@@ -53,39 +53,6 @@ public class DefaultSignalMastManager extends AbstractManager
         }
         return provideSignalMast(new String(name));
     }
-    
-    /*public SignalMast provideSignalMast(String prefix, String signalSystem, String mastName, HashMap<String,HashMap<Turnout, Integer>> map){
-        StringBuilder name = new StringBuilder(prefix);
-        name.append(":");
-        name.append("signalSystem");
-        name.append(":");
-        name.append(lastAutoMastRef);
-        lastAutoMastRef++;
-        jmri.implementation.TurnoutSignalMast m = (jmri.implementation.TurnoutSignalMast)provideTurnoutSignalMast(new String(name));
-        for (String key : map.keySet()){
-            HashMap<Turnout, Integer> temp = map.get(key);
-            int state =0;
-            Turnout turn = null;
-            for (Turnout turnout : temp.keySet()){
-                turn = turnout;
-                state = temp.get(turn);
-            }
-            if(turn!=null)
-                m.setTurnout(key, turn, state);
-        
-        }
-        return m;
-    }*/
-    
-    public SignalMast provideTurnoutSignalMast(String name){
-        SignalMast m = getSignalMast(name);
-        if(m==null){
-            m = new jmri.implementation.TurnoutSignalMast(name);
-            register(m);
-        }
-        return m;
-    }
-    
 
     public SignalMast provideSignalMast(String name) {
         SignalMast m = getSignalMast(name);
