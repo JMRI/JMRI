@@ -75,15 +75,17 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             fireTableDataChanged();
         } else if (matchPropertyName(e)) {
             // a value changed.  Find it, to avoid complete redraw
-            String name = ((NamedBean)e.getSource()).getSystemName();
-            if (log.isDebugEnabled()) log.debug("Update cell "+sysNameList.indexOf(name)+","
-                                                +VALUECOL+" for "+name);
-            // since we can add columns, the entire row is marked as updated
-            int row = sysNameList.indexOf(name);
-            try{
-                fireTableRowsUpdated(row, row);
-            } catch (Exception ex){
-                log.error(ex.toString());
+            if(e.getSource() instanceof NamedBean){
+                String name = ((NamedBean)e.getSource()).getSystemName();
+                if (log.isDebugEnabled()) log.debug("Update cell "+sysNameList.indexOf(name)+","
+                                                    +VALUECOL+" for "+name);
+                // since we can add columns, the entire row is marked as updated
+                int row = sysNameList.indexOf(name);
+                try{
+                    fireTableRowsUpdated(row, row);
+                } catch (Exception ex){
+                    log.error(ex.toString());
+                }
             }
         }
     }
