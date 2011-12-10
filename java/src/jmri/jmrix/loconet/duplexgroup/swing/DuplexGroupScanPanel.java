@@ -491,7 +491,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         private final static int channelCount = 26-11+1;
         private final static int barGraphScale = 2;
         private final static int maxScanValue = 255;
-        private final static int maxScaledBarValue = (int) ((maxScanValue+1)/barGraphScale);
+        private final static int maxScaledBarValue = ((maxScanValue+1)/barGraphScale);
         private int baseline = maxScaledBarValue + 5;
 
         public int requiredMinWindowWidth = (channelCount*barSpace);
@@ -636,16 +636,16 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
                 // draw the line for the average value.
                 g2.setColor (averageLineColor);
                 g2.draw(new java.awt.geom.Line2D.Float(
-                        (float)(barSpace * index)+1, (float) ((baseline - (avg/barGraphScale))-1),
-                        (float)(barSpace * (index+1))-2, (float)(baseline - (avg/barGraphScale))-1));
+                        (barSpace * index)+1, ((baseline - (avg/barGraphScale))-1),
+                        (barSpace * (index+1))-2, (baseline - (avg/barGraphScale))-1));
             }
 
             // draw the line for the max value.
             if (max >= 0) {
                 g2.setColor (maxLineColor);
                 g2.draw(new java.awt.geom.Line2D.Float(
-                        (float)(barSpace * index)+1, (float)((baseline - (max/barGraphScale))-1),
-                        (float)(barSpace * (index+1))-2, (float)(baseline - (max/barGraphScale))-1));
+                        (barSpace * index)+1, ((baseline - (max/barGraphScale))-1),
+                        (barSpace * (index+1))-2, (baseline - (max/barGraphScale))-1));
             }
         }
 
@@ -702,7 +702,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         public int avgSamples;
         public int mostRecentSample;
 
-        public void DuplexChannelInfo () {
+        public DuplexChannelInfo () {
             channel = -1;
             numSamples = 0;
             maxSigValue = -1;

@@ -65,7 +65,6 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jmrix.loconet.LocoNetListener {
 
     private static final boolean limitPasswordToNumericCharacters = false;
-    private java.beans.PropertyChangeSupport duplexGroupDataListeners = new java.beans.PropertyChangeSupport(this);
     private LocoNetSystemConnectionMemo memo;
     private Integer numUr92;
     private javax.swing.Timer   swingTmrIplQuery;
@@ -132,7 +131,6 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         });
         swingTmrDuplexInfoQuery = new javax.swing.Timer(LnDplxGrpInfoImplConstants.DPLX_QUERY_DELAY, new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                String statusVal;
                 swingTmrDuplexInfoQuery.stop();
                 waitingForIplReply = false;
                 if (gotQueryReply == true) {
@@ -231,7 +229,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
 
     /**
      * Creates a LocoNet packet which queries UR92(s) for Duplex group
-     * identificaiton information.  The invoking method is responsible for
+     * identification information.  The invoking method is responsible for
      * sending the message to LocoNet.
      * @return LocoNetMessage containing IPL query of UR92s
      */
@@ -357,7 +355,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * which uses only valid group ID characters (0-9, A-C, a-c), a bogus
      * LocoNet message is returned.
      * <p>
-     * @param s The desired group password as a string
+     * @param sGroupPassword The desired group password as a string
      * @return  The packet which writes the Group Password to the UR92 device(s)
      */
     public static final LocoNetMessage createSetUr92GroupPasswordPacket(String sGroupPassword) throws jmri.jmrix.loconet.LocoNetException {

@@ -214,7 +214,7 @@ public class ValidatedTextField extends javax.swing.JTextField  {
             Integer maxValue,
             String validationErrorMessage) {
         super("0",len);
-        validateRegExpr = (String)null;
+        validateRegExpr = null;
         validationErrorText = "ERROR:" + validationErrorMessage;
         fieldType = FieldType.INTEGRALNUMERIC;
         minAllowedValue = minValue;
@@ -240,7 +240,8 @@ public class ValidatedTextField extends javax.swing.JTextField  {
 
     /**
      * Provides a validated text field, where the validation mechanism requires
-     * a String value which passes the matching defined in validationRegExpr .
+     * a Numeric value which is a hexadecimal value which is valid and within a given 
+     * numeric range.
      * 
      * Validation occurs as part of the process of focus leaving the field.
      * When validation fails, the focus remains within the field, and the field 
@@ -254,10 +255,9 @@ public class ValidatedTextField extends javax.swing.JTextField  {
      * changed to reflect that the value is not yet saved.  Use the 
      * setLastQueriedValue() method to set the value for this comparison.
      *
-     * Parameter len defines the width of the text field entry box, in characters.
-     *
-     * Parameter forceUppercase determines if all alphabetic characters are
-     * forced to uppercase.
+     * Parameter minAcceptableVal defines the lowest acceptable value.
+     * 
+     * Parameter maxAcceptableVal defines the lowest acceptable value.
      *
      * Parameter validationRegExpr defines a java regular expression which is 
      * used when validating the text input.  A string such as "^[0-9]{2}[a-zA-Z]{3,4}$"
@@ -269,8 +269,8 @@ public class ValidatedTextField extends javax.swing.JTextField  {
      * change listener for the instantiating class.
      *
      * @param len
-     * @param forceUppercase
-     * @param validationRegExpr
+     * @param minAcceptableVal
+     * @param maxAcceptableVal
      * @param validationErrorMessage
      */
     public ValidatedTextField(Integer len, 
@@ -378,7 +378,7 @@ public class ValidatedTextField extends javax.swing.JTextField  {
      */
     public boolean isValid() {
         String value;
-        if (this.thisone == (ValidatedTextField)null) {
+        if (this.thisone == null) {
             return false;
         }
         value = getText();
@@ -476,7 +476,7 @@ public class ValidatedTextField extends javax.swing.JTextField  {
      * Method to retrieve the current value of the "Last Queried Value".
      * See also setLastQueriedValue().
      *
-     * @return
+     * @return lastQueryValue
      */
     public String getLastQueriedValue() {
         return lastQueryValue;
@@ -488,7 +488,7 @@ public class ValidatedTextField extends javax.swing.JTextField  {
      * Each different type requires special-case coding within the
      * methods defined within this class.
      */
-    private enum FieldType {TEXT, INTEGRALNUMERIC, INTEGRALNUMERICPLUSSTRING, LIMITEDHEX};
+    private enum FieldType {TEXT, INTEGRALNUMERIC, INTEGRALNUMERICPLUSSTRING, LIMITEDHEX}
 
     /**
      * Private class used in conjunction with the basic GUI JTextField to provide

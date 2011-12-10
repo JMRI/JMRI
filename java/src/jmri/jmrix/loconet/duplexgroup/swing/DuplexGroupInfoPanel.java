@@ -42,26 +42,14 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
     ValidatedTextField          swingIdValueField = new ValidatedTextField(1,false,"a","b");
     JLabel                      swingNumUr92Label;
     JLabel                      swingStatusValueLabel;
-//    JCheckBox                   scanPanelCheckBox;
     private static ResourceBundle      rb = ResourceBundle.getBundle("jmri.jmrix.loconet.duplexgroup.DuplexGroup");
     private int                 numUr92;
-    private boolean             gotQueryReply;
-    private boolean             waitingForIplReply = false;
     private DuplexGroupInfoPanel thisone;
 
     private LnDplxGrpInfoImpl duplexGroupImplementation;
 
     private int minWindowWidth = 0;
 
-//    private jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupScanPanel scanPanel = null;
-//    private JPanel              pScanPanelCheckBox = null;
-    private javax.swing.Timer   initTimer = null;
-
-
-    public DuplexGroupInfoPanel(jmri.util.JmriJFrame jFrame) {
-        this();
-        hostingJFrame = jFrame;
-    }
     public DuplexGroupInfoPanel() {
         super();
         thisone = this;
@@ -76,9 +64,6 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
 
         duplexGroupImplementation = new LnDplxGrpInfoImpl();
         duplexGroupImplementation.addPropertyChangeListener(this);
-
-        java.beans.PropertyChangeListener[] pcl = duplexGroupImplementation.getPropertyChangeListeners();
-        pcl = swingIdValueField.getPropertyChangeListeners();
 
     }
 
@@ -185,32 +170,12 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
             });
         swingReadButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-//                    readButtonActionPerformed();
                     scanButtonActionPerformed();
                 }
 
         });
     }
     
-    jmri.util.JmriJFrame hostingJFrame = null;
-    
-    private boolean foundHostingJFrame() {
-        java.awt.Container aContainer = new java.awt.Container();
-        aContainer = thisone.getParent();
-        Integer maxLevels = 8;
-        while ((aContainer != null) && (maxLevels-- > 0)) {
-            if (aContainer.getClass() == jmri.util.JmriJFrame.class) {
-                hostingJFrame = (jmri.util.JmriJFrame) aContainer;
-                return true;
-            }
-            else
-                aContainer = aContainer.getParent();
-        }
-        // didn't find the JFrame.
-        hostingJFrame = null;
-        return false;
-    }
-
     @Override public String getHelpTarget() { return "package.jmri.jmrix.loconet.duplexgroup.DuplexGroupInfoPanel"; }
 
     @Override public String getTitle() {
@@ -219,11 +184,6 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     @Override public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
-//        if (scanPanel != null) {
-//            scanPanel.initComponents(memo);
-//        }
-        // if can find a hosting JmriJFrame, then add the scan pannel checkbox and scan panel.
-
         scanButtonActionPerformed();    // begin a query for UR92s
     }
 
@@ -235,15 +195,6 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         numUr92 = 0;
         updateStatusLineMessage("ProcessingFindingUR92s",COLOR_STATUS_OK);
         duplexGroupImplementation.countUr92sAndQueryDuplexIdentityInfo();
-    }
-
-    /**
-     * If number of sensed UR92 devices is greater than zero, performs operations
-     * required to create and send a LocoNet packet which queries the UR92 device(s)
-     * for Duplex Group Identity information.
-     */
-    private void InvalidateDataAndQueryDuplexInfo() {
-        if (numUr92 > 0) readButtonActionPerformed();
     }
 
 
@@ -269,8 +220,6 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         updateStatusLineMessage("ProcessingReadingInfo",COLOR_STATUS_OK);
         duplexGroupImplementation.queryDuplexGroupIdentity();
         updateStatusLineMessage("ProcessingWaitingForReport",COLOR_STATUS_OK);
-        gotQueryReply = false;
-        waitingForIplReply = true;
     }
 
     /**
@@ -363,7 +312,6 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
 
         if (result == true) {
             updateStatusLineMessage("ProcessingGroupUpdate",COLOR_STATUS_OK);
-            Integer nameLength;
             StringBuilder writeGroupName = new StringBuilder();
             writeGroupName.append(swingNameValueField.getText());
             writeGroupName.append("         "); // ensure length at least 8 characters

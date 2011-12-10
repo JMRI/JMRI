@@ -22,7 +22,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
     public LnIPLImplementation() {
         super();
         thisone = this;
-//        LocoNetSystemConnectionMemo lnMemo = (LocoNetSystemConnectionMemo)jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class);
         java.util.List<Object> listOfLocoNetSystemConnectionMemos = jmri.InstanceManager.getList(LocoNetSystemConnectionMemo.class);
         for (Object listObj : listOfLocoNetSystemConnectionMemos) {
             LocoNetSystemConnectionMemo thisMemo = (LocoNetSystemConnectionMemo)listObj;
@@ -55,13 +54,11 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
                 thisone.firePropertyChange("LnIPLEndOfDeviceQuery", (Integer) 9999, (Integer) 0);
                 }
             });
-        numUr92 = 0;
-
     }
 
     /**
      * Creates a LocoNet packet which queries UR92(s) for Duplex group
-     * identificaiton information.  The invoking method is responsible for
+     * identification information.  The invoking method is responsible for
      * sending the message to LocoNet.
      * @return a LocoNetMessage containing the packet required to query UR92
      * device Duplex Group Identity information
@@ -693,8 +690,8 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
       * in response to appropriate Host Manufacturer number and appropriate Host Device
       * number.
       * <p>
-      * @param slaveMfr
-      * @param slaveDevice
+     * @param hostMfr
+     * @param hostDevice
       * @return String containing Manufacturer name and Device model.
       */
      public static final String interpretHostManufacturerDevice(Integer hostMfr, Integer hostDevice) {
@@ -775,7 +772,6 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
          }
          return s;
      }
-    private java.beans.PropertyChangeSupport iplListeners = new java.beans.PropertyChangeSupport(this);
     LnIPLImplementation thisone;
     private LocoNetSystemConnectionMemo memo;
 
@@ -902,21 +898,20 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
     }
 
     private boolean waitingForIplReply;
-    private Integer numUr92;
 
-    private void sendUr92IplQuery() {
-        waitingForIplReply = true;
-        memo.getLnTrafficController().sendLocoNetMessage(
-                LnIPLImplementation.createIplSpecificHostQueryPacket(
-                        LnConstants.RE_IPL_DIGITRAX_HOST_ALL,
-                        LnConstants.RE_IPL_DIGITRAX_HOST_UR92));
-        thisone.firePropertyChange("NumberOfUr92sUpdate", (Integer) 9999, (Integer) 0);
-        if (swingTmrIplQuery != null) {
-            if (swingTmrIplQuery.isRunning()) {
-                swingTmrIplQuery.restart();
-            }
-            else swingTmrIplQuery.start();
-        }
-    }
+//    private void sendUr92IplQuery() {
+//        waitingForIplReply = true;
+//        memo.getLnTrafficController().sendLocoNetMessage(
+//                LnIPLImplementation.createIplSpecificHostQueryPacket(
+//                        LnConstants.RE_IPL_DIGITRAX_HOST_ALL,
+//                        LnConstants.RE_IPL_DIGITRAX_HOST_UR92));
+//        thisone.firePropertyChange("NumberOfUr92sUpdate", (Integer) 9999, (Integer) 0);
+//        if (swingTmrIplQuery != null) {
+//            if (swingTmrIplQuery.isRunning()) {
+//                swingTmrIplQuery.restart();
+//            }
+//            else swingTmrIplQuery.start();
+//        }
+//    }
 
 }
