@@ -177,65 +177,6 @@ public class StringUtil {
         return b;
     }
 
-    static public int hiIntForLongAddr(int val) {
-        return (192 + (int) (val / 256));
-    }
-
-    static public int lowIntForLongAddr(int val) {
-        return (val % 256);
-    }
-
-    static public String hexFromInt(int val) {
-        int lowNib = (val % 256);
-        if ((val > 255) || (val < 0)) return null;
-        return String.format("%02X ", lowNib);
-    }
-
-    /**
-     * XOR comparison of two integers
-     * @param a first int
-     * @param b second int
-     * @return -1 if params out of range, otherwise return the error byte
-     */
-    static public int errorIntForIntegers(int a, int b) {
-        if ((a < 0) || (a > 255) || (b < 0) || (b > 255)) {
-            return -1;
-        }
-        int ret;
-        ret = a ^ b;
-        return ret;
-    }
-
-    /**
-     * create a properly formatted hex packet ready to send to the command station
-     * @param allInt variable length parameter list of integers
-     * @return hex packet, or null if cannot be formatted properly
-     */
-    static public String formatPacketFromIntegers(int... allInt) {
-        if (allInt.length < 1) {
-            return null;
-        }
-        int intCount = 0;
-        int errorInt = 0;
-        StringBuilder packet = null;
-
-        for (int eachInt : allInt) {
-            String hexPair = hexFromInt(eachInt);
-            if (hexPair == null) return null;
-            if (intCount == 0) {
-                packet = new StringBuilder(hexPair);
-                errorInt = eachInt;
-            } else {
-                packet.append(hexPair);
-                errorInt = errorIntForIntegers(errorInt, eachInt);
-                if (errorInt < 0) return null;  //  If -1, the package would be no good
-            }
-            intCount++;
-        }
-        packet.append(hexFromInt(errorInt));
-        return packet.toString();
-    }
-
     /**
      * This is a lexagraphic sort; lower case goes to the end.
      * Identical entries are retained, so the output length is the same
