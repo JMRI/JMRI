@@ -26,19 +26,22 @@
 <H1>Adding Signal Masts
 </H1>
     
-<A href="SignalMastAdd.png"><IMG SRC="SignalMastAdd.png" ALIGN=RIGHT WIDTH="315" HEIGHT="231" HSPACE="0" VSPACE="0" ALT="Add signal mast panel figure"></a>
-
+<A href="SignalMastAdd.png"><IMG SRC="SignalMastAdd.png" ALIGN=RIGHT WIDTH="315" HEIGHT="210" HSPACE="0" VSPACE="0" ALT="Add signal mast panel figure"></a>
+<p>
 Signal Masts are built based upon different signalling systems, and the masts supported within those system.
 <p>
 In the add window, you first need to select the prototypical signalling system that the mast is to be based upon, followed by the mast within that system.
 <p>
-The mast can then be built in two different ways depending upon the hardware being used.
+The mast can then be built in three different ways depending upon the hardware being used.
 <ul>
 <li>SignalHeads</li>
 Individual signals heads are used to represent each signal head on the mast.  The signal head will then deal with handling the changing of it aspect depending upon the state of the signal mast.
 If each signal head that has been configured on the mast, a drop down box will appear for you to select the signal head that will control the head on that mast.
 <li>Turnout Driven</li>
 This is for specific hardware that can control the whole appearance of a Signal Mast based upon the setting of a turnout.  Depending upon the hardware used will depend upon what needs to be set here.
+<li>Virtual</li>
+This mast does not directly control any hardware relating to a signal mast.  It use is ideal for where a physical mast would not be present on the railroad, such as an End Bumper/Buffer Stop, or to 
+mark the end of a signalling section of track and the beginning of dark territory.
 </ul>
 <p>
 <!--#include virtual="/Footer" -->

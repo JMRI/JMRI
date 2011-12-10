@@ -27,6 +27,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     private boolean allowTurnout = true;
     private boolean allowRoute = true;
     private boolean allowConsist = true;
+    private boolean useWiFiConsist = true;
     
     public WiThrottlePreferences(String fileName){
         super.openFile(fileName);
@@ -53,6 +54,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
         if ((a = child.getAttribute("isAllowTurnout")) != null )  setAllowTurnout(a.getValue().equalsIgnoreCase("true"));
         if ((a = child.getAttribute("isAllowRoute")) != null )  setAllowRoute(a.getValue().equalsIgnoreCase("true"));
         if ((a = child.getAttribute("isAllowConsist")) != null )  setAllowConsist(a.getValue().equalsIgnoreCase("true"));
+        if ((a = child.getAttribute("isUseWiFiConsist")) != null )  setUseWiFiConsist(a.getValue().equalsIgnoreCase("true"));
 
     }
 
@@ -61,6 +63,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
         if (isAllowTurnout() != prefs.isAllowTurnout()) return true;
         if (isAllowRoute() != prefs.isAllowRoute()) return true;
         if (isAllowConsist() != prefs.isAllowConsist()) return true;
+        if (isUseWiFiConsist() != prefs.isUseWiFiConsist()) return true;
 
         if (isUseEStop() != prefs.isUseEStop()) return true;
         if (getEStopDelay() != prefs.getEStopDelay()) return true;
@@ -82,6 +85,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
         setAllowTurnout(prefs.isAllowTurnout());
         setAllowRoute(prefs.isAllowRoute());
         setAllowConsist(prefs.isAllowConsist());
+        setUseWiFiConsist(prefs.isUseWiFiConsist());
     }
 
     public Element store() {
@@ -96,6 +100,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
         element.setAttribute("isAllowTurnout", "" + isAllowTurnout());
         element.setAttribute("isAllowRoute", "" + isAllowRoute());
         element.setAttribute("isAllowConsist", "" + isAllowConsist());
+        element.setAttribute("isUseWiFiConsist", "" + isUseWiFiConsist());
         setIsDirty(false);  //  Resets only when stored
         return element;
     }
@@ -176,6 +181,13 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     }
     public void setAllowConsist(boolean value){
         allowConsist = value;
+    }
+    
+    public boolean isUseWiFiConsist(){
+        return useWiFiConsist;
+    }
+    public void setUseWiFiConsist(boolean value){
+        useWiFiConsist = value;
     }
 
     private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WiThrottlePreferences.class.getName());

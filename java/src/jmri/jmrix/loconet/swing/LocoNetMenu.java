@@ -60,7 +60,7 @@ public class LocoNetMenu extends JMenu {
         new Item("MenuItemDS64Programmer",      "jmri.jmrix.loconet.ds64.DS64Panel"),
         new Item("MenuItemCmdStnConfig",        "jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigPane"),
         new Item("MenuItemSetID",               "jmri.jmrix.loconet.locoid.LocoIdPanel"),
-        null,
+        new Item("MenuItemDuplex",              "jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupTabbedPanel"),
         //new Item("MenuItemStartLocoNetServer",  "jmri.jmrix.loconet.locormi.LnMessageServerPanel"),
         //new Item("MenuItemLocoNetOverTCPServer","jmri.jmrix.loconet.loconetovertcp.ServerPanel"),
         null,

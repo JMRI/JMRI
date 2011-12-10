@@ -1,5 +1,5 @@
 /* 
-    Document   : miniServer-simple
+    Document   : miniServer-plain
     Created on : Dec 3, 2011, 11:06:30 AM
     Author     : rhwood
     Description: Minimal stylesheet for clients that want only the ajax-frame
@@ -19,4 +19,8 @@ body {
 
 .frame-footer {
     display: none;
+}
+
+div#frame_image_wrapper:hover {
+	cursor: pointer;
 }

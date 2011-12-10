@@ -38,7 +38,6 @@ public class MiniServerPrefsPanel extends JPanel{
     JTextArea disallowedFrames;
     JCheckBox useAjaxCB;
     JCheckBox rebuildIndexCB;
-    JCheckBox showCommCB;
     JTextField port;
 
     JButton saveB;
@@ -70,7 +69,6 @@ public class MiniServerPrefsPanel extends JPanel{
         add(rebuildIndexPanel());
         add(portPanel());
         add(delaysPanel());
-        add(showCommPanel());
         add(cancelApplySave());
 
     }
@@ -81,7 +79,6 @@ public class MiniServerPrefsPanel extends JPanel{
         disallowedFrames.setText(localPrefs.getDisallowedFrames());
         useAjaxCB.setSelected(localPrefs.useAjax());
         rebuildIndexCB.setSelected(localPrefs.isRebuildIndex());
-        showCommCB.setSelected(localPrefs.isShowComm());
         port.setText(localPrefs.getPort());
     }
 
@@ -104,7 +101,6 @@ public class MiniServerPrefsPanel extends JPanel{
         localPrefs.setDisallowedFrames(disallowedFrames.getText());
         localPrefs.setUseAjax(useAjaxCB.isSelected());
         localPrefs.setRebuildIndex(rebuildIndexCB.isSelected());
-        localPrefs.setShowComm(showCommCB.isSelected());
         int portNum;
         try{
         	portNum = Integer.parseInt(port.getText());
@@ -177,11 +173,13 @@ public class MiniServerPrefsPanel extends JPanel{
         useAjaxCB.setToolTipText(rb.getString("ToolTipUseAjax"));
         panel.add(useAjaxCB);
 
+        JPanel dfPanel = new JPanel();
         disallowedFrames = new JTextArea(4,20);
         disallowedFrames.setText(rb.getString("DefaultDisallowedFrames"));
-
-        panel.add(new JScrollPane(disallowedFrames));
-        panel.add(new JLabel(rb.getString("LabelDisallowedFrames")));
+        dfPanel.add(new JScrollPane(disallowedFrames));
+        dfPanel.add(new JLabel(rb.getString("LabelDisallowedFrames")));
+        
+        panel.add(dfPanel);
         
         return panel;
     }
@@ -195,18 +193,6 @@ public class MiniServerPrefsPanel extends JPanel{
         rebuildIndexCB = new JCheckBox(rb.getString("LabelRebuildIndex"));
         rebuildIndexCB.setToolTipText(rb.getString("ToolTipRebuildIndex"));
         panel.add(rebuildIndexCB);
-        return panel;
-    }
-
-    private JPanel showCommPanel(){
-        JPanel panel = new JPanel();
-        TitledBorder border = BorderFactory.createTitledBorder(lineBorder,
-                rb.getString("TitleShowCommPanel"), TitledBorder.CENTER, TitledBorder.TOP);
-
-        panel.setBorder(border);
-        showCommCB = new JCheckBox(rb.getString("LabelShowComm"));
-        showCommCB.setToolTipText(rb.getString("ToolTipShowComm"));
-        panel.add(showCommCB);
         return panel;
     }
 

@@ -2,28 +2,37 @@
 //  sets up a click listener plus a time-based refresh loop.  click listener sends click position to server
 
 $(function () {
-	//add an image for showing cursor click position
-	$('body').append("<img style='position:absolute;display:none;' id='crosshair' src='/images/crosshair.png'/>");
 	
 	//setup infinite image refresh loop  
 	setInterval(function () {
 		reloadImage();
 	},  noclickRetryTime * 1000);  //set refresh time in milliseconds
 
-	//set up to handle click on image div
-	$('div#frame_image_wrapper').click(function(event) {
+	//protect from updates if requested
+	if (protect != true) {
+		
+		//add an image for showing cursor click position
+		$('body').append("<img style='position:absolute;display:none;' id='crosshair' src='/images/crosshair.png'/>");
 
-		//show a momentary crosshair to point out cursor click position
-		$('#crosshair').css({'top':event.pageY-7,'left':event.pageX-7}).show().fadeOut('slow');
+		//set up to handle click on image div
+		$('div#frame_image_wrapper').click(function(event) {
 
-		//send request to frameserver as if user clicked on imagemap
-		$.get("/frame/" + frameName + ".html?" + event.pageX + "," + event.pageY, function(data) {
-			reloadImage();  //ignore response value, but update the image
+			//show a momentary crosshair to point out cursor click position
+			$('#crosshair').css({'top':event.pageY-7,'left':event.pageX-7}).show().fadeOut('slow');
+
+			//send request to frameserver as if user clicked on imagemap
+			$.get("/frame/" + frameName + ".html?" + event.pageX + "," + event.pageY, function(data) {
+				reloadImage();  //ignore response value, but update the image
+			});
 		});
-	});
+	} else {
+		//turn off the pointer cursor when protected
+		$('div#frame_image_wrapper').css({'cursor':'auto'});
+	}
 
 });
 
+//perform the image reload, including gray-out on error
 function reloadImage() {
 	var img = new Image();
 	$(img).load(function () {

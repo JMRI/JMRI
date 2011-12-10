@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 
-
-<!-- version 1 - for Unified Software version 30, added additional CV313 settings to CV260-CV355sound.xml -->
+<!-- version 1.1, correction to CV354 by Nigel Cliffe -->
+<!-- version 1, Mark Waters - for Unified Software version 30, added additional CV313 settings to CV260-CV355sound.xml -->
 
 <variables>      		
 		<variable label="Load Code 1" CV="260">
@@ -867,9 +867,9 @@
         <decVal min="0" max="252"/>
         <label>Automatic Shut-down of Smoke Generator</label>
       </variable>
-      <variable label="Delay of Switchgear sound at startup" CV="354" default="0" tooltip="0 = no effect, 1-127 = more chuffs, 255-128 = less chuffs relative to CV257. CV354">
+      <variable label="Steam chuff frequency at speed step 1" CV="354" default="0" tooltip="0 = no effect, 1-127 = more chuffs, 255-128 = less chuffs relative to CV257. CV354">
         <decVal min="0" max="255"/>
-        <label>Delay of Switchgear sound at startup</label>
+        <label>Steam chuff frequency at speed step 1</label>
       </variable>
       <variable label="Fan Speed at Standstill" CV="355" default="0" tooltip="0 to 255, Supplements CV133. CV355">
         <decVal min="0" max="255"/>

@@ -22,7 +22,7 @@ import org.jdom.Element;
 
 public class ConsistFile extends jmri.jmrit.XmlFile {
 
-       private jmri.ConsistManager ConsistMan = null;   
+       protected jmri.ConsistManager ConsistMan = null;   
 
        public ConsistFile(){
           super();
@@ -192,15 +192,25 @@ public class ConsistFile extends jmri.jmrit.XmlFile {
 	}
 
         /**
+         * Read all consists from the default file name
+         * @throws org.jdom.JDOMException
+         * @throws java.io.IOException
+         */
+        public void ReadFile() throws org.jdom.JDOMException, java.io.IOException {
+            ReadFile(defaultConsistFilename());
+        }
+
+        /**
          * Read all consists from a file.
+         * @param fileName - with location and file type
          * @throws org.jdom.JDOMException
          * @throws java.io.IOException
          */
 	@SuppressWarnings("unchecked")
-	public void ReadFile() throws org.jdom.JDOMException, java.io.IOException {
-           if(checkFile(defaultConsistFilename()))
+	public void ReadFile(String fileName) throws org.jdom.JDOMException, java.io.IOException {
+           if(checkFile(fileName))
            {
-	      Element root=rootFromName(defaultConsistFilename());
+	      Element root=rootFromName(fileName);
               Element roster = null;
               if(root==null) {
 	  	   log.warn("consist file could not be read");
@@ -225,12 +235,22 @@ public class ConsistFile extends jmri.jmrit.XmlFile {
            
         }
 
-	/**
-     * Write all consists to a file.
-	 * @param consistList an ArrayList of consists to write
-     * @throws org.jdom.JDOMException
- 	 */
-	public void WriteFile(ArrayList<jmri.DccLocoAddress> consistList) throws java.io.IOException {
+        /**
+         * Write all consists to the default file name
+         * @param consistList
+         * @throws java.io.IOException
+         */
+        public void WriteFile(ArrayList<jmri.DccLocoAddress> consistList) throws java.io.IOException {
+            WriteFile(consistList, defaultConsistFilename());
+        }
+
+        /**
+         * Write all consists to a file.
+         * @param consistList an ArrayList of consists to write
+         * @param fileName - with location and file type
+         * @throws java.io.IOException
+         */
+	public void WriteFile(ArrayList<jmri.DccLocoAddress> consistList, String fileName) throws java.io.IOException {
            // create root element
            Element root = new Element("consist-roster-config");
            Document doc = newDocument(root, dtdLocation+"consist-roster-config.dtd");
@@ -251,10 +271,10 @@ public class ConsistFile extends jmri.jmrit.XmlFile {
            }
            root.addContent(roster);
            try {   
-           if(!checkFile(defaultConsistFilename()))
+           if(!checkFile(fileName))
            {
                //The file does not exist, create it before writing
-               java.io.File file=new java.io.File(defaultConsistFilename());
+               java.io.File file=new java.io.File(fileName);
                java.io.File parentDir=file.getParentFile();
                if(!parentDir.exists())
                {
@@ -264,7 +284,7 @@ public class ConsistFile extends jmri.jmrit.XmlFile {
                if(!file.createNewFile())
                   throw(new java.io.IOException());
            }
-           writeXML(findFile(defaultConsistFilename()),doc);
+           writeXML(findFile(fileName),doc);
            } catch(java.io.IOException ioe) {
                 log.error("IO Exception " +ioe);
                 throw(ioe);

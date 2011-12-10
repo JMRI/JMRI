@@ -13,8 +13,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Peter Ulvestad" version="3" lastUpdated="20111203"/>
   <version author="Ian Birchenough(ian@birchenough.demon.co.uk)" version="2" lastUpdated="20060521"/>
   <version author="Phil Grainger (phil.grainger@ca.com)" version="1" lastUpdated="20030805"/>
+  <!--   version 3 Added factory reset.-->
 <!-- ZTC Speed Stabilized decoders -->
   <decoder>
     <family name="ZTC Speed Stabilised (B)" mfg="ZTC" lowVersionID="0" highVersionID="255">
@@ -77,7 +79,7 @@
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Extended Address (0-9999)" CV="17" item="Long Address" default="100" comment="4 digit address (Range 0-9999)">
+      <variable label="Extended Address (0-9999)" CV="17" item="Long Address" comment="4 digit address (Range 0-9999)">
         <longAddressVal/>
         <label>Extended Address (0-9999)</label>
         <comment>4 digit address (Range 0-9999)</comment>
@@ -174,6 +176,9 @@
       <constant label="F3 controls output 5" minOut="5" default="1"/>
       <constant label="F4 controls output 6" minOut="6" default="1"/>
     </variables>
+    <resets>
+       <factReset label="Reset All CVs" CV="8" default="8"/>
+    </resets>
   </decoder>
   <pane name="ZTC">
     <column>

@@ -13,8 +13,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Peter Ulvestad" version="3" lastUpdated="20111203"/>
   <version author="Ian Birchenough" version="2" lastUpdated="20080229"/>
   <version author="Ian Birchenough" version="1" lastUpdated="20071215"/>
+  <!--   version 3 Moved factory reset from tab to top menu.-->
   <decoder>
     <family name="ZTC 255" mfg="ZTC" lowVersionID="132" highVersionID="132">
       <model model="ZTC 255"/>
@@ -54,21 +56,6 @@
       <variable label="Manufacturer ID: " CV="8" readOnly="yes" item="Manufacturer">
         <decVal/>
         <label>Manufacturer ID: </label>
-      </variable>
-      <variable label="Decoder RESET:" CV="8" item="Reset" default="132">
-        <decVal/>
-        <label>Decoder RESET:</label>
-      </variable>
-      <variable label="Decoder Reset" CV="8" item="resetbit">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes" value="8">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Decoder Reset</label>
       </variable>
       <variable label="Total PWM Period" CV="9">
         <decVal/>
@@ -999,6 +986,9 @@
         <label>User Id #2</label>
       </variable>
     </variables>
+  <resets>
+      <factReset label="Reset All CVs" CV="8" default="8"/>
+  </resets>
   </decoder>
   <pane name="ZTC">
     <column>
@@ -1042,21 +1032,5 @@
       </row>
     </column>
     <name>ZTC</name>
-  </pane>
-  <pane name="Decoder RESET">
-    <column>
-      <row>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="resetbit"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-    </column>
-    <name>Decoder RESET</name>
   </pane>
 </decoder-config>

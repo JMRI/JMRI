@@ -59,7 +59,7 @@ Check that you can properly communicate with and operate your layout.
 <p>
 <img src="images/Startup.jpg" align="right" height="117" width="312"/>
 To start web access from the menus, select "Start Mini Web Server"
-under the "Debug" menu. A small window will open to confirm that
+under the "Tools" menu. A small window will open to confirm that
 it started, and to show you the URL that it's using.
 
 <p>
@@ -81,7 +81,8 @@ message, which will be something like "http://10.0.1.7:12080/index.html"
 "Open in Browser" button).
 The default port is 12080, but this can be changed in 
 MiniServer Preferences.
-You should see a welcome screen.
+You should see a welcome screen, which serves as the home page for the mini web server.  
+This page (by default) contains a number of useful examples and links.
 
 <p>
 Next, let's make sure you can access JMRI functions.
@@ -139,18 +140,29 @@ to let JMRI replace it with the newest version.
 You can create your own web pages using any tool you'd like. 
 To access JMRI from those pages, you just 
 need to know the proper URLs to request the services you'd like. 
-Several examples are available in the "web" directory of the distribution. 
+Several examples are linked from the index.html (mini server home page), 
 
-<h3>To Display a formatted JMRI roster list</h3>
+<h2>Open Window (Frame) Access</h2>
+    To display any <em>already open</em> JMRI window as a <b>clickable</b> image that periodically refreshes, use a URL like:
+    
+    <code><pre><a href="http://127.0.0.1:12080/frame/Monitor%20Slots.html">http://127.0.0.1:12080/frame/Monitor%20Slots.html</a> </pre></code>
+    <code><pre><a href="http://127.0.0.1:12080/frame/Analog%20Clock.html">http://127.0.0.1:12080/frame/Analog%20Clock.html</a></pre></code></a>
+    <code><pre><a href="http://127.0.0.1:12080/frame/Turnout%20Table.html">http://127.0.0.1:12080/frame/Turnout%20Table.html</a></pre></code></a>
+    
+    <p>Note the frame title in the URL, followed by ".html".  Replace any spaces in the title with "%20".</p>
+    For current, dynamically-generated list of available windows, use this URL:
+    <code><pre><a href="http://127.0.0.1:12080/frame">http://127.0.0.1:12080/frame</a></pre></code>
+    <p><em>Note:</em> Adjust defaults such as refresh timing, disallowed frames and ajax usage in MiniServer Preferences.</p>
+    You can override the defaults for individual pages by using the following parms in your URL:
+    <ul>
+    <li><b>plain</b> (hide the footer links)</li>
+    <li><b>protect</b> (protect the frame from user clicks, i.e. read-only image, but with refresh)</li>
+    <li><b>ajax</b> (use ajax for updates)</li>
+    </ul>
+    Example, showing no links, protected, using ajax to refresh every 12 seconds:
+    <code><pre><a href="http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&plain=true&protect=true&retry=12">http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&plain=true&protect=true&retry=12</a></pre></code>
 
-To get a nicely formatted view of your JMRI roster simply go to:
-<code><pre>
-<a href="http://localhost:12080/prefs/roster.xml">http://localhost:12080/prefs/roster.xml</a>
-</pre></code>
-Note that this is your roster.xml file displayed only using a xslt transformation.
-
-<h3>To get to the throttle web application</h3>
-
+<h2>inControl throttle web application</h2>
 To use the throttle web application, you can go to:
 <code><pre>
 <a href="http://localhost:12080/web/Scan2BeInControl.html" target="Scan2BeInControl">http://localhost:12080/web/Scan2BeInControl.html</a>
@@ -168,44 +180,7 @@ See <b>mini web server</b> starting page for more info or jump to the <b>inContr
 <a href="/help/en/package/jmri/jmrit/inControl/inControl.shtml">/help/en/package/jmri/jmrit/inControl/inControl.shtml</a>
 </pre></code>
 
-<h3>To Display a Clickable JMRI Window</h3>
-
-To display any <i>open</i> JMRI window as a clickable
-image that periodically refreshes, use a URL like:
-<code><pre>
-<a href="http://localhost:12080/frame/Power%20Control.html">http://localhost:12080/frame/Power%20Control.html</a>
-</pre></code>
-where the last part of the URL is the name
-of the desired window.  Note that you have to 
-replace spaces by "%20" to make the name a 
-valid URL, and that the name ends in ".html".
-<p>
-By default, that image refreshes every 5 seconds, and also refreshes one
-second after you click on it.  You can change the refresh intervals in MiniServer Preferences
-or by adding a modifier to the end of the URL.  Also, you can enable ajax refresh (new) or use a meta refresh (older).
-<code><pre>
-<a href="http://localhost:12080/frame/Power%20Control.html?retry=12.3">http://localhost:12080/frame/Power%20Control.html?retry=12.3</a>
-</pre></code>
-<p>
-For current list of available windows, use a URL like this:
-<code><pre>
-    <A HREF="http://localhost:12080/frame">http://localhost:12080/frame</a>
-</pre></code>
-Use the MiniServer Preferences to specify a list of windows which you do NOT want to allow web access to.
-
-<h3>To Display a JMRI Window as an Image</h3>
-
-To display the contents of any <i>open</i> JMRI window as an image, use
-a URL like:
-<code><pre>
-<a href="http://localhost:12080/frame/Power%20Control.png">http://localhost:12080/frame/Power%20Control.png</a>
-</pre></code>
-where the "file name" part of the URL is the name
-of the desired window.  Note that you have to 
-replace spaces by "%20" to make the name a 
-valid URL.  You can also embed this URL in a IMG tag.
-
-<h3>To Display a Local File</h3>
+<h2>To Display a Local File</h2>
 A local HTML file (web page), graphic or text file can be 
 displayed using the appropriate URL.
 <p>
@@ -228,7 +203,7 @@ will reference the index to the help system, while
 will load a JMRI logo graphic from the resources directory.
 "dist/web" and "dist/xml" also work as prefixes.
 
-<h3>Displaying Formatted Panel Files</h3>
+<h2>Displaying Formatted Panel Files</h2>
 
 The "panel files" that JMRI uses to store configuration
 and display information can be displayed in a convenient
@@ -240,8 +215,16 @@ For example, to display "MyFile.xml" from the JMRI preferences directory, use
 <code><pre>
 <a href="http://localhost:12080/prefs/MyFile.xml">http://localhost:12080/prefs/MyFile.xml</a>
 </pre></code>
+<h2>To Display a formatted JMRI roster list</h2>
 
-<h3>XML and Ajax access</h3>
+To get a nicely formatted view of your JMRI roster simply go to:
+<code><pre>
+<a href="http://localhost:12080/prefs/roster.xml">http://localhost:12080/prefs/roster.xml</a>
+</pre></code>
+Note that this is your roster.xml file displayed only using a xslt transformation.
+
+
+<h2>XML and Ajax access</h2>
 
 JMRI provides XML and Ajax access via a
 <a href="http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">XML IO custom servlet</a>.

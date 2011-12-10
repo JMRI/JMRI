@@ -35,7 +35,8 @@
       </xs:annotation>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element name="turnoutsignalmast" type="TurnoutSignalMastType" minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="signalmast" type="SignalMastType" minOccurs="0" maxOccurs="unbounded" />      
+        <xs:element name="signalmast" type="SignalMastType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="virtualsignalmast" type="SignalMastType" minOccurs="0" maxOccurs="unbounded" />    
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required" />
     </xs:complexType>

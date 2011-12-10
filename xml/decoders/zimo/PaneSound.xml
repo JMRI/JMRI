@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 
-
-<!-- version 1 - for Unified Software -->
+<!-- version 1.1, Nigel Cliffe, added "Steam chuff frequency at speed step 1" -->
+<!-- version 1, Mark Waters - for Unified Software -->
 
   <pane name="Sound">
     <column>
@@ -42,6 +42,7 @@
     </column>
     <column>
       <display item="Virtual cam chuff frequency"/>
+      <display item="Steam chuff frequency at speed step 1"/>
       <display item="Real cam sensor chuff rate"/>
       <display item="Lead chuff accentuated"/>
       <display item="Overlapping effect at high speeds"/>

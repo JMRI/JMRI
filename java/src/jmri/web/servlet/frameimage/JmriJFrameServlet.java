@@ -55,6 +55,7 @@ public class JmriJFrameServlet implements Servlet {
             Arrays.asList(MiniServerManager.miniServerPreferencesInstance().getDisallowedFrames().split("\n")));
     boolean useAjax = MiniServerManager.miniServerPreferencesInstance().useAjax();
     boolean plain = MiniServerManager.miniServerPreferencesInstance().isPlain();
+    boolean protect = false;
     protected int maxRequestLines = 50;
     protected String serverName = "JMRI-JFrameServer";
     static java.util.ResourceBundle rb 
@@ -138,6 +139,9 @@ public class JmriJFrameServlet implements Servlet {
         if (modifiers.containsKey("plain")) {
             plain = Boolean.valueOf(modifiers.get("plain"));
         }
+        if (modifiers.containsKey("protect")) {
+            protect = Boolean.valueOf(modifiers.get("protect"));
+        }
 
         // remove any type suffix
         String suffix = null;
@@ -168,8 +172,8 @@ public class JmriJFrameServlet implements Servlet {
             log.warn("Request for [" + frameName + "] found title [" + frame.getTitle() + "], mismatched");
         }
 
-        // If there's a click modifier, parse it and execute
-        if (click) {
+        // If there's a click modifier, parse it and execute (skip if protect turned on)
+        if (click && !protect) {
             try {
                 if (log.isDebugEnabled()) {
                     log.debug("Attempt click at " + x + "," + y);
@@ -244,13 +248,15 @@ public class JmriJFrameServlet implements Servlet {
         // 4 is state of plain
         // 5 is the CSS stylesteet name addition, based on "plain"
         // 6 is ajax preference
+        // 7 is protect
         Object[] args = new String[]{"localhost",
             name,
             (click ? clickRetryTime : noclickRetryTime),
             noclickRetryTime,
             Boolean.toString(plain),
             (plain ? "-plain" : ""),
-            Boolean.toString(useAjax)};
+            Boolean.toString(useAjax),
+            Boolean.toString(protect)};
         String h = rb.getString("FrameHeader");
         String s = rb.getString("FrameDocType");
         s += java.text.MessageFormat.format(rb.getString("FramePart1"), args);
