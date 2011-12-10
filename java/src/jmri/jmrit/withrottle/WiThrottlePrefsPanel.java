@@ -23,6 +23,8 @@ import javax.swing.JTextField;
 
 import jmri.jmrit.XmlFile;
 import java.io.File;
+import javax.swing.ButtonGroup;
+import javax.swing.JRadioButton;
 
 public class WiThrottlePrefsPanel extends JPanel{
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
@@ -39,6 +41,8 @@ public class WiThrottlePrefsPanel extends JPanel{
     JCheckBox turnoutCB;
     JCheckBox routeCB;
     JCheckBox consistCB;
+    JRadioButton wifiRB;
+    JRadioButton dccRB;
 
     JButton saveB;
     JButton cancelB;
@@ -86,6 +90,8 @@ public class WiThrottlePrefsPanel extends JPanel{
         turnoutCB.setSelected(localPrefs.isAllowTurnout());
         routeCB.setSelected(localPrefs.isAllowRoute());
         consistCB.setSelected(localPrefs.isAllowConsist());
+        wifiRB.setSelected(localPrefs.isUseWiFiConsist());
+        dccRB.setSelected(!localPrefs.isUseWiFiConsist());
     }
 
 /**
@@ -131,6 +137,7 @@ public class WiThrottlePrefsPanel extends JPanel{
         localPrefs.setAllowTurnout(turnoutCB.isSelected());
         localPrefs.setAllowRoute(routeCB.isSelected());
         localPrefs.setAllowConsist(consistCB.isSelected());
+        localPrefs.setUseWiFiConsist(wifiRB.isSelected());
 
         return didSet;
     }
@@ -237,6 +244,18 @@ public class WiThrottlePrefsPanel extends JPanel{
         consistCB = new JCheckBox(rb.getString("LabelConsist"));
         consistCB.setToolTipText(rb.getString("ToolTipConsist"));
         panel.add(consistCB);
+        
+        JPanel conPanel = new JPanel();
+        conPanel.setLayout(new BoxLayout(conPanel, BoxLayout.Y_AXIS));
+        wifiRB = new JRadioButton(rb.getString("LabelWiFiConsist"));
+        dccRB = new JRadioButton(rb.getString("LabelDCCConsist"));
+        
+        ButtonGroup group = new ButtonGroup();
+        group.add(wifiRB);
+        group.add(dccRB);
+        conPanel.add(wifiRB);
+        conPanel.add(dccRB);
+        panel.add(conPanel);
 
         return panel;
     }

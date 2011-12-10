@@ -26,17 +26,28 @@ public class ConsistController extends AbstractController implements ProgListene
     private boolean isConsistAllowed;
 
     public ConsistController(){
-        manager = jmri.InstanceManager.consistManagerInstance();
+        //  writeFile needs to be separate method
+        if (WiThrottleManager.withrottlePreferencesInstance().isUseWiFiConsist()){
+            manager = new WiFiConsistManager();
+            log.debug("Using WiFiConsisting");
+        }else{
+            manager = jmri.InstanceManager.consistManagerInstance();
+            log.debug("Using JMRIConsisting");
+        }
+        
         if (manager == null){
             log.info("No consist manager instance.");
             isValid = false;
         }else {
-            file = new ConsistFile();
-            try{
-               file.ReadFile();
-            }
-            catch(Exception e){
-               log.warn("error reading consist file: " +e);
+            if (WiThrottleManager.withrottlePreferencesInstance().isUseWiFiConsist()) {
+                file = new WiFiConsistFile(manager);
+            } else {
+                file = new ConsistFile();
+                try {
+                    file.ReadFile();
+                } catch (Exception e) {
+                    log.warn("error reading consist file: " + e);
+                }
             }
             isValid = true;
         }
@@ -87,40 +98,53 @@ public class ConsistController extends AbstractController implements ProgListene
     public void sendDataForNCEConsist(NceConsistRosterEntry con){
         if (listeners == null) return;
         StringBuilder list = new StringBuilder("RCD");  //  Roster Consist Data
-        list.append("}|{" + con.getConsistNumber());  //address
+        list.append("}|{");
+        list.append(con.getConsistNumber());  //address
         list.append("(S)}|{");  //consist address is always short
         if (con.getId().length() > 0){  
             list.append(con.getId());   //id
         }
         
         //append entries for each loco (if set)
-        list.append("]\\[" + con.getLoco1DccAddress());  //loco address
+        list.append("]\\[");
+        list.append(con.getLoco1DccAddress());  //loco address
         list.append(con.isLoco1LongAddress() ? "(L)" : "(S)");  //include length
-        list.append("}|{" + (con.getLoco1Direction().equals("normal")));  //forward is true, reverse is false
+        list.append("}|{");
+        list.append((con.getLoco1Direction().equals("normal")));  //forward is true, reverse is false
         if (!con.getLoco2DccAddress().equals("")) {
-        	list.append("]\\[" + con.getLoco2DccAddress());
+        	list.append("]\\[");
+                list.append(con.getLoco2DccAddress());
         	list.append(con.isLoco2LongAddress() ? "(L)" : "(S)");
-        	list.append("}|{" + (con.getLoco2Direction().equals("normal")));
+        	list.append("}|{");
+                list.append((con.getLoco2Direction().equals("normal")));
         }
         if (!con.getLoco3DccAddress().equals("")) {
-        	list.append("]\\[" + con.getLoco3DccAddress());
+        	list.append("]\\[");
+                list.append(con.getLoco3DccAddress());
         	list.append(con.isLoco3LongAddress() ? "(L)" : "(S)");
-        	list.append("}|{" + (con.getLoco3Direction().equals("normal")));
+        	list.append("}|{");
+                list.append((con.getLoco3Direction().equals("normal")));
         }
         if (!con.getLoco4DccAddress().equals("")) {
-        	list.append("]\\[" + con.getLoco4DccAddress());
+        	list.append("]\\[");
+                list.append(con.getLoco4DccAddress());
         	list.append(con.isLoco4LongAddress() ? "(L)" : "(S)");
-        	list.append("}|{" + (con.getLoco4Direction().equals("normal")));
+        	list.append("}|{");
+                list.append((con.getLoco4Direction().equals("normal")));
         }
         if (!con.getLoco5DccAddress().equals("")) {
-        	list.append("]\\[" + con.getLoco5DccAddress());
+        	list.append("]\\[");
+                list.append(con.getLoco5DccAddress());
         	list.append(con.isLoco5LongAddress() ? "(L)" : "(S)");
-        	list.append("}|{" + (con.getLoco5Direction().equals("normal")));
+        	list.append("}|{");
+                list.append((con.getLoco5Direction().equals("normal")));
         }
         if (!con.getLoco6DccAddress().equals("")) {
-        	list.append("]\\[" + con.getLoco6DccAddress());
+        	list.append("]\\[");
+                list.append(con.getLoco6DccAddress());
         	list.append(con.isLoco6LongAddress() ? "(L)" : "(S)");
-        	list.append("}|{" + (con.getLoco6Direction().equals("normal")));
+        	list.append("}|{");
+                list.append((con.getLoco6Direction().equals("normal")));
         }
 
         String message = list.toString();
@@ -133,15 +157,18 @@ public class ConsistController extends AbstractController implements ProgListene
     public void sendDataForConsist(Consist con){
         if (listeners == null) return;
         StringBuilder list = new StringBuilder("RCD");  //  Roster Consist Data
-        list.append("}|{" + con.getConsistAddress());
+        list.append("}|{");
+        list.append(con.getConsistAddress());
         list.append("}|{");
         if (con.getConsistID().length() > 0){
             list.append(con.getConsistID());
         }
         
         for (DccLocoAddress loco : con.getConsistList()){
-            list.append("]\\[" + loco.toString());
-            list.append("}|{" + con.getLocoDirection(loco));
+            list.append("]\\[");
+            list.append(loco.toString());
+            list.append("}|{");
+            list.append(con.getLocoDirection(loco));
         }
         
 
@@ -229,11 +256,7 @@ public class ConsistController extends AbstractController implements ProgListene
             return;
         }
         
-        try{
-            file.WriteFile(manager.getConsistList());
-        }catch(IOException e){
-            log.warn("Consist file could not be written!");
-        }
+        writeFile();
                 
     }
     
@@ -244,6 +267,19 @@ public class ConsistController extends AbstractController implements ProgListene
      */
     private void removeConsist(String message){
         List<String> header = Arrays.asList(message.split("<;>"));
+        Consist consist = null;
+        try{
+            consist = manager.getConsist(stringToDcc(header.get(1)));
+            while (!consist.getConsistList().isEmpty()){
+                DccLocoAddress loco = consist.getConsistList().get(0);
+                if (log.isDebugEnabled()) log.debug("Remove loco: "+loco+", from consist: "+consist.getConsistAddress().toString());
+                consist.remove(loco);
+            }
+        }catch(NullPointerException noCon){
+            log.warn("Consist: "+header.get(1)+" not found. Cannot delete.");
+            return;
+        }
+        
         try{
             manager.delConsist(stringToDcc(header.get(1)));
         }catch(NullPointerException noCon){
@@ -251,11 +287,7 @@ public class ConsistController extends AbstractController implements ProgListene
             return;
         }
         
-        try{
-            file.WriteFile(manager.getConsistList());
-        }catch(IOException e){
-            log.warn("Consist file could not be written!");
-        }
+        writeFile();
         
     }
     
@@ -288,11 +320,7 @@ public class ConsistController extends AbstractController implements ProgListene
             return;
         }
         
-        try{
-            file.WriteFile(manager.getConsistList());
-        }catch(IOException e){
-            log.warn("Consist file could not be written!");
-        }
+        writeFile();
     }
     
     /**
@@ -325,8 +353,16 @@ public class ConsistController extends AbstractController implements ProgListene
             return;
         }
         
+        writeFile();
+    }
+    
+    private void writeFile(){
         try{
-            file.WriteFile(manager.getConsistList());
+            if (WiThrottleManager.withrottlePreferencesInstance().isUseWiFiConsist()) {
+                file.WriteFile(manager.getConsistList(), WiFiConsistFile.getFileLocation()+"wifiConsist.xml");
+            } else {
+                file.WriteFile(manager.getConsistList());
+            }
         }catch(IOException e){
             log.warn("Consist file could not be written!");
         }
