@@ -28,6 +28,8 @@
 
 <!-- V 1 new file -->
 
+<!-- v1.1,  small change to refer CV's 260-355 to the "version 30" file,  Nigel Cliffe. 9th Dec 2011 -->
+
   <decoder>
     <family name="Zimo Unified software (version 25+)" mfg="Zimo">
       <model model="MX648 version 30+" lowVersionID="30" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A"
@@ -96,7 +98,7 @@
 			</variable>
 			
 <!-- Begin sound-only variables -->
-  <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV355sound.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV355sound_version30.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/CV357-CV365sound_version28.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/CV366-CV371sound.xml"/>
 <!-- End sound-only variables -->
