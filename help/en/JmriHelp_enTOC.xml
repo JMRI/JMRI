@@ -428,9 +428,33 @@
 
   </tocitem>
   <tocitem text="Digitrax ">
+   <tocitem text="BDL16, BDL162, BDL168 Configuration Tool " target="package.jmri.jmrix.loconet.bdl16.BDL16Frame"/>
+
+   <tocitem text="Digitrax Command Station Configuration Tool " target="package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame"/>
+
+   <tocitem text="DS64 Configuration Tool " target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
+
+   <tocitem text="Duplex Network Configuration Tool " target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"/>
+
+   <tocitem text="Firmware Downloader Tool " target="package.jmri.jmrix.loconet.downloader.LoaderFrame"/>
+
+   <tocitem text="LocoIO Configuration Tool " target="package.jmri.jmrix.loconet.locoio.LocoIOFrame"/>
+
    <tocitem text="LocoNet Addresses " target="html.hardware.loconet.Addressing"/>
 
+   <tocitem text="LocoNet Clock Monitor Tool " target="package.jmri.jmrix.loconet.clockmon.ClockMonFrame"/>
+
    <tocitem text="LocoNet ID " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
+
+   <tocitem text="LocoNet Interface Statistics Tool " target="package.jmri.jmrix.loconet.locostats.LocoStatsFrame"/>
+
+   <tocitem text="LocoNet Monitor " target="package.jmri.jmrix.loconet.locomon.LocoMonFrame"/>
+
+   <tocitem text="LocoNet Simulator Tool " target="package.jmri.jmrix.loconet.locogen.LocoGenFrame"/>
+
+   <tocitem text="PM4, PM42 Configuration Tool " target="package.jmri.jmrix.loconet.pm4.PM4Frame"/>
+
+   <tocitem text="PR3 Mode Selection Tool " target="package.jmri.jmrix.loconet.pr3.swing.Pr3Select"/>
 
    <tocitem text="Sound ">
     <tocitem text="Sound Loader " target="package.jmri.jmrix.loconet.soundloader.LoaderFrame"/>
@@ -438,6 +462,10 @@
     <tocitem text="Sound Editor " target="package.jmri.jmrix.loconet.soundloader.EditorFrame"/>
 
    </tocitem>
+   <tocitem text="SE8C Configuration Tool " target="package.jmri.jmrix.loconet.se8.SE8Frame"/>
+
+   <tocitem text="Slot Monitor " target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame"/>
+
    <tocitem text="Throttle Messages " target="package.jmri.jmrix.loconet.swing.throttlemsg.MessageFrame"/>
 
   </tocitem>

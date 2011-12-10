@@ -10,7 +10,7 @@
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <META content="B. Milhaupt" name=Author>
 <META name="keywords" content="Digitrax LocoNet BDL16 BDL162 BDL168 PM4 PM42 
-      SE8C DS64 DS54 DT400 DT402 DCS100 DB150 JMRI UR90 UR91 UR92  
+      SE8C DS64 DS54 DT400 DT402 DCS100 DB150 JMRI UR90 UR91 UR92 Duplex 
       Simplex Infrared Monitor Slot FastClock Firmware 'Sound Project'">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
@@ -154,6 +154,15 @@
         <td></td>
         <td></td>
         <td>UR90, UR91(Infrared &amp Simplex), UR92(Infrared)</td>
+    </tr>
+    <tr align="center"><td><a href="../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">Configure Duplex Group</a></td>
+        <td>(limited)</td>
+        <td></td>
+
+        <td>&bull;</td>
+        <td></td>
+        <td></td>
+        <td>UR92(Duplex)</td>
     </tr>
     <tr align="center"><td><a href="../../../package/jmri/jmrix/loconet/swing/throttlemsg/MessageFrame.shtml">Send Throttle Message</a></td>
         <td></td>

@@ -60,6 +60,9 @@
 		    <dd> A tool to help you configure the LocoNet ID number which is used by
                         infrared and simplex throttles and the UR9x panels.</dd>
 
+		    <dt><a HREF="#duplexgroup"><dfn>Duplex Group Configuration Tool</dfn></a> </dt>
+		    <dd> A tool to help you configure the Digitrax Duplex radio network.</dd>
+
 		    <dt><a HREF="#throttlemsg"><dfn>Send Throttle Message Tool</dfn></a> </dt>
 		    <dd> A tool to help you send text messages to some Digitrax throttles.</dd>
 
@@ -253,6 +256,33 @@
 			<a href="../../../package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">help page</a>.
 		    </dd>
                     
+                    <p></p>
+
+		    <dt class=im100w>
+                        <a name="duplexgroup"></a>
+                        <a href="../../../package/jmri/jmrix/loconet/duplexgroup/SampleInitialView.png">
+			    <img src="../../../package/jmri/jmrix/loconet/duplexgroup/SampleInitialView.png"
+			         width=100
+			         alt="Duplex Group Identity Configuration"></a>
+                        <a href="../../../package/jmri/jmrix/loconet/duplexgroup/SampleBadChannels.png">
+			    <img src="../../../package/jmri/jmrix/loconet/duplexgroup/SampleBadChannels.png"
+			         width=100
+			         alt="Duplex Group Channel Scan"></a>
+		    </dt>
+                    
+		    <dd>
+		    <H2>Duplex Group Configuration Tool</H2>
+		    <p>
+			This tool allows reading and changing the Digitrax Duplex 
+                        Network identity information, including Duplex Group 
+                        Name, Channel and Password.  This tool also provides a
+                        mechanism to scan for interfering radio signals on Duplex 
+                        radio channels.  This tool is based on the Digitrax program
+                        <i>DigiGroupSetup.exe</i>.
+		    <p>
+		    Details on this tool may be found <a href="../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">here.</a>
+		    </dd>
+
                     <p></p>
 
                     <dd>

@@ -53,15 +53,33 @@
 
  </indexitem>
  <indexitem text="Digitrax ">
+  <indexitem text="BDL16 " target="package.jmri.jmrix.loconet.bdl16.BDL16Frame"/>
+
+  <indexitem text="BDL162 " target="package.jmri.jmrix.loconet.bdl16.BDL16Frame"/>
+
+  <indexitem text="BDL168 " target="package.jmri.jmrix.loconet.bdl16.BDL16Frame"/>
+
+  <indexitem text="Digitrax Duplex Radio System " target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"/>
+
+  <indexitem text="DS64 " target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
+
   <indexitem text="DS64 " target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
 
   <indexitem text="LocoNet ID " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
+
+  <indexitem text="LocoNet Interface Statistics " target="package.jmri.jmrix.loconet.locostats.LocoStatsFrame"/>
+
+  <indexitem text="LocoNet Monitor " target="package.jmri.jmrix.loconet.locomon.LocoMonFrame"/>
+
+  <indexitem text="LocoNet Tools " target="html.hardware.loconet.LocoNetTools"/>
 
   <indexitem text="PM4 " target="package.jmri.jmrix.loconet.pm4.PM4Frame"/>
 
   <indexitem text="PR2 " target="html.hardware.loconet.PR2"/>
 
   <indexitem text="PR3 " target="html.hardware.loconet.PR3"/>
+
+  <indexitem text="PR3 Mode Selection Tool " target="package.jmri.jmrix.loconet.pr3.swing.Pr3Select"/>
 
   <indexitem text="SE8c " target="package.jmri.jmrix.loconet.se8.SE8Frame"/>
 
@@ -75,7 +93,17 @@
    <indexitem text="SPJ Project File Editor " target="package.jmri.jmrix.loconet.soundloader.EditorFrame"/>
 
   </indexitem>
+  <indexitem text="Standalone LocoNet " target="html.hardware.loconet.StandaloneLocoNet"/>
+
   <indexitem text="Throttle Messages " target="package.jmri.jmrix.loconet.swing.throttlemsg.MessageFrame"/>
+
+  <indexitem text="UR90 " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
+
+  <indexitem text="UR91 " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
+
+  <indexitem text="UR92 " target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"/>
+
+  <indexitem text="UR92 " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
 
  </indexitem>
  <indexitem text="Dispatcher " target="package.jmri.jmrit.dispatcher.Dispatcher">
@@ -87,8 +115,6 @@
 
  </indexitem>
  <indexitem text="DispatcherPro " target="html.apps.DispatcherPro.index"/>
-
- <indexitem text="DS64 " target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
 
  <indexitem text="Error Codes " target="html.Errors"/>
 
@@ -181,7 +207,13 @@
 
   <indexitem text="Fast Clock " target="package.jmri.jmrix.loconet.clockmon.ClockMonFrame"/>
 
-  <indexitem text="LocoNet ID " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
+  <indexitem text="LocoIO " target="package.jmri.jmrix.loconet.locoio.LocoIOFrame"/>
+
+  <indexitem text="PM4 " target="package.jmri.jmrix.loconet.pm4.PM4Frame"/>
+
+  <indexitem text="PR2 " target="html.hardware.loconet.PR2"/>
+
+  <indexitem text="PR3 " target="html.hardware.loconet.PR3"/>
 
   <indexitem text="SE8c " target="package.jmri.jmrix.loconet.se8.SE8Frame"/>
 
@@ -223,11 +255,11 @@
  <indexitem text="Operations " target="package.jmri.jmrit.operations.Operations">
   <indexitem text="Cars " target="package.jmri.jmrit.operations.Operations_Cars"/>
 
-  <indexitem text="Locomotives " target="package.jmri.jmrit.operations.Operations_Locomotives"/>
-
   <indexitem text="Interchange " target="package.jmri.jmrit.operations.Operations_Interchange"/>
 
   <indexitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations"/>
+
+  <indexitem text="Locomotives " target="package.jmri.jmrit.operations.Operations_Locomotives"/>
 
   <indexitem text="Routes " target="package.jmri.jmrit.operations.Operations_Routes"/>
 
@@ -257,12 +289,6 @@
 
  </indexitem>
  <indexitem text="Panels Menu " target="package.jmri.jmrit.display.PanelMenuHelp"/>
-
- <indexitem text="PM4 " target="package.jmri.jmrix.loconet.pm4.PM4Frame"/>
-
- <indexitem text="PR2 " target="html.hardware.loconet.PR2"/>
-
- <indexitem text="PR3 " target="html.hardware.loconet.PR3"/>
 
  <indexitem text="Preferences " target="package.apps.TabbedPreferences"/>
 
@@ -310,8 +336,6 @@
   <indexitem text="Tracking Display " target="package.jmri.jmrix.rps.trackingpanel.RpsTrackingFrame"/>
 
  </indexitem>
- <indexitem text="SE8c " target="package.jmri.jmrix.loconet.se8.SE8Frame"/>
-
  <indexitem text="Sections " target="package.jmri.jmrit.beantable.SectionTable">
   <indexitem text="Section Add/Edit " target="package.jmri.jmrit.beantable.SectionAddEdit"/>
 
@@ -405,13 +429,13 @@
  <indexitem text="Throttles " target="html.tools.throttle.ThrottleMain">
   <indexitem text="Android Phone as Throttle " target="package.jmri.jmrit.withrottle.EngineDriverAndroidThrottle"/>
 
+  <indexitem text="inControl - Web Throttles and Panels " target="package.jmri.jmrit.inControl.inControl"/>
+
   <indexitem text="iPhone/iPod as Throttle " target="html.tools.throttle.AdvancedThrottleControl_iphone"/>
 
   <indexitem text="USB Joypad as Throttle " target="html.tools.throttle.AdvancedThrottleControl_joypad"/>
 
   <indexitem text="Wii Remote as Throttle " target="html.tools.throttle.AdvancedThrottleControl_wii"/>
-
-  <indexitem text="inControl - Web Throttles and Panels " target="package.jmri.jmrit.inControl.inControl"/>
 
  </indexitem>
  <indexitem text="Tracker " target="html.tools.tracker.index"/>

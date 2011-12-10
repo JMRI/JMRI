@@ -1,0 +1,451 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: DuplexGroupTabbedPanel.shtml,v 1.0 2011/11/05 10:23:07 B. Milhaupt Exp $ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: Duplex Network Configuration Tool
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="B. Milhaupt" name=Author>
+    <META name="keywords" content="JMRI configure LocoNet UR92">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Digitrax Duplex Network Configuration Tool</H1>
+<table border="0">
+    <tr>
+        <td valign="CENTER">
+            <b>CONTENTS</b>
+            <UL>
+            <LI><a href="#Overview">Overview </a></LI>
+            <LI><a href="#Disclaimer">Disclaimer </a></LI>
+            <LI><a href="#Starting">Starting the Duplex Network Configuration Tool </a></LI>
+            <LI><a href="#GroupIdTab">The Group Identity Tab </a>
+            <ul>
+                <LI><a href="#Fields">The Duplex Group Identification Fields </a>
+                  <UL>
+                  <LI><a href="#NameField">Duplex Group Name </a></LI>
+                  <LI><a href="#ChannelField">Duplex Group Channel </a></LI>
+                  <LI><a href="#PasswordField">Duplex Group Password </a></LI>
+                  <LI><a href="#GroupIdField">Duplex Group ID </a></LI>
+                  </UL></LI>
+                </ul></LI>
+            <LI><a href="#Scanning">The Channel Scan Tab </a>
+                <UL><LI><a href="#ScanningLimitations">Channel Scan Limitations </a></LI></UL>
+            </LI>
+            <LI><a href="#Notes">Notes</a></LI>
+            <LI><a href="#Interfere">Some possible interference sources </a></LI>
+            <LI><a href="#SimplexInteract">Digitrax Simplex radio system interaction </a></LI>
+            <LI><a href="#SeeAlso">See Also </a></LI>
+            </UL>
+        </td>
+        <td valign ="TOP">
+        <img src="./UR92.jpg" alt="UR92 image" >
+        </td>
+    </TR>
+</table>
+<p></p>
+<H2><a name="Overview">Overview</a></H2>
+<p>The JMRI Digitrax Duplex Configuration Tool provides a mechanism to read and 
+modify the Duplex Group identification information associated with a Digitrax 
+Duplex wireless network.  It also can scan the Duplex channels for radio 
+interference.</p>
+<p>This tool provides the same basic features as provided by the Digitrax 
+program "DuplexGroupSetup".  Duplex network "identification" information may 
+read and changed by using the fields availble in the "Group Identity" tab.  
+Scanning the Duplex channels for radio interference me be performed using the 
+"Channel Scan" tab.  Each tab is described below.</p>
+<p>If the Duplex Group identity information is changed, then throttles must
+join the network with the new identity information in order to communicate 
+properly.  Join the network using any of the mechanisms which apply for the 
+throttle(s) you use.</p>
+<p>This configuration tool has no effect on Digitrax infrared or simplex network 
+configuration, and has no useful effect if there are no UR92 devices connected 
+to LocoNet.</p>
+<H2><a name="Disclaimer">Disclaimer</a></H2>
+<p>This tool was not developed by Digitrax.  This tool is not supported by 
+Digitrax.  The tool's original author reverse-engineered the operations of the 
+DigiGroupSetup software package to determine how this tool should operate.  It 
+is not possible to guarantee that this tool will work properly with future 
+Digitrax Duplex-related hardware.</p>
+<p>At the time this help page was last edited, there have been no reports of 
+incompatibility.</p>
+<H2><a name="Starting">Starting the Duplex Network Configuration Tool</a></H2>
+<p>This tool is available in DecoderPro under the LocoNet menu, as the item
+"Configure Duplex Group".  Other tools may provide different methods to start 
+this tool.</p>
+<p>When this tool is started, the tool automatically determines if it can access
+any UR92 devcies.  If the tool is able to find and read the UR92 Duplex Group 
+identification information, the identification information is updated in the 
+display.  A sample is shown below.</p>
+<p><img src="SampleInitialView.png" alt="Duplex Configuration Tool"></p>
+<p>If the tool cannot communicate with any UR92 devices, then this tool cannot provide any useful 
+function.  In this case, the tool disables all Duplex Group identification entry 
+fields and displays a status message.  This is shown (in part) below.</p>
+<p><img src="SampleNoUr92Found.png" alt="Status message showing no UR92s found"></p>
+<p>Once LocoNet communication between the computer and the UR92(s) is restored, 
+the user can press the "<b>Read Group Information</b>" button to re-try the 
+UR92 query.</p>
+<p>If the tool finds more than one UR92, and they are configured with different
+Duplex Group identity information, then the display will show configuration 
+information from the first UR92 to respond to the tool's identity query.  The 
+tool reports the number of UR92s found, and shows a message in the status line at
+the bottom of the tool, such as shown (in part) below.</p>
+<p><img src="SampleConflictingGroupIdentity.png" 
+        alt="Display when UR92s have non-matching Duplex Group identity information"></p>
+<p>In this case, it is advisable to Set all of the UR92s to the same Duplex 
+Group identity information by modifying the Duplex Group identification fields 
+as required and then pressing the "<b>Set Group Information</b>" button to 
+configure all UR92s to the same Duplex Group identity information.</p>
+<h2><a name="GroupIdTab">The Group Identity Tab</a></h2>    
+The "Group Identity" tab is used to read and change the identification 
+information associated with the Digitrax Duplex network.  This information is 
+used by the devices which support the Digitrax Duplex radio system, which 
+includes the UR92, the DT402D, and the UT4D.
+<p>As fields are modified, they are marked in orange, as shown below:</p>
+<p><img src="./SampleChangedName.png" alt="Tool showing modified fields"></p>
+<p>The "<b>Set Group Information</b>" button may be used to write the displayed Duplex 
+Group identification information to the UR92(s).  All values are checked for 
+validity before being written to the UR92(s).  If any invalid values are 
+found, the incorrect data will be shown in red text and a message will be 
+shown near the bottom of the tool, but no information will be written to 
+the UR92(s).</p>
+<p>After changing the Digitrax Duplex Group identification information, it is 
+necessary for each Duplex throttle to join the network to learn the updated 
+identification.  Rejoining must be done for each throttle.  This tool cannot inform
+throttles that they will need to rejoin, and cannot cause throttles to rejoin.
+Rejoining can be as simple as unplugging and plugging each Duplex 
+throttle into LocoNet, or done wirelessly on the DT402D.  See DT402D throttle 
+instructions for information on wirelessly joining a Duplex Group network.
+</p>
+<p>Changes to the Duplex Group identification information happens immediately 
+when the UR92(s) accept the Duplex Group identity information.  Any Duplex 
+throttle which was communicating with a UR92 using the old Duplex Group 
+identification information will no longer be able to communicate with the UR92 
+until it re-joins the Duplex network using the new Duplex Group identification 
+information.  Because of this, it is recommended that all Duplex throttle users 
+stop their trains and exit programming modes as necessary before changing the 
+Duplex Group identity information.</p>    
+<p>To ensure that the Duplex throttles understand <i>any</i> changes to the Duplex
+Group identity information, it is necessary for each throttle to join the Duplex 
+Group network.  See throttle documentation for details on joining the 
+Duplex Group network.  Re-joining may be as simple as plugging the throttle 
+into a LocoNet jack.  Re-joining may be done on the DT402D throttle by 
+"find"ing the Duplex Group name on the correct Duplex Group channel, and, if 
+necessary, entering the Duplex Group password.</p>
+<p>The "<b>Read Group Information</b>" button may be used to request a read of 
+Duplex Group identity information from UR92(s) on LocoNet.  This will refresh 
+the displayed Duplex Group identity information and UR92 count information based on the 
+response(s) from the UR92 devices.</p>
+<h3><a name="Fields">The Duplex Group Identification Fields</a></h3>
+<p>A Duplex Group is identified by a Duplex Group Name, a Duplex Group "Password" 
+a Duplex channel number, and a "Duplex Group ID".  Each of these is described 
+below.</p>
+<h4><a name="NameField">Duplex Group Name</a></h4>
+<p>The Duplex Group Name is a field of 8 characters which is used to help
+distinguish one Duplex Group network from another.  It may be configured with 
+an 8 character text message which is meaningful to the user.</p>
+<p>The Duplex Group Name is stored in the UR92(s).  Each Duplex-capable throttle 
+must be configured to a specific Duplex Group Name in order to be able to 
+communicate with a UR92.</p>
+<p>If you enter a Duplex Group Name with less than 8 characters, this tool 
+will automatically add spaces after the characters you have entered to fill
+it out to 8 characters.  When entering the Duplex Group Name on a DT402D, 
+a Duplex Group Name of less than 8 characters must similarly be padded with 
+spaces to fill it out to 8 characters.</p>
+<p>If you enter more than 8 characters, this tool will report an error message 
+in the status line at the bottom of the tool window, as shown below.  The tool 
+will not update the Duplex Group identification information in the UR92(s) if 
+this field (or any other field) contains unacceptable data.</p>
+<p><img src="./SampleInvalidSetting.png" alt="Tool showing too many name characters"></p>
+
+<H4><a name="ChannelField">Duplex Group Channel</a></H4>
+<p>The Duplex Group Channel number controls which frequency band the UR92(s)
+and throttle(s) will use to communicate.  By default, the UR92 uses Duplex 
+Group Channel number 11.  The Digitrax Duplex radio system supports channel
+numbers 11 through 26 (inclusive).</p>
+<p>If an invalid Duplex Group Channel Number is entered, this tool will report 
+an error message in the status line at the bottom of the tool window.</p>
+<p>Because there are other electronic communication systems which may use the 
+same frequency bands which are available to the Digitrax Duplex radio system, 
+it may be useful to select a Duplex Group Channel number other than the 
+default.</p>
+<H4><a name="PasswordField">Duplex Group Password</a></H4>
+<p>The Duplex Group Password is a four character security code which can be
+used to control access to a Duplex Group network.  It is stored in the UR92(s). </p>
+<p>The Duplex Group Password is always four characters.  The Duplex Group 
+Password may contain characters between 0 and 9 (inclusive).  Although 
+not documented by Digitrax, the UR92 and DT402D also support the
+use of the characters "A", "B", and "C".  This tool supports use of these
+additional characters.  <i>To help ensure compatibility with future
+Digitrax devices, it is advised that the password characters should be 
+chosen to use only the numbers 0 through 9 (inclusive); the letter characters 
+should not be used.</i></p>
+<p>If an invalid Duplex Group Password is entered, this tool will report an error 
+message in the status line at the bottom of the tool window.</p>
+<p>A Duplex throttle does not need to know the Duplex Group Password if joining 
+a Duplex Group network by plugging into the LocoNet.  When the Duplex Group Password 
+is "0000", untethered DT402D throttles can join the Duplex Group network easily and 
+without entering a Password.  As such, a Duplex Group network which is configured 
+with a Duplex Group Password of "0000" should be considered un-secured.</p>
+<p>When the Duplex Group Password is other than "0000", untethered throttles
+may only join a Duplex Group network if the tetherless throttle user enters the 
+correct Duplex Group Password when attempting to join the network.  Since
+UT4D throttles do not allow the user to enter the Duplex Group Password, 
+a UT4D must be plugged into LocoNet to join a Duplex Group network when that 
+network uses a Duplex Group Password that is other than "0000".</p>
+<p>For a variety of technical reasons, the Duplex Group Password cannot provide
+a highly-secured Duplex wireless network.  Please do not expect the Duplex Group 
+password system to prevent unauthorized users from joining the Duplex network.</p>
+
+<H4><a name="GroupIdField">Duplex Group ID</a></H4>
+<p>The Duplex Group ID number is a number between 0 and 127.  The UR92
+device(s) stores and reports the Duplex Group ID setting.  It appears that 
+the UR92, DT402D, and UT4D do not make any active use of this setting.  
+Changing the Duplex Group ID number does not appear to have any effect on 
+operation of the Duplex Group network.</p>
+<p><i>The default Duplex Group ID setting of 0 is recommended to help ensure
+compatibility with future Digitrax devices.</i></p>
+
+<H2><a name="Scanning">The Channel Scan Tab</a></H2>
+
+<p>The Channel Scan tab allows the user to temporarily use the UR92(s) to "scan" 
+the Duplex Radio channels for interfering signal sources.  Results are shown 
+graphically, in a way similar to that used by the Digitrax "DigiGroupSetup" 
+program.</p>
+<p>The Channel Scan is started by pressing the "<b>Scan Duplex Channels</b>" 
+button.  This begins a loop which scans each available Duplex Group channel
+number sequentially, then repeating, for a total of 25 scans of each channel.  
+As each channel is scanned, the graphical chart area is updated to show the 
+channel being scanned, the reported signal strength, and the average and maximum 
+signal strength reported for the channel.  The channel being scanned is indicated
+by a diamond-shaped icon which is shown just above the channel number near the 
+bottom of the graphical area.</p>
+<p>The data reported by the UR92(s) is shown graphically on the chart, with a 
+light blue vertical bar shown for each channel as it is scanned, a red horizontal 
+line which represents the highest value reported for the channel, and a green 
+horizontal line which represents the average value reported for the channel.</p>
+<p>Values higher on the chart indicate stronger interfering sources than values 
+shown lower on the chart.</p>
+<p>The chart also shows a horizontal dashed yellow line, which corresponds 
+roughly to the dashed yellow line shown on the Digigrax "DigiGroupSetup" program channel
+scan display.  It is believed that this Digitrax may intend this dashed yellow line 
+to represent a recommendation for maximum amount of interfering radio signal.</p>
+<p>The best Duplex Group channel to use is one which <i>never</i> has any 
+interfering radio signals.  In this case, the red line for the channel will be 
+shown at the bottom of the chart, indicating a very low maximum interfering 
+radio signal strength.  In some environments, there may be not be any channels 
+where the maximum interfering signal strength is very low.  In this case, choose 
+a Duplex Group channel number where the maximum interfering signal strength is 
+lowest.  It may be advisable to run the radio scan occasionally to determine that
+the radio signal environment has not changed over time.</p> 
+<p>The image below shows a sample Channel Scan tab display.  Note the diamond 
+above the lower line showing channel numbers - it indicates the channel being 
+scanned at that time.</p>
+<p><img src="SampleScanDisplay.png" alt="Sample Channel Scan display"></p>
+<p>The image below shows a sample Channel Scan tab display which has indicates
+some channels which should be avoided due to high levels of radio signal from
+interfering sources.</p>
+<p><img src="SampleBadChannels.png" 
+        alt="Sample Channel Scan display with bad channels"></p>
+
+<H3><a name="ScanningLimitations">Channel Scan Limitations</a></H3>
+<ul>
+<LI><p>The UR92 mechanism which measures interfering radio signals is one which 
+acts for a very short period of time.  Many possible interfering radio signal 
+sources only generate interfering signals for very short periods of time or at
+random intervals.  The measurement mechanism can only report strength from an
+interfering source if the measurement is taken when the interfering source is
+transmitting.  This makes it likely that a given scan operation can "miss" the
+signal from an interfering source.  By executing the measurements for each 
+channel 25 times, the tool attempts to increase the chance of seeing interfering
+sources.  The user can run additional scans without clearing previous scan data 
+to increase the chances of measuring interfering radio signals.
+times</p></LI>
+<LI><p>When the channel scan is being performed, the UR92 cannot be relied upon to 
+pass radio signals between Duplex throttles and LocoNet.</p></LI>
+<li><p>When performing the channel scan operation, the UR92(s) can interpret radio 
+traffic from Duplex throttles as signal sources.  To prevent improper 
+interpretation of Duplex throttle activity as interfering sources, remove 
+batteries from all Duplex throttles and unplug them from LocoNet for the
+duration of the channel scan operation.</p></li>
+<li><p>If multiple UR92s are connected to LocoNet, each one will report a value for
+the channel scan operations.  The tool will properly update the maximum and average
+lines based on the data from channel scan reports from UR92s, but the light blue
+bar will only reflect the last scan report seen for the channel.  So in some cases, 
+the chart can show a maximum line for a channel where the light blue bar has only 
+been shown at lower heights.</p>
+<p>When multiple UR92s are installed, it might be useful to generate a separate 
+chart for each UR92 acting alone (by disconnecting all other UR92s from LocoNet
+and power), and then comparing the charts.  It may be possible to generate
+separate charts to help identify possible stationary interference sources by 
+relating signal strength seen on specific channels to UR92 location.  Presumably, 
+a stronger signal reading implies a closer interference source.</p></li>
+</ul>
+
+<H2><a name="Notes">Notes</a></H2>
+<UL>
+<li><p><b>Multiple UR92s with Differing Duplex Group Identification Information:</b>
+A Duplex throttle will only communicate with UR92s which use identical Duplex Group
+Identification information to the network which it has most recently joined.  If
+any UR92 on LocoNet is configured differently, it will not establish communication
+with the throttle.</p>
+<p>When a Duplex throttle is plugged into LocoNet, it queries (reads) the Duplex 
+Group Identification from the UR92.  If more than one UR92 is attached to LocoNet,
+each will respond with its Duplex Group Identification information, but the throttle
+will only accept the information from the first response.  It is impossible to 
+predict which UR92 will reply first.  Therefore, it is important for all UR92s
+to have the same Duplex Group Identification information.</p>
+<p>Any time when this tool queries (reads) the UR92 Duplex group information, it
+displays only the first Duplex Group information which it receives.  If any 
+UR92 reports Duplex Group information which is different from the first UR92
+reply, this tool will provide a message in the status line stating that 
+differing Duplex Group identification was reported, as shown above.</p>
+<p>This is an indication that at least one UR92 is configured with differing Duplex Group 
+Identification - for best Duplex throttle operation, the user should set the
+Duplex Group information to a common identity.  This can be done using the "Set Group
+Information" button or using the procedure documented in the Digitrax DT402D 
+documentation.</p></li>
+<li><p><b>Multiple UR92s on LocoNet:</b> When adding a UR92 to a LocoNet which 
+already has one or more UR92 devices installed, there can be some confusion as to 
+which Duplex Group information is used - the information from the existing 
+UR92(s) or from the new one.  To resolve this issue, Digitrax recommends that 
+the user turns track power off then back on when installing a new UR92.  Upon 
+receipt of a "Track Power On" message, the UR92s will negotiate and automatically 
+change all UR92s to one of the sets of Duplex Group information.  The Duplex Group 
+information from the previously-existing UR92(s) might NOT win this negotiation, 
+so the Duplex Group information might be set to match the new UR92.</p>
+<p>Alternately, when adding a UR92 to a LocoNet which already has one or more UR92 
+devices installed, this tool can be used to help configure all UR92s to the 
+previously-configured settings from the old UR92(s).  First install the new UR92
+on Loconet and then start this tool.</p>
+<p>If this tool shows the desired Duplex Group Identity information when started, 
+simply click the "<b>Set Group Information</b>" button to update all UR92s to the
+desired configuration.</p>
+<p>If this tool instead shows the Duplex Group Identity information from the new UR92,
+simply click the "<b>Read Group Information</b>" button to re-query the system.  Repeat 
+this if necessary until the previously-configured settings from the old UR92(s) 
+appear.  Then click the "<b>Set Group Information</b>" button to update all UR92s to the
+desired configuration.</p></li>
+
+<li><p><b>UR92 Reset to Factory Default:</b> The user may reset a UR92 to its
+factory-default Duplex Group information by holding down the UR92's reset 
+button for about 5 seconds while the UR92 is powered.  The UR92's red and 
+lights will flicker for a few seconds while the reset process completes.  
+After resetting a UR92 to its factory defaults, the user may use this tool's 
+"Read Group Information" to refresh the tool display.  Resetting one UR92 has 
+no direct effect on other UR92s on LocoNet and can result in use of different 
+Duplex Group identification information in the UR92s.  This tool's "Set Group 
+Information" can be used to write the displayed Duplex Group identification 
+information to all UR92s to ensure use of consistent Duplex Group 
+identification information by all UR92s on LocoNet.</p></li>
+<li><p><b>Duplex Group Identification Changes by Other Agents:</b> This
+tool's display will be updated only when the tool receives a response
+to its query for Duplex Group information, including the query automatically 
+made when this tool is opened.  If some other agent, such as a throttle, 
+changes the Duplex Group information while this tool is open, and the changed 
+data is later reported on LocoNet, this tool will display the status message 
+"UR92(s) have different info than shown above." The tool's data entry fields 
+will <i>not</i> be updated to show the information from the LocoNet message.</p>
+<p>The user may click the "<b>Read Group Information</b>" button to refresh the data 
+entry fields to find the Duplex Group information which was modified by some 
+other LocoNet agent.</p></li>
+<li><p><b>Duplex Group Name Characters:</b> The DT402D can be used to select
+characters which are not normally available on English-based computer platforms
+which are configured for the English 
+language.  Generally, characters which show up on a "standard" English keyboard 
+should work properly with this tool.  Characters known to be awkward include the 
+left-facing and right-facing arrows (on the DT402D display) and the tilde ("~") 
+character on the PC keyboard.  Operation of this tool for non-PC and/or 
+non-English platforms has not been tested by this tool's original author.  
+Operation of this tool has only been tested by the tool's original author using 
+Digitrax Duplex equipment sold for use in the United States.</p></li>
+
+<li><p><b>Duplex Group Channel Number:</b> The Duplex Group Channel Number is like
+a television channel in that each channel number defines a unique frequency range 
+for communication.  If you experience communication difficulties and suspect 
+interferance from other wireless devices, you may change the Duplex Group channel 
+number to try a different frequency range.  All of the available Duplex Group 
+channel numbers specify frequencies in the 2.4 GHz "ISM" frequency range.  Other 
+wireless devices which operate in this frequency range include WiFi networks, 
+Bluetooth devices, 2.4 GHz cordless telephones, some wireless video systems, and 
+many other consumer, industrial, and medical wireless devices.</p></li>
+
+<li><p><b>Duplex Group Password Characters:</b> The DT402D and UR92 allow use of
+characters "A", "B", and "C" in the Duplex Group Password, while Digitrax 
+documentation describes the password as being a 4 digit number between 0 and 
+9999.  This software supports "A", "B", and "C" in the Duplex Group Password.  
+When entering a Duplex Group Password on the DT402D keypad, the "C" character 
+is entered using the pushbutton which shows both a "C" and the number "12", 
+not the pushbutton marked "CLOC" and "c".</p></li>
+
+<li><p><b>Count of UR92 Devices:</b> The count of UR92s is used primarily
+to provide a display of the number of UR92s found.  The mechanism this tool 
+uses to count the number of UR92s connected to LocoNet sometimes does not 
+provide an accurate count.  An inaccurate count does not prevent operation of 
+this tool but may indicate that the UR92 devices are not properly communicating 
+with LocoNet.</p>
+<p>The user should compare this number against the known number of UR92s.  If the
+reported count does not match the number of UR92s known to be installed on
+LocoNet, the count can be refreshed by clicking on the "<b>Read Group Information</b>" button.
+If the count continues to be wrong, check for proper LocoNet and power wiring
+to all installed UR92s.</p></li>
+
+<li><p><b>Non-connected UR92s:</b> To the best knowledge of the author of this tool,
+it is not possible to wirelessly connect two separate wired LocoNet segments.  To 
+the best knowledge of the original author of this tool, it is not possible to affect the 
+Duplex Group identity information of any UR92 or any Duplex Group other than those 
+which are connected to the same wired LocoNet.</p></li>
+</UL>
+
+<H2><a name="Interfere">Some possible interference sources</a></H2>
+<p>All of the available Duplex Group channel numbers specify frequencies in the 2.4 GHz
+"ISM" frequency range.  Some electronic devices which are known to use the 2.4 GHz "ISM" 
+frequency range, and thus can interfere with Duplex radio operation include:</p>
+
+<UL>
+  <LI> 2.4 GHz cordless telephones</LI>
+  <LI> WiFi networks</LI>
+  <LI> "Bluetooth" devices</LI>
+  <LI> 2.4 GHz wireless video cameras</LI>
+</UL>
+
+<H2><a name="SimplexInteract">Digitrax Simplex radio system interaction</a></H2>
+<p>It is believed that the Digitrax Simplex radio throttle system (UR91, DTx00R, 
+DT402R, UT4R) has no effect on the Duplex Channel Scan tool, because the Simplex 
+radio throttle system operates in the 915 MHz "ISM" frequency range, while the 
+Duplex radio throttle system operates in the 2.4GHz "ISM" frequency range.</p>
+<p>Because the Simplex and Duplex radio systems use different radio frequency ranges, 
+the Duplex Channel Scan tool cannot be used to analyze the Simplex radio frequency range.  
+To the best knowledge of the tool's original author, the Simplex radio system does not provide any
+mechanisms to allow creation of a similar tool for analyzing Simplex radio interference.</p>
+
+<H2><a name="SeeAlso">See Also</a></H2>
+<p>The <a href="../locoid/LocoIdFrame.shtml">LocoNet ID Tool</a> allows reading 
+    and writing the LocoNet ID number</p>
+<p>Support for this software tool is available through the
+<a href="http://groups.yahoo.com/group/jmriusers/"> JMRI User forum at Yahoo Groups</a>.  
+Digitrax does <b>NOT</b> provide support for this tool.  </p>
+<p>The <a href="http://www.digitrax.com">Digitrax web site</a> offers official Digitrax documentation, 
+their "Tech Support Depot", and the Digitrax program "DigiGroupSetup", which is available for 
+Windows operating systems.</p>
+<p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+                </div>
+                </div>
+                
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+
