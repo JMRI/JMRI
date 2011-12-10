@@ -185,7 +185,8 @@ class TurnoutListener(java.beans.PropertyChangeListener):
 	#	                                                     *                                                     
     myProperties = myNetwork.getProperties()
     myMessage = xAPlib.xAPMessage("xAPBSC.cmd", myProperties.getxAPAddress())
-    myMessage.setUID("FF112233")
+    myMessage.setUID(self.uid)
+    myMessage.setTarget(self.target)
     if (event.newValue == CLOSED) :
         myMessage.addNameValuePair( "output.state.1", "ID", self.id)
         myMessage.addNameValuePair( "output.state.1", "State", "OFF")
@@ -199,10 +200,12 @@ class TurnoutListener(java.beans.PropertyChangeListener):
     return
     
     
-def defineTurnout(name, id) :
+def defineTurnout(name, uid, id, target) :
     t = turnouts.provideTurnout(name)
     m = TurnoutListener()
+    m.uid = uid
     m.id = id
+    m.target = target
     t.addPropertyChangeListener(m)
     return
 
@@ -211,6 +214,6 @@ print "register"
 myNetwork.addMyEventListener(InputListener())
 
 # define the turnouts
-defineTurnout("IT:xAP:FF0101:08", "08")
+defineTurnout("IT:xAP:FF0101:08", "FF010108", "08", "NWE.EVA485.DEFAULT:FRED")
 
 print "End of Script"
