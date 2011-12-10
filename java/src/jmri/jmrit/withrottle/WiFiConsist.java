@@ -2,7 +2,6 @@ package jmri.jmrit.withrottle;
 
 import jmri.DccConsist;
 import jmri.DccLocoAddress;
-import jmri.util.StringUtil;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010, 2011
@@ -35,10 +34,14 @@ public class WiFiConsist extends DccConsist{
      * @param consist   The short consist address for a loco, null to remove
      */
     public void sendConsistCommand(DccLocoAddress loco, boolean dirNorm, WiFiConsist consist){
+        int conAddr = 0;
+        if (consist != null){
+            conAddr = getConsistAddress().getNumber();
+        }
         //  Use NMRA consist command to set consist address
         byte packet[] = jmri.NmraPacket.consistControl(loco.getNumber(),
                                         loco.isLongAddress(),
-                                        getConsistAddress().getNumber(),
+                                        conAddr,
                                         dirNorm);
         if (packet != null) {
             log.debug(packet);
