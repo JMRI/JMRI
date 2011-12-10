@@ -248,7 +248,9 @@ public class WiThrottlePrefsPanel extends JPanel{
         JPanel conPanel = new JPanel();
         conPanel.setLayout(new BoxLayout(conPanel, BoxLayout.Y_AXIS));
         wifiRB = new JRadioButton(rb.getString("LabelWiFiConsist"));
+        wifiRB.setToolTipText(rb.getString("ToolTipWiFiConsist"));
         dccRB = new JRadioButton(rb.getString("LabelDCCConsist"));
+        dccRB.setToolTipText(rb.getString("ToolTipDCCConsist"));
         
         ButtonGroup group = new ButtonGroup();
         group.add(wifiRB);

@@ -109,6 +109,27 @@ It has an item titled "Filter Controls"
 that will let you pick which turnouts to display or hide.
 
 <p>
+<h3>
+Advanced Consisting
+</h3>
+There are now two options for how Advanced (or Decoder Assisted) Consisting is handled. 
+This can be selected from the <a href="../../../apps/TabbedPreferences.shtml#WiThrottle">WiThrottle</a> portion of JMRI Preferences. 
+
+<p>
+
+The default is <b>NMRA Format</b>. This will build a consist using NMRA consisting commands. 
+It does not use any techniques specific to the connected DCC system. 
+This allows WiFi throttles to work in a DCC manufacturer independent way. 
+These consists may perform better for building and controlling with WiFi devices.
+
+<p>
+The second option is <b>DCC Brand-Specific</b> which will build consists in a manner 
+where they will function as though built using a throttle from the DCC manufacturer. 
+This will follow manufacturer specific features as to how consists are built and controlled. 
+These consists should perform better when built with a WiFi device, but controlled by a 
+throttle from the DCC manufacturer of your system.
+
+<p>
 This is the package/jmri/jmrit/withrottle/UserInterface help page
 
 <!--#include virtual="/Footer" -->

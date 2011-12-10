@@ -272,6 +272,11 @@ This will let you to limit what users have the ability to control.
     <li>Turnouts - Select whether mobile devices can control turnouts.
     <li>Routes - Select whether mobile devices can control routes.
     <li>Consists - If selected, mobile devices can build & break "Advanced Consists".
+        <ul>
+            <li>NMRA Format - These consists may perform better for building and controlling with WiFi devices.
+            <li>DCC Brand-Specific - These consists should perform better when built with a WiFi device, 
+                but controlled by a throttle from the DCC manufacturer of your system.
+        </ul>
 </ul>
 </dl>
 
