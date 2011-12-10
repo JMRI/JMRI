@@ -1086,9 +1086,9 @@
 
 <mapID target="html.hardware.loconet.LocoNetworking" url="html/hardware/loconet/LocoNetworking.shtml"/>
 
-<mapID target="manual.test_manual.Ops_Trains_BuildOptions_Top" url="manual/test_manual/Ops_Trains_BuildOptions.shtml#Top"/>
-
 <mapID target="manual.test_manual.Ops_TrainsModify_Preview" url="manual/test_manual/Ops_TrainsModify.shtml#Preview"/>
+
+<mapID target="manual.test_manual.Ops_Trains_BuildOptions_Top" url="manual/test_manual/Ops_Trains_BuildOptions.shtml#Top"/>
 
 <mapID target="manual.test_manual.Ops_AddInterchange" url="manual/test_manual/Ops_AddInterchange.shtml"/>
 
