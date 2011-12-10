@@ -36,22 +36,13 @@ public class WiFiConsist extends DccConsist{
      */
     public void sendConsistCommand(DccLocoAddress loco, boolean dirNorm, WiFiConsist consist){
         //  Use NMRA consist command to set consist address
-        String packet = null;
-        int loAdd = StringUtil.lowIntForLongAddr(loco.getNumber());
-        int ctl = 16 + 2 + (dirNorm ? 0 : 1);
-        int conAdd = 0;
-        if (consist != null){
-            conAdd = getConsistAddress().getNumber();
-        }
-        if (loco.isLongAddress()) {
-            int hiAdd = StringUtil.hiIntForLongAddr(loco.getNumber());
-            packet = StringUtil.formatPacketFromIntegers(hiAdd, loAdd, ctl, conAdd);
-        } else {
-            packet = StringUtil.formatPacketFromIntegers(loAdd, ctl, conAdd);
-        }
+        byte packet[] = jmri.NmraPacket.consistControl(loco.getNumber(),
+                                        loco.isLongAddress(),
+                                        getConsistAddress().getNumber(),
+                                        dirNorm);
         if (packet != null) {
             log.debug(packet);
-            jmri.InstanceManager.commandStationInstance().sendPacket(StringUtil.bytesFromHexString(packet), 1);
+            jmri.InstanceManager.commandStationInstance().sendPacket(packet, 1);
         }
     }
     
