@@ -79,7 +79,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         add(p);
 
         p = new JPanel();
-        p.setLayout(new java.awt.GridLayout(3,1));
+        p.setLayout(new java.awt.GridLayout(4,1));
 
         JLabel graphicAreaLabel1 = new JLabel (rb.getString("LabelGraphicArea1"));
         graphicAreaLabel1.setFont(new Font("Dialog", Font.PLAIN, 10));
@@ -92,6 +92,11 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         JLabel graphicAreaLabel3 = new JLabel (rb.getString("LabelGraphicArea3"));
         graphicAreaLabel3.setFont(new Font("Dialog", Font.PLAIN, 10));
         p.add(graphicAreaLabel3);
+        add(p);
+
+        JLabel graphicAreaLabel4 = new JLabel (rb.getString("LabelGraphicArea4"));
+        graphicAreaLabel4.setFont(new Font("Dialog", Font.PLAIN, 10));
+        p.add(graphicAreaLabel4);
         add(p);
 
         p = new JPanel();
