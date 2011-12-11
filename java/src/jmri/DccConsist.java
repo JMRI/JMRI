@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * address to a Command Station that supports it.
  *
  * @author                      Paul Bender Copyright (C) 2003-2008
- * @version                     $Revision 1.0 $
+ * @version                     $Revision$
  */
 public class DccConsist implements Consist, ProgListener{
 
