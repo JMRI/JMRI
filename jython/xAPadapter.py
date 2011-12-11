@@ -214,6 +214,6 @@ print "register"
 myNetwork.addMyEventListener(InputListener())
 
 # define the turnouts
-defineTurnout("IT:xAP:FF0101:08", "FF010108", "08", "NWE.EVA485.DEFAULT:FRED")
+defineTurnout("IT:XAP:XAPBSC:NWE.EVA485.DEFAULT:99", "FF010100", "99", "NWE.EVA485.DEFAULT")
 
 print "End of Script"
