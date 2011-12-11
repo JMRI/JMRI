@@ -58,6 +58,7 @@ public class XNetTest extends TestCase {
         suite.addTest(jmri.jmrix.lenz.li101.LI101Test.suite());
         suite.addTest(jmri.jmrix.lenz.liusb.LIUSBTest.suite());
         suite.addTest(jmri.jmrix.lenz.xntcp.XnTcpTest.suite());
+        suite.addTest(jmri.jmrix.lenz.liusbserver.LIUSBServerTest.suite());
         suite.addTest(jmri.jmrix.lenz.xnetsimulator.XNetSimulatorTest.suite());
         suite.addTest(jmri.jmrix.lenz.hornbyelite.EliteTest.suite());
         
