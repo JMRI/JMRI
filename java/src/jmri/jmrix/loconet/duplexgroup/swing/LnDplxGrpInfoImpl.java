@@ -119,12 +119,15 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 swingTmrIplQuery.stop();
                 waitingForIplReply = false;
+                int oldvalue = 9999;
+                int newvalue = 0;
                 if (numUr92 > 0) {
-                    thisone.firePropertyChange("NumberOfUr92sUpdate", (Integer) 9999, (Integer) numUr92);
+                    newvalue = numUr92;
+                    thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue);
                     InvalidateDataAndQueryDuplexInfo();
                 }
                 else {
-                    thisone.firePropertyChange("NumberOfUr92sUpdate", (Integer) 9999, (Integer) 0);
+                    thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue);
                     thisone.firePropertyChange(DPLX_PC_STAT_LN_UPDATE, " ", "ErrorNoUR92Found");
                 }
             }
@@ -141,7 +144,9 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
                 else {
                     thisone.firePropertyChange(DPLX_PC_STAT_LN_UPDATE, " ", "ErrorNoQueryResponse");
                     numUr92 = 0;
-                    thisone.firePropertyChange("NumberOfUr92sUpdate", (Integer) 9999, (Integer) 0);
+                    int oldvalue = 9999;
+                    int newvalue = 0;
+                    thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue);
                 }
             }
         });
@@ -943,7 +948,9 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
                 LnIPLImplementation.createIplSpecificHostQueryPacket(
                         LnConstants.RE_IPL_DIGITRAX_HOST_ALL,
                         LnConstants.RE_IPL_DIGITRAX_HOST_UR92));
-        thisone.firePropertyChange("NumberOfUr92sUpdate", (Integer) 9999, (Integer) 0);
+        int oldvalue = 9999;
+        int newvalue = 0;
+        thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue);
         invalidateDuplexGroupIdentityInfo();
         if (swingTmrIplQuery != null) {
             if (swingTmrIplQuery.isRunning()) {

@@ -51,7 +51,9 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 swingTmrIplQuery.stop();
                 waitingForIplReply = false;
-                thisone.firePropertyChange("LnIPLEndOfDeviceQuery", (Integer) 9999, (Integer) 0);
+                int oldvalue = 9999;
+                int newvalue = 0;
+                thisone.firePropertyChange("LnIPLEndOfDeviceQuery", oldvalue, newvalue);
                 }
             });
     }
@@ -846,7 +848,9 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         if (isIplIdentityQueryMessage(m)) {
             Integer deviceType = 256 * extractIplIdentityHostManufacturer(m) +
                     extractIplIdentityHostDevice(m);
-            thisone.firePropertyChange("IplDeviceTypeQuery", (Integer) 99999, (Integer) deviceType);
+            int oldvalue = 99999;
+            int newvalue = deviceType;
+            thisone.firePropertyChange("IplDeviceTypeQuery", oldvalue, newvalue);
             if (waitingForIplReply == true) {
                 swingTmrIplQuery.restart();
             }
@@ -859,7 +863,9 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         if (isIplIdentityReportMessage(m)) {
             Integer deviceType = 256 * extractIplIdentityHostManufacturer(m) +
                     extractIplIdentityHostDevice(m);
-            thisone.firePropertyChange("IplDeviceTypeReport", (Integer) 99999, (Integer) deviceType);
+            int oldvalue = 99999;
+            int newvalue = deviceType;
+            thisone.firePropertyChange("IplDeviceTypeReport", oldvalue, newvalue);
             if (waitingForIplReply == true) {
                 waitingForIplReply = false;
                 swingTmrIplQuery.stop();
@@ -905,7 +911,9 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
 //                LnIPLImplementation.createIplSpecificHostQueryPacket(
 //                        LnConstants.RE_IPL_DIGITRAX_HOST_ALL,
 //                        LnConstants.RE_IPL_DIGITRAX_HOST_UR92));
-//        thisone.firePropertyChange("NumberOfUr92sUpdate", (Integer) 9999, (Integer) 0);
+//        int oldvalue = 9999;
+//        int newvalue = 0;
+//        thisone.firePropertyChange("NumberOfUr92sUpdate", oldvalue, newvalue);
 //        if (swingTmrIplQuery != null) {
 //            if (swingTmrIplQuery.isRunning()) {
 //                swingTmrIplQuery.restart();

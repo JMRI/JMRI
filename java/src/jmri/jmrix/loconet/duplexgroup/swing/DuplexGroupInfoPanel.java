@@ -44,7 +44,6 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
     JLabel                      swingStatusValueLabel;
     private static ResourceBundle      rb = ResourceBundle.getBundle("jmri.jmrix.loconet.duplexgroup.DuplexGroup");
     private int                 numUr92;
-    private DuplexGroupInfoPanel thisone;
 
     private LnDplxGrpInfoImpl duplexGroupImplementation;
 
@@ -52,8 +51,8 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     public DuplexGroupInfoPanel() {
         super();
-        thisone = this;
         swingNameValueField = new ValidatedTextField(9, false, "^.{1,8}$", "ErrorBadGroupName");
+        
         swingChannelValueField = new ValidatedTextField(3, false, 11, 26, "ErrorBadGroupChannel");
         swingPasswordValueField = new ValidatedTextField(5, true, "^[0-9A-C]{4}$", "ErrorBadGroupPassword");
         swingIdValueField = new ValidatedTextField(3, false, 0, 127, "ErrorBadGroupId");

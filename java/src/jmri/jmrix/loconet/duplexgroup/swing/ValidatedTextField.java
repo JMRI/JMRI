@@ -20,12 +20,6 @@ public class ValidatedTextField extends javax.swing.JTextField  {
 
     ValidatedTextField thisone;
 
-    /*
-     * This data model is shared between several views; each
-     * needs to know when the data changes out from under it.
-     */
-    private java.beans.PropertyChangeSupport dataListeners = new java.beans.PropertyChangeSupport(this);
-
     /**
      * Provides a validated text field, where the validation mechanism requires
      * a String value which passes the matching defined in validationRegExpr .
@@ -75,13 +69,13 @@ public class ValidatedTextField extends javax.swing.JTextField  {
         allow0Length = false;
 
         verifier = new MyVerifier();
-        this.setInputVerifier(verifier);
 
         // set default background color for invalid field data
         setInvalidBackgroundColor(COLOR_BG_ERROR);
 
         thisone = this;
-        this.addFocusListener(new FocusListener() {
+        thisone.setInputVerifier(verifier);
+        thisone.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {
                 setEditable(true);
                 setEnabled(true);
@@ -158,10 +152,10 @@ public class ValidatedTextField extends javax.swing.JTextField  {
         allow0Length = allow0LengthValue;
 
         verifier = new MyVerifier();
-        this.setInputVerifier(verifier);
 
         thisone = this;
-        this.addFocusListener(new FocusListener() {
+        thisone.setInputVerifier(verifier);
+        thisone.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {
                 setEditable(true);
                 setEnabled(true);
@@ -223,10 +217,10 @@ public class ValidatedTextField extends javax.swing.JTextField  {
         allow0Length = allow0LengthValue;
         
         verifier = new MyVerifier();
-        this.setInputVerifier(verifier);
 
         thisone = this;
-        this.addFocusListener(new FocusListener() {
+        thisone.setInputVerifier(verifier);
+        thisone.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {
                 setEditable(true);
                 setEnabled(true);
@@ -287,13 +281,13 @@ public class ValidatedTextField extends javax.swing.JTextField  {
         allow0Length = false;
 
         verifier = new MyVerifier();
-        this.setInputVerifier(verifier);
 
         // set default background color for invalid field data
         setInvalidBackgroundColor(COLOR_BG_ERROR);
 
         thisone = this;
-        this.addFocusListener(new FocusListener() {
+        thisone.setInputVerifier(verifier);
+        thisone.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {
                 setEditable(true);
                 setEnabled(true);
@@ -326,9 +320,9 @@ public class ValidatedTextField extends javax.swing.JTextField  {
     private void exitFieldColorizer() {
         // colorize the text field entry box based on comparison with last queried value
 
-        if (this.isEnabled()) {
-                this.setForeground(COLOR_OK);
-            this.firePropertyChange(VTF_PC_STAT_LN_UPDATE, "_", " ");
+        if (thisone.isEnabled()) {
+                thisone.setForeground(COLOR_OK);
+            thisone.firePropertyChange(VTF_PC_STAT_LN_UPDATE, "_", " ");
 
             if ((getText() == null) || (getText().length() == 0)) {
                 // handle 0-length current value; 0-length is allowed
@@ -355,13 +349,13 @@ public class ValidatedTextField extends javax.swing.JTextField  {
                 setBackground(COLOR_BG_EDITED);
                 return;
             }
-            if ( ! lastQueryValue.equals(this.getText())) {
+            if ( ! lastQueryValue.equals(thisone.getText())) {
                 // mismatch between last queried value and current field value
-                this.setBackground(COLOR_BG_EDITED);
+                thisone.setBackground(COLOR_BG_EDITED);
             }
             else {
                 // match between last queried value and current field value
-                this.setBackground(COLOR_BG_UNEDITED);
+                thisone.setBackground(COLOR_BG_UNEDITED);
             }
             return;
         } else {
@@ -378,7 +372,7 @@ public class ValidatedTextField extends javax.swing.JTextField  {
      */
     public boolean isValid() {
         String value;
-        if (this.thisone == null) {
+        if (thisone == null) {
             return false;
         }
         value = getText();
@@ -482,7 +476,7 @@ public class ValidatedTextField extends javax.swing.JTextField  {
         return lastQueryValue;
     }
 
-
+    
     /**
      * Enumeration type which differentiates the supported data types.
      * Each different type requires special-case coding within the
