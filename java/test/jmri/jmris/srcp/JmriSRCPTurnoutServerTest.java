@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPTurnoutServer class
  * @author                      Paul Bender
- * @version                     $Revision: 17977 $
+ * @version                     $Revision$
  */
 public class JmriSRCPTurnoutServerTest extends TestCase {
 
