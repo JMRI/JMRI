@@ -17,10 +17,16 @@ import junit.framework.Assert;
 public class DccConsistTest extends TestCase {
 
 	public void testCtor() {
-                // constructor test.
+                // DccLocoAddress constructor test.
                 DccConsist c = new DccConsist(new DccLocoAddress(12, true));
                 Assert.assertNotNull(c);
 	}
+
+        public void testCtor2() {
+               // integer constructor test.
+                DccConsist c = new DccConsist(new DccLocoAddress(12, true));
+                Assert.assertNotNull(c);
+        }
 
 	// from here down is testing infrastructure
 	public DccConsistTest(String s) {
