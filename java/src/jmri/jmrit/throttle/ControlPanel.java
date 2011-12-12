@@ -1374,7 +1374,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	
 	public void setSwitchSliderFunction(String fn) {
 		switchSliderFunction = fn;
-                if ((switchSliderFunction==null) || (switchSliderFunction.isEmpty()))
+                if ((switchSliderFunction==null) || (switchSliderFunction.length()==0))
                     return;
 		if (throttle != null) { // Update UI depending on function state
 			try {
