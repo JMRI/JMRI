@@ -73,6 +73,9 @@ public class TurnoutSignalMast extends AbstractSignalMast {
             // not a valid aspect
             log.warn("attempting to set invalid aspect: "+aspect+" on mast: "+getDisplayName());
             throw new IllegalArgumentException("attempting to set invalid aspect: "+aspect+" on mast: "+getDisplayName());
+        }  else if (disabledAspects.contains(aspect)){
+            log.warn("attempting to set an aspect that has been disabled: "+aspect+" on mast: "+getDisplayName());
+            throw new IllegalArgumentException("attempting to set an aspect that has been disabled: "+aspect+" on mast: "+getDisplayName());
         }
         
         if(resetPreviousStates){
@@ -89,11 +92,26 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         Turnout turnToSet = turnouts.get(aspect).getTurnout();
         int stateToSet = turnouts.get(aspect).getTurnoutState();
         //Set the new signal mast state
-        turnToSet.setCommandedState(stateToSet);
+        if(turnToSet!=null){
+            turnToSet.setCommandedState(stateToSet);
+        } else {
+            log.error("Trying to set a state " + aspect + " on signal mast " + getDisplayName() + " which has not been configured");
+        }
         super.setAspect(aspect);
     }
     
     public Vector<String> getValidAspects() {
+        java.util.Enumeration<String> e = map.getAspects();
+        Vector<String> v = new Vector<String>();
+        while (e.hasMoreElements()) {
+            String aspect = e.nextElement();
+            if(!disabledAspects.contains(aspect))
+                v.add(aspect);
+        }
+        return v;
+    }
+    
+    public Vector<String> getAllKnownAspects(){
         java.util.Enumeration<String> e = map.getAspects();
         Vector<String> v = new Vector<String>();
         while (e.hasMoreElements()) {
@@ -102,6 +120,34 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         return v;
     }
 
+    ArrayList<String> disabledAspects = new ArrayList<String>(1);
+
+    public void setAspectDisabled(String aspect){
+        if(aspect==null || aspect.equals(""))
+            return;
+        if(!map.checkAspect(aspect)){
+            log.warn("attempting to disable an aspect: " + aspect + " that is not on the mast " + getDisplayName());
+            return;
+        }
+        if(!disabledAspects.contains(aspect))
+            disabledAspects.add(aspect);
+    }
+    
+    public void setAspectEnabled(String aspect){
+        if(aspect==null || aspect.equals(""))
+            return;
+        if(!map.checkAspect(aspect)){
+            log.warn("attempting to disable an aspect: " + aspect + " that is not on the mast " + getDisplayName());
+            return;
+        }
+        if(disabledAspects.contains(aspect))
+            disabledAspects.remove(aspect);
+    }
+    
+    public List<String> getDisabledAspects(){
+        return disabledAspects;
+    }
+    
     public SignalSystem getSignalSystem() {
         return systemDefn;
     }
@@ -167,16 +213,22 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         int state;
         
         TurnoutAspect(String turnoutName, int turnoutState){
-            Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
-            namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turn);
-            state = turnoutState;
+            if(turnoutName!=null && !turnoutName.equals("")){
+                Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+                namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turn);
+                state = turnoutState;
+            }
         }
         
         Turnout getTurnout(){
+            if(namedTurnout==null)
+                return null;
             return namedTurnout.getBean();
         }
         
         String getTurnoutName() {
+            if(namedTurnout==null)
+                return null;
             return namedTurnout.getName();
         }
         

@@ -596,6 +596,8 @@ public class AddSignalMastPanel extends JPanel {
         }
         
         TurnoutAspectPanel(String turnoutName, int state){
+            if(turnoutName==null || turnoutName.equals(""))
+                return;
             beanBox.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(turnoutName));
         }
         
@@ -608,6 +610,8 @@ public class AddSignalMastPanel extends JPanel {
         }
         
         void setSelectedTurnout(String name){
+            if(name==null || name.equals(""))
+                return;
             beanBox.setDefaultNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(name));
         }
         
