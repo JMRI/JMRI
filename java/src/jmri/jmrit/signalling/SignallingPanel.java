@@ -103,6 +103,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 else
                     mastSpeed.setText(rb.getString("PathSpeed") + " : " + Float.toString(pathSpeed));
             }
+        } else if (dest==null){
+            sml=null;
         }
         
         sourceMastBox = new JmriBeanComboBox(smm, sourceMast, JmriBeanComboBox.DISPLAYNAME);
