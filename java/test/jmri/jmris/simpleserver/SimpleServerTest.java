@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmris.simpleserver package
  * @author                      Paul Bender
- * @version                     $Revision: 17977 $
+ * @version                     $Revision$
  */
 public class SimpleServerTest extends TestCase {
 
