@@ -8,7 +8,7 @@ import java.io.*;
  * Simple interface between the JMRI operations and a 
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 17977 $
+ * @version         $Revision$
  */
 
 public class SimpleOperationsServer extends jmri.jmris.AbstractOperationsServer {

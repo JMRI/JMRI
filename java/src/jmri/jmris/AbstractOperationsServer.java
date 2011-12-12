@@ -11,7 +11,7 @@ import jmri.jmrit.operations.locations.*;
  * Abstract interface between the JMRI operations and a 
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 17977 $
+ * @version         $Revision$
  */
 
 abstract public class AbstractOperationsServer implements java.beans.PropertyChangeListener {
