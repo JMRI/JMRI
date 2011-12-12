@@ -524,6 +524,8 @@ public class DecoderPro3Window
     protected ListSelectionListener tableSelectionListener;
     
     protected void moveTableViewToSelected(){
+        if(re==null)
+            return;
         //Remove the listener as this change will re-activate it and we end up in a loop!
         rtable.getTable().getSelectionModel().removeListSelectionListener(tableSelectionListener);
 
