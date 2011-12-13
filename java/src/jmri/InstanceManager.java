@@ -327,8 +327,16 @@ public class InstanceManager {
     }    
 
     static private InstanceManager instance() {
-        if (root==null) root = new InstanceManager();
+        if (root==null){
+            setRootInstance();
+        }
         return root;
+    }
+    
+    private static synchronized void setRootInstance(){
+        if(root!=null)
+            return;
+        root = new InstanceManager();
     }
 
     public InstanceManager() {
