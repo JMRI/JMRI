@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties>
-<comment></comment>
-<entry key="presets.cpufragment.profiler.settings.fragment.selection"></entry>
-<entry key="presets.cpupart.profiler.settings.instrumentation.root.methods.size">0</entry>
-</properties>

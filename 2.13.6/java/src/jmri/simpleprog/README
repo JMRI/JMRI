@@ -1,8 +1,0 @@
-DO NOT ADD ANY NEW FILES TO THIS DIRECTORY.
-
-The jmri.simpleprog package been moved
-to the jmri.jmrit.simpleprog package.
-
-Due to CVS limitations, jmri/simpleprog directory 
-cannot be removed. We have therefore left it here, empty
-except for this file.
