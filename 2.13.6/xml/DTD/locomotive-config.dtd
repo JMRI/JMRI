@@ -1,0 +1,98 @@
+<!-- Defines XML documenting on a locomotive, esp. information -->
+<!-- on how it is programmed. -->
+<!-- $Id$ -->
+
+<!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!ELEMENT locomotive-config (locomotive)>
+<!ATTLIST locomotive-config>
+
+<!-- The identification attributes in locomotive and -->
+<!-- decoder must be kept the same as the ones in the roster DTD -->
+<!-- This copy is used if we have to import an existing file into a roster -->
+
+<!ELEMENT locomotive (dateupdated?,dateUpdated?, decoder, locoaddress*, functionlabels?, attributepairs?, values?) >
+<!ATTLIST locomotive id		      CDATA #REQUIRED>          
+<!ATTLIST locomotive fileName	CDATA #IMPLIED>  
+<!ATTLIST locomotive groupName  CDATA #IMPLIED>        
+<!ATTLIST locomotive roadName	  CDATA #IMPLIED>          
+<!ATTLIST locomotive roadNumber	CDATA #IMPLIED>          
+<!ATTLIST locomotive mfg	      CDATA #IMPLIED>
+<!ATTLIST locomotive owner	    CDATA #IMPLIED>
+<!ATTLIST locomotive model	    CDATA #IMPLIED>
+<!ATTLIST locomotive dccAddress	CDATA #IMPLIED>	<!-- long or short address -->
+<!ATTLIST locomotive comment	  CDATA #IMPLIED>
+
+<!ATTLIST locomotive maxSpeed CDATA #IMPLIED>
+
+<!ATTLIST locomotive imageFilePath CDATA #IMPLIED>
+<!ATTLIST locomotive iconFilePath  CDATA #IMPLIED>
+<!ATTLIST locomotive URL  CDATA #IMPLIED>
+<!ATTLIST locomotive IsShuntingOn  CDATA #IMPLIED>
+
+<!ELEMENT dateupdated (#PCDATA) >
+<!ELEMENT dateUpdated (#PCDATA) >
+
+<!-- The decoder optional section defines the type of the installed decoder -->
+<!ELEMENT decoder EMPTY >
+<!ATTLIST decoder model   CDATA #REQUIRED>  <!-- used for identification -->
+<!ATTLIST decoder family  CDATA #REQUIRED>  <!-- used for identification   -->
+<!ATTLIST decoder comment CDATA #IMPLIED>
+
+<!-- define general locomotive address -->
+<!ELEMENT locoaddress (dcclocoaddress) >
+
+<!-- define DCC locomotive address -->
+<!ELEMENT dcclocoaddress EMPTY >
+<!ATTLIST dcclocoaddress number      CDATA #IMPLIED>
+<!ATTLIST dcclocoaddress longaddress ( yes | no) "no">
+
+<!-- The values section defines values for CVs and/or variables -->
+<!ELEMENT values (decoderDef, (CVvalue | varValue)*, indexedCVvalue* )>
+
+<!ELEMENT decoderDef (varValue*) >   <!-- Where the variable definitions came from -->
+		  						
+<!ELEMENT CVvalue EMPTY>
+<!ATTLIST CVvalue name    CDATA #IMPLIED>         <!-- CV number, used for identification -->
+<!ATTLIST CVvalue value   CDATA #REQUIRED>        <!-- Value of specified CV -->
+<!ATTLIST CVvalue comment CDATA #IMPLIED>
+
+<!ELEMENT indexedCVvalue EMPTY>
+<!ATTLIST indexedCVvalue name    CDATA #REQUIRED> <!-- Indexed CV name, used for identification -->
+<!ATTLIST indexedCVvalue piCv    CDATA #REQUIRED> <!-- Primary index for Indexed CV -->
+<!ATTLIST indexedCVvalue piVal   CDATA #REQUIRED> <!-- Primary index value for Indexed CV -->
+<!ATTLIST indexedCVvalue siCv    CDATA #REQUIRED> <!-- Secondary index for Indexed CV -->
+<!ATTLIST indexedCVvalue siVal   CDATA #REQUIRED> <!-- Secondary index value for Indexed CV -->
+<!ATTLIST indexedCVvalue iCv     CDATA #REQUIRED> <!-- Indexed CV number -->
+<!ATTLIST indexedCVvalue value   CDATA #REQUIRED> <!-- Value of specified Indexed CV -->
+<!ATTLIST indexedCVvalue comment CDATA #IMPLIED>
+
+<!ELEMENT varValue EMPTY>
+<!ATTLIST varValue item    CDATA #IMPLIED>        <!-- item name used for identification -->
+<!ATTLIST varValue name    CDATA #IMPLIED>        <!-- old form of item name, for compatibility -->
+<!ATTLIST varValue value   CDATA #REQUIRED>       <!-- Value of specified variable -->
+<!ATTLIST varValue comment CDATA #IMPLIED>
+
+<!ELEMENT functionlabels (functionlabel*) >
+
+<!ELEMENT functionlabel (#PCDATA) >
+<!ATTLIST functionlabel	num	      CDATA #REQUIRED>   
+<!ATTLIST functionlabel	lockable (true | false) "true">   
+<!ATTLIST functionlabel functionImage CDATA #IMPLIED>
+<!ATTLIST functionlabel functionImagePressed  CDATA #IMPLIED>
+
+<!ELEMENT attributepairs (keyvaluepair*) >
+<!ELEMENT keyvaluepair (key, value) >
+<!ELEMENT key (#PCDATA) >
+<!ELEMENT value (#PCDATA) >
+

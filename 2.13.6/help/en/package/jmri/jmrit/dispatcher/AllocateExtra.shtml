@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: Allocate Extra Window Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Dave Duchamp" name=Author>
+    <META name="keywords" content="JMRI help Dispatcher New Train">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Allocate Extra Window
+</H1>
+<H2>Introduction
+</H2>
+<p>The <b>Allocate Extra Window</b> allows "extra Sections" to be allocated to 
+any Active Train. "Extra Sections" are Sections that are not in the sequence 
+of Sections defined in the Transit being followed by the Active Train.  The need 
+to allocate "extra Sections" can arise if the engineer of an Active Train needs 
+to do more than simply run around the layout.  For example, extra Sections could 
+be needed for setting out or picking up cars, especially if a run around is 
+needed.</p>
+
+<p> Extra Sections are allocated manually via the Dispatcher panel, using this 
+window to select the Active Train and the Section to be allocated. Once allocated, 
+extra Sections will show in the <b>Allocated Sections</b> table in the 
+<b><a href="Dispatcher.shtml">Dispatcher</a></b> window.  The <b>Release</b> button 
+in the Allocated Sections table should be used to release the extra Sections when 
+they are no longer required. The <b>Auto Release</b> option does not release extra 
+Sections; extra Sections must be released manually.</p>
+
+<p>Note: Turnout checking and turnout setting are turned off during Allocate Extra.  
+Turnouts should be set as needed by the dispatcher or by the engineer.</p>
+
+<H2>Using the Allocate Extra Window
+</H2>
+<p>To allocate and extra Section to an Active Train, use the following 
+procedure:
+<ol>
+<li><p>Click the <b>Allocate Extra...</b> button in the 
+<b><a href="Dispatcher.shtml">Dispatcher</a></b> window. This brings up 
+the window shown below.</p>
+<img src="AllocateExtraWindow.jpg" height="146" width="267">
+</li>
+<li><p>Select an Active Train in the <b>Active Train:</b> select box. When an 
+Active Train is selected, the <b>Section to Allocate:</b> select box will change 
+to display Sections that are appropriate to that Active Train. Active Train 
+names are displayed in either short form (shown above) or long form depending 
+on the option selected in the Dispatcher's <b><a href="Options.shtml">Options</a></b>
+window.</p>
+</li>
+<li><p>Select a Section to allocate in the <b>Section to Allocate:</b> select box.
+To be listed in this select box, a Section must be FREE (not allocated to any 
+Active Train), and must be connected to a Section that is currently allocated 
+to the Active Train selected in the <b>Active Train:</b> select box.</p>
+<li><p>Click the <b>Allocate</b> button to allocate the selected Section to the 
+selected Active Train. The Section is allocated immediately, and this window
+disappears.</p>
+</li>
+<li><p>Or click the <b>Cancel</b> button to exit without allocating an extra
+Section.</p>
+</li>
+</ol>
+<p>Note: If this window accidentally should be left open, allocating a Section in 
+another manner will automatically cancel the operation in this window, and this 
+window will disappear.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

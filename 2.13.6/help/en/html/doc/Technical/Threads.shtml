@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: Threading
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code threading">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+	    <H1>JMRI: Threading</H1>
+The initial threading model for JMRI is quite simple: Everything interesting
+happens in 
+the GUI thread.  For example, once a 'message', e.g. a LocoNet packet, 
+is accumulated in a separate thread, the message is processed in the 
+GUI thread via:
+<PRE>
+	// message is complete, dispatch it !!
+	{ 
+	final LocoNetMessage thisMsg = msg;
+	final LnTrafficController thisTC = this;
+	// return a notification via the queue to ensure end
+	Runnable r = new Runnable() {
+		LocoNetMessage msgForLater = thisMsg;
+		LnTrafficController myTC = thisTC;
+		public void run() { 
+				log.debug("Delayed notify starts");
+           		myTC.notify(msgForLater);
+			}
+		};
+		javax.swing.SwingUtilities.invokeLater(r);
+	}
+</PRE>
+
+This can't work forever, however, so we're working on a new
+threading model.
+
+<p>
+See the working 
+<a href="http://sourceforge.net/apps/trac/jmri/wiki/Thread%20Model">Wiki page</a>
+for more info.
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

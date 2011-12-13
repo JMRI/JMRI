@@ -1,0 +1,693 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI Hardware Guide: Chubb C/MRI
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="Bruce Chubb C/MRI Computer interface java model railroad JMRI install windows">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> 
+JMRI Hardware Guide: Chubb C/MRI
+</H1>
+  
+<H2>Supported Hardware</H2>
+
+<UL>
+<li>Chubb C/MRI USIC
+<li>Chubb C/MRI SMINI
+<li>Chubb C/MRI SUSIC
+</UL>
+<P>At this time, the directly connected IBEC and UBEC interfaces are not supported.
+
+<a name=contents><H2>Contents</H2></a>
+
+The documentation below discusses how JMRI may be used with C/MRI, and 
+how to get started with connecting a C/MRI system to JMRI. It assumes a basic
+knowledge of JMRI (as documented on this JMRI web site), and some familiarity
+with C/MRI. It is highly recommended that C/MRI users have access to Bruce
+Chubb's <B>C/MRI User Manual, Version 3.0</B>, because it contains 
+detailed hardware documentation not available elsewhere. Since you don't 
+need to program your computer if you're using JMRI with your C/MRI system, 
+you can skip over computer programming details when consulting the C/MRI
+User Manual. The documentation below is divided into sections; click for 
+easy access to a section listed below:
+<ul>
+<li><a href="#intro">Introduction to C/MRI on JMRI</a>
+<li><a href="#iobits">C/MRI Input and Output Bits</a>
+<li><a href="#smini">Getting Started with an SMINI node</a>
+<li><a href="#susic">Getting Started with a USIC or SUSIC</a>
+<li><a href="#nodes">Managing Nodes</a>
+<li><a href="#numbers">Numbering used in C/MRI System Names</a>
+<li><a href="#alternate">Alternate Numbering for System Names</a>
+<li><a href="#options">C/MRI Turnout Control Options</a>
+<li><a href="#signals">Wiring Signals</a>
+<li><a href="#diagnostics">C/MRI Diagnostics</a>
+<li><a href="#sim">Running JMRI when disconnected from your C/MRI system</a>
+</ul>
+
+<a name=intro><H2>Introduction to C/MRI on JMRI</H2></a>
+
+C/MRI is a system of digital input and digital output lines that can be
+used to connect a computer to a model railroad layout, allowing computer 
+monitoring and control of various things of the layout. The SUSIC (Super 
+Universal Serial Interface Card) is the controller board for a large digital 
+I/O system supporting, via a motherboard, up to 64 digital input and digital 
+output cards, with either 24 or 32 input or output lines per card. The USIC 
+is an older version of the SUSIC. The SMINI (Super Mini-node) card is a stand- 
+alone serial node providing a fixed 24 input lines and 48 output lines. A 
+number of other interface boards are available as part of C/MRI, but they 
+all connect to your computer via an SMINI, a SUSIC, or a USIC. For example,
+C/MRI's DCCOD occupancy detector board connects to an SMINI (or SUSIC or 
+USIC) input line. Layouts that use C/MRI will commonly have several SMINI's 
+located at different places on the layout, and perhaps one or two SUSIC's 
+located at CTC panels.</p> 	
+
+<p>C/MRI is not a train control system. You may run C/MRI with a DCC train 
+control system (such as, Digitrax, Lenz, or NCE) or with a DC train control 
+system. And you can use JMRI with your C/MRI system whether you are using 
+DCC or DC to control your trains. If you are controlling your trains with a 
+system that JMRI supports, you can connect your C/MRI system and your train 
+control system to JMRI simultaneously, each with its own serial input line 
+into your computer. Most C/MRI users who use JMRI run with connections to 
+both their C/MRI and their train control system. There are many advantages 
+to doing so. JMRI allows you to "mix and match" how you control and monitor 
+things on your layout.  For example, you can switch your turnouts (track 
+switches) using static decoders on your train control system, 
+and simultaneously use C/MRI inputs to provide turnout feedback to JMRI. 
+JMRI is designed to make both connected systems work smoothly together. 
+
+<P>JMRI software consists of a large library, divided into 1) a system 
+specific part, with many subparts, each of which communicates with one 
+supported hardware system, like C/MRI, in a system specific way, and 2) a 
+system-independent part where most of the features of JMRI are 
+implemented. So, for example, if the user does something (perhaps setting a
+route) to cause JMRI to throw a turnout (track switch), that user action 
+will occur in the system-independent part of the software, and then JMRI will 
+send out the actual command via the system-dependent part appropriate to the
+hardware system controlling the particular turnout thrown. JMRI is designed 
+so that features are implemented in the system-independent part as much as
+possible, with JMRI using system-dependent subparts only when really necessary. 
+Access to system-independent features is via the main JMRI menus, such as 
+the Tools menu.  Access to system-dependent features is via a menu titled 
+for the hardware system supported; C/MRI specific features are accessed via 
+the CMRI menu.</P>
+
+<p>JMRI presents itself to users via several application front ends, each 
+focusing on a type of use, but all based on the same underlying software 
+library. The popular DecoderPro application focuses on programming DCC 
+decoders, and is not of much interest to C/MRI. On the other hand, PanelPro 
+is the JMRI application that focuses on layout automation, signaling, and CTC 
+panels. PanelPro is the application most often used with C/MRI, and is
+the one used in the examples <a href="#smini">below</a>. Since all JMRI
+applications use the same library, it is possible to run a panel from 
+DecoderPro, or even program a DCC decoder from PanelPro. 
+It's just not quite as
+easy as using the focused application.</p> 
+
+<p>JMRI libraries have built-in support for C/MRI serial hardware using the 
+USIC, SUSIC and SMINI. Each SMINI, USIC or SUSIC is a serial node capable of 
+communicating independently with a computer via serial I/O. Several C/MRI 
+nodes may be connected together using the RS485 communication protocol in a 
+daisy chain configuration, so that only one serial line into your computer is 
+required. For this to work, each node must have a different unique address 
+set into the address switches on its board. Each node (USIC, SUSIC, or 
+SMINI) needs to receive an initialization string before it can communicate 
+with a computer. JMRI will automatically create and transmit the required 
+initialization string when it starts up, but to make this possible, you 
+need to tell JMRI the details of how your C/MRI hardware is set up. The 
+process of doing so is called "configuring" your C/MRI node 
+(<a href="#nodes">see below</a>). If you daisy chain several C/MRI nodes, you
+probably will need a C/MRI RS232 to RS485 conversion card between the RS485
+bus connecting the cards and the RS232 serial line to connect to your 
+computer. If your computer doesn't have an RS232 serial port (most newer 
+computers don't), you can connect to a USB computer port with a USB-to-serial 
+adapter (<A HREF="../USBtoSerial.shtml">click here for help</a>).</p>	
+
+<P>C/MRI inputs can be used as JMRI 'sensors', and C/MRI outputs can be driven 
+as JMRI 'turnouts' or JMRI 'lights' (<a href="#iobits">see below</a>). Note 
+that C/MRI inputs and outputs are sometimes called 'pins', sometimes called 
+'bits', and sometimes called 'lines'; all are equivalent ways to refer to 
+same things. C/MRI is a polling system, which means that communicating with 
+C/MRI nodes requires that the computer periodically send a message to each
+node asking it to transmit the status of its input bits. JMRI begins to 
+poll a node when at least one sensor has been set up to refer to an input 
+bit on that node. It is this polling action that keeps the LED's on your
+SMINI flashing at a high rate.</p>
+
+
+<a name=iobits><H2>C/MRI Input and Output Bits</H2></a>
+
+JMRI refers to C/MRI input bits as sensors. Sensors provide input to JMRI 
+about conditions on the layout--a button is pushed, a block is occupied, 
+etc. Within JMRI, you refer to a C/MRI input bit (sensor) by its "system 
+name", CSnxxx, where nxxx is the address of the bit 
+(<a href="#numbers">see below</a>). Before you can refer to a sensor in JMRI, 
+it must be "created". A sensor may be created in a number of ways, including 
+automatically.  All JMRI sensors that have been created may be viewed in the
+JMRI sensor table, accessed by selecting <b>Sensor Table</b> in the Tools 
+menu. A new sensor may be created via the sensor table as illustrated 
+<a href="#smini">below</a>. Creating a sensor to refer to a specific C/MRI 
+input bit, is called "assigning" that input bit. Each input bit may be 
+assigned only once, i.e., two different sensors may not refer to the same
+C/MRI input bit. A sensor is "active" when its assigned input bit is on 
+(grounded) and "inactive" when its input bit is off. <b>So when you see 
+"sensor", think "input bit" or "input line".</b></P>
+
+<P>JMRI refers to C/MRI output bits as turnouts or lights. Turnouts and 
+lights are on/off switches that JMRI can change to control things on 
+your layout. To refer to a C/MRI output bit as a turnout, use the system name 
+CTnxxx, where nxxx is the address of the output bit 
+(<a href="#numbers">see below</a>). To refer to a C/MRI output bit as a 
+light, use CLnxxx, where nxxx is the address of the output bit 
+(<a href="#numbers">see below</a>). Turnouts and lights are different methods 
+of referring to C/MRI outputs from within JMRI.  Each method has 
+different control options. Always use 'turnouts' for C/MRI outputs used to 
+control turnouts (track switches) and for C/MRI outputs used to operate 
+signals.  For historical reasons, C/MRI output bits used to control signal 
+aspects are referred to as 'turnouts', even if the output bits are used to 
+control lighted signals.  Use 'lights' to refer to C/MRI output bits used 
+for fascia panel lights, for lights in scenery (structure lighting, street 
+lights, etc.), and for special purposes where the control options for lights 
+suit your needs. <b>So when you see "turnout" or "light" in connection with 
+C/MRI, think "output bit" or "output line".</b></P>
+
+<P>Before you can refer to a turnout or a light within JMRI, the turnout or
+light must be "created". A turnout may be created in a number of ways, 
+including automatically. All JMRI turnouts that have been created may be 
+viewed in the JMRI turnout table, accessed by selecting <b>Turnout Table</b> 
+in the Tools menu. A new turnout may be created via the turnout table by 
+clicking "Add" at the bottom of the table. Similiarly, a new light may be 
+created via the JMRI light table by clicking "Add" at the bottom of that 
+table.  The JMRI light table is accessed by selecting <b>Light Table</b> in 
+the Tools menu. All JMRI lights that have been created are listed in the 
+JMRI light table. Creating a turnout or a light to refer to a specific C/MRI 
+output bit, is called "assigning" that output bit. Each light or turnout is 
+linked to a specific output line via the address part of the system name. 
+</P>
+
+<P>A specific output bit may be referred to as a turnout or a light, but not 
+both. Each output bit may be assigned only once. When a new C/MRI turnout or 
+a new C/MRI light is created, JMRI checks 
+that the specified output bit is available for assignment. If the requested 
+C/MRI output bit is in use by a turnout or a light, JMRI will refuse to 
+create the new turnout or new light.  Note that some C/MRI turnout control 
+options use two output bits, the addressed one and the next one 
+(<a href="#options">see below</a>), and that both output bits must be 
+unassigned for successful creation of a new turnout controlled by two output 
+bits. Lists of current C/MRI bit assignments can be obtained by selecting 
+<B>List Assignments</B> in the CMRI menu.</P>
+
+
+<a name=smini><H2>Getting Started with an SMINI node</H2></a>
+
+It's easiest to try JMRI with a SMINI board, as there are few
+options to be configured for the C/MRI hardware. After you have 
+physically connected your SMINI to your computer, follow the procedure 
+below to configure your SMINI as a C/MRI node, and test an input and
+an output bit. (The procedure assumes nothing is connected to the 
+input and output pins of your SMINI, and that you haven't made any
+assignments for its bits.)
+<ol>
+<li>Start the PanelPro program.
+<li>From the Edit menu, select <b>Preferences...</b> and configure:
+    <ul>
+    <li>For layout connection select "C/MRI".
+    <li>For serial port, select the port your C/MRI hardware is attached
+        to.
+    <li>Select the baud rate your C/MRI system uses.
+    <li>Click the "Configure C/MRI nodes" button. On the
+            new panel that opens:
+        <UL>
+        <LI>Enter your SMINI's node address. (0 is typically used for 
+            the first SMINI card, but enter whatever number is in the 
+            address switches on your SMINI board.)
+        <li>Select "SMINI" for node type.
+        <LI>Leave DL at zero.
+        <li>Click "Add Node".
+        <LI>Click "Done".
+        </ul>
+    <li>Back on the "Preferences..." panel, click "Save", and say yes 
+        when it asks if you want to quit.
+    </ul>
+<li>Restart the program. You need to assign an input bit to start 
+    polling. Select <b>Sensor Table</b> from the Tools menu, and proceed:
+    <UL>
+    <LI>Click "Add..." at the bottom of the table.
+    <LI>In the Add New Sensor dialog:
+        <UL>
+        <LI> For system name, enter CS1 if your SMINI's node address was
+            0, or else enter CSn001, where n is your SMINI's node address.
+        <LI> For user name enter "Test".
+        <LI> Click "OK".
+        </UL>
+    <LI>The system name and user name will appear in the sensor table. 
+        The state of your sensor in the sensor table will initially be 
+        "Unknown", but will quickly switch to "Inactive" when polling 
+        begins (assuming nothing is connected to input pin 1).
+    </UL>
+    The transmit and receive LED's on your SMINI board should now be 
+    flashing, indicating that the computer and the SMINI are talking.
+<li>To check that the input bit (sensor) you assigned is working, 
+    connect a jumper wire from input pin 1 to the ground terminal on your 
+    SMINI board.  The sensor should switch to "Active". The sensor state 
+    will alternate between "Active" and "Inactive", according to whether
+    pin 1 is grounded or not.
+<li>To check that everything is working on the output side, select 
+    <b>Turnout Control</b> from the Tools menu.  When the small Turnout 
+    Control window opens, proceed:
+    <UL> 
+    <LI>For turnout, enter CT1 if your node address was 0, or else 
+        enter CTn001, where n is your node address. (This assigns output
+        bit 1 of your SMINI as a turnout.)
+    <LI>Click "Closed" or "Thrown" to turn output line 1 on and off.
+    </UL>
+    If you connect an LED in series with a resistor (ohm size depends 
+    upon the direct current voltage applied) to output bit 1, you will 
+    be able to turn the LED on and off by simply clicking "Closed" or 
+    "Thrown" in the turnout control window.  Note that SMINI output bits 
+    can be set up to be either "current sinking" or "current sourcing". 
+    (Which you have depends on how your SMINI is constructed.) JMRI 
+    works the same, independent of the type of output bit, but the type 
+    of output bit determines how you hook up your LED. If your output
+    bits are current sinking (the most common type), connect the 
+    negative lead of your LED to output pin 1, and connect the resistor 
+    between the positive LED lead and a source of direct current (usually 
+    3 to 12 volts). If your output bits are current sourcing, connect
+    the positive lead of your LED to output pin 1, and connect the 
+    resistor between the negative lead and direct current ground.  				
+</ol>
+<P>You now have one C/MRI node configured and working. You may add
+    more nodes, by returning to the Configure C/MRI Nodes dialog 
+    (<a href="#nodes">see below</a>).
+
+<H2>Getting Started with a USIC or SUSIC</H2></a>
+
+After you have physically connected your SUSIC (or USIC) to your computer, 
+follow the procedure below to configure your SUSIC (or USIC) as a C/MRI 
+node, and test an input bit and an output bit. The procedure assumes 
+that 1) this SUSIC is the first C/MRI node being connected to your 
+computer, 2) that nothing is connected to the input pins of your SUSIC's 
+first digital input card, or the output pins of your SUSIC's first 
+digital output card, and 3)	that you haven't made any assignments for 
+your SUSIC's bits.</p>
+<ol>
+<li>Start the PanelPro program.
+<li>From the Edit menu, select <b>Preferences...</b> and configure:
+    <ul>
+    <li>For layout connection select "C/MRI".
+    <li>For serial port, select the port your C/MRI  hardware is attached to.
+    <li>Select the baud rate your C/MRI system uses
+    <li>Click the "Configure C/MRI nodes" button. On the
+        new panel that opens:
+        <UL>
+        <LI>Enter your SUSIC's node address. (0 is typically used for 
+            the first SUSIC module, but enter whatever number is in the 
+            address switches on your SUSIC controller board.)
+        <LI>Select "USIC_SUSIC" for node type. 
+        <LI>Leave DL at zero.
+        <LI>Select "24-bit" or "32-bit" for card size, depending
+            on whether you have the original 24-bit or newer 32-bit 
+            DIN and DOUT cards.
+        <LI>Use the table below to configure your cards and tell JMRI
+            which card addresses have input cards and which have output
+            cards. For each card you've installed, click where it 
+            says "No Card" and select "Input Card" or "Output Card". 
+            Note that the input and output cards may be in any order, 
+            but there must be no empty slots before the one following 
+            the last installed card. (This is a C/MRI hardware 
+            requirement.)
+        <li>Click "Add Node"
+        <LI>Click "Done"
+        </ul>
+    <li>Back on the "Preferences..." panel, click "Save", and say yes when 
+    it asks if you want to quit.
+    </ul>
+<li>Restart the program. You need to assign an input bit to start 
+    polling. Select <b>Sensor Table</b> from the Tools menu, and proceed:
+    <UL>
+    <LI>Click "Add..." at the bottom of the table.
+    <LI>In the Add New Sensor dialog:
+        <UL>
+        <LI> For system name, enter CS1 if your SUSIC's node address was
+            0, or else enter CSn001, where n is your SUSIC's node address.
+        <LI> For user name enter "Test".
+        <LI> Click "OK".
+        </UL>
+    <LI>The system name and user name will appear in the sensor table. 
+        The state of your sensor in the sensor table will initially be 
+        "Unknown", but will quickly switch to "Inactive" when polling 
+        begins (assuming nothing is connected to input pin 1).
+    </UL>
+    The transmit and receive LED's on your SUSIC controller board should 
+    now be flashing, indicating that the computer and the SUSIC are 
+    talking.
+<li>To check that the input bit (sensor) you assigned is working, 
+    connect a jumper wire from input pin 1 (the first input pin on the
+    first input card of your SUSIC) to direct current ground.  
+    The sensor should switch to "Active". The sensor state 
+    will alternate between "Active" and "Inactive", according to whether
+    pin 1 is grounded or not.
+<li>To check that everything is working on the output side, select 
+    <b>Turnout Control</b> from the Tools menu.  When the small Turnout 
+    Control window opens, proceed:
+    <UL> 
+    <LI>For turnout, enter CT1 if your SUSIC's node address was 0, or 
+    else enter CTn001, where n is your SUSIC's node address. This 
+    assigns output bit 1 (the first output line on the first output card 
+    of your SUSIC) as a turnout.
+    <LI>Click "Closed" or "Thrown" to turn output line 1 on and off.
+    </UL>
+    If you connect an LED in series with a resistor (ohm size depends 
+    upon the direct current voltage applied) to output bit 1, you will 
+    be able to turn the LED on and off by simply clicking "Closed" or 
+    "Thrown" in the turnout control window. Alternatively you can use
+    a meter set to measure direct current to detect a change in output
+    bit 1 as it is switched on and off.
+</ol>
+<P>You now have one C/MRI node configured and working. You may add
+    more nodes, or edit the DIN/DOUT card configuration of this SUSIC node, 
+    by returning to the Configure C/MRI Nodes dialog 
+    (<a href="#nodes">see below</a>).  
+
+<a name=nodes><H2>Managing Nodes</H2></a>
+
+Each SMINI, USIC or SUSIC is called a "node".  Before using C/MRI with 
+JMRI, you must tell JMRI what nodes you have on your system and the 
+configuration of each node.  When you select C/MRI in the Preferences 
+dialog, a "Configure C/MRI nodes" button is displayed.  Click this button 
+to bring up a dialog for entering node configuration information. You can 
+add new nodes or update an existing node's configuration by returning to the 
+Preference dialog (<b>Edit>Preferences...</b>) or by selecting <b>Configure 
+C/MRI Nodes</b> in the CMRI menu.  Make sure to save your 
+preferences after making changes to your node configuration. Use the "Save" 
+button in the Preferences window.</P>
+<P>A node's address is set using the address switches on your C/MRI board. 
+(Node addresses are called UA in C/MRI manuals.) Node addresses must be 
+unique for each board, but need not be sequential. The node address is used 
+in the JMRI system name to reference input and output bits belonging to that 
+node (<a href="#numbers">see below</a>).</P>
+<P>Configuring C/MRI nodes using the configuration dialog is simple. For an 
+SMINI, simply enter the Node Address as set in the address switches on the 
+SMINI board, select SMINI for the Node Type, and click the "Add Node" 
+button.  For a USIC or SUSIC, enter the node address, select USIC_SUSIC, 
+select 24-bit or 32-bit cards, then tell JMRI what type cards are in 
+occupied slots.</P>
+<P>For each node, you can view a summary list of C/MRI bits that are in 
+use and those that are available.  Select <b>List Assignments</b> in the 
+CMRI menu to bring up the List C/MRI Assignments dialog.  Then select the 
+node of interest from the list of configured nodes, and whether you want to 
+view input bit assignments or output bit assignments.  The assignments being 
+viewed may be printed by clicking the Print button at the bottom of the 
+dialog.</P>
+<P><B>List Assignments</B> is useful for checking that you have
+configured the correct numbers of input and output bits and the correct node 
+address for each node.  The List Assignments software works from the current 
+C/MRI configuration, so if a node has been configured, it will be selectable 
+in the List C/MRI Assignments dialog. The assignment table contains a line 
+for each configured input or output bit. Each line also contains an address 
+column showing what address to use for that bit in JMRI's C/MRI system 
+names.  Printing blank assignment lists for each node provides a convenient 
+paper form for use in setting up your input/output bit assignments.</P>
+
+<a name=numbers><H2>Numbering used in C/MRI System Names</H2></a>
+
+C/MRI system names start with "C". For example, "CS24" is a C/MRI 
+"S"ensor, the 24th input line, "CL35" refers to the 35th output line as 
+a "L"ight, and "CT38" refers to the 38th output line as a "T"urnout (all
+for a node with address of 0).</p>
+
+<p>For each node, inputs and outputs are numbered sequentially from 1, without
+worrying about the types of cards, or what type card is in what card slot. 
+For example, if you have two 24-bit input cards, CS25 refers to the 1st input 
+line on the second input card.  If you have two 32-bit input cards, CS25 
+refers to the 25th input line on the first input card.</p>
+
+<p>Each SMINI, USIC or SUSIC (node) has a unique address set into its 
+hardware address switches and entered when you configured each C/MRI node 
+(<a href="#nodes">see above</a>). 
+Sensors and turnouts on the first node (address 0) are numbered from 1 to 
+999; sensors and turnouts on the second node (address 1) are numbered 1001 
+to 1999; etc. Note that node addresses may be sequential, but are not 
+required to be so.</p>
+
+<P>For example:
+<UL>
+<LI>Say you have a SMINI with it's address switches set to "2". All of the
+inputs and outputs on that node will be numbered starting with 2001.  
+    <UL>
+    <LI>CT2001 is the first output pin
+    <LI>CT2048 is the last output pin
+    <LI>CS2001 is the first input pin
+    <LI>CS2024 is the last output pin.
+    </UL>
+<LI>If you have a USIC with it's address switches set to "1", it will
+have all it's inputs and outputs numbered starting with 1001.  If it has
+three 24-bit input cards, and two 24-bit output cards, their addresses will be:
+    <UL>
+    <LI>CT1001 is the first pin on the 1st output card
+    <LI>CT1024 is the last pin on the 1st output card
+    <LI>CT1025 is the first pin on the 2nd output card
+    <LI>CT1048 is the last pin on the 2nd output card
+    <LI>CS1001 is the first pin on the 1st input card
+    <LI>CS1024 is the last pin on the 1st input card
+    <LI>CS1025 is the first pin on the 2nd input card
+    <LI>CS1049 is the first pin on the 3rd input card
+    <LI>CS1072 is the last pin on the 3rd input card
+    </UL>
+Note that it doesn't matter what order the cards are installed. That's
+configured when you put together the hardware. JMRI is told what type
+card is installed in what USIC slot when you define the node in the 
+C/MRI configuration dialog (<a href="#nodes">see above</a>). 
+<LI>Is you have a SUSIC with it's address switches set to "4", the inputs
+and outputs will be numbered starting with 4001.  If it has two 32-bit input
+and two 32-bit output
+cards, their addresses will be:
+    <UL>
+    <LI>CT4001 is the first pin on the 1st output card
+    <LI>CT4032 is the last pin on the 1st output card
+    <LI>CT4033 is the first pin on the 2nd output card
+    <LI>CT4064 is the last pin on the 2nd output card
+    <LI>CS4001 is the first pin on the 1st input card
+    <LI>CS4032 is the last pin on the 1st input card
+    <LI>CS4033 is the first pin on the 2nd input card
+    <LI>CS4064 is the last pin on the 2nd input card
+    </UL>
+
+</UL>
+
+<p>When entering Hardware information into the Add sensor window you can 
+Enter in the Node Id, followed by the Sensor Id, seperated by a ":".  
+This method can also be used for the alternative/extended addressing.<br>
+So for a sensor on Node 2, pin 3 you would enter the following into the hardware
+address field : <b>2:3</b></p>
+
+<P>To summarize, input and output pins are labeled sequentially
+within each C/MRI node.  To complete the bit address, add 1000 times the
+node address to the pin number. Node addresses can go as high as the C/MRI 
+hardware allows.</P>
+<P>For an easy guide to input and output pins addresses, select <b>List 
+Assignments</b> in the CMRI menu to access tables listing assigned and 
+available inputs and outputs for each node. Each table has a line for each 
+pin including an address column showing what address to use for that pin in 
+system names.</P>   	
+
+<a name=alternate><H2>Alternate Numbering for System Names</H2></a>
+
+An alternate scheme for numbering in C/MRI system names was developed 
+to give user access to the full number of lines allowed by C/MRI hardware design.
+The main numbering system (<a href="#numbers">documented above</a>) allows 
+access to 999 input and output lines on each node. The C/MRI hardware design, 
+however, supports many more bits for USIC and SUSIC nodes. Most JMRI users 
+will never need this alternate scheme, and should use the main numbering scheme.
+<P>
+The alternate numbering scheme is similar to the main numbering scheme,
+except the node address and bit number are separated by a "B",
+and both node address and bit number can range to any value supported by C/MRI.
+For example, CS1B13 refers to input line 13 of a node with address 1, and is 
+equivalent to CS1013 in the main numbering scheme. Also CT2B1109 refers to 
+output line 1109 of a node with address 2, and there is no equivalent in the 
+main numbering scheme. Users may use either numbering scheme interchangeably 
+for line numbers up to 999, but must use the alternate numbering scheme for 
+line numbers greater than 999. For ease in communicating with other users, 
+using the main numbering scheme is recommended unless bits greater than 999
+need to be addressed.
+
+<a name=options><H2>C/MRI Turnout Control Options</H2></a>
+
+Turnouts (switches) may be controlled using one or two output bits.  
+When a turnout is created using the Add option in the Turnout Table, 
+the user is asked whether the turnout is to be controlled using one 
+or two output bits.  
+<P>
+If one-output-bit control is selected, the user must select either 'steady state'
+or 'pulsed' control. If 'steady state' is selected, then that output bit is set 
+"Off" for CLOSED ('normal' in C/MRI manuals) or "On" for THROWN ('reverse' in 
+C/MRI manuals). When setting the output bit, JMRI compares the requested state 
+to the state indicated by the current value of the output bit. If these states 
+are different, then the output bit is set as indicated above. If these states 
+are the same, that state is compared to the state indicated by turnout feedback. 
+If the states are the same, no action is taken since the turnout is already in 
+the requested state. If the states are different, the turnout was probably 
+changed by some means separate from JMRI. To ensure the turnout is actually 
+set to the requested state, the output bit is first changed to match the state 
+indicated by the turnout feedback, then one second later it is changed again to 
+match the requested state. This guarantees a change of state for those turnout 
+control devices that require a change in state to actually move the turnout.
+<P>
+If one-output-bit with pulsed control is selected, the output bit is "Off" when 
+nothing is happening. When CLOSED or THROWN is requested, this request is 
+compared to the known state of the turnout (which follows turnout feedback). 
+If the known state indicates the turnout is already in the requested state, 
+nothing is done. If the known state is different from the requested state, then 
+the bit is 'pulsed'.  A 'pulse' consists of the bit being turned "On" for one 
+second, then returned to the "Off" position. 
+<P>
+If two-output-bit control is selected, the bit referenced in the turnout system 
+name (see above) and the next bit in sequence are used to control the turnout. 
+For example, if CT33 has two-output-bit control, the 33rd and 34th bits are 
+used to control the turnout. If two-output-bit control is selected, the user 
+must select either 'steady state' or 'pulsed' control.  Steady state control 
+should be selected for stall motor turnouts, such as a Tortoise, if it is being 
+controlled according to the recommendation in Chubb's C/MRI User's Manual, 
+Version 3.0, page 3-12. With steady state control, for CLOSED, the first bit is 
+set "Off" and the second bit is set "On"; for THROWN, the bits states are 
+reversed, i.e., the first bit is set "On" and the second bit is set "Off". 
+<P>
+If two-output-bit control with pulse control is requested, both bits are "Off" 
+when nothing is happening. When CLOSED or THROWN is requested, this request is 
+compared to the known state of the turnout (which follows turnout feedback). If 
+the known state indicates the turnout is already in the requested state, 
+nothing is done. If the known state is different from the requested state, then 
+the first bit is pulsed if CLOSED is requested, or the second bit is pulsed if 
+THROWN is requested.  In either case, a 'pulse' consists of the bit being 
+turned "On" for one second, then returned to the "Off" position.
+<p><I>Note that to have two-output-bit control,
+a turnout must be created using the "Add" button in the Turnout Table.</I>
+<p>
+Finally, the "inverted" option can be selected.  This controls
+how the C/MRI hardware implements the "On" and "Off" used in the 
+description above.  Normally (invert option not selected),
+"On" refers to a "1" to the hardware; with standard C/MRI hardware,
+this pulls the output pin down and allows it to sink current.  "Off"
+the corresponds to a "0" to the hardware, turning the output pin off, 
+and causing it to stop sinking current.
+<p>
+When "invert" is selected, "On" results in a "0" sent to the hardware, and
+"Off" results in a "1" being sent.  This causes the hardware to act with
+the opposite polarity.
+</dd>
+
+<a name=signals><H2>Wiring Signals</H2></a>
+
+JMRI can work with all the popular ways of wiring 
+signals to C/MRI hardware (and there are a lot of them!)
+For information on how to configure your signals to the
+program, please see the 
+<A HREF="Signals.shtml">C/MRI signals</a> page.   
+
+<a name=diagnostics><H2>C/MRI Diagnostics</H2></a>
+
+JMRI supports the two automated diagnostic procedures mentioned in 
+Chapter 6 of Bruce Chubb's <b>C/MRI User's Manual, Version 3.0</b>. Diagnostics
+are useful for checking the functioning of your C/MRI hardware. These automated 
+procedures are controlled via a dialog available by selecting 
+<b><a href="../../../package/jmri/jmrix/cmri/serial/diagnostic/DiagnosticFrame.shtml">Run Diagnostic</a></b>
+in the CMRI menu. 
+The Wraparound Test requires a special 
+wraparound test cable, and the Output Test requires a special output test card.  
+Both devices are described in the above reference. Any other connections to input
+or output bits on the card(s) being tested should be unplugged when these tests 
+are run. The diagnostics are easy to use.  Simply follow the instructions presented 
+in the Run C/MRI Diagnostic dialog.  Any errors found are reported in the status 
+box of the dialog.
+
+<a name=usb><H2>Using USB-serial adapters</H2></a>
+
+Most C/MRI systems use RS485 electrical signals to communicate between
+the nodes and the computer.  There are several ways to generate them:
+<ol>
+<li>If your computer has a built-in serial port (RS232 connection), you can use 
+an RS232-to-RS485 convertor.  There's one you can build as 
+part of the C/MRI system, or you can buy a commercial one.
+<li>If your computer has a USB port, you can buy a commercial
+USB-toRS485 adapter and use that.
+<li>If your computer has a USB port and you have a RS232-to-RS485
+convertor, you can install a USB-to-RS232 adapter (sometimes called
+a "USB-to-serial converter"), then connect the RS232 output of that to the
+RS232 input of the RS232-to-RS485 convertor.  
+Note that if you're using the Chubb RS232-to-RS485 converter, some 
+USB-to-RS232 adapters will require that you connect certain 
+RS232 control leads that are not handled by the Chubb convertor:
+    <ul>
+    <li>DSR - DTR (pins 4&6 on the DB9 connector)
+    <li>RTS - CTS (pins 7&8 on the DB9 connector)
+    </ul>
+</ol>
+
+In all cases, the communications line will end up appearing
+as a serial port on your computer.  In Windows, this is a COMn port,
+in other computers it's a named serial device. You'll have to select
+the proper one when configuring JMRI.
+<a name=sim><H2>Running JMRI when disconnected from your C/MRI system</H2></a>
+
+JMRI continually polls the C/MRI hardware for status changes.
+If one or more C/MRI nodes are not responding, eventually their inputs (Sensors)
+are set to the UNKNOWN state to indicate that JMRI has lost contact with 
+those devices on the layout.
+<p>
+Although this is the right thing to do when you're really connected to the
+hardware and trying to operate the layout, it can get in the way if you're 
+running JMRI without your layout connection.  
+You might want to do this, for example, to work on your panels while 
+away from the layout, or while the layout needs to be powered off for some reason.
+<p>
+To accomodate using JMRI without an active layout connection, 
+in the JMRI 2.3.2 release a "C/MRI Simulator" connection was made available
+in the preferences.
+<p>
+<i>Please note that this is only meant for users who already have a working
+C/MRI connection already configured. Please do not try to 
+use the C/MRI simulator before configuring a valid connection to C/MRI hardware, 
+as it will not work.</i>
+<p>
+Once you have your C/MRI connection configured, when your hardware is
+not available you can just go to the JMRI preferences, select "C/MRI Simulator", 
+save preferences, quit and restart. Don't change any other settings!
+<p>
+When the C/MRI hardware is again available, go the JMRI preferences, 
+select "C/MRI Serial", save preferences, quit and restart.
+
+
+<H2> More info </H2>
+For more information on C/MRI (including the C/MRI User Manual), 
+please see the </p>
+<p><a HREF="http://www.jlcenterprises.net/">JLC Enterprises web site</a>,
+the 
+<a HREF="http://groups.yahoo.com/group/CMRI_Users/">C/MRI yahoo users group</a>,
+and the 
+<A HREF="http://www.easeeinterfaces.com">Easee Interfaces web site</a>.
+</p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

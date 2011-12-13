@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: Memory Table Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Memory Table">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>The Memory Table</H1>
+    
+You can use the Memory Table to look at the contents of JMRI memory variables.
+<p>
+Note that you can sort the table by each of the columns, just click on the
+column heading.
+<p>
+To change the value stored in a particular memory, just click on the 
+value column in the desired row. Enter a new value, followed by hitting the 
+return or enter key to store the value.
+<p>
+To create a new memory variable, click on the 
+"<a href="MemoryAddEdit.shtml">Add...</a>" button at the bottom of the window.
+
+<p>
+For more information on memories, see the 
+<a href="../../../../html/tools/Memories.shtml">memory help page</a>.
+<br>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

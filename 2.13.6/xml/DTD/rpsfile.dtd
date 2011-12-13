@@ -1,0 +1,41 @@
+<!-- Defines XML for RPS position information -->
+<!-- $Id$ -->
+
+<!-- This DTD is part of JMRI.                                              -->
+<!-- Copyright Bob Jacobsen 2008                                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!ELEMENT rpsfile (vsound?, offset?, receiver*, calibrationpoint*, transmitter*)>
+
+<!ELEMENT vsound  (#PCDATA)>
+<!ELEMENT offset  (#PCDATA)>
+
+<!ELEMENT receiver (position)>
+<!ATTLIST receiver number CDATA #REQUIRED>
+
+<!ELEMENT calibrationpoint EMPTY>
+
+<!ELEMENT position (x, y, z)>
+
+<!ELEMENT x (#PCDATA)>
+<!ELEMENT y (#PCDATA)>
+<!ELEMENT z (#PCDATA)>
+
+<!ELEMENT reading (id, time*)>
+
+<!ELEMENT id (#PCDATA)>
+<!ELEMENT time (#PCDATA)>
+
+<!ELEMENT transmitter (#PCDATA)>
+<!ATTLIST transmitter address CDATA #REQUIRED>
+<!ATTLIST transmitter long (true|false) "false" >
+

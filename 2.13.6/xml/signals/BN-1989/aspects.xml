@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>BN-1989</name>
+  <date>1989</date>
+  <reference>As described in the October 1989 Burlington Northern Railroad Southern Region, Debraska Division Timetable #2. In effect at 0001 Continental Mountain Time, Sunday October 29, 1989.</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>James</firstname><surname>Koretsky</surname></personname>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-02-08</date>
+        <authorinitials>JK</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspects>
+
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule 230</rule>
+      <indication>Proceed</indication>
+      <reference>Page 2</reference>
+    </aspect>
+
+    <aspect>
+      <name>Advance Approach</name>
+      <rule>Rule 232</rule>
+      <indication>Proceed prepared to stop at second signal</indication>
+      <reference>Page 2</reference>
+    </aspect>
+  
+    <aspect>
+      <name>Approach Diverging</name>
+      <rule>Rule 233</rule>
+      <indication>Proceed prepared to advance on diverging route at the next signal at prescribed speed through turnout.</indication>
+      <reference>Page 2</reference>
+    </aspect>
+ 
+    <aspect>
+      <name>Approach Medium</name>
+      <rule>Rule 234</rule>
+      <indication>Proceed prepared to pass next signal not exceeding 35 MPH.</indication>
+      <reference>Page 2</reference>
+    </aspect>
+
+    <aspect>
+      <name>Approach Restricting</name>
+      <rule>Rule 235</rule>
+      <indication>Proceed prepared to pass next signal at restricted speed.</indication>
+      <reference>Page 2</reference>
+    </aspect>
+
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule 236</rule>
+      <indication>Proceed prepared to stop at next signal, trains exceeding 35 MPH immediately reduce to that speed.</indication>
+      <reference>Page 2</reference>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Clear</name>
+      <rule>Rule 237</rule>
+      <indication>Proceed on diverging route not exceeding prescribed speed through turnout.</indication>
+      <reference>Page 2</reference>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Approach Medium</name>
+      <rule>Rule 238</rule>
+      <indication>Proceed on diverging route not exceeding prescribed speed through turnout prepared to pass next signal not exceeding 35 MPH.</indication>
+      <reference>Page 2</reference>
+    </aspect>
+
+    <aspect>
+      <name>Diverging Approach</name>
+      <rule>Rule 239</rule>
+      <indication>Proceed on diverging route not exceeding prescribed speed through turnout prepared to stop at next signal, trains exceeding 35 MPH immediately reduce to that speed.</indication>
+      <reference>Page 2</reference>
+    </aspect>
+
+    <aspect>
+      <name>Restricted Proceed</name>
+      <rule>Rule 241</rule>
+      <indication>Proceed at restricted speed.</indication>
+      <reference>Page 2</reference>
+    </aspect>
+
+    <aspect>
+      <name>Stop</name>
+      <rule>Rule 242</rule>
+      <indication>Stop.</indication>
+      <reference>Page 2</reference>
+    </aspect>
+
+  </aspects>
+
+  <appearancefiles>
+    <appearancefile href="appearance-SL-1-abs.xml"/>
+    <appearancefile href="appearance-SL-2-abs.xml"/>
+    <appearancefile href="appearance-SL-3-abs.xml"/>
+  </appearancefiles>
+
+  
+</aspecttable>
+  

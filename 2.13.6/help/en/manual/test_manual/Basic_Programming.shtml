@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009, 2010 -->
+<!-- $Id: Basic_Programming.shtml 18193 2011-08-16 23:19:17Z dat7719 $ -->
+<TITLE>
+Using DecoderPro&reg;
+</TITLE>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>Using DecoderPro&reg;</h1>
+
+<div align=right>
+<p><a href="Getting_Started.shtml#Getting Started"> Previous | </a><a href="Comp_Setup_Roster.shtml">Next</a></p>
+<p><a href="index.shtml#Basic Programmer">Back to Index</a></p>
+</div>
+
+
+<hr>
+
+<h2><a NAME="Setting Up"></a>Setting Up the Programmer</h2>
+<p>Prior to using the programmer you  need to have completed the previous section (<a href="Getting_Started.shtml#top">Getting Started</a>), have your computer connected to  your command station/booster with the required interface device for your DCC  system, you are now ready to actually program a decoder that has been installed  in your locomotive.</p>
+<p><br>
+  On opening DecoderPro, the main  page will be displayed: </p>
+<div align="center"><img src="images/Splash_Screen.png" alt="Splaxh Screen" width="425" height="265" border="5" class="BOXIT">
+  
+</div>
+<p>There are four buttons near the  bottom, the first two of which are: </p>
+<ol>
+  <li><b>Service Mode (programming track) Programmer</b> - 
+    With this button you program the locomotive on the dedicated programming track.  (Probably because the Locomotive has to be taken to the  servicing track to be programmed).&nbsp; Not all command  stations support a dedicated programming track, and some brands  will shut down the mainline power when in programming mode (not pleasant when you have  an ops session in progress.
+</ol>
+<blockquote>
+  <p><strong>Reading  your Decoder On the programming track:</strong><br>
+    <br>
+To obtain  information from the decoder on the programming track we rely on the ability of  the decoder to respond to a query, what is known as <strong>Readback. </strong>Most  decoders cannot talk to send information back to the command station.&nbsp;  They just respond to instructions, so special instructions were developed which  allow the Command Station &nbsp;to determine  the contents of the decoder's memories <br>
+<br>
+Basically  the decoder is asked a whole&nbsp;series of questions and when the answer is  &ldquo;yes&rdquo; it turns on the motor for only a very brief time.&nbsp; The command  station notices the current being drawn and stops asking questions, since it  got the <strong><em>yes</em></strong> answer to the last question.&nbsp; This can take a  bit of time since the command station must ask all possible values waiting for  the <strong><em>yes</em></strong> response.&nbsp;You can observe the process by looking  down at the bottom line of all the panes (the status bar) where the word<strong><em> idle </em></strong>is normally shown when the programmer is inactive.&nbsp; When  DecoderPro is working it will show you what events are being performed.&nbsp;  Sometimes you can see the loco jump a bit as the decoder pulses the motor for  &ldquo;yes&rdquo;.&nbsp; The computer folks call this an  ack (for acknowledgement).&nbsp; When the Command  Station sends the decoder data that is in agreement with what is in the CV of  the decoder, the decoder will send an ack.&nbsp;  If the ack is never received the Command Station tells DecoderPro that  the Decoder did not respond.<br>
+<br>
+<strong>Writing  to Decoder on the programming track:</strong><br>
+<br>
+The CV  data is written to ANY and ALL decoders on the programming track. When the  write has been successful the decoder will acknowledge (ack) to the Digital  Command Station (DCS.) If the ack is not seen by the DCS it says the decoder  did not respond. (error code 308 in JMRI) </p>
+</blockquote>
+<ol start="2">
+  <li><b>Operations Mode (Main Track) Programmer</b> - 
+    or  <strong>Programming on the main(POM)</strong>.&nbsp; This  lets you program a specific decoder on the layout, even while it is 
+    operating. However, because it addresses a specific  decoder address, some  decoders will not allow you to change the  decoder's address using this method! 
+</ol>
+<p>Some  command stations will only &quot;broadcast&quot; programming commands,  which can mean every locomotive on 
+       the layout gets the same programming! The same is true if  you try to program a loco with address zero (or forget to enter an address when  you start). &nbsp;If in doubt, check  your documentation. </p>
+<blockquote>  
+ <strong>Reading  from your Decoder on the main:</strong><br>
+    <br>
+With a  few exceptions it is not possible to read from a CV on the Main.  If reading fails it usually reports as a 306 error (Timeout Talking to Command  Station.)<br>
+<br>
+<strong>Writing  to your decoder on the main:</strong> <br>
+<br>
+Program  on the Main writes are often called a &quot;blind write&quot; because there is  no response from the decoder that the write was successful.&nbsp; POM is very useful for tuning loco  performance while it is operating and the ack is the change in performance.<br>
+The decoder  is first addressed by the Command Station, then the CV is addressed and then  the data that is to be written into that CV of that decoder is sent. An  exception is if address zero is used,(or you forget to enter an address when  you start). &nbsp;Then <strong>ALL</strong> decoders  on the main will write that data into the appropriate CV which usually is an &ldquo;unintended  consequence&rdquo;.<br>
+  <br>
+The other two buttons are:</blockquote>
+<ol start="3">
+  <li><strong>Help     </strong>- Accesses the help files<br>
+    <br>
+  </li>
+  <li><b>Quit</b> - Exits the program. </li>
+</ol>
+<p> <a name="ServiceMode"></a>Click on <b>Service Mode (programming track) Programmer </b>and the Service Mode Programmer  (Programming Track) Setup window opens </p>
+<div align="center"><img src="images/Set_Up.png" alt="Service Mode Setup" border="5" class="BOXIT">
+</div>
+<p>The first item at the top of the service mode programmer  pane is a selection for the mode used to program your decoders.&nbsp; This is a legacy to the olden times and  rather technical, but fortunately DecoderPro has matured to the point that it  is quite good at selecting the best mode for you.&nbsp; It uses the selection of command station from  your Preferences selections, combined with the decoder manufacturer and type  selections (which we&rsquo;ll get to real soon now).&nbsp;  Just accept what&rsquo;s there as a good start.&nbsp; And, fear not, for each pane in the  programmer has a button which can be used to change programming mode if you  have a problem.&nbsp; For further details on  programming mode <a href="Basic_Mode.shtml"><strong>click here</strong></a>.</p>
+<a name="SelectDecoder"></a>
+<p>Now let&rsquo;s  determine the type of decoder that&rsquo;s  installed in the locomotive that you would like to program. </p>
+<p>The decoder identification is entered by using the  selections in the middle of the page.&nbsp;</p>
+<p>Since we want to know what type of decoder is in the locomotive, we  can either look up what was listed when it was entered in the roster stored in this  computer, or we can ask it what it&rsquo;s manufacturer and firmware version are.
+  &nbsp;
+The first is method is <strong>IDENT,</strong> and the other is <strong>READ  TYPE.</strong>&nbsp; You can use one or the other, but  they are mutually exclusive.</p>
+<p><strong>IDENT </strong>is used to identify a locomotive that is already  stored in your computer&rsquo;s roster file.&nbsp;  You can use the drop down arrow to display a listing of locomotives in  your roster, and then select the desired locomotive from the list.&nbsp;  An alternative is to be lazy and click the<strong> IDENT</strong> button.&nbsp; The program will then query the locomotive to  get it&rsquo;s address which is linked to the roster entry.&nbsp; The Decoder Pro roster entry includes the  decoder type used when it programmed the locomotive.&nbsp; If it gets a valid address, but there is no  roster entry with that address, then you will get an error message.</p>
+<p><strong>READ TYPE </strong>is the other method located in the center of  the page.&nbsp; If you click on <strong>Read Type  From Decoder </strong>button, the system will query the decoder to get the manufacturer and  firmware version number.&nbsp; From this  information it will highlight all the decoders which are known to match.&nbsp; There may be several, usually with differences in  the physical shape and size to fit in a particular locomotive&rsquo;s shell, or a few  more &ldquo;bells and whistles&rdquo;.&nbsp;&nbsp;&nbsp; When  confronted with a large selection, you can either remove the shell to try to  read information printed on the decoder itself, or just select one of the ones with  the fewest letters in the model number.&nbsp;  (Letters are often used to separate the shape differences which have no  bearing on the electronic functions of the decoder.)&nbsp;Just be aware that some functions  that Decoder Pro allows you to  program may not be fully operable.</p>
+
+<p>As noted above, these methods  will work only with command  stations which are capable of reading back the contents of CV&rsquo;s, and the process does  take some time.&nbsp;Many lower end and/or older systems and decoders do not provide readback capability.&nbsp;&nbsp;  If the command station cannot read CV&rsquo;s from the programming track, you  will have to select the decoder manually by using the large selection box in  the middle of the page.&nbsp; With it you can  select the manufacturer, family and specific model of the decoder.&nbsp; This manual method may be the best and  fastest way if you know for sure &ldquo;What&rsquo;s in there&rdquo;.</p>
+
+<p>If you have a decoder that doesn&rsquo;t appear in the listing,  you may want to check to be sure that you are using the most up to date version  of Decoder Pro, because manufacturers are adding models almost faster than the  team can enter the new decoder definitions into the files.&nbsp; You can choose a manufacturer's version which  is as close as you can find, or if you&rsquo;re only interested in basic programming  functions, use the NMRA&copy; decoder which  is a generic file of the CV&rsquo;s contained in their standards.</p>
+
+<p>The last item on  this pane is the Programmer Format entry.&nbsp;  It is preset by your Preferences entry, but you can select other  programmers using the drop down arrow. &nbsp;For now use the <strong>Basic </strong>programmer, because  you won&rsquo;t be able to do much damage if you make mistakes.&nbsp; We&rsquo;ll get into the other programmers later  on.</p>
+<p>Once you have  selected a decoder, or Decoder Pro has done it for you, the <strong>Open Programmer </strong>button will become activated and you&rsquo;ll be able to move on with Service Mode  Programming.&nbsp; </p>
+
+<p>When you are on the <strong>Setup Pane</strong> and click on the <strong>Open Programmer</strong> button, the selected Programmer  window will open. All programmers, Basic and Comprehensive, open to the Roster  Entry pane, which will be similar to that shown below. </p>
+
+<p>But before we do that let&rsquo;s cover  the other type of  programming, namely <strong>Operations Mode programming </strong>(Ops Mode) or Program on  the Main(POM).&nbsp; All the discussion above had  to do with working on a physically separate piece of track away from the layout.&nbsp; In Ops Mode we program  directly on the main line while the locomotive is in operation.&nbsp; Great for  getting those speeds and sounds just right. Most all of the programming panes  we will discuss will work just as well when you are programming on the main,  and you get instant feedback to your changes.&nbsp; How cool is that?</p>
+
+<p><a name="OpsMode"></a>If you click on <b>Operations Mode (Main Track) Programmer</b>  the <em><strong>Operations Mode (Main Track) Programmer setup </strong>window</em> will open.</p>
+
+
+<div align="center"><img src="images/Ops_Mode_setup.png" alt="Ops Mode setup window" border="5" class="BOXIT">
+  
+</div>
+<p>In this window you  select the locomotive in which you wish to change CV values, and what  programmer you want to use.&nbsp; Once they are selected you click <strong>Open Programmer</strong> button just as we were about to do in the <strong>Service  Mode programmer</strong>.</p>
+<p>Getting back to the  <strong>Service Mode Programmer</strong>, which is now completely set-up with a decoder and the Basic  programmer selected, let&rsquo;s move on to Basic Programming. &nbsp;Click on the <strong>Open Programmer</strong> button to open  the programmer panes.</p>
+
+
+<div align=right>
+  <p><a href="index.shtml#Basic Programmer">Back to Index</a> </p>
+</div>
+<hr>
+<br>
+<h1><a NAME="Basic Programmer"></a>The Basic Programmer</h1>
+<p>The first action in programming a locomotive with Decoder Pro is to fill out the roster entry screen.</p>
+<h2><a NAME="Roster"></a>The Roster Entry Pane</h2>
+<p>
+A <b>roster</b> is a  database of all locomotives that your installation
+of Decoder Pro has programmed. It includes the information seen in the screen
+below:</p>
+<div align="center"><img src="images/Basic_Roster.png" alt="Basic Programmer Roster Tab" width=648 height=520 border=5 class="BOXIT">
+  
+</div>
+<p>Most of these fields are self-explanatory.  However, note that the first field (<strong>ID</strong>) becomes the 
+file name in the Roster for the locomotive you are programming. Set up a  schema to identify your locomotive to its decoder program. i.e. Mfr, Loco Type, and &nbsp;Address (Kato_SD40-2_5645). Spaces in the ID field will be  changed to underscores (_) when the file is written.&nbsp; In a club environment, often the ID begins  with the owner&rsquo;s name, or  member number. This way the Roster (which is sorted alphabetically) will keep  all of an owner's locomotives listed together. </p>
+<p>The <strong>Throttle Speed Limit(%)</strong> entry will set the top  speed of a locomotive as a percentage of its normal maximum.&nbsp; Good for grandkids, but only works with JMRI  throttles, not system throttles (i.e. NCE or Digitrax).</p>
+<p> The  <strong>Comment</strong> field is a good place 
+  to add the date you purchased the locomotive, price, or  any other information you might 
+feel is important to record. </p>
+
+<p>The <strong>Save</strong> button stores the  current decoder information to  your computer hard drive and folder where your roster file is located. The default storage is the same directory where the program is  installed. </p>
+
+<p>The <strong>Reset to Defaults</strong> button can be used to return the Roster file to the condition of a new file for  the type and version of the decoder listed in the roster entry.&nbsp; It does NOT change the values in the roster  file on your hard disk, unless you specifically save it after using this reset  button. It also is not written to the decoder until you specifically select a  write operation.&nbsp; It was included in  DecoderPro so that if you get hopelessly confused in proceeding screen to  screen entering variables, you can return to the manufacturers baseline default  set and start again. </p>
+<p><br>
+  Most decoders will activate the <strong>Reset Menu</strong> (next to the File menu at  the top of the page).&nbsp; This will reset  the decoder to the manufacturers default settings for all the CVs, or just some  of them if the manufacturer has several reset routines.&nbsp; It does this by writing directly to a CV in  the decoder, if the decoder has that feature, CV8 in the case of Digitrax. All  decoders may not support reset and how they work is manufacturer and decoder  dependent.</p>
+<p><br>
+  One decoder with a lengthy list  of reset routines is the QSI Revolution decoder, which enables a drop-down list  of options for resetting the decoder as shown below:</p>
+<p><img src="images/FactoryReset.jpg" alt="Factory Reset" width="1010" height="765" border="4"></p>
+<p>You  will note that the decoder address is shown but grayed out (or blank if this is  a new locomotive in the roster).&nbsp; This  field is automatically filled in by the program and is determined from the  address entered using the <strong>Basic</strong> tab which we will get to shortly.&nbsp; This address is used with the <strong>Ident </strong>function  on the start page if you wish to recall a locomotive that is already in your  roster. </p>
+
+<p><a name="ProgramModes"></a>The Programming mode can be changed by clicking on the <strong>Set.</strong>.. button at the bottom of the window. To the left of the <strong>Set</strong>... button is the current programming mode that is selected. When you click on the <strong>Set.</strong>. button, the <strong>Set programming mode</strong> dialog box displays.</p>
+
+<div align="center"><img src="images/SetProgramMode.png" alt="Set program mode dialog" border="5" class="BOXIT">
+  
+</div>
+<p>There are radio buttons for several <a href="Basic_Mode.shtml"><strong>programming modes</strong></a>. JMRI now selects the best mode for you.  It determines this from the command station type you are using and the decoder model you are attempting to program.  Usually this will be OK. If you find that you are having a problem with programming you may try a different mode.</p>
+
+<p>For most newer decoders, 
+stay with <strong>Paged mode</strong> or whichever Direct mode  your Command Station supports. Your 
+decoder documentation should let you know if programming  in some other mode is 
+necessary... but if you are having problems, experiment.  If a mode is not supported for the selected decoder and system, that option will be grayed out. 
+<p>When you make your selection, the programming mode should now display to the left of the Set button.</p>
+
+<p>Now that we have the Roster  information all in order, we can continue with programming the decoder. </p>
+
+<p>But, first a let&rsquo;s talk a  bit about Roster management.&nbsp; The Set-up  screen (the one where we selected the decoder) and the initial DecoderPro  &ldquo;Splash&rdquo; screen have a top tab called Roster.&nbsp;  When you click on it you get opportunities to modify, print and move  your roster files.&nbsp; Particularly  interesting are<strong> Export/Import </strong>and <strong>Copy</strong>.&nbsp;  Let&rsquo;s say you and a friend have two identical Berkshires, and you desire  to have yours to be set up just like your friends.&nbsp; Now, you could put his loco on your track and  read all the CVs out and then put them in yours, but if he lives on the other  coast that&rsquo;s not practical.&nbsp; So, have him  use DecoderPro to export his loco file and e-mail it to you.&nbsp; You import it into DecoderPro, change the  address if you wish and then use that roster entry to program your loco.&nbsp;Similarly you can Copy a roster entry to duplicate one  of your own locomotives into a second roster entry with it&rsquo;s own address.</p>
+
+<p align="center"><img src="images/RosterEdit.png" alt="Roster Edit" width="412" height="265" border="4"></p>
+
+<p>Let&rsquo;s  move on to the Basic Programmer.</p>
+<div align=right>
+<p><a href="index.shtml#Basic Programmer">Back to Index</a></p>
+</div>
+<hr>
+<br>
+<h2><a NAME="Basic 2"></a>Using the Basic Programmer</h2>
+<p>You may have noticed that at the  top of the window are Three tabs: <strong>Roster Entry, Function Labels</strong> and <strong>Basic</strong>.  We have completed the <strong>Roster Entry</strong> pane of the Program window, and at  this time we will not be concerned with the <strong>Function Labels</strong> tab. Now,  click on the <strong>Basic</strong> tab to change panes to continue with programming your  decoder. The Basic pane will be displayed and look similar to the following illustration: 
+Many panes in the programmer contain decoder dependent features,  as a result what you see may not exactly agree with what you see here.  Only those variables that your decoder can implement will be shown. </p>
+<div align="center"><img src="images/Basic_Program.png" alt="Basic Programming Pane" width=648 height=520 border=5 class="BOXIT">
+</div>
+<p>You will see three options you can change, highlighted in  yellow: </p>
+<ol> 
+<li>The decoder address (should be unique among your  locomotives) often the locomotive number is used.</li>
+  <li>Two radio buttons that let you toggle between 2 digit  (one byte, normal) or 4 digit <br>
+(two byte, extended) addressing </li>
+
+ <li> Analog operation (enables the decoder running under  regular DC voltage/analog <br>
+control) </li>
+</ol>
+<p>The yellow highlighting indicates  these options are &quot;probable&quot; settings and have not been 
+confirmed from the decoder. Settings that have been changed by the user and  have not <br>
+been written back to the decoder appear in a darker yellow color. You will see  examples of <br>
+this throughout the manual. </p>
+<a name="Read Data"></a>
+To read the actual settings  for these options (and  IF your system and installed decoder will allow readback of decoder values), click  on the  <strong>Read Sheet </strong>button. The individual settings  will turn red while they are in the process of 
+  being read (clever, eh?), and will turn white once the  values have been read successfully 
+  from the decoder. Once again, Decoder Pro must play  &quot;Twenty Questions&quot; to get this 
+information, and sometimes even has to ask a couple of  times. 
+  <p> Be patient, especially with older computers. At the very  bottom of the pane (where it says  &quot;idle&quot;) you will see a running account of  exactly what DecoderPro is doing, for example, the 
+  specific CV being read. </p>
+<p> Again, the <strong>Read sheet</strong> and <strong>Read all</strong> functions are  dependant on your command station. If 
+  your system does not have the capability to read CVs,  then these buttons will not be 
+  available. </p>
+<p><a name="Enter Edit data"></a>If you wish to change the address  of the locomotive, type in the new address. To turn on or off 4 digit  addressing, select the desired radio button. .&nbsp;  Be sure that the address  type agrees with the number of characters in the address. &nbsp;</p>
+<p>To enable Analog (old style DC)  Operation select the appropriate entry from the drop-down list. </p>
+<p> When you are finished, click on <strong>Write sheet</strong> to  write the new values in the decoder. It's 
+that easy! </p>
+  <p><a name="Write Data"></a> Writing usually takes much less time than reading,  because the value can be sent directly. 
+  As the write operation proceeds, the data will change  from yellow to white. If there is 
+  difficulty writing to the decoder, the data will change  to red. The software will automatically 
+  keep trying until the write operation is successful. In some instances the  system will &ldquo;time-out&rdquo; after a certain number of tries without an  acknowledgement from the decoder.&nbsp; This  does not necessarily mean that the values have not been written, just that the  program has not received an acknowledgement.&nbsp;  This can be due to &nbsp;the locomotive  moving and getting on dirty track so that it can&rsquo;t pulse back, or possibly  because the command station or decoder cannot read back.&nbsp; Try moving the loco and try again.&nbsp; If it is a command station or decoder  read-back issue, try the loco on the mainline and see if the programming was  successful. </p>
+  <p><a name="Save Data"></a>
+  To finish this &quot;basic&quot; programming of a  decoder, click once more on the <strong>Roster Entry</strong> tab, You will see that the  address field has now been filled in, so  you can now 
+  click on the <strong>Save</strong> button. Your new decoder  settings have now been written not only 
+  to the decoder, but also saved to a computer file where  they may be recalled in the future. . 
+</p>
+<a name="Do More"></a>
+But you  say...&quot;I want to change more than what's shown on the Basic decoder pane.&quot; Well&hellip; there are other programmers that  are available.&nbsp; But&hellip; first we need to  study a bit on the various options.&nbsp; In  fact there are so many options the programmers had to use a slider to get them  all to show.&nbsp; Here are the option  windows.&nbsp; Don&rsquo;t panic&hellip;.Most are of no use  to the average user.
+<p align="center"><img src="images/Basic_programmers.png" alt="programmers" width="421" height="201" border="4"><br>
+</p>
+<p>Comprehensive is the only other programmer <strong>Normal Users </strong>will ever need, because it  is, well&hellip;Comprehensive.&nbsp; So why all the  others?</p>
+<p>First of all eliminate the Manufacturer  specific programmers (unless of course you have a Zimo or ESU system).&nbsp; </p>
+<p>We can also eliminate the Tutorial and Custom  programmers. They were put in to show folks that want to <strong>write their own</strong>&nbsp; programmer  (not you right?) all the possible ways to gather input and to have a common  starting point in the roster pane. Now if you wish to pursue writing a custom programmer go to this <a href="../html/apps/DecoderPro/Programmer.shtml" target="_blank">site</a>.</p>
+<p>If you have need for a special situation programmer  you might want to look at Sample Club or TrainShowBasic to see what panes can  be taken out of Comprehensive to make an intermediate complexity, special  purpose programmer.&nbsp; Again, how to do this  is a subject for another manual.</p>
+<p>And that leaves us with the Registers  programmer.&nbsp; If you have an old or  bargain basement decoder that only programs using registers, then of course  you&rsquo;ll be interested in &ldquo;Registers&rdquo;.</p>
+<p>Now that we&rsquo;ve narrowed our &ldquo;real&rdquo; choices  down to the&nbsp; Basic and Comprehensive,  let's explore the <a href="Comp_Setup_Roster.shtml">Comprehensive Programmer</a>! </p>
+
+<div align="right">
+<p><a href="Getting_Started.shtml#Getting Started">Previous | </a><a href="Comp_Setup_Roster.shtml">Next</a><a href="Comp_Setup_Roster.shtml"></a></p>
+<p><a href="index.shtml#Basic Programmer">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

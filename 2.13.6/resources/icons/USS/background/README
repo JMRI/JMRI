@@ -1,0 +1,13 @@
+   US&S Artwork based on images from Mike Burgett of Control Train Components.
+   These files were contributed by Dick Bronson.
+
+
+The Panel-*-9 files are slices used to put together a panel 
+background that's 900 pixels high.
+
+The Panel-* files are similar slices for panels that are 718 pixels 
+high, e.g. for a 800 pixel high monitor.
+
+The uss-15.gif and uss-15-dual.gif files are backgrounds for 
+a 15-section panel that are 1000 pixels wide by 718 high, e.g. 
+nicely fit a 1000x800 monitor.

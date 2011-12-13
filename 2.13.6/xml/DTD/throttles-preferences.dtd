@@ -1,0 +1,29 @@
+<!-- Defines XML for throttles preferences -->
+<!-- This DTD is part of JMRI. Copyright 2003-2009.                         -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!ELEMENT throttles-preferences (throttlesPreferences)>
+
+<!ELEMENT throttlesPreferences EMPTY>
+<!ATTLIST throttlesPreferences isUsingExThrottle CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences isUsingToolBar CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences isUsingFunctionIcon CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences isResizingWindow CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences windowDimensionWidth CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences windowDimensionHeight CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences isSavingThrottleOnLayoutSave CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences isUsingRosterImage CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences isEnablingRosterSearch CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences isAutoLoading CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences isHidingUndefinedFunctionButtons CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences isIgnoringThrottlePosition CDATA #REQUIRED>
+<!ATTLIST throttlesPreferences isCleaningOnClose CDATA #REQUIRED>

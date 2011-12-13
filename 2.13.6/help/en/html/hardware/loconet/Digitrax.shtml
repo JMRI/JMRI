@@ -1,0 +1,331 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+  <title>JMRI Hardware Guide: Digitrax DCC </title>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META name="keywords" content="Digitrax LocoNet LocoBuffer LocoBuffer-II
+          LocoBuffer-USB MS100 PR2 PR3 DCS100 DCS50 DCS51 DB150 JMRI">
+
+  <!-- Style -->
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<div class="nomenu" id="mBody">
+
+<div id="mainContent">
+<h1>JMRI Hardware Guide: Digitrax DCC </h1>
+
+<div class="toc">
+<ul>
+  <li><a href="#LocoNetConnect">LocoNet&reg; Connections</a></li>
+  <li><a href="#Programmer">PR2 and PR3 Programmers</a></li>
+  <li><a href="#Setup">Setup</a></li>
+  <li><a href="#Using">Using JMRI with LocoNet&reg;</a></li>
+  <li><a href="#Limitation">LocoNet&reg; Conenction Limitations</a></li>
+  <li><a href="#Network">Networked Computers and LocoNet&reg;</a></li>
+  <li><a href="#Debugging">Debugging</a></li>
+  <li><a href="#SeeAlso">See Also</a></li>
+</ul>
+</div>
+
+<h2><a name="LocoNetConnect">LocoNet&reg; Connections</a></h2>
+
+<p>JMRI software, including DecoderPro and PanelPro, works with your Digitrax command
+station to program decoders. To do this, it communicates with the command
+station over the LocoNet&reg; using one of several types of &reg; adapter.</p>
+
+<h3>Supported Command Stations</h3>
+<p>JMRI software supports the following LocoNet&reg;-based command stations:</p>
+<ul>
+  <li>Zephyr Starter Set</li>
+  <li>Zephyr Xtra Starter Set</li>
+  <li>Super Empire Builder Set</li>
+  <li>Chief Starter Set</li>
+  <li>Super Chief Set</li>
+  <li>Super Chief Xtra Set</li>
+  <li>DCS50 Command Station/Booster/Throttle </li>
+  <li>DCS51 Command Station/Booster/Throttle </li>
+  <li>DB150 Command Station/Booster</li>
+  <li>DCS100 Command Station/Booster</li>
+  <li>DCS200 Command Station/Booster</li>
+  <li><a href="Uhlenbrock.shtml">Intellibox: The Uhlenbrock Central
+  Unit</a></li>
+  <li>DCC-Mux: DCC data combiner with built-in LocoNet&reg; command station </li>
+</ul>
+<p>For systems which do not provide a LocoNet&reg; command station, two additional 
+    options are supported.  When a layout uses LocoNet&reg; peripheral devices but 
+    not a LocoNet&reg;-based command station, a "Standalone" LocoNet&reg; is used.  See 
+    <a href="StandaloneLocoNet.shtml">Standalone LocoNet&reg;</a>.  In addition, 
+    JMRI software may be configured to use a simulated LocoNet&reg;
+    connection instead of a real LocoNet&reg; connection.  This is the "LocoNet&reg; 
+    Simulator".</p>
+
+<h3>Supported Computer Interfaces</h3>
+<p>To connect your computer to the LocoNet&reg;, and hence to the command station,
+you need one of the following adapters:</p>
+<ul>
+  <li><a title="RR-CirKits USB interface" href="LocoBufferUSB.shtml">LocoBuffer-USB</a></li>
+  <li><a title="Digitrax USB interface" href="PR3.shtml">PR3</a></li>
+  <li><a title="RR-CirKits Serial interface" href="LocoBufferII.shtml">LocoBuffer II</a></li>
+  <li><a title="Original Kit Version" href="LocoBuffer.shtml">LocoBuffer</a></li>
+  <li><a title="Digitrax Serial interface" href="MS100.shtml">MS-100</a></li>
+</ul>
+
+<p>Generally, any of these can be used with any type of computer to communicate
+with any type of command station. Currently, the LocoBuffer-USB and PR3 are the
+recommended computer interface solutions. The LocoBuffer II and original 
+LocoBuffer are no longer commercially available; their primary advantage now is 
+that they use a traditional serial port, which may be the only suitable connection 
+type available on some older computers.</p>
+<p>The MS100 is not recommended; it sometimes fails to provide reliable 
+    communications, and it cannot be used with JMRI if you are using MacOS X or 
+    on most Windows Vista machines. </p>
+
+<p>The Uhlenbrock Intellibox can also be controlled directly through it's
+serial port; there's a <a href="Uhlenbrock.shtml">separate page</a> on how to
+do this. </p>
+
+<h2><a name="Programmer">PR2 and PR3 Programmers</a></h2>
+JMRI can also use a <a title="Digitrax programmer" href="PR2.shtml">Digitrax PR2</a>
+or <a title="Digitrax Programmer/USB interface" href="PR3.shtml">PR3</a> to program 
+and test decoders. The PR2 is a stand-alone unit which does not connect to the rest 
+of the layout, the command station, nor to a LocoNet&reg;. For more information on using 
+a PR2 with DecoderPro, please see the <a href="PR2.shtml">PR2 setup page</a>. The PR3 
+can either serve as an interface (see above) or as a stand alone programmer. There 
+is more information on the <a href="PR3.shtml">PR3 setup page</a>. 
+
+<h2><a name="Setup">Setup</a></h2>
+
+<p>To connect your computer to a Digitrax DCC system, you need a  <a
+title="RR-CirKits USB interface" href="LocoBufferUSB.shtml">LocoBuffer-USB</a>,
+<a title="Digitrax USB interface" href="PR3.shtml">PR3</a>, <a
+title="RR-CirKits Serial interface"
+href="LocoBufferII.shtml">LocoBuffer-II</a>, <a title="Original Kit Version"
+href="LocoBuffer.shtml">LocoBuffer</a>, or <a title="Digitrax Serial interface"
+href="MS100.shtml">MS100</a> to act as an adapter. See below for more
+information on these. The LocoBuffer-USB is highly recommended. </p>
+
+<p>Note that except for the PR3, these are only LocoNet&reg; interfaces, not stand
+alone programmers like the Digitrax PR2 and PR3. None of these except the PR3
+will let you read CVs if you have an Empire Builder! For that you need a Chief
+or Zephyr command station. </p>
+<ol>
+  <li>Connect your adapter to the LocoNet&reg;, and connect your computer to it with
+    the appropriate serial or USB cable. </li>
+  <li>Mac and Windows users should install the proper USB drivers if they are
+    using USB devices.</li>
+  <li>Linux and Mac users should be sure that the correct Java communications
+    packages have been installed.</li>
+  <li>Open a JMRI program and go to the "Preferences" panel. This normally
+    opens automatically the first time each program is run, or you can select
+    it from the "Edit" menu. </li>
+  <li>Select "LocoNet LocoBuffer-USB", "LocoNet MS100", or your device from the
+    top selection box. You can then select the proper serial port in the second
+    selection box. Check in your system hardware information if you are not
+    sure which port to select.</li>
+  <li>The baud rate box will be fixed and grayed out if you've selected
+    LocoBuffer-USB, PR3, or MS100. There are two speed choices for the
+    LocoBuffer and LocoBuffer-II; select the one that corresponds to the jumper
+    settings on your LocoBuffer unit. We recommend that you start with the
+    19,200 choice for the LocoBuffer or LocoBuffer-II; see the <a
+    href="LocoBufferII.shtml">LocoBuffer-II</a> and <a
+    href="LocoBuffer.shtml">LocoBuffer</a> pages for more information. </li>
+  <li>The fourth box should be left on "hardware flow control" unless you later
+    consistently get a message about the LocoBuffer control leads being
+    improperly set up, in which case you might want to try to bypass that by
+    selecting "no flow control". This box will be blank if you've selected
+    LocoBuffer-USB, PR3 or MS100. </li>
+  <li>In the fifth box, select the type of command station you have. Note that
+    this program can't read decoder CVs if you have an Empire Builder (DB150);
+    that's due to the Empire Builder hardware, and there's nothing we can do
+    about it.To read CV's in conjunction with a DB150 use the PR3 in
+    programming track mode.<br>
+  </li>
+  <li>The series of radio buttons labelled "GUI style" allows you to select how
+    the program will look. "Metal" is the native Java look available on all
+    types. Other choices will vary with your computer type. "Motif", "Windows",
+    "MacOS" and "MacOS Adaptive" look native on Linux, Windows, MacOS "Classic"
+    and MacOS X respectively. </li>
+  <li>In the bottom selection box, you can pick the default programmer format.
+    You can override this each time you open the programmer, so this is here
+    just for convenience. If you are the primary user of this system we suggest
+    you set this to "Comprehensive".<br>
+  </li>
+  <li>Click "Save". You'll be asked if it's OK for the program to quit, click
+    "Yes". </li>
+  <li style="text-align:left;">Restart the program. You should be up and
+    running. <br>
+  </li>
+</ol>
+
+<p>If you are going to control turnouts, signals or other devices on your
+layout from JMRI or another program, we recommend that you set the command
+station's "Meter route/switch output when not in trinary" option off. (T) When
+on, this option greatly reduces the number of commands the LocoNet&reg; can handle
+each second, which can cause significant delays when you're controlling
+signals, etc. To turn it off, you can use the "Configure Command Station" tool
+in the <b>LocoNet</b> menu to set Option Switch 31 to "T" (thrown), or set it directly
+in the command station using a Digitrax throttle. </p>
+
+<h2><a name="Using">Using JMRI with LocoNet&reg;</a></h2>
+JMRI provides a number of features which allow it to interact with LocoNet&reg;. 
+<ul>
+  <li>Many LocoNet&reg; devices can be directly addressed by JMRI, such as 
+      the individual turnout outputs on a DS54, or the individual block detection
+      inputs on a BDL16x. For more information on how to find those addresses, 
+      see <a href="Addressing.shtml">this page</a>. </li>
+  <li>JMRI provides a variety of LocoNet&reg;-related tools.  These primarily 
+    allow configuration of LocoNet&reg; device functionality, but also include 
+    some tools for status monitoring.  Information on these tools can be found
+    at the <a href="LocoNetTools.shtml">LocoNet&reg; tools page</a>.</li>
+</ul>
+
+<h2><a name="Network">Networked Computers and LocoNet&reg;</a></h2>
+There are several mechanisms available to allow multiple computers to 
+communicate with LocoNet&reg;.  These communicate via standard TCP/IP protocols, 
+and can even work remotely. At least one of the networked computers must have a 
+functioning LocoNet&reg; interface. See <a href="LocoNetworking.shtml">this page</a> 
+for more information.
+
+<h2><a name="Limitation">LocoNet&reg; Conenction Limitations</a></h2>
+
+<p><b>Uhlenbrock Intellibox</b> - The Intellibox has two LocoNet&reg; connections,
+called LocoNet&reg;-T and LocoNet&reg;-B. The LocoNet&reg;-T connection can drive more
+devices, but does not provide the Rail-Synch signals that some LocoNet&reg; devices
+(particularly the BDL-16, -162 and -168) require. A LocoBuffer should be
+connected to the LocoNet&reg;-T connection. </p>
+
+<p><strong>PR-1 not supported</strong> - Note that DecoderPro cannot directly
+program decoders via a PR1 programmer. JMRI supports decoder programming either
+via the PR3 as a stand-alone programmer or via a command station.</p>
+
+<p><b>MacOS X and the MS100</b> - Because MacOS X can't communicate at the
+special baud rate used by the MS100, the MS100 won't work with MacOS X. You
+should get a LocoBuffer-USB instead. </p>
+
+<p><b>Microsoft Vista and the MS100</b> - It has been reported that Vista does
+not support the special baud rate used by the MS100. If you find that your
+MS-100 does not work on your Vista machine you should get a LocoBuffer-USB or
+PR3 instead.<br>
+</p>
+<h2><a name="Debugging">Debugging</a></h2>
+<ul>
+    <li>When using the LocoBuffer or LocoBuffer-II, be sure that the JMRI 
+        preferences for the connection are set to use the same Baud rate as the 
+        LocoBuffer or LocoBuffer-II.</li>
+    <li>On Windows O/S machines, be sure that the JMRI connection is set to use 
+        the correct COM port.  Use Windows "Device Manager" to help determine 
+        which COM port your interface hardware is using, then verify that JMRI 
+        is configured to use that COM port.</li>
+    <li>On Windows platforms, the COM port assignment can change if the interface 
+        hardware is moved from one USB port on the computer to another USB port.  
+        Avoid changing how your LocoNet&reg;-to-computer interface is connected to
+        the computer.</li>
+    <li>On Windows platforms, the COM port assignment can change if the interface 
+        hardware is connected via a USB hub.  At Windows start-up, the computer
+        can assign different COM port numbers to devices downstream of USB hubs, even
+        if all of the USB hardware connected in the system has not been changed.
+        Avoid connecting your LocoNet&reg;-to-computer hardware downstream of a hub.
+        Note that a computer monitor which has USB connectors, and which is 
+        connected to a PC using a USB cable is considered to have a built-in USB
+        hub.</li>
+    <li>Some PR3 devices were shipped with poor quality USB cables.  These
+        cables have been known to cause a computer to fail to communicate with
+        the PR3 or to have intermittent communication.  Users should consider
+        replacing the original USB cable from the PR3 with a known-good USB
+        cable.</li>
+    <li>Some mobile decoders will only allow proper readback of CV values when
+        there is a sufficient electrical load connected to the F0F (front 
+        headlamp) output connections or the motor connections.  This means that 
+        an incandescent lamp or LED is properly connected to the front headlamp
+        connection and functional.  Other mobile decoders will only provide 
+        proper CV readback when a motor is connected to the mobile
+        decoder motor connections.  Consult the documentation for your mobile 
+        decoder to determine what connections are required to allow proper 
+        CV readback.</li>
+    <li>Some Digitrax hardware is capable of successful CV read and write 
+        operations on some mobile decoders but is unable to reliably read and/or 
+        write CVs for other mobile decoders.  This problem is most obvious with 
+        sound decoders from some manufacturers.  Some suggestions are listed here.
+        <ul>
+            <li>When using a Zephyr (DCS50) or Zephyr Xtra (DCS51), enable its 
+                "Blast Mode" programming feature.  This will often allow correct
+                writing of mobile decoder CV values.</li>
+            <li>"Programming on the main" can allow a Chief (DCS100 or DCS200) to
+                properly write to difficult mobile decoder's CV values.</li>
+            <li>A programming booster, such as the <i>SoundTraxx</i> 
+                <b>PTB-100</b> or the <i>DCC Specialties</i> <b>Power Pax</b> 
+                can often be used between the command station programming track 
+                connections and the programming track to allow successful 
+                read and write access of CVs on mobile decoders which do not
+                allow readback on a programming track connected directly to the
+                programming hardware.</li>
+        </ul>
+</ul>
+
+<h2><a name="Support">Support</a></h2>
+<p>Support for Digitrax hardware products is available through <a href="http://www.digitrax.com">
+        Digitrax, Inc.</a>  Digitrax product manuals may be found 
+        <a href="http://www.digitrax.com/manuals.php">here</a>.  
+        Note that Digitrax does not provide support for JMRI software.</p>
+<p>Many knowledgable Digitrax users contribute to the <a href="http://groups.yahoo.com/group/Digitrax">
+        Digitrax User's "Yahoo Group"</a>.  If you have a problem with Digitrax equipment, 
+        this is a good place to pose your Digitrax-specific problems.  This 
+        user's group is run by and for Digitrax users.  It is not directly 
+        supported by Digitrax.  </p>
+<p>For JMRI-specific questions, including questions about how JMRI and Digitrax 
+hardware interact, the <a href="http://groups.yahoo.com/group/jmriusers">
+    JMRI Users "Yahoo group"</a> is very helpful.</p>  
+
+<h2><a name="SeeAlso">See also</a></h2>
+<p>JMRI provides specific support for the following Digitrax or 3rd-party hardware
+    which connects to LocoNet&reg;:
+<ul>
+    <li>Computer-to-LocoNet&reg; Interface Hardware
+        <ul>
+            <li><a href="LocoBufferUSB.shtml">RR-CirKits LocoBuffer-USB</a></li>
+            <li><a href="LocoBufferII.shtml">RR-CirKits LocoBuffer-II</a></li>
+            <li><a href="LocoBuffer.shtml">LocoBuffer</a></li>
+            <li><a href="PR3.shtml">Digitrax PR3</a></li>
+            <li><a href="PR2.shtml">Digitrax PR2</a></li>
+            <li><a href="MS100.shtml">Digitrax MS100</a></li>
+            <li>Compatibility of the MS100 with some <a href="KeyspanUSB.shtml">Keyspan USB-to-serial converters</a></li>
+            <li><a href="../../../package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml">
+                    LocoNet&reg; Interface Statistics Tool</a></li>
+        </ul>
+    </li>
+    <li><a href="LocoNetTools.shtml">JMRI's Tools for LocoNet&reg; Devices</a></li>
+    <li>3rd-party Command Stations
+        <ul>
+            <li><a href="Fleischmann.shtml">Fleischmann Twin Centre</a></li>
+            <li><a href="Uhlenbrock.shtml">Uhlenbrock Command Station</a></li>
+        </ul>
+    </li>
+    <li>Other
+        <ul>
+            <li><a href="Addressing.shtml">JMRI addressing</a> of LocoNet&reg; turnouts, 
+                sensors and transponding zones</li>
+            <li><a href="LocoNetSim.shtml">LocoNet&reg; Simulator</a></li>
+            <li><a href="LocoNetClasses.shtml">JMRI High-level Structures for LocoNet&reg; Interfacing</a></li>
+            <li><a href="LocoNetworking.shtml">Connecting multiple computers to a LocoNet&reg; layout</a></li>
+            <li>A technically-oriented study of <a href="DigitraxPower/index.shtml">Power Supply issues</a> in some Digitrax products</li>
+        </ul>
+    </li>
+    
+</ul>
+
+<p>LocoNet&reg; is a registered trademark of <a href="www.digitrax.com">Digitrax, Inc.</a></p>
+<!--#include virtual="/Footer" -->
+</div>
+</div>
+</body>
+</html>

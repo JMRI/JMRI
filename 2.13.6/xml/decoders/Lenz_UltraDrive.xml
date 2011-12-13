@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2004 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Jack Shall jcshall@bellsouth.net" version="1" lastUpdated="20040421"/>
+<!-- Version 2 - added factory reset menu items (Paul Bender) -->
+<!-- These are the Ultra-Drive decoders, with "5th gen BEMF", "Precision Braking Control" -->
+<!-- and "Low Gear Switching Drive" -->
+  <version author="Michael Greene mgreene@cedarlane.com" version="3" lastUpdated="20110216"/>
+<!-- Version 3 - added support for LE1835 (Michael Greene) -->  
+  <decoder>
+    <family name="Lenz Ultra-Drive decoders" mfg="Lenz" lowVersionID="1" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive">
+      <model model="LE1035" numOuts="4" numFns="8" nmraWarrant="yes" nmraWarrantStart="200404" productID="LE1035">
+        <output name="1" label="A - White"/>
+        <output name="2" label="B - Yellow"/>
+        <output name="3" label="C - Green"/>
+        <output name="4" label="D - Violet"/>
+      </model>
+      <model model="LE1835" numOuts="4" numFns="8" nmraWarrant="yes" nmraWarrantStart="200407" productID="LE1835">
+        <output name="1" label="A - White"/>
+        <output name="2" label="B - Yellow"/>
+        <output name="3" label="C - Green"/>
+        <output name="4" label="D - Violet"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <variable label="Primary Address (1-127)" CV="1" item="Short Address" default="03" comment="Range 1-127">
+        <shortAddressVal/>
+        <label>Primary Address (1-127)</label>
+        <comment>Range 1-127</comment>
+      </variable>
+      <variable label="Acceleration Momentum (1-255)" CV="3" item="Accel" default="4" comment="Range 1-255">
+        <decVal min="1" max="255"/>
+        <label>Acceleration Momentum (1-255)</label>
+        <comment>Range 1-255</comment>
+      </variable>
+      <variable label="Deceleration (Brake) Momentum (1-255)" CV="4" item="Decel" default="4" comment="Range 1-255">
+        <decVal min="1" max="255"/>
+        <label>Deceleration (Brake) Momentum (1-255)</label>
+        <comment>Range 1-255</comment>
+      </variable>
+      <variable label="Max Volts (2-10)" CV="5" item="Vhigh" default="10" comment="Sets the maximum voltage at full throttle (only active if Back EMF enabled)">
+        <decVal min="2" max="10"/>
+        <label>Max Volts (2-10)</label>
+        <comment>Sets the maximum voltage at full throttle (only active if Back EMF enabled)</comment>
+      </variable>
+      <variable label="Decoder Version No: " CV="7" readOnly="yes" item="Decoder Version" default="1">
+        <decVal/>
+        <label>Decoder Version No: </label>
+      </variable>
+      <variable label="Manufacturer ID: " CV="8" readOnly="yes" item="Manufacturer" default="99">
+        <decVal/>
+        <label>Manufacturer ID: </label>
+      </variable>
+      <variable label="Manufacturer ID - Reset" CV="8" item="Reset" comment="Writing a value of 33 using register mode will reset decoder to factory defaults">
+        <decVal/>
+        <label>Manufacturer ID - Reset</label>
+        <comment>Writing a value of 33 using register mode will reset decoder to factory defaults</comment>
+      </variable>
+      <variable label="Extended Address (128-9999)" CV="17" item="Long Address" comment="4 digit address (Range 128-9999)">
+        <longAddressVal/>
+        <label>Extended Address (128-9999)</label>
+        <comment>4 digit address (Range 128-9999)</comment>
+      </variable>
+      <variable label="Consist Address (0-127)" CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
+        <decVal min="0" max="127"/>
+        <label>Consist Address (0-127)</label>
+        <comment>Stores consist address. Range 0-127 (direction set in bit 7)</comment>
+      </variable>
+      <variable label="Consist Direction" CV="19" mask="VXXXXXXX" comment="A consist address over 127 will also set this bit">
+        <enumVal>
+          <enumChoice choice="Forward">
+            <choice>Forward</choice>
+          </enumChoice>
+          <enumChoice choice="Reversed">
+            <choice>Reversed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Direction</label>
+        <comment>A consist address over 127 will also set this bit</comment>
+      </variable>
+      <variable label="Locomotive Direction in Forward" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
+        <enumVal>
+          <enumChoice choice="Normal">
+            <choice>Normal</choice>
+          </enumChoice>
+          <enumChoice choice="Reversed">
+            <choice>Reversed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Locomotive Direction in Forward</label>
+      </variable>
+      <variable label="Speed Steps (Headlight Mode)" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+        <enumVal>
+          <enumChoice choice="14">
+            <choice>14</choice>
+          </enumChoice>
+          <enumChoice choice="28/128">
+            <choice>28/128</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Speed Steps (Headlight Mode)</label>
+      </variable>
+      <variable label="Loco can operate on conventional DC" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Loco can operate on conventional DC</label>
+      </variable>
+      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
+        <enumVal>
+          <enumChoice choice="2 digit addressing">
+            <choice>2 digit addressing</choice>
+          </enumChoice>
+          <enumChoice choice="4 digit addressing">
+            <choice>4 digit addressing</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Addressing Mode</label>
+      </variable>
+      <variable label="Precision Braking Control" CV="50" mask="XXXXXXVX" tooltip="Loco stops in a predetermined distance when speed is set to zero (Constant Braking Distance)">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled">
+            <choice>Enabled</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Precision Braking Control</label>
+      </variable>
+      <variable label="When loco enters DC track section: " CV="50" mask="XXXXXVXX" item="DC Brake Momentum" tooltip="Only active if analog (conventional DC) operation is disabled" comment="Governs how loco reacts in DC track block (CV29.2 must be disabled)">
+        <enumVal>
+          <enumChoice choice="Loco continues under analog (DC) voltage control">
+            <choice>Loco continues under analog (DC) voltage control</choice>
+          </enumChoice>
+          <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
+            <choice>Loco brakes to a stop using momentum set in CV4</choice>
+          </enumChoice>
+        </enumVal>
+        <label>When loco enters DC track section: </label>
+        <comment>Governs how loco reacts in DC track block (CV29.2 must be disabled)</comment>
+      </variable>
+      <variable label="Directional Headlights" CV="51" mask="XXXXXXXV" tooltip="Enables Rule 17 for headlights (independent control)" comment="Outputs A and B">
+        <enumVal>
+          <enumChoice choice="Headlights are directional and operate automatically">
+            <choice>Headlights are directional and operate automatically</choice>
+          </enumChoice>
+          <enumChoice choice="Headlights are independently controlled (F0-Front, F1-Rear)">
+            <choice>Headlights are independently controlled (F0-Front, F1-Rear)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Directional Headlights</label>
+        <comment>Outputs A and B</comment>
+      </variable>
+      <variable label="Dimming Control" CV="51" mask="XXXXXXVX" item="Function F0F behavior" tooltip="Controls how front headlight dims (when dimming is enabled)" comment="CV 52 controls amount">
+        <enumVal>
+          <enumChoice choice="Front headlight is always dimmed">
+            <choice>Front headlight is always dimmed</choice>
+          </enumChoice>
+          <enumChoice choice="F1 or F4 controls headlight dimming">
+            <choice>F1 or F4 controls headlight dimming</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Dimming Control</label>
+        <comment>CV 52 controls amount</comment>
+      </variable>
+      <variable label="Front Headlight (Output A) Dimming" CV="51" mask="XXXXXVXX" item="Function F0F effect generated" tooltip="Enables front headlight dimming">
+        <enumVal>
+          <enumChoice choice="Front headlight never dim">
+            <choice>Front headlight never dim</choice>
+          </enumChoice>
+          <enumChoice choice="Front headlight can dim">
+            <choice>Front headlight can dim</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Front Headlight (Output A) Dimming</label>
+      </variable>
+      <variable label="Rear Headlight (Output B) Dimming" CV="51" mask="XXXXVXXX" item="Function F0R effect generated" tooltip="Enables rear headlight dimming">
+        <enumVal>
+          <enumChoice choice="Rear headlight never dim">
+            <choice>Rear headlight never dim</choice>
+          </enumChoice>
+          <enumChoice choice="Rear headlight can dim">
+            <choice>Rear headlight can dim</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Rear Headlight (Output B) Dimming</label>
+      </variable>
+      <variable label="Dimming Intensity (0-255)" CV="52" item="Global lighting option 1" default="64" tooltip="Sets intensity of dimmed headlight (larger number = brighter light)">
+        <decVal min="0" max="255"/>
+        <label>Dimming Intensity (0-255)</label>
+      </variable>
+      <variable label="Back EMF Control Value (1-255)" CV="53" item="EMF Dynamic Config" default="8" tooltip="Fine tune the back EMF control">
+        <decVal min="1" max="255"/>
+        <label>Back EMF Control Value (1-255)</label>
+      </variable>
+      <variable label="F1 controls output C" CV="54" mask="XXXXXXXV" item="F1 controls output 3" default="1" minOut="3" minFn="1">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F1 controls output C</label>
+      </variable>
+      <variable label="F2 controls output C" CV="54" mask="XXXXXXVX" item="F2 controls output 3" minOut="3" minFn="2">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F2 controls output C</label>
+      </variable>
+      <variable label="F3 controls output C" CV="54" mask="XXXXXVXX" item="F3 controls output 3" minOut="3" minFn="3">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F3 controls output C</label>
+      </variable>
+      <variable label="F4 controls output C" CV="54" mask="XXXXVXXX" item="F4 controls output 3" minOut="3" minFn="4">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F4 controls output C</label>
+      </variable>
+      <variable label="F5 controls output C" CV="54" mask="XXXVXXXX" item="F5 controls output 3" minOut="3" minFn="5">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F5 controls output C</label>
+      </variable>
+      <variable label="F6 controls output C" CV="54" mask="XXVXXXXX" item="F6 controls output 3" minOut="3" minFn="6">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F6 controls output C</label>
+      </variable>
+      <variable label="F7 controls output C" CV="54" mask="XVXXXXXX" item="F7 controls output 3" minOut="3" minFn="7">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F7 controls output C</label>
+      </variable>
+      <variable label="F8 controls output C" CV="54" mask="VXXXXXXX" item="F8 controls output 3" minOut="3" minFn="8">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F8 controls output C</label>
+      </variable>
+      <variable label="F1 controls output D" CV="55" mask="XXXXXXXV" item="F1 controls output 4" minOut="4" minFn="1">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F1 controls output D</label>
+      </variable>
+      <variable label="F2 controls output D" CV="55" mask="XXXXXXVX" item="F2 controls output 4" default="1" minOut="4" minFn="2">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F2 controls output D</label>
+      </variable>
+      <variable label="F3 controls output D" CV="55" mask="XXXXXVXX" item="F3 controls output 4" minOut="4" minFn="3">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F3 controls output D</label>
+      </variable>
+      <variable label="F4 controls output D" CV="55" mask="XXXXVXXX" item="F4 controls output 4" minOut="4" minFn="4">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F4 controls output D</label>
+      </variable>
+      <variable label="F5 controls output D" CV="55" mask="XXXVXXXX" item="F5 controls output 4" minOut="4" minFn="5">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F5 controls output D</label>
+      </variable>
+      <variable label="F6 controls output D" CV="55" mask="XXVXXXXX" item="F6 controls output 4" minOut="4" minFn="6">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F6 controls output D</label>
+      </variable>
+      <variable label="F7 controls output D" CV="55" mask="XVXXXXXX" item="F7 controls output 4" minOut="4" minFn="7">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F7 controls output D</label>
+      </variable>
+      <variable label="F8 controls output D" CV="55" mask="VXXXXXXX" item="F8 controls output 4" minOut="4" minFn="8">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F8 controls output D</label>
+      </variable>
+      <variable label="Enable Low Speed Gear with F1" CV="59" mask="XXXXXXXV" tooltip="Toggle low speed switching gear 'on' using F1">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Enable Low Speed Gear with F1</label>
+      </variable>
+      <variable label="Enable Low Speed Gear with F2" CV="59" mask="XXXXXXVX" tooltip="Toggle low speed switching gear 'on' using F2">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Enable Low Speed Gear with F2</label>
+      </variable>
+      <variable label="Enable Low Speed Gear with F3" CV="59" mask="XXXXXVXX" default="1" tooltip="Toggle low speed switching gear 'on' using F3">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Enable Low Speed Gear with F3</label>
+      </variable>
+      <variable label="Enable Low Speed Gear with F4" CV="59" mask="XXXXVXXX" tooltip="Toggle low speed switching gear 'on' using F4">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Enable Low Speed Gear with F4</label>
+      </variable>
+      <variable label="Enable Low Speed Gear with F5" CV="59" mask="XXXVXXXX" tooltip="Toggle low speed switching gear 'on' using F5">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Enable Low Speed Gear with F5</label>
+      </variable>
+      <variable label="Enable Low Speed Gear with F6" CV="59" mask="XXVXXXXX" tooltip="Toggle low speed switching gear 'on' using F6">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Enable Low Speed Gear with F6</label>
+      </variable>
+      <variable label="Enable Low Speed Gear with F7" CV="59" mask="XVXXXXXX" tooltip="Toggle low speed switching gear 'on' using F7">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Enable Low Speed Gear with F7</label>
+      </variable>
+      <variable label="Enable Low Speed Gear with F8" CV="59" mask="VXXXXXXX" tooltip="Toggle low speed switching gear 'on' using F8">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Enable Low Speed Gear with F8</label>
+      </variable>
+      <variable label="Disable PBC with F1" CV="60" mask="XXXXXXXV" tooltip="Toggle PBC (Constant Braking Distance) 'off' using F1">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Disable PBC with F1</label>
+      </variable>
+      <variable label="Disable PBC with F2" CV="60" mask="XXXXXXVX" tooltip="Toggle PBC (Constant Braking Distance) 'off' using F2">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Disable PBC with F2</label>
+      </variable>
+      <variable label="Disable PBC with F3" CV="60" mask="XXXXXVXX" tooltip="Toggle PBC (Constant Braking Distance) 'off' using F3">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Disable PBC with F3</label>
+      </variable>
+      <variable label="Disable PBC with F4" CV="60" mask="XXXXVXXX" default="1" tooltip="Toggle PBC (Constant Braking Distance) 'off' using F4">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Disable PBC with F4</label>
+      </variable>
+      <variable label="Disable PBC with F5" CV="60" mask="XXXVXXXX" tooltip="Toggle PBC (Constant Braking Distance) 'off' using F5">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Disable PBC with F5</label>
+      </variable>
+      <variable label="Disable PBC with F6" CV="60" mask="XXVXXXXX" tooltip="Toggle PBC (Constant Braking Distance) 'off' using F6">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Disable PBC with F6</label>
+      </variable>
+      <variable label="Disable PBC with F7" CV="60" mask="XVXXXXXX" tooltip="Toggle PBC (Constant Braking Distance) 'off' using F7">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Disable PBC with F7</label>
+      </variable>
+      <variable label="Disable PBC with F8" CV="60" mask="VXXXXXXX" tooltip="Toggle PBC (Constant Braking Distance) 'off' using F8">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Disable PBC with F8</label>
+      </variable>
+      
+      <variable label="Braking Distance (0-255)" CV="61" default="100" tooltip="Sets the constant braking distance (larger number = longer distance)" comment="Range 0-255 (0 will disable)">
+        <decVal min="0" max="255"/>
+        <label>Braking Distance (0-255)</label>
+        <comment>Range 0-255 (0 will disable)</comment>
+      </variable>
+
+      <variable label="SUSI CV Number (tens and units)" CV="62"
+			item="SUSI CV Number Tens" default="0" include="LE1835"
+			comment="For LE1835 only; Range 0-99"
+            tooltip="CV holds the tens and units components of the SUSI CV Number">
+			<decVal min="0" max="99"/>
+      </variable>
+
+      <variable label="SUSI CV Number (hundreds)" CV="63"
+			item="SUSI CV Number Hundreds" default="0" include="LE1835"
+			comment="For LE1835 only; Range 0-99"
+            tooltip="CV holds the hundreds component of the SUSI CV Number">
+			<decVal min="0" max="99"/>
+      </variable>
+
+      <variable label="SUSI CV Value" CV="64"
+			item="SUSI CV Value" default="0" include="LE1835"
+			comment="For LE1835 only; Range 0-255"
+            tooltip="The value of the CV pointed to by CVs 63,62">
+			<decVal min="0" max="255"/>
+      </variable>
+
+
+      <variable label="Decoder Software Version (read only): " CV="128" readOnly="yes" item="Decoder Software Version" default="05">
+        <decVal/>
+        <label>Decoder Software Version (read only): </label>
+      </variable>
+
+<!-- Define the fixed Function-Output mapping -->
+      <constant label="FL(f) controls output 1" minOut="1" default="1"/>
+      <constant label="FL(r) controls output 2" minOut="2" default="1"/>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="33"/>
+    </resets>
+  </decoder>
+
+  <pane name="Lenz">
+    <column>
+      <row>
+        <column>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Determine which function will enable">
+            <label>Determine which function will enable</label>
+          </label>
+          <label label="the Low Speed Gear for switching:">
+            <label>the Low Speed Gear for switching:</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="Enable Low Speed Gear with F1" format="checkbox"/>
+          <display item="Enable Low Speed Gear with F2" format="checkbox"/>
+          <display item="Enable Low Speed Gear with F3" format="checkbox"/>
+          <display item="Enable Low Speed Gear with F4" format="checkbox"/>
+          <display item="Enable Low Speed Gear with F5" format="checkbox"/>
+          <display item="Enable Low Speed Gear with F6" format="checkbox"/>
+          <display item="Enable Low Speed Gear with F7" format="checkbox"/>
+          <display item="Enable Low Speed Gear with F8" format="checkbox"/>
+        </column>
+        <column>
+          <label label="           ">
+            <label>           </label>
+          </label>
+        </column>
+        <column>
+          <label label="Precision Braking Control (aka Constant Braking Distance)">
+            <label>Precision Braking Control (aka Constant Braking Distance)</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="Precision Braking Control"/>
+          <display item="Braking Distance (0-255)"/>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="Disable PBC with F1" format="checkbox"/>
+          <display item="Disable PBC with F2" format="checkbox"/>
+          <display item="Disable PBC with F3" format="checkbox"/>
+          <display item="Disable PBC with F4" format="checkbox"/>
+          <display item="Disable PBC with F5" format="checkbox"/>
+          <display item="Disable PBC with F6" format="checkbox"/>
+          <display item="Disable PBC with F7" format="checkbox"/>
+          <display item="Disable PBC with F8" format="checkbox"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Tip: Low Speed Gear must be enabled for Precision Braking Control to function">
+            <label>Tip: Low Speed Gear must be enabled for Precision Braking Control to function</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <separator/>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="Decoder Software Version"/>
+        </column>
+      </row>
+    </column>
+    <name>Lenz</name>
+  </pane>
+  
+  <pane name="SUSI">
+	<column>
+		<row>
+			<column>
+				<label label="              S.U.S.I. Variables"/>
+				<label label=" "/>
+				<display item="SUSI CV Number Tens"/>
+                <display item="SUSI CV Number Hundreds"/>
+				<display item="SUSI CV Value"/>											
+			</column>		
+		</row>	
+	</column>
+  </pane>
+
+</decoder-config>

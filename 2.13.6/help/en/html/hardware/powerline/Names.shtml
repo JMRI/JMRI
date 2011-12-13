@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- $Id$ -->
+<title>JMRI: Power Line System Names</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Powerline System Names
+</h1>
+
+Individual inputs (Sensors)  and outputs (Turnouts and Lights)
+in JMRI are accessed via names.  
+For information on the general scheme, please see
+the 
+<a href="../../doc/Technical/Names.shtml">naming page</a>
+in the
+<a href="../../doc/Technical/index.shtml">technical documentation</a>.
+
+<h2>X10</h2>
+
+X10 devices are addressed via a "House Code" of A through P, 
+and a "Device Code" of 1 through 16.
+
+<p>
+Outputs (Lights or Turnouts) in each house code 
+are numbered with their 
+device code, e.g. PTA1 is a JMRI Turnout that
+talks to device 1 on housecode A; PTB3 is a Turnout
+for device 3 on housecode B; PLP16 is a JMRI Light
+for device 16 on housecode P.
+
+<p>
+If an output is called as a turnout (name starts with PT), you only get on and off
+for output options.
+
+<p>
+An output that is used as a light (name starts with PL) 
+will take variable intensities.
+However, some physical X10 devices may not support dimming.
+
+<p>
+Inputs (Sensors) are identified by the house code and device number
+that was reported by some other X10 device like a motion sensor or
+light control pad.
+NOTE: due to a large number of false codes due to other X10 users
+sensors are not automatically generated.
+They must be entered in the sensor table by the user.
+
+<p>
+JMRI configures the adapter to use House Code "A" now.
+We'll eventually make that configuable, but for now
+that means that input messages will only be received
+from devices set to house code A, so only sensors PSA1 through PSA16
+will work.
+
+<p>
+(Early versions of JMRI X10 support used an all-numeric address
+like PT12, with no housecode letters; this is no longer available,
+because it caused way too much confusion)
+
+<h2>Insteon</h2>
+
+Insteon adapters are labelled with a four-part number that looks
+like "01.2A.B4".  These are just random
+strings as part as the user and the program is concerned, and
+we don't make any effort to subdivide them.  You should
+enter these exactly as they appear on the device you 
+want to address. Do not delete or add leading zeros, etc.
+
+<p>
+For example, if the device is labelled "01.2A.B4",
+the corresponding Light system name is "PL01.2A.B4".
+
+<h3>More Information</h3>
+
+More information on the X10 hardware can be found on the
+(admittedly obnoxious)
+<a href="http://www.x10.com">X10 web site</a>.
+<p>More information about <a
+href="http://www.x10.com/support/technology1.htm">X10 Powerline Carrier (PLC)
+Technology.</a></p>
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+
+ 	  	 

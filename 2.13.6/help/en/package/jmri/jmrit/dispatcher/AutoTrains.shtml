@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: AutoTrains Window Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Dave Duchamp" name=Author>
+    <META name="keywords" content="JMRI help Dispatcher Auto Active Trains">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>The AutoTrains Window
+</H1>
+<H2>Introduction
+</H2
+<p>The <b>AutoTrains</b> window allows the dispatcher to take control of an 
+Auto Active Train (an automatically running Active Train) from the <i>virtual 
+dispatcher</i> when required to solve a problem, and to restore automatic operation 
+after the problem is solved. Example problems requiring the dispatcher to intervene 
+are derailment of the train, or unexpected uncoupling of cars in a train. This 
+window is also used to restart automatic operation after suspending it for a human 
+engineer to switch train cars or perform other work.</p>
+<p> When the first Auto Active Train is created in
+<b><a href="Dispatcher.shtml">Dispatcher</a></b>, an <b>AutoTrains</b> window is 
+opened immediately to the right of the Dispatcher window. This window may be moved 
+to another location if desired. An entry is added for each additional Auto Active 
+Train as it is created. When an Auto Active Train is terminated, its entry is 
+removed from the <b>AutoTrains</b> window.
+
+<H2>Using the AutoTrains Window
+</H2
+<p>Below is an <b>AutoTrains</b> window showing two Auto Active Trains, Amtrak 139 and 
+GTW 6418. Entries are separated by a horizontal line.</p>
+<img src="AutoTrainsA.jpg" height="154" width="255">
+<p>Each entry has a <b>Stop</b> button and a <b>To Manual</b> button. If the 
+dispatcher presses the <b>Stop</b> button, the Auto Active Train is immediately 
+stopped. The stopping is an emergency stop--no gradual reduction of speed. Clicking 
+the <b>Stop All Auto Trains</b> button at the bottom of the window will issue an 
+emergency stop to all Auto Active Trains shown in the <b>AutoTrains</b> window. 
+<b>Stop</b> buttons change to <b>Resume</b> buttons when trains are stopped. Each 
+stopped train must be restarted individually by clicking its <b>Resume</b> button. 
+</p>
+<p>If the dispatcher clicks the <b>To Manual</b> button for Amtrak 139, the above 
+window changes to:</p>
+<img src="AutoTrainsB.jpg" height="154" width="551">
+<p>The slider controls the train speed, and the <b>For</b> and <b>Rev</b> radio 
+buttons control the train direction. The dispatcher can use these controls to run 
+the train and fix whatever problem is present. When the problem is remedied, clicking 
+the <b>To Auto</b> button will restore automatic operation of the train. Prior to 
+clicking its <b>To Auto</b> button, the dispatcher should run the train to the 
+same location where it was when <b>To Manual</b> was clicked. This assures smooth 
+resumption of automatic operation.</p>
+<p>One of the user-specified <b>Actions</b> is <b>Go to Manual Mode</b>. This 
+Action supports running an Auto Active Train automatically to a work side, where a 
+human engineer takes over to preform operations (perhaps switching cars), after 
+which automatic running is continued following the same Transit. When the 
+<b>Go to Manual Mode</b> action is initiated, the <b>Stop</b> and <b>ToManual</b> 
+buttons are replaced by one <b>Resume Auto Running</b> button, and the computer 
+throttle being used by the <i>virtual engineer</i> is released. A human engineer 
+can then plug in a manual throttle and acquire the train for manual running.
+After the human engineer has completed his/her work, the human engineer releases 
+the manual throttle, and informs the dispatcher that automatic operation may be 
+resumed. The dispatcher resumes automatic operation by clicking the 
+<b>Resume Auto Running</b> button. Prior to releasing the manual throttle, the 
+human engineer should run the train in the same position it was in when manual 
+mode operation was initiated. This insures smooth resumption of automatic 
+operation.</p>
+
+
+
+
+
+
+
+
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

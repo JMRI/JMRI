@@ -1,0 +1,5 @@
+The jmrix.cmri package contains jmri implementations for Bruce Chubb's
+C/MRI system.
+
+The serial directory contains a serial implementation; there may also be
+a parallel implementation some day.

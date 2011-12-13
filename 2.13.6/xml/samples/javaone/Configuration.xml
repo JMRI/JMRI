@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE layout-config SYSTEM "layout-config.dtd">
+<layout-config>
+  <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <turnout systemName="LT200" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT201" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT202" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT203" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT256" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT257" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT258" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT259" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT260" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT261" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT262" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT263" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT264" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT265" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT266" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT267" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT268" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT269" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT270" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT271" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT272" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT273" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT274" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT275" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT276" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT277" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT278" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT279" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT280" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT281" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT282" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT283" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT284" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT285" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT286" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT287" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT288" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT289" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT290" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT291" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT293" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT295" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT296" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT297" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT299" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT301" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT303" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT305" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT309" feedback="MONITORING" automate="Default" />
+    <turnout systemName="LT311" feedback="MONITORING" automate="Default" />
+  </turnouts>
+  <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+  </turnouts>
+  <lights class="jmri.jmrix.loconet.configurexml.LnLightManagerXml" />
+  <sensors class="jmri.jmrix.loconet.configurexml.LnSensorManagerXml">
+    <sensor systemName="LS100" />
+    <sensor systemName="LS101" />
+    <sensor systemName="LS102" />
+    <sensor systemName="LS103" userName="Start/Stop"/>
+    <sensor systemName="LS150" />
+    <sensor systemName="LS151" />
+    <sensor systemName="LS152" />
+    <sensor systemName="LS153" />
+    <sensor systemName="LS154" />
+    <sensor systemName="LS155" />
+    <sensor systemName="LS156" />
+    <sensor systemName="LS157" />
+    <sensor systemName="LS158" />
+    <sensor systemName="LS159" />
+    <sensor systemName="LS160" />
+    <sensor systemName="LS161" />
+    <sensor systemName="LS162" userName="Lower Left"/>
+    <sensor systemName="LS163" userName="Lower Right"/>
+    <sensor systemName="LS164" userName="Upper Left"/>
+    <sensor systemName="LS165" userName="Upper Right"/>
+  </sensors>
+  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml" />
+  <reporters class="jmri.jmrix.loconet.configurexml.LnReporterManagerXml" />
+  <signalheads class="jmri.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH257" userName="200 Main">
+      <turnout systemName="257" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH273" userName="200 Siding">
+      <turnout systemName="273" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH261" userName="200 Facing Lower">
+      <turnout systemName="261" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH263" userName="200 Facing Upper">
+      <turnout systemName="263" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH265" userName="201 Main">
+      <turnout systemName="265" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH269" userName="201 Facing Lower">
+      <turnout systemName="269" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH271" userName="201 Facing Upper">
+      <turnout systemName="271" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH279" userName="201 Siding">
+      <turnout systemName="279" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH289" userName="202 Main">
+      <turnout systemName="289" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH293" userName="202 Facing Lower">
+      <turnout systemName="293" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH295" userName="202 Facing Upper">
+      <turnout systemName="295" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH297" userName="203 Facing Upper">
+      <turnout systemName="297" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH299" userName="203 Facing Lower">
+      <turnout systemName="299" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH303" userName="203 Main">
+      <turnout systemName="303" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH305" userName="202 Siding">
+      <turnout systemName="305" />
+    </signalhead>
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH311" userName="203 Siding">
+      <turnout systemName="311" />
+    </signalhead>
+  </signalheads>
+  <memories class="jmri.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IMIB150" userName="Track IB150" />
+    <memory systemName="IMIB151" userName="Track IB151" />
+    <memory systemName="IMIB152" userName="Track IB152" />
+    <memory systemName="IMIB153" userName="Track IB153" />
+    <memory systemName="IMIB154" userName="Track IB154" />
+    <memory systemName="IMIB155" userName="Track IB155" />
+    <memory systemName="IMIB156" userName="Track IB156" />
+    <memory systemName="IMIB157" userName="Track IB157" />
+    <memory systemName="IMIB158" userName="Track IB158" />
+    <memory systemName="IMIB159" userName="Track IB159" />
+    <memory systemName="IMIB160" userName="Track IB160" />
+    <memory systemName="IMIB161" userName="Track IB161" />
+    <memory systemName="IMIB162" userName="Track IB162" />
+    <memory systemName="IMIB163" userName="Track IB163" />
+    <memory systemName="IMIB164" userName="Track IB164" />
+    <memory systemName="IMIB165" userName="Track IB165" />
+  </memories>
+  <routes class="jmri.configurexml.DefaultRouteManagerXml" />
+  <blocks class="jmri.jmrit.blockboss.configurexml.BlockBossLogicXml">
+    <block signal="200 Facing Lower" mode="3" watchedturnout="LT200" watchedsignal1="201 Siding" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS162" />
+      <sensor systemName="LS159" />
+      <sensor systemName="LS161" />
+    </block>
+    <block signal="200 Facing Upper" mode="2" watchedturnout="LT200" watchedsignal1="201 Main" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS162" />
+      <sensor systemName="LS158" />
+      <sensor systemName="LS160" />
+    </block>
+    <block signal="200 Main" mode="2" watchedturnout="LT200" watchedsignal1="202 Facing Upper" watchedsignal1alt="202 Facing Lower" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS162" />
+      <sensor systemName="LS157" />
+      <sensor systemName="LS156" />
+    </block>
+    <block signal="200 Siding" mode="3" watchedturnout="LT200" watchedsignal1="202 Facing Upper" watchedsignal1alt="202 Facing Lower" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS162" />
+      <sensor systemName="LS157" />
+      <sensor systemName="LS156" />
+    </block>
+    <block signal="201 Facing Lower" mode="3" watchedturnout="LT201" watchedsignal1="200 Siding" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS163" />
+      <sensor systemName="LS161" />
+      <sensor systemName="LS159" />
+    </block>
+    <block signal="201 Facing Upper" mode="2" watchedturnout="LT201" watchedsignal1="200 Main" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS163" />
+      <sensor systemName="LS160" />
+      <sensor systemName="LS158" />
+    </block>
+    <block signal="201 Main" mode="2" watchedturnout="LT201" watchedsignal1="203 Facing Upper" watchedsignal1alt="203 Facing Lower" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS163" />
+      <sensor systemName="LS150" />
+      <sensor systemName="LS151" />
+    </block>
+    <block signal="201 Siding" mode="3" watchedturnout="LT201" watchedsignal1="203 Facing Upper" watchedsignal1alt="203 Facing Lower" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS163" />
+      <sensor systemName="LS150" />
+      <sensor systemName="LS151" />
+    </block>
+    <block signal="202 Facing Lower" mode="3" watchedturnout="LT202" watchedsignal1="203 Siding" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS164" />
+      <sensor systemName="LS155" />
+      <sensor systemName="LS153" />
+    </block>
+    <block signal="202 Facing Upper" mode="2" watchedturnout="LT202" watchedsignal1="203 Main" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS164" />
+      <sensor systemName="LS154" />
+      <sensor systemName="LS152" />
+    </block>
+    <block signal="202 Main" mode="2" watchedturnout="LT202" watchedsignal1="200 Facing Upper" watchedsignal1alt="200 Facing Lower" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS164" />
+      <sensor systemName="LS156" />
+      <sensor systemName="LS157" />
+    </block>
+    <block signal="202 Siding" mode="3" watchedturnout="LT202" watchedsignal1="200 Facing Upper" watchedsignal1alt="200 Facing Lower" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS164" />
+      <sensor systemName="LS156" />
+      <sensor systemName="LS157" />
+    </block>
+    <block signal="203 Siding" mode="3" watchedturnout="LT203" watchedsignal1="201 Facing Upper" watchedsignal1alt="201 Facing Lower" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS165" />
+      <sensor systemName="LS151" />
+      <sensor systemName="LS150" />
+    </block>
+    <block signal="203 Main" mode="2" watchedturnout="LT203" watchedsignal1="201 Facing Upper" watchedsignal1alt="201 Facing Lower" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS165" />
+      <sensor systemName="LS151" />
+      <sensor systemName="LS150" />
+    </block>
+    <block signal="203 Facing Lower" mode="3" watchedturnout="LT203" watchedsignal1="202 Siding" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS165" />
+      <sensor systemName="LS153" />
+      <sensor systemName="LS155" />
+    </block>
+    <block signal="203 Facing Upper" mode="2" watchedturnout="LT203" watchedsignal1="202 Main" useflashyellow="false" distantsignal="false">
+      <sensor systemName="LS165" />
+      <sensor systemName="LS152" />
+      <sensor systemName="LS154" />
+    </block>
+  </blocks>
+  <!--Written by JMRI version 1.7.3 on Sat May 13 17:12:58 PDT 2006 $Id$-->
+</layout-config>
+

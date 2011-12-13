@@ -1,0 +1,10 @@
+
+
+When SimpleProgFrame is closed, it doesn't disconnect from the SlotManager.  Is this an error?
+Does it leak memory?
+
+Since programming takes time, need to clearly articulate the threading model.
+
+Also, need to clean this up a little so it can form a base for others.
+
+

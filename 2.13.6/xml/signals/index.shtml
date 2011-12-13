@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author$) 2009 -->
+<!-- $Id$ -->
+<title>JMRI: Signal System Definitions</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Signal System Definitions
+</h1>
+
+JMRI provides a number of definitions for signal
+systems via this directory.
+
+<p>
+For more information, please see
+the JMRI help page on
+<a href="../../help/en/html/tools/signaling/AspectSignaling.shtml">aspect-based signaling</a>.
+
+
+<p>
+The available definitions include:
+<dl>
+
+<dt><a href="basic/index.shtml">basic</a>
+    <dd>A non-prototypical set of aspects and appearances that most 
+        model railroaders will understand easily.
+
+<dt><a href="AAR-1946/index.shtml">AAR-1946</a>
+    <dd>American Association of Railroads 1946 rule book
+
+<dt><a href="NYCS-1937/index.shtml">NYCS-1937</a>
+    <dd>New York Central System 1937 rule book
+    <br>
+    <i>Missing aspect mapping, not finished.</i>
+
+<dt><a href="SPTCO-1930/index.shtml">SPTCO-1930</a>
+    <dd>Southern Pacific Railway and Transportation Company 1930 rule book
+    <br>
+    <i>Missing aspect mapping, not finished.</i>
+
+<dt><a href="SPTCO-1960/index.shtml">SPTCO-1960</a>
+    <dd>Southern Pacific Railway and Transportation Company 1960 rule book
+    <br>
+    <i>Missing aspect mapping, not finished.</i>
+
+<dt><a href="DB-HV-1969/index.shtml">DB HV 1969</a>
+    <dd>1969 Deutsche Bundesbahn "Einheitsbauform" Home Signal/Distant signal (Hauptsignal/Vorsignal) system revision
+    <br>
+    <i>Missing aspect mapping, not finished.</i>
+
+<dt><a href="SLSF-1973/index.shtml">SLSF-1973</a>
+    <dd>1973 SLSF (Frisco) rules 
+    <br>
+    <i>Missing aspect mapping, not finished.</i>
+
+<dt><a href="BR-2003/index.shtml">BR-2003</a>
+    <dd>2003 BR rule book
+
+<dt><a href="BN-1989/index.shtml">BN-1989</a>
+	<dd>1989 October Burlington Northern
+    <br>
+    <i>Missing aspect mapping, not finished.</i>
+
+</dl>
+
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: Signal Mast Table Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Signal Mast Table">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>The Signal Mast Table
+</H1>
+
+<a href="SignalMastTable.png">
+   <img src="SignalMastTable.png" 
+        height="86" width="338" align="right">
+</a>
+
+<p>
+For more information on Signal Masts and aspect signaling, 
+see the 
+<a href="../../../../html/tools/signaling/AspectSignaling.shtml">introductory page</a>.
+
+<P>To define a new signal mast, click on the 
+"<A HREF="SignalMastAddEdit.shtml">Add.." button</a>.
+It will
+prompt you whatever setup information is needed.
+
+<P> Use the Store item in the File menu to save signal information to disk. 
+This information is saved with the configuration in an XML file, along
+with control panel setup and similar stuff.  To store your panels in the same 
+file (recommended), select <b>File>Store>Store Configuration and Panels To 
+File...</b> or select <b>Panels>Store panels...</b> in the main JMRI window.
+<P>For more information on creating and displaying panels, including how to 
+show signals on your panels, please see the 
+<A HREF="../../../../html/apps/PanelPro/Panels.shtml">Panels pages</a>.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

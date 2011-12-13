@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author$) 2009 -->
+<!-- $Id$ -->
+<title>JMRI: BR 2003 Signaling Definition</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: BR 2003 Signaling Definition
+</h1>
+
+This directory contains signaling definitions corresponding to 
+the GE/RT8000 - S1 Rule Book as described in the 
+June 2003 version of the "Signals and indicators controlling train movements", 
+Module S1.
+<p>
+These masts do not cover Junction(Feathers) and route (Theatre) indicators, They should be created via signal heads and controlled via logixs.
+<p>
+See the 
+<a href="aspects.xml">aspect page</a>.
+
+<p>
+For three and four aspect signals, there are two options on how they can be built, the first is to use a single JMRI Signal Head to represent the main Signal. 
+The second option is to build the signals using individual JMRI Signal Heads for each aspect.  Depending upon the configuration in both JMRI and the hardware, 
+will depend upon whether all the "flash" aspects are available.
+<p>
+Colour Light Signal Mast definitions:
+<ul>
+<li><a href="appearance-buffer-stop.xml">Buffer Stop</a>
+<li><a href="appearance-2-d.xml">2 Aspect Distant Signal</a>
+<li><a href="appearance-2-h.xml">2 Aspect Home Signal</a>
+<li><a href="appearance-2-h-c.xml">2 Aspect Home Signal With Call On</a>
+<li><a href="appearance-3.xml">3 Aspect Signal</a>
+<li><a href="appearance-3-c.xml">3 Aspect Signal With Call On</a>
+<li><a href="appearance-3-i.xml">3 Aspect Signal - Built using individual heads for each aspect</a>
+<li><a href="appearance-3-i-c.xml">3 Aspect Signal With Call On  - Built using individual heads for each aspect</a>
+<li><a href="appearance-4.xml">4 Aspect Signal</a>
+<li><a href="appearance-4-c.xml">4 Aspect Signal With Call On</a>
+<li><a href="appearance-4-i.xml">4 Aspect Signal - Built using individual heads for each aspect</a>
+<li><a href="appearance-4-i-c.xml">4 Aspect Signal With Call On  - Built using individual heads for each aspect</a>
+</ul>
+<p>
+
+Position Light Signals definitions:
+<ul>
+<li><a href="appearance-plr.xml">Position Light Signal Red White Apperance</a>
+<li><a href="appearance-ply.xml">Position Light Signal Yellow White Apperance</a>
+</ul>
+
+<p>
+Semaphore Signal Mast definitions:
+<ul>
+<li><a href="appearance-2-d-sema.xml">Distant Signal</a>
+<li><a href="appearance-2-h-sema.xml">Home Signal</a>
+<li><a href="appearance-2-h-sema-sub.xml">Home Signal With Subsidiary Signal</a>
+<li><a href="appearance-2-h-d-sema.xml">Home/Distant Signal</a>
+</ul>
+
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

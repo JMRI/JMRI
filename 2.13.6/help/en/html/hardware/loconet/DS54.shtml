@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: DS54 Examples
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI LocoNet DS54">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+<H1>JMRI: DS54 Examples</H1>
+<p class=subtitle> Examples of using a Digitrax DS54 with JMRI. </p>
+<p>
+The DS54 accessory decoder can be configured in a large number of
+ways.  
+(<a href="../../../manual/index.shtml">DecoderPro</a> can help with that)
+
+<P>
+Walter Thompson walked through the details of this:
+
+<P>
+With the ds54 at defaults these are the Loconet msgs when either Switch A
+or Aux A goes positive causing the Turnout to "toggle" state:
+<BR>
+When Switch A (blue lead) goes high loconet msg [b2 8 70 35].
+<BR>
+When Aux A (orange lead) goes high loconet msg [b2 8 50 15]
+
+<P>
+I then set "When Switch A input changes, send" ="Turnout feedback msg"
+<BR>
+When Switch A (blue lead) goes high loconet msg [b2 8 70 36]
+<BR>
+When Aux A (orange lead) goes high loconet msg [b2 8 50 15]
+
+<P>
+I then set "When Aux A input changes, send"= "Turnout feedback message"
+<BR>
+When Switch A (blue lead) goes high loconet msg [b2 8 70 36]
+<BR>
+When Aux A (orange lead) goes high loconet msg [b2 8 50 16]
+
+<P>
+Therefore, when the Switch and Aux inputs are set to send a turnout 
+feedback message, the feedback mechanisms built into recent versions
+of JMRI can be used to track the turnout state when the local
+inputs are used to change the turnout.
+
+<h2>Exact Feedback</h2>
+
+To use exact feedback, you need to connect two microswitches to the 
+turnout and to the Switch and Aux inputs on the DS54.
+(You can use the built in Tortoise contacts for this)
+<P>
+Configure the DS54 channel with:
+<PRE>
+ Aux A input"='Active ON, trigger on change, Postive Level"
+ Aux A task"="No Output change"
+ When Aux A input changes, send"= "Exact turnout feedback message"
+ Switch A input"='Active ON, trigger on change, Postive Level"
+ Switch A task"="No Output change"
+ Switch A input changes, send"= "Exact turnout feedback message"
+</PRE>
+Configure Turnout LT9 (via the Turnout Table) to use "EXACT" feedback.
+<P>
+<table border="1">
+    <tr><th> Commentary</th><th>Loconet messages</th></tr>
+    <tr><td>
+            Start with Turnout 9 closed<br>
+            Switch A will be Closed and Aux A open.
+    </td>
+    <td>none</td></tr>
+        <tr><th colspan="2">&nbsp;</th></tr>
+    <tr><td>
+            Issue a "Throw Turnout 9" command from <br>
+            the throttle or the turnout table
+        </td>
+        <td><code>[b0 8 10 57]</code> Requesting Switch at 9 to Thrown (output On)<br>
+            <code>[b0 8 &nbsp;0 47]</code> Requesting Switch at 9 to Thrown (output Off)</td></tr>
+    <tr><td>
+            Turnout starts to move and opens Switch A
+        </td><td><code>[b1 8 60 26]</code> Turnout 9 Switch input is Thrown (input on)</td></tr>
+    <tr><td>
+            Moving turnout closes Aux A and reaches the end of its travel.
+        </td>
+        <td>
+          <code>[b1 8 50 16]</code> Turnout 9 Aux input is Closed (input off)
+        </td></tr>
+    <tr><th colspan="2">&nbsp;</th></tr>
+    <tr><td>Now issue a "Close Turnout 9" command
+        </td><td>
+            <code>[b0 8 30 77]</code> Requesting Switch at 9 to Closed (output On)<br>
+            <code>[b0 8 20 67]</code> Requesting Switch at 9 to Closed (output Off)
+    </td></tr>
+    <tr><td>
+            Turnout starts to move, opens Aux A
+        </td>
+        <td>
+            <code>[b1 8 40 &nbsp;6]</code> Turnout 9 Aux input is Thrown (input on)
+        </td></tr>
+    <tr><td>
+            Moving turnout closes Switch A and reaches the end of its travel.
+        </td><td>
+            <code>[b1 8 70 36]</code> Turnout 9 Switch input is Closed (input off)
+        </td></tr>
+</table>
+<H1>Programming the DS54</H1>
+<p>The DS54 CV values can be programmed via JMRI using the JMRI programming tools
+    using the "Service Mode" programming track.  This requires a JMRI connection
+    to a command station, and the DS54's track inputs must be connected to the
+    programming track.  As described in the DS54 documentation, it is necessary to 
+    connect a 100 Ohm 2 Watt resistor between one of the programming track 
+    rails and the "Yellow" input wire of one of the DS54's output connectors.  
+    It is also necessary to disconnect all other input signal sources.</p>
+<p>Once the connections described above have been made, place the programming 
+    jumper across the programming jumper pins and open the JMRI "Service-Mode 
+    Programmer" tool.  Navigate to the "Digitrax" entry, and select DS54 as the
+    decoder type, and press the "Open Programmer" button.  You may then read and
+    write the CVs just like any mobile decoder.</p>    
+<p>When ready to place the DS54 back in normal service, disconnect the programming
+    track connections and programming resistor, and be sure to remove the 
+    programming jumper.</p>
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

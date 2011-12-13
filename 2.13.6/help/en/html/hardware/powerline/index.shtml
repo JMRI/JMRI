@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- $Id$ -->
+<title>JMRI: Powerline Controllers</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+<h2> 
+JMRI:  Powerline Controllers
+</h2>
+
+This page talks about how to configure JMRI to talk
+to powerline controllers, e.g. X10. 
+
+<p>
+See also the associated
+<a href="Compatibility.shtml">compatibility page</a> to see what interfaces
+have been supported.
+
+<p>
+For information on how to address your equipment via JMRI, please
+see the 
+<a href="Names.shtml">page on addressing and JMRI names</a> for X10.
+
+<p>
+JMRI Lights work intuitively with powerline devices.  When the JMRI
+Light is set "ON", a command is send to the remote device to set it "ON".
+Ditto for "OFF". 
+
+<p>
+There's also limited support for dimming (variable brightness) Lights.
+See the 
+<a href="../../../package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml">"Light Control" page</a> 
+for more information on this.
+
+<p>
+JMRI Turnouts are available for X10.  When the JMRI Turnout
+is set to "THROWN", a command is sent to the remote device to 
+set it to "BRIGHT".  This is an immediate, full-power on.  When the Turnout
+is set to "CLOSED", the remote device is sent a command to go "OFF".  Depending
+on the X10 hardware, this may be either an immediate off, or be slowly dimmed. 
+<!--#include virtual="/Footer" -->
+</body>
+</html>

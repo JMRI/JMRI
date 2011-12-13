@@ -1,0 +1,7 @@
+This directory contains scripts that were
+first created for the JavaOne test layout.
+
+These files require some JMRI classes that
+first appeared in version 1.7.4, so should
+not be used with versions before that.
+

@@ -1,0 +1,211 @@
+<?xml version="1.0"?>
+<!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
+
+<!-- This file is part of JMRI.  Copyright 2007.                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<programmer-config>
+<!-- $Id$ -->
+          <!--version author="Joe Ellis, based on Comprehensive Programmer"/-->
+		<version author="Mark Gurries, Bob Jacobsen" 
+					version="5" lastUpdated="20031205"/>
+
+      <!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
+      <!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
+      <!-- Version 5 - modify format, add tooltips (Jack Shall) -->
+
+<programmer decoderFilePanes="yes">
+
+	<pane name="Basic">
+		<column>
+			<dccaddress />
+			<label label=" "/>
+			<display item="Short Address"
+				tooltip="Sets the Primary (2 digit) address" />
+			<display item="Long Address"
+				tooltip="Sets the Extended (4 digit) address" />
+			<display item="Address Format"
+				tooltip="Determines whether loco will use short or long
+				address" />
+			<label label=" "/>
+			<display item="Locomotive Direction"
+				tooltip="Sets the relative direction of the loco when told
+	               to move forward" />
+			<display item="Speed Step Mode"
+				tooltip="Sets the speed step mode for headlight control" />
+			<display item="Analog (DC) Operation"
+				tooltip="Determines whether loco can operate on conventional
+			     DC current (enables Power Source Conversion)" />
+		</column>
+	</pane>
+	
+	
+	
+	<pane name="Motor">
+		<column>
+			<display item="Kick Start"
+				tooltip="Provides an initial higher voltage spike to loco 
+				to overcome starting friction" />
+			<display item="Accel"
+				tooltip="Sets the acceleration rate (delay)" />
+			<display item="Decel"
+				tooltip="Sets the deceleration rate (delay)" />
+		</column>
+	</pane>
+	
+
+	<pane name="Speed Control">
+		<column>
+			<row>
+				<column>
+					<label label=" "/>
+					<display item="Speed Table Definition" 
+						format="offradiobutton" label=""/>
+					<label label=" "/>
+				</column>
+			</row>
+			<row>
+				<column>
+					<display item="Vstart"
+						tooltip="Sets the starting voltage at 
+						throttle speed step 1" />
+					<display item="Vmid"
+						tooltip="Sets the voltage at mid throttle" />
+					<display item="Vhigh"
+						tooltip="Sets the maximum voltage at full
+						throttle" />
+				</column>
+				<column>
+					<display item="Vstart" format="hslider" label=""
+						tooltip="Sets the starting voltage at 
+						throttle speed step 1" />
+					<display item="Vmid" format="hslider" label=""
+						tooltip="Sets the voltage at mid throttle" />
+					<display item="Vhigh" format="hslider" label=""
+						tooltip="Sets the maximum voltage at full
+						throttle" />
+				</column>
+			</row>
+			<row>
+				<column>
+					<label label=" "/>
+					<display item="Forward Trim"
+						tooltip="Fine tune the forward voltage levels" />
+					<label label=" "/>
+				</column>
+				<column>
+					<label label="     "/>
+				</column>
+				<column>
+					<label label=" "/>
+					<display item="Reverse Trim"
+						tooltip="Fine tune the reverse voltage levels" />
+					<label label=" "/>
+				</column>
+			</row>
+			<separator/>
+			<row>
+				<column>
+					<display item="Speed Table Definition" 
+						format="onradiobutton" layout="above" label=""/>
+					<display item="Speed Table" layout="above"/>
+					<label label=" "/>
+				</column>
+			</row>
+		</column>
+	</pane>
+	
+	
+
+	<pane name="Consist">
+		<column>
+			<row>
+				<column>
+					<display item="Consist Address"
+						tooltip="Sets the multiple unit (consist) 
+						address" />
+					<display item="Consist Direction"
+						tooltip="Sets the relative direction of the 
+						loco when consist is told to move forward" />
+				</column>
+				<column>
+					<label label="   "/>
+				</column>
+
+			</row>
+			<label label=" "/>
+
+			<separator/>
+
+			<label label=" "/>			
+			<label label="Will decoder respond to function 
+			requests at consist address?"/>
+			<label label=" "/>
+			<display item="Consist Address Active For FL in Forward"
+				tooltip="Determines whether the function will respond 
+				to the consist address" />
+			<display item="Consist Address Active For FL in Reverse"
+				tooltip="Determines whether the function will respond 
+				to the consist address" />
+			<display item="Consist Address Active For F0"
+				tooltip="Determines whether the function will respond 
+				to the consist address" />
+			<display item="Consist Address Active For F1"
+				tooltip="Determines whether the function will respond 
+				to the consist address" />
+			<display item="Consist Address Active For F2"
+				tooltip="Determines whether the function will respond 
+				to the consist address" />
+			<display item="Consist Address Active For F3"
+				tooltip="Determines whether the function will respond 
+				to the consist address" />
+			<display item="Consist Address Active For F4"
+				tooltip="Determines whether the function will respond 
+				to the consist address" />
+			<display item="Consist Address Active For F5"
+				tooltip="Determines whether the function will respond 
+				to the consist address" />
+			<display item="Consist Address Active For F6"
+				tooltip="Determines whether the function will respond 
+				to the consist address" />
+			<display item="Consist Address Active For F7"
+				tooltip="Determines whether the function will respond 
+				to the consist address" />
+			<display item="Consist Address Active For F8"
+				tooltip="Determines whether the function will respond 
+				to the consist address" />
+			<display item="Consist Address Active For F9"
+				tooltip="Determines whether the function will respond 
+				to the consist address" />
+			<display item="Consist Address Active For F10"
+				tooltip="Determines whether the function will respond 
+				to the consist address" />
+			<display item="Consist Address Active For F11"
+				tooltip="Determines whether the function will respond 
+				to the consist address" />
+			<display item="Consist Address Active For F12"
+				tooltip="Determines whether the function will respond 
+				to the consist address" />
+		</column>
+	</pane>
+	
+	
+	<pane name="CVs">
+		<column>
+			<cvtable/>
+		</column>
+	</pane>
+
+</programmer>
+</programmer-config>
+
+

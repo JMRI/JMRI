@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: Digitrax Downloader
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help digitrax downloader">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Digitrax Firmware Downloader
+</H1>
+    
+Some Digitrax products can have new firmware (internal programs) downloaded to them.
+The firmware updates are distributed as ".dmf" (Digitrax Mangled Firmware) files.
+They contain both the code itself, and various managment information
+to make sure that it can only be downloaded into the hardware it expects.
+
+<p>
+Note that this is not the same as the 
+<a href="../soundloader/LoaderFrame.shtml">Sound Download Tool</a>, which
+is used with a PR2 or PR3 to load new sound projects into a Digitrax
+sound decoder.
+
+<p>
+To use this tool:
+<ul>
+<li>Click the select button, and select the .dmf file you want to download.
+<li>Click Read File to read the file into the program and verify its contents
+<li>Only if instructed to by Digitrax, change the various values in the 
+control fields (this is usuall not needed)
+<li>Click Download to load the firmware. This will take a little while, so
+there's progress bar below the buttons.
+<li>If desired, click Verify to double-check the contents. This also takes a 
+while.
+</ul>
+<p>
+(This is the help/jmri/jmrix/loconet/downloader/LoaderFrame help page)
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

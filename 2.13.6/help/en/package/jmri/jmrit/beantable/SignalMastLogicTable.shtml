@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: SignalMast Logic Table Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Kevin Dickerson" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Signal Mast Logic Table">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>The SignalMast Logic Table</H1>
+
+<P>A SignalMast logic, consists of a destination Mast, one or more turnouts, 
+block, sensors or other signalmasts that must be in a specific state before the 
+source signalmast can be set from a "Danger" aspect.
+<P>If you have drawn up your layout on layout editor correctly with all the block 
+information then it is possible for the system to automatically build up all 
+the SignalMast source and destination pairs, along with blocks, turnouts and their 
+settings.
+<H2>SignalMast Logic Table Columns</H2>
+
+<DL>
+	<DT>Source</DT>
+	<DD>This is the signal mast that you wish to set the logic up from.  There
+    can be multiple instances of the source mast in the table, depending upon
+    the number of different destination masts that are reachable from it.
+    <br>
+    Consider it as the signal mast that the driver is currently facing.</DD>
+
+    <DT>Appearance</DT>
+    <DD>The current appearance of the source mast</DD>
+    
+	<DT>Destination</DT>
+	<DD>This is the destination signal mast which is next down the line from the
+    source mast.  There can be multiple instances of the destination mast, all 
+    with different source masts.
+	</DD>
+
+    <DT>Appearance</DT>
+    <DD>The current appearance of the destination mast</DD>
+
+    <DT>Comment</DT>
+    <DD>A free form user editable field for the user to assign comment against 
+    the logic</DT>
+
+	<DT>Delete</DT>
+	<DD>Pushing the "Delete" button will remove the Signal Mast Logic from the
+	table. 
+	<p>
+	Note that this doesn't remove the Signal Mast Logic from any files you've
+	saved that contain it.  If you load one of those files, perhaps
+	when you restart the program, the route will reappear.
+	You should use one of the "Store to file" options in the "File"
+	menu to save new versions of any files that contain this route.
+	</DD>
+
+
+	<DT>Enabled</DT>
+	<DD>To disable a SignalMast Logic from triggering, uncheck the "Enabled" box
+	for the route.</DD>
+
+	<DT>Edit</DT>
+	<DD>Push this button to edit the Signal Mast Logic. For more information see <A
+		HREF="SignalMastLogicAddEdit.shtml">Adding/Editing Signal Mast Logic</A>.</DD>
+</DL>
+
+<H3>Add SignalMast Logic</H3>
+
+<DD>This is done via the Add button at the bottom of the screen, for more information
+on editing and adding Signal Mast Logics see 
+
+	<A HREF="../signalling/AddEditSignallingLogic.shtml">Adding/Editing SignalMast Logic</A>.</DD>
+</DL>
+<!--#include virtual="/Footer" -->
+</BODY>
+</HTML>
+

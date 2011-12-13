@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2006, 2007 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bill Chown" version="1" lastUpdated="20080226"/>
+<!-- made from the MRC_1656 (Pete Cesaro) file by Bill Chown orrrbrit2004@yahoo.com -->
+  <decoder>
+    <family name="MRC Light Effect Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
+      <model model="5 Function decoder 1650" maxTotalCurrent="1.5A" extFnsMRC="yes">
+<!-- note All functions are NMRA compatible -->
+        <size length="25.5" width="12.3" height="4.5" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <variable label="Primary Address" CV="1" comment="Short address 1-127" tooltip="Sets the Short, Primary or 2-digit address, CV 1, range 1-127" item="Short Address" default="3">
+        <shortAddressVal/>
+        <label>Primary Address</label>
+        <comment>Short address 1-127</comment>
+      </variable>
+      <variable label="Start Voltage" CV="2" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1, range 0(default)-32, CV2" comment="Range 0-32">
+        <decVal max="32"/>
+        <label>Start Voltage</label>
+        <comment>Range 0-32</comment>
+      </variable>
+      <variable label="Acceleration" CV="3" item="Accel" default="0" tooltip="Sets the acceleration rate (delay or momentum), range 0(default)-32, CV3" comment="Range 0-32">
+        <decVal max="32"/>
+        <label>Acceleration</label>
+        <comment>Range 0-32</comment>
+      </variable>
+      <variable label="Deceleration" CV="4" item="Decel" default="0" tooltip="Sets the deceleration rate (delay or momentum), range 0(default)-32, CV4" comment="Range 0-32">
+        <decVal max="32"/>
+        <label>Deceleration</label>
+        <comment>Range 0-32</comment>
+      </variable>
+      <variable label="Top Voltage" CV="5" item="Vhigh" default="32" tooltip="sets the motor voltage at top Speed Step, range 0-32(default), CV5" comment="Range 0-32">
+        <decVal max="32"/>
+        <label>Top Voltage</label>
+        <comment>Range 0-32</comment>
+      </variable>
+      <variable label="Manufacturer version number" CV="7" readOnly="yes" tooltip="CV7=32 for many MRC models, Read Only" item="Decoder Version" default="32">
+        <decVal/>
+        <label>Manufacturer version number</label>
+      </variable>
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" tooltip="CV8=143 for MRC, Read Only" item="Manufacturer" default="143">
+        <decVal/>
+        <label>Manufacturer ID</label>
+      </variable>
+      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended (4 digit) address, range 128-9999, mapped to CV17 and 18" comment="4 digit address (Range 0001-9999)">
+        <longAddressVal/>
+        <label>Long Address</label>
+        <comment>4 digit address (Range 0001-9999)</comment>
+      </variable>
+      <variable label="Advanced Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address" tooltip="range 1-127, CV19">
+        <decVal/>
+        <label>Advanced Consist Address</label>
+      </variable>
+      <variable label="Consist Direction" CV="19" mask="VXXXXXXX" tooltip="Normal(default) or Reversed(consist address+128), CV19">
+        <enumVal>
+          <enumChoice choice="Normal">
+            <choice>Normal</choice>
+          </enumChoice>
+          <enumChoice choice="Reversed">
+            <choice>Reversed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Direction</label>
+      </variable>
+      <variable label="Functions Respond To Address" CV="21" mask="XXXXXXXV" tooltip="CV21, least bit">
+        <enumVal>
+          <enumChoice choice="Locomotive Address Only">
+            <choice>Locomotive Address Only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to Consist Address">
+            <choice>Respond to Consist Address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Functions Respond To Address</label>
+      </variable>
+      <variable label="Normal direction of motion" CV="29" tooltip="CV29, '1' (least significant) bit, Forward(0)(default) or Reverse(1)" mask="XXXXXXXV" item="Locomotive Direction">
+        <enumVal>
+          <enumChoice choice="Forward">
+            <choice>Forward</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse">
+            <choice>Reverse</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Normal direction of motion</label>
+      </variable>
+      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" tooltip="CV29, '2' bit. Sets the Speed Step for motor, also affects some light settings" item="Speed Step Mode" default="1">
+        <enumVal>
+          <enumChoice choice="14">
+            <choice>14</choice>
+          </enumChoice>
+          <enumChoice choice="28/128 (recommended)">
+            <choice>28/128 (recommended)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Speed Steps</label>
+      </variable>
+      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="0" tooltip="CV29, '4' bit. Allows the loco to run on DC, default is Off" item="Analog (DC) Operation">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Analog conversion mode</label>
+      </variable>
+      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
+        <enumVal>
+          <enumChoice choice="2 digit addressing">
+            <choice>2 digit addressing</choice>
+          </enumChoice>
+          <enumChoice choice="4 digit addressing">
+            <choice>4 digit addressing</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Addressing Mode</label>
+      </variable>
+      <variable label="Strobe Light" CV="59" item="Function 4 behavior" default="0" tooltip="CV59, range 0(Double)-1(Single)" comment="Range 0(Double)-1(Single)">
+        <enumVal>
+          <enumChoice choice="Double Strobe" value="0">
+            <choice>Double Strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Single Strobe" value="1">
+            <choice>Single Strobe</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Strobe Light</label>
+        <comment>Range 0(Double)-1(Single)</comment>
+      </variable>
+      <variable label="Head/Rear Light" CV="60" item="Global lighting option 1" default="0" tooltip="CV60, range 0, 1 or 2" comment="Range 0-2">
+        <enumVal>
+          <enumChoice choice="Directional" value="0">
+            <choice>Directional</choice>
+          </enumChoice>
+          <enumChoice choice="Rule 17" value="1">
+            <choice>Rule 17</choice>
+          </enumChoice>
+          <enumChoice choice="Both On/Off" value="2">
+            <choice>Both On/Off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Head/Rear Light</label>
+        <comment>Range 0-2</comment>
+      </variable>
+      <variable label="Ditch Light Rate, F1" CV="61" item="Function 1 options" default="10" tooltip="CV61, range 0-32, F2 enables 10 flashes" comment="Range 0-32">
+        <decVal max="3"/>
+        <label>Ditch Light Rate, F1</label>
+        <comment>Range 0-32</comment>
+      </variable>
+      <variable label="Mars Light Rate, F3" CV="62" item="Function 3 options" default="10" tooltip="CV62, range 0-32" comment="Range 0-32">
+        <decVal max="3"/>
+        <label>Mars Light Rate, F3</label>
+        <comment>Range 0-32</comment>
+      </variable>
+      <variable label="Strobe Light Rate, F4" CV="63" item="Function 4 options" default="10" tooltip="CV63, range 0-32" comment="Range 0-32">
+        <decVal max="3"/>
+        <label>Strobe Light Rate, F4</label>
+        <comment>Range 0-32</comment>
+      </variable>
+      <variable label="Accessory Lighting Effects (Not Headlight)" item="Function 1 effect generated" CV="64" default="1" tooltip="CV64, 1(default) enables dedicated lighting effects">
+        <enumVal>
+          <enumChoice choice="F1-F4 normal On/Off" value="0">
+            <choice>F1-F4 normal On/Off</choice>
+          </enumChoice>
+          <enumChoice choice="MRC Special Light effects" value="1">
+            <choice>MRC Special Light effects</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Accessory Lighting Effects (Not Headlight)</label>
+      </variable>
+      <variable label="User ID #1" CV="105" item="User Id #1" default="0" tooltip="CV105, range 0-255, code your own ID">
+        <decVal max="255"/>
+        <label>User ID #1</label>
+      </variable>
+      <variable label="User ID #2" CV="106" item="User Id #2" default="0" tooltip="CV106, range 0-255, code your own ID">
+        <decVal max="255"/>
+        <label>User ID #2</label>
+      </variable>
+      <variable label="Load Control Back emf" CV="123" item="EMF Static Config" default="0" tooltip="CV123, default Back EMF is Off">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Load Control Back emf</label>
+      </variable>
+      <variable label="Select Speed Curve" CV="124" item="Speed Table Selection" default="0" tooltip="sets the motor voltage increase curve with Speed Steps, range 0(default)-2, CV124">
+        <enumVal>
+          <enumChoice choice="Linear">
+            <choice>Linear</choice>
+          </enumChoice>
+          <enumChoice choice="Slow increase at slow speed">
+            <choice>Slow increase at slow speed</choice>
+          </enumChoice>
+          <enumChoice choice="Fast increase at slow speed">
+            <choice>Fast increase at slow speed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Select Speed Curve</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="125" default="1"/>
+    </resets>
+  </decoder>
+  <pane name="MRC">
+    <column>
+      <display item="Functions Respond To Address"/>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <label label="Controls whether this loco's functions (lights) respond in the consist,">
+        <label>Controls whether this loco's functions (lights) respond in the consist,</label>
+      </label>
+      <label label="or just to this loco's unique address">
+        <label>or just to this loco's unique address</label>
+      </label>
+    </column>
+    <name>MRC</name>
+  </pane>
+</decoder-config>

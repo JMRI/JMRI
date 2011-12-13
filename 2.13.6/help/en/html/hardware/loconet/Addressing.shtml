@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: LocoNet Addressing
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI LocoNet Address Addressing Sensors Turnout">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+<h1>LocoNet addressing</h1>
+
+LocoNet systems address input sensors and output turnouts using numbers.
+This page talks about how those numbers are defined in JMRI, and how they relate
+to the numbers in other systems.
+
+<h2>Addressing LocoNet turnouts in JMRI</h2>
+
+Inside packets on the LocoNet, output turnouts are addressed with numbers from 0 to 4095.
+Throttles, however, address these with numbers from 1 to 4096. To avoid user
+confusion, JMRI uses the same numbering as the throttles:  LT1 to LT4096.
+<P>
+Note that when the LocoNet monitor panel shows the contents of the LocoNet packets
+in text, it uses the same addressing, hence 1 to 4096.  This is then different 
+from the raw bytes that are displayed, but at least it's consistent with what 
+users expect to see.  We agree that's confusing, but there has to be some 
+confusion somewhere, given the way this was set up.
+
+<h3>The Turnout Table</h3>
+<p>The JMRI Turnout Table shows a table of turnout which JMRI is aware of. Every 
+    time JMRI sees a LocoNet message which specifies a turnout, JMRI updates an 
+    existing entry in the table or creates a new entry if one does not already 
+    exist.  Each turnout in the table can be assigned a "User name".</p>
+<p>The Turnout table provides a useful snapshot of the current state of all 
+    known turnouts, and allows the user to change the state of those turnouts.</p>
+<p>Additional information on Turnouts and the Turnout Table may be found at the
+    <a href="../../tools/Turnouts.shtml">main Turnouts page</a>.</p>
+
+<h2>Addressing LocoNet sensors in JMRI</h2>
+
+Inside packets on the LocoNet, sensors are addressed with numbers from 0 to 4095.
+Digitrax documentation refers to these as 1 to 4096, however.  Just like
+turnouts, we use the documentation numbering to define the sensor names: LS1 to LS4096.
+<P>
+The simplest way to find the 
+right number for a given block is to open a "LocoNet monitor" window, and drop a 
+locomotive onto the block you're interested in.  You'll see the 
+LocoNet message, complete with number, in the window that looks 
+something like this:
+<PRE>
+   General sensor input report: contact 161 (DS54 switch 81 Aux input) (BDL16 11,1) is Hi 
+</PRE>
+The contact number, 161 in this case, is the address of the sensor.
+Prefix that with LS that to get the sensor name, e.g. LS161 in this case.
+<P>
+If you wish to manually enter in the hardware address to the system you can do it
+by enter in the board number, followed by the channel number seperated by a ":"<br>
+So for a sensor on board 11, channel 1 you would enter into the Hardware Address field : 
+<b>11:1</b>
+<P>
+If you want to calculate the address of a BDL168 input, you can use
+<CODE>
+&nbsp;&nbsp;&nbsp;&nbsp;number = 16 * (board number) + (channel number) - 16
+</CODE>
+where "channel number" runs from 1 to 16.  For example, the first circuit
+(number 1) on board 11 has number:
+<CODE>
+&nbsp;&nbsp;&nbsp;&nbsp;number = 16 * (11) + (1) - 16 = 161
+</CODE>
+as we saw in the example above.
+<P>
+If you want to calculate the address of a DS54 aux input, use:
+<CODE>
+&nbsp;&nbsp;&nbsp;&nbsp;number = 2 * (turnout number - 1) + 1
+</CODE>
+For example, the aux input associated with turnout 81 has number:
+<CODE>
+&nbsp;&nbsp;&nbsp;&nbsp;number = 2 * (81 - 1) + 1 = 161
+</code>
+If it's the switch input, you add one more to that:
+<CODE>
+&nbsp;&nbsp;&nbsp;&nbsp;number = 2 * (turnout number - 1) + 2
+</CODE>
+<p>For example, the switch input associated with turnout 12 has number:</p>
+<CODE>
+&nbsp;&nbsp;&nbsp;&nbsp;number = 2 * ( 12 - 1 ) + 2 = 24
+</code>
+
+<h3>The Sensor Table</h3>
+<p>The JMRI Sensor Table shows a table of sensors which JMRI is aware of. Every 
+    time JMRI sees a LocoNet message which specifies a sensor, JMRI updates an 
+    existing entry in the table or creates a new entry if one does not already 
+    exist.  Each sensor in the table can be assigned a "User name".</p>
+<p>The Sensor table provides a useful snapshot of the current state of all 
+    known sensors.</p>
+<p>Additional information on Sensors and the Sensor Table may be found at the
+    <a href="../../tools/Sensors.shtml">main Sensors page</a>.</p>
+
+<h2>Addressing Transponding in JMRI</h2>
+
+<p>Digitrax transponding is handled via the Reporter mechanism
+in JMRI.  Reporters gather information from the layout and make it
+available when it changes.  JMRI refers to reporters using the name
+<i>LRx</i> where <i>x</i> is a number which corresponds to a detection zone</p>
+
+<p>The transponding zones are numbered sequentially from 1 to 4096.  Current 
+    BDL16x hardware implements only odd-numbered transponding zones.  The first 
+    transponding zone of a BDL16x board is reported as reporter number 
+    <span style="font-family: monospace">(1 +(board address -1) * 16)</span>. 
+    The second transponding zone of a BDL16x board is reported as reporter number 
+    <span style="font-family: monospace">(1 +(board address -1) * 16) + 2</span>.</p>
+<p>Reporter numbering is summarized in the table below:</p>
+    <table border="2">
+        <tr align="center"><td>Board Address</td><td>Zone</td><td>Reporter Number</td></tr>
+        <tr align="center"><td rowspan="8">1</td><td>A</td><td>LR1</td></tr>
+        <tr align="center"><td>B</td><td>LR3</td></tr>
+        <tr align="center"><td>C</td><td>LR5</td></tr>
+        <tr align="center"><td>D</td><td>LR7</td></tr>
+        <tr align="center"><td>E</td><td>LR9</td></tr>
+        <tr align="center"><td>F</td><td>LR11</td></tr>
+        <tr align="center"><td>G</td><td>LR13</td></tr>
+        <tr align="center"><td>H</td><td>LR15</td></tr>
+        <tr align="center"><td rowspan="8">2</td><td>A</td><td>LR17</td></tr>
+        <tr align="center"><td>B</td><td>LR19</td></tr>
+        <tr align="center"><td>C</td><td>LR21</td></tr>
+        <tr align="center"><td>D</td><td>LR23</td></tr>
+        <tr align="center"><td>E</td><td>LR25</td></tr>
+        <tr align="center"><td>F</td><td>LR27</td></tr>
+        <tr align="center"><td>G</td><td>LR29</td></tr>
+        <tr align="center"><td>H</td><td>LR31</td></tr>
+        <tr align="center"><td rowspan="8">3</td><td>A</td><td>LR33</td></tr>
+        <tr align="center"><td>B</td><td>LR35</td></tr>
+        <tr align="center"><td>C</td><td>LR37</td></tr>
+        <tr align="center"><td>D</td><td>LR39</td></tr>
+        <tr align="center"><td>E</td><td>LR41</td></tr>
+        <tr align="center"><td>F</td><td>LR43</td></tr>
+        <tr align="center"><td>G</td><td>LR45</td></tr>
+        <tr align="center"><td>H</td><td>LR47</td></tr>
+        <tr align="center"><td colspan="3">...</td></tr>
+        <tr align="center"><td rowspan="4">256</td><td>A</td><td>LR4081</td></tr>
+        <tr align="center"><td>B</td><td>LR4083</td></tr>
+        <tr align="center"><td colspan="2">...</td></tr>
+        <tr align="center"><td>H</td><td>LR4095</td></tr>
+    </table>
+<h3>The Reporter Table</h3>
+<p>The JMRI Reporter Table shows a table of reporters which JMRI is aware of. JMRI 
+    creates an entry in this table for each new transponding zone for which it sees a 
+    transponding message. Each reporter in the table can be assigned a "User name".</p>
+<p>Once you have the transponding hardware installed and at least one locomotive
+    transponding properly, it is simple to fill in the reporter table for each 
+    transponding zone by running the transponding locomotive through all 
+    transponding-capable zones. It may be convenient to fill in a "User Name"
+    in the JMRI Repoter Table at the same time when the locomotive first enters 
+    each transponding zone</p>
+<p>Additional information on Reporters and the Reporter Table may be found at the
+    <a href="../../tools/Reporters.shtml">main Reporter page</a>.</p>
+    </div>
+  </div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

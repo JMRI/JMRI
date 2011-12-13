@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id$ -->
+<title>JMRI: The Python/Jython language</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<!-- Page Body -->
+<H2>
+JMRI: The Python/Jython language
+</H2>
+
+<A HREF="http://www.python.org">Python<a/> is a widely used scripting language that's
+available on many types of computers.  A Java-based varient, called
+<A HREF="http://www.jython.org">Jython</a>,
+has been integrated with JMRI to make it easy to control a model railroad
+from the command line of a computer.  For our purposes, the two 
+languages are completely the same.
+
+<P>
+If like me you prefer to read off paper, 
+there are lots of books available on Python.
+Perhaps one of the best for beginners is
+<A HREF="http://www.oreilly.com/catalog/lpython2/">"Learning Python"</a>
+published by O'Reilly.  It contains more than you really need to know, though.
+
+
+<p>The 
+<A HREF="http://www.jython.org">jython.org site</a>
+has some introductory information, though their
+<A HREF="http://www.python.org/doc/tut/tut.html">tutorial</A>
+spends too much time on the engineering details
+at the beginning.  You might want to skip to the 
+<a href="http://www.python.org/doc/tut/node5.html">part about the language itself</a>.
+
+<P>
+Non-programmers might want to start with some of the  
+<A HREF="http://www.python.org/moin/BeginnersGuide">resources for them</a>
+listed on the python website.
+
+<p>If you are interested in the underlying 
+technicalities of the langugage, 
+IBM Developerworks has two good articles
+<A HREF="http://www-106.ibm.com/developerworks/java/library/j-jython.html">here</a>
+and
+<A HREF="http://www-106.ibm.com/developerworks/java/library/j-alj07064/">here</a>.
+They also have a nice tutorial
+<A HREF="http://www-106.ibm.com/developerworks/java/edu/j-dw-java-jython1-i.html?S_TACT=104AHW02">here</a>, although they require you
+to register with your email address to access it.
+</p>
+
+<P>
+Looking at the examples in the "jython" directory in the JMRI distribution
+might also help.
+
+
+<h3>Things somebody should point out to you</h3>
+
+The single oddest thing about Python is that the indentation matters.
+
+Instead of using { and } characters to indicate the beginning and 
+end of a block or function, that's done with indentation in Python.  
+Of course, in a C-like language people usually indent blocks anyway, 
+but it takes a little getting used to that you <em>have</em> to do it
+in Python.
+<P>
+For example, this is a sytax error:
+<PRE>
+   a = 15
+      print a
+   b = 21
+   
+</pre>
+because those statements, though logically grouped at the same level in the program,
+aren't indented the same.  This sounds like a pain at first, but you
+rapidly get used to it. Then it makes things
+like the following
+pretty easy to read, without having to worry about where the { and
+} go:
+
+<pre>
+        if ( now == -1 ) :
+                done = 1
+        else :
+                done = 0
+        print done
+ </PRE>
+If you do get a message about "Syntax error", look at the indicated line
+number to see if your indentation isn't lined up.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

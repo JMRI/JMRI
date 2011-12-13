@@ -1,0 +1,15 @@
+These icons were extracted from images on Carsten S. Lundsten's web site.
+Please see http://www.lundsten.dk/us_signaling/abs_st_sp/index.html#example
+
+Images with names like "os-upper-right-closed.gif" represent:
+
+  "os"    - turnout with end-of-track-circuit markers in this icon.
+            "turnout" - there are no end-of-track-circuit markers.
+            "segment" - straight track segment
+            "block", "block-end" - icons for drawing a straight block
+            
+  "upper" - the diverging route is above the horizontal mainline
+  "right" - the diverging route goes to the right
+  "closed" - the mainline is selected (c.f. "thrown" for diverging route selected)
+
+

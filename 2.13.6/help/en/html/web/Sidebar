@@ -1,0 +1,36 @@
+<!-- Sidebar -->
+	  <hr class="hide">
+	  <div id="mBody">
+	  <div id="side"> <!-- Block of text on left side of page -->
+	    <div style="text-align: center">JMRI web access</div>
+	    <dl>
+
+		<dt><h3><a href="index.shtml">Basic Use</a></h3></dt>
+		<dd>JMRI has built-in support for viewing your
+		layout from a web browser.
+		    <UL>
+		    <LI><dfn><a href="index.shtml#Start">Getting Started</a></dfn>
+		    <LI><dfn><a href="index.shtml#Configure">Configuring</a></dfn>
+		    <LI><dfn><a href="index.shtml#URLs">URLs</a></dfn>
+		    </UL>
+		</dd>
+
+		<dt><h3><a href="MiniServer.shtml">Advanced Configuration</a></h3></dt>
+		<dd>JMRI's built-in support can be reconfigured to some extent.
+		    <UL>
+		    <LI><dfn><a href="MiniServer.shtml">Miniserver</a></dfn>
+		    </UL>
+		</dd>
+
+		<dt><h3>Advanced Uses</h3></dt>
+		<dd>The JMRI web components can be used in your own web server.
+		    <UL>
+		    <LI><dfn><a href="FrameServlet.shtml">Frame servlet</a></dfn>
+		    </UL>
+		</dd>
+
+	    </dl>
+
+	</div> <!-- closes #side -->
+
+<!-- /Sidebar -->

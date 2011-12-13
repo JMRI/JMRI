@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright 2008 -->
+<!-- $Id$ -->
+<title>JMRI: Web Access</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name = "viewport" content = "width = device-width" />
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1> 
+JMRI: Web Access
+</h1>
+
+JMRI can provide web access to your model railroad. 
+
+<p>
+The basic method was developed by Konrad Froetzheim and colleagues 
+in the early 1990's for their "Internet Model Railroad". 
+A standard web server communicates with the user's normal web browser, accepting 
+HTTP requests in the usual way. 
+These requests are handed to a small "JMRI connector", which interprets 
+them and returns the information from JMRI back to the browser.
+
+<p>
+For example, the user can have their browser request the current 
+contents of a JMRI panel, which is 
+returned back to the browser as an image to be displayed. 
+Or the user can click on the image of a JMRI panel, 
+which causes the browser to request a click in the same position on a JMRI panel. 
+JMRI acts on that click, 
+and also sends back an image of the updated panel.
+
+<a id="Start">
+<h2>Starting Web Access</h2>
+
+JMRI web access is included in the usual JMRI downloads.
+To use it, you just have to start it.
+
+<p>
+Before attempting to use web access, 
+please make sure that the basic configuration of your JMRI application 
+is working. 
+Check that you can properly communicate with and operate your layout. 
+
+<p>
+<img src="images/Startup.jpg" align="right" height="117" width="312"/>
+To start web access from the menus, select "Start Mini Web Server"
+under the "Tools" menu. A small window will open to confirm that
+it started, and to show you the URL that it's using.
+
+<p>
+Next, check the connection. 
+
+<p>
+If you're using a Bonjour/Zeroconf-enabled web browser like
+Safari or 
+<a href="http://www.bonjourfoxy.net/">Firefox</a>, 
+you should see a "JMRI on (your computer name)"
+web site in the "Bonjour" tab.  You can just click on that
+to get to the welcome page of the JMRI web server.
+
+<p>
+Otherwise, enter the starting URL from the "Web server started ..."
+message, which will be something like "http://10.0.1.7:12080/index.html"
+(or if you're browsing on the same computer right now, 
+<a href="http://localhost:12080/index.html">click here</a>, or press the
+"Open in Browser" button).
+The default port is 12080, but this can be changed in 
+MiniServer Preferences.
+You should see a welcome screen, which serves as the home page for the mini web server.  
+This page (by default) contains a number of useful examples and links.
+
+<p>
+Next, let's make sure you can access JMRI functions.
+From the JMRI Tools menu select "Power Control", which should open a new window. 
+Then click on 
+<a href="http://localhost:12080/panel/Power%20Control.html">this link</a> 
+or enter the URL 
+<code><pre>
+http://localhost:12080/panel/Power%20Control.html
+</pre></code>
+This should display the Power Control window on your web browser. 
+(Note: "localhost" is an alias for your 
+computer; if you want to access the computer running JMRI from some other computer, 
+replace "localhost" 
+with the IP address displayed on the main screen, e.g. 
+<code><pre>
+http://127.0.0.1:12080/panel/Power%20Control.html
+</pre></code>
+or something similar) 
+If everything is working, you should see the Power Control window on your browser screen. 
+Click the "On" button to turn layout power on.
+
+<a id="Configure">
+<h2>Configuring</h2>
+
+You can use  
+"<a href="../../package/apps/TabbedPreferences.shtml">Preferences</a>"
+to tell JMRI to 
+start the server each time you start the program.
+<p>
+To do this, open the Preferences window, select the 
+"Start Up" tab, and 
+click "Add Action".  In the new selection box that
+appears, select "Start Web Miniserver".  
+Don't forget to save your changes!
+
+<p>
+The MiniServer defaults to port 12080, but this can be changed using
+the MiniServer Preferences dialog. 
+
+<p>
+The "index.html" page that you used in the 
+previous section
+is automatically created by the program in the JMRI
+preferences directory.  You can edit it to 
+display whatever you want; by default, JMRI won't modify if it exists. 
+You can include links to web pages outside JMRI, and 
+links to various JMRI-served pages, see below.
+On the other hand, we periodically improve the 
+page, so you might want to turn on "Rebuild index.html?" in Preferences 
+to let JMRI replace it with the newest version.
+
+<a id="URLs">
+<h2>Access URLs</h2>
+You can create your own web pages using any tool you'd like. 
+To access JMRI from those pages, you just 
+need to know the proper URLs to request the services you'd like. 
+Several examples are linked from the index.html (mini server home page), 
+
+<h2>Open Window (Frame) Access</h2>
+    To display any <em>already open</em> JMRI window as a <b>clickable</b> image that periodically refreshes, use a URL like:
+    
+    <code><pre><a href="http://127.0.0.1:12080/frame/Monitor%20Slots.html">http://127.0.0.1:12080/frame/Monitor%20Slots.html</a> </pre></code>
+    <code><pre><a href="http://127.0.0.1:12080/frame/Analog%20Clock.html">http://127.0.0.1:12080/frame/Analog%20Clock.html</a></pre></code></a>
+    <code><pre><a href="http://127.0.0.1:12080/frame/Turnout%20Table.html">http://127.0.0.1:12080/frame/Turnout%20Table.html</a></pre></code></a>
+    
+    <p>Note the frame title in the URL, followed by ".html".  Replace any spaces in the title with "%20".</p>
+    For current, dynamically-generated list of available windows, use this URL:
+    <code><pre><a href="http://127.0.0.1:12080/frame">http://127.0.0.1:12080/frame</a></pre></code>
+    <p><em>Note:</em> Adjust defaults such as refresh timing, disallowed frames and ajax usage in MiniServer Preferences.</p>
+    You can override the defaults for individual pages by using the following parms in your URL:
+    <ul>
+    <li><b>plain</b> (hide the footer links)</li>
+    <li><b>protect</b> (protect the frame from user clicks, i.e. read-only image, but with refresh)</li>
+    <li><b>ajax</b> (use ajax for updates)</li>
+    </ul>
+    Example, showing no links, protected, using ajax to refresh every 12 seconds:
+    <code><pre><a href="http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&plain=true&protect=true&retry=12">http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&plain=true&protect=true&retry=12</a></pre></code>
+
+<h2>inControl throttle web application</h2>
+To use the throttle web application, you can go to:
+<code><pre>
+<a href="http://localhost:12080/web/Scan2BeInControl.html" target="Scan2BeInControl">http://localhost:12080/web/Scan2BeInControl.html</a>
+</pre></code>
+It will generate and display a scannable and clickable locomotive list from your JMRI roster.
+<br />Each smartphone scan will open an inControl web throttle in it.
+<br />Each click on a link will open a new inControl web throttle browser window or tab.  
+
+You may also call the <b>inControl</b> directly:
+<code><pre>
+<a href="http://localhost:12080/web/inControl.html" target="_blank">http://localhost:12080/web/inControl.html</a>
+</pre></code>
+See <b>mini web server</b> starting page for more info or jump to the <b>inControl</b> help page:
+<code><pre>
+<a href="/help/en/package/jmri/jmrit/inControl/inControl.shtml">/help/en/package/jmri/jmrit/inControl/inControl.shtml</a>
+</pre></code>
+
+<h2>To Display a Local File</h2>
+A local HTML file (web page), graphic or text file can be 
+displayed using the appropriate URL.
+<p>
+Files in your JMRI preferences directory can be
+accessed via a URL that starts with "prefs":
+<code><pre>
+<a href="http://localhost:12080/prefs/index.html">http://localhost:12080/prefs/index.html</a>
+</pre></code>
+(The index.html file is in your preferences directory)
+<p>
+Files in certain directories in the JMRI program directory can be
+accessed via a URL that starts with "dist":
+<code><pre>
+<a href="http://localhost:12080/dist/help/en/webindex.shtml">http://localhost:12080/dist/help/en/webindex.shtml</a>
+</pre></code>
+will reference the index to the help system, while
+<code><pre>
+<a href="http://localhost:12080/dist/resources/logo.gif">http://localhost:12080/dist/resources/logo.gif</a>
+</pre></code>
+will load a JMRI logo graphic from the resources directory.
+"dist/web" and "dist/xml" also work as prefixes.
+
+<h2>Displaying Formatted Panel Files</h2>
+
+The "panel files" that JMRI uses to store configuration
+and display information can be displayed in a convenient
+format by a web browser.  
+The JMRI web server works with your browser to 
+do this formatting.
+You can then view, print, save, etc the formatted file.
+For example, to display "MyFile.xml" from the JMRI preferences directory, use
+<code><pre>
+<a href="http://localhost:12080/prefs/MyFile.xml">http://localhost:12080/prefs/MyFile.xml</a>
+</pre></code>
+<h2>To Display a formatted JMRI roster list</h2>
+
+To get a nicely formatted view of your JMRI roster simply go to:
+<code><pre>
+<a href="http://localhost:12080/prefs/roster.xml">http://localhost:12080/prefs/roster.xml</a>
+</pre></code>
+Note that this is your roster.xml file displayed only using a xslt transformation.
+
+
+<h2>XML and Ajax access</h2>
+
+JMRI provides XML and Ajax access via a
+<a href="http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">XML IO custom servlet</a>.
+
+<p>
+There are three sample pages that show how this can be used:
+<dl>
+<dt><a href="http://localhost:12080/web/request.html">web/request.html</a>
+<dd>Makes a single XML request for all available sensors, and shows their status in a table.
+<dt><a href="http://localhost:12080/web/monitor.html">web/monitor.html</a>
+<dd>Uses delayed requests to monitor the status of all sensors, 
+updating a table when any change.
+<dt><a href="http://localhost:12080/web/throttle.html">web/throttle.html</a>
+<dd>Sends a speed command to a DCC locomotive on the layout when a button is pressed.
+</dl>
+
+<p>
+By default, this is configured to handle URLs that start with "/xmlio".
+Information on use and customization can be found on a 
+<a href="XMLIO.shtml">separate page</a>.
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

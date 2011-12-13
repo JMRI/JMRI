@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright 2008 -->
+<!-- $Id$ -->
+<title>JMRI: Frame Servlet</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1> 
+JMRI: Frame Servlet
+</h1>
+
+The JMRI Frame Servlet provides web access to JMRI windows.
+
+<p>
+It uses the facilities of the jmri.util.JmriJFrame class
+to locate windows and create an image of their current appearance.
+The window does not have to be maximized, but it does have to be open;
+it's OK for the window to have been minimized to the Start Bar (Windows)
+or converted to an icon (MacOS X and Linux).
+
+<p>
+The MiniServer Preferences can be used to adjust the default delay after 
+a click and adjust the periodic refresh between clicks.  You can also
+enter a list of frames which are not to be allowed, and enable ajax 
+refresh (new) or use the older meta-refresh.
+
+<p>
+The jmri/web/servlet/frameimage/JmriJFrameServlet.properties
+file can be used to configure the HTML that's returned when
+a frame is requested.
+
+<p>
+Please note that this servlet has only been used with 
+the 
+<a href="MiniServer.shtml">JMRI mini-server</a>, and may 
+not work with other servlet containers.  We're committed to
+making it work, however, so just get in touch with 
+the JMRI developers if you encounter any problems.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

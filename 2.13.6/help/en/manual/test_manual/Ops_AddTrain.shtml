@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Ops_AddTrain.shtml 18290 2011-08-25 09:06:42Z dat7719 $ -->
+<title>Operations-Add Train</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h1>Add Train<br>
+  Edit Train
+</h1>
+
+<div align=right>
+<p><a href="Ops_Trains.shtml">Back</a><a href="#"></a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<hr>
+<p>The Edit Train window is opened from the 
+  <input type="button" name="button46" id="button46" value="Edit"> 
+  found in each train in the Train window, only the Title bar is different.</p>
+<p><img src="images/Ops_AddTrainEditTitle.png" width="646" height="103" alt="title"><br>
+From the <strong>Tool</strong> Menu, the<strong> Train Conductor</strong> may be opened. It can also be opened by Right Click on the train icon and select <strong>Conductor</strong>.<br>
+</p>
+<table width="90%" border="0" cellspacing="1" cellpadding="2">
+  <tr>
+    <td><img src="images/Ops_AddTrain_conductor.png" width="274" height="386" alt="Conductor"></td>
+    <td><img src="images/Ops_train_conductor.png" width="600" height="373" alt="conductor"></td>
+  </tr>
+</table>
+<p>You may now aquire a manifest for a train in the Conductor window which will update as the train moves. The window includes a check list for the work needed at each location. </p>
+<p>The Add Train window is opened from the
+  <input type="button" name="button45" id="button45" value="Add">
+on the Trains window.</p>
+<p><img src="images/Ops_AddTrain.png" width="638" height="744" alt="add trains"></p>
+<p><strong>Name</strong>
+  <input type="text" name="textfield" id="textfield">
+  Description
+<input type="text" name="textfield2" id="textfield2">
+<br>
+Type in train name and optional description, then press 
+
+  <input type="submit" name="button" id="button" value="Add Train">
+.</p>
+<p>Both will  show up on the train's manifest. The train's name will also show up on  the train icon, so short names work best. </p>
+<p><img src="images/Ops_AddTrain01.png" width="638" height="744" alt="add train"><br>
+Now all the options are activated and you can complete the train.</p>
+<table width="90%" border="0" cellspacing="1" cellpadding="2">
+  <tr>
+    <td width="69%"><img src="images/Ops_addTrain02.png" width="658" height="414" alt="Add Train"></td>
+    <td width="31%" align="left" valign="top"><p>Select <strong>Route</strong>
+        <select name="select" id="select">
+          <option>Local 940</option>
+        </select>
+route that  this train will travel. </p>
+      <p>The
+        <input type="submit" name="button2" id="button2" value="Edit">
+    to the right of the route allows you to <a href="Ops_AddRoutes.shtml"><strong>directly edit</strong></a>the selected route. Once a route is  selected a list of locations that the train will visit should appear.  You can deselect any location that you don't want the train to work. </p></td>
+  </tr>
+</table>
+<table width="90%" border="0" cellspacing="1" cellpadding="2">
+  <tr>
+    <td width="28%"><img src="images/Ops_AddTrain03.png" width="244" height="137" alt="Add Train time"></td>
+    <td width="72%" align="left" valign="top">Set the <strong>Departure Time(hh:mm)</strong>
+      <select name="select2" id="select2">
+        <option>08</option>
+    </select>     <select name="select3" id="select3">
+      <option>00</option>
+    </select> 
+    , the time that this train will depart the first location in its  route. You can use the departure time to sort your trains in the order  that you want them built .</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<table width="90%" border="0" cellspacing="1" cellpadding="2">
+  <tr>
+    <td width="69%" valign="top"><img src="images/Ops_AddTrain04.png" width="679" height="240" alt="trains"></td>
+    <td width="31%" align="left" valign="top"><p>You can determine what type of rolling stock the train will service.  Select the Rolling stock the train will carry by clicking on the  appropriate check boxes. A checked box means the train will service this  type of rolling stock. </p></td>
+  </tr>
+  <tr>
+    <td width="69%" valign="top"><img src="images/Ops_AddTrain05.png" width="682" height="130" alt="trains"></td>
+    <td align="left" valign="top"><p><strong>Select locomotive types serviced by this train </strong>by checking all required engine types.</p></td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="images/Ops_AddTrain07.png" width="684" height="129" alt="train"></td>
+    <td align="left" valign="top"><p>you can control the number of locomotives that will be assigned to this  train, and optionally, the engine's model and road name. If you want two  or more engines assigned to a train, the engines must be part of a  consist. If you select "Auto", the program will calculate the number of  engines required for this train based on the weight of the train, the  track grade, and the horsepower of the engines.
+    </p>      <p>You can also require a caboose or car with FRED (Flashing Rear  End Device) as the last car in the train, and you can optionally specify  the road name for the caboose or car with FRED.  If you leave the road name  blank, the program will try and find a caboose with the same road name as the  engine.</p></td>
+  </tr>
+  <tr>
+    <td><img src="images/Ops_AddTrain08.png" width="656" height="100" alt="Add Train"></td>
+    <td align="left" valign="top">&nbsp;</td>
+  </tr>
+</table>
+<p>
+  <input type="submit" name="button7" id="button7" value="Reset Train">
+allows you to remove locomotives and cars that have  been assigned to a train. Useful when you want to try various build  options and don't what to physically move locomotive and cars on the  railroad. </p>
+<p>
+ Press 
+   <input type="submit" name="button8" id="button8" value="Save Train">
+  to save your train. The program will create a file  (OperationsTrainRoster.xml) in your JMRI directory in a folder called  "operations". A backup file with the last settings for all of your  trains is also created each time the
+  <input type="submit" name="button9" id="button9" value="Save Train">
+is pressed. </p>
+<p>Note that the train is now shown in the<a href="Ops_Trains.shtml">Trains</a> window.</p>
+<hr>
+
+<div align=right>
+<p><a href="Ops_Trains.shtml">Back</a><a href="#"></a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

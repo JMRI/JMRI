@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author$) 2008 -->
+<!-- $Id$ -->
+<title>JMRI: ESU ECoS Support</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: ESU ECoS Support
+</h1>
+JMRI can connect to an ESU ECoS command station 
+via an Internet connection.
+
+<p>
+To configure the connection:
+<ul>
+<li>Open the JMRI "Preferences" under the "Edit" menu,
+<li>Select "ESU ECoS" as the connection type,
+<li>Enter the IP address for your ECoS unit,
+<li>Leave the port number at 15471,
+<li>Click "Save".
+</ul>
+
+<p>
+Turnout, Sensor and a basic throttle and power support is available for 
+a JMRI-connected ECoS unit.
+<p>
+
+<H2>Throttles</H2>
+Only basic support for throttles via the Ecos is supported.  When an entry from the roster, or a DCC address is directly
+entered into the address field, JMRI will check the existing list of ECoS locos for a match on the first DCC address it comes across.
+If there is no match, the throttle will create an entry in the Ecos which will be listed as "Created By JMRI" with a default of 128 speed steps.<br>
+From version 2.9.4 when you close down JMRI, you will be prompted to either delete or keep the entries in the ECoS.<br>
+<b> Consisting is NOT supported</b>
+
+<H2>Sensors</H2>
+ECoS-connected senors on the s88 bus have names like "US100:01", where "U" is the system name for esU ecos,
+"S" means sensor, "100" is the s88 board address registered in the Ecos, and "01" is the port on that board.
+<p>
+
+<H2>Turnouts</H2>
+ECoS-connected turnouts have names like "UT123", where "U"
+is the system name for esU ecos, "T" means turnout, and
+"123" is the address.
+<p>
+
+<H2>Ecos Initialisation</H2>
+When JMRI first starts up, it reads the turnout, sensor and loco information from the ECoS, which might take a couple seconds.  Turnouts and 
+Sensors are automatically added into the JMRI tablesk, this is necessary so that a link can be made between the sensors and turnouts configured in the ecos and the accessory address that JMRI uses.<br>
+While gathering the loco information from the ecos, JMRI will check to see if there is already a roster entry assoicated with the loco.  If the check fails, the system will ask if you wish to add import the Loco to the roster.
+<p>
+
+<H2>Ecos Loco Database</H2>
+The Ecos Loco Database allows you to view all the locos that are configured on the Ecos, Assign them to a JMRI roster entry to the loco or import it in to the JMRI roster.
+
+<H2>Importing Locos from the Ecos</H2>
+When importing the loco to JMRI, it currently only creates a skeleton record, that contains the loco Name along with the 
+decoder type if selected and the loco address.  This process does not currently import any CV values stored on the Ecos into JMRI.
+<p>
+<H2>Exporting Locos into the Ecos</H2>
+When a new roster entry is created in JMRI, you will be asked if you wish to add the roster entry in to the Ecos Database.  The ecos entry will use the roster id as the loco name, set the speed steps 128, and set the loco address.  The number of speeds change be changed in the Ecos Preferences Menu.
+
+<H2>Programming</H2>
+This is currently not supported by the Ecos.
+<p>
+Additional information on the ECoS can be found
+on the 
+<a href="http://www.loksound.de/us/index.php?showId=205">ESU web site</a>.
+
+<p>
+Support for ECoS was first available in 
+<a href="http://jmri.sf.net/releasenotes/jmri2.3.3.shtml">JMRI 2.3.3</a>.
+
+Support for the ECoS throttle was first available in 
+<a href="http://jmri.sf.net/releasenotes/jmri2.7.4.shtml">JMRI 2.7.4</a>.
+
+Support for the ECoS s88 Feedback Sensors was first available in 
+<a href="http://jmri.sf.net/releasenotes/jmri2.7.9.shtml">JMRI 2.7.9</a>.
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

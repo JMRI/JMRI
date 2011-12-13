@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/speedtable.xsl" type="text/xsl"?>
+
+<speedtable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/speedtable.xsd"
+>
+
+  <name>Speed Requirements for Signal Aspects</name>
+  <reference>Speeds commonly commonly associated to signals</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Pete</firstname><surname>Cressman</surname></personname>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-03-28</date>
+        <authorinitials>PWC</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+  </revhistory>
+
+<!-- Meaning of the number used for the aspectSpeeds names                      -->
+<!-- percentNormal is the percentage of the recorded speed (the "Normal" speed  --> 
+<!-- percentThrottle is the percentage of the full throttle speed               --> 
+  <interpretation>percentNormal</interpretation>
+
+<!-- Speed changes are ramped from the current indication to the next.          -->
+<!-- Throttle speed commands are sent incrementally with a delay between them.  -->
+<!-- The delay in milliseconds between speed increments sent to the throttle.   -->
+  <msPerIncrement>750</msPerIncrement>
+<!-- Time needed to ramp a speed change can be shortened    -->
+<!-- Increase number of steps per throttle commands         -->   
+  <stepsPerIncrement>1</stepsPerIncrement>
+  
+<!-- map speed names to ratios used in throttle settings                            -->
+<!-- speed names may be put into aspect.xml files to indicate speed for the aspect  -->
+<!-- These speeds are emforced at the entrance to a block                           -->
+  <aspectSpeeds>
+    <Maximum>125</Maximum>
+    <Normal>100</Normal>
+    <Limited>75</Limited>
+    <Medium>50</Medium>
+    <Slow>25</Slow>
+    <Restricted>15</Restricted>
+    <Stop>0</Stop>
+  </aspectSpeeds>
+
+<!-- speeds associated with SignalHead appearances for heads NOT used in SignalMasts  -->
+<!-- Appearance names aree those listed in jmri.implementation.DefaultSignalHead      -->
+<!-- speed names must agree with the names in the above "speeds" elements             --> 
+<!-- These speeds are emforced at the entrance to a block                             -->
+  <appearanceSpeeds>
+    <SignalHeadStateRed>Stop</SignalHeadStateRed>
+    <SignalHeadStateFlashingRed>Restricted</SignalHeadStateFlashingRed>
+    <SignalHeadStateGreen>Normal</SignalHeadStateGreen>
+    <SignalHeadStateFlashingGreen>Limited</SignalHeadStateFlashingGreen>
+    <SignalHeadStateYellow>Medium</SignalHeadStateYellow>
+    <SignalHeadStateFlashingYellow>Limited</SignalHeadStateFlashingYellow>
+    <SignalHeadStateLunar>Restricted</SignalHeadStateLunar>
+    <SignalHeadStateFlashingLunar>slow</SignalHeadStateFlashingLunar>    
+  </appearanceSpeeds>
+
+</speedtable>
+  

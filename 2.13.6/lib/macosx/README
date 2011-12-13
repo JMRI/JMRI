@@ -1,0 +1,3 @@
+Mac OS X has fat (multi-architecture) binaries, and single
+architecture binaries.  Fat ones can go here, single architecture
+ones should go into the correct subdir.

@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Routes.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<html lang="en">
+<head>
+  <TITLE>
+ 	JMRI: Entry Exit (NX) Documentation
+  </TITLE>
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+
+  <META content="Kevin Dickerson" name=Author>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <meta name="keywords"
+        content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<H2>JMRI: Entry Exit (NX) Routing Documentation</H2>
+
+<h3>What is Entry/Exit (NX) Routing?</h3>
+
+<p>NX Routing, builds a dynamic valid path between two locations on a Layout Editor 
+such as sensors or signal masts.  The path can traverse a number of turnouts 
+and different blocks.  The entry and exit locations on the Layout Editor are 
+defined by the placement of sensors at various block boundaries.  When two sensors 
+are activated and a clear and valid route is found between them, then the turnouts 
+in the route will automatically be set accordingly.
+<p>
+If there are multiple paths between two locations, then the system will use the 
+path with the smallest cost or number of different blocks.  If one on the blocks on the 
+path is already occupied and there is a valid alternative path, then this will be taken.
+<p>
+<h3>How to setup for Entry Exit Routing:</h3>
+
+First you will need to have built a representation of your layout in the 
+layout editor, blocks will also need be defined so that the sensors can be 
+assigned to the boundary.
+
+<h3>Placing Sensors</h3>
+Sensors can be placed by turnouts, anchor points and level crossings, 
+but only where there is a boundary between two different layout blocks.<br>
+To add a sensor right click on the turnout, level crossing or anchor point 
+and if a block boundary exists you will be given the option to "Set Sensors..." 
+You can also set sensors at End Bumpers or Buffer Stops.
+<p>
+You will then be presented with a fresh window that allows you to select 
+the sensor that will be used to either "protect" or be on the boundary of block x & y.<br>
+The boundary or the protecting block selected will define which direction the 
+sensors is active in. 
+<p>
+<img src="images/EntryExitExample1.png" height="560" width="628">
+<p>
+In the example above, the sensor protecting block 51 will be used
+for routes going in an easterly direction. While the sensor 
+protecting block 50, will be used for routes going in a westerly direction.<p>
+
+For turnouts and crossings, you can only add a sensors for the boundary 
+going into the turnout or crossing, it is not possible to add a sensor 
+for the boundary going out from the turnout or crossing.<br>
+e.g., If block A is the section of track attached to the turnout and the 
+turnout is in block B, you can only add a sensor that faces into block A 
+that protects block B, you cannot add a sensor that faces into block B to 
+protect block A. 
+
+<p>
+<img src="images/EntryExitLayout.png" height="232" width="725">
+<p>
+
+<h3>Generating Entry Exit Pairs</h3>
+You can have the system automatically generate the basic Entry Exit pairs and also it is possible 
+to manually add pairs in the system, along with adding in what would normally be considered invalid 
+configuration.
+
+To access the Entry Exit panel, select "Entry Exit" from the tools menu of the layout editor. 
+You will then be presented with the following screen...
+<p>
+<img src="images/AddEntryExit.png" height="302" width="633">
+<p>
+If you press the <b>Auto Generate Entry Exit Pairs</b> this will then discover all the 
+valid entry exit pairs on the layout.<br>
+Using the combo boxes it is also possible to manually add in additional Entry Exit pairs.<br>
+In all cases when the <b>From</b> sensor is set active followed by the <b>To</b> sensor, the 
+route will be set between those two points and the two sensors will return back to the inactive state. 
+If the <b>Both Way</b> option is ticked, then it is possible to activate the route in either direction, 
+i.e. you can select the To sensor prior to the From sensor and the same route will be set.
+<p>
+<h3>Limitation</h3>
+The Entry Exit currently only deals with the throwing of turnouts between two routes, it does not 
+yet provide a method to set-up Signal Mast logic or full interlocking.  This is envisaged to be 
+developed during 2012.
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

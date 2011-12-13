@@ -1,0 +1,80 @@
+// AudioTableFrame.java
+
+package jmri.jmrit.beantable;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+
+/**
+ *
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * for more details.
+ * <P>
+ *
+ * @author	Bob Jacobsen   Copyright (C) 2003
+ * @author Matthew Harris  copyright (c) 2009
+ * @version $Revision$
+ */
+public class AudioTableFrame extends BeanTableFrame {
+
+    //static final ResourceBundle rba = ResourceBundle.getBundle("jmri.jmrit.audio.swing.AudioTableBundle");
+
+    AudioTablePanel audioPanel;
+    
+    public AudioTableFrame(AudioTablePanel panel,
+                           String helpTarget) {
+
+        super();
+        
+        audioPanel = panel;
+
+        // general GUI config
+        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
+        // add save menu item
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu(rbapps.getString("MenuFile"));
+        menuBar.add(fileMenu);
+        fileMenu.add(new jmri.configurexml.SaveMenu());
+
+        //fileMenu.add(panel.getPrintItem());
+
+        setJMenuBar(menuBar);
+
+        addHelpMenu(helpTarget,true);
+
+        // install items in GUI
+        getContentPane().add(audioPanel);
+        bottomBox = Box.createHorizontalBox();
+        bottomBox.add(Box.createHorizontalGlue());	// stays at end of box
+        bottomBoxIndex = 0;
+
+        getContentPane().add(bottomBox);
+
+        // add extras, if desired by subclass
+        extras();
+
+    }
+
+    @Override
+    public void dispose() {
+        if (audioPanel!=null)
+            audioPanel.dispose();
+        super.dispose();
+    }
+
+}
+
+/* @(#)AudioTableFrame.java */

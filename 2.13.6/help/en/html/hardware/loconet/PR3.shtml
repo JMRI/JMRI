@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI Hardware Guide: Connecting to a Digitrax PR3
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI Hardware Guide: Connecting to a Digitrax PR3
+</h1>
+
+
+<a href="http://digitrax.com/prd_compint_pr3.php">
+<img src="http://digitrax.com/images/pr3.jpg" align="right" width="200" height="179" alt="PR3 picture"/>
+</a><br/>
+
+<em>Support for the Digitrax PR3 was first available in 
+<A href="http://jmri.sf.net/releasenotes/jmri2.1.6.shtml">JMRI 2.1.6</a>,
+released May 31, 2008.</em><p>
+
+The Digitrax PR3 can be used as either a standalone
+decoder programmer much like the PR2, or as an 
+interface between your computer and a LocoNet, much
+like an MS100. It can only do one or the other 
+of these at a given time. You select the mode
+of operation in the JMRI preferences during setup.
+
+<p>
+When the PR3 is acting as a programmer, it can be used
+to set CVs in all decoders that DecoderPro supports.
+It can also be used to download sound information into
+Digitrax sound decoders and, within its limited current
+capability, run one locomotive to test it. When used with 
+Digitrax SFX decoders, "neutral mode" allows you to vary the speed
+without the motor moving the deocder, so you can hear how the locomotive
+sound reacts to varying speeds.
+(Note that Digitrax only guarantees programming for Digitrax
+SFX decoders with properly installed loads, etc, but our testing
+has found that the PR3 will work with many common decoders)
+
+<p>
+When acting as an interface, the PR3 allows JMRI full control of the 
+LocoNet and the devices attached to it.
+That includes programming
+decoders on a programming track attached to a LocoNet command station,
+or on the main track.
+The PR3 can also serve
+as the "LocoNet terminator", which allows it to drive a 
+LocoNet without an attached command station, e.g. if you want
+to have a LocoNet dedicated to signaling.
+
+<p>
+For more information on the PR3 itself, please see the
+<a href="http://digitrax.com/prd_compint_pr3.php">Digitrax PR3 page</a>
+and the 
+<a href="http://www.digitrax.com/kb/index.php?c=338">PR3 page</a>
+in the 
+<a href="http://www.digitrax.com/kb/index.php">Digitrax Knowledge Base</a>.
+
+<h3>Drivers</h3>
+The PR3 needs to have a driver installed when used with
+Microsoft Windows.  See the 
+<a href="http://digitrax.com/prd_compint_pr3.php">Digitrax PR3 page</a>
+for more information.  Make sure to follow the instructions
+exactly, particularly about the order of installing the drivers
+and plugging in the device.
+
+<p>
+You don't need to install a separate
+driver when using current versions of Mac OS X or Linux.
+
+<h2>Using the PR3 as a LocoNet Interface</h2>
+
+<img src="images/PR3toCommandStation.png" align="right" height="120" width="426">
+
+To use the PR3 as an interface, connect a LocoNet cable to the
+LocoNet connector on the PR3.  
+(Although not required, it's also OK to connect a power supply to the PR3).
+Finally, connect a USB cable between the PR3 and your computer.
+
+<h3>Recommended setup</h3>
+<p>
+To set up a JMRI application to use the PR3 as an interface:
+</p>
+
+<UL>
+<LI>
+Start the program.
+<li>
+Open the Preferences window from the Edit menu and configure the connection by:
+<UL>
+<LI>Select LocoNet PR3
+<LI>Select the serial port that's connected to the PR3
+<li>The speed will be fixed at 57,600 baud; don't try to change this 
+in your computer's settings
+<li>The "Flow Control" option defaults to "Use Hardware Flow Control", which
+uses the status leads in the serial connection to determine when the PR3
+is ready to send and receive.  You should try that first, as it is the most
+reliable mode.  
+Only if you can't connect to your LocoNet with that setting,
+and only after checking that you're using the right port, should you select "None" for 
+this preference and try again.
+<li>In the "Command Station" option, select the type of command station you've
+got on your LocoNet, e.g. DCS100 (Chief), DCS050 (Zephyr), etc.  
+The "Stand-alone LocoNet" option should be selected if you don't have a command
+station connected.
+</UL>
+<li>Click Save at the bottom of the preferences window, quit the program and restart.
+</UL>
+
+
+<h2>Using the PR3 Programming Track</h2>
+
+<img src="images/PR3standAlone.png" align="right" height="194" width="399">
+
+To use the PR3 programming track, 
+connect the PR3 to its power supply and to a 
+dedicated piece of track which you'll use as the programming track.
+Finally, connect a USB cable between the PR3 and your computer.
+
+<h3>Recommended setup</h3>
+<p>
+To set up DecoderPro to use the PR3:
+</p>
+
+<UL>
+<LI>
+Start DecoderPro.
+<li>
+Open the Preferences window from the Edit menu and configure the connection by:
+<UL>
+<LI>Select LocoNet PR3
+<LI>Select the serial port that's connected to the PR3
+<li>The speed will be fixed at 57,600 baud; don't try to change this 
+in your computer's settings
+<li>The "Flow Control" option defaults to "Use Hardware Flow Control", which
+uses the status leads in the serial connection to determine when the PR3
+is ready to send and receive.  You should try that first, as it is the most
+reliable mode.  
+Only if you can't program decoders using that choice, 
+and only after checking that you're using the right port, should you select "None" for 
+this preference and try again.
+<li>In the "Command Station" option, select "PR3 Programmer".
+</UL>
+<li>Click Save at the bottom of the preferences window, quit the program and restart.
+</UL>
+
+<h3>Usage suggestions</h3>
+
+<P> 
+You can use a JMRI throttle to control the locomotive connected
+to the PR3 Programmer. Use the JMRI Power Control or the "Power" menu item 
+on the Throttle's menu bar to turn on track power, and then you 
+can operate the locomotive normally.  
+
+<p>The PR3 can only
+provide very limited current, so Digitrax has built a "neutral mode"
+into their sound decoders.  When JMRI and the PR3 is running
+a Digitrax sound decoder, the motor is disconnected to reduce the current load.
+You can still ramp the speed up and down with the throttle and listen to
+how the sound responds, but the motor won't move the locomotive.
+
+<p>
+Other decoders, including decoders from other manufacturers, may 
+draw enough motor current to trip the PR3 internal circuit breakers.
+This will cause JMRI to mark track power as "off". Just wait a couple
+seconds and turn the track power back on to recover.
+	  
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

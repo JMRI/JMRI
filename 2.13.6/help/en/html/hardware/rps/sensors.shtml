@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI Hardware Guide: RPS Sensors
+ </TITLE>
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI Hardware Guide: RPS Sensors
+</h1>
+
+<em>Please note that JMRI's RPS support is being rapidly improved.
+This page refers to most recent JMRI test version.  If you're using
+an RPS system, you should update to new test versions as they 
+<a href="http://jmri.sf.net/download/index.html">are announced</a>.</em>
+
+<p>
+The 
+<a href="http://www.proto87.com/RPS-MR-position-detection-system.html">RPS System</a>
+provides absolute location of RPS-equipped rolling stock.
+<P>
+JMRI can use that to set JMRI 
+<a href="../../tools/Sensors.shtml">Sensors</a>
+when a RPS transmitter is in a specific area, which can in turn be used to control other
+JMRI functions such as 
+<a href="../../tools/Signals.shtml">signals</a>, 
+<a href="../../tools/Routes.shtml">Routes</a> and 
+<a href="../../tools/Logix.shtml">Logix</a>.
+
+<p>
+An RPS sensor is associated with an area bounded by a series of
+points and the lines between them.
+
+<h2>Defining a Sensor</h2>
+There are two ways to create an RPS Sensor and define the 
+area on the layout that it covers.
+
+<h3>By Coordinates</h3>
+
+You can enter a series of coordinates that list the corners 
+of the region to be covered.  For example, the points
+defining a square one unit on a side are:
+<code><pre>
+ (0,0,0)
+ (1,0,0)
+ (1,1,0)
+ (0,1,0)
+</pre></code>
+If you use the Sensor Table's "Add..." button
+to create a sensor with the system name
+<code><pre>
+  RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)
+</pre></code>
+you'll get an RPS Sensor that shows "ACTIVE" when a 
+transmitter is present in that area, and "INACTIVE" otherwise.
+<p>
+The "R" means the RPS system, "S" means you're defining a Sensor,
+and the rest of the name defines the coordinates of the corners
+of the region to include in the sensor.
+Each corner is specified by its X, Y and Z values, all grouped
+together with parantheses.  The corners should be separated by
+semicolons; see the example above.
+
+<p>
+Once you've defined your sensor, you can use the 
+<a href="../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">tracking display</a>
+to see if it's in the right place on your layout.
+
+<h3>Using the Tracking Tool</h3>
+(To be written, for now see the
+<a href="../../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">tracking display help page</a>.)
+
+<h2>For More Information</h2>
+
+There's more information available on the 
+<a href="http://www.proto87.com/RPS-MR-position-detection-system.html">RPS Web Site</a>.
+<p>
+See also the 
+<a href="index.shtml">main JMRI RPS page</a>.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -1,0 +1,166 @@
+package jmri.jmrit.vsdecoder;
+
+/*
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ * <P>
+ *
+ * @author			Mark Underwood Copyright (C) 2011
+ * @version			$Revision$
+ */
+
+import org.jdom.Element;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
+
+
+// Usage:
+// EngineSound() : constructor
+// play() : plays short horn pop
+// loop() : starts extended sustain horn
+// stop() : ends extended sustain horn (plays end sound)
+
+class EngineSound extends VSDSound {
+
+    // Engine Sounds
+    boolean initialized = false;
+    boolean engine_started = false;
+    boolean auto_start_engine = false;
+
+    int fade_length = 100;
+
+    javax.swing.Timer t;
+
+    public EngineSound(String name) {
+	super(name);
+	is_playing = false;
+	engine_started = false;
+	initialized = init();
+    }
+
+    public boolean init() {
+	auto_start_engine = VSDecoderManager.instance().getVSDecoderPreferences().isAutoStartingEngine();
+	return(true);
+    }
+
+    // Note:  Play and Loop do the same thing, since all of the notch sounds are set to loop.
+    public void play() {
+	log.debug("EngineSound Play");
+	if (engine_started || auto_start_engine) {
+	    is_playing = true;
+	}
+    }
+
+    // Note:  Play and Loop do the same thing, since all of the notch sounds are set to loop.
+    public void loop() {
+	log.debug("EngineSound Loop");
+	if (engine_started || auto_start_engine) {
+	    is_playing = true;
+	}
+    }
+
+    public void stop() {
+	is_playing = false;
+    }
+
+    public void fadeIn() {
+	this.play();
+    }
+
+    public void fadeOut() {
+	this.stop();
+    }
+
+    static final public int calcEngineNotch(final float throttle) {
+	// This will convert to a value 0-8.
+	int notch = ((int) Math.rint(throttle * 8)) + 1;
+	if (notch < 1) { notch = 1; }
+	log.warn("Throttle: " + throttle + " Notch: " + notch);
+	return(notch);
+
+    }
+
+    static final public int calcEngineNotch(final double throttle) {
+	// This will convert from a % to a value 0-8.
+	int notch = ((int) Math.rint(throttle * 8)) + 1;
+	if (notch < 1) { notch = 1; }
+	//log.warn("Throttle: " + throttle + " Notch: " + notch);
+	return(notch);
+
+    }
+
+    public void changeNotch(int new_notch) {
+	log.debug("EngineSound.changeNotch()"); 
+    }
+
+    protected Timer newTimer(int time, boolean repeat, ActionListener al) {
+	t = new Timer(time, al);
+	t.setRepeats(repeat);
+	return(t);
+    }
+
+    public void startEngine() {
+	log.debug("Starting Engine");
+    }
+
+    public void stopEngine() {
+	engine_started = false;
+    }
+
+    public boolean isEngineStarted() {
+	return(engine_started);
+    }
+
+    public void setEngineStarted(boolean es) {
+	engine_started = es;
+    }
+
+    public void shutdown() {
+	// do nothing.
+    }
+
+    public void mute(boolean m) {
+	// do nothing.
+    }
+
+    public void setVolume(float v) {
+	// do nothing.
+    }
+
+    protected float setXMLGain(Element e) {
+	String g = e.getChildText("gain");
+	log.debug("  gain: " + g);
+	if ((g != null) && !(g.equals("")))
+	    return(Float.parseFloat(g));
+	else
+	    return(default_gain);
+
+    }
+
+    public Element getXml() {
+	Element me = new Element("sound");
+	me.setAttribute("name", this.getName());
+	me.setAttribute("type", "engine");
+	// Do something, eventually...
+	return(me);
+    }
+
+    public void setXml(Element e, VSDFile vf) {
+	// Do only the stuff common...
+	this.setName(e.getAttribute("name").getValue());
+	log.debug("EngineSound: " + e.getAttribute("name").getValue());
+    }
+
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EngineSound.class.getName());
+
+}

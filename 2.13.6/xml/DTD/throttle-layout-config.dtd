@@ -1,0 +1,56 @@
+
+<!ELEMENT throttle-layout-config (ThrottlesListPanel, ThrottleWindow*)>
+
+<!ELEMENT ThrottlesListPanel (window) >
+
+<!ELEMENT ThrottleWindow (window, ThrottleFrame*) >
+<!ATTLIST ThrottleWindow title CDATA #REQUIRED>
+<!ATTLIST ThrottleWindow titleType (address | text | textAddress | addresstext | rosterID) "address" >
+
+<!--TODO Here it would be good to include this as throttle-config-2.dtd -->
+<!-- <!ENTITY % throttle-config SYSTEM "throttle-config-2.dtd"> ?? not working ?? -->
+<!ELEMENT ThrottleFrame ( (ControlPanel, FunctionPanel, AddressPanel, Jynstrument*)? ) >
+<!ATTLIST ThrottleFrame ThrottleXMLFile CDATA #IMPLIED>
+
+<!ELEMENT ControlPanel (window) >
+<!ATTLIST ControlPanel displaySpeedSlider CDATA #IMPLIED>
+<!ATTLIST ControlPanel trackSlider CDATA #IMPLIED>
+<!ATTLIST ControlPanel trackSliderMinInterval CDATA #IMPLIED>
+<!ATTLIST ControlPanel speedMode CDATA #IMPLIED>
+<!ATTLIST ControlPanel switchSliderOnFunction CDATA #IMPLIED>
+
+<!ELEMENT FunctionPanel (window, FunctionButton*) >
+<!ELEMENT FunctionButton EMPTY >
+<!ATTLIST FunctionButton id CDATA #REQUIRED>
+<!ATTLIST FunctionButton text CDATA #REQUIRED>
+<!ATTLIST FunctionButton isLockable CDATA #REQUIRED>
+<!ATTLIST FunctionButton isVisible CDATA #REQUIRED>
+<!ATTLIST FunctionButton fontSize CDATA #REQUIRED>
+<!ATTLIST FunctionButton iconPath CDATA #REQUIRED>
+<!ATTLIST FunctionButton selectedIconPath CDATA #REQUIRED>
+
+<!ELEMENT AddressPanel (window, address*, locoaddress*) >
+
+<!ELEMENT address EMPTY >   <!-- obsolete -->
+<!ATTLIST address value CDATA #REQUIRED>
+
+<!-- define general locomotive address -->
+<!ELEMENT locoaddress (dcclocoaddress) >
+
+<!-- define DCC locomotive address -->
+<!ELEMENT dcclocoaddress EMPTY >
+<!ATTLIST dcclocoaddress number      CDATA #IMPLIED>
+<!ATTLIST dcclocoaddress longaddress ( yes | no) "no">
+
+<!ELEMENT Jynstrument (window) >
+<!ATTLIST Jynstrument JynstrumentFolder CDATA #IMPLIED>
+
+<!--TODO Here it would be good to include this as a window.dtd -->
+<!-- <!ENTITY % window SYSTEM "window.dtd"> ?? not working ?? -->
+<!ELEMENT window EMPTY >
+<!ATTLIST window x CDATA #REQUIRED>
+<!ATTLIST window y CDATA #REQUIRED>
+<!ATTLIST window width CDATA #REQUIRED>
+<!ATTLIST window height CDATA #REQUIRED>
+<!ATTLIST window isIconified CDATA #IMPLIED>
+<!ATTLIST window isVisible CDATA #IMPLIED>

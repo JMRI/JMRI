@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author$) 2009 -->
+<!-- $Id$ -->
+<title>JMRI: Panels Menu</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Panels Menu
+</h1>
+
+The JMRI "Panels" menu contains the following items:
+
+<ul>
+<li>New Panel...: 
+Select to create a new panel in either 
+<a href="PanelEditor.shtml">Panel Editor</a>
+or 
+<a href="LayoutEditor.shtml">Layout Editor</a>.
+
+<li>Load Panel...: 
+Loads a a file previously stored with the "Store Panels..." choice below.
+If the file contains Panel Editor or Layout Editor panels, they will be added to any
+that already exist in the program.
+
+<li>Store Panels...: 
+Store the current setup of the program to a file, 
+includeing all current Panel Editor and Layout editor panels.
+Use "Show Panel" below to see the complete list.
+
+<LI>Show History:
+Shows a history of all files loaded into the currently running program, 
+and how they were stored from previous runs of the program, 
+along with what was loaded into those, and so on.
+Only records information from running JMRI 2.9.3 and later.
+
+<LI>Show Panel: 
+Shows the list of Layout and/or Panel Editor panels currently in the program,
+and allows you to bring one to the front by selecting it.
+
+<LI>Run Script...: 
+Select and run a 
+<a href="../../../../html/tools/scripting/index.shtml">script file</a>.
+
+<LI>Thread Monitor: Open a 
+<a href="../automat/monitor/AutomatTableFrame.shtml">window displaying currently-running threads</a>,
+which includes long-running scripts.
+
+<LI>Script Output: Open the script output window.  Any messages from scripts will appear here.
+
+<LI>Script Entry: Open an script input window. You can directly type scripting commands here.
+
+</ul>
+<p>
+This is the jmri.jmrit.display.PanelMenuHelp help page.   
+<!--#include virtual="/Footer" -->
+</body>
+</html>

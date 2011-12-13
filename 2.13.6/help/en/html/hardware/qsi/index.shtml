@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id$ -->
+<title>JMRI: QSI Programmer</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Quantum Programmer
+</h1>
+
+JMRI can now use a Quantum Programmer module
+to read and write CVs in DCC decoders.
+
+<p>
+JMRI cannot (yet) download sounds to QSI decoders.
+
+<p>
+Note that when using JMRI with the Quantum Programmer,
+the Quantum CV Manager program must <em>not</em>
+be running. If it is, you'll get obscure errors and JMRI won't be
+able to access the decoder.
+
+<p>
+JMRI and the Quantum program generally works well with QSI
+decoders.  Some people have had trouble using JMRI and the
+Quantum Programmer with non-QSI decoders, particularly other
+kinds of sound decoders.  In those cases, the solution has
+usually been to use a programming track booster
+such as the 
+<a href="http://www.tonystrains.com/technews/powerpax.htm">PowerPax</a>
+or
+<a href="http://www.soundtraxx.com/access/ptb100.php">PTB-100<a>.
+
+
+
+
+<h2>Driver Installation</h2>
+
+To access the Quantum Programmer, you need to install a driver on your
+computer.  This section describes how to do that for several popular
+computer types.
+
+<a id="driverWin">
+<h3>Windows</h3>
+
+For JMRI to talk to the Quantum Programmer, a driver has to be installed
+so that the Quantum Programmer appears to be a serial port (a Virtual Comm Port, or
+VCP).  These drivers are compatible with the most recent version of the
+QSI Quantum Programmer software, so you can alternate between
+using JMRI and the Quantum Programmer (though not at the same time, of course).
+
+<p>
+Max Ettinger has provided 
+<a href="http://jmri.sourceforge.net/install/qsidriver/">detailed instructions</a>
+for how to install these.  
+
+<a id="driverMac">
+<h3>Mac OS X</h3>
+
+<ol>
+<li>Download the 
+<a href="http://downloads.sourceforge.net/jmri/corby-osx-V1_04_1-release.dmg">installation file</a>
+for the Mac OS X driver.
+This is a disk image (.dmg) file that should open
+as a new Finder window. If not, double click on it.
+<li>
+Double-click on the installer and follow the directions.
+<li>
+Restart your computer.
+</ol>
+You should now be able to start a JMRI application
+and access the Quantum Programmer.  It will appear as
+"Quantum Programmer" in the preferences windows.
+
+<a id="driverLinux">
+<h3>Linux</h3>
+
+<em>This is still being worked on.</em>
+
+<ol>
+<li>Download the 
+<a href="http://downloads.sourceforge.net/jmri/cornwall-redhat9-V0_84.tar">installation file</a>
+for the Linux driver.
+This is a .tar archive file.
+<li>
+Expand the archive to somewhere convenient, and change directory to there.
+<li>
+Try running the installer via either
+<code><pre>
+./load_qsi_prog
+</pre></code>
+or
+<code><pre>
+sudo ./load_qsi_prog
+</pre></code>
+</ol>
+
+<h2>Configure the Quantum Programmer Support</h2>
+
+You configure JMRI to use a Quantum Programmer similarly to the
+way all other connection types are configured.
+
+<ol>
+<li>
+Start the program
+<li>
+Select the "Preferences..." item from the "Edit" menu on the main window.
+<li>
+Select "Quantum Programmer" as the connection type.
+<li>
+Select "QSIProgrammer" as the port to use.
+<li>
+The rest of the options are fixed, and can't be changed.
+<li>
+Click the "Save" button. When prompted, allow the program to quit.
+</ol>
+
+The program is now configured. Restart it, and it should be ready to use.
+
+<h2>Features and Limitations</h2>
+
+The Quantum Programmer hardware is capable of driving one (low-current) locomotive
+in "Ops Mode".  This lets the user run the engine, test the lights, etc.
+JMRI does not yet have code to do this, but if there's enough interest we can certainly
+add it.
+
+<p>
+We currently don't have enough information to download sounds to the decoder through 
+the Quantum Programmer.  If we get the information, we'll certainly write this code.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

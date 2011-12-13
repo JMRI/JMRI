@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: Edit NCE Macro</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Dan Boudreau" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI Help NCE Show Cabs ">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Show NCE Cabs</H1>
+<P>
+	This tool provides a list of the NCE cabs connected to your NCE command station.
+	Up to 63 cabs can be connected, the type of cabs are ProCab, Cab04, USB, and AIU.
+	The tool also provides each cab's active locomotive address, speed, consist number,
+	and which locomotive functions are active.
+</P>
+<P>
+	The monitor will read the current cab information when the tool is first selected.
+	It will then update the list when the "Refresh" button is pressed or if a cab address
+	is purged.
+<P>
+	To help manage cabs on very large layouts the display will show the last time a cab
+	was seen as active and changed settings.
+	Using that you can then enter the cab id and use the "Purge" button to mark
+	the cab address as in-active.
+	This is expected to improve the keystroke response on the remaining cabs
+	as the command station will not have to timeout waiting for a response from
+	the purged cab address.
+</P>
+</BODY>
+</HTML>
+

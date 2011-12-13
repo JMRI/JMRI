@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author$) 2009 -->
+<!-- $Id$ -->
+<title>JMRI: WiFi Throttle</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: WiFi Throttle
+</h1>
+
+<a href="http://withrottle.com">
+  <img src="images/WiT150x250.png" height="250" width="150" align="right">
+</a>
+This window controls the connection between WiFi throttles, 
+e.g. an iPhone, iPod Touch, or Android Phone, and JMRI.  
+
+
+<p>
+It can be set to start automatically with the 
+"<a href="../../../apps/TabbedPreferences.shtml#Startup">Start Up</a>" section in the
+"<a href="../../../apps/TabbedPreferences.shtml">JMRI Preferences</a>"
+section of JMRI Preferences under the heading of "Actions".
+
+<p>
+<a href="../../../apps/TabbedPreferences.shtml#WiThrottle">Preferences</a>
+for the WiFi throttles can be found in the JMRI Preferences
+under the heading WiThrottle.
+
+<p>
+This utility broadcasts its connection information across the local 
+network, so it can be picked up by any device looking for 
+the service.  This eliminates having to enter connection information 
+into the device.  If the computer running JMRI is protected by a
+software firewall, you may need to disable the firewall to allow
+the WiFi throttle to connect.
+
+<p>
+When using a WiFi throttle, if the computer enters sleep mode,
+control will be lost. System preferences may need to be adjusted
+to prevent the computer from putting itself to sleep when it is inactive.
+
+<P>
+To use your iPhone or iPod Touch with JMRI as a throttle, you
+run the 
+<a href="http://withrottle.com">WiThrottle</a>
+app on the iPhone or iPod Touch. The basic application is
+available for free download from the iTunes store.  
+
+<P>
+<a href="EngineDriverAndroidThrottle.shtml">
+  <img src="images/EngineDriverScreen.png" height="200" width="120" align="right">
+</a>
+To use your Android phone with JMRI as a throttle, you
+run the 
+<a href="EngineDriverAndroidThrottle.shtml">Engine Driver</a>
+program on the Android phone.
+
+<p>
+The protocol is described on a 
+<a href="Protocol.shtml">separate page</a>.
+For more on JMRI networking, see the 
+<a href="../../../../html/doc/Technical/Networking.shtml">networking technical page</a>.
+
+<p>
+<h3>
+Function Labels
+</h3>
+Function labels can be customized for each roster entry through JMRI.
+These labels will then be displayed in place of the generic F1, F2... on the
+screen of the mobile device.
+The labels can be added when a new roster entry is created,
+or by editing an existing roster entry under the Function Labels tab.
+To enter function labels, the programmer format has to be either "Advanced" or "Custom".
+
+
+<p>
+<h3>
+Routes & Turnouts
+</h3>
+The app can control any turnouts (and routes) that JMRI has control of.
+If they are available in the JMRI turnout (or route) table,
+they are automatically available in WiFi throttles. 
+If there are no turnouts (or routes) on the table(s),
+then the control screen for them does not show in the app.
+It will do all of this by default.
+However, if JMRI cannot control them, WiFi throttles will not be able to either.
+
+<p>
+Additionally, you can limit what turnouts appear.
+In JMRI, with the WiThrottle window active, there is a menu named WiThrottle.
+It has an item titled "Filter Controls"
+that will let you pick which turnouts to display or hide.
+
+<p>
+<h3>
+Advanced Consisting
+</h3>
+There are now two options for how Advanced (or Decoder Assisted) Consisting is handled. 
+This can be selected from the <a href="../../../apps/TabbedPreferences.shtml#WiThrottle">WiThrottle</a> portion of JMRI Preferences. 
+
+<p>
+
+The default is <b>NMRA Format</b>. This will build a consist using NMRA consisting commands. 
+It does not use any techniques specific to the connected DCC system. 
+This allows WiFi throttles to work in a DCC manufacturer independent way. 
+These consists may perform better for building and controlling with WiFi devices.
+
+<p>
+The second option is <b>DCC Brand-Specific</b> which will build consists in a manner 
+where they will function as though built using a throttle from the DCC manufacturer. 
+This will follow manufacturer specific features as to how consists are built and controlled. 
+These consists should perform better when built with a WiFi device, but controlled by a 
+throttle from the DCC manufacturer of your system.
+
+<p>
+This is the package/jmri/jmrit/withrottle/UserInterface help page
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

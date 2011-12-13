@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!--
+
+  $Id$
+
+  Made with permission from the Sun version at
+  http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+
+  Copyright 2003, 2008
+
+-->
+</head>
+<body bgcolor="white">
+
+XML persistance for the jmrit.blockboss package.
+
+<p>
+In JMRI 2.1.5, the XML written by this 
+package was changed. 
+<p>
+Previously, it wrote a single
+"blocks" element, which contained multiple "block" elements 
+to represent each individual BlockBoss (Simple Signal Logic) object.
+<p>
+These names were too generic, and conflicted with storing true Block
+objects.
+<p>
+Starting in JMRI 2.1.5 (May 2008), these were changed to 
+"signalelements" and "signalelement" respectively.
+
+<!-- Put @see and @since tags down here. -->
+@see jmri.jmrit.blockboss
+
+</body>
+</html>

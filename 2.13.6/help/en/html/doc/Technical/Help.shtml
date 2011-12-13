@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: Use of JavaHelp
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code Java Help JavaHelp ">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+		    <H1>JMRI: Use of JavaHelp</H1>
+
+This page talks about technical aspects of how JMRI provides help
+information using JavaHelp and JHelpDev.
+
+
+<h2>Organization of the help files</h2>
+
+The help files are located in the "help" directory
+within the JMRI distribution directory. 
+
+<p>
+The master copy of this is stored in CVS as the "help" 
+module.  This means to get your own local copy, just do:
+<code><PRE>
+cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
+cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all 
+</PRE></code>
+(If asked for a password, just hit return;
+see our 
+"<a href="getcode.shtml">getting the code</a>" page for more information
+on getting JMRI content with CVS)
+
+<P>
+Within that, all the English-language files are located
+within the "en" subdirectory.  Eventually, this will
+let us internationalize the help pages.
+<P>
+Within that, there are several file trees:
+<UL>
+<LI>package - organized like the source package tree,
+this contains code-specific help files for e.g. a particular
+window or component.  For example, a window that's created
+by the <code>jmri.jmrit.speedometer.SpeedometerFrame</code> class
+(from the <code>src/jmri/jmrit/speedometer/SpeedometerFrame.java</code> file)
+should have its window-specific help in a file at
+<code>package/jmri/jmrit/speedometer/SpeedometerFrame.shtml</code>.
+<LI>html - general descriptions, tutorials, etc.  
+This in turn in organized into directories that represent general areas.
+<LI>manual - a version of the DecoderPro manual reformatted for 
+use in the help system.
+</UL>
+
+In the long run, we want only two branches to this structure:  the "package"
+part of the tree for help information that is specific to 
+a particular piece of code, 
+and another part of the tree for more general information.
+(It's a religious issue whether that 2nd part should be called
+"html" or "manual"; the key thing is we end up with just one).
+The web is meant to be a <em>web</em>, with many paths through
+it to reach content.  The second part of the tree should also be organized
+as "one page, one topic", with links to connect them as needed.
+
+<a name="limitations">
+<h3>Limitations of JavaHelp HTML</h3></a>
+
+JavaHelp displays "plain old HTML 4.0", without providing some of the
+syntactic sugar provided by many browsers to allow poor HTML to render.
+In particular, there are a couple things to watch for.
+<ul>
+<li>Anchor tags aren't XML. Specifically,
+<code><pre>
+&lt;a id="foo"/&gt;Foo!
+</pre></code>
+needs to be replaced by
+<code><pre>
+&lt;a id="foo"&gt;Foo!
+</pre></code>
+or
+<code><pre>
+&lt;a name="foo"&gt;Foo!&lt;/a&gt;
+</pre></code>
+The indicator that you have to do this is an
+&lt; character just appearing by itself on the rendered page.
+
+<li>Anchors also need to use the "name" attribute rather than
+the "id" attribute.  See the item above for an example.
+
+<li>You can't count on any particular location for your files
+on the local machine, so all links to other help pages need to be relative.
+
+<li>Links to web pages outside the help system work,
+but JavaHelp can't display PDF files.  Links to those 
+should be shown explicitly as links, so they can be copied to
+an outside web browser.
+
+</ul>
+
+<h2>Web access to help</h2>
+
+It's inconvenient to have to maintain two separate web pages for the
+main web site and the help system.  To reduce the need for that, we
+use a particular form for the web pages in the help system.
+<UL>
+<LI>Use ".shtml" file extensions so that
+the main web servers will search the files for
+<A HREF="http://httpd.apache.org/docs/1.3/howto/ssi.html">server-side includes</a>.
+<li>When you create a new page, start with a copy 
+of either the 
+help/en/TemplateBar.shtml or help/en/TemplatePlain.shtml
+template 
+file, depending on whether or not you want to include a "Sidebar"
+via a file of the same name.  This will put the proper top and bottom
+matter in place to get the page properly displayed.
+</UL>
+
+<h2>Access in the code</h2>
+
+Within the JMRI code, access the help system comes
+via the jmri.util.HelpUtil class.
+(For historical reasons, there's a little bit of code
+in apps.Apps, but you should ignore that).
+<P>
+The easiest way to add a help menu to a 
+frame is to have it be a JmriJFrame (which you 
+should do anyway), and call addHelpMenu(...)
+after you've built any other menus.
+
+<P>
+By convention, we use a similar file tree for 
+the source code and help files.  For example,
+the <code>jmri.jmrit.simpleclock.SimpleClockFrame</code>
+class inherits from JmriJFrame, and adds a help menu with the line
+<PRE>
+<CODE>
+  addHelpMenu("package.jmri.jmrit.simpleclock.SimpleClockFrame", true);
+</CODE>
+</PRE>
+The help file is then located at 
+<code>help/en/package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml</code>.
+<P>
+A number of help files have been put in place without any contents;
+hopefully some users will edit them and contribute them back.
+
+
+<h2>Creating the control files with JHelpDev</h2>
+
+JavaHelp uses various XML files to 
+control how the table of contents and index are displayed.
+We create those with
+<A HREF="http://jhelpdev.sourceforge.net/">JHelpDev</a>.
+Please don't edit them manually.
+
+<P>
+To do this:
+<OL>
+<LI>You have to put some files in your help/en directory 
+Download 
+<A HREF="http://downloads.sourceforge.net/jmri/JHelpDevTool.3.zip?download">this .zip archive</a>
+and put in in your project's help/en directory, then expand it.
+It should create a jhelpdev.jar file, and a lib directory 
+containing additional .jar files.  
+These files don't show up in CVS, for various reasons.
+
+<li>It's important that you update the configuration files
+from CVS before running the tool.  The configuration info is 
+complicated, and a CVS merge may not go well later.
+<br/>
+<code>cvs -q update Map.jhm *.xml</code>
+
+<LI>Start the tool by clicking on the jhelpdev.jar file.
+
+<LI>Once the window appears, select "Open Project" under the "File" menu.
+
+<LI>Navigate to the "help" directory in your checked out copy of the code, 
+then the "en" directory within that, then select the "JHelpDev.xml" file 
+and click "Open".
+
+<LI>Click the "Create All" button to recreate the maps, index, etc.
+
+<li>Then, back on the command line and in the help/en directory, invoke
+"ant" to create the web index and table of contents pages.
+</OL>
+
+<p>
+The various control files that JavaHelp uses are stored in CVS, 
+so once you've done this CVS will show them as modified.  
+Please check them in when you check in new help files so other 
+people don't have to recreate those control files for themselves.
+<P>
+You can also use the tool to add them to the table of contents, etc, if you'd like. 
+There's more info on how to do that on the
+<a href="http://jhelpdev.sourceforge.net/">JHelpDev web site</a>.
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>

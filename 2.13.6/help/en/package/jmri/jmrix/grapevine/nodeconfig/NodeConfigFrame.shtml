@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: Configure Grapevine Nodes
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help configure grapevine node">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Configure Grapevine Nodes
+</H1>
+    
+This is the help/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame help page
+
+<p>
+Grapevine nodes need to be configured before input works.
+
+<p>
+The node software comes in three separate varieties:
+<dl>
+<dt>2002 node, version 6 or later</dt>
+<dd>Generally considered the best</dd>
+
+<dt>2002 node, pre version 6</dt>
+<dd>If you have one of these, you should probably update the software in it</dd>
+
+<dt>2000 (original) node</dt>
+<dd>Although JMRI has code to support these, it has not been extensively tested.
+If you encounter problems, please let us now so we improve the support 
+for these cards.</dd>
+
+</dl>
+
+Although right now there are no additional properties, we expect 
+to eventually add more information here as we learn about 
+the capabilities of Grapevine nodes.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

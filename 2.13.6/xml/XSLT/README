@@ -1,0 +1,67 @@
+README for xml/XSLT in the JMRI distribution.
+
+See COPYING for license information.
+
+This contains XSLT transformations of the XML information maintained
+by the JMRI project.  build.xml is the ant build control file for
+performing these transformations. In general, these transformations put 
+their results in "pages" subdirectory that is not present in CVS.
+
+Common & summary Ant targets:
+
+ 	xslt		run the whole sequence of processing
+
+	init    	create needed directories
+	clean   	remove compilation results to force rebuild
+	copyDTD		ensure local DTD file copies present where needed for processing
+	copyXML		ensure local XML file copies present where needed for processing
+ 
+Create the by-decoder web pages and index:
+
+	index 		create a decoder index page
+ 				uses DecoderModelIndex.xsl
+ 			
+	models		tranform definitions into web pages
+ 				uses DecoderModelList.xsl
+ 
+Create other views as web pages:			
+
+	selection	create HTML decoder selection guide listing various properties
+ 				uses SelectionGuide.xsl
+ 	
+ 	cvsummary	create HTML page listing CVs available on all decoders
+  				uses CVsummary.xsl, interestingCVs.xml
+ 
+Create views as CommaSeparateVariable files:
+
+	csv			create CSV file listing CVs available on all decoders
+ 				uses CSVsummary.xsl, interestingCVs.xml
+ 			
+ 				create CSV file listing decoder sizes
+ 				uses SizeAsCSV.xsl
+ 				
+ 				create CSV file listing decoder power limits
+ 				uses PowerAsCSV.xsl
+
+
+Information on specific XSLT tranforms:
+
+decoder.xsl     used as a stylesheet by decoder XML files for web display;
+                creates an update form
+                
+DecoderID.xsl   used by Ant "id" target and used as an XML stylesheet to 
+                display the decoderIndex.xml file.
+                
+panelfile.xsl   stylesheet for JMRI panel files
+
+locomotive.xsl  stylesheet for JMRI roster entry files
+
+roster.xsl      stylesheet for JMRI roster index
+
+rpsfile.xsl     stylesheet for JMRI RPS files
+
+throttle.xsl    stylesheet for JMRI throttle layout files
+
+LogixToCode.xml Tool for creating Java code from the Logix and Routes
+                in a panel file.  The code will (with a little adjustment)
+                recreate the contents.

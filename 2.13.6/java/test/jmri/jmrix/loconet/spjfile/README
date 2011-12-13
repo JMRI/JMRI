@@ -1,0 +1,7 @@
+README for the test/jmri/jmrix/loconet/spjfile directory,
+part of the JMRI test tree.
+
+Note that this directory contains several test SPJ files:
+
+test.spj - made from Digitrax sd38_2.spj
+

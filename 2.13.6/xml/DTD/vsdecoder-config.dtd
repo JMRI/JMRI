@@ -1,0 +1,55 @@
+<!-- Defines XML for configuring the VSDecoder -->
+<!-- $Id$ -->
+
+<!-- This DTD is part of JMRI. Copyright 2003-2011.                         -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- A VSDecoderConfig has one or more profiles -->
+<!ELEMENT vsdecoder-config (vsdecoder+)>
+
+<!-- A Profile element has one or more sounds and/or triggers -->
+<!-- A Profile element must have a name and a type -->
+<!ELEMENT vsdecoder (default?, (sound|trigger)+)>
+<!ATTLIST vsdecoder name CDATA #REQUIRED>
+<!ATTLIST vsdecoder type (steam|diesel) #REQUIRED>
+
+<!-- Optional default element marks this Profile as the default choice -->
+<!ELEMENT default (EMPTY)>
+
+<!-- A Sound element can have different children depending on its type -->
+<!ELEMENT sound
+	  ((start-file|mid-file|end-file|short-file),use-start-file,
+	  use-mid-file, use-end-file, use-short-file)>
+<!ATTLIST sound name CDATA #REQUIRED>
+<!ATTLIST sound type (configurable|engine) #REQUIRED>
+
+<!-- Parameters for Sound element -->
+<!ELEMENT start-file (#PCDATA)>
+<!ELEMENT mid-file (#PCDATA)>
+<!ELEMENT end-file (#PCDATA)>
+<!ELEMENT short-file (#PCDATA)>
+<!ELEMENT use-start-file (#PCDATA)>
+<!ELEMENT use-mid-file (#PCDATA)>
+<!ELEMENT use-end-file (#PCDATA)>
+<!ELEMENT use-short-file (#PCDATA)>
+
+<!-- A Trigger element can have different children depending on its type -->
+<!ELEMENT trigger (event_name,match,target_name,action,match_type)>
+<!ATTLIST trigger name CDATA #REQUIRED>
+<!ATTLIST trigger type (bool|compare) #REQUIRED>
+
+<!-- Parameters for Trigger element -->
+<!ELEMENT event-name (#PCDATA)>
+<!ELEMENT match-type (#PCDATA)>
+<!ELEMENT match (#PCDATA)>
+<!ELEMENT target-name (#PCDATA)>
+<!ELEMENT action (#PCDATA)>

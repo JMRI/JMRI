@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: Continuous Integration
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code Continuous Integration jenkins SVN">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+	    <!-- -------- -->
+	    <!--  Teaser  --> <!-- Optional -->
+	    <!-- -------- -->
+
+<H1>JMRI: Continuous Integration</H1>
+
+"Continuous Integration" is the process of rebuilding a 
+system every time it changes, so that you rapidly learn of
+new problems and are motivated to remove existing ones.
+<p>
+JMRI uses the 
+<a href="http://jenkins-ci.org/">Jenkins</a>
+continuous integration engine for this.
+<p>
+
+Specific results of interest:
+<ul>
+<li><a href="http://builds.jmri.org/jenkins/">Dashboard</a> page that gives one-line status
+<li><a href="http://builds.jmri.org/jenkins/job/Development%20(SVN)/">Development</a> page, 
+showing status of the builds done after every series of commits.
+There are also pages of the 
+<a href="http://builds.jmri.org/jenkins/job/Development%20(SVN)/changes">most recent changes<a> and the
+<a href="http://builds.jmri.org/jenkins/job/Development%20(SVN)/lastBuild/">most results<a>.
+<li><a href="http://builds.jmri.org/jenkins/job/FindBugs%20(SVN)/">FindBugs</a> page, 
+showing status of the more-extensive tests done periodically.
+There are also pages of the 
+<a href="http://builds.jmri.org/jenkins/job/FindBugs%20(SVN)/changes">most recent changes<a> and the
+<a href="http://builds.jmri.org/jenkins/job/FindBugs%20(SVN)/lastBuild/">most recent results<a>.
+<p>
+For more information on JMRI's use of FindBugs, see the
+<a href="FindBugs.shtml">separate FindBugs page</a>.
+</ul>
+
+<h2>Integration with NetBeans</h2>
+<p>If you are developing in the <a href="NetBeans.shtml">NetBeans 7.0</a> environment,
+it is possible to integrate feedback from the Jenkins Continuous Integration (CI) engine.
+<p>Within the NetBeans environment, reference is made to the Hudson CI engine - Jenkins
+is a <a href="http://en.wikipedia.org/wiki/Fork_(software_development)">"fork"</a>
+of the Hudson code and supports the same <a href="http://en.wikipedia.org/wiki/API">API</a>.
+<h3>Integration</h3>
+<p>Integration into NetBeans is achieved by executing the following steps:
+<ol>
+<li>Open NetBeans
+<li>Switch to the 'Services' window (shortcut key 'Ctrl+5')
+<li>Right-click (Ctrl-click on Mac) the entry 'Hudson Builders' and choose 'Add Hudson Instance...'
+    <p><img src="images/NetBeansJenkinsAdd.png" width="342" height="134" alt="Add Hudson Instance...">
+<li>In the resulting pop-up, complete the following:
+    <dl>
+    <dt>Name</dt><dd>JMRI</dd>
+    <dt>URL</dt><dd>http://builds.jmri.org/jenkins/</dd>
+    <dt>Auto refresh every X minutes</dt><dd>60 (change from the default of 5 to avoid overloading the CI server)</dd>
+    </dl>
+    <img src="images/NetBeansJenkinsAddDialog.png" width="453" height="240" alt="Add Hudson Instance dialog">
+</ol>
+<p>From now on, the current status of the Jenkins builds can be reviewed in the 'Services'
+window by expanding the 'JMRI' entry under 'Hudson Builders'.
+<p><img src="images/NetBeansJenkinsOverview.png" width="342" height="452" alt="Jenkins Overview">
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

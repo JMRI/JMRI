@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+ <TITLE>
+ JMRI Install Guide: Uhlenbrock Intellibox via Serial Port
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Michael Beck" name=Author>
+    <META content="John Plocher" name=Author>
+    <META name="keywords" content="Uhlenbrock Intellibox java model railroad JMRI install">
+
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <H1> 
+      JMRI Install Guide: Uhlenbrock Intellibox via Serial Port
+      </H1>
+
+
+<P>DecoderPro can communicate with an 
+<a href="http://www.uhlenbrock.de/3/index.htm">Uhlenbrock Intellibox</a>
+via the built-in serial port and the LocoNet protocol. 
+
+<p>
+Configure the options of your Uhlenbrock Intellibox to be:
+<UL>
+<LI>SO 2 value 4  (Select LocoNet protocol in the interface)
+<LI>SO 5 value 1  (Use 1 stop bit on the serial port)
+<LI>SO 6 value 255  (CTS never set false due to pressing a stop button)
+
+<LI>Baudrate 19200
+</UL>
+
+Then start the JMRI program and configure it to:
+
+<UL>
+<LI>"LocoNet Intellibox Serial Port" protocol
+<LI>Select the appropriate serial port on your computer
+<LI>Select 19200 baud
+<LI>Select hardware handshaking
+</UL>
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

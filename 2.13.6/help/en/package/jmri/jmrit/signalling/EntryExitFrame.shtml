@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: Kevin Dickerson $) 2009 -->
+<!-- $Id: EntryExitFrame.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<title>JMRI: Signal Group Table</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<h1>JMRI: Entry Exit Window</h1>
+
+The Entry Exit system allows you to assign sensors to various location on a layout panel, 
+then get the system to automatically set the route up between those sensors when they both go 
+active.  If a block within the path is already Occupied, then the system will try to find an 
+alternative path.
+<p>
+From this window you can create and delete Entry Exit Pairs for a given layout panel
+<p>
+You first need to assign sensors at Block boundaries on the layout editor, by using the pop up window
+on block boundaries, the popup menu on turnouts or Level Crossings.
+<p>
+From the Entry Exit window, select the layout panel that you are working on, you can then either 
+manually select the source and destination sensor pair, or all the system to automatically discover 
+all the valid paths, by pressing the "Auto Generate Entry Exit Pairs" button.
+<p>
+The result will be populated in the table below the button.
+<p>
+The auto discovery will only discover fully valid pairs for sensors that are effectively protecting
+ blocks that are in the same direction.  This also means that to set the route through you must first 
+ set the "From" sensor then set the "To" sensor, if you want to be able to set the route by selecting 
+ either sensor first, then you will need to check the "Both Way" option.  If the end point is assigned 
+ an end Bumper then this will not be possible.
+<p>
+It is possible to manually add Entry Exit pairs for sensors that are in effect protecting blocks that 
+work in opposite directions.  Here you will need to use the drop down options to select the start and 
+finish locations against a layout panel.  Again you can select this pair to be "Both Way" working.
+<!--#include virtual="/Footer" -->
+</body>
+</html>

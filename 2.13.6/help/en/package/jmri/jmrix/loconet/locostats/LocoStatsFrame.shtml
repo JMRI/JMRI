@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: LocoNet Statistics
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help digitrax downloader">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> LocoNet Statistics
+</H1>
+    
+Advanced LocoNet interfaces like the LocoBuffer series from 
+RR-CirKits or the PRn series from DIgitrax 
+collect statistics
+on the operation of the attached LocoNet.  This window displays those.
+
+<p>
+The "Update" button requests information from the interface for display.
+
+<h2>LocoBuffer Values</h2>
+
+<dl>
+<dt>Version<dd>The version number of the unit.
+<dt>Breaks<dd>The number of LocoNet breaks seen since the last time the interface was powered on.
+<dt>Errors<dd>The number of LocoNet errors seen since the last time the interface was powered on.
+</dl>
+
+<h2>Digitrax PRn</h2>
+
+<dl>
+<dt>Serial Number<dd>The serial number of the unit.
+<dt>PR2 Status<dd>The status bits from an interface in PR2 (programmer) mode.
+<dt>Current<dd>The current being drawn by the track, in some arbitrary units.
+<dt>Hardware Version<dd>The version number of the interface's hardware.
+<dt>Software Version<dd>The version number of the interface's software.
+<dt>Good Message Count<dd>The number of good LocoNet messages seen since the last time the interface was powered on.
+<dt>Bad Message Count<dd>The number of bad LocoNet messages seen since the last time the interface was powered on.
+<dt>MS100 Status<dd>The status bits from an interface in MS100 (LocoNet adapter) mode.
+</dl>
+
+Some of these are displayed when the interface is acting as a programmer
+(PR2 mode), and others when it's acting as an interface (MS100 mode).
+
+<p>
+This is the help/jmri/jmrix/loconet/locostats/LocoStatsFrame help page
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+
