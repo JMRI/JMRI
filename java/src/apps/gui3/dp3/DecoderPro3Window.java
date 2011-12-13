@@ -112,7 +112,7 @@ public class DecoderPro3Window
      * Loads Decoder Pro 3 with specific menu and toolbar files
      */
     public DecoderPro3Window(File menuFile, File toolbarFile) {
-        super("DecoderPro",
+        super("DecoderPro 3",
                 menuFile,
                 toolbarFile);
         buildWindow();
