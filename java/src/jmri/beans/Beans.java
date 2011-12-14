@@ -1,6 +1,7 @@
 // Beans.java
 package jmri.beans;
 
+import java.beans.IndexedPropertyDescriptor;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
@@ -18,6 +19,68 @@ import java.util.Set;
  */
 public class Beans extends java.beans.Beans {
 
+    public static void setIndexedProperty(Object object, String key, int index, Object value) {
+        if (implementsBeanInterface(object)) {
+            ((BeanInterface) object).setIndexedProperty(key, index, value);
+        } else {
+            setIntrospectedIndexedProperty(object, key, index, value);
+        }
+    }
+
+    public static void setIntrospectedIndexedProperty(Object object, String key, int index, Object value) {
+        if (object != null && key != null) {
+            try {
+                PropertyDescriptor[] pds = Introspector.getBeanInfo(object.getClass()).getPropertyDescriptors();
+                for (PropertyDescriptor pd : pds) {
+                    if (pd instanceof IndexedPropertyDescriptor && pd.getName().equalsIgnoreCase(key)) {
+                        ((IndexedPropertyDescriptor)pd).getIndexedWriteMethod().invoke(object, new Object[]{index, value});
+                        return; // short circut, since there is nothing left to do at this point.
+                    }
+                }
+                // catch only introspection-related exceptions, and allow all other to pass through
+            } catch (IllegalAccessException ex) {
+                log.warn(ex.toString(), ex);
+            } catch (IllegalArgumentException ex) {
+                log.warn(ex.toString(), ex);
+            } catch (InvocationTargetException ex) {
+                log.warn(ex.toString(), ex);
+            } catch (IntrospectionException ex) {
+                log.warn(ex.toString(), ex);
+            }
+        }
+    }
+
+    public static Object getIndexedProperty(Object object, String key, int index) {
+        if (implementsBeanInterface(object)) {
+            return ((BeanInterface) object).getIndexedProperty(key, index);
+        } else {
+            return getIntrospectedIndexedProperty(object, key, index);
+        }
+    }
+
+    public static Object getIntrospectedIndexedProperty(Object object, String key, int index) {
+        if (object != null && key != null) {
+            try {
+                PropertyDescriptor[] pds = Introspector.getBeanInfo(object.getClass()).getPropertyDescriptors();
+                for (PropertyDescriptor pd : pds) {
+                    if (pd instanceof IndexedPropertyDescriptor && pd.getName().equalsIgnoreCase(key)) {
+                        return ((IndexedPropertyDescriptor)pd).getIndexedReadMethod().invoke(object, new Object[]{index});
+                    }
+                }
+                // catch only introspection-related exceptions, and allow all other to pass through
+            } catch (IllegalAccessException ex) {
+                log.warn(ex.toString(), ex);
+            } catch (IllegalArgumentException ex) {
+                log.warn(ex.toString(), ex);
+            } catch (InvocationTargetException ex) {
+                log.warn(ex.toString(), ex);
+            } catch (IntrospectionException ex) {
+                log.warn(ex.toString(), ex);
+            }
+        }
+        return null;
+    }
+
     /**
      * Set property <i>key</i> of <i>object</i> to <i>value</i>.
      * <p>
@@ -32,12 +95,12 @@ public class Beans extends java.beans.Beans {
      */
     public static void setProperty(Object object, String key, Object value) {
         if (implementsBeanInterface(object)) {
-            ((BeanInterface)object).setProperty(key, value);
+            ((BeanInterface) object).setProperty(key, value);
         } else {
             setIntrospectedProperty(object, key, value);
         }
     }
-    
+
     /**
      * Set property <i>key</i> of <i>object</i> to <i>value</i>.
      * <p>
@@ -56,11 +119,11 @@ public class Beans extends java.beans.Beans {
                 PropertyDescriptor[] pds = Introspector.getBeanInfo(object.getClass()).getPropertyDescriptors();
                 for (PropertyDescriptor pd : pds) {
                     if (pd.getName().equalsIgnoreCase(key)) {
-                        pd.getWriteMethod().invoke(object, new Object[] {value});
+                        pd.getWriteMethod().invoke(object, new Object[]{value});
                         return; // short circut, since there is nothing left to do at this point.
                     }
                 }
-            // catch only introspection-related exceptions, and allow all other to pass through
+                // catch only introspection-related exceptions, and allow all other to pass through
             } catch (IllegalAccessException ex) {
                 log.warn(ex.toString(), ex);
             } catch (IllegalArgumentException ex) {
@@ -88,12 +151,12 @@ public class Beans extends java.beans.Beans {
      */
     public static Object getProperty(Object object, String key) {
         if (implementsBeanInterface(object)) {
-            return ((BeanInterface)object).getProperty(key);
+            return ((BeanInterface) object).getProperty(key);
         } else {
             return getIntrospectedProperty(object, key);
         }
     }
-    
+
     /**
      * Get the property <i>key</i> of <i>object</i>.
      * <p>
@@ -117,7 +180,7 @@ public class Beans extends java.beans.Beans {
                         return pd.getReadMethod().invoke(object, (Object[]) null);
                     }
                 }
-            // catch only introspection-related exceptions, and allow all other to pass through
+                // catch only introspection-related exceptions, and allow all other to pass through
             } catch (IllegalAccessException ex) {
                 log.warn(ex.toString(), ex);
             } catch (IllegalArgumentException ex) {
@@ -143,12 +206,12 @@ public class Beans extends java.beans.Beans {
      */
     public static boolean hasProperty(Object object, String key) {
         if (implementsBeanInterface(object)) {
-            return ((BeanInterface)object).hasProperty(key);
+            return ((BeanInterface) object).hasProperty(key);
         } else {
             return hasIntrospectedProperty(object, key);
         }
     }
-    
+
     /**
      * Test that <i>object</i> has the property <i>key</i>.
      * <p>
@@ -170,25 +233,25 @@ public class Beans extends java.beans.Beans {
                         return true;
                     }
                 }
-            // catch only introspection-related exceptions, and allow all other to pass through
+                // catch only introspection-related exceptions, and allow all other to pass through
             } catch (IntrospectionException ex) {
                 log.warn(ex.toString(), ex);
             }
         }
         return false;
     }
-    
+
     public static Set<String> getPropertyNames(Object object) {
         if (object != null) {
             if (implementsBeanInterface(object)) {
-                return ((BeanInterface)object).getPropertyNames();
+                return ((BeanInterface) object).getPropertyNames();
             } else {
                 return getIntrospectedPropertyNames(object);
             }
         }
         return new HashSet<String>(); // return an empty set instead of null
     }
-    
+
     public static Set<String> getIntrospectedPropertyNames(Object object) {
         HashSet<String> names = new HashSet<String>();
         if (object != null) {
@@ -197,13 +260,14 @@ public class Beans extends java.beans.Beans {
                 for (PropertyDescriptor pd : pds) {
                     names.add(pd.getName());
                 }
-            // catch only introspection-related exceptions, and allow all other to pass through
+                // catch only introspection-related exceptions, and allow all other to pass through
             } catch (IntrospectionException ex) {
                 log.warn(ex.toString(), ex);
             }
         }
         return names;
     }
+
     /**
      * Test that <i>object</i> implements {@link jmri.beans.BeanInterface}.
      * 

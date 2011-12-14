@@ -22,12 +22,39 @@ import java.util.Set;
 public interface BeanInterface {
     
     /**
+     * Set the value of an element in an indexed property.
+     * <p>
+     * <b>NOTE</b> Implementing methods <i>must not call</i> <code>Bean.setIndexedProperty()</code>,
+     * as doing so will cause a stack overflow. Implementing methods may call
+     * <code>Beans.setIntrospectedIndexedProperty()</code> instead.
+     * 
+     * @param key name of the property
+     * @param index index of the property element to change
+     * @param value the value to set the property to
+     */
+    public void setIndexedProperty(String key, int index, Object value);
+    
+    /**
+     * Get the value of an element in an indexed property.
+     * <p>
+     * <b>NOTE</b> Implementing methods <i>must not call</i> <code>Bean.getIndexedProperty()</code>,
+     * as doing so will cause a stack overflow. Implementing methods may call
+     * <code>Beans.getIntrospectedIndexedProperty()</code> instead.
+     * 
+     * @param key name of the property
+     * @param index index of the property element to change
+     * @return value of the property or null
+     */
+    public Object getIndexedProperty(String key, int index);
+    
+    /**
      * Set the value of a property.
      * <p>
      * <b>NOTE</b> Implementing methods <i>must not call</i> <code>Bean.setProperty()</code>,
      * as doing so will cause a stack overflow. Implementing methods may call
      * <code>Beans.setIntrospectedProperty()</code> instead.
      * 
+     * @param key name of the property
      * @param value the value to set the property to
      */
     public void setProperty(String key, Object value);
@@ -39,6 +66,7 @@ public interface BeanInterface {
      * as doing so will cause a stack overflow. Implementing methods may call
      * <code>Beans.getIntrospectedProperty()</code> instead.
      *
+     * @param key name of the property
      * @return The value of the property or null
      */
     public Object getProperty(String key);
@@ -50,6 +78,7 @@ public interface BeanInterface {
      * as doing so will cause a stack overflow. Implementing methods may call
      * <code>Beans.hasIntrospectedProperty()</code> instead.
      * 
+     * @param key name of the property
      * @return true is property <i>key</i> exists
      */
     public boolean hasProperty(String key);
@@ -63,6 +92,7 @@ public interface BeanInterface {
      * <p>
      * <b>NOTE</b> Implementations of this method should not return null.
      * 
+     * @param key name of the property
      * @return property names or an empty Set.
      */
     public Set<String> getPropertyNames();
