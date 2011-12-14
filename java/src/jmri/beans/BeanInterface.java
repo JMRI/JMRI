@@ -92,7 +92,6 @@ public interface BeanInterface {
      * <p>
      * <b>NOTE</b> Implementations of this method should not return null.
      * 
-     * @param key name of the property
      * @return property names or an empty Set.
      */
     public Set<String> getPropertyNames();

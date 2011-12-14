@@ -105,7 +105,7 @@ public abstract class UnboundBean implements BeanInterface {
      * @param key
      * @param index
      * @param value
-     * @see BeanInterface#setIndexedProperty(java.lang.String, java.lang.Object)
+     * @see BeanInterface#setIndexedProperty(java.lang.String, int, java.lang.Object) 
      */
     public void setIndexedProperty(String key, int index, Object value) {
         if (Beans.hasIntrospectedProperty(this, key)) {
