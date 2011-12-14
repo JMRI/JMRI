@@ -128,6 +128,14 @@ public class BeanSelectCreatePanel extends JPanel{
             hardwareAddress.setVisible(true);
         }
     }
+    
+    public void setEnabled(boolean enabled){
+        existingItem.setEnabled(enabled);
+        hardwareAddress.setEnabled(enabled);
+        prefixBox.setEnabled(enabled);
+        newItem.setEnabled(enabled);
+        super.setEnabled(enabled);
+    }
 	
 	public void refresh(){
 		existingCombo.refreshCombo();
