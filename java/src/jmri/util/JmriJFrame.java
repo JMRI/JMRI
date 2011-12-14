@@ -692,6 +692,24 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      */
     protected HashMap<String, Object> properties = new HashMap<String, Object>();
     
+    public void setIndexedProperty(String key, int index, Object value) {
+        if (Beans.hasIntrospectedProperty(this, key)) {
+            Beans.setIntrospectedIndexedProperty(this, key, index, value);
+        } else {
+            if (!properties.containsKey(key)) {
+                properties.put(key, new Object[0]);
+            }
+            ((Object[])properties.get(key))[index] = value;
+        }
+    }
+
+    public Object getIndexedProperty(String key, int index) {
+        if (properties.containsKey(key) && properties.get(key).getClass().isArray()) {
+            return ((Object[])properties.get(key))[index];
+        }
+        return Beans.getIntrospectedIndexedProperty(this, key, index);
+    }
+
     // subclasses should override this method with something more direct and faster
     public void setProperty(String key, Object value) {
         if (Beans.hasIntrospectedProperty(this, key)) {
@@ -752,4 +770,5 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         names.addAll(Beans.getIntrospectedPropertyNames(this));
         return names;
     }
+
 }
