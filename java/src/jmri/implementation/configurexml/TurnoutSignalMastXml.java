@@ -46,6 +46,17 @@ public class TurnoutSignalMastXml
                 e.addContent(el);
             }
         }
+        List<String> disabledAspects = p.getDisabledAspects();
+        if(disabledAspects!=null){
+            Element el = new Element("disabledAspects");
+            for(String aspect: disabledAspects){
+                Element ele = new Element("disabledAspect");
+                ele.addContent(aspect);
+                el.addContent(ele);
+            }
+            if(disabledAspects.size()!=0)
+                e.addContent(el);
+        }
         if(p.resetPreviousStates())
             e.addContent(new Element("resetPreviousStates").addContent("yes"));
         return e;
@@ -56,6 +67,7 @@ public class TurnoutSignalMastXml
      * @param element Top level Element to unpack.
      * @return true if successful
      */
+    @SuppressWarnings("unchecked")
     public boolean load(Element element) {
         TurnoutSignalMast m;
         String sys = getSystemName(element);
@@ -66,7 +78,6 @@ public class TurnoutSignalMastXml
         
         loadCommon(m, element);
         
-        @SuppressWarnings("unchecked")
         List<Element> list = element.getChildren("aspect");
         for (int i = 0; i < list.size(); i++) {
             Element e = list.get(i);
@@ -77,6 +88,13 @@ public class TurnoutSignalMastXml
             if(turnoutState.equals("closed"))
                 turnState = Turnout.CLOSED;
             m.setTurnout(aspect, turnout, turnState);
+        }
+        Element e = element.getChild("disabledAspects");
+        if(e!=null){
+            list = e.getChildren("disabledAspect");
+            for(Element aspect: list){
+                m.setAspectDisabled(aspect.getText());
+            }
         }
         if (( element.getChild("resetPreviousStates") != null) && 
             element.getChild("resetPreviousStates").getText().equals("yes") ){

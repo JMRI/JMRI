@@ -65,7 +65,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             SignalMast s = InstanceManager.signalMastManagerInstance().getBySystemName(name);
             if(s instanceof jmri.implementation.TurnoutSignalMast)
                 return true;
-            else return false;
+            else return true;
         }
         else if (col==HELDCOL) return true;
         else return super.isCellEditable(row,col);
@@ -105,7 +105,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         else if (col==EDITMASTCOL) {
             if(s instanceof jmri.implementation.TurnoutSignalMast)
                 return rb.getString("ButtonEdit");
-            return "";
+            return rb.getString("ButtonEdit");
         }
         else return super.getValueAt(row, col);
     }

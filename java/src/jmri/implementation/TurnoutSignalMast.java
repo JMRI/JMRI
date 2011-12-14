@@ -100,6 +100,9 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         super.setAspect(aspect);
     }
     
+    /**
+    * returns a list of all the valid aspects, that have not been disabled
+    */
     public Vector<String> getValidAspects() {
         java.util.Enumeration<String> e = map.getAspects();
         Vector<String> v = new Vector<String>();
@@ -111,6 +114,9 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         return v;
     }
     
+    /**
+    * returns a list of all the known aspects for this mast, including those that have been disabled
+    */
     public Vector<String> getAllKnownAspects(){
         java.util.Enumeration<String> e = map.getAspects();
         Vector<String> v = new Vector<String>();
@@ -146,6 +152,10 @@ public class TurnoutSignalMast extends AbstractSignalMast {
     
     public List<String> getDisabledAspects(){
         return disabledAspects;
+    }
+    
+    public boolean isAspectDisabled(String aspect){
+        return disabledAspects.contains(aspect);
     }
     
     public SignalSystem getSignalSystem() {

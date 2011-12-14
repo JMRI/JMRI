@@ -8,6 +8,7 @@ import jmri.util.StringUtil;
 import jmri.util.swing.BeanSelectCreatePanel;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.implementation.TurnoutSignalMast;
+import jmri.implementation.SignalHeadSignalMast;
 import jmri.implementation.VirtualSignalMast;
 import javax.swing.BorderFactory;
 import javax.swing.border.TitledBorder;
@@ -87,6 +88,11 @@ public class AddSignalMastPanel extends JPanel {
         signalHeadPanel.setVisible(false);
         add(signalHeadPanel);
         
+        TitledBorder disableborder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+        disableborder.setTitle("Disable Specific Aspects");
+        disabledAspectsPanel.setBorder(disableborder);
+        add(disabledAspectsPanel);
+        
         turnoutMastScroll = new JScrollPane(turnoutMastPanel);
         turnoutMastScroll.setVisible(false);
         add(turnoutMastScroll);
@@ -154,7 +160,6 @@ public class AddSignalMastPanel extends JPanel {
         sigSysBox.setSelectedItem(mast.getSignalSystem().getSystemName());
         loadMastDefinitions();
         
-        //jmri.implementation.AbstractSignalMast aMast = (jmri.implementation.AbstractSignalMast) mast;
         String mastType = "appearance-" + extractMastTypeFromMast(((jmri.implementation.AbstractSignalMast)mast).getSystemName())+".xml";
         for(int i = 0; i<mastNames.size(); i++){
             if (mastNames.get(i).getName().endsWith(mastType)){
@@ -164,11 +169,27 @@ public class AddSignalMastPanel extends JPanel {
         }
         mastNames.get(mastBox.getSelectedIndex()).getName();
         
+        signalMastDriver.setEnabled(false);
         
-        if(mast instanceof jmri.implementation.TurnoutSignalMast){
-            //turnoutDriverMast.setSelected(true);
+        if(mast instanceof jmri.implementation.SignalHeadSignalMast){
+            signalMastDriver.setSelectedItem(rb.getString("HeadCtlMast"));
+            updateSelectedDriver();
+
+            signalHeadPanel.setVisible(false);
+
+            List<String> disabled = ((SignalHeadSignalMast)mast).getDisabledAspects();
+            if(disabled!=null){
+                for(String aspect: disabled){
+                    if(disabledAspects.containsKey(aspect)){
+                        disabledAspects.get(aspect).setSelected(true);
+                    }
+                }
+            }
+        
+        } else if(mast instanceof jmri.implementation.TurnoutSignalMast){
+
             signalMastDriver.setSelectedItem(rb.getString("TurnCtlMast"));
-            signalMastDriver.setEnabled(false);
+
             updateSelectedDriver();
             SignalAppearanceMap appMap = mast.getAppearanceMap();
             TurnoutSignalMast tmast = (TurnoutSignalMast) mast;
@@ -180,10 +201,22 @@ public class AddSignalMastPanel extends JPanel {
                     TurnoutAspectPanel turnPanel = turnoutAspect.get(key);
                     turnPanel.setSelectedTurnout(tmast.getTurnoutName(key));
                     turnPanel.setTurnoutState(tmast.getTurnoutState(key));
+                    turnPanel.setAspectDisabled(tmast.isAspectDisabled(key));
                 }
             }
             if(tmast.resetPreviousStates())
                 resetPreviousState.setSelected(true);
+        } else if (mast instanceof jmri.implementation.VirtualSignalMast){
+            signalMastDriver.setSelectedItem(rb.getString("VirtualMast"));
+            updateSelectedDriver();
+            List<String> disabled = ((VirtualSignalMast)mast).getDisabledAspects();
+            if(disabled!=null){
+                for(String aspect: disabled){
+                    if(disabledAspects.containsKey(aspect)){
+                        disabledAspects.get(aspect).setSelected(true);
+                    }
+                }
+            }
         }
         
         cancel.setVisible(true);
@@ -203,16 +236,19 @@ public class AddSignalMastPanel extends JPanel {
     void updateSelectedDriver(){
         signalHeadPanel.setVisible(false);
         turnoutMastScroll.setVisible(false);
+        disabledAspectsPanel.setVisible(false);
         if(rb.getString("TurnCtlMast").equals(signalMastDriver.getSelectedItem())){
-        //if(turnoutDriverMast.isSelected()){
             updateTurnoutAspectPanel();
             turnoutMastScroll.setVisible(true);
+            
         } else if(rb.getString("HeadCtlMast").equals(signalMastDriver.getSelectedItem())){
-        //if(signalHeadDriverMast.isSelected()){
             updateHeads();
+            updateDisabledOption();
             signalHeadPanel.setVisible(true);
+            disabledAspectsPanel.setVisible(true);
         } else if(rb.getString("VirtualMast").equals(signalMastDriver.getSelectedItem())){
-            //Do nothing at this stage
+            updateDisabledOption();
+            disabledAspectsPanel.setVisible(true);
         }
         validate();
         if (getTopLevelAncestor()!=null){
@@ -230,6 +266,28 @@ public class AddSignalMastPanel extends JPanel {
     
     String sigsysname;
     ArrayList<File> mastNames = new ArrayList<File>();
+    
+    HashMap<String, JCheckBox> disabledAspects = new HashMap<String, JCheckBox>(10);
+    JPanel disabledAspectsPanel = new JPanel();
+    
+    void updateDisabledOption(){
+        String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
+        mastType =  mastType.substring(11, mastType.indexOf(".xml"));
+        jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap((String) sigSysBox.getSelectedItem(), mastType);
+        java.util.Enumeration<String> aspects = sigMap.getAspects();
+        disabledAspects = new HashMap<String, JCheckBox>(5);
+
+        while(aspects.hasMoreElements()){ 
+            String aspect = aspects.nextElement();
+            JCheckBox disabled = new JCheckBox(aspect);
+            disabledAspects.put(aspect, disabled);
+        }
+        disabledAspectsPanel.removeAll();
+        disabledAspectsPanel.setLayout(new jmri.util.javaworld.GridLayout2(disabledAspects.size()+1,1));
+        for(String aspect: disabledAspects.keySet()){
+            disabledAspectsPanel.add(disabledAspects.get(aspect));
+        }
+    }
     
     void loadMastDefinitions() {
         // need to remove itemListener before addItem() or item event will occur
@@ -360,13 +418,9 @@ public class AddSignalMastPanel extends JPanel {
         }
         if(mast==null){
             if(rb.getString("HeadCtlMast").equals(signalMastDriver.getSelectedItem())){
-            //if(signalHeadDriverMast.isSelected()){
                 if((!checkSignalHeadUse()) || (!checkUserName(userName.getText()))){
                     return;
                 }
-                /*String name = "IF$shsm:"
-                        +sigsysname
-                        +":"+mastname.substring(11,mastname.length()-4);*/
                 
                 StringBuilder build = new StringBuilder();
                 build.append("IF$shsm:"
@@ -391,6 +445,14 @@ public class AddSignalMastPanel extends JPanel {
                     return; // without creating       
                 }
                 if (!user.equals("")) m.setUserName(user);
+                
+                for(String aspect: disabledAspects.keySet()){
+                    if(disabledAspects.get(aspect).isSelected())
+                        ((SignalHeadSignalMast)m).setAspectDisabled(aspect);
+                    else
+                        ((SignalHeadSignalMast)m).setAspectEnabled(aspect);
+                }
+                
             } else if(rb.getString("TurnCtlMast").equals(signalMastDriver.getSelectedItem())){
                 if(!checkUserName(userName.getText()))
                     return;
@@ -403,6 +465,10 @@ public class AddSignalMastPanel extends JPanel {
                     turnoutAspect.get(aspect).setReference(name + ":" + aspect);
                     turnMast.setTurnout(aspect, turnoutAspect.get(aspect).getTurnoutName(), turnoutAspect.get(aspect).getTurnoutState());
                     turnoutMastPanel.add(turnoutAspect.get(aspect).getPanel());
+                    if(turnoutAspect.get(aspect).isAspectDisabled())
+                        turnMast.setAspectDisabled(aspect);
+                    else
+                        turnMast.setAspectEnabled(aspect);
                 }
                 turnMast.resetPreviousStates(resetPreviousState.isSelected());
                 if (!user.equals("")) turnMast.setUserName(user);
@@ -417,15 +483,29 @@ public class AddSignalMastPanel extends JPanel {
                 VirtualSignalMast virtMast = new VirtualSignalMast(name);
                 if (!user.equals("")) virtMast.setUserName(user);
                 InstanceManager.signalMastManagerInstance().register(virtMast);
+
+                for(String aspect: disabledAspects.keySet()){
+                    if(disabledAspects.get(aspect).isSelected())
+                        virtMast.setAspectDisabled(aspect);
+                    else
+                        virtMast.setAspectEnabled(aspect);
+                
+                }
             }
             prefs.addComboBoxLastSelection(systemSelectionCombo, (String) sigSysBox.getSelectedItem());
             prefs.addComboBoxLastSelection(driverSelectionCombo, (String) signalMastDriver.getSelectedItem());
             prefs.addComboBoxLastSelection(mastSelectionCombo+":"+((String) sigSysBox.getSelectedItem()), (String) mastBox.getSelectedItem());
-                        refreshComboBox();
+            refreshComboBox();
         }
         else {
-            //@TODO For use with editing the signal mast
             if(rb.getString("HeadCtlMast").equals(signalMastDriver.getSelectedItem())){
+                SignalHeadSignalMast headMast = (SignalHeadSignalMast) mast;
+                for(String aspect: disabledAspects.keySet()){
+                    if(disabledAspects.get(aspect).isSelected())
+                        headMast.setAspectDisabled(aspect);
+                    else
+                        headMast.setAspectEnabled(aspect);
+                }
             
             } else if(rb.getString("TurnCtlMast").equals(signalMastDriver.getSelectedItem())){
                 String name = "IF$tsm:"
@@ -436,8 +516,20 @@ public class AddSignalMastPanel extends JPanel {
                     turnoutAspect.get(aspect).setReference(name + ":" + aspect);
                     turnMast.setTurnout(aspect, turnoutAspect.get(aspect).getTurnoutName(), turnoutAspect.get(aspect).getTurnoutState());
                     turnoutMastPanel.add(turnoutAspect.get(aspect).getPanel());
+                    if(turnoutAspect.get(aspect).isAspectDisabled())
+                        turnMast.setAspectDisabled(aspect);
+                    else
+                        turnMast.setAspectEnabled(aspect);
                 }
                 turnMast.resetPreviousStates(resetPreviousState.isSelected());
+            } else if(rb.getString("VirtualMast").equals(signalMastDriver.getSelectedItem())){
+                VirtualSignalMast virtMast = (VirtualSignalMast) mast;
+                for(String aspect: disabledAspects.keySet()){
+                    if(disabledAspects.get(aspect).isSelected())
+                        virtMast.setAspectDisabled(aspect);
+                    else
+                        virtMast.setAspectEnabled(aspect);
+                }
             }
         }
     }
@@ -578,10 +670,10 @@ public class AddSignalMastPanel extends JPanel {
     ArrayList<JmriBeanComboBox> headList = new ArrayList<JmriBeanComboBox>(5);
     
     HashMap<String, TurnoutAspectPanel> turnoutAspect = new HashMap<String, TurnoutAspectPanel>(10);
-    
+
     static class TurnoutAspectPanel{
         BeanSelectCreatePanel beanBox = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-        //Border blackline = BorderFactory.createLineBorder(Color.black);
+        JCheckBox disabledCheck = new JCheckBox("Disable Aspect");
         
         String stateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
         String stateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
@@ -589,6 +681,7 @@ public class AddSignalMastPanel extends JPanel {
         int[] turnoutStateValues = new int[]{Turnout.CLOSED, Turnout.THROWN};
         
         JComboBox turnoutState = new JComboBox(turnoutStates);
+        JLabel turnoutStateLabel = new JLabel("Set State");
         String aspect = "";
         
         TurnoutAspectPanel(String aspect){
@@ -623,6 +716,24 @@ public class AddSignalMastPanel extends JPanel {
             }
         }
         
+        void setAspectDisabled(boolean boo){
+            disabledCheck.setSelected(boo);
+            if(boo){
+                beanBox.setEnabled(false);
+                turnoutStateLabel.setEnabled(false);
+                turnoutState.setEnabled(false);
+            }
+            else {
+                beanBox.setEnabled(true);
+                turnoutStateLabel.setEnabled(true);
+                turnoutState.setEnabled(true);
+            }
+        }
+        
+        boolean isAspectDisabled(){
+            return disabledCheck.isSelected();
+        }
+        
         String getTurnoutName(){
             return beanBox.getDisplayName();
         }
@@ -641,12 +752,23 @@ public class AddSignalMastPanel extends JPanel {
         JPanel getPanel(){
             if(panel==null){
                 panel = new JPanel();
-                panel.add(beanBox);
-                panel.add(new JLabel("Set State"));
-                panel.add(turnoutState);
+                panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                JPanel turnDetails = new JPanel();
+                turnDetails.add(beanBox);
+                turnDetails.add(turnoutStateLabel);
+                turnDetails.add(turnoutState);
+                panel.add(turnDetails);
+                panel.add(disabledCheck);
                 TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 border.setTitle(aspect);
                 panel.setBorder(border);
+                
+                disabledCheck.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        setAspectDisabled(disabledCheck.isSelected());
+                    }
+                });
+                
             }
             return panel;
         }

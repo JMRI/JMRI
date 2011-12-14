@@ -4,6 +4,7 @@ import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.implementation.SignalHeadSignalMast;
 import org.jdom.Element;
+import java.util.List;
 
 /**
  * Handle XML configuration for a DefaultSignalMastManager objects.
@@ -28,6 +29,18 @@ public class SignalHeadSignalMastXml
         e.setAttribute("class", this.getClass().getName());
         e.addContent(new Element("systemName").addContent(p.getSystemName()));
         storeCommon(p, e);
+        
+        List<String> disabledAspects = p.getDisabledAspects();
+        if(disabledAspects!=null){
+            Element el = new Element("disabledAspects");
+            for(String aspect: disabledAspects){
+                Element ele = new Element("disabledAspect");
+                ele.addContent(aspect);
+                el.addContent(ele);
+            }
+            if(disabledAspects.size()!=0)
+                e.addContent(el);
+        }
         return e;
     }
 
@@ -46,6 +59,15 @@ public class SignalHeadSignalMastXml
             m.setUserName(getUserName(element));
         
         loadCommon(m, element);
+        
+        Element e = element.getChild("disabledAspects");
+        if(e!=null){
+            @SuppressWarnings("unchecked")
+            List<Element> list = e.getChildren("disabledAspect");
+            for(Element aspect: list){
+                ((SignalHeadSignalMast)m).setAspectDisabled(aspect.getText());
+            }
+        }
         return true;
     }
 
