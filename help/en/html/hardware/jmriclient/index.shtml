@@ -85,9 +85,9 @@ connection with the prefix 'L'.</p>
 click the "Add Action" button, and select "Start Simple JMRI Server" from the list 
 of options.  Save the preferences and restart the program.</p>
 
-<p>On the client machine, add a "JMRI (Network)" connection to both machines. 
-Change the system connection prefix to "L". and set the IP address to the IP 
-address of the server.Save the preferences and restart the program.</p>
+<p>On the client machine, add a "JMRI (Network)" connection.  Change the system 
+connection prefix to "L". and set the IP address to the IP  address of the server. Save
+the preferences and restart the program.</p>
 
 <p>Once both computers have restarted JMRI, you will be able to load a panel
 file on the client computer which was created on the server computer.</p>
