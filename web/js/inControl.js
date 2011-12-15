@@ -2,6 +2,9 @@
 *  
 *  For 'inControl.html'
 *  
+*  Some settings are defined as constants in 'Vars' section below.
+*  These settings can be changed (timeouts, image URLs, size ratios, ...).
+*  
 *  Using jQuery
 *  
 **********************************************************************************************/
@@ -9,6 +12,134 @@
 //============================================================= Specific code
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++ Global Vars and Functions
+
+//----------------------------------------- Vars
+var $imagePowerUndefined = "/resources/icons/throttles/power_yellow.png";	// images/PowerGrey.png
+var $imagePowerOff = "/resources/icons/throttles/power_red.png";			// images/PowerRed.png
+var $imagePowerOn = "/resources/icons/throttles/power_green.png";			// images/PowerGreen.png
+var $imageSliderCursor = "images/SpeedCursor1.png";
+var $imagePlusPlus = "images/PlusPlus.png";
+var $imagePlus = "images/Plus.png";
+var $imageMinus = "images/Minus.png";
+var $imageMinusMinus = "images/MinusMinus.png";
+var $imageReverseEnabled = "/resources/icons/throttles/down-green.png";		// images/LeftGreen.png
+var $imageReverseDisabled = "/resources/icons/throttles/down-red.png";		// images/LeftRed.png
+var $imageStop = "/resources/icons/throttles/estop.png";					// images/Stop.png
+var $imageForwardEnabled = "/resources/icons/throttles/up-green.png";		// images/RightGreen.png
+var $imageForwardDisabled = "/resources/icons/throttles/up-red.png";		// images/RightRed.png
+var $imageSettings = "images/Settings.png";
+var $imageClose = "images/Close.png";
+var $imageTrash = "images/Trash.png";
+var $xmlRosterPath = "/prefs/roster.xml";
+var $xmlioPath = "/xmlio";
+var $imagesPath = "/web/images/";
+var $userImagesPath = "/prefs/resources/";
+var allUrlParameters;
+var $selectAux;
+var $imagesFileList = [];
+var $ResizeCheckInterval = 500;												//ms
+var $RetrieveFrameInterval = 3000;											//ms
+var $SizeReference;
+var $SizeReferenceMin = 30;													//px minimum
+var $SizeReferencePercent = 7;												//%
+var $TextSizeRatioS = 0.7;													//small
+var $TextSizeRatioN = 1;													//normal
+var $TextSizeRatioL = 1.3;													//large
+var $LocoImageLayoutHeightPercent = 18;										//%
+var $TurnoutRouteWidthRef = 400;											//px
+var $viewportWidth = 0;
+var $viewportHeight = 0;
+var $frameInitHeight = -1;
+var $frameInitWidth = -1;
+var $isMultiPage;
+var $insideMulti;
+var $iframeId = "";
+var $changeBothSizes;
+var $portrait;
+var $inSettings = false;
+var $inSettingsLoco = false;
+var $inChooseImage = false;
+var $inQueryString = false;
+var $inHelp = false;
+var $powerStatusBlock = false;			//If true, cannot control loco if not Power ON
+var $powerStatus = -1;
+var $speedValue = 0;
+var $forward = true;
+var $shunt;
+var $LocoNameList = [];
+var $FnPressed = [];
+var $SettingsLocoFunctionSelected = 0;
+var $VerticalSlider;
+var $paramRemoveFromLocalStorage;
+var $paramFrameName;
+var $listTurnoutsRoutes = [];
+var $paramTurnouts;
+var $paramRoutes;
+var $paramThrottles = [];
+var $paramTextSizeRatio;
+var $paramPower;
+var $paramSpeedCtrlRight;
+var $paramSpeedCtrlButtons;
+var $paramLocoName;
+var $paramLocoAddress;
+var $paramLocoImage;
+var $paramLocoNoSpeedCtrl;
+var $paramFnActive = [];
+var $paramFnToggle = [];
+var $paramFnAutoUnpress = [];
+var $paramFnLabel = [];
+var $paramFnImage = [];
+var $paramFnImagePressed = [];
+var $paramFnAddress = [];
+var $paramFnShunt = [];
+var $paramXmlioDebug;
+var $QueryStringText =
+	"- RemoveFromLocalStorage &nbsp;&nbsp;(all parameters)" +
+	"<br />- FrameName (display a frame - case sensitive name - instead of a loco throttle)" +
+	"<br />- Turnouts &nbsp;&nbsp;(display the turnouts list instead of a loco throttle)" +
+	"<br />- Routes &nbsp;&nbsp;(display the routes list instead of a loco throttle)" +
+	"<br />- LocoName&lt;i&gt; &nbsp;&nbsp;(multiple loco throttles - case sensitive name)" +
+	"<br />- TextSize &nbsp;&nbsp;(s[mall] n[ormal] l[arge])" +
+	"<br />- Power &nbsp;&nbsp;(power button)" +
+	"<br />- SpeedCtrlRight &nbsp;&nbsp;(speed control on right)" +
+	"<br />- SpeedCtrlButtons &nbsp;&nbsp;(speed control with buttons)" +
+	"<br />- LocoName (loco or function only decoder - case sensitive name)" +
+	"<br />- LocoAddress (loco or function only decoder)" +
+	"<br />- LocoImage &nbsp;&nbsp;(URL)" +
+	"<br />- LocoNoSpeedCtrl &nbsp;&nbsp;(no speed control)" +
+	"<br />- F&lt;i&gt;Active" +					//also true if any param exists					i: de 0 a 28
+	"<br />- F&lt;i&gt;Toggle" +					//also true if param 'f<i>imagepressed' exists
+	"<br />- F&lt;i&gt;AutoUnpress" +
+	"<br />- F&lt;i&gt;Label" +
+	"<br />- F&lt;i&gt;Image &nbsp;&nbsp;(URL)" +
+	"<br />- F&lt;i&gt;ImagePressed &nbsp;&nbsp;(URL)" +
+	"<br />- F&lt;i&gt;Address &nbsp;&nbsp;(alternative device address)" +
+	"<br />- F&lt;i&gt;Shunt &nbsp;&nbsp;(activate half speed with bidirectional control)" +
+	"<br />- xmlioDebug &nbsp;&nbsp;(display XML in/out)" +
+	"<br />[all parameters are optional and their names are not case sensitive]" +
+	"<br />[boolean parameters: empty (no) / anything (yes)]" +
+	"<br />[already saved parameters are not changed - they are temporarily replaced]" +
+	"<br />Examples:" +
+	"<br />http://localhost:12080/web/inControl.html?loconame7=loco1" +
+	"<br />http://localhost:12080/web/inControl.html?POWER=x&LocoName=loco1" +
+	"<br />http://localhost:12080/web/inControl.html?Framename=myFrame" +
+	"";
+var $HelpText =
+	"<br />Version 2.7 - by Oscar Moutinho" +
+	"<br />" +
+	"<br />All browsers: set zoom to 100%." +
+	"<br />Google Chrome: deactivate 'instant' functionality." +
+	"<br />This page may be opened in iFrames of any size - you may create sets of throttle/frame controls in HTML pages." +
+	"<br />" +
+	"<br />The Locos in the roster file are always loaded." +
+	"<br />" +
+	"<br />To best display full JMRI Frames, you should resize the frame window in 'Panel editor' to show the full diagram and select 'No scrollbars'." +
+	"<br />" +
+	"<br />For Loco or Function Keys, you may select any image from the internet. Just write the correct URL." +
+	"<br />Example: http://www.anysite.org/images/Loco3.jpg" +
+	"<br />You may also select images from JMRI '/web/images/' directory (directly from the list)." +
+	"<br />The images already stored in JMRI user resources '/prefs/resources/' must be written without directory info (ex.: MyHorn.png)." +
+	"";
 
 //----------------------------------------- Generic onError
 window.onerror = function(errMsg, errUrl, errLineNumber) {
@@ -120,7 +251,7 @@ function $verticalSlider(_parent, sliderTop, sliderLeft, sliderHeight, sliderWid
 	$sliderButtonId = $("#" + sliderButtonId);
 	$sliderButtonId.height(sb_hw);
 	$sliderButtonId.width(sb_hw);
-	$sliderButtonId.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/SpeedCursor1.png?MaxHeight=" + $sliderButtonId.height() + "&MaxWidth=" + $sliderButtonId.width()));
+	$sliderButtonId.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imageSliderCursor + "?MaxHeight=" + $sliderButtonId.height() + "&MaxWidth=" + $sliderButtonId.width()));
 	$sliderButtonId.css("position", "absolute");
 	$sliderButtonId.css("cursor", "pointer");
 	$sliderButtonId.css("z-index", 101);
@@ -134,6 +265,26 @@ function $verticalSlider(_parent, sliderTop, sliderLeft, sliderHeight, sliderWid
 $(document).ajaxError(function(event, jqXHR, ajaxSettings, thrownError){
 	if ($paramXmlioDebug) alert((($iframeId.length > 0) ? "[" + $iframeId + "] " : "") + "AJAX error.\n\nURL:\n" + ajaxSettings.url + "\n\nStatus:\n" + jqXHR.status + "\n\nResponse:\n" + jqXHR.responseText + "\n\nError:\n" + thrownError);
 });
+
+//----------------------------------------- Send XMLIO Set Turnout
+var $xmlioSendSetTurnout = function(turnoutName, turnoutStatus){
+	$xmlioSend("<xmlio>\n  <item>\n    <type>turnout</type>\n    <name>" + turnoutName + "</name>\n    <set>" + turnoutStatus + "</set>\n  </item>\n</xmlio>");
+}
+
+//----------------------------------------- Send XMLIO Get Turnouts list
+var $xmlioSendGetTurnouts = function(){
+	$xmlioSend("<xmlio>\n  <list>\n    <type>turnout</type>\n  </list>\n</xmlio>");
+}
+
+//----------------------------------------- Send XMLIO Set Route
+var $xmlioSendSetRoute = function(routeName, routeStatus){
+	$xmlioSend("<xmlio>\n  <item>\n    <type>route</type>\n    <name>" + routeName + "</name>\n    <set>" + routeStatus + "</set>\n  </item>\n</xmlio>");
+}
+
+//----------------------------------------- Send XMLIO Get Routes list
+var $xmlioSendGetRoutes = function(){
+	$xmlioSend("<xmlio>\n  <list>\n    <type>route</type>\n  </list>\n</xmlio>");
+}
 
 //----------------------------------------- Send XMLIO Set Power
 var $xmlioSendSetPower = function(){
@@ -204,6 +355,8 @@ var $xmlioSend = function(xml){
 			var int;
 			var frw;
 			var s;
+			var isTurnoutOrRoute = false;
+			var addedTurnoutRoute = false;
 			if($responseForThrottle){
 				$xmlNode = $xmlReturned.find("throttle");
 				address = parseInt($xmlNode.find("address").text(), 10);				
@@ -236,15 +389,160 @@ var $xmlioSend = function(xml){
 					$updateSpeed();
 				}
 			} else {
-				$xmlNode = $xmlReturned.find("item");
-				if("power" == $xmlNode.find("type").text() && "power" == $xmlNode.find("name").text()){
-					$powerStatus = parseInt($xmlNode.find("value").text(), 10);
-					$updatePower();
-				}
+				$xmlReturned.find("item").each(function(){
+					$xmlNode = $(this);
+					if("power" == $xmlNode.find("type").text() && "power" == $xmlNode.find("name").text()){
+						$powerStatus = parseInt($xmlNode.find("value").text(), 10);
+						$updatePower();
+					}
+					isTurnoutOrRoute = ("turnout" == $xmlNode.find("type").text() || "route" == $xmlNode.find("type").text());
+					if(isTurnoutOrRoute){
+						if($updateTurnoutRoute("turnout" == $xmlNode.find("type").text(), $xmlNode.find("name").text(), $xmlNode.find("userName").text(), $xmlNode.find("value").text())) addedTurnoutRoute = true;
+					}
+				});
+				if(addedTurnoutRoute) $buildLayoutTurnoutRoute(); else if(isTurnoutOrRoute) for(var i = 0; i < $listTurnoutsRoutes.length; i++) $updateLayoutTurnoutRoute(i);
 				$xmlioSend(jqXHR.responseText);
 			}
 		}
 	});
+}
+
+//----------------------------------------- Update Turnout or Route in list
+var $updateTurnoutRoute = function(turnout, name, description, status){
+	var f = -1;
+	for(var i = 0; i < $listTurnoutsRoutes.length; i++){
+		if($listTurnoutsRoutes[i].name == name){
+			f = i;
+			break;
+		}
+	}
+	if(f > -1){
+			$listTurnoutsRoutes[f].status = status;
+	} else {
+		$listTurnoutsRoutes.push({turnout: turnout, name: name, description: description, status: status});
+		$listTurnoutsRoutes.sort(function(a, b){
+ 			var nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase();
+ 			if (nameA < nameB) return -1;
+			if (nameA > nameB) return 1;
+			return 0;
+		});
+	}
+	return (f == -1);
+}
+
+//----------------------------------------- Build Layout for Turnouts or Routes
+var $buildLayoutTurnoutRoute = function(){
+	var $TurnoutsRoutes = $("#TurnoutsRoutes");
+	var $TurnoutsRoutesI;
+	var $divTR;
+	var s = "";
+	var s1 =  "<div id='divTR";
+	var s2 =  "' class='TurnoutsRoutes' onclick='$changeTurnoutRoute(";
+	var s3 =  ")'><label id='lblTR";
+	var s4 =  "' class='lblTurnoutsRoutes'>x</label><label id='lblTRStatus";
+	var s5 =  "' class='TurnoutsRoutesStatus'>x</label></div>";
+	var hTR;
+	var wTR;
+	var h_mp;
+	var w_mp;
+	var n;
+	var t = 0;
+	var l = 0;
+	$TurnoutsRoutes.height($viewportHeight);
+	$TurnoutsRoutes.width($viewportWidth);
+	if($changeBothSizes){
+		n = ($TurnoutsRoutes.height() * $SizeReferencePercent / 100);
+		$SizeReference = Math.round((n > $SizeReferenceMin) ? n : $SizeReferenceMin);
+	}
+	$TurnoutsRoutes.offset({top: 0, left: 0});
+	for(var i = 0; i < $listTurnoutsRoutes.length; i++) s+= s1 + i + s2 + i + s3 + i + s4 + i + s5;
+	$TurnoutsRoutes.html(s);
+	$TurnoutsRoutesI = $(".TurnoutsRoutes");
+	n = Math.floor($TurnoutsRoutes.width() / $TurnoutRouteWidthRef) + 1;
+	wTR = Math.floor($viewportWidth / n);
+	$(".lblTurnoutsRoutes").css("font-size", $SizeReference * 0.4);
+	$(".TurnoutsRoutesStatus").css("font-size", $SizeReference * 0.4);
+	hTR = $TurnoutsRoutesI.height();
+	h_mp = $.calcTotalMBP($TurnoutsRoutesI, false);
+	w_mp = $.calcTotalMBP($TurnoutsRoutesI, true);
+	$TurnoutsRoutesI.width(wTR - w_mp);
+	for(var i = 0; i < $listTurnoutsRoutes.length; i++){
+		$divTR = $("#divTR" + i);
+		$divTR.css("top", t);
+		$divTR.css("left", l);
+		if(l + wTR * 2 <= $TurnoutsRoutes.width()) l+= wTR; else {l = 0; t+= hTR + h_mp;}
+		$("#lblTR" + i).text($listTurnoutsRoutes[i].name + " - " + $listTurnoutsRoutes[i].description);
+	}
+	for(var i = 0; i < $listTurnoutsRoutes.length; i++) $updateLayoutTurnoutRoute(i);
+	$TurnoutsRoutesI.height(hTR);
+}
+
+//----------------------------------------- Update Layout for Turnouts or Routes
+var $updateLayoutTurnoutRoute = function(index){
+	var st = $listTurnoutsRoutes[index].status;
+	var $TurnoutRouteStatus = $("#lblTRStatus" + index);
+	if($TurnoutRouteStatus.hasClass("TRon")) $TurnoutRouteStatus.removeClass("TRon");
+	if($TurnoutRouteStatus.hasClass("TRoff")) $TurnoutRouteStatus.removeClass("TRoff");
+	if($TurnoutRouteStatus.hasClass("TRdisabled")) $TurnoutRouteStatus.removeClass("TRdisabled");
+	if($TurnoutRouteStatus.hasClass("TRundefined")) $TurnoutRouteStatus.removeClass("TRundefined");
+	if($listTurnoutsRoutes[index].turnout){
+		switch (st) {
+			case "2": {		//Closed
+				$TurnoutRouteStatus.text("C");
+				$TurnoutRouteStatus.addClass("TRon");
+				break;
+			}
+			case "4": {		//Thrown
+				$TurnoutRouteStatus.text("T");
+				$TurnoutRouteStatus.addClass("TRoff");
+				break;
+			}
+			default: {		//undefined
+				$TurnoutRouteStatus.text("?");
+				$TurnoutRouteStatus.addClass("TRundefined");
+				break;
+			}
+		}
+	} else {
+		switch (st) {
+			case "2": {		//Active
+				$TurnoutRouteStatus.text("On");
+				$TurnoutRouteStatus.addClass("TRon");
+				break;
+			}
+			case "4": {		//Inactive
+				$TurnoutRouteStatus.text("Off");
+				$TurnoutRouteStatus.addClass("TRoff");
+				break;
+			}
+			case "0": {		//Disabled
+				$TurnoutRouteStatus.text("X");
+				$TurnoutRouteStatus.addClass("TRdisabled");
+				break;
+			}
+			default: {		//undefined
+				$TurnoutRouteStatus.text("?");
+				$TurnoutRouteStatus.addClass("TRundefined");
+				break;
+			}
+		}
+	}
+}
+
+//----------------------------------------- Click Turnout or Route
+var $changeTurnoutRoute = function(index){
+	var st = $listTurnoutsRoutes[index].status;
+	if($listTurnoutsRoutes[index].turnout){		// 1(undefined) 2(Closed) 4(Thrown)
+		if("2" == st) $listTurnoutsRoutes[index].status = "4"; else $listTurnoutsRoutes[index].status = "2";
+		$updateLayoutTurnoutRoute(index);
+		$xmlioSendSetTurnout($listTurnoutsRoutes[index].name, $listTurnoutsRoutes[index].status);
+	} else {									// 0(disable - cannot change) 1(undefined) 2(Active) 4(Inactive) - Can only activate
+		if("1" == st || "4" == st){
+			$listTurnoutsRoutes[index].status = "2";
+			$updateLayoutTurnoutRoute(index);
+			$xmlioSendSetRoute($listTurnoutsRoutes[index].name, $listTurnoutsRoutes[index].status);
+		}
+	}
 }
 
 //----------------------------------------- Retrieve images file list from dir
@@ -274,11 +572,11 @@ var $errorLoadingImage = function(obj){
 	alert("Error loading image: " + obj.attr("src").split("?")[0] + "\n\nPlease check if file exists.\nIf it exists, please refresh the page.");
 }
 
-//----------------------------------------- Host resize helper (to show ICO, GIF and PNG with tranparency, do not resize at the host)
-var $correctForTransparency = function(url){
+//----------------------------------------- Host resize helper
+var $correctForSomeImageTypes = function(url){
 	var s = url.split("?")[0];
 	var e = s.slice(s.lastIndexOf(".") + 1).toLowerCase();
-	if("ico" != e && "gif" != e && "png" != e) s = url;
+	if("ico" != e && "gif" != e && "png" != e) s = url; 		//Do not resize at the host: ICO (to show), GIF (animated), PNG (animated)
 	return s;
 }
 
@@ -296,115 +594,6 @@ var $resizeFunctionImage = function(thisObj){
 	}
 }
 
-//----------------------------------------- Vars
-var $xmlRosterPath = "/prefs/roster.xml";
-var $xmlioPath = "/xmlio";
-var $imagesPath = "/web/images/";
-var $userImagesPath = "/prefs/resources/";
-var allUrlParameters;
-var $selectAux;
-var $imagesFileList = [];
-var $ResizeCheckInterval = 500;												//ms
-var $RetrieveFrameInterval = 3000;											//ms
-var $SizeReference;
-var $SizeReferenceMin = 30;													//px minimum
-var $SizeReferencePercent = 7;												//%
-var $TextSizeRatioS = 0.7;													//small
-var $TextSizeRatioN = 1;													//normal
-var $TextSizeRatioL = 1.3;													//large
-var $LocoImageLayoutHeightPercent = 18;										//%
-var $viewportWidth = 0;
-var $viewportHeight = 0;
-var $frameInitHeight = -1;
-var $frameInitWidth = -1;
-var $isMultiPage;
-var $insideMulti;
-var $iframeId = "";
-var $changeBothSizes;
-var $portrait;
-var $inSettings = false;
-var $inSettingsLoco = false;
-var $inChooseImage = false;
-var $inQueryString = false;
-var $inHelp = false;
-var $powerStatus= -1;
-var $speedValue = 0;
-var $forward = true;
-var $shunt;
-var $LocoNameList = [];
-var $FnPressed = [];
-var $SettingsLocoFunctionSelected = 0;
-var $VerticalSlider;
-var $paramRemoveFromLocalStorage;
-var $paramFrameName;
-var $paramTurnouts;
-var $paramRoutes;
-var $paramThrottles = [];
-var $paramTextSizeRatio;
-var $paramPower;
-var $paramSpeedCtrlRight;
-var $paramSpeedCtrlButtons;
-var $paramLocoName;
-var $paramLocoAddress;
-var $paramLocoImage;
-var $paramLocoNoSpeedCtrl;
-var $paramFnActive = [];
-var $paramFnToggle = [];
-var $paramFnAutoUnpress = [];
-var $paramFnLabel = [];
-var $paramFnImage = [];
-var $paramFnImagePressed = [];
-var $paramFnAddress = [];
-var $paramFnShunt = [];
-var $paramXmlioDebug;
-var $QueryStringText =
-	"- RemoveFromLocalStorage &nbsp;&nbsp;(all parameters)" +
-	"<br />- FrameName (display a frame - case sensitive name - instead of a loco throttle)" +
-	"<br />- Turnouts &nbsp;&nbsp;(display the turnouts list instead of a loco throttle)" +
-	"<br />- Routes &nbsp;&nbsp;(display the routes list instead of a loco throttle)" +
-	"<br />- LocoName&lt;i&gt; &nbsp;&nbsp;(multiple loco throttles - case sensitive name)" +
-	"<br />- TextSize &nbsp;&nbsp;(s[mall] n[ormal] l[arge])" +
-	"<br />- Power &nbsp;&nbsp;(power button)" +
-	"<br />- SpeedCtrlRight &nbsp;&nbsp;(speed control on right)" +
-	"<br />- SpeedCtrlButtons &nbsp;&nbsp;(speed control with buttons)" +
-	"<br />- LocoName (loco or function only decoder - case sensitive name)" +
-	"<br />- LocoAddress (loco or function only decoder)" +
-	"<br />- LocoImage &nbsp;&nbsp;(URL)" +
-	"<br />- LocoNoSpeedCtrl &nbsp;&nbsp;(no speed control)" +
-	"<br />- F&lt;i&gt;Active" +					//also true if any param exists					i: de 0 a 28
-	"<br />- F&lt;i&gt;Toggle" +					//also true if param 'f<i>imagepressed' exists
-	"<br />- F&lt;i&gt;AutoUnpress" +
-	"<br />- F&lt;i&gt;Label" +
-	"<br />- F&lt;i&gt;Image &nbsp;&nbsp;(URL)" +
-	"<br />- F&lt;i&gt;ImagePressed &nbsp;&nbsp;(URL)" +
-	"<br />- F&lt;i&gt;Address &nbsp;&nbsp;(alternative device address)" +
-	"<br />- F&lt;i&gt;Shunt &nbsp;&nbsp;(activate half speed with bidirectional control)" +
-	"<br />- xmlioDebug &nbsp;&nbsp;(display XML in/out)" +
-	"<br />[all parameters are optional and their names are not case sensitive]" +
-	"<br />[boolean parameters: empty (no) / anything (yes)]" +
-	"<br />[already saved parameters are not changed - they are temporarily replaced]" +
-	"<br />Examples:" +
-	"<br />http://localhost:12080/web/inControl.html?loconame7=loco1" +
-	"<br />http://localhost:12080/web/inControl.html?POWER=x&LocoName=loco1" +
-	"<br />http://localhost:12080/web/inControl.html?Framename=myFrame" +
-	"";
-var $HelpText =
-	"<br />Version 2.5 - by Oscar Moutinho" +
-	"<br />" +
-	"<br />All browsers: set zoom to 100%." +
-	"<br />Google Chrome: deactivate 'instant' functionality." +
-	"<br />This page may be opened in iFrames of any size - you may create sets of throttle/frame controls in HTML pages." +
-	"<br />" +
-	"<br />The Locos in the roster file are always loaded." +
-	"<br />" +
-	"<br />To best display full JMRI Frames, you should resize the frame window in 'Panel editor' to show the full diagram and select 'No scrollbars'." +
-	"<br />" +
-	"<br />For Loco or Function Keys, you may select any image from the internet. Just write the correct URL." +
-	"<br />Example: http://www.anysite.org/images/Loco3.jpg" +
-	"<br />You may also select images from JMRI '/web/images/' directory (directly from the list)." +
-	"<br />The images already stored in JMRI user resources '/prefs/resources/' must be written without directory info (ex.: MyHorn.png)." +
-	"";
-
 //----------------------------------------- Run at start up
 $(document).ready(function(){
 	$readParametersFromQueryString();
@@ -412,13 +601,31 @@ $(document).ready(function(){
 		$manageFrameDisplay();
 		return;
 	};
-	if(!$paramRemoveFromLocalStorage && $paramTurnouts){
-		$manageTurnoutsDisplay();
-		return;
-	};
-	if(!$paramRemoveFromLocalStorage && $paramRoutes){
-		$manageRoutesDisplay();
-		return;
+	if(!$paramRemoveFromLocalStorage && ($paramTurnouts || $paramRoutes)){
+		$.ajaxSetup({url: $xmlioPath, async: true, cache: false, type: "POST", dataType: "xml"});
+		$changeBothSizes = (($viewportWidth != $(window).width()) && ($viewportHeight != $(window).height()));
+		$viewportWidth = $(window).width();
+		$viewportHeight = $(window).height();
+		$portrait = ($viewportWidth <= $viewportHeight);
+		$("body").html("<div id='TurnoutsRoutes'></div>");
+		window.setInterval(
+			"if(($viewportHeight != $(window).height()) || ($viewportWidth != $(window).width())){" +
+			"	$changeBothSizes = (($viewportWidth != $(window).width()) && ($viewportHeight != $(window).height()));" +
+			"	$viewportHeight = $(window).height();" +
+			"	$viewportWidth = $(window).width();" +
+			"	$portrait = ($viewportWidth <= $viewportHeight);" +
+			"	$buildLayoutTurnoutRoute();" +
+			"}"
+			, $ResizeCheckInterval
+		);
+		if($paramTurnouts){
+			$xmlioSendGetTurnouts();
+			return;
+		};
+		if($paramRoutes){
+			$xmlioSendGetRoutes();
+			return;
+		};
 	};
 	$("body").html(
 		"<div id='throttle'>" +
@@ -498,18 +705,6 @@ var $manageFrameDisplay = function(){
 		e.preventDefault();
 	});
 	$imgFrame.attr("src", "/frame/" + encodeURIComponent($paramFrameName) + ".png");
-}
-
-//----------------------------------------- Manage turnouts display
-var $manageTurnoutsDisplay = function(){
-alert("Sorry, Turnouts not yet available.\nWork in progress ...");
-self.close();
-}
-
-//----------------------------------------- Manage routes display
-var $manageRoutesDisplay = function(){
-alert("Sorry, Routes not yet available.\nWork in progress ...");
-self.close();
 }
 
 //----------------------------------------- Run at start (inControlMulti)
@@ -1142,7 +1337,7 @@ var $buildSettingsButtonLayout = function(){
 	$imgSettings = $("#imgSettings");
 	$imgSettings.height($settingsButton.height() - $.calcTotalMBP($imgSettings, false));
 	$imgSettings.width($settingsButton.width() - $.calcTotalMBP($imgSettings, true));
-	$imgSettings.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/Settings.png?MaxHeight=" + $imgSettings.height() + "&MaxWidth=" + $imgSettings.width()));
+	$imgSettings.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imageSettings + "?MaxHeight=" + $imgSettings.height() + "&MaxWidth=" + $imgSettings.width()));
 }
 
 //----------------------------------------- Buid loco info layout
@@ -1185,7 +1380,7 @@ var $buildLocoImageLayout = function(){
 	$locoImage.html("<img id='imgLocoImage' />");
 	$imgLocoImage = $("#imgLocoImage");
 	$imgLocoImage.height($locoImage.height());
-	$imgLocoImage.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency($paramLocoImage + "?MaxHeight=" + $imgLocoImage.height() + "&MaxWidth=" + $imgLocoImage.width()));
+	$imgLocoImage.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($paramLocoImage + "?MaxHeight=" + $imgLocoImage.height() + "&MaxWidth=" + $imgLocoImage.width()));
 }
 
 //----------------------------------------- Buid speed control layout
@@ -1230,11 +1425,11 @@ var $buildSpeedLayout = function(){
 	$imgSTOP = $("#imgSTOP");
 	$imgFrw = $("#imgFrw");
 	$imgFrwR = $("#imgFrwR");
-	$imgRev.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/LeftGreen.png?MaxHeight=" + $imgRev.height() + "&MaxWidth=" + $imgRev.width())).load(function(){$(this).width(Math.round($speed.width() / 3) - $.calcTotalMBP($(this), true)); $(this).height($(this).width())});
-	$imgRevR.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/LeftRed.png?MaxHeight=" + $imgRev.height() + "&MaxWidth=" + $imgRev.width())).load(function(){$(this).width(Math.round($speed.width() / 3) - $.calcTotalMBP($(this), true)); $(this).height($(this).width())});
-	$imgSTOP.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/Stop.png?MaxHeight=" + $imgSTOP.height() + "&MaxWidth=" + $imgSTOP.width())).load(function(){$(this).width(Math.round($speed.width() / 3) - $.calcTotalMBP($(this), true)); $(this).height($(this).width())});
-	$imgFrw.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/RightGreen.png?MaxHeight=" + $imgFrw.height() + "&MaxWidth=" + $imgFrw.width())).load(function(){$(this).width(Math.round($speed.width() / 3) - $.calcTotalMBP($(this), true)); $(this).height($(this).width())});
-	$imgFrwR.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/RightRed.png?MaxHeight=" + $imgFrw.height() + "&MaxWidth=" + $imgFrw.width())).load(function(){$(this).width(Math.round($speed.width() / 3) - $.calcTotalMBP($(this), true)); $(this).height($(this).width())});
+	$imgRev.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imageReverseEnabled + "?MaxHeight=" + $imgRev.height() + "&MaxWidth=" + $imgRev.width())).load(function(){$(this).width(Math.round($speed.width() / 3) - $.calcTotalMBP($(this), true)); $(this).height($(this).width())});
+	$imgRevR.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imageReverseDisabled + "?MaxHeight=" + $imgRev.height() + "&MaxWidth=" + $imgRev.width())).load(function(){$(this).width(Math.round($speed.width() / 3) - $.calcTotalMBP($(this), true)); $(this).height($(this).width())});
+	$imgSTOP.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes( $imageStop + "?MaxHeight=" + $imgSTOP.height() + "&MaxWidth=" + $imgSTOP.width())).load(function(){$(this).width(Math.round($speed.width() / 3) - $.calcTotalMBP($(this), true)); $(this).height($(this).width())});
+	$imgFrw.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imageForwardEnabled + "?MaxHeight=" + $imgFrw.height() + "&MaxWidth=" + $imgFrw.width())).load(function(){$(this).width(Math.round($speed.width() / 3) - $.calcTotalMBP($(this), true)); $(this).height($(this).width())});
+	$imgFrwR.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imageForwardDisabled + "?MaxHeight=" + $imgFrw.height() + "&MaxWidth=" + $imgFrw.width())).load(function(){$(this).width(Math.round($speed.width() / 3) - $.calcTotalMBP($(this), true)); $(this).height($(this).width())});
 	height-= Math.round($speed.width() / 3) + $.calcTotalMBP($imgSTOP, false);
 	if($paramSpeedCtrlButtons){													//Buttons Speed Control
 		$speedCtrl.html(
@@ -1256,19 +1451,19 @@ var $buildSpeedLayout = function(){
 		$imgPlusPlus.css("top", $divSpeed.height());
 		$imgPlusPlus.height(height - $.calcTotalMBP($imgPlusPlus, false));
 		$imgPlusPlus.width($speed.width() - $.calcTotalMBP($imgPlusPlus, true));
-		$imgPlusPlus.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/PlusPlus.png?MaxHeight=" + $imgPlusPlus.height() + "&MaxWidth=" + $imgPlusPlus.width()));
+		$imgPlusPlus.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imagePlusPlus + "?MaxHeight=" + $imgPlusPlus.height() + "&MaxWidth=" + $imgPlusPlus.width()));
 		$imgPlus.css("top", $divSpeed.height() + height);
 		$imgPlus.height(height - $.calcTotalMBP($imgPlus, false));
 		$imgPlus.width($speed.width() - $.calcTotalMBP($imgPlus, true));
-		$imgPlus.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/Plus.png?MaxHeight=" + $imgPlus.height() + "&MaxWidth=" + $imgPlus.width()));
+		$imgPlus.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imagePlus + "?MaxHeight=" + $imgPlus.height() + "&MaxWidth=" + $imgPlus.width()));
 		$imgMinus.css("top", $divSpeed.height() + height * 2);
 		$imgMinus.height(height - $.calcTotalMBP($imgMinus, false));
 		$imgMinus.width($speed.width() - $.calcTotalMBP($imgMinus, true));
-		$imgMinus.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/Minus.png?MaxHeight=" + $imgMinus.height() + "&MaxWidth=" + $imgMinus.width()));
+		$imgMinus.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imageMinus + "?MaxHeight=" + $imgMinus.height() + "&MaxWidth=" + $imgMinus.width()));
 		$imgMinusMinus.css("top", $divSpeed.height() + height * 3);
 		$imgMinusMinus.height(height - $.calcTotalMBP($imgMinusMinus, false));
 		$imgMinusMinus.width($speed.width() - $.calcTotalMBP($imgMinusMinus, true));
-		$imgMinusMinus.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/MinusMinus.png?MaxHeight=" + $imgMinusMinus.height() + "&MaxWidth=" + $imgMinusMinus.width()));
+		$imgMinusMinus.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imageMinusMinus + "?MaxHeight=" + $imgMinusMinus.height() + "&MaxWidth=" + $imgMinusMinus.width()));
 		$speedCtrl.height($divSpeed.height() + height * 4);
 	} else {																//Slider Speed Control
 		$speedCtrl.width($speed.width());
@@ -1344,8 +1539,8 @@ var $buildFunctionsLayout = function(){
 				$lblF.css("font-size", $SizeReference * (($paramFnLabel[i] == "") ? 0.6 : 0.4) * $paramTextSizeRatio);
 			} else {																		// Image
 				$divF.html("<img id='imgF" + i + "Image' class='imgFunctions' alt='" + text + "' title='" + text + "' /><img id='imgF" + i + "ImagePressed' class='imgFunctions' alt='" + text + "' title='" + text + "' />");
-				$("#imgF" + i + "Image").error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency($paramFnImage[i] + "?MaxHeight=" + $divF.height() + "&MaxWidth=" + $divF.width())).load(function(){$resizeFunctionImage($(this))});
-				if($paramFnToggle[i]) $("#imgF" + i + "ImagePressed").error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency($paramFnImagePressed[i] + "?MaxHeight=" + $divF.height() + "&MaxWidth=" + $divF.width())).load(function(){$resizeFunctionImage($(this))});
+				$("#imgF" + i + "Image").error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($paramFnImage[i] + "?MaxHeight=" + $divF.height() + "&MaxWidth=" + $divF.width())).load(function(){$resizeFunctionImage($(this))});
+				if($paramFnToggle[i]) $("#imgF" + i + "ImagePressed").error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($paramFnImagePressed[i] + "?MaxHeight=" + $divF.height() + "&MaxWidth=" + $divF.width())).load(function(){$resizeFunctionImage($(this))});
 				$("#imgF" + i + "Image").show();
 				$("#imgF" + i + "ImagePressed").hide();
 			}
@@ -1378,7 +1573,7 @@ var $buildSettingsLayout = function(){
 	$divSettingsParams = $("#divSettingsParams");
 	$imgSettingsClose.height($SizeReference - $.calcTotalMBP($imgSettingsClose, false));
 	$imgSettingsClose.width($SizeReference - $.calcTotalMBP($imgSettingsClose, true));
-	$imgSettingsClose.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/Close.png?MaxHeight=" + $imgSettingsClose.height() + "&MaxWidth=" + $imgSettingsClose.width()));
+	$imgSettingsClose.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imageClose + "?MaxHeight=" + $imgSettingsClose.height() + "&MaxWidth=" + $imgSettingsClose.width()));
 	$SettingsTitle.height($SizeReference);
 	$lblSettingsTitle.css("font-size", $SizeReference * 0.7 * $paramTextSizeRatio);
 	$lblSettingsTitle.css("top", ($SettingsTitle.height() - $lblSettingsTitle.height()) / 2);
@@ -1448,7 +1643,7 @@ var $buildSettingsLocoLayout = function(){
 	$divSettingsLocoParams = $("#divSettingsLocoParams");
 	$imgSettingsLocoClose.height($SizeReference - $.calcTotalMBP($imgSettingsLocoClose, false));
 	$imgSettingsLocoClose.width($SizeReference - $.calcTotalMBP($imgSettingsLocoClose, true));
-	$imgSettingsLocoClose.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/Close.png?MaxHeight=" + $imgSettingsLocoClose.height() + "&MaxWidth=" + $imgSettingsLocoClose.width()));
+	$imgSettingsLocoClose.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imageClose + "?MaxHeight=" + $imgSettingsLocoClose.height() + "&MaxWidth=" + $imgSettingsLocoClose.width()));
 	$SettingsLocoTitle.height($SizeReference);
 	$lblSettingsLocoTitle.css("font-size", $SizeReference * 0.7 * $paramTextSizeRatio);
 	$lblSettingsLocoTitle.css("top", ($SettingsLocoTitle.height() - $lblSettingsLocoTitle.height()) / 2);
@@ -1515,7 +1710,7 @@ var $buildSettingsLocoLayout = function(){
 		"<label id='chkSettingsLocoFunctionShunt' class='pointer settingsCheckboxes settingsOptions'>" + ($paramFnShunt[$SettingsLocoFunctionSelected] ? "[x]" : "[&nbsp;]") + "</label>" +
 		"</div>";
 	$divSettingsLocoParams.html("<div>" + s + "</div>");
-	$imgSettingsLocoTrash.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/Trash.png?MaxHeight=" + $imgSettingsLocoTrash.height() + "&MaxWidth=" + $imgSettingsLocoTrash.width()));
+	$imgSettingsLocoTrash.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imageTrash + "?MaxHeight=" + $imgSettingsLocoTrash.height() + "&MaxWidth=" + $imgSettingsLocoTrash.width()));
 	$(".divSettingsParams").css("font-size", $SizeReference * 0.4 * $paramTextSizeRatio);
 	$divSettingsLocoParams.jScrollPane();
 	$SettingsLocoFunctionClick(0);
@@ -1544,7 +1739,7 @@ var $buildQueryStringLayout = function(){
 	$divQueryStringText = $("#divQueryStringText");
 	$imgQueryStringClose.height($SizeReference - $.calcTotalMBP($imgQueryStringClose, false));
 	$imgQueryStringClose.width($SizeReference - $.calcTotalMBP($imgQueryStringClose, true));
-	$imgQueryStringClose.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/Close.png?MaxHeight=" + $imgQueryStringClose.height() + "&MaxWidth=" + $imgQueryStringClose.width()));
+	$imgQueryStringClose.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imageClose + "?MaxHeight=" + $imgQueryStringClose.height() + "&MaxWidth=" + $imgQueryStringClose.width()));
 	$QueryStringTitle.height($SizeReference);
 	$lblQueryStringTitle.css("font-size", $SizeReference * 0.7 * $paramTextSizeRatio);
 	$lblQueryStringTitle.css("top", ($QueryStringTitle.height() - $lblQueryStringTitle.height()) / 2);
@@ -1579,7 +1774,7 @@ var $buildHelpLayout = function(){
 	$divHelpText = $("#divHelpText");
 	$imgHelpClose.height($SizeReference - $.calcTotalMBP($imgHelpClose, false));
 	$imgHelpClose.width($SizeReference - $.calcTotalMBP($imgHelpClose, true));
-	$imgHelpClose.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/Close.png?MaxHeight=" + $imgHelpClose.height() + "&MaxWidth=" + $imgHelpClose.width()));
+	$imgHelpClose.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imageClose + "?MaxHeight=" + $imgHelpClose.height() + "&MaxWidth=" + $imgHelpClose.width()));
 	$HelpTitle.height($SizeReference);
 	$lblHelpTitle.css("font-size", $SizeReference * 0.7 * $paramTextSizeRatio);
 	$lblHelpTitle.css("top", ($HelpTitle.height() - $lblHelpTitle.height()) / 2);
@@ -1723,7 +1918,7 @@ var $buildChooseImageLayout = function(){
 	$divChooseImageList = $("#divChooseImageList");
 	$imgChooseImageClose.height($SizeReference - $.calcTotalMBP($imgChooseImageClose, false));
 	$imgChooseImageClose.width($SizeReference - $.calcTotalMBP($imgChooseImageClose, true));
-	$imgChooseImageClose.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/Close.png?MaxHeight=" + $imgChooseImageClose.height() + "&MaxWidth=" + $imgChooseImageClose.width()));
+	$imgChooseImageClose.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imageClose + "?MaxHeight=" + $imgChooseImageClose.height() + "&MaxWidth=" + $imgChooseImageClose.width()));
 	$ChooseImageTitle.height($SizeReference);
 	$lblChooseImageTitle.css("font-size", $SizeReference * 0.7 * $paramTextSizeRatio);
 	$lblChooseImageTitle.css("top", ($ChooseImageTitle.height() - $lblChooseImageTitle.height()) / 2);
@@ -2020,7 +2215,7 @@ var $Power = function(){
 
 //----------------------------------------- Click ++
 var $PlusPlus = function(){
-	if ($powerStatus != 2) return;
+	if ($powerStatusBlock && $powerStatus != 2) return;
 	$speedValue+= 10;
 	if($speedValue > 100) $speedValue = 100;
 	$xmlioSendSetLocoSpeed($speedValue);
@@ -2029,7 +2224,7 @@ var $PlusPlus = function(){
 
 //----------------------------------------- Click +
 var $Plus = function(){
-	if ($powerStatus != 2) return;
+	if ($powerStatusBlock && $powerStatus != 2) return;
 	$speedValue++;
 	if($speedValue > 100) $speedValue = 100;
 	$xmlioSendSetLocoSpeed($speedValue);
@@ -2038,7 +2233,7 @@ var $Plus = function(){
 
 //----------------------------------------- Click -
 var $Minus = function(){
-	if ($powerStatus != 2) return;
+	if ($powerStatusBlock && $powerStatus != 2) return;
 	$speedValue--;
 	if($speedValue < 0) $speedValue = 0;
 	$xmlioSendSetLocoSpeed($speedValue);
@@ -2047,7 +2242,7 @@ var $Minus = function(){
 
 //----------------------------------------- Click --
 var $MinusMinus = function(){
-	if ($powerStatus != 2) return;
+	if ($powerStatusBlock && $powerStatus != 2) return;
 	$speedValue -= 10;
 	if($speedValue < 0) $speedValue = 0;
 	$xmlioSendSetLocoSpeed($speedValue);
@@ -2062,7 +2257,7 @@ var $LevelChange = function(level){
 
 //----------------------------------------- Click Rev
 var $Rev = function(){
-	if ($powerStatus != 2 || !$forward) return;
+	if ($powerStatusBlock && ($powerStatus != 2 || !$forward)) return;
 	$forward = false;
 	$xmlioSendSetLocoDirection();
 	$updateSpeed();
@@ -2077,7 +2272,7 @@ var $STOP = function(){
 
 //----------------------------------------- Click Frw
 var $Frw = function(){
-	if ($powerStatus != 2 || $forward) return;
+	if ($powerStatusBlock && ($powerStatus != 2 || $forward)) return;
 	$forward = true;
 	$xmlioSendSetLocoDirection();
 	$updateSpeed();
@@ -2085,7 +2280,7 @@ var $Frw = function(){
 
 //----------------------------------------- Click Function
 var $Fn = function(func){
-	if ($powerStatus != 2) return;
+	if ($powerStatusBlock && $powerStatus != 2) return;
 	$FnPressed[func] = !$FnPressed[func];
 	if($paramFnShunt[func]){
 		$shunt = $FnPressed[func];
@@ -2100,7 +2295,7 @@ var $updatePower = function(){
 	var $html = $("html");
 	var $body = $("body");
 	var $imgPower = $("#imgPower");
-	if(!$paramSpeedCtrlButtons && !$paramLocoNoSpeedCtrl) $VerticalSlider.setEnable($powerStatus == 2);	//Slider Speed Control
+	if(!$paramSpeedCtrlButtons && !$paramLocoNoSpeedCtrl) $VerticalSlider.setEnable(!$powerStatusBlock || $powerStatus == 2);	//Slider Speed Control
 	if($html.hasClass("powerUndefined")) $html.removeClass("powerUndefined");
 	if($html.hasClass("powerOff")) $html.removeClass("powerOff");
 	if($html.hasClass("powerOn")) $html.removeClass("powerOn");
@@ -2111,20 +2306,20 @@ var $updatePower = function(){
 		case 2: {		//power on
 			$html.addClass("powerOn");
 			$body.addClass("powerOn");
-			$imgPower.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/PowerRed.png?MaxHeight=" + $imgPower.height() + "&MaxWidth=" + $imgPower.width()));
+			$imgPower.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imagePowerOff + "?MaxHeight=" + $imgPower.height() + "&MaxWidth=" + $imgPower.width()));
 			break;
 		}
 		case 4: {		//power off
 			$html.addClass("powerOff");
 			$body.addClass("powerOff");
-			$imgPower.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/PowerGreen.png?MaxHeight=" + $imgPower.height() + "&MaxWidth=" + $imgPower.width()));
+			$imgPower.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imagePowerOn + "?MaxHeight=" + $imgPower.height() + "&MaxWidth=" + $imgPower.width()));
 			break;
 		}
 		default: {		//undefined
 			$powerStatus = 0;
 			$html.addClass("powerUndefined");
 			$body.addClass("powerUndefined");
-			$imgPower.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForTransparency("images/PowerGrey.png?MaxHeight=" + $imgPower.height() + "&MaxWidth=" + $imgPower.width()));
+			$imgPower.error(function(){$errorLoadingImage($(this))}).attr("src", $correctForSomeImageTypes($imagePowerUndefined + "?MaxHeight=" + $imgPower.height() + "&MaxWidth=" + $imgPower.width()));
 			break;
 		}
 	}

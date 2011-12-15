@@ -35,6 +35,51 @@ body {
 	cursor:pointer;
 }
 
+/* Turnouts and Routes ****************************************************************************/
+.TurnoutsRoutes {
+	position:absolute;
+	overflow:hidden;
+	background-color:darkslategrey;
+    margin:2px;
+    padding:2px;
+	color:white;
+	display:table-cell;
+	vertical-align:middle;
+	text-align:left;
+	cursor:pointer;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border-radius:10px;
+}
+
+.lblTurnoutsRoutes {
+	float:left;
+    padding:2px;
+	cursor:pointer;
+}
+
+.TurnoutsRoutesStatus {
+	float:right;
+    padding:2px;
+	cursor:pointer;
+}
+
+.TRon {
+	color:lime;
+}
+
+.TRoff {
+	color:red;
+}
+
+.TRundefined {
+	color:yellow;
+}
+
+.TRdisabled {
+	color:grey;
+}
+
 /* Multi throttles ********************************************************************************/
 #throttles {
 	overflow:hidden;
