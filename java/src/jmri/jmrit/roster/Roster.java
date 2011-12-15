@@ -7,6 +7,7 @@ import java.io.File;
 
 import java.util.*;
 
+import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
@@ -44,7 +45,7 @@ import org.jdom.ProcessingInstruction;
  * @version	$Revision$
  * @see         jmri.jmrit.roster.RosterEntry
  */
-public class Roster extends XmlFile {
+public class Roster extends XmlFile implements RosterGroupSelector {
 
     /** record the single instance of Roster **/
     static transient Roster _instance = null;
@@ -866,5 +867,20 @@ public class Roster extends XmlFile {
     
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Roster.class.getName());
+
+    /**
+     * Get the default roster group.
+     * <p>
+     * This method currently returns <i>null</i> since that represents the
+     * entire roster in the current roster groups management design.
+     * 
+     * @return The entire roster
+     */
+    // Provide a default instance of a RosterGroupSelector so objects querying
+    // rosterGroupSelectors never need to check that a RosterGroupSelector is
+    // null
+    public String getSelectedRosterGroup() {
+        return null;
+    }
 
 }

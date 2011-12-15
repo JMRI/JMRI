@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JComboBox;
 import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 
 /**
  * A JComboBox of Roster Groups.
@@ -13,7 +14,7 @@ import jmri.jmrit.roster.Roster;
  * @version	$Revision: $
  * @see         jmri.jmrit.roster.Roster
  */
-public class RosterGroupComboBox extends JComboBox {
+public class RosterGroupComboBox extends JComboBox implements RosterGroupSelector {
 
     private Roster _roster;
 
@@ -80,5 +81,13 @@ public class RosterGroupComboBox extends JComboBox {
         }
         insertItemAt(Roster.ALLENTRIES, 0);
         setSelectedItem(selection);
+    }
+
+    public String getSelectedRosterGroup() {
+        if (getSelectedItem().equals(Roster.ALLENTRIES)) {
+            return null;
+        } else {
+            return getSelectedItem().toString();
+        }
     }
 }
