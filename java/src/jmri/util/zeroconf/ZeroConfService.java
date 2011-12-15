@@ -205,6 +205,7 @@ public class ZeroConfService {
      * Stop advertising the service.
      */
     public void stop() {
+        if (log.isDebugEnabled()) log.debug("Stopping ZeroConfService " + key());
         ZeroConfService.jmdns().unregisterService(_serviceInfo);
         ZeroConfService.services().remove(key());
     }
@@ -213,9 +214,9 @@ public class ZeroConfService {
      * Stop advertising all services.
      */
     public static void stopAll() {
+        log.debug("Stopping all ZeroConfServices");
         ZeroConfService.jmdns().unregisterAllServices();
         ZeroConfService.services().clear();
-        log.debug("Stopping all ZeroConfServices");
     }
     
     /**
@@ -245,7 +246,11 @@ public class ZeroConfService {
                         @Override
                         public boolean execute() {
                             jmri.util.zeroconf.ZeroConfService.stopAll();
-                            jmri.util.zeroconf.ZeroConfService.jmdns().close();
+                            try {
+								jmri.util.zeroconf.ZeroConfService.jmdns().close();
+							} catch (IOException e) {
+								log.debug("jmdns.close() returned IOException: " + e.getMessage());
+							}
                             return true;
                         }
                     };
