@@ -4,7 +4,6 @@ package jmri.util.zeroconf;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Hashtable; // JmDNS.ServiceInfo 3.0 objects are created with a Hashtable.
 import java.util.HashMap;
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
@@ -99,7 +98,6 @@ public class ZeroConfService {
      * @param priority Default value is 0
      * @param properties Additional information to be listed in service advertisement
      */
-    @SuppressWarnings("UseOfObsoleteCollectionType") // JmDNS 3.0 uses Hashtables, upgrade to JmDNS 3.4 and this is not required
     public static ZeroConfService create(String type, String name, int port, int weight, int priority, HashMap<String, String> properties) {
         ZeroConfService s = null;
         if (ZeroConfService.services().containsKey(ZeroConfService.key(type, name))) {
@@ -111,7 +109,7 @@ public class ZeroConfService {
             // tight space constraints in terms of the number of bytes that properties 
             // can use, and there are some unconstrained properties that we would like to use.
             properties.put("jmri", jmri.Version.major + "." + jmri.Version.minor + "." + jmri.Version.test);
-            s = new ZeroConfService(ServiceInfo.create(type, name, port, weight, priority, new Hashtable<String,String>(properties)));
+            s = new ZeroConfService(ServiceInfo.create(type, name, port, weight, priority, properties));
             if (log.isDebugEnabled()) log.debug("Creating new ZeroConfService " + s.key());
         }
         return s;
@@ -193,7 +191,7 @@ public class ZeroConfService {
                 ZeroConfService.services().put(key(), this);
                 if (log.isDebugEnabled()) { 
                     log.debug("Publishing zeroConf service for " + key());
-                    log.debug("\ton " + _serviceInfo.getInetAddress());
+                    log.debug("\ton " + _serviceInfo.getInetAddresses().toString());
                 }
             } catch (IOException ex) {
                 log.error("Unable to publish service for " + key() + ": " + ex.getMessage());
@@ -247,10 +245,10 @@ public class ZeroConfService {
                         public boolean execute() {
                             jmri.util.zeroconf.ZeroConfService.stopAll();
                             try {
-								jmri.util.zeroconf.ZeroConfService.jmdns().close();
-							} catch (IOException e) {
-								log.debug("jmdns.close() returned IOException: " + e.getMessage());
-							}
+                                jmri.util.zeroconf.ZeroConfService.jmdns().close();
+                            } catch (IOException e) {
+                                log.debug("jmdns.close() returned IOException: " + e.getMessage());
+                            }
                             return true;
                         }
                     };
