@@ -127,9 +127,11 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
     List <RosterEntry> rosterList;
 
+    private DeviceManager manager;
     
-    DeviceServer(Socket socket){
+    DeviceServer(Socket socket, DeviceManager manager){
         this.device = socket;
+        this.manager = manager;
         if (listeners == null){
             listeners = new ArrayList<DeviceListener>(2);
         }
@@ -147,7 +149,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         sendPacketToDevice("VN"+getWiTVersion());
         sendPacketToDevice(sendRoster());
         addControllers();
-        sendPacketToDevice("PW"+getWebServerPort()); 
+        sendPacketToDevice("PW"+getWebServerPort());
         
     }
 
@@ -598,14 +600,15 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     public String sendRoster(){
         if (rosterList == null) rosterList = new ArrayList <RosterEntry>();
         List <RosterEntry> list = Roster.instance().matchingList(null, null, null, null, null, null, null);
-        for (int i = 0; i < list.size(); i++) {
-            RosterEntry roster = list.get(i);
-            if(Roster.getRosterGroup()!=null){
-                if(roster.getAttribute(Roster.getRosterGroupWP())!=null){
-                    if(roster.getAttribute(Roster.getRosterGroupWP()).equals("yes"))
-                        rosterList.add(roster);
+        for (RosterEntry roster : list) {
+            if (manager.getSelectedRosterGroup() != null) {
+                if (roster.getAttribute(Roster.getRosterGroupProperty(manager.getSelectedRosterGroup())) != null &&
+                    roster.getAttribute(Roster.getRosterGroupProperty(manager.getSelectedRosterGroup())).equals("yes")) {
+                    rosterList.add(roster);
                 }
-            } else rosterList.add(roster);
+            } else {
+                rosterList.add(roster);
+            }
         }
         StringBuilder rosterString = new StringBuilder(rosterList.size()*25);
         for (int i=0;i<rosterList.size();i++){

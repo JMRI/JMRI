@@ -17,6 +17,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ResourceBundle;
@@ -25,9 +26,11 @@ import java.util.Enumeration;
 import java.net.NetworkInterface;
 import java.net.InetAddress;
 
+import java.text.MessageFormat;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -38,13 +41,17 @@ import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 
+import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
+import jmri.jmrit.roster.swing.RosterGroupComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.jmrit.throttle.LargePowerManagerButton;
 import jmri.jmrit.throttle.StopAllButton;
 
 
-public class UserInterface extends JmriJFrame implements DeviceListener{
+//	listen() has to run in a separate thread.
+public class UserInterface extends JmriJFrame implements DeviceListener, DeviceManager {
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(UserInterface.class.getName());
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
@@ -58,6 +65,9 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
     JScrollPane scrollTable;
     JTable withrottlesList;
     WiThrottlesListModel withrottlesListModel;
+    UserPreferencesManager userPreferences = InstanceManager.getDefault(UserPreferencesManager.class);
+    String rosterGroupSelectorPreferencesName = this.getClass().getName() + ".rosterGroupSelector";
+    RosterGroupComboBox rosterGroupSelector = new RosterGroupComboBox(userPreferences.getComboBoxLastSelection(rosterGroupSelectorPreferencesName));
 
 //	Server iVars
     int port;
@@ -94,7 +104,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
         con.weightx = 0.5;
         con.weighty = 0;
 
-        JLabel label = new JLabel(rb.getString("LabelAdvertising"));
+        JLabel label = new JLabel(MessageFormat.format(rb.getString("LabelAdvertising"), new Object[]{DeviceServer.getWiTVersion()}));
         con.gridx = 0;
         con.gridy = 0;
         con.gridwidth = 2;
@@ -116,23 +126,28 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
         con.gridwidth = 1;
         panel.add(numConnected, con);
 
+        JPanel rgsPanel = new JPanel();
+        rgsPanel.add(new JLabel(rb.getString("RosterGroupLabel")));
+        rgsPanel.add(rosterGroupSelector);
+        rgsPanel.setToolTipText(rb.getString("RosterGroupToolTip"));
         JToolBar withrottleToolBar = new JToolBar();
         withrottleToolBar.setFloatable(false);
         withrottleToolBar.add(new StopAllButton());
 	withrottleToolBar.add(new LargePowerManagerButton());
+        withrottleToolBar.add(rgsPanel);
         con.weightx = 0.5;
         con.ipadx = 0;
         con.gridx = 1;
         con.gridy = 3;
-        con.gridwidth = 1;
+        con.gridwidth = 2;
         panel.add(withrottleToolBar, con);
-
+/*
         JLabel vLabel = new JLabel("v"+DeviceServer.getWiTVersion());
         con.weightx = 0;
         con.gridx = 2;
         con.gridy = 3;
         panel.add(vLabel, con);
-
+*/
         JLabel icon;
         java.net.URL imageURL = ClassLoader.getSystemResource("resources/IconForWiThrottle.gif");
 
@@ -189,6 +204,12 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
 
         setVisible(true);
 
+        rosterGroupSelector.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                userPreferences.addComboBoxLastSelection(rosterGroupSelectorPreferencesName, ((JComboBox) e.getSource()).getSelectedItem().toString());
+            }
+        });
     }
 
     protected void buildMenu(){
@@ -285,7 +306,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
             DeviceServer device;
             try{
                 log.debug("Creating new DeviceServer(socket)");
-                device = new DeviceServer(socket.accept());
+                device = new DeviceServer(socket.accept(), this);
 
                 Thread t = new Thread(device);
                 device.addDeviceListener(this);
@@ -394,10 +415,14 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
             return;
         }
     }
+
+    public String getSelectedRosterGroup() {
+        return rosterGroupSelector.getSelectedRosterGroup();
+    }
+    
 }
 
-
-//	listen() has to run in a separate thread.
+//  listen() has to run in a separate thread.
 class ServerThread extends Thread {
     UserInterface UI;
 
