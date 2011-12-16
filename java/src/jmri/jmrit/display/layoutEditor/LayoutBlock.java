@@ -913,15 +913,19 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             int neigh = neighbourDir.get(i).getSelectedIndex();
             neighbours.get(i).getBlock().removeBlockDenyList(this.block);
             this.block.removeBlockDenyList(neighbours.get(i).getBlock());
+            LayoutBlock neighLBlock = neighbours.get(i).getLayoutBlock();
             switch(neigh){
-                case 0 : neighbours.get(i).setPacketFlow(RXTX);
-                        break;
-                case 1 : neighbours.get(i).setPacketFlow(TXONLY);
+                case 0 : updateNeighbourPacketFlow(neighbours.get(i), RXTX);
+                         break;
+                case 1 : 
                         neighbours.get(i).getBlock().addBlockDenyList(this.block.getDisplayName());
+                        updateNeighbourPacketFlow(neighbours.get(i), TXONLY);
                         break;
-                case 2 : neighbours.get(i).setPacketFlow(RXONLY);
+                case 2 : 
                         this.block.addBlockDenyList(neighbours.get(i).getBlock().getDisplayName());
+                        updateNeighbourPacketFlow(neighbours.get(i), RXONLY);
                         break;
+                 default: break;
             
             }
         }
@@ -1219,6 +1223,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         log.info("From " + this.getDisplayName() + " Updating flow direction to " + decodePacketFlow(determineAdjPacketFlow(workingDirection, neighwork)) + " for block " + blk.getDisplayName() + " choice of " + decodePacketFlow(workingDirection) + " " + decodePacketFlow(neighwork));
                     int newPacketFlow = determineAdjPacketFlow(workingDirection, neighwork);
                     adj.setPacketFlow(newPacketFlow);
+                    
                     if(newPacketFlow==TXONLY){
                         for(int j = routes.size()-1; j>-1; j--){
                             if ((routes.get(j).getDestBlock()==addBlock) && (routes.get(j).getNextBlock()==this.getBlock())){
@@ -1227,6 +1232,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                             }
                         }
                         RoutingPacket newUpdate = new RoutingPacket(REMOVAL, addBlock, -1, -1, -1, getNextPacketID());
+                        for(Adjacencies adja: neighbours){
+                            adja.removeRouteAdvertisedToNeighbour(addBlock);
+                        }
                         firePropertyChange("routing", null, newUpdate);
                     }
                 }
@@ -1329,6 +1337,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     }
                 }
                 RoutingPacket newUpdate = new RoutingPacket(REMOVAL, block, -1, -1, -1, getNextPacketID());
+                for(Adjacencies adja: neighbours){
+                    adja.removeRouteAdvertisedToNeighbour(block);
+                }
                 firePropertyChange("routing", null, newUpdate);
             }
             
@@ -1361,48 +1372,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
         return NONE;
     }
-    
-    //This needs to be re-written.
-    
-    
-    //determineAdjWorkingDirection
-   /* int determineAdjPacketFlow(int our, int neigh){
-        //Both are the same
-        if (enableUpdateRouteLogging)
-            log.info("From " + this.getDisplayName() + " values passed our " + decodePacketFlow(our) + " neigh " + decodePacketFlow(neigh));
-        if (neigh==our){
-            if((our==TXONLY) || (our==RXONLY))
-                return NONE;
-            return RXTX;
-        }
-        else if (our==RXTX){
-            if (neigh==RXONLY){
-                return TXONLY;
-            } else {
-                return RXONLY;
-            }
-        }
-        else if (neigh==RXTX){
-            if (our==RXONLY){
-                return RXONLY;
-            } else {
-                return TXONLY;
-            }
-        }
-        else if ((neigh==RXONLY) && (our==TXONLY)){
-            return TXONLY;
-        }
-        else if ((neigh==TXONLY) && (our==RXONLY)){
-            return RXONLY;
-        } 
-        else if ((neigh==TXONLY) && (our==RXONLY)){
-            return RXONLY;
-        }
-        else if ((neigh==RXONLY) && (our==TXONLY)){
-            return TXONLY;
-        }
-        return neigh;
-    }*/
     
     void informNeighbourOfValidRoutes(Block newblock){
        // java.sql.Timestamp t1 = new java.sql.Timestamp(System.nanoTime());
@@ -1517,30 +1486,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if(enableDeleteRouteLogging)
             log.info("From " + this.getDisplayName() + " Adjacency to be removed " + layoutBlock.getDisplayName());
         Block removedBlock = layoutBlock.getBlock();
-        ArrayList<Routes> tmpBlock = new ArrayList<Routes>();
         //Work our way backward through the list of neighbours
         //We need to work out which routes to remove first.
 
         // here we simply remove the routes which are advertised from the removed neighbour
-        for(int j = routes.size()-1; j>-1; j--){
-            if(enableDeleteRouteLogging)
-                log.info("From " + this.getDisplayName()+  " route to check " + routes.get(j).getDestBlock().getDisplayName() + " from Block " + routes.get(j).getNextBlock().getDisplayName());
-            if(routes.get(j).getDestBlock()==removedBlock){
-                if(enableDeleteRouteLogging)
-                    log.info("From " + this.getDisplayName() + " route to " + routes.get(j).getDestBlock().getDisplayName() + " from block " + routes.get(j).getNextBlock().getDisplayName() + " to be removed triggered by adjancey removal as dest block has been removed");
-                if (!tmpBlock.contains(routes.get(j)))
-                    tmpBlock.add(routes.get(j));
-                routes.remove(j);
-                //This will need to be removed fromth directly connected 
-            } else if (routes.get(j).getNextBlock()==removedBlock){
-                if(enableDeleteRouteLogging)
-                    log.info("From " + this.getDisplayName() + " route to " + routes.get(j).getDestBlock().getDisplayName() + " from block " + routes.get(j).getNextBlock().getDisplayName() + " to be removed triggered by adjancey removal");
-                if (!tmpBlock.contains(routes.get(j)))
-                    tmpBlock.add(routes.get(j));
-                routes.remove(j);
-                //This will also need to be removed from the directly connected list as well.
-            }
-        }
+        ArrayList<Routes> tmpBlock = removeRouteRecievedFromNeighbour(removedBlock);
         
         for (int i = neighbours.size()-1; i>-1; i--){
             //Use to check against direction but don't now.
@@ -1582,7 +1532,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     }
     
     //This is used when a property event change is triggered for a removed route.  Not sure that bulk removals will be necessary
-    void removeRouteFromNeighbour(LayoutBlock src, RoutingPacket update){       
+    void removeRouteFromNeighbour(LayoutBlock src, RoutingPacket update){
         InstanceManager.layoutBlockManagerInstance().setLastRoutingChange();
         Block srcblk = src.getBlock();
         Block destblk = update.getBlock();
@@ -1608,11 +1558,120 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 if(enableDeleteRouteLogging)
                     log.info(msgPrefix + " route to " + ro.getDestBlock().getDisplayName() + " from block " + ro.getNextBlock().getDisplayName() + " to be removed triggered by propertyChange");
                 routes.remove(i);
-                //We only fire off routing update the one
+                //We only fire off routing update the once
             }
         }
-
         notifyNeighboursOfRemoval(routesToRemove, srcblk);
+    }
+    
+    ArrayList<Routes> removeRouteRecievedFromNeighbour(Block removedBlock){
+        ArrayList<Routes> tmpBlock = new ArrayList<Routes>();
+        
+        // here we simply remove the routes which are advertised from the removed neighbour
+        for(int j = routes.size()-1; j>-1; j--){
+            if(enableDeleteRouteLogging)
+                log.info("From " + this.getDisplayName()+  " route to check " + routes.get(j).getDestBlock().getDisplayName() + " from Block " + routes.get(j).getNextBlock().getDisplayName());
+            if(routes.get(j).getDestBlock()==removedBlock){
+                if(enableDeleteRouteLogging)
+                    log.info("From " + this.getDisplayName() + " route to " + routes.get(j).getDestBlock().getDisplayName() + " from block " + routes.get(j).getNextBlock().getDisplayName() + " to be removed triggered by adjancey removal as dest block has been removed");
+                if (!tmpBlock.contains(routes.get(j)))
+                    tmpBlock.add(routes.get(j));
+                routes.remove(j);
+                //This will need to be removed fromth directly connected 
+            } else if (routes.get(j).getNextBlock()==removedBlock){
+                if(enableDeleteRouteLogging)
+                    log.info("From " + this.getDisplayName() + " route to " + routes.get(j).getDestBlock().getDisplayName() + " from block " + routes.get(j).getNextBlock().getDisplayName() + " to be removed triggered by adjancey removal");
+                if (!tmpBlock.contains(routes.get(j)))
+                    tmpBlock.add(routes.get(j));
+                routes.remove(j);
+                //This will also need to be removed from the directly connected list as well.
+            }
+        }
+        return tmpBlock;
+    }
+    
+    void updateNeighbourPacketFlow(Block neighbour, int flow){
+        //Packet flow from neighbour will need to be reversed.
+        Adjacencies neighAdj = getAdjacency(neighbour);
+        if(flow==RXONLY){
+            flow = TXONLY;
+        } else if (flow==TXONLY) {
+            flow = RXONLY;
+        }
+        if(neighAdj.getPacketFlow()==flow){
+            return;
+        }
+        updateNeighbourPacketFlow(neighAdj, flow);
+    }
+    
+    protected void updateNeighbourPacketFlow(Adjacencies neighbour, final int flow){
+        
+        if(neighbour.getPacketFlow()==flow){
+            return;
+        }
+        
+        final LayoutBlock neighLBlock = neighbour.getLayoutBlock();
+        
+        Runnable r = new Runnable() {
+          public void run() {
+              neighLBlock.updateNeighbourPacketFlow(block, flow);
+          }
+        };
+        Thread thr = new Thread(r);
+        
+        Block neighBlock = neighbour.getBlock();
+        int oldPacketFlow = neighbour.getPacketFlow();
+        
+        neighbour.setPacketFlow(flow);
+        thr.start();
+        
+        
+        if(flow==TXONLY){
+            neighBlock.addBlockDenyList(this.block);
+            neighBlock.removePropertyChangeListener(this);
+            //This should remove routes learned from our neighbour
+            ArrayList<Routes> tmpBlock = removeRouteRecievedFromNeighbour(neighBlock);
+            
+            notifyNeighboursOfRemoval(tmpBlock, neighbour.getBlock());
+            
+            //Need to also remove all through paths to this neighbour
+            for(int i = throughPaths.size()-1; i>-1; i--){
+                if (throughPaths.get(i).getDestinationBlock()==neighBlock){
+                    throughPaths.remove(i);
+                    firePropertyChange("through-path-removed", null, null);
+                }
+            }
+            //We potentially will need to re-advertise routes to this neighbour
+            if(oldPacketFlow==RXONLY){
+                addThroughPath(neighbour);
+            }
+        } else if (flow==RXONLY){
+            neighBlock.addPropertyChangeListener(this);
+            neighBlock.removeBlockDenyList(this.block);
+            this.block.addBlockDenyList(neighBlock);
+            
+            for(int i = throughPaths.size()-1; i>-1; i--){
+                if (throughPaths.get(i).getSourceBlock()==neighBlock){
+                    throughPaths.remove(i);
+                    firePropertyChange("through-path-removed", null, null);
+                }
+            }
+            //Might need to rebuild through paths.
+            if(oldPacketFlow==TXONLY){
+                routes.add(new Routes(neighBlock, this.getBlock(), 1, neighbour.getDirection(), neighbour.getLayoutBlock().getBlockMetric()));
+                addThroughPath(neighbour);
+            }
+            //We would need to withdraw the routes that we advertise to the neighbour
+        } else if (flow ==RXTX){
+            neighBlock.removeBlockDenyList(this.block);
+            this.block.removeBlockDenyList(neighBlock);
+            neighBlock.addPropertyChangeListener(this);
+            //Might need to rebuild through paths.
+            if(oldPacketFlow==TXONLY){
+                routes.add(new Routes(neighBlock, this.getBlock(), 1, neighbour.getDirection(), neighbour.getLayoutBlock().getBlockMetric()));
+            }
+            addThroughPath(neighbour);
+        }
     }
     
     void notifyNeighboursOfRemoval(ArrayList<Routes> routesToRemove, Block notifyingblk){
@@ -1661,7 +1720,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     log.info(msgPrefix + " the number of routes installed to block " + destBlock.getDisplayName() + " is " + validroute.size());
                 }
                 if (validroute.size()==1){
-                //Specific routing update.
+                    //Specific routing update.
                     Block nextHop = validroute.get(0).getNextBlock();
                     LayoutBlock layoutBlock;
                     if(validroute.get(0).getNextBlock()!=this.getBlock()){
@@ -1683,8 +1742,15 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                             if (validThroughPath(notifyingblk, neighbours.get(i).getBlock())){
                                 Block neighblock = neighbours.get(i).getBlock();
                                 if(enableDeleteRouteLogging)
-                                    log.info(msgPrefix + " we could of potentially send the route to " + neighblock.getDisplayName());
-                                validNeighboursToNotify.add(neighblock);
+                                    log.info(msgPrefix + " we could of potentially sent the route to " + neighblock.getDisplayName());
+                                if(!validThroughPath(nextHop, neighblock)){
+                                    if(enableDeleteRouteLogging)
+                                        log.info(msgPrefix + " there is no other valid path so will mark for removal");
+                                    validNeighboursToNotify.add(neighblock);
+                                } else {
+                                    if(enableDeleteRouteLogging)
+                                        log.info(msgPrefix + " there is another valid path so will NOT mark for removal");                                
+                                }
                             }
                         }
                     }
@@ -1692,6 +1758,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         log.info(msgPrefix + " the next block is our selves so we won't remove!");
                         log.info(msgPrefix + " do we need to find out if we could of send the route to another neighbour such as?");
                     }
+                    
                     for(int i = 0; i<validNeighboursToNotify.size(); i++){
                         //If the neighbour has a valid through path to the dest we will not notify the neighbour of our loss of route
                         if(!validThroughPath(validNeighboursToNotify.get(i), destBlock)){
@@ -1760,6 +1827,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             } else {
                 if(enableDeleteRouteLogging)
                     log.info(msgPrefix+ " We have no other routes to " + destBlock.getDisplayName() + " Therefore we will broadast this to our neighbours");
+                for(Adjacencies adj: neighbours){
+                    adj.removeRouteAdvertisedToNeighbour(destBlock);
+                }
                 firePropertyChange("routing", null, newUpdate);
             }
         }
@@ -1966,6 +2036,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             if(enableAddRouteLogging)
                 log.info("From " + this.getDisplayName() + " added Throughpath " + path.getSourceBlock().getDisplayName() + " " + path.getDestinationBlock().getDisplayName());
             throughPaths.add(path);
+            firePropertyChange("through-path-added", null, null);
             //update our neighbours of the new valid paths;
             informNeighbourOfValidRoutes(srcBlock);
             informNeighbourOfValidRoutes(dstBlock);
@@ -2389,6 +2460,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             if(enableUpdateRouteLogging) log.info("==Event type " + e.getPropertyName().toString() + " New " + lbkblock.getDisplayName());
         } else if (e.getPropertyName().toString().equals("through-path-added")) {
             if(enableUpdateRouteLogging) log.info("neighbour has new through path");
+        } else if (e.getPropertyName().toString().equals("through-path-removed")) {
+            if(enableUpdateRouteLogging) log.info("neighbour has through removed");
         } else if (e.getPropertyName().toString().equals("routing")){
             if(enableUpdateRouteLogging)
                 log.info("From " + this.getDisplayName() + " we have a routing packet update from neighbor "+ srcEvent.getDisplayName());
@@ -2603,7 +2676,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 }
             }
             if (stateUpdated) {
-                log.info("block status change");
                 RoutingPacket newUpdate = new RoutingPacket(UPDATE, updateBlock, -1, -1, blockstate, getNextPacketID());
                 firePropertyChange("routing", null, newUpdate);
             }
@@ -2878,6 +2950,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         
         Block getBlock() { return adjBlock; }
         
+        LayoutBlock getLayoutBlock() { return adjLayoutBlock; }
+        
         int getDirection() { return direction; }
         
         //If a set true on mutual, then we could go through the list of what to send out to neighbour
@@ -2886,8 +2960,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 return;
             mutualAdjacency=mut;
             if (mutualAdjacency){
-                if (adjLayoutBlock!=null)
-                    adjLayoutBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(adjBlock);
+                adjLayoutBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(adjBlock);
             }
         }
         
@@ -2929,10 +3002,14 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         
         void removeRouteAdvertisedToNeighbour(Routes removeRoute){
             Block dest = removeRoute.getDestBlock();
-            //Only remove the dest / route pair if they match to what we have listed.
+            
             if(adjDestRoutes.get(dest)==removeRoute){
                 adjDestRoutes.remove(dest);
             }
+        }
+        
+        void removeRouteAdvertisedToNeighbour(Block block){
+            adjDestRoutes.remove(block);
         }
         
         void addRouteAdvertisedToNeighbour(Routes addedRoute){
