@@ -1,5 +1,4 @@
 // ZeroConfService.java
-
 package jmri.util.zeroconf;
 
 import java.io.IOException;
@@ -56,6 +55,13 @@ import jmri.implementation.QuietShutDownTask;
  */
 public class ZeroConfService {
 
+    // internal data members
+    private ServiceInfo _serviceInfo = null;
+    // static data objects
+    private static HashMap<String, ZeroConfService> _services = null;
+    private static JmDNS _jmdns = null;
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ZeroConfService.class.getName());
+
     /**
      * Create a ZeroConfService with the minimal required settings. This method
      * calls <pre>create(type, port, props)</pre> with an empty props HashMap.
@@ -64,7 +70,7 @@ public class ZeroConfService {
      * @param port The port the service runs over
      */
     public static ZeroConfService create(String type, int port) {
-        return create(type, port, new HashMap<String,String>());
+        return create(type, port, new HashMap<String, String>());
     }
 
     /**
@@ -102,7 +108,9 @@ public class ZeroConfService {
         ZeroConfService s = null;
         if (ZeroConfService.services().containsKey(ZeroConfService.key(type, name))) {
             s = ZeroConfService.services().get(ZeroConfService.key(type, name));
-            if (log.isDebugEnabled()) log.debug("Using existing ZeroConfService " + s.key());
+            if (log.isDebugEnabled()) {
+                log.debug("Using existing ZeroConfService " + s.key());
+            }
         } else {
             properties.put("version", jmri.Version.name());
             // use the major.minor.test version string for jmri since we have potentially
@@ -110,7 +118,9 @@ public class ZeroConfService {
             // can use, and there are some unconstrained properties that we would like to use.
             properties.put("jmri", jmri.Version.major + "." + jmri.Version.minor + "." + jmri.Version.test);
             s = new ZeroConfService(ServiceInfo.create(type, name, port, weight, priority, properties));
-            if (log.isDebugEnabled()) log.debug("Creating new ZeroConfService " + s.key());
+            if (log.isDebugEnabled()) {
+                log.debug("Creating new ZeroConfService " + s.key());
+            }
         }
         return s;
     }
@@ -162,7 +172,7 @@ public class ZeroConfService {
     public String type() {
         return _serviceInfo.getType();
     }
-    
+
     /**
      * Get the ServiceInfo property of the object. This is the JmDNS
      * implementation of a zeroConf service.
@@ -189,9 +199,13 @@ public class ZeroConfService {
             try {
                 ZeroConfService.jmdns().registerService(_serviceInfo);
                 ZeroConfService.services().put(key(), this);
-                if (log.isDebugEnabled()) { 
-                    log.debug("Publishing zeroConf service for " + key());
-                    log.debug("\ton " + _serviceInfo.getInetAddresses().toString());
+                if (log.isDebugEnabled()) {
+                    log.debug("Publishing zeroConf service for " + key() + " on");
+                    for (int i = 0; i < _serviceInfo.getInetAddresses().length; i++) {
+                        if (_serviceInfo.getInetAddresses()[i] != null) {
+                            log.debug("\t" + _serviceInfo.getInetAddresses()[i]);
+                        }
+                    }
                 }
             } catch (IOException ex) {
                 log.error("Unable to publish service for " + key() + ": " + ex.getMessage());
@@ -203,7 +217,9 @@ public class ZeroConfService {
      * Stop advertising the service.
      */
     public void stop() {
-        if (log.isDebugEnabled()) log.debug("Stopping ZeroConfService " + key());
+        if (log.isDebugEnabled()) {
+            log.debug("Stopping ZeroConfService " + key());
+        }
         ZeroConfService.jmdns().unregisterService(_serviceInfo);
         ZeroConfService.services().remove(key());
     }
@@ -216,7 +232,7 @@ public class ZeroConfService {
         ZeroConfService.jmdns().unregisterAllServices();
         ZeroConfService.services().clear();
     }
-    
+
     /**
      * A list of published ZeroConfServices 
      * 
@@ -232,15 +248,18 @@ public class ZeroConfService {
         }
         return _services;
     }
-    
+
     /* return the JmDNS handler */
     private static JmDNS jmdns() {
         if (_jmdns == null) {
             try {
                 _jmdns = JmDNS.create();
-                if (log.isDebugEnabled()) log.debug("JmDNS version: " + JmDNS.VERSION);
+                if (log.isDebugEnabled()) {
+                    log.debug("JmDNS version: " + JmDNS.VERSION);
+                }
                 if (jmri.InstanceManager.shutDownManagerInstance() != null) {
                     ShutDownTask task = new QuietShutDownTask("Stop ZeroConfServices") {
+
                         @Override
                         public boolean execute() {
                             jmri.util.zeroconf.ZeroConfService.stopAll();
@@ -260,7 +279,7 @@ public class ZeroConfService {
         }
         return _jmdns;
     }
-    
+
     /**
      * Return the system name or "computer" if the system name cannot be
      * determined. This method uses the JmDNS.getHostName() method.
@@ -273,16 +292,6 @@ public class ZeroConfService {
         // to the string above.
         return hostName.substring(0, hostName.indexOf('.'));
     }
-
-    // internal data members
-    private ServiceInfo _serviceInfo = null;
-
-    // static data objects
-    private static HashMap<String, ZeroConfService> _services = null;
-    private static JmDNS _jmdns = null;
-
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ZeroConfService.class.getName());
-
 }
 
 /* @(#)ZeroConfService.java */
