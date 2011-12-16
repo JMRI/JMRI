@@ -909,24 +909,25 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if (m!=metric)
             setBlockMetric(m);
         block.setPermissiveWorking(permissiveCheck.isSelected());
-        for(int i = 0; i<neighbourDir.size(); i++){
-            int neigh = neighbourDir.get(i).getSelectedIndex();
-            neighbours.get(i).getBlock().removeBlockDenyList(this.block);
-            this.block.removeBlockDenyList(neighbours.get(i).getBlock());
-            LayoutBlock neighLBlock = neighbours.get(i).getLayoutBlock();
-            switch(neigh){
-                case 0 : updateNeighbourPacketFlow(neighbours.get(i), RXTX);
-                         break;
-                case 1 : 
-                        neighbours.get(i).getBlock().addBlockDenyList(this.block.getDisplayName());
-                        updateNeighbourPacketFlow(neighbours.get(i), TXONLY);
-                        break;
-                case 2 : 
-                        this.block.addBlockDenyList(neighbours.get(i).getBlock().getDisplayName());
-                        updateNeighbourPacketFlow(neighbours.get(i), RXONLY);
-                        break;
-                 default: break;
-            
+        if(neighbourDir!=null){
+            for(int i = 0; i<neighbourDir.size(); i++){
+                int neigh = neighbourDir.get(i).getSelectedIndex();
+                neighbours.get(i).getBlock().removeBlockDenyList(this.block);
+                this.block.removeBlockDenyList(neighbours.get(i).getBlock());
+                switch(neigh){
+                    case 0 : updateNeighbourPacketFlow(neighbours.get(i), RXTX);
+                             break;
+                    case 1 :
+                            neighbours.get(i).getBlock().addBlockDenyList(this.block.getDisplayName());
+                            updateNeighbourPacketFlow(neighbours.get(i), TXONLY);
+                            break;
+                    case 2 :
+                            this.block.addBlockDenyList(neighbours.get(i).getBlock().getDisplayName());
+                            updateNeighbourPacketFlow(neighbours.get(i), RXONLY);
+                            break;
+                     default: break;
+
+                }
             }
         }
 		// complete
