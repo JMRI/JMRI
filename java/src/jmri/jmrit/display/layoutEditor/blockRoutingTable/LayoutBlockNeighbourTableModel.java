@@ -85,7 +85,7 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
     }
     
     	protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-		return (e.getPropertyName().indexOf("neighbourmetric")>=0);
+		return (e.getPropertyName().indexOf("neighbourmetric")>=0 || e.getPropertyName().indexOf("neighbourpacketflow")>=0);
 	}
     
     /**
@@ -103,8 +103,8 @@ public class LayoutBlockNeighbourTableModel extends javax.swing.table.AbstractTa
                             if(mutual)
                                 return rb.getString("Yes");
                                 return rb.getString("No");
-        case DIRECTIONCOL:  return jmri.Path.decodeDirection(Integer.valueOf(lBlock.getNeighbourDirection(row)).intValue());
-        case METRICCOL:     return Integer.valueOf(lBlock.getNeighbourMetric(row)).intValue();
+        case DIRECTIONCOL:  return jmri.Path.decodeDirection(Integer.valueOf(lBlock.getNeighbourDirection(row)));
+        case METRICCOL:     return Integer.valueOf(lBlock.getNeighbourMetric(row));
         case RELATCOL:      return lBlock.getNeighbourPacketFlowAsString(row);
         default:            return "<UNKNOWN>";
         }

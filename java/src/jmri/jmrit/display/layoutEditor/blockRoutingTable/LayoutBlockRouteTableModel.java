@@ -79,18 +79,15 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
     }
     
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("length")) {
-            // a new NamedBean is available in the manager
-            //updateNameList();
-            //log.debug("Table changed length to "+sysNameList.size());
+        if (e.getPropertyName().toString().equals("length")) {
             fireTableDataChanged();
-        } else if (matchPropertyName(e)){
-            //System.out.println("Matched");
+        } else if (e.getPropertyName().toString().equals("routing")) {
+            fireTableDataChanged();
+        }
+        else if (matchPropertyName(e)){
             // a value changed.  Find it, to avoid complete redraw
-            int row;
-            row = (Integer)e.getNewValue();
+            int row = (Integer)e.getNewValue();
             // since we can add columns, the entire row is marked as updated
-            //int row = sysNameList.indexOf(name);
             fireTableRowsUpdated(row, row);
         }
     }
@@ -115,9 +112,9 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
                             if (nextBlock.equals(lBlock.getDisplayName()))
                                 nextBlock = rb.getString("DirectConnect");
                             return nextBlock;
-        case HOPCOUNTCOL:   return Integer.valueOf(lBlock.getRouteHopCountAtIndex(row)).intValue();
-        case DIRECTIONCOL:  return jmri.Path.decodeDirection(Integer.valueOf(lBlock.getRouteDirectionAtIndex(row)).intValue());
-        case METRICCOL:     return Integer.valueOf(lBlock.getRouteMetric(row)).intValue();
+        case HOPCOUNTCOL:   return Integer.valueOf(lBlock.getRouteHopCountAtIndex(row));
+        case DIRECTIONCOL:  return jmri.Path.decodeDirection(Integer.valueOf(lBlock.getRouteDirectionAtIndex(row)));
+        case METRICCOL:     return Integer.valueOf(lBlock.getRouteMetric(row));
         case STATECOL:      return lBlock.getRouteStateAsString(row);
         case VALIDCOL:      String value ="";
                             if(lBlock.getRouteValid(row))

@@ -65,9 +65,10 @@ public class LayoutBlockThroughPathsTableModel extends javax.swing.table.Abstrac
     
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
-            // a new NamedBean is available in the manager
-            //updateNameList();
-            //log.debug("Table changed length to "+sysNameList.size());
+            fireTableDataChanged();
+        } else if (e.getPropertyName().equals("through-path-removed")) {
+            fireTableDataChanged();
+        } else if (e.getPropertyName().equals("through-path-added")) {
             fireTableDataChanged();
         } else if (matchPropertyName(e)){
             // a value changed.  Find it, to avoid complete redraw
