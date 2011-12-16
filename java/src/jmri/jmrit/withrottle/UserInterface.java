@@ -269,34 +269,29 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         service.publish();
             
         if (service.isPublished()) {
+            // these labels will be changed if possible
             portLabel.setText(service.name());
+            manualPortLabel.setText("unknown:" + port);
             //Determine the first externally accessible IP address for this system. This is presented in the GUI for
             //those users who can't, or don't want to use ZeroConf to connect to the WiThrottle.
-            //Adapted from http://www.rgagnon.com/javadetails/java-0390.html
-            String bound_ip_address = "";
-            try
-            {
-              Enumeration<NetworkInterface> network_interface_list=NetworkInterface.getNetworkInterfaces();
-              network_interfaces: while(network_interface_list.hasMoreElements()) {
-                Enumeration<InetAddress> interface_addresses=(network_interface_list.nextElement()).getInetAddresses();
-                while(interface_addresses.hasMoreElements()){
-                  InetAddress ip=interface_addresses.nextElement();
-                  bound_ip_address=ip.getHostAddress();
-                  if(!bound_ip_address.equals("0.0.0.0") && !bound_ip_address.regionMatches(0, "127", 0, 3) && !(bound_ip_address.contains(":")) )
-                  {
-                    //Find just the first "real" IPv4 address to present in the GUI. If the user has set up a multihomed
+            try {
+                for (InetAddress addr : service.serviceInfo().getInetAddresses()) {
+                    //Find just the first non-loopback IPv4 address to present in the GUI. If the user has set up a multihomed
                     //computer, chances are that he knows enough about networking to know which IP address he should use
                     //to connect to this service.
-                    break network_interfaces;
-                  }
-                  //In case we don't find a "real" IP address, there's no sense in presenting a loopback address. Novice
-                  //users might actually try to connect to it, and not understand why it doesn't work.
-                  bound_ip_address="";
+                    //In case we don't find a "real" IP address, there's no sense in presenting a loopback address. Novice
+                    //users might actually try to connect to it, and not understand why it doesn't work.
+                    if (!addr.isLoopbackAddress()) {
+                        // set the portLabel to the hostname instead of the service name, since service names are simply
+                        // mangled hostnames
+                        manualPortLabel.setText(addr.getHostAddress() + ":" + port);
+                        portLabel.setText(addr.getHostName());
+                        break;
+                    }
                 }
-              }
+            } catch (Exception except) {
+                log.error("Failed to determine this system's IP address: " + except.toString());
             }
-            catch(Exception except) { log.error("Failed to determine this system's IP address: "+except.toString()); }
-            manualPortLabel.setText(bound_ip_address+":"+port);
         } else {
             log.error("JmDNS Failure");
             portLabel.setText("failed to advertise service");
