@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.13.7ish-20111216-1747-jake on Fri Dec 16 09:47:41 PST 2011 $Id$-->
+  <!--Written by JMRI version 2.13.7ish-20111216-2259-jake on Fri Dec 16 15:00:04 PST 2011 $Id$-->
   <decoderIndex version="227">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -6405,7 +6405,7 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
-        <model model="GP15-1" numOuts="4" numFns="14" connector="other" productID="MP15">
+        <model model="GP7" numOuts="4" numFns="14" connector="other" productID="GP9">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -6420,7 +6420,37 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
-        <model model="GP15T" numOuts="4" numFns="14" connector="other" productID="F45">
+        <model model="GP9" numOuts="4" numFns="14" connector="other" productID="GP9">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="GP15-1" numOuts="4" numFns="14" connector="other" productID="GP15">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="GP15T" numOuts="4" numFns="14" connector="other" productID="GP15">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -7087,7 +7117,52 @@
           <output name="Brake-Squeal" />
           <output name="Coupler" />
         </model>
+        <model model="HO 3 Truck Climax" numOuts="2" numFns="14" connector="other" productID="3climax">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
         <model model="HO 3 Truck Shay" numOuts="2" numFns="14" connector="other" productID="3shay">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="On30 0-4-0 Porter" numOuts="2" numFns="14" connector="other" productID="o040">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="On30 0-4-2 Porter" numOuts="2" numFns="14" connector="other" productID="o042">
           <versionCV lowVersionID="80" />
           <output name="Whistle" />
           <output name="Bell" />
@@ -7132,7 +7207,7 @@
           <output name="Brake-Squeal" />
           <output name="Coupler" />
         </model>
-        <model model="On30 4-6-0" numOuts="2" numFns="14" connector="other" productID="460">
+        <model model="On30 4-6-0" numOuts="2" numFns="14" connector="other" productID="o460">
           <versionCV lowVersionID="80" />
           <output name="Whistle" />
           <output name="Bell" />
@@ -7147,7 +7222,7 @@
           <output name="Brake-Squeal" />
           <output name="Coupler" />
         </model>
-        <model model="On30 2 Truck T Boiler Shay" numOuts="2" numFns="14" connector="other" productID="2shay">
+        <model model="On30 Climax" numOuts="2" numFns="14" connector="other" productID="o2climax">
           <versionCV lowVersionID="80" />
           <output name="Whistle" />
           <output name="Bell" />
@@ -7162,7 +7237,37 @@
           <output name="Brake-Squeal" />
           <output name="Coupler" />
         </model>
-        <model model="On30 Climax" numOuts="2" numFns="14" connector="other" productID="climax">
+        <model model="On30 2 Truck T Boiler Shay" numOuts="2" numFns="14" connector="other" productID="o2shay">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="Fn3 2 Truck Climax" numOuts="2" numFns="14" connector="other" productID="f2climax">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="Fn3 3 Truck Shay" numOuts="2" numFns="14" connector="other" productID="f3shay">
           <versionCV lowVersionID="80" />
           <output name="Whistle" />
           <output name="Bell" />
