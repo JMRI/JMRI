@@ -909,20 +909,22 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if (m!=metric)
             setBlockMetric(m);
         block.setPermissiveWorking(permissiveCheck.isSelected());
-        for(int i = 0; i<neighbourDir.size(); i++){
-            int neigh = neighbourDir.get(i).getSelectedIndex();
-            neighbours.get(i).getBlock().removeBlockDenyList(this.block);
-            this.block.removeBlockDenyList(neighbours.get(i).getBlock());
-            switch(neigh){
-                case 0 : neighbours.get(i).setPacketFlow(RXTX);
-                        break;
-                case 1 : neighbours.get(i).setPacketFlow(TXONLY);
-                        neighbours.get(i).getBlock().addBlockDenyList(this.block.getDisplayName());
-                        break;
-                case 2 : neighbours.get(i).setPacketFlow(RXONLY);
-                        this.block.addBlockDenyList(neighbours.get(i).getBlock().getDisplayName());
-                        break;
-            
+        if(neighbourDir!=null){
+            for(int i = 0; i<neighbourDir.size(); i++){
+                int neigh = neighbourDir.get(i).getSelectedIndex();
+                neighbours.get(i).getBlock().removeBlockDenyList(this.block);
+                this.block.removeBlockDenyList(neighbours.get(i).getBlock());
+                switch(neigh){
+                    case 0 : neighbours.get(i).setPacketFlow(RXTX);
+                            break;
+                    case 1 : neighbours.get(i).setPacketFlow(TXONLY);
+                            neighbours.get(i).getBlock().addBlockDenyList(this.block.getDisplayName());
+                            break;
+                    case 2 : neighbours.get(i).setPacketFlow(RXONLY);
+                            this.block.addBlockDenyList(neighbours.get(i).getBlock().getDisplayName());
+                            break;
+                
+                }
             }
         }
 		// complete
