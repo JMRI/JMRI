@@ -177,7 +177,7 @@ public class TrainSwitchLists extends TrainCommon {
 		else
 			TrainPrintUtilities.printReport(buildFile, rb.getString("SwitchList")
 					+ " " + location.getName(), isPreview, Setup.getFontName(),
-					false, Setup.getManifestLogoURL(), location.getDefaultPrinterName());
+					false, Setup.getManifestLogoURL(), location.getDefaultPrinterName(), Setup.getSwitchListOrientation());
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger

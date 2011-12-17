@@ -83,10 +83,12 @@ public class PrintOptionFrame extends OperationsFrame{
 	
 	// combo boxes
 	JComboBox fontComboBox = Setup.getFontComboBox();
+	JComboBox manifestOrientationComboBox = Setup.getOrientationComboBox();
 	JComboBox fontSizeComboBox = new JComboBox();
 	JComboBox pickupComboBox = Setup.getPrintColorComboBox();	// colors
 	JComboBox dropComboBox = Setup.getPrintColorComboBox();
 	JComboBox localComboBox = Setup.getPrintColorComboBox();
+	JComboBox switchListOrientationComboBox = Setup.getOrientationComboBox();
 	
 	// message formats
 	List<JComboBox> enginePickupMessageList = new ArrayList<JComboBox>();
@@ -99,6 +101,7 @@ public class PrintOptionFrame extends OperationsFrame{
 	List<JComboBox> switchListLocalMessageList = new ArrayList<JComboBox>();
 	
 	// switch list panels
+	JPanel pSwitchListOrientation = new JPanel();
 	JPanel pSwPickup = new JPanel();
 	JPanel pSwDrop = new JPanel();
 	JPanel pSwLocal = new JPanel();
@@ -131,21 +134,21 @@ public class PrintOptionFrame extends OperationsFrame{
 		JScrollPane pManifestPane = new JScrollPane(pManifest);
 		pManifestPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifestOptions")));
 		
-		// manifest options
-		JPanel pReport = new JPanel();
-		pReport.setLayout(new GridBagLayout());
-		JScrollPane pReportPane = new JScrollPane(pReport);
-		pReportPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutReportOptions")));
-		
 		// row 1 font type and size
 		JPanel p1 = new JPanel();
 		p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+		
 		JPanel pFont = new JPanel();
 		pFont.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFont")));
 		pFont.add(fontComboBox);
+		
 		JPanel pFontSize = new JPanel();
 		pFontSize.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFontSize")));
 		pFontSize.add(fontSizeComboBox);
+
+		JPanel pOrientation = new JPanel();
+		pOrientation.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOrientation")));
+		pOrientation.add(manifestOrientationComboBox);
 
 		JPanel pPickupColor = new JPanel();
 		pPickupColor.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPickupColor")));
@@ -163,21 +166,17 @@ public class PrintOptionFrame extends OperationsFrame{
 		pFormat.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFormat")));
 		pFormat.add(tabFormatCheckBox);
 		
-		JPanel pEdit = new JPanel();
-		pEdit.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifestPreview")));
-		pEdit.add(editManifestCheckBox);
-		
 		JPanel pSwitchFormat = new JPanel();
 		pSwitchFormat.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListFormat")));
 		pSwitchFormat.add(formatSwitchListCheckBox);
 
 		p1.add(pFont);
 		p1.add(pFontSize);
+		p1.add(pOrientation);
 		p1.add(pPickupColor);
 		p1.add(pDropColor);
 		p1.add(pLocalColor);
 		p1.add(pFormat);
-		p1.add(pEdit);
 		p1.add(pSwitchFormat);
 		
 		// engine message format
@@ -245,6 +244,14 @@ public class PrintOptionFrame extends OperationsFrame{
 		}
 
 		// switch list car pickup message format
+		pSwitchListOrientation = new JPanel();
+		pSwitchListOrientation.setLayout(new GridBagLayout());
+		pSwitchListOrientation.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListOrientation")));		
+		addItem(pSwitchListOrientation, switchListOrientationComboBox, 0, 0);
+		addItem(pSwitchListOrientation, new JLabel(" "), 1, 0);	// pad
+		addItem(pSwitchListOrientation, new JLabel(" "), 2, 0);	// pad
+		addItem(pSwitchListOrientation, new JLabel(" "), 3, 0);	// pad
+		//pSwitchListOrientation.add(switchListOrientationComboBox);
 		
 		pSwPickup.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListPickupCar")));
 		pSwPickup.add(switchListPickupCarPrefix);
@@ -308,26 +315,44 @@ public class PrintOptionFrame extends OperationsFrame{
 		pManifest.add(pPickup);
 		pManifest.add(pDrop);
 		pManifest.add(pLocal);
+		pManifest.add(pSwitchListOrientation);
 		pManifest.add(pSwPickup);
 		pManifest.add(pSwDrop);
 		pManifest.add(pSwLocal);
 		pManifest.add(p2);
+		
+		// manifest comment
+		JPanel pComment = new JPanel();
+		pComment.setLayout(new GridBagLayout());
+		JScrollPane pCommentPane = new JScrollPane(pComment);
+		pCommentPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutCommentOptions")));
+		addItem (pComment, commentScroller, 0, 0);
+		
+		// panel options
+		JPanel pOptions = new JPanel();
+		pOptions.setLayout(new BoxLayout(pOptions, BoxLayout.X_AXIS));
+		JScrollPane pOptionsPane = new JScrollPane(pOptions);
+		pOptionsPane.setBorder(BorderFactory.createTitledBorder(""));
+
+		JPanel pEdit = new JPanel();
+		pEdit.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifestPreview")));
+		pEdit.add(editManifestCheckBox);
 			
+		// build report
+		JPanel pReport = new JPanel();
+		pReport.setLayout(new GridBagLayout());		
+		pReport.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutReportOptions")));
 		// build report options
 		addItem (pReport, textBuildReport, 0, 16);
 		addItemLeft (pReport, buildReportMin, 1, 16);
 		addItemLeft (pReport, buildReportNor, 2, 16);
 		addItemLeft (pReport, buildReportMax, 3, 16);
 		addItemLeft (pReport, buildReportVD, 4, 16);
-		addItemWidth (pReport, buildReportCheckBox, 3, 1, 17);
+		addItemWidth (pReport, buildReportCheckBox, 3, 1, 17);	
 		
-		// manifest options
-		JPanel pComment = new JPanel();
-		pComment.setLayout(new GridBagLayout());
-		JScrollPane pCommentPane = new JScrollPane(pComment);
-		pCommentPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutCommentOptions")));
-		addItem (pComment, commentScroller, 0, 0);
-				
+		pOptions.add(pEdit);
+		pOptions.add(pReport);
+
 		// row 11
 		JPanel pControl = new JPanel();
 		pControl.setBorder(BorderFactory.createTitledBorder(""));
@@ -336,8 +361,11 @@ public class PrintOptionFrame extends OperationsFrame{
 		
 		getContentPane().add(pManifestPane);	
 		getContentPane().add(pCommentPane);
-		getContentPane().add(pReportPane);
+		getContentPane().add(pOptionsPane);
 		getContentPane().add(pControl);
+		
+		manifestOrientationComboBox.setSelectedItem(Setup.getManifestOrientation());
+		switchListOrientationComboBox.setSelectedItem(Setup.getSwitchListOrientation());
 		
 		tabFormatCheckBox.setSelected(Setup.isTabEnabled());
 		formatSwitchListCheckBox.setSelected(Setup.isSwitchListFormatSameAsManifest());
@@ -406,6 +434,9 @@ public class PrintOptionFrame extends OperationsFrame{
 			Setup.setFontName((String)fontComboBox.getSelectedItem());
 			// font size
 			Setup.setFontSize((Integer)fontSizeComboBox.getSelectedItem());
+			// page orientation
+			Setup.setManifestOrientation((String)manifestOrientationComboBox.getSelectedItem());
+			Setup.setSwitchListOrientation((String)switchListOrientationComboBox.getSelectedItem());
 			// drop and pick up color option
 			Setup.setDropTextColor((String)dropComboBox.getSelectedItem());
 			Setup.setPickupTextColor((String)pickupComboBox.getSelectedItem());
@@ -512,6 +543,7 @@ public class PrintOptionFrame extends OperationsFrame{
 	}
 	
 	private void setSwitchListVisible(boolean b){
+		pSwitchListOrientation.setVisible(b);
 		pSwPickup.setVisible(b);
 		pSwDrop.setVisible(b);
 		pSwLocal.setVisible(b);

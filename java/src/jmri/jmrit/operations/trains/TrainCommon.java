@@ -63,7 +63,7 @@ public class TrainCommon {
 		String[] format = Setup.getPickupEngineMessageFormat();
 		for (int i=0; i<format.length; i++){
 			String s = getEngineAttribute(engine, format[i], pickup);
-			if (buf.length()+s.length()>lineLength()){
+			if (buf.length()+s.length()>lineLength(Setup.PORTRAIT)){
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
 			}
@@ -77,7 +77,7 @@ public class TrainCommon {
 		String[] format = Setup.getDropEngineMessageFormat();
 		for (int i=0; i<format.length; i++){
 			String s = getEngineAttribute(engine, format[i], !pickup);
-			if (buf.length()+s.length()>lineLength()){
+			if (buf.length()+s.length()>lineLength(Setup.PORTRAIT)){
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
 			}
@@ -91,22 +91,22 @@ public class TrainCommon {
 	 * Adds the car's pick up string to the output file using the manifest format
 	 */
 	protected void pickUpCar(PrintWriter file, Car car){
-		pickUpCar(file, car, new StringBuffer(Setup.getPickupCarPrefix()), Setup.getPickupCarMessageFormat());
+		pickUpCar(file, car, new StringBuffer(Setup.getPickupCarPrefix()), Setup.getPickupCarMessageFormat(), Setup.getManifestOrientation());
 	}
 	
 	/*
 	 * Adds the car's pick up string to the output file using the switch list format
 	 */
 	protected void switchListPickUpCar(PrintWriter file, Car car){
-		pickUpCar(file, car, new StringBuffer(Setup.getSwitchListPickupCarPrefix()), Setup.getSwitchListPickupCarMessageFormat());
+		pickUpCar(file, car, new StringBuffer(Setup.getSwitchListPickupCarPrefix()), Setup.getSwitchListPickupCarMessageFormat(), Setup.getSwitchListOrientation());
 	}
 	
-	private void pickUpCar(PrintWriter file, Car car, StringBuffer buf, String[] format){
+	private void pickUpCar(PrintWriter file, Car car, StringBuffer buf, String[] format, String orientation){
 		if (car.getRouteLocation().equals(car.getRouteDestination()))
 			return; // print nothing local move, see dropCar
 		for (int i=0; i<format.length; i++){
 			String s = getCarAttribute(car, format[i], pickup, !local);
-			if (buf.length()+s.length()>lineLength()){
+			if (buf.length()+s.length()>lineLength(orientation)){
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
 			}
@@ -138,7 +138,7 @@ public class TrainCommon {
 			format = Setup.getLocalMessageFormat();
 			local = true;
 		}
-		dropCar(file, car, buf, format, local);
+		dropCar(file, car, buf, format, local, Setup.getManifestOrientation());
 	}
 	
 	/*
@@ -154,13 +154,13 @@ public class TrainCommon {
 			format = Setup.getSwitchListLocalMessageFormat();
 			local = true;
 		}
-		dropCar(file, car, buf, format, local);
+		dropCar(file, car, buf, format, local, Setup.getSwitchListOrientation());
 	}
 	
-	private void dropCar(PrintWriter file, Car car, StringBuffer buf, String[] format, boolean local){
+	private void dropCar(PrintWriter file, Car car, StringBuffer buf, String[] format, boolean local, String orientation){
 		for (int i=0; i<format.length; i++){
 			String s = getCarAttribute(car, format[i], !pickup, local);
-			if (buf.length()+s.length()>lineLength()){
+			if (buf.length()+s.length()>lineLength(orientation)){
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
 			}
@@ -366,23 +366,21 @@ public class TrainCommon {
 		return buf.toString();
 	}
 	
-	int chars_per_line = 0;
-	protected int lineLength(){
-		if (chars_per_line == 0){
-			// page size has been adjusted to account for margins of .5
-			// Dimension pagesize = new Dimension(612,792);
-			Dimension pagesize = new Dimension(540,792);
-			// Metrics don't always work for the various font names, so use Monospaced
-			Font font = new Font("Monospaced", Font.PLAIN, Setup.getFontSize());
-			Frame frame = new Frame();
-			FontMetrics metrics = frame.getFontMetrics(font);
+	protected int lineLength(String orientation){
+		// page size has been adjusted to account for margins of .5
+		// Dimension pagesize = new Dimension(612,792);
+		Dimension pagesize = new Dimension(540,792);
+		if (orientation.equals(Setup.LANDSCAPE))
+			pagesize = new Dimension(720,612);
+		// Metrics don't always work for the various font names, so use Monospaced
+		Font font = new Font("Monospaced", Font.PLAIN, Setup.getFontSize());
+		Frame frame = new Frame();
+		FontMetrics metrics = frame.getFontMetrics(font);
 
-			int charwidth = metrics.charWidth('m');
+		int charwidth = metrics.charWidth('m');
 
-			// compute lines and columns within margins
-			chars_per_line = pagesize.width / charwidth;
-		}
-		return chars_per_line;
+		// compute lines and columns within margins
+		return pagesize.width / charwidth;
 	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger

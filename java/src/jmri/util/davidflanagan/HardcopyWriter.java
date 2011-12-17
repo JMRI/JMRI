@@ -94,14 +94,19 @@ public class HardcopyWriter extends Writer {
 				topmargin, bottommargin, preview);
 	}
 	
-	// constructor modified to add default printer name
+	// constructor modified to add default printer name and page orientation
 	public HardcopyWriter(Frame frame, String jobname, int fontsize,
 			double leftmargin, double rightmargin, double topmargin,
-			double bottommargin, boolean preview, String printerName)
+			double bottommargin, boolean preview, String printerName, boolean landscape)
 			throws HardcopyWriter.PrintCanceledException {
 		
 		// set default print name
 		jobAttributes.setPrinter(printerName);
+		if (landscape){
+			pageAttributes.setOrientationRequested(PageAttributes.OrientationRequestedType.LANDSCAPE);
+			if (preview)
+				pagesize = new Dimension(792,612);
+		}
 		
 		hardcopyWriter(frame, jobname, fontsize, leftmargin, rightmargin,
 				topmargin, bottommargin, preview);
@@ -180,7 +185,8 @@ public class HardcopyWriter extends Writer {
             // use a scroll pane to handle print images bigger than the window
             previewFrame.getContentPane().add(new JScrollPane(previewPanel),
                     BorderLayout.CENTER);
-            previewFrame.setSize(660, Toolkit.getDefaultToolkit().getScreenSize().height);
+            // page width 660 for portrait
+            previewFrame.setSize(pagesize.width+48, Toolkit.getDefaultToolkit().getScreenSize().height);
             previewFrame.setVisible(true);         
         }
 

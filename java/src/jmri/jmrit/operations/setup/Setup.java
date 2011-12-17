@@ -103,6 +103,10 @@ public class Setup {
 	public static final String MONOSPACED = "Monospaced"; // printer fonts
 	public static final String SANSERIF = "SansSerif";
 	public static final String SERIF = "Serif";
+	
+	public static final String PORTRAIT = rb.getString("Portrait");
+	public static final String LANDSCAPE = rb.getString("Landscape");
+	
 	public static final String LENGTHABV =rb.getString("LengthSymbol");
 	
 	public static final String BUILD_REPORT_MINIMAL = "1";
@@ -154,6 +158,8 @@ public class Setup {
 	private static String ownerName ="";
 	private static String fontName = MONOSPACED;
 	private static int fontSize = 10;
+	private static String manifestOrientation = PORTRAIT;
+	private static String switchListOrientation = PORTRAIT;
 	private static String pickupColor = BLACK;
 	private static String dropColor = BLACK;
 	private static String localColor = BLACK;
@@ -671,6 +677,25 @@ public class Setup {
 		fontSize = size;
 	}
 	
+	public static String getManifestOrientation(){
+		return manifestOrientation;
+	}
+	
+	public static void setManifestOrientation(String orientation){
+		manifestOrientation = orientation;
+	}
+	
+	public static String getSwitchListOrientation(){
+		if (isSwitchListFormatSameAsManifest())
+			return manifestOrientation;
+		else
+			return switchListOrientation;
+	}
+	
+	public static void setSwitchListOrientation(String orientation){
+		switchListOrientation = orientation;
+	}
+	
 	public static boolean isTabEnabled(){
 		return tab;
 	}
@@ -1055,6 +1080,13 @@ public class Setup {
 		return box;
 	}
 	
+	public static JComboBox getOrientationComboBox(){
+		JComboBox box = new JComboBox();
+		box.addItem(PORTRAIT);
+		box.addItem(LANDSCAPE);
+		return box;
+	}
+	
 	/**
 	 * 
 	 * @return the available text colors used for printing
@@ -1294,6 +1326,10 @@ public class Setup {
     	
        	e.addContent(values = new Element("fontSize"));
     	values.setAttribute("size", Integer.toString(getFontSize()));
+    	
+       	e.addContent(values = new Element("pageOrientation"));
+    	values.setAttribute("manifest", getManifestOrientation());
+    	values.setAttribute("switchList", getSwitchListOrientation());
     	
       	e.addContent(values = new Element("manifestColors"));
     	values.setAttribute("dropColor", getDropTextColor());
@@ -1645,6 +1681,19 @@ public class Setup {
         	String size = a.getValue();
            	if (log.isDebugEnabled()) log.debug("fontName: "+size);
            	setFontSize(Integer.parseInt(size));
+        }
+        
+        if ((operations.getChild("pageOrientation") != null)){
+        	if((a = operations.getChild("pageOrientation").getAttribute("manifest"))!= null){
+        		String orientation = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("manifestOrientation: "+orientation);
+        		setManifestOrientation(orientation);
+        	}
+        	if((a = operations.getChild("pageOrientation").getAttribute("switchList"))!= null){
+        		String orientation = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("switchListOrientation: "+orientation);
+        		setSwitchListOrientation(orientation);
+        	}
         }
         if ((operations.getChild("manifestColors") != null)){ 
         	if((a = operations.getChild("manifestColors").getAttribute("dropColor"))!= null){

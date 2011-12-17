@@ -41,7 +41,7 @@ public class TrainPrintUtilities {
 	 * @param logoURL optional pathname for logo
 	 */
 	public static void printReport (File file, String name, boolean isPreview, String fontName, boolean isBuildReport, String logoURL){
-		printReport (file,name, isPreview, fontName, isBuildReport, logoURL, "");
+		printReport (file,name, isPreview, fontName, isBuildReport, logoURL, "", Setup.PORTRAIT);
 	}
 	
 	/**
@@ -54,12 +54,15 @@ public class TrainPrintUtilities {
 	 * @param logoURL optional pathname for logo
 	 * @param printerName optional default printer name
 	 */
-	public static void printReport (File file, String name, boolean isPreview, String fontName, boolean isBuildReport, String logoURL, String printerName){
+	public static void printReport (File file, String name, boolean isPreview, String fontName, boolean isBuildReport, String logoURL, String printerName, String orientation){
 	    // obtain a HardcopyWriter to do this
 		HardcopyWriter writer = null;
 		Frame mFrame = new Frame();
+		boolean isLandScape = false;
+		if (orientation.equals(Setup.LANDSCAPE))
+			isLandScape = true;
         try {
-            writer = new HardcopyWriter(mFrame, name, Setup.getFontSize(), .5, .5, .5, .5, isPreview, printerName);
+            writer = new HardcopyWriter(mFrame, name, Setup.getFontSize(), .5, .5, .5, .5, isPreview, printerName, isLandScape);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;

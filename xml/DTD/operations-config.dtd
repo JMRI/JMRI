@@ -18,7 +18,8 @@
  | manifestLogo | buildOptions | buildReport | owner | iconColor | options 
  | pickupEngFormat | dropEngFormat | pickupCarFormat | dropCarFormat | localFormat
  | missingCarFormat | tab | manifest | vsd | reporters | switchList
- | switchListPickupCarFormat | switchListDropCarFormat | switchListLocalFormat | comments)*>
+ | switchListPickupCarFormat | switchListDropCarFormat | switchListLocalFormat 
+ | pageOrientation | comments)*>
 
 <!ELEMENT railRoad EMPTY>
 <!ELEMENT settings EMPTY>
@@ -46,6 +47,7 @@
 <!ELEMENT switchListPickupCarFormat EMPTY>
 <!ELEMENT switchListDropCarFormat EMPTY>
 <!ELEMENT switchListLocalFormat EMPTY>
+<!ELEMENT pageOrientation EMPTY>
 <!ELEMENT comments EMPTY>
 
 <!ATTLIST railRoad name				CDATA #IMPLIED>  
@@ -141,6 +143,9 @@
 
 <!ATTLIST vsd enablePhysicalLocations	(true | false ) "false">
 <!ATTLIST switchList sameAsManifest		(true | false ) "true">
+
+<!ATTLIST pageOrientation manifest		CDATA #IMPLIED>
+<!ATTLIST pageOrientation switchList	CDATA #IMPLIED>
 
 <!ATTLIST comments misplacedCars		CDATA #IMPLIED> 
 
