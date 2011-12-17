@@ -17,7 +17,8 @@
 <!ELEMENT operations (railRoad | settings | panel | fontName | fontSize | manifestColors
  | manifestLogo | buildOptions | buildReport | owner | iconColor | options 
  | pickupEngFormat | dropEngFormat | pickupCarFormat | dropCarFormat | localFormat
- | missingCarFormat | tab | manifest | vsd | reporters | comments)*>
+ | missingCarFormat | tab | manifest | vsd | reporters | switchList
+ | switchListPickupCarFormat | switchListDropCarFormat | switchListLocalFormat | comments)*>
 
 <!ELEMENT railRoad EMPTY>
 <!ELEMENT settings EMPTY>
@@ -41,7 +42,10 @@
 <!ELEMENT tab EMPTY>
 <!ELEMENT manifest EMPTY>
 <!ELEMENT vsd EMPTY>
-<!ELEMENT reporters EMPTY>
+<!ELEMENT switchList EMPTY>
+<!ELEMENT switchListPickupCarFormat EMPTY>
+<!ELEMENT switchListDropCarFormat EMPTY>
+<!ELEMENT switchListLocalFormat EMPTY>
 <!ELEMENT comments EMPTY>
 
 <!ATTLIST railRoad name				CDATA #IMPLIED>  
@@ -88,11 +92,17 @@
 <!ATTLIST pickupCarFormat prefix	CDATA #IMPLIED>
 <!ATTLIST dropCarFormat prefix		CDATA #IMPLIED>
 <!ATTLIST localFormat prefix		CDATA #IMPLIED>
+<!ATTLIST switchListPickupCarFormat prefix	CDATA #IMPLIED>
+<!ATTLIST switchListDropCarFormat prefix	CDATA #IMPLIED>
+<!ATTLIST switchListLocalFormat prefix		CDATA #IMPLIED>
 <!ATTLIST pickupEngFormat setting	CDATA #IMPLIED>
 <!ATTLIST dropEngFormat setting		CDATA #IMPLIED>
 <!ATTLIST pickupCarFormat setting	CDATA #IMPLIED>
 <!ATTLIST dropCarFormat setting		CDATA #IMPLIED>
 <!ATTLIST localFormat setting		CDATA #IMPLIED>
+<!ATTLIST switchListPickupCarFormat setting	CDATA #IMPLIED>
+<!ATTLIST switchListDropCarFormat setting	CDATA #IMPLIED>
+<!ATTLIST switchListLocalFormat setting		CDATA #IMPLIED>
 <!ATTLIST missingCarFormat setting	CDATA #IMPLIED>
 <!ATTLIST manifestColors dropColor	CDATA #IMPLIED> 
 <!ATTLIST manifestColors pickupColor	CDATA #IMPLIED>  
@@ -130,7 +140,7 @@
 <!ATTLIST manifest hazardousMsg			CDATA #IMPLIED> 
 
 <!ATTLIST vsd enablePhysicalLocations	(true | false ) "false">
-<!ATTLIST reporters enable				(true | false ) "false">
+<!ATTLIST switchList sameAsManifest		(true | false ) "true">
 
 <!ATTLIST comments misplacedCars		CDATA #IMPLIED> 
 
