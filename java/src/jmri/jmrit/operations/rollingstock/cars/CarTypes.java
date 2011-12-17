@@ -164,9 +164,11 @@ public class CarTypes {
     		String[] types = getNames();
     		int length = MIN_NAME_LENGTH;
     		for (int i = 0; i < types.length; i++){
-    			if (types[i].length()>length)
-    				length = types[i].length();
+    			String type[] = types[i].split("-");
+    			if (type[0].length()>length)
+    				length = type[0].length();
     		}
+    		maxNameLength = length;
     		return length;
     	} else {
     		return maxNameLength;

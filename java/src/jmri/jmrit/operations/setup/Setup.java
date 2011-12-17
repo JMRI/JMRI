@@ -162,12 +162,18 @@ public class Setup {
 	private static String[] pickupCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION, COMMENT, PICKUP_COMMENT};
 	private static String[] dropCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION, COMMENT, DROP_COMMENT};
 	private static String[] localMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION, DESTINATION, COMMENT};
+	private static String[] switchListPickupCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION, COMMENT, PICKUP_COMMENT};
+	private static String[] switchListDropCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION, COMMENT, DROP_COMMENT};
+	private static String[] switchListLocalMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION, DESTINATION, COMMENT};
 	private static String[] missingCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, COMMENT};
 	private static String pickupEnginePrefix = BOX + rb.getString("PickUpPrefix");
 	private static String dropEnginePrefix = BOX + rb.getString("SetOutPrefix");
 	private static String pickupCarPrefix = BOX + rb.getString("PickUpPrefix");
 	private static String dropCarPrefix = BOX + rb.getString("SetOutPrefix");
-	private static String localPrefix = BOX + rb.getString("LocalCarPrefix");	
+	private static String localPrefix = BOX + rb.getString("LocalCarPrefix");
+	private static String switchListPickupCarPrefix = BOX + rb.getString("PickUpPrefix");
+	private static String switchListDropCarPrefix = BOX + rb.getString("SetOutPrefix");
+	private static String switchListLocalPrefix = BOX + rb.getString("LocalCarPrefix");	
 	private static String miaComment = rb.getString("misplacedCars");
 	private static String hazardousMsg = "("+rb.getString("Hazardous")+")";
 	private static String logoURL ="";
@@ -186,6 +192,7 @@ public class Setup {
 	
 	private static boolean tab = false;
 	private static boolean manifestEditorEnabled = false;	// when true use text editor to view build report
+	private static boolean switchListSameManifest = true;	// when true switch list format is the same as the manifest
 	private static boolean buildReportEditorEnabled = false;	// when true use text editor to view build report
 	private static boolean enableTrainIconXY = true;
 	private static boolean appendTrainIcon = false;		//when true, append engine number to train name
@@ -532,6 +539,14 @@ public class Setup {
 		buildReportEditorEnabled = enable;
 	}
 	
+	public static boolean isSwitchListFormatSameAsManifest(){
+		return switchListSameManifest;
+	}
+	
+	public static void setSwitchListFormatSameAsManifest(boolean b){
+		switchListSameManifest = b;
+	}
+	
 	public static boolean isBuildReportEditorEnabled(){
 		return buildReportEditorEnabled;
 	}
@@ -731,6 +746,39 @@ public class Setup {
 		localPrefix = prefix;
 	}
 	
+	public static String getSwitchListPickupCarPrefix(){
+		if (isSwitchListFormatSameAsManifest())
+			return pickupCarPrefix;
+		else
+			return switchListPickupCarPrefix;
+	}
+	
+	public static void setSwitchListPickupCarPrefix(String prefix){
+		switchListPickupCarPrefix = prefix;
+	}
+	
+	public static String getSwitchListDropCarPrefix(){
+		if (isSwitchListFormatSameAsManifest())
+			return dropCarPrefix;
+		else
+			return switchListDropCarPrefix;
+	}
+	
+	public static void setSwitchListDropCarPrefix(String prefix){
+		switchListDropCarPrefix = prefix;
+	}
+	
+	public static String getSwitchListLocalPrefix(){
+		if (isSwitchListFormatSameAsManifest())
+			return localPrefix;
+		else
+			return switchListLocalPrefix;
+	}
+	
+	public static void setSwitchListLocalPrefix(String prefix){
+		switchListLocalPrefix = prefix;
+	}
+	
 	public static String[] getPickupEngineMessageFormat(){
 		return pickupEngineMessageFormat.clone();
 	}
@@ -783,6 +831,42 @@ public class Setup {
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setMissingCarMessageFormat(String[] format){
 		missingCarMessageFormat = format;
+	}
+	
+	public static String[] getSwitchListPickupCarMessageFormat(){
+		if (isSwitchListFormatSameAsManifest())
+			return pickupCarMessageFormat.clone();
+		else
+			return switchListPickupCarMessageFormat.clone();
+	}
+	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
+	public static void setSwitchListPickupCarMessageFormat(String[] format){
+		switchListPickupCarMessageFormat = format;
+	}
+	
+	public static String[] getSwitchListDropCarMessageFormat(){
+		if (isSwitchListFormatSameAsManifest())
+			return dropCarMessageFormat.clone();
+		else
+			return switchListDropCarMessageFormat.clone();
+	}
+	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
+	public static void setSwitchListDropCarMessageFormat(String[] format){
+		switchListDropCarMessageFormat = format;
+	}
+	
+	public static String[] getSwitchListLocalMessageFormat(){
+		if (isSwitchListFormatSameAsManifest())
+			return localMessageFormat.clone();
+		else
+			return switchListLocalMessageFormat.clone();
+	}
+	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
+	public static void setSwitchListLocalMessageFormat(String[] format){
+		switchListLocalMessageFormat = format;
 	}
 	
 	public static String getDropTextColor(){
@@ -1091,6 +1175,7 @@ public class Setup {
     		return 0; // return unknown
     }
     
+    // must synchronize changes with operation-config.dtd
     public static Element store(){
     	Element values;
     	Element e = new Element("operations");
@@ -1169,6 +1254,33 @@ public class Setup {
         buf = new StringBuffer();
        	for (int i=0; i<missingCarMessageFormat.length; i++){
        		buf.append(missingCarMessageFormat[i]+",");
+       	}
+       	values.setAttribute("setting", buf.toString());
+       	
+       	e.addContent(values = new Element("switchList"));
+       	values.setAttribute("sameAsManifest", isSwitchListFormatSameAsManifest()?"true":"false");
+       	
+      	e.addContent(values = new Element("switchListPickupCarFormat"));
+      	values.setAttribute("prefix", getSwitchListPickupCarPrefix());
+        buf = new StringBuffer();
+       	for (int i=0; i<switchListPickupCarMessageFormat.length; i++){
+       		buf.append(switchListPickupCarMessageFormat[i]+",");
+       	}
+       	values.setAttribute("setting", buf.toString());
+       	
+      	e.addContent(values = new Element("switchListDropCarFormat"));
+      	values.setAttribute("prefix", getSwitchListDropCarPrefix());
+        buf = new StringBuffer();
+       	for (int i=0; i<switchListDropCarMessageFormat.length; i++){
+       		buf.append(switchListDropCarMessageFormat[i]+",");
+       	}
+       	values.setAttribute("setting", buf.toString());
+       	
+      	e.addContent(values = new Element("switchListLocalFormat"));
+      	values.setAttribute("prefix", getSwitchListLocalPrefix());
+        buf = new StringBuffer();
+       	for (int i=0; i<switchListLocalMessageFormat.length; i++){
+       		buf.append(switchListLocalMessageFormat[i]+",");
        	}
        	values.setAttribute("setting", buf.toString());
     	
@@ -1463,6 +1575,46 @@ public class Setup {
         		String[] format = setting.split(",");
         		fixLocaleBug(format);
         		setMissingCarMessageFormat(format);
+        	}
+        }
+        if (operations.getChild("switchList") != null){
+        	if ((a = operations.getChild("switchList").getAttribute("sameAsManifest"))!= null){
+        		String b = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("sameAsManifest: "+b);
+        		setSwitchListFormatSameAsManifest(b.equals("true"));
+        	}
+        }
+        if (operations.getChild("switchListPickupCarFormat") != null){
+        	if ((a = operations.getChild("switchListPickupCarFormat").getAttribute("prefix"))!= null)
+        		setSwitchListPickupCarPrefix(a.getValue());
+        	if ((a = operations.getChild("switchListPickupCarFormat").getAttribute("setting"))!= null){
+        		String setting = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("switchListpickupCarFormat: "+setting);
+        		String[] format = setting.split(",");
+        		fixLocaleBug(format);
+        		setSwitchListPickupCarMessageFormat(format);
+        	}
+        }
+        if (operations.getChild("switchListDropCarFormat") != null){
+        	if ((a = operations.getChild("switchListDropCarFormat").getAttribute("prefix"))!= null)
+        		setSwitchListDropCarPrefix(a.getValue());
+        	if ((a = operations.getChild("switchListDropCarFormat").getAttribute("setting"))!= null){
+        		String setting = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("switchListDropCarFormat: "+setting);
+        		String[] format = setting.split(",");
+        		fixLocaleBug(format);
+        		setSwitchListDropCarMessageFormat(format);
+        	}
+        }
+        if (operations.getChild("switchListLocalFormat") != null){
+        	if ((a = operations.getChild("switchListLocalFormat").getAttribute("prefix"))!= null)
+        		setSwitchListLocalPrefix(a.getValue());
+        	if ((a = operations.getChild("switchListLocalFormat").getAttribute("setting"))!= null){
+        		String setting = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("switchListLocalFormat: "+setting);
+        		String[] format = setting.split(",");
+        		fixLocaleBug(format);
+        		setSwitchListLocalMessageFormat(format);
         	}
         }
         if (operations.getChild("panel") != null){

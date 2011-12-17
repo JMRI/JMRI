@@ -56,6 +56,7 @@ public class PrintOptionFrame extends OperationsFrame{
     
     // check boxes
     JCheckBox tabFormatCheckBox = new JCheckBox(rb.getString("TabFormat"));
+    JCheckBox formatSwitchListCheckBox = new JCheckBox(rb.getString("SameAsManifest"));
     JCheckBox editManifestCheckBox = new JCheckBox(rb.getString("UseTextEditor"));
 	JCheckBox buildReportCheckBox = new JCheckBox(rb.getString("BuildReportEdit"));
 	JCheckBox printLocCommentsCheckBox = new JCheckBox(rb.getString("PrintLocationComments"));
@@ -70,6 +71,10 @@ public class PrintOptionFrame extends OperationsFrame{
 	JTextField pickupCarPrefix = new JTextField(10);
 	JTextField dropCarPrefix = new JTextField(10);
 	JTextField localPrefix = new JTextField(10);
+	JTextField switchListPickupCarPrefix = new JTextField(10);
+	JTextField switchListDropCarPrefix = new JTextField(10);
+	JTextField switchListLocalPrefix = new JTextField(10);
+
 	
 	// text area
 	JTextArea commentTextArea	= new JTextArea(2,90);
@@ -89,6 +94,14 @@ public class PrintOptionFrame extends OperationsFrame{
 	List<JComboBox> carPickupMessageList = new ArrayList<JComboBox>();
 	List<JComboBox> carDropMessageList = new ArrayList<JComboBox>();
 	List<JComboBox> localMessageList = new ArrayList<JComboBox>();
+	List<JComboBox> switchListCarPickupMessageList = new ArrayList<JComboBox>();
+	List<JComboBox> switchListCarDropMessageList = new ArrayList<JComboBox>();
+	List<JComboBox> switchListLocalMessageList = new ArrayList<JComboBox>();
+	
+	// switch list panels
+	JPanel pSwPickup = new JPanel();
+	JPanel pSwDrop = new JPanel();
+	JPanel pSwLocal = new JPanel();
 
 	public PrintOptionFrame() {
 		super(ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle").getString("TitlePrintOptions"));
@@ -153,6 +166,10 @@ public class PrintOptionFrame extends OperationsFrame{
 		JPanel pEdit = new JPanel();
 		pEdit.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifestPreview")));
 		pEdit.add(editManifestCheckBox);
+		
+		JPanel pSwitchFormat = new JPanel();
+		pSwitchFormat.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListFormat")));
+		pSwitchFormat.add(formatSwitchListCheckBox);
 
 		p1.add(pFont);
 		p1.add(pFontSize);
@@ -161,6 +178,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		p1.add(pLocalColor);
 		p1.add(pFormat);
 		p1.add(pEdit);
+		p1.add(pSwitchFormat);
 		
 		// engine message format
 		JPanel pEngPickup = new JPanel();
@@ -225,6 +243,43 @@ public class PrintOptionFrame extends OperationsFrame{
 			pLocal.add(b);
 			localMessageList.add(b);
 		}
+
+		// switch list car pickup message format
+		
+		pSwPickup.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListPickupCar")));
+		pSwPickup.add(switchListPickupCarPrefix);
+		switchListPickupCarPrefix.setText(Setup.getSwitchListPickupCarPrefix());
+		pickFormat = Setup.getSwitchListPickupCarMessageFormat();
+		for (int i=0; i<pickFormat.length; i++){
+			JComboBox b = Setup.getCarMessageComboBox();
+			b.setSelectedItem(pickFormat[i]);
+			pSwPickup.add(b);
+			switchListCarPickupMessageList.add(b);
+		}
+			
+		// switch list car drop message format
+		pSwDrop.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListDropCar")));
+		pSwDrop.add(switchListDropCarPrefix);
+		switchListDropCarPrefix.setText(Setup.getSwitchListDropCarPrefix());
+		dropFormat = Setup.getSwitchListDropCarMessageFormat();
+		for (int i=0; i<dropFormat.length; i++){
+			JComboBox b = Setup.getCarMessageComboBox();
+			b.setSelectedItem(dropFormat[i]);
+			pSwDrop.add(b);
+			switchListCarDropMessageList.add(b);
+		}
+		
+		// switch list local car move message format
+		pSwLocal.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListLocal")));
+		pSwLocal.add(switchListLocalPrefix);
+		switchListLocalPrefix.setText(Setup.getSwitchListLocalPrefix());
+		localFormat = Setup.getSwitchListLocalMessageFormat();
+		for (int i=0; i<localFormat.length; i++){
+			JComboBox b = Setup.getCarMessageComboBox();
+			b.setSelectedItem(localFormat[i]);
+			pSwLocal.add(b);
+			switchListLocalMessageList.add(b);
+		}		
 		
 		JPanel p2 = new JPanel();
 		p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
@@ -253,6 +308,9 @@ public class PrintOptionFrame extends OperationsFrame{
 		pManifest.add(pPickup);
 		pManifest.add(pDrop);
 		pManifest.add(pLocal);
+		pManifest.add(pSwPickup);
+		pManifest.add(pSwDrop);
+		pManifest.add(pSwLocal);
 		pManifest.add(p2);
 			
 		// build report options
@@ -282,6 +340,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		getContentPane().add(pControl);
 		
 		tabFormatCheckBox.setSelected(Setup.isTabEnabled());
+		formatSwitchListCheckBox.setSelected(Setup.isSwitchListFormatSameAsManifest());
 		printLocCommentsCheckBox.setSelected(Setup.isPrintLocationCommentsEnabled());
 		printRouteCommentsCheckBox.setSelected(Setup.isPrintRouteCommentsEnabled());
 		printLoadsEmptiesCheckBox.setSelected(Setup.isPrintLoadsAndEmptiesEnabled());
@@ -289,6 +348,8 @@ public class PrintOptionFrame extends OperationsFrame{
 		use12hrFormatCheckBox.setSelected(Setup.is12hrFormatEnabled());
 		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
 		editManifestCheckBox.setSelected(Setup.isManifestEditorEnabled());
+		
+		setSwitchListVisible(!formatSwitchListCheckBox.isSelected());
 		
 		updateLogoButtons();
 		dropComboBox.setSelectedItem(Setup.getDropTextColor());
@@ -313,6 +374,8 @@ public class PrintOptionFrame extends OperationsFrame{
 		addButtonAction(addLogoButton);
 		addButtonAction(removeLogoButton);
 		addButtonAction(saveButton);
+		
+		addCheckBoxAction(formatSwitchListCheckBox);
 		
 		setBuildReportRadioButton();
 
@@ -387,6 +450,30 @@ public class PrintOptionFrame extends OperationsFrame{
 				format[i] = (String)b.getSelectedItem();
 			}
 			Setup.setLocalMessageFormat(format);
+			// save switch list car pick up message format
+			Setup.setSwitchListPickupCarPrefix(switchListPickupCarPrefix.getText());
+			format = new String[switchListCarPickupMessageList.size()];
+			for (int i=0; i<switchListCarPickupMessageList.size(); i++){
+				JComboBox b = switchListCarPickupMessageList.get(i);
+				format[i] = (String)b.getSelectedItem();
+			}
+			Setup.setSwitchListPickupCarMessageFormat(format);
+			// save switch list car drop message format
+			Setup.setSwitchListDropCarPrefix(switchListDropCarPrefix.getText());
+			format = new String[switchListCarDropMessageList.size()];
+			for (int i=0; i<switchListCarDropMessageList.size(); i++){
+				JComboBox b = switchListCarDropMessageList.get(i);
+				format[i] = (String)b.getSelectedItem();
+			}
+			Setup.setSwitchListDropCarMessageFormat(format);
+			// save switch list local message format
+			Setup.setSwitchListLocalPrefix(switchListLocalPrefix.getText());
+			format = new String[switchListLocalMessageList.size()];
+			for (int i=0; i<switchListLocalMessageList.size(); i++){
+				JComboBox b = switchListLocalMessageList.get(i);
+				format[i] = (String)b.getSelectedItem();
+			}
+			Setup.setSwitchListLocalMessageFormat(format);
 			// misplaced car comment
 			Setup.setMiaComment(commentTextArea.getText());
 			// build report level
@@ -399,6 +486,7 @@ public class PrintOptionFrame extends OperationsFrame{
 			else if (buildReportVD.isSelected())
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
 			Setup.setTabEnabled(tabFormatCheckBox.isSelected());
+			Setup.setSwitchListFormatSameAsManifest(formatSwitchListCheckBox.isSelected());
 			Setup.setPrintLocationCommentsEnabled(printLocCommentsCheckBox.isSelected());
 			Setup.setPrintRouteCommentsEnabled(printRouteCommentsCheckBox.isSelected());
 			Setup.setPrintLoadsAndEmptiesEnabled(printLoadsEmptiesCheckBox.isSelected());
@@ -416,6 +504,17 @@ public class PrintOptionFrame extends OperationsFrame{
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
 		}
+	}
+	
+	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		log.debug("Switch list check box activated");
+		setSwitchListVisible(!formatSwitchListCheckBox.isSelected());
+	}
+	
+	private void setSwitchListVisible(boolean b){
+		pSwPickup.setVisible(b);
+		pSwDrop.setVisible(b);
+		pSwLocal.setVisible(b);
 	}
 
 	/**

@@ -153,7 +153,7 @@ public class TrainManifest extends TrainCommon {
 					Car car = carManager.getById(carList.get(k));
 					if (car.getRouteLocation() == rl
 							&& car.getRouteDestination() == rld) {
-						pickupCar(fileOut, car);
+						pickUpCar(fileOut, car);
 						cars++;
 						newWork = true;
 						if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))

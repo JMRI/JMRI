@@ -122,6 +122,7 @@ public class CarRoads {
     			if (roads[i].length()>length)
     				length = roads[i].length();
     		}
+    		maxNameLength = length;
     		return length;
     	} else {
     		return maxNameLength;

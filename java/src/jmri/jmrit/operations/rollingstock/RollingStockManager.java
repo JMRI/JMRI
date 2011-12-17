@@ -134,6 +134,12 @@ public class RollingStockManager {
         firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_hashTable.size()));
     }
     
+    public void changeId(RollingStock rs, String road, String number){
+    	_hashTable.remove(rs.getId());
+    	rs._id = RollingStock.createId(road, number);
+    	register(rs);
+    }
+    
     /**
      * Remove all RollingStock from roster
      */

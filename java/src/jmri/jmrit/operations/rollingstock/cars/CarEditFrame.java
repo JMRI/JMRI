@@ -474,28 +474,15 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			// log.debug("car save button pressed");
 			if (!checkCar(_car))
 				return;
-			// delete car and create new car if edit and road or road number has changed
-			// this keeps the car id format correct
-			if (_car != null && _car.getRoad() != null && !_car.getRoad().equals("")){
-				if (!_car.getRoad().equals(roadComboBox.getSelectedItem().toString())
-						|| !_car.getNumber().equals(roadNumberTextField.getText())) {
-					// transfer car attributes since road name and number have changed
-					Car oldCar = _car;
-					Car newCar = addCar();
-					// copy the old car's destination, train, etc.
-					newCar.setDestination(oldCar.getDestination(), oldCar.getDestinationTrack());
-					newCar.setNextDestination(oldCar.getNextDestination());
-					newCar.setNextDestTrack(oldCar.getNextDestTrack());
-					newCar.setReturnWhenEmptyDestination(oldCar.getReturnWhenEmptyDestination());
-					newCar.setReturnWhenEmptyDestTrack(oldCar.getReturnWhenEmptyDestTrack());
-					newCar.setOutOfService(oldCar.isOutOfService());
-					newCar.setLocationUnknown(oldCar.isLocationUnknown());
-					newCar.setTrain(oldCar.getTrain());
-					oldCar.removePropertyChangeListener(this);
-					carManager.deregister(oldCar);
-					writeFiles();
-					return;
-				}
+			// if the road or number changes, the car needs a new id
+			if (_car != null && _car.getRoad() != null && !_car.getRoad().equals("")
+				&& (!_car.getRoad().equals(roadComboBox.getSelectedItem().toString())
+						|| !_car.getNumber().equals(roadNumberTextField.getText()))) {
+				String road = roadComboBox.getSelectedItem().toString();
+				String number = roadNumberTextField.getText();
+				carManager.changeId(_car, road, number);
+				_car.setRoad(road);
+				_car.setNumber(number);
 			}
 			addCar();
 			/* all JMRI window position and size are now saved
@@ -628,10 +615,10 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		}
 	}
 
-	private Car addCar() {
+	private void addCar() {
 		if (roadComboBox.getSelectedItem() == null
 				|| roadComboBox.getSelectedItem().toString().equals(""))
-			return null;
+			return;
 		if (_car == null
 				|| !_car.getRoad().equals(roadComboBox.getSelectedItem().toString())
 				|| !_car.getNumber().equals(roadNumberTextField.getText())) {
@@ -714,7 +701,6 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 				}
 			}
 		}	
-		return _car;
 	}
 
 	private void addEditButtonAction(JButton b) {

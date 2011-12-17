@@ -3,7 +3,9 @@
 package jmri.jmrit.operations.locations;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
@@ -41,6 +43,7 @@ public class PrintLocationsAction  extends AbstractAction {
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 	String newLine = "\n";
 	String formFeed = "\f";
+	String tab = "   ";
 	LocationManager manager = LocationManager.instance();
 	public static final int MAX_NAME_LENGTH = 25;
 
@@ -79,234 +82,320 @@ public class PrintLocationsAction  extends AbstractAction {
 			log.debug("Print cancelled");
 			return;
 		}
-
-		// Loop through the Roster, printing as needed
-
+		try {
+			// print locations?
+			if (printLocations.isSelected())
+				printLocationsSelected();
+			// print schedules?
+			if (printSchedules.isSelected())
+				printSchedulesSelected();
+			// print detailed report?
+			if (printDetails.isSelected())
+				printDetailsSelected();
+			// print analysis?
+			if (printAnalysis.isSelected())
+				printAnalysisSelected();
+			// force completion of the printing
+			writer.close();
+		} catch (IOException we) {
+			log.error("Error printing PrintLocationAction: " + we);
+		}
+	}
+	
+	// Loop through the Roster, printing as needed
+	private void printLocationsSelected() throws IOException{
 		List<String> locations = manager.getLocationsByNameList();
 		int totalLength = 0;
 		int usedLength = 0;
 		int numberRS = 0;
 		int numberCars = 0;
 		int numberEngines = 0;
+		String s = rb.getString("Location") + "\t\t\t "
+		+ rb.getString("Length") + " " + rb.getString("Used")
+		+ "\t" + rb.getString("RS") 
+		+ "\t" + rb.getString("Cars")
+		+ "\t" + rb.getString("Engines")
+		+ "\t" + rb.getString("Pickup")
+		+ " " + rb.getString("Drop") + newLine;
+		writer.write(s);
+		for (int i=0; i<locations.size(); i++){
+			Location location = manager.getLocationById(locations.get(i));
+			String name = location.getName();
+			StringBuffer buf = new StringBuffer(name);
+			// pad out the location name
+			for (int j=name.length(); j < LocationEditFrame.MAX_NAME_LENGTH; j++) {
+				buf.append(" ");
+			}
+			s = buf.toString() + " \t  " + Integer.toString(location.getLength()) + "\t"
+			+ Integer.toString(location.getUsedLength()) + "\t"
+			+ Integer.toString(location.getNumberRS()) + "\t"
+			+ "\t" + "\t"
+			+ Integer.toString(location.getPickupRS()) + "\t"
+			+ Integer.toString(location.getDropRS())+ newLine;
+			writer.write(s);
 
-		try {
-			if (printLocations.isSelected()){
-				String s = rb.getString("Location") + "\t\t\t "
-				+ rb.getString("Length") + " " + rb.getString("Used")
-				+ "\t" + rb.getString("RS") 
-				+ "\t" + rb.getString("Cars")
-				+ "\t" + rb.getString("Engines")
-				+ "\t" + rb.getString("Pickup")
-				+ " " + rb.getString("Drop") + newLine;
+			totalLength += location.getLength();
+			usedLength += location.getUsedLength();
+			numberRS += location.getNumberRS();
+
+			List<String> yards = location.getTracksByNameList(Track.YARD);
+			if (yards.size()>0){
+				s = "    " + rb.getString("YardName")	+ newLine;
 				writer.write(s);
-				for (int i=0; i<locations.size(); i++){
-					Location location = manager.getLocationById(locations.get(i));
-					String name = location.getName();
-					StringBuffer buf = new StringBuffer(name);
-					// pad out the location name
-					for (int j=name.length(); j < LocationEditFrame.MAX_NAME_LENGTH; j++) {
+				for (int k=0; k<yards.size(); k++){
+					Track yard = location.getTrackById(yards.get(k));
+					name = yard.getName();
+					buf = new StringBuffer(name);
+					// pad out the track name
+					for (int j=name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
 						buf.append(" ");
 					}
-					s = buf.toString() + " \t  " + Integer.toString(location.getLength()) + "\t"
-					+ Integer.toString(location.getUsedLength()) + "\t"
-					+ Integer.toString(location.getNumberRS()) + "\t"
-					+ "\t" + "\t"
-					+ Integer.toString(location.getPickupRS()) + "\t"
-					+ Integer.toString(location.getDropRS())+ newLine;
+					s = getTrackString (yard, buf.toString());
 					writer.write(s);
-
-					totalLength += location.getLength();
-					usedLength += location.getUsedLength();
-					numberRS += location.getNumberRS();
-
-					List<String> yards = location.getTracksByNameList(Track.YARD);
-					if (yards.size()>0){
-						s = "    " + rb.getString("YardName")	+ newLine;
-						writer.write(s);
-						for (int k=0; k<yards.size(); k++){
-							Track yard = location.getTrackById(yards.get(k));
-							name = yard.getName();
-							buf = new StringBuffer(name);
-							// pad out the track name
-							for (int j=name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
-								buf.append(" ");
-							}
-							s = getTrackString (yard, buf.toString());
-							writer.write(s);
-							numberCars += yard.getNumberCars();
-							numberEngines += yard.getNumberEngines();
-						}
-					}
-
-					List<String> sidings = location.getTracksByNameList(Track.SIDING);
-					if (sidings.size()>0){
-						s = "    " + rb.getString("SidingName")	+ newLine;
-						writer.write(s);
-						for (int k=0; k<sidings.size(); k++){
-							Track siding = location.getTrackById(sidings.get(k));
-							name = siding.getName();
-							buf = new StringBuffer(name);
-							for (int j=name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
-								buf.append(" ");
-							}
-							s = getTrackString (siding, buf.toString());
-							writer.write(s);
-							numberCars += siding.getNumberCars();
-							numberEngines += siding.getNumberEngines();
-						}
-					}
-
-					List<String> interchanges = location.getTracksByNameList(Track.INTERCHANGE);
-					if (interchanges.size()>0){
-						s = "    " + rb.getString("InterchangeName")	+ newLine;
-						writer.write(s);
-						for (int k=0; k<interchanges.size(); k++){
-							Track interchange = location.getTrackById(interchanges.get(k));
-							name = interchange.getName();
-							buf = new StringBuffer(name);
-							for (int j=name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
-								buf.append(" ");
-							}
-							s = getTrackString (interchange, buf.toString());
-							writer.write(s);
-							numberCars += interchange.getNumberCars();
-							numberEngines += interchange.getNumberEngines();
-						}
-					}
-
-					List<String> stagings = location.getTracksByNameList(Track.STAGING);
-					if (stagings.size()>0){
-						s = "    " + rb.getString("StagingName")	+ newLine;
-						writer.write(s);
-						for (int k=0; k<stagings.size(); k++){
-							Track staging = location.getTrackById(stagings.get(k));
-							name = staging.getName();
-							buf = new StringBuffer(name);
-							for (int j=name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
-								buf.append(" ");
-							}
-							s = getTrackString (staging, buf.toString());
-							writer.write(s);
-							numberCars += staging.getNumberCars();
-							numberEngines += staging.getNumberEngines();
-						}
-					}
-					writer.write(newLine, 0, newLine.length());
-				}
-
-				// summary
-				s = MessageFormat.format(rb.getString("TotalLengthMsg"),
-						new Object[] { Integer.toString(totalLength),
-					Integer.toString(usedLength),
-					Integer.toString(usedLength * 100 / totalLength) })
-					+ newLine;
-				writer.write(s);
-				s = MessageFormat.format(rb.getString("TotalRollingMsg"),
-						new Object[] { Integer.toString(numberRS),
-					Integer.toString(numberCars),
-					Integer.toString(numberEngines) })
-					+ newLine;
-				writer.write(s);
-				// are there trains in route, then some cars and engines not counted!
-				if (numberRS != numberCars+numberEngines){
-					s = MessageFormat.format(rb.getString("NoteRSMsg"),
-							new Object[] { Integer.toString(numberRS-(numberCars+numberEngines)) })
-							+ newLine;
-					writer.write(s);
+					numberCars += yard.getNumberCars();
+					numberEngines += yard.getNumberEngines();
 				}
 			}
 
-			// print schedules
-			if (printSchedules.isSelected()){
-				writer.write(newLine);
-				String s = rb.getString("Schedules") + "\t\t  " +rb.getString("Location") + " - " +  rb.getString("SidingName") + newLine;
+			List<String> sidings = location.getTracksByNameList(Track.SIDING);
+			if (sidings.size()>0){
+				s = "    " + rb.getString("SidingName")	+ newLine;
 				writer.write(s);
-				ScheduleManager sm = ScheduleManager.instance();
-				List<String> schedules = sm.getSchedulesByNameList();
-				for (int i=0; i<schedules.size(); i++){
-					Schedule schedule = sm.getScheduleById(schedules.get(i));
-					for (int j=0; j<locations.size(); j++){
-						Location location = manager.getLocationById(locations.get(j));
-						List<String> sidings = location.getTracksByNameList(Track.SIDING);
-						for (int k=0; k<sidings.size(); k++){
-							Track siding = location.getTrackById(sidings.get(k));
-							if (siding.getScheduleId().equals(schedule.getId())){
-								String name = schedule.getName();
-								// pad out schedule name
-								StringBuffer buf = new StringBuffer(name);
-								for (int n=name.length(); n<MAX_NAME_LENGTH; n++){
-									buf.append(" ");
-								}
-								s = buf.toString() +" "+ location.getName()+ " - " + siding.getName();
-								String status = siding.checkScheduleValid();
-								if (!status.equals("")){
-									buf = new StringBuffer(s);
-									for (int m=s.length(); m<63; m++){
-										buf.append(" ");
-									}
-									s = buf.toString();
-									if (s.length()>63)
-										s = s.substring(0, 63);
-									s = s + "\t" + status;
-								}
-								s = s + newLine;
-								writer.write(s);
-							}
-						}
+				for (int k=0; k<sidings.size(); k++){
+					Track siding = location.getTrackById(sidings.get(k));
+					name = siding.getName();
+					buf = new StringBuffer(name);
+					for (int j=name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
+						buf.append(" ");
 					}
-				}
-			}
-			// user requesting detailed report?
-			if (printDetails.isSelected()){
-				String s = formFeed + newLine + rb.getString("DetailedReport") + newLine;
-				writer.write(s);
-				String tab = "   ";
-				for (int i=0; i<locations.size(); i++){
-					Location location = manager.getLocationById(locations.get(i));
-					String name = location.getName();
-					// services train direction
-					int dir = location.getTrainDirections();
-					s = newLine + name + getDirection(dir);     		
+					s = getTrackString (siding, buf.toString());
 					writer.write(s);
-					// services car and engine types
-					s = getLocationTypes(location);
-					writer.write(s);
-
-					List<String> yards = location.getTracksByNameList(Track.YARD);
-					if (yards.size()>0){
-						s = tab + rb.getString("YardName") + newLine;
-						writer.write(s);
-						printTrackInfo(location, yards);
-					}
-
-					List<String> sidings = location.getTracksByNameList(Track.SIDING);
-					if (sidings.size()>0){
-						s = tab + rb.getString("SidingName") + newLine;
-						writer.write(s);
-						printTrackInfo(location, sidings);
-					}
-
-					List<String> interchanges = location.getTracksByNameList(Track.INTERCHANGE);
-					if (interchanges.size()>0){
-						s = tab + rb.getString("InterchangeName") + newLine;
-						writer.write(s);
-						printTrackInfo(location, interchanges);
-					}
-
-					List<String> stagings = location.getTracksByNameList(Track.STAGING);
-					if (stagings.size()>0){
-						s = tab + rb.getString("StagingName") + newLine;
-						writer.write(s);
-						printTrackInfo(location, stagings);
-					}
+					numberCars += siding.getNumberCars();
+					numberEngines += siding.getNumberEngines();
 				}
 			}
 
-			// and force completion of the printing
-			writer.close();
-		} catch (IOException we) {
-			log.error("Error printing PrintLocationAction: " + we);
+			List<String> interchanges = location.getTracksByNameList(Track.INTERCHANGE);
+			if (interchanges.size()>0){
+				s = "    " + rb.getString("InterchangeName")	+ newLine;
+				writer.write(s);
+				for (int k=0; k<interchanges.size(); k++){
+					Track interchange = location.getTrackById(interchanges.get(k));
+					name = interchange.getName();
+					buf = new StringBuffer(name);
+					for (int j=name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
+						buf.append(" ");
+					}
+					s = getTrackString (interchange, buf.toString());
+					writer.write(s);
+					numberCars += interchange.getNumberCars();
+					numberEngines += interchange.getNumberEngines();
+				}
+			}
+
+			List<String> stagings = location.getTracksByNameList(Track.STAGING);
+			if (stagings.size()>0){
+				s = "    " + rb.getString("StagingName")	+ newLine;
+				writer.write(s);
+				for (int k=0; k<stagings.size(); k++){
+					Track staging = location.getTrackById(stagings.get(k));
+					name = staging.getName();
+					buf = new StringBuffer(name);
+					for (int j=name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
+						buf.append(" ");
+					}
+					s = getTrackString (staging, buf.toString());
+					writer.write(s);
+					numberCars += staging.getNumberCars();
+					numberEngines += staging.getNumberEngines();
+				}
+			}
+			writer.write(newLine, 0, newLine.length());
 		}
+
+		// summary
+		s = MessageFormat.format(rb.getString("TotalLengthMsg"),
+				new Object[] { Integer.toString(totalLength),
+			Integer.toString(usedLength),
+			Integer.toString(usedLength * 100 / totalLength) })
+			+ newLine;
+		writer.write(s);
+		s = MessageFormat.format(rb.getString("TotalRollingMsg"),
+				new Object[] { Integer.toString(numberRS),
+			Integer.toString(numberCars),
+			Integer.toString(numberEngines) })
+			+ newLine;
+		writer.write(s);
+		// are there trains in route, then some cars and engines not counted!
+		if (numberRS != numberCars+numberEngines){
+			s = MessageFormat.format(rb.getString("NoteRSMsg"),
+					new Object[] { Integer.toString(numberRS-(numberCars+numberEngines)) })
+					+ newLine;
+			writer.write(s);
+		}
+	}
+	
+	private void printSchedulesSelected() throws IOException{
+		List<String> locations = manager.getLocationsByNameList();
+		writer.write(newLine);
+		String s = rb.getString("Schedules") + "\t\t  " +rb.getString("Location") + " - " +  rb.getString("SidingName") + newLine;
+		writer.write(s);
+		ScheduleManager sm = ScheduleManager.instance();
+		List<String> schedules = sm.getSchedulesByNameList();
+		for (int i=0; i<schedules.size(); i++){
+			Schedule schedule = sm.getScheduleById(schedules.get(i));
+			for (int j=0; j<locations.size(); j++){
+				Location location = manager.getLocationById(locations.get(j));
+				List<String> sidings = location.getTracksByNameList(Track.SIDING);
+				for (int k=0; k<sidings.size(); k++){
+					Track siding = location.getTrackById(sidings.get(k));
+					if (siding.getScheduleId().equals(schedule.getId())){
+						String name = schedule.getName();
+						// pad out schedule name
+						StringBuffer buf = new StringBuffer(name);
+						for (int n=name.length(); n<MAX_NAME_LENGTH; n++){
+							buf.append(" ");
+						}
+						s = buf.toString() +" "+ location.getName()+ " - " + siding.getName();
+						String status = siding.checkScheduleValid();
+						if (!status.equals("")){
+							buf = new StringBuffer(s);
+							for (int m=s.length(); m<63; m++){
+								buf.append(" ");
+							}
+							s = buf.toString();
+							if (s.length()>63)
+								s = s.substring(0, 63);
+							s = s + "\t" + status;
+						}
+						s = s + newLine;
+						writer.write(s);
+					}
+				}
+			}
+		}
+	}
+	
+	private void printDetailsSelected() throws IOException{
+		List<String> locations = manager.getLocationsByNameList();
+		String s = formFeed + newLine + rb.getString("DetailedReport") + newLine;
+		writer.write(s);
+		for (int i=0; i<locations.size(); i++){
+			Location location = manager.getLocationById(locations.get(i));
+			String name = location.getName();
+			// services train direction
+			int dir = location.getTrainDirections();
+			s = newLine + name + getDirection(dir);     		
+			writer.write(s);
+			// services car and engine types
+			s = getLocationTypes(location);
+			writer.write(s);
+
+			List<String> yards = location.getTracksByNameList(Track.YARD);
+			if (yards.size()>0){
+				s = tab + rb.getString("YardName") + newLine;
+				writer.write(s);
+				printTrackInfo(location, yards);
+			}
+
+			List<String> sidings = location.getTracksByNameList(Track.SIDING);
+			if (sidings.size()>0){
+				s = tab + rb.getString("SidingName") + newLine;
+				writer.write(s);
+				printTrackInfo(location, sidings);
+			}
+
+			List<String> interchanges = location.getTracksByNameList(Track.INTERCHANGE);
+			if (interchanges.size()>0){
+				s = tab + rb.getString("InterchangeName") + newLine;
+				writer.write(s);
+				printTrackInfo(location, interchanges);
+			}
+
+			List<String> stagings = location.getTracksByNameList(Track.STAGING);
+			if (stagings.size()>0){
+				s = tab + rb.getString("StagingName") + newLine;
+				writer.write(s);
+				printTrackInfo(location, stagings);
+			}
+		}
+	}
+	
+	private final boolean showStaging = false;
+	private void printAnalysisSelected() throws IOException{
+		CarManager carManager = CarManager.instance();
+		List<String> locations = manager.getLocationsByNameList();
+		List<String> cars = carManager.getByLocationList();
+		String[] carTypes = CarTypes.instance().getNames();
+		
+		String s = formFeed + newLine + rb.getString("TrackAnalysis") + newLine;
+		writer.write(s);
+		
+		// print the car type being analyzed
+		for (int i=0; i<carTypes.length; i++){
+			String type = carTypes[i];
+			// get the total length for a given car type
+			int numberOfCars = 0;
+			int totalTrackLength = 0;
+			for (int j=0; j<cars.size(); j++){
+				Car car = carManager.getById(cars.get(j));
+				if (car.getType().equals(type) && car.getLocation() != null){
+					numberOfCars++;
+					totalTrackLength = totalTrackLength + Integer.parseInt(car.getLength()) + Car.COUPLER;
+				}
+			}
+			writer.write(MessageFormat.format(rb.getString("NumberTypeLength"),new Object[]{numberOfCars, type, totalTrackLength}) + newLine);
+			// don't bother reporting when the number of cars for a given type is zero
+			if (numberOfCars > 0){
+				// spurs
+				writer.write(tab+MessageFormat.format(rb.getString("SpurTrackThatAccept"),new Object[]{type})+ newLine);
+				int trackLength = getTrackLengthAcceptType(locations, type, Track.SIDING);
+				if (trackLength > 0)
+					writer.write(tab+MessageFormat.format(rb.getString("TotalLengthSpur"),new Object[]{type, trackLength, 100*totalTrackLength/trackLength}) + newLine);
+				else
+					writer.write(tab+ rb.getString("None") + newLine);
+				// yards
+				writer.write(tab+MessageFormat.format(rb.getString("YardTrackThatAccept"),new Object[]{type})+ newLine);
+				trackLength = getTrackLengthAcceptType(locations, type, Track.YARD);
+				if (trackLength > 0)
+					writer.write(tab+MessageFormat.format(rb.getString("TotalLengthYard"),new Object[]{type, trackLength, 100*totalTrackLength/trackLength}) + newLine);
+				else
+					writer.write(tab+ rb.getString("None") + newLine);
+				// interchanges
+				writer.write(tab+MessageFormat.format(rb.getString("InterchangesThatAccept"),new Object[]{type})+ newLine);
+				trackLength = getTrackLengthAcceptType(locations, type, Track.INTERCHANGE);
+				if (trackLength > 0)
+					writer.write(tab+MessageFormat.format(rb.getString("TotalLengthInterchange"),new Object[]{type, trackLength, 100*totalTrackLength/trackLength}) + newLine);
+				else
+					writer.write(tab+ rb.getString("None") + newLine);
+				// staging
+				if (showStaging){
+					writer.write(tab+MessageFormat.format(rb.getString("StageTrackThatAccept"),new Object[]{type})+ newLine);
+					trackLength = getTrackLengthAcceptType(locations, type, Track.STAGING);
+					if (trackLength > 0)
+						writer.write(tab+MessageFormat.format(rb.getString("TotalLengthStage"),new Object[]{type, trackLength, 100*totalTrackLength/trackLength}) + newLine);
+					else
+						writer.write(tab+ rb.getString("None") + newLine);
+				}
+			}
+		}
+	}
+
+	private int getTrackLengthAcceptType(List<String> locations, String carType, String trackType) throws IOException{
+		int trackLength = 0;
+		for (int j=0; j<locations.size(); j++){
+			Location location = manager.getLocationById(locations.get(j));
+			// get a list of spur tracks at this location
+			List<String> tracks = location.getTracksByNameList(trackType);				
+			for (int k=0; k<tracks.size(); k++){
+				Track track = location.getTrackById(tracks.get(k));
+				if (track.acceptsTypeName(carType)){
+					trackLength = trackLength + track.getLength();
+					writer.write(tab+tab+MessageFormat.format(rb.getString("LocationTrackLength"),new Object[]{location.getName(), track.getName(), track.getLength()})+ newLine);
+				}
+			}
+		}
+		return trackLength;
 	}
 
 	private String getTrackString (Track track, String name){
@@ -593,6 +682,7 @@ public class PrintLocationsAction  extends AbstractAction {
 	JCheckBox printLocations = new JCheckBox(rb.getString("PrintLocations"));
 	JCheckBox printSchedules = new JCheckBox(rb.getString("PrintSchedules"));
 	JCheckBox printDetails = new JCheckBox(rb.getString("PrintDetails"));
+	JCheckBox printAnalysis = new JCheckBox(rb.getString("PrintAnalysis"));
 
 	JButton okayButton = new JButton(rb.getString("ButtonOkay"));
 
@@ -608,11 +698,13 @@ public class PrintLocationsAction  extends AbstractAction {
 			pPanel.setBorder(BorderFactory.createTitledBorder(rb.getString("PrintOptions")));
 			pPanel.add(printLocations);
 			pPanel.add(printSchedules);
-			pPanel.add(printDetails);   		    		
+			pPanel.add(printDetails); 
+			pPanel.add(printAnalysis);
 			// set defaults
 			printLocations.setSelected(true);
 			printSchedules.setSelected(true);
 			printDetails.setSelected(true);
+			printAnalysis.setSelected(true);
 
 			//add tool tips
 

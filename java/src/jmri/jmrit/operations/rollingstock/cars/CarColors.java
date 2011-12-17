@@ -122,6 +122,7 @@ public class CarColors {
     			if (colors[i].length()>length)
     				length = colors[i].length();
     		}
+    		maxNameLength = length;
     		return length;
     	} else {
     		return maxNameLength;

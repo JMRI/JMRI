@@ -134,7 +134,7 @@ public class TrainSwitchLists extends TrainCommon {
 							Car car = carManager.getById(carList.get(k));
 							if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
 									&& car.getRouteDestination() == rld) {
-								pickupCar(fileOut, car);
+								switchListPickUpCar(fileOut, car);
 								pickupCars++;
 							}
 						}
@@ -145,7 +145,7 @@ public class TrainSwitchLists extends TrainCommon {
 					for (int j=0; j<carList.size(); j++){
 						Car car = carManager.getById(carList.get(j));
 						if (car.getRouteDestination() == rl){
-							dropCar(fileOut, car);
+							switchListDropCar(fileOut, car);
 							dropCars++;
 						}
 					}

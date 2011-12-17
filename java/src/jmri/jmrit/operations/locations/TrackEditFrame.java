@@ -506,7 +506,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 	}
 
-	private void addNewTrack(){
+	protected void addNewTrack(){
 		// check that track name is valid
 		if (!checkName(rb.getString("add")))
 			return;
@@ -520,14 +520,19 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		_track =_location.addTrack(trackNameTextField.getText(), _type);
 		// check track length
 		checkLength(_track);
-		//update check boxes
+
+		//reset all of the track's attributes
+		updateTrainDir();
 		updateCheckboxes();
+		updateRoadNames();
+		updateLoadNames();
+		updateDropOptions();
+		updatePickupOptions();
 
 		_track.addPropertyChangeListener(this);
 
 		// setup check boxes
 		selectCheckboxes(true);
-		updateTrainDir();
 		// store comment
 		_track.setComment(commentTextArea.getText());
 		// enable 
@@ -585,6 +590,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// check track length
 		if (!checkLength(track))
 			return false;
+		// check trains and route option
+		if (!checkService(track))
+			return false;
+
 		return true;
 	}
 	
@@ -671,6 +680,27 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		// if everything is okay, save length
 		track.setLength(trackLength);
+		return true;
+	}
+	
+	private boolean checkService(Track track){
+		// check train and route restrictions
+		if (!anyDrops.isSelected() && track.getDropIds().length == 0){
+			log.debug("Must enter trains or routes for this track");
+			JOptionPane.showMessageDialog(this,
+					rb.getString("UseAddTrainsOrRoutes"),
+					rb.getString("SetOutDisabled"),
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (!anyPickups.isSelected() && track.getPickupIds().length == 0){
+			log.debug("Must enter trains or routes for this track");
+			JOptionPane.showMessageDialog(this,
+					rb.getString("UseAddTrainsOrRoutes"),
+					rb.getString("PickUpsDisabled"),
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 		return true;
 	}
 	
@@ -946,6 +976,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		CarLoads.instance().updateComboBox(carType, comboBoxLoads);
 	}
 	
+	// car and loco types
 	private void updateCheckboxes(){
 		checkBoxes.clear();
 		panelCheckBoxes.removeAll();

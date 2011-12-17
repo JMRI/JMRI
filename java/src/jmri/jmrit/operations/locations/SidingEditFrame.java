@@ -46,7 +46,8 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		
 		super.initComponents(location, track);
 		
-		_toolMenu.add(new ChangeTrackTypeAction (this));
+		_toolMenu.add(new AlternateTrackAction (this));
+		_toolMenu.add(new ChangeTrackTypeAction (this));	
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Sidings", true);
 		
 		// override text strings for tracks
@@ -57,11 +58,8 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		saveTrackButton.setText(rb.getString("SaveSiding"));
 		
 		// Select the spur's Schedule
-		if (_track !=null){
-			Schedule s = ScheduleManager.instance().getScheduleById(_track.getScheduleId());
-			comboBoxSchedules.setSelectedItem(s);
-			textSchError.setText(_track.checkScheduleValid());
-		}
+		updateScheduleComboBox();
+		
 		ScheduleManager.instance().addPropertyChangeListener(this);
 		
 		// setup buttons
@@ -118,11 +116,17 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		super.saveTrack(track);
 	}
 	
+	protected void addNewTrack(){
+		super.addNewTrack();
+		updateScheduleComboBox();	// reset schedule and error text
+	}
+	
 	private void updateScheduleComboBox(){
 		ScheduleManager.instance().updateComboBox(comboBoxSchedules);
 		if (_track != null){
 			Schedule s = ScheduleManager.instance().getScheduleById(_track.getScheduleId());
 			comboBoxSchedules.setSelectedItem(s);
+			textSchError.setText(_track.checkScheduleValid());
 		}
 	}
 

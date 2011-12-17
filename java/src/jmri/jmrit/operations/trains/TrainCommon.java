@@ -62,7 +62,12 @@ public class TrainCommon {
 		StringBuffer buf = new StringBuffer(Setup.getPickupEnginePrefix());
 		String[] format = Setup.getPickupEngineMessageFormat();
 		for (int i=0; i<format.length; i++){
-			buf.append(getEngineAttribute(engine, format[i], pickup));
+			String s = getEngineAttribute(engine, format[i], pickup);
+			if (buf.length()+s.length()>lineLength()){
+				addLine(file, buf.toString());
+				buf = new StringBuffer(TAB);
+			}
+			buf.append(s);
 		}
 		addLine(file, buf.toString());
 	}
@@ -71,16 +76,34 @@ public class TrainCommon {
 		StringBuffer buf = new StringBuffer(Setup.getDropEnginePrefix());
 		String[] format = Setup.getDropEngineMessageFormat();
 		for (int i=0; i<format.length; i++){
-			buf.append(getEngineAttribute(engine, format[i], !pickup));
+			String s = getEngineAttribute(engine, format[i], !pickup);
+			if (buf.length()+s.length()>lineLength()){
+				addLine(file, buf.toString());
+				buf = new StringBuffer(TAB);
+			}
+			buf.append(s);
 		}
 		addLine(file, buf.toString());
 	}
 	
-	protected void pickupCar(PrintWriter file, Car car){
-		StringBuffer buf = new StringBuffer(Setup.getPickupCarPrefix());
+	
+	/*
+	 * Adds the car's pick up string to the output file using the manifest format
+	 */
+	protected void pickUpCar(PrintWriter file, Car car){
+		pickUpCar(file, car, new StringBuffer(Setup.getPickupCarPrefix()), Setup.getPickupCarMessageFormat());
+	}
+	
+	/*
+	 * Adds the car's pick up string to the output file using the switch list format
+	 */
+	protected void switchListPickUpCar(PrintWriter file, Car car){
+		pickUpCar(file, car, new StringBuffer(Setup.getSwitchListPickupCarPrefix()), Setup.getSwitchListPickupCarMessageFormat());
+	}
+	
+	private void pickUpCar(PrintWriter file, Car car, StringBuffer buf, String[] format){
 		if (car.getRouteLocation().equals(car.getRouteDestination()))
 			return; // print nothing local move, see dropCar
-		String[] format = Setup.getPickupCarMessageFormat();
 		for (int i=0; i<format.length; i++){
 			String s = getCarAttribute(car, format[i], pickup, !local);
 			if (buf.length()+s.length()>lineLength()){
@@ -90,7 +113,7 @@ public class TrainCommon {
 			buf.append(s);
 		}
 		addLine(file, buf.toString());
-	}
+	} 
 	
 	protected String pickupCar(Car car){
 		StringBuffer buf = new StringBuffer();
@@ -102,16 +125,39 @@ public class TrainCommon {
 		return buf.toString();
 	}
 	
+	/*
+	 * Adds the car's set out string to the output file using the manifest format
+	 */	
 	protected void dropCar(PrintWriter file, Car car){
 		StringBuffer buf = new StringBuffer(Setup.getDropCarPrefix());
 		String[] format = Setup.getDropCarMessageFormat();
-		// local move?
 		boolean local = false;
+		// local move?
 		if (car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null){
 			buf = new StringBuffer(Setup.getLocalPrefix());
 			format = Setup.getLocalMessageFormat();
 			local = true;
 		}
+		dropCar(file, car, buf, format, local);
+	}
+	
+	/*
+	 * Adds the car's set out string to the output file using the switch list format
+	 */	
+	protected void switchListDropCar(PrintWriter file, Car car){
+		StringBuffer buf = new StringBuffer(Setup.getSwitchListDropCarPrefix());
+		String[] format = Setup.getSwitchListDropCarMessageFormat();
+		boolean local = false;
+		// local move?
+		if (car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null){
+			buf = new StringBuffer(Setup.getSwitchListLocalPrefix());
+			format = Setup.getSwitchListLocalMessageFormat();
+			local = true;
+		}
+		dropCar(file, car, buf, format, local);
+	}
+	
+	private void dropCar(PrintWriter file, Car car, StringBuffer buf, String[] format, boolean local){
 		for (int i=0; i<format.length; i++){
 			String s = getCarAttribute(car, format[i], !pickup, local);
 			if (buf.length()+s.length()>lineLength()){

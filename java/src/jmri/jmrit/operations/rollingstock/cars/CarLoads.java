@@ -382,6 +382,7 @@ public class CarLoads {
     				}
     			}
     		}
+       		maxNameLength = length;
     		return length;
     	} else {
     		return maxNameLength;

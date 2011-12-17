@@ -65,11 +65,13 @@ public class CarOwners {
     	if (list.contains(owner))
     		return;
     	list.add(0,owner);
+    	maxNameLength = 0;	// reset maximum name length
     	firePropertyChange (CAROWNERS_LENGTH_CHANGED_PROPERTY, list.size()-1, list.size());
     }
     
     public void deleteName(String owner){
     	list.remove(owner);
+    	maxNameLength = 0;	// reset maximum name length
     	firePropertyChange (CAROWNERS_LENGTH_CHANGED_PROPERTY, list.size()+1, list.size());
     }
     
@@ -110,6 +112,7 @@ public class CarOwners {
     			if (colors[i].length()>length)
     				length = colors[i].length();
     		}
+    		maxNameLength = length;
     		return length;
     	} else {
     		return maxNameLength;

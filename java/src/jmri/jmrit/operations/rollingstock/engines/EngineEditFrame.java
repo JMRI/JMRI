@@ -418,21 +418,15 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 				}
 			}
 
-			// delete engine if edit and road or road number has changed
-			if (_engine != null){
-				if (_engine.getRoad() != null && !_engine.getRoad().equals("")){
-					if (!_engine.getRoad().equals(roadComboBox.getSelectedItem().toString())
-							|| !_engine.getNumber().equals(roadNumberTextField.getText())) {
-						// transfer engine attributes since road name and number have changed
-						Engine oldengine = _engine;
-						Engine newEngine = addEngine();
-						newEngine.setDestination(oldengine.getDestination(), oldengine.getDestinationTrack());
-						newEngine.setTrain(oldengine.getTrain());
-						manager.deregister(oldengine);
-						writeFiles();
-						return;
-					}
-				}
+			// if the road or number changes, the loco needs a new id
+			if (_engine != null && _engine.getRoad() != null && !_engine.getRoad().equals("")
+					&& (!_engine.getRoad().equals(roadComboBox.getSelectedItem().toString())
+							|| !_engine.getNumber().equals(roadNumberTextField.getText()))) {
+				String road = roadComboBox.getSelectedItem().toString();
+				String number = roadNumberTextField.getText();
+				manager.changeId(_engine, road, number);
+				_engine.setRoad(road);
+				_engine.setNumber(number);
 			}
 			addEngine();
 			/* all JMRI window position and size are now saved
@@ -486,7 +480,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		}
 	}
 
-	private Engine addEngine() {
+	private void addEngine() {
 		if (roadComboBox.getSelectedItem() != null
 				&& !roadComboBox.getSelectedItem().toString().equals("")) {
 			if (_engine == null
@@ -558,9 +552,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 			_engine.setComment(commentTextField.getText());
 			_engine.setValue(valueTextField.getText());
 			_engine.setRfid(rfidTextField.getText());
-			return _engine;
 		}
-		return null;
 	}
 
 	private void addEditButtonAction(JButton b) {

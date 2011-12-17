@@ -16,7 +16,7 @@ import javax.print.PrintServiceLookup;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -102,16 +102,19 @@ public class TrainPrintUtilities {
 			}else{
 				// determine if line is a pickup or drop
 				if((!Setup.getPickupEnginePrefix().equals("") && line.startsWith(Setup.getPickupEnginePrefix()))
-						|| (!Setup.getPickupCarPrefix().equals("") && line.startsWith(Setup.getPickupCarPrefix()))){
+						|| (!Setup.getPickupCarPrefix().equals("") && line.startsWith(Setup.getPickupCarPrefix()))
+						|| (!Setup.getSwitchListPickupCarPrefix().equals("") && line.startsWith(Setup.getSwitchListPickupCarPrefix()))){
 					//log.debug("found a pickup line");
 					c = Setup.getPickupColor();
 				}
 				else if((!Setup.getDropEnginePrefix().equals("") && line.startsWith(Setup.getDropEnginePrefix()))
-						|| (!Setup.getDropCarPrefix().equals("") && line.startsWith(Setup.getDropCarPrefix()))){
+						|| (!Setup.getDropCarPrefix().equals("") && line.startsWith(Setup.getDropCarPrefix()))
+						|| (!Setup.getSwitchListDropCarPrefix().equals("") && line.startsWith(Setup.getSwitchListDropCarPrefix()))){
 					//log.debug("found a drop line");
 					c = Setup.getDropColor();
 				}
-				else if(!Setup.getLocalPrefix().equals("") && line.startsWith(Setup.getLocalPrefix())){
+				else if((!Setup.getLocalPrefix().equals("") && line.startsWith(Setup.getLocalPrefix()))
+						|| (!Setup.getSwitchListLocalPrefix().equals("") && line.startsWith(Setup.getSwitchListLocalPrefix()))){
 					//log.debug("found a drop line");
 					c = Setup.getLocalColor();
 				}
@@ -258,7 +261,6 @@ public class TrainPrintUtilities {
 	 * This method uses Desktop which is supported in Java 1.6. Since we're
 	 * currently limiting the code to Java 1.5, this method must be commented out.
 	 */
-	/*
 	public static void openDesktopEditor(File file){
 		if (!java.awt.Desktop.isDesktopSupported()) {
 			log.warn("desktop not supported");
@@ -275,12 +277,13 @@ public class TrainPrintUtilities {
 			e.printStackTrace();
 		}
 	}
-	*/
+
 	
 	/**
-	 * This method replaces the commented out method above for
+	 * This method replaces the method above for
 	 * compatibility with Java 1.5.
 	 */
+	/*
 	public static void openDesktopEditor(File file){
 		log.info("Open file using editor not supported yet!  Requires Java 1.6");
 		String path = file.getAbsolutePath();
@@ -292,6 +295,7 @@ public class TrainPrintUtilities {
 				JOptionPane.INFORMATION_MESSAGE);
 		return;
 	}
+	*/
 	
 	public static JComboBox getPrinterJComboBox(){
 		JComboBox box = new JComboBox();

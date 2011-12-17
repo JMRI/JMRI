@@ -135,6 +135,7 @@ public class CarLengths implements java.beans.PropertyChangeListener {
     			if (lengths[i].length()>length)
     				length = lengths[i].length();
     		}
+    		maxNameLength = length;
     		return length;
     	} else {
     		return maxNameLength;
