@@ -3,15 +3,12 @@ package jmri.jmrit.display.configurexml;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LightIcon;
-import org.jdom.Attribute;
 import org.jdom.Element;
-import java.util.List;
-import java.util.HashMap;
 
 /**
  * Handle configuration for display.LightIcon objects.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2002
+ * @author Pete Cressman Copyright: Copyright (c) 2011
  * @version $Revision: 17977 $
  */
 public class LightIconXml extends PositionableLabelXml {
@@ -20,8 +17,7 @@ public class LightIconXml extends PositionableLabelXml {
     }
 
     /**
-     * Default implementation for storing the contents of a
-     * LightIcon
+     * Default implementation for storing the contents of a LightIcon
      * @param o Object to store, of type LightIcon
      * @return Element containing the complete info
      */
@@ -57,7 +53,6 @@ public class LightIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o  Editor as an Object
      */
-    @SuppressWarnings("null")
 	public void load(Element element, Object o) {
         // create the objects
         Editor p = (Editor)o;
