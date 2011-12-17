@@ -298,7 +298,8 @@ public class InstanceManager {
 		instance().clockControl = cc;
 	}
     
-    static public ConsistManager consistManagerInstance() { return instance().consistManager; }
+    static public ConsistManager consistManagerInstance() { return getDefault(ConsistManager.class); 
+    }
 
     static public CommandStation commandStationInstance()  {
         return getDefault(CommandStation.class);
@@ -481,20 +482,21 @@ public class InstanceManager {
 	
     private ClockControl clockControl = null;
 
-    private ConsistManager consistManager = null;
-
     static public void setConsistManager(ConsistManager p) {
-        instance().addConsistManager(p);
+        store(p, ConsistManager.class);
+        instance().notifyPropertyChangeListener("consistmanager", null, null);
     }
 
-    protected void addConsistManager(ConsistManager p) {
-        if (p!=consistManager && consistManager!=null && log.isDebugEnabled()) log.debug("ConsistManager instance is being replaced: "+p);
-        if (p!=consistManager && consistManager==null && log.isDebugEnabled()) log.debug("consistManager instance is being installed: "+p);
-        consistManager = p;
-    }
 
     static public void setCommandStation(CommandStation p) {
          store(p, CommandStation.class);
+	 if(consistManagerInstance() == null || 
+            (consistManagerInstance()).getClass()==DccConsistManager.class){
+                // if there is a command station available, use
+                // the NMRA consist manager instead of the generic consist
+                // manager.
+		setConsistManager(new NmraConsistManager());
+	 }
          instance().notifyPropertyChangeListener("commandstation", null, null);
     }
 
