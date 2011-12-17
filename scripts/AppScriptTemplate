@@ -1,11 +1,14 @@
 #! /bin/sh
 #
-# Script to start a JMRI 2.12 application
+# Script to start a JMRI @VERSION@ application
+#
+# This script is used for both the Linux command line and in the Mac
+# OS X application bundle
 #
 # If you need to add any additional Java options or defines,
 # include them in the JMRI_OPTIONS environment variable
 #
-# If your serial ports are not shown in the initial list, you 
+# If your serial ports are not shown in the initial list, you
 # can include them in the environment variable JMRI_SERIAL_PORTS
 # separated by commas:
 #    export JMRI_SERIAL_PORTS="/dev/locobuffer,/dev/cmri"
@@ -26,28 +29,17 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision$ (CVS maintains this line, do not edit please)
+# $Revision$ (SVN maintains this line, do not edit please)
 #
 
+# keep track of the original location
+ORIGDIR="${PWD}"
+
 # define the class to be invoked
-CLASSNAME=apps.gui3.dp3.DecoderPro3
+CLASSNAME=@CLASS@
 
 # set DEBUG to anything to see debugging output
 # DEBUG=yes
-
-# if JMRI_HOME is defined, go there, else
-# change directory to where the script is located
-if [ "${JMRI_HOME}" ]
-then
-    cd "${JMRI_HOME}"
-else 
-    cd `dirname $0`
-fi
-[ "${DEBUG}" ] && echo "PWD: '${PWD}'"
-
-
-# build library path
-SYSLIBPATH=
 
 if [ -z "$OS" ]
 then
@@ -66,13 +58,46 @@ then
     fi
 fi
 
-if [ -d "lib/$OS" ]
+if [ "$OS" = "macosx" ]
 then
-  SYSLIBPATH="lib/$OS"
+    # on Mac OS X, we default to logging, since the Console app make it less visible unless you look for it
+    DEBUG=yes
+fi
+
+
+# if JMRI_HOME is defined, go there, else
+# change directory to where the script is located
+if [ "${JMRI_HOME}" ]
+then
+    cd "${JMRI_HOME}"
+else
+    SCRIPTDIR=`dirname "$0"`
+    cd "$SCRIPTDIR"
+fi
+[ "${DEBUG}" ] && echo "PWD: '${PWD}'"
+
+
+# build library path
+SYSLIBPATH=
+
+
+LIBDIR="lib"
+
+if [ "$OS" = "macosx" -a -z "$JMRI_HOME" ]
+then
+    BUNDLEDIR="${SCRIPTDIR}/../../.."
+    cd "${BUNDLEDIR}"
+    echo "PWD is now: ${PWD}"
+fi
+
+
+if [ -d "${LIBDIR}/$OS" ]
+then
+  SYSLIBPATH="${LIBDIR}/$OS"
 fi
 
 # one or another of these commands should return a useful value, except that sometimes
-# it is spelled funny (e,g, amd64, not x86_64).  
+# it is spelled funny (e,g, amd64, not x86_64).
 
 if [ -z "$ARCH" ]
 then
@@ -82,7 +107,7 @@ then
       if [ -n "$ARCH" ]
       then
 	    # canonicalize the architecture names where possible
-	    # we currently have AMD64 / X86_64 
+	    # we currently have AMD64 / X86_64
 	    if [ "$ARCH" = "amd64" ]
 	    then
 	      ARCH="x86_64"
@@ -94,9 +119,9 @@ then
 	      ARCH="i386"
 	    fi
 
-	    if [ -d "lib/$OS/$ARCH" ]
+	    if [ -d "${SYSLIBPATH}/$ARCH" ]
 	    then
-	       SYSLIBPATH="lib/$OS/$ARCH:$SYSLIBPATH"
+	       SYSLIBPATH="${SYSLIBPATH}/$ARCH:$SYSLIBPATH"
 
 	       # we're only interested in ONE of these values, so as soon as we find a supported
 	       # architecture directory, continue processing and start up the program
@@ -110,40 +135,66 @@ fi
 # build classpath dynamically
 CP=".:classes:java/classes"
 # list of jar files in home, not counting jmri.jar
-LOCALJARFILES=`ls *.jar | grep -v jmri.jar | tr "\n" ":"`
+LOCALJARFILES=`ls ${LIBDIR}/*.jar | grep -v jmri.jar | tr "\n" ":"`
 if [ ${LOCALJARFILES} ]
-then 
+then
   CP="${CP}:${LOCALJARFILES}"
 fi
 # add jmri.jar
 CP="${CP}:jmri.jar"
 # and contents of lib
-CP="${CP}:`ls -m lib/*.jar | tr -d ' \n' | tr ',' ':'`"
+CP="${CP}:`ls -m ${LIBDIR}/*.jar | tr -d ' \n' | tr ',' ':'`"
+
+if [ -d /System/Library/Java ]
+then
+    CP="${CP}":/System/Library/Java
+fi
+
 [ "${DEBUG}" ] && echo "CLASSPATH: '${CP}'"
 
-# configuration file name is 1st argument. 
+# configuration file name is 1st argument.
 # If not provided, build config file name dynamically
-APPNAME=`basename $0`
-if [ "$1" ]
-then 
-    CONFIGFILE=$1;
+if [ "$OS" = "macosx" ]
+then
+    APP_DIR=$(cd "$ORIGDIR"/../..; pwd)
+    APPNAME=`basename -s .app "${APP_DIR}" | awk '{print $1}'`
 else
-    CONFIGFILE=${APPNAME}Config2.xml;
+    APPNAME=`basename $0`
+fi
+[ ${DEBUG} ] && echo "APPNAME: '${APPNAME}'"
+
+
+if [ "$1" ]
+then
+    CONFIGFILE=$1;
 fi
 [ ${DEBUG} ] && echo "CONFIGFILE: '${CONFIGFILE}'"
 
 # create the option string
 #
 # Add JVM and RMI options to user options, if any
+
+if [ "$OS" = "macosx" ]
+then
+    MEMORY_OPTIONS="-Xms96m -Xmx640m"
+    OS_OPTIONS="-Dapple.laf.useScreenMenuBar=true"
+    OS_OPTIONS="${OS_OPTIONS} -Dcom.apple.macos.useScreenMenuBar=true"
+    OS_OPTIONS="${OS_OPTIONS} -Dcom.apple.mrj.application.apple.menu.about.name=${APPNAME}"
+else
+    MEMORY_OPTIONS="-Xms30m -Xmx200m"
+fi
+
+
 OPTIONS="${JMRI_OPTIONS} -noverify"
-OPTIONS="${OPTIONS} -Djava.security.policy=lib/security.policy"
+OPTIONS="${OPTIONS} -Djava.security.policy=${LIBDIR}/security.policy"
 OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:java/classes/"
-OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:lib"
+OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"
+
 # ddraw is disabled to get around Swing performance problems in Java 1.5.0
 OPTIONS="${OPTIONS} -Dsun.java2d.noddraw"
+
 # memory start and max limits
-OPTIONS="${OPTIONS} -Xms30m"
-OPTIONS="${OPTIONS} -Xmx200m"
+OPTIONS="${OPTIONS} ${OS_OPTIONS} ${MEMORY_OPTIONS}"
 
 # RXTX options (only works in some versions)
 OPTIONS="${OPTIONS} -Dgnu.io.rxtx.NoVersionOutput=true"
@@ -155,7 +206,7 @@ then
 fi
 
 # locate alternate serial ports
-ALTPORTS=`(echo $JMRI_SERIAL_PORTS; ls -fm /dev/ttyUSB* /dev/ttyACM* 2>/dev/null ) | tr -d " \n" | tr "," ":"`
+ALTPORTS=`(echo $JMRI_SERIAL_PORTS; ls -fm /dev/serial/by-id/* /dev/ttyUSB* /dev/ttyACM* 2>/dev/null ) | tr -d " \n" | tr "," ":"`
 if [ "${ALTPORTS}" ]
 then
   ALTPORTS=-Dgnu.io.rxtx.SerialPorts=${ALTPORTS}
@@ -174,4 +225,3 @@ while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ]; do
 done
 
 exit $EXIT_STATUS
-
