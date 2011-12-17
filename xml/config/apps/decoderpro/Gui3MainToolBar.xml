@@ -6,12 +6,7 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/guinode.xsd"
 >
-  <name>DecoderPro</name>
-
-   <node name="Help">
-     <help>package.apps.gui3.dp3.DecoderPro3</help>
-   </node>
-  
+    <name>DecoderPro</name>
     <node name="New Loco">
         <icon>resources/icons/misc/gui3/NewLocoButton.png</icon>
         <adapter>apps.gui3.dp3.PaneProgDp3Action</adapter>
@@ -21,6 +16,9 @@
         <icon>resources/icons/misc/gui3/IdentifyButton.png</icon>
         <current>identifyloco</current>
     </node>
-
+    <node name="Help">
+        <icon>resources/icons/misc/gui3/help-browser.png</icon>
+        <help>package.apps.gui3.dp3.DecoderPro3</help>
+    </node>
 </nodes>
   
