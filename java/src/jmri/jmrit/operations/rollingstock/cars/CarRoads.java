@@ -88,6 +88,7 @@ public class CarRoads {
     public void replaceName(String oldName, String newName){
     	addName(newName);
     	list.remove(oldName);
+    	maxNameLength = 0;	// reset maximum name length
     	firePropertyChange (CARROADS_NAME_CHANGED_PROPERTY, oldName, newName);
     	if (newName == null)
     		firePropertyChange (CARROADS_LENGTH_CHANGED_PROPERTY, list.size()+1, list.size());
