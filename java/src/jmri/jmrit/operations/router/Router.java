@@ -131,12 +131,14 @@ public class Router extends TrainCommon {
 							return true;
 						}
 						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterNotSendCarToAlternative"),new Object[]{_train.getName(), car.toString(), clone.getDestinationTrack().getAlternativeTrack().getName(), clone.getDestination().getName()}));
+					} else {
+						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterAlternateFailed"),new Object[]{clone.getDestinationTrack().getAlternativeTrack().getName(), status}));
 					}
 				}
 				// check to see if spur was full, if so, forward to yard if possible
 				if (Setup.isForwardToYardEnabled() && _status.contains(Track.LENGTH) && car.getLocation() != clone.getDestination()){
 					//log.debug("Siding full, searching for a yard at destination ("+clone.getDestinationName()+")");
-					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterSidingFull"),new Object[]{clone.getDestinationName()}));
+					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterSidingFull"),new Object[]{clone.getDestinationTrackName(), clone.getDestinationName()}));
 					Location dest = clone.getDestination();
 					List<String> yards = dest.getTracksByMovesList(Track.YARD);
 					log.debug("Found "+yards.size()+" yard(s) at destination ("+clone.getDestinationName()+")");
