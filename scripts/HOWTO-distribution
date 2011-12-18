@@ -86,6 +86,7 @@ Second, we build the release branch:
 
     ( to merge everything to date: svn merge ^/trunk/jmri
       If you do this, beware, you'll also merge in the new release.properties file, which you do NOT want to do.
+      You can undo that merge with 'svn revert release.properties'.
 
       add --dry-run to the command to see what would be merged in without doing it
     )
