@@ -1362,9 +1362,9 @@ public class Track {
     		e.setAttribute("itemCount", Integer.toString(getScheduleCount()));
     		e.setAttribute("factor", Integer.toString(getReservationFactor()));
     		e.setAttribute("scheduleMode", Integer.toString(getScheduleMode()));
-    		if (getAlternativeTrack() != null)
-    			e.setAttribute("alternative", getAlternativeTrack().getId());
     	}
+    	if (getAlternativeTrack() != null)
+    		e.setAttribute("alternative", getAlternativeTrack().getId());
     	if (_loadOptions != 0)
     		e.setAttribute("loadOptions", Integer.toString(_loadOptions));
     	if (_blockOptions != 0)
