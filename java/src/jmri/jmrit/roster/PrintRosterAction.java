@@ -99,13 +99,12 @@ public class PrintRosterAction  extends jmri.util.swing.JmriAbstractAction {
         List<RosterEntry> l = r.matchingList(null, null, null, null, null, null, null); // take all
         log.debug("Roster list size: "+l.size());
         for (RosterEntry re : l) {
-            if(rosterGroup!=null){
-                if(re.getAttribute(Roster.getRosterGroupProperty(rosterGroup))!=null){
-                    if(re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)).equals("yes"))
-                        re.printEntry(writer);
+            if (rosterGroup != null) {
+                if (re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)) != null
+                        && re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)).equals("yes")) {
+                    re.printEntry(writer);
                 }
-            }
-            else {
+            } else {
                 re.printEntry(writer);
             }
         }
