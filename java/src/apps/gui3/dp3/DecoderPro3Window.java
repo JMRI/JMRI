@@ -68,6 +68,7 @@ import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.swing.ResizableImagePanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.ConnectionConfig;
@@ -94,7 +95,7 @@ import jmri.jmrix.ConnectionConfig;
  */
 
 public class DecoderPro3Window
-        extends jmri.util.swing.multipane.TwoPaneTBWindow {
+        extends jmri.util.swing.multipane.TwoPaneTBWindow implements RosterGroupSelector {
 
     static int openWindowInstances = 0;
 
