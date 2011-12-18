@@ -1,6 +1,8 @@
 // RosterGroupSelector.java
 package jmri.jmrit.roster.rostergroup;
 
+import java.beans.PropertyChangeListener;
+
 /**
  * The getter method for a roster group selection.
  * <p>
@@ -12,5 +14,13 @@ package jmri.jmrit.roster.rostergroup;
 public interface RosterGroupSelector {
     
     public String getSelectedRosterGroup();
+    
+    public void	addPropertyChangeListener(PropertyChangeListener listener);
+    
+    public void	addPropertyChangeListener(String propertyName, PropertyChangeListener listener);
+    
+    public void removePropertyChangeListener(PropertyChangeListener listener);
+    
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener);
     
 }
