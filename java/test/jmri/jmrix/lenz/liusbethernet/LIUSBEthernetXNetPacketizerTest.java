@@ -8,7 +8,7 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2009</p>
  * @author Paul Bender 
- * @version $Revision: 17977 $
+ * @version $Revision$
  */
 public class LIUSBEthernetXNetPacketizerTest extends TestCase {
 

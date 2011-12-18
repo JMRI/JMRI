@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.liusbethernet.LIUSBEthernetAdapter class
  * @author			Paul Bender
- * @version         $Revision: 17977 $
+ * @version         $Revision$
  */
 public class LIUSBEthernetAdapterTest extends TestCase {
 
