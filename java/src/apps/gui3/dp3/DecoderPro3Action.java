@@ -7,6 +7,7 @@ import javax.swing.Icon;
 import javax.swing.WindowConstants;
 
 import java.awt.event.ActionEvent;
+import jmri.beans.Beans;
 
 /**
  * AbstractAction for the DP3 window so that further 
@@ -42,6 +43,9 @@ public class DecoderPro3Action extends jmri.util.swing.JmriAbstractAction
         if(!p.isWindowPositionSaved(mainFrame.getWindowFrameRef())) {
             mainFrame.setSize(new java.awt.Dimension(1024, 600));
             mainFrame.setPreferredSize(new java.awt.Dimension(1024, 600));
+        }
+        if (wi instanceof DecoderPro3Window) {
+            mainFrame.setSelectedRosterGroup(((DecoderPro3Window)wi).getSelectedRosterGroup());
         }
         mainFrame.setVisible(true);
         mainFrame.allowQuit(allowQuit);

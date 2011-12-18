@@ -38,6 +38,8 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
 
     static final int NUMCOL = 9+1;
     
+    private String rosterGroup = null;
+    
     boolean editable = false;
     
     public RosterTableModel() {
@@ -49,21 +51,21 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
         Roster.instance().addPropertyChangeListener(this);
     }
     
-    public void propertyChange(java.beans.PropertyChangeEvent e){
-        if(e.getPropertyName().equals("add")){
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (e.getPropertyName().equals("add")) {
             fireTableDataChanged();
-        } else if (e.getPropertyName().equals("remove")){
+        } else if (e.getPropertyName().equals("remove")) {
             fireTableDataChanged();
-        } else if (e.getPropertyName().equals("ActiveRosterGroup")){
-            fireTableDataChanged();
-        } else if(e.getPropertyName().equals("saved")){
+        } else if (e.getPropertyName().equals("saved")) {
             //TODO This really needs to do something like find the index of the roster entry here
             fireTableDataChanged();
+        } else if (e.getPropertyName().equals("selectedRosterGroup")) {
+            setRosterGroup((e.getNewValue() != null) ? e.getNewValue().toString() : null);
         }
     }
     
     public int getRowCount() {
-        return Roster.instance().numGroupEntries();
+        return Roster.instance().numGroupEntries(rosterGroup);
     }
 
     public int getColumnCount( ){
@@ -119,7 +121,7 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
      */
     public Object getValueAt(int row, int col) {
         // get roster entry for row
-        RosterEntry re = Roster.instance().getGroupEntry(row);
+        RosterEntry re = Roster.instance().getGroupEntry(rosterGroup, row);
         if (re == null){
         	log.debug("roster entry is null!");
         	return null;
@@ -174,6 +176,11 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
         return retval+5;
     }
     
+    public final void setRosterGroup(String rosterGroup) {
+        this.rosterGroup = rosterGroup;
+        fireTableDataChanged();
+    }
+
     // drop listeners
     public void dispose() {
     }

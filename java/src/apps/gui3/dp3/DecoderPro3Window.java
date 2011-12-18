@@ -44,8 +44,6 @@ import javax.swing.table.TableModel;
 import javax.swing.JTextPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelListener;
-import javax.swing.event.TableModelEvent;
 import javax.swing.Timer;
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
@@ -358,19 +356,21 @@ public class DecoderPro3Window
     jmri.jmrit.roster.swing.RosterTable rtable;
     ResourceBundle rb = ResourceBundle.getBundle("apps.gui3.dp3.DecoderPro3Bundle");
     JSplitPane rosterGroupSplitPane;
+    RosterGroupsPanel groups;
 
     JComponent createTop() {
         
-        String rosterGroup = p.getComboBoxLastSelection(rosterGroupSelectionCombo);
-        Roster.instance().setRosterGroup(rosterGroup);
-        activeRosterGroupField.setText(Roster.getRosterGroupName());
+        activeRosterGroupField.setText(p.getComboBoxLastSelection(rosterGroupSelectionCombo));
+        Object selectedRosterGroup = p.getProperty(getWindowFrameRef(), "selectedRosterGroup");
+        groups = new RosterGroupsPanel((selectedRosterGroup != null) ? selectedRosterGroup.toString() : null);
         
-        JPanel groups = new RosterGroupsPanel();
         final JPanel rosters = new JPanel();
         rosters.setLayout(new BorderLayout());
 
         // set up roster table
         rtable = new RosterTable(false, ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        ((RosterTableModel)rtable.getModel().getTableModel()).setRosterGroup(this.getSelectedRosterGroup());
+        rtable.setRosterGroupSource(groups);
         rosters.add(rtable, BorderLayout.CENTER);
 
         // add selection listener
@@ -481,6 +481,14 @@ public class DecoderPro3Window
           }
         };
 
+        groups.addPropertyChangeListener("selectedRosterGroup", new PropertyChangeListener() {
+
+            public void propertyChange(PropertyChangeEvent pce) {
+                p.setProperty(this.getClass().getName(), "selectedRosterGroup", pce.getNewValue());
+            }
+            
+        });
+        
         rosterGroupSplitPane.addPropertyChangeListener(propertyChangeListener);
         
         Roster.instance().addPropertyChangeListener( new PropertyChangeListener() {
@@ -1225,6 +1233,7 @@ public class DecoderPro3Window
         p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideSummary", hideBottomPane);
         p.setSimplePreferenceState(DecoderPro3Window.class.getName() + ".hideGroups", hideGroups);
         p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideRosterImage",hideRosterImage);
+        p.setProperty(getWindowFrameRef(), "selectedRosterGroup", groups.getSelectedRosterGroup());
         //Method to save table sort status
         int count = rtable.getModel().getColumnCount();
         for (int i = 0; i <count; i++){
@@ -1412,9 +1421,11 @@ public class DecoderPro3Window
 
     protected void newWindow(){
         DecoderPro3Action act = new DecoderPro3Action(getTitle(), allowQuit);
+        act.setWindowInterface(this);
         act.actionPerformed(null);
         firePropertyChange("closewindow", "setEnabled", true);
     }
+    
     protected void printLoco(boolean boo){
         PrintRosterEntry pre = new PrintRosterEntry(re, this, "programmers"+File.separator+programmer2+".xml");
         pre.printPanes(boo);
@@ -1471,7 +1482,11 @@ public class DecoderPro3Window
     }
 
     public String getSelectedRosterGroup() {
-        return Roster.getRosterGroup();
+        return groups.getSelectedRosterGroup();
+    }
+    
+    public void setSelectedRosterGroup(String rosterGroup) {
+        groups.setSelectedRosterGroup(rosterGroup);
     }
     
     @Override

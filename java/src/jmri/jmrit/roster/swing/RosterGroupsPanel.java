@@ -20,7 +20,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import javax.swing.DropMode;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -51,6 +50,7 @@ import javax.swing.tree.TreeSelectionModel;
 import jmri.jmrit.roster.FullBackupExportAction;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.IterableEnumeration;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.util.swing.JmriAbstractAction;
@@ -64,13 +64,13 @@ import jmri.util.swing.JmriAbstractAction;
  * @author  Randall Wood    Copyright (C) 2011
  * @see     jmri.jmrit.roster.Roster
  */
-public class RosterGroupsPanel extends JPanel {
+public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
     /**
      * Property change listeners can listen for property changes with this name
      * from this object to take action when a user selects a roster group.
      */
-    public final static String ROSTER_GROUP_SELECTED_EVENT = "RosterGroupSelected";
+    public final static String SELECTED_ROSTER_GROUP = "selectedRosterGroup";
     private static int GROUPS_MENU = 1;
     private static int ALL_ENTRIES_MENU = 2;
     private JScrollPane scrollPane;
@@ -80,7 +80,6 @@ public class RosterGroupsPanel extends JPanel {
     private DefaultMutableTreeNode _groups;
     //private DefaultMutableTreeNode _consists;
     private TreeSelectionListener _TSL;
-    private boolean _usesActiveRosterGroup;
     private String selectedRosterGroup = "";
     private JPopupMenu groupsMenu;
     private JPopupMenu allEntriesMenu;
@@ -91,44 +90,15 @@ public class RosterGroupsPanel extends JPanel {
      * Create a RosterGroupsPanel that tracks the active Roster Group
      */
     public RosterGroupsPanel() {
-        this(null, true);
+        this(null);
     }
 
     /**
-     * Create a RosterGroupsPanel that optionally tracks the active Roster Group
-     *
-     * If you create a RosterGroupsPanel that does not track the active Roster Group,
-     * you will need to add a PropertyChangeListener to the JTree returned by
-     * RosterGroupsPanel.getTree() to respond to changes to the roster group.
-     *
-     * @param useActiveRosterGroup
-     */
-    public RosterGroupsPanel(boolean useActiveRosterGroup) {
-        this(null, useActiveRosterGroup);
-    }
-
-    /**
-     * Create a RosterGroupsPanel that does not track the active Roster Group
-     * with the defaultRosterGroup selected.
-     *
-     * If the defaultRosterGroup is null, the selected Roster Group will be "All Entries"
+     * Create a RosterGroupTreePane with the defaultRosterGroup selected.
      *
      * @param defaultRosterGroup
      */
     public RosterGroupsPanel(String defaultRosterGroup) {
-        this(defaultRosterGroup, false);
-    }
-
-    /**
-     * Create a RosterGroupTreePane with the defaultRosterGroup selected that optionally
-     * tracks the active Roster Group.
-     *
-     * Note that if useActiveRosterGroup is true, the defaultRosterGroup is ignored.
-     *
-     * @param defaultRosterGroup
-     * @param useActiveRosterGroup
-     */
-    public RosterGroupsPanel(String defaultRosterGroup, boolean useActiveRosterGroup) {
         this.scrollPane = new JScrollPane(getTree());
         this.scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         setGroupsMenu(defaultMenu(GROUPS_MENU));
@@ -136,32 +106,7 @@ public class RosterGroupsPanel extends JPanel {
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
         add(getButtons(), BorderLayout.SOUTH);
-        setUsesActiveRosterGroup(useActiveRosterGroup);
         setSelectedRosterGroup(defaultRosterGroup);
-    }
-
-    /**
-     * Returns <code>true</code> if the RosterGroupsPanel selection changes
-     * as the Active roster group changes, and if the the Active roster group
-     * changes when the selection changes.
-     *
-     * @return flag indicating that the selection is the active roster group
-     */
-    public boolean getUsesActiveRosterGroup() {
-        return _usesActiveRosterGroup;
-    }
-
-    /**
-     * The selection in the RosterGroupsPanel may or may not reflect the active
-     * roster group, used for other purposes throughout JMRI.
-     *
-     * @param useActiveRosterGroup flag the selection should be the active roster group
-     */
-    public final void setUsesActiveRosterGroup(boolean useActiveRosterGroup) {
-        _usesActiveRosterGroup = useActiveRosterGroup;
-        if (useActiveRosterGroup) {
-            setSelectedRosterGroup(null);
-        }
     }
 
     /**
@@ -185,7 +130,7 @@ public class RosterGroupsPanel extends JPanel {
             String oldGroup = selectedRosterGroup;
             selectedRosterGroup = group;
             setSelectionToGroup(group);
-            firePropertyChange(ROSTER_GROUP_SELECTED_EVENT, oldGroup, group);
+            firePropertyChange(SELECTED_ROSTER_GROUP, oldGroup, group);
         }
     }
 
@@ -277,9 +222,6 @@ public class RosterGroupsPanel extends JPanel {
 
     private void setSelectionToGroup(String group) {
         _tree.removeTreeSelectionListener(_TSL);
-        if (_usesActiveRosterGroup) {
-            group = Roster.getRosterGroupName();
-        }
         if (group == null || group.equals(Roster.ALLENTRIES) || group.equals("")) {
             _tree.setSelectionPath(new TreePath(_model.getPathToRoot(_groups.getFirstChild())));
         } else {
@@ -447,6 +389,11 @@ public class RosterGroupsPanel extends JPanel {
         }
     }
 
+    // allow private classes to fire property change events as the RGP
+    protected void firePropertyChangeAsRGP(String propertyName, Object oldValue, Object newValue) {
+        this.firePropertyChange(propertyName, oldValue, newValue);
+    }
+
     // This class is required only for Java 1.5 support.
     class DropTargetListener implements java.awt.dnd.DropTargetListener {
 
@@ -490,10 +437,8 @@ public class RosterGroupsPanel extends JPanel {
             JmriAbstractAction a;
             if (g.isDescendant(_tree.getSelectionPath())) {
                 if (e.getActionCommand().equals("export")) {
-                    if (getUsesActiveRosterGroup()) {
-                        a = new FullBackupExportAction("Export...", scrollPane.getTopLevelAncestor());
-                        a.actionPerformed(e);
-                    }
+                    a = new FullBackupExportAction("Export...", scrollPane.getTopLevelAncestor());
+                    a.actionPerformed(e);
                 } else if (e.getActionCommand().equals("rename")) {
                     a = new RenameRosterGroupAction("Rename", scrollPane.getTopLevelAncestor());
                     a.setParameter("group", _tree.getSelectionPath().getLastPathComponent().toString());
@@ -572,8 +517,6 @@ public class RosterGroupsPanel extends JPanel {
                 setRosterGroups(_groups);
                 _model.reload(_groups);
                 setSelectionToGroup(selectedRosterGroup);
-            } else if (e.getPropertyName().equals("ActiveRosterGroup") && _usesActiveRosterGroup) {
-                setSelectionToGroup(Roster.getRosterGroupName());
             }
         }
     }
@@ -648,14 +591,14 @@ public class RosterGroupsPanel extends JPanel {
                 _tree.setSelectionPath(e.getOldLeadSelectionPath());
             } else if (g.isDescendant(e.getNewLeadSelectionPath())) {
                 // set Active Roster Group if selection is under "Roster Groups"
-                if (_usesActiveRosterGroup) {
-                    Roster.instance().setRosterGroup(_tree.getSelectionPath().getLastPathComponent().toString());
-                }
                 selectedRosterGroup = _tree.getSelectionPath().getLastPathComponent().toString();
+                if (Roster.ALLENTRIES.equals(selectedRosterGroup)) {
+                    selectedRosterGroup = null;
+                }
             } else {
                 selectedRosterGroup = null;
             }
-            firePropertyChange(ROSTER_GROUP_SELECTED_EVENT, oldGroup, selectedRosterGroup);
+            firePropertyChangeAsRGP(SELECTED_ROSTER_GROUP, oldGroup, selectedRosterGroup);
         }
     }
 

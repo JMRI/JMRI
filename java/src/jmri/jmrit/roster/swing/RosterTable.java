@@ -4,6 +4,7 @@ package jmri.jmrit.roster.swing;
 
 import javax.swing.*;
 
+import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.com.sun.TableSorter;
 
 /**
@@ -19,6 +20,8 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
     TableSorter         sorter;
     JTable			    dataTable;
     JScrollPane 		dataScroll;
+    
+    private RosterGroupSelector rosterGroupSource = null;
 
     public RosterTable() {
         this(false);
@@ -89,11 +92,32 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
     }
 	
     public void dispose() {
+        this.setRosterGroupSource(null);
         if (dataModel != null)
             dataModel.dispose();
         dataModel = null;
         dataTable = null;
         dataScroll = null;
         super.dispose();
+    }
+
+    /**
+     * @return the rosterGroupSource
+     */
+    public RosterGroupSelector getRosterGroupSource() {
+        return this.rosterGroupSource;
+    }
+
+    /**
+     * @param rosterGroupSource the rosterGroupSource to set
+     */
+    public void setRosterGroupSource(RosterGroupSelector rosterGroupSource) {
+        if (this.rosterGroupSource != null) {
+            this.rosterGroupSource.removePropertyChangeListener("selectedRosterGroup", dataModel);
+        }
+        this.rosterGroupSource = rosterGroupSource;
+        if (this.rosterGroupSource != null) {
+            this.rosterGroupSource.addPropertyChangeListener("selectedRosterGroup", dataModel);
+        }
     }
 }
