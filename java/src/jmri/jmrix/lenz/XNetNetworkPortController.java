@@ -2,9 +2,6 @@
 
 package jmri.jmrix.lenz;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-
 /**
  * Abstract base for classes representing a XNet communications port
  * <p>
@@ -20,14 +17,6 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
        adaptermemo = new XNetSystemConnectionMemo();
     }
 
-    // base class. Implementations will provide InputStream and OutputStream
-    // objects to XNetTrafficController classes, who in turn will deal in messages.    
-    // returns the InputStream from the port
-    public abstract DataInputStream getInputStream();
-    
-    // returns the outputStream to the port
-    public abstract DataOutputStream getOutputStream();
-    
     /**
      * Check that this object is ready to operate. This is a question
      * of configuration, not transient hardware status.

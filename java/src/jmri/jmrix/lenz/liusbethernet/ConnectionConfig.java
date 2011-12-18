@@ -45,9 +45,9 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
 
     public void loadDetails(JPanel details) {
      	super.loadDetails(details);
-        hostNameField.setText(LIUSBEthernetAdapter.DEFAULT_IP_ADDRESS);
+        hostNameField.setText(adapter.getHostName());
 	portFieldLabel.setText("Communication Port");
-	portField.setText(String.valueOf(LIUSBEthernetAdapter.COMMUNICATION_TCP_PORT));
+	portField.setText(String.valueOf(adapter.getPort()));
 	portField.setEnabled(false); // we can't change this now.
 	opt1Box.setEnabled(false); // we can't change this now.
     }

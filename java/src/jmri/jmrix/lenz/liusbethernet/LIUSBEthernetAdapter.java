@@ -37,7 +37,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
                                                             // to send a message
                                                             // Must be < 60s.
 
-        private CommunicationPortAdapter commAdapter= null;
+        //private CommunicationPortAdapter commAdapter= null;
 
 	private DataOutputStream pout=null; // for output to other classes
     	private DataInputStream pin = null; // for input from other classes
@@ -51,13 +51,13 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
             setPort(COMMUNICATION_TCP_PORT);
         }
 
-    synchronized public String openPort(String portName, String appName)  {
+
+    public void connect() throws Exception {
+        super.connect();
         if(log.isDebugEnabled()) log.debug("openPort called");
         // open the port in XPressNet mode
         try {
-            commAdapter=new CommunicationPortAdapter();
-            commAdapter.connect(); 
-            pout=commAdapter.getOutputStream();
+            pout=getOutputStream();
             PipedOutputStream tempPipeO=new PipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
@@ -69,7 +69,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
             log.error("init (connect): Exception: "+ex.toString());
         }
         keepAliveTimer();
-        return null; // normal operation
+        //return null; // normal operation
     }
 
         /**
@@ -79,20 +79,8 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         public boolean okToSend() {
           return status();
         }
-
-	// base class methods for the XNetNetworkPortController interface
-        public DataInputStream getInputStream() {
-                if (pin == null )
-                    log.error("getInputStream called before load(), stream not available");
-                    return pin;
-                }
-
-         public DataOutputStream getOutputStream() {
-            if (pout==null) log.error("getOutputStream called before load(), stream not available");
-            return pout;
-         }
    
-         public boolean status() {return (pout!=null && pin!=null);}
+    public boolean status() {return (pout!=null && pin!=null);}
     
 	/**
 	 * set up all of the other objects to operate with a LIUSB Ethernet 
@@ -116,10 +104,10 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
        // ports and writes any data received to the output pipe. 
        if(log.isDebugEnabled()) log.debug("Communication Adapter Thread Started");
        XNetReply r;
-       BufferedReader bufferedin = new BufferedReader(new InputStreamReader(commAdapter.getInputStream()));
+       BufferedReader bufferedin = new BufferedReader(new InputStreamReader(getInputStream()));
        for(;;){
              try{
-                synchronized(commAdapter) {
+                synchronized(this) {
                    r=loadChars(bufferedin);
                 }
             } catch(java.io.IOException e) {
@@ -185,7 +173,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
     }
  
         // Internal class for communication port connection
-        private static class CommunicationPortAdapter extends jmri.jmrix.AbstractNetworkPortController{
+        /*private static class CommunicationPortAdapter extends jmri.jmrix.AbstractNetworkPortController{
 		 public CommunicationPortAdapter(){
           		super();
           		setHostName(DEFAULT_IP_ADDRESS);
@@ -198,7 +186,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
                   public String getManufacturer() { return null; }
                   public void setManufacturer(String manu) { }
 
-        }
+        }*/
 
     /*
      * Set up the keepAliveTimer, and start it.
