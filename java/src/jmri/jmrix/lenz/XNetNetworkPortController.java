@@ -10,7 +10,7 @@ import java.io.DataOutputStream;
  * <p>
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
- * @author			Paul Bender    Copyright (C) 2004,2010
+ * @author			Paul Bender    Copyright (C) 2004,2010,2011
  * @version			$Revision$
  */
 public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetworkPortController implements XNetPortController {
@@ -45,16 +45,6 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
      * We need a way to say if the output buffer is empty or not
      */ 
     public void setOutputBufferEmpty(boolean s) {} // Maintained for compatibility with XNetPortController. Simply ignore calls !!!
-
-    /* Option 2 is not currently used with RxTx 2.0.  In the past, it
-       was used for the "check buffer status when sending" If this is still set        in a configuration file, we need to handle it, but we are not writing it        to new configuration files. */
-    public String getCurrentOption2Setting() {
-        if(mOpt2==null) return("no");
-        else return mOpt2;
-    }
-
-    protected String [] validOption2 = new String[]{"yes", "no"};
-    protected boolean checkBuffer = false;
 
     protected XNetSystemConnectionMemo adaptermemo = null;
 
