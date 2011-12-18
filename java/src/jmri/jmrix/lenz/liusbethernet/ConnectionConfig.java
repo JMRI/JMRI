@@ -1,0 +1,54 @@
+// ConnectionConfig.java
+
+package jmri.jmrix.lenz.liusbethernet;
+
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+
+/**
+ * Handle configuring an XPressNet layout connection
+ * via a LIUSBEthernet.
+ * <P>
+ * This uses the {@link LIUSBEthernetAdapter} class to do the actual
+ * connection.
+ *
+ * @author	Paul Bender Copyright (C) 2009
+ * @version	$Revision: 19061 $
+ *
+ * @see LIUSBEthernetAdapter
+ */
+public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfig {
+
+    /**
+     * Ctor for an object being created during load process;
+     * Swing init is deferred.
+     */
+    public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p){
+        super(p);
+
+    }
+    /**
+     * Ctor for a functional Swing object with no prexisting adapter
+     */
+    public ConnectionConfig() {
+	super();
+    }
+
+    public String name() { return "Lenz LIUSB Ethernet"; }
+
+    /**
+     * Load the adapter with an appropriate object
+     * <i>unless</i> it has already been set.
+     */
+    protected void setInstance() { if(adapter==null) adapter = new LIUSBEthernetAdapter(); }
+
+    public void loadDetails(JPanel details) {
+     	super.loadDetails(details);
+        hostNameField.setText(LIUSBEthernetAdapter.DEFAULT_IP_ADDRESS);
+	portFieldLabel.setText("Communication Port");
+	portField.setText(String.valueOf(LIUSBEthernetAdapter.COMMUNICATION_TCP_PORT));
+	portField.setEnabled(false); // we can't change this now.
+	opt1Box.setEnabled(false); // we can't change this now.
+    }
+}
