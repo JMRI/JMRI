@@ -8,6 +8,7 @@ import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
 
 import javax.swing.JOptionPane;
+import jmri.beans.Beans;
 import jmri.jmrit.roster.Roster;
 
 /**
@@ -56,17 +57,25 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
         _who = who;
     }
     Component _who;
-    String group;
+    String group = null;
 
     /**
-     * Call setContext(oldName) prior to calling actionPerformed(event) to bypass
-     * the roster group selection dialog if the name of the group to copied is
-     * already known.
+     * Call setParameter("group", oldName) prior to calling actionPerformed(event)
+     * to bypass the roster group selection dialog if the name of the group to
+     * be copied is already known and is not the selectedRosterGroup property of
+     * the WindowInterface.
      *
      * @param event
      */
     @Override
     public void actionPerformed(ActionEvent event) {
+        // only query wi for group if group was not set using setParameter
+        // prior to call
+        if (group == null && Beans.hasProperty(wi, "selectedRosterGroup")) {
+            group = (String)Beans.getProperty(wi, "selectedRosterGroup");
+        }
+        // null might be valid output from getting the selectedRosterGroup,
+        // so we have to check for null again.
         if (group == null) {
             group = (String) JOptionPane.showInputDialog(_who,
                     "<html><b>Duplicate roster group</b><br>Select the roster group to duplicate.</html>",
@@ -76,7 +85,9 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
                     Roster.instance().getRosterGroupList().toArray(),
                     Roster.getRosterGroup());
         }
+        // don't duplicate the null and ALLENTRIES groups (they are the entire roster)
         if (group == null || group.equals(Roster.ALLENTRIES)) {
+            group = null;
             return;
         }
 
@@ -88,6 +99,7 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
                 null,
                 null);
         if (entry == null || entry.equals(Roster.ALLENTRIES)) {
+            group = null;
             return;
         } else if (Roster.instance().getRosterGroupList().contains(entry)) {
             JOptionPane.showMessageDialog(_who,
@@ -99,6 +111,7 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
         // rename the roster grouping
         Roster.instance().copyRosterGroupList(group, entry);
         Roster.writeRosterFile();
+        group = null; // reset to default value since Action gets retained
     }
 
     // never invoked, because we overrode actionPerformed above

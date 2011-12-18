@@ -9,6 +9,7 @@ import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
 
 import javax.swing.JOptionPane;
+import jmri.beans.Beans;
 import jmri.jmrit.roster.Roster;
 
 /**
@@ -55,13 +56,25 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
     }
 
     Component _who;
-    String group;
+    String group = null;
 
     /**
+     * Call setParameter("group", oldName) prior to calling actionPerformed(event)
+     * to bypass the roster group selection dialog if the name of the group to
+     * be copied is already known and is not the selectedRosterGroup property of
+     * the WindowInterface.
+     *
      * @param event
      */
     @Override
     public void actionPerformed(ActionEvent event) {
+        // only query wi for group if group was not set using setParameter
+        // prior to call
+        if (group == null && Beans.hasProperty(wi, "selectedRosterGroup")) {
+            group = (String)Beans.getProperty(wi, "selectedRosterGroup");
+        }
+        // null might be valid output from getting the selectedRosterGroup,
+        // so we have to check for null again.
         if (group == null) {
             group = (String) JOptionPane.showInputDialog(_who,
                     "<html><b>Delete roster group</b><br>Roster entries in the group are not deleted.</html>",
@@ -71,16 +84,21 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
                     Roster.instance().getRosterGroupList().toArray(),
                     Roster.getRosterGroup());
         }
+        // can't delete the roster itself (ALLENTRIES and null represent the roster)
         if (group == null || group.equals(Roster.ALLENTRIES)) {
+            group = null;
             return;
         }
         // prompt for one last chance
-        if (!userOK(group)) return;
+        if (!userOK(group)) {
+            group = null;
+            return;
+        }
 
         // delete the roster grouping
         Roster.instance().delRosterGroupList(group);
         Roster.writeRosterFile();
-
+        group = null; // reset to default value
     }
 
     /**

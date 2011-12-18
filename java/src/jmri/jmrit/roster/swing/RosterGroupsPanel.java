@@ -391,6 +391,9 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
     // allow private classes to fire property change events as the RGP
     protected void firePropertyChangeAsRGP(String propertyName, Object oldValue, Object newValue) {
+        if (propertyName.equals(SELECTED_ROSTER_GROUP)) {
+            selectedRosterGroup = (String)newValue;
+        }
         this.firePropertyChange(propertyName, oldValue, newValue);
     }
 
