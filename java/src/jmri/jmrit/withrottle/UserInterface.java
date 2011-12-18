@@ -22,8 +22,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.net.NetworkInterface;
 import java.net.InetAddress;
 
 import java.text.MessageFormat;
@@ -207,7 +205,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         rosterGroupSelector.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                userPreferences.addComboBoxLastSelection(rosterGroupSelectorPreferencesName, ((JComboBox) e.getSource()).getSelectedItem().toString());
+                userPreferences.addComboBoxLastSelection(rosterGroupSelectorPreferencesName, (String)((JComboBox) e.getSource()).getSelectedItem());
             }
         });
     }
