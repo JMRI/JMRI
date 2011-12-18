@@ -5,7 +5,7 @@
  *                        NmraConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2003
- * @version               $Revision: 17977 $
+ * @version               $Revision$
  */
 
 
