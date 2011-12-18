@@ -66,7 +66,13 @@ Second, we build the release branch:
 
 ( ) Start the release by copying the current HEAD onto a new SVN "release branch"
 
+    ant make-test-release-branch
+
+    This will do (more or less) the following actions:
+
     svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/2.13.5
+    <check in an update of the version number of trunk/HEAD>
+    <check in an update of the version number of the new release>
 
 ( ) If using the CI system, set up CI builds for that branch
 
@@ -78,22 +84,18 @@ Second, we build the release branch:
 
     ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/2.13.5")
 
-    ( to merge everything to date: svn merge ^/trunk/jmri )
+    ( to merge everything to date: svn merge ^/trunk/jmri
+      If you do this, beware, you'll also merge in the new release.properties file, which you do NOT want to do.
+
+      add --dry-run to the command to see what would be merged in without doing it
+    )
+
+
     ( to merge a single later change: svn merge -c <changeset#> ^/trunk/jmri )
 
 ================================================================================
 Third, we do any necessary release-specific updates.
     (we need to work through automation of version number values)
-
-( ) Edit the top-level "release.properties" file in the branch to say:
-    release.is_branched=true
-
-    Edit the "release.build=" clause here and on trunk so that here
-    it's the current build number, and on trunk it's the _next_ number.
-
-    <property name="release.major" value="2" />
-    <property name="release.minor" value="13" />
-    <property name="release.build" value="5" />
 
 ( ) Edit the version number into the top help page on the branch (one place):
     bbedit help/en/index.html

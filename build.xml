@@ -1,3 +1,4 @@
+
 <!-- Ant build.xml file for JMRI development                                -->
 <!-- Bob Jacobsen, Copyright 2002-2011                                      -->
 
@@ -94,12 +95,14 @@
     <property name="resourcedir"  value="${basedir}/resources"/>
     <property name="scriptdir"    value="${basedir}/scripts"/>
     <property name="javadir"      value="${basedir}/java"/>
+    <property name="svnantdir"    value="${libdir}/svnant"/>
     <property name="doctarget"    value="${javadir}/doc"/>
     <property name="source"       value="${javadir}/src"/>
     <property name="target"       value="${javadir}/classes"/>
     <property name="test"         value="${javadir}/test"/>
     <property name="templatedir"  value="${javadir}/template"/>
     <property name="tmptarget"    value="${javadir}/tmp"/>
+    <property name="tempdir"      value="${basedir}/tempdir"/>    <!-- actual tmp files -->
 
     <!-- location for all generated java code -->
     <property name="genjavasrcdir" value="${tmptarget}/"/>
@@ -152,6 +155,25 @@
         <path        refid="runtime.class.path"/>
         <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
     </path>
+
+
+    <path id="path.svnant">
+      <pathelement location="${svnantdir}/svnant.jar"/>
+      <pathelement location="${svnantdir}/svnClientAdapter.jar"/>
+      <pathelement location="${svnantdir}/svnjavahl.jar"/>
+      <pathelement location="${svnantdir}/svnkit.jar"/>
+    </path>
+
+    <typedef
+        resource="org/tigris/subversion/svnant/svnantlib.xml"
+        classpathref="path.svnant"/>
+
+    <svnSetting
+        id="svn.settings"
+        username="${sourceforge.userid}"
+        password="${sourceforge.password}"
+        javahl="true"
+        svnkit="true"/>
 
     <target name="check-ant-requirements"
             description="check build system requirements">
@@ -233,6 +255,7 @@
             <fileset dir="${dist}"/>
             <fileset dir="${genjavasrcdir}"/>
             <fileset file="${javadir}/manifest"/>
+            <fileset dir="${tempdir}"/>
         </delete>
     </target>
 
@@ -1295,6 +1318,88 @@
         <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
     </target>
 
+
+
+<!-- targets to support revision control repository management -->
+
+    <!-- where is the SVN repository -->
+    <property name="repository.base-url" value="https://jmri.svn.sourceforge.net/svnroot/jmri"/>
+
+    <!-- you can set these to alternate values in local.properties
+         when you need to test.  Please do not change them here! -->
+    <property name="svndir.trunk" value="/trunk/jmri"/>
+    <property name="svndir.releases" value="/branches/jmri/releases"/>
+
+
+    <property name="repository.jmri-trunk" value="${repository.base-url}${svndir.trunk}"/>
+    <property name="repository.release-dir" value="${repository.base-url}${svndir.releases}"/>
+
+    <property name="head-dir" value="${tempdir}/HEAD"/>
+    <property name="branch-dir" value="${tempdir}/BRANCH"/>
+
+
+    <!-- several steps are involved in creating a new test release
+         branch from trunk/HEAD.  This target intends to manage as
+         many of them as possible -->
+    <target name="make-test-release-branch"
+            description="Make a new test release branch in SVN, copying the head of the trunk to the new release dir">
+
+        <!-- copy the trunk/HEAD to the new release directory.  Since
+             the trunk's release.properties always points to the NEXT
+             release (aka, the one we're making), release.properties and
+             ${release} will be correct for this new branch -->
+
+        <svn refid="svn.settings">
+            <copy srcUrl="${repository.jmri-trunk}"
+                  destUrl="${repository.release-dir}/${release}"
+                  message="make branch for ${release} release"/>
+        </svn>
+
+        <!-- now we check out JUST the very top level of the trunk and
+             the new release branch (that what depth="files" does).
+             This working copy might not be the trunk HEAD, so we
+             don't want to modify the file right here -->
+        <delete dir="${tempdir}"/>
+        <mkdir dir="${tempdir}"/>
+        <svn refid="svn.settings">
+            <checkout url="${repository.jmri-trunk}"
+                      depth="files"
+                      destPath="${head-dir}"/>
+            <checkout url="${repository.release-dir}/${release}"
+                      depth="files"
+                      destPath="${branch-dir}"/>
+        </svn>
+
+        <!-- in the trunk release.properties file, we now increment
+             the release.build value in order to point to the NEW next
+             release (the one after we're branching to create) -->
+        <propertyfile file="${head-dir}/release.properties">
+	    <entry key="release.build" type="int" operation="+" value="1"/>
+        </propertyfile>
+
+        <!-- and in the newly created release branch, we modify
+             release.properties to show that we have indeed branched -->
+        <propertyfile file="${branch-dir}/release.properties">
+	    <entry key="release.is_branched" type="string" operation="=" value="true"/>
+        </propertyfile>
+
+        <!-- now we check in the now modified files from trunk/HEAD
+             and the new branch -->
+        <svn refid="svn.settings">
+            <commit file="${branch-dir}/release.properties"
+                    message="set release.is-branched to true"/>
+            <commit file="${head-dir}/release.properties"
+                    message="set new revision number due to ${release} release branch creation"/>
+        </svn>
+
+        <!-- lastly, since we're probably in a HEAD tree, we're going
+             to try to update the release.properties file in this directory
+             to help keep things in sync -->
+        <svn refid="svn.settings">
+            <update file="release.properties"/>
+        </svn>
+        <echo message="new release branch URL is ${repository.release-dir}/${release}"/>
+    </target>
 
 
 </project>
