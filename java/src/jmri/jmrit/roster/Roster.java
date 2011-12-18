@@ -2,6 +2,7 @@
 
 package jmri.jmrit.roster;
 
+import java.beans.PropertyChangeListener;
 import jmri.jmrit.XmlFile;
 import java.io.File;
 
@@ -97,7 +98,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         }
         _list.add(i+1, e);
         if(_rostergroup!=null)
-            e.putAttribute(getRosterGroupWP(), "yes");
+            e.putAttribute(getRosterGroupProperty(getRosterGroup()), "yes");
         setDirty(true);
         firePropertyChange("add", null, e);
     }
@@ -112,7 +113,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         /*If there is a current roster group set then we need to make sure that the entry is complete, 
         this can be check as there should be a file name assocated with the entry*/
         if((_rostergroup!=null) && (e.getFileName()!=null)){
-            e.deleteAttribute(getRosterGroupWP());
+            e.deleteAttribute(getRosterGroupProperty(getRosterGroup()));
             e.updateFile();
         }
         else
@@ -130,13 +131,17 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * @return The Number of roster entries that are in the currently selected group.
      */
     public int numGroupEntries() {
+        return this.numGroupEntries(getRosterGroup());
+    }
+    
+    public int numGroupEntries(String group) {
         List<RosterEntry> l = matchingList(null, null, null, null, null, null, null);
         int num = 0;
         for (int i = 0; i < l.size(); i++) {
             RosterEntry r = l.get(i);
-            if(_rostergroup!=null){
-                if(r.getAttribute(getRosterGroupWP())!=null){
-                    if(r.getAttribute(getRosterGroupWP()).equals("yes"))
+            if(group!=null){
+                if(r.getAttribute(getRosterGroupProperty(group))!=null){
+                    if(r.getAttribute(getRosterGroupProperty(group)).equals("yes"))
                         num++;
                 }
             }
@@ -168,21 +173,30 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * @return The Number of roster entries that are in the currently selected group.
      */
     public RosterEntry getGroupEntry(int i) {
+        return getGroupEntry(getRosterGroup(), i);
+    }
+    
+    /**
+     * @param group
+     * @param i
+     * @return Number of roster entries in the group
+     */
+    public RosterEntry getGroupEntry(String group, int i) {
         List<RosterEntry> l = matchingList(null, null, null, null, null, null, null);
         int num = 0;
-        for (int j = 0; j < l.size(); j++) {
-            RosterEntry r = l.get(j);
-            if(_rostergroup!=null){
-                if(r.getAttribute(getRosterGroupWP())!=null){
-                    if(r.getAttribute(getRosterGroupWP()).equals("yes")){
-                        if(num==i)
-                            return r;
-                        num++;
+        for (RosterEntry r : l) {
+            if (group != null) {
+                if ((r.getAttribute(getRosterGroupProperty(group)) != null)
+                        && r.getAttribute(getRosterGroupProperty(group)).equals("yes")) {
+                    if (num == i) {
+                        return r;
                     }
+                    num++;
                 }
             } else {
-                if(num==i)
+                if (num == i) {
                     return r;
+                }
                 num++;
             }
         }
@@ -637,16 +651,24 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     // Note that dispose() doesn't act on these.  Its not clear whether it should...
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+    
     protected void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p,old,n);
     }
 
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
+    }
+
+    public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
     }
 
     /**
@@ -693,10 +715,6 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         return _rostergroup;
     }
     
-    public static String getRosterGroupWP(){
-        return getRosterGroupProperty(_rostergroup);
-    }
-
     /**
      * Get the string for a RosterGroup property in a RosterEntry
      *
