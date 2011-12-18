@@ -125,7 +125,7 @@ public class FontComboUtil {
             // Retrieve a plain version of the current font family
             Font f = new Font(s, Font.PLAIN, 12);
 
-            // Fairly naïve test if this is a symbol font
+            // Fairly naive test if this is a symbol font
 //            if (f.canDisplayUpTo("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")==-1) {
             // Check that a few different characters can be displayed
             if (f.canDisplay('F') && f.canDisplay('b') && f.canDisplay('8')) {
