@@ -14,7 +14,7 @@ import javax.swing.JTextField;
  * connection.
  *
  * @author	Paul Bender Copyright (C) 2009
- * @version	$Revision: 19061 $
+ * @version	$Revision$
  *
  * @see LIUSBEthernetAdapter
  */

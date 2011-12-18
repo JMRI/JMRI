@@ -21,7 +21,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author   Paul Bender Copyright (C) 2009	
- * @version $Revision: 18133 $
+ * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 

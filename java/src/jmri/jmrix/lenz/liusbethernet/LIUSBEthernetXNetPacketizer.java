@@ -16,7 +16,7 @@ import jmri.jmrix.AbstractMRListener;
  * <P>
  * In particular, LIUSBEthernetXNetPacketizer counts the number of commands received.
  * @author		Paul Bender, Copyright (C) 2009
- * @version 	$Revision: 18133 $
+ * @version 	$Revision$
  *
  */
 public class LIUSBEthernetXNetPacketizer extends jmri.jmrix.lenz.liusb.LIUSBXNetPacketizer {

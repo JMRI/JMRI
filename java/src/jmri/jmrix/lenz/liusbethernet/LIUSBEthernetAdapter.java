@@ -21,7 +21,7 @@ import java.io.*;
  * on the port.
  *
  * @author			Paul Bender (C) 2011
- * @version			$Revision: 18133 $
+ * @version			$Revision$
  */
 
 public class LIUSBEthernetAdapter extends XNetNetworkPortController {
