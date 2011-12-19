@@ -58,8 +58,9 @@ public class PhysicalLocationPanel extends JPanel {
 	gbc1.weighty = 100.0;
 	gbc1.gridwidth = 1;
 	gbc1.anchor = GridBagConstraints.LINE_START;
-	if (fill && false)
+	if (fill && false) {
 	    gbc1.fill = GridBagConstraints.HORIZONTAL;
+        }
 	return(gbc1);
     }
 
@@ -129,9 +130,9 @@ public class PhysicalLocationPanel extends JPanel {
 	yt.setText("" + p.getY());
 	zt.setText("" + p.getZ());
 	*/
-	xs.setValue((new Float(p.getX())).doubleValue());
-	ys.setValue((new Float(p.getY())).doubleValue());
-	zs.setValue((new Float(p.getZ())).doubleValue());
+	xs.setValue(p.getX());
+	ys.setValue(p.getY());
+	zs.setValue(p.getZ());
     }
 
     public void setValue(String s) {
