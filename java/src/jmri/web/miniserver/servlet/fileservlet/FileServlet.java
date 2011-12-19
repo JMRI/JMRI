@@ -369,7 +369,7 @@ public class FileServlet extends AbstractServlet {
     }
 
     
-	static DateFormat dfGMT;
+    private DateFormat dfGMT;
 
     // Send standard HTTP response (with default values)
     protected void printHeader(PrintWriter out, String mimeType, String responseStatus) {
