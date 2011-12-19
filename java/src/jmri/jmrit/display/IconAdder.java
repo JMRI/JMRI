@@ -420,7 +420,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         	}
             int nextWidth = but.getIcon().getIconWidth();
             int nextHeight = but.getIcon().getIconHeight();
-            if ((Math.abs(lastWidth - nextWidth) > 3 || Math.abs(lastHeight - lastHeight) > 3)) {
+            if ((Math.abs(lastWidth - nextWidth) > 3 || Math.abs(lastHeight - nextHeight) > 3)) {
                 JOptionPane.showMessageDialog(this, rb.getString("IconSizeDiff"), rb.getString("warnTitle"),
                                                      JOptionPane.WARNING_MESSAGE);
                 return;
