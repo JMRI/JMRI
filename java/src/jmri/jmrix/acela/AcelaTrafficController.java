@@ -352,7 +352,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         // So we will not poll sensors or send om/off commands until we have
         // initialized all of the sensor modules -- this can take several seconds
         // during a cold system startup.
-        if ((currentSensorAddress == 0) | (currentSensorAddress != getAcelaSensorInitCount())) {
+        if ((currentSensorAddress == 0) || (currentSensorAddress != getAcelaSensorInitCount())) {
             return null;
         }
 
