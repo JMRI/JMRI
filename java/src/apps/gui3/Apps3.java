@@ -92,7 +92,7 @@ public abstract class Apps3 extends apps.AppsBase {
     
     /**
      * Provide access to a place where applications
-     * can expect the configurion code to build run-time
+     * can expect the configuration code to build run-time
      * buttons.
      * @see apps.CreateButtonPanel
      * @return null if no such space exists
@@ -177,49 +177,47 @@ public abstract class Apps3 extends apps.AppsBase {
     }
     
     static SplashWindow sp = null;
-	static java.awt.event.AWTEventListener debugListener = null;
-	static boolean debugFired = false;
-    static boolean debugmsg=false;
+    static java.awt.event.AWTEventListener debugListener = null;
+    static boolean debugFired = false;
+    static boolean debugmsg = false;
     
     static protected void splash(boolean show, boolean debug) {
         if (debugListener == null && debug) {
-			// set a global listener for debug options
-			debugFired = false;
-			java.awt.Toolkit.getDefaultToolkit().addAWTEventListener(
-				debugListener = new java.awt.event.AWTEventListener() {
-						public void eventDispatched(java.awt.AWTEvent e) {
-                            if (!debugFired) {
-                                /*We set the debugmsg flag on the first instance of the user pressing any button
-                                and the if the debugFired hasn't been set, this allows us to ensure that we don't
-                                miss the user pressing F8, while we are checking*/
-                                debugmsg=true;
-                                if (e.getID()==KeyEvent.KEY_PRESSED){
-                                    java.awt.event.KeyEvent ky = (java.awt.event.KeyEvent) e;
-                                    if (ky.getKeyCode()==119)
-                                        startupDebug();
-                                } else {
-                                    debugmsg=false;
-                                }
-							}
-						}
-					},
-					java.awt.AWTEvent .KEY_EVENT_MASK
-				);
-		}
+            // set a global listener for debug options
+            debugFired = false;
+            debugListener = new java.awt.event.AWTEventListener() {
 
-		// bring up splash window for startup
-        
-        if (sp==null){
-            if (debug){
-                sp = new SplashWindow(splashDebugMsg());
-            } else sp = new SplashWindow();
+                public void eventDispatched(java.awt.AWTEvent e) {
+                    if (!debugFired) {
+                        /*We set the debugmsg flag on the first instance of the user pressing any button
+                        and the if the debugFired hasn't been set, this allows us to ensure that we don't
+                        miss the user pressing F8, while we are checking*/
+                        debugmsg = true;
+                        if (e.getID() == KeyEvent.KEY_PRESSED) {
+                            if (((java.awt.event.KeyEvent) e).getKeyCode() == 119) {
+                                startupDebug();
+                            }
+                        } else {
+                            debugmsg = false;
+                        }
+                    }
+                }
+            };
+            java.awt.Toolkit.getDefaultToolkit().addAWTEventListener(debugListener,
+                    java.awt.AWTEvent.KEY_EVENT_MASK);
+        }
+
+        // bring up splash window for startup
+
+        if (sp == null) {
+            sp = new SplashWindow((debug) ? splashDebugMsg() : null);
         }
         sp.setVisible(show);
         if (!show) {
             sp.dispose();
-			java.awt.Toolkit.getDefaultToolkit().removeAWTEventListener(debugListener);
-            debugListener=null;
-			sp = null;
+            java.awt.Toolkit.getDefaultToolkit().removeAWTEventListener(debugListener);
+            debugListener = null;
+            sp = null;
         }
     }
     
