@@ -22,11 +22,11 @@ import org.jdom.Element;
 
 public class ConsistFile extends jmri.jmrit.XmlFile {
 
-       protected jmri.ConsistManager ConsistMan = null;   
+       protected jmri.ConsistManager consistMan = null;   
 
        public ConsistFile(){
           super();
-          ConsistMan=jmri.InstanceManager.consistManagerInstance();
+          consistMan=jmri.InstanceManager.consistManagerInstance();
           // set the location to a subdirectory of the defined roster
           // directory
           setFileLocation(jmri.jmrit.roster.Roster.getFileLocation()+
@@ -64,7 +64,7 @@ public class ConsistFile extends jmri.jmrit.XmlFile {
     				   Integer.parseInt(cnumber.getValue()),
     				   false);
     	   }
-    	   newConsist=ConsistMan.getConsist(consistAddress);
+    	   newConsist=consistMan.getConsist(consistAddress);
     	   if(!(newConsist.getConsistList().isEmpty())) {
     		   if(log.isDebugEnabled())
     			   log.debug("Consist " + consistAddress.toString() + " is not empty.  Using version in memory.");
@@ -266,7 +266,7 @@ public class ConsistFile extends jmri.jmrit.XmlFile {
 
            for(int i=0; i<consistList.size();i++)
            {
-                jmri.Consist newConsist=ConsistMan.getConsist(consistList.get(i));
+                jmri.Consist newConsist=consistMan.getConsist(consistList.get(i));
 		roster.addContent(ConsistToXML(newConsist));
            }
            root.addContent(roster);

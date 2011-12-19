@@ -12,7 +12,7 @@ public class WiFiConsistFile extends ConsistFile{
 
     public WiFiConsistFile(jmri.ConsistManager cm){
           super();
-          ConsistMan=cm;
+          consistMan=cm;
           loadStoredConsistFile("wifiConsist.xml");
        }
 
