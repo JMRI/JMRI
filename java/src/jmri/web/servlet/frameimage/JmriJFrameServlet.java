@@ -22,7 +22,7 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-/** 
+/**
  * A simple servlet that returns a JMRI window as
  * a PNG image or enclosing HTML file.
  * <p>
@@ -34,14 +34,14 @@ import javax.servlet.ServletResponse;
  * <dt>no name<dd>Return an HTML page with links to available images
  * </dl>
  *<P>
- * The associated .properties file contains the HTML fragments used to 
+ * The associated .properties file contains the HTML fragments used to
  * form replies.
  *<P>
- *  Parts taken from Core Web Programming from 
+ *  Parts taken from Core Web Programming from
  *  Prentice Hall and Sun Microsystems Press,
  *  http://www.corewebprogramming.com/.
  *  &copy; 2001 Marty Hall and Larry Brown;
- *  may be freely used or adapted. 
+ *  may be freely used or adapted.
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
  * @version     $Revision$
@@ -58,15 +58,15 @@ public class JmriJFrameServlet implements Servlet {
     boolean protect = false;
     protected int maxRequestLines = 50;
     protected String serverName = "JMRI-JFrameServer";
-    static java.util.ResourceBundle rb 
+    static java.util.ResourceBundle rb
             = java.util.ResourceBundle.getBundle("jmri.web.servlet.frameimage.JmriJFrameServlet");
 
     public void destroy() {}
-    
+
     public void init(javax.servlet.ServletConfig config) {}
-    
+
     public String getServletInfo() { return ""; }
-    
+
     public javax.servlet.ServletConfig getServletConfig() { return null; }
 
     public void service(ServletRequest req, ServletResponse res) throws java.io.IOException {
@@ -197,18 +197,19 @@ public class JmriJFrameServlet implements Servlet {
             handleError("Can't handle suffix [" + suffix + "], use .png or .html", 400, res);
         }
     }
-   
-    void imageReply(String name, PrintWriter out, JmriJFrame frame, ServletResponse res ) 
+
+    void imageReply(String name, PrintWriter out, JmriJFrame frame, ServletResponse res )
             throws java.io.IOException {
     	putFrameImage(frame, res.getOutputStream());
     }
-    
+
     //send html list of available frames
     void listReply(PrintWriter out, ServletResponse res) {
 
         String h = rb.getString("FrameHeader");
-        String s = rb.getString("FrameDocType");
-        s += rb.getString("ListFront");
+
+        StringBuilder sb = new StringBuilder(rb.getString("FrameDocType"));
+        sb.append(rb.getString("ListFront"));
     	// list frames, (open JMRI windows)
     	List<JmriJFrame> framesList = JmriJFrame.getFrameList();
     	int framesNumber = framesList.size();
@@ -220,15 +221,21 @@ public class JmriJFrameServlet implements Servlet {
     			//format a table row for each valid window (frame)
     			String frameURLhtml = "/frame/" + frameTitle.replaceAll(" ", "%20") + ".html";
     			String frameURLpng  = "/frame/" + frameTitle.replaceAll(" ", "%20") + ".png";
-    			s += "<TR><TD>" + frameTitle + "</TD>\n";
-    			s += "<TD><A href='"+frameURLhtml+"'><IMG src='"+frameURLpng+"' /></A></TD></TR>\n"; 
+                        sb.append("<TR><TD>");
+                        sb.append(frameTitle);
+                        sb.append("</TD>\n");
+                        sb.append("<TD><A href='");
+                        sb.append(frameURLhtml);
+                        sb.append("'><IMG src='");
+                        sb.append(frameURLpng);
+                        sb.append("' /></A></TD></TR>\n");
     		}
     	}
 
-    	s += "</TABLE>";
-        
-        s += rb.getString("ListFooter");
+    	sb.append("</TABLE>");
+        sb.append(rb.getString("ListFooter"));
 
+        String s = sb.toString();
         h += s.length() + "\n";
         Date now = new Date();
 		h += "Date: " + now + "\n";
@@ -239,7 +246,7 @@ public class JmriJFrameServlet implements Servlet {
 //        out.close();
         if (log.isDebugEnabled()) log.debug("Sent " + s.length() + " bytes html.");
     }
-    
+
     void htmlReply(String name, PrintWriter out, JmriJFrame frame, ServletResponse res, boolean click) {
         // 0 is host
         // 1 is frame name
@@ -279,13 +286,13 @@ public class JmriJFrameServlet implements Servlet {
             log.debug("Sent " + s.length() + " bytes jframe html with click=" + (click ? "True" : "False"));
         }
     }
-   
+
     void sendClick(String name, Component c, int xg, int yg, Container FrameContentPane) {  // global positions
         int x = xg-c.getLocation().x;
         int y = yg-c.getLocation().y;
         // log.debug("component is "+c);
         if (log.isDebugEnabled()) log.debug("Local click at "+x+","+y);
-        
+
         if (c.getClass().equals(JButton.class)) {
         	((JButton)c).doClick();
             return;
@@ -315,7 +322,7 @@ public class JmriJFrameServlet implements Servlet {
             );
             ((jmri.jmrit.display.MultiSensorIcon)c).doMouseClicked(e);
             return;
-           
+
         } else if (c instanceof jmri.jmrit.display.Positionable) {
             if (log.isDebugEnabled()) log.debug("Invoke Pressed, Released and Clicked on Positionable");
 
@@ -355,8 +362,8 @@ public class JmriJFrameServlet implements Servlet {
             if (log.isDebugEnabled()) log.debug("Invoke "+la.length+" contained mouse listeners");
             if (log.isDebugEnabled()) log.debug("component is "+c);
             /*  Using c.getLocation() above we adjusted the click position for the offset of the control relative to the frame.
-             *  That works fine in the cases above.  
-             *  In this case getLocation only provides the offset of the control relative to the Component.  
+             *  That works fine in the cases above.
+             *  In this case getLocation only provides the offset of the control relative to the Component.
              *  So we also need to adjust the click position for the offset of the Component relative to the frame.
              */
 // was incorrect for zoomed panels, turned off
@@ -364,7 +371,7 @@ public class JmriJFrameServlet implements Servlet {
 //            Point pf = FrameContentPane.getLocationOnScreen();
 //           	x -= (int)(pc.getX() - pf.getX());
 //           	y -= (int)(pc.getY() - pf.getY());
-           	
+
             for (int i = 0; i<la.length; i++) {
                 if (log.isDebugEnabled()) log.debug("Send click sequence at "+x+","+y);
                 sendClickSequence(la[i], c, x, y);
@@ -372,7 +379,7 @@ public class JmriJFrameServlet implements Servlet {
            return;
         }
     }
-    
+
     private void sendClickSequence(MouseListener m, Component c, int x, int y) {
     	/*
     	 * create the sequence of mouse events needed to click on a control:
@@ -465,9 +472,9 @@ public class JmriJFrameServlet implements Servlet {
 
         out.println(s);
     }
-    
+
     /**
-     * Parse input lines to find 
+     * Parse input lines to find
      * frame name.
      */
     String parseRequest(String[] input, int len) {
@@ -475,20 +482,20 @@ public class JmriJFrameServlet implements Servlet {
         //
         // remove HTTP from back
     	String part = input[0].substring(0, input[0].lastIndexOf(" HTTP"));
-        
+
         // remove "GET /" from front
         part = part.substring(5, part.length());
-        
+
         //return empty string now if no frame passed
         int pos = part.indexOf('/');
         if (pos == -1) {
             if (log.isDebugEnabled()) log.debug("request is key-only");
         	return "";
         }
-        
+
         //remove key from front
         String rawRequest = part.substring(part.indexOf('/'), part.length());
-        
+
         // decode
         String request = "<error>";
         try {
@@ -501,18 +508,18 @@ public class JmriJFrameServlet implements Servlet {
             log.error("error in URI: "+e4);
         }
         if (log.isDebugEnabled()) log.debug("request is ["+request+"]");
-        
+
         return request;
     }
-    
-    /** 
+
+    /**
      * Get the frame graphics as png and output to browser
      */
     void putFrameImage(JmriJFrame frame, OutputStream outStream) {
     	try {
-    		BufferedImage image 
-    		= new BufferedImage(frame.getContentPane().getWidth(), 
-    				frame.getContentPane().getHeight(), 
+    		BufferedImage image
+    		= new BufferedImage(frame.getContentPane().getWidth(),
+    				frame.getContentPane().getHeight(),
     				BufferedImage.TYPE_INT_RGB);
     		frame.getContentPane().paint(image.createGraphics());
 
@@ -537,9 +544,9 @@ public class JmriJFrameServlet implements Servlet {
     		log.error(e.getMessage());
     	}
     }
-        
+
     // Send standard HTTP response for image/png type
-   
+
     private void printHeader(PrintWriter out, long fileSize) {
     	String h;
 		h = "HTTP/1.1 200 OK\n" +
@@ -552,24 +559,24 @@ public class JmriJFrameServlet implements Servlet {
         		Date now = new Date();
         		h += "Date: " + now + "\n";
         		h += "Last-Modified: " + now + "\n";
-        		
+
                 h += "\n";  //blank line to indicate end of header
     	out.print(h);
     	if (log.isDebugEnabled()) log.debug("Sent Header: "+h.replaceAll("\\n"," | "));
         out.flush();
     }
-    
-    
+
+
     // Normal Web page requests use GET, so this server can simply
-    // read a line at a time. However, HTML forms can also use 
+    // read a line at a time. However, HTML forms can also use
     // POST, in which case we have to determine the number of POST
     // bytes that are sent so we know how much extra data to read
     // after the standard HTTP headers.
-    
+
     private boolean usingPost(String[] inputs) {
         return(inputs[0].toUpperCase().startsWith("POST"));
     }
-    
+
     private void readPostData(String[] inputs, int i,
                               BufferedReader in)
         throws IOException {
@@ -578,10 +585,10 @@ public class JmriJFrameServlet implements Servlet {
         int length = in.read(postData, 0, contentLength);
         inputs[++i] = new String(postData, 0, length);
     }
-    
+
     // Given a line that starts with Content-Length,
     // this returns the integer value specified.
-    
+
     private int contentLength(String[] inputs) {
         String input;
         for (int i=0; i<inputs.length; i++) {
@@ -593,7 +600,7 @@ public class JmriJFrameServlet implements Servlet {
         }
         return(0);
     }
-    
+
     private int getLength(String length) {
         StringTokenizer tok = new StringTokenizer(length);
         tok.nextToken();
