@@ -1172,7 +1172,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
          * Sets which signalMasts must be at Danager for the signal not to be set at a stop aspect
          * @param blocks
          */
-        void setAutoMasts(Hashtable<SignalMast, String> masts, boolean overright){
+        void setAutoMasts(Hashtable<SignalMast, String> newAutoMasts, boolean overright){
             if(log.isDebugEnabled())
                 log.debug(destination.getDisplayName() + " setAutoMast Called");
             if (this.autoMasts!=null){
@@ -1186,20 +1186,20 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             }
             destMastInit = false;
             if(overright){
-                if(masts==null){
+                if(newAutoMasts==null){
                     this.autoMasts = new Hashtable<SignalMast, String>(0);
                 } else {
-                    this.autoMasts=masts;
+                    this.autoMasts=newAutoMasts;
                 }
             } else {
-                if (this.autoMasts==null){
+                if (newAutoMasts==null){
                     this.autoMasts = new Hashtable<SignalMast, String>(0);
                 } else {
-                    Enumeration<SignalMast> keys = this.masts.keys();
+                    Enumeration<SignalMast> keys = newAutoMasts.keys();
                     while ( keys.hasMoreElements() )
                     {
                        SignalMast key = keys.nextElement();
-                        this.autoMasts.put(key, masts.get(key));
+                       this.autoMasts.put(key, newAutoMasts.get(key));
                     }
                 }
             }
