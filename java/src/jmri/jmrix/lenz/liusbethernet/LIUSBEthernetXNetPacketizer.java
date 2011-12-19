@@ -1,5 +1,5 @@
 /**
- * LIUSBXNetPacketizer.java
+ * LIUSBEthernetXNetPacketizer.java
  */
 
 package jmri.jmrix.lenz.liusbethernet;
@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRListener;
  * specific requirements of the LIUSBEthernet.
  * <P>
  * In particular, LIUSBEthernetXNetPacketizer counts the number of commands received.
- * @author		Paul Bender, Copyright (C) 2009
+ * @author		Paul Bender, Copyright (C) 2011
  * @version 	$Revision$
  *
  */
@@ -27,58 +27,12 @@ public class LIUSBEthernetXNetPacketizer extends jmri.jmrix.lenz.liusb.LIUSBXNet
     	}
 
     /**
-     * Actually transmits the next message to the port
-     */
-     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
-        if (log.isDebugEnabled()) log.debug("forwardToPort message: ["+m+"]");
-        // remember who sent this
-        mLastSender = reply;
-
-        // forward the message to the registered recipients,
-        // which includes the communications monitor, except the sender.
-        // Schedule notification via the Swing event queue to ensure order
-        Runnable r = new XmtNotifier(m, mLastSender, this);
-        javax.swing.SwingUtilities.invokeLater(r);
-
-        // stream the bytes
-        try {
-            if (ostream != null) {
-                while(m.getRetries()>=0) {
-                    if(portReadyToSend(controller)) {
-                        ostream.write((m+"\n\r").getBytes());
-                        log.debug("written");
-                        break;
-                    } else if(m.getRetries()>=0) {
-                        if (log.isDebugEnabled()) log.debug("Retry message: "+m.toString() +" attempts remaining: " + m.getRetries());
-                        m.setRetries(m.getRetries() - 1);
-                        try {
-                            synchronized(xmtRunnable) {
-                                xmtRunnable.wait(m.getTimeout());
-                            }
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt(); // retain if needed later
-                            log.error("retry wait interupted");
-                        }
-                    } else log.warn("sendMessage: port not ready for data sending: " +m.toString());
-                }
-            } else {  // ostream is null
-                // no stream connected
-                connectionWarn();
-            }
-        } catch (Exception e) {
-                // TODO Currently there's no port recovery if an exception occurs
-                // must restart JMRI to clear xmtException.
-                xmtException = true;
-            portWarn(e);
-        }
-     }
-
-    /**
      * Determine how much many bytes the entire
      * message will take, including space for header and trailer
      * @param m  The message to be sent
      * @return Number of bytes
      */
+     @Override
     protected int lengthOfByteStream(jmri.jmrix.AbstractMRMessage m) {
         int len = m.getNumDataElements() + 2;
         int cr = 0;
@@ -91,6 +45,7 @@ public class LIUSBEthernetXNetPacketizer extends jmri.jmrix.lenz.liusb.LIUSBXNet
      * @param msg  The output byte stream
      * @return next location in the stream to fill
      */
+     @Override
      protected int addHeaderToOutput(byte[] msg, jmri.jmrix.AbstractMRMessage m)     {
         if(log.isDebugEnabled()) log.debug("Appending 0xFF 0xFE to start of outgoing message");
         msg[0]=(byte) 0xFF;

@@ -13,7 +13,7 @@ import javax.swing.JTextField;
  * This uses the {@link LIUSBEthernetAdapter} class to do the actual
  * connection.
  *
- * @author	Paul Bender Copyright (C) 2009
+ * @author	Paul Bender Copyright (C) 2011
  * @version	$Revision$
  *
  * @see LIUSBEthernetAdapter

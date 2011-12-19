@@ -20,7 +20,7 @@ import org.jdom.Element;
  * as that class is the one actually registered. Reads are brought
  * here directly via the class attribute in the XML.
  *
- * @author   Paul Bender Copyright (C) 2009	
+ * @author   Paul Bender Copyright (C) 2011	
  * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {

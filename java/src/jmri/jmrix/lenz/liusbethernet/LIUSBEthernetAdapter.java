@@ -37,8 +37,6 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
                                                             // to send a message
                                                             // Must be < 60s.
 
-        //private CommunicationPortAdapter commAdapter= null;
-
 	private DataOutputStream pout=null; // for output to other classes
     	private DataInputStream pin = null; // for input from other classes
 	// internal ends of the pipe
@@ -47,11 +45,13 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
 
         public LIUSBEthernetAdapter(){
 	    super();
+            if(log.isDebugEnabled()) log.debug("Constructor Called");
             setHostName(DEFAULT_IP_ADDRESS);
             setPort(COMMUNICATION_TCP_PORT);
         }
 
 
+        @Override
     public void connect() throws Exception {
         super.connect();
         if(log.isDebugEnabled()) log.debug("openPort called");
@@ -76,57 +76,34 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
          * Can the port accept additional characters?
          * return true if the port is opened.
          */
+        @Override
         public boolean okToSend() {
           return status();
         }
    
+        @Override
     public boolean status() {return (pout!=null && pin!=null);}
     
 	/**
 	 * set up all of the other objects to operate with a LIUSB Ethernet 
 	 * interface
 	 */
+        @Override
 	public void configure() {
             if(log.isDebugEnabled()) log.debug("configure called");
             // connect to a packetizing traffic controller
             XNetTrafficController packets = (new LIUSBEthernetXNetPacketizer(new LenzCommandStation()));
             packets.connectPort(this);
 
-
        	    // start operation
             // packets.startThreads();
             adaptermemo.setXNetTrafficController(packets);
  
-            commThread = new Thread(new Runnable () {
-       public void run(){ // start a new thread
-       // this thread has one task.  It repeatedly reads from the two incomming
-       // network connections and writes the resulting messages from the network
-       // ports and writes any data received to the output pipe. 
-       if(log.isDebugEnabled()) log.debug("Communication Adapter Thread Started");
-       XNetReply r;
-       BufferedReader bufferedin = new BufferedReader(new InputStreamReader(getInputStream()));
-       for(;;){
-             try{
-                synchronized(this) {
-                   r=loadChars(bufferedin);
-                }
-            } catch(java.io.IOException e) {
-              continue;
-            }
-          if(log.isDebugEnabled()) log.debug("Network Adapter Received Reply: " + r.toString() );
-          writeReply(r);
-          }
-        }
-            });
-
-            commThread.start();
-
             new XNetInitilizationManager(adaptermemo);
 
             jmri.jmrix.lenz.ActiveFlag.setActive();
 	
        }
-
 
 	/**
 	 * Local method to do specific configuration
@@ -138,55 +115,6 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
 		return mInstance;
 	}
 	volatile static LIUSBEthernetAdapter mInstance = null;
-
-       
-       private synchronized void writeReply(XNetReply r){
-       if(log.isDebugEnabled()) log.debug("Write reply to outpipe: "+ r.toString());
-       int i;
-       int len = (r.getElement(0)&0x0f)+2;  // opCode+Nbytes+ECC
-       for(i=0;i<len;i++)
-            try {
-               outpipe.writeByte((byte)r.getElement(i));
-            } catch  ( java.io.IOException ex){
-            }
-       }
-
-    /**
-     * Get characters from the input source, and file a message.
-     * <P>
-     * Returns only when the message is complete.
-     * <P>
-     * Only used in the Receive thread.
-     *
-     * @param msg message to fill
-     * @param istream character source.
-     * @throws IOException when presented by the input source.
-     */
-    private XNetReply loadChars(java.io.BufferedReader istream) throws java.io.IOException {
-        // The LIUSBEthernet sends us data as strings of hex values.
-        // These hex values are followed by a <cr><lf>
-        String s = "";
-        s = istream.readLine(); 
-        if(log.isDebugEnabled()) log.debug("Received from port: " +s);
-        if (s == null) return null;
-        else return new XNetReply(s);
-    }
- 
-        // Internal class for communication port connection
-        /*private static class CommunicationPortAdapter extends jmri.jmrix.AbstractNetworkPortController{
-		 public CommunicationPortAdapter(){
-          		super();
-          		setHostName(DEFAULT_IP_ADDRESS);
-          		setPort(COMMUNICATION_TCP_PORT);
-                  }
-
-                  public void configure(){
-                  }
-                  
-                  public String getManufacturer() { return null; }
-                  public void setManufacturer(String manu) { }
-
-        }*/
 
     /*
      * Set up the keepAliveTimer, and start it.
