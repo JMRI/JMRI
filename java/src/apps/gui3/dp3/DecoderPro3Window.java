@@ -1231,6 +1231,20 @@ public class DecoderPro3Window
     }
     
     void closeWindow(java.awt.event.WindowEvent e){
+        saveWindowDetails();
+        if (allowQuit && openWindowInstances == 1) {
+            handleQuit(e);
+        } else {
+            //As we are not the last window open or we are not allowed to quit the application then we will just close the current window
+            openWindowInstances--;
+            super.windowClosing(e);
+            dispose();
+            if((openWindowInstances==1) && (allowQuit))
+                firePropertyChange("closewindow", "setEnabled", false);
+        }
+    }
+    
+    void saveWindowDetails(){
         p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideSummary", hideBottomPane);
         p.setSimplePreferenceState(DecoderPro3Window.class.getName() + ".hideGroups", hideGroups);
         p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideRosterImage",hideRosterImage);
@@ -1250,17 +1264,6 @@ public class DecoderPro3Window
         }
         else if (groupSplitPaneLocation>2){
             p.setProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation", groupSplitPaneLocation);
-        }
-
-        if (allowQuit && openWindowInstances == 1) {
-            handleQuit(e);
-        } else {
-            //As we are not the last window open or we are not allowed to quit the application then we will just close the current window
-            openWindowInstances--;
-            super.windowClosing(e);
-            dispose();
-            if((openWindowInstances==1) && (allowQuit))
-                firePropertyChange("closewindow", "setEnabled", false);
         }
     }
     
@@ -1314,6 +1317,7 @@ public class DecoderPro3Window
         } else if (args[0].equals("groupspane")) {
             hideGroups();
         } else if (args[0].equals("quit")){
+            saveWindowDetails();
             handleQuit(null);
         } else if (args[0].equals("closewindow")){
             closeWindow(null);
