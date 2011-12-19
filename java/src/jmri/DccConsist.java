@@ -341,7 +341,7 @@ public class DccConsist implements Consist, ProgListener{
           java.util.Iterator<DccLocoAddress> i= ConsistList.iterator();
           while(i.hasNext()){
             DccLocoAddress locoaddress=i.next();
-            if(oldDir==newDir)
+            if(oldDir.equals(newDir))
 	      add(locoaddress,getLocoDirection(locoaddress));
             else 
 	      add(locoaddress,!getLocoDirection(locoaddress));
