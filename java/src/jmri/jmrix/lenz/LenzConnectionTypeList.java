@@ -21,8 +21,9 @@ public class LenzConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
           "jmri.jmrix.lenz.liusb.ConnectionConfig",
           "jmri.jmrix.lenz.xntcp.ConnectionConfig",
           "jmri.jmrix.xpa.serialdriver.ConnectionConfig",
-          "jmri.jmrix.lenz.xnetsimulator.ConnectionConfig", // experimental
-          "jmri.jmrix.lenz.liusbserver.ConnectionConfig" // experimental
+          "jmri.jmrix.lenz.xnetsimulator.ConnectionConfig",
+          "jmri.jmrix.lenz.liusbserver.ConnectionConfig",
+          "jmri.jmrix.lenz.liusbethernet.ConnectionConfig" // experimental
         };
     }
 
