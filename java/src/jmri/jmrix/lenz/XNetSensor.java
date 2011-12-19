@@ -128,7 +128,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
  				  " (Address " + baseaddress + 
                                   " position " + (address-(baseaddress*8)) +
 				  ")");
-                    if(statusRequested & l.isUnsolicited() ) {
+                    if(statusRequested && l.isUnsolicited() ) {
 	              l.resetUnsolicited();
                       statusRequested=false;
                     }
