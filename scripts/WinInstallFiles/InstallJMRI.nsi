@@ -424,6 +424,15 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\messages.log"
     Delete "$OUTDIR\uninstal.log" ; from InstallerVise installer
 
+    ; -- Delete obsolete .bat files from program folder
+    Delete "$OUTDIR\CornwallRR.bat"
+    Delete "$OUTDIR\DecoderPro.bat"
+    Delete "$OUTDIR\JmriDemo.bat"
+    Delete "$OUTDIR\LocoTools.bat"
+    Delete "$OUTDIR\PacketPro.bat"
+    Delete "$OUTDIR\PanelPro.bat"
+    Delete "$OUTDIR\SoundPro.bat"
+
     ; -- Delete obsolete resource files
     Delete "$OUTDIR\resources\GreenPowerLED.gif"
     Delete "$OUTDIR\resources\RedPowerLED.gif"
