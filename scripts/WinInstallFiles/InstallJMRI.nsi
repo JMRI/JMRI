@@ -50,6 +50,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.20.0
+; - Update installer to use Java 6 and to no longer install on Windows 98
+; - and Windows ME
+; -------------------------------------------------------------------------
 ; - Version 0.1.19.0
 ; - Remove DecoderPro desktop shortcut from standard installation - now
 ; - only installed when selected
@@ -194,8 +198,8 @@
 !ifndef RELEASEDIR
   !define RELEASEDIR ".."
 !endif
-!define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.19.0"                    ; Installer version
+!define JRE_VER   "1.6"                         ; Required JRE version
+!define INST_VER  "0.1.20.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -230,7 +234,6 @@ SetCompressor /SOLID /FINAL lzma
 ; - Defines for downloading
 ; -------------------------------------------------------------------------
 !define JRE_URL     "http://java.com/winoffline_installer/"
-!define JRE_URL98ME "http://javadl.sun.com/webapps/download/AutoDL?BundleId=35608"
 !define INTERNET_CONNECTION_CONFIGURED 64  ; 0x40
 !define INTERNET_CONNECTION_LAN 2          ; 0x02
 !define INTERNET_CONNECTION_MODEM 1        ; 0x01
@@ -589,33 +592,20 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
                    "" \
                    "$INSTDIR\InstallTest80x80.ico" 0 "" "" \
                    "Start JMRI Install Test"
-    StrCmp $PROFILE "" 0 Win2k+ ; -- prior to Win2k this is blank
     ; -- Create a preferences directory for this user
-    IfFileExists "$WINDIR\JMRI\*.*" +2
-      CreateDirectory "$WINDIR\JMRI"
-    ; -- Now create a shortcut to it
-    CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\Preferences.lnk" \
-                   "%WINDIR%\JMRI" \
+    IfFileExists "$PROFILE\JMRI\*.*" +2
+      CreateDirectory "$PROFILE\JMRI"
+      ; -- Now create a shortcut to it
+      CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\Preferences.lnk" \
+                   "%HOMEDRIVE%%HOMEPATH%\JMRI" \
                    "" \
                    "" "" "" "" \
                    "Open JMRI Preferences Folder"
-    Goto Uninstall
-    Win2k+:
-      ; -- Create a preferences directory for this user
-      IfFileExists "$PROFILE\JMRI\*.*" +2
-        CreateDirectory "$PROFILE\JMRI"
-      ; -- Now create a shortcut to it
-      CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\Preferences.lnk" \
-                     "%HOMEDRIVE%%HOMEPATH%\JMRI" \
-                     "" \
-                     "" "" "" "" \
-                     "Open JMRI Preferences Folder"
-    Uninstall:
-      SetFileAttributes "$SMPROGRAMS\$SMFOLDER\Tools and Demos\Preferences.lnk" READONLY
-      CreateShortcut "$SMPROGRAMS\$SMFOLDER\Uninstall.lnk" \
-                     "$INSTDIR\Uninstall.exe" \
-                     "/$MultiUser.InstallMode"
-      !insertmacro MUI_STARTMENU_WRITE_END
+    SetFileAttributes "$SMPROGRAMS\$SMFOLDER\Tools and Demos\Preferences.lnk" READONLY
+    CreateShortcut "$SMPROGRAMS\$SMFOLDER\Uninstall.lnk" \
+                   "$INSTDIR\Uninstall.exe" \
+                   "/$MultiUser.InstallMode"
+    !insertmacro MUI_STARTMENU_WRITE_END
   SectionEnd ; SEC_SCSMSC
 
   Section /o "Additional Tools and Demos" SEC_OCSMSC
@@ -702,7 +692,6 @@ Section "-PostProcessing" SEC_POST
                  "NoRepair" 1
   ; -- Register task to create JMRI Preferences directory with Active Setup
   ; -- to ensure created for each new user (for All Users on Win2k+ only)
-  StrCmp $PROFILE "" Done ; -- skip prior to Win2k
   StrCmp $MultiUser.InstallMode "CurrentUser" Done
   ; -- Write the Local Machine registry entries
   WriteRegStr HKLM "Software\Microsoft\Active Setup\Installed Components\JMRI" \
@@ -797,6 +786,7 @@ LangString DESC_SEC_PPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for Panel
 LangString DESC_SEC_SPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for SoundPro"
 LangString DESC_SEC_CRUNINST ${LANG_ENGLISH} "Creates an Uninstaller for ${APP}"
 LangString MESSAGE_INVALID_DIRECTORY ${LANG_ENGLISH} "This not a valid installation directory. Please reselect"
+LangString MESSAGE_WIN2K_OR_LATER ${LANG_ENGLISH} "${APP} version ${JMRI_VER} is not supported on this version of Windows. Installation cannot continue."
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_CORE} $(DESC_SEC_CORE)
@@ -825,16 +815,23 @@ LangString MESSAGE_INVALID_DIRECTORY ${LANG_ENGLISH} "This not a valid installat
 
 Function .onInit
 ; -------------------------------------------------------------------------
-; - On installer initialisation, initialise MultiUser header and check OS
-; - architecture
+; - On installer initialisation, initialise MultiUser header, check OS
+; - architecture and check for running on Win2k or later
 ; -------------------------------------------------------------------------
 
   !insertmacro MULTIUSER_INIT
   
+  ; -- Determine if we're running on Windows 98 or ME
+  ; -- If so, show a message and then abort
+  StrCmp $PROFILE "" 0 Check64 ; -- prior to Win2k this is blank
+  ;MessageBox MB_OK|MB_ICONSTOP "${MESSAGE_WIN2K_OR_LATER}"
+  Abort "${MESSAGE_WIN2K_OR_LATER}"
+
+  Check64:
   ; -- Determine OS architecture
   Call CheckIf64bit
   Pop $x64
-  
+
 FunctionEnd
 
 Function un.onInit
@@ -948,13 +945,8 @@ Function CheckJRE
     ; -- below that of the installer. It needs to be of the format jre*.exe
     ; -- (This is to allow for automatic off-line installation
     ; -- and creation of turn-key distribution CD's)
-    ; -- For Windows 98 and ME, use the JRE_98ME sub-directory instead.
     
-    StrCmp $PROFILE "" Win98ME ; -- skip prior to Win2k
-      FindFirst $2 $JREINSTALLER "$EXEDIR\JRE\jre*.exe"
-      Goto OfflineJREInstall
-    Win98ME:
-      FindFirst $2 $JREINSTALLER "$EXEDIR\JRE_98ME\jre*.exe"
+    FindFirst $2 $JREINSTALLER "$EXEDIR\JRE\jre*.exe"
     
     OfflineJREInstall:
     StrCmp $JREINSTALLER "" DownloadJREQuery
@@ -976,9 +968,6 @@ Function CheckJRE
 
   DownloadJRE:
     StrCpy $JREINSTALLER "$TEMP\JRE.exe"
-    StrCmp $PROFILE "" 0 +3 ; -- prior to Win2k this is blank
-    nsisDL::Download /TIMEOUT=30000 ${JRE_URL98ME} $JREINSTALLER
-    Goto +2
     nsisDL::Download /TIMEOUT=30000 ${JRE_URL} $JREINSTALLER
     Pop $0 ; Get the return value
     StrCmp $0 "success" DownloadOK
@@ -1138,18 +1127,13 @@ Function nsDialogRemoveOldJMRI
     Pop $0
     ${NSD_CreateLabel} 0u 36u 100% 12u "Backup files will be stored in the following location:"
     Pop $0
-    ; -- Check Windows version
-    StrCmp $PROFILE "" 0 +3 ; -- prior to Win2k this is blank
-    StrCpy $1 "$WINDIR"     ; -- for pre-Win2k
-    Goto +2
-    StrCpy $1 "$PROFILE"    ; -- for Win2k and later
-    ${NSD_CreateText} 0u 50u 100% 12u "$1\JMRI_backup"
+    ${NSD_CreateText} 0u 50u 100% 12u "$PROFILE\JMRI_backup"
     Pop $0
     SendMessage $0 ${EM_SETREADONLY} 1 0
     
     ${NSD_CreateLabel} 0u 70u 100% 12u "Any existing backup will be moved to the following location:"
     Pop $0
-    ${NSD_CreateText} 0u 84u 100% 12u "$1\JMRI_backup_old"
+    ${NSD_CreateText} 0u 84u 100% 12u "$PROFILE\JMRI_backup_old"
     Pop $0
     SendMessage $0 ${EM_SETREADONLY} 1 0
 
@@ -1233,17 +1217,11 @@ Function RemoveOldJMRI
   GetDlgItem $0 $HWNDPARENT 1
   EnableWindow $0 0
 
-  ; -- Check Windows version
-  StrCmp $PROFILE "" 0 +3 ; -- prior to Win2k this is blank
-  StrCpy $0 "$WINDIR"     ; -- for pre-Win2k
-  Goto +2
-  StrCpy $0 "$PROFILE"    ; -- for Win2k and later
-
   ; -- Perform backup
-  RMDir /r "$0\JMRI_backup_old"
-  Rename "$0\JMRI_backup" "$0\JMRI_backup_old"
-  CreateDirectory "$0\JMRI_backup"
-  CopyFiles "$0\JMRI\*.*" "$0\JMRI_backup"
+  RMDir /r "$PROFILE\JMRI_backup_old"
+  Rename "$PROFILE\JMRI_backup" "$PROFILE\JMRI_backup_old"
+  CreateDirectory "$PROFILE\JMRI_backup"
+  CopyFiles "$PROFILE\JMRI\*.*" "$PROFILE\JMRI_backup"
   
   ; -- Check if uninstall required
   StrCmp $REMOVEOLDJMRI.BACKUPONLY "1" Done
