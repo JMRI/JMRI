@@ -37,7 +37,7 @@ a decoder?</h1>
 <p>DecoderPro3 provices access to the JMRI tools required to program DCC decoders. If you are an advanced user, using PanelPro to run your layout, then you may start PanelPro and then from the File menu start DecoderPro3.</p>
 <p>DecoderPro3 by its self may program DCC decoders and also use the other JMRI tools to manually operte your trains from the computer interface. These include throttle control and power control of your layout if your DCC system allows them..</p>
 <p>The DecoderPro3 window is divided into five main section from top to bottom.</p>
-<div align="center"><img src="images/start_dp_main01.png" width="900" height="521" alt="dp3 main"></div>
+<div align="center"><img src="images/start_dp_main01.png" width="1107" height="493" alt="dp main"></div>
 <p>1. <strong><a href="dp3_menubar.html">The Menu Bar</a></strong>.<br>
 2. <strong><a href="dp3_toobar.shtml">The Tool Bar</a></strong><br>
 3. <a href="dp3_rosterTable.shtml"><strong>The Roster Table</strong></a> (a list of all the docoders in your roster.<br>

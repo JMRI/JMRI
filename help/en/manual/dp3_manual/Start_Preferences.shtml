@@ -261,6 +261,7 @@ removes the item from the Start Up sequence. All of the panes are of the same fo
 <p><strong><a href="#Top">Top</a></strong></p>
 <h2><a name="MiniServer"></a>MinServer Pane</h2>
 <p>Use this pane to setup MinServer if you are using it.</p>
+<p>Ajax is now in use for smoother image refresh and clicking. For older browser you may want to unselect Ajax.</p>
 <p><img src="images/Preferences_miniServer.png" width="668" height="455" alt="miniServer"></p>
 <p><strong><a href="#Top">Top</a></strong></p>
 <h2 align="center">Before you exit the preferences, Click on          
