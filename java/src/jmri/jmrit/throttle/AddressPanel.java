@@ -47,7 +47,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	private JButton dispatchButton;
 	private JButton progButton;
 	private JButton setButton;
-	private JComboBox rosterBox;
+	private RosterEntryComboBox rosterBox;
 	private JComboBox conRosterBox;
 	
 	private boolean disableRosterBoxActions = false;
@@ -301,6 +301,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 		});
 
 		rosterBox = new RosterEntryComboBox();
+        rosterBox.setRosterListenerEnabled(false);
 		rosterBox.insertItemAt(new NullComboBoxItem(), 0);
 		rosterBox.setSelectedIndex(0);
 		rosterBox.setToolTipText(rb.getString("SelectLocoFromRosterTT"));
@@ -311,6 +312,16 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 				}
 			}
 		});
+        
+        Roster.instance().addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent pce) {
+                if (pce.getPropertyName().equals("add")
+                        || pce.getPropertyName().equals("remove")
+                        || pce.getPropertyName().equals("change")) {
+                    updateRosterBox();
+                }
+            }
+        });
 		constraints.gridx = 0;
 		constraints.gridy = GridBagConstraints.RELATIVE;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -374,6 +385,26 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
 		pack();
 	}
+    
+    private void updateRosterBox(){
+        //disable rosterbox actions when doing the update
+        disableRosterBoxActions=true;
+        boolean isNullSelected = false;
+        String selectedItem ="";
+        if(rosterBox.getSelectedItem() instanceof NullComboBoxItem)
+            isNullSelected = true;
+        else
+            selectedItem = rosterBox.getSelectedItem().toString();
+        rosterBox.update();
+        rosterBox.insertItemAt(new NullComboBoxItem(), 0);
+        if(isNullSelected)
+            rosterBox.setSelectedIndex(0);
+        else {
+            rosterBox.setSelectedItem(selectedItem);
+        }
+        disableRosterBoxActions=false;
+    
+    }
 
 	private void rosterItemSelected() {
 		if (!(rosterBox.getSelectedItem() instanceof NullComboBoxItem)) {

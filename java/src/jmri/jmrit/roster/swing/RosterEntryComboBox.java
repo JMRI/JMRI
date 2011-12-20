@@ -210,8 +210,13 @@ public class RosterEntryComboBox extends JComboBox {
                 decoderMfgID,
                 decoderVersionID,
                 id);
-        _roster.addPropertyChangeListener(new PropertyChangeListener() {
 
+        _roster.addPropertyChangeListener(rosterListener);
+        
+        setRenderer(new jmri.jmrit.roster.swing.RosterEntryListCellRenderer());
+    }
+    
+    PropertyChangeListener rosterListener = new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent pce) {
                 if (pce.getPropertyName().equals("add")
                         || pce.getPropertyName().equals("remove")
@@ -219,8 +224,13 @@ public class RosterEntryComboBox extends JComboBox {
                     update();
                 }
             }
-        });
-        setRenderer(new jmri.jmrit.roster.swing.RosterEntryListCellRenderer());
+        };
+    
+    public void setRosterListenerEnabled(boolean boo){
+        if(boo)
+            _roster.addPropertyChangeListener(rosterListener);
+        else
+            _roster.removePropertyChangeListener(rosterListener);
     }
 
     /**
