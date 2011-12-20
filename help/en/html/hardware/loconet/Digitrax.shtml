@@ -88,7 +88,8 @@ that they use a traditional serial port, which may be the only suitable connecti
 type available on some older computers.</p>
 <p>The MS100 is not recommended; it sometimes fails to provide reliable 
     communications, and it cannot be used with JMRI if you are using MacOS X or 
-    on most Windows Vista machines. </p>
+    on most Windows Vista machines. If you have problems with the MS100, 
+    you might not be able to fix them, and nobody may be able to help you.</p>
 
 <p>The Uhlenbrock Intellibox can also be controlled directly through it's
 serial port; there's a <a href="Uhlenbrock.shtml">separate page</a> on how to

@@ -36,11 +36,22 @@ to a LocoNet.
 </p>
 <p>
 Unfortunately, the MS100 is a somewhat old design, and doesn't
-provide a completely reliable connection to the LocoNet.
-The 
+provide a reliable connection to the LocoNet.
+<ul>
+<li>Your computer may not be able to connect through the MS100.
+<li>Even if it the MS100 makes a connection, you are likely to encounter hard-to-diagnose intermittent errors.  
+<li>Even if you get the MS100 to work once, it may permanently fail due to an update to the computer operating system.
+<li>If you have problems with an MS100, there may not be anybody who can help you with them.
+</ul>
+We strongly recommend that new setups not use the MS100, and existing users 
+plan on converting to a better solution before it becomes necessary. 
+
+<p>The 
 <A HREF="LocoBufferUSB.shtml">LocoBuffer USB</a>
-is currently the most reliable way to 
-connect a computer to a LocoNet.  It is produced by Dick Bronson's
+and the <A HREF="PR3.shtml">Digitrax PR3</a>
+are currently the most reliable ways to 
+connect a computer to a LocoNet.  
+The LocoBuffer-USB is produced by Dick Bronson's
 <A HREF="http://www.rr-cirkits.com">RR-CirKits</a> 
 company, based in part on the original LocoBuffer design.
 </p>
