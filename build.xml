@@ -103,7 +103,8 @@
     <property name="templatedir"  value="${javadir}/template"/>
     <property name="tmptarget"    value="${javadir}/tmp"/>
     <property name="tempdir"      value="${basedir}/tempdir"/>    <!-- actual tmp files -->
-
+    <property name="java.debugging" value="yes" />
+    
     <!-- location for all generated java code -->
     <property name="genjavasrcdir" value="${tmptarget}/"/>
 
