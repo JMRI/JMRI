@@ -51,8 +51,9 @@
 ; - Version History
 ; -------------------------------------------------------------------------
 ; - Version 0.1.20.0
-; - Update installer to use Java 6 and to no longer install on Windows 98
-; - and Windows ME
+; - Update installer to no longer install on Windows 98 and Windows ME
+; - Change JRE version and copyright date to be determined by build.xml
+; - ant script rather than being hard-coded here
 ; -------------------------------------------------------------------------
 ; - Version 0.1.19.0
 ; - Remove DecoderPro desktop shortcut from standard installation - now
@@ -190,15 +191,23 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR    "Matt Harris for JMRI"        ; Author name
 !define APP       "JMRI"                        ; Application name
-!define COPYRIGHT "© 1997-2011 JMRI Community"  ; Copyright string
+!ifndef JMRI_COPY
+  ; -- usually, this will be determined by the build.xml ant script
+  !define JMRI_COPY  "by"                       ; Copyright dates
+!endif
+!define COPYRIGHT "© ${JMRI_COPY} JMRI Community"  ; Copyright string
 !ifndef JMRI_VER
-  ; -- usually, this will be determined by the dist.xml ant script
+  ; -- usually, this will be determined by the build.xml ant script
   !define JMRI_VER  "unknown"                   ; Application version
 !endif
 !ifndef RELEASEDIR
+  ; -- usually, this will be determined by the build.xml ant script
   !define RELEASEDIR ".."
 !endif
-!define JRE_VER   "1.6"                         ; Required JRE version
+!ifndef JRE_VER
+  ; -- usually, this will be determined by the build.xml ant script
+  !define JRE_VER   "1.6"                       ; Required JRE version
+!endif
 !define INST_VER  "0.1.20.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources

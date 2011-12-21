@@ -1116,7 +1116,7 @@
               dir="${dist.windows}/JMRI"
               failonerror="true">
             <!-- RELEASEDIR below is relative because it's interpreted from the location of 'dir' in this exec -->
-            <arg line="-V2 -DJMRI_VER=${release.version-string} -DRELEASEDIR='../../release' InstallJMRI.nsi"/>
+            <arg line="-V2 -DJMRI_VER=${release.version-string} -DJMRI_COPY=${jmri.copyright.year} -DJRE_VER=${jre_version} -DRELEASEDIR='../../release' InstallJMRI.nsi"/>
         </exec>
     </target>
 
