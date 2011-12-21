@@ -42,6 +42,7 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
                     return;
                 } else if ( u.getProtocol().equalsIgnoreCase("file") && (
                         u.getFile().endsWith("jpg")
+                        ||u.getFile().endsWith("png")
                         ||u.getFile().endsWith("gif")) ) {
                     
                     URI uri = new URI("file:"+System.getProperty("user.dir")+"/"+u.getFile());
