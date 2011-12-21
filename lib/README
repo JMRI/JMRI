@@ -113,10 +113,6 @@ JavaMail 1.4.1
 
 JavaBeans Activation Framework 1.1.1 (needed by JavaMail until JRE 1.6, which contains) 
   activation.jar
-
-ExternalLinkContentViewerUI.jar
-  made with Java 1.6 by JMRI to handle the single jmri.util.ExternalLinkContentViewerUI class,
-  now being carried in this jar file instead of source until we migrate to Java 1.6
   
 Joal 1.1.2
   from <https://joal.dev.java.net/servlets/ProjectDocumentList?folderID=9265&expandFolder=9265&folderID=9264>
@@ -172,3 +168,9 @@ Older, no longer present:
 #MRJAdaper.jar
 # version, source unknown
 # No longer used as of JMRI 2.13.4
+
+ExternalLinkContentViewerUI.jar
+  made with Java 1.6 by JMRI to handle the single jmri.util.ExternalLinkContentViewerUI class,
+  now being carried in this jar file instead of source until we migrate to Java 1.6
+  No longer used as of JMRI 2.99.1
+  
