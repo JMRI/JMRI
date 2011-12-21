@@ -20,8 +20,15 @@ public class UsbViewAction extends javax.swing.AbstractAction {
 
     public void actionPerformed(java.awt.event.ActionEvent e) {
         // create and display
-        new ch.ntb.usb.usbView.UsbView().setVisible(true);
+        try{
+            new ch.ntb.usb.usbView.UsbView().setVisible(true);
+        } catch (java.lang.UnsatisfiedLinkError ex){
+            log.error(ex.toString());
+            javax.swing.JOptionPane.showMessageDialog(null, "Unable to find the libusb-win32 package.\nFor more details on how to installed it please check http://www.jmri.org/install/USB.shtml");
+        }
     }
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(UsbViewAction.class.getName());
 }
 
 /* @(#)UsbViewAction.java */
