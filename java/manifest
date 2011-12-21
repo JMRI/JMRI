@@ -4,16 +4,16 @@ Class-Path: java/classes jmriplugins.jar lib/jmriplugins.jar jmri.jar lib/RXTXco
 
 Name: jmri
 Specification-Title: “Java Model Railroad Interface Classes”
-Specification-Version: “2.13.7”
+Specification-Version: “2.14”
 Specification-Vendor: “JMRI”
 Package-Title: “jmri”
-Package-Version: “2.13.7”
+Package-Version: “2.14”
 Package-Vendor: “JMRI”
  
 Name: apps
 Specification-Title: “JMRI Application Classes”
-Specification-Version: “2.13.7”
+Specification-Version: “2.14”
 Specification-Vendor: “JMRI”
 Package-Title: “apps”
-Package-Version: “2.13.7”
+Package-Version: “2.14”
 Package-Vendor: “JMRI”
