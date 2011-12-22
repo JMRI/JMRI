@@ -534,22 +534,19 @@ move a car from one track to another at the same location. The car in
 this case in not added to the train. Select the desired color from the
 drop down box.
 
-<H3>Manifest Format</H3>
+<H3>Message Format</H3>
 
-If you would like your manifest printed in a tabular format select the
+If you would like your manifest and switch lists printed in a tabular format select the
 tabular checkbox. This options works best with font names that have
 equally spaced characters like "Courier or Monospaced".
 
-<H3>Preview Manifest</H3>
+<H3>Switch List Format</H3>
 
-If you want to use a text editor to preview your manifests and switch
-lists, select this option. JMRI is currently built for compatibility
-with Java 1.5. This feature requires Java 1.6 and a custom jmri.jar
-file. You can get the replacement file from
-<A HREF="http://home.comcast.net/~daboudreau/JMRI_JAVA1.6/jmri.jar">
-	http://home.comcast.net/~daboudreau/JMRI_JAVA1.6/jmri.jar.</A>
+You can use the same format as your manifest for your switch lists, or you can customize
+your switch lists to your liking.  Deselect the "Same as Manifest" if you want a 
+different format for your switch lists.
 
-			<H3>Message Formats</H3>
+<H3>Message Formats</H3>
 
 You can customize the pick up, set out, and local move messages for your
 manifests and switch lists by selecting the appropriate drop down menus.
@@ -584,21 +581,31 @@ The program provides a comment for your operators to search for
 <A	HREF="#CarsSet">misplaced</A> cars.  You can modify
 the comment to your liking.
 
+<H3>Preview Manifest</H3>
+
+If you want to use a text editor to preview your manifests and switch
+lists, select this option.
+
 <A NAME="BuildReportDetails"></A>
 <H3>Build Report Details</H3>
 
    You can adjust the amount of information that the build report will show. Select one of the four
-   levels using the radio buttons in the Print Options window. The program when generating the build reports stores the "Very
-   Detailed" information to disk. The radio buttons control how much of that data is actually
-   printed. The "Minimal" radio button provides the least amount of information and "Very Detailed"
-   provides the most. If you're only interested why a train won't build, the "Minimal" setting can
-   provide you with this information. The "Normal" setting shows the train's route and requirements,
-   along with the choices the program makes for setting out locomotives and cars. The "Detailed"
-   provides additional comments about the build and shows all of the available cars for the train. 
-   The "Very
-   Detailed" setting produces the most pages, and will show why cars are excluded from the train,
-   and why they are not picked up or set out. Be sure and press "Save" after changing the build
-   report selection. 
+   levels using the radio buttons in the Print Options window. The program when generating the build
+   reports stores the "Very Detailed" information to disk. The radio buttons control how much of
+   that data is actually printed. The "Minimal" radio button provides the least amount of
+   information and "Very Detailed" provides the most. If you're only interested why a train won't
+   build, the "Minimal" setting can provide you with this information. The "Normal" setting shows
+   the train's route and requirements, along with the choices the program makes for setting out
+   locomotives and cars. The "Detailed" provides additional comments about the build and shows all
+   of the available cars for the train. The "Very Detailed" setting produces the most pages, and
+   will show why cars are excluded from the train, and why they are not picked up or set out. Be
+   sure and press "Save" after changing the build report selection. 
+   
+   <P>
+   You also have the option of using a text editor to view your build report.  A text editor can make
+   trouble shooting a problem much easier for you.  For example, say you have a car that isn't moving.
+   Using the editor's find feature, you could search the build report using the car's road number
+   and quickly find why the car isn't being picked up by the train.
    
 <A NAME="Locations"></A>
 <H2>Locations</H2>
@@ -1335,7 +1342,7 @@ load or unload cars with custom loads that you've created. You can also use
 <A HREF="#StagingAndCarLoads">staging tracks</A> to load or unload your car with custom loads.
 It is also suggested
 that you use a format similar to L(commodity) to describe your loads.
-For example a load of tools could be entered as L(Tools).
+For example a load of tools could be entered as "L(Tools)" or just "Tools" if desired.
 
 <A	NAME="Kernel"></A>
 <H3>Kernel, or Group of Cars</H3>
@@ -1852,6 +1859,15 @@ car roads, load, owners, and built dates the train will service.
 <P>You can also specify a locomotive change in route or add helper locomotives.</P>
 
 <P><img src="images/TrainBuildOptions.png"></P>
+
+<H3>Options</H3>
+
+You can request that the program use normal mode when building the train.  This is useful when a
+train departs staging.  In normal mode, all of the cars in staging are set out first, where in 
+aggressive mode, the cars in staging are set out last.
+<P>
+You can also request that all car pick ups are sent to the last location in your route (terminal).
+Useful if you don't want your cars picked up and set out at various locations in your train's route.
 
 <A NAME="TrainRoadNames"></A>
 <H3>Train Road Names</H3>

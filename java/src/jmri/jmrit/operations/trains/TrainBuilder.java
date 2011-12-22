@@ -116,8 +116,9 @@ public class TrainBuilder extends TrainCommon{
 		} catch (IOException e) {
 			log.error("can not open build status file");
 			return;
-		}		
-		addLine(buildReport, ONE, MessageFormat.format(rb.getString("BuildReportMsg"),new Object[]{train.getName(), new Date()}));
+		}	
+		Date startTime = new Date();
+		addLine(buildReport, ONE, MessageFormat.format(rb.getString("BuildReportMsg"),new Object[]{train.getName(), startTime}));
 		addLine(buildReport, ONE, MessageFormat.format(rb.getString("BuildReportVersion"),new Object[]{Version.name()}));
 		
 		if (train.getRoute() == null){
@@ -448,6 +449,7 @@ public class TrainBuilder extends TrainCommon{
 			addLine(buildReport, ONE, Train.BUILT +" "+ train.getNumberCarsWorked() +" "+ rb.getString("cars"));
 		}
 		train.setBuilt(true);
+		addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildTime"),new Object[]{train.getName(), new Date().getTime()-startTime.getTime()}));
 		buildReport.flush();
 		buildReport.close();
 

@@ -545,18 +545,18 @@ public class Setup {
 		buildReportEditorEnabled = enable;
 	}
 	
-	public static boolean isSwitchListFormatSameAsManifest(){
-		return switchListSameManifest;
+	public static boolean isBuildReportEditorEnabled(){
+		return buildReportEditorEnabled;
 	}
 	
 	public static void setSwitchListFormatSameAsManifest(boolean b){
 		switchListSameManifest = b;
 	}
 	
-	public static boolean isBuildReportEditorEnabled(){
-		return buildReportEditorEnabled;
-	}
-	
+	public static boolean isSwitchListFormatSameAsManifest(){
+		return switchListSameManifest;
+	}	
+
 	public static void setPrintLocationCommentsEnabled(boolean enable){
 		printLocationComments = enable;
 	}
