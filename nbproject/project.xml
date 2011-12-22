@@ -167,7 +167,7 @@
         <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/3">
             <compilation-unit>
                 <package-root>java/src</package-root>
-                <classpath mode="compile">java/tmp:lib/ch.ntb.usb.jar:lib/comm-rxtx.jar:lib/xercesImpl.jar:lib/gluegen-rt.jar:lib/javacsv.jar:lib/jdom.jar:lib/jhall.jar:lib/jinput.jar:lib/jmdns.jar:lib/joal.jar:lib/openlcb.jar:lib/junit.jar:lib/jython.jar:lib/log4j.jar:lib/RXTXcomm.jar:lib/Serialio.jar:lib/servlet.jar:lib/vecmath.jar:lib/activation.jar:lib/mailapi.jar:lib/smtp.jar:lib/jfcunit.jar:lib/jakarta-regexp-1.5.jar:lib/ExternalLinkContentViewerUI.jar:lib/annotations.jar:lib/jsr305.jar:lib/WinRegistry-4.4.jar:lib/jmdns.jar:lib/AppleJavaExtensions.jar</classpath>
+                <classpath mode="compile">java/tmp:lib/ch.ntb.usb.jar:lib/comm-rxtx.jar:lib/xercesImpl.jar:lib/gluegen-rt.jar:lib/javacsv.jar:lib/jdom.jar:lib/jhall.jar:lib/jinput.jar:lib/jmdns.jar:lib/joal.jar:lib/openlcb.jar:lib/junit.jar:lib/jython.jar:lib/log4j.jar:lib/RXTXcomm.jar:lib/Serialio.jar:lib/servlet.jar:lib/vecmath.jar:lib/activation.jar:lib/mailapi.jar:lib/smtp.jar:lib/jfcunit.jar:lib/jakarta-regexp-1.5.jar:lib/annotations.jar:lib/jsr305.jar:lib/WinRegistry-4.4.jar:lib/jmdns.jar:lib/AppleJavaExtensions.jar</classpath>
                 <built-to>java/classes</built-to>
                 <javadoc-built-to>java/doc</javadoc-built-to>
                 <source-level>1.6</source-level>
