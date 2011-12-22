@@ -46,9 +46,25 @@ public class PrintOptionFrame extends OperationsFrame{
 	JButton saveButton = new JButton(rb.getString("Save"));
 	JButton addLogoButton = new JButton(rb.getString("AddLogo"));
 	JButton removeLogoButton = new JButton(rb.getString("RemoveLogo"));
+	
+	JButton addEngPickupComboboxButton = new JButton("+");
+	JButton deleteEngPickupComboboxButton = new JButton("-");
+	JButton addEngDropComboboxButton = new JButton("+");
+	JButton deleteEngDropComboboxButton = new JButton("-");
+	JButton addCarPickupComboboxButton = new JButton("+");
+	JButton deleteCarPickupComboboxButton = new JButton("-");
+	JButton addCarDropComboboxButton = new JButton("+");
+	JButton deleteCarDropComboboxButton = new JButton("-");
+	JButton addLocalComboboxButton = new JButton("+");
+	JButton deleteLocalComboboxButton = new JButton("-");
+	JButton addSwitchListPickupComboboxButton = new JButton("+");
+	JButton deleteSwitchListPickupComboboxButton = new JButton("-");
+	JButton addSwitchListDropComboboxButton = new JButton("+");
+	JButton deleteSwitchListDropComboboxButton = new JButton("-");
+	JButton addSwitchListLocalComboboxButton = new JButton("+");
+	JButton deleteSwitchListLocalComboboxButton = new JButton("-");
 
-	// radio buttons		
-    
+	// radio buttons		    
     JRadioButton buildReportMin = new JRadioButton(rb.getString("Minimal"));
     JRadioButton buildReportNor = new JRadioButton(rb.getString("Normal"));
     JRadioButton buildReportMax = new JRadioButton(rb.getString("Detailed"));
@@ -74,7 +90,6 @@ public class PrintOptionFrame extends OperationsFrame{
 	JTextField switchListPickupCarPrefix = new JTextField(10);
 	JTextField switchListDropCarPrefix = new JTextField(10);
 	JTextField switchListLocalPrefix = new JTextField(10);
-
 	
 	// text area
 	JTextArea commentTextArea	= new JTextArea(2,90);
@@ -99,6 +114,14 @@ public class PrintOptionFrame extends OperationsFrame{
 	List<JComboBox> switchListCarPickupMessageList = new ArrayList<JComboBox>();
 	List<JComboBox> switchListCarDropMessageList = new ArrayList<JComboBox>();
 	List<JComboBox> switchListLocalMessageList = new ArrayList<JComboBox>();
+	
+	// manifest panels
+	JPanel pManifest = new JPanel();
+	JPanel pEngPickup = new JPanel();
+	JPanel pEngDrop = new JPanel();
+	JPanel pPickup = new JPanel();
+	JPanel pDrop = new JPanel();
+	JPanel pLocal = new JPanel();
 	
 	// switch list panels
 	JPanel pSwitchListOrientation = new JPanel();
@@ -127,9 +150,27 @@ public class PrintOptionFrame extends OperationsFrame{
 		buildReportCheckBox.setToolTipText(rb.getString("CreatesTextFileTip"));
 		editManifestCheckBox.setToolTipText(rb.getString("UseTextEditorTip"));
 		
+		addEngPickupComboboxButton.setToolTipText(rb.getString("AddMessageComboboxTip"));
+		deleteEngPickupComboboxButton.setToolTipText(rb.getString("DeleteMessageComboboxTip"));
+		addEngDropComboboxButton.setToolTipText(rb.getString("AddMessageComboboxTip"));
+		deleteEngDropComboboxButton.setToolTipText(rb.getString("DeleteMessageComboboxTip"));
+		
+		addCarPickupComboboxButton.setToolTipText(rb.getString("AddMessageComboboxTip"));
+		deleteCarPickupComboboxButton.setToolTipText(rb.getString("DeleteMessageComboboxTip"));
+		addCarDropComboboxButton.setToolTipText(rb.getString("AddMessageComboboxTip"));
+		deleteCarDropComboboxButton.setToolTipText(rb.getString("DeleteMessageComboboxTip"));
+		addLocalComboboxButton.setToolTipText(rb.getString("AddMessageComboboxTip"));
+		deleteLocalComboboxButton.setToolTipText(rb.getString("DeleteMessageComboboxTip"));
+		
+		addSwitchListPickupComboboxButton.setToolTipText(rb.getString("AddMessageComboboxTip"));
+		deleteSwitchListPickupComboboxButton.setToolTipText(rb.getString("DeleteMessageComboboxTip"));
+		addSwitchListDropComboboxButton.setToolTipText(rb.getString("AddMessageComboboxTip"));
+		deleteSwitchListDropComboboxButton.setToolTipText(rb.getString("DeleteMessageComboboxTip"));
+		addSwitchListLocalComboboxButton.setToolTipText(rb.getString("AddMessageComboboxTip"));
+		deleteSwitchListLocalComboboxButton.setToolTipText(rb.getString("DeleteMessageComboboxTip"));
+		
 		// Manifest panel
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-		JPanel pManifest = new JPanel();
 		pManifest.setLayout(new BoxLayout(pManifest, BoxLayout.Y_AXIS));
 		JScrollPane pManifestPane = new JScrollPane(pManifest);
 		pManifestPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifestOptions")));
@@ -152,7 +193,7 @@ public class PrintOptionFrame extends OperationsFrame{
 
 		JPanel pPickupColor = new JPanel();
 		pPickupColor.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPickupColor")));
-		pPickupColor.add( pickupComboBox);
+		pPickupColor.add(pickupComboBox);
 		
 		JPanel pDropColor = new JPanel();
 		pDropColor.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropColor")));
@@ -179,8 +220,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		p1.add(pFormat);
 		p1.add(pSwitchFormat);
 		
-		// engine message format
-		JPanel pEngPickup = new JPanel();
+		// engine message format		
 		pEngPickup.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPickupEngine")));
 		pEngPickup.add(pickupEngPrefix);
 		pickupEngPrefix.setText(Setup.getPickupEnginePrefix());
@@ -191,8 +231,9 @@ public class PrintOptionFrame extends OperationsFrame{
 			pEngPickup.add(b);
 			enginePickupMessageList.add(b);
 		}
+		pEngPickup.add(addEngPickupComboboxButton);
+		pEngPickup.add(deleteEngPickupComboboxButton);
 		
-		JPanel pEngDrop = new JPanel();
 		pEngDrop.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropEngine")));
 		pEngDrop.add(dropEngPrefix);
 		dropEngPrefix.setText(Setup.getDropEnginePrefix());
@@ -203,9 +244,10 @@ public class PrintOptionFrame extends OperationsFrame{
 			pEngDrop.add(b);
 			engineDropMessageList.add(b);
 		}
+		pEngDrop.add(addEngDropComboboxButton);
+		pEngDrop.add(deleteEngDropComboboxButton);
 		
 		// car pickup message format
-		JPanel pPickup = new JPanel();
 		pPickup.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPickupCar")));
 		pPickup.add(pickupCarPrefix);
 		pickupCarPrefix.setText(Setup.getPickupCarPrefix());
@@ -216,9 +258,10 @@ public class PrintOptionFrame extends OperationsFrame{
 			pPickup.add(b);
 			carPickupMessageList.add(b);
 		}
+		pPickup.add(addCarPickupComboboxButton);
+		pPickup.add(deleteCarPickupComboboxButton);
 			
 		// car drop message format
-		JPanel pDrop = new JPanel();
 		pDrop.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropCar")));
 		pDrop.add(dropCarPrefix);
 		dropCarPrefix.setText(Setup.getDropCarPrefix());
@@ -229,9 +272,10 @@ public class PrintOptionFrame extends OperationsFrame{
 			pDrop.add(b);
 			carDropMessageList.add(b);
 		}
+		pDrop.add(addCarDropComboboxButton);
+		pDrop.add(deleteCarDropComboboxButton);
 		
 		// local car move message format
-		JPanel pLocal = new JPanel();
 		pLocal.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutLocal")));
 		pLocal.add(localPrefix);
 		localPrefix.setText(Setup.getLocalPrefix());
@@ -242,6 +286,8 @@ public class PrintOptionFrame extends OperationsFrame{
 			pLocal.add(b);
 			localMessageList.add(b);
 		}
+		pLocal.add(addLocalComboboxButton);
+		pLocal.add(deleteLocalComboboxButton);
 
 		// switch list car pickup message format
 		pSwitchListOrientation = new JPanel();
@@ -263,6 +309,8 @@ public class PrintOptionFrame extends OperationsFrame{
 			pSwPickup.add(b);
 			switchListCarPickupMessageList.add(b);
 		}
+		pSwPickup.add(addSwitchListPickupComboboxButton);
+		pSwPickup.add(deleteSwitchListPickupComboboxButton);
 			
 		// switch list car drop message format
 		pSwDrop.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListDropCar")));
@@ -275,6 +323,8 @@ public class PrintOptionFrame extends OperationsFrame{
 			pSwDrop.add(b);
 			switchListCarDropMessageList.add(b);
 		}
+		pSwDrop.add(addSwitchListDropComboboxButton);
+		pSwDrop.add(deleteSwitchListDropComboboxButton);
 		
 		// switch list local car move message format
 		pSwLocal.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListLocal")));
@@ -286,7 +336,9 @@ public class PrintOptionFrame extends OperationsFrame{
 			b.setSelectedItem(localFormat[i]);
 			pSwLocal.add(b);
 			switchListLocalMessageList.add(b);
-		}		
+		}
+		pSwLocal.add(addSwitchListLocalComboboxButton);
+		pSwLocal.add(deleteSwitchListLocalComboboxButton);
 		
 		JPanel p2 = new JPanel();
 		p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
@@ -403,6 +455,25 @@ public class PrintOptionFrame extends OperationsFrame{
 		addButtonAction(removeLogoButton);
 		addButtonAction(saveButton);
 		
+		addButtonAction(addEngPickupComboboxButton);
+		addButtonAction(deleteEngPickupComboboxButton);
+		addButtonAction(addEngDropComboboxButton);
+		addButtonAction(deleteEngDropComboboxButton);
+		
+		addButtonAction(addCarPickupComboboxButton);
+		addButtonAction(deleteCarPickupComboboxButton);
+		addButtonAction(addCarDropComboboxButton);
+		addButtonAction(deleteCarDropComboboxButton);		
+		addButtonAction(addLocalComboboxButton);
+		addButtonAction(deleteLocalComboboxButton);
+		
+		addButtonAction(addSwitchListPickupComboboxButton);
+		addButtonAction(deleteSwitchListPickupComboboxButton);
+		addButtonAction(addSwitchListDropComboboxButton);
+		addButtonAction(deleteSwitchListDropComboboxButton);		
+		addButtonAction(addSwitchListLocalComboboxButton);
+		addButtonAction(deleteSwitchListLocalComboboxButton);
+		
 		addCheckBoxAction(formatSwitchListCheckBox);
 		
 		setBuildReportRadioButton();
@@ -429,6 +500,44 @@ public class PrintOptionFrame extends OperationsFrame{
 			Setup.setManifestLogoURL("");
 			updateLogoButtons();
 		}
+		// add or delete message comboBox
+		if (ae.getSource() == addEngPickupComboboxButton)
+			addComboBox(pEngPickup, enginePickupMessageList, Setup.getEngineMessageComboBox());
+		if (ae.getSource() == deleteEngPickupComboboxButton)
+			removeComboBox(pEngPickup, enginePickupMessageList);
+		if (ae.getSource() == addEngDropComboboxButton)
+			addComboBox(pEngDrop, engineDropMessageList, Setup.getEngineMessageComboBox());
+		if (ae.getSource() == deleteEngDropComboboxButton)
+			removeComboBox(pEngDrop, engineDropMessageList);
+		
+		if (ae.getSource() == addCarPickupComboboxButton)
+			addComboBox(pPickup, carPickupMessageList, Setup.getCarMessageComboBox());
+		if (ae.getSource() == deleteCarPickupComboboxButton)
+			removeComboBox(pPickup, carPickupMessageList);
+		if (ae.getSource() == addCarDropComboboxButton)
+			addComboBox(pDrop, carDropMessageList, Setup.getCarMessageComboBox());
+		if (ae.getSource() == deleteCarDropComboboxButton)
+			removeComboBox(pDrop, carDropMessageList);
+		
+		if (ae.getSource() == addLocalComboboxButton)
+			addComboBox(pLocal, localMessageList, Setup.getCarMessageComboBox());
+		if (ae.getSource() == deleteLocalComboboxButton)
+			removeComboBox(pLocal, localMessageList);
+		
+		if (ae.getSource() == addSwitchListPickupComboboxButton)
+			addComboBox(pSwPickup, switchListCarPickupMessageList, Setup.getCarMessageComboBox());
+		if (ae.getSource() == deleteSwitchListPickupComboboxButton)
+			removeComboBox(pSwPickup, switchListCarPickupMessageList);
+		if (ae.getSource() == addSwitchListDropComboboxButton)
+			addComboBox(pSwDrop, switchListCarDropMessageList, Setup.getCarMessageComboBox());
+		if (ae.getSource() == deleteSwitchListDropComboboxButton)
+			removeComboBox(pSwDrop, switchListCarDropMessageList);
+		
+		if (ae.getSource() == addSwitchListLocalComboboxButton)
+			addComboBox(pSwLocal, switchListLocalMessageList, Setup.getCarMessageComboBox());
+		if (ae.getSource() == deleteSwitchListLocalComboboxButton)
+			removeComboBox(pSwLocal, switchListLocalMessageList);
+		
 		if (ae.getSource() == saveButton){
 			// font name
 			Setup.setFontName((String)fontComboBox.getSelectedItem());
@@ -586,6 +695,26 @@ public class PrintOptionFrame extends OperationsFrame{
 		buildReportNor.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL));
 		buildReportMax.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED));
 		buildReportVD.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED));
+	}
+	
+	private void addComboBox (JPanel panel, List<JComboBox> list, JComboBox box){
+		list.add(box);
+		panel.add(box, list.size());
+		panel.validate();
+		pManifest.revalidate();
+	}
+	
+	private void removeComboBox(JPanel panel, List<JComboBox> list){
+		for (int i=0; i<list.size(); i++){
+			JComboBox cb = list.get(i);
+			if (cb.getSelectedItem() == Setup.NONE){
+				list.remove(i);
+				panel.remove(cb);
+				panel.validate();
+				pManifest.revalidate();
+				return;				
+			}				
+		}		
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
