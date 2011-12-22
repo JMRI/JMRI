@@ -19,7 +19,6 @@
     <path>[lib/smtp.jar]</path>
     <path>[lib/jfcunit.jar]</path>
     <path>[lib/jakarta-regexp-1.5.jar]</path>
-    <path>[lib/ExternalLinkContentViewerUI]</path>
     <path>src/resources</path>
   </class>
 </library>

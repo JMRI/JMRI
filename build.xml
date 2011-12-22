@@ -134,7 +134,6 @@
         <pathelement location="${libdir}/mailapi.jar"/>
         <pathelement location="${libdir}/smtp.jar"/>
         <pathelement location="${libdir}/xAPlib.jar"/>
-        <pathelement location="${libdir}/ExternalLinkContentViewerUI.jar"/>
         <pathelement location="${libdir}/junit.jar"/>
         <pathelement location="${libdir}/jfcunit.jar"/>
         <pathelement location="${libdir}/WinRegistry-4.4.jar"/>
