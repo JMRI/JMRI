@@ -1629,11 +1629,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         
         if(flow==TXONLY){
             neighBlock.addBlockDenyList(this.block);
-            neighBlock.removePropertyChangeListener(this);
+            neighLBlock.removePropertyChangeListener(this);
             //This should remove routes learned from our neighbour
             ArrayList<Routes> tmpBlock = removeRouteRecievedFromNeighbour(neighBlock);
             
-            notifyNeighboursOfRemoval(tmpBlock, neighbour.getBlock());
+            notifyNeighboursOfRemoval(tmpBlock, neighBlock);
             
             //Need to also remove all through paths to this neighbour
             for(int i = throughPaths.size()-1; i>-1; i--){
@@ -1647,7 +1647,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 addThroughPath(neighbour);
             }
         } else if (flow==RXONLY){
-            neighBlock.addPropertyChangeListener(this);
+            neighLBlock.addPropertyChangeListener(this);
             neighBlock.removeBlockDenyList(this.block);
             this.block.addBlockDenyList(neighBlock);
             
@@ -1659,17 +1659,17 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             }
             //Might need to rebuild through paths.
             if(oldPacketFlow==TXONLY){
-                routes.add(new Routes(neighBlock, this.getBlock(), 1, neighbour.getDirection(), neighbour.getLayoutBlock().getBlockMetric()));
+                routes.add(new Routes(neighBlock, this.getBlock(), 1, neighbour.getDirection(), neighLBlock.getBlockMetric()));
                 addThroughPath(neighbour);
             }
             //We would need to withdraw the routes that we advertise to the neighbour
         } else if (flow ==RXTX){
             neighBlock.removeBlockDenyList(this.block);
             this.block.removeBlockDenyList(neighBlock);
-            neighBlock.addPropertyChangeListener(this);
+            neighLBlock.addPropertyChangeListener(this);
             //Might need to rebuild through paths.
             if(oldPacketFlow==TXONLY){
-                routes.add(new Routes(neighBlock, this.getBlock(), 1, neighbour.getDirection(), neighbour.getLayoutBlock().getBlockMetric()));
+                routes.add(new Routes(neighBlock, this.getBlock(), 1, neighbour.getDirection(), neighLBlock.getBlockMetric()));
             }
             addThroughPath(neighbour);
         }
@@ -2455,31 +2455,33 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
     
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        LayoutBlock srcEvent = (LayoutBlock) e.getSource();
-        if (e.getPropertyName().toString().equals("NewRoute")){
-            LayoutBlock lbkblock = (LayoutBlock) e.getNewValue();
-            if(enableUpdateRouteLogging) log.info("==Event type " + e.getPropertyName().toString() + " New " + lbkblock.getDisplayName());
-        } else if (e.getPropertyName().toString().equals("through-path-added")) {
-            if(enableUpdateRouteLogging) log.info("neighbour has new through path");
-        } else if (e.getPropertyName().toString().equals("through-path-removed")) {
-            if(enableUpdateRouteLogging) log.info("neighbour has through removed");
-        } else if (e.getPropertyName().toString().equals("routing")){
-            if(enableUpdateRouteLogging)
-                log.info("From " + this.getDisplayName() + " we have a routing packet update from neighbor "+ srcEvent.getDisplayName());
-            RoutingPacket update = (RoutingPacket) e.getNewValue();
-            int updateType = update.getPacketType();
-            switch (updateType) {
-                case ADDITION : if(enableUpdateRouteLogging) log.info("Addition");
-                                //InstanceManager.layoutBlockManagerInstance().setLastRoutingChange();
-                                addRouteFromNeighbour(srcEvent, update);
-                                break;
-                case UPDATE :  if(enableUpdateRouteLogging) log.info("Update");
-                               updateRoutingInfo(srcEvent, update);
-                                break;
-                case REMOVAL : if(enableUpdateRouteLogging) log.info("Removal");
-                                InstanceManager.layoutBlockManagerInstance().setLastRoutingChange();
-                                removeRouteFromNeighbour(srcEvent, update);
-                                break;
+        if(e.getSource() instanceof LayoutBlock){
+            LayoutBlock srcEvent = (LayoutBlock) e.getSource();
+            if (e.getPropertyName().toString().equals("NewRoute")){
+                LayoutBlock lbkblock = (LayoutBlock) e.getNewValue();
+                if(enableUpdateRouteLogging) log.info("==Event type " + e.getPropertyName().toString() + " New " + lbkblock.getDisplayName());
+            } else if (e.getPropertyName().toString().equals("through-path-added")) {
+                if(enableUpdateRouteLogging) log.info("neighbour has new through path");
+            } else if (e.getPropertyName().toString().equals("through-path-removed")) {
+                if(enableUpdateRouteLogging) log.info("neighbour has through removed");
+            } else if (e.getPropertyName().toString().equals("routing")){
+                if(enableUpdateRouteLogging)
+                    log.info("From " + this.getDisplayName() + " we have a routing packet update from neighbor "+ srcEvent.getDisplayName());
+                RoutingPacket update = (RoutingPacket) e.getNewValue();
+                int updateType = update.getPacketType();
+                switch (updateType) {
+                    case ADDITION : if(enableUpdateRouteLogging) log.info("Addition");
+                                    //InstanceManager.layoutBlockManagerInstance().setLastRoutingChange();
+                                    addRouteFromNeighbour(srcEvent, update);
+                                    break;
+                    case UPDATE :  if(enableUpdateRouteLogging) log.info("Update");
+                                   updateRoutingInfo(srcEvent, update);
+                                    break;
+                    case REMOVAL : if(enableUpdateRouteLogging) log.info("Removal");
+                                    InstanceManager.layoutBlockManagerInstance().setLastRoutingChange();
+                                    removeRouteFromNeighbour(srcEvent, update);
+                                    break;
+                }
             }
         }
     }
