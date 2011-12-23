@@ -49,6 +49,18 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         return new OlcbSensor(systemName, userName);
     }
 
+    public boolean allowMultipleAdditions() { return false;  }
+    
+    public String createSystemName(String curAddress, String prefix) {
+        // don't check for integer; should check for validity here
+        return prefix+typeLetter()+curAddress;
+    }
+
+    public String getNextValidAddress(String curAddress, String prefix) {
+        // always return this (the current) name without change
+        return curAddress;
+    }
+
     // ctor has to register for LocoNet events
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                         justification="temporary until mult-system; only set at startup")

@@ -32,6 +32,16 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     
     public boolean allowMultipleAdditions() { return false;  }
     
+    public String createSystemName(String curAddress, String prefix) throws JmriException{
+        // don't check for integer; should check for validity here
+        return prefix+typeLetter()+curAddress;
+    }
+
+    public String getNextValidAddress(String curAddress, String prefix) throws JmriException{
+        // always return this (the current) name without change
+        return curAddress;
+    }
+
    /**
     * A method that creates an array of systems names to allow bulk
     * creation of turnouts.
