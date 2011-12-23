@@ -102,6 +102,81 @@ public class Version {
     }
      
     /**
+     * Tests that a string contains a canonical version string.
+     * <p>
+     * A canonical version string is a string in the form x.y.z and is different
+     * than the version string displayed using {@link #name() }. The canonical
+     * version string for a JMRI instance is available using {@link #getCanonicalVersion() }.
+     * 
+     * @param version
+     * @return true if version is a canonical version string
+     */
+    static public boolean isCanonicalVersion(String version) {
+        String[] parts = version.split(".");
+        if (parts.length != 3) {
+            return false;
+        }
+        for (String part : parts) {
+            if (Integer.getInteger(part) == null || Integer.getInteger(part) < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Compares a canonical version string to the JMRI canonical version and returns
+     * an integer indicating if the string is less than, equal to, or greater than the
+     * JMRI canonical version.
+     * 
+     * @param version
+     * @return -1, 0, or 1 if version is less than, equal to, or greater than JMRI canonical version
+     * @throws IllegalArgumentException if version is not a canonical version string
+     * @see java.lang.Comparable#compareTo(java.lang.Object) 
+     */
+    static public int compareCanonicalVersions(String version) throws IllegalArgumentException {
+        return compareCanonicalVersions(version, getCanonicalVersion());
+    }
+
+    /**
+     * Compares two canonical version strings and returns an integer indicating if
+     * the first string is less than, equal to, or greater than the second string.
+     * 
+     * @param version1 a canonical version string
+     * @param version2 a canonical version string
+     * @return -1, 0, or 1 if version1 is less than, equal to, or greater than version2 
+     * @throws IllegalArgumentException if either version string is not a canonical version string
+     * @see java.lang.Comparable#compareTo(java.lang.Object) 
+     */
+    static public int compareCanonicalVersions(String version1, String version2) throws IllegalArgumentException {
+        int result = 0;
+        if (!isCanonicalVersion(version1)) {
+            throw new IllegalArgumentException("Parameter version1 is not a canonical version string.");
+        }
+        if (!isCanonicalVersion(version2)) {
+            throw new IllegalArgumentException("Parameter version2 is not a canonical version string.");
+        }
+        String[] p1 = version1.split(".");
+        String[] p2 = version2.split(".");
+        for (int i = 0; i < 3; i++) {
+            result = p1[i].compareTo(p2[i]);
+            if (result != 0) {
+                return result;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Return the version as a major.minor.test String.
+     * 
+     * @return The version
+     */
+    static public String getCanonicalVersion() {
+        return major + "." + minor + "." + test;
+    }
+    
+    /**
      * Standalone print of version string and exit.
      */
     static public void main(String[] args) {

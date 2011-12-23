@@ -37,6 +37,8 @@ public class Metadata {
     public static String getBySystemName(String name) {
         if (name.equalsIgnoreCase("JMRIVERSION")) {
             return jmri.Version.name();
+        } else if (name.equalsIgnoreCase("JMRIVERCANON")) {
+            return jmri.Version.getCanonicalVersion();
         } else if (name.equalsIgnoreCase("JMRIVERMAJOR")) {
             return Integer.toString(jmri.Version.major);
         } else if (name.equalsIgnoreCase("JMRIVERMINOR")) {
@@ -59,6 +61,7 @@ public class Metadata {
      */
     public static String[] getSystemNameArray() {
         String[] names = {"JMRIVERSION",
+            "JMRIVERCANON",
             "JMRIVERMAJOR",
             "JMRIVERMINOR",
             "JMRIVERTEST",

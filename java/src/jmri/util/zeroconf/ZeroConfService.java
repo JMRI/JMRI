@@ -116,7 +116,7 @@ public class ZeroConfService {
             // use the major.minor.test version string for jmri since we have potentially
             // tight space constraints in terms of the number of bytes that properties 
             // can use, and there are some unconstrained properties that we would like to use.
-            properties.put("jmri", jmri.Version.major + "." + jmri.Version.minor + "." + jmri.Version.test);
+            properties.put("jmri", jmri.Version.getCanonicalVersion());
             s = new ZeroConfService(ServiceInfo.create(type, name, port, weight, priority, properties));
             if (log.isDebugEnabled()) {
                 log.debug("Creating new ZeroConfService " + s.key());
