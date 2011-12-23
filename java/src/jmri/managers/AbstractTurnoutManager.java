@@ -183,7 +183,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         try {
             Integer.parseInt(curAddress);
         } catch (java.lang.NumberFormatException ex) {
-            log.error("Hardware Address passed should be a number " + ex);
+            log.error("Hardware Address passed should be a number", ex);
             throw new JmriException("Hardware Address passed should be a number");
         }
         return prefix+typeLetter()+curAddress;
