@@ -2,6 +2,8 @@
 
 package jmri.util.swing;
 
+import java.awt.Frame;
+
 /**
  * Interface for an object that can arrange for a 
  * {@link JmriPanel} to be displayed.
@@ -60,6 +62,20 @@ public interface WindowInterface {
     public void dispose();
     
     //public void runMethod(String method, Object args[]);
+
+    /**
+     * Test if the WindowInterface object extends java.awt.Frame
+     * 
+     * @return true if the WindowInterface is a Frame
+     */
+    public boolean isFrame();
+
+    /**
+     * Returns the WindowInterface as a Frame or null if isFrame() is false.
+     * 
+     * @return a Frame or null
+     */
+    public Frame getFrame();
     
     /**
      * Suggested location for subsequent panels

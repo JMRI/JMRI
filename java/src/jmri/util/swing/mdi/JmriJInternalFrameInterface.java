@@ -2,8 +2,10 @@
 
 package jmri.util.swing.mdi;
 
+import java.awt.Frame;
 import javax.swing.*;
 import java.util.List;
+import jmri.util.JmriJFrame;
 
 /**
  * Display a JmriPanel in a JInternalFrame of its own.
@@ -18,14 +20,14 @@ import java.util.List;
 
 public class JmriJInternalFrameInterface implements jmri.util.swing.WindowInterface {
 
-    public JmriJInternalFrameInterface(jmri.util.JmriJFrame mainFrame,
-                                       JDesktopPane desktop) {
-        // mainFrame not used in this implementation
+    public JmriJInternalFrameInterface(JmriJFrame mainFrame, JDesktopPane desktop) {
+        this.mainFrame = mainFrame;
         this.desktop = desktop;
     }
 
-    JDesktopPane    desktop;
-
+    JDesktopPane desktop;
+    JmriJFrame mainFrame;
+    
     public void show(final jmri.util.swing.JmriPanel child, 
                         jmri.util.swing.JmriAbstractAction act,
                         Hint hint) {
@@ -90,5 +92,15 @@ public class JmriJInternalFrameInterface implements jmri.util.swing.WindowInterf
      * Create new windows on each request
      */
     public boolean multipleInstances() { return true; }
+
+    @Override
+    public boolean isFrame() {
+        return (this.mainFrame != null);
+    }
+
+    @Override
+    public Frame getFrame() {
+        return (isFrame()) ? this.mainFrame : null;
+    }
 
 }

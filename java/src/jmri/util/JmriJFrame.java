@@ -771,4 +771,14 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         return names;
     }
 
+    @Override
+    public boolean isFrame() {
+        return true;
+    }
+
+    @Override
+    public Frame getFrame() {
+        return this;
+    }
+
 }

@@ -2,6 +2,7 @@
 
 package jmri.util.swing.sdi;
 
+import java.awt.Frame;
 import javax.swing.*;
 import java.util.List;
 import java.util.HashMap;
@@ -92,4 +93,14 @@ public class JmriJFrameInterface implements jmri.util.swing.WindowInterface {
     public boolean multipleInstances() { return true; }
 
     public void dispose() {}
+
+    @Override
+    public boolean isFrame() {
+        return false;
+    }
+
+    @Override
+    public Frame getFrame() {
+        return null;
+    }
 }

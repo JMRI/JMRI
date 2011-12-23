@@ -2,6 +2,7 @@
 
 package jmri.util.swing.multipane;
 
+import java.awt.Frame;
 import javax.swing.*;
 import java.util.*;
 
@@ -61,5 +62,15 @@ public class PanedInterface implements jmri.util.swing.WindowInterface {
     public void dispose(){
         for (JmriAbstractAction a : actions) 
             a.dispose();
+    }
+
+    @Override
+    public boolean isFrame() {
+        return (this.frame != null);
+    }
+
+    @Override
+    public Frame getFrame() {
+        return (isFrame()) ? this.frame : null;
     }
 }
