@@ -979,10 +979,9 @@ public class LayoutTurnout
 		}
     }
     
-    @SuppressWarnings("static-access")
     private boolean disableOccupiedTurnout(){
         if ((type==RH_TURNOUT) || (type==LH_TURNOUT) || (type==WYE_TURNOUT)){
-            if(block.getOccupancy()==block.OCCUPIED){
+            if(block.getOccupancy()==LayoutBlock.OCCUPIED){
                 log.debug("Block " + blockName + "is Occupied");
                 return true;
             }
@@ -990,11 +989,11 @@ public class LayoutTurnout
         if ((type==DOUBLE_XOVER)||(type==RH_XOVER)||(type==LH_XOVER)){
             //If the turnout is set for straigh over, we need to deal with the straight over connecting blocks
             if (getTurnout().getKnownState()==jmri.Turnout.CLOSED){
-                if ((block.getOccupancy()==block.OCCUPIED) && (blockB.getOccupancy()==block.OCCUPIED)){
+                if ((block.getOccupancy()==LayoutBlock.OCCUPIED) && (blockB.getOccupancy()==LayoutBlock.OCCUPIED)){
                     log.debug("Blocks " + blockName + " & " + blockBName + " are Occupied");
                     return true;
                 }
-                if ((blockC.getOccupancy()==block.OCCUPIED) && (blockD.getOccupancy()==block.OCCUPIED)){
+                if ((blockC.getOccupancy()==LayoutBlock.OCCUPIED) && (blockD.getOccupancy()==LayoutBlock.OCCUPIED)){
                     log.debug("Blocks " + blockCName + " & " + blockDName + " are Occupied");
                     return true;
                 }
@@ -1003,7 +1002,7 @@ public class LayoutTurnout
         }
         if ((type==DOUBLE_XOVER)||(type==LH_XOVER)){
             if (getTurnout().getKnownState()==jmri.Turnout.THROWN){
-                if ((blockB.getOccupancy()==block.OCCUPIED) && (blockD.getOccupancy()==block.OCCUPIED)){
+                if ((blockB.getOccupancy()==LayoutBlock.OCCUPIED) && (blockD.getOccupancy()==LayoutBlock.OCCUPIED)){
                     log.debug("Blocks " + blockBName + " & " + blockDName + " are Occupied");
                     return true;
                 }
@@ -1012,7 +1011,7 @@ public class LayoutTurnout
         
         if ((type==DOUBLE_XOVER)||(type==RH_XOVER)){
             if (getTurnout().getKnownState()==jmri.Turnout.THROWN){
-                if ((block.getOccupancy()==block.OCCUPIED) && (blockC.getOccupancy()==block.OCCUPIED)) {
+                if ((block.getOccupancy()==LayoutBlock.OCCUPIED) && (blockC.getOccupancy()==LayoutBlock.OCCUPIED)) {
                     log.debug("Blocks " + block + " & " + blockCName + " are Occupied");
                     return true;
                 }
@@ -1241,13 +1240,13 @@ public class LayoutTurnout
 						tools = new LayoutEditorTools(layoutEditor);
 					}
 					if ( (getTurnoutType()==DOUBLE_XOVER) || (getTurnoutType()==RH_XOVER) ||
-											(getTurnoutType()==LH_XOVER) ) {	
+											(getTurnoutType()==LH_XOVER) ) {
 						tools.setSignalsAtXoverTurnoutFromMenu(instance,
-							layoutEditor.signalIconEditor,layoutEditor.signalFrame);						
+							layoutEditor.signalIconEditor,layoutEditor.signalFrame);
 					}
 					else if (linkType==NO_LINK) {
 						tools.setSignalsAtTurnoutFromMenu(instance,
-							layoutEditor.signalIconEditor,layoutEditor.signalFrame);											
+							layoutEditor.signalIconEditor,layoutEditor.signalFrame);
 					}
 					else if (linkType==THROAT_TO_THROAT) {
 						tools.setThroatToThroatFromMenu(instance,linkedTurnoutName,
@@ -1288,7 +1287,7 @@ public class LayoutTurnout
                         }
                     });
                     
-                    if(!blockBName.equals("")){
+                    if(!blockBName.equals("") && !blockBName.equals(blockName)){
                         viewRouting.add(new AbstractAction(blockBName) {
                             public void actionPerformed(ActionEvent e) {
                                 AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockBName, getLayoutBlockB());
@@ -1296,7 +1295,7 @@ public class LayoutTurnout
                             }
                         });
                     }
-                    if(!blockCName.equals("")){
+                    if(!blockCName.equals("") && !blockCName.equals(blockName) && !blockCName.equals(blockBName)){
                         viewRouting.add(new AbstractAction(blockCName) {
                             public void actionPerformed(ActionEvent e) {
                                 AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockCName, getLayoutBlockC());
@@ -1304,7 +1303,7 @@ public class LayoutTurnout
                             }
                         });
                     }
-                    if(!blockDName.equals("")){
+                    if(!blockDName.equals("")  && !blockDName.equals(blockName) && !blockDName.equals(blockBName) && !blockDName.equals(blockCName)){
                         viewRouting.add(new AbstractAction(blockDName) {
                             public void actionPerformed(ActionEvent e) {
                                 AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockDName, getLayoutBlockD());
@@ -1337,7 +1336,6 @@ public class LayoutTurnout
                         boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
                     }
                 });
-
             }
         }
         layoutEditor.setShowAlignmentMenu(popup);
@@ -1350,29 +1348,41 @@ public class LayoutTurnout
         if ((type==WYE_TURNOUT) || (type ==RH_TURNOUT) || (type == LH_TURNOUT)){
             //This should only be needed where we are looking at a single turnout.
             if(block!=null){
-                if ((connectA instanceof TrackSegment) && (((TrackSegment)connectA).getLayoutBlock()!=block)){
-                    try {
-                        boundaryBetween[0]=(((TrackSegment)connectA).getLayoutBlock().getDisplayName()+ " - " + block.getDisplayName());
-                    } catch (java.lang.NullPointerException e){
-                        //Can be considered normal if tracksegement hasn't yet been allocated a block
-                        log.debug("TrackSegement at connection A doesn't contain a layout block");
+                LayoutBlock aLBlock = null;
+                LayoutBlock bLBlock = null;
+                LayoutBlock cLBlock = null;
+                if (connectA instanceof TrackSegment){
+                    aLBlock =((TrackSegment)connectA).getLayoutBlock();
+                    if(aLBlock!=block){
+                        try {
+                            boundaryBetween[0]=(aLBlock.getDisplayName()+ " - " + block.getDisplayName());
+                        } catch (java.lang.NullPointerException e){
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
+                            log.debug("TrackSegement at connection A doesn't contain a layout block");
+                        }
                     }
                 }
                 
-                if ((connectB instanceof TrackSegment) && (((TrackSegment)connectB).getLayoutBlock()!=block)){
-                    try {
-                        boundaryBetween[1]=(((TrackSegment)connectB).getLayoutBlock().getDisplayName()+ " - " + block.getDisplayName());
-                    } catch (java.lang.NullPointerException e){
-                        //Can be considered normal if tracksegement hasn't yet been allocated a block
-                        log.debug("TrackSegement at connection B doesn't contain a layout block");
+                if (connectB instanceof TrackSegment){
+                    bLBlock =((TrackSegment)connectB).getLayoutBlock();
+                    if(bLBlock!=block){
+                        try {
+                            boundaryBetween[1]=(bLBlock.getDisplayName()+ " - " + block.getDisplayName());
+                        } catch (java.lang.NullPointerException e){
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
+                            log.debug("TrackSegement at connection B doesn't contain a layout block");
+                        }
                     }
                 }
                 if ((connectC instanceof TrackSegment) && (((TrackSegment)connectC).getLayoutBlock()!=block)){
-                    try{
-                        boundaryBetween[2]=(((TrackSegment)connectC).getLayoutBlock().getDisplayName()+ " - " + block.getDisplayName());
-                    } catch (java.lang.NullPointerException e){
-                        //Can be considered normal if tracksegement hasn't yet been allocated a block
-                        log.debug("TrackSegement at connection C doesn't contain a layout block");
+                    cLBlock = ((TrackSegment)connectC).getLayoutBlock();
+                    if(cLBlock!=block){
+                        try{
+                            boundaryBetween[2]=(cLBlock.getDisplayName()+ " - " + block.getDisplayName());
+                        } catch (java.lang.NullPointerException e){
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
+                            log.debug("TrackSegement at connection C doesn't contain a layout block");
+                        }
                     }
                 }
             }
@@ -1389,63 +1399,59 @@ public class LayoutTurnout
             if(blockD!=null)
                 localblks.add(blockD);
             
+            LayoutBlock aLBlock = null;
+            LayoutBlock bLBlock = null;
+            LayoutBlock cLBlock = null;
+            LayoutBlock dLBlock = null;
             if(block!=null){
-                ArrayList<LayoutConnectivity> conn = layoutEditor.auxTools.getConnectivityList(block);
-                for (int i = 0; i<conn.size(); i++){
-                    if (conn.get(i).getConnectedObject()==(this)){
-                        try{
-                            if(!localblks.contains(conn.get(i).getTrackSegment().getLayoutBlock())){
-                                boundaryBetween[0]=((conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()+ " - " + block.getDisplayName()));
-                            }
+                if (connectA instanceof TrackSegment){
+                    aLBlock =((TrackSegment)connectA).getLayoutBlock();
+                    if(aLBlock!=block){
+                        try {
+                            boundaryBetween[0]=(aLBlock.getDisplayName()+ " - " + block.getDisplayName());
                         } catch (java.lang.NullPointerException e){
-                            //Can be considered normal if tracksegement hasn't yet been allocated a block or the connection isn't a track segment
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
+                            log.debug("TrackSegement at connection A doesn't contain a layout block");
+                        }
+                    }
+                }
+                
+                if (connectB instanceof TrackSegment){
+                    bLBlock =((TrackSegment)connectB).getLayoutBlock();
+                    
+                    if (bLBlock!=block || bLBlock!=blockB){
+                        try {
+                            boundaryBetween[1]=(bLBlock.getDisplayName()+ " - " + blockB.getDisplayName());
+                        } catch (java.lang.NullPointerException e){
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
+                            log.debug("TrackSegement at connection B doesn't contain a layout block");
+                        }
+                    }
+                }
+                if (connectC instanceof TrackSegment){
+                    cLBlock =((TrackSegment)connectC).getLayoutBlock();
+                    if (cLBlock!=block || cLBlock!=blockB || cLBlock!=blockC) {
+                        try{
+                            boundaryBetween[2]=(cLBlock.getDisplayName()+ " - " + blockC.getDisplayName());
+                        } catch (java.lang.NullPointerException e){
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
+                            log.debug("TrackSegement at connection C doesn't contain a layout block");
+                        }
+                    }
+                }
+                if (connectD instanceof TrackSegment){
+                    dLBlock =((TrackSegment)connectD).getLayoutBlock();
+                    if (dLBlock!=block || dLBlock!=blockB || dLBlock!=blockC || dLBlock!=blockD) {
+                        try{
+                            boundaryBetween[3]=(dLBlock.getDisplayName()+ " - " + blockD.getDisplayName());
+                        } catch (java.lang.NullPointerException e){
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
+                            log.debug("TrackSegement at connection C doesn't contain a layout block");
                         }
                     }
                 }
             }
-            if(blockB!=null){
-                ArrayList<LayoutConnectivity> conn = layoutEditor.auxTools.getConnectivityList(blockB);
-                for (int i = 0; i<conn.size(); i++){
-                    if (conn.get(i).getConnectedObject()==(this)){
-                        try{
-                              if(!localblks.contains(conn.get(i).getTrackSegment().getLayoutBlock())){
-                                boundaryBetween[1]=((blockB.getDisplayName() + " - " + conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()));
-                            }
-                        } catch (java.lang.NullPointerException e){
-                            //Can be considered normal if tracksegement hasn't yet been allocated a block or the connection isn't a track segment
-                        }
-
-                    }
-                }
-            }
-            if(blockC!=null){
-                ArrayList<LayoutConnectivity> conn = layoutEditor.auxTools.getConnectivityList(blockC);
-                for (int i = 0; i<conn.size(); i++){
-                    if (conn.get(i).getConnectedObject()==(this)){
-                        try{
-                            if(!localblks.contains(conn.get(i).getTrackSegment().getLayoutBlock())){
-                                boundaryBetween[2]=((blockC.getDisplayName() + " - " + conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName()));
-                            }
-                        } catch (java.lang.NullPointerException e){
-                            //Can be considered normal if tracksegement hasn't yet been allocated a block or the connection isn't a track segment
-                        }
-                    }
-                }
-            }
-            if(blockD!=null){
-                ArrayList<LayoutConnectivity> conn = layoutEditor.auxTools.getConnectivityList(blockD);
-                for (int i = 0; i<conn.size(); i++){
-                    if (conn.get(i).getConnectedObject()==(this)){
-                        try{
-                            if(!localblks.contains(conn.get(i).getTrackSegment().getLayoutBlock())){
-                                boundaryBetween[3]=((conn.get(i).getTrackSegment().getLayoutBlock().getDisplayName() + " - " + blockD.getDisplayName()));
-                            }
-                        } catch (java.lang.NullPointerException e){
-                            //Can be considered normal if tracksegement hasn't yet been allocated a block or the connection isn't a track segment
-                        }
-                    }
-                }
-            }
+            
         }
         return boundaryBetween;
     }
@@ -1913,7 +1919,10 @@ public class LayoutTurnout
 		editLayoutTurnoutFrame.setVisible(false);
 		editLayoutTurnoutFrame.dispose();
 		editLayoutTurnoutFrame = null;
-		if (needsBlockUpdate) updateBlockInfo();
+		if (needsBlockUpdate){
+            updateBlockInfo();
+            reCheckBlockBoundary();
+        }
 		if (needRedraw) {
 			layoutEditor.redrawPanel();
 			layoutEditor.setDirty();
@@ -1931,6 +1940,99 @@ public class LayoutTurnout
 		}
 	}
 
+    public void reCheckBlockBoundary(){
+        if(connectA==null && connectB==null && connectC==null){
+            if ((type==RH_TURNOUT) || (type==LH_TURNOUT) || (type==WYE_TURNOUT)){
+                if(!getSignalAMast().equals(""))
+                    removeSML(getSignalAMast());
+                if(!getSignalBMast().equals(""))
+                    removeSML(getSignalBMast());
+                if(!getSignalCMast().equals(""))
+                    removeSML(getSignalCMast());
+                if(!getSignalDMast().equals(""))
+                    removeSML(getSignalDMast());
+                signalAMast = "";
+                signalBMast = "";
+                signalCMast = "";
+                sensorANamed=null;
+                sensorBNamed=null;
+                sensorCNamed=null;
+                return;
+            
+            } else if (((type==DOUBLE_XOVER)||(type==RH_XOVER)||(type==LH_XOVER)) && connectD==null){
+                if(!getSignalAMast().equals(""))
+                    removeSML(getSignalAMast());
+                if(!getSignalBMast().equals(""))
+                    removeSML(getSignalBMast());
+                if(!getSignalCMast().equals(""))
+                    removeSML(getSignalCMast());
+                if(!getSignalDMast().equals(""))
+                    removeSML(getSignalDMast());
+                signalAMast = "";
+                signalBMast = "";
+                signalCMast = "";
+                signalDMast = "";
+                sensorANamed=null;
+                sensorBNamed=null;
+                sensorCNamed=null;
+                sensorDNamed=null;
+                return;
+            }
+        }
+        
+        if(connectA==null || connectB==null || connectC==null){
+            //could still be in the process of rebuilding.
+            return;
+        } else if ((connectD == null) && ((type==DOUBLE_XOVER)||(type==RH_XOVER)||(type==LH_XOVER))){
+            //could still be in the process of rebuilding.
+            return;
+        }
+        
+        TrackSegment trkA;
+        TrackSegment trkB;
+        TrackSegment trkC;
+        TrackSegment trkD;
+        
+        if(connectA instanceof TrackSegment){
+            trkA = (TrackSegment)connectA;
+            if(trkA.getLayoutBlock()==block){
+                signalAMast = "";
+                sensorANamed=null;
+                if(!getSignalAMast().equals(""))
+                    removeSML(getSignalAMast());
+            }
+        }
+        if(connectB instanceof TrackSegment){
+            trkB = (TrackSegment)connectB;
+            if(trkB.getLayoutBlock()==block || trkB.getLayoutBlock()==blockB){
+                signalBMast = "";
+                sensorBNamed=null;
+                if(!getSignalBMast().equals(""))
+                    removeSML(getSignalBMast());
+            }
+        } if(connectC instanceof TrackSegment) {
+            trkC = (TrackSegment)connectC;
+            if(trkC.getLayoutBlock()==block || trkC.getLayoutBlock()==blockB || trkC.getLayoutBlock()==blockC){
+                signalCMast = "";
+                sensorCNamed=null;
+                if(!getSignalCMast().equals(""))
+                    removeSML(getSignalCMast());
+            }
+        } if(connectD!=null && connectD instanceof TrackSegment && ((type==DOUBLE_XOVER)||(type==RH_XOVER)||(type==LH_XOVER))){
+            trkD = (TrackSegment)connectD;
+            if(trkD.getLayoutBlock()==block || trkD.getLayoutBlock()==blockB || trkD.getLayoutBlock()==blockC || trkD.getLayoutBlock()==blockD){
+                signalDMast = "";
+                sensorDNamed=null;
+                if(!getSignalDMast().equals(""))
+                    removeSML(getSignalDMast());
+            }
+        }
+    }
+    
+    void removeSML(String signalMast){
+    
+    }
+    
     /**
      * Clean up when this object is no longer needed.  Should not
      * be called while the object is still displayed; see remove()

@@ -309,7 +309,81 @@ public class LevelXing
 			b2 = ((TrackSegment)connectD).getLayoutBlock();
 			if ((b2!=null)&&(b2!=blockBD)&&(b2!=b1)) b2.updatePaths();
 		}
-	}	
+        reCheckBlockBoundary();
+	}
+    
+    public void reCheckBlockBoundary(){
+        if(connectA==null && connectB==null && connectC==null && connectD==null){
+            //This is no longer a block boundary, therefore will remove signal masts and sensors if present
+            if(!getSignalAMastName().equals(""))
+                removeSML(getSignalAMastName());
+            if(!getSignalBMastName().equals(""))
+                removeSML(getSignalBMastName());
+            if(!getSignalCMastName().equals(""))
+                removeSML(getSignalCMastName());
+            if(!getSignalDMastName().equals(""))
+                removeSML(getSignalDMastName());
+            setSignalAMastName("");
+            setSignalBMastName("");
+            setSignalCMastName("");
+            setSignalDMastName("");
+            setSensorAName("");
+            setSensorBName("");
+            setSensorCName("");
+            setSensorDName("");
+            //May want to look at a method to remove the assigned mast from the panel and potentially any logics generated
+        }  else if(connectA==null || connectB==null || connectC==null || connectD==null){
+            //could still be in the process of rebuilding the point details
+            return;
+        } 
+        
+        TrackSegment trkA;
+        TrackSegment trkB;
+        TrackSegment trkC;
+        TrackSegment trkD;
+        
+        if(connectA instanceof TrackSegment){
+            trkA = (TrackSegment)connectA;
+            if(trkA.getLayoutBlock()==blockAC){
+                setSignalAMastName("");
+                setSensorAName("");
+                if(!getSignalAMastName().equals(""))
+                    removeSML(getSignalAMastName());
+            }
+        }
+        if(connectC instanceof TrackSegment) {
+            trkC = (TrackSegment)connectC;
+            if(trkC.getLayoutBlock()==blockAC){
+                setSignalCMastName("");
+                setSensorCName("");
+                if(!getSignalCMastName().equals(""))
+                    removeSML(getSignalCMastName());
+            }
+        }
+        if(connectB instanceof TrackSegment){
+            trkB = (TrackSegment)connectB;
+            if(trkB.getLayoutBlock()==blockBD){
+                setSignalBMastName("");
+                setSensorBName("");
+                if(!getSignalBMastName().equals(""))
+                    removeSML(getSignalBMastName());
+            }
+        }
+
+        if(connectD instanceof TrackSegment) {
+            trkD = (TrackSegment)connectC;
+            if(trkD.getLayoutBlock()==blockBD){
+                setSignalDMastName("");
+                setSensorDName("");
+                if(!getSignalDMastName().equals(""))
+                    removeSML(getSignalDMastName());
+            }
+        }
+    }
+    
+    void removeSML(String signalMast){
+    
+    }
 
 	/** 
 	 * Methods to test if mainline track or not

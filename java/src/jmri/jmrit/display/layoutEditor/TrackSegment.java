@@ -231,6 +231,19 @@ public class TrackSegment
 		if ((b1!=null)&&(b1!=block)) b1.updatePaths();
 		LayoutBlock b2 = getBlock(connect2,type2);
 		if ((b2!=null)&&(b2!=block)&&(b2!=b1)) b2.updatePaths();
+        if(getConnect1() instanceof PositionablePoint)
+            ((PositionablePoint)getConnect1()).reCheckBlockBoundary();
+        else if(getConnect1() instanceof LayoutTurnout)
+            ((LayoutTurnout)getConnect1()).reCheckBlockBoundary();
+        else if(getConnect1() instanceof LevelXing)
+            ((LevelXing)getConnect1()).reCheckBlockBoundary();
+            
+        if(getConnect2() instanceof PositionablePoint)
+            ((PositionablePoint)getConnect2()).reCheckBlockBoundary();
+        else if(getConnect2() instanceof LayoutTurnout)
+            ((LayoutTurnout)getConnect2()).reCheckBlockBoundary();
+        else if(getConnect2() instanceof LevelXing)
+            ((LevelXing)getConnect2()).reCheckBlockBoundary();
 	}
 	private LayoutBlock getBlock (Object connect, int type) {
 		if (connect==null) return null;
@@ -692,6 +705,7 @@ public class TrackSegment
     private double chordLength;
     public double getChordLength() { return chordLength; }
     public void setChordLength(double chord) { chordLength=chord;}
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackSegment.class.getName());
 
 }

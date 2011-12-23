@@ -8561,7 +8561,6 @@ public class LayoutEditorTools
                     usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(to.getSignalDMast()));
             //}
 		}
-
 		for (int i=0;i<layoutEditor.xingList.size();i++) {
 			LevelXing x = layoutEditor.xingList.get(i);
 			if (x.getSignalAMastName()!=null && !x.getSignalAMastName().equals(""))
@@ -8576,6 +8575,7 @@ public class LayoutEditorTools
     }
     
     void refreshSignalMastAtTurnoutComboBox(){
+		turnoutSignalMastsGetSaved(null);
         createListUsedSignalMasts();
         usedMasts.remove(turnoutSignalMastA.getBean());
         usedMasts.remove(turnoutSignalMastB.getBean());
@@ -8591,6 +8591,7 @@ public class LayoutEditorTools
 		if (setSignalMastsOpen) {
             //We will do a refresh in case the block boundaries have changed.
             turnoutSignalMastsGetSaved(null);
+            refreshSignalMastAtTurnoutComboBox();
 			signalMastsJmriFrame.setVisible(true);
 			return;
 		}
@@ -8653,7 +8654,7 @@ public class LayoutEditorTools
             turnoutSignalMastB.setBoundaryLabel(turnoutBlocks[1]);
             turnoutSignalMastC.setBoundaryLabel(turnoutBlocks[2]);
             turnoutSignalMastD.setBoundaryLabel(turnoutBlocks[3]);
-            
+
             if(turnoutBlocks[0]!=null)
                 signalMastTurnoutPanel.add(turnoutSignalMastA.getDetailsPanel());
             if(turnoutBlocks[1]!=null)
@@ -9305,6 +9306,7 @@ public class LayoutEditorTools
 	}
 
     void refreshSignalMastAtXingComboBox(){
+        xingSignalMastsGetSaved(null);
         createListUsedSignalMasts();
         usedMasts.remove(xingSignalMastA.getBean());
         usedMasts.remove(xingSignalMastB.getBean());

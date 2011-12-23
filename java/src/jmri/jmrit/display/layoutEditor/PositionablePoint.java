@@ -173,17 +173,55 @@ public class PositionablePoint
 			}
 		}
 	}
+    
 	public void removeTrackConnection (TrackSegment track) {
 		if (track==connect1) {
 			connect1 = null;
+            reCheckBlockBoundary();
 		}
 		else if (track==connect2) {
 			connect2 = null;
+            reCheckBlockBoundary();
 		}
 		else {
 			log.error ("Attempt to remove non-existant track connection");
 		}
 	}
+    
+    public void reCheckBlockBoundary(){
+        if(type==END_BUMPER)
+            return;
+        if(connect1==null && connect2==null){
+            //This is no longer a block boundary, therefore will remove signal masts and sensors if present
+            if(!getWestBoundSignalMast().equals(""))
+                removeSML(getWestBoundSignalMast());
+            if(!getEastBoundSignalMast().equals(""))
+                removeSML(getEastBoundSignalMast());
+            setWestBoundSignalMast("");
+            setEastBoundSignalMast("");
+            setWestBoundSensor("");
+            setEastBoundSensor("");
+            //May want to look at a method to remove the assigned mast from the panel and potentially any SignalMast logics generated
+        }  else if(connect1==null || connect2==null){
+            //could still be in the process of rebuilding the point details
+            return;
+        } else if (connect1.getLayoutBlock()==connect2.getLayoutBlock()){
+            //We are no longer a block bounardy
+            if(!getWestBoundSignalMast().equals(""))
+                removeSML(getWestBoundSignalMast());
+            if(!getEastBoundSignalMast().equals(""))
+                removeSML(getEastBoundSignalMast());
+            setWestBoundSignalMast("");
+            setEastBoundSignalMast("");
+            setWestBoundSensor("");
+            setEastBoundSensor("");
+            //May want to look at a method to remove the assigned mast from the panel and potentially any SignalMast logics generated
+        }
+    }
+    
+    void removeSML(String signalMast){
+    
+    }
 
     protected int maxWidth(){
         return 5;
