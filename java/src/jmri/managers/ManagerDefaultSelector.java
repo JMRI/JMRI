@@ -145,11 +145,11 @@ public class ManagerDefaultSelector {
              */
             if(!found){
                 String currentName = null;
-                if(c == ThrottleManager.class){
+                if(c == ThrottleManager.class && InstanceManager.throttleManagerInstance()!=null){
                     currentName = InstanceManager.throttleManagerInstance().getUserName();
-                } else if(c==PowerManager.class){
+                } else if(c==PowerManager.class && InstanceManager.powerManagerInstance()!=null){
                     currentName = InstanceManager.powerManagerInstance().getUserName();
-                } else if (c==ProgrammerManager.class){
+                } else if (c==ProgrammerManager.class && InstanceManager.programmerManagerInstance()!=null){
                     currentName = InstanceManager.programmerManagerInstance().getUserName();
                 }
                 if(currentName!=null){
