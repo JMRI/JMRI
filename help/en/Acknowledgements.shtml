@@ -134,6 +134,7 @@
     <li>Peter Cesaro provided MRC decoder definitions
 	<LI>Barry Chinn, who created the PDF file of our manual
 	<LI>Bill Chown, who did a lot of work on the MRC decoder definitions
+	<li>Bob Clearfield, who helped fix some broken links
 	<li>Nigel Cliffe, who updated the CT Elektronic decoder definitions,
 	    provided sample scripts,
 	    provided new Zimo MX620 and ZTC 471 definitions,
