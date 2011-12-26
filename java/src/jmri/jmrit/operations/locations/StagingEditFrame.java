@@ -127,12 +127,22 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 				swapLoadsCheckBox.setSelected(false);
 		}
 		if (ae.getSource() == loadCheckBox){
-			if (loadCheckBox.isSelected())
+			if (loadCheckBox.isSelected()){
 				loadAnyCheckBox.setSelected(false);
+				blockCarsCheckBox.setSelected(false);
+				blockCarsCheckBox.setEnabled(false);
+			}
+			else if (!loadAnyCheckBox.isSelected())
+				blockCarsCheckBox.setEnabled(true);
 		}
 		if (ae.getSource() == loadAnyCheckBox){
-			if (loadAnyCheckBox.isSelected())
+			if (loadAnyCheckBox.isSelected()){
 				loadCheckBox.setSelected(false);
+				blockCarsCheckBox.setSelected(false);
+				blockCarsCheckBox.setEnabled(false);
+			}
+			else if (!loadCheckBox.isSelected())
+				blockCarsCheckBox.setEnabled(true);
 		}
 		else super.checkBoxActionPerformed(ae);
 	}

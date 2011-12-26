@@ -1194,6 +1194,10 @@ public class TrainBuilder extends TrainCommon{
     							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockNotAbleCustomLoad"),new Object[]{car.toString(), car.getLoad()}));
     							continue;
     						}
+       						if (car.getLoad().equals(CarLoads.instance().getDefaultEmptyName()) && (departStageTrack.isAddLoadsEnabled() || departStageTrack.isAddLoadsEnabledAnySiding())){
+    							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockNotAbleCarTypeGenerate"),new Object[]{car.toString(), car.getLoad()}));
+    							continue;
+    						}
     						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockingCar"),new Object[]{car.toString(), loc.getName(), rld.getName()}));
     						if (!findDestinationAndTrack(car, rl, rld)){
     							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockNotAbleCarType"),new Object[]{car.toString(), rld.getName(), car.getType()}));
