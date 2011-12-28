@@ -26,6 +26,14 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 public interface SignalMastLogicManager extends Manager {
 
     public void addDestinationMastToLogic(SignalMastLogic src, SignalMast destination);
+    
+    /**
+     * This will replace all instances of an old SignalMast (either source or destination)
+     * with the new signal mast instance.  This is for use with such tools as the layout editor
+     * where a signalmast can at a certain location can be replaced with another, while the
+     * remainder of the configuration stays the same.
+     */
+    public void replaceSignalMast(SignalMast oldMast, SignalMast newMast);
 
     /**
      * Discover all possible valid source and destination signalmasts past pairs

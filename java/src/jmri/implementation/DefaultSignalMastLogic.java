@@ -78,6 +78,37 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         return source;
     }
     
+    public void replaceSourceMast(SignalMast oldMast, SignalMast newMast){
+        if(oldMast!=source){
+            //Old mast does not match new mast so will exit
+            return;
+        }
+        source.removePropertyChangeListener(propertySourceMastListener);
+        source = newMast;
+        stopAspect = source.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER);
+        source.addPropertyChangeListener(propertySourceMastListener);
+        if(source.getAspect()==null)
+            source.setAspect(stopAspect);
+        firePropertyChange("updatedSource", oldMast, newMast);
+    }
+    
+    public void replaceDestinationMast(SignalMast oldMast, SignalMast newMast){
+        if(!destList.containsKey(oldMast)){
+            return;
+        }
+        DestinationMast destMast = destList.get(oldMast);
+        destMast.updateDestinationMast(newMast);
+        if(destination==oldMast){
+            oldMast.removePropertyChangeListener(propertyDestinationMastListener);
+            newMast.addPropertyChangeListener(propertyDestinationMastListener);
+            destination=newMast;
+            setSignalAppearance();
+        }
+        destList.remove(oldMast);
+        destList.put(newMast, destMast);
+        firePropertyChange("updatedDestination", oldMast, newMast);
+    }
+    
     public void setDestinationMast(SignalMast dest){
         if(destList.containsKey(dest)){
             return;
@@ -935,6 +966,12 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         
         DestinationMast(SignalMast destination){
             this.destination=destination;
+            if(destination.getAspect()==null)
+                destination.setAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
+        }
+        
+        void updateDestinationMast(SignalMast newMast){
+            destination=newMast;
             if(destination.getAspect()==null)
                 destination.setAspect(destination.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
         }

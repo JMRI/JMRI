@@ -59,7 +59,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         }
         return null;
     }
-
+    
     public SignalMastLogic newSignalMastLogic(SignalMast source){
         for(int i = 0; i <signalMastLogic.size(); i++){
             if (signalMastLogic.get(i).getSourceMast()==source)
@@ -74,6 +74,16 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     ArrayList<SignalMastLogic> signalMastLogic = new ArrayList<SignalMastLogic>();
     
     Hashtable<SignalMast, ArrayList<SignalMastLogic>> destLocationList = new Hashtable<SignalMast, ArrayList<SignalMastLogic>>();
+    
+    public void replaceSignalMast(SignalMast oldMast, SignalMast newMast){
+        for(SignalMastLogic source: signalMastLogic){
+            if(source.getSourceMast()==oldMast){
+                source.replaceSourceMast(oldMast, newMast);
+            } else {
+                source.replaceDestinationMast(oldMast, newMast);
+            }
+        }
+    }
     
     public void addDestinationMastToLogic(SignalMastLogic src, SignalMast destination){
         if(!destLocationList.contains(destination)){
@@ -369,7 +379,8 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         }
         if(!lbm.routingStablised()){
             runWhenStablised=true;
-            throw new JmriException("routing not stablised");
+            log.info("Layout block routing has not yet stabilsed discovery will happen once it has");
+            return;
         }
         ArrayList<FacingProtecting> signalMastList = generateBlocksWithSignals();
         int total = signalMastList.size()*signalMastList.size();

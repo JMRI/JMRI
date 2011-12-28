@@ -79,6 +79,22 @@ public interface SignalMastLogic {
      */
     public boolean areBlocksIncluded(ArrayList<Block> blks);
 
+    /**
+     * This will replace the existing source SignalMast with a new signal mast instance.
+     * This is for use with such tools as the layout editor
+     * where a signalmast can at a certain location can be replaced with another, while the
+     * remainder of the configuration stays the same.
+     */
+    public void replaceSourceMast(SignalMast oldMast, SignalMast newMast);
+    
+    /**
+     * This will replace the existing destination SignalMast with a new signal mast instance.
+     * This is for use with such tools as the layout editor
+     * where a signalmast can at a certain location can be replaced with another, while the
+     * remainder of the configuration stays the same.
+     */
+     public void replaceDestinationMast(SignalMast oldMast, SignalMast newMast);
+    
     public void dispose();
 
     public int getAutoBlockState(Block block, SignalMast destination);
