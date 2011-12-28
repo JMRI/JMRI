@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
+import java.util.Arrays;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -70,6 +71,18 @@ abstract public class AbstractActionPanel extends JPanel {
             AbstractActionModel m = (AbstractActionModel) rememberedObjects().get(i);
             add(new Item(m));
         }
+        jmri.InstanceManager.getDefault(apps.CreateButtonModel.class).addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if (e.getPropertyName().equals("length")){
+                    Component[] l = getComponents();
+                    for(Component m: l){
+                        if ( (m!= null) && (m instanceof AbstractActionPanel.Item)) {
+                            ((Item) m).updateCombo();
+                        }
+                    }
+                }
+            }
+        });
     }
 
     abstract List<?> rememberedObjects();
@@ -86,6 +99,7 @@ abstract public class AbstractActionPanel extends JPanel {
 
     public class Item extends JPanel implements ActionListener {
         JButton removeButton = new JButton(rb.getString(removeButtonKey));
+            
         Item() {
             setLayout(new FlowLayout());
             add(removeButton);
@@ -93,19 +107,6 @@ abstract public class AbstractActionPanel extends JPanel {
             // create the list of possibilities
             selections = new JComboBox(AbstractActionModel.nameList());
             add(selections);
-            jmri.InstanceManager.getDefault(apps.CreateButtonModel.class).addPropertyChangeListener( new PropertyChangeListener() {
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    if (e.getPropertyName().equals("length")){
-                        String current = (String)selections.getSelectedItem();
-                        selections.removeAllItems();
-                        String[] items = AbstractActionModel.nameList();
-                        for(int i = 0; i<items.length; i++){
-                            selections.addItem(items[i]);
-                        }
-                        selections.setSelectedItem(current);
-                    }
-                }
-            });
         }
         Item(AbstractActionModel m) {
             this();
@@ -115,13 +116,28 @@ abstract public class AbstractActionPanel extends JPanel {
 
         AbstractActionModel model = null;
         JComboBox selections;
-
+        
+        void updateCombo(){
+            String current = (String)selections.getSelectedItem();
+            selections.removeAllItems();
+            String[] items = AbstractActionModel.nameList();
+            for(int i = 0; i<items.length; i++){
+                selections.addItem(items[i]);
+            }
+            if(Arrays.asList(items).contains(current)){
+                selections.setSelectedItem(current);
+            } else {
+                log.info("Item " + current + " has been removed as it is no longer a valid option");
+                actionPerformed(null);
+            }
+        }
+        
         public AbstractActionModel updatedModel() {
             if (model==null) model = getNewModel();
             model.setName((String)selections.getSelectedItem());
             return model;
         }
-
+        
         public void actionPerformed(ActionEvent e) {
             synchronized (self) {
                 // remove this item from display
@@ -137,6 +153,8 @@ abstract public class AbstractActionPanel extends JPanel {
             }
         }
     }
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractActionPanel.class.getName());
 }
 
 
