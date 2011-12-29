@@ -29,8 +29,8 @@ public class SerialDriverAdapter extends EasyDccPortController  implements jmri.
 
     public SerialDriverAdapter() {
         super();
-        adaptermemo = new EasyDccSystemConnectionMemo();
-        setManufacturer(jmri.jmrix.DCCManufacturerList.SPROG);
+        adaptermemo = new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial");
+        setManufacturer(jmri.jmrix.DCCManufacturerList.EASYDCC);
     }
 
     SerialPort activeSerialPort = null;

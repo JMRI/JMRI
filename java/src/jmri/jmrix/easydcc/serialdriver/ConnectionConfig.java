@@ -26,7 +26,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super();
     }
 
-    public String name() { return "Serial"; }
+    public String name() { return "EasyDCC via Serial"; }
 
     protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }
