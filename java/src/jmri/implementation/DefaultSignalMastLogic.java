@@ -115,11 +115,13 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
         int oldSize = destList.size();
         destList.put(dest, new DestinationMast(dest));
-        InstanceManager.signalMastLogicManagerInstance().addDestinationMastToLogic(this, dest);
+        //InstanceManager.signalMastLogicManagerInstance().addDestinationMastToLogic(this, dest);
         firePropertyChange("length", oldSize, Integer.valueOf(destList.size()));
     }
     
     public boolean isDestinationValid(SignalMast dest){
+        if(dest==null)
+            return false;
         return destList.containsKey(dest);
     }
     
@@ -215,7 +217,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
     public boolean removeDestination(SignalMast dest){
         int oldSize = destList.size();
         if(destList.containsKey(dest)){
-            InstanceManager.signalMastLogicManagerInstance().removeDestinationMastToLogic(this, dest);
+            //InstanceManager.signalMastLogicManagerInstance().removeDestinationMastToLogic(this, dest);
             destList.get(dest).dispose();
             destList.remove(dest);
             firePropertyChange("length", oldSize, Integer.valueOf(destList.size()));
@@ -948,6 +950,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         Hashtable<Block, Integer> blocks = new Hashtable<Block, Integer>(0);
         boolean turnoutThrown = false;
         boolean permissiveBlock = false;
+        boolean disposed = false;
         
         ArrayList<LevelXing> blockInXings = new ArrayList<LevelXing>();
         
@@ -989,7 +992,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
 
         boolean isActive(){
-            if(disposing){
+            if(disposed){
                 log.error("checkState called even though this has been disposed of");
                 return false;
             }
@@ -1456,8 +1459,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
          * for things to settle down to help prevent a race condition
          */
         void checkState(){
-            if(disposing){
-                log.error("checkStateDetails called even though this has been disposed of");
+            if(disposed){
+                log.error("checkState called even though this has been disposed of " + getSourceMast().getDisplayName());
                 return;
             }
             if (inWait){
@@ -1496,8 +1499,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         void checkStateDetails() {
             turnoutThrown=false;
             permissiveBlock=false;
-            if(disposing){
-                log.error("checkStateDetails called even though this has been disposed of");
+            if(disposed){
+                log.error("checkStateDetails called even though this has been disposed of " + getSourceMast().getDisplayName() + " " + destination.getDisplayName());
                 return;
             }
             if(inWait){
@@ -1639,7 +1642,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
 
         void initialise(){
-            if ((destMastInit) || (disposing)) { return;}
+            if ((destMastInit) || (disposed)) { return;}
 
             active=false;
             turnoutThrown=false;
@@ -1821,8 +1824,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         
         void setupLayoutEditorDetails() throws jmri.JmriException{
             if(log.isDebugEnabled())
-                log.debug(useLayoutEditor + " " + disposing);
-            if((!useLayoutEditor)|| (disposing))
+                log.debug(useLayoutEditor + " " + disposed);
+            if((!useLayoutEditor)|| (disposed))
                 return;
             if ((destinationBlock!=null) && (log.isDebugEnabled()))
                 log.debug(destination.getDisplayName() + " Set use layout editor");
@@ -2048,7 +2051,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
         
         void dispose(){
-            disposing = true;
+            disposed = true;
             clearTurnoutLock();
             destination.removePropertyChangeListener(propertyDestinationMastListener);
             setBlocks(null);
@@ -2061,9 +2064,9 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
         
         void lockTurnouts(){
-            //We do not allow the turnouts to be locked, if we are disposing the logic, 
+            //We do not allow the turnouts to be locked, if we are disposed the logic, 
             //the logic is not active, or if we do not allow the turnouts to be locked
-            if((disposing) || (!lockTurnouts) || (!active))
+            if((disposed) || (!lockTurnouts) || (!active))
                 return;
                 
             
@@ -2431,7 +2434,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         while (en.hasMoreElements()) {
             SignalMast dm = en.nextElement();
             destList.get(dm).dispose();
-            InstanceManager.signalMastLogicManagerInstance().removeDestinationMastToLogic(this, dm);
+            //InstanceManager.signalMastLogicManagerInstance().removeDestinationMastToLogic(this, dm);
         }
     }
 
