@@ -139,7 +139,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
             @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                // updateNameList();
-                if (e.getPropertyName().equals("length")) {
+                if (e.getPropertyName().equals("length") ||  e.getPropertyName().equals("updatedDestination") ||  e.getPropertyName().equals("updatedSource")) {
                     updateNameList();
                     //log.debug("Table changed length to "+signalMastLogicList.size());
                     fireTableDataChanged();
