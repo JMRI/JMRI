@@ -85,7 +85,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         
         
         SignalAppearanceTable.setRowSelectionAllowed(false);
-        SignalAppearanceTable.setPreferredScrollableViewportSize(new java.awt.Dimension(630,120));
+        SignalAppearanceTable.setPreferredScrollableViewportSize(new java.awt.Dimension(600,120));
         _AppearanceModel.configureTable(SignalAppearanceTable);
         _SignalAppearanceScrollPane = new JScrollPane(SignalAppearanceTable);
         p3xsi.add(_SignalAppearanceScrollPane,BorderLayout.CENTER);
@@ -195,6 +195,8 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 return Boolean.class;
             if(c==EDIT_COLUMN)
                 return JButton.class;
+            if(c==DEL_COLUMN)
+                return JButton.class;
             return String.class;
         }
         
@@ -220,13 +222,15 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         public int getPreferredWidth(int col) {
             switch (col) {
             case SYSNAME_COLUMN:
-                return new JTextField(20).getPreferredSize().width;
+                return new JTextField(15).getPreferredSize().width;
             case ENABLE_COLUMN:
             case ACTIVE_COLUMN:
                 return new JTextField(5).getPreferredSize().width;
             case USERNAME_COLUMN:
-                return new JTextField(20).getPreferredSize().width;
+                return new JTextField(15).getPreferredSize().width;
             case EDIT_COLUMN: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
+                return new JTextField(22).getPreferredSize().width;
+            case DEL_COLUMN: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
                 return new JTextField(22).getPreferredSize().width;
             default:
                 log.warn("Unexpected column in getPreferredWidth: "+col);
@@ -241,6 +245,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             if (col==ACTIVE_COLUMN) return rb.getString("ColumnActive");
             if (col==ENABLE_COLUMN) return rb.getString("ColumnEnabled");
             if (col==EDIT_COLUMN) return rb.getString("ColumnEdit");
+            if (col==DEL_COLUMN) return rb.getString("ColumnDelete");
             return "";
         }
         
@@ -249,11 +254,12 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         }
         
         public void propertyChange(java.beans.PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("length")) {
+            if (e.getPropertyName().equals("length") || e.getPropertyName().equals("updatedDestination")) {
                 // a new NamedBean is available in the manager
                 _signalMastList = sml.getDestinationList();
                 fireTableDataChanged();
             } else {
+                fireTableDataChanged();
                 fireTableRowsUpdated(0, _signalMastList.size());
             }
         }
@@ -263,7 +269,9 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             // have the delete column hold a button
             /*AbstractTableAction.rb.getString("EditDelete")*/
             setColumnToHoldButton(table, EDIT_COLUMN, 
-                    new JButton("EDIT"));
+                    new JButton(rb.getString("ButtonEdit")));
+            setColumnToHoldButton(table, DEL_COLUMN, 
+                    new JButton(rb.getString("ButtonDelete")));
         }
         
         protected void setColumnToHoldButton(JTable table, int column, JButton sample) {
@@ -279,11 +287,13 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 .setPreferredWidth((sample.getPreferredSize().width)+4);
         }
 
-        public int getColumnCount () {return 5;}
+        public int getColumnCount () {return 6;}
 
         @Override
         public boolean isCellEditable(int r,int c) {
             if (c==EDIT_COLUMN)
+                return true;
+            if (c==DEL_COLUMN)
                 return true;
             return ( (c==USERNAME_COLUMN) );
         }
@@ -305,11 +315,16 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             javax.swing.SwingUtilities.invokeLater(t);
         }
         
+        protected void deletePair(int r){
+            jmri.InstanceManager.signalMastLogicManagerInstance().removeSignalMastLogic(sml, _signalMastList.get(r));
+        }
+        
         public static final int SYSNAME_COLUMN = 0;
         public static final int USERNAME_COLUMN = 1;
         public static final int ACTIVE_COLUMN = 2;
         public static final int ENABLE_COLUMN = 3;
         public static final int EDIT_COLUMN = 4;
+        public static final int DEL_COLUMN = 5;
         
         public void setSetToState(String x){}
         
@@ -336,7 +351,9 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                  case ENABLE_COLUMN:
                     return sml.isEnabled(_signalMastList.get(r));
                 case EDIT_COLUMN:
-                    return "EDIT";
+                    return rb.getString("ButtonEdit");
+                case DEL_COLUMN:
+                    return rb.getString("ButtonDelete");
                 default:
                     return null;
             }
@@ -346,6 +363,8 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         public void setValueAt(Object type,int r,int c) {
             if (c==EDIT_COLUMN)
                 editPair(r);
+            else if (c==DEL_COLUMN)
+                deletePair(r);
         }
     }
     

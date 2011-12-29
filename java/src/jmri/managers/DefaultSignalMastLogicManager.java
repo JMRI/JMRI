@@ -73,9 +73,11 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
 
     ArrayList<SignalMastLogic> signalMastLogic = new ArrayList<SignalMastLogic>();
     
-    Hashtable<SignalMast, ArrayList<SignalMastLogic>> destLocationList = new Hashtable<SignalMast, ArrayList<SignalMastLogic>>();
+    //Hashtable<SignalMast, ArrayList<SignalMastLogic>> destLocationList = new Hashtable<SignalMast, ArrayList<SignalMastLogic>>();
     
     public void replaceSignalMast(SignalMast oldMast, SignalMast newMast){
+        if(oldMast==null || newMast==null)
+            return;
         for(SignalMastLogic source: signalMastLogic){
             if(source.getSourceMast()==oldMast){
                 source.replaceSourceMast(oldMast, newMast);
@@ -84,32 +86,29 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
             }
         }
     }
-    
-    public void addDestinationMastToLogic(SignalMastLogic src, SignalMast destination){
-        if(!destLocationList.contains(destination)){
-            destLocationList.put(destination, new ArrayList<SignalMastLogic>());
-        }
-        ArrayList<SignalMastLogic> a = destLocationList.get(destination);
-        if(!a.contains(src)){
-            a.add(src);
-            firePropertyChange("DestinationAdded", src, destination);
-        }
-    }
-    
-    public void removeDestinationMastToLogic(SignalMastLogic src, SignalMast destination){
-        if(!destLocationList.contains(destination))
+
+    public void swapSignalMasts(SignalMast mastA, SignalMast mastB){
+        if(mastA==null || mastB==null){
             return;
-        ArrayList<SignalMastLogic> a = destLocationList.get(destination);
-        int loc = a.indexOf(src);
-        if(loc!=-1){
-            //Remove the mast logic from the list
-            a.remove(loc);
-            firePropertyChange("DestinationRemoved", src, destination);
         }
-        if(a.isEmpty()){
-            // if the mast logic contains no entries then we can remove it.
-            destLocationList.remove(destination);
+        ArrayList<SignalMastLogic> mastALogicList = getLogicsByDestination(mastA);
+        SignalMastLogic mastALogicSource = getSignalMastLogic(mastA);
+        
+        ArrayList<SignalMastLogic> mastBLogicList = getLogicsByDestination(mastB);
+        SignalMastLogic mastBLogicSource = getSignalMastLogic(mastB);
+        
+        if(mastALogicSource!=null)
+            mastALogicSource.replaceSourceMast(mastA, mastB);
+        if(mastBLogicSource!=null)
+            mastBLogicSource.replaceSourceMast(mastB, mastA);
+        
+        for(SignalMastLogic mastALogic: mastALogicList){
+            mastALogic.replaceDestinationMast(mastA, mastB);
         }
+        for(SignalMastLogic mastBLogic: mastBLogicList){
+            mastBLogic.replaceDestinationMast(mastB, mastA);
+        }
+    
     }
     
     /**
@@ -117,9 +116,16 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     */
     
     public ArrayList<SignalMastLogic> getLogicsByDestination(SignalMast destination){
+        ArrayList<SignalMastLogic> list = new ArrayList<SignalMastLogic>();
+        for(SignalMastLogic source: signalMastLogic){
+            if(source.isDestinationValid(destination))
+                list.add(source);
+        }
+        return list;
+        /*isDestinationValid(SignalMast dest)
         if(!destLocationList.contains(destination))
             return new ArrayList<SignalMastLogic>();
-        return destLocationList.get(destination);
+        return destLocationList.get(destination);*/
     }
     
     /**
@@ -128,6 +134,19 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
      */
     public ArrayList<SignalMastLogic> getSignalMastLogicList() {
         return signalMastLogic;
+    }
+    
+    
+    public boolean isSignalMastUsed(SignalMast mast){
+        if(getSignalMastLogic(mast)!=null){
+            /*Although the we might have it registered as a source, it may not have
+              any valid destination, so therefore it can be returned as not in use */
+            if(getSignalMastLogic(mast).getDestinationList().size()!=0)
+                return true;
+        }
+        if(getLogicsByDestination(mast).size()!=0)
+            return true;
+        return false;
     }
 
     /**
@@ -145,11 +164,27 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     * Completely remove the signalmast logic.
     */
     public void removeSignalMastLogic(SignalMastLogic sml){
+        if(sml==null)
+            return;
         //Need to provide a method to delete and dispose.
         sml.dispose();
         
         signalMastLogic.remove(sml);
         firePropertyChange("length", null, Integer.valueOf(signalMastLogic.size()));
+    }
+    
+    /*
+    * Procedure for completely remove a signalmast out of all the logics
+    */
+    public void removeSignalMast(SignalMast mast){
+        if(mast==null)
+            return;
+        for(SignalMastLogic source: signalMastLogic){
+             if (source.isDestinationValid(mast)){
+                source.removeDestination(mast);
+            }
+        }
+        removeSignalMastLogic(getSignalMastLogic(mast));
     }
 
     /**

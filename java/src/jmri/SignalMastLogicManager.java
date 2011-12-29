@@ -25,7 +25,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  */
 public interface SignalMastLogicManager extends Manager {
 
-    public void addDestinationMastToLogic(SignalMastLogic src, SignalMast destination);
+    /*public void addDestinationMastToLogic(SignalMastLogic src, SignalMast destination);*/
     
     /**
      * This will replace all instances of an old SignalMast (either source or destination)
@@ -83,7 +83,7 @@ public interface SignalMastLogicManager extends Manager {
 
     public SignalMastLogic newSignalMastLogic(SignalMast source);
 
-    public void removeDestinationMastToLogic(SignalMastLogic src, SignalMast destination);
+    //public void removeDestinationMastToLogic(SignalMastLogic src, SignalMast destination);
 
     /**
      * Remove a destination mast from the signalmast logic
@@ -96,6 +96,15 @@ public interface SignalMastLogicManager extends Manager {
      * Completely remove the signalmast logic.
      */
     public void removeSignalMastLogic(SignalMastLogic sml);
+    
+    /**
+     * Completely remove the signalmast logic, for a specific signal mast
+     */
+    public void removeSignalMast(SignalMast mast);
+    
+    public void swapSignalMasts(SignalMast mastA, SignalMast mastB);
+    
+    public boolean isSignalMastUsed(SignalMast mast);
 
     public void setSignalLogicDelay(long l);
 
