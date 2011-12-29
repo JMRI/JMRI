@@ -176,9 +176,11 @@ this page
         Windows, starting with version 2.7.2, JMRI supports interfacing with 
         the LIUSB through the Lenz LIUSBServer.
 
-        <li>The Lenz LI-USB-Ethernet is a revised version of the LIUSB which includes a
-        built in Ethernet adapter.  Connection via the USB port appears to be identical to 
-        the LIUSB, and is in any JMRI version with support for the LIUSB.  When configuring to communicate with the device via USB, be sure that Flow Control is turned off.  Connection via the Ethernet connection is available through the LIUSB Ethernet connection type, which was first made available in version 2.13.7.
+        <li>The Lenz LI-USB-Ethernet (Lenz part number 23151) is a revised version of the LIUSB which includes 
+        built in Ethernet adapter.  The USB connection on the device is provided by a Microchip chipset and registers itself as a USB CDC-ACM (Abstract Control Model) device.  For Windows users, Connection via the USB port will be identical to the previous version of the LIUSB.  For Linux users, the device will appear as a /dev/ttyACMx device (where x is replaced with a number.)  For MacOS X users, the device name will be /dev/tty.usbmodemXXX (where XXX is replaced with a 3 digit number)</p>
+
+<p>The protocol used to connect to the device via USB is identical to the prior LIUSB device, so the USB connection is supported by any JMRI version with support for the LIUSB.  When configuring to communicate with the device via USB, be sure that Flow Control is turned off.</p>  
+<p>Connection via the Ethernet connection is available through the LIUSB Ethernet connection type, which was first made available in version 2.13.7.</p>
 	
 	<li>In addition to the Lenz purpose built computer interfaces, we have
 	also included support for using an XPressNet Phone Adapter (XPA) as an
@@ -381,19 +383,19 @@ this page
         feedback module, so it can be used to add feedback to an existing 
         XPressNet equipped layout.
        
-        <p> The  RS2PC interface allows adding Lenz (and compatible) RS Feedbacl 
+        <p> The  RS2PC interface allows adding Lenz (and compatible) RS Feedback 
         Bus modules to a system that does not support the RS Feedback Bus.  
         This device does not require an XPressNet connection. 
 
         </dd>
-        <dt class=left>Viessemann</dt>
+        <dt class=left>Viessmann</dt>
         <dd>
-        <p> The Viessemann Commander's Low Speed Bus port supports the 
+        <p> The Viessmann Commander's Low Speed Bus port supports the 
         XPressNet protocol.  We should be able to use this to connect 
         using one of the supported XPressnet computer interfaces, but the
         limitations of this port have not been determined.
 
-        <p> Viessemann has indicated the Commander's built in USB port can 
+        <p> Viessmann has indicated the Commander's built in USB port can 
         only be used for updating the firmware and sending data to the 
         commander, not for operating the device.
         </dd>
