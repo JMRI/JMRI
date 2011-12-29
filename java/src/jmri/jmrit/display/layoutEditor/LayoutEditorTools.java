@@ -33,6 +33,7 @@ import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.display.SignalHeadIcon;
 import jmri.jmrit.display.PositionableIcon;
+import jmri.jmrit.signalling.SignallingGuiTools;
 
 /**
  * Layout Editor Tools provides tools making use of layout connectivity available 
@@ -7833,101 +7834,148 @@ public class LayoutEditorTools
     
 	private void setSignalMastsAtBoundaryDonePressed (ActionEvent a) {
 		if ( !getSimpleBlockInformation() ) return;
+        SignalMast oldBlock1SignalMast = getSignalMastFromName(boundary.getEastBoundSignalMast());
+        SignalMast oldBlock2SignalMast = getSignalMastFromName(boundary.getWestBoundSignalMast());
 		SignalMast block1BoundSignalMast = getSignalMastFromEntry(eastSignalMast.getText(),false,setSignalMastsAtBoundaryFrame);
 		SignalMast block2BoundSignalMast = getSignalMastFromEntry(westSignalMast.getText(),false,setSignalMastsAtBoundaryFrame);
+        
         if(block1BoundSignalMast==null){
+            if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(oldBlock1SignalMast)){
+                SignallingGuiTools.removeSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock1SignalMast);
+            }
+            
             removeSignalMastFromPanel(boundary.getEastBoundSignalMast());
             removeSignalMastAssignment(jmri.InstanceManager.signalMastManagerInstance().getSignalMast(boundary.getEastBoundSignalMast()));
             boundary.setEastBoundSignalMast("");
         }
         if(block2BoundSignalMast==null){
+            if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(oldBlock2SignalMast)){
+                SignallingGuiTools.removeSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock2SignalMast);
+            }
+            
             removeSignalMastFromPanel(boundary.getWestBoundSignalMast());
             removeSignalMastAssignment(jmri.InstanceManager.signalMastManagerInstance().getSignalMast(boundary.getWestBoundSignalMast()));
             boundary.setWestBoundSignalMast("");
         }
-
-		if ( (block1BoundSignalMast!=null) && eastSignalMast.addToPanel() ) {
-			if (isSignalMastOnPanel(block1BoundSignalMast) && 
-					(block1BoundSignalMast!=getSignalMastFromName(boundary.getEastBoundSignalMast()))) { 
-				JOptionPane.showMessageDialog(setSignalMastsAtBoundaryFrame,
-					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
-						new Object[]{eastSignalMast.getText()}), 
-							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			else {
-				removeSignalMastFromPanel(boundary.getEastBoundSignalMast());
-                SignalMastIcon l = new SignalMastIcon(layoutEditor);
-                l.setSignalMast(eastSignalMast.getText());
-				placeEastBoundIcon(l, eastSignalMast.isRightSelected(), 0);
-				removeSignalMastAssignment(block1BoundSignalMast);
-				boundary.setEastBoundSignalMast(eastSignalMast.getText());
-				needRedraw = true;
-			}		
-		}
-		else if ( (block1BoundSignalMast!=null) && 
-				(block1BoundSignalMast!=getSignalMastFromName(boundary.getEastBoundSignalMast())) &&
-				(block1BoundSignalMast!=getSignalMastFromName(boundary.getWestBoundSignalMast())) ) {
-			if (isSignalMastOnPanel(block1BoundSignalMast)) {
-				JOptionPane.showMessageDialog(setSignalMastsAtBoundaryFrame,
-					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
-						new Object[]{eastSignalMast.getText()}), 
-							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
-				return;
-			}		
-			else {
-				removeSignalMastFromPanel(boundary.getEastBoundSignalMast());
-				removeSignalMastAssignment(block1BoundSignalMast);
-				boundary.setEastBoundSignalMast(eastSignalMast.getText());
-			}
-		}
-		else if ( (block1BoundSignalMast!=null) &&  
-				(block1BoundSignalMast==getSignalMastFromName(boundary.getWestBoundSignalMast())) ) {
-// need to figure out what to do in this case.			
-		}
-		if ( (block2BoundSignalMast!=null) && westSignalMast.addToPanel() ) {
-			if (isSignalMastAssignedAnywhere(block2BoundSignalMast) &&
-					(block2BoundSignalMast!=getSignalMastFromName(boundary.getWestBoundSignalMast()))) { 
-				JOptionPane.showMessageDialog(setSignalMastsAtBoundaryFrame,
-					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
-						new Object[]{westSignalMast.getText()}), 
-							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			else {
-				removeSignalMastFromPanel(boundary.getWestBoundSignalMast());
-                SignalMastIcon l = new SignalMastIcon(layoutEditor);
-                l.setSignalMast(westSignalMast.getText());
-				placeWestBoundIcon(l, westSignalMast.isRightSelected(), 0);
-				removeSignalMastAssignment(block2BoundSignalMast);
-				boundary.setWestBoundSignalMast(westSignalMast.getText());
-				needRedraw = true;
-			}		
-		}
-		else if ( (block2BoundSignalMast!=null) && 
-				(block2BoundSignalMast!=getSignalMastFromName(boundary.getEastBoundSignalMast())) &&
-				(block2BoundSignalMast!=getSignalMastFromName(boundary.getWestBoundSignalMast())) ) {
-			if (isSignalMastAssignedAnywhere(block2BoundSignalMast)) {
-                //Need to do this better, so that the signalMast can be on panel multiple times but only alocated to one anchor at a time
-				JOptionPane.showMessageDialog(setSignalMastsAtBoundaryFrame,
-					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
-						new Object[]{westSignalMast.getText()}), 
-							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
-				return;
-			}		
-			else {
-				removeSignalMastFromPanel(boundary.getWestBoundSignalMast());
-				removeSignalMastAssignment(block2BoundSignalMast);
-				boundary.setWestBoundSignalMast(westSignalMast.getText());
-			}
-		}
-		else if ( (block2BoundSignalMast!=null) &&  
-				(block2BoundSignalMast==getSignalMastFromName(boundary.getEastBoundSignalMast())) ) {
-// need to figure out what to do in this case.			
-		}
-		setSignalMastsAtBoundaryOpen = false;
+        if(block2BoundSignalMast!=null && block1BoundSignalMast!=null){
+            if(block1BoundSignalMast == block2BoundSignalMast){
+                JOptionPane.showMessageDialog(setSignalMastsAtBoundaryFrame,
+                    rb.getString("SignalMastsError14"), 
+                    rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if(oldBlock1SignalMast==block2BoundSignalMast && oldBlock2SignalMast==block1BoundSignalMast){
+                //We are going for a swap!
+                //Need to remove old items first
+                removeSignalMastFromPanel(boundary.getWestBoundSignalMast());
+                removeSignalMastFromPanel(boundary.getEastBoundSignalMast());
+                removeSignalMastAssignment(block1BoundSignalMast);
+                removeSignalMastAssignment(block2BoundSignalMast);
+                //Then place new ones
+                SignalMastIcon l;
+                if (eastSignalMast.addToPanel()){
+                    l = new SignalMastIcon(layoutEditor);
+                    l.setSignalMast(eastSignalMast.getText());
+                    placeEastBoundIcon(l, eastSignalMast.isRightSelected(), 0);
+                }
+                if (westSignalMast.addToPanel()){
+                    l = new SignalMastIcon(layoutEditor);
+                    l.setSignalMast(westSignalMast.getText());
+                    placeWestBoundIcon(l, westSignalMast.isRightSelected(), 0);
+                }
+                boundary.setEastBoundSignalMast(eastSignalMast.getText());
+                boundary.setWestBoundSignalMast(westSignalMast.getText());
+                //Then sort out the logic
+                if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+                    SignallingGuiTools.swapSignalMastLogic(setSignalMastsAtBoundaryFrame, block1BoundSignalMast, block2BoundSignalMast);
+                }
+                needRedraw = true;
+            }
+        }
+        if(!needRedraw){
+            if(block1BoundSignalMast!=null){
+                if (eastSignalMast.addToPanel()) {
+                    System.out.println(block1BoundSignalMast.getDisplayName() + " v " + boundary.getEastBoundSignalMast());
+                    if (isSignalMastAssignedAnywhere(block1BoundSignalMast) && 
+                            (block1BoundSignalMast!=oldBlock1SignalMast)) { 
+                        JOptionPane.showMessageDialog(setSignalMastsAtBoundaryFrame,
+                            java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
+                                new Object[]{eastSignalMast.getText()}), 
+                                    rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    else {
+                        removeSignalMastFromPanel(boundary.getEastBoundSignalMast());
+                        SignalMastIcon l = new SignalMastIcon(layoutEditor);
+                        l.setSignalMast(eastSignalMast.getText());
+                        placeEastBoundIcon(l, eastSignalMast.isRightSelected(), 0);
+                        removeSignalMastAssignment(block1BoundSignalMast);
+                        boundary.setEastBoundSignalMast(eastSignalMast.getText());
+                        needRedraw = true;
+                    }
+                }
+                else if ((block1BoundSignalMast!=getSignalMastFromName(boundary.getEastBoundSignalMast())) &&
+                        (block1BoundSignalMast!=getSignalMastFromName(boundary.getWestBoundSignalMast())) ) {
+                    if (isSignalMastOnPanel(block1BoundSignalMast)) {
+                        JOptionPane.showMessageDialog(setSignalMastsAtBoundaryFrame,
+                            java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
+                                new Object[]{eastSignalMast.getText()}), 
+                                    rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }		
+                    else {
+                        removeSignalMastFromPanel(boundary.getEastBoundSignalMast());
+                        removeSignalMastAssignment(block1BoundSignalMast);
+                        boundary.setEastBoundSignalMast(eastSignalMast.getText());
+                    }
+                }
+            }
+            if(block2BoundSignalMast!=null){
+                if (westSignalMast.addToPanel() ) {
+                    if (isSignalMastAssignedAnywhere(block2BoundSignalMast) &&
+                            (block2BoundSignalMast!=oldBlock2SignalMast)) { 
+                        JOptionPane.showMessageDialog(setSignalMastsAtBoundaryFrame,
+                            java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
+                                new Object[]{westSignalMast.getText()}), 
+                                    rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    else /*(oldBlock2SignalMast!=block2BoundSignalMast)*/{
+                        removeSignalMastFromPanel(boundary.getWestBoundSignalMast());
+                        SignalMastIcon l = new SignalMastIcon(layoutEditor);
+                        l.setSignalMast(westSignalMast.getText());
+                        placeWestBoundIcon(l, westSignalMast.isRightSelected(), 0);
+                        removeSignalMastAssignment(block2BoundSignalMast);
+                        boundary.setWestBoundSignalMast(westSignalMast.getText());
+                        needRedraw = true;
+                    }		
+                }
+                else if ( (block2BoundSignalMast!=getSignalMastFromName(boundary.getEastBoundSignalMast())) &&
+                        (block2BoundSignalMast!=oldBlock2SignalMast) ) {
+                    if (isSignalMastAssignedAnywhere(block2BoundSignalMast)) {
+                        //Need to do this better, so that the signalMast can be on panel multiple times but only alocated to one anchor at a time
+                        JOptionPane.showMessageDialog(setSignalMastsAtBoundaryFrame,
+                            java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
+                                new Object[]{westSignalMast.getText()}), 
+                                    rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }		
+                    else {
+                        removeSignalMastFromPanel(boundary.getWestBoundSignalMast());
+                        removeSignalMastAssignment(block2BoundSignalMast);
+                        boundary.setWestBoundSignalMast(westSignalMast.getText());
+                    }
+                }
+            }
         
-//		boundaryFromMenu = false;
+        //If advanced routing is enabled and then this indicates that we are using this for discovering the signalmast logic paths.
+            if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && (block1BoundSignalMast!=null || block2BoundSignalMast!=null)){
+                updateBoundaryBasedSignalMastLogic(oldBlock1SignalMast, oldBlock2SignalMast, 
+                                                            block1BoundSignalMast,block2BoundSignalMast);
+            }
+        }
+        setSignalMastsAtBoundaryOpen = false;
+        
 		setSignalMastsAtBoundaryFrame.setVisible(false);
 		if (needRedraw) {
 			layoutEditor.redrawPanel();
@@ -7935,6 +7983,49 @@ public class LayoutEditorTools
 			layoutEditor.setDirty();
 		}
 	}
+    
+    public void updateBoundaryBasedSignalMastLogic(SignalMast oldBlock1SignalMast, SignalMast oldBlock2SignalMast, 
+                                                        SignalMast block1BoundSignalMast,SignalMast block2BoundSignalMast){
+        jmri.SignalMastLogicManager smlm = InstanceManager.signalMastLogicManagerInstance();
+        boolean old1Used = smlm.isSignalMastUsed(oldBlock1SignalMast);
+        boolean old2Used = smlm.isSignalMastUsed(oldBlock2SignalMast);
+        //Just check that the old ones are used in logics somewhere.
+        if(old1Used || old2Used){
+            boolean new1Used = smlm.isSignalMastUsed(block1BoundSignalMast);
+            boolean new2Used = smlm.isSignalMastUsed(block2BoundSignalMast);
+            if(new1Used || new2Used) {
+                if((new1Used) && (block1BoundSignalMast!=oldBlock1SignalMast)){
+                    SignallingGuiTools.removeAlreadyAssignedSignalMastLogic(setSignalMastsAtBoundaryFrame, block1BoundSignalMast);
+                }
+                if((new2Used) && (block2BoundSignalMast!=oldBlock2SignalMast)){
+                    SignallingGuiTools.removeAlreadyAssignedSignalMastLogic(setSignalMastsAtBoundaryFrame, block2BoundSignalMast);
+                }
+            }
+            if(block1BoundSignalMast!=null){
+                if (oldBlock2SignalMast!=null && old2Used &&
+                      oldBlock2SignalMast==block1BoundSignalMast){
+                    SignallingGuiTools.updateSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock2SignalMast, block1BoundSignalMast);
+                }
+                
+                if(oldBlock1SignalMast!=null && old1Used &&
+                      oldBlock1SignalMast!=block1BoundSignalMast){
+                    
+                    SignallingGuiTools.updateSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock1SignalMast, block1BoundSignalMast);
+                }
+            }
+            if(block2BoundSignalMast!=null){
+                if(oldBlock1SignalMast!=null && old1Used &&
+                      oldBlock1SignalMast==block2BoundSignalMast){
+                     
+                    SignallingGuiTools.updateSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock1SignalMast, block2BoundSignalMast);
+                }
+                if (oldBlock2SignalMast!=null && old2Used &&
+                        oldBlock2SignalMast!=block2BoundSignalMast){
+                    SignallingGuiTools.updateSignalMastLogic(setSignalMastsAtBoundaryFrame, oldBlock2SignalMast, block2BoundSignalMast);
+                }
+            }
+        }
+    }
     
     public void setIconOnPanel(PositionableIcon l, int rotation,
 					Point p) {
@@ -7978,7 +8069,6 @@ public class LayoutEditorTools
         }
         else {
             if(isAtWestEndOfAnchor(boundary.getConnect1(), boundary)){
-                //dir = false;
                 t = boundary.getConnect1();
             }
         }
@@ -8002,7 +8092,6 @@ public class LayoutEditorTools
         boolean dir = false;
         if(boundary.getType()!=PositionablePoint.END_BUMPER){
             if(isAtWestEndOfAnchor(boundary.getConnect1(), boundary)){
-                //dir = false;
                 t = boundary.getConnect2();
             }
         }
@@ -8017,46 +8106,6 @@ public class LayoutEditorTools
 
 	}
 
-    //Manually need to calculate if the signal is pointing in an east or west bound direction!
-	/*private void placeWestBoundIcon(PositionableIcon icon, boolean right, double fromPoint) {
-
-		Point2D p = boundary.getCoords();
-        
-        boolean dir = false;
-        
-        TrackSegment t = boundary.getConnect1();
-        Point2D pt2;
-        if(boundary.getType()==PositionablePoint.ANCHOR){
-            pt2 = layoutEditor.getCoords(t.getConnect1(),t.getType1());
-            if(t.getConnect1()==boundary){
-                pt2 = layoutEditor.getCoords(t.getConnect2(),t.getType2());
-            }
-        }
-        else {
-            if(isAtWestEndOfAnchor(boundary.getConnect1(), boundary)){
-                t = boundary.getConnect2();
-            }
-            
-            Point2D point;
-            if (t.getConnect1()==boundary){
-                point = layoutEditor.getCoords(t.getConnect2(), t.getType2());
-                if(log.isDebugEnabled())
-                    log.debug("connection from 2 " + boundary.getConnect2().getLayoutBlock().getDisplayName());
-            } else {
-                point = layoutEditor.getCoords(t.getConnect1(), t.getType1());
-                if(log.isDebugEnabled())
-                    log.debug("connection from 1 " + boundary.getConnect1().getLayoutBlock().getDisplayName());
-            }
-            
-            if(t.getConnect1()==boundary){
-                pt2 = layoutEditor.getCoords(t.getConnect2(),t.getType2());
-            } else {
-                pt2 = layoutEditor.getCoords(t.getConnect1(),t.getType1());
-            }
-        }
-        setIconOnPanel(t, icon,  dir, p, pt2, right, fromPoint);
-	}*/
-    
     void setIconOnPanel(TrackSegment t, PositionableIcon l, boolean eastbound, Point2D p, Point2D pt2, boolean side, double fromPoint){
     
         Point2D pt1 = p;
