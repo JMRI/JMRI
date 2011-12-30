@@ -307,10 +307,11 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	}
 	
 	private void check(){
-		Enumeration<JCheckBox> en =carCheckBoxes.elements();
+		Enumeration<JCheckBox> en = carCheckBoxes.elements();
 		while (en.hasMoreElements()){
 			JCheckBox checkBox = en.nextElement();
 			if (!checkBox.isSelected()){
+				log.debug("Checkbox ("+checkBox.getText()+") isn't selected ");
 				moveButton.setEnabled(false);
 				setButton.setEnabled(true);
 				return;
@@ -323,7 +324,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	}
 	
 	private void selectCheckboxes(boolean enable){
-		Enumeration<JCheckBox> en =carCheckBoxes.elements();
+		Enumeration<JCheckBox> en = carCheckBoxes.elements();
 		while (en.hasMoreElements()){
 			JCheckBox checkBox = en.nextElement();
 			checkBox.setSelected(enable);
@@ -417,7 +418,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 								addItem(pSet, carSetButton, 1,0);								
 								pSetouts.add(pSet);
 							} else {
-							pSetouts.add(carCheckBoxes.get("s"+car.getId()));
+								pSetouts.add(carCheckBoxes.get("s"+car.getId()));
 							}
 						} else {
 							JCheckBox checkBox = new JCheckBox(tc.dropCar(car));
@@ -503,12 +504,14 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 			clearAndUpdate();
 		}
 		if ((e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY) && e.getNewValue() == null)
+				|| (e.getPropertyName().equals(RollingStock.ROUTE_DESTINATION_CHANGED_PROPERTY) && e.getNewValue() == null)
 				|| e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY)){
 			// remove car from list
 			if (e.getSource().getClass().equals(Car.class)){
 				Car car = (Car)e.getSource();
 				carCheckBoxes.remove("p"+car.getId());
 				carCheckBoxes.remove("s"+car.getId());
+				log.debug("Car "+car.toString()+" removed from list");
 			}
 			update();
 		}

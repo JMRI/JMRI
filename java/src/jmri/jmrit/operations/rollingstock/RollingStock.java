@@ -67,6 +67,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public static final String LENGTH_CHANGED_PROPERTY = "rolling stock length";
 	public static final String TYPE_CHANGED_PROPERTY = "rolling stock type";
 	public static final String ROUTE_LOCATION_CHANGED_PROPERTY = "rolling stock route location";
+	public static final String ROUTE_DESTINATION_CHANGED_PROPERTY = "rolling stock route destination";
 	
 	// the draw bar length must only be calculated once at startup
 	public static final int COUPLER = Setup.getLengthUnit().equals(Setup.FEET)?
@@ -674,7 +675,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public void setRouteDestination (RouteLocation routeDestination){
 		if(routeDestination != null && _destination != null && !routeDestination.getName().equals(_destination.getName()))
 			log.debug("WARNING route destination name ("+routeDestination.getName()+") not equal to destination name ("+_destination.getName()+") for rolling stock ("+toString()+")" );
+		RouteLocation old = _routeDestination;
 		_routeDestination = routeDestination;
+		if (old != routeDestination)
+			firePropertyChange(ROUTE_DESTINATION_CHANGED_PROPERTY, old, routeDestination);
 	}
 	
 	public RouteLocation getRouteDestination(){

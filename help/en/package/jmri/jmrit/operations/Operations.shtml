@@ -178,9 +178,7 @@ The program supports an alternate set of railway terminology for our
 British modelers. To use British terminologies, change the JMRI Display
 Locale to English (United Kingdom). With British terminology, trains
 travel Up/Down and East/West, and some British railway names and wagon
-types are provided to get you started. The program will also convert
-from centimeters to meters when entering wagon, locomotive, or location
-lengths, just append "cm" to any length. 
+types are provided to get you started. 
 
 <A NAME="Settings"></A>
 <H2>Settings</H2>
@@ -253,7 +251,9 @@ the <A HREF="#CarTypeLengthWeight">car type edit</A> window.
 
 <H3>Unit of Length</H3>
 
-You can use feet or meters when entering the length of your rolling stock and tracks.
+   You can use feet or meters when entering the length of your rolling stock and tracks. The program
+   will also convert from centimeters to meters when entering car, locomotive, or location lengths,
+   just append "cm" to any length.
 
 <H3>Optional Year Modeled</H3>
 
