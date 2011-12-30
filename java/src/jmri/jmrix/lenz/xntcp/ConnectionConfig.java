@@ -23,6 +23,7 @@ import jmri.jmrix.JmrixConfigPane;
  * @version	$Revision$
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  * GT - May 2011 - Fixed problems arising from recent refactoring
+ * GT - Dec 2011 - Fixed problems in 2.14 arising from changes introduced since May
  *
  * @see XnTcpAdapter
  */
@@ -41,7 +42,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
 
 		String h = adapter.getHostName();
 		if(h != null && !h.equals(JmrixConfigPane.NONE)) hostNameField = new JTextField(h);
-		String t = adapter.getCurrentPortName();
+		String t = ""+adapter.getPort();
 		if(!t.equals("0")) portField = new JTextField(t);
 		oldName = adapter.getHostName();
     }
@@ -64,7 +65,8 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
 
 		@Override
     public String getInfo() {
-        String x = (String)opt1Box.getSelectedItem();
+// GT 2.14 retrieving adapter name from CurrentOption1Setting, since Opt1Box now returns null
+		String x = adapter.getCurrentOption1Setting();
         if (x==null)  return JmrixConfigPane.NONE;
 		if (x.equals("Manual")) {
 			x = "";
@@ -182,7 +184,12 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
 
 	private void enableInput() {
 		String choice = (String)opt1Box.getSelectedItem();
-		manualInput = choice.equals("Manual");
+//GT 2.14 - Added test for null, now returned by opt1Box at startup (somewhere the initialization is missing)
+		if(choice != null) {
+			manualInput = choice.equals("Manual");
+		} else {
+			manualInput = false;
+		}
 		hostNameField.setEnabled(manualInput);
 		portField.setEnabled(manualInput);
 		adapter.configureOption1(choice);
