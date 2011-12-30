@@ -8,6 +8,12 @@ If you're building locally:
     file to the root of the nsis installation:
         nsis.home=/opt/nsis/nsis-2.46/
 
+    If you're making branches in sourceforge, put your sourceforge userid & password in the
+    local.properties file (this does not get checked in, so your ID remains safe).
+
+    sourceforge.userid=zoo
+    sourceforge.password=IMNOTTELLING
+
 
 ================================================================================
 First, we merge in as much tentative content as possible to the SVN trunk.
