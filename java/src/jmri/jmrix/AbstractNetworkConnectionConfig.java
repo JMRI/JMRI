@@ -1,4 +1,4 @@
-// AbstractSerialConnectionConfig.java
+// AbstractNetworkConnectionConfig.java
 
 package jmri.jmrix;
 
@@ -208,7 +208,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             hostNameField.setText(p.getComboBoxLastSelection(adapter.getClass().getName()+".hostname"));
             adapter.setHostName(hostNameField.getText());
         }
-        portField.setText(adapter.getCurrentPortName());
+        portField.setText(""+adapter.getPort());
         
         portFieldLabel = new JLabel("TCP/UDP Port:");
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
