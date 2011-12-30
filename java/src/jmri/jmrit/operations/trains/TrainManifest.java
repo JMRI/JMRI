@@ -104,16 +104,20 @@ public class TrainManifest extends TrainCommon {
 						addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
 								+", "+rb.getString("estimatedArrival")+" "+train.getExpectedArrivalTime(rl));
 					}
+					// add route comment
+					if (!rl.getComment().equals(""))
+						addLine(fileOut, rl.getComment());
 				} else {
-					if (r == 0){
-						addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName})
-								+", "+rb.getString("departureTime")+" "+train.getDepartureTime());
-					} else if (!rl.getDepartureTime().equals("")){
-						addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName}) 
-								+", "+rb.getString("departureTime")+" "+rl.getFormatedDepartureTime());
-					} else {
-						addLine(fileOut, MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName}));
-					}
+					// no work at this location
+					String s = MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName});
+					// if a route comment, then only use location name and route comment, useful for passenger trains
+					if (!rl.getComment().equals(""))
+						s = routeLocationName+", "+rl.getComment();
+					if (r == 0)
+						s = s +", "+rb.getString("departureTime")+" "+train.getDepartureTime();
+					else if (!rl.getDepartureTime().equals(""))
+						s = s +", "+rb.getString("departureTime")+" "+rl.getFormatedDepartureTime();				
+					addLine(fileOut, s);
 				}
 				// add location comment
 				if (Setup.isPrintLocationCommentsEnabled()){
@@ -122,9 +126,6 @@ public class TrainManifest extends TrainCommon {
 						addLine(fileOut, l.getComment());				
 				}
 			}
-			// add route comment
-			if (!rl.getComment().equals(""))
-				addLine(fileOut, rl.getComment());
 			
 			// engine change or helper service?
 			if (train.getSecondLegOptions() != Train.NONE){
