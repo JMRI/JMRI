@@ -37,6 +37,8 @@ import javax.swing.*;
 import jmri.plaf.macosx.Application;
 import jmri.plaf.macosx.PreferencesHandler;
 import jmri.plaf.macosx.QuitHandler;
+import jmri.util.swing.JFrameInterface;
+import jmri.util.swing.WindowInterface;
 
 
 /**
@@ -146,14 +148,16 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         // and UI L&F has been set
         addToActionModel();
 
-	// populate GUI
+    	// populate GUI
         log.debug("Start UI");
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        // Create a WindowInterface object based on the passed-in Frame
+        JFrameInterface wi = new JFrameInterface(frame);
         // Create a menu bar
         menuBar = new JMenuBar();
 
         // Create menu categories and add to the menu bar, add actions to menus
-        createMenus(menuBar, frame);
+        createMenus(menuBar, wi);
         
         long end = System.nanoTime();
         
@@ -326,7 +330,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
      * @param menuBar
      * @param frame
      */
-    protected void createMenus(JMenuBar menuBar, JFrame frame) {
+    protected void createMenus(JMenuBar menuBar, WindowInterface wi) {
         // the debugging statements in the following are
         // for testing startup time
         log.debug("start building menus");
@@ -341,29 +345,29 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             });
         }
         
-        fileMenu(menuBar, frame);
-        editMenu(menuBar, frame);
-        toolsMenu(menuBar, frame);
-        rosterMenu(menuBar, frame);
-        panelMenu(menuBar, frame);
+        fileMenu(menuBar, wi);
+        editMenu(menuBar, wi);
+        toolsMenu(menuBar, wi);
+        rosterMenu(menuBar, wi);
+        panelMenu(menuBar, wi);
         // check to see if operations in main menu
         if (jmri.jmrit.operations.setup.Setup.isMainMenuEnabled())
-        	operationsMenu(menuBar, frame);
-        systemsMenu(menuBar, frame);
-        scriptMenu(menuBar, frame);
-        debugMenu(menuBar, frame);
-        menuBar.add(new WindowMenu(frame)); // * GT 28-AUG-2008 Added window menu
-        helpMenu(menuBar, frame);
+        	operationsMenu(menuBar, wi);
+        systemsMenu(menuBar, wi);
+        scriptMenu(menuBar, wi);
+        debugMenu(menuBar, wi);
+        menuBar.add(new WindowMenu(wi)); // * GT 28-AUG-2008 Added window menu
+        helpMenu(menuBar, wi);
         log.debug("end building menus");
     }
 
-    protected void fileMenu(JMenuBar menuBar, JFrame frame) {
+    protected void fileMenu(JMenuBar menuBar, WindowInterface wi) {
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         menuBar.add(fileMenu);
         
         fileMenu.add(new apps.gui3.dp3.DecoderPro3Action(rb.getString("MenuItemDP3"), false));
-        fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rb.getString("MenuPrintDecoderDefinitions"), frame, false));
-        fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rb.getString("MenuPrintPreviewDecoderDefinitions"), frame, true));
+        fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rb.getString("MenuPrintDecoderDefinitions"), wi.getFrame(), false));
+        fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rb.getString("MenuPrintPreviewDecoderDefinitions"), wi.getFrame(), true));
 
         // Use Mac OS X native Quit if using Aqua look and feel
         if (!(SystemType.isMacOSX() && UIManager.getLookAndFeel().isNativeLookAndFeel())) {
@@ -392,7 +396,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         f.addHelpMenu(l, true);
     }
     
-    protected void editMenu(JMenuBar menuBar, JFrame frame) {
+    protected void editMenu(JMenuBar menuBar, WindowInterface wi) {
 
         JMenu editMenu = new JMenu(rb.getString("MenuEdit"));
         menuBar.add(editMenu);
@@ -427,19 +431,19 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
     }
 
-    protected void toolsMenu(JMenuBar menuBar, JFrame frame) {
+    protected void toolsMenu(JMenuBar menuBar, WindowInterface wi) {
         menuBar.add(new jmri.jmrit.ToolsMenu(rb.getString("MenuTools")));
     }
     
-    protected void operationsMenu(JMenuBar menuBar, JFrame frame) {
+    protected void operationsMenu(JMenuBar menuBar, WindowInterface wi) {
         menuBar.add(new jmri.jmrit.operations.OperationsMenu(rb.getString("MenuOperations")));
     }
 
-    protected void rosterMenu(JMenuBar menuBar, JFrame frame) {
+    protected void rosterMenu(JMenuBar menuBar, WindowInterface wi) {
         menuBar.add(new jmri.jmrit.roster.swing.RosterMenu(rb.getString("MenuRoster"), jmri.jmrit.roster.swing.RosterMenu.MAINMENU, this));
     }
 	
-    protected void panelMenu(JMenuBar menuBar, JFrame frame) {
+    protected void panelMenu(JMenuBar menuBar, WindowInterface wi) {
         menuBar.add(jmri.jmrit.display.PanelMenu.instance());
     }
 
@@ -453,11 +457,11 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
      * @param menuBar
      * @param frame
      */
-    protected void systemsMenu(JMenuBar menuBar, JFrame frame) {
+    protected void systemsMenu(JMenuBar menuBar, WindowInterface wi) {
         jmri.jmrix.ActiveSystemsMenu.addItems(menuBar);
     }
 
-    protected void debugMenu(JMenuBar menuBar, JFrame frame) {
+    protected void debugMenu(JMenuBar menuBar, WindowInterface wi) {
         JMenu d = new jmri.jmrit.DebugMenu(this);
         
         // also add some tentative items from jmrix
@@ -481,7 +485,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
     }
 
-    protected void scriptMenu(JMenuBar menuBar, JFrame frame) {
+    protected void scriptMenu(JMenuBar menuBar, WindowInterface wi) {
         // temporarily remove Scripts menu; note that "Run Script"
         // has been added to the Panels menu
         // JMenu menu = new JMenu("Scripts");
@@ -490,7 +494,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         // menu.add(new jmri.jmrit.automat.JythonSigletAction("Jython siglet", this));
     }
 
-    protected void developmentMenu(JMenuBar menuBar, JFrame frame) {
+    protected void developmentMenu(JMenuBar menuBar, WindowInterface wi) {
         JMenu devMenu = new JMenu("Development");
         menuBar.add(devMenu);
         devMenu.add(new jmri.jmrit.symbolicprog.autospeed.AutoSpeedAction("Auto-speed tool"));
@@ -503,7 +507,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
 
 
-    protected void helpMenu(JMenuBar menuBar, final JFrame frame) {
+    protected void helpMenu(JMenuBar menuBar, WindowInterface wi) {
         try {
 
             // create menu and standard items

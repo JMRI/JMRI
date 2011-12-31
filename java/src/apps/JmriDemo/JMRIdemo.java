@@ -8,6 +8,7 @@ import java.text.MessageFormat;
 
 import javax.swing.*;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.WindowInterface;
 
 /**
  * The JMRI demo program.
@@ -50,9 +51,10 @@ public class JMRIdemo extends Apps {
      * @param menuBar
      * @param frame
      */
-    protected void createMenus(JMenuBar menuBar, JFrame frame) {
-        super.createMenus(menuBar, frame);
-        developmentMenu(menuBar, frame);
+    @Override
+    protected void createMenus(JMenuBar menuBar, WindowInterface wi) {
+        super.createMenus(menuBar, wi);
+        developmentMenu(menuBar, wi);
         menuBar.add(new jmri.jmris.ServerMenu());
     }
 

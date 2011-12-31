@@ -8,6 +8,7 @@ import java.text.MessageFormat;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import jmri.util.swing.WindowInterface;
 
 /**
  * Nick Kulp's Cornwall Railroad.
@@ -35,15 +36,15 @@ import javax.swing.JMenuBar;
  */
 public class CornwallRR extends Apps {
 
-    protected void createMenus(JMenuBar menuBar, JFrame frame) {
-        fileMenu(menuBar, frame);
-        editMenu(menuBar, frame);
-        toolsMenu(menuBar, frame);
-        rosterMenu(menuBar, frame);
-        panelMenu(menuBar, frame);
-        systemsMenu(menuBar, frame);
-        debugMenu(menuBar, frame);
-        helpMenu(menuBar, frame);
+    protected void createMenus(JMenuBar menuBar, WindowInterface wi) {
+        fileMenu(menuBar, wi);
+        editMenu(menuBar, wi);
+        toolsMenu(menuBar, wi);
+        rosterMenu(menuBar, wi);
+        panelMenu(menuBar, wi);
+        systemsMenu(menuBar, wi);
+        debugMenu(menuBar, wi);
+        helpMenu(menuBar, wi);
     }
 
     protected void systemsMenu(JMenuBar menuBar, JFrame frame) {

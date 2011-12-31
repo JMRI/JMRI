@@ -72,6 +72,7 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.ConnectionConfig;
+import jmri.util.swing.WindowInterface;
 
 /**
  * Standalone DecoderPro3 Window (new GUI)

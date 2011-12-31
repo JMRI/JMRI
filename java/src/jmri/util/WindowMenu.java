@@ -9,6 +9,7 @@ import java.awt.event.*;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
+import jmri.util.swing.WindowInterface;
 
 /**
  * Creates a menu showing all open windows 
@@ -21,14 +22,14 @@ import javax.swing.event.MenuEvent;
 
 public class WindowMenu extends JMenu implements javax.swing.event.MenuListener {
 
-	private JFrame parentFrame;	// Keep note of the window containing the menu
+	private Frame parentFrame;	// Keep note of the window containing the menu
 	private List<JmriJFrame> framesList;	// Keep the list of windows, in order to find out which window was selected
 
     java.util.ResourceBundle rb;
     
-    public WindowMenu(JFrame frame) {
+    public WindowMenu(WindowInterface wi) {
         super(java.util.ResourceBundle.getBundle("apps.AppsBundle").getString("MenuWindow"));
-		parentFrame = frame;
+		parentFrame = wi.getFrame();
 		addMenuListener(this);
     }
     
@@ -42,7 +43,9 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
         add(new AbstractAction(rb.getString("MenuItemMinimize")){
             public void actionPerformed(ActionEvent e) {
                 // the next line works on Java 2, but not 1.1.8
-				parentFrame.setState(Frame.ICONIFIED);
+                if (parentFrame != null) {
+    				parentFrame.setState(Frame.ICONIFIED);
+                }
             }
         }); 
 		add(new JSeparator());

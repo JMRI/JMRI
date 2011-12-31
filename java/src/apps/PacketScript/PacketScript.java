@@ -11,6 +11,7 @@ import java.text.MessageFormat;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import jmri.util.swing.WindowInterface;
 
 /**
  * Main program for the NMRA PacketScript program based on JMRI.
@@ -42,13 +43,14 @@ public class PacketScript extends Apps {
         super(p);
         }
 
-    protected void createMenus(JMenuBar menuBar, JFrame frame) {
-        fileMenu(menuBar, frame);
-        editMenu(menuBar, frame);
-        toolsMenu(menuBar, frame);
-        panelMenu(menuBar, frame);
-        systemsMenu(menuBar, frame);
-        debugMenu(menuBar, frame);
+    @Override
+    protected void createMenus(JMenuBar menuBar, WindowInterface wi) {
+        fileMenu(menuBar, wi);
+        editMenu(menuBar, wi);
+        toolsMenu(menuBar, wi);
+        panelMenu(menuBar, wi);
+        systemsMenu(menuBar, wi);
+        debugMenu(menuBar, wi);
     }
 
     protected String line1() {
