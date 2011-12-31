@@ -429,6 +429,7 @@
       </xs:annotation>
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1" />
         <xs:element name="memorystate" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:attribute name="value" type="xs:string" use="required" />
