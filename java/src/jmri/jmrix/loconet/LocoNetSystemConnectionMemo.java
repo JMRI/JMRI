@@ -196,7 +196,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     }
     
-    private LnPowerManager powerManager;
+    protected LnPowerManager powerManager;
     
     public LnPowerManager getPowerManager() { 
         if (getDisabled())
@@ -206,7 +206,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         return powerManager;
     }
     
-    private ThrottleManager throttleManager;
+    protected ThrottleManager throttleManager;
     
     public ThrottleManager getThrottleManager() { 
         if (getDisabled())
@@ -220,7 +220,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         throttleManager = t;
     }
     
-    private LnTurnoutManager turnoutManager;
+    protected LnTurnoutManager turnoutManager;
     
     public LnTurnoutManager getTurnoutManager() { 
         if (getDisabled())
@@ -230,7 +230,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         return turnoutManager;
     }
     
-    private LnClockControl clockControl;
+    protected LnClockControl clockControl;
     
     public LnClockControl getClockControl() { 
         if (getDisabled())
@@ -240,7 +240,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         return clockControl;
     }
     
-    private LnReporterManager reporterManager;
+    protected LnReporterManager reporterManager;
     
     public LnReporterManager getReporterManager() { 
         if (getDisabled())
@@ -250,7 +250,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         return reporterManager;
     }
     
-    private LnSensorManager sensorManager;
+    protected LnSensorManager sensorManager;
     
     public LnSensorManager getSensorManager() { 
         if (getDisabled())
@@ -260,7 +260,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         return sensorManager;
     }
     
-    private LnLightManager lightManager;
+    protected LnLightManager lightManager;
     
     public LnLightManager getLightManager() { 
         if (getDisabled())
