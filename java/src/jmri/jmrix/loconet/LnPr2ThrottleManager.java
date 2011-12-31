@@ -25,10 +25,8 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
      */
     public LnPr2ThrottleManager(LocoNetSystemConnectionMemo memo) {
     	super(memo);
-        this.tc = memo.getLnTrafficController();
     }
     
-    private LnTrafficController tc;
 
 	/**
 	 * PR2 allows only one throttle
@@ -90,39 +88,6 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
     * turn on and off "neutral mode" in the locomotive
     */
     public DccLocoAddress getActiveAddress() { return activeAddress; }
-
-    public boolean disposeThrottle(DccThrottle t, ThrottleListener l){
-        if (super.disposeThrottle(t, l)){
-            LocoNetThrottle lnt = (LocoNetThrottle) t;
-            lnt.throttleDispose();
-            return true;
-        }
-        return false;
-        //LocoNetSlot tSlot = lnt.getLocoNetSlot();
-    }
-
-    public void dispatchThrottle(DccThrottle t, ThrottleListener l) {
-                // set status to common
-        LocoNetThrottle lnt = (LocoNetThrottle) t;
-        LocoNetSlot tSlot = lnt.getLocoNetSlot();
-
-        tc.sendLocoNetMessage(
-                tSlot.writeStatus(LnConstants.LOCO_COMMON));
-
-        // and dispatch to slot 0
-        tc.sendLocoNetMessage(tSlot.dispatchSlot());
-
-        super.dispatchThrottle(t, l);
-    }
-
-    public void releaseThrottle(DccThrottle t, ThrottleListener l){
-        LocoNetThrottle lnt = (LocoNetThrottle) t;
-        LocoNetSlot tSlot = lnt.getLocoNetSlot();
-        if (tSlot != null)
-        	tc.sendLocoNetMessage(
-        			tSlot.writeStatus(LnConstants.LOCO_COMMON));
-        super.releaseThrottle(t, l);
-    }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnPr2ThrottleManager.class.getName());

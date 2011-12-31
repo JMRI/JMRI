@@ -3,6 +3,7 @@
 package jmri.jmrix.loconet.pr3;
 
 import jmri.InstanceManager;
+import jmri.ThrottleManager;
 import jmri.jmrix.loconet.*;
 
 /**
@@ -21,44 +22,106 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
     public PR3SystemConnectionMemo() {
         super();
     }
+
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T get(Class<?> T) {
+        if (getDisabled())
+            return null;
+        if(mode==MS100MODE){
+            return (T)super.get(T);
+        }
+        if (T.equals(jmri.ProgrammerManager.class))
+            return (T)getProgrammerManager();
+        if (T.equals(jmri.ThrottleManager.class))
+            return (T)getThrottleManager();
+        if (T.equals(jmri.PowerManager.class))
+            return (T)getPowerManager();
+        return null; // nothing, by default
+    }
+
+    final static int PR3MODE = 0x00;
+    final static int MS100MODE = 0x01;
+
+    int mode = PR3MODE;
     
    /**
      * Configure the subset of LocoNet managers valid for the PR3 in PR2 mode.
      */
     public void configureManagersPR2() {
-        
-        InstanceManager.setPowerManager(new jmri.jmrix.loconet.pr2.LnPr2PowerManager(this));
+        mode = PR3MODE;
+        InstanceManager.setPowerManager(
+            getPowerManager());
 
-        InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnPr2ThrottleManager(this));
+        InstanceManager.setThrottleManager(
+            getThrottleManager());
         
         jmri.InstanceManager.setProgrammerManager(
-            new jmri.jmrix.loconet.LnProgrammerManager(getSlotManager(), this));
+            getProgrammerManager());
 
+    }
+
+    public ThrottleManager getThrottleManager() {
+        if (super.getDisabled())
+            return null;
+        if(mode==MS100MODE){
+            return super.getThrottleManager();
+        }
+        if (throttleManager == null)
+            throttleManager = new jmri.jmrix.loconet.LnPr2ThrottleManager(this);
+        return throttleManager;
+    }
+
+    @Override
+    public boolean provides(Class<?> type) {
+        if (getDisabled())
+            return false;
+       if(mode==MS100MODE){
+            return super.provides(type);
+        }
+        if (type.equals(jmri.ProgrammerManager.class))
+            return true;
+        if (type.equals(jmri.ThrottleManager.class))
+            return true;
+        if (type.equals(jmri.PowerManager.class))
+            return true;
+         return false;
+    }
+    //private jmri.jmrix.loconet.pr2.LnPr2PowerManager powerManager;
+
+    public LnPowerManager getPowerManager() {
+        if (getDisabled())
+            return null;
+        if(mode==MS100MODE){
+            return super.getPowerManager();
+        }
+        if (powerManager == null)
+            powerManager = new jmri.jmrix.loconet.pr2.LnPr2PowerManager(this);
+        return powerManager;
     }
 
    /**
      * Configure the subset of LocoNet managers valid for the PR3 in MS100 mode.
      */
     public void configureManagersMS100() {
-        
-        LocoNetThrottledTransmitter tm = new LocoNetThrottledTransmitter(getLnTrafficController());
+        mode = MS100MODE;
 
-        InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager(this));
+        InstanceManager.setPowerManager(super.getPowerManager());
 
-        InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager(getLnTrafficController(), tm, getSystemPrefix()));
+        InstanceManager.setTurnoutManager(getTurnoutManager());
 
-        InstanceManager.setLightManager(new jmri.jmrix.loconet.LnLightManager(getLnTrafficController(), getSystemPrefix()));
+        InstanceManager.setLightManager(getLightManager());
 
-        InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager(getLnTrafficController(), getSystemPrefix()));
+        InstanceManager.setSensorManager(getSensorManager());
 
-        InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnThrottleManager(this));
+        InstanceManager.setThrottleManager(super.getThrottleManager());
 
-        jmri.InstanceManager.setProgrammerManager(
-            new jmri.jmrix.loconet.LnProgrammerManager(getSlotManager(), this));
+        jmri.InstanceManager.setProgrammerManager(getProgrammerManager());
 
-        InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager(getLnTrafficController(), getSystemPrefix()));
+        InstanceManager.setReporterManager(getReporterManager());
 
-        InstanceManager.addClockControl(new jmri.jmrix.loconet.LnClockControl(getSlotManager(), getLnTrafficController()));
+        InstanceManager.addClockControl(getClockControl());
 
     }
     
