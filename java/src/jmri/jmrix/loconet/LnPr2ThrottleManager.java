@@ -25,10 +25,8 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
      */
     public LnPr2ThrottleManager(LocoNetSystemConnectionMemo memo) {
     	super(memo);
-        this.tc = memo.getLnTrafficController();
     }
     
-    private LnTrafficController tc;
 
 	/**
 	 * PR2 allows only one throttle

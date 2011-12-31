@@ -106,8 +106,6 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
      */
     public void configureManagersMS100() {
         mode = MS100MODE;
-        
-        LocoNetThrottledTransmitter tm = new LocoNetThrottledTransmitter(getLnTrafficController());
 
         InstanceManager.setPowerManager(super.getPowerManager());
 
