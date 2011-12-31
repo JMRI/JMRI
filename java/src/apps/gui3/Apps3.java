@@ -277,18 +277,10 @@ public abstract class Apps3 extends apps.AppsBase {
     protected static void setApplication(String name) {
         try {
             // Enable access to name field
-            java.lang.reflect.Field f = jmri.Application.class.getDeclaredField("name");
-            f.setAccessible(true);
-
-            // Set to new value
-            f.set(f, name);
+            jmri.Application.setApplicationName(name);
         } catch (IllegalArgumentException ex) {
             log.warn("Unable to set application name " + ex);
         } catch (IllegalAccessException ex) {
-            log.warn("Unable to set application name " + ex);
-        } catch (NoSuchFieldException ex) {
-            log.warn("Unable to set application name " + ex);
-        } catch (SecurityException ex) {
             log.warn("Unable to set application name " + ex);
         }
     }

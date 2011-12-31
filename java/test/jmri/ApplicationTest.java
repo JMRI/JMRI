@@ -23,21 +23,16 @@ public class ApplicationTest extends TestCase {
         Assert.assertEquals("Changed Application name is 'JMRI Testing'", "JMRI Testing", Application.getApplicationName());
     }
 
+    public void testSubsequentNameChange() {
+        setApplication("JMRI Testing 2");
+        Assert.assertEquals("Changed Application name to 'JMRI Testing 2' prevented", "JMRI Testing", Application.getApplicationName());
+    }
     private static void setApplication(String name) {
         try {
-            // Enable access to name field
-            java.lang.reflect.Field f = jmri.Application.class.getDeclaredField("name");
-            f.setAccessible(true);
-
-            // Set to new value
-            f.set(f, name);
+            jmri.Application.setApplicationName(name);
         } catch (IllegalArgumentException ex) {
             log.warn("Unable to set application name " + ex);
         } catch (IllegalAccessException ex) {
-            log.warn("Unable to set application name " + ex);
-        } catch (NoSuchFieldException ex) {
-            log.warn("Unable to set application name " + ex);
-        } catch (SecurityException ex) {
             log.warn("Unable to set application name " + ex);
         }
     }

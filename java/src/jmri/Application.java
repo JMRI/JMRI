@@ -27,24 +27,37 @@ package jmri;
  */
 public class Application {
 
-//    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_CANNOT_BE_FINAL",
-//                                            justification="only one application")
-    private static String name = "JMRI";
+    private static String applicationName = null;
 
     /**
      * Return the current JMRI application name
-     * @return String containing JMRI application name
+     * @return String containing JMRI application name or "JMRI" if name has not been set.
      */
     public static String getApplicationName() {
-        return name;
+        if (Application.applicationName == null) {
+            return "JMRI";
+        }
+        return Application.applicationName;
     }
 
-//    /**
-//     * Set the current JMRI application name
-//     * @param name String containing JMRI application name
-//     */
-//    abstract protected void setApplicationName(String name);
-//
+    /**
+     * Set the current JMRI application name
+     * @param applicationName String containing the JMRI application name
+     * @throws IllegalAccessException
+     * @throws IllegalArgumentException
+     */
+    public static void setApplicationName(String applicationName) throws IllegalAccessException, IllegalArgumentException {
+        if (Application.applicationName == null) {
+            if (applicationName != null) {
+                Application.applicationName = applicationName;
+            } else {
+                throw new IllegalArgumentException("Application name cannot be null.");
+            }
+        } else {
+            throw new IllegalAccessException("Application name cannot be modified once set.");
+        }
+    }
+
 }
 
 /* @(#)Application.java */
