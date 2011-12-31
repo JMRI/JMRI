@@ -44,6 +44,7 @@ public class JmriTest extends TestCase {
                 suite.addTest(jmri.ApplicationTest.suite());
                 suite.addTest(jmri.AudioTest.suite());
                 suite.addTest(jmri.IdTagTest.suite());
+                suite.addTest(jmri.VersionTest.suite());
         
         if (!System.getProperty("jmri.headlesstest","false").equals("true"))
             suite.addTest(jmri.progdebugger.ProgDebuggerTest.suite());

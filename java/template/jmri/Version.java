@@ -4,7 +4,7 @@ package jmri;
 /**
  * Defines a simple place to get the JMRI version string.
  *<P>
- * These JavaDocs are for Version 2.11.9 of JMRI.
+ * These JavaDocs are for Version @@release.major@@.@@release.minor@@.@@release.build@@ of JMRI.
  *
  * <hr>
  * This file is part of JMRI.
@@ -38,7 +38,7 @@ public class Version {
     static final public int minor = @@release.minor@@;
      
     /* Test number changes with individual releases,
-     * general fastest for test releases. Set 0 for production
+     * generally fastest for test releases. Set 0 for production
      */
     static final public int test = @@release.build@@;
 
@@ -73,10 +73,11 @@ public class Version {
 
 
     /**
-     * Provide the current version string in I.J.Kmod format.
+     * Provide the current version string.  
      * <P>
-     * This is manually maintained by updating it before each
-     * release is built.
+     * This string is built using various known build parameters, including
+     * the release.{major,minor,build} values, the SVN revision ID (if known)
+     * and the branched & release.official statuses.
      *
      * @return The current version string
      */
@@ -112,12 +113,12 @@ public class Version {
      * @return true if version is a canonical version string
      */
     static public boolean isCanonicalVersion(String version) {
-        String[] parts = version.split(".");
+        String[] parts = version.split("\\.");
         if (parts.length != 3) {
             return false;
         }
         for (String part : parts) {
-            if (Integer.getInteger(part) == null || Integer.getInteger(part) < 0) {
+            if (Integer.valueOf(part) == null || Integer.valueOf(part) < 0) {
                 return false;
             }
         }
@@ -151,13 +152,13 @@ public class Version {
     static public int compareCanonicalVersions(String version1, String version2) throws IllegalArgumentException {
         int result = 0;
         if (!isCanonicalVersion(version1)) {
-            throw new IllegalArgumentException("Parameter version1 is not a canonical version string.");
+            throw new IllegalArgumentException("Parameter version1 (" + version1 + ") is not a canonical version string.");
         }
         if (!isCanonicalVersion(version2)) {
-            throw new IllegalArgumentException("Parameter version2 is not a canonical version string.");
+            throw new IllegalArgumentException("Parameter version2 (" + version2 + ") is not a canonical version string.");
         }
-        String[] p1 = version1.split(".");
-        String[] p2 = version2.split(".");
+        String[] p1 = version1.split("\\.");
+        String[] p2 = version2.split("\\.");
         for (int i = 0; i < 3; i++) {
             result = p1[i].compareTo(p2[i]);
             if (result != 0) {
@@ -178,6 +179,9 @@ public class Version {
     
     /**
      * Standalone print of version string and exit.
+     * 
+     * This is used in the build.xml to generate parts of the installer release file name, so
+     * take care in altering this code to make sure the ant recipes are also suitably modified.
      */
     static public void main(String[] args) {
         System.out.println(name());
