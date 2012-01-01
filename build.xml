@@ -1129,8 +1129,9 @@
                      includes="jmri.jar"/>
             <fileset dir="."
                      includes="xml/,resources/,help/,web/,jython/"/>
+            <!-- use question marks for spaces in filename; Ant will split the list on commas and spaces -->
             <fileset dir="${dist.apps}"
-                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JmriDemo.app/,LocoTools.app/,CornwallRR.app/,DecoderPro3.app/"/>
+                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/,Loco?Tools.app/,Cornwall?RR.app/,DecoderPro?3.app/"/>
             <fileset dir="scripts"
                      includes="default.lcf,COPYING"/>
         </copy>
@@ -1147,11 +1148,11 @@
         </copy>
         <chmod perm="ugo+rx">
             <fileset dir="${dist.macosx}/JMRI">
-                <include name="CornwallRR.app/Contents/MacOS/StartJMRI"/>
+                <include name="Cornwall RR.app/Contents/MacOS/StartJMRI"/>
                 <include name="DecoderPro.app/Contents/MacOS/StartJMRI"/>
-                <include name="DecoderPro3.app/Contents/MacOS/StartJMRI"/>
-                <include name="JmriDemo.app/Contents/MacOS/StartJMRI"/>
-                <include name="LocoTools.app/Contents/MacOS/StartJMRI"/>
+                <include name="DecoderPro 3.app/Contents/MacOS/StartJMRI"/>
+                <include name="JMRI Demo.app/Contents/MacOS/StartJMRI"/>
+                <include name="Loco Tools.app/Contents/MacOS/StartJMRI"/>
                 <include name="PanelPro.app/Contents/MacOS/StartJMRI"/>
                 <include name="SoundPro.app/Contents/MacOS/StartJMRI"/>
             </fileset>
@@ -1237,6 +1238,7 @@
               description="Create a Mac OS X application directory from the template directory">
         <attribute name="script.name"/>
         <attribute name="script.class"/>
+        <attribute name="script.icon" default="use script.name"/> <!-- if set to JMRI, app-specifc icons will not be used -->
         <sequential>
             <copy todir="${dist.apps}/@{script.name}.app">
                 <fileset dir="${scriptdir}/MacOSXapps/V2/TemplateApp.app"/>
@@ -1251,6 +1253,7 @@
                 <first>
                     <restrict>
                         <filelist>
+                            <file name="${scriptdir}/MacOSXapps/V2/icons/@{script.icon}.icns"/>
                             <file name="${scriptdir}/MacOSXapps/V2/icons/@{script.name}.icns"/>
                             <file name="${scriptdir}/MacOSXapps/V2/icons/JMRI.icns"/>
                         </filelist>
@@ -1307,14 +1310,14 @@
     <target name="startup-scripts-macosx"
             description="Create all of the app specific startup scripts for Mac OS X">
         <create-macosx-application-directory script.name="DecoderPro"    script.class="apps.DecoderPro.DecoderPro"/>
-        <create-macosx-application-directory script.name="DecoderPro3"   script.class="apps.gui3.dp3.DecoderPro3"/>
+        <create-macosx-application-directory script.name="DecoderPro 3"  script.class="apps.gui3.dp3.DecoderPro3"   script.icon="DecoderPro"/>
         <create-macosx-application-directory script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
         <create-macosx-application-directory script.name="DispatcherPro" script.class="apps.DispatcherPro.DispatcherPro"/>
-        <create-macosx-application-directory script.name="JMRIdemo"      script.class="apps.JmriDemo.JMRIdemo"/>
-        <create-macosx-application-directory script.name="LocoTools"     script.class="apps.LocoTools.LocoTools"/>
+        <create-macosx-application-directory script.name="JMRI Demo"     script.class="apps.JmriDemo.JMRIdemo"/>
+        <create-macosx-application-directory script.name="Loco Tools"    script.class="apps.LocoTools.LocoTools"/>
         <create-macosx-application-directory script.name="SignalPro"     script.class="apps.SignalPro"/>
         <create-macosx-application-directory script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
-        <create-macosx-application-directory script.name="CornwallRR"    script.class="apps.cornwall.CornwallRR"/>
+        <create-macosx-application-directory script.name="Cornwall RR"   script.class="apps.cornwall.CornwallRR"/>
         <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
     </target>
 

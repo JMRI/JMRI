@@ -27,13 +27,16 @@
 # xprop -root -remove _MOTIF_DEFAULT_BINDINGS
 #
 # For more information, please see
-# http://jmri.sourceforge.net/install/ShellScripts.shtml
+# http://jmri.org/install/ShellScripts.shtml
 #
 # $Revision$ (SVN maintains this line, do not edit please)
 #
 
 # keep track of the original location
 ORIGDIR="${PWD}"
+
+# get the script's location as an absolute path
+SCRIPTDIR=$(cd "$( dirname "${0}" )" && pwd)
 
 # define the class to be invoked
 CLASSNAME=@CLASS@
@@ -58,22 +61,24 @@ then
     fi
 fi
 
-if [ "$OS" = "macosx" ]
-then
+if [ "$OS" = "macosx" ]; then
     # on Mac OS X, we default to logging, since the Console app make it less visible unless you look for it
     DEBUG=yes
 fi
 
 
-# if JMRI_HOME is defined, go there, else
-# change directory to where the script is located
-if [ "${JMRI_HOME}" ]
-then
-    cd "${JMRI_HOME}"
-else
-    SCRIPTDIR=`dirname "$0"`
-    cd "$SCRIPTDIR"
+# define JMRI_HOME if it is not defined
+if [ -z "${JMRI_HOME}" ]; then
+    if [ "$OS" = "macosx" ]; then
+        # on OS X, the .app bundle is assumed to reside in the default JMRI_HOME
+        BUNDLEDIR=$(cd "${SCRIPTDIR}/../.." && pwd)
+        JMRI_HOME=$(cd "${BUNDLEDIR}/.." && pwd)
+    else
+        JMRI_HOME="$SCRIPTDIR"
+    fi
 fi
+
+cd "${JMRI_HOME}"
 [ "${DEBUG}" ] && echo "PWD: '${PWD}'"
 
 
@@ -82,14 +87,6 @@ SYSLIBPATH=
 
 
 LIBDIR="lib"
-
-if [ "$OS" = "macosx" -a -z "$JMRI_HOME" ]
-then
-    BUNDLEDIR="${SCRIPTDIR}/../../.."
-    cd "${BUNDLEDIR}"
-    echo "PWD is now: ${PWD}"
-fi
-
 
 if [ -d "${LIBDIR}/$OS" ]
 then
@@ -154,10 +151,9 @@ fi
 
 # configuration file name is 1st argument.
 # If not provided, build config file name dynamically
-if [ "$OS" = "macosx" ]
-then
-    APP_DIR=$(cd "$ORIGDIR"/../..; pwd)
-    APPNAME=`basename -s .app "${APP_DIR}" | awk '{print $1}'`
+if [ "$OS" = "macosx" ]; then
+    # OS X can have spaces in the application name
+    APPNAME=`basename -s .app "${BUNDLEDIR}"`
 else
     APPNAME=`basename $0`
 fi
@@ -174,12 +170,17 @@ fi
 #
 # Add JVM and RMI options to user options, if any
 
-if [ "$OS" = "macosx" ]
-then
+if [ "$OS" = "macosx" ]; then
+    # since bash mangles the application name and icon in $OPTIONS,
+    # these are not stored in $OPTIONS
     MEMORY_OPTIONS="-Xms96m -Xmx640m"
     OS_OPTIONS="-Dapple.laf.useScreenMenuBar=true"
     OS_OPTIONS="${OS_OPTIONS} -Dcom.apple.macos.useScreenMenuBar=true"
-    OS_OPTIONS="${OS_OPTIONS} -Dcom.apple.mrj.application.apple.menu.about.name=${APPNAME}"
+    if [ -f "${BUNDLEDIR}/Contents/Resources/@NAME@.icns" ]; then
+        APPICON="${BUNDLEDIR}/Contents/Resources/@NAME@.icns"
+    else
+        APPICON=`find "${BUNDLEDIR}" | grep -s -m 1 icns`
+    fi
 else
     MEMORY_OPTIONS="-Xms30m -Xmx200m"
 fi
@@ -189,9 +190,6 @@ OPTIONS="${JMRI_OPTIONS} -noverify"
 OPTIONS="${OPTIONS} -Djava.security.policy=${LIBDIR}/security.policy"
 OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:java/classes/"
 OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"
-
-# ddraw is disabled to get around Swing performance problems in Java 1.5.0
-OPTIONS="${OPTIONS} -Dsun.java2d.noddraw"
 
 # memory start and max limits
 OPTIONS="${OPTIONS} ${OS_OPTIONS} ${MEMORY_OPTIONS}"
@@ -217,9 +215,16 @@ EXIT_STATUS=${RESTART_CODE}
 while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ]; do
   [ "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
 
-  [ "${DEBUG}" ] && echo java ${OPTIONS} "${ALTPORTS}" -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+    # Apple dock extensions to java get mangled by bash if included in ${OPTIONS}
+    if [ "$OS" = "macosx" ]; then
+        [ "${DEBUG}" ] && echo java -Xdock:name="${APPNAME}" -Xdock:icon="${APPICON}" ${OPTIONS} "${ALTPORTS}" -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
 
-  java ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+        java -Xdock:name="${APPNAME}" -Xdock:icon="${APPICON}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+    else
+        [ "${DEBUG}" ] && echo java ${OPTIONS} "${ALTPORTS}" -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+
+        java ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+    fi
   EXIT_STATUS=$?
   [ "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}"
 done
