@@ -22,8 +22,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
 
 /**
- * Action to print a summary of locations and tracks that service specific
- * car types.
+ * Action to load the schedules by car type and load frame.
  * @author Daniel Boudreau Copyright (C) 2012
  * @version     $Revision: 17977 $
  */

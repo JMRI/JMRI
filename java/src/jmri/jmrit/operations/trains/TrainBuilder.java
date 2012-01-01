@@ -792,6 +792,7 @@ public class TrainBuilder extends TrainCommon{
 		if (rl == train.getTrainDepartsRouteLocation())
 			departTrack = departStageTrack;
 		boolean cabooseTip = true;	// add a user tip to the build report about cabooses if none found
+		boolean cabooseAtDeparture = false; // set to true if caboose at departure location is found
 		boolean foundCaboose = false;
 		boolean requiresCaboose = false;
 		if ((train.getRequirements() & Train.CABOOSE) == 0){
@@ -856,6 +857,8 @@ public class TrainBuilder extends TrainCommon{
 					if (!roadCaboose.equals("") && !roadCaboose.equals(car.getRoad())){
 						continue;	//yes
 					}
+					// okay, we found a caboose at the departure location
+					cabooseAtDeparture = true;
 					if (checkCarForDestinationAndTrack(car, rl, rld)){
 						if (car.getTrain() == train){
 							foundCaboose = true;
@@ -869,10 +872,16 @@ public class TrainBuilder extends TrainCommon{
 			}
 		}
 		if (requiresCaboose && !foundCaboose){
-			if (cabooseTip)
+			if (cabooseTip){
 				addLine(buildReport, ONE, rb.getString("buildNoteCaboose"));
-			throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorRequirements"),
-					new Object[]{train.getName(), rb.getString("Caboose"), rl.getName(), rld.getName()}));
+				addLine(buildReport, ONE, rb.getString("buildNoteCaboose2"));
+			}
+			if (!cabooseAtDeparture)
+				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorReqDepature"),
+						new Object[]{train.getName(), rb.getString("Caboose"), rl.getName()}));
+			// we did find a caboose at departure that meet requirements, but couldn't place it at destination.
+			throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorReqDest"),
+					new Object[]{train.getName(), rb.getString("Caboose"), rld.getName()}));
 		}
 	}
 	
