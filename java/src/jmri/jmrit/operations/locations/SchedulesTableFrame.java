@@ -11,6 +11,8 @@ import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -80,13 +82,11 @@ public class SchedulesTableFrame extends OperationsFrame {
 		addRadioButtonAction (sortById);
     	
 		//	build menu
-		//JMenuBar menuBar = new JMenuBar();
-		//JMenu toolMenu = new JMenu("Tools");
-		//Frame newFrame = new Frame();
-		//toolMenu.add(new PrintSchedulesAction(rb.getString("MenuItemPrint"), newFrame, false, this));
-		//toolMenu.add(new PrintSchedulesAction(rb.getString("MenuItemPreview"), newFrame, true, this));
-		//menuBar.add(toolMenu);
-		//setJMenuBar(menuBar);
+		JMenuBar menuBar = new JMenuBar();
+		JMenu toolMenu = new JMenu("Tools");
+		toolMenu.add(new SchedulesByLoadAction(rb.getString("MenuItemShowSchedulesByLoad")));
+		menuBar.add(toolMenu);
+		setJMenuBar(menuBar);
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true);
     	
     	pack();
