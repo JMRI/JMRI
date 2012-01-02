@@ -20,6 +20,7 @@ import jmri.CommandStation;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.DccThrottle;
+import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.ThrottleListener;
 import jmri.jmrit.DccLocoAddressSelector;
@@ -183,6 +184,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected float profileSpeed;
     protected float profileIncrement;
     //protected int profileAddress = 0;
+    protected int readAddress = 0;
     protected Programmer prog = null;
     protected CommandStation commandStation = null;
     protected enum ProgState {IDLE, WAIT29, WAIT1, WAIT17, WAIT18}
@@ -426,6 +428,14 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         	addrSelector.setEnabled(true);
             readAddressButton.setEnabled(true);
         }
+
+        // Listen to read button
+        readAddressButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                readAddress();
+            }
+        });
+
         profilePane.add(addrPane, BorderLayout.NORTH);
         
         // pane to hold the graph
@@ -1064,22 +1074,26 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     break;
 
                 case WAIT1:
-                	profileAddress = value;
+                	readAddress = value;
                     //profileAddressField.setText(Integer.toString(profileAddress));
                     //profileAddressField.setBackground(Color.WHITE);
+                    addrSelector.setAddress(new DccLocoAddress(readAddress, false));
+                    changeOfAddress();
                     readState = ProgState.IDLE;
                     break;
 
                 case WAIT17:
-                    profileAddress = value;
+                    readAddress = value;
                     readState = ProgState.WAIT18;
                     startRead(18);
                     break;
 
                 case WAIT18:
-                    profileAddress = (profileAddress&0x3f)*256 + value;
+                    readAddress = (readAddress&0x3f)*256 + value;
                     //profileAddressField.setText(Integer.toString(profileAddress));
                     //profileAddressField.setBackground(Color.WHITE);
+                    addrSelector.setAddress(new DccLocoAddress(readAddress, true));
+                    changeOfAddress();
                     statusLabel.setText(rb.getString("ProgRdComplete"));
                     readState = ProgState.IDLE;
                     break;
