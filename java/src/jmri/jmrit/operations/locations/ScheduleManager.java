@@ -260,6 +260,8 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
      * @param newRoad replacement car road.
      */
 	public void replaceRoad(String oldRoad, String newRoad){
+		if (newRoad == null)
+			return;
 		List<String> schs = getSchedulesByIdList();
 		for (int i=0; i<schs.size(); i++){
 			Schedule sch = getScheduleById(schs.get(i));

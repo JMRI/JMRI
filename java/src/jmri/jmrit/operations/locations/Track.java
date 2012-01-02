@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -1084,6 +1085,11 @@ public class Track {
 				break;
 			}
 			if (!si.getRoad().equals("") && !acceptsRoadName(si.getRoad())){
+				status = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getRoad()});
+				break;
+			}
+			
+			if (!si.getRoad().equals("") && !CarRoads.instance().containsName(si.getRoad())){
 				status = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getRoad()});
 				break;
 			}

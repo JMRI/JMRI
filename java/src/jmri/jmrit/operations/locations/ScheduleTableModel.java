@@ -278,7 +278,6 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     		return MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getType()});
     }
     
-    String notValidRoad =rb.getString("NotValid");
     private JComboBox getRoadComboBox(ScheduleItem si){
     	//log.debug("getRoadComboBox for ScheduleItem "+si.getType());
     	JComboBox cb = new JComboBox();
@@ -294,9 +293,9 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     	}
     	cb.setSelectedItem(si.getRoad());
     	if (!cb.getSelectedItem().equals(si.getRoad())){
-    		notValidRoad = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getRoad()});
-    		cb.addItem(notValidRoad);
-    		cb.setSelectedItem(notValidRoad);
+    		String notValid = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getRoad()});
+    		cb.addItem(notValid);
+    		cb.setSelectedItem(notValid);
     	}
     	return cb;
     }
@@ -321,9 +320,9 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     	filterLoads(cb);	// remove loads not accepted by this track
     	cb.setSelectedItem(si.getLoad());
     	if (!cb.getSelectedItem().equals(si.getLoad())){
-    		notValidRoad = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getLoad()});
-    		cb.addItem(notValidRoad);
-    		cb.setSelectedItem(notValidRoad);
+    		String notValid = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getLoad()});
+    		cb.addItem(notValid);
+    		cb.setSelectedItem(notValid);
     	}
     	return cb;
     }
@@ -333,9 +332,9 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     	JComboBox cb = CarLoads.instance().getSelectComboBox(si.getType());  
     	cb.setSelectedItem(si.getShip());
     	if (!cb.getSelectedItem().equals(si.getShip())){
-    		notValidRoad = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getShip()});
-    		cb.addItem(notValidRoad);
-    		cb.setSelectedItem(notValidRoad);
+    		String notValid = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getShip()});
+    		cb.addItem(notValid);
+    		cb.setSelectedItem(notValid);
     	}
     	return cb;
     }
@@ -366,21 +365,23 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     	try{
      		count = Integer.parseInt(value.toString());
     	} catch(NumberFormatException e) {
-    		log.error("Schedule count must be a number");
+    		log.error("Schedule count or hits must be a number");
+    		return;
+    	}
+    	// we don't care what value the user sets the hit count
+    	if (_matchMode){
+    		si.setHits(count);
     		return;
     	}
     	if (count < 1){
     		log.error("Schedule count must be greater than 0");
     		return;
     	}
-    	if (!_matchMode && count > 10){
+    	if (count > 10){
     		log.error("Schedule count must be less than 11");
     		return;
     	}
-    	if (_matchMode)
-    		si.setHits(count);
-    	else
-    		si.setCount(count);
+    	si.setCount(count);
     }
     
     private void setWait(Object value, int row){
@@ -417,13 +418,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     private void setRoad(Object value, int row){
     	ScheduleItem si = _schedule.getItemById(list.get(row));
     	String road = (String)((JComboBox)value).getSelectedItem();
-    	// String "Not Valid <>" is 12 char in length
-    	if (road.length()<12){
-    		si.setRoad(road);
-    		return;
-    	}
-    	String test = road.substring(0, 11);
-    	if (!test.equals(rb.getString("NotValid").substring(0, 11)))
+    	if (checkForNotValidString(road))
     		si.setRoad(road);
     }
     
@@ -431,13 +426,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     private void setLoad(Object value, int row){
     	ScheduleItem si = _schedule.getItemById(list.get(row));
     	String load = (String)((JComboBox)value).getSelectedItem();
-    	// String "Not Valid <>" is 12 char in length
-    	if (load.length()<12){
-    		si.setLoad(load);
-    		return;
-    	}
-    	String test = load.substring(0, 11);
-    	if (!test.equals(rb.getString("NotValid").substring(0, 11)))
+    	if (checkForNotValidString(load))
     		si.setLoad(load);
     }
     
@@ -445,14 +434,21 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     private void setShip(Object value, int row){
        	ScheduleItem si = _schedule.getItemById(list.get(row));
     	String load = (String)((JComboBox)value).getSelectedItem();
-    	// String "Not Valid <>" is 12 char in length
-    	if (load.length()<12){
+    	if (checkForNotValidString(load))
     		si.setShip(load);
-    		return;
-    	}
-    	String test = load.substring(0, 11);
-    	if (!test.equals(rb.getString("NotValid").substring(0, 11)))
-    		si.setShip(load);
+    }
+    
+    /*
+     * Returns true if string is okay, doesn't have the
+     * string "Not Valid <>".
+     */
+    private boolean checkForNotValidString(String s){
+    	if (s.length()<12)
+    		return true;
+    	String test = s.substring(0, 11);
+    	if (test.equals(rb.getString("NotValid").substring(0, 11)))
+    		return false;
+    	return true;   	
     }
     
     private void setDestination(Object value, int row){ 	
