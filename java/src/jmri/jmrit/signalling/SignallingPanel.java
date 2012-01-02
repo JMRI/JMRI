@@ -851,7 +851,22 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 
         Hashtable<SignalMast, String> hashSignalMast = new Hashtable<SignalMast, String>();
         for(int i = 0; i<_includedManualSignalMastList.size(); i++){
-            hashSignalMast.put(_includedManualSignalMastList.get(i).getMast(), _includedManualSignalMastList.get(i).getSetToState());
+            if(_includedManualSignalMastList.get(i).getMast()==sourceMast || _includedManualSignalMastList.get(i).getMast()==destMast){
+                int mes = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(rb.getString("SignalMastCriteriaOwn"),
+                    new Object[]{ _includedManualSignalMastList.get(i).getMast().getDisplayName() }),
+                    rb.getString("SignalMastCriteriaOwnTitle"),
+                    JOptionPane.YES_NO_OPTION);
+                if(mes ==0) {
+                    hashSignalMast.put(_includedManualSignalMastList.get(i).getMast(), _includedManualSignalMastList.get(i).getSetToState());
+                } else{
+                    _includedManualSignalMastList.get(i).setIncluded(false);
+                    initializeIncludedList();
+                    _signalMastModel.fireTableDataChanged();
+                }
+            } else {
+                hashSignalMast.put(_includedManualSignalMastList.get(i).getMast(), _includedManualSignalMastList.get(i).getSetToState());
+            }
+
         }
         sml.setMasts(hashSignalMast, destMast);
         sml.allowTurnoutLock(lockTurnouts.isSelected(), destMast);
@@ -1245,7 +1260,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     private class ManualSignalMastList extends SignalMastElement {
         ManualSignalMastList (SignalMast s) {
             mast = s;
-            //super(sysName, userName);
         }
         
         String _setToAspect = "";
