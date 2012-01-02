@@ -5,21 +5,27 @@ package jmri.jmrix.bachrus;
 import java.util.*;
 import java.text.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import javax.swing.*;
-import javax.swing.JComboBox;
 
+import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+
 import jmri.CommandStation;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.ThrottleListener;
+import jmri.jmrit.DccLocoAddressSelector;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.JmriJFrame;
 import jmri.Programmer;
 import jmri.ProgrammerException;
@@ -43,7 +49,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      *  Allow selection of arbitrary scale
      */
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.bachrus.BachrusBundle");
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.bachrus.BachrusBundle");
 
     private PowerManager pm = null;
     
@@ -62,9 +68,19 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JRadioButton dirRevButton = new JRadioButton(rb.getString("Rev"));
 
     GraphPane profileGraphPane;
-    protected JLabel profileAddressLabel = new JLabel(rb.getString("LocoAddress"));
-    protected JTextField profileAddressField = new JTextField(6);
+    //protected JLabel profileAddressLabel = new JLabel(rb.getString("LocoAddress"));
+    //protected JTextField profileAddressField = new JTextField(6);
     protected JButton readAddressButton = new JButton(rb.getString("Read"));
+
+	private DccLocoAddressSelector addrSelector = new DccLocoAddressSelector();
+	private JButton setButton;
+	private RosterEntryComboBox rosterBox;
+	protected RosterEntry rosterEntry;
+	private boolean disableRosterBoxActions = false;
+	
+	private int profileAddress = 0;
+	private boolean profileIsLong = false;
+	
     protected JButton trackPowerButton = new JButton(rb.getString("PowerUp"));
     protected JButton startProfileButton = new JButton(rb.getString("Start"));
     protected JButton stopProfileButton = new JButton(rb.getString("Stop"));
@@ -166,14 +182,14 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected int profileStep = 0;
     protected float profileSpeed;
     protected float profileIncrement;
-    protected int profileAddress = 0;
+    //protected int profileAddress = 0;
     protected Programmer prog = null;
     protected CommandStation commandStation = null;
     protected enum ProgState {IDLE, WAIT29, WAIT1, WAIT17, WAIT18}
     protected ProgState readState = ProgState.IDLE;
 
     //Create the combo box, select item at index 4.
-    //Indices start at 0, so 4 specifies british N.
+    //Indices start at 0, so 4 specifies British N.
     JComboBox scaleList = new JComboBox(scaleStrings);
 
     // members for handling the Speedo interface
@@ -350,70 +366,67 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
          * Pane for profiling loco speed curve
          */
         JPanel profilePane = new JPanel();
-        //profilePane.setLayout(new BoxLayout(profilePane, BoxLayout.Y_AXIS));
         profilePane.setLayout(new BorderLayout());
+        
+        JPanel addrPane = new JPanel();
+        GridBagLayout gLayout = new GridBagLayout();
+        GridBagConstraints gConstraints = new GridBagConstraints();
+        gConstraints.insets = new Insets(3, 3, 3, 3);
+        Border addrPaneBorder = javax.swing.BorderFactory.createEtchedBorder();
+        TitledBorder addrPaneTitle = javax.swing.BorderFactory.createTitledBorder(addrPaneBorder, rb.getString("LocoSelection"));
+        addrPane.setLayout(gLayout);
+        addrPane.setBorder(addrPaneTitle);
 
-        // pane to hold address
-        JPanel profileAddressPane = new JPanel();
-        profileAddressPane.setLayout(new FlowLayout());
-        profileAddressPane.add(profileAddressLabel);
-        profileAddressPane.add(profileAddressField);
-        profileAddressField.setToolTipText(rb.getString("EnterLoc"));
-        profileAddressPane.add(readAddressButton);
+		setButton = new JButton(rb.getString("ButtonSet"));
+		setButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				changeOfAddress();
+			}
+		});
+    	addrSelector.setAddress(null);
+
+		rosterBox = new RosterEntryComboBox();
+        rosterBox.setRosterListenerEnabled(false);
+		rosterBox.insertItemAt(new NullComboBoxItem(), 0);
+		rosterBox.setSelectedIndex(0);
+		rosterBox.setToolTipText(rb.getString("TTSelectLocoFromRoster"));
+		rosterBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (!disableRosterBoxActions) { //Have roster box actions been disabled?
+					rosterItemSelected();
+				}
+			}
+		});
+        
+        Roster.instance().addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent pce) {
+                if (pce.getPropertyName().equals("add")
+                        || pce.getPropertyName().equals("remove")
+                        || pce.getPropertyName().equals("change")) {
+                    updateRosterBox();
+                }
+            }
+        });
+        
         readAddressButton.setToolTipText(rb.getString("ReadLoco"));
+
+    	addrPane.add(addrSelector.getCombinedJPanel(), gConstraints);
+        addrPane.add(new JLabel(" "), gConstraints);
+		addrPane.add(setButton, gConstraints);
+        addrPane.add(new JLabel(" "), gConstraints);
+		addrPane.add(rosterBox, gConstraints);
+        addrPane.add(new JLabel(" "), gConstraints);
+        addrPane.add(readAddressButton, gConstraints);
         
         if ((dccServices & PROG) != PROG) {
             // User must enter address
+        	addrSelector.setEnabled(false);
             readAddressButton.setEnabled(false);
-            profileAddressField.setText(Integer.toString(0));
+        } else {
+        	addrSelector.setEnabled(true);
+            readAddressButton.setEnabled(true);
         }
-
-        profileAddressField.addKeyListener( new KeyListener() {
-            public void keyPressed(KeyEvent keyEvent) {
-            }
-            public void keyReleased(KeyEvent keyEvent) {
-                try {
-                    if(!profileAddressField.getText().equals("")){
-                        int userinput = Integer.parseInt(profileAddressField.getText());
-                        profileAddress = userinput;
-                        profileAddressField.setBackground(Color.WHITE);
-                    } else {
-                        profileAddress = 0;
-                    }
-                } catch (NumberFormatException ex) {
-                    log.error("Non numeric address entered " + ex);
-                    if(profileAddress==0){
-                        profileAddressField.setText("");
-                    } else {
-                        profileAddressField.setText(Integer.toString(profileAddress));
-                    }
-                }
-            }
-            public void keyTyped(KeyEvent keyEvent) {
-            }
-        });
-        // Listen to text entry
-        profileAddressField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                try {
-                    profileAddress = Integer.parseInt(profileAddressField.getText());
-                    profileAddressField.setBackground(Color.WHITE);
-                } catch (NumberFormatException ex) {
-                    log.error("Non numeric address entered " + ex);
-                    profileAddress = 0;
-                    profileAddressField.setText("0");
-                }
-            }
-        });
-
-        // Listen to read button
-        readAddressButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                readAddress();
-            }
-        });
-
-        profilePane.add(profileAddressPane, BorderLayout.NORTH);
+        profilePane.add(addrPane, BorderLayout.NORTH);
         
         // pane to hold the graph
         spFwd = new DccSpeedProfile(29);       // 28 step plus step 0
@@ -524,7 +537,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         // add help menu to window
     	addHelpMenu("package.jmri.jmrix.bachrus.SpeedoConsoleFrame", true);
 
-        // Create a wrapper with a status line and add the main contnnt
+        // Create a wrapper with a status line and add the main content
         JPanel statusWrapper = new JPanel();
         statusWrapper.setLayout(new BorderLayout());
         JPanel statusPanel = new JPanel();
@@ -540,7 +553,63 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         // pack for display
         pack();
     }
+
+    /**
+     * Handle changing/setting the address
+     */
+    private void changeOfAddress() {
+    	if (addrSelector.getAddress() != null) {
+	    	profileAddress = addrSelector.getAddress().getNumber();
+	    	profileIsLong = addrSelector.getAddress().isLongAddress();
+    	} else {
+    		profileAddress = 0;
+    		profileIsLong = true;
+    	}
+    }
     
+	/**
+	 * Set the RosterEntry for this throttle.
+	 */
+	public void setRosterEntry(RosterEntry entry){
+		rosterBox.setSelectedItem(entry);
+		addrSelector.setAddress(entry.getDccLocoAddress());
+		rosterEntry = entry;
+		changeOfAddress();
+	}
+	
+	private void rosterItemSelected() {
+		if (!(rosterBox.getSelectedItem() instanceof NullComboBoxItem)) {
+			String rosterEntryTitle = rosterBox.getSelectedItem().toString();
+			setRosterEntry(Roster.instance().entryFromTitle(rosterEntryTitle));
+		}
+	}
+
+    private void updateRosterBox(){
+        //disable rosterbox actions when doing the update
+        disableRosterBoxActions=true;
+        boolean isNullSelected = false;
+        String selectedItem ="";
+        if(rosterBox.getSelectedItem() instanceof NullComboBoxItem)
+            isNullSelected = true;
+        else
+            selectedItem = rosterBox.getSelectedItem().toString();
+        rosterBox.update();
+        rosterBox.insertItemAt(new NullComboBoxItem(), 0);
+        if(isNullSelected)
+            rosterBox.setSelectedIndex(0);
+        else {
+            rosterBox.setSelectedItem(selectedItem);
+        }
+        disableRosterBoxActions=false;
+    
+    }
+
+	static class NullComboBoxItem {
+		public String toString() {
+			return rb.getString("NoLocoSelected");
+		}
+	}
+
 	public void propertyChange(PropertyChangeEvent evt) {
 		setPowerStatus();
 	}
@@ -748,12 +817,15 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     profileGraphPane.repaint();
                     profileTimer.start();
                     log.info("Requesting throttle");
-                    jmri.InstanceManager.throttleManagerInstance().requestThrottle(profileAddress, this);
+                    boolean requestOK = jmri.InstanceManager.throttleManagerInstance().requestThrottle(profileAddress, profileIsLong, this);
+                    if (requestOK) {
+                    	log.error("Loco Address in use, throttle request failed.");
+                    }
                 }
             }
         } else {
             // Must have a non-zero address
-            profileAddressField.setBackground(Color.RED);
+            //profileAddressField.setBackground(Color.RED);
             log.error("Attempt to profile loco address 0");
         }
     }
@@ -885,7 +957,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * timeout requesting a throttle
      */
     synchronized protected void throttleTimeout() {
-        jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(profileAddress, this);
+        jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(profileAddress, profileIsLong, this);
         state = ProfileState.IDLE;
         log.error("Timeout waiting for throttle");
 
@@ -992,9 +1064,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     break;
 
                 case WAIT1:
-                    profileAddress = value;
-                    profileAddressField.setText(Integer.toString(profileAddress));
-                    profileAddressField.setBackground(Color.WHITE);
+                	profileAddress = value;
+                    //profileAddressField.setText(Integer.toString(profileAddress));
+                    //profileAddressField.setBackground(Color.WHITE);
                     readState = ProgState.IDLE;
                     break;
 
@@ -1006,8 +1078,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
                 case WAIT18:
                     profileAddress = (profileAddress&0x3f)*256 + value;
-                    profileAddressField.setText(Integer.toString(profileAddress));
-                    profileAddressField.setBackground(Color.WHITE);
+                    //profileAddressField.setText(Integer.toString(profileAddress));
+                    //profileAddressField.setBackground(Color.WHITE);
                     statusLabel.setText(rb.getString("ProgRdComplete"));
                     readState = ProgState.IDLE;
                     break;
@@ -1016,7 +1088,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         } else {
             // Error during programming
             log.error("Status not OK during read: " + status);
-            profileAddressField.setText("Error");
+            //profileAddressField.setText("Error");
             statusLabel.setText(rb.getString("ProgRdError"));
             readState = ProgState.IDLE;
         }
