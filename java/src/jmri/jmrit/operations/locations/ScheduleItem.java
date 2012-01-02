@@ -21,6 +21,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	protected Track _trackDestination = null;// car destination track after load
 	protected int _count = 1;				// the number of times this type of car must be dropped
 	protected int _wait = 0;				// how many trains this car must wait before being picked up
+	protected int _hits = 0;				// how many times this schedule item has been used
 	protected String _comment = "";
 			
 	public static final String TRAIN_SCHEDULE_CHANGED_PROPERTY = "trainScheduleId";
@@ -143,6 +144,16 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 		firePropertyChange (WAIT_CHANGED_PROPERTY, old, wait);
 	}
 	
+	public int getHits(){
+		return _hits;
+	}
+	
+	public void setHits(int hit){
+		int old = _hits;
+		_hits = hit;
+		firePropertyChange (WAIT_CHANGED_PROPERTY, old, hit);
+	}
+	
 	public Location getDestination() {
 		return _destination;
 	}
@@ -237,6 +248,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 		if ((a = e.getAttribute("destTrackId")) != null  && _destination != null)
 			_trackDestination = _destination.getTrackById(a.getValue());
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
+        if ((a = e.getAttribute("hits")) != null )  _hits = Integer.parseInt(a.getValue());
     }
 
     /**
@@ -260,6 +272,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 		if (!getDestinationTrackId().equals(""))
 			e.setAttribute("destTrackId", getDestinationTrackId());
        	e.setAttribute("comment", getComment());
+       	e.setAttribute("hits", Integer.toString(getHits()));
     	return e;
     }
     

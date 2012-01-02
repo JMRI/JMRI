@@ -61,6 +61,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     Schedule _schedule;
     Location _location;
     Track _track;
+    JTable _table;
+    boolean _matchMode = false;
     
     synchronized void updateList() {
     	if (_schedule == null)
@@ -82,6 +84,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		_schedule = schedule;
 		_location = location;
 		_track = track;
+		_table = table;
 		
 		// add property listeners
 		if (_schedule != null)
@@ -90,6 +93,10 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		CarTypes.instance().addPropertyChangeListener(this);
 		_location.addPropertyChangeListener(this);
 		_track.addPropertyChangeListener(this);
+		initTable(table);
+	}
+	
+	private void initTable(JTable table) {
 		
 		// Install the button handlers
 		TableColumnModel tcm = table.getColumnModel();
@@ -141,7 +148,10 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         case SHIPCOLUMN: return rb.getString("Ship");
         case DESTCOLUMN: return rb.getString("Destination");
         case TRACKCOLUMN: return rb.getString("Track");
-        case COUNTCOLUMN: return rb.getString("Count");
+        case COUNTCOLUMN: 
+        	if (_matchMode)
+        		return rb.getString("Hits");
+        	return rb.getString("Count");
         case WAITCOLUMN: return rb.getString("Wait");
         case UPCOLUMN: return "";
         case DOWNCOLUMN: return "";
@@ -205,7 +215,10 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         case SHIPCOLUMN: return getShipComboBox(si);
         case DESTCOLUMN: return getDestComboBox(si);
         case TRACKCOLUMN: return getTrackComboBox(si);
-        case COUNTCOLUMN: return si.getCount();
+        case COUNTCOLUMN: 
+        	if (_matchMode)
+        		return si.getHits();
+        	return si.getCount();
         case WAITCOLUMN: return si.getWait();
         case UPCOLUMN: return rb.getObject("Up");
         case DOWNCOLUMN: return rb.getObject("Down");
@@ -346,6 +359,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     	return cb;
     }
     
+    // set the count or hits if in match mode
     private void setCount(Object value, int row){
     	ScheduleItem si = _schedule.getItemById(list.get(row));
     	int count;
@@ -359,11 +373,14 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     		log.error("Schedule count must be greater than 0");
     		return;
     	}
-    	if (count > 10){
+    	if (!_matchMode && count > 10){
     		log.error("Schedule count must be less than 11");
     		return;
     	}
-    	si.setCount(count);
+    	if (_matchMode)
+    		si.setHits(count);
+    	else
+    		si.setCount(count);
     }
     
     private void setWait(Object value, int row){
@@ -505,6 +522,14 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     public int getLastTrainDirection(){
     	return _trainDirection;
+    }
+    
+    public void setMatchMode(boolean mode){
+    	if (mode != _matchMode){
+    		_matchMode = mode;
+    		fireTableStructureChanged();
+    		initTable(_table);
+    	}
     }
 
     // this table listens for changes to a schedule and it's car types

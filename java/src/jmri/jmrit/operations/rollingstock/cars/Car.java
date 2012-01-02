@@ -602,6 +602,7 @@ public class Car extends RollingStock {
 				ScheduleItem si = sch.getItemById(getScheduleId());
 				setScheduleId("");
 				if (si != null){
+					si.setHits(si.getHits()+1);	// bump hit count for this schedule item
 					loadNext(si);
 					return;
 				}

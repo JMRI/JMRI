@@ -89,6 +89,7 @@
 <!ATTLIST item comment			CDATA #IMPLIED>
 <!ATTLIST item wait				CDATA #IMPLIED>
 <!ATTLIST item trainScheduleId	CDATA #IMPLIED>
+<!ATTLIST item hits				CDATA #IMPLIED>
 
 <!ATTLIST locationEditOptions x		CDATA #IMPLIED> 
 <!ATTLIST locationEditOptions y		CDATA #IMPLIED> 

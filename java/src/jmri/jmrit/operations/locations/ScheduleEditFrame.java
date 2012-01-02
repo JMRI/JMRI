@@ -132,6 +132,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		
 		sequentialRadioButton.setSelected(_track.getScheduleMode() == Track.SEQUENTIAL);
 		matchRadioButton.setSelected(_track.getScheduleMode() == Track.MATCH);
+		scheduleModel.setMatchMode(_track.getScheduleMode() == Track.MATCH);
 		
 		p1.add(pName);
 		p1.add(pC);
@@ -170,6 +171,10 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		addButtonAction(deleteScheduleButton);
 		addButtonAction(addScheduleButton);
 		addButtonAction(saveScheduleButton);
+		
+		// setup radio buttons
+		addRadioButtonAction(sequentialRadioButton);
+		addRadioButtonAction(matchRadioButton);
 		
 		// setup combobox
 		loadTypeComboBox();
@@ -243,6 +248,11 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 			}
 			saveNewSchedule();
 		}
+	}
+	
+	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae){
+		log.debug("Radio button action");
+		scheduleModel.setMatchMode(ae.getSource() == matchRadioButton);		
 	}
 	
 	private void addNewScheduleItem(){

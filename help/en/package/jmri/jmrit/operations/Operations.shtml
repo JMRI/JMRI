@@ -906,6 +906,11 @@ additional status for each of the spurs that use that particular
 schedule. The table also allows you the edit a schedule once its been
 assigned to a spur.</P>
 
+<P>A very useful tool is the "Show schedules by car type
+and load" which can be found under Tools in the Schedules window. This tool allows you to select
+a car type and the car's load to quickly see which spurs with schedules will ship and receive
+cars with those loads. </P>
+
 <A	NAME="SchedulesAndLoads"></A>
 <H3>Schedules and Loads</H3>
 
@@ -969,7 +974,7 @@ with custom loads. You could create the custom load "E(mpty)" and use
 this load to signify an empty car. Now cars with this load will be
 routed and will have the same characteristics as cars with the "other"
 custom loads.</P>
-
+   
 <A	NAME="Interchange"></A>
 <H3>Interchange Tracks</H3>
 
