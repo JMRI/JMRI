@@ -24,8 +24,10 @@ import java.util.Enumeration;
 import java.lang.reflect.Method;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicButtonUI;
 import org.jdom.Element;
 import java.util.Vector;
+import java.io.File;
 
 /**
  * Provide access to preferences via a 
@@ -93,6 +95,16 @@ public class TabbedPreferences extends AppConfigBase {
         if(initalisationState!=UNINITIALISED)
             return initalisationState;
         initalisationState=INITIALISING;
+        
+        deleteConnectionIconRollOver = new ImageIcon("resources"+File.separator+"icons"+File.separator+"misc" + File.separator+ "gui3" + File.separator+"Delete16x16.png");
+        deleteConnectionIcon = new ImageIcon("resources"+File.separator+"icons"+File.separator+"misc" + File.separator+ "gui3" + File.separator+"Delete-bw16x16.png");
+        deleteConnectionButtonSize = new Dimension(
+                deleteConnectionIcon.getIconWidth()+2,
+                deleteConnectionIcon.getIconHeight()+2);
+        addConnectionIcon = new ImageIcon("resources"+File.separator+"icons"+File.separator+"misc" + File.separator+ "gui3" + File.separator+"Add16x16.png");
+        addConnectionButtonSize = new Dimension(
+                addConnectionIcon.getIconWidth()+2,
+                addConnectionIcon.getIconHeight()+2);                
 
         throttlePreferences = new jmri.jmrit.throttle.ThrottlesPreferencesPane();
         withrottlePrefsPanel = new jmri.jmrit.withrottle.WiThrottlePrefsPanel();
@@ -113,7 +125,8 @@ public class TabbedPreferences extends AppConfigBase {
         GuiLafConfigPane gui = new GuiLafConfigPane();
         items.add(0, gui);
         
-        JButton save = new JButton(rb.getString("ButtonSave"));
+        ImageIcon saveIcon = new ImageIcon("resources"+File.separator+"icons"+File.separator+"misc" + File.separator+ "gui3" + File.separator+"SaveIcon.png");
+        JButton save = new JButton(rb.getString("ButtonSave"), saveIcon);
         save.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     invokeSaveOptions();
@@ -292,14 +305,13 @@ public class TabbedPreferences extends AppConfigBase {
     
 
     public void setUIFont(javax.swing.plaf.FontUIResource f){
-
-    java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
-    while (keys.hasMoreElements()) {
-      Object key = keys.nextElement();
-      Object value = UIManager.get (key);
-      if (value instanceof javax.swing.plaf.FontUIResource)
-        UIManager.put (key, f);
-      }
+        java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
+        while (keys.hasMoreElements()) {
+          Object key = keys.nextElement();
+          Object value = UIManager.get (key);
+          if (value instanceof javax.swing.plaf.FontUIResource)
+            UIManager.put (key, f);
+          }
     }
     
     void selection(String View){
@@ -411,16 +423,11 @@ public class TabbedPreferences extends AppConfigBase {
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
         p.add(configPane);
         p.add(Box.createVerticalGlue());
-        JPanel b = new JPanel();
-        b.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0));
-        JButton deleteButton = new JButton(rb.getString("ButtonDeleteConnection"));
-        deleteButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e){
-                removeTab(e, null, connectionPanel.getSelectedIndex());
-            }
         
-        });
-        b.add(deleteButton);
+        JButton tabCloseButton = new JButton(deleteConnectionIcon);
+        tabCloseButton.setPreferredSize(deleteConnectionButtonSize);
+        tabCloseButton.setBorderPainted(false);
+        tabCloseButton.setRolloverIcon(deleteConnectionIconRollOver);
         
         JPanel c = new JPanel();
         c.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -432,11 +439,7 @@ public class TabbedPreferences extends AppConfigBase {
             }
         });
         c.add(disable);
-        JPanel p1 = new JPanel();
-        p1.setLayout(new GridLayout(0,2));
-        p1.add(c);
-        p1.add(b);
-        p.add(p1);
+        p.add(c);
         String title;
 
         if (configPane.getConnectionName()!=null){
@@ -453,55 +456,61 @@ public class TabbedPreferences extends AppConfigBase {
                 }
             }
         }
-
+        
+        final JPanel tabTitle = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+        tabTitle.setOpaque(false);
+        p.setName(title);
+        
         if(configPane.getDisabled()){
             title = "(" + title + ")";
         }
+        
+        JLabel tabLabel = new JLabel(title);
+        tabTitle.add(tabLabel, BorderLayout.WEST);
+        tabTitle.add(tabCloseButton, BorderLayout.EAST);
+        
         connectionTabInstance.add(configPane);
-        connectionPanel.add(title, p);
-        connectionPanel.setTitleAt(tabPosition, title);
+        connectionPanel.add(p);
+        connectionPanel.setTabComponentAt(tabPosition, tabTitle);
+
+        tabCloseButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                removeTab(e, connectionPanel.indexOfTabComponent(tabTitle));
+            }
+        
+        });
+
         connectionPanel.setToolTipTextAt(tabPosition, title);
 
         if(jmri.jmrix.ConnectionStatus.instance().isConnectionOk(configPane.getCurrentProtocolInfo())){
-            connectionPanel.setForegroundAt(tabPosition, Color.black);
+            tabLabel.setForeground(Color.black);
         } else {
-            connectionPanel.setForegroundAt(tabPosition, Color.red);
+            tabLabel.setForeground(Color.red);
         }
         if(configPane.getDisabled()){
-            connectionPanel.setForegroundAt(tabPosition, Color.ORANGE);
+            tabLabel.setForeground(Color.ORANGE);
         }
-        //The following is not supported in 1.5, but is in 1.6 left here for future use.
-//        connectionPanel.setTabComponentAt(tabPosition, new ButtonTabComponent(connectionPanel));
 
         items.add(configPane);
     }
     
     void addConnectionTab(){
-        connectionPanel.removeTabAt(connectionPanel.indexOfTab("+"));
+        connectionPanel.removeTabAt(connectionPanel.indexOfTab(addConnectionIcon));
         addConnection(connectionTabInstance.size(), JmrixConfigPane.createNewPanel());
         newConnectionTab();
     }
     
     void newConnectionTab(){
-        JComponent p = new JPanel();
-        p.add(Box.createVerticalGlue());
-
-        connectionPanel.add("+", p);
-        connectionPanel.setToolTipTextAt(connectionPanel.getTabCount()-1, rb.getString("ToolTipAddNewConnection"));
-        //The following is not supported in 1.5, but is in 1.6 left here for future use.
-        //connectionPanel.setTabComponentAt(connectionPanel.getTabCount()-1, null);
+        connectionPanel.addTab(null, addConnectionIcon, null, rb.getString("ToolTipAddNewConnection"));
         connectionPanel.setSelectedIndex(connectionPanel.getTabCount()-2);
     }
     
     jmri.jmrix.JmrixConfigPane comm1;
     GuiLafConfigPane guiPrefs;
-        
-    //Unable to do remove tab, via a component in 1.5 but is supported in 1.6
-    //left here until a move is made to 1.6 or an alternative method is used.
-    private void removeTab(ActionEvent e, JComponent c, int x){
+    
+    private void removeTab(ActionEvent e, int x){
         int i;
-        // indexOfTabComponent is not supported in java 1.5
-        //i = connectionPanel.indexOfTabComponent(c);
+
         i = x;
 
         if (i != -1) {
@@ -512,16 +521,13 @@ public class TabbedPreferences extends AppConfigBase {
                 JOptionPane.YES_NO_OPTION);
             if(n!=JOptionPane.YES_OPTION)
                 return;
-            if(connectionPanel.getChangeListeners().length >0)
-                connectionPanel.removeChangeListener(connectionPanel.getChangeListeners()[0]);
-            //int jmrixinstance = connectionTabInstance.get(i);
+
             JmrixConfigPane configPane = connectionTabInstance.get(i);
             
             connectionPanel.removeChangeListener(addTabListener);
             connectionPanel.remove(i);  //was x
             items.remove(configPane);
             try{
-                //JmrixConfigPane.dispose(jmrixinstance);
                 JmrixConfigPane.dispose(configPane);
             } catch (java.lang.NullPointerException ex) {log.error("Caught Null Pointer Exception while removing connection tab"); }
             connectionTabInstance.remove(i);
@@ -543,14 +549,20 @@ public class TabbedPreferences extends AppConfigBase {
                         addConnectionTab();
                     }
                     else {
-                        String paneTitle = pane.getTitleAt(sel);
-                        if (paneTitle.equals("+")){
+                        Icon icon = pane.getIconAt(sel);
+                        if(icon == addConnectionIcon){
                             addConnectionTab();
                         }
                     }
                 } 
     };
 
+    private ImageIcon deleteConnectionIcon;
+    private ImageIcon deleteConnectionIconRollOver;
+    private Dimension deleteConnectionButtonSize;
+    private ImageIcon addConnectionIcon;
+    private Dimension addConnectionButtonSize;
+    
     class preferencesCatItems {
         
         /* This contains details of all list items to be displayed in the preferences*/
@@ -685,109 +697,6 @@ public class TabbedPreferences extends AppConfigBase {
             
         }
     }
-    /*Unable to do remove tab, via a component in 1.5 but is supported in 1.6
-    left here until a move is made to 1.6 or an alternative method is used.*/
-    /*
-        private class ButtonTabComponent extends JPanel {
-        private final JTabbedPane pane;
-
-        public ButtonTabComponent(final JTabbedPane pane) {
-            //unset default FlowLayout' gaps
-            super(new FlowLayout(FlowLayout.LEFT, 0, 0));
-            if (pane == null) {
-                throw new NullPointerException("TabbedPane is null");
-            }
-            this.pane = pane;
-            setOpaque(false);
-            
-            //make JLabel read titles from JTabbedPane
-            JLabel label = new JLabel() {
-                public String getText() {
-                    int i = pane.indexOfTabComponent(ButtonTabComponent.this);
-                    if (i != -1) {
-                        return pane.getTitleAt(i);
-                    }
-                    return null;
-                }
-            };
-            
-            add(label);
-            //add more space between the label and the button
-            label.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
-            //tab button
-            JButton button = new TabButton();
-            add(button);
-            //add more space to the top of the component
-            setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
-        }
-
-        private class TabButton extends JButton implements ActionListener {
-            public TabButton() {
-                int size = 17;
-                setPreferredSize(new Dimension(size, size));
-                setToolTipText("Delete This Connection");
-                //Make the button looks the same for all Laf's
-                setUI(new BasicButtonUI());
-                //No need to be focusable
-                setFocusable(false);
-                setBorderPainted(false);
-                //Making nice rollover effect
-                //we use the same listener for all buttons
-                addMouseListener(buttonMouseListener);
-                setRolloverEnabled(true);
-                //Close the proper tab by clicking the button
-                addActionListener(this);
-                setBackground(Color.RED);
-            }
-
-            public void actionPerformed(ActionEvent e) {
-                removeTab(e, ButtonTabComponent.this, pane.getSelectedIndex());
-            }
-
-            //we don't want to update UI for this button
-            public void updateUI() {
-            }
-
-            //paint the cross
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g.create();
-                //shift the image for pressed buttons
-                if (getModel().isPressed()) {
-                    g2.translate(1, 1);
-                }
-                g2.setStroke(new BasicStroke(2));
-                g2.setColor(Color.WHITE);
-                if (getModel().isRollover()) {
-                    g2.setColor(Color.RED);
-                }
-                int delta = 6;
-                
-                g2.drawLine(delta, delta, getWidth() - delta - 1, getHeight() - delta - 1);
-                g2.drawLine(getWidth() - delta - 1, delta, delta, getHeight() - delta - 1);
-                g2.dispose();
-            }
-        }
-        
-
-        private final MouseListener buttonMouseListener = new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                Component component = e.getComponent();
-                if (component instanceof AbstractButton) {
-                    AbstractButton button = (AbstractButton) component;
-                    button.setBackground(Color.WHITE);
-                }
-            }
-
-            public void mouseExited(MouseEvent e) {
-                Component component = e.getComponent();
-                if (component instanceof AbstractButton) {
-                    AbstractButton button = (AbstractButton) component;
-                    button.setBackground(Color.RED);
-                }
-            }
-        };
-    }*/
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TabbedPreferences.class.getName());
 
