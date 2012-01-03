@@ -2,7 +2,12 @@
 package jmri.util.zeroconf;
 
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashMap;
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
@@ -251,14 +256,21 @@ public class ZeroConfService {
 
     /* return the JmDNS handler */
     private static JmDNS jmdns() {
-        if (_jmdns == null) {
-            try {
-                _jmdns = JmDNS.create();
-                if (log.isDebugEnabled()) {
-                    log.debug("JmDNS version: " + JmDNS.VERSION);
-                }
-                if (jmri.InstanceManager.shutDownManagerInstance() != null) {
-                    ShutDownTask task = new QuietShutDownTask("Stop ZeroConfServices") {
+    	if (_jmdns == null) {
+			if (log.isDebugEnabled()) {
+				log.debug("JmDNS version: " + JmDNS.VERSION);
+			}
+    		try {
+    			//get good host address to pass to jmdns.create(), null no longer works on ubuntu w/dhcp
+    			InetAddress hostAddress = Inet4Address.getLocalHost();
+    			if (hostAddress == null || hostAddress.isLoopbackAddress()) {
+    				hostAddress = hostAddress();  //lookup from interfaces
+    			}
+    			if (log.isDebugEnabled()) log.debug("Calling JMDNS.create("+hostAddress.getHostAddress()+", "+hostAddress.getHostName()+")");
+    			_jmdns = JmDNS.create(hostAddress, hostAddress.getHostName());  //NOTE name is ignored by jmdns 3.4.1
+    			
+    			if (jmri.InstanceManager.shutDownManagerInstance() != null) {
+    				ShutDownTask task = new QuietShutDownTask("Stop ZeroConfServices") {
 
                         @Override
                         public boolean execute() {
@@ -292,6 +304,41 @@ public class ZeroConfService {
         // to the string above.
         return hostName.substring(0, hostName.indexOf('.'));
     }
+
+    /**
+     * Return the non-loopback ipv4 address of the host, or null if none found.
+     */
+    public static InetAddress hostAddress() {
+        // hostAddress returns the IPv4 address for the host
+		InetAddress hostAddress = null;
+		Enumeration<NetworkInterface> ifs=null;
+		try {
+			log.debug("Attempting to enumerate all network interfaces");
+			ifs = NetworkInterface.getNetworkInterfaces();
+
+			// Iterate all interfaces
+			while (ifs.hasMoreElements() && hostAddress == null) {
+				NetworkInterface iface = (NetworkInterface)ifs.nextElement();
+
+				// Fetch all IP addresses on this interface
+				Enumeration<InetAddress> ips = iface.getInetAddresses();
+
+				// Iterate the IP addresses
+				while (ips.hasMoreElements()) {
+					InetAddress ip=(InetAddress)ips.nextElement();
+					// use the last ipv4 that's not a loopback
+					if((ip instanceof Inet4Address) && !ip.isLoopbackAddress()) {
+						hostAddress = ip;
+						if (log.isDebugEnabled()) log.debug("  found: " + hostAddress.getHostAddress());
+					}
+				}
+			}
+		} catch (SocketException se) {
+			log.warn("Could not enumerate network interfaces");
+		}
+		return hostAddress;
+    }
+
 }
 
 /* @(#)ZeroConfService.java */

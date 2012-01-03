@@ -19,10 +19,10 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
-import java.net.InetAddress;
 
 import java.text.MessageFormat;
 import javax.swing.AbstractAction;
@@ -267,28 +267,27 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         service.publish();
             
         if (service.isPublished()) {
-            // these labels will be changed if possible
-            portLabel.setText(service.name());
-            manualPortLabel.setText("unknown:" + port);
-            //Determine the first externally accessible IP address for this system. This is presented in the GUI for
+        	Inet4Address hostAddr = null;
+            //Determine the first externally published IPv4 address for this system. This is presented in the GUI for
             //those users who can't, or don't want to use ZeroConf to connect to the WiThrottle.
             try {
-                for (InetAddress addr : service.serviceInfo().getInetAddresses()) {
-                    //Find just the first non-loopback IPv4 address to present in the GUI. If the user has set up a multihomed
-                    //computer, chances are that he knows enough about networking to know which IP address he should use
-                    //to connect to this service.
-                    //In case we don't find a "real" IP address, there's no sense in presenting a loopback address. Novice
-                    //users might actually try to connect to it, and not understand why it doesn't work.
-                    if (!addr.isLoopbackAddress()) {
-                        // set the portLabel to the hostname instead of the service name, since service names are simply
-                        // mangled hostnames
-                        manualPortLabel.setText(addr.getHostAddress() + ":" + port);
-                        portLabel.setText(addr.getHostName());
-                        break;
-                    }
-                }
+            	for (Inet4Address addr : service.serviceInfo().getInet4Addresses()) {
+            		if (addr != null && !addr.isLoopbackAddress()) {
+            			hostAddr = addr;
+            			break;
+            		}
+            	}
+            	if (hostAddr != null) {
+            		portLabel.setText(hostAddr.getHostName());
+            		manualPortLabel.setText(hostAddr.getHostAddress() + ":" + port);
+            	} else {
+            		portLabel.setText(Inet4Address.getLocalHost().getHostName());
+            		manualPortLabel.setText(Inet4Address.getLocalHost().getHostAddress() + ":" + port);
+            	}
             } catch (Exception except) {
-                log.error("Failed to determine this system's IP address: " + except.toString());
+            	log.error("Failed to determine this system's IP address: " + except.toString());
+        		portLabel.setText("null");
+        		manualPortLabel.setText("null:" + port);
             }
         } else {
             log.error("JmDNS Failure");
