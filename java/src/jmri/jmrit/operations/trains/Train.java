@@ -822,12 +822,22 @@ public class Train implements java.beans.PropertyChangeListener {
     }
     
     public void replaceRoad(String oldRoad, String newRoad){
-    	if (deleteRoadName(oldRoad) && newRoad != null)
-    		addRoadName(newRoad);
-    	if (getEngineRoad().equals(oldRoad))
-    		setEngineRoad(newRoad);
-    	if (getCabooseRoad().equals(oldRoad))
-    		setCabooseRoad(newRoad);
+    	if (newRoad != null){
+    		if (deleteRoadName(oldRoad))
+    			addRoadName(newRoad);
+    		if (getEngineRoad().equals(oldRoad))
+    			setEngineRoad(newRoad);
+    		if (getCabooseRoad().equals(oldRoad))
+    			setCabooseRoad(newRoad);
+    		if (getSecondLegEngineRoad().equals(oldRoad))
+    			setSecondLegEngineRoad(newRoad);
+    		if (getSecondLegCabooseRoad().equals(oldRoad))
+    			setSecondLegCabooseRoad(newRoad);
+    		if (getThirdLegEngineRoad().equals(oldRoad))
+    			setThirdLegEngineRoad(newRoad);
+       		if (getThirdLegCabooseRoad().equals(oldRoad))
+       			setThirdLegCabooseRoad(newRoad);
+    	}
     }
     
     /**
@@ -2141,78 +2151,6 @@ public class Train implements java.beans.PropertyChangeListener {
 			
     	firePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
     }
-  
-
-/**
- * creates a JMRI Reporter for the Train through which it can exchange updates
- * with other applications and scripts.
- * 
- * This method first requests a Recorder with a user name constructed from the
- * train name.  If one is not found, it creates an Internal Recorder.	
- */
-    /*
-    private void constructReporter() {
-    	if (Setup.isCreateReportersEnabled() && _reporter == null) {
-    		ReporterManager rm = InstanceManager.reporterManagerInstance();
-    		Reporter r = null;
-    		String uName = USER_PREFIX + getName();
-    		if (rm == null) {
-    			if (log.isDebugEnabled()) log.debug("JMRI reporter manager was not created.");
-    		}
-    		else if ((r = rm.getByUserName(uName)) == null) {
-    			if (log.isDebugEnabled()) log.debug("JMRI reporter for train (" +
-    					getName() + ") was not found, creating one!");
-    			String sName = SYSTEM_PREFIX + getName();
-    			r = rm.newReporter(sName, uName);
-    		}
-    		if (r != null) {
-    			r.addPropertyChangeListener(new PropertyChangeListener() {
-    				public void propertyChange(PropertyChangeEvent change) {
-    					log.debug("Train ("+getName()+ ") sees reporter property change: "+change.getPropertyName());
-    					if (change.getPropertyName().equals("currentReport")){
-    						String operation = ((String) _reporter.getCurrentReport()).trim();
-    						String str;
-    						if (operation != null) {
-    							if (operation.startsWith(LOCATION)) {
-    								str = operation.substring(LOCATION.length());
-    								if (str != null)
-    									if (move(str)){
-    										// this is not the right place to report on changes because
-    										// of possible recursion, but I don't know where else to put
-    										// it.  It should be queued to be run after processing of the
-    										// action completes.
-    										str = LENGTH + String.valueOf(getTrainLength()) + " | "
-    												+ TONNAGE + String.valueOf(getTrainWeight());
-    										_reporter.setComment(str);
-    									} else {
-    										str = "Unable to move train to location "+str;
-    										_reporter.setComment(str);
-    									}
-    							}
-    							else if (BUILD.equals(operation)) {
-    								build();
-    								_reporter.setComment(getStatus());
-    							}
-    							else if (TERMINATE.equals(operation)) {
-    								terminate();
-    								_reporter.setComment(getStatus());
-    							}
-    							else if (RESET.equals(operation)) {
-    								reset();
-    								_reporter.setComment(getStatus());
-    							}
-    							else {
-    								_reporter.setComment("Command not known");
-    							}
-    						} 
-    					}
-    				}
-    			});
-    		}
-    		_reporter = r;
-    	}
-    }
-    */
     
    /**
      * Construct this Entry from XML. This member has to remain synchronized with the

@@ -983,6 +983,16 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	
 	private void updateRoadComboBoxes(){
 		CarRoads.instance().updateComboBox(roadBox);
+		updateEngineRoadComboBox(roadEngine1Box, (String)modelEngine1Box.getSelectedItem());
+		updateEngineRoadComboBox(roadEngine2Box, (String)modelEngine2Box.getSelectedItem());
+		updateCabooseRoadComboBox(roadCaboose1Box);
+		updateCabooseRoadComboBox(roadCaboose2Box);
+		if (_train != null){
+			roadEngine1Box.setSelectedItem(_train.getSecondLegEngineRoad());
+			roadEngine2Box.setSelectedItem(_train.getThirdLegEngineRoad());
+			roadCaboose1Box.setSelectedItem(_train.getSecondLegCabooseRoad());
+			roadCaboose2Box.setSelectedItem(_train.getThirdLegCabooseRoad());
+		}
 	}
 	
 	private void updateLoadComboBoxes(){

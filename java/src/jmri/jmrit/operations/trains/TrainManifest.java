@@ -1,4 +1,4 @@
-// TrainCsvManifest.java
+// TrainManifest.java
 
 package jmri.jmrit.operations.trains;
 
@@ -21,10 +21,10 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
- * Builds a train's manifest using Comma Separated Values (csv). 
+ * Builds a train's manifest. 
  * 
- * @author Daniel Boudreau  Copyright (C) 2011
- * @version             $Revision: 1 $
+ * @author Daniel Boudreau  Copyright (C) 2011, 2012
+ * @version $Revision: 1 $
  */
 public class TrainManifest extends TrainCommon {
 	
@@ -135,7 +135,7 @@ public class TrainManifest extends TrainCommon {
 					pickupEngines(fileOut, engineList, rl);
 				}
 				if (rl == train.getSecondLegEndLocation())
-					addLine(fileOut, MessageFormat.format(rb.getString("RemoveHelpersAt"), new Object[]{rl.getName()}));
+					addLine(fileOut, MessageFormat.format(rb.getString("RemoveHelpersAt"), new Object[]{splitString(rl.getName())}));
 			}
 			if (train.getThirdLegOptions() != Train.NONE){
 				if (rl == train.getThirdLegStartLocation()){
@@ -144,7 +144,7 @@ public class TrainManifest extends TrainCommon {
 					pickupEngines(fileOut, engineList, rl);
 				}
 				if (rl == train.getThirdLegEndLocation())
-					addLine(fileOut, MessageFormat.format(rb.getString("RemoveHelpersAt"), new Object[]{rl.getName()}));
+					addLine(fileOut, MessageFormat.format(rb.getString("RemoveHelpersAt"), new Object[]{splitString(rl.getName())}));
 			}
 
 			// block cars by destination
@@ -220,11 +220,11 @@ public class TrainManifest extends TrainCommon {
 	
 	private void engineChange(PrintWriter fileOut, RouteLocation rl, int legOptions){
 		if ((legOptions & Train.HELPER_ENGINES) == Train.HELPER_ENGINES)
-			addLine(fileOut, MessageFormat.format(rb.getString("AddHelpersAt"), new Object[]{rl.getName()}));
+			addLine(fileOut, MessageFormat.format(rb.getString("AddHelpersAt"), new Object[]{splitString(rl.getName())}));
 		else if ((legOptions & Train.CHANGE_CABOOSE) == Train.CHANGE_CABOOSE)
-			addLine(fileOut, MessageFormat.format(rb.getString("EngineAndCabooseChangeAt"), new Object[]{rl.getName()}));
+			addLine(fileOut, MessageFormat.format(rb.getString("EngineAndCabooseChangeAt"), new Object[]{splitString(rl.getName())}));
 		else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES)
-			addLine(fileOut, MessageFormat.format(rb.getString("EngineChangeAt"), new Object[]{rl.getName()}));
+			addLine(fileOut, MessageFormat.format(rb.getString("EngineChangeAt"), new Object[]{splitString(rl.getName())}));
 	}
 }
 
