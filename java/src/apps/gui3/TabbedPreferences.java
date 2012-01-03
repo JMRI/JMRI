@@ -101,10 +101,7 @@ public class TabbedPreferences extends AppConfigBase {
         deleteConnectionButtonSize = new Dimension(
                 deleteConnectionIcon.getIconWidth()+2,
                 deleteConnectionIcon.getIconHeight()+2);
-        addConnectionIcon = new ImageIcon("resources"+File.separator+"icons"+File.separator+"misc" + File.separator+ "gui3" + File.separator+"Add16x16.png");
-        addConnectionButtonSize = new Dimension(
-                addConnectionIcon.getIconWidth()+2,
-                addConnectionIcon.getIconHeight()+2);                
+        addConnectionIcon = new ImageIcon("resources"+File.separator+"icons"+File.separator+"misc" + File.separator+ "gui3" + File.separator+"Add16x16.png");              
 
         throttlePreferences = new jmri.jmrit.throttle.ThrottlesPreferencesPane();
         withrottlePrefsPanel = new jmri.jmrit.withrottle.WiThrottlePrefsPanel();
@@ -561,7 +558,6 @@ public class TabbedPreferences extends AppConfigBase {
     private ImageIcon deleteConnectionIconRollOver;
     private Dimension deleteConnectionButtonSize;
     private ImageIcon addConnectionIcon;
-    private Dimension addConnectionButtonSize;
     
     class preferencesCatItems {
         
