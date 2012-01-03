@@ -44,13 +44,7 @@ public class NetworkServer {
 	  int i=0;
 	  try {
 		  listener = new ServerSocket(port);
-		  String lh;
-		  try {
-			  lh = InetAddress.getLocalHost().getHostAddress();
-		  } catch (java.net.UnknownHostException uhe) {
-			  lh = "(unknown local host)";
-		  }
-		  log.info("Server starts on address: "+ lh +" port "+port); 
+		  log.info("Server starts on address: "+ MiniServer.getLocalAddress() +" port "+port); 
 		  notifyServerStarted();  
 		  Socket server;
 		  while((i++ < maxConnections) || (maxConnections == 0)) {

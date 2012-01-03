@@ -7,6 +7,7 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.miniserver.servlet.echoservlet.EchoServlet;
 
 /** A simple HTTP server that generates a Web page showing all
@@ -165,13 +166,22 @@ public class MiniServer extends NetworkServer {
         return new EchoServlet();
     }
     
-    public String getLocalAddress() {
-        try {
-            return InetAddress.getLocalHost().getHostAddress().toString();
-        } catch (java.net.UnknownHostException e) {
-            return "(unknown host)";
-        }
+    public static String getLocalAddress() {
+    	InetAddress hostAddress = null;
+    	try {
+    		hostAddress = Inet4Address.getLocalHost();
+    	} catch (java.net.UnknownHostException e) {
+    	}
+    	if (hostAddress == null || hostAddress.isLoopbackAddress()) {
+    		hostAddress = ZeroConfService.hostAddress();  //lookup from interfaces
+    	}
+    	if (hostAddress == null) {
+    		return "(local host not found)";
+    	} else {
+    		return hostAddress.getHostAddress().toString();
+    	}
     }
+    
     public int getPort() {
         return port;
     }
