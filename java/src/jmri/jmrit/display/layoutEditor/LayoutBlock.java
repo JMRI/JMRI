@@ -1979,7 +1979,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if(!Connection.isTurnoutConnectivityComplete())
             layoutConnectivity=false;
         
-        //Possibly need to change this so that it can check one smaller list against a larger
         if ((stod.size()==tmpdtos.size()) && (stodSet.size()==tmpdtosSet.size())){
             //Need to reorder the tmplist (dst-src) to be the same order as src-dst
             ArrayList<LayoutTurnout> dtos = new ArrayList<LayoutTurnout>();
@@ -2020,7 +2019,62 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     return;
                 }
             }
+            
+            /*for(LayoutTurnout turn: stod){
+                if(turn.type==LayoutTurnout.DOUBLE_XOVER){
+                //Further checks might be required.
+                }
+            
+            }*/
+            addThroughPathPostChecks(srcBlock, dstBlock, stod, stodSet);
+        }
+        else {
+            //We know that a path that contains a double cross-over, is not reported correctly, 
+            //therefore we shall so some additional checks and add it.
+            if(enableAddRouteLogging)
+                log.info("sizes are not the same therefore, we will do some further checks");
+            ArrayList<LayoutTurnout> maxt;
+            ArrayList<Integer> maxtSet;
+            if(stod.size()>=tmpdtos.size()){
+                maxt = stod;
+                maxtSet=stodSet;
+            }
+            else {
+                maxt = tmpdtos;
+                maxtSet=tmpdtosSet;
+            }
+            
+            Set<LayoutTurnout> set = new HashSet<LayoutTurnout>(maxt);
 
+            if(set.size() == maxt.size()){
+                if(enableAddRouteLogging)
+                    log.info("All turnouts are unique so potentially a valid path");
+                boolean allowAddition = false;
+                for(int i = 0; i<maxt.size(); i++){
+                    LayoutTurnout turn = maxt.get(i);
+                    if(turn.type==LayoutTurnout.DOUBLE_XOVER){
+                        allowAddition=true;
+                        //The double crossover gets reported in the opposite setting.
+                        if(maxtSet.get(i)==2){
+                            maxtSet.set(i, 4);
+                        } else {
+                            maxtSet.set(i, 2);
+                        }
+                    }
+                
+                }
+                if(allowAddition){
+                    if(enableAddRouteLogging)
+                        log.info("addition allowed");
+                    addThroughPathPostChecks(srcBlock, dstBlock, maxt, maxtSet);
+                } else if(enableAddRouteLogging){
+                    log.info("No double cross-over so not a valid path");
+                }
+            }
+        }
+    }
+    
+    private void addThroughPathPostChecks(Block srcBlock, Block dstBlock, ArrayList<LayoutTurnout> stod, ArrayList<Integer> stodSet ){
             java.util.List<jmri.Path> paths = block.getPaths();
             jmri.Path srcPath = null;
             for (int i = 0; i<paths.size(); i++){
@@ -2041,10 +2095,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             //update our neighbours of the new valid paths;
             informNeighbourOfValidRoutes(srcBlock);
             informNeighbourOfValidRoutes(dstBlock);
-        }
-        else if(enableAddRouteLogging){
-            log.info("sizes are not the same therefore not a valid path through");
-        }
+    
     }
     
     void notifiedNeighbourNoLongerMutual(LayoutBlock srcBlock){
