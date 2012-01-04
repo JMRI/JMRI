@@ -328,7 +328,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
      * This does not include the development menu.
      *
      * @param menuBar
-     * @param frame
+     * @param wi
      */
     protected void createMenus(JMenuBar menuBar, WindowInterface wi) {
         // the debugging statements in the following are
@@ -455,7 +455,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
      *    menuBar.add(new jmri.jmrix.SystemsMenu());
      * </PRE>
      * @param menuBar
-     * @param frame
+     * @param wi
      */
     protected void systemsMenu(JMenuBar menuBar, WindowInterface wi) {
         jmri.jmrix.ActiveSystemsMenu.addItems(menuBar);
