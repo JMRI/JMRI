@@ -40,7 +40,7 @@ abstract public class AbstractOperationsServer implements java.beans.PropertyCha
    public void sendTrainList() throws IOException {
 	java.util.List<String> trainList=tm.getTrainsByNameList();
 	for(String trainID : trainList )
-	   sendInfoString(tm.getTrainById(trainID).getName());
+	   sendInfoString("OPERATIONS TRAINS " +tm.getTrainById(trainID).getName());
 	// end list with a . on a line by itself
 	sendInfoString(".");
    }
@@ -49,7 +49,7 @@ abstract public class AbstractOperationsServer implements java.beans.PropertyCha
    public void sendLocationList() throws IOException {
 	java.util.List<String> locationList=lm.getLocationsByNameList();
 	for(String LocationID : locationList )
-	   sendInfoString(lm.getLocationById(LocationID).getName());
+	   sendInfoString("OPERATIONS LOCATIONS " +lm.getLocationById(LocationID).getName());
 	// end list with a . on a line by itself
 	sendInfoString(".");
    }
