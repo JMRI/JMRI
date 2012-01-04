@@ -42,7 +42,7 @@ abstract public class AbstractOperationsServer implements java.beans.PropertyCha
 	for(String trainID : trainList )
 	   sendInfoString("OPERATIONS TRAINS " +tm.getTrainById(trainID).getName());
 	// end list with a . on a line by itself
-	sendInfoString(".");
+	sendInfoString("OPERATIONS TRAINS .");
    }
 
    /* send a list of locations */
@@ -51,7 +51,7 @@ abstract public class AbstractOperationsServer implements java.beans.PropertyCha
 	for(String LocationID : locationList )
 	   sendInfoString("OPERATIONS LOCATIONS " +lm.getLocationById(LocationID).getName());
 	// end list with a . on a line by itself
-	sendInfoString(".");
+	sendInfoString("OPERATIONS LOCATIONS .");
    }
 
    /* send train status */
