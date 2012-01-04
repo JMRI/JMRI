@@ -19,6 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -179,7 +180,6 @@ public class Train implements java.beans.PropertyChangeListener {
 		setTypeNames(CarTypes.instance().getNames());
 		setTypeNames(EngineTypes.instance().getNames());
 		addPropertyChangeListerners();
-		//constructReporter();
 	}
 
 	public String getId() {
@@ -821,7 +821,7 @@ public class Train implements java.beans.PropertyChangeListener {
        	return !_roadList.contains(road);
     }
     
-    public void replaceRoad(String oldRoad, String newRoad){
+    private void replaceRoad(String oldRoad, String newRoad){
     	if (newRoad != null){
     		if (deleteRoadName(oldRoad))
     			addRoadName(newRoad);
@@ -839,6 +839,8 @@ public class Train implements java.beans.PropertyChangeListener {
        			setThirdLegCabooseRoad(newRoad);
     	}
     }
+    
+    
     
     /**
      * Gets the car load option for this train.
@@ -1399,6 +1401,15 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	public String getThirdLegEngineModel() {
 		return _leg3Model;
+	}
+	
+	private void replaceModel(String oldModel, String newModel){
+		if (getEngineModel().equals(oldModel))
+			setEngineModel(newModel);
+		if (getSecondLegEngineModel().equals(oldModel))
+			setSecondLegEngineModel(newModel);
+		if (getThirdLegEngineModel().equals(oldModel))
+			setThirdLegEngineModel(newModel);
 	}
 	
 	/**
@@ -2146,8 +2157,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		CarTypes.instance().removePropertyChangeListener(this);
 		EngineTypes.instance().removePropertyChangeListener(this);
 		CarOwners.instance().removePropertyChangeListener(this);
-		//if (_reporter != null)
-		//	InstanceManager.reporterManagerInstance().deregister(_reporter);
+		EngineModels.instance().removePropertyChangeListener(this);
 			
     	firePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
     }
@@ -2322,7 +2332,6 @@ public class Train implements java.beans.PropertyChangeListener {
         	}
     	}
     	addPropertyChangeListerners();
-    	//constructReporter();
     }
     
     private void addPropertyChangeListerners(){
@@ -2330,6 +2339,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		CarTypes.instance().addPropertyChangeListener(this);
 		EngineTypes.instance().addPropertyChangeListener(this);
 		CarOwners.instance().addPropertyChangeListener(this);
+		EngineModels.instance().addPropertyChangeListener(this);
     }
 
     /**
@@ -2502,6 +2512,9 @@ public class Train implements java.beans.PropertyChangeListener {
        	if (e.getPropertyName().equals(CarOwners.CAROWNERS_NAME_CHANGED_PROPERTY)){
     		replaceOwner((String)e.getOldValue(), (String)e.getNewValue());
     	}
+       	if (e.getPropertyName().equals(EngineModels.ENGINEMODELS_NAME_CHANGED_PROPERTY)){
+    		replaceModel((String)e.getOldValue(), (String)e.getNewValue());
+       	}
        	// forward route departure time property changes
        	if (e.getPropertyName().equals(RouteLocation.DEPARTURE_TIME_CHANGED_PROPERTY)){
        		firePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, e.getOldValue(), e.getNewValue());

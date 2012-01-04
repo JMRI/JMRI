@@ -243,6 +243,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		for (int i=0; i<engines.size(); i++){
 			Engine engine = manager.getById(engines.get(i));
 			if(_comboboxName == EngineEditFrame.MODEL){
+				// we need to copy the old model attributes, so find an engine.
 				if (engine.getModel().equals(oldItem)){
 					// Has this model been configured?
 					if(EngineModels.instance().getModelLength(newItem) != null){
@@ -279,6 +280,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		}
 		if(_comboboxName == EngineEditFrame.LENGTH){
 			EngineLengths.instance().replaceName(oldItem, newItem);
+		}
+		if(_comboboxName == EngineEditFrame.MODEL){
+			EngineModels.instance().replaceName(oldItem, newItem);
 		}
 	}
 	

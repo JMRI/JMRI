@@ -58,6 +58,7 @@ public class EngineModels {
 	private static final String ENGINEWEIGHTS = rb.getString("engineModelWeights");
 	
 	public static final String ENGINEMODELS_CHANGED_PROPERTY = "EngineModels";
+	public static final String ENGINEMODELS_NAME_CHANGED_PROPERTY = "EngineModelsName";
 	
 	protected List<String> _list = new ArrayList<String>();
 	protected Hashtable<String, String> _engineHorsepowerHashTable = new Hashtable<String, String>();
@@ -131,6 +132,12 @@ public class EngineModels {
     public boolean containsName(String model){
     	return _list.contains(model);
      }
+    
+    public void replaceName(String oldName, String newName){
+    	addName(newName);
+    	firePropertyChange (ENGINEMODELS_NAME_CHANGED_PROPERTY, oldName, newName);
+       	deleteName(oldName);
+    }
     
     public JComboBox getComboBox (){
     	JComboBox box = new JComboBox();

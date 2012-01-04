@@ -473,6 +473,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		CarRoads.instance().addPropertyChangeListener(this);
 		CarLoads.instance().addPropertyChangeListener(this);
 		CarOwners.instance().addPropertyChangeListener(this);
+		EngineModels.instance().addPropertyChangeListener(this);
 		setVisible(true);
 	}
 	
@@ -610,6 +611,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		}
 		if (ae.getSource() == modelEngine1Box){
 			updateEngineRoadComboBox(roadEngine1Box, (String)modelEngine1Box.getSelectedItem());
+			if (_train != null)
+				roadEngine1Box.setSelectedItem(_train.getSecondLegEngineRoad());
 		}
 		if (ae.getSource() == numEngines2Box){
 			modelEngine2Box.setEnabled(!numEngines2Box.getSelectedItem().equals("0"));
@@ -617,6 +620,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		}
 		if (ae.getSource() == modelEngine2Box){
 			updateEngineRoadComboBox(roadEngine2Box, (String)modelEngine2Box.getSelectedItem());
+			if (_train != null)
+				roadEngine2Box.setSelectedItem(_train.getThirdLegEngineRoad());
 		}
 	}
 	
@@ -981,6 +986,17 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		}
 	}
 	
+	private void updateModelComboBoxes(){
+		EngineModels.instance().updateComboBox(modelEngine1Box);
+		EngineModels.instance().updateComboBox(modelEngine2Box);
+		modelEngine1Box.insertItemAt("",0);
+		modelEngine2Box.insertItemAt("",0);
+		if (_train != null){
+			modelEngine1Box.setSelectedItem(_train.getSecondLegEngineModel());
+			modelEngine2Box.setSelectedItem(_train.getThirdLegEngineModel());
+		}
+	}
+	
 	private void updateRoadComboBoxes(){
 		CarRoads.instance().updateComboBox(roadBox);
 		updateEngineRoadComboBox(roadEngine1Box, (String)modelEngine1Box.getSelectedItem());
@@ -1054,7 +1070,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		CarTypes.instance().removePropertyChangeListener(this);	
 		CarRoads.instance().removePropertyChangeListener(this);	
 		CarLoads.instance().removePropertyChangeListener(this);
-		CarOwners.instance().removePropertyChangeListener(this);	
+		CarOwners.instance().removePropertyChangeListener(this);
+		EngineModels.instance().removePropertyChangeListener(this);
 		if (_train != null){
 			_train.removePropertyChangeListener(this);
 		}
@@ -1081,6 +1098,10 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Train.TYPES_CHANGED_PROPERTY)){
 			updateTypeComboBoxes();
+		}
+		if (e.getPropertyName().equals(EngineModels.ENGINEMODELS_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(Train.TYPES_CHANGED_PROPERTY)){
+			updateModelComboBoxes();
 		}
 	}
  	
