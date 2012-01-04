@@ -16,6 +16,7 @@ import java.net.NetworkInterface;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.ArrayList;
+import javax.jmdns.ServiceInfo;
 import javax.swing.JFrame;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
@@ -236,11 +237,23 @@ public class ReportContext {
             for (ZeroConfService service: services) {
                 addString("ZeroConfService: " + service.serviceInfo().getQualifiedName() + "  ");
                 addString(" Name: " + service.name() + "  ");
-                addString(" Address: " + service.serviceInfo().getHostAddress() + "  ");
+                try {
+                    for (String address: service.serviceInfo().getHostAddresses()) {
+                        addString(" Address:" + address + "  ");
+                    }
+                } catch (NullPointerException ex) {
+                        addString(" Address: [unknown due to NPE]");
+                }
                 addString(" Port: " + service.serviceInfo().getPort() + "  ");
                 addString(" Server: " + service.serviceInfo().getServer() + "  ");
                 addString(" Type: " + service.type() + "  ");
-                addString(" URL: " + service.serviceInfo().getURL() + "  ");
+                try {
+                    for (String url: service.serviceInfo().getURLs()) {
+                        addString(" URL: " + url + "  ");                    
+                    }
+                } catch (NullPointerException ex) {
+                        addString(" URL: [unknown due to NPE]");
+                }
                 addString(" Published: " + (service.isPublished()?"yes":"no"));
             }
         }
