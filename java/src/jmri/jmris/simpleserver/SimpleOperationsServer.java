@@ -43,6 +43,20 @@ public class SimpleOperationsServer extends jmri.jmris.AbstractOperationsServer 
                    index=statusString.indexOf(" ",index)+1;
                    sendTrainLength(statusString.substring(index));
                }
+	  else if(statusString.contains("TRAINWEIGHT"))
+      {
+              int index;
+              index=statusString.indexOf(" ")+1;
+              index=statusString.indexOf(" ",index)+1;
+              sendTrainWeight(statusString.substring(index));
+          }
+	  else if(statusString.contains("TRAINCARS"))
+      {
+              int index;
+              index=statusString.indexOf(" ")+1;
+              index=statusString.indexOf(" ",index)+1;
+              sendTrainNumberOfCars(statusString.substring(index));
+          }
 	  else if(statusString.contains("TRAINLOCATION"))
 	       {
                    int index,index2;

@@ -81,6 +81,18 @@ abstract public class AbstractOperationsServer implements java.beans.PropertyCha
 	Train train=tm.getTrainByName(trainName);
 	sendInfoString("OPERATIONS " + trainName + " LENGTH " + train.getTrainLength());
    }
+   
+   /* send train tonnage */
+   public void sendTrainWeight(String trainName) throws IOException {
+	Train train=tm.getTrainByName(trainName);
+	sendInfoString("OPERATIONS " + trainName + " WEIGHT " + train.getTrainWeight());
+   }
+   
+   /* send number of cars in train */
+   public void sendTrainNumberOfCars(String trainName) throws IOException {
+	Train train=tm.getTrainByName(trainName);
+	sendInfoString("OPERATIONS " + trainName + " CARS " + train.getNumberCarsInTrain());
+   }
 
    /* Terminate the train */
    public void terminateTrain(String trainName) throws IOException {
