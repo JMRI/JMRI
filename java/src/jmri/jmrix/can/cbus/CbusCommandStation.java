@@ -8,6 +8,7 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  * Implement CommandStation for CBUS communications.
@@ -31,6 +32,21 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
         }
         return self;
     }
+    
+    private CbusCommandStation(){
+    
+    }
+    
+    public CbusCommandStation(CanSystemConnectionMemo memo) {
+        userName = memo.getUserName();
+        systemPrefix = memo.getSystemPrefix();
+        tc = memo.getTrafficController();
+        self = this;
+    }
+    
+    String userName = "MERG";
+    String systemPrefix = "M";
+    TrafficController tc = TrafficController.instance();
 
     /**
      * Send a specific packet to the rails.
@@ -57,7 +73,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
             m.setElement(j + 2, packet[j] & 0xFF);
         }
 
-        TrafficController.instance().sendCanMessage(m, null);
+        tc.sendCanMessage(m, null);
     }
 
     /**
@@ -71,7 +87,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
         msg.setOpCode(CbusConstants.CBUS_KLOC);
         msg.setElement(1, handle);
         log.debug("Release session handle " + handle);
-        TrafficController.instance().sendCanMessage(msg, null);
+        tc.sendCanMessage(msg, null);
     }
 
     /**
@@ -86,7 +102,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
         msg.setElement(1, handle);
         msg.setElement(2, speed_dir);
         log.debug("setSpeedDir session handle " + handle + " speedDir " + speed_dir);
-        TrafficController.instance().sendCanMessage(msg, null);
+        tc.sendCanMessage(msg, null);
     }
 
     /**
@@ -102,7 +118,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
         msg.setElement(1, handle);
         msg.setElement(2, group);
         msg.setElement(3, functions);
-        TrafficController.instance().sendCanMessage(msg, this);
+        tc.sendCanMessage(msg, this);
     }
 
     /**
@@ -115,7 +131,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
         msg.setOpCode(CbusConstants.CBUS_STMOD);
         msg.setElement(1, handle);
         msg.setElement(2, mode);
-        TrafficController.instance().sendCanMessage(msg, this);
+        tc.sendCanMessage(msg, this);
     }
 
     public void message(CanMessage m) {
@@ -152,9 +168,9 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
         return "0.0";
     }
     
-    public String getUserName() { return "MERG"; }
+    public String getUserName() { return userName; }
     
-    public String getSystemPrefix() { return "M"; }
+    public String getSystemPrefix() { return systemPrefix; }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusCommandStation.class.getName());
 }

@@ -4,6 +4,7 @@ package jmri.jmrix.can.cbus;
 
 import jmri.*;
 import jmri.managers.AbstractTurnoutManager;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  * CAN CBUS implementation of a TurnoutManager.
@@ -16,8 +17,21 @@ import jmri.managers.AbstractTurnoutManager;
  */
 public class CbusTurnoutManager extends AbstractTurnoutManager {
 	
-    public String getSystemPrefix() { return "M"; }
-
+    public CbusTurnoutManager(){
+        super();
+    }
+    
+    public CbusTurnoutManager(CanSystemConnectionMemo memo){
+        this.memo=memo;
+        prefix = memo.getSystemPrefix();
+    }
+    
+    CanSystemConnectionMemo memo;
+    
+    String prefix = "M";
+    
+    public String getSystemPrefix() { return prefix; }
+    
     /**
      * Internal method to invoke the factory, after all the
      * logic for returning an existing method has been invoked.

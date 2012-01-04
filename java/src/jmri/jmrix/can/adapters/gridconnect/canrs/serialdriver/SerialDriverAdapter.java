@@ -26,14 +26,17 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
     public void configure() {
 
         // Register the CAN traffic controller being used for this connection
-        MergTrafficController.instance();
+        adaptermemo.setTrafficController(MergTrafficController.instance());
         
         // Now connect to the traffic controller
         log.debug("Connecting port");
         MergTrafficController.instance().connectPort(this);
 
+        adaptermemo.setProtocol(mOpt1);
+
         // do central protocol-specific configuration    
-        jmri.jmrix.can.ConfigurationManager.configure(mOpt1);
+        //jmri.jmrix.can.ConfigurationManager.configure(mOpt1);
+        adaptermemo.configureManagers();
 
     }
 

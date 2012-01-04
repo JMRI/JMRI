@@ -8,6 +8,7 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanMessage;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  * PowerManager implementation for controlling CBUS layout power.
@@ -24,8 +25,22 @@ public class CbusPowerManager implements PowerManager, CanListener {
         tc = TrafficController.instance();
         tc.addCanListener(this);
     }
+    
+    public CbusPowerManager(CanSystemConnectionMemo memo) {
+        // connect to the TrafficManager
+        this.memo=memo;
+        tc=memo.getTrafficController();
+        tc.addCanListener(this);
+    }
+    
+    CanSystemConnectionMemo memo;
 
-    public String getUserName() { return "CBUS"; }
+    public String getUserName() { 
+        if(memo!=null){
+            return memo.getUserName();
+        }
+        return "CBUS";
+    }
 
     int power = ON;
 

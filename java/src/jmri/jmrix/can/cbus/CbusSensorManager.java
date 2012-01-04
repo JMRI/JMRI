@@ -8,6 +8,7 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  * Manage the CBUS-specific Sensor implementation.
@@ -19,19 +20,31 @@ import jmri.jmrix.can.TrafficController;
  */
 public class CbusSensorManager extends jmri.managers.AbstractSensorManager implements CanListener {
 
-    public String getSystemPrefix() { return "M"; }
+    String prefix = "M";
+    
+    public String getSystemPrefix() { return prefix; }
 
     static public CbusSensorManager instance() {
         if (mInstance == null) new CbusSensorManager();
         return mInstance;
     }
     static private CbusSensorManager mInstance = null;
-
+    
     // to free resources when no longer used
     public void dispose() {
         TrafficController.instance().removeCanListener(this);
         super.dispose();
     }
+    
+    //Implimented ready for new system connection memo
+    public CbusSensorManager(CanSystemConnectionMemo memo){
+        this.memo=memo;
+        prefix = memo.getSystemPrefix();
+        memo.getTrafficController().addCanListener(this);
+    }
+    
+    
+    CanSystemConnectionMemo memo;
 
     // CBUS-specific methods
 

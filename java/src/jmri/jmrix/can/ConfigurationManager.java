@@ -2,6 +2,10 @@
 
 package jmri.jmrix.can;
 
+import jmri.jmrix.can.cbus.*;
+
+import jmri.*;
+
 /**
  * Does configuration for various CAN-based communications
  * implementations.
@@ -12,12 +16,12 @@ package jmri.jmrix.can;
  * @author		Bob Jacobsen  Copyright (C) 2009
  * @version     $Revision$
  */
-public class ConfigurationManager {
+abstract public class ConfigurationManager {
 
-    final private static String MERGCBUS = "MERG CBUS";
-    final private static String OPENLCB = "OpenLCB";
-    final private static String RAWCAN = "Raw CAN";
-    final private static String TEST = "Test - do not use";
+    final public static String MERGCBUS = "MERG CBUS";
+    final public static String OPENLCB = "OpenLCB";
+    final public static String RAWCAN = "Raw CAN";
+    final public static String TEST = "Test - do not use";
     
     private static String[] options = new String[]{MERGCBUS, OPENLCB, RAWCAN, TEST};
     
@@ -71,6 +75,24 @@ public class ConfigurationManager {
             // just ignore.  null often used during reconfig process
         }
     }
+    
+    public ConfigurationManager(CanSystemConnectionMemo memo){
+        adapterMemo=memo;
+    }
+    
+    protected CanSystemConnectionMemo adapterMemo;
+    
+    abstract public void configureManagers();
+     
+    /** 
+     * Tells which managers this provides by class
+     */
+    abstract public boolean provides(Class<?> type);
+    
+    @SuppressWarnings("unchecked")
+    abstract public <T> T get(Class<?> T);
+    
+    abstract public void dispose();
 
 }
 

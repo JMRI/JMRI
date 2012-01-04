@@ -23,6 +23,9 @@ import java.io.DataOutputStream;
 
 	// check that this object is ready to operate
 	public abstract boolean status();
+    
+    protected jmri.jmrix.can.CanSystemConnectionMemo adaptermemo;
+    
 }
 
 

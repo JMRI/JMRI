@@ -12,6 +12,7 @@ import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanListener;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 import javax.swing.JOptionPane;
 import jmri.DccThrottle;
@@ -38,6 +39,14 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         TrafficController.instance().addCanListener(this);
         userName = "MERG";
     }
+    
+    public CbusThrottleManager(CanSystemConnectionMemo memo) {
+    	super();
+        userName = memo.getUserName();
+        memo.getTrafficController().addCanListener(this);
+    }
+    
+    CanSystemConnectionMemo memo;
 
 	/**
 	 * CBUS allows only one throttle per address
@@ -154,6 +163,8 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                         case CbusConstants.ERR_ADDR_TAKEN:
                             message = "Address in use by another throttle.";
                             JOptionPane.showMessageDialog(null, message);
+                            break;
+                        default:
                             break;
                     }
                     failedThrottleRequest(_dccAddr, message);

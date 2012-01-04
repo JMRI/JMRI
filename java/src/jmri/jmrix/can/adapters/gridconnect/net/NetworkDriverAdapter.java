@@ -21,6 +21,9 @@ import java.util.Vector;
  */
 public class NetworkDriverAdapter extends jmri.jmrix.AbstractSerialPortController {
 
+    //This should all probably be updated to use the AbstractNetworkPortContoller
+    protected jmri.jmrix.can.CanSystemConnectionMemo adaptermemo;
+    
     /**
      * set up all of the other objects to operate with an NCE command
      * station connected to this port
@@ -38,14 +41,20 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractSerialPortControlle
         // start of code duplicated from net.ConnectionConfig
         log.error("This code comes from ConnectionConfig, and needs to be refactored");
         // Register the CAN traffic controller being used for this connection
-        GcTrafficController.instance();
+        adaptermemo.setTrafficController(GcTrafficController.instance());
+        
         
         // Now connect to the traffic controller
         log.debug("Connecting port");
         GcTrafficController.instance().connectPort(this);
 
+        adaptermemo.setProtocol("OpenLCB CAN"); // MUST CHANGE
+
         // do central protocol-specific configuration    
-        jmri.jmrix.openlcb.ConfigurationManager.configure("OpenLCB CAN");  // MUST CHANGE
+        //jmri.jmrix.can.ConfigurationManager.configure(mOpt1);
+        adaptermemo.configureManagers();
+        // do central protocol-specific configuration    
+        //jmri.jmrix.openlcb.ConfigurationManager.configure("OpenLCB CAN");  // MUST CHANGE
         
         // end of code duplicated from net.ConnectionConfig
         
