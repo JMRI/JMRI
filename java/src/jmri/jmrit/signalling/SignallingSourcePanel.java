@@ -96,8 +96,6 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         footer.add(addLogic);
         addLogic.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //sigLog.setMast(sourceMast, null);
-                //sigLog.actionPerformed(null);
                 class WindowMaker implements Runnable {
                 WindowMaker(){
                 }
@@ -145,11 +143,11 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("autoSignalMastGenerateComplete")){
             signalMastLogicFrame.setVisible(false);
-            //signalMastLogicFrame = null;
-            JOptionPane.showMessageDialog(null, "Generation of Signalling Pairs Completed");
+
             if(sml==null){
                 updateDetails();
             }
+            JOptionPane.showMessageDialog(null, "Generation of Signalling Pairs Completed");
         }
         if(e.getPropertyName().equals("advancedRoutingEnabled")){
             boolean newValue = (Boolean) e.getNewValue();
@@ -160,10 +158,11 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
     private ArrayList <SignalMast> _signalMastList;
     
     private void updateDetails(){
+        SignalMastLogic old = sml;
         sml = jmri.InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sourceMast);
         if (sml!=null){
             _signalMastList = sml.getDestinationList();
-            _AppearanceModel.fireTableDataChanged();
+            _AppearanceModel.updateSignalMastLogic(old, sml);
         }
     }
     
@@ -173,6 +172,14 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             super();
             if(sml!=null)
                 sml.addPropertyChangeListener(this);
+        }
+        
+        void updateSignalMastLogic(SignalMastLogic smlOld, SignalMastLogic smlNew){
+            if(smlOld!=null)
+                smlOld.removePropertyChangeListener(this);
+            if(smlNew!=null)
+                smlNew.addPropertyChangeListener(this);
+            fireTableDataChanged();
         }
         
         @Override
@@ -202,7 +209,6 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             }
             table.sizeColumnsToFit(-1);
 
-            //configValueColumn(table);
             configEditColumn(table);
             
         }
@@ -238,15 +244,24 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         }
         
         public void dispose(){
-           // jmri.InstanceManager.signalMastManagerInstance().removePropertyChangeListener(this);
+            if(sml!=null)
+                sml.removePropertyChangeListener(this);
         }
         
         public void propertyChange(java.beans.PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("length") || e.getPropertyName().equals("updatedDestination")) {
+            if (e.getPropertyName().equals("length")){
+                _signalMastList = sml.getDestinationList();
+                int length = (Integer) e.getNewValue();
+                if(length==0){
+                    sml.removePropertyChangeListener(this);
+                    sml = null;
+                }
+                fireTableDataChanged();
+            } else if (e.getPropertyName().equals("updatedDestination")) {
                 // a new NamedBean is available in the manager
                 _signalMastList = sml.getDestinationList();
                 fireTableDataChanged();
-            } else {
+            } else if((e.getPropertyName().equals("state")) || (e.getPropertyName().equals("Enabled"))) {
                 fireTableDataChanged();
                 fireTableRowsUpdated(0, _signalMastList.size());
             }
@@ -325,6 +340,8 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         }
 
         public Object getValueAt (int r,int c) {
+            if(sml==null)
+                return null;
             // some error checking
             if (r >= _signalMastList.size()){
             	log.debug("row is greater than turnout list size");
@@ -335,7 +352,6 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                     return _signalMastList.get(r).getUserName();
                 case SYSNAME_COLUMN:  // slot number
                     return _signalMastList.get(r).getSystemName();
-//                    return appearList.get(r).getAppearance();
                 case ACTIVE_COLUMN:
                     return sml.isActive(_signalMastList.get(r));
                  case ENABLE_COLUMN:
