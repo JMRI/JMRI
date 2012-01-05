@@ -167,6 +167,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             NUMOPTIONS=NUMOPTIONS+2;
         }
         opt1List = adapter.validOption1();
+        opt1BoxLabel = new JLabel(adapter.option1Name());
         opt1Box.removeAllItems();
         // need to remove ActionListener before addItem() or action event will occur
         if(opt1Box.getActionListeners().length >0)
@@ -174,6 +175,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
         
         opt2List = adapter.validOption2();
+        opt2BoxLabel = new JLabel(adapter.option2Name());
         opt2Box.removeAllItems();
         // need to remove ActionListener before addItem() or action event will occur
         if(opt2Box.getActionListeners().length >0)
@@ -257,11 +259,11 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                 _details.add(portField);
             }
             if ((isOptList1Advanced())&&(opt1List.length>1)) {
-                _details.add(opt1BoxLabel = new JLabel(adapter.option1Name()));
+                _details.add(opt1BoxLabel);
                 _details.add(opt1Box);
             }
             if ((isOptList2Advanced())&&(opt2List.length>1)) {
-                _details.add(opt2BoxLabel = new JLabel(adapter.option2Name()));
+                _details.add(opt2BoxLabel);
                 _details.add(opt2Box);
             }
         } else {

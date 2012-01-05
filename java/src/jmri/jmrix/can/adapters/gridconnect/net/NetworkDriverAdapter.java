@@ -19,7 +19,7 @@ import java.util.Vector;
  * @author	Bob Jacobsen   Copyright (C) 2010
  * @version	$Revision$
  */
-public class NetworkDriverAdapter extends jmri.jmrix.AbstractSerialPortController {
+public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortController {
 
     //This should all probably be updated to use the AbstractNetworkPortContoller
     protected jmri.jmrix.can.CanSystemConnectionMemo adaptermemo;
@@ -27,6 +27,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractSerialPortControlle
     public NetworkDriverAdapter() {
         super();
         adaptermemo = new jmri.jmrix.can.CanSystemConnectionMemo();
+        setManufacturer(jmri.jmrix.DCCManufacturerList.OPENLCB);
     }
     
     /**
@@ -36,7 +37,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractSerialPortControlle
     public void configure() {
     	// set the command options, Note that the NetworkDriver uses
     	// the second option for EPROM revision
-        if (getCurrentOption2Setting().equals(validOption2()[0])) {
+        if (getCurrentOption1Setting().equals(validOption1()[0])) {
         	//
         } else {
             // setting binary mode
@@ -56,56 +57,8 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractSerialPortControlle
         adaptermemo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
 
         // do central protocol-specific configuration    
-        //jmri.jmrix.can.ConfigurationManager.configure(mOpt1);
         adaptermemo.configureManagers();
-        // do central protocol-specific configuration    
-        //jmri.jmrix.openlcb.ConfigurationManager.configure("OpenLCB CAN");  // MUST CHANGE
-        
-        // end of code duplicated from net.ConnectionConfig
-        
-        //jmri.jmrix.openlcb.ActiveFlag.setActive();
 
-    }
-
-    // base class methods for the NcePortController interface
-    public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-            ConnectionStatus.instance().setConnectionState(
-            		hostName, ConnectionStatus.CONNECTION_DOWN);
-        }
-        try {
-            log.debug("attempt create input stream");
-            return new DataInputStream(socket.getInputStream());
-        } catch (java.io.IOException ex1) {
-            log.error("Exception getting input stream: "+ex1);
-            return null;
-        }
-    }
-
-    public void connect(String host, int port) {
-        try {
-            log.debug("attempt connect");
-            socket = new Socket(host, port);
-            opened = true;
-        } catch (Exception e) {
-            log.error("error opening NCE network connection: "+e);
-            ConnectionStatus.instance().setConnectionState(
-            		hostName, ConnectionStatus.CONNECTION_DOWN);
-        }
-    }
-
-    public DataOutputStream getOutputStream() {
-        if (!opened) log.error("getOutputStream called before load(), stream not available");
-        try {
-            return new DataOutputStream(socket.getOutputStream());
-        }
-     	catch (java.io.IOException e) {
-            log.error("getOutputStream exception: "+e);
-            ConnectionStatus.instance().setConnectionState(
-            		hostName, ConnectionStatus.CONNECTION_DOWN);
-     	}
-     	return null;
     }
 
     public boolean status() {return opened;}
@@ -113,22 +66,22 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractSerialPortControlle
     /**
      * Option 2 is various filters
      */
-    public String[] validOption2() { return new String[]{"Pass All", "Filtering"}; }
+    public String[] validOption1() { return new String[]{"Pass All", "Filtering"}; }
 
     /**
-     * Get a String that says what Option 2 represents
+     * Get a String that says what Option 1 represents
      * May be an empty string, but will not be null
      */
-    public String option2Name() { return "Gateway: "; }
+    public String option1Name() { return "Gateway: "; }
 
     /**
      * Set the binary vs ASCII command set option.
      */
-    public void configureOption2(String value) { mOpt2 = value; }
+    public void configureOption1(String value) { mOpt1 = value; }
 
-    public String getCurrentOption2Setting() {
-        if (mOpt2 == null) return validOption2()[1];
-        return mOpt2;
+    public String getCurrentOption1Setting() {
+        if (mOpt1 == null) return validOption1()[1];
+        return mOpt1;
     }
 
     // private control members
@@ -140,19 +93,11 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractSerialPortControlle
     }
     static NetworkDriverAdapter mInstance = null;
 
-    Socket socket;
+    //Socket socket;
     
-    String hostName = null;
-    public void setHostName (String hostName){
-    	this.hostName = hostName;
-        if (this.hostName.equals("")) this.hostName = JmrixConfigPane.NONE;
-     }
-    
-    Vector<String> portNameVector = null;
     public Vector<String> getPortNames() {
-    	portNameVector = new Vector<String>();
-    	portNameVector.addElement(hostName);
-        return portNameVector;
+        log.error("Unexpected call to getPortNames");
+        return null;
     }
     public String openPort(String portName, String appName)  {
         log.error("Unexpected call to openPort");
@@ -162,11 +107,6 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractSerialPortControlle
         log.error("Unexpected call to validBaudRates");
         return null;
     }
-
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.OPENLCB;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
     
     public void dispose(){
         if (adaptermemo!=null)
