@@ -56,8 +56,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         
         jmri.InstanceManager.layoutBlockManagerInstance().addPropertyChangeListener(this);
         
-        JPanel containerPanel = new JPanel();
-        containerPanel.setLayout(new BorderLayout());
+        setLayout(new BorderLayout());
         
         JPanel header = new JPanel();
         header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
@@ -65,15 +64,8 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         JPanel sourcePanel = new JPanel();
         sourcePanel.add(fixedSourceMastLabel);
         header.add(sourcePanel);
-        containerPanel.add(header, BorderLayout.NORTH);
-
-        
-        JPanel p3xsi = new JPanel();
-        JPanel p3xsiSpace = new JPanel();
-        p3xsiSpace.setLayout(new BoxLayout(p3xsiSpace, BoxLayout.Y_AXIS));
-        p3xsiSpace.add(new JLabel(" "));
-        p3xsi.add(p3xsiSpace);
-        
+        add(header, BorderLayout.NORTH);
+       
         _AppearanceModel = new SignalMastAppearanceModel();
         JTable SignalAppearanceTable = jmri.util.JTableUtil.sortableDataModel(_AppearanceModel);
 
@@ -88,11 +80,8 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         SignalAppearanceTable.setPreferredScrollableViewportSize(new java.awt.Dimension(600,120));
         _AppearanceModel.configureTable(SignalAppearanceTable);
         _SignalAppearanceScrollPane = new JScrollPane(SignalAppearanceTable);
-        p3xsi.add(_SignalAppearanceScrollPane,BorderLayout.CENTER);
-       // p3.add(p3xsi);
-        p3xsi.setVisible(true);
         _AppearanceModel.fireTableDataChanged();
-        containerPanel.add(p3xsi, BorderLayout.CENTER);
+        add(_SignalAppearanceScrollPane, BorderLayout.CENTER);
         
         JPanel footer = new JPanel();
         
@@ -125,8 +114,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         
         if(!jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled())
             discoverPairs.setEnabled(false);
-        containerPanel.add(footer, BorderLayout.SOUTH);
-        add(containerPanel);
+        add(footer, BorderLayout.SOUTH);
     }
     
     JmriJFrame signalMastLogicFrame = null;
@@ -295,6 +283,8 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 return true;
             if (c==DEL_COLUMN)
                 return true;
+            if (c==ENABLE_COLUMN)
+                return true;
             return ( (c==USERNAME_COLUMN) );
         }
         
@@ -365,6 +355,14 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
                 editPair(r);
             else if (c==DEL_COLUMN)
                 deletePair(r);
+            else if (c==ENABLE_COLUMN){
+                boolean b = ((Boolean)type).booleanValue();
+                if(b)
+                    sml.setEnabled(_signalMastList.get(r));
+                else
+                    sml.setDisabled(_signalMastList.get(r));
+                
+            }
         }
     }
     
