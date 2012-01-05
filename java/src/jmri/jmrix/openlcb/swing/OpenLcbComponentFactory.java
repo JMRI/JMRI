@@ -2,8 +2,8 @@
 
 package jmri.jmrix.openlcb.swing;
 
-import jmri.jmrix.openlcb.OlcbSystemConnectionMemo;
 import jmri.jmrix.openlcb.OpenLcbMenu;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  * Provide access to Swing components for the LocoNet subsystem.
@@ -14,11 +14,11 @@ import jmri.jmrix.openlcb.OpenLcbMenu;
  */
 public class OpenLcbComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
-    public OpenLcbComponentFactory(OlcbSystemConnectionMemo memo) {
+    public OpenLcbComponentFactory(CanSystemConnectionMemo memo) {
         this.memo = memo;
     }
     
-    OlcbSystemConnectionMemo memo;
+    CanSystemConnectionMemo memo;
     
     /**
      * Provide a menu with all items attached to this system connection

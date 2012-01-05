@@ -5,6 +5,8 @@ package jmri.jmrix.can.cbus;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.*;
 
+import java.util.ResourceBundle;
+
 /**
  * Does configuration for various CAN-based communications
  * implementations.
@@ -167,6 +169,10 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (throttleManager != null) 
             InstanceManager.deregister((CbusThrottleManager)throttleManager, jmri.jmrix.can.cbus.CbusThrottleManager.class);
         InstanceManager.deregister(this, CbusConfigurationManager.class);
+    }
+    
+    protected ResourceBundle getActionModelResourceBundle(){
+        return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }
 
 }

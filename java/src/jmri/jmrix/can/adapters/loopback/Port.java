@@ -18,17 +18,22 @@ public class Port extends AbstractSerialPortController {
 
     public Port() {
         mPort="(None)";
+        adaptermemo = new jmri.jmrix.can.CanSystemConnectionMemo();
     }
 
     public void configure() {
 
         // Register the CAN traffic controller being used for this connection
-        LoopbackTrafficController.instance();
+        adaptermemo.setTrafficController(LoopbackTrafficController.instance());
 
         // do central protocol-specific configuration    
-        jmri.jmrix.can.ConfigurationManager.configure(mOpt1);
+        adaptermemo.setProtocol(mOpt1);
+        
+        adaptermemo.configureManagers();
 
     }
+    
+    protected jmri.jmrix.can.CanSystemConnectionMemo adaptermemo;
 
     /**
      * Option 1 is CAN-based protocol
@@ -79,6 +84,12 @@ public class Port extends AbstractSerialPortController {
 	    java.util.Vector<String> v = new java.util.Vector<String>();
 	    v.addElement("(None)");
 	    return v;
+    }
+    
+    public void dispose(){
+        if (adaptermemo!=null)
+            adaptermemo.dispose();
+        adaptermemo = null;
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Port.class.getName());

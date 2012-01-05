@@ -21,6 +21,11 @@ import gnu.io.SerialPort;
 public class SerialDriverAdapter extends PortController  implements jmri.jmrix.SerialPortAdapter {
 
     SerialPort activeSerialPort = null;
+    
+    public SerialDriverAdapter() {
+        super();
+        adaptermemo = new jmri.jmrix.can.CanSystemConnectionMemo();
+    }
 
     public String openPort(String portName, String appName)  {
         String [] baudRates = validBaudRates();
@@ -105,7 +110,8 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     public void configure() {
 
         // Register the CAN traffic controller being used for this connection
-        LawicellTrafficController.instance();
+        adaptermemo.setTrafficController(LawicellTrafficController.instance());
+        //LawicellTrafficController.instance();
         
         // Now connect to the traffic controller
         log.debug("Connecting port");
@@ -119,7 +125,10 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
         LawicellTrafficController.instance().sendCanMessage(m, null);
 
         // do central protocol-specific configuration    
-        jmri.jmrix.can.ConfigurationManager.configure(mOpt1);
+        //jmri.jmrix.can.ConfigurationManager.configure(mOpt1);
+        adaptermemo.setProtocol(mOpt1);
+        
+        adaptermemo.configureManagers();
     }
     
     // base class methods for the PortController interface
@@ -193,6 +202,12 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
+    
+    public void dispose(){
+        if (adaptermemo!=null)
+            adaptermemo.dispose();
+        adaptermemo = null;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 

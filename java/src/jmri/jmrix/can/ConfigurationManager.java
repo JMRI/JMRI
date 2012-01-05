@@ -6,6 +6,8 @@ import jmri.jmrix.can.cbus.*;
 
 import jmri.*;
 
+import java.util.ResourceBundle;
+
 /**
  * Does configuration for various CAN-based communications
  * implementations.
@@ -48,7 +50,7 @@ abstract public class ConfigurationManager {
         options = new String[]{MERGCBUS, OPENLCB, RAWCAN, TEST};
     }
     
-    static public void configure(String option) {
+    /*static public void configure(String option) {
         if (MERGCBUS.equals(option)) {
 
             jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.can.cbus.CbusTurnoutManager());
@@ -74,7 +76,7 @@ abstract public class ConfigurationManager {
         } else {
             // just ignore.  null often used during reconfig process
         }
-    }
+    }*/
     
     public ConfigurationManager(CanSystemConnectionMemo memo){
         adapterMemo=memo;
@@ -93,6 +95,8 @@ abstract public class ConfigurationManager {
     abstract public <T> T get(Class<?> T);
     
     abstract public void dispose();
+    
+    abstract protected ResourceBundle getActionModelResourceBundle();
 
 }
 

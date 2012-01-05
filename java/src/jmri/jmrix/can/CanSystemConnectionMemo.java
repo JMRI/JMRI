@@ -9,48 +9,21 @@ import java.util.ResourceBundle;
  * Lightweight class to denote that a system is active,
  * and provide general information.
  * <p>
- * Objects of specific subtypes are registered
- * in the instance manager to activate their
- * particular system.
- *
- * @author		Bob Jacobsen  Copyright (C) 2010
+ * As various CAN adapters, can work with different CAN Bus 
+ * systems, the adapter memo is generic for all adapters, it
+ * then uses a ConfigurationManager for each of the CAN Bus 
+ * systems. Any requests for provision or configuration is passed
+ * on to the relevant ConfigurationManager to handle.
+ * <p>
+ * @author		Kevin Dickerson Copyright (C) 2012
  * @version             $Revision: 19602 $
  */
 public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
-    public CanSystemConnectionMemo(String protocol, String prefix, String systemName) {
-        super(prefix, systemName);
-        this.protocol=protocol;
-        register(); // registers general type
-        InstanceManager.store(this, CanSystemConnectionMemo.class); // also register as specific type
-        
-        // create and register the LnComponentFactory
-        /*InstanceManager.store(cf = new jmri.jmrix.loconet.swing.LnComponentFactory(this),
-                                jmri.jmrix.swing.ComponentFactory.class);*/
-    }
-    
-    public CanSystemConnectionMemo(String protocol) {
-        super("M", "MERG");
-        this.protocol=protocol;
-        register(); // registers general type
-        InstanceManager.store(this, CanSystemConnectionMemo.class); // also register as specific type
-        
-        // create and register the LnComponentFactory
-        /*InstanceManager.store(cf = new jmri.jmrix.loconet.swing.LnComponentFactory(this),
-                                jmri.jmrix.swing.ComponentFactory.class);*/
-                                
-    }
-    
     public CanSystemConnectionMemo() {
         super("M", "MERG");
-        this.protocol=protocol;
         register(); // registers general type
         InstanceManager.store(this, CanSystemConnectionMemo.class); // also register as specific type
-        
-        // create and register the LnComponentFactory
-        /*InstanceManager.store(cf = new jmri.jmrix.loconet.swing.LnComponentFactory(this),
-                                jmri.jmrix.swing.ComponentFactory.class);*/
-                                
     }
     
     jmri.jmrix.swing.ComponentFactory cf = null;
@@ -62,8 +35,6 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
     
     public TrafficController getTrafficController() { return tm; }
-    
-    private String protocol;
     
     private jmri.jmrix.can.ConfigurationManager manager;
     
@@ -90,11 +61,15 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
     
     public void setProtocol(String protocol){
-        this.protocol = protocol;
-        if (ConfigurationManager.MERGCBUS.equals(this.protocol)) {
+        if (ConfigurationManager.MERGCBUS.equals(protocol)) {
             manager = new jmri.jmrix.can.cbus.CbusConfigurationManager(this);
+        } else if (ConfigurationManager.OPENLCB.equals(protocol)) {
+            manager = new jmri.jmrix.openlcb.ConfigurationManager(this);
+        }  else if (ConfigurationManager.RAWCAN.equals(protocol)) {
+            manager=new jmri.jmrix.can.CanConfigurationManager(this);
+        } else if (ConfigurationManager.TEST.equals(protocol)) {
+            manager=new jmri.jmrix.can.nmranet.NmraConfigurationManager(this);
         }
-        
     }
     
     /**
@@ -108,7 +83,9 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
     
     protected ResourceBundle getActionModelResourceBundle(){
-        return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
+        if(manager==null)
+            return null;
+        return manager.getActionModelResourceBundle();
     }
     
     public void dispose() {

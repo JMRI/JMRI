@@ -4,6 +4,7 @@ package jmri.jmrix.can.adapters.lawicell;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  * Abstract base for classes representing a LAWICELL communications port
@@ -24,6 +25,8 @@ public abstract class PortController extends jmri.jmrix.AbstractSerialPortContro
 
 	// check that this object is ready to operate
 	public abstract boolean status();
+    
+    protected jmri.jmrix.can.CanSystemConnectionMemo adaptermemo;
 }
 
 

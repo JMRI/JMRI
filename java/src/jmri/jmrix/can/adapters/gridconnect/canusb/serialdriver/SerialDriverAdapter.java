@@ -36,6 +36,12 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
         return mInstance;
     }
     static SerialDriverAdapter mInstance = null;
+    
+    public void dispose(){
+        if (adaptermemo!=null)
+            adaptermemo.dispose();
+        adaptermemo = null;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 

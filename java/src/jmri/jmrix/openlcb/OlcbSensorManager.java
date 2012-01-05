@@ -8,6 +8,7 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  * Manage the OpenLCB-specific Sensor implementation.
@@ -19,7 +20,9 @@ import jmri.jmrix.can.TrafficController;
  */
 public class OlcbSensorManager extends jmri.managers.AbstractSensorManager implements CanListener {
 
-    public String getSystemPrefix() { return "M"; }
+    String prefix = "M";
+    
+    public String getSystemPrefix() { return prefix; }
 
     static public OlcbSensorManager instance() {
         if (mInstance == null) new OlcbSensorManager();
@@ -32,6 +35,16 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         TrafficController.instance().removeCanListener(this);
         super.dispose();
     }
+    
+    //Implimented ready for new system connection memo
+    public OlcbSensorManager(CanSystemConnectionMemo memo){
+        this.memo=memo;
+        prefix = memo.getSystemPrefix();
+        memo.getTrafficController().addCanListener(this);
+    }
+    
+    
+    CanSystemConnectionMemo memo;
 
     public Sensor createNewSensor(String systemName, String userName) {
         // first, check validity

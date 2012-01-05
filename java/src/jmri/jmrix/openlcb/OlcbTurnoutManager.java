@@ -4,6 +4,7 @@ package jmri.jmrix.openlcb;
 
 import jmri.*;
 import jmri.managers.AbstractTurnoutManager;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  * OpenLCB implementation of a TurnoutManager.
@@ -16,7 +17,20 @@ import jmri.managers.AbstractTurnoutManager;
  */
 public class OlcbTurnoutManager extends AbstractTurnoutManager {
 	
-    public String getSystemPrefix() { return "M"; }
+    public OlcbTurnoutManager(){
+        super();
+    }
+    
+    public OlcbTurnoutManager(CanSystemConnectionMemo memo){
+        this.memo=memo;
+        prefix = memo.getSystemPrefix();
+    }
+    
+    CanSystemConnectionMemo memo;
+    
+    String prefix = "M";
+    
+    public String getSystemPrefix() { return prefix; }
 
     /**
      * Internal method to invoke the factory, after all the

@@ -13,7 +13,7 @@ import javax.swing.JMenu;
  * @version     $Revision$
  */
 public class OpenLcbMenu extends JMenu {
-    public OpenLcbMenu(jmri.jmrix.openlcb.OlcbSystemConnectionMemo memo) {
+    public OpenLcbMenu(jmri.jmrix.can.CanSystemConnectionMemo memo) {
 
         super();
 

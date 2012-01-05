@@ -19,6 +19,8 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
     public LoopbackTrafficController() {
         super();
     }
+    
+    protected jmri.jmrix.can.CanSystemConnectionMemo adaptermemo;
    
     /**
      * Forward a CanMessage to all registered CanInterface listeners.

@@ -24,6 +24,11 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractSerialPortControlle
     //This should all probably be updated to use the AbstractNetworkPortContoller
     protected jmri.jmrix.can.CanSystemConnectionMemo adaptermemo;
     
+    public NetworkDriverAdapter() {
+        super();
+        adaptermemo = new jmri.jmrix.can.CanSystemConnectionMemo();
+    }
+    
     /**
      * set up all of the other objects to operate with an NCE command
      * station connected to this port
@@ -48,7 +53,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractSerialPortControlle
         log.debug("Connecting port");
         GcTrafficController.instance().connectPort(this);
 
-        adaptermemo.setProtocol("OpenLCB CAN"); // MUST CHANGE
+        adaptermemo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
 
         // do central protocol-specific configuration    
         //jmri.jmrix.can.ConfigurationManager.configure(mOpt1);
@@ -58,7 +63,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractSerialPortControlle
         
         // end of code duplicated from net.ConnectionConfig
         
-        jmri.jmrix.openlcb.ActiveFlag.setActive();
+        //jmri.jmrix.openlcb.ActiveFlag.setActive();
 
     }
 
@@ -162,6 +167,12 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractSerialPortControlle
     
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
+    
+    public void dispose(){
+        if (adaptermemo!=null)
+            adaptermemo.dispose();
+        adaptermemo = null;
+    }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetworkDriverAdapter.class.getName());
 
