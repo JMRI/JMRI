@@ -619,6 +619,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                                 case 8  :   tmploco.setCV8(cvval);
                                             checkInRoster(tmploco);
                                             break;
+                                default : break;
                             }
                         }
                         if (lines[i].contains("addr")){

@@ -162,6 +162,7 @@ public class EcosLocoToRoster implements EcosListener {
                    case 1608: functionLabel = "notch_down"; break;
                    case 2055: functionLabel = "thunderer_whistle"; break;
                    case 3847: functionLabel = "buffer_sound"; break;
+                   default: break;
                 }
                 
                 re.setFunctionLabel(functNo, functionLabel);

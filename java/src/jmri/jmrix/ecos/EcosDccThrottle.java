@@ -691,6 +691,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                                             this.f28 = functionresult;
                                          }
                                          break;
+                                default : break;
                             }
                         }
                     }

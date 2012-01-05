@@ -207,6 +207,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                             break;
                                     case 4 : et.setComment("Double Slip with " + et.getSlaveAddress());
                                             break;
+                                    default : break;
                                 }
                             }
                             // get initial state
