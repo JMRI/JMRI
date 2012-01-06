@@ -8,31 +8,22 @@ import java.awt.event.ItemEvent;
 import java.awt.GridLayout;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Hashtable;
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.JOptionPane;
 import java.util.ResourceBundle;
-import java.util.Enumeration;
-
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import jmri.SignalMast;
 import jmri.NamedBean;
-import jmri.Block;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
-import jmri.jmrit.display.layoutEditor.LayoutBlock;
-import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.util.com.sun.TableSorter;
 import jmri.InstanceManager;
-import jmri.JmriException;
 
 /**
  * JPanel to create a new JMRI devices

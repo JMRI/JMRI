@@ -2,10 +2,6 @@
 
 package jmri.jmrix.can;
 
-import jmri.jmrix.can.cbus.*;
-
-import jmri.*;
-
 import java.util.ResourceBundle;
 
 /**

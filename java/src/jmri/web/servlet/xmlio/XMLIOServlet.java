@@ -6,8 +6,6 @@ import java.io.*;
 import java.util.StringTokenizer;
 
 import jmri.web.miniserver.AbstractServlet;
-import jmri.web.miniserver.MiniServerManager;
-
 import org.jdom.*;
 import org.jdom.input.*;
 import org.jdom.output.*;

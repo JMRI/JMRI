@@ -3,7 +3,6 @@ package jmri.implementation;
 import java.util.*;
 
 import jmri.*;
-import jmri.NamedBeanHandle;
 
  /**
  * SignalMast implemented via one SignalHead object.

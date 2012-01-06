@@ -2,7 +2,6 @@
 
 package jmri.web.miniserver;
 
-import javax.swing.ImageIcon;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;

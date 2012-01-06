@@ -1,9 +1,7 @@
 package jmri.implementation.configurexml;
 
 import jmri.InstanceManager;
-import jmri.Turnout;
 import jmri.implementation.VirtualSignalMast;
-import jmri.SignalAppearanceMap;
 import java.util.List;
 import org.jdom.Element;
 

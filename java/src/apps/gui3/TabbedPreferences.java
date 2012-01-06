@@ -24,7 +24,6 @@ import java.util.Enumeration;
 import java.lang.reflect.Method;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicButtonUI;
 import org.jdom.Element;
 import java.util.Vector;
 import java.io.File;

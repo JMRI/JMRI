@@ -4,11 +4,6 @@
 
 package jmri.jmrix.lenz.liusbethernet;
 
-import jmri.jmrix.lenz.XNetPacketizer;
-
-import jmri.jmrix.AbstractMRMessage;
-import jmri.jmrix.AbstractMRListener;
-
 
 /**
  * This is an extension of the XNetPacketizer to handle the device 

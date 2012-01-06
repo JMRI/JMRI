@@ -3,7 +3,6 @@
 package jmri.jmrix.lenz.liusbethernet;
 
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 
 /**

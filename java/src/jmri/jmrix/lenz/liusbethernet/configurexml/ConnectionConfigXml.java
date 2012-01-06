@@ -5,8 +5,6 @@ import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.lenz.liusbethernet.ConnectionConfig;
 import jmri.jmrix.lenz.liusbethernet.LIUSBEthernetAdapter;
 
-import org.jdom.Element;
-
 /**
  * Handle XML persistance of layout connections by persistening
  * the LIUSB Server (and connections). Note this is

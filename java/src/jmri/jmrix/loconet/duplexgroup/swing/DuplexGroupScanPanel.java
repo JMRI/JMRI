@@ -4,7 +4,6 @@ package jmri.jmrix.loconet.duplexgroup.swing;
 
 import java.awt.event.*;
 import java.awt.*;
-import java.awt.Font.*;
 import jmri.jmrix.loconet.*;
 import java.util.ResourceBundle;
 import javax.swing.*;

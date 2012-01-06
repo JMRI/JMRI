@@ -16,7 +16,6 @@ import java.net.NetworkInterface;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.ArrayList;
-import javax.jmdns.ServiceInfo;
 import javax.swing.JFrame;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;

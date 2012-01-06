@@ -2,13 +2,8 @@
 
 package jmri.jmrix.can.adapters.gridconnect.net;
 
-import jmri.jmrix.ConnectionStatus;
-import jmri.jmrix.JmrixConfigPane;
-
 import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
 
-import java.io.*;
-import java.net.*;
 import java.util.Vector;
 
 /**

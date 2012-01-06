@@ -1,7 +1,6 @@
 // JFrameInterface.java
 package jmri.util.swing;
 
-import java.awt.Component;
 import java.awt.Frame;
 import javax.swing.JFrame;
 

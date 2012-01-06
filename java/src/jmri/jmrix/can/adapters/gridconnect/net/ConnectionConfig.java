@@ -2,7 +2,6 @@
 
 package jmri.jmrix.can.adapters.gridconnect.net;
 
-import javax.swing.*;
 import java.util.ResourceBundle;
 
 /**

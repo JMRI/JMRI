@@ -6,7 +6,6 @@ import java.net.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.help.*;
-import javax.help.plaf.*;
 import javax.help.plaf.basic.*;
 
 

@@ -5,8 +5,6 @@ package jmri.jmrit.signalling.configurexml;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.signalling.EntryExitPairs;
-import jmri.jmrit.display.layoutEditor.PositionablePoint;
-import org.jdom.Attribute;
 import org.jdom.Element;
 import java.util.ArrayList;
 import java.util.List;

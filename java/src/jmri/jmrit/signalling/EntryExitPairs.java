@@ -10,7 +10,6 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import java.util.Hashtable;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +22,9 @@ import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.display.layoutEditor.LayoutEditorTools;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
-import jmri.jmrit.display.layoutEditor.TrackSegment;
 
 
 /**

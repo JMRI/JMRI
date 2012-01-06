@@ -4,11 +4,6 @@ package jmri;
 
 import jmri.ConsistListener;
 
-import java.util.Vector;
-
-import java.util.Hashtable;
-import java.util.ArrayList;
-
 
 /**
  * This is the Default DCC consist manager installed on systems which

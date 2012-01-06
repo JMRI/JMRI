@@ -15,7 +15,6 @@ import java.util.Hashtable;
 import java.util.ArrayList;
 
 import jmri.NmraConsist;
-import jmri.ConsistListener;
 
 public class NmraConsistManager extends DccConsistManager implements ConsistManager{
 

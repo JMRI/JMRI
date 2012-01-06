@@ -3,8 +3,6 @@ package jmri.jmrix.loconet;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
-import jmri.InstanceManager;
-
 import jmri.jmrix.AbstractThrottle;
 
 /**

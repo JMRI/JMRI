@@ -7,9 +7,6 @@ import jmri.jmrix.lenz.XNetInitilizationManager;
 import jmri.jmrix.lenz.XNetNetworkPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
 
-import jmri.jmrix.lenz.XNetReply;
-
-
 import java.io.*;
 
 
