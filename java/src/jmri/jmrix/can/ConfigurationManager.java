@@ -46,34 +46,6 @@ abstract public class ConfigurationManager {
         options = new String[]{MERGCBUS, OPENLCB, RAWCAN, TEST};
     }
     
-    /*static public void configure(String option) {
-        if (MERGCBUS.equals(option)) {
-
-            jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.can.cbus.CbusTurnoutManager());
-            jmri.InstanceManager.setSensorManager(new jmri.jmrix.can.cbus.CbusSensorManager());
-            jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.can.cbus.CbusDccProgrammerManager(
-                    new jmri.jmrix.can.cbus.CbusDccProgrammer()));
-            jmri.InstanceManager.setThrottleManager(new jmri.jmrix.can.cbus.CbusThrottleManager());
-            jmri.InstanceManager.setPowerManager(new jmri.jmrix.can.cbus.CbusPowerManager());
-            jmri.jmrix.can.cbus.ActiveFlag.setActive();
-
-        } if (OPENLCB.equals(option)) {
-            // Activate menu indirectly
-            jmri.jmrix.openlcb.ConfigurationManager.configure(option);
-
-        } if (RAWCAN.equals(option)) {
-            // This is just vanilla CAN with nothing additional
-            jmri.jmrix.can.ActiveFlag.setActive();
-
-        } if (TEST.equals(option)) {
-            // "Test - do not use"
-            jmri.jmrix.can.nmranet.ActiveFlag.setActive();
-
-        } else {
-            // just ignore.  null often used during reconfig process
-        }
-    }*/
-    
     public ConfigurationManager(CanSystemConnectionMemo memo){
         adapterMemo=memo;
     }

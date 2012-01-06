@@ -12,7 +12,9 @@ import javax.swing.JMenu;
  * @author	Bob Jacobsen   Copyright 2003, 2008
  * @author      Andrew Crosland 2008
  * @version     $Revision$
+ * @deprecated 2.99.2
  */
+@Deprecated
 public class CanMenu extends JMenu {
     public CanMenu(String name) {
         this();

@@ -64,7 +64,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (ConfigurationManager.MERGCBUS.equals(protocol)) {
             manager = new jmri.jmrix.can.cbus.CbusConfigurationManager(this);
         } else if (ConfigurationManager.OPENLCB.equals(protocol)) {
-            manager = new jmri.jmrix.openlcb.ConfigurationManager(this);
+            manager = new jmri.jmrix.openlcb.OlcbConfigurationManager(this);
         }  else if (ConfigurationManager.RAWCAN.equals(protocol)) {
             manager=new jmri.jmrix.can.CanConfigurationManager(this);
         } else if (ConfigurationManager.TEST.equals(protocol)) {

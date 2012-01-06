@@ -20,7 +20,8 @@ public class CanConfigurationManager extends ConfigurationManager {
         //At this stage without the multiple connections we can do this, but afterwards we can not.
         adapterMemo.setUserName("CAN-RAW");
         adapterMemo.setSystemPrefix("M");
-        
+        InstanceManager.store(cf = new jmri.jmrix.can.swing.CanComponentFactory(adapterMemo), 
+            jmri.jmrix.swing.ComponentFactory.class);
         InstanceManager.store(this, CanConfigurationManager.class);
     }
     
