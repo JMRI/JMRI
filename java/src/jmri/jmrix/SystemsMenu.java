@@ -47,11 +47,12 @@ public class SystemsMenu extends JMenu {
 
         addMenu("jmri.jmrix.acela.AcelaMenu");
         addMenu("jmri.jmrix.bachrus.SpeedoMenu");
-        // Merg CAN is migrated
+        // CAN is migrated
         add( new jmri.jmrix.can.swing.CanMenu(null));
+        
         // Merg CBUS is migrated
         add( new jmri.jmrix.can.cbus.swing.CbusMenu(null));
-        //addMenu("jmri.jmrix.can.cbus.CbusMenu");
+
         addMenu("jmri.jmrix.cmri.CMRIMenu");
         addMenu("jmri.jmrix.easydcc.EasyDCCMenu");
         addMenu("jmri.jmrix.grapevine.GrapevineMenu");
@@ -83,7 +84,8 @@ public class SystemsMenu extends JMenu {
         add(new javax.swing.JSeparator());
         addMenu("jmri.jmrix.direct.DirectMenu");
 
-        addMenu("jmri.jmrix.can.nmranet.NmraNetMenu");
+        // nmranet is migrated
+        add(new jmri.jmrix.can.nmranet.swing.NmraNetMenu(null));
         
         // Ecos is migrated
         add( new jmri.jmrix.ecos.swing.EcosMenu(null));

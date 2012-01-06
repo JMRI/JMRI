@@ -20,7 +20,8 @@ public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         //At this stage without the multiple connections we can do this, but afterwards we can not.
         adapterMemo.setUserName("Nmra Net");
         adapterMemo.setSystemPrefix("M");
-        
+        InstanceManager.store(cf = new jmri.jmrix.can.nmranet.swing.NmraNetComponentFactory(adapterMemo), 
+            jmri.jmrix.swing.ComponentFactory.class);
         InstanceManager.store(this, NmraConfigurationManager.class);
     }
     
