@@ -109,7 +109,7 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
-!define COPYRIGHT  "© 1997-2011 JMRI Community"   ; Copyright string
+!define COPYRIGHT  "© 1997-2012 JMRI Community"   ; Copyright string
 !define VER        "0.1.14.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
