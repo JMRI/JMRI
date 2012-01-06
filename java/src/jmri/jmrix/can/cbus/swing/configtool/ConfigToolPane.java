@@ -21,7 +21,7 @@ import javax.swing.*;
  * @version			$Revision$
  * @since 2.3.1
  */
-public class ConfigToolPane extends JPanel implements CanListener {
+public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.configtool.ConfigToolBundle");
     
@@ -29,7 +29,6 @@ public class ConfigToolPane extends JPanel implements CanListener {
     CbusEventRecorder[] recorders = new CbusEventRecorder[NRECORDERS];
     
     public ConfigToolPane() {
-        super();
         
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
@@ -46,7 +45,11 @@ public class ConfigToolPane extends JPanel implements CanListener {
         // add sensor
         makeSensor = new MakeNamedBean("LabelEventActive", "LabelEventInactive"){
             void create(String name) {
-                InstanceManager.sensorManagerInstance().provideSensor("MS"+name);
+                if(memo!=null){
+                    ((jmri.SensorManager)memo.get(jmri.SensorManager.class)).provideSensor("MS"+name);
+                } else {
+                    InstanceManager.sensorManagerInstance().provideSensor("MS"+name);
+                }
             }
         };
         makeSensor.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutAddSensor")));
@@ -55,15 +58,37 @@ public class ConfigToolPane extends JPanel implements CanListener {
         // add turnout
         makeTurnout = new MakeNamedBean("LabelEventThrown", "LabelEventClosed"){
             void create(String name) {
-                InstanceManager.turnoutManagerInstance().provideTurnout("MT"+name);
+                if(memo!=null){
+                    ((jmri.TurnoutManager)memo.get(jmri.TurnoutManager.class)).provideTurnout("MS"+name);
+                } else {
+                    InstanceManager.turnoutManagerInstance().provideTurnout("MT"+name);
+                }
             }
         };
         makeTurnout.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutAddTurnout")));
         add(makeTurnout);
 
-        // connect
-        TrafficController.instance().addCanListener(this);
-
+    }
+    
+    TrafficController tc;
+        
+    public void initComponents(CanSystemConnectionMemo memo) {
+        super.initComponents(memo);
+        tc = memo.getTrafficController();
+        tc.addCanListener(this);
+    }
+    
+    public void initComponents() {
+        tc = TrafficController.instance();
+        tc.addCanListener(this);
+    }
+    
+    public String getTitle() {
+        if(memo!=null) {
+            return (memo.getUserName() + " Event Capture Tool");
+        
+        }
+        return "CBUS Event Capture Tool";
     }
 
     MakeNamedBean makeSensor;
@@ -95,7 +120,7 @@ public class ConfigToolPane extends JPanel implements CanListener {
 
     public void dispose() {
         // disconnect from the CBUS
-        TrafficController.instance().removeCanListener(this);
+        tc.removeCanListener(this);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConfigToolPane.class.getName());
@@ -221,6 +246,18 @@ public class ConfigToolPane extends JPanel implements CanListener {
                 event.setText(CbusMessage.toAddress(m));
                 capture.setSelected(false);
             }
+        }
+    }
+    
+    /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
+        public Default() {
+            super("CBUS Event Capture Tool", 
+                new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                ConfigToolPane.class.getName(), 
+                jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
 }

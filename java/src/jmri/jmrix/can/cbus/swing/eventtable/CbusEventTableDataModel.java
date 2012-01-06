@@ -44,6 +44,20 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         tc = TrafficController.instance();
         tc.addCanListener(this);
     }
+    
+    CanSystemConnectionMemo memo;
+    
+    CbusEventTableDataModel(CanSystemConnectionMemo memo, int row, int column){
+        _id = new int[CbusConstants.MAX_TABLE_EVENTS];
+        _node = new int[CbusConstants.MAX_TABLE_EVENTS];
+        _name = new String[CbusConstants.MAX_TABLE_EVENTS];
+        _event = new int[CbusConstants.MAX_TABLE_EVENTS];
+        _type = new boolean[CbusConstants.MAX_TABLE_EVENTS];
+        _comment = new String[CbusConstants.MAX_TABLE_EVENTS];
+        // connect to the CanInterface
+        tc = memo.getTrafficController();
+        tc.addCanListener(this);
+    }
 
     /**
      * Returns the number of rows to be displayed.

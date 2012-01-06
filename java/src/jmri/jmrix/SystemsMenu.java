@@ -47,8 +47,11 @@ public class SystemsMenu extends JMenu {
 
         addMenu("jmri.jmrix.acela.AcelaMenu");
         addMenu("jmri.jmrix.bachrus.SpeedoMenu");
-        addMenu("jmri.jmrix.can.CanMenu");
-        addMenu("jmri.jmrix.can.cbus.CbusMenu");
+        // Merg CAN is migrated
+        add( new jmri.jmrix.can.swing.CanMenu(null));
+        // Merg CBUS is migrated
+        add( new jmri.jmrix.can.cbus.swing.CbusMenu(null));
+        //addMenu("jmri.jmrix.can.cbus.CbusMenu");
         addMenu("jmri.jmrix.cmri.CMRIMenu");
         addMenu("jmri.jmrix.easydcc.EasyDCCMenu");
         addMenu("jmri.jmrix.grapevine.GrapevineMenu");
@@ -81,7 +84,10 @@ public class SystemsMenu extends JMenu {
         addMenu("jmri.jmrix.direct.DirectMenu");
 
         addMenu("jmri.jmrix.can.nmranet.NmraNetMenu");
-        addMenu("jmri.jmrix.ecos.Menu");
+        
+        // Ecos is migrated
+        add( new jmri.jmrix.ecos.swing.EcosMenu(null));
+        
         addMenu("jmri.jmrix.maple.MapleMenu");
         // The JMRI Network ClientAllows Multiple Connections
         add( new jmri.jmrix.jmriclient.swing.JMRIClientMenu(null));

@@ -1,4 +1,4 @@
-// CbusConsoleFrame.java
+// CbusConsolePane.java
 
 package jmri.jmrix.can.cbus.swing.console;
 
@@ -35,20 +35,18 @@ import jmri.util.JmriJFrame;
 
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.*;
-import jmri.jmrix.can.cbus.CbusEventFilterFrame;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusOpCodes;
+import jmri.jmrix.can.swing.CanPanelInterface;
 
 /**
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision$
- * @deprecated 2.99.2
+ * @version			$Revision: 17977 $
  */
-@Deprecated
-public class CbusConsoleFrame extends JmriJFrame implements CanListener {
+public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
     
     // member declarations
     protected JButton clearButton = new JButton();
@@ -113,22 +111,32 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
     String replyString;
     
-    public CbusConsoleFrame() {
+    public CbusConsolePane() {
         super();
         _filterFrame = null;
     }
     
-    protected String title() { return "CBUS Console"; }
-    
-    protected void init() {
-        // connect to the CanTrafficController
-        tc = jmri.jmrix.can.TrafficController.instance();
-        tc.addCanListener(this);
+    public String getTitle() {
+        if(memo!=null) {
+            return (memo.getUserName() + " Console");
+        
+        }
+        return "CBUS Console";
     }
+    
+    public String getHelpTarget() { return "package.jmri.jmrix.can.cbus.swing.console.CbusConsolePane"; }
+    
+    public void init() {}
     
     public void dispose() {
         if (tc!=null) tc.removeCanListener(this);
         super.dispose();
+    }
+    
+    public void initComponents(CanSystemConnectionMemo memo) {
+        super.initComponents(memo);
+        tc = memo.getTrafficController();
+        tc.addCanListener(this);
     }
     
     public void initComponents() throws Exception {
@@ -267,15 +275,15 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         sendEvButton.setVisible(true);
         sendEvButton.setToolTipText("Send event");
 
-        setTitle(title());
+        //setTitle(getTitle());
         // Panels will be added downwards
 //        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        getContentPane().setLayout(new BorderLayout());
+        setLayout(new BorderLayout());
         
         // add items to GUI
         // Pane to hold packet history
         JPanel historyPane = new JPanel();
-        historyPane.setLayout(new BoxLayout(historyPane, BoxLayout.Y_AXIS));
+        historyPane.setLayout(new BorderLayout());
         historyPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Packet history"));
         
@@ -285,7 +293,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         paneB.setLayout(new BoxLayout(paneB, BoxLayout.X_AXIS));
         paneB.add(jScrollPane1Can);
         paneB.add(jScrollPane1Cbus);
-        historyPane.add(paneB);
+        historyPane.add(paneB, BorderLayout.CENTER);
         
         // Sub-pane to hold buttons
         JPanel paneA = new JPanel();
@@ -313,9 +321,8 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         pane3.add(entryField);
         paneA.add(pane3);
         
-        historyPane.add(paneA);
-//        getContentPane().add(historyPane);
-        getContentPane().add(historyPane, BorderLayout.CENTER);
+        historyPane.add(paneA, BorderLayout.SOUTH);
+        add(historyPane, BorderLayout.CENTER);
         
         JPanel southPane = new JPanel();
         southPane.setLayout(new BoxLayout(southPane, BoxLayout.Y_AXIS));
@@ -486,7 +493,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
 //        getContentPane().add(showPane);
         southPane.add(showPane);
         
-        getContentPane().add(southPane, BorderLayout.SOUTH);
+        add(southPane, BorderLayout.SOUTH);
         
         showEventCheckBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -578,45 +585,25 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         // set file chooser to a default
         logFileChooser.setSelectedFile(new File("monitorLog.txt"));
         
-        // connect to data source
-        init();
-        
-        // add help menu to window
-        addHelpMenu();
-        
-        // prevent button areas from expanding
-        pack();
-        paneA.setMaximumSize(paneA.getSize());
-        pack();
-        packInside();
-        
         linesBuffer[CAN] = new StringBuffer();
         linesBuffer[CBUS] = new StringBuffer();
-
     }
     
     /**
      * Special version of pack that holds the overall frame size constant.
      */
     void packInside() {
-        Dimension d;
-        d = getSize();
-        setMinimumSize(d);
-        setPreferredSize(d);
-        pack();
+        if (getTopLevelAncestor()!=null){
+            Dimension d = ((javax.swing.JFrame)getTopLevelAncestor()).getSize();
+            ((javax.swing.JFrame)getTopLevelAncestor()).setMinimumSize(d);
+            ((javax.swing.JFrame)getTopLevelAncestor()).setPreferredSize(d);
+            ((javax.swing.JFrame)getTopLevelAncestor()).pack();
+            
+            
+        }
     }
     
-    /**
-     * Define help menu for this window.
-     * <p>
-     * By default, provides a generic help page
-     * that covers general features.  Specific
-     * implementations can override this to
-     * show their own help page if desired.
-     */
-    protected void addHelpMenu() {
-        addHelpMenu("package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame", true);
-    }
+
     
     public void nextLine(String line, String decoded, String priorities, int filter) {
         // handle display of traffic
@@ -1059,5 +1046,17 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     private boolean _decimal;
     private CbusEventFilterFrame _filterFrame;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusConsoleFrame.class.getName());
+        /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
+        public Default() {
+            super("CBUS Console", 
+                new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                CbusConsolePane.class.getName(), 
+                jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
+        }
+    }
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusConsolePane.class.getName());
 }

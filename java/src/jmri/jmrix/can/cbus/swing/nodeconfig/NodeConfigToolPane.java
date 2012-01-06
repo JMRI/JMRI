@@ -15,7 +15,7 @@ import javax.swing.*;
  * @version			$Revision$
  * @since 2.3.1
  */
-public class NodeConfigToolPane extends JPanel implements CanListener {
+public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolBundle");
     
@@ -25,6 +25,27 @@ public class NodeConfigToolPane extends JPanel implements CanListener {
     JTextField varvalue;
     JButton read;
     JButton write;
+    
+    TrafficController tc;
+    
+    @Override
+    public void initComponents(CanSystemConnectionMemo memo) {
+        super.initComponents(memo);
+        tc = memo.getTrafficController();
+        tc.addCanListener(this);
+    }
+    
+    public String getTitle() {
+        if(memo!=null) {
+            return (memo.getUserName() + " " + ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolBundle").getString("Title"));
+        }
+        return ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolBundle").getString("Title");
+    }
+    
+    public void initComponents(){
+        tc = TrafficController.instance();
+        tc.addCanListener(this);
+    }
     
     public NodeConfigToolPane() {
         super();
@@ -71,9 +92,6 @@ public class NodeConfigToolPane extends JPanel implements CanListener {
         p1.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderNodeVariables")));
         add(p1);
         
-        // connect
-        TrafficController.instance().addCanListener(this);
-
     }
 
     public void reply(jmri.jmrix.can.CanReply m) {
@@ -84,7 +102,8 @@ public class NodeConfigToolPane extends JPanel implements CanListener {
 
     public void dispose() {
         // disconnect from the CBUS
-        TrafficController.instance().removeCanListener(this);
+        if(tc!=null)
+            tc.removeCanListener(this);
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Logger.getLogger(NodeConfigToolPane.class.getName());

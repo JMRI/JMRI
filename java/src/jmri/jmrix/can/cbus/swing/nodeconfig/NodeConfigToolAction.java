@@ -13,7 +13,9 @@ import java.util.ResourceBundle;
  * @author			Bob Jacobsen    Copyright (C) 2008
  * @version			$Revision$
  * @since 2.3.1
+ * @deprecated 2.99.2
  */
+@Deprecated
 public class NodeConfigToolAction extends AbstractAction {
 
     public NodeConfigToolAction(String s) {

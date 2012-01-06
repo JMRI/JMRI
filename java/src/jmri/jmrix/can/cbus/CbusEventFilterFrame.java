@@ -28,8 +28,8 @@ public class CbusEventFilterFrame extends JmriJFrame {
     protected CbusEventFilterPanel[] filterPanes = new CbusEventFilterPanel[FILTERS];
 
     // member to hold reference to my filters
-    private CbusEventFilter[] _filter = new CbusEventFilter[FILTERS];
-    private boolean[] _filterActive = new boolean[FILTERS];
+    protected CbusEventFilter[] _filter = new CbusEventFilter[FILTERS];
+    protected boolean[] _filterActive = new boolean[FILTERS];
     private CbusConsoleFrame _console = null;
     
     /** Creates a new instance of CbusFilterFrame */
@@ -43,6 +43,10 @@ public class CbusEventFilterFrame extends JmriJFrame {
         _console = console;
         this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         log.debug("CbusEventFilterFrame(CbusEventFilter) ctor done");
+    }
+    
+    protected CbusEventFilterFrame(){
+        super();
     }
     
     protected String title() { return "CBUS EventFilter"; }

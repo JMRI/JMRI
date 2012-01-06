@@ -13,7 +13,9 @@ import javax.swing.*;
  * @author			Bob Jacobsen   Copyright (C) 2008
  * @version			$Revision$
  * @since 2.3.1
+ * @deprecated 2.99.2
  */
+@Deprecated
 public class ConfigToolFrame extends jmri.util.JmriJFrame {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.configtool.ConfigToolBundle");
@@ -31,6 +33,7 @@ public class ConfigToolFrame extends jmri.util.JmriJFrame {
 
         // add GUI items
         pane = new ConfigToolPane();
+        pane.initComponents();
         getContentPane().add(pane);
         
         // add help

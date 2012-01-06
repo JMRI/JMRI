@@ -69,6 +69,9 @@ public class ActiveSystemsMenu extends JMenu {
 
         if (jmri.jmrix.easydcc.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.easydcc.EasyDCCMenu"));
+        
+/*        if (jmri.jmrix.dcc4pc.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.dcc4pc.Dcc4PcMenu"));*/
 
         if (jmri.jmrix.grapevine.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.grapevine.GrapevineMenu"));
@@ -112,23 +115,18 @@ public class ActiveSystemsMenu extends JMenu {
         if (jmri.jmrix.direct.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
 
-        if (jmri.jmrix.can.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.can.CanMenu"));
+        /*if (jmri.jmrix.can.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.can.CanMenu"));*/
 
-        if (jmri.jmrix.can.cbus.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.can.cbus.CbusMenu"));
+/*        if (jmri.jmrix.can.cbus.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.can.cbus.CbusMenu"));*/
 
         if (jmri.jmrix.can.nmranet.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.can.nmranet.NmraNetMenu"));
 
-        /*if (jmri.jmrix.ecos.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.ecos.Menu"));*/
-
         if (jmri.jmrix.maple.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.maple.MapleMenu"));
 
-//        if (jmri.jmrix.rfid.ActiveFlag.isActive())
-//            m.add(getMenu("jmri.jmrix.rfid.RfidMenu"));
     }
 
     /** 
@@ -145,10 +143,6 @@ public class ActiveSystemsMenu extends JMenu {
             m.add(getMenu("jmri.jmrix.acela.AcelaMenu"));
         if (jmri.jmrix.bachrus.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.bachrus.SpeedoMenu"));
-        if (jmri.jmrix.can.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.can.CanMenu"));
-        if (jmri.jmrix.can.cbus.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.can.cbus.CbusMenu"));
         if (jmri.jmrix.cmri.serial.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.cmri.CMRIMenu"));
         if (jmri.jmrix.easydcc.ActiveFlag.isActive())
@@ -190,14 +184,8 @@ public class ActiveSystemsMenu extends JMenu {
         if (jmri.jmrix.direct.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
 
-        /*if (jmri.jmrix.ecos.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.ecos.Menu"));*/
-
         if (jmri.jmrix.maple.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.maple.MapleMenu"));
-
-//        if (jmri.jmrix.rfid.ActiveFlag.isActive())
-//            m.add(getMenu("jmri.jmrix.rfid.RfidMenu"));
     }
 
     static JMenu getMenu(String className) {

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.cbus;
 
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import java.util.ResourceBundle;
 
 import javax.swing.JMenu;
@@ -12,31 +13,14 @@ import javax.swing.JMenu;
  * @author	    Bob Jacobsen   Copyright 2003, 2008, 2009
  * @author      Andrew Crosland 2008
  * @version     $Revision$
+ * @deprecated 2.99.2
  */
-public class CbusMenu extends JMenu {
-    public CbusMenu(String name) {
-        this();
-        setText(name);
+@Deprecated
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+public class CbusMenu extends jmri.jmrix.can.cbus.swing.CbusMenu {
+    public CbusMenu(CanSystemConnectionMemo memo) {
+        super(memo);
     }
-
-    public CbusMenu() {
-
-        super();
-
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
-
-        setText(rb.getString("MenuItemCBUS"));
-
-        add(new jmri.jmrix.can.cbus.swing.console.CbusConsoleAction(rb.getString("MenuItemConsole")));
-        add(new jmri.jmrix.can.swing.send.CanSendAction(rb.getString("MenuItemSendFrame")));
-        add(new jmri.jmrix.can.cbus.swing.configtool.ConfigToolAction(ResourceBundle
-                .getBundle("jmri.jmrix.can.cbus.swing.configtool.ConfigToolBundle")
-                        .getString("MenuItemConfigTool")));
-        add(new jmri.jmrix.can.cbus.swing.eventtable.CbusEventTableAction(rb.getString("MenuItemEventTable")));
-
-        add(new jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolAction("Node Config Tool"));
-    }
-
 }
 
 
