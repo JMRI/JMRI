@@ -4,6 +4,7 @@ package jmri.jmrix.ecos.swing.statusframe;
 
 import jmri.JmriException;
 import jmri.jmrix.ecos.*;
+import java.util.ResourceBundle;
 
 import javax.swing.*;
 
@@ -61,9 +62,6 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
         });
     }
     
-    public void initComponents() throws Exception {
-    }
-
     void reset() {
         appVersion.setText(appString+"<unknown>");
         proVersion.setText(proString+"<unknown>");
@@ -119,6 +117,18 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
 
     public void message(EcosMessage m) {
         // messages are ignored
+    }
+   
+    /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.ecos.swing.EcosNamedPaneAction {
+        public Default() {
+            super(ResourceBundle.getBundle("jmri.jmrix.ecos.EcosBundle").getString("MenuItemInfo"), 
+                new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                StatusPanel.class.getName(), 
+                jmri.InstanceManager.getDefault(EcosSystemConnectionMemo.class));
+        }
     }
 
 }
