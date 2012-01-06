@@ -731,7 +731,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                  int speedVal=java.lang.Math.round(speed*14);
                  // The first speed step used is actually at 2 for 14
                  // speed step mode.
-                 if(element4value>=1) { speedVal+=1; }
+                 if(speedVal>=1) {element4value+=1; }
          }
          msg.setElement(2,LenzCommandStation.getDCCAddressHigh(address));
                                  // set to the upper byte of the  DCC address
