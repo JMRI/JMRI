@@ -2403,11 +2403,18 @@ public class TrainBuilder extends TrainCommon{
 					// is the destination a spur with a Schedule?
 					// And is car departing a staging track that can generate schedule loads?
 					if(!status.equals(Track.OKAY) 
+							&& (!status.startsWith(Track.TYPE))		// can't generate load for spur that doesn't accept this car type
+							&& (!status.startsWith(Track.LENGTH))	// can't generate load for spur that is full
 							&& testTrack.getLocType().equals(Track.SIDING) 
 							&& !testTrack.getScheduleId().equals("")
 							&& car.getTrack().isAddLoadsEnabled() 
-							&& car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
-							&& testTrack.isSpaceAvailable(car)){
+							&& car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())){
+						// can we use this track?
+						if (!testTrack.isSpaceAvailable(car)){
+							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildNoDestTrackSpace"),
+									new Object[]{car.toString(), testTrack.getLocation().getName(), testTrack.getName(), testTrack.getNumberOfCarsInRoute(), testTrack.getReservedInRoute(), testTrack.getReservationFactor()}));
+							continue;	// no
+						}
 						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchTrackNewLoad"),
 								new Object[]{car.toString(), car.getType(), car.getLoad(), testTrack.getName()}));
 						String carLoad = car.getLoad(); // save the car's load
