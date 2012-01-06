@@ -12,7 +12,9 @@ import javax.swing.AbstractAction;
  *
  * @author			Bob Jacobsen    Copyright (C) 2009
  * @version			$Revision$
+ * @deprecated 2.99.2
  */
+@Deprecated
 public class MonitorAction 			extends AbstractAction {
 
 	public MonitorAction(String s) { super(s);}

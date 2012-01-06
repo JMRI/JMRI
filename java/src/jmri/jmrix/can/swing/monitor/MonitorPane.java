@@ -1,36 +1,46 @@
-// MonitorFrame.java
+// MonitorPane.java
 
 package jmri.jmrix.can.swing.monitor;
 
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.swing.CanPanelInterface;
 
 /**
  * Frame displaying (and logging) CAN frames
  *
  * @author	    Bob Jacobsen   Copyright (C) 2009
- * @version         $Revision$
- * @deprecated 2.99.2
+ * @version         $Revision: 17977 $
  */
-@Deprecated
-public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements CanListener {
 
-    public MonitorFrame() {
-        super();
+public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListener, CanPanelInterface {
+
+    public MonitorPane(){
+            super();
+    }
+    
+    CanSystemConnectionMemo memo;
+    
+    public void initContext(Object context) {
+        if (context instanceof CanSystemConnectionMemo ) {
+            initComponents((CanSystemConnectionMemo) context);
+        }
+    }
+    
+    public void initComponents(CanSystemConnectionMemo memo) {
+        this.memo = memo;
+
+        memo.getTrafficController().addCanListener(this);
     }
 
-    protected String title() { return "CAN Monitor"; }
-
-    protected void init() {
-        TrafficController.instance().addCanListener(this);
+    public String getTitle() {
+        return "CAN Monitor";
     }
-
-    public void dispose() {
-        TrafficController.instance().removeCanListener(this);
-        super.dispose();
-    }
+    
+    public void init() {}
 
     public synchronized void message(CanMessage l) {  // receive a message and log it
         if (log.isDebugEnabled()) log.debug("Message: "+l.toString());
@@ -58,6 +68,25 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements CanList
         nextLine("R: "+buf.toString()+"\n", l.toString());
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MonitorFrame.class.getName());
+    public void dispose() {
+        // disconnect from the LnTrafficController
+        memo.getTrafficController().removeCanListener(this);
+        // and unwind swing
+        super.dispose();
+    }
+    
+        /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
+        public Default() {
+            super("CAN Monitor", 
+                new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                MonitorPane.class.getName(), 
+                jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
+        }
+    }
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MonitorPane.class.getName());
 
 }

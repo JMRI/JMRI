@@ -12,7 +12,9 @@ import jmri.jmrix.can.TrafficController;
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
  * @version         $Revision$
+ * @deprecated 2.99.2
  */
+@Deprecated
 public class CanSendAction extends AbstractAction {
 
     public CanSendAction(String s) { super(s);}

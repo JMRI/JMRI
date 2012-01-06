@@ -1,4 +1,4 @@
-// CanSendFrame.java
+// CanSendPane.java
 
 package jmri.jmrix.can.swing.send;
 
@@ -8,6 +8,8 @@ import jmri.jmrix.can.CanInterface;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusAddress;
 
 // This makes it a bit CBUS specific
@@ -26,35 +28,20 @@ import javax.swing.*;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision$
- * @deprecated 2.99.2
+ * @version			$Revision: 17977 $
  */
-@Deprecated
-public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
+public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
-    public CanSendFrame() {
-        super();
-    }
-
-    // internal members to hold sequence widgets
-    static final int MAXSEQUENCE = 4;
-    JTextField mPacketField[]   = new JTextField[MAXSEQUENCE];
-    JCheckBox  mUseField[]      = new JCheckBox[MAXSEQUENCE];
-    JTextField mDelayField[]    = new JTextField[MAXSEQUENCE];
-    JToggleButton    mRunButton = new JToggleButton("Go");
-
-    public void initComponents() throws Exception {
-
-        setTitle("Send Can Frame");
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+    public CanSendPane() {
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // handle single-packet part
-        getContentPane().add(new JLabel("Send one frame:"));
+        add(new JLabel("Send one frame:"));
         {
             JPanel pane1 = new JPanel();
             pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
@@ -80,13 +67,13 @@ public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
                     }
                 });
 
-            getContentPane().add(pane1);
+            add(pane1);
         }
 
-        getContentPane().add(new JSeparator());
+        add(new JSeparator());
 
         // Configure the sequence
-        getContentPane().add(new JLabel("Send sequence of frames:"));
+        add(new JLabel("Send sequence of frames:"));
         JPanel pane2 = new JPanel();
         pane2.setLayout(new GridLayout(MAXSEQUENCE+2, 4));
         pane2.add(new JLabel(""));
@@ -104,18 +91,35 @@ public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
             pane2.add(mDelayField[i]);
         }
         pane2.add(mRunButton); // starts a new row in layout
-        getContentPane().add(pane2);
+        add(pane2);
 
         mRunButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     runButtonActionPerformed(e);
                 }
             });
+    }
 
-        addHelpMenu("package.jmri.jmrix.can.swing.send.CanSendFrame", true);
-        
-        // pack to cause display
-        pack();
+    // internal members to hold sequence widgets
+    static final int MAXSEQUENCE = 4;
+    JTextField mPacketField[]   = new JTextField[MAXSEQUENCE];
+    JCheckBox  mUseField[]      = new JCheckBox[MAXSEQUENCE];
+    JTextField mDelayField[]    = new JTextField[MAXSEQUENCE];
+    JToggleButton    mRunButton = new JToggleButton("Go");
+    
+    public void initComponents(CanSystemConnectionMemo memo) {
+        super.initComponents(memo);
+        tc = memo.getTrafficController();
+        tc.addCanListener(this);
+    }
+    
+    public String getHelpTarget() { return "package.jmri.jmrix.can.swing.send.CanSendPane"; }
+    
+    public String getTitle() {
+        if(memo!=null) {
+            return (memo.getUserName() + " Send Can Frame");
+        }
+        return "Send Can Frame";
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -251,12 +255,6 @@ public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
         return m;
     }
 
-    // connect to the CanInterface
-    public void connect(CanInterface t) {
-        tc = t;
-        tc.addCanListener(this);
-    }
-
     /**
      * Don't pay attention to messages
      */
@@ -280,7 +278,7 @@ public class CanSendFrame extends jmri.util.JmriJFrame implements CanListener {
     }
     
     // private data
-    private CanInterface tc = null;
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CanSendFrame.class.getName());
+    private TrafficController tc = null;
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CanSendPane.class.getName());
 
 }
