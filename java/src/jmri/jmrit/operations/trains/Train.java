@@ -159,18 +159,6 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String PRINTED = rb.getString("Printed");
 	
 	public static final String AUTO = rb.getString("Auto");				// how engines are assigned to this train
-
-	// Reporter Strings
-	/*
-	public static final String USER_PREFIX = "OPS TRAIN::";		// prefix on Reporter user name
-	public static final String SYSTEM_PREFIX = "IR_OPS::";		// prefix on Reporter system name
-	public static final String LOCATION = "LOCATION=";			// action to move a train to a new location
-	public static final String TERMINATE = "TERMINATE";				// action to terminate a train
-	public static final String BUILD = "BUILD";					// action to build a train
-	public static final String RESET = "RESET";					// action to reset a train
-	public static final String LENGTH = "LENGTH=";				// comment for reporting a train's length
-	public static final String TONNAGE = "TONNAGE=";			// comment for reporting a train's weight
-	*/
 	
 	public Train(String id, String name) {
 		log.debug("New train " + name + " " + id);
@@ -2339,7 +2327,8 @@ public class Train implements java.beans.PropertyChangeListener {
 		CarTypes.instance().addPropertyChangeListener(this);
 		EngineTypes.instance().addPropertyChangeListener(this);
 		CarOwners.instance().addPropertyChangeListener(this);
-		EngineModels.instance().addPropertyChangeListener(this);
+		// TODO loading EngineModels at creation causes problems at start up.  Engines do not get loaded with their assigned trains.
+		//EngineModels.instance().addPropertyChangeListener(this);
     }
 
     /**
