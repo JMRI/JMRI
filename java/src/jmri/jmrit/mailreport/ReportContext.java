@@ -284,6 +284,10 @@ public class ReportContext {
         for (CommPortIdentifier id: ports) {
             // output details
             SerialPortFriendlyName port = PortNameMapper.getPortNameMap().get(id.getName());
+            if(port==null){
+                port = new SerialPortFriendlyName(id.getName(), null);
+                PortNameMapper.getPortNameMap().put(id.getName(), port);
+            }
             	addString(" Port: " + port.getDisplayName()
                         + (id.isCurrentlyOwned()
                         ? " - in use by: " + id.getCurrentOwner()
