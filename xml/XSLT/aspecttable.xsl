@@ -58,7 +58,7 @@
 
 <hr/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.
-<P/>Copyright &#169; 1997 - 2011 JMRI Community. 
+<P/>Copyright &#169; 1997 - 2012 JMRI Community. 
 <P/>JMRI, DecoderPro, PanelPro, SoundPro, SignalPro, DispatcherPro and associated logos are our trademarks.
 <P/><A href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</A>
 <P/>Site hosted by: <BR/>

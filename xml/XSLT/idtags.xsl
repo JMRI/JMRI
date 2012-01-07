@@ -46,7 +46,7 @@
 <xsl:apply-templates/>
 <hr/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.
-<p/>Copyright &#169; 1997 - 2011 JMRI Community.
+<p/>Copyright &#169; 1997 - 2012 JMRI Community.
 <p/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 <p/><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
 <p/>Site hosted by: <br/>
