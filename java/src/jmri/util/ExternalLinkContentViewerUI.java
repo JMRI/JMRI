@@ -17,7 +17,6 @@ import javax.help.plaf.basic.*;
  * SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
  * <P.
  *
- @see http://forums.sun.com/thread.jspa?threadID=728061
  @since JMRI 2.5.3 (or perhaps later, please check CVS)
  */
  
