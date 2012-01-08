@@ -1,6 +1,7 @@
 // Beans.java
 package jmri.beans;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 import java.beans.IndexedPropertyDescriptor;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -17,6 +18,7 @@ import java.util.Set;
  * 
  * @author rhwood
  */
+@SuppressWarnings("NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class Beans extends java.beans.Beans {
 
     public static void setIndexedProperty(Object object, String key, int index, Object value) {
