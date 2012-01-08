@@ -516,6 +516,8 @@
 
 <mapID target="manual.dp3_manual.Main_XpressNet_LZV100" url="manual/dp3_manual/Main_XpressNet.shtml#LZV100"/>
 
+<mapID target="manual.dp3_manual.Start_DecoderPro_New" url="manual/dp3_manual/Start_DecoderPro_New.shtml"/>
+
 <mapID target="package.jmri.jmrix.grapevine.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame.shtml"/>
 
 <mapID target="package.jmri.jmrit.display.ItemPalette" url="package/jmri/jmrit/display/ItemPalette.shtml"/>
@@ -1397,6 +1399,8 @@
 <mapID target="manual.dp3_manual.Main_Monitor_Window" url="manual/dp3_manual/Main_Monitor_Window.shtml"/>
 
 <mapID target="manual.Main_Edit" url="manual/Main_Edit.shtml"/>
+
+<mapID target="manual.dp3_manual.Start_DecoderPro_New_Top" url="manual/dp3_manual/Start_DecoderPro_New.shtml#Top"/>
 
 <mapID target="manual.Main_Menu_Top" url="manual/Main_Menu.shtml#Top"/>
 
