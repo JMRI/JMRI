@@ -157,7 +157,7 @@ public class FirstTimeStartUpWizard {
         JPanel p = new JPanel();
         p.setPreferredSize(defaultInfoSize);
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-        p.add(formatText("Welcome to JMRIs' " + app.getAppName() + "<p><br>This little wizard will help to guide you through setting up " + app.getAppName() + " for the first time"));
+        p.add(formatText("Welcome to JMRI's " + app.getAppName() + "<p><br>This little wizard will help to guide you through setting up " + app.getAppName() + " for the first time"));
         
         wizPage.add(new WizardPage(p, new JPanel(),"Welcome to JMRI StartUp Wizard"));
     }

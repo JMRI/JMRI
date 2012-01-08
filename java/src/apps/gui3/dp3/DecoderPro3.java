@@ -125,7 +125,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         jmri.InstanceManager.tabbedPreferencesInstance().disablePreferenceItem("STARTUP", "apps.PerformFilePanel");
     }
     
-    public String getAppName() { return "Decoder Pro3"; }
+    public String getAppName() { return "DecoderPro 3"; }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderPro3.class.getName());
 }
