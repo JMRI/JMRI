@@ -318,14 +318,14 @@ public class ZeroConfService {
 
 			// Iterate all interfaces
 			while (ifs.hasMoreElements() && hostAddress == null) {
-				NetworkInterface iface = (NetworkInterface)ifs.nextElement();
+				NetworkInterface iface = ifs.nextElement();
 
 				// Fetch all IP addresses on this interface
 				Enumeration<InetAddress> ips = iface.getInetAddresses();
 
 				// Iterate the IP addresses
 				while (ips.hasMoreElements()) {
-					InetAddress ip=(InetAddress)ips.nextElement();
+					InetAddress ip=ips.nextElement();
 					// use the last ipv4 that's not a loopback
 					if((ip instanceof Inet4Address) && !ip.isLoopbackAddress()) {
 						hostAddress = ip;
