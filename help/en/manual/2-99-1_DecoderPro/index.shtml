@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: index.shtml 18615 2011-09-23 09:13:40Z dat7719 $ -->
 <title>Decoder Pro Manual: Index</title>
 
 <!-- Style -->
@@ -16,26 +16,24 @@
 
 <body>
 <!--#include virtual="/Header" -->
+
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
 <a NAME="Top"></a>
-<h1>JMRI&reg; v2.12 Archieve</h1>
-<h1><a href="2.14_manual/index.shtml" target="_blank">JMRI®   v2.14</a></h1>
-<h1><a href="2.14_dp3_manual/index.shtml" target="_blank">DecoderPro3&reg; 2.14</a></h1>
-<h1><a href="2-99-1_DecoderPro/index.shtml">Test Version Decoder Pro&reg; 2.99.1</a></h1>
-<h1><a href="2-99-1_DecoderPro3/index.shtml">Test Version DecoderPro3® 2.99.1</a></h1>
-
-<h3>Updated 1/9/2012</h3>
+<h1>JMRI&reg; v2.99.1 Test Version</h1>
+<h1>&nbsp;</h1>
+<h3>In work 1/9/2012</h3>
 
 <p>&nbsp;
 </p>
 <p><strong>JMRI is a Java-based cross-platform application for model railroaders. JMRi contains applications for:</strong></p>
 <p><strong>The programming of Digital
-  Command Control (DCC) decoders, (DecoderPro&reg;).<br>
+Command Control (DCC) decoders, (DecoderPro&reg;).<br>
+Programming decoders and using throttle run trains, DecoderPro 3&reg;</strong><strong><br>
   Drawing computer based panels for depicting a  model railroad&nbsp;  layout , (PanelPro&reg;
   ).<br>
-Controlling the layout , (Layout Editor).<br>
+  Controlling the layout , (Layout Editor).<br>
   Creating train manifests for duplicating railroad  operations, Operations<br>
   Controlling the signals on the layout<br>
 Controlling&nbsp;  lighting and sound in the room, and so forth. (SoundPro&reg;)</strong></p>
@@ -43,7 +41,7 @@ Controlling&nbsp;  lighting and sound in the room, and so forth. (SoundPro&reg;)
 <p>&nbsp;</p>
 
 <hr>
-&nbsp;JMRI&reg; can  run on any computer system that will run Java 1.5.0 or later, whether it is  Macintosh, Windows, or Linux based. It does require that Java be installed on  the computer. You can get Java as a free (but very large...) download at:
+&nbsp;JMRI&reg; can  run on any computer system that will run Java 1.6.0 or later, whether it is  Macintosh, Windows, or Linux based. It does require that Java be installed on  the computer. You can get Java as a free (but very large...) download at:
 <p><a href="http://java.sun.com/getjava/" target="_blank">http://java.sun.com/getjava/</a>
 <p>If  this is your first visit to our manual we suggest that you take the Decoder Pro&reg; tour at <a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
   to get an overview of what we&rsquo;re about to cover..
@@ -54,8 +52,9 @@ Controlling&nbsp;  lighting and sound in the room, and so forth. (SoundPro&reg;)
 <div align="right">
 <h2>Download Print version of Manual (pdf format)
 </h2>
-<p><a href="pdf/jmri_Man_2_12.pdf" target="_blank"><strong>Manual for JMRI 2.12</strong></a>
-<p><a href="http://jmri.org/pdf/index.shtml" target="_blank"><strong>Manuals for older JMRI versions</strong></a> (requires web connection)</div>
+<p><strong><a href="pdf/DecoderProManual_2_4.pdf" target="_blank">manual version 2.4</a></strong>
+<p><strong><a href="pdf/DecoderPro Man 2.8.pdf" target="_blank">manual version 2.8</a></strong>
+<p><a href="pdf/jmri_Man_2_12.pdf" target="_blank"><strong>manual version 2.12</strong></a></div>
 
 <h1>Table of Contents</h1>
 <h4><a name="Installing"></a>Installing JMRI</h4>
@@ -341,7 +340,6 @@ The Basic Programmer</h4>
           <li>Display Log Categories</li>
           <li>Listed Table Access</li>
           <li>Listed Table Access-Direct to Routes</li>
-	  <li><a href="Main_VSD.shtml">Virtual Sound Decoder</a></li>
           <li>PRICOM <img src="images/arrow.gif" width="20" height="9" alt="arrow">
             <ul>
               <li><a href="Main_PRICOM.shtml">PRICOM Pocket Tester</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
