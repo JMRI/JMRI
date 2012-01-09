@@ -40,12 +40,17 @@ public class ImportCars extends Thread {
 	
 	private int weightResults = JOptionPane.NO_OPTION;	// Automatically calculate weight for car if weight entry is not found
 	private boolean autoCalculate = true;
+	private boolean askAutoCreateTypes = true;
 	private boolean askAutoCreateLocations = true;
-	private boolean autoCreateLocations = false;
 	private boolean askAutoCreateTracks = true;
-	private boolean autoCreateTracks = false;
 	private boolean askAutoLocationType = true;
+	private boolean askAutoIncreaseTrackLength = true;
+	
+	private boolean autoCreateTypes = false;
+	private boolean autoCreateLocations = false;
+	private boolean autoCreateTracks = false;
 	private boolean autoAdjustLocationType = false;
+	private boolean autoAdjustTrackLength = false;
 	
 	// we use a thread so the status frame will work!
 	public void run() {
@@ -185,14 +190,28 @@ public class ImportCars extends Thread {
 					break;
 				}
 				if (!CarTypes.instance().containsName(carType)){
-					int results = JOptionPane.showConfirmDialog(null,
-							rb.getString("Car")+" ("+carRoad+" "+carNumber+") \n"+MessageFormat.format(rb.getString("typeNameNotExist"),new Object[]{carType}),
-							rb.getString("carAddType"),
-							JOptionPane.YES_NO_CANCEL_OPTION);
-					if (results == JOptionPane.YES_OPTION)
+					if (autoCreateTypes){
+						log.debug("Adding car type +carType");
 						CarTypes.instance().addName(carType);
-					else if (results == JOptionPane.CANCEL_OPTION){
-						break;	
+					} else {
+						int results = JOptionPane.showConfirmDialog(null,
+								rb.getString("Car")+" ("+carRoad+" "+carNumber+") \n"+MessageFormat.format(rb.getString("typeNameNotExist"),new Object[]{carType}),
+								rb.getString("carAddType"),
+								JOptionPane.YES_NO_CANCEL_OPTION);
+						if (results == JOptionPane.YES_OPTION){
+							CarTypes.instance().addName(carType);
+							if (askAutoCreateTypes){
+								results = JOptionPane.showConfirmDialog(null, rb.getString("DoYouWantToAutoAddCarTypes"),
+										rb.getString("OnlyAskedOnce"),
+										JOptionPane.YES_NO_OPTION);
+								if (results == JOptionPane.YES_OPTION)
+									autoCreateTypes = true;
+							}
+							askAutoCreateTypes = false;
+						}
+						else if (results == JOptionPane.CANCEL_OPTION){
+							break;	
+						}
 					}
 				}
 				if (carLength.length() > Control.MAX_LEN_STRING_LENGTH_NAME){
@@ -465,16 +484,30 @@ public class ImportCars extends Thread {
 								}
 							}
 							if (status.contains(Track.LENGTH)){
-								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantIncreaseLength"),new Object[]{carTrack}),
-										rb.getString("TrackLength"),
-										JOptionPane.YES_NO_OPTION);
-								if (results == JOptionPane.YES_OPTION){
+								if (autoAdjustTrackLength){
 									sl.setLength(sl.getLength()+1000);
 									status = car.setLocation(l,sl);
 									log.debug ("Set track length status: "+ status);
 								} else {
-									break;
-								}						
+									int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantIncreaseLength"),new Object[]{carTrack}),
+											rb.getString("TrackLength"),
+											JOptionPane.YES_NO_OPTION);
+									if (results == JOptionPane.YES_OPTION){
+										sl.setLength(sl.getLength()+1000);
+										status = car.setLocation(l,sl);
+										log.debug ("Set track length status: "+ status);
+										if (askAutoIncreaseTrackLength){
+											results = JOptionPane.showConfirmDialog(null, rb.getString("DoYouWantToAutoAdjustTrackLength"),
+													rb.getString("OnlyAskedOnce"),
+													JOptionPane.YES_NO_OPTION);
+											if (results == JOptionPane.YES_OPTION)
+												autoAdjustTrackLength = true;
+											askAutoIncreaseTrackLength = false;
+										}
+									} else {
+										break;
+									}	
+								}
 							}
 							if (!status.equals(Track.OKAY)){
 								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToForceCar"),new Object[]{(carRoad+" "+carNumber), carLocation, carTrack}),
