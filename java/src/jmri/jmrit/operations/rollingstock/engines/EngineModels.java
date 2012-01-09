@@ -78,8 +78,6 @@ public class EngineModels {
 			// create and load
 			_instance = new EngineModels();
 			_instance.loadDefaults();
-			// load engines
-			EngineManagerXml.instance();
 		}
 		if (Control.showInstance && log.isDebugEnabled()) log.debug("EngineModels returns instance "+_instance);
 		return _instance;

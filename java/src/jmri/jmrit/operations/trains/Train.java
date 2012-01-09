@@ -2327,8 +2327,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		CarTypes.instance().addPropertyChangeListener(this);
 		EngineTypes.instance().addPropertyChangeListener(this);
 		CarOwners.instance().addPropertyChangeListener(this);
-		// TODO loading EngineModels at creation causes problems at start up.  Engines do not get loaded with their assigned trains.
-		//EngineModels.instance().addPropertyChangeListener(this);
+		EngineModels.instance().addPropertyChangeListener(this);
     }
 
     /**
