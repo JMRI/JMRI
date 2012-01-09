@@ -162,9 +162,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         
         useLayoutEditor.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                /*p2xa.setVisible(useLayoutEditor.isSelected());
-                p2xb.setVisible(useLayoutEditor.isSelected());
-                p2xsm.setVisible(useLayoutEditor.isSelected());*/
+
                 useLayoutEditorBlock.setVisible(useLayoutEditor.isSelected());
                 useLayoutEditorTurnout.setVisible(useLayoutEditor.isSelected());
                 // Setup for display of all Turnouts, if needed
@@ -180,8 +178,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                             JOptionPane.showMessageDialog(null, rb.getString("LayoutBlockRoutingEnabled"));
                         }
                     }
-                    //p2xb.setVisible(true);
-                    //pack();
+
                     if ((sml!=null) && (destMast!=null)){
                         try {
                             sml.useLayoutEditor(useLayoutEditor.isSelected(), destMast);
@@ -198,16 +195,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                         catch (jmri.JmriException je){
                             JOptionPane.showMessageDialog(null, rb.getString("WarningUnabletoValidate"));
                         }
-                    }
-                } else if((sml!=null) && (!valid)){
-                    try {
-                        valid = InstanceManager.signalMastLogicManagerInstance().checkValidDest((SignalMast)sourceMastBox.getSelectedBean(), 
-                            (SignalMast)destMastBox.getSelectedBean());
-                        if(!valid)
-                            JOptionPane.showMessageDialog(null, rb.getString("ErrorUnReachableDestination"));
-                    }
-                    catch (jmri.JmriException je){
-                        JOptionPane.showMessageDialog(null, rb.getString("WarningUnabletoValidate"));
                     }
                 }
             }
@@ -1412,6 +1399,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 case STATE_COLUMN: 
                     blockList.get(r).setSetToState((String)type);
                     break;
+                default: break;
             }
         }
     }
@@ -1466,6 +1454,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 case STATE_COLUMN: 
                     turnoutList.get(r).setSetToState((String)type);
                     break;
+                default: break;
             }
         }
     }
@@ -1529,6 +1518,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 case STATE_COLUMN: 
                     sensorList.get(r).setSetToState((String)type);
                     break;
+                default: break;
             }
         }
     }
@@ -1595,6 +1585,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 case INCLUDE_COLUMN:
                     signalMastList.get(r).setIncluded(((Boolean)type).booleanValue());  
                     break;
+                default: break;
             }
         }
         
