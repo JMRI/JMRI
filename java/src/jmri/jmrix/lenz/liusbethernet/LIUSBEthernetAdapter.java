@@ -36,9 +36,6 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
 
 	private DataOutputStream pout=null; // for output to other classes
     	private DataInputStream pin = null; // for input from other classes
-	// internal ends of the pipe
-        private DataOutputStream outpipe = null;  // feed pin
-        private Thread commThread;
 
         public LIUSBEthernetAdapter(){
 	    super();
@@ -56,7 +53,6 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         try {
             pout=getOutputStream();
             PipedOutputStream tempPipeO=new PipedOutputStream();
-            outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         }
         catch (java.io.IOException e) {
