@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: index.shtml 19684 2012-01-09 11:04:47Z dat7719 $ -->
 <title>Decoder Pro Manual: Index</title>
 
 <!-- Style -->
@@ -20,9 +20,9 @@
 <div id="mainContent">
 
 <a NAME="Top"></a>
-<h1><a href="JMRI_2-12_Manual/index.shtml">JMRI® v2.12 Archieve</a></h1>
-<h1><a href="JMRI_2-14_manual/index.shtml" target="_blank">JMRI®   v2.14</a></h1>
-<h1><a href="DP3_2-14_manual/index.shtml" target="_blank">DecoderPro3&reg; 2.14</a></h1>
+<h1>JMRI&reg; v2.12 Archieve</h1>
+<h1><a href="2.14_manual/index.shtml" target="_blank">JMRI®   v2.14</a></h1>
+<h1><a href="2.14_dp3_manual/index.shtml" target="_blank">DecoderPro3&reg; 2.14</a></h1>
 <h1><a href="2-99-1_DecoderPro/index.shtml">Test Version Decoder Pro&reg; 2.99.1</a></h1>
 <h1><a href="2-99-1_DecoderPro3/index.shtml">Test Version DecoderPro3® 2.99.1</a></h1>
 
