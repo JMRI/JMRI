@@ -83,19 +83,6 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                         dest.setAttribute("item", itemDest);
                         if(!p.isUniDirection(key, panel, keyDest))
                             dest.setAttribute("uniDirection", "no");
-                        if(!p.isEnabled(key, panel, keyDest))
-                            dest.setAttribute("enabled", "no");
-                        int nxType = p.getEntryExitType(key, panel, keyDest);
-                        switch (nxType){
-                            case 0x00 : dest.setAttribute("nxType", "turnoutsetting");
-                                        break;
-                            case 0x01 : dest.setAttribute("nxType", "signalmastlogic");
-                                        break; 
-                            case 0x02 : dest.setAttribute("nxType", "fullinterlocking");
-                                        break;
-                            default   : dest.setAttribute("nxType", "turnoutsetting");
-                                        break;
-                        }
                         source.addContent(dest);
                     }
                     panelElem.addContent(source);
@@ -174,20 +161,6 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                         }
                         if((destinationList.get(j).getAttribute("uniDirection")!=null) && (destinationList.get(j).getAttribute("uniDirection").getValue().equals("no"))){
                             eep.setUniDirection(source, panel, dest, false);
-                        }
-                        if((destinationList.get(j).getAttribute("enabled")!=null) && (destinationList.get(j).getAttribute("enabled").getValue().equals("no"))){
-                            eep.setEnabled(source, panel, dest, false);
-                        }
-                        if(destinationList.get(j).getAttribute("nxType")!=null){
-                            String nxType = destinationList.get(j).getAttribute("nxType").getValue();
-                            if(nxType.equals("turnoutsetting"))
-                                eep.setEntryExitType(source, panel, dest, 0x00);
-                            else if (nxType.equals("signalmastlogic"))
-                                eep.setEntryExitType(source, panel, dest, 0x01);
-                            else if (nxType.equals("fullinterlocking"))
-                                eep.setEntryExitType(source, panel, dest, 0x02);
-                            
-                        
                         }
                     }
                 }
