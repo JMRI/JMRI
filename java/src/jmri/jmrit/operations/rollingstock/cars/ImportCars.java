@@ -52,6 +52,11 @@ public class ImportCars extends Thread {
 	private boolean autoAdjustLocationType = false;
 	private boolean autoAdjustTrackLength = false;
 	
+	private boolean autoCreateRoads = true;
+	private boolean autoCreateLengths = true;
+	private boolean autoCreateColors = true;
+	private boolean autoCreateOwners = true;
+	
 	// we use a thread so the status frame will work!
 	public void run() {
 		// Get file to read from
@@ -414,6 +419,38 @@ public class ImportCars extends Thread {
 					carsAdded++;
 					
 					car.setCaboose(carType.equals("Caboose"));
+					
+					// add new roads
+					if (!CarRoads.instance().containsName(carRoad)){
+						if (autoCreateRoads){
+							log.debug("add car road "+carRoad);
+							CarRoads.instance().addName(carRoad);
+						}
+					}
+					
+					// add new lengths
+					if (!CarLengths.instance().containsName(carLength)){
+						if (autoCreateLengths){
+							log.debug("add car length "+carLength);
+							CarLengths.instance().addName(carLength);
+						}
+					}
+					
+					// add new colors
+					if (!CarColors.instance().containsName(carColor)){
+						if (autoCreateColors){
+							log.debug("add car color "+carColor);
+							CarColors.instance().addName(carColor);
+						}
+					}
+					
+					// add new owners
+					if (!CarOwners.instance().containsName(carOwner)){
+						if (autoCreateOwners){
+							log.debug("add car owner "+carOwner);
+							CarOwners.instance().addName(carOwner);
+						}
+					}
 					
 					if (car.getWeight().equals("")){
 						log.debug("Car ("+carRoad+" "+carNumber+") weight not specified");
