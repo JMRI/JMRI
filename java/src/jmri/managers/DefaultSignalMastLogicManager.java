@@ -37,18 +37,16 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     public DefaultSignalMastLogicManager(){
         registerSelf();
         InstanceManager.layoutBlockManagerInstance().addPropertyChangeListener(propertyBlockManagerListener);
+        //_speedMap = jmri.implementation.SignalSpeedMap.getMap();
     }
     
     public int getXMLOrder(){
         return Manager.SIGNALMASTLOGICS;
     }
     
-    private static jmri.implementation.SignalSpeedMap _speedMap;
+    private static jmri.implementation.SignalSpeedMap _speedMap = jmri.implementation.SignalSpeedMap.getMap();
     
     public final static jmri.implementation.SignalSpeedMap getSpeedMap() {
-        if (_speedMap==null) {
-            _speedMap = jmri.implementation.SignalSpeedMap.getMap();
-        }
         return _speedMap;
     }
 
@@ -361,7 +359,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         if(!lbm.routingStablised()){
             throw new JmriException("routing not stablised");
         }
-        if(!validPaths.contains(source)){
+        if(!validPaths.containsKey(source)){
             validPaths.put(source, new ArrayList<SignalMast>());
         }
         ArrayList<SignalMast> validDestMast = validPaths.get(source);
