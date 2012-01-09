@@ -94,8 +94,8 @@ public class BoolTriggerTest extends TestCase {
 		}
 	    });
 	PropertyChangeEvent e = new PropertyChangeEvent(this, "test event",
-							new Boolean(false), 
-							new Boolean(true));
+							Boolean.valueOf(false), 
+							Boolean.valueOf(true));
 	uut.propertyChange(e);
     }
 

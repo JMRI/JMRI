@@ -100,8 +100,8 @@ public class IntTriggerTest extends TestCase {
 	    });
 	uut.setCompareType(Trigger.CompareType.GT);
 	PropertyChangeEvent e = new PropertyChangeEvent(this, "test event",
-							new Integer(1), 
-							new Integer(3));
+							Integer.valueOf(1), 
+							Integer.valueOf(3));
 	uut.propertyChange(e);
 
 	uut.setCompareType(Trigger.CompareType.LT);
@@ -112,20 +112,20 @@ public class IntTriggerTest extends TestCase {
 
 	uut.setCompareType(Trigger.CompareType.GTE);
 	e = new PropertyChangeEvent(this, "test event",
-				    new Integer(1), 
-				    new Integer(2));
+				    Integer.valueOf(1), 
+				    Integer.valueOf(2));
 	uut.propertyChange(e);
 
 	uut.setCompareType(Trigger.CompareType.LTE);
 	e = new PropertyChangeEvent(this, "test event",
-				    new Integer(3), 
-				    new Integer(2));
+				    Integer.valueOf(3), 
+				    Integer.valueOf(2));
 	uut.propertyChange(e);
 
 	uut.setCompareType(Trigger.CompareType.EQ);
 	e = new PropertyChangeEvent(this, "test event",
-				    new Integer(3), 
-				    new Integer(2));
+				    Integer.valueOf(3), 
+				    Integer.valueOf(2));
 	uut.propertyChange(e);
     }
 

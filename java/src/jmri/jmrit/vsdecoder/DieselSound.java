@@ -48,8 +48,6 @@ class DieselSound extends EngineSound {
 
     int current_notch = 1;
 
-    javax.swing.Timer t;
-
     public DieselSound(String name) {
 	super(name);
     }
@@ -81,6 +79,7 @@ class DieselSound extends EngineSound {
 	is_playing = false;
     }
 
+    @Override
     public void changeNotch(int new_notch) {
 	log.debug("EngineSound.changeNotch() current = " + current_notch + 
 		  " new notch = " + new_notch);
@@ -93,7 +92,7 @@ class DieselSound extends EngineSound {
 		log.debug("notch transition: name = " + notch_transition.getFileName() + " length = " + notch_transition.getLengthAsInt() +
 			  "fade_length = " + fade_length);
 		// Handle notch transition...
-		Timer t = newTimer(notch_transition.getLengthAsInt() - notch_sounds.get(new_notch).getFadeInTime(), false,
+		t = newTimer(notch_transition.getLengthAsInt() - notch_sounds.get(new_notch).getFadeInTime(), false,
 				   new ActionListener() {
 				       public void actionPerformed(ActionEvent e) {
 					   handleNotchTimerPop(e);
@@ -133,10 +132,12 @@ class DieselSound extends EngineSound {
 	return(null);
     }
 
+    @Override
     public void startEngine() {
 	start_sound.play();
 	current_notch = calcEngineNotch(0.0f);
 	t = newTimer(4500, false, new ActionListener() { 
+                @Override
 		public void actionPerformed(ActionEvent e) {
 		    startToIdleAction(e);
 		}
@@ -147,6 +148,7 @@ class DieselSound extends EngineSound {
 	t.start();
     }
 
+    @Override
     public void stopEngine() {
 	notch_sounds.get(current_notch).fadeOut();
 	shutdown_sound.play();
