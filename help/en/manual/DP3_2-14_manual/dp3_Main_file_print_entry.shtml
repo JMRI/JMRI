@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Start_DecoderPro.shtml 18193 2011-08-16 23:19:17Z dat7719 $ -->
+<title>Decoder Pro Manual: Getting Started</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+<h1>DecoderPro3&reg; Main Window</h1>
+<h1>Print/Preview Roster Entry</h1>
+
+<div align=right>
+<p><a href="dp3_menubar.html">Back </a> </div>
+
+<hr>
+<p><br>
+The <strong>Select Items to Print</strong> is opened from the DecoderPro3 Main Window menubar, File --&gt; Print/Preview Roster--&gt;Entry.</p>
+<p>This dialog allows you to select what features of an individual decoder in Roster you would like to Preview or Print.<br>
+</p>
+<h3><img src="images/Main_file_03.png" width="251" height="438" alt="select"></h3>
+<p>Cancel button -- Cancels the selections</p>
+<p>Okay button -- displays the print dialog for your printer or printer preview window.<br>
+<img src="images/dp3_print_dialog.png" width="438" height="334" alt="dialog"></p>
+<p>Example: <strong>Function List</strong> checkbox checked. You may select any combinaation or all items from the list.</p>
+<p><img src="images/dp3_rosterEntry_labels.png" width="800" height="704"></p>
+<p>Example of Print Preview with both Basic and Speed Table selected.</p>
+<p><img src="images/dp3_printPreview.png" width="665" height="744" alt="preview"></p>
+<hr>
+<div align=right>
+<p><a href="dp3_menubar.html">Back</a> </div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

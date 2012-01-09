@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Main_TurnoutControl.shtml 18167 2011-08-13 11:22:06Z dat7719 $ -->
+<title>DecoderPro Turnout Control</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+<h1>DecoderPro3&reg; Main Window</h1>
+<h1>Menu Bar - Turnout Control Panel</h1>
+
+<div align=right>
+<p><a href="Main_Tool.shtml#Turnout">Back</a></p>
+<p><a href="dp3_menubar.html">Back to Index</a></p>
+</div>
+
+<hr>
+<p>&nbsp;</p>
+
+<table width="90%" border="0" cellspacing="1" cellpadding="1">
+  <tr>
+    <td width="32%" align="left" valign="top"><img src="images/Main_TurnoutControl_01.png" width="282" height="291" alt="turnout control"></td>
+    <td width="68%" align="left" valign="top"><p><strong>Turnout Control</strong></p>
+      <p><strong>Turnout</strong></p>
+      <p>
+        <input name="textfield2" type="text" id="textfield2" size="8">
+        Enter the accessory number or tunout system name for the accessory or turnout you wish to control. For example, entering 678 and by pressing either the 
+        <input type="submit" name="button" id="button" value="Thrown">
+      or 
+      <input type="submit" name="button2" id="button2" value="closed">
+      , you should be able to change the state of accessory number 678 on the layout.</p>
+      <p>Another example, a valid turnout system name for NCE could be NT456. Then by pressing either the  
+        <input type="submit" name="button3" id="button3" value="Thrown">
+or
+<input type="submit" name="button3" id="button4" value="closed">
+, you should be able to change the state of turnout or accessory number 456 on the layout</p>
+      <p>Another example, a valid turnout name could be IT123 which is internal turnout number 123. Pressing either the  
+        <input type="submit" name="button4" id="button5" value="Thrown">
+or
+<input type="submit" name="button4" id="button6" value="closed"> 
+will only change the state of the internal turnout and will not change a turnout on the layout.
+      </p>
+      <p><strong>current state:</strong> A turnout can have four states: &lt;unknown&gt;, &lt;inconsistent&gt;, &lt;thrown&gt; and &lt;closed&gt;</p>
+<p><strong>feedback mode:</strong> some of the available feedback modes are: &lt;DIRECT&gt;, &lt;ONE SENSOR&gt;, &lt;TWO SENSOR&gt;, and &lt;MONITORING&gt;. A turnout using DIRECT mode does not have feedback from the layout. ONE SENSOR use one sensor on the layout to provide feedback on he state of the turnout. TWO SENSOR uses two sensors for feedback, one for closed and one for thrown. MONITORING gets feedback from the system by either listening to cab commands on the layout or polling the system for turnout status.</p>
+    <p><strong>Caboperation:</strong> some turnouts can be locked. If the control button is grayed out, the lock feature is not available.</p>
+    <p><strong>Pushbuttons:</strong> Shows state of Pushbuttons.</p></td>
+  </tr>
+</table>
+<p>
+<hr>
+
+<div align=right>
+<p><a href="dp3_menubar.html">Back</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
