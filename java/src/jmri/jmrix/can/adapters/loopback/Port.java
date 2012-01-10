@@ -6,7 +6,7 @@ import jmri.jmrix.AbstractSerialPortController;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Loopback connection to simulate a CAN link
@@ -24,7 +24,7 @@ public class Port extends AbstractSerialPortController {
     public void configure() {
 
         // Register the CAN traffic controller being used for this connection
-        adaptermemo.setTrafficController(LoopbackTrafficController.instance());
+        adaptermemo.setTrafficController(new LoopbackTrafficController());
 
         // do central protocol-specific configuration    
         adaptermemo.setProtocol(mOpt1);
@@ -60,12 +60,6 @@ public class Port extends AbstractSerialPortController {
     // check that this object is ready to operate
     public boolean status() { return true; }
     
-    static public Port instance() {
-        if (mInstance == null) mInstance = new Port();
-        return mInstance;
-    }
-    static Port mInstance = null;
-
     //////////////
     // not used //
     //////////////
@@ -91,6 +85,8 @@ public class Port extends AbstractSerialPortController {
             adaptermemo.dispose();
         adaptermemo = null;
     }
+    
+    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Port.class.getName());
 }

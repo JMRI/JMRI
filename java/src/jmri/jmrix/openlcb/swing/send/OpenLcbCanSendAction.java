@@ -13,27 +13,7 @@ import jmri.jmrix.can.TrafficController;
  * @author			Bob Jacobsen    Copyright (C) 2010
  * @version         $Revision$
  */
-public class OpenLcbCanSendAction extends AbstractAction {
-
-    public OpenLcbCanSendAction(String s) { super(s);}
-
-    public OpenLcbCanSendAction() { this("Send OpenLCB CAN Frame");}
-
-    public void actionPerformed(ActionEvent e) {
-        OpenLcbCanSendFrame f = new OpenLcbCanSendFrame();
-        try {
-            f.initComponents();
-        }
-        catch (Exception ex) {
-            log.error("Exception: "+ex.toString());
-        }
-        f.setVisible(true);
-        
-        // connect to the CanInterface
-        f.connect(TrafficController.instance());
-    }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OpenLcbCanSendAction.class.getName());
+public class OpenLcbCanSendAction extends OpenLcbCanSendPane.Default {
 }
-
 
 /* @(#)OpenLcbCanSendAction.java */

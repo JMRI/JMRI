@@ -22,13 +22,20 @@ public class MonitorTest extends TestCase {
     }
 
     public void testDisplay() throws Exception {
-        new TrafficControllerScaffold();
+        
+        TrafficControllerScaffold tcs = new TrafficControllerScaffold();
 
-        MonitorFrame f = new MonitorFrame(){
+        MonitorPane f = new MonitorPane();
+        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
+        memo.setTrafficController(tcs);
+        f.initComponents(memo);
+        
+        //pane.MonitorPane.Default;
+        /*MonitorFrame f = new MonitorFrame(){
           { rawCheckBox.setSelected(true);}
         };
         f.initComponents();
-        f.setVisible(true);
+        f.setVisible(true);*/
         
         // show std message
         CanMessage m = new CanMessage(0x123);
@@ -60,6 +67,7 @@ public class MonitorTest extends TestCase {
         
         // close panel
         f.dispose();
+        memo.dispose();
     }
 
     // Main entry point

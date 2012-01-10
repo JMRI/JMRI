@@ -74,7 +74,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         super.dispose();
     }
     
-        /**
+    /**
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {

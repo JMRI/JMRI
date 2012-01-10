@@ -21,27 +21,25 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
     OlcbAddress addrActive;    // go to active state
     OlcbAddress addrInactive;  // go to inactive state
 
-    public OlcbSensor(String systemName, String userName) {
-        super(systemName, userName);
-        init(systemName);
+    public OlcbSensor(String prefix, String address, TrafficController tc) {
+        super(prefix+"T"+address);
+        this.tc = tc;
+        init(address);
     }
-
-    public OlcbSensor(String systemName) {
-        super(systemName);
-        init(systemName);
-    }
+    
+    TrafficController tc;
 
     /**
      * Common initialization for both constructors.
      * <p>
      * 
      */
-    private void init(String systemName) {
+    private void init(String address) {
         // build local addresses
-        OlcbAddress a = new OlcbAddress(systemName.substring(2,systemName.length()));
+        OlcbAddress a = new OlcbAddress(address);
         OlcbAddress[] v = a.split();
         if (v==null) {
-            log.error("Did not find usable system name: "+systemName);
+            log.error("Did not find usable system name: "+address);
             return;
         }
         switch (v.length) {
@@ -49,12 +47,12 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
                 addrActive = v[0];
                 // need to complement here for addr 1
                 // so address _must_ start with address + or -
-                if (systemName.substring(2,3).equals("+")) {
-                    addrInactive = new OlcbAddress("-"+systemName.substring(3,systemName.length()));
-                } else if (systemName.substring(2,3).equals("-")) {
-                    addrInactive = new OlcbAddress("+"+systemName.substring(3,systemName.length()));
+                if (address.startsWith("+")) {
+                    addrInactive = new OlcbAddress("-"+address);
+                } else if (address.startsWith("-")) {
+                    addrInactive = new OlcbAddress("+"+address);
                 } else {
-                    log.error("can't make 2nd event from systemname "+systemName);
+                    log.error("can't make 2nd event from systemname "+address);
                     return;
                 }
                 break;
@@ -63,11 +61,11 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
                 addrInactive = v[1];
                 break;
             default:
-                log.error("Can't parse OpenLCB Sensor system name: "+systemName);
+                log.error("Can't parse OpenLCB Sensor system name: "+address);
                 return;
         }
         // connect
-        TrafficController.instance().addCanListener(this);
+        tc.addCanListener(this);
     }
 
     /**
@@ -91,11 +89,11 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
         CanMessage m;
         if (s==Sensor.ACTIVE) {
             m = addrActive.makeMessage();
-            TrafficController.instance().sendCanMessage(m, this);
+            tc.sendCanMessage(m, this);
             setOwnState(Sensor.ACTIVE);
         } else if (s==Sensor.INACTIVE) {
             m = addrInactive.makeMessage();
-            TrafficController.instance().sendCanMessage(m, this);
+            tc.sendCanMessage(m, this);
             setOwnState(Sensor.INACTIVE);
         }
     }
@@ -125,7 +123,7 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
     }
 
     public void dispose() {
-        TrafficController.instance().removeCanListener(this);
+        tc.removeCanListener(this);
         super.dispose();
     }
 

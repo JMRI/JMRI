@@ -278,6 +278,18 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     
     // private data
     private TrafficController tc = null;
+    
+    /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
+        public Default() {
+            super("Send Can Frame", 
+                new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                CanSendPane.class.getName(), 
+                jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
+        }
+    }
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CanSendPane.class.getName());
 
 }

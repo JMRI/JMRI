@@ -25,12 +25,12 @@ public class CanMenu extends JMenu {
 
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
+        /*ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
 
         setText(rb.getString("MenuItemCAN"));
 
         add(new jmri.jmrix.can.swing.monitor.MonitorAction(rb.getString("MenuItemConsole")));
-        add(new jmri.jmrix.can.swing.send.CanSendAction(rb.getString("MenuItemSendFrame")));
+        add(new jmri.jmrix.can.swing.send.CanSendAction(rb.getString("MenuItemSendFrame")));*/
 
     }
 

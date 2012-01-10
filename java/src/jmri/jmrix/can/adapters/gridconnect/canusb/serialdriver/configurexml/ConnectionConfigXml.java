@@ -26,11 +26,14 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     protected void getInstance() {
-        adapter = SerialDriverAdapter.instance();
+        adapter = new SerialDriverAdapter();
+    }
+    
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
     }
 
     protected void register() {
-        new Exception("Trace back register call").printStackTrace();
         InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
     }
 

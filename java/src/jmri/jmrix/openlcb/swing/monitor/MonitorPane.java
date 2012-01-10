@@ -1,8 +1,10 @@
-// MonitorFrame.java
+// MonitorPane.java
 
 package jmri.jmrix.openlcb.swing.monitor;
 
 import jmri.jmrix.can.CanListener;
+import jmri.jmrix.can.swing.CanPanelInterface;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficController;
@@ -11,23 +13,39 @@ import jmri.jmrix.can.TrafficController;
  * Frame displaying (and logging) OpenLCB (CAN) frames
  *
  * @author	    Bob Jacobsen   Copyright (C) 2009, 2010
- * @version         $Revision$
+ * @version         $Revision: 17977 $
  */
 
-public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements CanListener {
+public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListener, CanPanelInterface {
 
-    public MonitorFrame() {
+    public MonitorPane() {
         super();
     }
 
-    protected String title() { return "OpenLCB Monitor"; }
+    CanSystemConnectionMemo memo;
+    
+    public void initContext(Object context) {
+        if (context instanceof CanSystemConnectionMemo ) {
+            initComponents((CanSystemConnectionMemo) context);
+        }
+    }
+    
+    public void initComponents(CanSystemConnectionMemo memo) {
+        this.memo = memo;
+
+        memo.getTrafficController().addCanListener(this);
+    }
+    
+    public String getTitle() {
+        return "OpenLCB Monitor";
+    }
+
 
     protected void init() {
-        TrafficController.instance().addCanListener(this);
     }
 
     public void dispose() {
-        TrafficController.instance().removeCanListener(this);
+       memo.getTrafficController().removeCanListener(this);
         super.dispose();
     }
 
@@ -59,6 +77,18 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements CanList
         nextLine(new String(formatted), l.toString());
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MonitorFrame.class.getName());
+    /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
+        public Default() {
+            super("Openlcb Monitor", 
+                new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                MonitorPane.class.getName(), 
+                jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
+        }
+    }
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MonitorPane.class.getName());
 
 }

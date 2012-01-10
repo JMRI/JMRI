@@ -39,21 +39,14 @@ import java.util.ResourceBundle;
         return opt2Box.getSelectedItem().toString();
     }
     
-    protected void setInstance() {
-        adapter = NetworkDriverAdapter.instance();
-    }
-    
     public boolean isPortAdvanced() { return false; }
     public boolean isOptList1Advanced() { return false; }
     
-    /*MultiConnection code
     protected void setInstance() {
         if (adapter==null){
             adapter = new NetworkDriverAdapter();
-            adapter.setPort();
         }
-    }*/
-    
+    }
     
     protected ResourceBundle getActionModelResourceBundle(){
         return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");

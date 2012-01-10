@@ -24,9 +24,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     public ConnectionConfigXml() {
         super();
     }
-
+    
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
+    }
     protected void getInstance() {
-        adapter = CanUsbDriverAdapter.instance();
+        adapter = new CanUsbDriverAdapter();
     }
 
     protected void register() {

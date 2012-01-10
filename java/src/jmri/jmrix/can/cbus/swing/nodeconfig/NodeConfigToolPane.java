@@ -42,15 +42,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         return ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolBundle").getString("Title");
     }
    
-    /*
-     * @deprecated 2.99.2
-     */
-    @Deprecated
-    public void initComponents(){
-        tc = TrafficController.instance();
-        tc.addCanListener(this);
-    }
-    
     public NodeConfigToolPane() {
         super();
 
@@ -108,6 +99,18 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         // disconnect from the CBUS
         if(tc!=null)
             tc.removeCanListener(this);
+    }
+    
+        /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
+        public Default() {
+            super(ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolBundle").getString("Title"), 
+                new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                NodeConfigToolPane.class.getName(), 
+                jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
+        }
     }
 
     static org.apache.log4j.Category log = org.apache.log4j.Logger.getLogger(NodeConfigToolPane.class.getName());

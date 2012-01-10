@@ -16,10 +16,10 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  * @since 2.3.1
  */
 public class OlcbTurnoutManager extends AbstractTurnoutManager {
-	
+	/*
     public OlcbTurnoutManager(){
         super();
-    }
+    }*/
     
     public OlcbTurnoutManager(CanSystemConnectionMemo memo){
         this.memo=memo;
@@ -38,10 +38,10 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
      * @return never null
      */
     protected Turnout createNewTurnout(String systemName, String userName) {
-        if (userName!=null) 
-            return new OlcbTurnout(systemName, userName);
-        else 
-            return new OlcbTurnout(systemName);
+        String addr = systemName.substring(getSystemPrefix().length()+1);
+        Turnout t = new OlcbTurnout(getSystemPrefix(), addr, memo.getTrafficController());
+        t.setUserName(userName);
+        return t;
     }
     
     public boolean allowMultipleAdditions() { return false;  }

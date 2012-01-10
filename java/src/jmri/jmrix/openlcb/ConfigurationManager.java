@@ -17,8 +17,8 @@ public class ConfigurationManager {
         // "OpenLCB CAN"
         ActiveFlag.setActive();
         
-        InstanceManager.setTurnoutManager(new jmri.jmrix.openlcb.OlcbTurnoutManager());
-        InstanceManager.setSensorManager(new jmri.jmrix.openlcb.OlcbSensorManager());
+    //    InstanceManager.setTurnoutManager(new jmri.jmrix.openlcb.OlcbTurnoutManager());
+    //    InstanceManager.setSensorManager(new jmri.jmrix.openlcb.OlcbSensorManager());
         
     }
     

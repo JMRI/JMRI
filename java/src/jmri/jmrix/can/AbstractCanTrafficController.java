@@ -28,6 +28,10 @@ abstract public class AbstractCanTrafficController
         super();
         allowUnexpectedReply = true;
     }
+    
+    protected void setInstance(){
+    
+    }
 
     // The methods to implement the CAN Interface
  

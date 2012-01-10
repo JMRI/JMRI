@@ -3,6 +3,7 @@
 package jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver;
 
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Implements SerialPortAdapter for GridConnect adapters.
@@ -30,18 +31,14 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
     public int[] validBaudValues() {
         return new int[]{57600, 115200, 230400, 250000, 333333, 460800, 500000};
     }
-        
-    static public SerialDriverAdapter instance() {
-        if (mInstance == null) mInstance = new SerialDriverAdapter();
-        return mInstance;
-    }
-    static SerialDriverAdapter mInstance = null;
     
     public void dispose(){
         if (adaptermemo!=null)
             adaptermemo.dispose();
         adaptermemo = null;
     }
+    
+    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 

@@ -2,13 +2,8 @@
 
 package jmri.jmrix.can.cbus.swing.configtool;
 
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-
-import java.util.ResourceBundle;
-
 /**
- * Create and register a LocoStatsFrame object.
+ * Stand-in class for backward compatibility
  * 
  * @author			Bob Jacobsen    Copyright (C) 2008
  * @version			$Revision$
@@ -16,22 +11,6 @@ import java.util.ResourceBundle;
  * @deprecated 2.99.2
  */
 @Deprecated
-public class ConfigToolAction extends AbstractAction {
-
-    public ConfigToolAction(String s) {
-        super(s);
-    }
-    
-    public ConfigToolAction() {
-        this(ResourceBundle
-                .getBundle("jmri.jmrix.can.cbus.swing.configtool.ConfigToolBundle")
-                        .getString("MenuItemConfigTool"));
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        ConfigToolFrame f = new ConfigToolFrame();
-        f.setVisible(true);
-    }
+public class ConfigToolAction extends ConfigToolPane.Default {
 }
-
 /* @(#)ConfigToolAction.java */

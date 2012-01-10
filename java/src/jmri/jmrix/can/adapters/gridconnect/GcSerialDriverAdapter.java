@@ -4,6 +4,7 @@ package jmri.jmrix.can.adapters.gridconnect;
 
 import jmri.jmrix.can.adapters.gridconnect.GcPortController;
 import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
+import jmri.jmrix.can.TrafficController;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -114,11 +115,12 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
     public void configure() {
         // Register the CAN traffic controller being used for this connection
         //GcTrafficController.instance();
-        adaptermemo.setTrafficController(GcTrafficController.instance());
+        TrafficController tc = new GcTrafficController();
+        adaptermemo.setTrafficController(tc);
         
         // Now connect to the traffic controller
         log.debug("Connecting port");
-        GcTrafficController.instance().connectPort(this);
+        tc.connectPort(this);
         
         adaptermemo.setProtocol(mOpt1);
 

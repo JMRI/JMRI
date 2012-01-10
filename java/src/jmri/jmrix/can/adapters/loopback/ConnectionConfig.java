@@ -31,7 +31,9 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public String name() { return "CAN Simulation"; }
 
     protected void setInstance() {
-        adapter = Port.instance();
+        if(adapter ==null){
+            adapter = new Port();
+        }
     }
     
 	protected Vector<String> getPortNames() {

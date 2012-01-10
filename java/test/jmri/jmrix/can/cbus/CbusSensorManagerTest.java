@@ -21,7 +21,8 @@ public class CbusSensorManagerTest extends TestCase {
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         memo.setTrafficController(new TestTrafficController());
         CbusSensorManager m = new CbusSensorManager(memo);
-        m.provideSensor("MSX0A;+N15E6");
+        m.provideSensor(memo.getSystemPrefix()+"SX0A;+N15E6");
+        memo.dispose();
     }
         
     // from here down is testing infrastructure

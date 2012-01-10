@@ -4,6 +4,7 @@ package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Swing action to create and register a SerialDriverFrame object

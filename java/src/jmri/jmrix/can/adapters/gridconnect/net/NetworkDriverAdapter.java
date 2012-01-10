@@ -3,6 +3,8 @@
 package jmri.jmrix.can.adapters.gridconnect.net;
 
 import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
+import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.SystemConnectionMemo;
 
 import java.util.Vector;
 
@@ -38,16 +40,15 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
             // setting binary mode
             //
         }
-        
-        // start of code duplicated from net.ConnectionConfig
-        log.error("This code comes from ConnectionConfig, and needs to be refactored");
+
         // Register the CAN traffic controller being used for this connection
-        adaptermemo.setTrafficController(GcTrafficController.instance());
+        TrafficController tc = new GcTrafficController();
+        adaptermemo.setTrafficController(tc);
         
         
         // Now connect to the traffic controller
         log.debug("Connecting port");
-        GcTrafficController.instance().connectPort(this);
+        tc.connectPort(this);
 
         adaptermemo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
 
@@ -82,12 +83,6 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
     // private control members
     private boolean opened = false;
 
-    static public NetworkDriverAdapter instance() {
-        if (mInstance == null) mInstance = new NetworkDriverAdapter();
-        return mInstance;
-    }
-    static NetworkDriverAdapter mInstance = null;
-
     //Socket socket;
     
     public Vector<String> getPortNames() {
@@ -108,6 +103,8 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
             adaptermemo.dispose();
         adaptermemo = null;
     }
+    
+    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetworkDriverAdapter.class.getName());
 

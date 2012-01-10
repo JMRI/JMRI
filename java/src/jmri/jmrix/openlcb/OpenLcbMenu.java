@@ -1,6 +1,7 @@
 // OpenLcbMenu.java
 
 package jmri.jmrix.openlcb;
+import jmri.jmrix.can.swing.CanNamedPaneAction;
 
 import java.util.ResourceBundle;
 
@@ -14,18 +15,42 @@ import javax.swing.JMenu;
  */
 public class OpenLcbMenu extends JMenu {
     public OpenLcbMenu(jmri.jmrix.can.CanSystemConnectionMemo memo) {
-
         super();
-
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
-
-        setText(rb.getString("MenuItemOpenLCB"));
         
-        add(new jmri.jmrix.openlcb.swing.monitor.MonitorAction(rb.getString("MenuItemConsole")));
-        add(new jmri.jmrix.openlcb.swing.send.OpenLcbCanSendAction(rb.getString("MenuItemSendFrame")));
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
+        
+        String title;
+        if (memo != null)
+            title = memo.getUserName();
+        else
+            title = rb.getString("MenuItemCAN");
+        
+            setText(title);
+        
+        jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
+        
+        for (Item item : panelItems) {
+            if (item == null) {
+                add(new javax.swing.JSeparator());
+            } else {
+                add(new CanNamedPaneAction( rb.getString(item.name), wi, item.load, memo));
+            }
+        }
+    }
+    
+        Item[] panelItems = new Item[] {
+            new Item("MenuItemConsole", "jmri.jmrix.openlcb.swing.monitor.MonitorPane"),
+            new Item("MenuItemSendFrame",        "jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane"),
+        };
+    
+    static class Item {
+        Item(String name, String load) {
+            this.name = name;
+            this.load = load;
+        }
 
-        //add(new jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolAction("Node Config Tool"));
-
+        String name;
+        String load;
     }
 
 }

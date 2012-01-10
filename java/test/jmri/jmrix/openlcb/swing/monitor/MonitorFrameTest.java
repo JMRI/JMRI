@@ -7,6 +7,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.jmrix.can.*;
 /**
  * Tests for the jmri.jmrix.can.swing.monitor.MonitorFrame class
  *
@@ -19,12 +20,24 @@ public class MonitorFrameTest extends TestCase {
     String testRaw;
     
     public void testFormatMsg() throws Exception {
-        MonitorFrame f = new MonitorFrame(){
+        TrafficControllerScaffold tcs = new TrafficControllerScaffold();
+
+        MonitorPane f = new MonitorPane(){
             public void nextLine(String s1, String s2) {
                 testFormatted = s1;
                 testRaw = s2;
             }
         };
+        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
+        memo.setTrafficController(tcs);
+        f.initComponents(memo);
+        
+        /*MonitorFrame f = new MonitorFrame(){
+            public void nextLine(String s1, String s2) {
+                testFormatted = s1;
+                testRaw = s2;
+            }
+        };*/
         
         jmri.jmrix.can.CanMessage msg 
             = new jmri.jmrix.can.CanMessage(
@@ -35,15 +48,29 @@ public class MonitorFrameTest extends TestCase {
         
         Assert.assertEquals("formatted", "M: [12345678] 01 02\n", testFormatted);
         Assert.assertEquals("raw", "01 02", testRaw);
+        memo.dispose();
     }
     
     public void testFormatReply() throws Exception {
-        MonitorFrame f = new MonitorFrame(){
+    
+        TrafficControllerScaffold tcs = new TrafficControllerScaffold();
+
+        MonitorPane f = new MonitorPane(){
             public void nextLine(String s1, String s2) {
                 testFormatted = s1;
                 testRaw = s2;
             }
         };
+        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
+        memo.setTrafficController(tcs);
+        f.initComponents(memo);
+        
+        /*MonitorFrame f = new MonitorFrame(){
+            public void nextLine(String s1, String s2) {
+                testFormatted = s1;
+                testRaw = s2;
+            }
+        };*/
         
         jmri.jmrix.can.CanReply msg 
             = new jmri.jmrix.can.CanReply(
@@ -55,6 +82,7 @@ public class MonitorFrameTest extends TestCase {
         
         Assert.assertEquals("formatted", "R: [12345678] 01 02\n", testFormatted);
         Assert.assertEquals("raw", "01 02", testRaw);
+        memo.dispose();
     }
     
     // from here down is testing infrastructure

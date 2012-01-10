@@ -24,7 +24,7 @@ public class OlcbSensorTest extends TestCase {
         // load dummy TrafficController
         TestTrafficController t = new TestTrafficController();
         Assert.assertNotNull("exists", t );
-        OlcbSensor s = new OlcbSensor("MS1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9");
+        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t);
         
         // message for Active and Inactive
         CanMessage mActive = new CanMessage( //[182df123] 01 02 03 04 05 06 07 08
@@ -54,7 +54,7 @@ public class OlcbSensorTest extends TestCase {
         // load dummy TrafficController
         TestTrafficController t = new TestTrafficController();
         
-        OlcbSensor s = new OlcbSensor("MS1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9");
+        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t);
         t.rcvMessage = null;
         s.setKnownState(Sensor.ACTIVE);
         Assert.assertTrue(s.getKnownState()==Sensor.ACTIVE);

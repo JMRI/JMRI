@@ -17,9 +17,6 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     
     public OlcbConfigurationManager(CanSystemConnectionMemo memo){
         super(memo);
-        //At this stage without the multiple connections we can do this, but afterwards we can not.
-        adapterMemo.setUserName("OpenLCB");
-        adapterMemo.setSystemPrefix("M");
         
         InstanceManager.store(cf = new jmri.jmrix.openlcb.swing.OpenLcbComponentFactory(adapterMemo), 
             jmri.jmrix.swing.ComponentFactory.class);

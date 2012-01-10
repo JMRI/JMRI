@@ -81,11 +81,11 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
     /*
      * @deprecated 2.99.2
      */
-    @Deprecated
+    /*@Deprecated
     public void initComponents() {
         tc = TrafficController.instance();
         tc.addCanListener(this);
-    }
+    }*/
     
     public String getTitle() {
         if(memo!=null) {

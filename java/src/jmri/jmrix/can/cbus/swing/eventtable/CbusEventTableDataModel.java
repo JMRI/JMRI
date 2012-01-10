@@ -35,7 +35,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      /*
      * @deprecated 2.99.2
      */
-    @Deprecated
+    /*@Deprecated
     CbusEventTableDataModel(int row, int column) {
         _id = new int[CbusConstants.MAX_TABLE_EVENTS];
         _node = new int[CbusConstants.MAX_TABLE_EVENTS];
@@ -46,7 +46,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         // connect to the CanInterface
         tc = TrafficController.instance();
         tc.addCanListener(this);
-    }
+    }*/
     
     CanSystemConnectionMemo memo;
     

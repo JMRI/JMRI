@@ -222,5 +222,17 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         super.dispose();
     }
     
+    /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
+        public Default() {
+            super("CBUS Event table", 
+                new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                CbusEventTablePane.class.getName(), 
+                jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
+        }
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusEventTablePane.class.getName());
 }

@@ -62,7 +62,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
       */
     public boolean load(Element e) {
     	boolean result = true;
-        adapter = Port.instance();
+        getInstance();
         // simulator has fewer options in the XML, so implement
         // just needed ones       
         if (e.getAttribute("option1")!=null) {
@@ -95,9 +95,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
 
-    protected void getInstance() {  
-        // obsolete?
-        log.warn("getInstance called");
+    protected void getInstance() {
+        adapter = new Port();
+    }
+    
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
     }
 
     protected void register() {

@@ -24,15 +24,15 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     
     public String getSystemPrefix() { return prefix; }
 
-    static public OlcbSensorManager instance() {
+    /*static public OlcbSensorManager instance() {
         if (mInstance == null) new OlcbSensorManager();
         return mInstance;
     }
-    static private OlcbSensorManager mInstance = null;
+    static private OlcbSensorManager mInstance = null;*/
 
     // to free resources when no longer used
     public void dispose() {
-        TrafficController.instance().removeCanListener(this);
+        memo.getTrafficController().removeCanListener(this);
         super.dispose();
     }
     
@@ -43,12 +43,12 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         memo.getTrafficController().addCanListener(this);
     }
     
-    
     CanSystemConnectionMemo memo;
 
     public Sensor createNewSensor(String systemName, String userName) {
+        String addr = systemName.substring(getSystemPrefix().length()+1);
         // first, check validity
-        OlcbAddress a = new OlcbAddress(systemName.substring(2,systemName.length()));
+        OlcbAddress a = new OlcbAddress(addr);
         OlcbAddress[] v = a.split();
         if (v==null) {
             log.error("Did not find usable system name: "+systemName);
@@ -59,7 +59,9 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
             return null;
         }
         // OK, make
-        return new OlcbSensor(systemName, userName);
+        Sensor s =  new OlcbSensor(getSystemPrefix(), addr, memo.getTrafficController());
+        s.setUserName(userName);
+        return s;
     }
 
     public boolean allowMultipleAdditions() { return false;  }
@@ -75,12 +77,12 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     // ctor has to register for LocoNet events
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+   /* @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                         justification="temporary until mult-system; only set at startup")
     public OlcbSensorManager() {
         TrafficController.instance().addCanListener(this);
         mInstance = this;
-    }
+    }*/
 
     // listen for sensors, creating them as needed
     public void reply(CanReply l) {

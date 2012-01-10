@@ -4,6 +4,8 @@ package jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver;
 
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
+import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Implements SerialPortAdapter for the MERG CAN-RS or CAN-USB.
@@ -26,11 +28,19 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
     public void configure() {
 
         // Register the CAN traffic controller being used for this connection
-        adaptermemo.setTrafficController(MergTrafficController.instance());
+        TrafficController tc = new MergTrafficController();
+        try {
+            tc.setCanId(Integer.parseInt(getCurrentOption2Setting()));
+        } catch (Exception e) {
+            log.error("Cannot parse CAN ID - check your preference settings "+e);
+            log.error("Now using default CAN ID");
+        }
+        
+        adaptermemo.setTrafficController(tc);
         
         // Now connect to the traffic controller
         log.debug("Connecting port");
-        MergTrafficController.instance().connectPort(this);
+        tc.connectPort(this);
 
         adaptermemo.setProtocol(mOpt1);
 
@@ -50,12 +60,8 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
      * May be an empty string, but will not be null
      */
     public String option2Name() { return "CAN ID for CAN-USB"; }
-
-    static public SerialDriverAdapter instance() {
-        if (mInstance == null) mInstance = new SerialDriverAdapter();
-        return mInstance;
-    }
-    static SerialDriverAdapter mInstance = null;
+    
+    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 

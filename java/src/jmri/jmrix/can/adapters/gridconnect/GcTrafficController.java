@@ -84,19 +84,6 @@ public class GcTrafficController extends TrafficController {
         return m.getNumDataElements();
     }
 
-    /**
-     * static function returning the CanTrafficController instance to use.
-     * @return The registered SprogTrafficController instance for general use,
-     *         if need be creating one.
-     */
-    static public TrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) log.debug("creating a new GcTrafficController object");
-            self = new GcTrafficController();
-        }
-        return self;
-    }
-
     // New message for hardware protocol
     protected AbstractMRMessage newMessage() { 
         log.debug("New GridConnectMessage created");

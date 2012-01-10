@@ -24,7 +24,7 @@ public class OlcbTurnoutTest extends TestCase {
         // load dummy TrafficController
         TestTrafficController t = new TestTrafficController();
         Assert.assertNotNull("exists", t );
-        OlcbTurnout s = new OlcbTurnout("MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9");
+        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t);
         
         // message for Active and Inactive
         CanMessage mActive = new CanMessage( //[182df123] 01 02 03 04 05 06 07 08
@@ -54,7 +54,7 @@ public class OlcbTurnoutTest extends TestCase {
         // load dummy TrafficController
         TestTrafficController t = new TestTrafficController();
         
-        OlcbTurnout s = new OlcbTurnout("MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9");
+        OlcbTurnout s = new OlcbTurnout("MT", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t);
         t.rcvMessage = null;
         s.setState(Turnout.THROWN);
         Assert.assertTrue(s.getCommandedState()==Turnout.THROWN);

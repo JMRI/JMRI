@@ -22,9 +22,6 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     public CbusConfigurationManager(CanSystemConnectionMemo memo){
         super(memo);
         InstanceManager.store(this, CbusConfigurationManager.class);
-        //At this stage without the multiple connections we can do this, but afterwards we can not.
-        adapterMemo.setUserName("MERG");
-        adapterMemo.setSystemPrefix("M");
         InstanceManager.store(cf = new jmri.jmrix.can.cbus.swing.CbusComponentFactory(adapterMemo), 
             jmri.jmrix.swing.ComponentFactory.class);
     }

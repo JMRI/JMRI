@@ -26,17 +26,12 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         super();
     }
     
-    /*MultiConnection code
     protected void getInstance() {
         adapter = new NetworkDriverAdapter();
     }
 
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
-    }*/
-    
-    protected void getInstance() {
-        adapter = NetworkDriverAdapter.instance();
     }
 
     protected void register() {

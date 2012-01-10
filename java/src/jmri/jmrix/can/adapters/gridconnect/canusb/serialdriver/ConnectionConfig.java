@@ -35,6 +35,10 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }
 
-    protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
+    protected void setInstance() { 
+        if(adapter ==null){
+            adapter = new SerialDriverAdapter();
+        }
+    }
 }
 

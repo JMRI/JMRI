@@ -65,23 +65,10 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
         return m.getNumDataElements();
     }
 
-    /**
-     * static function returning the CanTrafficController instance to use.
-     * @return The registered SprogTrafficController instance for general use,
-     *         if need be creating one.
-     */
-    static public jmri.jmrix.can.TrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) log.debug("creating a new TrafficController object");
-            self = new LoopbackTrafficController();
-        }
-        return self;
-    }
-
     // New message for hardware protocol
     protected AbstractMRMessage newMessage() { 
         log.debug("New CanMessage created");
-        CanMessage msg = new CanMessage(self.getCanid());
+        CanMessage msg = new CanMessage(getCanid());
         return msg;
     }
 

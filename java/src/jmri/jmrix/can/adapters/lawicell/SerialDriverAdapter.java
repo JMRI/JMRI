@@ -7,6 +7,7 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.SystemConnectionMemo;
 
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
@@ -112,7 +113,7 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     public void configure() {
 
         // Register the CAN traffic controller being used for this connection
-        TrafficController tc = LawicellTrafficController.instance();
+        TrafficController tc = new LawicellTrafficController();
         adaptermemo.setTrafficController(tc);
         //LawicellTrafficController.instance();
         
@@ -201,16 +202,18 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     InputStream serialStream = null;
     
     
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.MERG;
+    /*String manufacturerName = jmri.jmrix.DCCManufacturerList.MERG;
     
     public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }*/
     
     public void dispose(){
         if (adaptermemo!=null)
             adaptermemo.dispose();
         adaptermemo = null;
     }
+    
+    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 
