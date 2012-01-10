@@ -2,9 +2,11 @@ package jmri.jmrix.can.cbus;
 
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
+import jmri.CommandStation;
 
 import jmri.DccThrottle;
 import jmri.jmrix.AbstractThrottle;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
  * An implementation of DccThrottle via AbstractThrottle with code specific
@@ -25,12 +27,12 @@ public class CbusThrottle extends AbstractThrottle {
      * Constructor
      * @param address The address this throttle relates to.
      */
-    public CbusThrottle(LocoAddress address, int handle) {
-        super(null);
+    public CbusThrottle(CanSystemConnectionMemo memo, LocoAddress address, int handle) {
+        super(memo);
 
         log.debug("Throttle created");
         DccLocoAddress dccAddress = (DccLocoAddress)address;
-        cs = CbusCommandStation.instance();
+        cs = (CbusCommandStation) adapterMemo.get(jmri.CommandStation.class);
         _handle = handle;
 
         // cache settings

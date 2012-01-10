@@ -31,8 +31,7 @@ public class MonitorTest extends TestCase {
         f.setVisible(true);
         
         // show std message
-        CanMessage m = new CanMessage();
-        m.setHeader(0x123);
+        CanMessage m = new CanMessage(0x123);
         m.setNumDataElements(3);
         m.setElement(0, (byte)0x02);
         m.setElement(1, (byte)0xA2);
@@ -41,9 +40,8 @@ public class MonitorTest extends TestCase {
         f.message(m);
         
         // show ext message
-        m = new CanMessage();
+        m = new CanMessage(0x654321);
         m.setExtended(true);
-        m.setHeader(0x654321);
         m.setNumDataElements(3);
         m.setElement(0, (byte)0x02);
         m.setElement(1, (byte)0xA2);

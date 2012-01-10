@@ -234,8 +234,8 @@ public class CbusMessage {
     /**
      * CBUS programmer commands
     */
-    static public CanMessage getReadCV(int cv, int mode) {
-        CanMessage m = new CanMessage(5);
+    static public CanMessage getReadCV(int cv, int mode, int header) {
+        CanMessage m = new CanMessage(5, header);
         m.setElement(0, CbusConstants.CBUS_QCVS);
         m.setElement(1, CbusConstants.SERVICE_HANDLE);
         m.setElement(2, (cv/256) & 0xff);
@@ -253,8 +253,8 @@ public class CbusMessage {
         return m;
     }
 
-    static public CanMessage getWriteCV(int cv, int val, int mode) {
-        CanMessage m = new CanMessage(6);
+    static public CanMessage getWriteCV(int cv, int val, int mode, int header) {
+        CanMessage m = new CanMessage(6, header);
         m.setElement(0, CbusConstants.CBUS_WCVS);
         m.setElement(1, CbusConstants.SERVICE_HANDLE);
         m.setElement(2, (cv/256) & 0xff);
@@ -276,8 +276,8 @@ public class CbusMessage {
     /**
      * CBUS Ops mode programmer commands
     */
-    static public CanMessage getOpsModeWriteCV(int mAddress, boolean mLongAddr, int cv, int val) {
-        CanMessage m = new CanMessage(7);
+    static public CanMessage getOpsModeWriteCV(int mAddress, boolean mLongAddr, int cv, int val, int header) {
+        CanMessage m = new CanMessage(7, header);
         int address = mAddress;
         m.setElement(0, CbusConstants.CBUS_WCVOA);
         if (mLongAddr) {
@@ -296,15 +296,15 @@ public class CbusMessage {
     /**
      * CBUS Power commands
      */
-    static public CanMessage getRequestTrackOn() {
-        CanMessage m = new CanMessage(1);
+    static public CanMessage getRequestTrackOn(int header) {
+        CanMessage m = new CanMessage(1, header);
         m.setElement(0, CbusConstants.CBUS_RTON);
         setPri(m, 0xb);
         return m;
     }
 
-    static public CanMessage getRequestTrackOff() {
-        CanMessage m = new CanMessage(1);
+    static public CanMessage getRequestTrackOff(int header) {
+        CanMessage m = new CanMessage(1, header);
         m.setElement(0, CbusConstants.CBUS_RTOF);
         setPri(m, 0xb);
         return m;
@@ -317,8 +317,8 @@ public class CbusMessage {
     /*
      * This is a strict CBUS message to put a node into boot mode
      */
-    static public CanMessage getBootEntry(int nn) {
-        CanMessage m = new CanMessage(3);
+    static public CanMessage getBootEntry(int nn, int header) {
+        CanMessage m = new CanMessage(3, header);
         m.setElement(0, CbusConstants.CBUS_BOOT);
         m.setElement(1, (nn/256) & 0xFF);
         m.setElement(2, nn & 0xFF);
@@ -331,8 +331,8 @@ public class CbusMessage {
      *
      * The CBUS bootloader uses extended ID frames
      */
-    static public CanMessage getBootNop(int a) {
-        CanMessage m = new CanMessage(8);
+    static public CanMessage getBootNop(int a, int header) {
+        CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x4);
         m.setElement(0, (a/65536) & 0xFF);
@@ -350,8 +350,8 @@ public class CbusMessage {
     /**
      * Microchip AN247 format message to reset and enter normal mode
      */
-    static public CanMessage getBootReset() {
-        CanMessage m = new CanMessage(8);
+    static public CanMessage getBootReset(int header) {
+        CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x4);
         m.setElement(0, 0);
@@ -370,8 +370,8 @@ public class CbusMessage {
      * Microchip AN247 format message to initialise the bootloader and set the
      * start address
      */
-    static public CanMessage getBootInitialise(int a) {
-        CanMessage m = new CanMessage(8);
+    static public CanMessage getBootInitialise(int a, int header) {
+        CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x4);
         m.setElement(0, (a/65536) & 0xFF);
@@ -389,8 +389,8 @@ public class CbusMessage {
     /**
      * Microchip AN247 format message to send the checksum for comparison
      */
-    static public CanMessage getBootCheck(int c) {
-        CanMessage m = new CanMessage(8);
+    static public CanMessage getBootCheck(int c, int header) {
+        CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x4);
         m.setElement(0, 0);
@@ -408,8 +408,8 @@ public class CbusMessage {
     /**
      * Microchip AN247 format message to check if a module is in boot mode
      */
-    static public CanMessage getBootTest() {
-        CanMessage m = new CanMessage(8);
+    static public CanMessage getBootTest(int header) {
+        CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x4);
         m.setElement(0, 0);
@@ -427,8 +427,8 @@ public class CbusMessage {
     /**
      * Microchip AN247 format message to write 8 bytes of data
      */
-    static public CanMessage getBootWriteData(int [] d) {
-        CanMessage m = new CanMessage(8);
+    static public CanMessage getBootWriteData(int [] d, int header) {
+        CanMessage m = new CanMessage(8, header);
         m.setExtended(true);
         m.setHeader(0x5);
         try {

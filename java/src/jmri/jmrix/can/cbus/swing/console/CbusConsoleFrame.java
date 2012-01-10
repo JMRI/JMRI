@@ -109,7 +109,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     // members for handling the CBUS interface
     CanMessage msg;
     
-    AbstractCanTrafficController tc = null;
+    TrafficController tc = null;
     
     String replyString;
     
@@ -814,7 +814,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         int i;
         int data, data2;
-        CanMessage m = new CanMessage();
+        CanMessage m = new CanMessage(tc.getCanid());
         data = parseBinDecHexByte(dynPriField.getText(), 2, _decimal, "CBUS Console", "Invalid Dynamic Priority Value");
         if (data == -1) return;
         data2 = parseBinDecHexByte(minPriField.getText(), 3, _decimal, "CBUS Console", "Invalid Minor Priority Value");
@@ -885,7 +885,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
     public void sendEvButtonActionPerformed(java.awt.event.ActionEvent e) {
         int nn, ev;
-        CanMessage m = new CanMessage();
+        CanMessage m = new CanMessage(tc.getCanid());
         nn = parseBinDecHexByte(nnField.getText(), 65536, _decimal, "CBUS Console", "Invalid Node Number");
         if (nn == -1) return;
         ev = parseBinDecHexByte(evField.getText(), 65536, _decimal, "CBUS Console", "Invalid Event");

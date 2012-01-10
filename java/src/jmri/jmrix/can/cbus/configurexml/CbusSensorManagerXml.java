@@ -31,12 +31,10 @@ public class CbusSensorManagerXml extends jmri.managers.configurexml.AbstractSen
 
     public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
     	boolean result = true;
-        // create the master object
-        CbusSensorManager mgr = CbusSensorManager.instance();
         // load individual sensors
         result = loadSensors(sensors);
 		// Request the status of these sensors from the layout, if appropriate.
-		mgr.updateAll();
+		//mgr.updateAll();
 		return result;
     }
 

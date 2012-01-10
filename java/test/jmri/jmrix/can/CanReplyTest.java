@@ -49,14 +49,12 @@ public class CanReplyTest extends CanMRCommonTest {
         m1.setHeader(0x12);
         m1.setNumDataElements(0);
 
-        CanMessage m2 = new CanMessage(0);
+        CanMessage m2 = new CanMessage(0, 0x12);
         m2.setExtended(true);
-        m2.setHeader(0x12);
         m2.setNumDataElements(0);
 
-        CanMessage m3 = new CanMessage();
+        CanMessage m3 = new CanMessage(0x12);
         m3.setExtended(false);
-        m3.setHeader(0x12);
         m3.setNumDataElements(0);
 
         Assert.assertTrue("equals same", m1.equals(m2));

@@ -28,11 +28,14 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener {
         // throw e;
     }
     
-    public CbusProgrammer(int nodenumber) {
+    public CbusProgrammer(int nodenumber, TrafficController tc) {
         this.nodenumber = nodenumber;
         // need a longer LONG_TIMEOUT
         LONG_TIMEOUT=180000;
+        this.tc=tc;
     }
+    
+    TrafficController tc;
 
     int nodenumber;
     /**
@@ -104,8 +107,8 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener {
 
         // format and send the write message.
         int[] frame = new int[]{0x96, (nodenumber/256)&0xFF, nodenumber&0xFF, operationVariableNumber&0xFF, operationValue&0xFF};
-        CanMessage m = new CanMessage(frame);
-        controller().sendCanMessage(m, this);
+        CanMessage m = new CanMessage(frame, tc.getCanid());
+        tc.sendCanMessage(m, this);
 
         // no reply, so don't want for reply
         progState = NOTPROGRAMMING;
@@ -129,8 +132,8 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener {
 
         // format and send the read message.
         int[] frame = new int[]{0x71, (nodenumber/256)&0xFF, nodenumber&0xFF, operationVariableNumber&0xFF};
-        CanMessage m = new CanMessage(frame);
-        controller().sendCanMessage(m, this);
+        CanMessage m = new CanMessage(frame, tc.getCanid());
+        tc.sendCanMessage(m, this);
     }
 
     private jmri.ProgListener programmerUser = null;  // null if don't have one
@@ -199,7 +202,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener {
      * subclasses, e.g. ops mode, may redefine that.
      */
     void cleanup() {
-        // controller().sendEasyDccMessage(EasyDccMessage.getExitProgMode(), this);
+        // tc.sendEasyDccMessage(EasyDccMessage.getExitProgMode(), this);
     }
 
     // internal method to notify of the final result
@@ -211,19 +214,8 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener {
         programmerUser = null;
         temp.programmingOpReply(value, status);
     }
-
-    TrafficController controller = null;
-
-    protected TrafficController controller() {
-        // connect the first time
-        if (controller == null) {
-            controller = TrafficController.instance();
-        }
-        return controller;
-    }
-
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusProgrammer.class.getName());
-
 }
 
 

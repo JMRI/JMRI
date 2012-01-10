@@ -41,7 +41,11 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         }
         return ResourceBundle.getBundle("jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolBundle").getString("Title");
     }
-    
+   
+    /*
+     * @deprecated 2.99.2
+     */
+    @Deprecated
     public void initComponents(){
         tc = TrafficController.instance();
         tc.addCanListener(this);

@@ -9,6 +9,15 @@
 
 package jmri.jmrix.can.cbus.swing.console;
 
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+import javax.swing.JCheckBox;
+import javax.swing.JButton;
+import javax.swing.ButtonGroup;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+
 import javax.swing.JOptionPane;
 import jmri.jmrix.can.cbus.CbusConstants;
 
@@ -16,9 +25,9 @@ import jmri.jmrix.can.cbus.CbusConstants;
  *
  * @author Andrew
  */
-public class CbusEventFilterPanel extends jmri.jmrix.can.cbus.CbusEventFilterPanel {
+public class CbusEventFilterPanel extends JPanel {
     
-    /*protected JCheckBox nnEnButton = new JCheckBox();
+    protected JCheckBox nnEnButton = new JCheckBox();
     protected JTextField nnLowField = new JTextField("", 5);
     protected JTextField nnHighField = new JTextField("", 5);
     // Fields to enter Event range
@@ -32,7 +41,7 @@ public class CbusEventFilterPanel extends jmri.jmrix.can.cbus.CbusEventFilterPan
     protected ButtonGroup eventGroup = new ButtonGroup();
     // Buttons to enable/disable filters
     protected JButton enableButton = new JButton();
-    protected JButton disableButton = new JButton();*/
+    protected JButton disableButton = new JButton();
     
     /** Creates a new instance of CbusEventFilterPanel */
     public CbusEventFilterPanel(CbusEventFilterFrame filterFrame, int index) {
@@ -41,7 +50,11 @@ public class CbusEventFilterPanel extends jmri.jmrix.can.cbus.CbusEventFilterPan
         _filterFrame = filterFrame;
     }
 
-   /* public void initComponents(int index) throws Exception {
+    protected CbusEventFilterPanel(){
+        super();
+    }
+
+    public void initComponents(int index) throws Exception {
         // Panels will be added across
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         
@@ -133,7 +146,7 @@ public class CbusEventFilterPanel extends jmri.jmrix.can.cbus.CbusEventFilterPan
                 disableButtonActionPerformed(e);
             }
         });
-    }*/
+    }
     
     public void enableButtonActionPerformed(java.awt.event.ActionEvent e) {
         int nn = 0;

@@ -150,8 +150,8 @@ public class CbusAddress {
         return ret;
     }
   
-    public CanMessage makeMessage() {
-        return new CanMessage(aFrame);
+    public CanMessage makeMessage(int header) {
+        return new CanMessage(aFrame, header);
     }
         
     public boolean check() {

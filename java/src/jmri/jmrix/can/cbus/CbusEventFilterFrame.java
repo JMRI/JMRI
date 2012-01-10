@@ -20,7 +20,9 @@ import jmri.jmrix.can.CanReply;
  *
  * @author			Andrew Crosland   Copyright (C) 2008
  * @version			$Revision$
+ * @deprecated 2.99.2
  */
+@Deprecated
 public class CbusEventFilterFrame extends JmriJFrame {
     
     protected static final int FILTERS = 4;

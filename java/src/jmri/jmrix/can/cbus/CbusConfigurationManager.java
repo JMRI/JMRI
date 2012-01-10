@@ -102,7 +102,7 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     public ProgrammerManager getProgrammerManager() {
         if (programmerManager == null)
             programmerManager = new CbusDccProgrammerManager(
-                    new jmri.jmrix.can.cbus.CbusDccProgrammer());
+                    new jmri.jmrix.can.cbus.CbusDccProgrammer(adapterMemo.getTrafficController()), adapterMemo);
         return programmerManager;
     }
     public void setProgrammerManager(ProgrammerManager p) {

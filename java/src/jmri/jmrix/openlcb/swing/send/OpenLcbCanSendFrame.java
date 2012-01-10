@@ -4,7 +4,7 @@ package jmri.jmrix.openlcb.swing.send;
 
 import jmri.util.StringUtil;
 
-import jmri.jmrix.can.CanInterface;
+import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -462,9 +462,9 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
         // Try to convert using CbusAddress class
         CbusAddress a = new CbusAddress(s);
         if (a.check()) {
-            m = a.makeMessage();
+            m = a.makeMessage(tc.getCanid());
         } else {
-            m = new CanMessage();
+            m = new CanMessage(tc.getCanid());
             // check for header
             if (s.charAt(0)=='[') {
                 // extended header
@@ -490,7 +490,7 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
     }
 
     // connect to the CanInterface
-    public void connect(CanInterface t) {
+    public void connect(TrafficController t) {
         tc = t;
         tc.addCanListener(this);
     }
@@ -518,7 +518,7 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
     }
     
     // private data
-    private CanInterface tc = null;
+    private TrafficController tc = null; //was CanInterface
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OpenLcbCanSendFrame.class.getName());
 
 }

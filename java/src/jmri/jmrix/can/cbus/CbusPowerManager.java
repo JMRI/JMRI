@@ -18,13 +18,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  * @version	$Revision$
  */
 public class CbusPowerManager implements PowerManager, CanListener {
-
-    public CbusPowerManager() {
-        // connect to the TrafficManager
-        // connect to the TrafficManager
-        tc = TrafficController.instance();
-        tc.addCanListener(this);
-    }
     
     public CbusPowerManager(CanSystemConnectionMemo memo) {
         // connect to the TrafficManager
@@ -49,10 +42,10 @@ public class CbusPowerManager implements PowerManager, CanListener {
         checkTC();
         if (v==ON) {
             // send "Enable main track"
-            tc.sendCanMessage(CbusMessage.getRequestTrackOn(), this);
+            tc.sendCanMessage(CbusMessage.getRequestTrackOn(tc.getCanid()), this);
         } else if (v==OFF) {
             // send "Kill main track"
-            tc.sendCanMessage(CbusMessage.getRequestTrackOff(), this);
+            tc.sendCanMessage(CbusMessage.getRequestTrackOff(tc.getCanid()), this);
         }
     }
 

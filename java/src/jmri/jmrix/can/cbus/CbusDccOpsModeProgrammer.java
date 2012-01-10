@@ -22,8 +22,9 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer  {
 
     int mAddress;
     boolean mLongAddr;
-    public CbusDccOpsModeProgrammer(int pAddress, boolean pLongAddr) {
-
+    
+    public CbusDccOpsModeProgrammer(int pAddress, boolean pLongAddr, jmri.jmrix.can.TrafficController tc) {
+        super(tc);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
     }
@@ -42,7 +43,7 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer  {
         _cv = CV;
 
         // send the programming command
-        controller().sendCanMessage(CbusMessage.getOpsModeWriteCV(mAddress, mLongAddr, CV, val), this);
+        tc.sendCanMessage(CbusMessage.getOpsModeWriteCV(mAddress, mLongAddr, CV, val, tc.getCanid()), this);
         notifyProgListenerEnd(_val, jmri.ProgListener.OK);
     }
 

@@ -20,10 +20,9 @@ public class MessageTest extends TestCase {
     // t123412345678
     public void testOne() {
         
-        CanMessage m = new CanMessage();
+        CanMessage m = new CanMessage(0x123);
         m.setExtended(false);
         m.setRtr(false);
-        m.setHeader(0x123);
         m.setNumDataElements(4);
         m.setElement(0, 0x12);
         m.setElement(1, 0x34);
@@ -37,10 +36,9 @@ public class MessageTest extends TestCase {
     // T0000F00D0
     public void testTwo() {
         
-        CanMessage m = new CanMessage();
+        CanMessage m = new CanMessage(0xF00D);
         m.setExtended(true);
         m.setRtr(false);
-        m.setHeader(0xF00D);
         m.setNumDataElements(0);
         
         Message g = new Message(m);
@@ -49,11 +47,10 @@ public class MessageTest extends TestCase {
 
     public void testThree() {
         
-        CanMessage m = new CanMessage();
+        CanMessage m = new CanMessage(0x123);
         m.setExtended(true);
         // not clear how to set RTR in this protocol
         //m.setRtr(true);
-        m.setHeader(0x123);
         m.setNumDataElements(4);
         m.setElement(0, 0x12);
         m.setElement(1, 0x34);
@@ -67,10 +64,9 @@ public class MessageTest extends TestCase {
     // T0000F00D0
     public void testFour() {
         
-        CanMessage m = new CanMessage();
+        CanMessage m = new CanMessage(0xF00D);
         m.setExtended(true);
         m.setRtr(false);
-        m.setHeader(0xF00D);
         m.setNumDataElements(8);
         m.setElement(0, 0x78);
         m.setElement(1, 0x78);

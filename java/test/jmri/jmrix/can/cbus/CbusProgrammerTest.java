@@ -12,6 +12,7 @@ import junit.framework.TestSuite;
 
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.jmrix.can.TestTrafficController;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusProgrammer class.
@@ -22,7 +23,7 @@ import jmri.jmrix.can.TrafficControllerScaffold;
 public class CbusProgrammerTest extends TestCase {
 
     public void testHasModes() {
-        CbusProgrammer p = new CbusProgrammer(10);
+        CbusProgrammer p = new CbusProgrammer(10, new TestTrafficController());
         
         Assert.assertTrue("CBUSNODEVARMODE", p.hasMode(Programmer.CBUSNODEVARMODE));
         Assert.assertTrue("PAGEMODE", !p.hasMode(Programmer.PAGEMODE));
@@ -35,14 +36,14 @@ public class CbusProgrammerTest extends TestCase {
     }
 
     public void testGetMode() {
-        CbusProgrammer p = new CbusProgrammer(10);
+        CbusProgrammer p = new CbusProgrammer(10, new TestTrafficController());
         
         Assert.assertEquals("CBUSNODEVARMODE", Programmer.CBUSNODEVARMODE, 
                                             p.getMode());
     }
     
     public void testSetMode() {
-        CbusProgrammer p = new CbusProgrammer(10);
+        CbusProgrammer p = new CbusProgrammer(10, new TestTrafficController());
         
         p.setMode(Programmer.PAGEMODE);
         
@@ -51,7 +52,7 @@ public class CbusProgrammerTest extends TestCase {
     }
     
     public void testGetCanRead() {
-        CbusProgrammer p = new CbusProgrammer(10);
+        CbusProgrammer p = new CbusProgrammer(10, new TestTrafficController());
         
         Assert.assertTrue("can read", p.getCanRead());
     }
@@ -70,7 +71,7 @@ public class CbusProgrammerTest extends TestCase {
 
     public void testWriteSequence() throws jmri.ProgrammerException {
         TrafficControllerScaffold tc = new TrafficControllerScaffold();
-        CbusProgrammer p = new CbusProgrammer(3);
+        CbusProgrammer p = new CbusProgrammer(3, tc);
         
         reply = false;
         rcvdValue = -2;
@@ -92,7 +93,7 @@ public class CbusProgrammerTest extends TestCase {
 
     public void testReadSequence() throws jmri.ProgrammerException {
         TrafficControllerScaffold tc = new TrafficControllerScaffold();
-        CbusProgrammer p = new CbusProgrammer(3);
+        CbusProgrammer p = new CbusProgrammer(3, tc);
         
         reply = false;
         rcvdValue = -2;

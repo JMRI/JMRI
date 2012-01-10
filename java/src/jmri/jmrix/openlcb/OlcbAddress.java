@@ -96,9 +96,8 @@ public class OlcbAddress {
     }
   
     public CanMessage makeMessage() {
-        CanMessage c = new CanMessage(aFrame);
+        CanMessage c = new CanMessage(aFrame, 0x182df000);
         c.setExtended(true);
-        c.setHeader(0x182df000);
         return c;
     }
         

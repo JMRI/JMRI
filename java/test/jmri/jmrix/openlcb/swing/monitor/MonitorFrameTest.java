@@ -28,9 +28,8 @@ public class MonitorFrameTest extends TestCase {
         
         jmri.jmrix.can.CanMessage msg 
             = new jmri.jmrix.can.CanMessage(
-                new int[]{1,2});
+                new int[]{1,2}, 0x12345678);
         msg.setExtended(true);
-        msg.setHeader(0x12345678);
         
         f.message(msg);
         

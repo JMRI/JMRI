@@ -16,10 +16,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  * @since 2.3.1
  */
 public class CbusTurnoutManager extends AbstractTurnoutManager {
-	
-    public CbusTurnoutManager(){
-        super();
-    }
     
     public CbusTurnoutManager(CanSystemConnectionMemo memo){
         this.memo=memo;
@@ -38,16 +34,16 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      * @return never null
      */
     protected Turnout createNewTurnout(String systemName, String userName) {
-        if (userName!=null) 
-            return new CbusTurnout(systemName, userName);
-        else 
-            return new CbusTurnout(systemName);
+        String addr = systemName.substring(getSystemPrefix().length()+1);
+        Turnout t = new CbusTurnout(getSystemPrefix(), addr, memo.getTrafficController());
+        t.setUserName(userName);
+        return t;
     }
     
     public boolean allowMultipleAdditions() { return false;  }
     
     public String createSystemName(String curAddress, String prefix) throws JmriException{
-        return prefix+typeLetter()+curAddress;
+        return getSystemPrefix()+typeLetter()+curAddress;
     }
     
    /**
@@ -59,7 +55,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         numberToAdd = 1;
         String range[] = new String[numberToAdd];
         for (int x = 0; x < numberToAdd; x++){
-            range[x] = prefix+"T"+start;
+            range[x] = getSystemPrefix()+"T"+start;
         }
         return range;
     }

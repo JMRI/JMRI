@@ -5,6 +5,15 @@
 
 package jmri.jmrix.can.cbus.swing.console;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.WindowConstants;
+import java.awt.Color;
+
+import jmri.util.JmriJFrame;
+import jmri.jmrix.can.CanMessage;
+import jmri.jmrix.can.CanReply;
+
 import javax.swing.WindowConstants;
 import jmri.jmrix.can.cbus.*;
 
@@ -14,8 +23,15 @@ import jmri.jmrix.can.cbus.*;
  * @author			Andrew Crosland   Copyright (C) 2008
  * @version			$Revision: 17977 $
  */
-public class CbusEventFilterFrame extends jmri.jmrix.can.cbus.CbusEventFilterFrame {
+public class CbusEventFilterFrame extends JmriJFrame {
     
+    protected static final int FILTERS = 4;
+    static final Color[] filterColors = {Color.RED, Color.GREEN, Color.CYAN, Color.YELLOW};
+    protected CbusEventFilterPanel[] filterPanes = new CbusEventFilterPanel[FILTERS];
+
+    // member to hold reference to my filters
+    protected CbusEventFilter[] _filter = new CbusEventFilter[FILTERS];
+    protected boolean[] _filterActive = new boolean[FILTERS];
     private CbusConsolePane _console = null;
     
     /** Creates a new instance of CbusFilterFrame */
@@ -31,9 +47,40 @@ public class CbusEventFilterFrame extends jmri.jmrix.can.cbus.CbusEventFilterFra
         log.debug("CbusEventFilterFrame(CbusEventFilter) ctor done");
     }
     
+    protected CbusEventFilterFrame(){
+        super();
+    }
+    
     protected String title() { return "CBUS EventFilter"; }
     
     protected void init() {
+    }
+    
+    public void dispose() {
+        super.dispose();
+//        _console.filterFrameClosed();
+    }
+    
+    public void initComponents() throws Exception {
+        setTitle(title());
+        // Panels will be added downwards
+        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        
+        // add items to GUI
+        for (int i=0; i < FILTERS; i++) {
+            // Pane to hold a filter
+            filterPanes[i] = new CbusEventFilterPanel(this, i);
+            filterPanes[i].setBorder(BorderFactory.createTitledBorder(
+                    BorderFactory.createEtchedBorder(), "Filter "+(i+1)));
+            filterPanes[i].initComponents(i);
+            getContentPane().add(filterPanes[i]);
+        }
+        
+        // add help menu to window
+        addHelpMenu();
+        
+        // prevent button areas from expanding
+        pack();
     }
     
     public void enable(int index, int nn, boolean nnEn, int ev, boolean evEn, int ty) {
@@ -51,6 +98,39 @@ public class CbusEventFilterFrame extends jmri.jmrix.can.cbus.CbusEventFilterFra
         _console.filterOff(index);
     }
 
+    public int filter(CanMessage m) {
+        int i;
+        for (i = 0; i < FILTERS; i++) {
+            if (_filterActive[i] && _filter[i].filter(m)) return i;
+        }
+        return -1;
+    }
+    
+    public int filter(CanReply r) {
+        int i;
+        for (i = 0; i < FILTERS; i++) {
+            if (_filterActive[i] && _filter[i].filter(r)) return i;
+        }
+        return -1;
+    }
+    
+    public Color getColor(int i) {
+        return filterColors[i];
+    }
+    
+    /**
+     * Define help menu for this window.
+     * <p>
+     * By default, provides a generic help page
+     * that covers general features.  Specific
+     * implementations can override this to 
+     * show their own help page if desired.
+     */
+    protected void addHelpMenu() {
+        
+        // *** TO DO
+//    	addHelpMenu("package.jmri.jmrix.can.cbus.CbusEventFilterFrame", true);
+    }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusEventFilterFrame.class.getName());
 }

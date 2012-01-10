@@ -7,6 +7,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.jmrix.can.TestTrafficController;
+
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusProgrammerManager class.
  *
@@ -16,12 +18,12 @@ import junit.framework.TestSuite;
 public class CbusProgrammerManagerTest extends TestCase {
 
     public void testGlobal() {
-        CbusProgrammerManager m = new CbusProgrammerManager();
+        CbusProgrammerManager m = new CbusProgrammerManager(new TestTrafficController());
         Assert.assertTrue("no global mode", !m.isGlobalModePossible());
     }
 
     public void testAddressed() {
-        CbusProgrammerManager m = new CbusProgrammerManager();
+        CbusProgrammerManager m = new CbusProgrammerManager(new TestTrafficController());
         Assert.assertTrue("addressed mode ok", m.isAddressedModePossible());
     }
 

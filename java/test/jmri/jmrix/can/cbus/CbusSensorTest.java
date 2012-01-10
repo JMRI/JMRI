@@ -24,14 +24,14 @@ public class CbusSensorTest extends TestCase {
         // load dummy TrafficController
         TestTrafficController t = new TestTrafficController();
         Assert.assertNotNull("exists", t );
-        CbusSensor s = new CbusSensor("MS+1;-1");
+        CbusSensor s = new CbusSensor("MS", "+1;-1", t);
         
         // message for Active and Inactive
         CanMessage mActive = new CanMessage(
-                    new int[]{CbusConstants.CBUS_ASON,0x00,0x00,0x00,0x01}
+                    new int[]{CbusConstants.CBUS_ASON,0x00,0x00,0x00,0x01}, t.getCanid()
         );
         CanMessage mInactive = new CanMessage(
-                    new int[]{CbusConstants.CBUS_ASOF,0x00,0x00,0x00,0x01}
+                    new int[]{CbusConstants.CBUS_ASOF,0x00,0x00,0x00,0x01}, t.getCanid()
         );
 
         // check states
@@ -49,7 +49,7 @@ public class CbusSensorTest extends TestCase {
         // load dummy TrafficController
         TestTrafficController t = new TestTrafficController();
         
-        CbusSensor s = new CbusSensor("MS+1;-1");
+        CbusSensor s = new CbusSensor("MS", "+1;-1", t);
         t.rcvMessage = null;
         s.setKnownState(Sensor.ACTIVE);
         Assert.assertTrue(s.getKnownState()==Sensor.ACTIVE);
@@ -62,7 +62,8 @@ public class CbusSensorTest extends TestCase {
     }
     
     public void testNameCreation() {
-        Assert.assertTrue("create MSX0A;+N15E6", null!= new CbusSensor("MSX0A;+N15E6"));
+        TestTrafficController t = new TestTrafficController();
+        Assert.assertTrue("create MSX0A;+N15E6", null!= new CbusSensor("MS", "X0A;+N15E6", t));
     }
     
     // from here down is testing infrastructure

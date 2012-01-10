@@ -20,10 +20,9 @@ public class GridConnectMessageTest extends TestCase {
     // :S123N12345678;
     public void testOne() {
         
-        CanMessage m = new CanMessage();
+        CanMessage m = new CanMessage(0x123);
         m.setExtended(false);
         m.setRtr(false);
-        m.setHeader(0x123);
         m.setNumDataElements(4);
         m.setElement(0, 0x12);
         m.setElement(1, 0x34);
@@ -37,10 +36,9 @@ public class GridConnectMessageTest extends TestCase {
     // :XF00DN;
     public void testTwo() {
         
-        CanMessage m = new CanMessage();
+        CanMessage m = new CanMessage(0xF00D);
         m.setExtended(true);
         m.setRtr(false);
-        m.setHeader(0xF00D);
         m.setNumDataElements(0);
         
         GridConnectMessage g = new GridConnectMessage(m);
@@ -49,10 +47,9 @@ public class GridConnectMessageTest extends TestCase {
 
     public void testThree() {
         
-        CanMessage m = new CanMessage();
+        CanMessage m = new CanMessage(0x123);
         m.setExtended(true);
         m.setRtr(true);
-        m.setHeader(0x123);
         m.setNumDataElements(4);
         m.setElement(0, 0x12);
         m.setElement(1, 0x34);

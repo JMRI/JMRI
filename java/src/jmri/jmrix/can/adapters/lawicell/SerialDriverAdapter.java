@@ -6,6 +6,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 
+import jmri.jmrix.can.TrafficController;
+
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -110,19 +112,20 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     public void configure() {
 
         // Register the CAN traffic controller being used for this connection
-        adaptermemo.setTrafficController(LawicellTrafficController.instance());
+        TrafficController tc = LawicellTrafficController.instance();
+        adaptermemo.setTrafficController(tc);
         //LawicellTrafficController.instance();
         
         // Now connect to the traffic controller
         log.debug("Connecting port");
-        LawicellTrafficController.instance().connectPort(this);
+        tc.connectPort(this);
     
         // send a request for version information, set 125kbps, open channel
         log.debug("send version request");
         jmri.jmrix.can.CanMessage m = 
-            new jmri.jmrix.can.CanMessage(new int[]{'V', 13, 'S', '4', 13, 'O', 13});
+            new jmri.jmrix.can.CanMessage(new int[]{'V', 13, 'S', '4', 13, 'O', 13}, tc.getCanid());
         m.setTranslated(true);
-        LawicellTrafficController.instance().sendCanMessage(m, null);
+        tc.sendCanMessage(m, null);
 
         // do central protocol-specific configuration    
         //jmri.jmrix.can.ConfigurationManager.configure(mOpt1);

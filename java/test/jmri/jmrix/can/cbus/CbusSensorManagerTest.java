@@ -6,6 +6,9 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.TestTrafficController;
+
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusSensorManager class.
  *
@@ -15,7 +18,9 @@ import junit.framework.TestSuite;
 public class CbusSensorManagerTest extends TestCase {
 
     public void testCreate() {
-        CbusSensorManager m = new CbusSensorManager();
+        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
+        memo.setTrafficController(new TestTrafficController());
+        CbusSensorManager m = new CbusSensorManager(memo);
         m.provideSensor("MSX0A;+N15E6");
     }
         

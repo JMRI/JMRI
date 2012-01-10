@@ -19,6 +19,7 @@ abstract public class TrafficController extends AbstractCanTrafficController {
      * @return The registered TrafficController instance for general use,
      *         which must have been initialized previously
      */
+    @Deprecated
     static public TrafficController instance() {
         return self;
     }
@@ -29,6 +30,7 @@ abstract public class TrafficController extends AbstractCanTrafficController {
     static protected TrafficController self = null;
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // There can be only one instance at present
+    @Deprecated
     protected void setInstance() { self = this; }
 
     // The CAN ID to be used by the hardware

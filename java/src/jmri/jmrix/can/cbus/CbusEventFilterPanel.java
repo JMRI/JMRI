@@ -22,7 +22,9 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Andrew
+ * @deprecated 2.99.2
  */
+@Deprecated
 public class CbusEventFilterPanel extends JPanel {
     
     protected JCheckBox nnEnButton = new JCheckBox();

@@ -21,32 +21,14 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  * @version     $Revision$
  */
 public class CbusCommandStation implements CommandStation, DccCommandStation, CanListener {
-
-    static volatile private CbusCommandStation self = null;
-
-    static public CbusCommandStation instance() {
-        if (self != null) {
-            log.error("Attempt to create multiple CBUS command stations");
-        } else {
-            self = new CbusCommandStation();
-        }
-        return self;
-    }
-    
-    private CbusCommandStation(){
-    
-    }
     
     public CbusCommandStation(CanSystemConnectionMemo memo) {
-        userName = memo.getUserName();
-        systemPrefix = memo.getSystemPrefix();
         tc = memo.getTrafficController();
-        self = this;
+        adapterMemo = memo;
     }
     
-    String userName = "MERG";
-    String systemPrefix = "M";
-    TrafficController tc = TrafficController.instance();
+    TrafficController tc;
+    CanSystemConnectionMemo adapterMemo;
 
     /**
      * Send a specific packet to the rails.
@@ -62,7 +44,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
             log.warn("Only single transmissions currently available");
         }
 
-        CanMessage m = new CanMessage(2 + packet.length);     // Account for opcode and repeat
+        CanMessage m = new CanMessage(2 + packet.length, tc.getCanid());     // Account for opcode and repeat
         int j = 0; // counter of byte in input packet
 
         m.setElement(0, CbusConstants.CBUS_RDCC3 + (((packet.length - 3) & 0x3) << 5));
@@ -83,7 +65,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
      */
     public void releaseSession(int handle) {
         // Send KLOC
-        CanMessage msg = new CanMessage(2);
+        CanMessage msg = new CanMessage(2, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_KLOC);
         msg.setElement(1, handle);
         log.debug("Release session handle " + handle);
@@ -97,7 +79,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
      * @param speed_dir Bit 7 is direction (1 = forward) 6:0 are speed
      */
     public void setSpeedDir(int handle, int speed_dir) {
-        CanMessage msg = new CanMessage(3);
+        CanMessage msg = new CanMessage(3, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_DSPD);
         msg.setElement(1, handle);
         msg.setElement(2, speed_dir);
@@ -113,7 +95,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
      */
     protected void setFunctions(int group, int handle, int functions) {
         log.debug("Set function group " + group + " Fns " + functions + " for session handle" + handle);
-        CanMessage msg = new CanMessage(4);
+        CanMessage msg = new CanMessage(4, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_DFUN);
         msg.setElement(1, handle);
         msg.setElement(2, group);
@@ -127,7 +109,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
      */
     protected void setSpeedSteps(int handle, int mode) {
         log.debug("Set speed step mode " + mode + " for session handle" + handle);
-        CanMessage msg = new CanMessage(3);
+        CanMessage msg = new CanMessage(3, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_STMOD);
         msg.setElement(1, handle);
         msg.setElement(2, mode);
@@ -168,9 +150,9 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
         return "0.0";
     }
     
-    public String getUserName() { return userName; }
+    public String getUserName() { return adapterMemo.getUserName(); }
     
-    public String getSystemPrefix() { return systemPrefix; }
+    public String getSystemPrefix() { return adapterMemo.getSystemPrefix(); }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusCommandStation.class.getName());
 }

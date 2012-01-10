@@ -81,7 +81,7 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
     // New message for hardware protocol
     protected AbstractMRMessage newMessage() { 
         log.debug("New CanMessage created");
-        CanMessage msg = new CanMessage();
+        CanMessage msg = new CanMessage(self.getCanid());
         return msg;
     }
 

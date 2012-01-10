@@ -18,27 +18,26 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     CbusAddress addrThrown;   // go to thrown state
     CbusAddress addrClosed;   // go to closed state
 
-	protected CbusTurnout(String systemName) {
-		super(systemName);
-        init(systemName);
-	}
-
-	protected CbusTurnout(String systemName, String userName) {
-		super(systemName, userName);
-        init(systemName);
-	}
+    protected CbusTurnout(String prefix, String address, TrafficController tc){
+        super(prefix+"T"+address);
+        this.tc = tc;
+        init(address);
+    
+    }
+    
+    TrafficController tc;
 
     /**
      * Common initialization for both constructors.
      * <p>
      * 
      */
-    private void init(String systemName) {
+    private void init(String address) {
         // build local addresses
-        CbusAddress a = new CbusAddress(systemName.substring(2,systemName.length()));
+        CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
         if (v==null) {
-            log.error("Did not find usable system name: "+systemName);
+            log.error("Did not find usable system name: "+address);
             return;
         }
         switch (v.length) {
@@ -46,12 +45,12 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
                 addrThrown = v[0];
                 // need to complement here for addr 1
                 // so address _must_ start with address + or -
-                if (systemName.substring(2,3).equals("+")) {
-                    addrClosed = new CbusAddress("-"+systemName.substring(3,systemName.length()));
-                } else if (systemName.substring(2,3).equals("-")) {
-                    addrClosed = new CbusAddress("+"+systemName.substring(3,systemName.length()));
+                if (address.startsWith("+")) {
+                    addrClosed = new CbusAddress("-"+address);
+                } else if (address.startsWith("-")) {
+                    addrClosed = new CbusAddress("+"+address);
                 } else {
-                    log.error("can't make 2nd event from systemname "+systemName);
+                    log.error("can't make 2nd event from systemname "+address);
                     return;
                 }
                 break;
@@ -60,11 +59,11 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
                 addrClosed = v[1];
                 break;
             default:
-                log.error("Can't parse CbusSensor system name: "+systemName);
+                log.error("Can't parse CbusSensor system name: "+address);
                 return;
         }
         // connect
-        TrafficController.instance().addCanListener(this);
+        tc.addCanListener(this);
     }
 
 	/**
@@ -75,11 +74,11 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
 	protected void forwardCommandChangeToLayout(int s) {
         CanMessage m;
         if (s==Turnout.THROWN) {
-            m = addrThrown.makeMessage();
-            TrafficController.instance().sendCanMessage(m, this);
+            m = addrThrown.makeMessage(tc.getCanid());
+            tc.sendCanMessage(m, this);
         } else if (s==Turnout.CLOSED) {
-            m = addrClosed.makeMessage();
-            TrafficController.instance().sendCanMessage(m, this);
+            m = addrClosed.makeMessage(tc.getCanid());
+            tc.sendCanMessage(m, this);
         }
 	}
 

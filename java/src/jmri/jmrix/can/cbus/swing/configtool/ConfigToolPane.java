@@ -78,6 +78,10 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         tc.addCanListener(this);
     }
     
+    /*
+     * @deprecated 2.99.2
+     */
+    @Deprecated
     public void initComponents() {
         tc = TrafficController.instance();
         tc.addCanListener(this);

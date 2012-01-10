@@ -17,9 +17,8 @@ import jmri.jmrix.can.TrafficControllerScaffold;
 public class CanMessageTest extends CanMRCommonTest {
 
     public void testCopyCtor() {
-        CanMessage m1 = new CanMessage();
+        CanMessage m1 = new CanMessage(0x12);
         m1.setExtended(true);
-        m1.setHeader(0x12);
         
         CanMessage m2 = new CanMessage(m1);
         Assert.assertTrue("extended", m2.isExtended());
@@ -27,17 +26,14 @@ public class CanMessageTest extends CanMRCommonTest {
     }
 
     public void testEqualsOp() {
-        CanMessage m1 = new CanMessage();
+        CanMessage m1 = new CanMessage(0x12);
         m1.setExtended(true);
-        m1.setHeader(0x12);
 
-        CanMessage m2 = new CanMessage();
+        CanMessage m2 = new CanMessage(0x12);
         m2.setExtended(true);
-        m2.setHeader(0x12);
 
-        CanMessage m3 = new CanMessage();
+        CanMessage m3 = new CanMessage(0x12);
         m3.setExtended(false);
-        m3.setHeader(0x12);
 
         Assert.assertTrue("equals self", m1.equals(m1));
         Assert.assertTrue("equals copy", m1.equals(new CanMessage(m1)));        
@@ -46,9 +42,8 @@ public class CanMessageTest extends CanMRCommonTest {
     }
     
     public void testEqualsReply() {
-        CanMessage m1 = new CanMessage(0);
+        CanMessage m1 = new CanMessage(0, 0x12);
         m1.setExtended(true);
-        m1.setHeader(0x12);
         m1.setNumDataElements(0);
         
         CanReply m2 = new CanReply();
@@ -66,17 +61,17 @@ public class CanMessageTest extends CanMRCommonTest {
     }
     
     public void testEqualsData() {
-        CanMessage m1 = new CanMessage();
+        CanMessage m1 = new CanMessage(0x12);
         m1.setNumDataElements(2);
         m1.setElement(0, 0x81);
         m1.setElement(1, 0x12);
         
-        CanMessage m2 = new CanMessage();
+        CanMessage m2 = new CanMessage(0x12);
         m2.setNumDataElements(2);
         m2.setElement(0, 0x81);
         m2.setElement(1, 0x12);
 
-        CanMessage m3 = new CanMessage();
+        CanMessage m3 = new CanMessage(0x12);
         m3.setNumDataElements(2);
         m3.setElement(0, 0x01);
         m3.setElement(1, 0x82);
@@ -88,15 +83,14 @@ public class CanMessageTest extends CanMRCommonTest {
     }
     
     public void testHeaderAccessors() {
-        CanMessage m = new CanMessage();
+        CanMessage m = new CanMessage(0x555);
         
-        m.setHeader(0x555);
         Assert.assertTrue("Header 0x555", m.getHeader() == 0x555);
         
     }
     
     public void testRtrBit() {
-        CanMessage m = new CanMessage();
+        CanMessage m = new CanMessage(0x12);
         Assert.assertTrue("not rtr at start", !m.isRtr());
         m.setRtr(true);
         Assert.assertTrue("rtr set", m.isRtr());
@@ -105,7 +99,7 @@ public class CanMessageTest extends CanMRCommonTest {
     }
 
     public void testStdExt() {
-        CanMessage m = new CanMessage();
+        CanMessage m = new CanMessage(0x12);
         Assert.assertTrue("std at start", !m.isExtended());
         m.setExtended(true);
         Assert.assertTrue("extended", m.isExtended());
@@ -114,7 +108,7 @@ public class CanMessageTest extends CanMRCommonTest {
     }
     
     public void testDataElements() {
-        CanMessage m = new CanMessage();
+        CanMessage m = new CanMessage(0x12);
 
         m.setNumDataElements(0);
         Assert.assertTrue("0 Elements", m.getNumDataElements() == 0);

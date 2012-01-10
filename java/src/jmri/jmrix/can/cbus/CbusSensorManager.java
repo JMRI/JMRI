@@ -20,37 +20,28 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  */
 public class CbusSensorManager extends jmri.managers.AbstractSensorManager implements CanListener {
 
-    String prefix = "M";
-    
-    public String getSystemPrefix() { return prefix; }
-
-    static public CbusSensorManager instance() {
-        if (mInstance == null) new CbusSensorManager();
-        return mInstance;
-    }
-    static private CbusSensorManager mInstance = null;
+    public String getSystemPrefix() { return memo.getSystemPrefix(); }
     
     // to free resources when no longer used
     public void dispose() {
-        TrafficController.instance().removeCanListener(this);
+        memo.getTrafficController().removeCanListener(this);
         super.dispose();
     }
     
     //Implimented ready for new system connection memo
     public CbusSensorManager(CanSystemConnectionMemo memo){
         this.memo=memo;
-        prefix = memo.getSystemPrefix();
         memo.getTrafficController().addCanListener(this);
     }
-    
     
     CanSystemConnectionMemo memo;
 
     // CBUS-specific methods
 
     public Sensor createNewSensor(String systemName, String userName) {
+        String addr = systemName.substring(getSystemPrefix().length()+1);
         // first, check validity
-        CbusAddress a = new CbusAddress(systemName.substring(2,systemName.length()));
+        CbusAddress a = new CbusAddress(addr);
         CbusAddress[] v = a.split();
         if (v==null) {
             log.error("Did not find usable system name: "+systemName);
@@ -61,19 +52,13 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
             return null;
         }
         // OK, make
-        return new CbusSensor(systemName, userName);
+        Sensor s = new CbusSensor(getSystemPrefix(), addr, memo.getTrafficController());
+        s.setUserName(userName);
+        return s;
     }
     
     public String createSystemName(String curAddress, String prefix) throws jmri.JmriException{
-        return prefix+typeLetter()+curAddress;
-    }
-
-    // ctor has to register for LocoNet events
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-    // There can only be one instance
-    public CbusSensorManager() {
-        TrafficController.instance().addCanListener(this);
-        mInstance = this;
+        return getSystemPrefix()+typeLetter()+curAddress;
     }
 
     // listen for sensors, creating them as needed

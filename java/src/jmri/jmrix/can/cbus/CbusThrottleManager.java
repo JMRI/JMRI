@@ -30,23 +30,15 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     private DccLocoAddress _dccAddr;
 
     private HashMap<Integer, CbusThrottle> softThrottles = new HashMap<Integer, CbusThrottle>(CbusConstants.CBUS_MAX_SLOTS);
-
-    /**
-     * Constructor. Gets a reference to the Cbus CommandStation.
-     */
-    public CbusThrottleManager() {
-    	super();
-        TrafficController.instance().addCanListener(this);
-        userName = "MERG";
-    }
     
     public CbusThrottleManager(CanSystemConnectionMemo memo) {
-    	super();
-        userName = memo.getUserName();
-        memo.getTrafficController().addCanListener(this);
+    	super(memo);
+        tc = memo.getTrafficController();
+        tc.addCanListener(this);
     }
     
-    CanSystemConnectionMemo memo;
+    TrafficController tc;
+
 
 	/**
 	 * CBUS allows only one throttle per address
@@ -64,7 +56,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         // station. Throttle object will be notified by Command Station
         log.debug("Requesting session for throttle");
                 
-        CanMessage msg = new CanMessage(3);
+        CanMessage msg = new CanMessage(3, tc.getCanid());
         // Request a session for this throttle
         msg.setOpCode(CbusConstants.CBUS_RLOC);
         if (((DccLocoAddress)address).isLongAddress()) {
@@ -72,7 +64,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         }
         msg.setElement(1, (_intAddr / 256));
         msg.setElement(2, _intAddr & 0xff);
-        TrafficController.instance().sendCanMessage(msg, this);
+        tc.sendCanMessage(msg, this);
         _handleExpected = true;
         startThrottleRequestTimer();
 	}
@@ -136,7 +128,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                     handle = m.getElement(1);
                     CbusThrottle throttle;
                     throttleRequestTimer.stop();
-                    throttle = new CbusThrottle(rcvdDccAddr, handle);
+                    throttle = new CbusThrottle((CanSystemConnectionMemo)adapterMemo, rcvdDccAddr, handle);
                     notifyThrottleKnown(throttle, rcvdDccAddr);
                     softThrottles.put(handle, throttle);
                     _handleExpected = false;

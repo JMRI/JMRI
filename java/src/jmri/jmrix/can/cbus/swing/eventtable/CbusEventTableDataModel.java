@@ -32,7 +32,10 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     static public final int NUMCOLUMN = 6;
 
     final JFileChooser fileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
- 
+     /*
+     * @deprecated 2.99.2
+     */
+    @Deprecated
     CbusEventTableDataModel(int row, int column) {
         _id = new int[CbusConstants.MAX_TABLE_EVENTS];
         _node = new int[CbusConstants.MAX_TABLE_EVENTS];

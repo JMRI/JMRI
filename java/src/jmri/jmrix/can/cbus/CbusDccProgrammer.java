@@ -19,18 +19,12 @@ import jmri.jmrix.can.*;
  */
 public class CbusDccProgrammer extends AbstractProgrammer implements CanListener {
 
-    public CbusDccProgrammer() {
+    public CbusDccProgrammer(jmri.jmrix.can.TrafficController tc){
+        this.tc=tc;
+        tc.addCanListener(this);
     }
-
-    /*
-     * method to find the existing SprogProgrammer object, if need be creating one
-     */
-    static public CbusDccProgrammer instance() {
-        if (self == null) self = new CbusDccProgrammer();
-
-        return self;
-    }
-    static volatile private CbusDccProgrammer self = null;
+    
+    jmri.jmrix.can.TrafficController tc;
 
     // handle mode
     static int _mode = Programmer.DIRECTBITMODE;
@@ -121,7 +115,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         try {
             startLongTimer();
             // write was in progress - send write command
-            controller().sendCanMessage(CbusMessage.getWriteCV(_cv, _val, getMode()), this);
+            tc.sendCanMessage(CbusMessage.getWriteCV(_cv, _val, getMode(), tc.getCanid()), this);
         } catch (Exception e) {
             // program op failed, go straight to end
             log.error("Write operation failed, exception "+e);
@@ -144,7 +138,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         try {
             startLongTimer();
             // read was in progress - send read command
-            controller().sendCanMessage(CbusMessage.getReadCV(_cv, getMode()), this);
+            tc.sendCanMessage(CbusMessage.getReadCV(_cv, getMode(), tc.getCanid()), this);
         } catch (Exception e) {
             // program op failed, go straight to end
             log.error("Read operation failed, exception "+e);
@@ -244,17 +238,6 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
             _usingProgrammer = null;
             temp.programmingOpReply(value, status);
         }
-    }
-
-    AbstractCanTrafficController _controller = null;
-
-    protected AbstractCanTrafficController controller() {
-        // connect the first time
-        if (_controller == null) {
-            _controller = jmri.jmrix.can.TrafficController.instance();
-            _controller.addCanListener(this);
-        }
-        return _controller;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusDccProgrammer.class.getName());

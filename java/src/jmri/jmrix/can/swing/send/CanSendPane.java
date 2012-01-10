@@ -227,9 +227,9 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
         // Try to convert using CbusAddress class
         CbusAddress a = new CbusAddress(s);
         if (a.check()) {
-            m = a.makeMessage();
+            m = a.makeMessage(tc.getCanid());
         } else {
-            m = new CanMessage();
+            m = new CanMessage(tc.getCanid());
             // check for header
             if (s.charAt(0)=='[') {
                 // extended header

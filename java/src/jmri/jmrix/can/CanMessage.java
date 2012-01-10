@@ -35,12 +35,8 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     public void setTranslated(boolean translated) { _translated = translated; }
     public boolean isTranslated() { return _translated; }
     
-    // Creates a new instance of CanMessage
-    public CanMessage() {
-        if (TrafficController.instance() != null)
-            _header = TrafficController.instance().getCanid();
-        else
-            _header = 0;
+    public CanMessage(int header){
+        _header=header;
         _isExtended = false;
         _isRtr = false;
         _nDataChars = 8;
@@ -49,14 +45,14 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     }
     
     // create a new one of given length
-    public CanMessage(int i) {
-        this();
+    public CanMessage(int i, int header) {
+        this(header);
         _nDataChars = (i <= 8) ? i : 8;
     }
     
     // create a new one from an array
-    public CanMessage(int [] d) {
-        this();
+    public CanMessage(int [] d, int header) {
+        this(header);
         _nDataChars = (d.length <= 8) ? d.length : 8;
         for (int i = 0; i < _nDataChars; i++) {
             _dataChars[i] = d[i];
