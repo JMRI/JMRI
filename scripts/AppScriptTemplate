@@ -159,11 +159,15 @@ else
 fi
 [ ${DEBUG} ] && echo "APPNAME: '${APPNAME}'"
 
+CONFIGNAME=`echo $APPNAME | awk '{print $1}'`
 
-if [ "$1" ]
+if [ ${OS} = "linux" -a -n "$1"]
 then
-    CONFIGFILE=$1;
+    CONFIGFILE=$1
+else
+    CONFIGFILE=${CONFIGNAME}Config@CONFIG_REV@.xml
 fi
+
 [ ${DEBUG} ] && echo "CONFIGFILE: '${CONFIGFILE}'"
 
 # create the option string
@@ -209,22 +213,24 @@ if [ "${ALTPORTS}" ]
 then
   ALTPORTS=-Dgnu.io.rxtx.SerialPorts=${ALTPORTS}
 fi
+[ "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
+
+
+declare -a DOCK_OPTIONS
+# Apple dock extensions to java get mangled by bash if included in ${OPTIONS}
+if [ "$OS" = "macosx" ]
+then
+  DOCK_OPTIONS=(-Xdock:name="${APPNAME}" -Xdock:icon="${APPICON}")
+fi
+[ "${DEBUG}" ] && echo "DOCK_OPTIONS: '${DOCK_OPTIONS[@]}'"
+
 
 RESTART_CODE=100
 EXIT_STATUS=${RESTART_CODE}
 while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ]; do
-  [ "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
 
-    # Apple dock extensions to java get mangled by bash if included in ${OPTIONS}
-    if [ "$OS" = "macosx" ]; then
-        [ "${DEBUG}" ] && echo java -Xdock:name="${APPNAME}" -Xdock:icon="${APPICON}" ${OPTIONS} "${ALTPORTS}" -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
+  java "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
 
-        java -Xdock:name="${APPNAME}" -Xdock:icon="${APPICON}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
-    else
-        [ "${DEBUG}" ] && echo java ${OPTIONS} "${ALTPORTS}" -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
-
-        java ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
-    fi
   EXIT_STATUS=$?
   [ "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}"
 done
