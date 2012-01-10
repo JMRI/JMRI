@@ -55,13 +55,8 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     JTextField writeDataField = new JTextField("00 00");
     JComboBox addrSpace = new JComboBox(new String[]{"CDI", "All", "Config", "None"});
 
-    /*public OpenLcbCanSendPane() {
-        super();
-    }*/
+    public OpenLcbCanSendPane() {
 
-    public void OpenLcbCanSendPane() {
-
-//        setTitle("Send CAN Frames and OpenLCB Messages");
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // handle single-packet part
