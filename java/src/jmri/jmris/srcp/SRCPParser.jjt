@@ -65,10 +65,10 @@ TOKEN :
 | < #OFF: <O>(<F>){2} >
 | < PROTOCOL: (<A>|<F>|<L>|<P>|<S>|<N>|<M>|<Z>) >
 | < DRIVEMODE: ("="|"0"|"1"|"2") >
+| < DELAY: ("-")?(["0"-"9"])+>
 | < JULDATE: (["1"-"9"]){2,4}["0"-"3"]["0"-"9"]["0"-"9"]>
 | < HOUR: (["0"-"2"])?["0"-"9"]>
 | < MINSEC: ["0"-"5"]["0"-"9"]>
-| < DELAY: ("-")?(["0"-"9"])+>
 
 // Device types
 | < FB: <F><B> >
@@ -258,7 +258,7 @@ SimpleNode set():{}
 
 SimpleNode term():{}
 {
-  <TERM> bus()  ( fb() gl() | sm() | power() | server() | lock() )
+  <TERM> bus()  ( fb() | gl() | sm() | power() | server() | lock() )
   {return jjtThis;}
 }
 
@@ -274,7 +274,7 @@ SimpleNode check():{}
 
 SimpleNode wait_cmd():{}
 {
-  <WAIT> bus() ( fb() | time() )
+  <WAIT> bus() ( fb() address() zeroone() timeout() )
 
   {
      log.debug("WAIT Production");
@@ -419,9 +419,21 @@ SimpleNode zeroone():{Token t;}
   }
 }
 
-SimpleNode delay():{}
+SimpleNode delay():{Token t;}
 {
-  <DELAY>
-  {return jjtThis;}
+  t=<DELAY>
+  {
+     log.debug("Delay Production " +t.image);
+     return jjtThis;
+  }
+}
+
+SimpleNode timeout():{Token t;}
+{
+  t=<ADDR>
+  {
+     log.debug("Timeout Production " +t.image);
+     return jjtThis;
+  }
 }
 

@@ -232,6 +232,11 @@ public class SRCPVisitor implements SRCPParserVisitor {
     log.debug("Delay " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
+  public Object visit(ASTtimeout node, Object data)
+  {
+    log.debug("Timeout " +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
   public Object visit(ASTzeroone node, Object data)
   {
     log.debug("ZeroOne " +node.jjtGetValue() );
