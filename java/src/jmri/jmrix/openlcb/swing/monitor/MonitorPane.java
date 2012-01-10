@@ -7,7 +7,6 @@ import jmri.jmrix.can.swing.CanPanelInterface;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.TrafficController;
 
 /**
  * Frame displaying (and logging) OpenLCB (CAN) frames

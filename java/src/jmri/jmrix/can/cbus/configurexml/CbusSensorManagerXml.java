@@ -1,7 +1,5 @@
 package jmri.jmrix.can.cbus.configurexml;
 
-import jmri.jmrix.can.cbus.CbusSensorManager;
-
 import org.jdom.Element;
 
 /**

@@ -3,7 +3,6 @@
 package jmri.jmrix.can;
 
 import jmri.jmrix.AbstractMRMessage;
-import jmri.jmrix.can.TrafficController;
 
 /**
  * Base class for messages in a CANbus based message/reply protocol.

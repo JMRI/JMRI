@@ -1,7 +1,5 @@
 package jmri.jmrix.openlcb.configurexml;
 
-import jmri.jmrix.openlcb.OlcbSensorManager;
-
 import org.jdom.Element;
 
 /**

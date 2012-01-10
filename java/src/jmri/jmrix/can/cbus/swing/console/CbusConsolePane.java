@@ -32,7 +32,11 @@ import java.awt.event.ActionEvent;
 import java.awt.Frame;
 
 import jmri.jmrix.AbstractMessage;
-import jmri.jmrix.can.*;
+import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.CanMessage;
+import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusOpCodes;
@@ -102,7 +106,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     final javax.swing.JFileChooser logFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
     
     // members for handling the CBUS interface
-    CanMessage msg;
+    //CanMessage msg;
     
     TrafficController tc = null;
     

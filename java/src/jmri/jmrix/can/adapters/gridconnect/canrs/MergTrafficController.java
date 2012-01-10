@@ -7,7 +7,6 @@ import jmri.jmrix.can.*;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 
-import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
 import jmri.jmrix.can.cbus.CbusConstants;
 

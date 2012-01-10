@@ -2,7 +2,6 @@ package jmri.jmrix.can.cbus;
 
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
-import jmri.CommandStation;
 
 import jmri.DccThrottle;
 import jmri.jmrix.AbstractThrottle;

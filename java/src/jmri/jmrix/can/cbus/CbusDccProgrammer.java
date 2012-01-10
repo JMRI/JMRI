@@ -27,7 +27,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     jmri.jmrix.can.TrafficController tc;
 
     // handle mode
-    static int _mode = Programmer.DIRECTBITMODE;
+    int _mode = Programmer.DIRECTBITMODE;
 
     /**
      * Switch to a new programming mode.  SPROG currently supports bit

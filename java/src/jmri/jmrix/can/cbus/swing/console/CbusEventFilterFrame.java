@@ -14,7 +14,6 @@ import jmri.util.JmriJFrame;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 
-import javax.swing.WindowConstants;
 import jmri.jmrix.can.cbus.*;
 
 /**

@@ -7,7 +7,7 @@ import jmri.Sensor;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.TrafficController;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
