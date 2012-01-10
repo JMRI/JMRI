@@ -56,6 +56,7 @@ public class TrainBuilder extends TrainCommon{
 	int numberCars = 0;			// how many cars are moved by this train
 	int reqNumEngines = 0; 		// the number of engines required for this train
 	List<String> engineList;	// list of engines available for this train
+	Engine leadEngine;				// last lead engine found from getEngine
 	int carIndex;				// index for carList
 	List<String> carList;		// list of cars available for this train
 	List<String> routeList;		// list of locations from departure to termination served by this train
@@ -365,19 +366,23 @@ public class TrainBuilder extends TrainCommon{
 			}
 		}
 		// First engine change in route?
+		Engine secondLeadEngine = null;
 		if ((train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES){
 			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildTrainEngineChange"),new Object[]{train.getSecondLegStartLocationName(), 
 				train.getSecondLegNumberEngines(), train.getSecondLegEngineModel(), train.getSecondLegEngineRoad()}));
 			if (getEngines(Integer.parseInt(train.getSecondLegNumberEngines()), train.getSecondLegEngineModel(), train.getSecondLegEngineRoad(), train.getSecondLegStartLocation(), engineTerminatesSecondLeg)){
+				secondLeadEngine = leadEngine;
 			} else {
 				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorEngines"),new Object[]{Integer.parseInt(train.getSecondLegNumberEngines()), train.getSecondLegStartLocation(), engineTerminatesSecondLeg}));
 			}
 		}
 		// Second engine change in route?
+		Engine thirdLeadEngine = null;
 		if ((train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES){
 			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildTrainEngineChange"),new Object[]{train.getThirdLegStartLocationName(), 
 				train.getThirdLegNumberEngines(), train.getThirdLegEngineModel(), train.getThirdLegEngineRoad()}));
 			if (getEngines(Integer.parseInt(train.getThirdLegNumberEngines()), train.getThirdLegEngineModel(), train.getThirdLegEngineRoad(), train.getThirdLegStartLocation(), engineTerminatesThirdLeg)){
+				thirdLeadEngine = leadEngine;
 			} else {
 				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorEngines"),new Object[]{Integer.parseInt(train.getThirdLegNumberEngines()), train.getThirdLegStartLocation(), engineTerminatesThirdLeg}));
 			}
@@ -414,16 +419,16 @@ public class TrainBuilder extends TrainCommon{
 		removeCars();
 
 		// get caboose or car with FRED if needed for train
-		getCaboose(train.getCabooseRoad(), train.getLeadEngine(), train.getTrainDepartsRouteLocation(), cabooseOrFredTerminatesFirstLeg);
+		getCaboose(train.getCabooseRoad(), train.getLeadEngine(), train.getTrainDepartsRouteLocation(), cabooseOrFredTerminatesFirstLeg, (train.getRequirements() & Train.CABOOSE) > 0);
 		getCarWithFred(train.getCabooseRoad(), train.getTrainDepartsRouteLocation(), cabooseOrFredTerminatesFirstLeg);
 		
 		// first caboose change?
 		if ((train.getSecondLegOptions() & Train.CHANGE_CABOOSE) > 0){
-			getCaboose(train.getSecondLegCabooseRoad(), null, train.getSecondLegStartLocation(), cabooseOrFredTerminatesSecondLeg);
+			getCaboose(train.getSecondLegCabooseRoad(), secondLeadEngine, train.getSecondLegStartLocation(), cabooseOrFredTerminatesSecondLeg, true);
 		}
 		// second caboose change?
 		if ((train.getThirdLegOptions() & Train.CHANGE_CABOOSE) > 0){
-			getCaboose(train.getThirdLegCabooseRoad(), null, train.getThirdLegStartLocation(), cabooseOrFredTerminatesThirdLeg);
+			getCaboose(train.getThirdLegCabooseRoad(), thirdLeadEngine, train.getThirdLegStartLocation(), cabooseOrFredTerminatesThirdLeg, true);
 		}
 		
 		// done assigning cabooses and cars with FRED, remove the rest, and save next destination
@@ -786,7 +791,7 @@ public class TrainBuilder extends TrainCommon{
 	}
 	
 	// find a caboose if needed at the correct location and add it to the train
-	private void getCaboose(String roadCaboose, Engine leadEngine, RouteLocation rl, RouteLocation rld) throws BuildFailedException{
+	private void getCaboose(String roadCaboose, Engine leadEngine, RouteLocation rl, RouteLocation rld, boolean requiresCaboose) throws BuildFailedException{
 		// load departure track if staging
 		Track departTrack = null;
 		if (rl == train.getTrainDepartsRouteLocation())
@@ -794,14 +799,12 @@ public class TrainBuilder extends TrainCommon{
 		boolean cabooseTip = true;	// add a user tip to the build report about cabooses if none found
 		boolean cabooseAtDeparture = false; // set to true if caboose at departure location is found
 		boolean foundCaboose = false;
-		boolean requiresCaboose = false;
-		if ((train.getRequirements() & Train.CABOOSE) == 0){
+		if (!requiresCaboose){
 			addLine(buildReport, FIVE, rb.getString("buildTrainNoCaboose"));
 			if (departTrack == null)
 				return;
 		} else {		
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildTrainReqCaboose"),new Object[]{train.getName(), roadCaboose, rl.getName(), rld.getName()}));
-			requiresCaboose = true;
 		}
 		for (carIndex=0; carIndex<carList.size(); carIndex++){
 			Car car = carManager.getById(carList.get(carIndex));
@@ -1416,6 +1419,7 @@ public class TrainBuilder extends TrainCommon{
 		location.setStatus();
 		Location destination = locationManager.getLocationByName(rld.getName());
 		destination.setStatus();
+		leadEngine = engine;
 		if (train.getLeadEngine() == null)
 			train.setLeadEngine(engine);	//load lead engine
 		addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildEngineAssigned"),new Object[]{engine.toString(), rld.getName(), track.getName()}));
