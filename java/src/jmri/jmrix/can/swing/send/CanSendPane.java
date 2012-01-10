@@ -4,7 +4,6 @@ package jmri.jmrix.can.swing.send;
 
 import jmri.util.StringUtil;
 
-import jmri.jmrix.can.CanInterface;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;

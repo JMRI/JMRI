@@ -2,7 +2,6 @@
 
 package jmri.jmrix.openlcb;
 
-import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.InstanceManager;
 
 /**

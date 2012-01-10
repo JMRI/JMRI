@@ -3,9 +3,6 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import java.util.ResourceBundle;
-
-import javax.swing.JMenu;
 
 /**
  * Create a menu containing the Jmri CAN- and CBUS-specific tools

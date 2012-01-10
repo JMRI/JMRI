@@ -5,16 +5,8 @@
 
 package jmri.jmrix.can.cbus.swing.console;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.WindowConstants;
-import java.awt.Color;
-
-import jmri.util.JmriJFrame;
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.cbus.*;
-import jmri.jmrix.can.cbus.CbusEventFilterPanel;
 
 /**
  * Frame to control an instance of CBUS filter to filter events

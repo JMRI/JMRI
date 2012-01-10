@@ -9,14 +9,6 @@
 
 package jmri.jmrix.can.cbus.swing.console;
 
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JRadioButton;
-import javax.swing.JCheckBox;
-import javax.swing.JButton;
-import javax.swing.ButtonGroup;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import jmri.jmrix.can.cbus.CbusConstants;
 

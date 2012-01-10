@@ -31,14 +31,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
 
-import jmri.util.JmriJFrame;
-
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.*;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusOpCodes;
-import jmri.jmrix.can.swing.CanPanelInterface;
 
 /**
  * Frame for Cbus Console

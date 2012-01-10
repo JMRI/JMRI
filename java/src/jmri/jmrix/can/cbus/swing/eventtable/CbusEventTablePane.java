@@ -5,7 +5,6 @@ package jmri.jmrix.can.cbus.swing.eventtable;
 import java.util.ResourceBundle;
 import jmri.util.davidflanagan.HardcopyWriter;
 
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
