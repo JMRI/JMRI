@@ -221,7 +221,7 @@ public class TrainManifest extends TrainCommon {
 	private void engineChange(PrintWriter fileOut, RouteLocation rl, int legOptions){
 		if ((legOptions & Train.HELPER_ENGINES) == Train.HELPER_ENGINES)
 			addLine(fileOut, MessageFormat.format(rb.getString("AddHelpersAt"), new Object[]{splitString(rl.getName())}));
-		else if ((legOptions & Train.CHANGE_CABOOSE) == Train.CHANGE_CABOOSE)
+		else if ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE || (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE)
 			addLine(fileOut, MessageFormat.format(rb.getString("EngineAndCabooseChangeAt"), new Object[]{splitString(rl.getName())}));
 		else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES)
 			addLine(fileOut, MessageFormat.format(rb.getString("EngineChangeAt"), new Object[]{splitString(rl.getName())}));

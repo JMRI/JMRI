@@ -107,7 +107,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	
 	public static final int CHANGE_ENGINES = 1;		// change engines
 	public static final int HELPER_ENGINES = 2;		// add helper engines
-	public static final int CHANGE_CABOOSE = 4;		// change caboose
+	public static final int ADD_CABOOSE = 4;		// add caboose
+	public static final int REMOVE_CABOOSE = 8;		// remove caboose
 	
 	// property change names
 	public static final String DISPOSE_CHANGED_PROPERTY = "TrainDispose";

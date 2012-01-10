@@ -268,7 +268,8 @@ public class TrainBuilder extends TrainCommon{
 				train.getSecondLegNumberEngines(), train.getSecondLegEngineModel(), train.getSecondLegEngineRoad()}));
 			if (train.getSecondLegStartLocation() != null){
 				engineTerminatesFirstLeg = train.getSecondLegStartLocation();
-				if ((train.getSecondLegOptions() & Train.CHANGE_CABOOSE) == Train.CHANGE_CABOOSE){
+				if ((train.getSecondLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
+						|| (train.getSecondLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE){
 					cabooseOrFredTerminatesFirstLeg = train.getSecondLegStartLocation();
 				}
 			}
@@ -282,13 +283,15 @@ public class TrainBuilder extends TrainCommon{
 				train.getThirdLegNumberEngines(), train.getThirdLegEngineModel(), train.getThirdLegEngineRoad()}));
 			if (train.getThirdLegStartLocation() != null){
 				engineTerminatesSecondLeg = train.getThirdLegStartLocation();
-				if ((train.getThirdLegOptions() & Train.CHANGE_CABOOSE) == Train.CHANGE_CABOOSE){
+				if ((train.getThirdLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
+						|| (train.getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE){
 					cabooseOrFredTerminatesSecondLeg = train.getThirdLegStartLocation();
 				}
 				// No engine or caboose change at first leg?
 				if ((train.getSecondLegOptions() & Train.CHANGE_ENGINES) != Train.CHANGE_ENGINES){
 					engineTerminatesFirstLeg = train.getThirdLegStartLocation();
-					if ((train.getThirdLegOptions() & Train.CHANGE_CABOOSE) == Train.CHANGE_CABOOSE){
+					if ((train.getThirdLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
+							|| (train.getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE){
 						cabooseOrFredTerminatesFirstLeg = train.getThirdLegStartLocation();
 					}
 				}
@@ -423,11 +426,11 @@ public class TrainBuilder extends TrainCommon{
 		getCarWithFred(train.getCabooseRoad(), train.getTrainDepartsRouteLocation(), cabooseOrFredTerminatesFirstLeg);
 		
 		// first caboose change?
-		if ((train.getSecondLegOptions() & Train.CHANGE_CABOOSE) > 0){
+		if ((train.getSecondLegOptions() & Train.ADD_CABOOSE) > 0){
 			getCaboose(train.getSecondLegCabooseRoad(), secondLeadEngine, train.getSecondLegStartLocation(), cabooseOrFredTerminatesSecondLeg, true);
 		}
 		// second caboose change?
-		if ((train.getThirdLegOptions() & Train.CHANGE_CABOOSE) > 0){
+		if ((train.getThirdLegOptions() & Train.ADD_CABOOSE) > 0){
 			getCaboose(train.getThirdLegCabooseRoad(), thirdLeadEngine, train.getThirdLegStartLocation(), cabooseOrFredTerminatesThirdLeg, true);
 		}
 		
@@ -800,7 +803,7 @@ public class TrainBuilder extends TrainCommon{
 		boolean cabooseAtDeparture = false; // set to true if caboose at departure location is found
 		boolean foundCaboose = false;
 		if (!requiresCaboose){
-			addLine(buildReport, FIVE, rb.getString("buildTrainNoCaboose"));
+			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildTrainNoCaboose"),new Object[]{rl.getName()}));
 			if (departTrack == null)
 				return;
 		} else {		
@@ -975,12 +978,14 @@ public class TrainBuilder extends TrainCommon{
     				continue;
     			}
         		// remove cabooses if not needed by train
+       			/*
         		if (c.isCaboose() && (train.getRequirements() & Train.CABOOSE) == 0){
     				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCabooseAtLoc"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+", "+c.getTrackName())}));
     				carList.remove(c.getId());		// remove this car from the list
     				carIndex--;
     				continue;
         		}
+        		*/
         		// remove cars with FRED if not needed by train
         		if (c.hasFred() && (train.getRequirements() & Train.FRED) == 0){
     				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarWithFredAtLoc"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+", "+c.getTrackName())}));

@@ -162,7 +162,7 @@ public class TrainCsvCommon extends TrainCommon {
 	protected void engineCsvChange(PrintWriter fileOut, RouteLocation rl, int legOptions){
 		if ((legOptions & Train.HELPER_ENGINES) == Train.HELPER_ENGINES)
 			addLine(fileOut, AH);
-		else if ((legOptions & Train.CHANGE_CABOOSE) == Train.CHANGE_CABOOSE)
+		else if ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE || (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE)
 			addLine(fileOut, CC);
 		else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES)
 			addLine(fileOut, CL);
