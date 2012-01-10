@@ -52,6 +52,12 @@ public class Constants {
     public static final int FLAG_BIT_X10_CMDUNIT	= 0x80;
     public static final int FLAG_X10_RECV_CMD	= 0x80;
     public static final int FLAG_X10_RECV_UNIT	= 0x00;
+    
+    public static final int	FLAG_MASK_HOPSLEFT	= 0x0C;
+    public static final int	FLAG_SHIFT_HOPSLEFT	= 2;
+    public static final int	FLAG_MASK_MAXHOPS	= 0x03;
+    public static final int	FLAG_MAXHOPS_DEFAULT	= 0x01;
+    public static final int	FLAG_MASK_MSGTYPE	= 0xE0;
 
     /**
      * Pretty-print a header code

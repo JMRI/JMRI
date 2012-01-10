@@ -46,6 +46,21 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
      int maxDimStep = 255;
      
     /**
+     * Value for  retransmission
+     */
+    int maxHops = Constants.FLAG_MAXHOPS_DEFAULT;
+     
+    public int getMaxHops() {
+		return maxHops;
+	}
+	public void setMaxHops(int maxHops) {
+		if (maxHops <= Constants.FLAG_MASK_MAXHOPS && maxHops >= 0) {
+			this.maxHops = maxHops;
+		} else {
+			log.error("setMaxHops out of range: " + maxHops);
+		}
+	}
+	/**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
@@ -112,7 +127,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
 
         // create output sequence of address, then function
         InsteonSequence out = new InsteonSequence();
-        out.addFunction(idhighbyte, idmiddlebyte, idlowbyte, Constants.FUNCTION_REQ_STD, Constants.FLAG_STD, Constants.CMD_LIGHT_CHG, newStep);
+        out.addFunction(idhighbyte, idmiddlebyte, idlowbyte, Constants.FUNCTION_REQ_STD, (Constants.FLAG_STD | (maxHops << Constants.FLAG_SHIFT_HOPSLEFT) | maxHops), Constants.CMD_LIGHT_CHG, newStep);
         // send
         tc.sendInsteonSequence(out, null);
 
@@ -158,7 +173,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
 
         // create output sequence of just address and function together
         InsteonSequence out = new InsteonSequence();
-        out.addFunction(idhighbyte, idmiddlebyte, idlowbyte, Constants.FUNCTION_REQ_STD, Constants.FLAG_STD, command1, 0);
+        out.addFunction(idhighbyte, idmiddlebyte, idlowbyte, Constants.FUNCTION_REQ_STD, (Constants.FLAG_STD | (maxHops << Constants.FLAG_SHIFT_HOPSLEFT) | maxHops), command1, 0);
         // send
         tc.sendInsteonSequence(out, null);
 

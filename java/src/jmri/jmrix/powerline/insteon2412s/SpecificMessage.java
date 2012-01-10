@@ -74,7 +74,7 @@ public class SpecificMessage extends SerialMessage {
 		            	} else if (len == 22) {
 		            		text.append(" Ext");
 		            	}
-		            	switch (getElement(5) & 0xE0) {
+		            	switch (getElement(5) & Constants.FLAG_MASK_MSGTYPE) {
 		            	case Constants.FLAG_TYPE_P2P:
 		            		text.append(" Direct");
 		            		break;
@@ -98,7 +98,8 @@ public class SpecificMessage extends SerialMessage {
 		            		break;
 		            	}
 		            	text.append(" message,");
-		            	text.append(" " + String.format("%d hops left, %d max hops", (getElement(5) & 0x0C >> 2), (getElement(5) & 0x03)));
+		            	text.append(String.format(" %d hops left", (getElement(5) & Constants.FLAG_MASK_HOPSLEFT >> Constants.FLAG_SHIFT_HOPSLEFT)));
+		            	text.append(String.format(" , %d max hops", (getElement(5) & Constants.FLAG_MASK_MAXHOPS)));
 		            	text.append(" addr " + String.format("%1$X.%2$X.%3$X", (getElement(2) & 0xFF), (getElement(3) & 0xFF), (getElement(4) & 0xFF)));
 		            	switch (getElement(6) & 0xFF) {
 		            	case Constants.CMD_LIGHT_ON_RAMP:
