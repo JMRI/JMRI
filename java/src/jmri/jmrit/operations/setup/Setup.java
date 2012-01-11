@@ -233,6 +233,7 @@ public class Setup {
 	private static boolean printLoadsAndEmpties	= false;	// when true print Loads and Empties on the manifest
 	private static boolean printTimetableName	= false;	// when true print timetable name on manifests and switch lists
 	private static boolean use12hrFormat		= false;	// when true use 12hr rather than 24hr format
+	private static boolean printValid			= true;		// when true print out the valid time and date
 
 	/* all JMRI window position and size are now saved
 	// Setup frame attributes
@@ -595,6 +596,14 @@ public class Setup {
 	
 	public static boolean is12hrFormatEnabled(){
 		return use12hrFormat;
+	}
+	
+	public static void setPrintValidEnabled(boolean enable){
+		printValid = enable;
+	}
+	
+	public static boolean isPrintValidEnabled(){
+		return printValid;
 	}
 	
 	public static void setSwitchTime(int minutes){
@@ -1239,6 +1248,7 @@ public class Setup {
        	values.setAttribute("printLoadsEmpties", isPrintLoadsAndEmptiesEnabled()?"true":"false");
        	values.setAttribute("printTimetable", isPrintTimetableNameEnabled()?"true":"false");
        	values.setAttribute("use12hrFormat", is12hrFormatEnabled()?"true":"false");
+       	values.setAttribute("printValid", isPrintValidEnabled()?"true":"false");
        	values.setAttribute("lengthUnit", getLengthUnit());
        	values.setAttribute("yearModeled", getYearModeled());
        	
@@ -1535,6 +1545,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("use12hrFormat: "+enable);
         		set12hrFormatEnabled(enable.equals("true"));
+        	}
+          	if ((a = operations.getChild("settings").getAttribute("printValid"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("printValid: "+enable);
+        		setPrintValidEnabled(enable.equals("true"));
         	}
          	if ((a = operations.getChild("settings").getAttribute("lengthUnit"))!= null){
         		String unit = a.getValue();
