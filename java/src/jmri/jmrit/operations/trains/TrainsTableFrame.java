@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
  
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.text.MessageFormat;
@@ -25,6 +26,8 @@ import javax.swing.table.TableColumnModel;
 
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
@@ -64,6 +67,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	EngineManagerXml engineManagerXml = EngineManagerXml.instance(); // load engines
 	TrainManager trainManager = TrainManager.instance();
 	TrainManagerXml trainManagerXml = TrainManagerXml.instance();
+	LocationManager locationManager = LocationManager.instance();
 
 	TrainsTableModel trainsModel;
 	TableSorter sorter;
@@ -249,6 +253,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     	
     	// listen for timetable changes
     	trainManager.addPropertyChangeListener(this);
+    	// listen for location switch list changes
+    	addPropertyChangeLocations();
     	
     }
     
@@ -513,6 +519,34 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		setTitle(title);
 	}
 	
+	private void updateSwitchListButton(java.beans.PropertyChangeEvent e){
+		log.debug("update switch list button");
+		Location location = (Location)e.getSource();
+		if (location.getSwitchList() && location.getStatus().equals(Location.MODIFIED)){
+			printSwitchButton.setBackground(Color.RED);
+			return;
+		}
+		printSwitchButton.setBackground(Color.GREEN);
+	}
+
+    private synchronized void addPropertyChangeLocations() {
+		List<String> locations = locationManager.getLocationsByIdList();
+		for (int i=0; i<locations.size(); i++){
+			Location location = locationManager.getLocationById(locations.get(i));
+			if (location != null)
+				location.addPropertyChangeListener(this);
+		}
+    }
+    
+    private synchronized void removePropertyChangeLocations() {
+		List<String> locations = locationManager.getLocationsByIdList();
+		for (int i=0; i<locations.size(); i++){
+			Location location = locationManager.getLocationById(locations.get(i));
+			if (location != null)
+				location.removePropertyChangeListener(this);
+		}
+    }
+	
     public void dispose() {
     	trainManager.setTrainsFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
     	trainsModel.dispose();
@@ -521,15 +555,19 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     	*/
     	trainManager.runShutDownScripts();
     	trainManager.removePropertyChangeListener(this);
+    	removePropertyChangeLocations();
         super.dispose();
     }
     
-	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()
-				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(TrainManager.ACTIVE_TRAIN_SCHEDULE_ID))
-				updateTitle();
-	}
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+    	if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()
+    			+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
+    	if (e.getPropertyName().equals(TrainManager.ACTIVE_TRAIN_SCHEDULE_ID))
+    		updateTitle();
+    	if (e.getSource().getClass().equals(Location.class) 
+    			&& e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY))
+    		updateSwitchListButton(e);
+    }
       
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 	.getLogger(TrainsTableFrame.class.getName());

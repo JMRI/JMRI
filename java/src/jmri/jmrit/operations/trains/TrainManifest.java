@@ -61,7 +61,8 @@ public class TrainManifest extends TrainCommon {
 				valid = valid + " ("+sch.getName()+")"; 
 		}
 		
-		addLine(fileOut, valid);
+		if (Setup.isPrintValidEnabled())
+			addLine(fileOut, valid);
 		if (!train.getComment().equals("")){
 			addLine(fileOut, train.getComment());
 		}
