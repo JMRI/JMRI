@@ -112,6 +112,10 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
     
     public SpeedometerFrame() {
         super(false, false);
+        //Install the named bean handle if not installed, which can happen if opened from DP3
+        if (jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class)==null){
+            jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+        }
         
         setInputBehavior(true,true,true);
 
