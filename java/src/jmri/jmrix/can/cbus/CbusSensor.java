@@ -21,13 +21,8 @@ public class CbusSensor extends AbstractSensor implements CanListener {
     CbusAddress addrActive;    // go to active state
     CbusAddress addrInactive;  // go to inactive state
 
-    /*public CbusSensor(String systemName, String userName) {
-        super(systemName, userName);
-        init(systemName);
-    }*/
-
     public CbusSensor(String prefix, String address, TrafficController tc) {
-        super(prefix+"T"+address);
+        super(prefix+"S"+address);
         this.tc = tc;
         init(address);
     }
