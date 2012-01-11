@@ -31,6 +31,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super("S", "Sprog");
         register(); // registers general type
         InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
+
         //Needs to be implemented
         /*InstanceManager.store(cf = new jmri.jmrix.ecos.swing.ComponentFactory(this), 
                         jmri.jmrix.swing.ComponentFactory.class);*/
@@ -38,7 +39,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     
     public void setSprogMode(SprogMode mode){ sprogMode=mode; }
     public SprogMode getSprogMode() { return sprogMode; }
-    private SprogMode sprogMode;
+    private SprogMode sprogMode;// = SprogMode.SERVICE;
 
     jmri.jmrix.swing.ComponentFactory cf = null;
       
@@ -90,7 +91,9 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return true;
         if (type.equals(jmri.ThrottleManager.class))
             return true;
-        if ((type.equals(jmri.ThrottleManager.class))){
+        if ((type.equals(jmri.CommandStation.class))){
+            if(sprogMode==null)
+                return false;
             switch(sprogMode){
                 case OPS : return true;
                 case SERVICE : return false;
