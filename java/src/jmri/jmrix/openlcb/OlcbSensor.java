@@ -22,7 +22,7 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
     OlcbAddress addrInactive;  // go to inactive state
 
     public OlcbSensor(String prefix, String address, TrafficController tc) {
-        super(prefix+"T"+address);
+        super(prefix+"S"+address);
         this.tc = tc;
         init(address);
     }
