@@ -519,12 +519,16 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		setTitle(title);
 	}
 	
-	private void updateSwitchListButton(java.beans.PropertyChangeEvent e){
+	private void updateSwitchListButton(){
 		log.debug("update switch list button");
-		Location location = (Location)e.getSource();
-		if (location.getSwitchList() && location.getStatus().equals(Location.MODIFIED)){
-			printSwitchButton.setBackground(Color.RED);
-			return;
+		List<String> locations = locationManager.getLocationsByIdList();
+		for (int i=0; i<locations.size(); i++){
+			Location location = locationManager.getLocationById(locations.get(i));
+			if (location != null)
+				if (location.getSwitchList() && location.getStatus().equals(Location.MODIFIED)){
+					printSwitchButton.setBackground(Color.RED);
+					return;
+				}
 		}
 		printSwitchButton.setBackground(Color.GREEN);
 	}
@@ -564,9 +568,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     			+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
     	if (e.getPropertyName().equals(TrainManager.ACTIVE_TRAIN_SCHEDULE_ID))
     		updateTitle();
-    	if (e.getSource().getClass().equals(Location.class) 
-    			&& e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY))
-    		updateSwitchListButton(e);
+    	if (e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY) 
+    			|| e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY))
+    		updateSwitchListButton();
     }
       
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
