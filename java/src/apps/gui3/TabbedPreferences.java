@@ -90,7 +90,9 @@ public class TabbedPreferences extends AppConfigBase {
     static final int INITIALISING = 0x01;
     static final int INITIALISED = 0x02;
     
-    public int init(){
+    public synchronized int init(){
+        if(initalisationState==INITIALISED)
+                return INITIALISED;
         if(initalisationState!=UNINITIALISED)
             return initalisationState;
         initalisationState=INITIALISING;
@@ -141,46 +143,73 @@ public class TabbedPreferences extends AppConfigBase {
         
         addItem("CONNECTIONS", rb.getString("MenuConnections"), null, null, 
                 connectionPanel, false, null);
-                
-        addItem("DEFAULTS",rb.getString("MenuDefaults"), rb.getString("TabbedLayoutDefaults"), rb.getString("LabelTabbedLayoutDefaults"), 
-            new apps.ManagerDefaultsConfigPane(), true, null);
-        
-        addItem("FILELOCATIONS", rb.getString("MenuFileLocation"), rb.getString("TabbedLayoutFileLocations"),
+
+        try {
+            addItem("DEFAULTS",rb.getString("MenuDefaults"), rb.getString("TabbedLayoutDefaults"), rb.getString("LabelTabbedLayoutDefaults"),
+                new apps.ManagerDefaultsConfigPane(), true, null);
+        } catch (Exception ex) {
+            log.error("Error in trying to add defaults to the preferences " + ex.toString());
+        }
+        try {
+            addItem("FILELOCATIONS", rb.getString("MenuFileLocation"), rb.getString("TabbedLayoutFileLocations"),
                 rb.getString("LabelTabbedFileLocations"), new apps.FileLocationPane(), true, null);
-        
-        addItem("STARTUP", rb.getString("MenuStartUp"), rb.getString("TabbedLayoutStartupActions"),
-            rb.getString("LabelTabbedLayoutStartupActions"), new apps.PerformActionPanel(), true, null);
-        addItem("STARTUP", rb.getString("MenuStartUp"), rb.getString("TabbedLayoutCreateButton"),
-            rb.getString("LabelTabbedLayoutCreateButton"), new apps.CreateButtonPanel(), true, null);
-        addItem("STARTUP", rb.getString("MenuStartUp"), rb.getString("TabbedLayoutStartupFiles"),
+        } catch (Exception ex) {
+            log.error("Error in trying to add the file locations to the preferences " + ex.toString());
+        }
+        try {
+            addItem("STARTUP", rb.getString("MenuStartUp"), rb.getString("TabbedLayoutStartupActions"),
+                rb.getString("LabelTabbedLayoutStartupActions"), new apps.PerformActionPanel(), true, null);
+            addItem("STARTUP", rb.getString("MenuStartUp"), rb.getString("TabbedLayoutCreateButton"),
+                rb.getString("LabelTabbedLayoutCreateButton"), new apps.CreateButtonPanel(), true, null);
+            addItem("STARTUP", rb.getString("MenuStartUp"), rb.getString("TabbedLayoutStartupFiles"),
                 rb.getString("LabelTabbedLayoutStartupFiles"), new apps.PerformFilePanel(), true, null);
-        addItem("STARTUP", rb.getString("MenuStartUp"), rb.getString("TabbedLayoutStartupScripts"),
+            addItem("STARTUP", rb.getString("MenuStartUp"), rb.getString("TabbedLayoutStartupScripts"),
                 rb.getString("LabelTabbedLayoutStartupScripts"), new apps.PerformScriptPanel(), true, null);
-
-        addItem("DISPLAY", rb.getString("MenuDisplay"), rb.getString("TabbedLayoutGUI"),
-                rb.getString("LabelTabbedLayoutGUI"), gui, true, null);
-        addItem("DISPLAY", rb.getString("MenuDisplay"), rb.getString("TabbedLayoutLocale"),
-                rb.getString("LabelTabbedLayoutLocale"), gui.doLocale(), false, null);
-        addItem("DISPLAY", rb.getString("MenuDisplay"), rb.getString("TabbedLayoutConsole"),
-                rb.getString("LabelTabbedLayoutConsole"), new apps.SystemConsoleConfigPanel(), true, null);
-        
-        addItem("MESSAGES", rb.getString("MenuMessages"), null, null, 
-            new jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane(), false, null);
-        
-        addItem("ROSTER", rb.getString("MenuRoster"), rb.getString("TabbedLayoutProgrammer"), rb.getString("LabelTabbedLayoutProgrammer"), 
-            new jmri.jmrit.symbolicprog.ProgrammerConfigPane(true), true, null);
-        addItem("ROSTER", rb.getString("MenuRoster"), rb.getString("TabbedLayoutRoster"),
-            rb.getString("LabelTabbedLayoutRoster"), new jmri.jmrit.roster.RosterConfigPane(), true, null);
-        
-        addItem("THROTTLE", rb.getString("MenuThrottle"), null, null, 
-            throttlePreferences, false, null);
-        
-        addItem("WITHROTTLE", rb.getString("MenuWiThrottle"), null, null, 
+        } catch (Exception ex) {
+            log.error("Error in trying to add the startup items to the preferences " + ex.toString());
+        }
+        try {
+            addItem("DISPLAY", rb.getString("MenuDisplay"), rb.getString("TabbedLayoutGUI"),
+                    rb.getString("LabelTabbedLayoutGUI"), gui, true, null);
+            addItem("DISPLAY", rb.getString("MenuDisplay"), rb.getString("TabbedLayoutLocale"),
+                    rb.getString("LabelTabbedLayoutLocale"), gui.doLocale(), false, null);
+            addItem("DISPLAY", rb.getString("MenuDisplay"), rb.getString("TabbedLayoutConsole"),
+                    rb.getString("LabelTabbedLayoutConsole"), new apps.SystemConsoleConfigPanel(), true, null);
+        } catch (Exception ex) {
+            log.error("Error in trying to add display config to the preferences " + ex.toString());
+        }
+        try {
+            addItem("MESSAGES", rb.getString("MenuMessages"), null, null,
+                new jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane(), false, null);
+        } catch (Exception ex) {
+            log.error("Error in trying to add message items to the preferences " + ex.toString());
+        }
+        try {
+            addItem("ROSTER", rb.getString("MenuRoster"), rb.getString("TabbedLayoutProgrammer"), rb.getString("LabelTabbedLayoutProgrammer"),
+                new jmri.jmrit.symbolicprog.ProgrammerConfigPane(true), true, null);
+            addItem("ROSTER", rb.getString("MenuRoster"), rb.getString("TabbedLayoutRoster"),
+                rb.getString("LabelTabbedLayoutRoster"), new jmri.jmrit.roster.RosterConfigPane(), true, null);
+        } catch (Exception ex) {
+            log.error("Error in trying to add roster preferemce " + ex.toString());
+        }
+        try {
+            addItem("THROTTLE", rb.getString("MenuThrottle"), null, null,
+                throttlePreferences, false, null);
+        } catch (Exception ex) {
+            log.error("Error in trying to add throttle preferences " + ex.toString());
+        }
+        try {
+            addItem("WITHROTTLE", rb.getString("MenuWiThrottle"), null, null,
                 withrottlePrefsPanel, false, null);
-
-        addItem("MINISERVER", rb.getString("MenuMiniServer"), null, null, 
+        } catch (Exception ex) {
+            log.error("Error in trying to add WiThrottle preferences " + ex.toString());
+        }
+        try {
+            addItem("MINISERVER", rb.getString("MenuMiniServer"), null, null,
                 miniserverPrefsPanel, false, null);
-            
+        } catch (Exception ex) {
+            log.error("Error in trying to add Mini Webserver preferences " + ex.toString());
+        }
         for(int x=0; x<preferencesArray.size(); x++){
             detailpanel.add(preferencesArray.get(x).getPanel(), preferencesArray.get(x).getPrefItem());
         }

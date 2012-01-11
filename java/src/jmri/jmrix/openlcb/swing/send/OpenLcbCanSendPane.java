@@ -493,9 +493,9 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         return m;
     }
 
-    // connect to the CanInterface
-    public void connect(TrafficController t) {
-        tc = t;
+    public void initComponents(CanSystemConnectionMemo memo) {
+        super.initComponents(memo);
+        tc = memo.getTrafficController();
         tc.addCanListener(this);
     }
 
