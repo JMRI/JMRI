@@ -12,6 +12,7 @@ import javax.swing.JSeparator;
 import jmri.NamedBeanHandle;
 import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.jmrit.signalling.SignallingGuiTools;
 
 /**
  * PositionablePoint is a Point defining a node in the Track that can be dragged around the
@@ -220,7 +221,17 @@ public class PositionablePoint
     }
     
     void removeSML(String signalMast){
-    
+        if(signalMast==null || signalMast.equals(""))
+            return;
+        jmri.SignalMast mast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
+        if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(mast)){
+            if(SignallingGuiTools.removeSignalMastLogic(null, mast)){
+                if (tools == null) {
+                    tools = new LayoutEditorTools(layoutEditor);
+                }
+                tools.removeSignalMastFromPanel(signalMast);
+            }
+        }
     }
 
     protected int maxWidth(){

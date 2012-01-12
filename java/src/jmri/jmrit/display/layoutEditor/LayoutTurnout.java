@@ -7,6 +7,7 @@ import jmri.Sensor;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.*;
 import jmri.util.swing.JmriBeanComboBox;
+import jmri.jmrit.signalling.SignallingGuiTools;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -2030,7 +2031,12 @@ public class LayoutTurnout
     }
     
     void removeSML(String signalMast){
-    
+        if(signalMast==null || !signalMast.equals(""))
+            return;
+        jmri.SignalMast mast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
+        if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(mast)){
+            SignallingGuiTools.removeSignalMastLogic(null, mast);
+        }
     }
     
     /**

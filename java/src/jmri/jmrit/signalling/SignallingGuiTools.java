@@ -75,7 +75,7 @@ public class SignallingGuiTools {
     * This provides a method to display a message to the user asking them to confirm if they wish to remove
     * the signal mast logic for a given signal.
     */
-    static public void removeSignalMastLogic(JmriJFrame frame, SignalMast mast){
+    static public boolean removeSignalMastLogic(JmriJFrame frame, SignalMast mast){
         Object[] options = {rb.getString("RemoveButton"),
             rb.getString("LeaveButton")};
         int n = JOptionPane.showOptionDialog(frame,
@@ -87,8 +87,11 @@ public class SignallingGuiTools {
             null,
             options,
             options[0]);
-         if(n==0)
+         if(n==0){
            InstanceManager.signalMastLogicManagerInstance().removeSignalMast(mast);
+            return true;
+        }
+        return false;
     }
     
     /**

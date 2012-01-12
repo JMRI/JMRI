@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import jmri.Sensor;
 import jmri.NamedBeanHandle;
 import jmri.InstanceManager;
+import jmri.jmrit.signalling.SignallingGuiTools;
 
 import java.util.ResourceBundle;
 import java.util.ArrayList;
@@ -382,7 +383,12 @@ public class LevelXing
     }
     
     void removeSML(String signalMast){
-    
+        if(signalMast==null || !signalMast.equals(""))
+            return;
+        jmri.SignalMast mast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
+        if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(mast)){
+            SignallingGuiTools.removeSignalMastLogic(null, mast);
+        }
     }
 
 	/** 
