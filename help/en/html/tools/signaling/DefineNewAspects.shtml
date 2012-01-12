@@ -246,7 +246,7 @@ characters in the right place? Etc.  The second makes sure that
 the right elements are in the right places, and is a little more
 intensive.
 
-<h3>Amendments to an Existing Signaling System<h3>
+<h3>Amendments to an Existing Signaling System</h3>
 
 There are a number of signalling definitions already provided within JMRI which are 
 located in the "xml/signals" directory, some of these may generally meet your existing 
