@@ -37,10 +37,14 @@ public class FileServlet extends AbstractServlet {
     static java.util.ResourceBundle types = java.util.ResourceBundle.getBundle("jmri.web.miniserver.servlet.fileservlet.FileServletTypes");
     static java.util.ResourceBundle paths = java.util.ResourceBundle.getBundle("jmri.web.miniserver.servlet.fileservlet.FileServletPaths");
     static java.util.ResourceBundle htmlStrings = java.util.ResourceBundle.getBundle("jmri.web.miniserver.Html");
+    private DateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss z");
 
     public void service(ServletRequest req, ServletResponse res) 
         throws java.io.IOException {
         
+    	//returned timestamps must be in GMT
+    	dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+
         // get the reader from the request
         BufferedReader in = req.getReader();
         
@@ -368,9 +372,6 @@ public class FileServlet extends AbstractServlet {
         }
     }
 
-    
-    private DateFormat dfGMT;
-
     // Send standard HTTP response (with default values)
     protected void printHeader(PrintWriter out, String mimeType, String responseStatus) {
     	printHeader(out, mimeType, responseStatus, null, -1);
@@ -381,11 +382,6 @@ public class FileServlet extends AbstractServlet {
     }
     
     protected void printHeader(PrintWriter out, String mimeType, String responseStatus, Date fileDate, long fileSize) {
-
-    	if (dfGMT == null) {  //setup format once
-    		dfGMT = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss z");
-    		dfGMT.setTimeZone(TimeZone.getTimeZone("GMT"));
-    	}
     	String s;
     	s = "HTTP/1.1 " + responseStatus + "\r\n" +
     		"Server: JMRI-FileServlet\r\n" +
@@ -393,10 +389,10 @@ public class FileServlet extends AbstractServlet {
     		"Connection: Keep-Alive\r\n";
     	if (fileDate != null) {
     		Date now = new Date();
-    		s += "Date: " + dfGMT.format(now) + "\r\n";
-    		s += "Last-Modified: " + dfGMT.format(fileDate) + "\r\n";
+    		s += "Date: " + dateFormat.format(now) + "\r\n";
+    		s += "Last-Modified: " + dateFormat.format(fileDate) + "\r\n";
     		s += "Cache-Control: public, max-age=" + 5*60 + "\r\n";  //max-age is in seconds
-    		s += "Expires: " + dfGMT.format(new Date(now.getTime() + 5*60*1000)) + "\r\n";  //set expiration to 5 minutes in the future, in ms
+    		s += "Expires: " + dateFormat.format(new Date(now.getTime() + 5*60*1000)) + "\r\n";  //set expiration to 5 minutes in the future, in ms
     	}
     	if (fileSize != -1) {
     		s += "Content-Length: " + fileSize + "\r\n";

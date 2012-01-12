@@ -9,12 +9,16 @@ import java.awt.image.*;
 import javax.imageio.*;
 import javax.swing.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.TimeZone;
+
 import jmri.util.JmriJFrame;
 import jmri.web.miniserver.MiniServerManager;
 
@@ -60,6 +64,7 @@ public class JmriJFrameServlet implements Servlet {
     protected String serverName = "JMRI-JFrameServer";
     static java.util.ResourceBundle rb
             = java.util.ResourceBundle.getBundle("jmri.web.servlet.frameimage.JmriJFrameServlet");
+    private DateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss z");
 
     public void destroy() {}
 
@@ -70,6 +75,9 @@ public class JmriJFrameServlet implements Servlet {
     public javax.servlet.ServletConfig getServletConfig() { return null; }
 
     public void service(ServletRequest req, ServletResponse res) throws java.io.IOException {
+
+    	//returned timestamps must be in GMT
+    	dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 
         // get the reader from the request
         BufferedReader in = req.getReader();
@@ -203,6 +211,7 @@ public class JmriJFrameServlet implements Servlet {
     	putFrameImage(frame, res.getOutputStream());
     }
 
+
     //send html list of available frames
     void listReply(PrintWriter out, ServletResponse res) {
 
@@ -237,9 +246,11 @@ public class JmriJFrameServlet implements Servlet {
 
         String s = sb.toString();
         h += s.length() + "\n";
+        
         Date now = new Date();
-		h += "Date: " + now + "\n";
-		h += "Last-Modified: " + now + "\n";
+		h += "Date: " + dateFormat.format(now) + "\r\n";
+		h += "Last-Modified: " + dateFormat.format(now) + "\r\n";
+		h += "Expires: " + dateFormat.format(now) + "\r\n";
 		out.println(h);  //write header with calculated fields
         out.println(s);  //write out rest of html page
         out.flush();
@@ -276,12 +287,11 @@ public class JmriJFrameServlet implements Servlet {
 
         h += s.length() + "\n";
         Date now = new Date();
-        h += "Date: " + now + "\n";
-        h += "Last-Modified: " + now + "\n";
+		h += "Date: " + dateFormat.format(now) + "\r\n";
+		h += "Last-Modified: " + dateFormat.format(now) + "\r\n";
         out.println(h);  //write header with calculated fields
         out.println(s);  //write out rest of html page
         out.flush();
-//        out.close();
         if (log.isDebugEnabled()) {
             log.debug("Sent " + s.length() + " bytes jframe html with click=" + (click ? "True" : "False"));
         }
@@ -557,8 +567,8 @@ public class JmriJFrameServlet implements Servlet {
                 "Keep-Alive: timeout=5, max=100\n" +
                 "Content-Length: " + fileSize + "\n";
         		Date now = new Date();
-        		h += "Date: " + now + "\n";
-        		h += "Last-Modified: " + now + "\n";
+        		h += "Date: " + dateFormat.format(now) + "\r\n";
+        		h += "Last-Modified: " + dateFormat.format(now) + "\r\n";
 
                 h += "\n";  //blank line to indicate end of header
     	out.print(h);
