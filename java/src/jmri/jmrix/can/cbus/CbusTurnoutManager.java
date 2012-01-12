@@ -43,7 +43,37 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     public boolean allowMultipleAdditions() { return false;  }
     
     public String createSystemName(String curAddress, String prefix) throws JmriException{
+        try {
+            validateSystemNameFormat(curAddress);
+        } catch (IllegalArgumentException e) {
+            throw new JmriException(e.toString());
+        }
         return getSystemPrefix()+typeLetter()+curAddress;
+    }
+    
+    public String getNextValidAddress(String curAddress, String prefix) throws JmriException{
+        // always return this (the current) name without change
+        try {
+            validateSystemNameFormat(curAddress);
+        } catch (IllegalArgumentException e) {
+            throw new JmriException(e.toString());
+        }
+        return curAddress;
+    }
+    
+    void validateSystemNameFormat(String address) throws IllegalArgumentException{
+        CbusAddress a = new CbusAddress(address);
+        CbusAddress[] v = a.split();
+        if (v==null) {
+            throw new IllegalArgumentException("Did not find usable system name: "+address+" to a valid Cbus turnout address");
+        }
+        switch (v.length){
+            case 1 : if (address.startsWith("+") || address.startsWith("-"))
+                        break;
+                     throw new IllegalArgumentException("can't make 2nd event from systemname "+address);
+            case 2 : break;
+            default :   throw new IllegalArgumentException("Wrong number of events in address: "+address);
+        }
     }
     
    /**

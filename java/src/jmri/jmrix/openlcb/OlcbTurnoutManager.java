@@ -16,10 +16,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  * @since 2.3.1
  */
 public class OlcbTurnoutManager extends AbstractTurnoutManager {
-	/*
-    public OlcbTurnoutManager(){
-        super();
-    }*/
     
     public OlcbTurnoutManager(CanSystemConnectionMemo memo){
         this.memo=memo;
@@ -48,12 +44,37 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     
     public String createSystemName(String curAddress, String prefix) throws JmriException{
         // don't check for integer; should check for validity here
+        try {
+            validateSystemNameFormat(curAddress);
+        } catch (IllegalArgumentException e) {
+            throw new JmriException(e.toString());
+        }
         return prefix+typeLetter()+curAddress;
     }
 
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException{
         // always return this (the current) name without change
+        try {
+            validateSystemNameFormat(curAddress);
+        } catch (IllegalArgumentException e) {
+            throw new JmriException(e.toString());
+        }
         return curAddress;
+    }
+    
+    void validateSystemNameFormat(String address) throws IllegalArgumentException{
+        OlcbAddress a = new OlcbAddress(address);
+        OlcbAddress[] v = a.split();
+        if (v==null) {
+            throw new IllegalArgumentException("Did not find usable system name: "+address+" to a valid Olcb turnout address");
+        }
+        switch (v.length){
+            case 1 : if (address.startsWith("+") || address.startsWith("-"))
+                        break;
+                     throw new IllegalArgumentException("can't make 2nd event from systemname "+address);
+            case 2 : break;
+            default :   throw new IllegalArgumentException("Wrong number of events in address: "+address);
+        }
     }
 
    /**

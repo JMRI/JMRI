@@ -3,6 +3,7 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.Sensor;
+import jmri.JmriException;
 
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
@@ -40,16 +41,13 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
     public Sensor createNewSensor(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length()+1);
         // first, check validity
-        CbusAddress a = new CbusAddress(addr);
-        CbusAddress[] v = a.split();
-        if (v==null) {
-            log.error("Did not find usable system name: "+systemName);
-            return null;
+        try {
+            validateSystemNameFormat(addr);
+        } catch (IllegalArgumentException e) {
+            log.error(e.toString());
+            throw e;
         }
-        if (v.length<1 || v.length>2) {
-            log.error("Wrong number of events in address: "+systemName);
-            return null;
-        }
+        
         // OK, make
         Sensor s = new CbusSensor(getSystemPrefix(), addr, memo.getTrafficController());
         s.setUserName(userName);
@@ -57,7 +55,27 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
     }
     
     public String createSystemName(String curAddress, String prefix) throws jmri.JmriException{
+        try {
+            validateSystemNameFormat(curAddress);
+        } catch (IllegalArgumentException e) {
+            throw new JmriException(e.toString());
+        }
         return getSystemPrefix()+typeLetter()+curAddress;
+    }
+    
+    void validateSystemNameFormat(String address) throws IllegalArgumentException{
+        CbusAddress a = new CbusAddress(address);
+        CbusAddress[] v = a.split();
+        if (v==null) {
+            throw new IllegalArgumentException("Did not find usable system name: "+address+" to a valid Cbus sensor address");
+        }
+        switch (v.length){
+            case 1 : if (address.startsWith("+") || address.startsWith("-"))
+                        break;
+                     throw new IllegalArgumentException("can't make 2nd event from systemname "+address);
+            case 2 : break;
+            default :   throw new IllegalArgumentException("Wrong number of events in address: "+address);
+        }
     }
 
     // listen for sensors, creating them as needed

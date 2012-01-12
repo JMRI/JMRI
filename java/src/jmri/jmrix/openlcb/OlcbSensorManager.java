@@ -7,6 +7,7 @@ import jmri.Sensor;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.JmriException;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
@@ -23,12 +24,6 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     String prefix = "M";
     
     public String getSystemPrefix() { return prefix; }
-
-    /*static public OlcbSensorManager instance() {
-        if (mInstance == null) new OlcbSensorManager();
-        return mInstance;
-    }
-    static private OlcbSensorManager mInstance = null;*/
 
     // to free resources when no longer used
     public void dispose() {
@@ -48,16 +43,13 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     public Sensor createNewSensor(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length()+1);
         // first, check validity
-        OlcbAddress a = new OlcbAddress(addr);
-        OlcbAddress[] v = a.split();
-        if (v==null) {
-            log.error("Did not find usable system name: "+systemName);
-            return null;
+        try {
+            validateSystemNameFormat(addr);
+        } catch (IllegalArgumentException e) {
+            log.error(e.toString());
+            throw e;
         }
-        if (v.length<1 || v.length>2) {
-            log.error("Wrong number of events in address: "+systemName);
-            return null;
-        }
+
         // OK, make
         Sensor s =  new OlcbSensor(getSystemPrefix(), addr, memo.getTrafficController());
         s.setUserName(userName);
@@ -66,7 +58,12 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
 
     public boolean allowMultipleAdditions() { return false;  }
     
-    public String createSystemName(String curAddress, String prefix) {
+    public String createSystemName(String curAddress, String prefix) throws JmriException{
+        try {
+            validateSystemNameFormat(curAddress);
+        } catch (IllegalArgumentException e) {
+            throw new JmriException(e.toString());
+        }
         // don't check for integer; should check for validity here
         return prefix+typeLetter()+curAddress;
     }
@@ -76,13 +73,20 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         return curAddress;
     }
 
-    // ctor has to register for LocoNet events
-   /* @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-                        justification="temporary until mult-system; only set at startup")
-    public OlcbSensorManager() {
-        TrafficController.instance().addCanListener(this);
-        mInstance = this;
-    }*/
+    void validateSystemNameFormat(String address) throws IllegalArgumentException{
+        OlcbAddress a = new OlcbAddress(address);
+        OlcbAddress[] v = a.split();
+        if (v==null) {
+            throw new IllegalArgumentException("Did not find usable system name: "+address+" to a valid Olcb sensor address");
+        }
+        switch (v.length){
+            case 1 : if (address.startsWith("+") || address.startsWith("-"))
+                        break;
+                     throw new IllegalArgumentException("can't make 2nd event from systemname "+address);
+            case 2 : break;
+            default :   throw new IllegalArgumentException("Wrong number of events in address: "+address);
+        }
+    }
 
     // listen for sensors, creating them as needed
     public void reply(CanReply l) {
