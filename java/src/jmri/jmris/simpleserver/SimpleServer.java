@@ -103,7 +103,7 @@ public class SimpleServer extends JmriServer {
                 } catch (jmri.JmriException je) {
                     outStream.writeBytes("not supported\n");
                 }
-            } else if (cmd.startsWith("OPERATIONS")) {
+            } else if (cmd.startsWith(SimpleOperationsServer.OPERATIONS)) {
                 try {
                     operationsServer.parseStatus(cmd);
                 } catch (jmri.JmriException je) {

@@ -4,6 +4,7 @@ package jmri.jmris;
 
 import java.io.*;
 
+import jmri.jmris.simpleserver.SimpleOperationsServer;
 import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.locations.*;
 
@@ -44,40 +45,40 @@ abstract public class AbstractOperationsServer implements
 	public void sendTrainList() throws IOException {
 		java.util.List<String> trainList = tm.getTrainsByNameList();
 		for (String trainID : trainList)
-			sendInfoString("OPERATIONS TRAINS "
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINS+ " "
 					+ tm.getTrainById(trainID).getName());
 		// end list with a . on a line by itself
-		sendInfoString("OPERATIONS TRAINS .");
+		sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINS+ " .");
 	}
 
 	/* send a list of locations */
 	public void sendLocationList() throws IOException {
 		java.util.List<String> locationList = lm.getLocationsByNameList();
 		for (String LocationID : locationList)
-			sendInfoString("OPERATIONS LOCATIONS "
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.LOCATIONS+ " "
 					+ lm.getLocationById(LocationID).getName());
 		// end list with a . on a line by itself
-		sendInfoString("OPERATIONS LOCATIONS .");
+		sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.LOCATIONS+ " .");
 	}
 
 	/* send train status */
 	public void sendTrainStatus(String trainName) throws IOException {
 		Train train = tm.getTrainByName(trainName);
 		if (train != null)
-			sendInfoString("OPERATIONS " + trainName + " STATUS "
-					+ train.getStatus());
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINSTATUS + " " + trainName 
+					+ SimpleOperationsServer.DELIMITER + train.getStatus());
 		else
-			sendInfoString("OPERATIONS ERROR train name doesn't exist "+trainName);
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
 	}
 
 	/* send train location */
 	public void sendTrainLocation(String trainName) throws IOException {
 		Train train = tm.getTrainByName(trainName);
 		if (train != null)
-			sendInfoString("OPERATIONS " + trainName + " LOCATION "
-					+ train.getCurrentLocationName());
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINLOCATION + " " + trainName
+					+ SimpleOperationsServer.DELIMITER + train.getCurrentLocationName());
 		else
-			sendInfoString("OPERATIONS ERROR train name doesn't exist "+trainName);
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
 	}
 
 	/* Set the current location of the train */
@@ -89,40 +90,40 @@ abstract public class AbstractOperationsServer implements
 			if (train.move(locationName))
 				sendTrainLocation(trainName);
 			else
-				sendInfoString("OPERATIONS ERROR Move of " + trainName
+				sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR Move of " + trainName
 						+ " to location " + locationName + " failed.");
 		} else
-			sendInfoString("OPERATIONS ERROR train name doesn't exist "+trainName);
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
 	}
 
 	/* send train length */
 	public void sendTrainLength(String trainName) throws IOException {
 		Train train = tm.getTrainByName(trainName);
 		if (train != null)
-			sendInfoString("OPERATIONS " + trainName + " LENGTH "
-					+ train.getTrainLength());
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINLENGTH + " " + trainName
+					+ SimpleOperationsServer.DELIMITER + train.getTrainLength());
 		else
-			sendInfoString("OPERATIONS ERROR train name doesn't exist "+trainName);
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
 	}
 
 	/* send train tonnage */
 	public void sendTrainWeight(String trainName) throws IOException {
 		Train train = tm.getTrainByName(trainName);
 		if (train != null)
-			sendInfoString("OPERATIONS " + trainName + " WEIGHT "
-					+ train.getTrainWeight());
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINWEIGHT + " " + trainName
+					+ SimpleOperationsServer.DELIMITER + train.getTrainWeight());
 		else
-			sendInfoString("OPERATIONS ERROR train name doesn't exist "+trainName);
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
 	}
 
 	/* send number of cars in train */
 	public void sendTrainNumberOfCars(String trainName) throws IOException {
 		Train train = tm.getTrainByName(trainName);
 		if (train != null)
-			sendInfoString("OPERATIONS " + trainName + " CARS "
-					+ train.getNumberCarsInTrain());
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINCARS + " " + trainName
+					+ SimpleOperationsServer.DELIMITER + train.getNumberCarsInTrain());
 		else
-			sendInfoString("OPERATIONS ERROR train name doesn't exist "+trainName);
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
 	}
 
 	/* Terminate the train */
@@ -132,7 +133,7 @@ abstract public class AbstractOperationsServer implements
 			train.terminate();
 			sendTrainStatus(trainName);
 		} else
-			sendInfoString("OPERATIONS ERROR train name doesn't exist "+trainName);
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
 	}
 
 	/*
