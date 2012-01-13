@@ -28,7 +28,7 @@ public class NceTurnout extends AbstractTurnout {
     public NceTurnout(NceTrafficController tc, String p, int i) {
     	super(p + "T" + i);
     	this.tc = tc;
-    	this.prefix = p;
+    	this.prefix = p + "T";
     	_number = i;
     	// At construction, register for messages
     	initialize();
@@ -100,7 +100,7 @@ public class NceTurnout extends AbstractTurnout {
 		if (log.isDebugEnabled())
 			log.debug("Send command to "
 					+ (pushButtonLockout ? "Lock" : "Unlock")
-					+ " Pushbutton NT" + _number);
+					+ " Pushbutton "+ prefix + _number);
 		
 		byte[] bl = PushbuttonPacket.pushbuttonPkt(prefix, _number, pushButtonLockout);
 		NceMessage m = NceMessage.sendPacketMessage(tc, bl);
