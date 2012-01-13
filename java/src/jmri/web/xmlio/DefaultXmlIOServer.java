@@ -206,25 +206,25 @@ public class DefaultXmlIOServer implements XmlIOServer {
             } else if (type.equals("frame")) {
             	
             	// list frames, (open JMRI windows)
-            	List<JmriJFrame> framesList = JmriJFrame.getFrameList();
-            	int framesNumber = framesList.size();
-            	for (int i = 0; i < framesNumber; i++) { //add all non-blank titles to list
-            		JmriJFrame iFrame = framesList.get(i);
-            		String frameTitle = iFrame.getTitle();
-            		if (!frameTitle.equals("") && !disallowedFrames.contains(frameTitle)) {
+                List<JmriJFrame> frames = JmriJFrame.getFrameList();
+                for (JmriJFrame frame : frames) { //add all non-blank titles to list
+                    if (frame.getAllowInFrameServlet()) {
+                        String frameTitle = frame.getTitle();
+                        if (!frameTitle.equals("") && !disallowedFrames.contains(frameTitle)) {
                             Element n = new Element((useAttributes) ? "frame" : "item");
                             if (useAttributes) {
                                 n.setAttribute("name", frameTitle.replaceAll(" ", "%20"));
                                 n.setAttribute("userName", frameTitle);
                             } else {
-                        n.addContent(new Element("type").addContent("frame"));
-                        //get rid of spaces in name
-            			n.addContent(new Element("name").addContent(frameTitle.replaceAll(" ","%20")));
-            			n.addContent(new Element("userName").addContent(frameTitle));
+                                n.addContent(new Element("type").addContent("frame"));
+                                //get rid of spaces in name
+                                n.addContent(new Element("name").addContent(frameTitle.replaceAll(" ", "%20")));
+                                n.addContent(new Element("userName").addContent(frameTitle));
                             }
-            			e.addContent(n);
-            		}
-            	}
+                            e.addContent(n);
+                        }
+                    }
+                }
             // identical to "frame" above until after 2.14
             } else if (type.equals("panel")) {
             	// list frames, (open JMRI windows)
