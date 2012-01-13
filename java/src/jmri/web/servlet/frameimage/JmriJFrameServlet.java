@@ -176,6 +176,10 @@ public class JmriJFrameServlet implements Servlet {
             handleError("Can't find frame [" + frameName + "]", 404, res);
             return;
         }
+        if (!frame.getAllowInFrameServlet()) {
+            handleError("Frame [" + frameName + "] not allowed (by developers)", 403, res);
+            return;
+        }
         if (!frameName.equals(frame.getTitle())) {
             log.warn("Request for [" + frameName + "] found title [" + frame.getTitle() + "], mismatched");
         }

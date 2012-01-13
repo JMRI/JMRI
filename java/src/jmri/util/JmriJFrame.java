@@ -65,6 +65,8 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
 
 public class JmriJFrame extends JFrame implements java.awt.event.WindowListener, jmri.ModifiedFlag, java.awt.event.ComponentListener, WindowInterface, BeanInterface {
 
+    protected boolean allowInFrameServlet = true;
+    
     /**
      * Creates a JFrame
      * @param saveSize - Set true to save the last known size
@@ -771,6 +773,14 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         return names;
     }
 
+    public void setAllowInFrameServlet(boolean allow) {
+        allowInFrameServlet = allow;
+    }
+    
+    public boolean getAllowInFrameServlet() {
+        return allowInFrameServlet;
+    }
+    
     @Override
     public boolean isFrame() {
         return true;
