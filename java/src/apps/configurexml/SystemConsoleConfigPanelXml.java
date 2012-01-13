@@ -44,11 +44,11 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
         Element ce = null;
         Element e = new Element("console");
         e.setAttribute("class", this.getClass().getName());
-        e.setAttribute("scheme", ""+SystemConsole.getScheme());
-        e.setAttribute("fontfamily", ""+SystemConsole.getFontFamily());
-        e.setAttribute("fontsize", ""+SystemConsole.getFontSize());
-        e.setAttribute("fontstyle", ""+SystemConsole.getFontStyle());
-        e.setAttribute("wrapstyle", ""+SystemConsole.getWrapStyle());
+        e.setAttribute("scheme", ""+SystemConsole.getInstance().getScheme());
+        e.setAttribute("fontfamily", ""+SystemConsole.getInstance().getFontFamily());
+        e.setAttribute("fontsize", ""+SystemConsole.getInstance().getFontSize());
+        e.setAttribute("fontstyle", ""+SystemConsole.getInstance().getFontStyle());
+        e.setAttribute("wrapstyle", ""+SystemConsole.getInstance().getWrapStyle());
 
         if (SystemConsoleConfigPanel.isPositionSaved()) {
             ce = new Element("position");
@@ -90,7 +90,7 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
 
         try {
             if ((value = e.getAttributeValue("scheme"))!=null) {
-                SystemConsole.setScheme(Integer.parseInt(value));
+                SystemConsole.getInstance().setScheme(Integer.parseInt(value));
             }
 
             if ((value = e.getAttributeValue("fontfamily"))!=null) {
@@ -104,19 +104,19 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
                 }
 
                 // Finally, set the font family
-                SystemConsole.setFontFamily(value);
+                SystemConsole.getInstance().setFontFamily(value);
             }
 
             if ((value = e.getAttributeValue("fontsize"))!=null) {
-                SystemConsole.setFontSize(Integer.parseInt(value));
+                SystemConsole.getInstance().setFontSize(Integer.parseInt(value));
             }
 
             if ((value = e.getAttributeValue("fontstyle"))!=null) {
-                SystemConsole.setFontStyle(Integer.parseInt(value));
+                SystemConsole.getInstance().setFontStyle(Integer.parseInt(value));
             }
 
             if ((value = e.getAttributeValue("wrapstyle"))!=null) {
-                SystemConsole.setWrapStyle(Integer.parseInt(value));
+                SystemConsole.getInstance().setWrapStyle(Integer.parseInt(value));
             }
 
             if ((ce = e.getChild("position"))!=null) {

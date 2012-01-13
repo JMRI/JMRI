@@ -4,9 +4,9 @@ package apps;
 
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
+import javax.swing.Icon;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
-import javax.swing.Icon;
 
 /**
  * Swing action to display the JMRI System Console
@@ -41,12 +41,14 @@ public class SystemConsoleAction extends jmri.util.swing.JmriAbstractAction {
         super(ResourceBundle.getBundle("apps.AppsBundle").getString("TitleConsole"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // Show system console
         SystemConsole.getConsole().setVisible(true);
     }
     
     // never invoked, because we overrode actionPerformed above
+    @Override
     public JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

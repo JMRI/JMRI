@@ -229,20 +229,28 @@ public abstract class AppsBase {
      *<LI>If no filename provided, use a default name (that's application
      *    specific)
      *</UL>
-     *This name will be used for reading and writing the preferences. It
-     * need not exist when the program first starts up.
+     * This name will be used for reading and writing the preferences. It
+     * need not exist when the program first starts up. This name may be proceeded
+     * with <em>config=</em>.
      *
      * @param def Default value if no other is provided
      * @param args Argument array from the main routine
      */
-    static protected void setConfigFilename(String def, String args[]) {
+    static protected void setConfigFilename(String def, String[] args) {
         // save the configuration filename if present on the command line
-        if (args.length>=1 && args[0]!=null) {
-            setJmriSystemProperty("configFilename", args[0]);
-            log.debug("Config file was specified as: "+args[0]);
-        } else{
-            setJmriSystemProperty("configFilename", def);
+        
+        if (args.length >= 1 && args[0] != null && !args[0].contains("=")) {
+            def = args[0];
+            log.debug("Config file was specified as: " + args[0]);
         }
+        for (String arg : args) {
+            String[] split = arg.split("=", 2);
+            if (split[0].equalsIgnoreCase("config")) {
+                def = split[1];
+                log.debug("Config file was specified as: " + arg);
+            }
+        }
+        setJmriSystemProperty("configFilename", def);
     }
     
     // We will use the value stored in the system property 
@@ -276,7 +284,7 @@ public abstract class AppsBase {
         // Initialise JMRI System Console
         // Need to do this before initialising log4j so that the new
         // stdout and stderr streams are set-up and usable by the ConsoleAppender
-        SystemConsole.init();
+        SystemConsole.create();
 
         log4JSetUp = true;
         // initialize log4j - from logging control file (lcf) only

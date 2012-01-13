@@ -870,7 +870,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         // Initialise JMRI System Console
         // Need to do this before initialising log4j so that the new
         // stdout and stderr streams are set-up and usable by the ConsoleAppender
-        SystemConsole.init();
+        SystemConsole.create();
 
         log4JSetUp = true;
         // initialize log4j - from logging control file (lcf) only
@@ -910,7 +910,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     /**
      * Set up the configuration file name at startup.
      * <P>
-     * The static configFilename variable holds the name 
+     * The Configuration File name variable holds the name 
      * used to load the configuration file during later startup
      * processing.  Applications invoke this method 
      * to handle the usual startup hierarchy:
@@ -921,22 +921,27 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
      *<LI>If no filename provided, use a default name (that's application
      *    specific)
      *</UL>
-     *This name will be used for reading and writing the preferences. It
-     * need not exist when the program first starts up.
+     * This name will be used for reading and writing the preferences. It
+     * need not exist when the program first starts up. This name may be proceeded
+     * with <em>config=</em> and may not contain the equals sign (=).
      *
      * @param def Default value if no other is provided
      * @param args Argument array from the main routine
      */
-    static protected void setConfigFilename(String def, String args[]) {
+    static protected void setConfigFilename(String def, String[] args) {
         // save the configuration filename if present on the command line
-        if (args.length>=1 && args[0]!=null) {
-            configFilename = args[0];
-            setJmriSystemProperty("configFilename", configFilename);
-            log.debug("Config file was specified as: "+configFilename);
-        } else{
-            configFilename = def;
-            setJmriSystemProperty("configFilename", configFilename);
+        if (args.length >= 1 && args[0] != null && !args[0].contains("=")) {
+            def = args[0];
+            log.debug("Config file was specified as: " + args[0]);
         }
+        for (String arg : args) {
+            String[] split = arg.split("=", 2);
+            if (split[0].equalsIgnoreCase("config")) {
+                def = split[1];
+                log.debug("Config file was specified as: "+arg);
+            }
+        }
+        setJmriSystemProperty("configFilename", def);
     }
     
     static public String getConfigFileName(){

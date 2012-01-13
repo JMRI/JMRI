@@ -2,12 +2,13 @@
 
 package apps;
 
-import apps.SystemConsole.Schemes;
+import apps.SystemConsole.Scheme;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -74,8 +75,8 @@ public class SystemConsoleConfigPanel extends JPanel {
 
     private static final JToggleButton fontStyleItalic = new JToggleButton("I");
 
-    private static final JComboBox scheme = new JComboBox(SystemConsole.schemes.toArray());
-
+    private static final JComboBox scheme = new JComboBox(SystemConsole.getInstance().getSchemes());
+    
     private static final JComboBox fontFamily = FontComboUtil.getFontCombo(FontComboUtil.MONOSPACED, 14);
 
     private static final JComboBox fontSize = new JComboBox(fontSizes);
@@ -87,10 +88,10 @@ public class SystemConsoleConfigPanel extends JPanel {
         JPanel p = new JPanel(new FlowLayout());
         p.add(new JLabel(rbc.getString("ConsoleScheme")));
 
-        scheme.setSelectedIndex(SystemConsole.getScheme());
+        scheme.setSelectedIndex(SystemConsole.getInstance().getScheme());
         scheme.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                SystemConsole.setScheme(((JComboBox)e.getSource()).getSelectedIndex());
+                SystemConsole.getInstance().setScheme(((JComboBox)e.getSource()).getSelectedIndex());
             }
         });
 
@@ -101,7 +102,7 @@ public class SystemConsoleConfigPanel extends JPanel {
                     boolean isSelected,
                     boolean hasFocus) {
 
-                Schemes scheme = (Schemes)value;
+                Scheme scheme = (Scheme)value;
 
                 JPanel p = new JPanel();
                 p.setOpaque(index > -1);
@@ -116,7 +117,7 @@ public class SystemConsoleConfigPanel extends JPanel {
 
                 JLabel l = new JLabel(" " + scheme.description + " ");
                 l.setOpaque(true);
-                l.setFont(new Font("Monospaced", SystemConsole.getFontStyle(), 12));
+                l.setFont(new Font("Monospaced", SystemConsole.getInstance().getFontStyle(), 12));
                 l.setForeground(scheme.foreground);
                 l.setBackground(scheme.background);
                 p.add(l);
@@ -136,11 +137,11 @@ public class SystemConsoleConfigPanel extends JPanel {
         p = new JPanel(new FlowLayout());
         fontFamily.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                SystemConsole.setFontFamily((String) ((JComboBox)e.getSource()).getSelectedItem());
+                SystemConsole.getInstance().setFontFamily((String) ((JComboBox)e.getSource()).getSelectedItem());
                 scheme.repaint();
             }
         });
-        fontFamily.setSelectedItem(SystemConsole.getFontFamily());
+        fontFamily.setSelectedItem(SystemConsole.getInstance().getFontFamily());
 
         JLabel fontFamilyLabel = new JLabel(rbc.getString("ConsoleFontStyle"));
         fontFamilyLabel.setLabelFor(fontFamily);
@@ -150,11 +151,11 @@ public class SystemConsoleConfigPanel extends JPanel {
 
         fontSize.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                SystemConsole.setFontSize((Integer) ((JComboBox)e.getSource()).getSelectedItem());
+                SystemConsole.getInstance().setFontSize((Integer) ((JComboBox)e.getSource()).getSelectedItem());
             }
         });
         fontSize.setToolTipText(rbc.getString("ConsoleFontSize"));
-        fontSize.setSelectedItem(SystemConsole.getFontSize());
+        fontSize.setSelectedItem(SystemConsole.getInstance().getFontSize());
         JLabel fontSizeUoM = new JLabel(rbc.getString("ConsoleFontSizeUoM"));
 
         p.add(fontSize);
@@ -167,7 +168,7 @@ public class SystemConsoleConfigPanel extends JPanel {
             }
         });
         fontStyleBold.setToolTipText(rbc.getString("ConsoleFontStyleBold"));
-        fontStyleBold.setSelected((SystemConsole.getFontStyle()&Font.BOLD)==Font.BOLD);
+        fontStyleBold.setSelected((SystemConsole.getInstance().getFontStyle()&Font.BOLD)==Font.BOLD);
         p.add(fontStyleBold);
 
         fontStyleItalic.setFont(fontStyleItalic.getFont().deriveFont(Font.ITALIC));
@@ -176,7 +177,7 @@ public class SystemConsoleConfigPanel extends JPanel {
                 doFontStyle();
             }
         });
-        fontStyleItalic.setSelected((SystemConsole.getFontStyle()&Font.ITALIC)==Font.ITALIC);
+        fontStyleItalic.setSelected((SystemConsole.getInstance().getFontStyle()&Font.ITALIC)==Font.ITALIC);
         fontStyleItalic.setToolTipText(rbc.getString("ConsoleFontStyleItalic"));
         p.add(fontStyleItalic);
 
@@ -186,10 +187,10 @@ public class SystemConsoleConfigPanel extends JPanel {
         final JComboBox wrapStyle = new JComboBox(wrapStyleNames);
         wrapStyle.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e)  {
-               SystemConsole.setWrapStyle(wrapStyles[((JComboBox)e.getSource()).getSelectedIndex()]);
+               SystemConsole.getInstance().setWrapStyle(wrapStyles[((JComboBox)e.getSource()).getSelectedIndex()]);
            }
         });
-        wrapStyle.setSelectedIndex(SystemConsole.getWrapStyle());
+        wrapStyle.setSelectedIndex(SystemConsole.getInstance().getWrapStyle());
 
         p.add(new JLabel(rbc.getString("ConsoleWrapStyle")));
         p.add(wrapStyle);
@@ -204,7 +205,7 @@ public class SystemConsoleConfigPanel extends JPanel {
     }
 
     private static void doFontStyle() {
-        SystemConsole.setFontStyle(
+        SystemConsole.getInstance().setFontStyle(
                 (fontStyleBold.isSelected()?Font.BOLD:Font.PLAIN)|
                 (fontStyleItalic.isSelected()?Font.ITALIC:Font.PLAIN));
         scheme.repaint();

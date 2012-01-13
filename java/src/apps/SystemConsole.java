@@ -7,28 +7,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import jmri.util.JmriJFrame;
 
 /**
@@ -51,7 +36,7 @@ import jmri.util.JmriJFrame;
  * @author Matthew Harris  copyright (c) 2010, 2011
  * @version $Revision$
  */
-public class SystemConsole extends JTextArea {
+public final class SystemConsole extends JTextArea {
 
     static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
     static final ResourceBundle rbc = ResourceBundle.getBundle("apps.AppsConfigBundle");
@@ -59,43 +44,51 @@ public class SystemConsole extends JTextArea {
     private static final int STD_ERR = 1;
     private static final int STD_OUT = 2;
 
-    private static JTextArea console = null;
+    private JTextArea console = null;
 
-    private static PrintStream originalOut;
-    private static PrintStream originalErr;
+    private PrintStream originalOut;
+    private PrintStream originalErr;
 
-    private static JmriJFrame frame = null;
+    private JmriJFrame frame = null;
 
-    private static JPopupMenu popup = new JPopupMenu();
+    private JPopupMenu popup = new JPopupMenu();
 
-    private static JMenu wrapMenu = null;
-    private static ButtonGroup wrapGroup = null;
+    private JMenu wrapMenu = null;
+    private ButtonGroup wrapGroup = null;
 
-    private static JMenu schemeMenu = null;
-    private static ButtonGroup schemeGroup = null;
+    private JMenu schemeMenu = null;
+    private ButtonGroup schemeGroup = null;
 
-    static ArrayList<Schemes> schemes;
+    private ArrayList<Scheme> schemes;
 
-    private static int scheme = 0; // Green on Black
+    private int scheme = 0; // Green on Black
 
-    private static int fontSize = 12;
+    private int fontSize = 12;
 
-    private static int fontStyle = Font.PLAIN;
+    private int fontStyle = Font.PLAIN;
 
-    private static String fontFamily = "Monospaced";
+    private String fontFamily = "Monospaced";
 
     public static final int WRAP_STYLE_NONE = 0x00;
     public static final int WRAP_STYLE_LINE = 0x01;
     public static final int WRAP_STYLE_WORD = 0x02;
 
-    private static int wrapStyle = WRAP_STYLE_WORD;
+    private int wrapStyle = WRAP_STYLE_WORD;
 
+    private static SystemConsole instance;
+    
     /**
      * Initialise the system console ensuring both System.out and System.err
      * streams are re-directed to the consoles JTextArea
      */
-    public static void init() {
+    public static void create() {
 
+        if (instance == null) {
+            instance = new SystemConsole();
+        }
+    }
+    
+    private SystemConsole() {
         if (console == null) {
             
             // Record current System.out and System.err
@@ -120,38 +113,44 @@ public class SystemConsole extends JTextArea {
         }
     }
 
+    public static SystemConsole getInstance() {
+        if (instance == null) {
+            SystemConsole.create();
+        }
+        return instance;
+    }
+    
     /**
      * Return the JFrame containing the console
      * @return console JFrame
      */
     public static JFrame getConsole() {
-        // Check if we've already been initialised and do so if not
-        if (console==null) {
-            init();
-        }
+        return SystemConsole.getInstance().getFrame();
+    }
+        
+    public JFrame getFrame() {
 
         // Check if we've created the frame and do so if not
-        log.debug("Check if frame created");
         if (frame==null) {
-            log.debug("No, do frame layout");
+            log.debug("Creating frame for console");
             // To avoid possible locks, frame layout should be
             // performed on the Swing thread
             if (SwingUtilities.isEventDispatchThread()) {
-                layoutFrame();
+                createFrame();
             } else {
                 try {
                     // Use invokeAndWait method as we don't want to
                     // return until the frame layout is completed
                     SwingUtilities.invokeAndWait(new Runnable() {
                         public void run() {
-                            layoutFrame();
+                            createFrame();
                         }
                     });
                 } catch (Exception ex) {
                     log.error("Exception creating system console frame: "+ex);
                 }
             }
-            log.debug("Layout done");
+            log.debug("Frame created");
         }
 
         return frame;
@@ -160,7 +159,7 @@ public class SystemConsole extends JTextArea {
     /**
      * Layout the console frame
      */
-    private static void layoutFrame() {
+    private void createFrame() {
         // Use a JmriJFrame to ensure that we fit on the screen
         frame = new JmriJFrame(rb.getString("TitleConsole"));
 
@@ -209,7 +208,7 @@ public class SystemConsole extends JTextArea {
         // Define the colour scheme sub-menu
         schemeMenu = new JMenu("Colour scheme");
         schemeGroup = new ButtonGroup();
-        for (final Schemes s: schemes) {
+        for (final Scheme s: schemes) {
             rbMenuItem = new JRadioButtonMenuItem(s.description);
             rbMenuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -272,7 +271,7 @@ public class SystemConsole extends JTextArea {
      * @param text the text to add
      * @param which the stream that this text is for
      */
-    private static void updateTextArea(final String text, final int which) {
+    private void updateTextArea(final String text, final int which) {
 
         // Append message to the original System.out / System.err streams
         if (which == STD_OUT) {
@@ -298,7 +297,7 @@ public class SystemConsole extends JTextArea {
      * @param which the stream, either STD_OUT or STD_ERR
      * @return the new OutputStream
      */
-    private static OutputStream outStream(final int which) {
+    private OutputStream outStream(final int which) {
         return new OutputStream() {
             @Override
             public void write(int b) throws IOException {
@@ -318,7 +317,7 @@ public class SystemConsole extends JTextArea {
     /**
      * Method to redirect the system streams to the console
      */
-    private static void redirectSystemStreams() {
+    private void redirectSystemStreams() {
         System.setOut(new PrintStream(outStream(STD_OUT), true));
         System.setErr(new PrintStream(outStream(STD_ERR), true));
     }
@@ -332,7 +331,7 @@ public class SystemConsole extends JTextArea {
      * <li>{@link #WRAP_STYLE_WORD} Wrap by word boundaries
      * </ul>
      */
-    public static void setWrapStyle(int style) {
+    public void setWrapStyle(int style) {
         wrapStyle = style;
         console.setLineWrap(style!=WRAP_STYLE_NONE);
         console.setWrapStyleWord(style==WRAP_STYLE_WORD);
@@ -351,7 +350,7 @@ public class SystemConsole extends JTextArea {
      * <li>{@link #WRAP_STYLE_WORD} Wrap by word boundaries (default)
      * </ul>
      */
-    public static int getWrapStyle() {
+    public int getWrapStyle() {
         return wrapStyle;
     }
 
@@ -359,7 +358,7 @@ public class SystemConsole extends JTextArea {
      * Set the console font size
      * @param size point size of font between 6 and 24 point
      */
-    public static void setFontSize(int size) {
+    public void setFontSize(int size) {
         updateFont(fontFamily, fontStyle, (fontSize = size<6?6:size>24?24:size));
     }
 
@@ -367,7 +366,7 @@ public class SystemConsole extends JTextArea {
      * Retrieve the current console font size (default 12 point)
      * @return selected font size in points
      */
-    public static int getFontSize() {
+    public int getFontSize() {
         return fontSize;
     }
 
@@ -375,7 +374,7 @@ public class SystemConsole extends JTextArea {
      * Set the console font style
      * @param style one of {@link Font#BOLD}, {@link Font#ITALIC}, {@link Font#PLAIN} (default)
      */
-    public static void setFontStyle(int style) {
+    public void setFontStyle(int style) {
 
         if (style==Font.BOLD || style==Font.ITALIC || style==Font.PLAIN || style==(Font.BOLD|Font.ITALIC)) {
             fontStyle = style;
@@ -385,11 +384,11 @@ public class SystemConsole extends JTextArea {
         updateFont(fontFamily, fontStyle, fontSize);
     }
 
-    public static void setFontFamily(String family) {
+    public void setFontFamily(String family) {
         updateFont((fontFamily = family), fontStyle, fontSize);
     }
 
-    public static String getFontFamily() {
+    public String getFontFamily() {
         return fontFamily;
     }
 
@@ -397,7 +396,7 @@ public class SystemConsole extends JTextArea {
      * Retrieve the current console font style
      * @return selected font style - one of {@link Font#BOLD}, {@link Font#ITALIC}, {@link Font#PLAIN} (default)
      */
-    public static int getFontStyle() {
+    public int getFontStyle() {
         return fontStyle;
     }
 
@@ -406,40 +405,40 @@ public class SystemConsole extends JTextArea {
      * @param style font style
      * @param size font size
      */
-    private static void updateFont(String family, int style, int size) {
+    private void updateFont(String family, int style, int size) {
         console.setFont(new Font(family, style, size));
     }
 
     /**
      * Method to define console colour schemes
      */
-    private static void defineSchemes() {
-        schemes = new ArrayList<Schemes>();
-        schemes.add(new Schemes(rbc.getString("ConsoleSchemeGreenOnBlack"), Color.GREEN, Color.BLACK));
-        schemes.add(new Schemes(rbc.getString("ConsoleSchemeOrangeOnBlack"), Color.ORANGE, Color.BLACK));
-        schemes.add(new Schemes(rbc.getString("ConsoleSchemeWhiteOnBlack"), Color.WHITE, Color.BLACK));
-        schemes.add(new Schemes(rbc.getString("ConsoleSchemeBlackOnWhite"), Color.BLACK, Color.WHITE));
-        schemes.add(new Schemes(rbc.getString("ConsoleSchemeWhiteOnBlue"), Color.WHITE, Color.BLUE));
-        schemes.add(new Schemes(rbc.getString("ConsoleSchemeBlackOnLightGray"), Color.BLACK, Color.LIGHT_GRAY));
-        schemes.add(new Schemes(rbc.getString("ConsoleSchemeBlackOnGray"), Color.BLACK, Color.GRAY));
-        schemes.add(new Schemes(rbc.getString("ConsoleSchemeWhiteOnGray"), Color.WHITE, Color.GRAY));
-        schemes.add(new Schemes(rbc.getString("ConsoleSchemeWhiteOnDarkGray"), Color.WHITE, Color.DARK_GRAY));
-        schemes.add(new Schemes(rbc.getString("ConsoleSchemeGreenOnDarkGray"), Color.GREEN, Color.DARK_GRAY));
-        schemes.add(new Schemes(rbc.getString("ConsoleSchemeOrangeOnDarkGray"), Color.ORANGE, Color.DARK_GRAY));
+    private void defineSchemes() {
+        schemes = new ArrayList<Scheme>();
+        schemes.add(new Scheme(rbc.getString("ConsoleSchemeGreenOnBlack"), Color.GREEN, Color.BLACK));
+        schemes.add(new Scheme(rbc.getString("ConsoleSchemeOrangeOnBlack"), Color.ORANGE, Color.BLACK));
+        schemes.add(new Scheme(rbc.getString("ConsoleSchemeWhiteOnBlack"), Color.WHITE, Color.BLACK));
+        schemes.add(new Scheme(rbc.getString("ConsoleSchemeBlackOnWhite"), Color.BLACK, Color.WHITE));
+        schemes.add(new Scheme(rbc.getString("ConsoleSchemeWhiteOnBlue"), Color.WHITE, Color.BLUE));
+        schemes.add(new Scheme(rbc.getString("ConsoleSchemeBlackOnLightGray"), Color.BLACK, Color.LIGHT_GRAY));
+        schemes.add(new Scheme(rbc.getString("ConsoleSchemeBlackOnGray"), Color.BLACK, Color.GRAY));
+        schemes.add(new Scheme(rbc.getString("ConsoleSchemeWhiteOnGray"), Color.WHITE, Color.GRAY));
+        schemes.add(new Scheme(rbc.getString("ConsoleSchemeWhiteOnDarkGray"), Color.WHITE, Color.DARK_GRAY));
+        schemes.add(new Scheme(rbc.getString("ConsoleSchemeGreenOnDarkGray"), Color.GREEN, Color.DARK_GRAY));
+        schemes.add(new Scheme(rbc.getString("ConsoleSchemeOrangeOnDarkGray"), Color.ORANGE, Color.DARK_GRAY));
     }
 
     /**
      * Set the console colour scheme
      * @param which the scheme to use
      */
-    public static void setScheme(int which) {
+    public void setScheme(int which) {
         scheme = which;
 
         if (schemes == null) {
             defineSchemes();
         }
 
-        Schemes s;
+        Scheme s;
 
         try {
             s = schemes.get(which);
@@ -460,19 +459,23 @@ public class SystemConsole extends JTextArea {
      * Retrieve the current console colour scheme
      * @return selected colour scheme
      */
-    public static int getScheme() {
+    public int getScheme() {
         return scheme;
     }
 
+    public Scheme[] getSchemes() {
+        return this.schemes.toArray(new Scheme[this.schemes.size()]);
+    }
+    
     /**
      * Class holding details of each scheme
      */
-    public static final class Schemes {
+    public final class Scheme {
         public Color foreground;
         public Color background;
         public String description;
 
-        Schemes(String description, Color foreground, Color background) {
+        Scheme(String description, Color foreground, Color background) {
             this.foreground = foreground;
             this.background = background;
             this.description = description;
@@ -482,7 +485,7 @@ public class SystemConsole extends JTextArea {
     /**
      * Class to deal with handling popup menu
      */
-    public static final class PopupListener extends MouseAdapter {
+    public final class PopupListener extends MouseAdapter {
         @Override
         public void mousePressed(MouseEvent e) {
             maybeShowPopup(e);

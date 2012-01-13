@@ -3,6 +3,7 @@
 package apps.gui3;
 
 import apps.SplashWindow;
+import apps.SystemConsole;
 import jmri.util.JmriJFrame;
 
 import java.awt.*;
@@ -45,7 +46,7 @@ public abstract class Apps3 extends apps.AppsBase {
         // Initialise system console
         // Put this here rather than in apps.AppsBase as this is only relevant
         // for GUI applications - non-gui apps will use STDOUT & STDERR
-        apps.SystemConsole.init();
+        SystemConsole.create();
         
         splash(true);
         
