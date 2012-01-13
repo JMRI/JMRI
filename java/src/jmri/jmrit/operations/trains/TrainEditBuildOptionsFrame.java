@@ -315,7 +315,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     	panelTrainReq1.add(engine1Option);
     	
     	// caboose options
-    	//roadCaboose1Box.setBorder(BorderFactory.createTitledBorder(rb.getString("Caboose")));
+    	engine1caboose.setBorder(BorderFactory.createTitledBorder(rb.getString("Caboose")));
     	roadCaboose1Box.setMinimumSize(new Dimension(120,20));
     	roadCaboose1Box.setToolTipText(rb.getString("RoadCabooseTip"));
     	addItem (engine1caboose, remove1Caboose, 1, 6);
@@ -373,7 +373,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     	panelTrainReq2.add(engine2Option);
     	
     	// caboose options
-    	//roadCaboose2Box.setBorder(BorderFactory.createTitledBorder(rb.getString("Caboose")));
+    	engine2caboose.setBorder(BorderFactory.createTitledBorder(rb.getString("Caboose")));
     	roadCaboose2Box.setMinimumSize(new Dimension(120,20));
     	roadCaboose2Box.setToolTipText(rb.getString("RoadCabooseTip"));
     	addItem (engine2caboose, remove2Caboose, 1, 6);

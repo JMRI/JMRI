@@ -530,21 +530,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     		String carId = ((Car) e.getSource()).getId();
     		int row = sysList.indexOf(carId);
     		if(Control.showProperty && log.isDebugEnabled()) log.debug("Update car table row: "+row);
-    		if (row >= 0){
+    		if (row >= 0)
     			fireTableRowsUpdated(row, row);
-    		// add car to table?
-    		}else if (e.getPropertyName().equals(Car.LOCATION_CHANGED_PROPERTY) || e.getPropertyName().equals(Car.TRACK_CHANGED_PROPERTY)) {
-    			Car car = manager.getById(carId);
-    			if (car == null){
-    				log.error("Null car in table model");
-    				return;
-    			}
-    			if ((locationName == null || car.getLocationName().equals(locationName)) 
-    					&& (trackName == null || car.getTrackName().equals(trackName))){
-    				updateList();
-    				fireTableDataChanged();
-    			}
-    		}
     	}
     }
 
