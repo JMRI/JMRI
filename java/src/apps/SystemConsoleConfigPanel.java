@@ -67,10 +67,6 @@ public class SystemConsoleConfigPanel extends JPanel {
         rbc.getString("ConsoleWrapStyleLine"),
         rbc.getString("ConsoleWrapStyleWord") };
 
-    private static final JCheckBox savePosition = new JCheckBox(rbc.getString("ConsoleWindowSavePosition"));
-
-    private static final JCheckBox saveSize = new JCheckBox(rbc.getString("ConsoleWindowSaveSize"));
-
     private static final JToggleButton fontStyleBold = new JToggleButton("B");
 
     private static final JToggleButton fontStyleItalic = new JToggleButton("I");
@@ -198,8 +194,6 @@ public class SystemConsoleConfigPanel extends JPanel {
 
         p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-        p.add(savePosition);
-        p.add(saveSize);
         add(p);
 
     }
@@ -209,22 +203,6 @@ public class SystemConsoleConfigPanel extends JPanel {
                 (fontStyleBold.isSelected()?Font.BOLD:Font.PLAIN)|
                 (fontStyleItalic.isSelected()?Font.ITALIC:Font.PLAIN));
         scheme.repaint();
-    }
-
-    public static void setPositionSaved(boolean position) {
-        savePosition.setSelected(position);
-    }
-
-    public static boolean isPositionSaved() {
-        return savePosition.isSelected();
-    }
-
-    public static void setSizeSaved(boolean size) {
-        saveSize.setSelected(size);
-    }
-
-    public static boolean isSizeSaved() {
-        return saveSize.isSelected();
     }
 }
 /* @(#)SystemConsoleConfigPanel.java */

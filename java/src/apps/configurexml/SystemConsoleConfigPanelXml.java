@@ -41,7 +41,6 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
      */
     public Element store(Object o) {
 
-        Element ce = null;
         Element e = new Element("console");
         e.setAttribute("class", this.getClass().getName());
         e.setAttribute("scheme", ""+SystemConsole.getInstance().getScheme());
@@ -49,20 +48,6 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
         e.setAttribute("fontsize", ""+SystemConsole.getInstance().getFontSize());
         e.setAttribute("fontstyle", ""+SystemConsole.getInstance().getFontStyle());
         e.setAttribute("wrapstyle", ""+SystemConsole.getInstance().getWrapStyle());
-
-        if (SystemConsoleConfigPanel.isPositionSaved()) {
-            ce = new Element("position");
-            ce.setAttribute("x", ""+SystemConsole.getConsole().getX());
-            ce.setAttribute("y", ""+SystemConsole.getConsole().getY());
-            e.addContent(ce);
-        }
-
-        if (SystemConsoleConfigPanel.isSizeSaved()) {
-            ce = new Element("size");
-            ce.setAttribute("width", ""+SystemConsole.getConsole().getWidth());
-            ce.setAttribute("height", ""+SystemConsole.getConsole().getHeight());
-            e.addContent(ce);
-        }
 
         return e;
     }
@@ -117,36 +102,6 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
 
             if ((value = e.getAttributeValue("wrapstyle"))!=null) {
                 SystemConsole.getInstance().setWrapStyle(Integer.parseInt(value));
-            }
-
-            if ((ce = e.getChild("position"))!=null) {
-                SystemConsoleConfigPanel.setPositionSaved(true);
-                boolean onScreen = false;
-
-                // Retrieve stored co-ordinates
-                int x = Integer.parseInt(ce.getAttributeValue("x"));
-                int y = Integer.parseInt(ce.getAttributeValue("y"));
-
-                // Check if stored co-ordinates are valid for at least one screen
-                for (GraphicsDevice gd: GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()) {
-                    onScreen = gd.getDefaultConfiguration().getBounds().contains(x, y)?true:onScreen;
-                }
-
-                if (!onScreen) {
-                    // Set to default position (0,0)
-                    log.warn("Stored console position is off-screen (" + x + ", " + y + ") - reset to default (0, 0)");
-                    x = y = 0;
-                }
-
-                // Finally, set the console location
-                SystemConsole.getConsole().setLocation(x, y);
-            }
-
-            if ((ce = e.getChild("size"))!=null) {
-                SystemConsoleConfigPanel.setSizeSaved(true);
-                SystemConsole.getConsole().setSize(
-                        Integer.parseInt(ce.getAttributeValue("width")),
-                        Integer.parseInt(ce.getAttributeValue("height")));
             }
 
         } catch (NumberFormatException ex) {
