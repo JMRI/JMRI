@@ -5,6 +5,8 @@ import jmri.DccLocoAddress;
 
 import jmri.jmrix.AbstractThrottleManager;
 
+import jmri.DccThrottle;
+
 
 /**
  * Implementation of a ThrottleManager for debugging.
@@ -28,7 +30,7 @@ public class DebugThrottleManager extends AbstractThrottleManager {
         // Immediately trigger the callback.
         DccLocoAddress address = (DccLocoAddress) a;
         log.debug("new debug throttle for "+address);
-        notifyThrottleKnown(new DebugThrottle(address), a);
+        notifyThrottleKnown(new DebugThrottle(address, adapterMemo), a);
     }
 
     /**
@@ -49,7 +51,16 @@ public class DebugThrottleManager extends AbstractThrottleManager {
      * Are there any ambiguous addresses (short vs long) on this system?
      */
     public boolean addressTypeUnique() { return false; }
-            
+    
+    public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l){
+        log.debug("disposeThrottle called for " + t);
+        if ( super.disposeThrottle(t, l)){
+            DebugThrottle lnt = (DebugThrottle) t;
+            lnt.throttleDispose();
+            return true;
+        }
+        return false;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DebugThrottleManager.class.getName());
 

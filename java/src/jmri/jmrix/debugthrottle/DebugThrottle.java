@@ -3,6 +3,7 @@ package jmri.jmrix.debugthrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.jmrix.AbstractThrottle;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * An implementation of DccThrottle for debugging use.
@@ -15,9 +16,9 @@ public class DebugThrottle extends AbstractThrottle
     /**
      * Constructor
      */
-    public DebugThrottle(DccLocoAddress address)
+    public DebugThrottle(DccLocoAddress address, SystemConnectionMemo memo)
     {
-        super(null);
+        super(memo);
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
@@ -94,7 +95,9 @@ public class DebugThrottle extends AbstractThrottle
             notifyPropertyChangeListener("IsForward", old, isForward );
     }
 
-    protected void throttleDispose(){ }
+    protected void throttleDispose(){
+        log.debug("throttleDispose() called");
+    }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DebugThrottle.class.getName());
