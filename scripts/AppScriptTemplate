@@ -39,7 +39,8 @@ ORIGDIR="${PWD}"
 SCRIPTDIR=$(cd "$( dirname "${0}" )" && pwd)
 
 # define the class to be invoked
-CLASSNAME=@CLASS@
+DEFAULT_APP_NAME="@NAME@"
+CLASSNAME="@CLASS@"
 
 # set DEBUG to anything to see debugging output
 # DEBUG=yes
@@ -155,20 +156,22 @@ if [ "$OS" = "macosx" ]; then
     # OS X can have spaces in the application name
     APPNAME=`basename -s .app "${BUNDLEDIR}"`
 else
-    APPNAME=`basename $0`
+    APPNAME=`basename "$0"`
 fi
+
 [ ${DEBUG} ] && echo "APPNAME: '${APPNAME}'"
 
-CONFIGNAME=`echo $APPNAME | awk '{print $1}'`
-
-if [ ${OS} = "linux" -a -n "$1" ]
+# we only process a config file name when the application is
+# NOT the default one this script was built for.
+if [ "$APPNAME" != "$DEFAULT_APP_NAME" ]
 then
-    CONFIGFILE=$1
-else
-    CONFIGFILE=${CONFIGNAME}Config@CONFIG_REV@.xml
-fi
 
-[ ${DEBUG} ] && echo "CONFIGFILE: '${CONFIGFILE}'"
+    CONFIGNAME=`echo $APPNAME | tr -d '[:space:]'`
+
+    CONFIGFILE="${CONFIGNAME}Config.xml"
+
+    [ ${DEBUG} ] && echo "CONFIGFILE: '${CONFIGFILE}'"
+fi
 
 # create the option string
 #
@@ -208,7 +211,7 @@ then
 fi
 
 # locate alternate serial ports
-ALTPORTS=`(echo $JMRI_SERIAL_PORTS; ls -fm /dev/serial/by-id/* /dev/ttyUSB* /dev/ttyACM* 2>/dev/null ) | tr -d " \n" | tr "," ":"`
+ALTPORTS=`(echo "$JMRI_SERIAL_PORTS"; ls -fm /dev/serial/by-id/* /dev/ttyUSB* /dev/ttyACM* 2>/dev/null ) | tr -d " \n" | tr "," ":"`
 if [ "${ALTPORTS}" ]
 then
   ALTPORTS=-Dgnu.io.rxtx.SerialPorts=${ALTPORTS}
@@ -221,13 +224,14 @@ declare -a DOCK_OPTIONS
 if [ "$OS" = "macosx" ]
 then
   DOCK_OPTIONS=(-Xdock:name="${APPNAME}" -Xdock:icon="${APPICON}")
+  [ "${DEBUG}" ] && echo "DOCK_OPTIONS: '${DOCK_OPTIONS[@]}'"
 fi
-[ "${DEBUG}" ] && echo "DOCK_OPTIONS: '${DOCK_OPTIONS[@]}'"
 
 
 RESTART_CODE=100
 EXIT_STATUS=${RESTART_CODE}
-while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ]; do
+while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ]
+do
 
   java "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
 
