@@ -7,13 +7,28 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javax.swing.*;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import jmri.util.JmriJFrame;
 
 /**
@@ -142,6 +157,7 @@ public final class SystemConsole extends JTextArea {
                     // Use invokeAndWait method as we don't want to
                     // return until the frame layout is completed
                     SwingUtilities.invokeAndWait(new Runnable() {
+                        @Override
                         public void run() {
                             createFrame();
                         }
@@ -174,6 +190,7 @@ public final class SystemConsole extends JTextArea {
         JPanel p = new JPanel();
         JButton copy = new JButton(rb.getString("ButtonCopyClip"));
         copy.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 StringSelection text = new StringSelection(console.getText());
                 clipboard.setContents(text, text);
@@ -184,16 +201,18 @@ public final class SystemConsole extends JTextArea {
         // Add button to allow console window to be closed
         JButton close = new JButton(rb.getString("ButtonClose"));
         close.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 frame.setVisible(false);
                 frame.dispose();
             }
         });
         p.add(close);
-
-         // Define the pop-up menu
+        
+        // Define the pop-up menu
         JMenuItem menuItem = new JMenuItem(rb.getString("ButtonCopyClip"));
         menuItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 StringSelection text = new StringSelection(console.getText());
                 clipboard.setContents(text, text);
@@ -211,6 +230,7 @@ public final class SystemConsole extends JTextArea {
         for (final Scheme s: schemes) {
             rbMenuItem = new JRadioButtonMenuItem(s.description);
             rbMenuItem.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent event) {
                     setScheme(schemes.indexOf(s));
                 }
@@ -226,6 +246,7 @@ public final class SystemConsole extends JTextArea {
         wrapGroup = new ButtonGroup();
         rbMenuItem = new JRadioButtonMenuItem(rbc.getString("ConsoleWrapStyleNone"));
         rbMenuItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 setWrapStyle(WRAP_STYLE_NONE);
             }
@@ -236,6 +257,7 @@ public final class SystemConsole extends JTextArea {
 
         rbMenuItem = new JRadioButtonMenuItem(rbc.getString("ConsoleWrapStyleLine"));
         rbMenuItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 setWrapStyle(WRAP_STYLE_LINE);
             }
@@ -246,6 +268,7 @@ public final class SystemConsole extends JTextArea {
 
         rbMenuItem = new JRadioButtonMenuItem(rbc.getString("ConsoleWrapStyleWord"));
         rbMenuItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 setWrapStyle(WRAP_STYLE_WORD);
             }
@@ -281,15 +304,9 @@ public final class SystemConsole extends JTextArea {
         }
 
         // Now append to the JTextArea
-        if (SwingUtilities.isEventDispatchThread()) {
-            console.append(text);
-        } else {
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    console.append(text);
-                }
-            });
-        }
+        // As append method is thread safe, we don't need to run this on
+        // the Swing dispatch thread
+        console.append(text);
     }
 
     /**
@@ -304,6 +321,8 @@ public final class SystemConsole extends JTextArea {
                 updateTextArea(String.valueOf((char)b), which);
             }
             @Override
+            @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DM_DEFAULT_ENCODING",
+                    justification="Can only be called from the same instance so default encoding OKLA")
             public void write(byte[] b, int off, int len) throws IOException {
                 updateTextArea(new String(b, off, len), which);
             }
@@ -317,6 +336,8 @@ public final class SystemConsole extends JTextArea {
     /**
      * Method to redirect the system streams to the console
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DM_DEFAULT_ENCODING",
+            justification="Can only be called from the same instance so default encoding OK")
     private void redirectSystemStreams() {
         System.setOut(new PrintStream(outStream(STD_OUT), true));
         System.setErr(new PrintStream(outStream(STD_ERR), true));
@@ -426,7 +447,7 @@ public final class SystemConsole extends JTextArea {
         schemes.add(new Scheme(rbc.getString("ConsoleSchemeGreenOnDarkGray"), Color.GREEN, Color.DARK_GRAY));
         schemes.add(new Scheme(rbc.getString("ConsoleSchemeOrangeOnDarkGray"), Color.ORANGE, Color.DARK_GRAY));
     }
-
+    
     /**
      * Set the console colour scheme
      * @param which the scheme to use
