@@ -14,6 +14,7 @@ import javax.swing.KeyStroke;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import jmri.beans.Beans;
@@ -461,6 +462,29 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         return returnList;
     }
     
+    /**
+     * Get a list of currently-existing JmriJFrame objects that are
+     * specific sub-classes of JmriJFrame.
+     * <p>
+     * The returned list is a copy made at the time of the call,
+     * so it can be manipulated as needed by the caller.
+     * <p>
+     * If subClass is null, returns a list of all JmriJFrames.
+     * 
+     * @param subClass The Class the list should be limited to.
+     * @return An ArrayList of Frames.
+     */
+    public static java.util.List<JmriJFrame> getFrameList(Class subClass) {
+        java.util.List<JmriJFrame> result = JmriJFrame.getFrameList();
+        if (subClass != null) {
+            for (JmriJFrame f : result) {
+                if (!subClass.isInstance(f)) {
+                    result.remove(f);
+                }
+            }
+        }
+        return result;
+    }
 
     /**
      * Get a JmriJFrame of a particular name.
