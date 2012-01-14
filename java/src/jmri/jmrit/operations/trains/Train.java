@@ -1269,7 +1269,7 @@ public class Train implements java.beans.PropertyChangeListener {
     	List<String> cars = CarManager.instance().getByTrainList(this);
     	for (int i=0; i<cars.size(); i++){
        		Car car = CarManager.instance().getById(cars.get(i));
-    		if (car.getRouteLocation() == rl && car.isCaboose())
+    		if (car.getRouteLocation() == rl && car.getRouteDestination() != rl && car.isCaboose())
     			cabooseRoadNumber = car.toString();
     	}
     	return cabooseRoadNumber;
