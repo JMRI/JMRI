@@ -53,32 +53,31 @@ version of Eclipse and create a new workspace before using SVN to get
 the latest files.</P>
 
 <P>These instructions were developed and tested using "Eclipse IDE for Java Developers" version "Indigo Release".
+<P>Also note that at the time of writing this help document that JMRI required JAVA version 6.  You must confirm
+that JRE 6 is the default Java Runtime Environment.
 
 <h2>Setting up Eclipse for building JMRI using Subversion</h2>
 
 The standard Eclipse download doesn't have the subversion plugin
 enabled. To install subversion do the following:
 
-<OL>
-	<LI>Open Eclipse.</LI>
-	<LI>From the main menu bar select "Help" then "Install New
-	Software..."</LI>
-	<LI>Now click on the "Available Software Sites" link.</LI>
-	<LI>Select
-	"http://download.eclipse.org/technology/subversive/0.7/update-site/"
-	and then press the "Enable" button followed by "OK". This should return
-	you to the Install window.</LI>
-	<LI>Now select
-	"http://download.eclipse.org/technology/subversive/0.7/update-site/" in
-	the "Work with:" selection menu, and then select all of the checkboxes,
-	followed by pressing the "Next" button, and complete the SVN installation
-	as prompted by the program.</LI>
-	<LI>You will be asked to restart the program, do so, and then complete the subversion installation by selecting a
-	connector or connectors, and again you will be asked to restart the program when the install of the connectors is
-	complete.</LI>
-</OL>
+ <OL>
+  <LI>Open Eclipse.</LI>
+  <LI>From the main menu bar select "Help" then "Install New Software..."</LI>
+  <LI>Now click on the "Available Software Sites" link.</LI>
+  <LI>Select "http://download.eclipse.org/technology/subversive/0.7/update-site/" and then
+   press the "Enable" button followed by "OK". This should return you to the Install window.</LI>
+    <LI>If the above link didn't appear in the available software sites, you can manually enter the 
+    entire site address into the "Work with" text window.
+  <LI>Now select "http://download.eclipse.org/technology/subversive/0.7/update-site/" in the
+   "Work with:" selection menu, and then select all of the checkboxes, followed by pressing the
+   "Next" button, and complete the SVN installation as prompted by the program.</LI>
+  <LI>You will be asked to restart the program, do so, and then complete the subversion
+   installation by selecting a connector or connectors, and again you will be asked to restart the
+   program when the install of the connectors is complete.</LI>
+ </OL>
 
-<h2>Getting the JMRI Source using Subversion</h2>
+ <h2>Getting the JMRI Source using Subversion</h2>
 
 To get the source code from SourceForge using Subversion you need to do
 the following:
@@ -116,11 +115,13 @@ JavaCC. To run the ant build.xml you need to do the following:
 <li>Ant needs a JDK (Java Development Kit) in order to run the supplied "build.xml" file. The Eclipse
 download doesn't include a JDK, so you must download and install a JDK, and then configure ant to
 use the JDK.
+<li>Here's a link to the Oracle site that can provide you with a JDK: 
+<P><a href= "http://www.oracle.com/technetwork/java/javase/downloads/index.html">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></P></li>
 <li>Select the build.xml file using the Package Explorer, then right click, and a menu should
 appear.</li>
 <li>Now select "Run As" then "2 Ant Build".</li>
 <Li>Confirm that under the menu tab JRE that you've selected a JDK.</Li>
-<LI>Select "Targets", and then select "Copy Resources", leave the other targets selected.</LI>
+<!-- <LI>Select "Targets", and then select "copy resource files", leave the other targets selected.</LI> -->
 <LI>Now press the "Run" button, this should start the ant build.
 </OL>
 
