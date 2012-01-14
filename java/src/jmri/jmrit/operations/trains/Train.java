@@ -1259,6 +1259,22 @@ public class Train implements java.beans.PropertyChangeListener {
     	return weight;
     }
     
+    /**
+     * Gets the current caboose road and number if there's one assigned to the train.
+     * @return Road and number of caboose.
+     */
+    public String getCabooseRoadAndNumber(){
+    	String cabooseRoadNumber = "";  
+    	RouteLocation rl = getCurrentLocation();
+    	List<String> cars = CarManager.instance().getByTrainList(this);
+    	for (int i=0; i<cars.size(); i++){
+       		Car car = CarManager.instance().getById(cars.get(i));
+    		if (car.getRouteLocation() == rl && car.isCaboose())
+    			cabooseRoadNumber = car.toString();
+    	}
+    	return cabooseRoadNumber;
+    }
+    
     public void setDescription(String description) {
 		String old = _description;
 		_description = description;

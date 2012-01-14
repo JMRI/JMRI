@@ -125,6 +125,37 @@ abstract public class AbstractOperationsServer implements
 		else
 			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
 	}
+	
+	/**
+	 * Send road and number of lead loco if there's one assigned to the train.
+	 * @param trainName train's name
+	 * @throws IOException
+	 */
+	public void sendTrainLeadLoco(String trainName) throws IOException {
+		Train train = tm.getTrainByName(trainName);
+		if (train != null) {
+			String leadEngine = "";
+			if (train.getLeadEngine() != null)
+				leadEngine = train.getLeadEngine().toString();
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINLEADLOCO + " " + trainName
+					+ SimpleOperationsServer.DELIMITER + leadEngine);
+		} else
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
+	}
+
+	/**
+	 * Send road and number of caboose if there's one assigned to the train.
+	 * @param trainName train's name
+	 * @throws IOException
+	 */
+	public void sendTrainCaboose(String trainName) throws IOException {
+		Train train = tm.getTrainByName(trainName);
+		if (train != null)
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINCABOOSE + " " + trainName
+					+ SimpleOperationsServer.DELIMITER + train.getCabooseRoadAndNumber());
+		else
+			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
+	}
 
 	/* Terminate the train */
 	public void terminateTrain(String trainName) throws IOException {

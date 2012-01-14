@@ -48,6 +48,14 @@ public class SimpleOperationsServer extends jmri.jmris.AbstractOperationsServer 
 	 */
 	public static final String TRAINCARS = "TRAINCARS";
 	/**
+	 * Returns the road and number of the lead loco for this train.  The train's name is required.
+	 */
+	public static final String TRAINLEADLOCO = "TRAINLEADLOCO";
+	/**
+	 * Returns the road and number of the caboose for this train if there's one assigned.  The train's name is required.
+	 */
+	public static final String TRAINCABOOSE = "TRAINCABOOSE";
+	/**
 	 * Returns the the train's status.  The train's name is required.
 	 */	
 	public static final String TRAINSTATUS = "TRAINSTATUS";
@@ -102,16 +110,20 @@ public class SimpleOperationsServer extends jmri.jmris.AbstractOperationsServer 
 		try {
 			if (statusString.contains(LOCATIONS))
 				sendLocationList();
+			else if (statusString.contains(TRAINS))
+				sendTrainList();
 			else if (statusString.contains(TRAINLENGTH))
 				sendTrainLength(getName(statusString));
 			else if (statusString.contains(TRAINWEIGHT))
 				sendTrainWeight(getName(statusString));
 			else if (statusString.contains(TRAINCARS))
 				sendTrainNumberOfCars(getName(statusString));
+			else if (statusString.contains(TRAINLEADLOCO))
+				sendTrainLeadLoco(getName(statusString));
+			else if (statusString.contains(TRAINCABOOSE))
+				sendTrainCaboose(getName(statusString));
 			else if (statusString.contains(TRAINSTATUS))
 				sendTrainStatus(getName(statusString));
-			else if (statusString.contains(TRAINS))
-				sendTrainList();
 			else if (statusString.contains(TERMINATE))
 				terminateTrain(getName(statusString));
 			else if (statusString.contains(TRAINLOCATION)) {
