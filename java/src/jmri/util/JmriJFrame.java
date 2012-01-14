@@ -474,12 +474,16 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * @param subClass The Class the list should be limited to.
      * @return An ArrayList of Frames.
      */
+    // this probably should use and return a generic type
     public static java.util.List<JmriJFrame> getFrameList(Class subClass) {
-        java.util.List<JmriJFrame> result = JmriJFrame.getFrameList();
-        if (subClass != null) {
-            for (JmriJFrame f : result) {
-                if (!subClass.isInstance(f)) {
-                    result.remove(f);
+        if (subClass == null) {
+            return JmriJFrame.getFrameList();
+        }
+        java.util.List<JmriJFrame> result = new ArrayList<JmriJFrame>();
+        synchronized(list) {
+            for (JmriJFrame f : list) {
+                if (subClass.isInstance(f)) {
+                    result.add(f);
                 }
             }
         }
