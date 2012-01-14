@@ -37,27 +37,27 @@ DecoderPro&reg; Main Window
     <td width="41%" valign="top">Displays the information about the current decoder selected.</td>
   </tr>
   <tr>
-    <td valign="top"><img src="images/decoder_program_mode.png" width="429" height="96" alt="programming mode"></td>
+    <td valign="top"><img src="images/decoder_program_mode.png" width="259" height="132" alt="decoder program mode"></td>
     <td valign="top"><p>You may select the progamming mode:<br>
-      <strong><a href="Programmer_ServiceMode.shtml">Service Mode Programmer</a></strong><br>
-      <strong><a href="Programmer_OpsMode.shtml">Operations Mode Programmer </a></strong><br>
-      <strong>Edit Only</strong> allows you to edit the roster without programming the locomotive.</p></td>
+      <strong><a href="Programmer_ServiceMode.shtml">
+      <input name="radio" type="radio" id="radio" value="radio" checked>
+      Programming Track</a></strong><br>
+      <strong><a href="Programmer_OpsMode.shtml">
+      <input type="radio" name="radio2" id="radio2" value="radio2">
+      Programming on Main</a></strong><br>
+      <strong>
+      <input type="radio" name="radio3" id="radio3" value="radio3">
+      Edit Only</strong> allows you to edit the roster without programming the locomotive.</p></td>
   </tr>
   <tr>
     <td valign="top"><img src="images/btn_basic_programmer.png" width="202" height="29" alt="button"></td>
-    <td valign="top">Opens the<strong> <a href="Basic_Start.shtml">Basic Programme</a></strong><a href="Basic_Start.shtml">r</a> for the selected decoder in the Roster List</td>
-  </tr>
-  <tr>
-    <td valign="top"><img src="images/btn_comprehensive_programmer.png" width="199" height="35" alt="comprehensive"></td>
-    <td valign="top">Opens the <strong><a href="Comp_Setup_Roster.shtml">Comprehensive Programmer</a></strong> for the selected decoder in the Roster List</td>
+    <td valign="top">Opens the<strong> <a href="Basic_Start.shtml">Default Programme</a></strong><a href="Basic_Start.shtml">r</a> for the selected decoder in the Roster List</td>
   </tr>
   <tr>
     <td valign="top"><img src="images/btn_throttle_labels.png" width="201" height="30" alt="labels"></td>
-    <td valign="top">Opens the<strong> <a href="Adv_FunctionLabel.shtml">Functions labels</a></strong> window and allows you to label throttle function buttons</td>
-  </tr>
-  <tr>
-    <td valign="top"><img src="images/btn_roster_media.png" width="203" height="33" alt="roster media"></td>
-    <td valign="top">Opens the <strong><a href="RosterMedia.shtml">Roster Media</a></strong> window and allows you to assign an image to the roster entry</td>
+    <td valign="top"><p>Opens the Labels &amp; Media Window for the selected roster member.</p>
+    <p><strong> <a href="Adv_FunctionLabel.shtml">Functions labels</a></strong> TAB opens the Function labels pane which allows you to label throttle function buttons</p>    
+    <strong><a href="RosterMedia.shtml">Roster Media</a></strong> TAB opens the Roster Media pane which allows you to assign an image to the roster entry</td>
   </tr>
   <tr>
     <td valign="top"><img src="images/btn_lanch_throttle.png" width="198" height="30" alt="throttle"></td>

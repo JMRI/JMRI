@@ -34,15 +34,53 @@ a decoder?</h1>
 <p>Prior to using the programmer you  need to have completed the previous section (<a href="Start_DCC.shtml">Getting Started</a>), have your computer connected to  your command station/booster with the required interface device for your DCC  system, you are now ready to actually program a decoder that has been installed  in your locomotive.</p>
 <p><br>
   On your initial opening DecoderPro3, the main  page will be displayed: (After preferences are set) The list of locomotives programmed by DecoderPro3 will be blank until you add a locomotive. From then on when it is opened a list of all the locomotives whose decoders you have previously programmed in DecoderPro3 or classic DecoderPro will be listed.</p>
-<p>DecoderPro3 provices access to the JMRI tools required to program DCC decoders. If you are an advanced user, using PanelPro to run your layout, then you may start PanelPro and then from the File menu start DecoderPro3.</p>
+<p>DecoderPro3 provides access to the JMRI tools required to program DCC decoders. If you are an advanced user, using PanelPro to run your layout, then you may start PanelPro and then from the File menu start DecoderPro3.</p>
+<p>If you already have roster entries and you want to start programming in <strong><a href="Comp_Setup_Roster.shtml">Comprehensive Programmer</a></strong>, double-click on the roster entry.</p>
 <p>DecoderPro3 by its self may program DCC decoders and also use the other JMRI tools to manually operte your trains from the computer interface. These include throttle control and power control of your layout if your DCC system allows them..</p>
 <p>The DecoderPro3 window is divided into five main section from top to bottom.</p>
 <div align="center"><img src="images/start_dp_main01.png" width="1107" height="493" alt="dp main"></div>
 <p>1. <strong><a href="dp3_menubar.html">The Menu Bar</a></strong>.<br>
 2. <strong><a href="dp3_toobar.shtml">The Tool Bar</a></strong><br>
-3. <a href="dp3_rosterTable.shtml"><strong>The Roster Table</strong></a> (a list of all the docoders in your roster.<br>
+3. <a href="dp3_rosterTable.shtml"><strong>The Roster Table</strong></a> a list of all the docoders in your roster.<br>
 4.<strong><a href="dp3_decoderInfo.shtml"> The Decoder Information Area</a></strong>.  Show information about any selected locomotive in the roster list.<br>
 5. A status bar that reports information about DecoderPro3 operation including errors.</p>
+<p>Anywhere in the roster table (area 3) you may right-click and a context menu will be displayed.<img src="images/dp3_main_contextMenu.png" width="825" height="314" alt="context menu"></p>
+<table width="90%" border="0" cellspacing="1" cellpadding="2">
+  <tr>
+    <td width="26%">Program</td>
+    <td width="74%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td rowspan="3" valign="top">Programmer type <img src="images/arrow.gif" width="20" height="9"></td>
+    <td><input name="radio" type="radio" id="radio" value="radio" checked>
+      Programming Track</td>
+  </tr>
+  <tr>
+    <td><input type="radio" name="radio2" id="radio2" value="radio2">
+      Programming on Main</td>
+  </tr>
+  <tr>
+    <td><input type="radio" name="radio3" id="radio3" value="radio3">
+      Edit</td>
+  </tr>
+  <tr>
+    <td>Labels and Media</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Throttle</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Duplicate</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Delete</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
 <p>At this time we have no entries in the Roster list of locomotives. We will now add our first locomotive to the list.</p>
 <h4><strong><a name="newLoco"></a>Adding New Locomotive</strong></h4>
 <p>On the Tool Bar is an icon labeled<strong> New Loco</strong>, click on the icon and the <strong>Create New Loco </strong>window opens. Click on the Service Mode radio button on the bottom of the screen.&nbsp; Place s locomotive (with the decoder installed) on the Programming Track (Service Mode), click on Read type from decoder button (mid right side)<br>
