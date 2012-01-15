@@ -126,6 +126,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String DEPARTURETIME_CHANGED_PROPERTY = "TrainDepartureTime";
 	public static final String TRAIN_LOCATION_CHANGED_PROPERTY = "TrainLocation";
 	public static final String TRAIN_ROUTE_CHANGED_PROPERTY = "TrainRoute";
+	public static final String TRAIN_REQUIREMENTS_CHANGED_PROPERTY = "TrainRequires";
 	
 	// Train status
 	public static final String BUILDFAILED = rb.getString("BuildFailed");
@@ -435,7 +436,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		int old = _requires;
 		_requires = requires;
 		if (old != requires)
-			firePropertyChange("requires", Integer.toString(old), Integer.toString(requires));
+			firePropertyChange(TRAIN_REQUIREMENTS_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(requires));
 	}
 	
 	/**
