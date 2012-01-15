@@ -131,7 +131,7 @@ public class TrainManifest extends TrainCommon {
 			// engine change or helper service?
 			if (train.getSecondLegOptions() != Train.NONE){
 				if (rl == train.getSecondLegStartLocation()){
-					engineChange(fileOut, rl, train.getSecondLegOptions());
+					printChange(fileOut, rl, train.getSecondLegOptions());
 					dropEngines(fileOut, engineList, rl);
 					pickupEngines(fileOut, engineList, rl);
 				}
@@ -140,7 +140,7 @@ public class TrainManifest extends TrainCommon {
 			}
 			if (train.getThirdLegOptions() != Train.NONE){
 				if (rl == train.getThirdLegStartLocation()){
-					engineChange(fileOut, rl, train.getThirdLegOptions());
+					printChange(fileOut, rl, train.getThirdLegOptions());
 					dropEngines(fileOut, engineList, rl);
 					pickupEngines(fileOut, engineList, rl);
 				}
@@ -219,13 +219,15 @@ public class TrainManifest extends TrainCommon {
 		return false;
 	}
 	
-	private void engineChange(PrintWriter fileOut, RouteLocation rl, int legOptions){
+	private void printChange(PrintWriter fileOut, RouteLocation rl, int legOptions){
 		if ((legOptions & Train.HELPER_ENGINES) == Train.HELPER_ENGINES)
 			addLine(fileOut, MessageFormat.format(rb.getString("AddHelpersAt"), new Object[]{splitString(rl.getName())}));
-		else if ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE || (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE)
+		else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES && ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE || (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE))
 			addLine(fileOut, MessageFormat.format(rb.getString("EngineAndCabooseChangeAt"), new Object[]{splitString(rl.getName())}));
 		else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES)
 			addLine(fileOut, MessageFormat.format(rb.getString("EngineChangeAt"), new Object[]{splitString(rl.getName())}));
+		else if ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE || (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE)
+			addLine(fileOut, MessageFormat.format(rb.getString("CabooseChangeAt"), new Object[]{splitString(rl.getName())}));
 	}
 }
 

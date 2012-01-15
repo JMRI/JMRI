@@ -38,7 +38,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Builds a train and creates the train's manifest. 
  * 
- * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011
+ * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010, 2011, 2012
  * @version             $Revision$
  */
 public class TrainBuilder extends TrainCommon{
@@ -268,10 +268,6 @@ public class TrainBuilder extends TrainCommon{
 				train.getSecondLegNumberEngines(), train.getSecondLegEngineModel(), train.getSecondLegEngineRoad()}));
 			if (train.getSecondLegStartLocation() != null){
 				engineTerminatesFirstLeg = train.getSecondLegStartLocation();
-				if ((train.getSecondLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
-						|| (train.getSecondLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE){
-					cabooseOrFredTerminatesFirstLeg = train.getSecondLegStartLocation();
-				}
 			}
 		}
 		if ((train.getSecondLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES){
@@ -283,17 +279,9 @@ public class TrainBuilder extends TrainCommon{
 				train.getThirdLegNumberEngines(), train.getThirdLegEngineModel(), train.getThirdLegEngineRoad()}));
 			if (train.getThirdLegStartLocation() != null){
 				engineTerminatesSecondLeg = train.getThirdLegStartLocation();
-				if ((train.getThirdLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
-						|| (train.getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE){
-					cabooseOrFredTerminatesSecondLeg = train.getThirdLegStartLocation();
-				}
 				// No engine or caboose change at first leg?
 				if ((train.getSecondLegOptions() & Train.CHANGE_ENGINES) != Train.CHANGE_ENGINES){
 					engineTerminatesFirstLeg = train.getThirdLegStartLocation();
-					if ((train.getThirdLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
-							|| (train.getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE){
-						cabooseOrFredTerminatesFirstLeg = train.getThirdLegStartLocation();
-					}
 				}
 			}
 		}
@@ -301,6 +289,16 @@ public class TrainBuilder extends TrainCommon{
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildTrainHelperEngines"),new Object[]{train.getThirdLegNumberEngines(), train.getThirdLegStartLocationName(), 
 				train.getThirdLegEndLocationName(), train.getThirdLegEngineModel(), train.getThirdLegEngineRoad()}));
 		}
+		// make any caboose changes
+		if ((train.getSecondLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
+				|| (train.getSecondLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE)
+			cabooseOrFredTerminatesFirstLeg = train.getSecondLegStartLocation();		
+		else if ((train.getThirdLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
+				|| (train.getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE)
+			cabooseOrFredTerminatesFirstLeg = train.getThirdLegStartLocation();
+		if ((train.getThirdLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
+				|| (train.getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE)
+			cabooseOrFredTerminatesSecondLeg = train.getThirdLegStartLocation();
 				
 		// does train terminate into staging?
 		terminateStageTrack = null;

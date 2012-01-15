@@ -1930,6 +1930,14 @@ optionally select the new locomotives model and road. At the locomotive change
 location, the previously assigned locomotives will be removed from the
 train.
 
+   <P>The program also gives you three options with regards to the train's caboose. The first
+    option, "Remove caboose", will set out the caboose if one was assigned to the train. The train
+    will then depart the specified location without a caboose. The second option, "No caboose
+    change", either keeps the caboose if one was assigned to the train, or departs without a caboose
+    if there wasn't one assigned to the train. The third option, "Change caboose", will set out the
+    caboose if one was assigned to the train, and then add a new one to the train. Use this option
+    to also add a caboose to the train if the train departed without a caboose.
+   
 <P>You can also request helper locomotives for those long up hill
 battles that your train might experience. The current code only adds a
 comment to the manifest requesting helper service starting at the

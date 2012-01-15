@@ -42,7 +42,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Frame for user edit of a train's build options
  * 
- * @author Dan Boudreau Copyright (C) 2010
+ * @author Dan Boudreau Copyright (C) 2010, 2012
  * @version $Revision$
  */
 
@@ -122,6 +122,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	// train requirements 1st set
     JRadioButton none1 = new JRadioButton(rb.getString("None"));
     JRadioButton change1Engine = new JRadioButton(rb.getString("EngineChange"));
+    JRadioButton modify1Caboose = new JRadioButton(rb.getString("ChangeCaboose"));
     JRadioButton helper1Service = new JRadioButton(rb.getString("HelperService"));
     JRadioButton remove1Caboose = new JRadioButton(rb.getString("RemoveCaboose"));
     JRadioButton keep1Caboose = new JRadioButton(rb.getString("KeepCaboose"));
@@ -133,6 +134,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	// train requirements 2nd set
     JRadioButton none2 = new JRadioButton(rb.getString("None"));
     JRadioButton change2Engine = new JRadioButton(rb.getString("EngineChange"));
+    JRadioButton modify2Caboose = new JRadioButton(rb.getString("ChangeCaboose"));
     JRadioButton helper2Service = new JRadioButton(rb.getString("HelperService"));
     JRadioButton remove2Caboose = new JRadioButton(rb.getString("RemoveCaboose"));
     JRadioButton keep2Caboose = new JRadioButton(rb.getString("KeepCaboose"));
@@ -282,11 +284,13 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		JPanel trainOption1 = new JPanel();
 		trainOption1.add(none1);
 		trainOption1.add(change1Engine);
+		trainOption1.add(modify1Caboose);
 		trainOption1.add(helper1Service);
 		panelTrainReq1.add(trainOption1);
 		
 		trainReq1Group.add(none1);
 		trainReq1Group.add(change1Engine);
+		trainReq1Group.add(modify1Caboose);
 		trainReq1Group.add(helper1Service);
 		
 		// engine options
@@ -304,25 +308,13 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     	roadEngine1Box.setSelectedIndex(0);
     	roadEngine1Box.setMinimumSize(new Dimension(120,20));
     	roadEngine1Box.setToolTipText(rb.getString("RoadEngineTip"));
-		addItem (engine1Option, new JLabel(rb.getString("ChangeEnginesAt")), 0, 0);
-		addItem (engine1Option, routePickup1Box, 1, 0);
-    	addItem (engine1Option, new JLabel(rb.getString("Engines")), 2, 0);
-    	addItem (engine1Option, numEngines1Box, 3, 0);
-    	addItem (engine1Option, new JLabel(rb.getString("Model")), 4, 0);
-    	addItem (engine1Option, modelEngine1Box, 5, 0);
-    	addItem (engine1Option, new JLabel(rb.getString("Road")), 6, 0);
-    	addItem (engine1Option, roadEngine1Box, 7, 0);
     	panelTrainReq1.add(engine1Option);
     	
     	// caboose options
-    	engine1caboose.setBorder(BorderFactory.createTitledBorder(rb.getString("Caboose")));
+    	engine1caboose.setLayout(new GridBagLayout());
+    	engine1caboose.setBorder(BorderFactory.createTitledBorder(rb.getString("ChangeCaboose")));
     	roadCaboose1Box.setMinimumSize(new Dimension(120,20));
     	roadCaboose1Box.setToolTipText(rb.getString("RoadCabooseTip"));
-    	addItem (engine1caboose, remove1Caboose, 1, 6);
-    	addItem (engine1caboose, keep1Caboose, 2, 6);
-    	addItem (engine1caboose, change1Caboose, 3, 6);
-     	addItem (engine1caboose, new JLabel(rb.getString("Road")), 5, 6);
-     	addItem (engine1caboose, roadCaboose1Box, 6, 6);
        	panelTrainReq1.add(engine1caboose);
     	
        	cabooseOption1Group.add(remove1Caboose);
@@ -340,11 +332,13 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		JPanel trainOption2 = new JPanel();
 		trainOption2.add(none2);
 		trainOption2.add(change2Engine);
+		trainOption2.add(modify2Caboose);
 		trainOption2.add(helper2Service);
 		panelTrainReq2.add(trainOption2);
 		
 		trainReq2Group.add(none2);
 		trainReq2Group.add(change2Engine);
+		trainReq2Group.add(modify2Caboose);
 		trainReq2Group.add(helper2Service);
 		
 		// engine options
@@ -362,25 +356,13 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     	roadEngine2Box.setSelectedIndex(0);
     	roadEngine2Box.setMinimumSize(new Dimension(120,20));
     	roadEngine2Box.setToolTipText(rb.getString("RoadEngineTip"));
-		addItem (engine2Option, new JLabel(rb.getString("ChangeEnginesAt")), 0, 0);
-		addItem (engine2Option, routePickup2Box, 1, 0);
-    	addItem (engine2Option, new JLabel(rb.getString("Engines")), 2, 0);
-    	addItem (engine2Option, numEngines2Box, 3, 0);
-    	addItem (engine2Option, new JLabel(rb.getString("Model")), 4, 0);
-    	addItem (engine2Option, modelEngine2Box, 5, 0);
-    	addItem (engine2Option, new JLabel(rb.getString("Road")), 6, 0);
-    	addItem (engine2Option, roadEngine2Box, 7, 0);
     	panelTrainReq2.add(engine2Option);
     	
     	// caboose options
-    	engine2caboose.setBorder(BorderFactory.createTitledBorder(rb.getString("Caboose")));
+    	engine2caboose.setLayout(new GridBagLayout());
+    	engine2caboose.setBorder(BorderFactory.createTitledBorder(rb.getString("ChangeCaboose")));
     	roadCaboose2Box.setMinimumSize(new Dimension(120,20));
     	roadCaboose2Box.setToolTipText(rb.getString("RoadCabooseTip"));
-    	addItem (engine2caboose, remove2Caboose, 1, 6);
-    	addItem (engine2caboose, keep2Caboose, 2, 6);
-    	addItem (engine2caboose, change2Caboose, 3, 6);
-     	addItem (engine2caboose, new JLabel(rb.getString("Road")), 5, 6);
-     	addItem (engine2caboose, roadCaboose2Box, 6, 6);
        	panelTrainReq2.add(engine2caboose);
     	
        	cabooseOption2Group.add(remove2Caboose);
@@ -433,12 +415,14 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		
 		addRadioButtonAction(none1);
 		addRadioButtonAction(change1Engine);
+		addRadioButtonAction(modify1Caboose);
 		addRadioButtonAction(helper1Service);
 		addRadioButtonAction(remove1Caboose);
 		addRadioButtonAction(keep1Caboose);
 		addRadioButtonAction(change1Caboose);		
 		addRadioButtonAction(none2);
 		addRadioButtonAction(change2Engine);
+		addRadioButtonAction(modify2Caboose);
 		addRadioButtonAction(helper2Service);
 		addRadioButtonAction(remove2Caboose);
 		addRadioButtonAction(keep2Caboose);
@@ -581,6 +565,10 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 				_train.setSecondLegOptions(Train.CHANGE_ENGINES);
 				updateTrainRequires1Option();
 			}
+			if (ae.getSource() == modify1Caboose){
+				_train.setSecondLegOptions(Train.ADD_CABOOSE);
+				updateTrainRequires1Option();
+			}
 			if (ae.getSource() == helper1Service){
 				_train.setSecondLegOptions(Train.HELPER_ENGINES);
 				updateTrainRequires1Option();
@@ -596,6 +584,10 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			}
 			if (ae.getSource() == change2Engine){
 				_train.setThirdLegOptions(Train.CHANGE_ENGINES);
+				updateTrainRequires2Option();
+			}
+			if (ae.getSource() == modify2Caboose){
+				_train.setThirdLegOptions(Train.ADD_CABOOSE);
 				updateTrainRequires2Option();
 			}
 			if (ae.getSource() == helper2Service){
@@ -840,6 +832,9 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 
 			change1Engine.setSelected((_train.getSecondLegOptions() & Train.CHANGE_ENGINES)>0);
 			helper1Service.setSelected((_train.getSecondLegOptions() & Train.HELPER_ENGINES)>0);
+			if (!change1Engine.isSelected() && !helper1Service.isSelected())
+				modify1Caboose.setSelected((_train.getSecondLegOptions() & Train.ADD_CABOOSE)>0
+						|| (_train.getSecondLegOptions() & Train.REMOVE_CABOOSE)>0);
 			numEngines1Box.setSelectedItem(_train.getSecondLegNumberEngines());
 			modelEngine1Box.setSelectedItem(_train.getSecondLegEngineModel());
 			routePickup1Box.setSelectedItem(_train.getSecondLegStartLocation());
@@ -851,10 +846,14 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			roadCaboose1Box.setEnabled(change1Caboose.isSelected());
 			roadCaboose1Box.setSelectedItem(_train.getSecondLegCabooseRoad());
 		} 
-		engine1Option.setVisible(!none1.isSelected());
-		engine1caboose.setVisible(change1Engine.isSelected());
+		engine1Option.setVisible(change1Engine.isSelected() || helper1Service.isSelected());
+		engine1caboose.setVisible(change1Engine.isSelected() || modify1Caboose.isSelected());
 		engine1DropOption.setVisible(helper1Service.isSelected());
 		engine1Option.setBorder(BorderFactory.createTitledBorder(rb.getString("EngineChange")));
+		if (change1Engine.isSelected() || helper1Service.isSelected())
+			createEngine1Panel();
+		if (change1Engine.isSelected() || modify1Caboose.isSelected())
+			createCaboose1Panel(modify1Caboose.isSelected());
 		if (helper1Service.isSelected())
 			engine1Option.setBorder(BorderFactory.createTitledBorder(rb.getString("AddHelpers")));
 		packFrame();
@@ -873,6 +872,9 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 
 			change2Engine.setSelected((_train.getThirdLegOptions() & Train.CHANGE_ENGINES)>0);
 			helper2Service.setSelected((_train.getThirdLegOptions() & Train.HELPER_ENGINES)>0);
+			if (!change2Engine.isSelected() && !helper2Service.isSelected())
+				modify2Caboose.setSelected((_train.getThirdLegOptions() & Train.ADD_CABOOSE)>0
+						|| (_train.getThirdLegOptions() & Train.REMOVE_CABOOSE)>0);
 			numEngines2Box.setSelectedItem(_train.getThirdLegNumberEngines());
 			modelEngine2Box.setSelectedItem(_train.getThirdLegEngineModel());
 			routePickup2Box.setSelectedItem(_train.getThirdLegStartLocation());
@@ -884,10 +886,14 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			roadCaboose2Box.setEnabled(change2Caboose.isSelected());
 			roadCaboose2Box.setSelectedItem(_train.getThirdLegCabooseRoad());
 		} 
-		engine2Option.setVisible(!none2.isSelected());
-		engine2caboose.setVisible(change2Engine.isSelected());
+		engine2Option.setVisible(change2Engine.isSelected() || helper2Service.isSelected());
+		engine2caboose.setVisible(change2Engine.isSelected() || modify2Caboose.isSelected());
 		engine2DropOption.setVisible(helper2Service.isSelected());
 		engine2Option.setBorder(BorderFactory.createTitledBorder(rb.getString("EngineChange")));
+		if (change2Engine.isSelected() || helper2Service.isSelected())
+			createEngine2Panel();
+		if (change2Engine.isSelected() || modify2Caboose.isSelected())
+			createCaboose2Panel(modify2Caboose.isSelected());
 		if (helper2Service.isSelected())
 			engine2Option.setBorder(BorderFactory.createTitledBorder(rb.getString("AddHelpers")));
 		packFrame();
@@ -901,12 +907,16 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		_train.setBuiltStartYear(builtAfterTextField.getText().trim());
 		_train.setBuiltEndYear(builtBeforeTextField.getText().trim());
 		
+		int options1 = Train.NONE;
 		if (change1Engine.isSelected())
-			_train.setSecondLegOptions(Train.CHANGE_ENGINES);
+			options1 = options1 | Train.CHANGE_ENGINES;
 		if (remove1Caboose.isSelected())
-			_train.setSecondLegOptions(_train.getSecondLegOptions() | Train.REMOVE_CABOOSE);
+			options1 = options1 | Train.REMOVE_CABOOSE;
 		else if (change1Caboose.isSelected())
-			_train.setSecondLegOptions(_train.getSecondLegOptions() | Train.ADD_CABOOSE | Train.REMOVE_CABOOSE);
+			options1 = options1 | Train.ADD_CABOOSE | Train.REMOVE_CABOOSE;
+		if (helper1Service.isSelected())
+			options1 = options1 | Train.HELPER_ENGINES;
+		_train.setSecondLegOptions(options1);
 		if (routePickup1Box.getSelectedItem() != null && !routePickup1Box.getSelectedItem().equals(""))
 			_train.setSecondLegStartLocation((RouteLocation)routePickup1Box.getSelectedItem());
 		else
@@ -920,12 +930,16 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		_train.setSecondLegEngineRoad((String)roadEngine1Box.getSelectedItem());
 		_train.setSecondLegCabooseRoad((String)roadCaboose1Box.getSelectedItem());
 		
+		int options2 = Train.NONE;
 		if (change2Engine.isSelected())
-			_train.setThirdLegOptions(Train.CHANGE_ENGINES);
+			options2 = options2 | Train.CHANGE_ENGINES;
 		if (remove2Caboose.isSelected())
-			_train.setThirdLegOptions(_train.getThirdLegOptions() | Train.REMOVE_CABOOSE);
+			options2 = options2 | Train.REMOVE_CABOOSE;
 		else if (change2Caboose.isSelected())
-			_train.setThirdLegOptions(_train.getThirdLegOptions() | Train.ADD_CABOOSE | Train.REMOVE_CABOOSE);
+			options2 = options2 | Train.ADD_CABOOSE | Train.REMOVE_CABOOSE;
+		if (helper2Service.isSelected())
+			options2 = options2 | Train.HELPER_ENGINES;
+		_train.setThirdLegOptions(options2);
 		if (routePickup2Box.getSelectedItem() != null && !routePickup2Box.getSelectedItem().equals(""))
 			_train.setThirdLegStartLocation((RouteLocation)routePickup2Box.getSelectedItem());
 		else
@@ -1055,6 +1069,58 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		for (int i=0; i<roads.size(); i++){
 			box.addItem(roads.get(i));
 		}
+	}
+	
+	private void createEngine1Panel(){
+		engine1Option.removeAll();
+		addItem (engine1Option, new JLabel(rb.getString("ChangeEnginesAt")), 0, 0);
+		addItem (engine1Option, routePickup1Box, 1, 0);
+    	addItem (engine1Option, new JLabel(rb.getString("Engines")), 2, 0);
+    	addItem (engine1Option, numEngines1Box, 3, 0);
+    	addItem (engine1Option, new JLabel(rb.getString("Model")), 4, 0);
+    	addItem (engine1Option, modelEngine1Box, 5, 0);
+    	addItem (engine1Option, new JLabel(rb.getString("Road")), 6, 0);
+    	addItem (engine1Option, roadEngine1Box, 7, 0);
+	}
+	
+	private void createEngine2Panel(){
+		engine2Option.removeAll();
+		addItem (engine2Option, new JLabel(rb.getString("ChangeEnginesAt")), 0, 0);
+		addItem (engine2Option, routePickup2Box, 1, 0);
+    	addItem (engine2Option, new JLabel(rb.getString("Engines")), 2, 0);
+    	addItem (engine2Option, numEngines2Box, 3, 0);
+    	addItem (engine2Option, new JLabel(rb.getString("Model")), 4, 0);
+    	addItem (engine2Option, modelEngine2Box, 5, 0);
+    	addItem (engine2Option, new JLabel(rb.getString("Road")), 6, 0);
+    	addItem (engine2Option, roadEngine2Box, 7, 0);
+	}
+	
+	private void createCaboose1Panel(boolean withCombox){
+		engine1caboose.removeAll();
+    	addItem (engine1caboose, remove1Caboose, 2, 6);
+    	addItem (engine1caboose, change1Caboose, 4, 6);
+     	addItem (engine1caboose, new JLabel(rb.getString("Road")), 5, 6);
+     	addItem (engine1caboose, roadCaboose1Box, 6, 6);
+     	if (withCombox){
+     		addItem(engine1caboose, new JLabel(rb.getString("ChangeEnginesAt")), 0, 6);
+     		addItem (engine1caboose, routePickup1Box, 1, 6);
+     	} else {
+     		addItem (engine1caboose, keep1Caboose, 3, 6);
+     	}
+	}
+	
+	private void createCaboose2Panel(boolean withCombox){
+		engine2caboose.removeAll();
+    	addItem (engine2caboose, remove2Caboose, 2, 6);
+    	addItem (engine2caboose, change2Caboose, 4, 6);
+     	addItem (engine2caboose, new JLabel(rb.getString("Road")), 5, 6);
+     	addItem (engine2caboose, roadCaboose2Box, 6, 6);
+     	if (withCombox){
+     		addItem(engine2caboose, new JLabel(rb.getString("ChangeEnginesAt")), 0, 6);
+     		addItem (engine2caboose, routePickup2Box, 1, 6);
+     	} else {
+     		addItem (engine2caboose, keep2Caboose, 3, 6);
+     	}
 	}
 	
 	/*
