@@ -32,7 +32,7 @@ public class TrainEditBuildOptionsAction extends AbstractAction {
     		f.dispose();
     	}
     	f = new TrainEditBuildOptionsFrame();
-    	f.setLocation(frame.getLocation());
+    	//f.setLocation(frame.getLocation());
     	f.initComponents(frame);
     	f.setExtendedState(Frame.NORMAL);  	
     	f.setTitle(rb.getString("MenuItemBuildOptions"));

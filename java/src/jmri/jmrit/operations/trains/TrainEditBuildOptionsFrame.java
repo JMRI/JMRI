@@ -466,7 +466,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		CarLoads.instance().addPropertyChangeListener(this);
 		CarOwners.instance().addPropertyChangeListener(this);
 		EngineModels.instance().addPropertyChangeListener(this);
-		setVisible(true);
+		packFrame();
 	}
 	
 	// Save
@@ -676,7 +676,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			roadNameAll.setSelected(true);
 		}
 		panelRoadNames.revalidate();
-		packFrame();
+		panelRoadNames.repaint();
+		validate();
 	}
 	
 	private void updateLoadNames(){
@@ -726,7 +727,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			loadNameAll.setSelected(true);
 		}
 		panelLoadNames.revalidate();
-		packFrame();
+		panelLoadNames.repaint();
+		validate();
 	}
 	
 	private void deleteAllRoads(){
@@ -784,7 +786,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			ownerNameAll.setSelected(true);
 		}
 		panelOwnerNames.revalidate();
-		packFrame();
+		panelOwnerNames.repaint();
+		validate();
 	}
 	
 	private void setBuiltRadioButton(){
@@ -820,7 +823,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			builtAfterTextField.setVisible(true);
 			builtBeforeTextField.setVisible(true);
 		}
-		packFrame();
+		validate();
 	}
 	
 	private void updateTrainRequires1Option(){
@@ -868,7 +871,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			createCaboose1Panel(modify1Caboose.isSelected());
 		if (helper1Service.isSelected())
 			engine1Option.setBorder(BorderFactory.createTitledBorder(rb.getString("AddHelpers")));
-		packFrame();
+		validate();
 	}
 	
 	private void updateTrainRequires2Option(){
@@ -917,7 +920,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			createCaboose2Panel(modify2Caboose.isSelected());
 		if (helper2Service.isSelected())
 			engine2Option.setBorder(BorderFactory.createTitledBorder(rb.getString("AddHelpers")));
-		packFrame();
+		validate();
 	}
 	
 	private void saveTrain(){
@@ -1160,12 +1163,14 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	*/
 	
     private void packFrame(){
-    	setPreferredSize(null);
-    	setVisible(false);
- 		pack();
- 		validate();
+    	//setPreferredSize(null);
+    	//setVisible(false);
+    	//validate();
+ 		pack(); 		
  		if(getWidth()<550)
  			setSize(550, getHeight());
+ 		if(getHeight()<600)
+ 			setSize(getWidth(), 600);
 		setVisible(true);
     }
 	
