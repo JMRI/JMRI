@@ -153,9 +153,9 @@ select "Java-&gt;Complier-&gt;Building". In the building window deselect
 
 <LI>Then run the ant build again to load the output folders.</LI>
 
-<LI>From the "Run" menu, select "Run..." We'll use the window that
+<LI>From the "Run" menu, select "Run Configurations..." We'll use the window that
 opens to configure which program(s) to run. (If the Run menu does not
-have a "Run..." entry, be sure you selected the java directory in the
+have a "Run Configurations..." entry, be sure you selected the java directory in the
 navigation pane above - Eclipse menus are context sensitive)</LI>
 
 <LI>On the left side, highlight "Java Application", then press the
