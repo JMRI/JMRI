@@ -8,19 +8,27 @@
     <div style="text-align: center"><strong>The JMRI Manual</strong></div>
 
     <div style="text-align: right">
-        <a href="https://sourceforge.net/projects/jmri/files/manuals/DecoderProManual_2_8.pdf/download">Download</a>
+        <a href="https://sourceforge.net/projects/jmri/help/en/manual/pdf/jmri_Man_3_12.pdf">Download</a>
     </div>
 
 <dl><!-- main table of contents -->
-
-<dt><a href="Getting_Started.shtml">Getting Started</a></dt>
+ <div style="text-align: center"><strong>Installing JMRI</strong></div>
+ <dt></dt>
     <dd>
     <ul>
-    <li><a href="Getting_Started.shtml#What is DCC">What is DCC?</a>
-    <li><a href="Getting_Started.shtml#DCC systems">What DCC systems will DecoderPro&reg; work with?</a></dt>
-    <li><a href="Getting_Started.shtml#DCC Hardware">What hardware do I need?</a>
-    <li><a href="Getting_Started.shtml#Start">How do I start the program?</a>
-    <li><a href="Getting_Started.shtml#Preferences">How do I set up my preferences?</a>
+    <li><a href="Installing_JMRI.shtml">Preparing to Install JMRI</a></li>
+    <li><a href="Installing_JMRI.shtml#installJMRI">Installing JMRI Software</a></li>
+    </ul>
+    </dd>
+ 
+<dt></dt>
+    <dd>
+    <ul>
+    <li><a href="Start_DCC.shtml">What is DCC?</a>
+    <li><a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro&reg; work with?</a></dt>
+    <li>><a href="Start_DCC_Hardware.shtml">What hardware do I need?</a>
+    <li><a href="Start_DecoderPro.shtml">How do I start the program?</a>
+    <li><a href="Start_Preferences.shtml">How do I set up my preferences?</a>
     </ul>
     </dd>
     
