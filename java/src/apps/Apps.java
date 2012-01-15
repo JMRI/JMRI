@@ -941,6 +941,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
                 log.debug("Config file was specified as: "+arg);
             }
         }
+        Apps.configFilename = def;
         setJmriSystemProperty("configFilename", def);
     }
     
