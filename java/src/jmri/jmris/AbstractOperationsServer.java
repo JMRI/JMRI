@@ -3,8 +3,11 @@
 package jmri.jmris;
 
 import java.io.*;
+import java.util.ArrayList;
+import javax.management.Attribute;
 
 import jmri.jmris.simpleserver.SimpleOperationsServer;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.locations.*;
 
@@ -41,139 +44,229 @@ abstract public class AbstractOperationsServer implements
 			lm.removePropertyChangeListener(this);
 	}
 
-	/* send a list of trains */
-	public void sendTrainList() throws IOException {
+	/**
+	 * send a list of trains known by Operations to the client
+	 */
+	public void sendTrainList() {
 		java.util.List<String> trainList = tm.getTrainsByNameList();
-		for (String trainID : trainList)
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINS+ " "
-					+ tm.getTrainById(trainID).getName());
-		// end list with a . on a line by itself
-		sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINS+ " .");
+		ArrayList<Attribute> aTrain;
+		for (String trainID : trainList) {
+		    aTrain = new ArrayList<Attribute>(1);
+		    aTrain.add(new Attribute(SimpleOperationsServer.TRAINS, tm.getTrainById(trainID).getName()));
+		    try {
+		        sendMessage(aTrain);
+		    }
+		    catch (IOException ioe) {
+		        log.equals("could not send train " + tm.getTrainById(trainID).getName());
+		    }
+		}
 	}
 
-	/* send a list of locations */
-	public void sendLocationList() throws IOException {
+	/**
+	 *  send a list of locations known by Operations to the client
+	 */
+	public void sendLocationList() {
 		java.util.List<String> locationList = lm.getLocationsByNameList();
-		for (String LocationID : locationList)
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.LOCATIONS+ " "
-					+ lm.getLocationById(LocationID).getName());
-		// end list with a . on a line by itself
-		sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.LOCATIONS+ " .");
+		ArrayList<Attribute> location;
+		for (String LocationID : locationList) {
+		    location = new ArrayList<Attribute>(1);
+		    location.add(new Attribute(SimpleOperationsServer.LOCATIONS, lm.getLocationById(LocationID).getName()));
+            try {
+                sendMessage(location);
+            }
+            catch (IOException ioe) {
+                log.equals("could not send train " + lm.getLocationById(LocationID).getName());
+            }
+		}
 	}
 
-	/* send train status */
-	public void sendTrainStatus(String trainName) throws IOException {
-		Train train = tm.getTrainByName(trainName);
-		if (train != null)
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINSTATUS + " " + trainName 
-					+ SimpleOperationsServer.DELIMITER + train.getStatus());
-		else
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
+	/**
+	 * constructs a String containing the status of a train
+	 * @param trainName is the name of the train.  If not found in Operations, an error message
+	 * is sent to the client.
+	 * @return the train's status as known by Operations
+	 * @throws IOException on failure to send an error message to the client
+	 */
+	public String constructTrainStatus(String trainName) throws IOException {
+	    Train train = tm.getTrainByName(trainName);
+	    if (train != null) {
+	        return train.getStatus();
+	    }
+	    sendErrorStatus("ERROR train name doesn't exist " + trainName);
+	    return null;
 	}
 
-	/* send train location */
-	public void sendTrainLocation(String trainName) throws IOException {
-		Train train = tm.getTrainByName(trainName);
-		if (train != null)
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINLOCATION + " " + trainName
-					+ SimpleOperationsServer.DELIMITER + train.getCurrentLocationName());
-		else
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
+	/**
+	 * constructs a String containing the location of a train
+	 * @param trainName is the name of the desired train.  If not found in Operations, an
+	 * error message is sent to the client
+	 * @return the train's location, as known by Operations
+	 * @throws IOException on failure to send an error message ot the client
+	 */
+	public String constructTrainLocation(String trainName) throws IOException {
+	    Train train = tm.getTrainByName(trainName);
+	    if (train != null) {
+	        return train.getCurrentLocationName();
+	    }
+	    sendErrorStatus("ERROR train name doesn't exist " + trainName);
+	    return null;
 	}
 
-	/* Set the current location of the train */
-	public void setTrainLocation(String trainName, String locationName)
+	/**
+     * constructs a String containing the location of a train
+     * @param trainName is the name of the desired train.  If not found in Operations, an
+     * error message is sent to the client
+     * @return the train's location, as known by Operations
+     * @throws IOException on failure to send an error message ot the client
+	 */
+	public String setTrainLocation(String trainName, String locationName)
 			throws IOException {
 		log.debug("Set train " + trainName + " Location " + locationName);
 		Train train = tm.getTrainByName(trainName);
 		if (train != null) {
-			if (train.move(locationName))
-				sendTrainLocation(trainName);
-			else
-				sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR Move of " + trainName
-						+ " to location " + locationName + " failed.");
-		} else
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
+			if (train.move(locationName)) {
+				return constructTrainLocation(trainName);
+			}
+			else {
+				sendErrorStatus("ERROR Move of " + trainName + " to location " + locationName + " failed.");
+			}
+		} else {
+			sendErrorStatus("ERROR train name doesn't exist " + trainName);
+		}
+		return null;
 	}
 
-	/* send train length */
-	public void sendTrainLength(String trainName) throws IOException {
-		Train train = tm.getTrainByName(trainName);
-		if (train != null)
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINLENGTH + " " + trainName
-					+ SimpleOperationsServer.DELIMITER + train.getTrainLength());
-		else
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
+	/**
+	 * constructs a String containing the length of a train
+	 * @param trainName is the name of the desired train.  If not found in Operations, an
+	 * error message is sent to the client
+	 * @return the train's length, as known by Operations
+	 * @throws IOException on failure to send an error message to the client
+	 */
+	public String constructTrainLength(String trainName) throws IOException {
+	    Train train = tm.getTrainByName(trainName);
+	    if (train != null) {
+	        return String.valueOf(train.getTrainLength());
+	    }
+	    sendErrorStatus("ERROR train name doesn't exist " + trainName);
+	    return null;
 	}
 
-	/* send train tonnage */
-	public void sendTrainWeight(String trainName) throws IOException {
-		Train train = tm.getTrainByName(trainName);
-		if (train != null)
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINWEIGHT + " " + trainName
-					+ SimpleOperationsServer.DELIMITER + train.getTrainWeight());
-		else
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
+    /**
+     * constructs a String containing the tonnage of a train
+     * @param trainName is the name of the desired train.  If not found in Operations, an
+     * error message is sent to the client
+     * @return the train's tonnage, as known by Operations
+     * @throws IOException on failure to send an error message to the client
+     */
+	public String constructTrainWeight(String trainName) throws IOException {
+	    Train train = tm.getTrainByName(trainName);
+	    if (train != null) {
+	        return String.valueOf(train.getTrainWeight());
+	    }
+	    sendErrorStatus("ERROR train name doesn't exist " + trainName);
+	    return null;
 	}
 
-	/* send number of cars in train */
-	public void sendTrainNumberOfCars(String trainName) throws IOException {
-		Train train = tm.getTrainByName(trainName);
-		if (train != null)
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINCARS + " " + trainName
-					+ SimpleOperationsServer.DELIMITER + train.getNumberCarsInTrain());
-		else
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
+    /**
+     * constructs a String containing the number of cars in a train
+     * @param trainName is the name of the desired train.  If not found in Operations, an
+     * error message is sent to the client
+     * @return the number of cars in a train, as known by Operations
+     * @throws IOException on failure to send an error message to the client
+     */
+	public String constructTrainNumberOfCars(String trainName) throws IOException {
+	    Train train = tm.getTrainByName(trainName);
+	    if (train != null) {
+	        return String.valueOf(train.getNumberCarsInTrain());
+	    }
+	    sendErrorStatus("ERROR train name doesn't exist " + trainName);
+	    return null;
 	}
 	
 	/**
-	 * Send road and number of lead loco if there's one assigned to the train.
-	 * @param trainName train's name
-	 * @throws IOException
+	 * Constructs a String containing the road and number of lead loco, if there's one assigned to the train.
+	 * @param trainName is the name of the desired train.  If not found in Operations, an
+     * error message is sent to the client
+     * @return the lead loco
+	 * @throws IOException on failure to send an error message to the client
 	 */
-	public void sendTrainLeadLoco(String trainName) throws IOException {
-		Train train = tm.getTrainByName(trainName);
-		if (train != null) {
-			String leadEngine = "";
-			if (train.getLeadEngine() != null)
-				leadEngine = train.getLeadEngine().toString();
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINLEADLOCO + " " + trainName
-					+ SimpleOperationsServer.DELIMITER + leadEngine);
-		} else
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
+	public String constructTrainLeadLoco(String trainName) throws IOException {
+	    Train train = tm.getTrainByName(trainName);
+	    if (train != null) {
+	        Engine leadEngine = train.getLeadEngine();
+	        if (leadEngine != null) {
+	            return leadEngine.toString();
+	        }
+	    }
+	    sendErrorStatus("ERROR train name doesn't exist " + trainName);
+	    return null;
+	}
+
+    /**
+     * constructs a String containing the caboose on a train
+     * @param trainName is the name of the desired train.  If not found in Operations, an
+     * error message is sent to the client
+     * @return the caboose on a train, as known by Operations
+     * @throws IOException on failure to send an error message to the client
+     */
+	public String constructTrainCaboose(String trainName) throws IOException {
+	    Train train = tm.getTrainByName(trainName);
+	    if (train != null) {
+	        return train.getCabooseRoadAndNumber();
+	    }
+	    sendErrorStatus("ERROR train name doesn't exist " + trainName);
+	    return null;
 	}
 
 	/**
-	 * Send road and number of caboose if there's one assigned to the train.
-	 * @param trainName train's name
-	 * @throws IOException
+	 * tells Operations that a train has terminated.  If not found in Operations, an
+     * error message is sent to the client
+	 * @param trainName is the name of the train
+	 * @return the termination String
+	 * @throws IOException on failure to send an error message to the client
 	 */
-	public void sendTrainCaboose(String trainName) throws IOException {
-		Train train = tm.getTrainByName(trainName);
-		if (train != null)
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " " + SimpleOperationsServer.TRAINCABOOSE + " " + trainName
-					+ SimpleOperationsServer.DELIMITER + train.getCabooseRoadAndNumber());
-		else
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
+	public String terminateTrain(String trainName) throws IOException {
+	    Train train = tm.getTrainByName(trainName);
+	    if (train != null) {
+	        train.terminate();
+	        return constructTrainStatus(trainName);
+	    }
+	    sendErrorStatus("ERROR train name doesn't exist " + trainName);
+	    return null;
 	}
-
-	/* Terminate the train */
-	public void terminateTrain(String trainName) throws IOException {
-		Train train = tm.getTrainByName(trainName);
-		if (train != null) {
-			train.terminate();
-			sendTrainStatus(trainName);
-		} else
-			sendInfoString(SimpleOperationsServer.OPERATIONS + " ERROR train name doesn't exist "+trainName);
+	
+	/**
+	 * sends the full status for a train to a client
+	 * @param trainName is the name of the desired train.  If not found, an error is sent to
+	 * the client
+	 * @throws IOException on failure to send an error message
+	 */
+	public void sendFullStatus(String trainName) throws IOException {
+	    Train train = tm.getTrainByName(trainName);
+	    ArrayList<Attribute> status = new ArrayList<Attribute>();
+	    if (train != null) {
+	        status.add(new Attribute(SimpleOperationsServer.TRAIN, trainName));
+	        status.add(new Attribute(SimpleOperationsServer.TRAINLOCATION, train.getCurrentLocationName()));
+            status.add(new Attribute(SimpleOperationsServer.TRAINLENGTH, String.valueOf(train.getTrainLength())));
+            status.add(new Attribute(SimpleOperationsServer.TRAINWEIGHT, String.valueOf(train.getTrainWeight())));
+            status.add(new Attribute(SimpleOperationsServer.TRAINCARS, String.valueOf(train.getNumberCarsInTrain())));
+            status.add(new Attribute(SimpleOperationsServer.TRAINLEADLOCO, constructTrainLeadLoco(trainName)));
+            status.add(new Attribute(SimpleOperationsServer.TRAINLOCATION, constructTrainCaboose(trainName)));
+            sendMessage(status);
+	    }
+	    else {
+	        sendErrorStatus("ERROR train name doesn't exist " + trainName);
+	    }
 	}
 
 	/*
 	 * Protocol Specific Abstract Functions
 	 */
 
-	abstract public void sendInfoString(String statusString) throws IOException;
+	abstract public void sendMessage(ArrayList<Attribute> contents) throws IOException;
 
-	abstract public void sendErrorStatus() throws IOException;
+	abstract public void sendErrorStatus(String errorStatus) throws IOException;
 
 	abstract public void parseStatus(String statusString)
 			throws jmri.JmriException;

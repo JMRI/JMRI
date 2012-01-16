@@ -3,6 +3,8 @@
 package jmri.jmris.simpleserver;
 
 import java.io.*;
+import java.util.ArrayList;
+import javax.management.Attribute;
 
 /**
  * Simple interface between the JMRI operations and a network connection
@@ -23,65 +25,80 @@ public class SimpleOperationsServer extends jmri.jmris.AbstractOperationsServer 
 	
 	// The supported commands for operations
 	/**
-	 * Returns a list of trains.  One reply message for each train in the list.
+	 * the tag identifying the train's identity
+	 */
+	public static final String TRAIN = "TRAIN";
+	
+	/**
+	 * Returns a list of trains.  One line for each train in the list.
 	 */
 	public static final String TRAINS = "TRAINS";
+	
 	/**
-	 * Returns a list of locations that the trains visit. One reply
-	 * message for each location in the list.
+	 * Returns a list of locations that the trains visit. One line
+	 * for each location in the list.
 	 */
 	public static final String LOCATIONS = "LOCATIONS";
+	
 	/**
-	 * Returns the train's length.  The train's name is required.
-	 * Proper message format: "OPERATIONS TRAINLENGTH train_name"
+	 * Requests/returns the train's length.  The train's name is required.
+	 * Proper message format: "OPERATIONS TRAIN=train_name , TRAINLENGTH"
 	 * Returns train length if train exists, otherwise an error message.
 	 * <P>
-	 * Reply: "OPERATIONS TRAINLENGTH train_name , train_length"
+	 * Request: "Operations , TRAIN=train"
+	 * <P>
+	 * Reply: "OPERATIONS , TRAIN=train , TRAINLENGTH=train_length"
 	 */
 	public static final String TRAINLENGTH = "TRAINLENGTH";
+	
 	/**
-	 * Returns the train's weight.  The train's name is required.
+	 * Requests/returns the train's weight.  The train's name is required.
 	 */
 	public static final String TRAINWEIGHT = "TRAINWEIGHT";
+	
 	/**
-	 * Returns the number of cars in the train.  The train's name is required.
+	 * Requests/returns the number of cars in the train.  The train's name is required.
 	 */
 	public static final String TRAINCARS = "TRAINCARS";
+	
 	/**
-	 * Returns the road and number of the lead loco for this train.  The train's name is required.
+	 * Requests/returns the road and number of the lead loco for this train.  The train's name is required.
 	 */
 	public static final String TRAINLEADLOCO = "TRAINLEADLOCO";
+	
 	/**
-	 * Returns the road and number of the caboose for this train if there's one assigned.  The train's name is required.
+	 * Requests/returns the road and number of the caboose for this train if there's one assigned.  The train's name is required.
 	 */
 	public static final String TRAINCABOOSE = "TRAINCABOOSE";
+	
 	/**
-	 * Returns the the train's status.  The train's name is required.
+	 * Requests/returns the the train's status.  The train's name is required.
 	 */	
 	public static final String TRAINSTATUS = "TRAINSTATUS";
+	
 	/**
 	 * Terminates the train and returns the train's status.  The train's name is required.
 	 */	
 	public static final String TERMINATE = "TERMINATE";
+	
 	/**
-	 * Sets the train's location or gets the train's current location.  
+	 * Sets/requests/returns the train's location or gets the train's current location.
 	 * <P>
-	 * To get the train's location, use this format:
+	 * Sets the train's location: "Operations , TRAIN=train_name , TRAINLOCATION=location"
 	 * <P>
-	 * "OPERATIONS TRAINLOCATION train_name"
+	 * Requests the train's location: "OPERATIONS , TRAIN=train_name"
 	 * <P>
-	 * Reply: "OPERATIONS TRAINLOCATION train_name , location_name"
-	 * <P>
-	 * To set the train's location include the location name in the message,
-	 * both the train's name and location name are required.
-	 * The train's name and location name must be separated by space comma space.
-	 * <P>
-	 * Correct format: "OPERATIONS TRAINLOCATION train_name , location_name"
+	 * Returns the train's location: "OPERATIONS , TRAIN=train_name , TRAINLOCATION=location" 
 	 */	
 	public static final String TRAINLOCATION = "TRAINLOCATION";
 	
-	public static final String DELIMITER = " , "; // delimiter
-
+	private static final String REQUEST_DELIMITER = " , ";
+	
+	/**
+	 * the character that separates the field tag from its value.
+	 */
+	public static final String FIELDSEPARATOR = "=";
+	
 	private DataOutputStream output;
 
 	public SimpleOperationsServer(DataInputStream inStream,
@@ -94,80 +111,196 @@ public class SimpleOperationsServer extends jmri.jmris.AbstractOperationsServer 
 	 * Protocol Specific Simple Functions
 	 */
 
-	public void sendInfoString(String statusString) throws IOException {
-		output.writeBytes(statusString + "\n");
-	}
-
-	public void sendErrorStatus() throws IOException {
+	/**
+	 * send a String to the other end of the telnet connection.   The String is composed of a set of attributes.
+	 * @param contents is the ArrayList of Attributes to be sent.  A linefeed ('\n") is appended
+	 * to the String.
+	 */
+    public void sendMessage(ArrayList<Attribute> contents) throws IOException {
+        output.writeBytes(constructOperationsMessage(contents) + "\n");
+    }
+    
+	/**
+	 * constructs an error message and sends it to the client.  The error message will be
+	 * <ul>
+	 * <li> OPERATIONS: </li>
+	 * <li> the error string </li>
+	 * <li> "\n" </li>
+	 * </ul>
+	 * @param errorStatus is the error message.  It need not include any padding - this method
+	 * will add it.  It should be plain text.
+	 * @throws IOException if there is a problem sending the error message
+	 */
+	public void sendErrorStatus(String errorStatus) throws IOException {
+	    output.writeBytes(OPERATIONS + ": " + errorStatus + "\n");
 	}
 
 	/**
-	 * Parse operation commands. They all start with "OPERATIONS" followed by a
-	 * command like "LOCATIONS". A command like "TRAINLENGTH" requires a train
-	 * name. The delimiter is the space character.
+	 * constructs a request in a format that parseOperationsMessage can handle.  An OperationsMessage has the format:
+	 * <ul>
+	 * <li> OPERATIONS </li>
+	 * <li> " , " (delimiter) </li>
+	 * <li> request/reponse </li>
+	 * <li> any number of " , " , followed by additional request/response pairs </li>
+	 * </ul>
+	 * The meaning of request/response is context sensitive.  If the SimpleOperationsServer client is sending
+	 * the message, then it is a request.  If the SimpleOperationsServer is sending the message, then it is a response.
+	 * @param contents is an array of Attributes.  An Attribute is a String (tag) and a value. For this use,
+	 * the value will always be a String or null.  Thus, "=" and REQUEST_DELIMITER are illegal in a tag and REQUEST_DELIMITER is illegal
+	 * in a value. 
+	 * @return a String which is a serialized version of the attribute array, which can be sent to an SimpleOperationsServer
+	 * or received from a SimpleOperationsServer
 	 */
-	public void parseStatus(String statusString) throws jmri.JmriException {
-		try {
-			if (statusString.contains(LOCATIONS))
-				sendLocationList();
-			else if (statusString.contains(TRAINS))
-				sendTrainList();
-			else if (statusString.contains(TRAINLENGTH))
-				sendTrainLength(getName(statusString));
-			else if (statusString.contains(TRAINWEIGHT))
-				sendTrainWeight(getName(statusString));
-			else if (statusString.contains(TRAINCARS))
-				sendTrainNumberOfCars(getName(statusString));
-			else if (statusString.contains(TRAINLEADLOCO))
-				sendTrainLeadLoco(getName(statusString));
-			else if (statusString.contains(TRAINCABOOSE))
-				sendTrainCaboose(getName(statusString));
-			else if (statusString.contains(TRAINSTATUS))
-				sendTrainStatus(getName(statusString));
-			else if (statusString.contains(TERMINATE))
-				terminateTrain(getName(statusString));
-			else if (statusString.contains(TRAINLOCATION)) {
-				int index, index2;
-				index = statusString.indexOf(" ") + 1;
-				index = statusString.indexOf(" ", index) + 1;
-				// new message format, uses (space comma space) between train name and location name
-				// this allows the train name to consist of several words
-				if (statusString.contains(" , ")) {
-					index2 = statusString.indexOf(DELIMITER, index);
-					setTrainLocation(statusString.substring(index, index2),
-							statusString.substring(index2 + 1));
-				// old message format
-				/*} else if ((index2 = statusString.indexOf(" ", index)) > 0) {
-					// set the location.
-					log.debug("setting location index = " + index
-							+ "index 2 = " + index2 + " String " + statusString);
-					// this code incorrectly assumes that the train name is
-					// only one word.
-					setTrainLocation(statusString.substring(index, index2),
-							statusString.substring(index2 + 1));
-							*/
-				} else {
-					// get the location.
-					sendTrainLocation(getName(statusString));
-				}
-			} else
-				throw new jmri.JmriException();
-		} catch (java.io.IOException ioe) {
-			throw new jmri.JmriException();
-		}
-	}
-	
-	/*
-	 * Skips the first two words in the status string
-	 * and returns the remainder of the string.
-	 */
-	private String getName(String statusString){
-		int index;
-		index = statusString.indexOf(" ") + 1;
-		index = statusString.indexOf(" ", index) + 1;
-		return statusString.substring(index);
+	public static String constructOperationsMessage(ArrayList<Attribute> contents) {
+	    StringBuilder result = new StringBuilder(OPERATIONS);
+	    for (Attribute content : contents) {
+	        result.append(REQUEST_DELIMITER + content.getName());
+	        if (content.getValue() != null) {
+	            result.append(FIELDSEPARATOR + content.getValue());
+	        }
+	    }
+	    return new String(result);
 	}
 
+	/**
+	 * parse a String presumably constructed by constructOperationsMessage.  It breaks the String
+	 * down into tag or tag=value pairs, using a REQUEST_DELIMITER as the separator.  Each pair is further
+	 * broken down into the tag and value and stuffed into an Attribute.  The Attribute is then
+	 * added to the resulting ArrayList.
+	 * <p>
+	 * The leading OPERATIONS String is NOT included.  If the the first String is not OPERATIONS, an empty
+	 * ArrayList is returned.
+	 * @param message is the String received
+	 * @return an ArrayList of Attributes of the constituent pieces of the message
+	 */
+	public static ArrayList<Attribute> parseOperationsMessage(String message) {
+	    ArrayList<Attribute> contents = new ArrayList<Attribute>();
+	    int start;
+	    int end;
+	    int equals;
+	    String request;
+	    if ((message != null) && message.startsWith(OPERATIONS)){
+	        for (start = message.indexOf(REQUEST_DELIMITER);
+	                start > 0;
+	                start = end) {  // step through all the requests/responses in the message
+	            start += REQUEST_DELIMITER.length();
+	            end = message.indexOf(REQUEST_DELIMITER, start);
+	            if (end > 0) {
+	                request = message.substring(start, end);
+	            }
+	            else {
+	                request = message.substring(start, message.length());
+	            }
+	            
+	            //convert a request/response to an Attribute and add it to the result
+	            equals = request.indexOf(FIELDSEPARATOR);
+	            if ((equals > 0) && (equals < (request.length() - 1))) {
+	                contents.add(new Attribute(request.substring(0, equals), request.substring(equals + 1, request.length())));
+	            }
+	            else {
+	                contents.add(new Attribute(request, null));
+	            }
+	        }
+	    }
+	    return contents;
+	}
+	
+	/**
+	 * Parse operation commands. They all start with "OPERATIONS" followed by a
+	 * command like "LOCATIONS". A command like "TRAINLENGTH" requires a train
+	 * name. The delimiter is the tab character.
+	 */
+	public void parseStatus(String statusString) throws jmri.JmriException {
+	    ArrayList<Attribute> contents = parseOperationsMessage(statusString);
+	    ArrayList<Attribute> response = new ArrayList<Attribute>();
+	    String trainName = null;
+	    String tag;
+	    String value;
+	    
+	    try {
+	        for (Attribute field : contents) {
+	            tag = field.getName();
+	            if (TRAIN.equals(tag)) {
+	                trainName = new String((String) field.getValue());
+	                response.add(field);
+	            }
+	            else if (LOCATIONS.equals(tag)) {
+	                sendLocationList();
+	            }
+	            else if (TRAINS.equals(tag)) {
+	                sendTrainList();
+	            }
+	            else if (trainName != null) {
+	                if (TRAINLENGTH.equals(tag)) {
+	                    value = constructTrainLength(trainName);
+	                    if (value != null) {
+	                        response.add(new Attribute(TRAINLENGTH, value));
+	                    }
+	                }
+	                else if (TRAINWEIGHT.equals(tag)) {
+	                    value = constructTrainWeight(trainName);
+	                    if (value != null) {
+	                        response.add(new Attribute(TRAINWEIGHT, value));
+	                    }
+	                }
+	                else if (TRAINCARS.equals(tag)) {
+	                    value = constructTrainNumberOfCars(trainName);
+	                    if (value != null) {
+	                        response.add(new Attribute(TRAINCARS, value));
+	                    }
+	                }
+	                else if (TRAINLEADLOCO.equals(tag)) {
+	                    value = constructTrainLeadLoco(trainName);
+	                    if (value != null) {
+	                        response.add(new Attribute(TRAINLEADLOCO, value));
+	                    }
+	                }
+	                else if (TRAINCABOOSE.equals(tag)) {
+	                    value = constructTrainCaboose(trainName);
+	                    if (value != null) {
+	                        response.add(new Attribute(TRAINCABOOSE, value));
+	                    }
+	                }
+	                else if (TRAINSTATUS.equals(tag)) {
+	                    value = constructTrainStatus(trainName);
+	                    if (value != null) {
+	                        response.add(new Attribute(TRAINSTATUS, value));
+	                    }
+	                }
+	                else if (TERMINATE.equals(tag)) {
+	                    value = terminateTrain(trainName);
+	                    if (value != null) {
+	                        response.add(new Attribute(TERMINATE, value));
+	                    }
+	                }
+	                else if (TRAINLOCATION.equals(tag)) {
+	                    if (field.getValue() == null) {
+	                        value = constructTrainLocation(trainName);
+	                    }
+	                    else {
+	                        value = setTrainLocation(trainName, (String) field.getValue());
+	                    }
+	                    if (value != null) {
+	                        response.add(new Attribute(TRAINLOCATION, value));
+	                    }
+	                } 
+	                else {
+	                    throw new jmri.JmriException();
+	                }
+	            }
+                else {
+                    throw new jmri.JmriException();
+                }
+	        }
+	        if (response.size() > 1) {  // something more than just a train ID
+	            sendMessage(response);
+	        }
+	    }
+	    catch (IOException ioe) {
+
+	    }
+	}
+	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 			.getLogger(SimpleOperationsServer.class.getName());
 
