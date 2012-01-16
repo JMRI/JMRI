@@ -2178,7 +2178,7 @@ public class TrainBuilder extends TrainCommon{
 					}
 					// check for valid destination track
 					if (car.getDestinationTrack() == null){
-						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarDoesNotHaveDest"),new Object[]{car.toString()}));
+						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarDoesNotHaveDest"),new Object[]{car.toString()}));
 						// is there a destination track assigned for staging cars?
 						if (rld == train.getTrainTerminatesRouteLocation() && terminateStageTrack != null){
 							String status = car.testDestination(car.getDestination(), terminateStageTrack);
