@@ -221,7 +221,7 @@ public class SimpleOperationsServer extends jmri.jmris.AbstractOperationsServer 
 	        for (Attribute field : contents) {
 	            tag = field.getName();
 	            if (TRAIN.equals(tag)) {
-	                trainName = new String((String) field.getValue());
+	                trainName = (String) field.getValue();
 	                response.add(field);
 	            }
 	            else if (LOCATIONS.equals(tag)) {
