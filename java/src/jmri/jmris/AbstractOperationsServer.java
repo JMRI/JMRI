@@ -16,6 +16,7 @@ import jmri.jmrit.operations.locations.*;
  * 
  * @author Paul Bender Copyright (C) 2010
  * @author Dan Boudreau Copyright (C) 2012 (added checks for null train)
+ * @author Rodney Black Copyright (C) 2012 
  * @version $Revision$
  */
 
@@ -30,18 +31,7 @@ abstract public class AbstractOperationsServer implements
 		tm.addPropertyChangeListener(this);
 		lm = LocationManager.instance();
 		lm.addPropertyChangeListener(this);
-	}
-
-	public void propertyChange(java.beans.PropertyChangeEvent ev) {
-		// we may need to do something with the properties at some
-		// point, but we don't know what yet.
-	}
-
-	public void dispose() {
-		if (tm != null)
-			tm.removePropertyChangeListener(this);
-		if (lm != null)
-			lm.removePropertyChangeListener(this);
+		addPropertyChangeListeners();
 	}
 
 	/**
@@ -244,21 +234,65 @@ abstract public class AbstractOperationsServer implements
 	 */
 	public void sendFullStatus(String trainName) throws IOException {
 	    Train train = tm.getTrainByName(trainName);
+	    if (train != null)
+	    	sendFullStatus(train);
+	    else 
+	        sendErrorStatus("ERROR train name doesn't exist " + trainName);
+	}
+	
+	/**
+	 * sends the full status for a train to a client
+	 * @param train The desired train.  
+	 * @throws IOException on failure to send an error message
+	 */
+	public void sendFullStatus(Train train) throws IOException {
 	    ArrayList<Attribute> status = new ArrayList<Attribute>();
 	    if (train != null) {
-	        status.add(new Attribute(SimpleOperationsServer.TRAIN, trainName));
+	        status.add(new Attribute(SimpleOperationsServer.TRAIN, train.getName()));
 	        status.add(new Attribute(SimpleOperationsServer.TRAINLOCATION, train.getCurrentLocationName()));
             status.add(new Attribute(SimpleOperationsServer.TRAINLENGTH, String.valueOf(train.getTrainLength())));
             status.add(new Attribute(SimpleOperationsServer.TRAINWEIGHT, String.valueOf(train.getTrainWeight())));
             status.add(new Attribute(SimpleOperationsServer.TRAINCARS, String.valueOf(train.getNumberCarsInTrain())));
-            status.add(new Attribute(SimpleOperationsServer.TRAINLEADLOCO, constructTrainLeadLoco(trainName)));
-            status.add(new Attribute(SimpleOperationsServer.TRAINLOCATION, constructTrainCaboose(trainName)));
+            status.add(new Attribute(SimpleOperationsServer.TRAINLEADLOCO, constructTrainLeadLoco(train.getName())));
+            status.add(new Attribute(SimpleOperationsServer.TRAINCABOOSE, constructTrainCaboose(train.getName())));
             sendMessage(status);
 	    }
-	    else {
-	        sendErrorStatus("ERROR train name doesn't exist " + trainName);
-	    }
 	}
+	
+	private void addPropertyChangeListeners(){
+		java.util.List<String> trainList = tm.getTrainsByNameList();		
+		for (String trainID : trainList) {
+			tm.getTrainById(trainID).addPropertyChangeListener(this);
+		}
+	}
+	
+	private void removePropertyChangeListeners(){
+		java.util.List<String> trainList = tm.getTrainsByNameList();		
+		for (String trainID : trainList) {
+			tm.getTrainById(trainID).removePropertyChangeListener(this);
+		}
+	}
+	
+	public void propertyChange(java.beans.PropertyChangeEvent e) {
+		log.debug("property change: "+ e.getPropertyName()+" old: "+e.getOldValue()+" new: "+e.getNewValue());
+	if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY))
+		try {
+			sendFullStatus((Train)e.getSource());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+	public void dispose() {
+		if (tm != null)
+			tm.removePropertyChangeListener(this);
+		if (lm != null)
+			lm.removePropertyChangeListener(this);
+		removePropertyChangeListeners();
+	}
+
+
 
 	/*
 	 * Protocol Specific Abstract Functions
