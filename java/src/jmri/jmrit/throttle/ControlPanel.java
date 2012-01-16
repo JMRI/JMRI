@@ -211,8 +211,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * "Destructor"
      */
     public void destroy() {
+        if(addressPanel!=null)
+            addressPanel.removeAddressListener(this);
         if (throttle != null) {
-            throttle.setSpeedSetting(0);
             throttle.removePropertyChangeListener(this);
             throttle = null;
         }

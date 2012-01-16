@@ -67,11 +67,13 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 			throttle.removePropertyChangeListener(this);
 			InstanceManager.throttleManagerInstance().cancelThrottleRequest(l.getNumber(), this);
             InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
+            notifyListenersOfThrottleRelease();
 			throttle = null;
 		}
 		if (consistThrottle != null)
 		{
             InstanceManager.throttleManagerInstance().releaseThrottle(consistThrottle, this);
+            notifyListenersOfThrottleRelease();
 			consistThrottle = null;
 		}
 	}

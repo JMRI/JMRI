@@ -46,38 +46,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 
 	public void destroy()
 	{
+        if(addressPanel!=null)
+            addressPanel.removeAddressListener(this);
 		if (mThrottle != null)
 		{
-			mThrottle.setF0(false);
-			mThrottle.setF1(false);
-			mThrottle.setF2(false);
-			mThrottle.setF3(false);
-			mThrottle.setF4(false);
-			mThrottle.setF5(false);
-			mThrottle.setF6(false);
-			mThrottle.setF7(false);
-			mThrottle.setF8(false);
-			mThrottle.setF9(false);
-			mThrottle.setF10(false);
-			mThrottle.setF11(false);
-			mThrottle.setF12(false);
-			mThrottle.setF13(false);
-			mThrottle.setF14(false);
-			mThrottle.setF15(false);
-			mThrottle.setF16(false);
-			mThrottle.setF17(false);
-			mThrottle.setF18(false);
-			mThrottle.setF19(false);
-			mThrottle.setF20(false);
-			mThrottle.setF21(false);
-			mThrottle.setF22(false);
-			mThrottle.setF23(false);
-			mThrottle.setF24(false);
-			mThrottle.setF25(false);
-			mThrottle.setF25(false);
-			mThrottle.setF26(false);
-			mThrottle.setF27(false);
-			mThrottle.setF28(false);
             mThrottle.removePropertyChangeListener(this);
             mThrottle=null;
 		}

@@ -518,6 +518,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 	 */
     public void dispose() {
     	log.debug("Disposing "+getTitle());
+        addressPanel.removeAddressListener(this);
         jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesListPanel().getTableModel().removeThrottleFrame(this, addressPanel.getCurrentAddress());
         // check for any special disposing in InternalFrames
         controlPanel.destroy();
