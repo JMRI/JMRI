@@ -47,7 +47,7 @@ abstract public class AbstractOperationsServer implements
 		        sendMessage(aTrain);
 		    }
 		    catch (IOException ioe) {
-		        log.equals("could not send train " + tm.getTrainById(trainID).getName());
+		        log.debug("could not send train " + tm.getTrainById(trainID).getName());
 		    }
 		}
 	}
@@ -65,7 +65,7 @@ abstract public class AbstractOperationsServer implements
                 sendMessage(location);
             }
             catch (IOException ioe) {
-                log.equals("could not send train " + lm.getLocationById(LocationID).getName());
+                log.debug("could not send train " + lm.getLocationById(LocationID).getName());
             }
 		}
 	}
