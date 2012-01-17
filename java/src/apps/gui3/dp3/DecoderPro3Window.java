@@ -186,16 +186,15 @@ public class DecoderPro3Window
         }
     }
     
-    void additionsToToolBar(){
+    void additionsToToolBar() {
         //This value may return null if the DP3 window has been called from a the traditional JMRI menu frame
-        if(apps.gui3.Apps3.buttonSpace()!=null)
+        if (apps.gui3.Apps3.buttonSpace() != null) {
             getToolBar().add(apps.gui3.Apps3.buttonSpace());
+        }
         getToolBar().add(modePanel);
-        getToolBar().add(new SelectRosterGroupPanelAction("Select Group").makePanel());
     }
 
     jmri.UserPreferencesManager p;
-    final String rosterGroupSelectionCombo = this.getClass().getName()+".rosterGroupSelected";
 
     JLabel serviceModeProgrammerLabel = new JLabel();
     JLabel operationsModeProgrammerLabel = new JLabel();
@@ -363,7 +362,7 @@ public class DecoderPro3Window
 
     JComponent createTop() {
         
-        activeRosterGroupField.setText(p.getComboBoxLastSelection(rosterGroupSelectionCombo));
+        activeRosterGroupField.setText(Roster.getRosterGroupName());
         Object selectedRosterGroup = p.getProperty(getWindowFrameRef(), "selectedRosterGroup");
         groups = new RosterGroupsPanel((selectedRosterGroup != null) ? selectedRosterGroup.toString() : null);
         
@@ -498,7 +497,6 @@ public class DecoderPro3Window
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("ActiveRosterGroup")){
                     String activeGroup = ((String)e.getNewValue());
-                    p.addComboBoxLastSelection(rosterGroupSelectionCombo, activeGroup);
                     activeRosterGroupField.setText(activeGroup);
                 } 
                 if (e.getPropertyName().equals("RosterGroupAdded")
