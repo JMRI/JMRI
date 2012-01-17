@@ -3,12 +3,14 @@
 package jmri.jmrit.roster;
 
 import java.beans.PropertyChangeListener;
-import jmri.jmrit.XmlFile;
 import java.io.File;
-
+import java.io.IOException;
 import java.util.*;
-
+import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
+import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.util.StringUtil;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
@@ -50,7 +52,24 @@ public class Roster extends XmlFile implements RosterGroupSelector {
 
     /** record the single instance of Roster **/
     static transient Roster _instance = null;
-    
+
+    private UserPreferencesManager preferences;
+
+    // should be private except that JUnit testing creates multiple Roster objects
+    public Roster() {
+        super();
+        try {
+            this.readFile(defaultRosterFilename());
+        } catch (Exception e) {
+            log.error("Exception during roster reading: " + e);
+        }
+        this.preferences = InstanceManager.getDefault(UserPreferencesManager.class);
+        if (this.preferences != null) {
+            // for some reason, during JUnit testing, preferences is often null
+            this.setRosterGroup((String) this.preferences.getProperty(Roster.class.getCanonicalName(), "activeRosterGroup"));
+        }
+    }
+
     public synchronized static void resetInstance() { 
         _instance = null; 
     }
@@ -61,16 +80,15 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      */
     public static synchronized Roster instance() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) log.debug("Roster creating instance");
+            if (log.isDebugEnabled()) {
+                log.debug("Roster creating instance");
+            }
             // create and load
             _instance = new Roster();
-            try {
-                _instance.readFile(defaultRosterFilename());
-            } catch (Exception e) {
-                log.error("Exception during roster reading: "+e);
-            }
         }
-        if (log.isDebugEnabled()) log.debug("Roster returns instance "+_instance);
+        if (log.isDebugEnabled()) {
+            log.debug("Roster returns instance " + _instance);
+        }
         return _instance;
     }
 
@@ -681,7 +699,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         // order may be wrong! Sort
         RosterEntry[] rarray = new RosterEntry[_list.size()];
         for (int i=0; i<rarray.length; i++) rarray[i] =_list.get(i);
-        jmri.util.StringUtil.sortUpperCase(rarray);
+        StringUtil.sortUpperCase(rarray);
         for (int i=0; i<rarray.length; i++) _list.set(i,rarray[i]);
 
         firePropertyChange("change", null, r);
@@ -690,19 +708,26 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         
     static String _rostergroup = null;
     
-    public void setRosterGroup(String group){
+    public void setRosterGroup(String group) {
         String oldGroup = _rostergroup;
         String newGroup = group;
-        if (group==null) _rostergroup=null;
-        else if (group.equals(ALLENTRIES))
-            _rostergroup=null;
-        else
+        if (group == null) {
+            _rostergroup = null;
+        } else if (group.equals(ALLENTRIES)) {
+            _rostergroup = null;
+        } else {
             _rostergroup = group;
-        if(oldGroup==null)
-            oldGroup=ALLENTRIES;
-        if(newGroup==null)
-            newGroup=ALLENTRIES;
+        }
+        if (oldGroup == null) {
+            oldGroup = ALLENTRIES;
+        }
+        if (newGroup == null) {
+            newGroup = ALLENTRIES;
+        }
         firePropertyChange("ActiveRosterGroup", oldGroup, newGroup);
+        if (preferences != null) {
+            preferences.setProperty(Roster.class.getCanonicalName(), "activeRosterGroup", _rostergroup);
+        }
     }
     
     public static String getRosterGroup(){
