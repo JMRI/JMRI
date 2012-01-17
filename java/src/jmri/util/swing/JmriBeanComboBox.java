@@ -174,7 +174,7 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
             super.removeItemAt(0);
         else {
             super.insertItemAt("", 0);
-            if (_lastSelected.equals("")){
+            if (_lastSelected==null || _lastSelected.equals("")){
                 setSelectedIndex(0);
             }
         }
