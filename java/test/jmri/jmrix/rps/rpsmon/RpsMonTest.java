@@ -23,6 +23,7 @@ public class RpsMonTest extends TestCase {
     }
     
     public void testFrameCreation() {
+        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
     	JFrame f = jmri.util.JmriJFrame.getFrame("RPS Monitor");
     	Assert.assertTrue("found frame", f !=null );
     	if (f != null)

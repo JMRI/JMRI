@@ -22,6 +22,7 @@ public class SerialMonTest extends TestCase {
     }
 
     public void testDisplay() throws Exception {
+        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         // create a SerialMonFrame
         SerialMonFrame f = new SerialMonFrame(){
           { rawCheckBox.setSelected(true);}

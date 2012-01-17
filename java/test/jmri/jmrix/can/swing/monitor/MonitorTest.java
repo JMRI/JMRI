@@ -22,7 +22,6 @@ public class MonitorTest extends TestCase {
     }
 
     public void testDisplay() throws Exception {
-        
         TrafficControllerScaffold tcs = new TrafficControllerScaffold();
 
         MonitorPane f = new MonitorPane();
@@ -84,6 +83,9 @@ public class MonitorTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void setUp() { 
+        apps.tests.Log4JFixture.setUp();
+        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
+    }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 }

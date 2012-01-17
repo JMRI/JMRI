@@ -22,6 +22,7 @@ import jmri.jmrix.tmcc.*;
 public class SerialMonFrameTest extends TestCase {
     
     public void testCreateAndShow() {
+        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         SerialMonFrame f = new SerialMonFrame();
 		try {
 			f.initComponents();

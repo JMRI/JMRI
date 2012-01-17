@@ -19,6 +19,7 @@ public class MonitorFrameTest extends TestCase {
 
     // create and show, with some data present
     public void testShow() throws Exception {
+        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         MonitorFrame f = new MonitorFrame();
         f.initComponents();
         f.setVisible(true);

@@ -31,8 +31,10 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
     }
     
     public void dispose() {
+        if(memo.getLnTrafficController()!=null){
         // disconnect from the LnTrafficController
-        memo.getLnTrafficController().removeLocoNetListener(~0,this);
+            memo.getLnTrafficController().removeLocoNetListener(~0,this);
+        }
         // and unwind swing
         super.dispose();
     }
@@ -50,6 +52,10 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         this.memo = memo;
         // connect to the LnTrafficController
+        if(memo.getLnTrafficController()==null){
+            log.error("No traffic controller is available");
+            return;
+        }
         memo.getLnTrafficController().addLocoNetListener(~0, this);
         if(memo.provides(jmri.TurnoutManager.class))
             llnmon.setLocoNetTurnoutManager((jmri.TurnoutManager)memo.get(jmri.TurnoutManager.class));

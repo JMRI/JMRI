@@ -31,7 +31,11 @@ public abstract class AbstractMonPane extends JmriPanel  {
     protected abstract void init();
 
     // the subclass also needs a dispose() method to close any specific communications; call super.dispose()
-    public void dispose() { super.dispose();}
+    public void dispose() { 
+        p.setSimplePreferenceState(timeStampCheck, timeCheckBox.isSelected());
+        p.setSimplePreferenceState(rawDataCheck, rawCheckBox.isSelected());
+        super.dispose();
+    }
     // you'll also have to add the message(Foo) members to handle info to be logged.
     // these should call nextLine(String line, String raw) with their updates
 
@@ -47,7 +51,9 @@ public abstract class AbstractMonPane extends JmriPanel  {
     protected JButton openFileChooserButton = new JButton();
     protected JTextField entryField = new JTextField();
     protected JButton enterButton = new JButton();
-
+    String rawDataCheck = this.getClass().getName()+".RawData";
+    String timeStampCheck = this.getClass().getName()+".TimeStamp";
+    jmri.UserPreferencesManager p;
 	// for locking
 	AbstractMonPane self;
 	
@@ -60,8 +66,8 @@ public abstract class AbstractMonPane extends JmriPanel  {
     }
 
     public void initComponents() throws Exception {
+        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         // the following code sets the frame's initial state
-
         clearButton.setText("Clear screen");
         clearButton.setVisible(true);
         clearButton.setToolTipText("Clear monitoring history");
@@ -105,10 +111,12 @@ public abstract class AbstractMonPane extends JmriPanel  {
         rawCheckBox.setText("Show raw data");
         rawCheckBox.setVisible(true);
         rawCheckBox.setToolTipText("If checked, show the raw traffic in hex");
-
+        rawCheckBox.setSelected(p.getSimplePreferenceState(rawDataCheck));
+        
         timeCheckBox.setText("Show timestamps");
         timeCheckBox.setVisible(true);
         timeCheckBox.setToolTipText("If checked, show timestamps before each message");
+        timeCheckBox.setSelected(p.getSimplePreferenceState(timeStampCheck));
 
         openFileChooserButton.setText("Choose log file");
         openFileChooserButton.setVisible(true);
@@ -326,5 +334,6 @@ public abstract class AbstractMonPane extends JmriPanel  {
 
 	StringBuffer linesBuffer = new StringBuffer();
 	static private int MAX_LINES = 500 ;
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMonFrame.class.getName());
 }

@@ -33,6 +33,11 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         this.memo = memo;
 
         memo.getTrafficController().addCanListener(this);
+        try{
+            initComponents();
+        } catch (Exception e){
+            log.error(e.toString());
+        }
     }
 
     public String getTitle() {
