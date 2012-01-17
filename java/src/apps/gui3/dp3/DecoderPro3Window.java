@@ -225,7 +225,7 @@ public class DecoderPro3Window
         ConnectionConfig oldServMode = serModeProCon;
         ConnectionConfig oldOpsMode = opsModeProCon;
     
-        if (jmri.InstanceManager.programmerManagerInstance()!=null)
+        if (jmri.InstanceManager.programmerManagerInstance()!=null){
             if(jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
                 String serviceModeProgrammer = jmri.InstanceManager.programmerManagerInstance().getUserName();
                 ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
