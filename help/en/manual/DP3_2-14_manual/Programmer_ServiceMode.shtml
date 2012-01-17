@@ -55,7 +55,7 @@ The CV  data is written to ANY and ALL decoders on the programming track. When t
   <p>If you have a decoder that doesn&rsquo;t appear in the listing,  you may want to check to be sure that you are using the most up to date version  of Decoder Pro, because manufacturers are adding models almost faster than the  team can enter the new decoder definitions into the files.&nbsp; You can choose a manufacturer's version which  is as close as you can find, or if you&rsquo;re only interested in basic programming  functions, use the NMRA&copy; decoder which  is a generic file of the CV&rsquo;s contained in their standards.</p>
   <p>The last item on  this pane is the Programmer Format entry.&nbsp;  It is preset by your Preferences entry, but you can select other  programmers using the drop down arrow. </p>
   <p>Once you have  selected a decoder, or Decoder Pro has done it for you, the <strong>Open Programmer </strong>button will become activated and you&rsquo;ll be able to move on with Service Mode  Programming.&nbsp; </p>
-  <p>When you are on the <strong>Setup Pane</strong> and click on the <strong>Open Programmer</strong> button, the selected Programmer  window will open. All programmers, Basic, Comprehensive and Advanced, open to the Roster  Entry pane.</p>
+  <p>When you click on the <strong>Open Programmer</strong> button, the selected Programmer  window will open. Both programmers, Basic and Comprehensive  open to the Roster  Entry pane.</p>
 </blockquote>
 
 

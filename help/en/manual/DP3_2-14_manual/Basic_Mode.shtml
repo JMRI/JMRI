@@ -34,12 +34,12 @@ DecoderPro&reg; Programming Modes
 <p align="center"><img src="images/SetProgramMode.png" width="653" height="218" alt="program mode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
 
 <p>Some brief comments on Programming Modes </p>
-<p><strong>Paged Mode </strong>is an expansion of Register mode that gives  full access to all decoder CVs. </p>
-<p><strong>Register Mode</strong> is an expanded form of 
-Address Mode, and is still used by some older and/or  lower end decoders, particularly some from MRC and Wangrow. It is inherently limited in its  ability to access all CVs in a decoder. </p>
-<p><strong>Direct Mode</strong> is another method, not yet  supported by all decoders, that allows full access.&nbsp;&nbsp; There  are two ways of implementing Direct Mode. The radio button(s) for the Direct Mode method(s) your command station supports  will be activated. </p>
 <p><strong>Address Mode</strong> is an outdated programming method that is  included here for the sake of <br>
 full compliance with the NMRA DCC standard.</p>
+<p><strong>Register Mode</strong> is an expanded form of 
+Address Mode, and is still used by some older and/or  lower end decoders, particularly some from MRC and Wangrow. It is inherently limited in its  ability to access all CVs in a decoder. </p>
+<p><strong>Paged Mode </strong>is an expansion of Register mode that gives  full access to all decoder CVs. </p>
+<p><strong>Direct Mode</strong> is another method, not yet  supported by all decoders, that allows full access.&nbsp;&nbsp; There  are two ways of implementing Direct Mode. The radio button(s) for the Direct Mode method(s) your command station supports  will be activated. </p>
 <p>  If you experience difficulty programming a decoder in  Paged Mode, try Direct Mode, then <br>
   Register Mode, and finally Address Mode. The EasyDCC AD4  Accessory Decoder can only be <br>
 programmed in Direct Mode.</p>

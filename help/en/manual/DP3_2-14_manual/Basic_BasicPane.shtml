@@ -65,8 +65,7 @@ information, and sometimes even has to ask a couple of  times.
   </strong>functions are  dependant on your command station. If 
   your system does not have the capability to read CVs,  then these buttons will not be 
   available. </p>
-<p><a name="Enter/Edit data"></a>If you wish to change the address  of the locomotive, type in the new address. To turn on or off 4 digit  addressing, select the desired radio button. .&nbsp;  Be sure that the address  type agrees with the number of characters in the address. &nbsp;</p>
-<p>To enable Analog (old style DC, some vendors refer to this as dual mode)  Operation select the appropriate entry from the drop-down list. </p>
+<p><a name="Enter/Edit data"></a>If you wish to change the address  of the locomotive, type in the new address. To turn on or off 4 digit  addressing, select the desired radio button. .&nbsp;  Be sure that the address  type agrees with the number of characters in the address.&nbsp;</p>
 <p> When you are finished, click on 
   <input type="button" name="button4" id="button4" value="Write full sheet">
 to  write the new values in the decoder. </p>
