@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.locormi;
 
 import jmri.jmrix.loconet.*;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Client for the RMI LocoNet server.
@@ -35,6 +36,7 @@ public class LnMessageClient extends LnTrafficRouter {
 
     public LnMessageClient() {
         super();
+        clientMemo = new LocoNetSystemConnectionMemo();
     }
 
     /**
@@ -98,12 +100,11 @@ public class LnMessageClient extends LnTrafficRouter {
         // ready to go, connection running, etc.
 
         // create SlotManager (includes programmer) and connection memo
-        LocoNetSystemConnectionMemo memo 
-            = new LocoNetSystemConnectionMemo(this, new SlotManager(this));
-       
+        clientMemo.setSlotManager(new SlotManager(this));
+        clientMemo.setLnTrafficController(this);
         // do the common manager config
-        memo.configureCommandStation(true, false,"<unknown>");  // for now, assume full capability
-        memo.configureManagers();
+        clientMemo.configureCommandStation(true, false,"<unknown>");  // for now, assume full capability
+        clientMemo.configureManagers();
 
         // the serial connections (LocoBuffer et al) start
         // various threads here.
@@ -111,6 +112,10 @@ public class LnMessageClient extends LnTrafficRouter {
         jmri.jmrix.loconet.ActiveFlag.setActive();
 
     }
+    
+    LocoNetSystemConnectionMemo clientMemo;
+    
+    public SystemConnectionMemo getAdapterMemo(){ return clientMemo; }
 
     public static void main( String[] args ){
     	String logFile = "default.lcf";

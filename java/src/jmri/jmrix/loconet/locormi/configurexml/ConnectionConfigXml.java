@@ -38,6 +38,16 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         Element e = new Element("connection");
         e.setAttribute("manufacturer", c.getManufacturer());
         e.setAttribute("port", c.host.getText());
+        
+        if(c.getLnMessageClient()!=null){
+            if(c.getLnMessageClient().getAdapterMemo()!=null){
+                e.setAttribute("userName", c.getLnMessageClient().getAdapterMemo().getUserName());
+                e.setAttribute("systemPrefix", c.getLnMessageClient().getAdapterMemo().getSystemPrefix());
+            }
+            if (c.getDisabled())
+                e.setAttribute("disabled", "yes");
+            else e.setAttribute("disabled", "no");
+        }
 
         e.setAttribute("class", this.getClass().getName());
 
@@ -52,47 +62,72 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     	boolean result = true;
         // configure port name
         String hostName = e.getAttribute("port").getValue();
-
-        // notify
-        JFrame f = new JFrame("LocoNet server connection");
-        f.getContentPane().add(new JLabel("Connecting to "+hostName));
-        f.pack();
-        f.setVisible(true);
-
-        // slightly different, as not based on a serial port...
-        // create the LnMessageClient
-        jmri.jmrix.loconet.locormi.LnMessageClient client = new jmri.jmrix.loconet.locormi.LnMessageClient();
-
-        // start the connection
-        try {
-            client.configureRemoteConnection(hostName, 500);
-            connected = true;   // exception during connect skips this
-        } catch (jmri.jmrix.loconet.LocoNetException ex) {
-            log.error("Error opening connection to "+hostName+" was: "+ex);
-            f.setTitle("Server connection failed");
-            f.getContentPane().removeAll();
-            f.getContentPane().add(new JLabel("failed, error was "+ex));
-            f.pack();
-            connected = false;
-            result = false;
-        }
-        
         String manufacturer = null;
+        
         try { 
             manufacturer = e.getAttribute("manufacturer").getValue();
         } catch ( NullPointerException ex) { //Considered normal if not present
         }
-
-        // configure the other instance objects
-        client.configureLocalServices();
-
-        if (connected) {
-            f.setVisible(false);
-            f.dispose();
+        
+        ConnectionConfig cc = new ConnectionConfig(hostName, manufacturer);
+        jmri.jmrix.loconet.locormi.LnMessageClient client = new jmri.jmrix.loconet.locormi.LnMessageClient();
+        cc.setLnMessageClient(client);
+        
+        if (e.getAttribute("disabled")!=null) {
+            String yesno = e.getAttribute("disabled").getValue();
+                if ( (yesno!=null) && (!yesno.equals("")) ) {
+                    if (yesno.equals("no")) cc.setDisabled(false);
+                    else if (yesno.equals("yes")) cc.setDisabled(true);
+                }
         }
+        
+        if (client.getAdapterMemo()!=null){
+            if (e.getAttribute("userName")!=null) {
+                client.getAdapterMemo().setUserName(e.getAttribute("userName").getValue());
+            }
+            
+            if (e.getAttribute("systemPrefix")!=null) {
+                client.getAdapterMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
+            }
+        }
+        
+        if(!cc.getDisabled()){
+            // notify
+            JFrame f = new JFrame("LocoNet server connection");
+            f.getContentPane().add(new JLabel("Connecting to "+hostName));
+            f.pack();
+            f.setVisible(true);
 
+            // slightly different, as not based on a serial port...
+            // create the LnMessageClient
+            
+
+            // start the connection
+            try {
+                client.configureRemoteConnection(hostName, 500);
+                connected = true;   // exception during connect skips this
+            } catch (jmri.jmrix.loconet.LocoNetException ex) {
+                log.error("Error opening connection to "+hostName+" was: "+ex);
+                f.setTitle("Server connection failed");
+                f.getContentPane().removeAll();
+                f.getContentPane().add(new JLabel("failed, error was "+ex));
+                f.pack();
+                jmri.jmrix.ConnectionStatus.instance().setConnectionState(cc.getInfo(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
+                connected = false;
+                result = false;
+            }
+            
+            if (connected) {
+                jmri.jmrix.ConnectionStatus.instance().setConnectionState(cc.getInfo(), jmri.jmrix.ConnectionStatus.CONNECTION_UP);
+                // configure the other instance objects only if connected.
+                client.configureLocalServices();
+                f.setVisible(false);
+                f.dispose();
+            }
+        }
+        
         // register, so can be picked up
-        register(hostName, manufacturer);
+        register(cc);
         return result;
     }
 
@@ -102,8 +137,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         log.error("unexpected call to register()");
         new Exception().printStackTrace();
     }
-    protected void register(String host, String manufacturer) {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, manufacturer));
+    protected void register(ConnectionConfig cc) {
+        InstanceManager.configureManagerInstance().registerPref(cc);
     }
 
     // initialize logging

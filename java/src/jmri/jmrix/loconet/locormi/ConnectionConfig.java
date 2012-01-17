@@ -14,6 +14,7 @@ import javax.swing.JTextField;
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @version	$Revision$
  */
+ //@todo This class could ideally do with refactoring to the NetworkConnectionConfig and also multi-connection
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
@@ -35,8 +36,31 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public JTextField host;
     String hostName ="";
 
-    public String name() { return "LocoNet Server"; }
+    public String name() { 
+        return "LocoNet Server";
+    }
+    
+    public String getConnectionName() { 
+        if((lmc!=null) && (lmc.getAdapterMemo()!=null)){
+            return lmc.getAdapterMemo().getUserName();
+        }
+        return name();
+    }
+    
+    public String getInfo(){
+        return hostName;
+    }
 
+    public void setLnMessageClient(LnMessageClient ln){
+        lmc = ln;
+    }
+    
+    LnMessageClient lmc;
+    
+    public LnMessageClient getLnMessageClient() {
+        return lmc;
+    }
+    
     public void loadDetails(JPanel details) {
         details.setLayout(new BoxLayout(details, BoxLayout.X_AXIS));
         details.add(new JLabel("Server hostname:"));
@@ -55,5 +79,20 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
+    
+    boolean disabled = false;
+    
+    public boolean getDisabled() {
+        return disabled;
+    }
+    
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+        if((lmc!=null) && (lmc.getAdapterMemo()!=null)){
+            lmc.getAdapterMemo().setDisabled(disabled);
+        }
+    }
+    
+    
 }
 
