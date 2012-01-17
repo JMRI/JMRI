@@ -24,7 +24,11 @@ public class LnPowerManager
 	public LnPowerManager(LocoNetSystemConnectionMemo memo) {
 	    super(memo);
 	    // standard LocoNet - connect
-		this.tc = memo.getLnTrafficController();
+        if(memo.getLnTrafficController()==null){
+            log.error("Power Manager Created, yet there is no Traffic Controller");
+            return;
+        }
+        this.tc = memo.getLnTrafficController();
 		tc.addLocoNetListener(~0, this);
 	}
 
@@ -74,6 +78,8 @@ public class LnPowerManager
 			firePropertyChange("Power", null, null);
 		}
 	}
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnPowerManager.class.getName());
 
 }
 
