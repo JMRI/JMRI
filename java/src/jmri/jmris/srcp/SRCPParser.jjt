@@ -37,8 +37,15 @@ MORE :
   <DESCRIPT: ~[]>
 }
 
+<IN_TIME>
+TOKEN:
+{
+    < JULDATE: (["1"-"9"]){2,4}["0"-"3"]["0"-"9"]["0"-"9"]>
+  | < MINSEC: ["0"-"5"]["0"-"9"]>
+  | < HOUR: (["0"-"2"])?["0"-"9"]>
+}
 
-<DEFAULT,IN_DESCRIPTION>
+<DEFAULT,IN_DESCRIPTION,IN_TIME>
 TOKEN :
 {
   < EOL :(["\n","\r"]){2} >:DEFAULT
@@ -55,20 +62,17 @@ SKIP:
 <DEFAULT>
 TOKEN :
 {
-  < ADDR: ( ["0"-"9"] )+ >
+  < ZEROADDR: ( "0" )(["0"-"9"])* >
+| < NONZEROADDR: ["1"-"9"](["0"-"9"])* >
 | < JMRITURNOUT: ["a"-"z","A"-"Z"] "T" (["0"-"9"])+ >
 | < JMRISENSOR: ["a"-"z","A"-"Z"] "S" (["0"-"9"])+ >
 | < JMRILIGHT: ["a"-"z","A"-"Z"] "L" (["0"-"9"])+ >
-| < NONZEROBUS: ["1"-"9"](["0"-"9"])* >
 | < ONOFF: (<ON>|<OFF>) >
 | < #ON: <O><N>> 
 | < #OFF: <O>(<F>){2} >
 | < PROTOCOL: (<A>|<F>|<L>|<P>|<S>|<N>|<M>|<Z>) >
 | < DRIVEMODE: ("="|"0"|"1"|"2") >
 | < DELAY: ("-")?(["0"-"9"])+>
-| < JULDATE: (["1"-"9"]){2,4}["0"-"3"]["0"-"9"]["0"-"9"]>
-| < HOUR: (["0"-"2"])?["0"-"9"]>
-| < MINSEC: ["0"-"5"]["0"-"9"]>
 
 // Device types
 | < FB: <F><B> >
@@ -77,10 +81,10 @@ TOKEN :
 | < GM: <G><M> >
 | < SM: <S><M> >
 | < LOCK: <L><O><C><K> >
-| < TIME: <T><I><M><E>>
+| < TIME: <T><I><M><E>>:IN_TIME
 | < POWER: <P><O><W><E><R>>
 | < SESSION: <S><E><S><S><I><O><N>>
-| < DESCRIPTION: <D><E><S><C><I><P><T><I><O><N> >:IN_DESCRIPTION
+| < DESCRIPTION: <D><E><S><C><R><I><P><T><I><O><N> >:IN_DESCRIPTION
 | < SERVER: <S><E><R><V><E><R>>
 
 // Constants and commands used for handshake mode only.
@@ -170,32 +174,55 @@ SimpleNode connectionmode():{}
   }
 }
 
-void bus():{Token t;}
+SimpleNode bus():{SimpleNode s;}
 {
-  t=<ADDR>
+  (s=zeroaddress() | s=nonzeroaddress())
   {
-    log.debug("BUS Production " + t.image);
-    jjtThis.jjtSetValue(t.image);
-    //return jjtThis;
+    log.debug("BUS Production "+ s.jjtGetValue());
+    jjtThis.jjtSetValue(s.jjtGetValue());
+    return jjtThis;
   }
 }
 
-SimpleNode address():{Token t;}
+SimpleNode address():{SimpleNode s;}
 {
-  t=<ADDR>
+  (s=zeroaddress() | s=nonzeroaddress())
   {
-    log.debug("Address Production "+ t.image);
+    log.debug("Address Production "+ s.jjtGetValue());
+    jjtThis.jjtSetValue(s.jjtGetValue());
+    return jjtThis;
+  }
+}
+
+SimpleNode zeroaddress():{Token t;}
+{
+  t=<ZEROADDR>
+  {
+    //Zero Address allows a leading zero
+    log.debug("ZeroAddress Production "+ t.image);
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
 }
 
-SimpleNode port():{Token t;}
+SimpleNode nonzeroaddress():{Token t;}
 {
-  t=<ADDR>
+  t=<NONZEROADDR>
   {
-    log.debug("PORT Production " +t.image);
+    //NonZero Address requires a value  >=1, without
+    //a leading zero
+    log.debug("NonZeroAddress Production "+ t.image);
     jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode port():{SimpleNode s;}
+{
+  (s=zeroaddress() | s=nonzeroaddress())
+  {
+    log.debug("PORT Production "+ s.jjtGetValue());
+    jjtThis.jjtSetValue(s.jjtGetValue());
     return jjtThis;
   }
 }
@@ -243,7 +270,7 @@ SimpleNode set():{}
 {
   <SET> ( ( bus() ( gl() | 
                 sm() | 
-                ga() address() port() zeroone() delay() | 
+                ga() address() port() zeroone() (delay()|timeout()) | 
                 fb() address() zeroone()| 
                 time() | 
                 power() onoff() | 
@@ -262,10 +289,20 @@ SimpleNode term():{}
   {return jjtThis;}
 }
 
+
 SimpleNode check():{}
 {
-  <CHECK> bus() ( gl() | sm() | ga() <ADDR> <ADDR> <ADDR> <DELAY> | 
-                 fb() | time() | power() onoff() | lock() )
+  // the protocol documentation indicates check and set
+  // are the same, so there could be some refactoring here.
+  <CHECK> ( ( bus() ( gl() | 
+                sm() | 
+                ga() address() port() zeroone() (delay()|timeout()) | 
+                fb() address() zeroone()| 
+                time() | 
+                power() onoff() | 
+                lock() ) ) |
+	<PROTOCOLLITTERAL> serviceversion() | 
+	<CONNECTIONMODELITTERAL> connectionmode() ) 
   {
     log.debug("Check Production");
     return jjtThis;
@@ -411,16 +448,16 @@ SimpleNode onoff():{Token t;}
 
 SimpleNode zeroone():{Token t;}
 {
-  t=<ADDR>
+  (zeroaddress() | nonzeroaddress())
   {
-     log.debug("ZeroOne Production " +t.image);
-     jjtThis.jjtSetValue(t.image);
+     log.debug("ZeroOne Production ");
      return jjtThis;
   }
 }
 
 SimpleNode delay():{Token t;}
 {
+  // time timeout is a non-zero integer.  It may be negative.
   t=<DELAY>
   {
      log.debug("Delay Production " +t.image);
@@ -430,9 +467,10 @@ SimpleNode delay():{Token t;}
 
 SimpleNode timeout():{Token t;}
 {
-  t=<ADDR>
+  // the timeout is a non-negative integer.
+  address()
   {
-     log.debug("Timeout Production " +t.image);
+     log.debug("Timeout Production ");
      return jjtThis;
   }
 }

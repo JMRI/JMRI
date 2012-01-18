@@ -142,6 +142,16 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     log.debug("Received Address " + node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
+  public Object visit(ASTnonzeroaddress node, Object data)
+  {
+    log.debug("Received NonZeroAddress " + node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+  public Object visit(ASTzeroaddress node, Object data)
+  {
+    log.debug("Received ZeroAddress " + node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
   public Object visit(ASTport node, Object data)
   {
     log.debug("Received Port " + node.jjtGetValue() );
@@ -188,6 +198,12 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
   public Object visit(ASTinforesponse node, Object data)
   {
     log.debug("Information Response " +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+
+  public Object visit(ASTtimeout node, Object data)
+  {
+    log.debug("Timeout " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
 

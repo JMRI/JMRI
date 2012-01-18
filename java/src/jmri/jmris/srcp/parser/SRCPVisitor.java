@@ -207,6 +207,16 @@ public class SRCPVisitor implements SRCPParserVisitor {
     log.debug("Received Address " + node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
+  public Object visit(ASTzeroaddress node, Object data)
+  {
+    log.debug("Received Address " + node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+  public Object visit(ASTnonzeroaddress node, Object data)
+  {
+    log.debug("Received Address " + node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
   public Object visit(ASTport node, Object data)
   {
     log.debug("Received Port " + node.jjtGetValue() );

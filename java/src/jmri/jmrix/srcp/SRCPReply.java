@@ -26,13 +26,20 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
     // from a parser message node.
     public SRCPReply(SimpleNode n){
 	super();
-        StringBuilder b = new StringBuilder(n.jjtGetFirstToken().toString());
+	log.debug("Parser Constructor called with node type " + n.getClass()+ " and "+ n.jjtGetNumChildren() +" children.");
+        StringBuilder b;
+        if(n.jjtGetNumChildren()>1) {
+        b = new StringBuilder(n.jjtGetFirstToken().toString());
 	for(int i=1;i<n.jjtGetNumChildren();i++) {
             b.append(" ");
             b.append(((SimpleNode)n.jjtGetChild(i)).jjtGetFirstToken().toString());
         }
-        
+        }
+        else {
+          b = new StringBuilder((String)n.jjtGetValue() );
+        }
         String s = b.toString();
+	log.debug("Parser Constructor built :"+ s);
         _nDataChars = s.length();
         for (int i = 0; i<_nDataChars; i++)
             _dataChars[i] = s.charAt(i);

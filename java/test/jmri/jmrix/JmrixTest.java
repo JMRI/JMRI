@@ -53,6 +53,7 @@ public class JmrixTest extends TestCase {
         suite.addTest(jmri.jmrix.secsi.SerialTest.suite());
         suite.addTest(jmri.jmrix.tmcc.SerialTest.suite());
         suite.addTest(jmri.jmrix.xpa.XpaTest.suite());
+        suite.addTest(jmri.jmrix.srcp.SRCPTest.suite());
 
 		return suite;
 
