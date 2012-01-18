@@ -58,15 +58,20 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     // should be private except that JUnit testing creates multiple Roster objects
     public Roster() {
         super();
-        try {
-            this.readFile(defaultRosterFilename());
-        } catch (Exception e) {
-            log.error("Exception during roster reading: " + e);
-        }
         this.preferences = InstanceManager.getDefault(UserPreferencesManager.class);
         if (this.preferences != null) {
             // for some reason, during JUnit testing, preferences is often null
             this.setRosterGroup((String) this.preferences.getProperty(Roster.class.getCanonicalName(), "activeRosterGroup"));
+        }
+    }
+
+    // should be private except that JUnit testing creates multiple Roster objects
+    public Roster(String rosterFilename) {
+        this();
+        try {
+            this.readFile(rosterFilename);
+        } catch (Exception e) {
+            log.error("Exception during roster reading: " + e);
         }
     }
 
@@ -84,7 +89,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
                 log.debug("Roster creating instance");
             }
             // create and load
-            _instance = new Roster();
+            _instance = new Roster(defaultRosterFilename());
         }
         if (log.isDebugEnabled()) {
             log.debug("Roster returns instance " + _instance);
