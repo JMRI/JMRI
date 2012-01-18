@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmris.srcp.parser package
  * @author                      Paul Bender
- * @version                     $Revision: 17977 $
+ * @version                     $Revision$
  */
 public class SRCPClientParserTests extends TestCase {
 

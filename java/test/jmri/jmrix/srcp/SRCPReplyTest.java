@@ -16,7 +16,7 @@ import java.io.StringReader;
  *
  * Description:	    tests for the jmri.jmrix.srcp.SRCPReply class
  * @author			Bob Jacobsen
- * @version         $Revision: 17977 $
+ * @version         $Revision$
  */
 public class SRCPReplyTest extends TestCase {
 

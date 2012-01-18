@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.srcp package
  * @author			Paul Bender 
- * @version			$Revision: 19478 $
+ * @version			$Revision$
  */
 public class SRCPTest extends TestCase {
 
