@@ -184,7 +184,16 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         }
         return null;
     }
-    
+
+    public RosterEntry getEntryForId(String id) {
+        for (RosterEntry re : _list) {
+            if (re.getId().equals(id)) {
+                return re;
+            }
+        }
+        return null;
+    }
+
     /**
      * Return a specific entry by index
      */
