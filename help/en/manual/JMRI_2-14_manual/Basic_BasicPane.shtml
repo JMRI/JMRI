@@ -33,8 +33,7 @@
 <hr>
 <p>You may have noticed that at the  top of the window are Two tabs: <strong>Roster Entry</strong> and <strong>Basic</strong>.  We have completed the <strong>Roster Entry</strong> pane of the Program window, now,  click on the <strong>Basic</strong> tab to change panes to continue with programming your  decoder. The Basic pane will be displayed and look similar to the following illustration: 
 Many panes in the programmer contain decoder dependent features,  as a result what you see may not exactly agree with what you see here.  Only those variables that your decoder can implement will be shown. </p>
-<div align="center"><img src="images/Basic_Program.png" alt="Basic Programming Pane" width=648 height=520 border=5 class="BOXIT">
-</div>
+<div align="center"><img src="images/Basic_Program.png" width="636" height="556" alt="Basic pane"></div>
 <p>You will see three options you can change, highlighted in  yellow: </p>
 <ol> 
 <li>The decoder address (should be unique among your  locomotives, unless you are operating as a set) often the locomotive number is used.</li>

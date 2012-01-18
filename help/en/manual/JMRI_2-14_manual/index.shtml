@@ -22,7 +22,7 @@
 
 <a NAME="Top"></a>
 <h1>JMRI&reg; v2.14 </h1>
-<h4>Updated 10/3/2011</h4>
+<h4>Updated In Work x/x/2012</h4>
 <p>&nbsp;
 </p>
 <p><strong>JMRI is a Java-based cross-platform application for model railroaders. JMRi contains applications for:</strong></p>
@@ -50,9 +50,7 @@ Controlling&nbsp;  lighting and sound in the room, and so forth. (SoundPro&reg;)
 <div align="right">
 <h2>Download Print version of Manual (pdf format)
 </h2>
-<p><strong><a href="pdf/DecoderProManual_2_4.pdf" target="_blank">manual version 2.4</a></strong>
-<p><strong><a href="pdf/DecoderPro Man 2.8.pdf" target="_blank">manual version 2.8</a></strong>
-<p><a href="pdf/jmri_Man_2_12.pdf" target="_blank"><strong>manual version 2.12</strong></a></div>
+<p><a href="../pdf/jmri_Man_2_14.pdf"><strong>Manual version 2.14</strong></a></div>
 
 <h1>Table of Contents</h1>
 <h4><a name="Installing"></a>Installing JMRI</h4>
@@ -444,10 +442,10 @@ are best submitted to the
     Revisions
   </caption>
   <tr>
-    <th width="8%" scope="col">Version</th>
-    <th width="8%" scope="col">Revision Date</th>
-    <th width="13%" scope="col">Editors</th>
-    <th width="71%" scope="col">Major Revisions</th>
+    <th width="9%" scope="col">Version</th>
+    <th width="10%" scope="col">Revision Date</th>
+    <th width="15%" scope="col">Editors</th>
+    <th width="66%" scope="col">Major Revisions</th>
   </tr>
   <tr>
     <td align="left" valign="top">original</td>
@@ -493,6 +491,13 @@ are best submitted to the
     Installation information added<br>
     Contents updated to current functions
     </p></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">2.14</td>
+    <td align="left" valign="top">x/x/2012</td>
+    <td align="left" valign="top">Dale A.Tripp<br>
+      Bruce Shanks</td>
+    <td align="left" valign="top">Updated from JMRI 2.12</td>
   </tr>
 </table>
 <hr>

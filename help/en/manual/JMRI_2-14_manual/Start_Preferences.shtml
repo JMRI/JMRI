@@ -239,7 +239,7 @@ removes the item from the Start Up sequence. All of the panes are of the same fo
 <p><strong><a href="#Top">Top</a></strong></p>
 <h3><a name="Messages"></a>Messages Panes</h3>
 <p>TABS and selections can be used to set how and when messages are displayed.</p>
-<p><img border="0" src="Start_Preferences_SNAGHTML5c45623.PNG" width="650" height="235"></p>
+<p><img src="images/Preferences_Messages.png" width="677" height="240" alt="messages"></p>
 <p><strong><a href="#Top">Top</a></strong></p>
 <h3><a name="Roster"></a>Roster Panes</h3>
 <h4>Programmer pane</h4>
@@ -251,15 +251,15 @@ removes the item from the Start Up sequence. All of the panes are of the same fo
 <p><strong><a href="#Top">Top</a></strong></p>
 <h3><a name="Throttle"></a>Throttle Pane</h3>
 <p>Select throttle startup conditions, shown are defaults, but you may change the settings.</p>
-<p><img src="images/Preferences_throttle.png" width="661" height="454" alt="throttle"></p>
+<p><img src="images/Preferences_throttle.png" width="755" height="432" alt="throttle"></p>
 <p><strong><a href="#Top">Top</a></strong></p>
 <h3><a name="WiThrottle"></a>WiThrottle Pane</h3>
 <p>This pane allows WiThottle users to customize the setup.</p>
-<p><img src="images/Preferences_Wi.png" width="662" height="450" alt="Wi Throttle"></p>
+<p><img src="images/Preferences_Wi.png" width="755" height="432" alt="wi"></p>
 <p><strong><a href="#Top">Top</a></strong></p>
 <h2><a name="MiniServer"></a>MinServer Pane</h2>
 <p>Use this pane to setup MinServer if you are using it.</p>
-<p><img src="images/Preferences_miniServer.png" width="668" height="455" alt="miniServer"></p>
+<p><img src="images/Preferences_miniServer.png" width="755" height="432" alt="mini server"></p>
 <p><strong><a href="#Top">Top</a></strong></p>
 <h2 align="center">Before you exit the preferences, Click on          
   <input type="submit" name="button8" id="button8" value="Save">

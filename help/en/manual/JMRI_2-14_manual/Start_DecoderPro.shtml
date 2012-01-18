@@ -36,7 +36,7 @@
   open the program in the usual manner for your operating system. You should
   see this or a similar opening screen displayed:
   
-<h1><img src="images/Splash_Screen.png" alt="DecoderPro Splash Screen" width=425 height=265 border=10 class="BOXIT"></h1>
+<h1><img src="images/Splash_Screen.png" width="496" height="282" alt="splash"></h1>
 
 <p>
 It may take a while for this screen to come up, especially on older
