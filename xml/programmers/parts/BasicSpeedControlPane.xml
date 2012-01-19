@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <pane name="Basic Speed Control">
+  <name xml:lang="ca">Control bàsic de velocitat</name>
     <column>
         <row>
             <column>

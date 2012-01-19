@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <pane name="Basic">
     <name xml:lang="fr">Basic(fr)</name>
+    <name xml:lang="ca">Bàsic</name>
     <column>
         <dccaddress/>
         <label label=" "/>
