@@ -27,6 +27,20 @@ public class ErrorMemo {
         this.exception = exception;
     }
     
+    public ErrorMemo(
+            org.apache.log4j.Level level,
+            XmlAdapter adapter,
+            String operation,
+            String description, 
+            String systemName, 
+            String userName, 
+            Throwable exception,
+            String title)
+    {
+        this(level, adapter, operation, description, systemName, userName, exception);
+        this.title=title;
+    }
+    
     public org.apache.log4j.Level level;
     public XmlAdapter adapter;
     public String operation;
@@ -34,6 +48,7 @@ public class ErrorMemo {
     public String systemName;
     public String userName;
     public Throwable exception;
+    public String title = "loading";
 }
     
 
