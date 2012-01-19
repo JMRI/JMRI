@@ -231,7 +231,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
     }
     
-    protected void addConfigStore(Element root) {
+    protected boolean addConfigStore(Element root) {
+        boolean result = true;
         ArrayList<Map.Entry<Object, Integer>> l = new ArrayList<Map.Entry<Object, Integer>>(clist.entrySet());
         Collections.sort(l, new Comparator<Map.Entry<Object, Integer>>(){
 
@@ -239,26 +240,49 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             return o1.getValue().compareTo(o2.getValue());
         }});
         for (int i=0; i<l.size(); i++) {
-            Object o = l.get(i).getKey();
-            Element e = elementFromObject(o);
-            if (e!=null) root.addContent(e);
+            try {
+                Object o = l.get(i).getKey();
+                Element e = elementFromObject(o);
+                if (e!=null) root.addContent(e);
+            } catch (java.lang.Exception e) {
+                storingErrorEncountered (null, "storing to file", Level.ERROR,
+                                          "Unknown error (Exception)", null,null,e);
+                result = false;
+            }
         }
+        return result;
     }
     
-    protected void addToolsStore(Element root) {
+    protected boolean addToolsStore(Element root) {
+        boolean result = true;
         for (int i=0; i<tlist.size(); i++) {
             Object o = tlist.get(i);
-            Element e = elementFromObject(o);
-            if (e!=null) root.addContent(e);
+            try {
+                Element e = elementFromObject(o);
+                if (e!=null) root.addContent(e);
+            } catch (java.lang.Exception e) {
+                result = false;
+                storingErrorEncountered (((XmlAdapter)o), "storing to file", Level.ERROR,
+                                          "Unknown error (Exception)", null,null,e);
+            }
         }
+        return result;
     }
     
-    protected void addUserStore(Element root) {
+    protected boolean addUserStore(Element root) {
+        boolean result = true;
         for (int i=0; i<ulist.size(); i++) {
             Object o = ulist.get(i);
-            Element e = elementFromObject(o);
-            if (e!=null) root.addContent(e);
+            try{
+                Element e = elementFromObject(o);
+                if (e!=null) root.addContent(e);
+            } catch (java.lang.Exception e) {
+                result = false;
+                storingErrorEncountered ((XmlAdapter)o, "storing to file", Level.ERROR, 
+                                          "Unknown error (Exception)", null,null,e);
+            }
         }
+        return result;
     }
     
     protected void addUserPrefsStore(Element root) {
@@ -275,7 +299,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         root.addContent(jmri.jmrit.revhistory.configurexml.FileHistoryXml.storeDirectly(InstanceManager.getDefault(FileHistory.class)));
     }
 
-    protected void finalStore(Element root, File file) {
+    protected boolean finalStore(Element root, File file) {
         try {
             // Document doc = newDocument(root, dtdLocation+"layout-config-"+dtdVersion+".dtd");
             Document doc = newDocument(root);
@@ -293,23 +317,43 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
             writeXML(file, doc);
         } catch (java.io.FileNotFoundException ex3) {
+            storingErrorEncountered (null, "storing to file "+file.getName(), Level.ERROR,
+                                      "File not found " + file.getName(), null,null,ex3);
             log.error("FileNotFound error writing file: "+ex3.getLocalizedMessage());
+            return false;
         } catch (java.io.IOException ex2) {
+            storingErrorEncountered (null, "storing to file "+file.getName(), Level.ERROR,
+                              "IO error writing file " + file.getName(), null,null,ex2);
             log.error("IO error writing file: "+ex2.getLocalizedMessage());
-        } 
+            return false;
+        }
+        return true;
     }
 
     /**
      * Writes config, tools and user to a file.
      * @param file
      */
-    public void storeAll(File file) {
+    public boolean storeAll(File file) {
+        boolean result = true;
         Element root = initStore();
+        if(!addConfigStore(root)){
+            result=false;
+        }
+        if(!addToolsStore(root)){
+            result=false;
+        }
+        if(!addUserStore(root)){
+            result=false;
+        }
         addConfigStore(root);
         addToolsStore(root);
         addUserStore(root);
         includeHistory(root);
-        finalStore(root, file);
+        if(!finalStore(root, file)){
+            result=false;
+        }
+        return result;
     }
     /**
      * Writes prefs to a predefined File location.
@@ -352,11 +396,17 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Writes prefs to a file.
      * @param file
      */
-    public void storeConfig(File file) {
+    public boolean storeConfig(File file) {
+        boolean result = true;
         Element root = initStore();
-        addConfigStore(root);
+        if(!addConfigStore(root)){
+            result=false;
+        }
         includeHistory(root);
-        finalStore(root, file);
+        if(!finalStore(root, file)){
+            result=false;
+        }
+        return result;
     }
 
      /**
@@ -367,12 +417,20 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * requires it to be present first.
      * @param file
      */
-    public void storeUser(File file) {
+    public boolean storeUser(File file) {
+        boolean result = true;
         Element root = initStore();
-        addConfigStore(root);
-        addUserStore(root);
+        if(!addConfigStore(root)){
+            result=false;
+        }
+        if(!addUserStore(root)){
+            result=false;
+        }
         includeHistory(root);
-        finalStore(root, file);
+        if(!finalStore(root, file)){
+            result=false;
+        }
+        return result;
     }
     
     public boolean makeBackup(File file){
@@ -751,7 +809,45 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         // format and log a message (note reordered from arguments)
         ErrorMemo e = new ErrorMemo(level,
                             adapter, operation, description, 
-                            systemName, userName, exception);
+                            systemName, userName, exception, "loading");
+
+        handler.handle(e);
+    }
+    
+    /**
+     * Invoke common handling of errors that
+     * happen during the "store" process.
+     * <p>
+     * Generally, this is invoked by {@link XmlAdapter}
+     * implementations of their creationErrorEncountered()
+     * method (note different arguemments, though). The
+     * standard implemenation of that is in {@link AbstractXmlAdapter}.
+     * <p>
+     * Exceptions passed into this are absorbed.
+     *
+     * @param adapter Object that encountered the error (for reporting),
+     *                  may be null
+     * @param operation description of the operation being attempted,
+     *                  may be null
+     * @param description description of error encountered
+     * @param systemName System name of bean being handled, may be null
+     * @param userName used name of the bean being handled, may be null
+     * @param exception Any exception being handled in the processing, may be null
+     */
+    
+    static public void storingErrorEncountered (
+                XmlAdapter adapter,
+                String operation,
+                org.apache.log4j.Level level,
+                String description, 
+                String systemName, 
+                String userName, 
+                Throwable exception)
+    {
+        // format and log a message (note reordered from arguments)
+        ErrorMemo e = new ErrorMemo(level,
+                            adapter, operation, description, 
+                            systemName, userName, exception, "storing");
 
         handler.handle(e);
     }

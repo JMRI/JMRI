@@ -4,6 +4,9 @@ package jmri.configurexml;
 
 import jmri.InstanceManager;
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
+
+import javax.swing.JOptionPane;
 
 /**
  * Store the JMRI user-level information as XML.
@@ -18,6 +21,8 @@ import java.awt.event.ActionEvent;
  * @see         jmri.jmrit.XmlFile
  */
 public class StoreXmlUserAction extends StoreXmlConfigAction {
+
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
     public StoreXmlUserAction() {
         this(
@@ -43,7 +48,15 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
         // make a backup file
         InstanceManager.configureManagerInstance().makeBackup(file);
         // and finally store
-        InstanceManager.configureManagerInstance().storeUser(file);
+        boolean results = InstanceManager.configureManagerInstance().storeUser(file);
+        log.debug(results?"store was successful":"store failed");
+        if (!results){
+        	JOptionPane.showMessageDialog(null,
+        			rb.getString("StoreHasErrors")+"\n"
+        			+rb.getString("StoreIncomplete")+"\n"
+        			+rb.getString("ConsoleWindowHasInfo"),
+        			rb.getString("StoreError"),	JOptionPane.ERROR_MESSAGE);
+        }
 
         // The last thing we do is restore the Approve button text.
 	userFileChooser.setDialogType(oldDialogType);

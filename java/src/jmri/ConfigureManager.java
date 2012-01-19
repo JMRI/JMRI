@@ -90,8 +90,9 @@ public interface ConfigureManager {
     /**
      * Stores prefs, config, tools and user information.
      * @param file Output file
+     * @return true if succeeded
      */
-    public void storeAll(File file);
+    public boolean storeAll(File file);
 
     /**
      * Stores just preferences information.
@@ -114,13 +115,14 @@ public interface ConfigureManager {
      * Stores just configuration information.
      * @param file Output file
      */
-    public void storeConfig(File file);
+    public boolean storeConfig(File file);
 
     /**
      * Stores just user information.
      * @param file Output file
+     * @return true if succeeded
      */
-    public void storeUser(File file);
+    public boolean storeUser(File file);
 
     /**
      * Create the objects defined in a particular configuration

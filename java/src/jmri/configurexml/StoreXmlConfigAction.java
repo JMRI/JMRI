@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import java.util.ResourceBundle;
 
 /**
  * Store the JMRI configuration information as XML.
@@ -21,6 +22,8 @@ import javax.swing.JOptionPane;
  * @see         jmri.jmrit.XmlFile
  */
 public class StoreXmlConfigAction extends LoadStoreBaseAction {
+
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
     public StoreXmlConfigAction() {
         this("Store configuration ...");
@@ -77,7 +80,16 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
         if (file==null) return;
         
         // and finally store
-        InstanceManager.configureManagerInstance().storeConfig(file);
+        boolean results = InstanceManager.configureManagerInstance().storeConfig(file);
+        System.out.println(results);
+        log.debug(results?"store was successful":"store failed");
+        if (!results){
+        	JOptionPane.showMessageDialog(null,
+        			rb.getString("StoreHasErrors")+"\n"
+        			+rb.getString("StoreIncomplete")+"\n"
+        			+rb.getString("ConsoleWindowHasInfo"),
+        			rb.getString("StoreError"),	JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     // initialize logging

@@ -27,14 +27,14 @@ public class DialogErrorHandler extends jmri.configurexml.ErrorHandler {
 
         if (e.level == org.apache.log4j.Level.ERROR) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showInfoMessage("Error during loading",m,e.description, "",true, false, e.level);
+                            showInfoMessage("Error during " + e.title,m,e.description, "",true, false, e.level);
                             
         } else if (e.level == org.apache.log4j.Level.WARN) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showInfoMessage("Warning during loading",m,e.description, "", true, false, e.level);
+                            showInfoMessage("Warning during " + e.title,m,e.description, "", true, false, e.level);
         } else {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showInfoMessage("Message during loading",m,e.description, "",true, false, e.level);
+                        showInfoMessage("Message during " + e.title,m,e.description, "",true, false, e.level);
         }
         
     }

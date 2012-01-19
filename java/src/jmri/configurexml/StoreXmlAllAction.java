@@ -4,6 +4,9 @@ package jmri.configurexml;
 
 import jmri.InstanceManager;
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
+
+import javax.swing.JOptionPane;
 
 /**
  * Store the entire JMRI status in an XML file.
@@ -16,6 +19,8 @@ import java.awt.event.ActionEvent;
  * @see         jmri.jmrit.XmlFile
  */
 public class StoreXmlAllAction extends StoreXmlConfigAction {
+
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
     public StoreXmlAllAction() {
         this("Store all ...");
@@ -30,7 +35,16 @@ public class StoreXmlAllAction extends StoreXmlConfigAction {
         if (file==null) return;
         
         // and finally store
-        InstanceManager.configureManagerInstance().storeAll(file);
+        
+        boolean results = InstanceManager.configureManagerInstance().storeAll(file);
+        log.debug(results?"store was successful":"store failed");
+        if (!results){
+        	JOptionPane.showMessageDialog(null,
+        			rb.getString("PanelStoreHasErrors")+"\n"
+        			+rb.getString("PanelStoreIncomplete")+"\n"
+        			+rb.getString("ConsoleWindowHasInfo"),
+        			rb.getString("PanelStoreError"),	JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     // initialize logging
