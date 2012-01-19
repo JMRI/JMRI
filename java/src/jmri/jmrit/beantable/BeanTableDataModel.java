@@ -705,7 +705,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
     public void removeName(int row, int column){
         NamedBean nBean = getBySystemName(sysNameList.get(row));
-        nBean.setUserName(null);
         String msg = java.text.MessageFormat.format(AbstractTableAction.rb
                 .getString("UpdateToSystemName"),
                 new Object[] { getBeanType()});
@@ -715,6 +714,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         if(optionPane == JOptionPane.YES_OPTION){
             nbMan.updateBeanFromUserToSystem(nBean);
         }
+        nBean.setUserName(null);
         fireTableRowsUpdated(row, row);
     }
     
