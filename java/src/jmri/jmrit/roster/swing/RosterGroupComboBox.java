@@ -1,8 +1,6 @@
 // RosterGroupComboBox.java
 package jmri.jmrit.roster.swing;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JComboBox;
@@ -51,15 +49,6 @@ public class RosterGroupComboBox extends JComboBox implements RosterGroupSelecto
     public RosterGroupComboBox(Roster roster, String selection) {
         super();
         _roster = roster;
-        _roster.addPropertyChangeListener(new PropertyChangeListener() {
-
-            public void propertyChange(PropertyChangeEvent pce) {
-                if (pce.getPropertyName().startsWith("RosterGroup")) {
-                    update(getSelectedRosterGroup());
-                }
-            }
-            
-        });
         update(selection);
     }
 
