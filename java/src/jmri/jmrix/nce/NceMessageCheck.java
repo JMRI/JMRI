@@ -18,8 +18,9 @@ public class NceMessageCheck {
 	public static void checkMessage(NceSystemConnectionMemo memo, NceMessage m) throws JmriException{
         if(m!=null){
             switch(m.getOpCode()){
+            /* NCE USB can now address the full range of accessory addresses dboudreau 1/18/2012
             case NceBinaryCommand.ACC_CMD: checkACC_CMD(memo, m);
-            break;
+            break;*/
             case NceBinaryCommand.READ1_CMD: checkAccessory_CMD(memo, m);
             break;
             case NceBinaryCommand.READ16_CMD: checkAccessory_CMD(memo, m);
@@ -51,6 +52,7 @@ public class NceMessageCheck {
         }
 	}
 	
+	/* NCE USB no longer has an accessory address restriction dboudreau 1/18/2012
 	private static void checkACC_CMD(NceSystemConnectionMemo memo, NceMessage m) throws JmriException{
 		// USB connected to PowerCab or SB3 can only access addresses up to 250
 		int number = m.getElement(1);			// high byte address
@@ -62,6 +64,7 @@ public class NceMessageCheck {
 			throw new JmriException("invalid NCE accessory address for USB " + number);
 		}
 	}
+	*/
 	
 	private static void checkAccessory_CMD(NceSystemConnectionMemo memo, NceMessage m) throws JmriException{
 	   	if (memo.getNceUSB() != NceTrafficController.USB_SYSTEM_NONE){

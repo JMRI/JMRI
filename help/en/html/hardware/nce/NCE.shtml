@@ -331,9 +331,9 @@ track) is available for loco programming. Most functions and features
 that are not supported by the NCE USB Interface are disabled or grayed out in the
 JMRI program.</P>
 
-<P>The NCE USB Interface when connected to a Power Cab or SB3 can only
+<!--  <P>The NCE USB Interface when connected to a Power Cab or SB3 can only
 address accessories (turnouts) between 1 and 250. There isn't a
-limitation when connected to a Power Pro.</P>
+limitation when connected to a Power Pro.</P> -->
 
 
 <H4>USB Adapter Limitation Summary</H4>
@@ -342,8 +342,8 @@ limitation when connected to a Power Pro.</P>
 	<DT>All systems:</DT>
 	<DD>No AIU support, No Turnout MONITORING, No Clock functions.</DD>
 
-	<DT>Power Cab and SB3:</DT>
-	<DD>Can only access accessory addresses between 1 and 250.</DD>
+	<!--  <DT>Power Cab and SB3:</DT>
+	<DD>Can only access accessory addresses between 1 and 250.</DD> -->
 
 	<DT>SB3:</DT>
 	<DD>No programming track support, operation mode only.</DD>
