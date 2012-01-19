@@ -41,7 +41,8 @@ which allows them to report their location and engine number back to the
 Loconet.
 <p>There  may be one or several of these panes, depending on how complex the decoder  programming is and the style of the person who wrote the definition file for  your particular decoder.
 
-<h1><img src="images/Comp_08_Advanced.png" width="923" height="800" alt="Advanced pane"></h1>
+<p>Note that the Tsunami decoder has advanced, Tsunami Lighting, Equalizer, Reverb, and ASC TAB that are unique to this deocoder and will not be discussed in this manual.
+<h1><img src="images/Comp_08_Advanced.png" width="932" height="792" alt="advanced"></h1>
 <p>
 <hr>
 

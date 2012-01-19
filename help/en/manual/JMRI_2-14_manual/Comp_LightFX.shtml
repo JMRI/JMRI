@@ -41,7 +41,8 @@ as the locomotive approached the crossing suddenly begin flashing alternately,
 then return to a steady glow; or when a locomotive pulls into a siding,
 stops, and dims its headlight for the approaching train.
 All  these effects are possible with the right decoder and proper set-up, and set-up  is what DecderPro is all about. 
-<p align="center"><img src="images/Comp_06_Lights.png" width="918" height="799" alt="light pane">
+<p>Note: FP45 Tsunami decoder does not allow you to program the lights, We are using a Digitrax decoder for Kato F7A, which has full FX lighting capability.
+<p align="center"><img src="images/Comp_06_Lights.png" width="920" height="799" alt="Lights FX">
 <p>
 The specific effects available differ widely between manufacturers,
 and even between different "families" of decoders from the same maker.
@@ -67,7 +68,7 @@ function key. Since the <b>F2</b> key is non-latching (think of it as a
 momentary contact switch) that normally turns off when it is released. By
 raising the value of this CV you can make them stay on for up to 30 seconds
 from a single momentary activation.
-<p align="center"><img src="images/Comp_06A_Lights.png" width="923" height="800" alt="lignt pane">
+<p align="center"><img src="images/Comp_06A_Lights.png" width="920" height="799" alt="lights FX">
 <p>
 The other lighting effects are highly variable between decoders. Check
 your specific decoder documentation for what the decoder is supposed to

@@ -41,7 +41,7 @@ a decoder?</h1>
 <div align="center"><img src="images/start_dp_main01.png" width="1107" height="493" alt="dp main"></div>
 <p>1. <strong><a href="dp3_menubar.html">The Menu Bar</a></strong>.<br>
 2. <strong><a href="dp3_toobar.shtml">The Tool Bar</a></strong><br>
-3. <a href="dp3_rosterTable.shtml"><strong>The Roster Table</strong></a> a list of all the docoders in your roster that are part of the active roster group. To set-up a roster goup in addition to the default group of Global see <strong><a href="dp3_settings_rosterGroups.html">Settings for Roster groups.</a></strong>.<br>
+3. <a href="dp3_rosterTable.shtml"><strong>The Roster Table</strong></a> a list of all the decoders in your roster that are part of the active roster group. To set-up a roster group in addition to the default group of <strong>All Entries</strong> see <strong><a href="dp3_settings_rosterGroups.html">Settings for Roster groups.</a></strong>.<br>
 4.<strong><a href="dp3_decoderInfo.shtml"> The Decoder Information Area</a></strong>.  Show information about any selected locomotive in the roster list.<br>
 5. A status bar that reports information about DecoderPro3 operation including errors.</p>
 <p>Anywhere in the roster table  you may right-click and a context menu will be displayed.<img src="images/dp3_main_contextMenu.png" width="825" height="314" alt="context menu"></p>
@@ -53,31 +53,31 @@ a decoder?</h1>
   <tr>
     <td rowspan="3" valign="top">Programmer type <img src="images/arrow.gif" width="20" height="9"></td>
     <td><input name="radio" type="radio" id="radio" value="radio" checked>
-      Programming Track</td>
+    <a href="Programmer_ServiceMode.shtml">Programming Track</a></td>
   </tr>
   <tr>
     <td><input type="radio" name="radio2" id="radio2" value="radio2">
-      Programming on Main</td>
+    <a href="Programmer_OpsMode.shtml">Programming on Main</a></td>
   </tr>
   <tr>
     <td><input type="radio" name="radio3" id="radio3" value="radio3">
-      Edit</td>
+      Edit (Allows you to edit roster without making changes to program)</td>
   </tr>
   <tr>
     <td>Labels and Media</td>
-    <td>&nbsp;</td>
+    <td>Opens programming page to select either Labels TAB or Roster Media TAB</td>
   </tr>
   <tr>
     <td>Throttle</td>
-    <td>&nbsp;</td>
+    <td>Opens JMRI Throttle</td>
   </tr>
   <tr>
     <td>Duplicate</td>
-    <td>&nbsp;</td>
+    <td>Duplicates the selected roster entry to use for same type of locomotive.</td>
   </tr>
   <tr>
     <td>Delete</td>
-    <td>&nbsp;</td>
+    <td>Deletes roster entry.</td>
   </tr>
 </table>
 <p>&nbsp;</p>

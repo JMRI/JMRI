@@ -35,9 +35,9 @@ This pane in the <b>Comprehensive Programmer</b> provides programming
 for functions that are specific to an individual manufacturer, but outside
 the realm of the DCC standard. While items like <b>Transponding</b> may eventually find a place in the NMRA DCC standard, and are therefore in the Advanced pane, these items are obviously beyond that category.
 
-This pane will be manufacturer dependent and decoder family dependent<h1><img src="images/Comp_12_Manufacturer.png" width="922" height="799" alt="Manufacturers pane"></h1>
+This pane will be manufacturer dependent and decoder family dependent<h1><img src="images/Comp_12_Manufacturer.png" width="920" height="510" alt="mfr"></h1>
 
-<p align="center"><img src="images/Comp_12A_Manufacturer.png" width="922" height="739" alt="Extended mfr panes">
+<p align="center"><img src="images/Comp_12A_Manufacturer.png" width="932" height="667" alt="mfr">
 <p>These items will, by definition, vary greatly between manufacturers.
   Once again, your best resource is the documentation for the specific decoder
   you are programming and this pane in the programmer for that decoder.

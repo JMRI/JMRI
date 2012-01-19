@@ -22,7 +22,7 @@
 
 <a NAME="Top"></a>
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
-<h1>Speed Control Pane</h1>
+<h1>Basic Speed Control Pane</h1>
 
 <div align=right>
 <p><a href="Comp_Motor.shtml">Previous &nbsp;| </a>
@@ -31,12 +31,13 @@
 </div>
 
 <hr>
-<p>The <strong>Speed Control pane</strong> looks very complicated, but it can be one of
+<p>The<strong>Basic Speed Control pane</strong> looks very complicated, but it can be one of
 the most significant in improving the performance of your locomotive fleet.
-<h1><img src="images/Speed_Table_Main.png" width="919" height="799" alt="Speed pane"></h1>
+<h1><img src="images/Speed_Table_Main.png" width="799" height="402" alt="Speed pane"></h1>
 
 <p>Let's look first at the top of the pane: You now have the option of using Basic Speed Control (this pane) or Speed Table to control your locomotive's speed.  Which ever one you select last and write to your decoder will be the method used for speed control.  To select this pane:
-<p>Click on the <strong>Use Vstart, Vmid, Vhigh</strong> radio button.
+<p>Depending upon the decoder manufacturer, any of these settings could be on this pane.
+<p>Capability to select  the <strong>Use Vstart, Vmid, Vhigh</strong> settings..
 <p>Three important CVs are programmed in this pane Vstart, Vmid and Vhigh. They work together to make a very basic three point speed table. On some decoders these settings may be labeled differently and all three may not be available.  Decoder Pro will show the correct options for your selected decoder.  
 <p>
 <b>Vstart</b>(<strong>Start Voltage</strong>) is the voltage at the first speed step. If your locomotive

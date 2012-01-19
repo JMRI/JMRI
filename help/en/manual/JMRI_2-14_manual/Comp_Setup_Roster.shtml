@@ -30,17 +30,16 @@
 </div>
 
 <hr>
-<p>The Comprehensive Programmer begins the same way as the Basic Programmer, with  a Programmer Setup Pane and a Roster Pane.  The content  are identical, so they will not be repeated here. . To use the Comprehensive Programmer just  be sure that you select the Comprehensive Programmer in the DecoderPro3 initial  screen decoder information area. 
-<p> (<a href="Basic_Programming.shtml#Setting Up">Tab Programmer Setup</a>),
-<p>When you are  on the <strong>Setup Pane</strong> and click on the <b>Open Programmer</b> button, the appropriate
-  Comprehensive Programmer window will open. All programmers, Basic and Comprehensive, open
-  to the Roster Entry pane, which will be similar to that shown below. (Using Digitrax DN163K0a decoder examples)
-<h1><img src="images/Comp_Roste_01.png" width="821" height="601" alt="comp roster"></h1>
+<p>The Comprehensive Programmer begins the same way as the Basic Programmer, opening with the <strong>Roster Entry Pane</strong>.  The contents  are identical, so they will not be repeated here. . To use the Comprehensive Programmer just  be sure that you select the Comprehensive Programmer in the <strong><a href="Start_Preferences.shtml">Preferences</a></strong>.
+<p>When you are  on the<a href="Basic_Programming.shtml">Service Mode Programmer Setup</a> and click on the <b>Open Programmer</b> button, the appropriate
+  Programmer window will open, in this case the Comprehensive Programmer.. All programmers, Basic and Comprehensive, open
+  to the Roster Entry pane, which will be similar to that shown below. (Using Tsunami Diesel Genesis OEM for Athearn N FP45 decoder examples) in the<strong> Program(locomotive roster title) (Programming Track)</strong>
+<h1><img src="images/Comp_Roste_01.png" width="799" height="583" alt="comp roster"></h1>
 
 <p>
-Note that the <b>Roster</b> pane is essentially unchanged from the <b>Basic</b>
+Note that the <b>Roster Entry </b> pane is essentially unchanged from the <b>Basic</b>
 programmer, but the window has a LOT more options in the <b>Tabs</b>
-at the top! If you are unsure how to handle the <b>Roster</b> information,
+at the top of the window!!! If you are unsure how to handle the <b>Roster Entry </b>information,
 go back to that section in the <a href="Basic_Programming.shtml#Roster"><strong>Basic
 Programmer</strong></a>. If you're ready to move on to bigger and better things,
 let's go to the next tab, the <a href="Comp_Basic.shtml"><strong>Expanded Basic

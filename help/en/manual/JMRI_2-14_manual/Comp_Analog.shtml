@@ -31,7 +31,9 @@
 </div>
 
 <hr>
-<p>As  discussed in the <a href="Comp_Basic.shtml"><strong>Expanded Basic Pane</strong></a>, some decoders allow operation on Analog  or Conventional DC layouts.&nbsp;  At the discretion of the manufacturer, some of the non-motor responses  may be changeable by setting CV&rsquo;s in the decoder.&nbsp; This pane is where you would set these  values.&nbsp; Typical would be whether any of  the various functions (such as lights and bell) would be on or off when in DC  mode. Consult your decoders manual for options available.<h1><img src="images/AnalogModeFunctions.png" width="914" height="798" alt="Analog pane"></h1>
+<p>As  discussed in the <a href="Comp_Basic.shtml"><strong>Expanded Basic Pane</strong></a>, some decoders allow operation on Analog  or Conventional DC layouts.&nbsp;  At the discretion of the manufacturer, some of the non-motor responses  may be changeable by setting CV&rsquo;s in the decoder.&nbsp; This pane is where you would set these  values.&nbsp; Typical would be whether any of  the various functions (such as lights and bell) would be on or off when in DC  mode. Consult your decoders manual for options available
+<p>Some are very complex and others are very simple, such as alternate analog or DCC only.
+<h1><img src="images/AnalogModeFunctions.png" width="932" height="424" alt="analog options"></h1>
 <p>
 <hr>
 

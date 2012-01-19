@@ -35,10 +35,9 @@
 
 <hr>
 <p>
-One of the first things you will notice about the expanded Basic Pane
-in the Comprehensive Programmer is that there are a lot more options than
+One of the first things you will notice about the expanded <strong>Basic Pane</strong> in the Comprehensive Programmer is that there are a lot more options than
 you found in the Basic Programmer.</p>
-<p align="center"><img src="images/Extended_Basic_Program_Roster.png" width="828" height="602" alt="Extended Basix"></p>
+<p align="center"><img src="images/Extended_Basic_Program_Roster.png" width="799" height="583" alt="Extended Basic Pane"></p>
 <p>
 Select 2 or 4 digit <b>addressing</b> radio button to select which mode of addressing you wish to be active</p>
 <p>You can enter locomotive addresses in both the <strong>Primary address</strong> and/or the <strong>Extended address</strong>. The address of a decoder is the prefix for the code it responds to.
@@ -66,7 +65,7 @@ is "breaking away" and running out of control at high speed on a DCC layout, you
 <h2>The Read and Write Buttons</h2>
 <p>
 At the bottom of all the programmer panes you will find three rows of buttons, as shown :
-<p align="center"><img src="images/Comp_03_Basic.png" width="929" height="168" alt="comp basic buttons">
+<p align="center"><img src="images/Comp_03_Basic.png" width="808" height="145" alt="bottom of pane">
 <p>
 The top row operates <span class="ACCENT"><strong>ONLY</strong></span> on the currently visible pane. These buttons are:</p>
 
@@ -79,7 +78,7 @@ The top row operates <span class="ACCENT"><strong>ONLY</strong></span> on the cu
 
 <p>The second row of buttons  performs essentially the same functions, but on the <strong>entire range </strong>of CVs for the  decoder. This allows you to read all CVs, for example, or to make a series of  changes across several panes,  and when done then write them all to the decoder. Again, you have the  option of reading/writing only the changed data, or all data. </p>
 <p>
-Below the two rows of buttons is a text line that shows what the current <b>programming mode</b> is, and a <b>Set</b><strong>...</strong>  button that allows you to change it without exiting the programmer. <a href="Basic_Mode.shtml"><strong>click here</strong></a> for further information on Programming Modes.</p>
+Below the two rows of buttons is a text line that shows what the current <b>programming mode</b> is, and a <b>drop-down list </b> that allows you to change it without exiting the programmer. <a href="Basic_Mode.shtml"><strong>click here</strong></a> for further information on Programming Modes.</p>
 <p>
 Finally, the bottom line of the pane is a status bar that tells you exactly what the system is doing. It shows <strong>idle</strong> in these screen shots  because the system was  not actively programming decoders when they were made. </p>
 <hr>
