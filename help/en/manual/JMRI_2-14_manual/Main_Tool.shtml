@@ -92,14 +92,14 @@
     </tr>
   </table>
   <p>Use Throttles preferences window to set the desired preferences.</p>
-  <p align="center"><img src="images/Main_Tool01.png" width="700" height="427" alt="Throttle pref"></p>
+  <p align="center"><img src="images/Main_Tool01.png" width="755" height="432" alt="throttle prefernxces"></p>
   <li><strong>Save Throttle Layout...</strong></li>
 </ul>
 <blockquote>
   <p>Displays the  <strong>Save</strong> dialog box to save your throttle as an XML file to the default folder, in Windows XP: C:\Document and Settings\userName,\JMRI,\throttles. This can be changed in the save dialog box.</p>
 </blockquote>
 <ul>
-  <li><strong>Load Throttle Layout...</strong></li>
+  <li><strong>Open Throttle Layout...</strong></li>
 </ul>
 <blockquote>
   <p>Displays  the <strong>Open</strong> dialog box allowing you to select a throttle file that has been saved in the default folder above, or the location of your choice.</p>
@@ -148,7 +148,7 @@
 <h3><strong>Power Control...</strong></h3>
 <p>Opens the Power Control Panel, which allows you to turn the power to layout ON/OFF</p>
 <blockquote>
-  <p><img src="images/Main_PowerControl_01.png" width="232" height="118" alt="Power control"></p>
+  <p><img src="images/main_Tool_PowerControl.png" width="211" height="111" alt="power control"></p>
 </blockquote>
 <h3><strong><a name="Turnout"></a><a href="Main_TurnoutControl.shtml">Turnout Control...</a></strong></h3>
 <h3><strong>Simple Signal Logic </strong>(advanced users, beyond the scope of this manual)</h3>
@@ -171,6 +171,12 @@
   <li><strong>Routes</strong></li>
   <li><strong>Trains</strong></li>
 </ul>
+<h3>Start Mini Web Server</h3>
+<blockquote>
+  <p>Starts a Web Server on your computer. You can access the Index.shtml page using the URL displayed in the dialog.</p>
+  <p>The <a href="../html/web/index.shtml">JMRI mini web server </a>is meant to be a quick and easy  way for model railroaders, not Masters of the Web,   to get a web connection to JMRI up and running.</p>
+</blockquote>
+<p align="center"><img src="images/Main_Debug03.png" width="428" height="70" alt="mini server"></p>
 <hr>
 
 <div align=right>

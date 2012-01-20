@@ -30,13 +30,15 @@
 
 <hr>
 <p align="left">When you start Decoder Pro, the DecoderPro  window is displayed. All of the JMRI functions can be accessed via the menu bar on the DecoderPro&reg; window, additional menus are added when functions are selected, example below with added operations menu(selected on operations setup window), which is also in the tools menu.</p>
-<p align="center"><img src="images/Splash_Screen01.png" width="433" height="317" alt="splash01"><img src="images/Main_01_main_b.png" width="497" height="307" alt="main window"></p>
+<p align="center"><img src="images/Splash_Screen.png" width="496" height="282" alt="splash"></p>
+<p align="center"><img src="images/Splash_Screen01.png" width="496" height="308" alt="splash screen"></p>
 <p align="left"><a href="Main_Menu.shtml"><strong>Menu Bar</strong></a></p>
 <p align="left">Provides access to the menus that allow you to access all the features of JMRI/</p>
 <p align="left">DecoderPro&reg; icon and DecoderPro version information is displayed. The version of Java installed and in use is also shown</p>
 <p align="left"><strong>
   <input type="button" name="button" id="button" value="Service Mode (Programming Track) Programmer"> 
-</strong>Provides access to the decoder programming capability in <a href="Basic_Programming.shtml#ServiceMode"><strong>Service Mode Programmer</strong></a>
+</strong>Provides access to the decoder programming capability in <a href="Basic_Programming.shtml#ServiceMode"><strong>Service Mode Programmer<br>
+</strong></a>
 <input type="button" name="button2" id="button2" value="Operations Mode (Main Track) Programmer">
 Provides access to the <a href="Basic_Programming.shtml#OpsMode"><strong>Operations Mode Programmer. 
 <br>
@@ -48,7 +50,7 @@ Exists the program, with confirmation dialog.</p>
 <p><strong>
   <input type="button" name="button5" id="button5" value="New Throttle...">
 </strong>Opens a throttle window which provides a tool to control your trains, you may open more than one throttle and position on the computer screen
-<p align="center"><img src="images/Main_02_Thottle.png" width="510" height="498" alt="Throttle">
+<p align="center"><img src="images/Main_02_Thottle.png" width="501" height="544" alt="throttle">
 <p><strong>
     <input type="button" name="button6" id="button6" value="Monitor LocoNet">
 </strong>Opens the Monitor LocoNet window that allows you to monitor the commands and responses on the LocoNet.

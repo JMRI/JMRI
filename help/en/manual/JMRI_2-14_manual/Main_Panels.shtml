@@ -45,11 +45,11 @@ DecoderPro main window that allows access to some of the PanelPro functions.</p>
   <li><a href="#Control">Control Panel Editor</a></li>
   <li><a href="#LayoutEditor">Layout Editor</a></li>
 </ul>
-<p><strong>Load Panels...</strong></p>
+<p><strong>Open Panels...</strong></p>
 <blockquote>
   <p>The <strong>Open</strong> dialog opens, select the panel file that you would like to load.</p>
 </blockquote>
-<p><strong>Store Panels...</strong></p>
+<p><strong>Save Panels...</strong></p>
 <blockquote>
   <p>The Save dialog opens, select the location on your computer that you would like to store your panel file.</p>
 </blockquote>

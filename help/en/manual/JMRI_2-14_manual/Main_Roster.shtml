@@ -82,6 +82,8 @@
     <li><strong>Disassociation of Roster Entry to Group</strong></li>
   </ul>
 </ul>
+<p><strong>Export Complete Roster...</strong></p>
+<p>Opens the Save dialog box to allow you to select directory and name the file.</p>
 <blockquote>
   <div>
     <div align="right"><a href="#Top">Top</a></div>
@@ -122,7 +124,7 @@
   <div align="right"><a href="#Delete">Back</a></div>
 </div>
 <h4 align="left"><a name="PrintOutput"></a>Print and Print Preview</h4>
-<p align="left">Both generate a printout that looks like this.&nbsp; The difference is that preview is only on  your screen, whereas print summary prints it onto paper.</p>
+<p align="left">Both generate a printout that looks like this.&nbsp; The difference is that preview is only on  your screen, whereas print summary prints it onto paper. (HINT: Print to pdf file and review. Then you can print anytime or print selected pages.)</p>
 <p align="center"><img src="images/Main_RosterMenu07.png" alt="pritned page" width="610" height="674" border="4"></p>
 <div>
   <div align="right"><a href="#Print">Back</a></div>

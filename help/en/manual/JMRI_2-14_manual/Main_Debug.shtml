@@ -91,14 +91,9 @@
 <p>Displays the <strong>Display Log Categories</strong> window which displays a list of all the jmri log message categories.<br>
 </p>
 <p><img src="images/separator.png" alt="sep" width="340" height="4">
-<p><strong>Listed Table Access</strong>
-<p>Opens the Turnouts window and lists the turnout tables in use.
-<p><img src="images/Main_Debug07.png" width="800" height="317" alt="Tables">
-<p><strong>Listed Table Access - Direct to Routes</strong>
-<p>Opens the <strong>Routes</strong> window.
-<p><img src="images/Main_Debug08.png" width="800" height="352" alt="Routes">
+<p><strong>Virtual Sound Decoder</strong>
+<p>Opens the <strong>VSDecoder engine name (L) </strong>dialog box to set up sounds.
 <p><img src="images/separator.png" alt="sep" width="340" height="4">
-
 <p><strong><a name="pricom"></a>PRICOM <img src="images/arrow.gif" alt="arrow" width="20" height="9"></strong>
 <ul>
   <ul>

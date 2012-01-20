@@ -33,7 +33,7 @@
 <p>This  pane is more than a scratch pad to keep track of what happens when function  buttons are pushed.&nbsp; It also interacts  with the <a href="Main_Throttle.shtml">JMRI throttle</a>. </p>
 <p wrap="">The <strong>Function Label</strong> Tab makes settings for the Software Throttles within JMRI.  Primarily the on-screen throttles, but some of the settings are mirrored on smart-phones (iPhone/Android) using the WiThrottle interface.</p>
 <p>When you  use the roster pull-down on the JMRI throttle to select a loco from your  roster, the function buttons will be marked with the descriptions you have  entered for those functions in this pane. </p>
-<p align="center"><img src="images/Adv_03_FunctionLabels.png" width="912" height="794" alt="function labels"></p>
+<p align="center"><img src="images/Adv_03_FunctionLabels.png" width="636" height="598" alt="function labels"></p>
 <p>Using the checkboxes,	space holders and the radio button to the right of each function may be set to:
 <table width="80%" border="1" cellspacing="1" cellpadding="2">
   <tr>

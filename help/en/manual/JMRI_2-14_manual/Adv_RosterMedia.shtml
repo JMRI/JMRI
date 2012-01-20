@@ -31,7 +31,7 @@
 
 <hr>
 <p>The Roster Media Pane allows you to add a main image and an icon to the engines roster. The main image may be used for Throttle background image if selected in the Throttle preferences. The icon image is used in the Throttle list and various roster combo boxes.</p>
-<p align="center"><img src="images/Adv_04_RosterMedia.png" width="642" height="647" alt="Roster Media"></p>
+<p align="center"><img src="images/Adv_04_RosterMedia.png" width="780" height="810" alt="roster media"></p>
 <p align="left"><strong>Image to be used as main image for that roster:</strong> The  large black box is the  image holder. The image  is placed into  the image holder by following these instructions. </p>
 <ol>
   <ol>
@@ -60,7 +60,7 @@
 </ol>
 <blockquote>
   <blockquote>
-    <p align="center"><img src="images/Adv_04a_RosterMedia.png" width="830" height="647" alt="roster"></p>
+    <p align="center"><img src="images/Adv_04a_RosterMedia.png" width="899" height="388" alt="roster media"></p>
   </blockquote>
   <p>
  To remove either image from the Roster, Right click and click remove in the context that displays, however, it will not remove the image from the Resources folder.</p>
@@ -99,11 +99,10 @@
   <input type="submit" name="button" id="button" value="Save to Roster"> 
 After adding images to the image boxes for main image and icon, click on this button to store images in your Roster.
 <p><strong>Links for icons in GIF and images of  most Locomotives</strong><strong> are listed below:</strong>
-<p><a href="http://cencalrails.railfan.net/home.shtml" target="_blank">Central California Rails</a>
 <p><a href="http://www.railserve.com/TrainGIFs/" target="_blank">Rail Serve</a>
-<p><a href="http://dansdepot.railfan.net/darkgifbylocomotive.shtml" target="_blank">Dans Depot</a>
 <p><a href="http://www.djcooley.com/info/gifs/loco/gifloco.htm" target="_blank">Train GIF Railyard</a>
-<p><a href="http://www.trainweb.org/rrgifroundhouse/steamgif.shtml" target="_blank">Steam Locomotive Roundhouse</a>
+<p><a href="http://www.kls2.com/~karl/rr/consists/">Karl's RR Pages</a>
+<p><a href="http://www.bluarcher.com/traingifs/edtraingifsSD40.htm">ED Bindler Train GIF.s</a>
 <p>
 <hr>
 
