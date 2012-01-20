@@ -1293,7 +1293,7 @@ public class TrainBuilder extends TrainCommon{
 				continue;
 			}
 			moves = 0;			// the number of moves for this location
-			success = false;	// true when done with this location
+			success = true;	// true when done with this location
 			reqNumOfMoves = rl.getMaxCarMoves()-rl.getCarMoves();	// the number of moves requested
 			int saveReqMoves = reqNumOfMoves;	// save a copy for status message
 			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildLocReqMoves"),new Object[]{rl.getName(), reqNumOfMoves, rl.getMaxCarMoves()}));
@@ -1306,83 +1306,12 @@ public class TrainBuilder extends TrainCommon{
 					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildDepartStagingAggressive"),new Object[]{}));
 				}
 			}
-			if (reqNumOfMoves <= 0)
-				success = true;
-			while (reqNumOfMoves > 0){
-				for (carIndex=0; carIndex<carList.size(); carIndex++){
-					Car car = carManager.getById(carList.get(carIndex));
-					// find a car at this location
-					if (!car.getLocationName().equals(rl.getName()))
-						continue;
-					// can this car be picked up?
-					if(!checkPickUpTrainDirection(car, rl))
-						continue; // no
-					// check for car order?
-					car = getCarOrder(car);
-					// is car departing staging and generate custom load?
-					searchForCarLoad(car);
-					// does car have a custom load without a destination?
-					if (!car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
-							&& !car.getLoad().equals(CarLoads.instance().getDefaultLoadName())
-							&& car.getDestination() == null && car.getNextDestination() == null){
-						findNextDestinationForCarLoad(car);
-						// did the router set a destination? If not this train doesn't service this car.
-						if (car.getTrack() != departStageTrack && car.getNextDestination() != null && car.getDestination() == null){
-							log.debug("Removing car ("+car.toString()+") from list");
-			   				carList.remove(car.getId());
-		    				carIndex--;
-		    				continue;
-						}
-					}
-					// does car have a next destination, but no destination
-					if (car.getNextDestination() != null && car.getDestination() == null){
-						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarRoutingBegins"),new Object[]{car.toString(), car.getLocationName(),(car.getNextDestinationName()+", "+car.getNextDestTrackName())}));
-						if (!Router.instance().setDestination(car, train, buildReport)){
-							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildNotAbleToSetDestination"),new Object[]{car.toString(), Router.instance().getStatus()}));
-							// don't move car if routing issue was track space but not departing staging
-							if ((!Router.instance().getStatus().contains(Track.LENGTH) 
-									&& !Router.instance().getStatus().contains(Car.CAPACITY))
-									|| (car.getLocationName().equals(departLocation.getName()) && departStageTrack != null))
-								// move this car, routing failed!
-								findDestinationAndTrack(car, rl, routeIndex, routeList.size());
-						} else {
-							// did the router assign a destination?
-							if (!checkCarForDestinationAndTrack(car, rl, routeIndex) && car.getTrack() != departStageTrack){
-								log.debug("Removing car ("+car.toString()+") from list, no car destination");
-								carList.remove(car.getId());
-								carIndex--;
-								continue;
-							}
-						}
-					}
-					// does car have a destination?
-					else if (checkCarForDestinationAndTrack(car, rl, routeIndex)){
-					// car does not have a destination, search for the best one	
-					} else {
-						findDestinationAndTrack(car, rl, routeIndex, routeList.size());
-					}
-					if (success){
-						//log.debug("done with location ("+destinationSave.getName()+")");
-						break;
-					}
-					// build failure if car departing staging without a destination and a train
-					if (car.getLocationName().equals(departLocation.getName()) && departStageTrack != null && 
-							(car.getDestination() == null || car.getDestinationTrack() == null || car.getTrain() == null)){
-						addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildErrorCarStageDest"),
-								new Object[]{car.toString()}));
-					}
-					// are there still moves available?
-					if (noMoreMoves) {
-						addLine(buildReport, FIVE, rb.getString("buildNoAvailableDestinations"));
-						reqNumOfMoves = 0;
-						break;
-					}
-				}
-				// could not find enough cars
-				reqNumOfMoves = 0;
-				// don't use this location again
-				//rl.setCarMoves(rl.getMaxCarMoves());
+			placeCarFromLocation(rl, routeIndex, false);
+			// perform a second pass if aggressive and there are requested moves		
+			if (Setup.isBuildAggressive() && saveReqMoves != reqNumOfMoves){
+				placeCarFromLocation(rl, routeIndex, true);
 			}
+			
 			if (routeIndex == 0)
 				checkDepartureForStaging(percent);	// report ASAP that the build has failed
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildStatusMsg"),new Object[]{(success? rb.getString("Success"): rb.getString("Partial")),
@@ -1391,12 +1320,95 @@ public class TrainBuilder extends TrainCommon{
 		checkDepartureForStaging(percent);	// covers the cases: no pick ups, wrong train direction and train skips, 
 	}
 	
+	private void placeCarFromLocation(RouteLocation rl, int routeIndex, boolean secondPass) throws BuildFailedException{
+		if (reqNumOfMoves > 0){
+			boolean messageFlag = true;
+			success = false;
+			for (carIndex=0; carIndex<carList.size(); carIndex++){
+				Car car = carManager.getById(carList.get(carIndex));
+				// second pass only cares about cars that have a final destination equal to this location
+				if (secondPass && !car.getNextDestinationName().equals(rl.getName()))
+					continue;
+				// find a car at this location
+				if (!car.getLocationName().equals(rl.getName()))
+					continue;
+				// can this car be picked up?
+				if(!checkPickUpTrainDirection(car, rl))
+					continue; // no
+				if (secondPass && messageFlag){
+					messageFlag = false;
+					addLine(buildReport, THREE, "Second pass for location "+rl.getName());
+				}
+				// check for car order?
+				car = getCarOrder(car);
+				// is car departing staging and generate custom load?
+				searchForCarLoad(car);
+				// does car have a custom load without a destination?
+				if (!car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
+						&& !car.getLoad().equals(CarLoads.instance().getDefaultLoadName())
+						&& car.getDestination() == null && car.getNextDestination() == null){
+					findNextDestinationForCarLoad(car);
+					// did the router set a destination? If not this train doesn't service this car.
+					if (car.getTrack() != departStageTrack && car.getNextDestination() != null && car.getDestination() == null){
+						log.debug("Removing car ("+car.toString()+") from list");
+						carList.remove(car.getId());
+						carIndex--;
+						continue;
+					}
+				}
+				// does car have a next destination, but no destination
+				if (car.getNextDestination() != null && car.getDestination() == null){
+					addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarRoutingBegins"),new Object[]{car.toString(), car.getLocationName(),(car.getNextDestinationName()+", "+car.getNextDestTrackName())}));
+					if (!Router.instance().setDestination(car, train, buildReport)){
+						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildNotAbleToSetDestination"),new Object[]{car.toString(), Router.instance().getStatus()}));
+						// don't move car if routing issue was track space but not departing staging
+						if ((!Router.instance().getStatus().contains(Track.LENGTH) 
+								&& !Router.instance().getStatus().contains(Car.CAPACITY))
+								|| (car.getLocationName().equals(departLocation.getName()) && departStageTrack != null))
+							// move this car, routing failed!
+							findDestinationAndTrack(car, rl, routeIndex, routeList.size());
+					} else {
+						// did the router assign a destination?
+						if (!checkCarForDestinationAndTrack(car, rl, routeIndex) && car.getTrack() != departStageTrack){
+							log.debug("Removing car ("+car.toString()+") from list, no car destination");
+							carList.remove(car.getId());
+							carIndex--;
+							continue;
+						}
+					}
+				}
+				// does car have a destination?
+				else if (checkCarForDestinationAndTrack(car, rl, routeIndex)){
+				// car does not have a destination, search for the best one	
+				} else {
+					findDestinationAndTrack(car, rl, routeIndex, routeList.size());
+				}
+				if (success){
+					//log.debug("done with location ("+destinationSave.getName()+")");
+					break;
+				}
+				// build failure if car departing staging without a destination and a train
+				// we'll just put out a warning message here so we can find out how many cars have issues
+				if (car.getLocationName().equals(departLocation.getName()) && departStageTrack != null && 
+						(car.getDestination() == null || car.getDestinationTrack() == null || car.getTrain() == null)){
+					addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildErrorCarStageDest"),
+							new Object[]{car.toString()}));
+				}
+				// are there still moves available?
+				if (noMoreMoves) {
+					addLine(buildReport, FIVE, rb.getString("buildNoAvailableDestinations"));
+					break;
+				}
+			}
+		}
+	}
+	
 	private void checkDepartureForStaging(int percent) throws BuildFailedException{
 		if (percent != 100)
 			return;	// only check departure track after last pass is complete
 		// is train departing staging?
 		if (departStageTrack == null)
-			return; //no
+			return; //no, so we're done
 		int carCount = 0;
 		StringBuffer buf = new StringBuffer();
 		// confirm that all cars in staging are departing
