@@ -97,6 +97,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 			case 26: mThrottle.setF26(isSet); break;
 			case 27: mThrottle.setF27(isSet); break;
 			case 28: mThrottle.setF28(isSet); break;
+            default: break;
 			}
 		}
 	}
@@ -146,6 +147,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 		case 26: mThrottle.setF26Momentary(!isLockable); break;
 		case 27: mThrottle.setF27Momentary(!isLockable); break;
 		case 28: mThrottle.setF28Momentary(!isLockable); break;
+        default: break;
 		}
 	}
 
@@ -294,6 +296,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 						functionButton[i].setIconPath("resources/icons/throttles/Horn.png");
 						functionButton[i].setSelectedIconPath("resources/icons/throttles/HornOn.png");
 						break;
+                    default: break;
 				}
 			else {
 				functionButton[i].setIconPath(null);
