@@ -57,7 +57,6 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
         _who = who;
     }
     Component _who;
-    String group = null;
 
     /**
      * Call setParameter("group", oldName) prior to calling actionPerformed(event)
@@ -69,9 +68,10 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
      */
     @Override
     public void actionPerformed(ActionEvent event) {
+        String group = null;
         // only query wi for group if group was not set using setParameter
         // prior to call
-        if (group == null && Beans.hasProperty(wi, "selectedRosterGroup")) {
+        if (Beans.hasProperty(wi, "selectedRosterGroup")) {
             group = (String)Beans.getProperty(wi, "selectedRosterGroup");
         }
         // null might be valid output from getting the selectedRosterGroup,
@@ -87,7 +87,6 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
         }
         // don't duplicate the null and ALLENTRIES groups (they are the entire roster)
         if (group == null || group.equals(Roster.ALLENTRIES)) {
-            group = null;
             return;
         }
 
@@ -99,7 +98,6 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
                 null,
                 null);
         if (entry == null || entry.equals(Roster.ALLENTRIES)) {
-            group = null;
             return;
         } else if (Roster.instance().getRosterGroupList().contains(entry)) {
             JOptionPane.showMessageDialog(_who,
@@ -111,20 +109,14 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
         // rename the roster grouping
         Roster.instance().copyRosterGroupList(group, entry);
         Roster.writeRosterFile();
-        group = null; // reset to default value since Action gets retained
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
 
-    @Override
-    public void setParameter(String key, String value) {
-        if (key.equals("group")) {
-            group = value;
-        }
-    }
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CopyRosterGroupAction.class.getName());
 }
