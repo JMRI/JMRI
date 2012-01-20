@@ -1,52 +1,17 @@
 package jmri.jmrit.roster.swing;
 
-import java.awt.BorderLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetDragEvent;
-import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetEvent;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
-import javax.swing.DropMode;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JToggleButton;
-import javax.swing.JToolBar;
-import javax.swing.JTree;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.plaf.basic.BasicTreeUI;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.DefaultTreeSelectionModel;
-import javax.swing.tree.ExpandVetoException;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
+import javax.swing.tree.*;
 import jmri.jmrit.roster.FullBackupExportAction;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -114,6 +79,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
      *
      * @return The selected roster group
      */
+    @Override
     public String getSelectedRosterGroup() {
         return selectedRosterGroup;
     }
@@ -242,6 +208,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         final JToggleButton actGroupBtn = new JToggleButton(new ImageIcon("resources/icons/misc/gui3/Action.png"), false);
         addGroupBtn.addActionListener(new ActionListener() {
 
+            @Override
             public void actionPerformed(ActionEvent e) {        
                 new CreateRosterGroupAction("", scrollPane.getTopLevelAncestor()).actionPerformed(e);
                 addGroupBtn.setSelected(false);
@@ -249,6 +216,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         });
         actGroupBtn.addItemListener(new ItemListener() {
 
+            @Override
             public void itemStateChanged(ItemEvent ie) {
                 if (ie.getStateChange() == ItemEvent.SELECTED) {
                     TreePath g = new TreePath(_model.getPathToRoot(_groups));
@@ -264,14 +232,17 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         });
         PopupMenuListener PML = new PopupMenuListener() {
 
+            @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent pme) {
                 // do nothing
             }
 
+            @Override
             public void popupMenuWillBecomeInvisible(PopupMenuEvent pme) {
                 actGroupBtn.setSelected(false);
             }
 
+            @Override
             public void popupMenuCanceled(PopupMenuEvent pme) {
                 actGroupBtn.setSelected(false);
             }
@@ -316,17 +287,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
             _TSL = new TreeSelectionListener();
             _tree.addTreeSelectionListener(_TSL);
             _tree.setDragEnabled(true);
-            try {
-                // Java 1.6
-                _tree.setDropMode(DropMode.ON);
-            } catch (java.lang.NoClassDefFoundError ex) {
-                // Java 1.5
-                log.info("Failed to set DropMode. Falling back on setting DropTarget.");
-                _tree.setDropTarget(new DropTarget(_tree,
-                        DnDConstants.ACTION_COPY,
-                        new DropTargetListener(),
-                        true));
-            }
+            _tree.setDropMode(DropMode.ON);
             _tree.setTransferHandler(new TransferHandler());
             _tree.addMouseListener(new MouseAdapter());
             setSelectionToGroup(selectedRosterGroup);
@@ -397,44 +358,9 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         this.firePropertyChange(propertyName, oldValue, newValue);
     }
 
-    // This class is required only for Java 1.5 support.
-    class DropTargetListener implements java.awt.dnd.DropTargetListener {
-
-        public void dragEnter(DropTargetDragEvent dtde) {
-            //throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        public void dragOver(DropTargetDragEvent dtde) {
-            //throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        public void dropActionChanged(DropTargetDragEvent dtde) {
-            //throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        public void dragExit(DropTargetEvent dte) {
-            //throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        public void drop(DropTargetDropEvent dtde) {
-            TransferHandler th = new TransferHandler();
-            if (dtde.isLocalTransfer() && th.canImport(_tree, dtde.getCurrentDataFlavors())) {
-                Point l = dtde.getLocation();
-                int closestRow = _tree.getClosestRowForLocation(l.x, l.y);
-                Rectangle closestRowBounds = _tree.getRowBounds(closestRow);
-                if (l.getY() >= closestRowBounds.getY()
-                        && l.getY() < closestRowBounds.getY() + closestRowBounds.getHeight()) {
-                    th.importData(_tree, dtde.getTransferable(), _tree.getPathForRow(closestRow));
-                } else {
-                    th.importData(_tree, dtde.getTransferable(), null);
-                }
-            }
-        }
-
-    }
-
     class MenuActionListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             TreePath g = new TreePath(_model.getPathToRoot(_groups));
             JmriAbstractAction a;
@@ -447,9 +373,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
                     a.setParameter("group", _tree.getSelectionPath().getLastPathComponent().toString());
                     a.actionPerformed(e);
                 } else if (e.getActionCommand().equals("duplicate")) {
-                    a = new CopyRosterGroupAction("Duplicate", scrollPane.getTopLevelAncestor());
-                    a.setParameter("group", _tree.getSelectionPath().getLastPathComponent().toString());
-                    a.actionPerformed(e);
+                    new CopyRosterGroupAction("Duplicate", scrollPane.getTopLevelAncestor()).actionPerformed(e);
                 } else if (e.getActionCommand().equals("delete")) {
                     a = new DeleteRosterGroupAction("Delete", scrollPane.getTopLevelAncestor());
                     a.setParameter("group", _tree.getSelectionPath().getLastPathComponent().toString());
@@ -513,6 +437,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
     class PropertyChangeListener implements java.beans.PropertyChangeListener {
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if ((e.getPropertyName().equals("RosterGroupRemoved"))
                     || (e.getPropertyName().equals("RosterGroupAdded"))
@@ -581,6 +506,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
     public class TreeSelectionListener implements javax.swing.event.TreeSelectionListener {
 
+        @Override
         public void valueChanged(TreeSelectionEvent e) {
             TreePath g = new TreePath(_model.getPathToRoot(_groups));
             String oldGroup = selectedRosterGroup;
@@ -607,10 +533,12 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
     public class TreeWillExpandListener implements javax.swing.event.TreeWillExpandListener {
 
+        @Override
         public void treeWillExpand(TreeExpansionEvent e) throws ExpandVetoException {
             log.debug(_tree.getSelectionRows());
         }
 
+        @Override
         public void treeWillCollapse(TreeExpansionEvent e) throws ExpandVetoException {
             if (e.getPath().getLastPathComponent().toString().equals("Roster Groups")) {
                 throw new ExpandVetoException(e);
