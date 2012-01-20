@@ -120,8 +120,6 @@ public class Roster extends XmlFile implements RosterGroupSelector {
             i--;
         }
         _list.add(i+1, e);
-        if(_rostergroup!=null)
-            e.putAttribute(getRosterGroupProperty(getRosterGroup()), "yes");
         setDirty(true);
         firePropertyChange("add", null, e);
     }
@@ -133,14 +131,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      */
     public void removeEntry(RosterEntry e) {
         if (log.isDebugEnabled()) log.debug("Remove entry "+e);
-        /*If there is a current roster group set then we need to make sure that the entry is complete, 
-        this can be check as there should be a file name assocated with the entry*/
-        if((_rostergroup!=null) && (e.getFileName()!=null)){
-            e.deleteAttribute(getRosterGroupProperty(getRosterGroup()));
-            e.updateFile();
-        }
-        else
-            _list.remove(_list.indexOf(e));
+        _list.remove(_list.indexOf(e));
         setDirty(true);
         firePropertyChange("remove", null, e);
     }
