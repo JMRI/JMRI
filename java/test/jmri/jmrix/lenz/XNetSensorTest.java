@@ -79,7 +79,19 @@ public class XNetSensorTest extends TestCase {
 
         t.requestUpdateFromLayout();
         // check that the correct message was sent
-        Assert.assertEquals("Sensor Status Request Sent","42 05 80 C3",xnis.outbound.elementAt(0).toString());
+        Assert.assertEquals("Sensor Status Request Sent","42 05 80 C7",xnis.outbound.elementAt(0).toString());
+
+    }
+
+    // XNetSensor test for outgoing status request
+    public void testXNetSensorStatusRequest2() {
+        XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
+
+        XNetSensor t = new XNetSensor("XS513",xnis);
+
+        t.requestUpdateFromLayout();
+        // check that the correct message was sent
+        Assert.assertEquals("Sensor Status Request Sent","42 40 80 82",xnis.outbound.elementAt(0).toString());
 
     }
 
