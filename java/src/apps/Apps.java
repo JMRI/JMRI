@@ -143,6 +143,9 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             configOK = false;
         }
         
+        //2012/01/21 dboudreau rb needs to be reloaded after reading the configuration file so the locale is set properly.
+        rb = ResourceBundle.getBundle("apps.AppsBundle");
+        
         // Add actions to abstractActionModel
         // Done here as initial non-GUI initialisation is completed
         // and UI L&F has been set
@@ -712,8 +715,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
     static JComponent _buttonSpace = null;
     
-    static final protected ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
-
+    //2012/01/21 dboudreau rb needs to be reloaded after reading the configuration file so the locale is set properly.
+    protected static ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
 
     static AppConfigBase prefs;
     static public AppConfigBase getPrefs() { return prefs; }
