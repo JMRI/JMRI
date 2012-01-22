@@ -12,6 +12,8 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -19,6 +21,7 @@ import javax.swing.ScrollPaneConstants;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.PrintCarLoadsAction;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
 
 /**
@@ -103,6 +106,15 @@ class SchedulesByLoadFrame extends OperationsFrame implements java.beans.Propert
     	CarTypes.instance().addPropertyChangeListener(this);
     	CarLoads.instance().addPropertyChangeListener(this);
     	
+		// build menu
+		JMenuBar menuBar = new JMenuBar();
+		JMenu toolMenu = new JMenu(rb.getString("Tools"));
+		toolMenu.add(new PrintCarLoadsAction(rb.getString("MenuItemCarLoadsPreview"), true, this));
+		toolMenu.add(new PrintCarLoadsAction(rb.getString("MenuItemCarLoadsPrint"), false, this));
+		menuBar.add(toolMenu);
+		setJMenuBar(menuBar);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_ShowSchedulesByCarTypeAndLoad", true);
+    	
     	setTitle(rb.getString("MenuItemShowSchedulesByLoad"));
     	pack();
 		if (getWidth()<750)
@@ -154,8 +166,10 @@ class SchedulesByLoadFrame extends OperationsFrame implements java.beans.Propert
 						// determine if schedule is requesting car type and load
 						for (int k=0; k<items.size(); k++){
 							ScheduleItem item = sch.getItemById(items.get(k));
-							if (item.getType().equals(type) && item.getLoad().equals(load) 
-									|| item.getType().equals(type) && item.getShip().equals(load)){
+							if (item.getType().equals(type) && item.getLoad().equals(load)
+									|| item.getType().equals(type) && item.getLoad().equals("")
+									|| item.getType().equals(type) && item.getShip().equals(load)
+									|| item.getType().equals(type) && item.getShip().equals("")){
 								addItemLeft(locationsPanel, new JLabel(spur.getName()+" ("+spur.getScheduleName()+")"), 1, x);
 								// create string (type, timetable, road, load)
 								String s = item.getType();

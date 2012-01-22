@@ -13,7 +13,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
-import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 
 
@@ -50,13 +49,13 @@ public class PrintCarLoadsAction  extends AbstractAction {
  
 
     public void actionPerformed(ActionEvent e) {
-    		new CarPrintOptionFrame();
+    		new CarLoadPrintOption();
     }
     
-    public class CarPrintOptionFrame extends OperationsFrame{
+    public class CarLoadPrintOption {
     	
     	// no frame needed for now
-    	public CarPrintOptionFrame(){
+    	public CarLoadPrintOption(){
     		super();
     		printCars();
     	}
@@ -88,9 +87,8 @@ public class PrintCarLoadsAction  extends AbstractAction {
         		Enumeration<String> en = list.keys();
         		while(en.hasMoreElements()) {
         			String key = en.nextElement();
-        			writer.write(key + newLine);
         			List<CarLoad> loads = list.get(key);
-     
+        			boolean printType = true;
         			for (int j=0; j<loads.size(); j++){
         				StringBuffer buf = new StringBuffer("\t");
         				String load = loads.get(j).getName();
@@ -101,6 +99,11 @@ public class PrintCarLoadsAction  extends AbstractAction {
         						&& loads.get(j).getDropComment().equals("")
         						&& loads.get(j).getPriority().equals(CarLoad.PRIORITY_LOW))
         						continue;
+        				// print the car type once
+        				if (printType){
+        					writer.write(key + newLine);
+        					printType = false;
+        				}
         				buf.append(tabString(load, Control.MAX_LEN_STRING_ATTRIBUTE));
         				buf.append(tabString(loads.get(j).getPriority(), 5));
         				buf.append(tabString(loads.get(j).getPickupComment(), 27));
