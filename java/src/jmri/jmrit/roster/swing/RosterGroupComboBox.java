@@ -26,16 +26,14 @@ public class RosterGroupComboBox extends JComboBox implements RosterGroupSelecto
      */
     // needed for unit tests
     public RosterGroupComboBox(Roster roster) {
-        this(roster, Roster.getRosterGroupName());
+        this(roster, roster.getDefaultRosterGroup());
     }
 
     /**
-     * Create a RosterGroupComboBox with an arbitrary selection instead of the
-     * active roster group.
+     * Create a RosterGroupComboBox with an arbitrary selection.
      *
      * @param selection
      */
-    // plan for roster selections that may not mirror the active roster group
     public RosterGroupComboBox(String selection) {
         this(Roster.instance(), selection);
     }
@@ -54,17 +52,17 @@ public class RosterGroupComboBox extends JComboBox implements RosterGroupSelecto
 
     /**
      * Create a RosterGroupComboBox with the default Roster instance and the
-     * active roster group.
+     * default roster group.
      */
     public RosterGroupComboBox() {
-        this(Roster.instance(), Roster.getRosterGroupName());
+        this(Roster.instance(), Roster.instance().getDefaultRosterGroup());
     }
 
     /**
-     * Update the combo box and select the active roster group.
+     * Update the combo box and reselect the current selection.
      */
     public final void update() {
-        update(Roster.getRosterGroupName());
+        update((String) this.getSelectedItem());
     }
 
     /**

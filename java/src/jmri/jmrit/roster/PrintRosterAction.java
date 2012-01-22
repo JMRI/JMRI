@@ -59,7 +59,7 @@ public class PrintRosterAction  extends jmri.util.swing.JmriAbstractAction {
         // obtain a HardcopyWriter to do this
         Roster r = Roster.instance();
         String title = "DecoderPro Roster";
-        String rosterGroup = Roster.getRosterGroup();
+        String rosterGroup = r.getDefaultRosterGroup();
         // rosterGroup may legitimately be null
         // but getProperty returns null if the property cannot be found, so
         // we test that the property exists before attempting to get its value

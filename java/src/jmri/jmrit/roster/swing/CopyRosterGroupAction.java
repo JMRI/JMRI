@@ -83,7 +83,7 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
                     Roster.instance().getRosterGroupList().toArray(),
-                    Roster.getRosterGroup());
+                    null);
         }
         // don't duplicate the null and ALLENTRIES groups (they are the entire roster)
         if (group == null || group.equals(Roster.ALLENTRIES)) {

@@ -2,11 +2,6 @@
 
 package jmri.jmrit.roster.swing;
 
-import jmri.jmrit.roster.swing.RosterEntryToGroupAction;
-import jmri.jmrit.roster.swing.RemoveRosterEntryToGroupAction;
-import jmri.jmrit.roster.swing.SelectRosterGroupAction;
-import jmri.jmrit.roster.swing.DeleteRosterGroupAction;
-import jmri.jmrit.roster.swing.CreateRosterGroupAction;
 import java.awt.Component;
 import java.awt.Frame;
 import java.util.ResourceBundle;
@@ -92,9 +87,6 @@ public class RosterMenu extends JMenu {
         AbstractAction createGroupAction = new CreateRosterGroupAction(rb.getString("MenuGroupCreate"), pWho);
         createGroupAction.setEnabled(false);
         
-        AbstractAction selectGroupAction = new SelectRosterGroupAction(rb.getString("MenuGroupActive"), pWho);
-        selectGroupAction.setEnabled(false);
-        
         AbstractAction rosterEntryToGroupAction = new RosterEntryToGroupAction(rb.getString("MenuGroupAssociate"), pWho);
         rosterEntryToGroupAction.setEnabled(false);
         
@@ -116,7 +108,6 @@ public class RosterMenu extends JMenu {
         
         JMenu groupMenu = new JMenu(rb.getString("MenuRosterGroups"));
         groupMenu.add(createGroupAction);
-        groupMenu.add(selectGroupAction);
         groupMenu.add(deleteGroupAction);
         groupMenu.add(rosterGroupTableAction);
         groupMenu.add(rosterEntryToGroupAction);
@@ -147,7 +138,6 @@ public class RosterMenu extends JMenu {
                 copyAction.setEnabled(true);
                 deleteGroupAction.setEnabled(true);
                 createGroupAction.setEnabled(true);
-                selectGroupAction.setEnabled(true);
                 rosterEntryToGroupAction.setEnabled(true);
                 removeRosterEntryToGroupAction.setEnabled(true);
                 printAction.setEnabled(true);

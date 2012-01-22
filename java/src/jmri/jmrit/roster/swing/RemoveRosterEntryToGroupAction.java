@@ -18,8 +18,6 @@ import javax.swing.JPanel;
 import java.awt.event.ActionListener;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.roster.swing.RosterEntryComboBox;
-import jmri.jmrit.roster.swing.RosterGroupComboBox;
 
 /**
  * Remove a locomotive from a roster grouping.
@@ -65,8 +63,6 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     
     public void actionPerformed(ActionEvent event) {
         frame = new JmriJFrame("DisAssociate Loco from Group");
-        curRosterGroup = Roster.getRosterGroup();
-        Roster.instance().setRosterGroup(null);
         rosterBox = new RosterEntryComboBox();
         groupBox = new RosterGroupComboBox();
         updateRosterEntry((String) groupBox.getSelectedItem());
@@ -101,7 +97,6 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
         frame.pack();
         frame.setVisible(true);
 
-        Roster.instance().setRosterGroup(curRosterGroup);
     }
 
     /**
@@ -125,19 +120,17 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
         re.deleteAttribute(group);
         re.updateFile();
         Roster.writeRosterFile();
-        rosterBox.update();
+        rosterBox.update((String) groupBox.getSelectedItem());
         frame.pack();
     
     }
     
     public void dispose(){
-        Roster.instance().setRosterGroup(curRosterGroup);
         frame.dispose();
     
     }
     
     public void updateRosterEntry(String group) {
-        Roster.instance().setRosterGroup(group);
         rosterBox.update(group);
         Roster.instance().rosterGroupEntryChanged();
         frame.pack();

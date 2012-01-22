@@ -14,6 +14,7 @@ import javax.swing.Icon;
 import javax.swing.Action;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import jmri.beans.Beans;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 
 /**
@@ -66,54 +67,73 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
     public void actionPerformed(ActionEvent event) {
 
         Roster roster = Roster.instance();
-        String entry = selectRosterEntry();
-        if (entry==null) return;
+        String rosterGroup = Roster.instance().getDefaultRosterGroup();
+        RosterEntry[] entries;
+        // rosterGroup may legitimately be null
+        // but getProperty returns null if the property cannot be found, so
+        // we test that the property exists before attempting to get its value
+        if (Beans.hasProperty(wi, "selectedRosterGroup")) {
+            rosterGroup = (String) Beans.getProperty(wi, "selectedRosterGroup");
+        }
+        if (Beans.hasProperty(wi, "selectedRosterEntries")) {
+            entries = (RosterEntry[]) Beans.getProperty(wi, "selectedRosterEntries");
+        } else {
+            entries = selectRosterEntry();
+        }
+        if (entries == null) {
+            return;
+        }
         // get parent object if there is one
         //Component parent = null;
         //if ( event.getSource() instanceof Component) parent = (Component)event.getSource();
 
         // find the file for the selected entry
-        String filename = roster.fileFromTitle(entry);
-        String fullFilename = LocoFile.getFileLocation()+filename;
-        log.debug("resolves to \""+filename+"\", \""+fullFilename+"\"");
+        for (RosterEntry re : entries) {
+            String filename = roster.fileFromTitle(re.titleString());
+            String fullFilename = LocoFile.getFileLocation() + filename;
+            if (log.isDebugEnabled()) {
+                log.debug("resolves to \"" + filename + "\", \"" + fullFilename + "\"");
+            }
 
-        // prompt for one last chance
-        if (Roster.getRosterGroup()==null){
-            if (!userOK(entry, filename, fullFilename)) return;
-            // delete it from roster
-            roster.removeEntry(roster.entryFromTitle(entry));
-        }
-        else {
-            RosterEntry r = roster.entryFromTitle(entry);
-            String group = roster.getRosterGroupPrefix()+Roster.getRosterGroup();
-            r.deleteAttribute(group);
-            r.updateFile();
-        }
-        Roster.writeRosterFile();
+            // prompt for one last chance
+            if (rosterGroup == null) {
+                if (!userOK(re.titleString(), filename, fullFilename)) {
+                    return;
+                }
+                // delete it from roster
+                roster.removeEntry(re);
+            } else {
+                String group = Roster.getRosterGroupProperty(rosterGroup);
+                re.deleteAttribute(group);
+                re.updateFile();
+            }
+            Roster.writeRosterFile();
 
-        // backup the file & delete it
-        if (Roster.getRosterGroup()==null){
-            try {
-                // ensure preferences will be found
-                XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
+            // backup the file & delete it
+            if (rosterGroup == null) {
+                try {
+                    // ensure preferences will be found
+                    XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
 
-                // do backup
-                LocoFile df = new LocoFile();   // need a dummy object to do this operation in next line
-                df.makeBackupFile(LocoFile.getFileLocation()+filename);
+                    // do backup
+                    LocoFile df = new LocoFile();   // need a dummy object to do this operation in next line
+                    df.makeBackupFile(LocoFile.getFileLocation() + filename);
 
-                // locate the file and delete
-                File f = new File(fullFilename);
-                if (!f.delete()) // delete file and check success
-                    log.error("failed to delete file");
+                    // locate the file and delete
+                    File f = new File(fullFilename);
+                    if (!f.delete()) { // delete file and check success
+                        log.error("failed to delete file");
+                    }
 
-            } catch (Exception ex) {
-                log.error("error during locomotive file output: "+ex);
+                } catch (Exception ex) {
+                    log.error("error during locomotive file output: " + ex);
+                }
             }
         }
 
     }
 
-    protected String selectRosterEntry(){
+    protected RosterEntry[] selectRosterEntry(){
         // create a dialog to select the roster entry
         JComboBox selections = new RosterEntryComboBox();
         int retval = JOptionPane.showOptionDialog(_who,
@@ -123,8 +143,9 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
         log.debug("Dialog value "+retval+" selected "+selections.getSelectedIndex()+":"
                   +selections.getSelectedItem());
         if (retval != 1) return null;
-        String entry = (String) selections.getSelectedItem();
-        return entry;
+        RosterEntry[] entries = new RosterEntry[1];
+        entries[0] = Roster.instance().entryFromTitle((String)selections.getSelectedItem());
+        return entries;
     }
 
     /**

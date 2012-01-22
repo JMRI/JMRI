@@ -82,7 +82,7 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
                     Roster.instance().getRosterGroupList().toArray(),
-                    Roster.getRosterGroup());
+                    null);
         }
         // can't delete the roster itself (ALLENTRIES and null represent the roster)
         if (group == null || group.equals(Roster.ALLENTRIES)) {

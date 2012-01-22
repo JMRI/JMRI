@@ -52,7 +52,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     private JmriAbstractAction newWindowMenuItemAction = null;
 
     /**
-     * Create a RosterGroupsPanel that tracks the active Roster Group
+     * Create a RosterGroupsPanel with default settings
      */
     public RosterGroupsPanel() {
         this(null);
@@ -85,8 +85,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     }
 
     /**
-     * Set the selected roster group. If the RosterGroupPanel uses the Active
-     * Roster Group, this property will change the active roster group.
+     * Set the selected roster group.
      * <p>
      * If the group is <code>null</code>, the selected roster group is set to "All Entries".
      * @param group The name of the group to set the selection to.
@@ -519,7 +518,6 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
                 // reject user attempts to select the "Roster Groups" header
                 _tree.setSelectionPath(e.getOldLeadSelectionPath());
             } else if (g.isDescendant(e.getNewLeadSelectionPath())) {
-                // set Active Roster Group if selection is under "Roster Groups"
                 selectedRosterGroup = _tree.getSelectionPath().getLastPathComponent().toString();
                 if (Roster.ALLENTRIES.equals(selectedRosterGroup)) {
                     selectedRosterGroup = null;

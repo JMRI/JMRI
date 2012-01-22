@@ -54,6 +54,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     static transient Roster _instance = null;
 
     private UserPreferencesManager preferences;
+    private String defaultRosterGroup = null;
 
     // should be private except that JUnit testing creates multiple Roster objects
     public Roster() {
@@ -61,7 +62,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         this.preferences = InstanceManager.getDefault(UserPreferencesManager.class);
         if (this.preferences != null) {
             // for some reason, during JUnit testing, preferences is often null
-            this.setRosterGroup((String) this.preferences.getProperty(Roster.class.getCanonicalName(), "activeRosterGroup"));
+            this.setDefaultRosterGroup((String) this.preferences.getProperty(Roster.class.getCanonicalName(), "defaultRosterGroup"));
         }
     }
 
@@ -142,12 +143,8 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     public int numEntries() { return _list.size(); }
     
     /**
-     * @return The Number of roster entries that are in the currently selected group.
+     * @return The Number of roster entries that are in the specified group.
      */
-    public int numGroupEntries() {
-        return this.numGroupEntries(getRosterGroup());
-    }
-    
     public int numGroupEntries(String group) {
         List<RosterEntry> l = matchingList(null, null, null, null, null, null, null);
         int num = 0;
@@ -193,16 +190,11 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     }
     
     /**
-     * @return The Number of roster entries that are in the currently selected group.
-     */
-    public RosterEntry getGroupEntry(int i) {
-        return getGroupEntry(getRosterGroup(), i);
-    }
-    
-    /**
+     * Get the Nth RosterEntry in the group
+     *
      * @param group
      * @param i
-     * @return Number of roster entries in the group
+     * @return The specified entry in the group
      */
     public RosterEntry getGroupEntry(String group, int i) {
         List<RosterEntry> l = matchingList(null, null, null, null, null, null, null);
@@ -710,41 +702,12 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         firePropertyChange("change", null, r);
     }
     
-        
-    static String _rostergroup = null;
-    
-    public void setRosterGroup(String group) {
-        String oldGroup = _rostergroup;
-        String newGroup = group;
-        if (group == null) {
-            _rostergroup = null;
-        } else if (group.equals(ALLENTRIES)) {
-            _rostergroup = null;
-        } else {
-            _rostergroup = group;
-        }
-        if (oldGroup == null) {
-            oldGroup = ALLENTRIES;
-        }
-        if (newGroup == null) {
-            newGroup = ALLENTRIES;
-        }
-        firePropertyChange("ActiveRosterGroup", oldGroup, newGroup);
-        if (preferences != null) {
-            preferences.setProperty(Roster.class.getCanonicalName(), "activeRosterGroup", _rostergroup);
-        }
-    }
-    
-    public static String getRosterGroup(){
-        return _rostergroup;
-    }
-    
-    public static String getRosterGroupName(){
-        if(_rostergroup==null)
+    public static String getRosterGroupName(String rosterGroup) {
+        if(rosterGroup == null)
             return ALLENTRIES;
-        return _rostergroup;
+        return rosterGroup;
     }
-    
+
     /**
      * Get the string for a RosterGroup property in a RosterEntry
      *
@@ -825,10 +788,6 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      */
     private void delRosterGroupList(String str, boolean notify) {
         _rosterGroupList.remove(str);
-        // if deleting active group, set active group to all entries
-        if (str.equals(_rostergroup)) {
-            setRosterGroup(null);
-        }
         str = _rosterGroupPrefix + str;
         List<RosterEntry> groupentries = getEntriesWithAttributeKey(str);
         for (int i = 0; i < groupentries.size(); i++) {
@@ -918,17 +877,29 @@ public class Roster extends XmlFile implements RosterGroupSelector {
 
     /**
      * Get the default roster group.
-     * <p>
-     * This method currently returns <i>null</i> since that represents the
-     * entire roster in the current roster groups management design.
+     *
+     * This method ensures adherence to the RosterGroupSelector protocol
      * 
      * @return The entire roster
      */
-    // Provide a default instance of a RosterGroupSelector so objects querying
-    // rosterGroupSelectors never need to check that a RosterGroupSelector is
-    // null
+    @Override
     public String getSelectedRosterGroup() {
-        return null;
+        return getDefaultRosterGroup();
+    }
+
+    /**
+     * @return the defaultRosterGroup
+     */
+    public String getDefaultRosterGroup() {
+        return defaultRosterGroup;
+    }
+
+    /**
+     * @param defaultRosterGroup the defaultRosterGroup to set
+     */
+    public void setDefaultRosterGroup(String defaultRosterGroup) {
+        this.defaultRosterGroup = defaultRosterGroup;
+        this.preferences.setProperty(Roster.class.getCanonicalName(), "defaultRosterGroup", defaultRosterGroup);
     }
 
 }
