@@ -152,15 +152,14 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         pane2a.setLayout(new BoxLayout(pane2a, BoxLayout.X_AXIS));
         pane2a.add(new JLabel(rbt.getString("USE LOCOMOTIVE SETTINGS FOR: ")));
         locoBox = new GlobalRosterEntryComboBox();
+        locoBox.setNonSelectedItem(rbt.getString("<NONE - NEW LOCO>"));
         Roster.instance().addPropertyChangeListener(this);
-        locoBox.insertItemAt(rbt.getString("<NONE - NEW LOCO>"),0);
-        locoBox.setSelectedIndex(0);
         pane2a.add(locoBox);
         locoBox.addActionListener(new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (locoBox.getSelectedIndex()!=0) {
                         // reset and disable decoder selection
-                        setDecoderSelectionFromLoco((String)locoBox.getSelectedItem());
+                        setDecoderSelectionFromLoco(((RosterEntry)locoBox.getSelectedItem()).titleString());
                         go2.setEnabled(true);
                         go2.setRequestFocusEnabled(true);
                         go2.requestFocus();
@@ -298,8 +297,6 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      */
     public void propertyChange(PropertyChangeEvent ev) {
         locoBox.update();
-        locoBox.insertItemAt(rbt.getString("<NONE - NEW LOCO>"),0);
-        locoBox.setSelectedIndex(0);
     }
 
     /**
