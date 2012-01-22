@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.trains.TrainCommon;
 
 
 /**
@@ -82,8 +81,8 @@ public class PrintCarLoadsAction  extends AbstractAction {
             	String s = rb.getString("Type") + "\t"
             	+ rb.getString("Load") + "\t" 
             	+ rb.getString("BorderLayoutPriority") + "  "
-            	+ rb.getString("BorderLayoutOptionalPickup") + "  "
-            	+ rb.getString("BorderLayoutOptionalDrop")           	
+            	+ rb.getString("LoadPickupMessage") + "  "
+            	+ rb.getString("LoadDropMessage")           	
             	+ newLine;
             	writer.write(s);
         		Enumeration<String> en = list.keys();
@@ -96,12 +95,15 @@ public class PrintCarLoadsAction  extends AbstractAction {
         				StringBuffer buf = new StringBuffer("\t");
         				String load = loads.get(j).getName();
         				// don't print out default load or empty
-        				if (load.equals(carLoads.getDefaultEmptyName()) 
+        				if ((load.equals(carLoads.getDefaultEmptyName())
         						|| load.equals(carLoads.getDefaultLoadName()))
+        						&& loads.get(j).getPickupComment().equals("")
+        						&& loads.get(j).getDropComment().equals("")
+        						&& loads.get(j).getPriority().equals(CarLoad.PRIORITY_LOW))
         						continue;
-        				buf.append(TrainCommon.tabString(load, Control.MAX_LEN_STRING_ATTRIBUTE) + " ");
-        				buf.append(TrainCommon.tabString(loads.get(j).getPriority(), 5));
-        				buf.append(TrainCommon.tabString(loads.get(j).getPickupComment(), 33));
+        				buf.append(tabString(load, Control.MAX_LEN_STRING_ATTRIBUTE));
+        				buf.append(tabString(loads.get(j).getPriority(), 5));
+        				buf.append(tabString(loads.get(j).getPickupComment(), 27));
         				buf.append(loads.get(j).getDropComment());
         				writer.write(buf.toString() + newLine);
         			}
@@ -113,6 +115,16 @@ public class PrintCarLoadsAction  extends AbstractAction {
             }
         }
     }
+    
+	private static String tabString(String s, int fieldSize){
+		if (s.length()>fieldSize)
+			s = s.substring(0, fieldSize);
+		StringBuffer buf = new StringBuffer(s+" ");
+		while (buf.length() < fieldSize){
+			buf.append(" ");
+		}
+		return buf.toString();
+	}
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintCarLoadsAction.class.getName());
 }
