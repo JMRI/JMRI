@@ -83,24 +83,26 @@ public class RosterTest extends TestCase {
 
     public void testComboBox() {
         Roster r = new Roster();
-        RosterEntry e;
-        e = new RosterEntry("file name Bob");
-        e.setRoadNumber("123");
-        e.setRoadName("SP");
-        e.setId("entry 1");
-        r.addEntry(e);
-        e = new RosterEntry("file name Bill");
-        e.setRoadNumber("123");
-        e.setRoadName("ATSF");
-        e.setDecoderModel("81");
-        e.setDecoderFamily("33");
-        e.setId("entry 2");
-        r.addEntry(e);
-        e = new RosterEntry("file name Ben");
-        e.setRoadNumber("123");
-        e.setRoadName("UP");
-        e.setId("entry 3");
-        r.addEntry(e);
+        RosterEntry e1;
+        RosterEntry e2;
+        RosterEntry e3;
+        e1 = new RosterEntry("file name Bob");
+        e1.setRoadNumber("123");
+        e1.setRoadName("SP");
+        e1.setId("entry 1");
+        r.addEntry(e1);
+        e2 = new RosterEntry("file name Bill");
+        e2.setRoadNumber("123");
+        e2.setRoadName("ATSF");
+        e2.setDecoderModel("81");
+        e2.setDecoderFamily("33");
+        e2.setId("entry 2");
+        r.addEntry(e2);
+        e3 = new RosterEntry("file name Ben");
+        e3.setRoadNumber("123");
+        e3.setRoadName("UP");
+        e3.setId("entry 3");
+        r.addEntry(e3);
         
         javax.swing.JComboBox box;
         
@@ -109,13 +111,13 @@ public class RosterTest extends TestCase {
 
         box = new RosterEntryComboBox(r, "UP", null, null, null, null, null, null);
         Assert.assertEquals("search for one match", 1, box.getItemCount() );
-        Assert.assertEquals("search for one match", "entry 3", box.getItemAt(0) );
+        Assert.assertEquals("search for one match", e3, box.getItemAt(0) );
 
         box = new RosterEntryComboBox(r, null, "123", null, null, null, null, null);
         Assert.assertEquals("search for three matches", 3, box.getItemCount() );
-        Assert.assertEquals("search for three matches", "entry 1", box.getItemAt(0) );
-        Assert.assertEquals("search for three matches", "entry 2", box.getItemAt(1) );
-        Assert.assertEquals("search for three matches", "entry 3", box.getItemAt(2) );
+        Assert.assertEquals("search for three matches", e1, box.getItemAt(0) );
+        Assert.assertEquals("search for three matches", e2, box.getItemAt(1) );
+        Assert.assertEquals("search for three matches", e3, box.getItemAt(2) );
 
     }
 
