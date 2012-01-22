@@ -13,7 +13,7 @@ import java.io.File;
 import jmri.*;
 import jmri.jmrit.roster.*;
 import jmri.jmrit.DccLocoAddressSelector;
-import jmri.jmrit.roster.swing.RosterEntryComboBox;
+import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.jmrit.symbolicprog.ProgDefault;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrix.nce.consist.NceConsistRoster;
@@ -47,7 +47,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	private JButton dispatchButton;
 	private JButton progButton;
 	private JButton setButton;
-	private RosterEntryComboBox rosterBox;
+	private RosterEntrySelectorPanel rosterBox;
 	private JComboBox conRosterBox;
 	
 	private boolean disableRosterBoxActions = false;
@@ -110,7 +110,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	 * @return the selected index of the roster combo box
 	 */
 	public int getRosterSelectedIndex() {
-		return rosterBox.getSelectedIndex();
+		return rosterBox.getRosterEntryComboBox().getSelectedIndex();
 	}
 	
 	/**
@@ -121,14 +121,14 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	 * @param index the index to select in the combo box
 	 */
 	public void setRosterSelectedIndex(int index) {
-		if (rosterBox.isEnabled() && index >= 0 && index < rosterBox.getItemCount()) {
+		if (rosterBox.isEnabled() && index >= 0 && index < rosterBox.getRosterEntryComboBox().getItemCount()) {
 			this.disableRosterBoxActions = true; //Temporarily disable roster box actions
-			rosterBox.setSelectedIndex(index);
+			rosterBox.getRosterEntryComboBox().setSelectedIndex(index);
 			this.disableRosterBoxActions = false;
 		}
-		if ((backgroundPanel != null) && (!(rosterBox.getSelectedItem() instanceof NullComboBoxItem))) {
+		if ((backgroundPanel != null) && (!(rosterBox.getSelectedRosterEntries().length != 0))) {
 			backgroundPanel.setImagePath(null);
-			String rosterEntryTitle = rosterBox.getSelectedItem().toString();
+			String rosterEntryTitle = rosterBox.getSelectedRosterEntries()[0].titleString();
 			RosterEntry re = Roster.instance().entryFromTitle(rosterEntryTitle);
 			if ((re != null) && (re.getImagePath()!=null)){
 				backgroundPanel.setImagePath(re.getImagePath());
@@ -255,11 +255,11 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	/**
 	 * Set the RosterEntry for this throttle.
 	 */
-	public void setRosterEntry(RosterEntry entry){
-		rosterBox.setSelectedItem(entry);
-		addrSelector.setAddress(entry.getDccLocoAddress());
-		rosterEntry = entry;
-		changeOfAddress();
+	public void setRosterEntry(RosterEntry entry) {
+        rosterBox.setSelectedRosterEntry(entry);
+        addrSelector.setAddress(entry.getDccLocoAddress());
+        rosterEntry = entry;
+        changeOfAddress();
 	}
 
 	/**
@@ -302,33 +302,23 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 			}
 		});
 
-		rosterBox = new RosterEntryComboBox();
-        rosterBox.setRosterListenerEnabled(false);
-		rosterBox.insertItemAt(new NullComboBoxItem(), 0);
-		rosterBox.setSelectedIndex(0);
+		rosterBox = new RosterEntrySelectorPanel();
+        rosterBox.setEmptyEntry(rb.getString("NoLocoSelected"));
 		rosterBox.setToolTipText(rb.getString("SelectLocoFromRosterTT"));
-		rosterBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (!disableRosterBoxActions) { //Have roster box actions been disabled?
-					rosterItemSelected();
-				}
-			}
-		});
-        
-        Roster.instance().addPropertyChangeListener(new PropertyChangeListener() {
+		rosterBox.addPropertyChangeListener("selectedRosterEntries", new PropertyChangeListener() {
+
+            @Override
             public void propertyChange(PropertyChangeEvent pce) {
-                if (pce.getPropertyName().equals("add")
-                        || pce.getPropertyName().equals("remove")
-                        || pce.getPropertyName().equals("change")) {
-                    updateRosterBox();
-                }
+                rosterItemSelected();
             }
         });
+        
 		constraints.gridx = 0;
 		constraints.gridy = GridBagConstraints.RELATIVE;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		constraints.weightx = 1;
 		constraints.weighty = 0;
+        constraints.gridwidth = GridBagConstraints.REMAINDER;
 		mainPanel.add(rosterBox, constraints);
 
 		conRosterBox = NceConsistRoster.instance().fullRosterComboBox();
@@ -388,32 +378,11 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 		pack();
 	}
     
-    private void updateRosterBox(){
-        //disable rosterbox actions when doing the update
-        disableRosterBoxActions=true;
-        boolean isNullSelected = false;
-        String selectedItem ="";
-        if(rosterBox.getSelectedItem() instanceof NullComboBoxItem)
-            isNullSelected = true;
-        else
-            selectedItem = rosterBox.getSelectedItem().toString();
-        rosterBox.update();
-        rosterBox.insertItemAt(new NullComboBoxItem(), 0);
-        if(isNullSelected)
-            rosterBox.setSelectedIndex(0);
-        else {
-            rosterBox.setSelectedItem(selectedItem);
-        }
-        disableRosterBoxActions=false;
-    
-    }
-
 	private void rosterItemSelected() {
-		if (!(rosterBox.getSelectedItem() instanceof NullComboBoxItem)) {
-			String rosterEntryTitle = rosterBox.getSelectedItem().toString();
-			setRosterEntry(Roster.instance().entryFromTitle(rosterEntryTitle));
-			consistAddress = null;
-		}
+        if (rosterBox.getSelectedRosterEntries().length != 0) {
+            setRosterEntry(rosterBox.getSelectedRosterEntries()[0]);
+            consistAddress = null;
+        }
 	}
 
 	private void consistRosterSelected() {
