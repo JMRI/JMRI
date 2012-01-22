@@ -5,7 +5,7 @@ import jmri.jmrit.roster.Roster;
 
 /**
  * A {@link RosterEntryComboBox} that lists all roster entries in the Roster
- * without respect a roster group.
+ * without respect to a roster group.
  *
  * @author Randall Wood Copyright (C) 2011
  * @version $Revision: $
