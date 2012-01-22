@@ -974,6 +974,14 @@ with custom loads. You could create the custom load "E(mpty)" and use
 this load to signify an empty car. Now cars with this load will be
 routed and will have the same characteristics as cars with the "other"
 custom loads.</P>
+
+<H3>Show Schedules by Car Type and Load</H3>
+
+<img src="images/ShowSchedulesBYCarTYpeAndLoad.png">
+
+<P>You can access this useful tool from the Schedules window.  It allows you to select a car type, and then
+any load that you've created for the that type of car.  The window then shows which schedules by location are receiving
+or shipping that specific car load.</P>  
    
 <A	NAME="Interchange"></A>
 <H3>Interchange Tracks</H3>
