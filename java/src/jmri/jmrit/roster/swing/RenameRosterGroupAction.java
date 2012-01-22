@@ -16,11 +16,6 @@ import jmri.jmrit.roster.Roster;
  * <p>
  * This action prevents a user from renaming a roster group to same name as an
  * existing roster group.
- * <p>
- * If performAction(event) is being called in a context where the name of the
- * group to be renamed is already known, call setParameter("group", groupName)
- * prior to calling performAction(event) to bypass the group selection dialog.
- *
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -59,7 +54,6 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
         _who = who;
     }
     Component _who;
-    String group = null;
 
     /**
      * Call setParameter("group", oldName) prior to calling actionPerformed(event)
@@ -71,9 +65,8 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
      */
     @Override
     public void actionPerformed(ActionEvent event) {
-        // only query wi for group if group was not set using setParameter
-        // prior to call
-        if (group == null && Beans.hasProperty(wi, "selectedRosterGroup")) {
+        String group = null;
+        if (Beans.hasProperty(wi, "selectedRosterGroup")) {
             group = (String)Beans.getProperty(wi, "selectedRosterGroup");
         }
         // null might be valid output from getting the selectedRosterGroup,
@@ -100,7 +93,6 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
                 null,
                 null);
         if (entry == null || entry.equals(Roster.ALLENTRIES)) {
-            group = null;
             return;
         } else if (Roster.instance().getRosterGroupList().contains(entry)) {
             JOptionPane.showMessageDialog(_who,
@@ -112,20 +104,14 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
         // rename the roster grouping
         Roster.instance().renameRosterGroupList(group, entry);
         Roster.writeRosterFile();
-        group = null; // reset to default value
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
 
-    @Override
-    public void setParameter(String key, String value) {
-        if (key.equals("group")) {
-            group = value;
-        }
-    }
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RenameRosterGroupAction.class.getName());
 }

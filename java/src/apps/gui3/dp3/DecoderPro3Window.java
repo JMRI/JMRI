@@ -362,6 +362,7 @@ public class DecoderPro3Window
         
         Object selectedRosterGroup = p.getProperty(getWindowFrameRef(), "selectedRosterGroup");
         groups = new RosterGroupsPanel((selectedRosterGroup != null) ? selectedRosterGroup.toString() : null);
+        groups.setNewWindowMenuAction(new DecoderPro3Action("newWindow", this));
         
         final JPanel rosters = new JPanel();
         rosters.setLayout(new BorderLayout());

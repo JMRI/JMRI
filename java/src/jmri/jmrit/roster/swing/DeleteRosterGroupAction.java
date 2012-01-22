@@ -14,10 +14,6 @@ import jmri.jmrit.roster.Roster;
 
 /**
  * Remove roster group.
- * <p>
- * If performAction(event) is being called in a context where the name of the
- * group to be removed is already known, call setParameter("group", groupName)
- * prior to calling performAction(event) to bypass the group selection dialog.
  *
  * <hr>
  * This file is part of JMRI.
@@ -56,7 +52,6 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
     }
 
     Component _who;
-    String group = null;
 
     /**
      * Call setParameter("group", oldName) prior to calling actionPerformed(event)
@@ -68,9 +63,8 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
      */
     @Override
     public void actionPerformed(ActionEvent event) {
-        // only query wi for group if group was not set using setParameter
-        // prior to call
-        if (group == null && Beans.hasProperty(wi, "selectedRosterGroup")) {
+        String group = null;
+        if (Beans.hasProperty(wi, "selectedRosterGroup")) {
             group = (String)Beans.getProperty(wi, "selectedRosterGroup");
         }
         // null might be valid output from getting the selectedRosterGroup,
@@ -86,19 +80,16 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
         }
         // can't delete the roster itself (ALLENTRIES and null represent the roster)
         if (group == null || group.equals(Roster.ALLENTRIES)) {
-            group = null;
             return;
         }
         // prompt for one last chance
         if (!userOK(group)) {
-            group = null;
             return;
         }
 
         // delete the roster grouping
         Roster.instance().delRosterGroupList(group);
         Roster.writeRosterFile();
-        group = null; // reset to default value
     }
 
     /**
@@ -122,15 +113,9 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
     }
     
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
-    }
-
-    @Override
-    public void setParameter(String key, String value) {
-        if (key.equals("group")) {
-            group = value;
-        }
     }
 
     // initialize logging

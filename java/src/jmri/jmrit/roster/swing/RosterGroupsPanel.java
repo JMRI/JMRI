@@ -19,6 +19,7 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.IterableEnumeration;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
 
 /**
  * A JPanel that lists Roster Groups
@@ -48,7 +49,6 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
     private String selectedRosterGroup = "";
     private JPopupMenu groupsMenu;
     private JPopupMenu allEntriesMenu;
-    private JMenuItem newWindowMenuItem;
     private JmriAbstractAction newWindowMenuItemAction = null;
 
     /**
@@ -159,22 +159,29 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
      */
     public void setNewWindowMenuAction(JmriAbstractAction action) {
         if (action != null) {
+            MenuActionListener ml = new MenuActionListener();
             newWindowMenuItemAction = action;
-            newWindowMenuItem = new JMenuItem("Open in New Window");
-            newWindowMenuItem.addActionListener(action);
-            newWindowMenuItem.setActionCommand("newWindow");
-            groupsMenu.add(newWindowMenuItem, 0);
-            groupsMenu.addSeparator();
-            allEntriesMenu.add(newWindowMenuItem, 0);
-            allEntriesMenu.addSeparator();
-        } else if (newWindowMenuItem != null) {
+            JMenuItem mi = new JMenuItem("Open in New Window");
+            mi.addActionListener(ml);
+            mi.setActionCommand("newWindow");
+            groupsMenu.insert(mi, 0);
+            groupsMenu.insert(new JSeparator(), 1);
+            // create the menu item twice because a single menu item can only
+            // be attached to a single menu
+            mi = new JMenuItem("Open in New Window");
+            mi.addActionListener(ml);
+            mi.setActionCommand("newWindow");
+            allEntriesMenu.insert(mi, 0);
+            allEntriesMenu.insert(new JSeparator(), 1);
+        } else if (newWindowMenuItemAction != null) {
             groupsMenu.remove(0);
             groupsMenu.remove(0);
             allEntriesMenu.remove(0);
             allEntriesMenu.remove(0);
-            newWindowMenuItem = null;
             newWindowMenuItemAction = null;
         }
+        groupsMenu.validate();
+        allEntriesMenu.validate();
     }
 
     /**
@@ -362,23 +369,17 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         @Override
         public void actionPerformed(ActionEvent e) {
             TreePath g = new TreePath(_model.getPathToRoot(_groups));
-            JmriAbstractAction a;
+            WindowInterface wi = (WindowInterface) scrollPane.getTopLevelAncestor();
             if (g.isDescendant(_tree.getSelectionPath())) {
                 if (e.getActionCommand().equals("export")) {
-                    a = new FullBackupExportAction("Export...", scrollPane.getTopLevelAncestor());
-                    a.actionPerformed(e);
+                    new FullBackupExportAction("Export...", wi).actionPerformed(e);
                 } else if (e.getActionCommand().equals("rename")) {
-                    a = new RenameRosterGroupAction("Rename", scrollPane.getTopLevelAncestor());
-                    a.setParameter("group", _tree.getSelectionPath().getLastPathComponent().toString());
-                    a.actionPerformed(e);
+                    new RenameRosterGroupAction("Rename", wi).actionPerformed(e);
                 } else if (e.getActionCommand().equals("duplicate")) {
-                    new CopyRosterGroupAction("Duplicate", scrollPane.getTopLevelAncestor()).actionPerformed(e);
+                    new CopyRosterGroupAction("Duplicate", wi).actionPerformed(e);
                 } else if (e.getActionCommand().equals("delete")) {
-                    a = new DeleteRosterGroupAction("Delete", scrollPane.getTopLevelAncestor());
-                    a.setParameter("group", _tree.getSelectionPath().getLastPathComponent().toString());
-                    a.actionPerformed(e);
+                    new DeleteRosterGroupAction("Delete", wi).actionPerformed(e);
                 } else if (e.getActionCommand().equals("newWindow") && newWindowMenuItemAction != null) {
-                    newWindowMenuItemAction.setParameter("group", _tree.getSelectionPath().getLastPathComponent().toString());
                     newWindowMenuItemAction.actionPerformed(e);
                 } else {
                     JOptionPane.showMessageDialog((JComponent) e.getSource(), "Not Implemented", "Not Implemented", JOptionPane.ERROR_MESSAGE);
