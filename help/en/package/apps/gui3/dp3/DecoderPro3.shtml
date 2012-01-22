@@ -161,7 +161,6 @@ upper right-hand corner. </p>
   <li>--------------</li>
   <li>Create Roster Group</li>
   <li>Delete Roster Group</li>
-  <li>Set Active Roster Group</li>
   <li>Roster Group Table Association</li>
 </ul>
 
@@ -221,12 +220,7 @@ your command station. </p>
 
 <p>Opens the selection of programing modes. </p>
 
-<h2>Select Roster Group drop-menu</h2>
-
-<p>The Select Roster Group drop-menu only appears if a Roster Group has been
-defined. The drop menu selects which is the Active Roster Group, and filters
-the Roster Table. The Active Roster Group also influences the locomotives
-offered for control with software Throttles. </p>
+<h1>Roster Group Pane</h1>
 
 <p>The Roster Group Pane only appears if a Roster Group has been defined. 
 The pane appears to the left of the Roster Table.  Further groups can be added

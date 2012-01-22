@@ -239,7 +239,6 @@ The Basic Programmer</h4>
       <li><a href="Main_RosterGroup.shtml">Roster Groups</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
         <ul>
           <li>Create Roster Group</li>
-          <li>Set Active Roster Group</li>
           <li>Delete Roster Group</li>
           <li>Table Association</li>
           <li>Associate Roster Entry to Group</li>

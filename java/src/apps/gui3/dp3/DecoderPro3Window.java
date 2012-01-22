@@ -72,6 +72,7 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.ConnectionConfig;
+import jmri.util.swing.WindowInterface;
 
 /**
  * Standalone DecoderPro3 Window (new GUI)
@@ -95,7 +96,7 @@ import jmri.jmrix.ConnectionConfig;
  */
 
 public class DecoderPro3Window
-        extends jmri.util.swing.multipane.TwoPaneTBWindow implements RosterGroupSelector {
+        extends jmri.util.swing.multipane.TwoPaneTBWindow implements RosterEntrySelector, RosterGroupSelector {
 
     static int openWindowInstances = 0;
 
@@ -211,9 +212,6 @@ public class DecoderPro3Window
         JLabel programmerStatusLabel = new JLabel("Programmer Status : ");
         statusField.setText("idle");
         addToStatusBox(programmerStatusLabel, statusField);
-        
-        JLabel programmerLabel = new JLabel("Active Roster Group : ");
-        addToStatusBox(programmerLabel, activeRosterGroupField);
     }
     
     /*
@@ -362,7 +360,6 @@ public class DecoderPro3Window
 
     JComponent createTop() {
         
-        activeRosterGroupField.setText(Roster.getRosterGroupName());
         Object selectedRosterGroup = p.getProperty(getWindowFrameRef(), "selectedRosterGroup");
         groups = new RosterGroupsPanel((selectedRosterGroup != null) ? selectedRosterGroup.toString() : null);
         
@@ -380,6 +377,7 @@ public class DecoderPro3Window
             tableSelectionListener = new ListSelectionListener() {
                     public void valueChanged(ListSelectionEvent e) {
                         if (!e.getValueIsAdjusting()) {
+                            selectedRosterEntries = null; // clear cached list of selections
                             if (rtable.getTable().getSelectedRowCount() == 1) {
                                 locoSelected(rtable.getModel().getValueAt(rtable.getTable().getSelectedRow(), RosterTableModel.IDCOL).toString());
                                 
@@ -495,10 +493,6 @@ public class DecoderPro3Window
         
         Roster.instance().addPropertyChangeListener( new PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if (e.getPropertyName().equals("ActiveRosterGroup")){
-                    String activeGroup = ((String)e.getNewValue());
-                    activeRosterGroupField.setText(activeGroup);
-                } 
                 if (e.getPropertyName().equals("RosterGroupAdded")
                         && Roster.instance().getRosterGroupList().size() == 1) {
                     // if the pane is hidden, show it when 1st group is created
@@ -577,6 +571,22 @@ public class DecoderPro3Window
             re = null;
         }
         updateDetails();
+    }
+
+    RosterEntry[] selectedRosterEntries = null;
+
+    @Override
+    // cache selectedRosterEntries so that multiple calls to this
+    // between selection changes will not require the creation of a new array
+    public RosterEntry[] getSelectedRosterEntries() {
+        if (selectedRosterEntries == null) {
+            int[] rows = rtable.getTable().getSelectedRows();
+            selectedRosterEntries = new RosterEntry[rows.length];
+            for (int idx = 0; idx < rows.length; idx++) {
+                selectedRosterEntries[idx] = Roster.instance().getEntryForId(rtable.getModel().getValueAt(rows[idx], RosterTableModel.IDCOL).toString());
+            }
+        }
+        return selectedRosterEntries;
     }
 
     //Popup listener is used against the roster table to display a 
@@ -731,7 +741,6 @@ public class DecoderPro3Window
     }
 
     JLabel statusField = new JLabel();
-    JLabel activeRosterGroupField = new JLabel();
 
     final ResourceBundle rbroster = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
 
@@ -1408,20 +1417,8 @@ public class DecoderPro3Window
         }
 
     protected void deleteLoco(){
-        DeleteRosterItem act = new DeleteRosterItem("Delete", this, re);
+        DeleteRosterItemAction act = new DeleteRosterItemAction("Delete", (WindowInterface)this);
         act.actionPerformed(null);
-    }
-
-    static class DeleteRosterItem extends jmri.jmrit.roster.DeleteRosterItemAction{
-        DeleteRosterItem(String pName, Component pWho, RosterEntry re) {
-            super(pName, pWho);
-            this.re = re;
-        }
-        RosterEntry re;
-        @Override
-        protected String selectRosterEntry(){
-            return re.getId();
-        }
     }
 
     protected void newWindow(){
@@ -1447,7 +1444,6 @@ public class DecoderPro3Window
     protected void enableRosterGroupMenuItems(boolean enable){
         firePropertyChange("groupspane", "setEnabled", enable);
         firePropertyChange("grouptable", "setEnabled", enable);
-        firePropertyChange("activegroup", "setEnabled", enable);
         firePropertyChange("deletegroup", "setEnabled", enable);
     }
     int groupSplitPaneLocation = 0;

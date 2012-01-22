@@ -154,12 +154,6 @@
         <current>deletegroup</current>
     </node>
     <node>separator</node><!-- separator -->
-    <node name="Set Active Roster Group">
-        <name xml:lang="fr">Sélectionner le groupe actif</name>
-        <mnemonic>a</mnemonic>
-        <adapter>jmri.jmrit.roster.swing.SelectRosterGroupAction</adapter>
-        <current>activegroup</current>
-    </node>
     <node name="Roster Group Table Association">
         <mnemonic>t</mnemonic>
         <adapter>jmri.jmrit.roster.swing.rostergroup.RosterGroupTableAction</adapter>
