@@ -1,21 +1,21 @@
 // RosterEntryComboBox.java
 package jmri.jmrit.roster.swing;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.JComboBox;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.RosterEntrySelector;
 
 /**
  * A JComboBox containing roster entries
  * <p>
  * This class has a self contained data model, and will automatically update the
  * display if a RosterEntry is added, removed, or changes.
- * <p>
- * This class <em>does not</em> update if the active roster group changes.
- * Implementors must include that behavior if it is desired.
  *
  * @author Randall Wood Copyright (C) 2011
  * @version $Revision: $
@@ -23,9 +23,10 @@ import jmri.jmrit.roster.RosterEntry;
  * @see jmri.jmrit.roster.RosterEntry
  * @see javax.swing.JComboBox
  */
-public class RosterEntryComboBox extends JComboBox {
+public class RosterEntryComboBox extends JComboBox implements RosterEntrySelector {
 
     protected Roster _roster;
+    protected String _group;
     protected String _roadName;
     protected String _roadNumber;
     protected String _dccAddress;
@@ -33,13 +34,17 @@ public class RosterEntryComboBox extends JComboBox {
     protected String _decoderMfgID;
     protected String _decoderVersionID;
     protected String _id;
+    protected String _emptyEntry;
+    protected RosterEntry[] _currentSelection = null;
+
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterEntryComboBox.class.getName());
 
     /**
      * Create a combo box with the default Roster and all entries in the active
      * roster group.
      */
     public RosterEntryComboBox() {
-        this(Roster.instance(), Roster.getRosterGroupName(), null, null, null, null, null, null, null);
+        this(Roster.instance(), Roster.instance().getDefaultRosterGroup(), null, null, null, null, null, null, null);
     }
 
     /**
@@ -49,7 +54,7 @@ public class RosterEntryComboBox extends JComboBox {
      * @param roster
      */
     public RosterEntryComboBox(Roster roster) {
-        this(roster, Roster.getRosterGroupName(), null, null, null, null, null, null, null);
+        this(roster, Roster.instance().getDefaultRosterGroup(), null, null, null, null, null, null, null);
     }
 
     /**
@@ -94,7 +99,7 @@ public class RosterEntryComboBox extends JComboBox {
             String decoderVersionID,
             String id) {
         this(Roster.instance(),
-                Roster.getRosterGroupName(),
+                Roster.instance().getDefaultRosterGroup(),
                 roadName,
                 roadNumber,
                 dccAddress,
@@ -127,7 +132,7 @@ public class RosterEntryComboBox extends JComboBox {
             String decoderVersionID,
             String id) {
         this(roster,
-                Roster.getRosterGroupName(),
+                Roster.instance().getDefaultRosterGroup(),
                 roadName,
                 roadNumber,
                 dccAddress,
@@ -201,7 +206,10 @@ public class RosterEntryComboBox extends JComboBox {
             String decoderVersionID,
             String id) {
         super();
+        setRenderer(new jmri.jmrit.roster.swing.RosterEntryListCellRenderer());
         _roster = roster;
+        _group = rosterGroup;
+        _emptyEntry = null;
         update(rosterGroup,
                 roadName,
                 roadNumber,
@@ -212,8 +220,14 @@ public class RosterEntryComboBox extends JComboBox {
                 id);
         
         _roster.addPropertyChangeListener(rosterListener);
-        
-        setRenderer(new jmri.jmrit.roster.swing.RosterEntryListCellRenderer());
+
+        this.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                fireSelectedRosterEntriesPropertyChange();
+            }
+        });
     }
     
     PropertyChangeListener rosterListener = new PropertyChangeListener() {
@@ -221,11 +235,12 @@ public class RosterEntryComboBox extends JComboBox {
                 if (pce.getPropertyName().equals("add")
                         || pce.getPropertyName().equals("remove")
                         || pce.getPropertyName().equals("change")) {
-                    update();
+                    update(_group);
                 }
             }
         };
-    
+
+    // I think this is no longer needed
     public void setRosterListenerEnabled(boolean boo){
         if(boo)
             _roster.addPropertyChangeListener(rosterListener);
@@ -234,12 +249,12 @@ public class RosterEntryComboBox extends JComboBox {
     }
 
     /**
-     * Update the combo box with the active roster group, using the same roster
+     * Update the combo box with the currently selected roster group, using the same roster
      * entry attributes specified in a prior call to update or when creating the
      * combo box.
      */
     public void update() {
-        update(Roster.getRosterGroupName(),
+        update((String) this.getSelectedItem(),
                 _roadName,
                 _roadNumber,
                 _dccAddress,
@@ -268,7 +283,7 @@ public class RosterEntryComboBox extends JComboBox {
     }
 
     /**
-     * Update the combo box with the active roster group, using new roster
+     * Update the combo box with the currently selected roster group, using new roster
      * entry attributes.
      *
      * @param roadName
@@ -286,7 +301,7 @@ public class RosterEntryComboBox extends JComboBox {
             String decoderMfgID,
             String decoderVersionID,
             String id) {
-        update(Roster.getRosterGroupName(),
+        update((String) this.getSelectedItem(),
                 roadName,
                 roadNumber,
                 dccAddress,
@@ -317,6 +332,16 @@ public class RosterEntryComboBox extends JComboBox {
             String decoderMfgID,
             String decoderVersionID,
             String id) {
+        Object selection = this.getSelectedItem();
+        if (log.isDebugEnabled()) {
+            log.debug("Old selection: " + selection);
+            log.debug("Old group: " + _group);
+        }
+        ActionListener[] ALs = this.getActionListeners();
+        for (ActionListener al : ALs) {
+            this.removeActionListener(al);
+        }
+        this.setSelectedItem(null);
         List<RosterEntry> l = _roster.matchingList(roadName,
                 roadNumber,
                 dccAddress,
@@ -324,6 +349,7 @@ public class RosterEntryComboBox extends JComboBox {
                 decoderMfgID,
                 decoderVersionID,
                 id);
+        _group = rosterGroup;
         _roadName = roadName;
         _roadNumber = roadNumber;
         _dccAddress = dccAddress;
@@ -332,15 +358,84 @@ public class RosterEntryComboBox extends JComboBox {
         _decoderVersionID = decoderVersionID;
         _id = id;
         removeAllItems();
+        if (_emptyEntry != null) {
+            this.insertItemAt(_emptyEntry, 0);
+            this.setSelectedItem(_emptyEntry);
+        }
         for (RosterEntry r : l) {
-            if (!rosterGroup.equals(Roster.ALLENTRIES)) {
+            if (rosterGroup != null && !rosterGroup.equals(Roster.ALLENTRIES)) {
                 if (r.getAttribute(Roster.getRosterGroupProperty(rosterGroup)) != null
                         && r.getAttribute(Roster.getRosterGroupProperty(rosterGroup)).equals("yes")) {
-                    addItem(r.titleString());
+                    addItem(r);
                 }
             } else {
-                addItem(r.titleString());
+                addItem(r);
+            }
+            if (r.equals(selection)) {
+                this.setSelectedItem(r);
             }
         }
+        if (log.isDebugEnabled()) {
+            log.debug("New selection: " + this.getSelectedItem());
+            log.debug("New group: " + _group);
+        }
+        for (ActionListener al : ALs) {
+            this.addActionListener(al);
+        }
+        // fire the action event only if selection is not in the updated combobox
+        // don't use equals() since selection or getSelectedItem could be null
+        if (this.getSelectedItem() != selection) {
+            this.fireActionEvent();
+            // this is part of the RosterEntrySelector contract
+            this.fireSelectedRosterEntriesPropertyChange();
+        }
+    }
+
+    /**
+     * Set the text of the item that visually indicates that no roster entry
+     * is selected in the comboBox.
+     *
+     * @param itemText
+     */
+    public void setNonSelectedItem(String itemText) {
+        _emptyEntry = itemText;
+        update(_group);
+    }
+
+    /**
+     * Get the text of the item that visually indicates that no roster entry
+     * is selected in the comboBox.
+     *
+     * If this returns null, it indicates that the comboBox has no special item
+     * to indicate an empty selection.
+     * 
+     * @return The text or null
+     */
+    public String getNonSelectedItem() {
+        return _emptyEntry;
+    }
+
+    @Override
+    public RosterEntry[] getSelectedRosterEntries() {
+        return getSelectedRosterEntries(false);
+    }
+
+    // internally, we sometimes want to be able to force the reconstruction of
+    // the cached value returned by getSelectedRosterEntries
+    private RosterEntry[] getSelectedRosterEntries(boolean force) {
+        if (_currentSelection == null || force) {
+            if (this.getSelectedItem() != null && !this.getSelectedItem().equals(_emptyEntry)) {
+                _currentSelection = new RosterEntry[1];
+                _currentSelection[0] = (RosterEntry) this.getSelectedItem();
+            } else {
+                _currentSelection = new RosterEntry[0];
+            }
+        }
+        return _currentSelection;
+    }
+
+    // this method allows anonymous listeners to fire the "selectedRosterEntries" property change
+    private void fireSelectedRosterEntriesPropertyChange() {
+        this.firePropertyChange("selectedRosterEntries", _currentSelection, this.getSelectedRosterEntries(true));
     }
 }
