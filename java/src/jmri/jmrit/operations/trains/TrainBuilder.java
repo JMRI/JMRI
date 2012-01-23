@@ -317,8 +317,13 @@ public class TrainBuilder extends TrainCommon{
 				terminateStageTrack = null;
 			}
 			if (terminateStageTrack == null){
-				addLine(buildReport, ONE, rb.getString("buildErrorStagingFullNote"));
-				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorStagingFull"),new Object[]{terminateLocation.getName()}));
+				// is this train returning to the same staging in aggressive mode?
+				if (departLocation == terminateLocation && Setup.isBuildAggressive() && Setup.isStagingTrackImmediatelyAvail()){
+					addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildStagingReturn"),new Object[]{terminateLocation.getName()}));
+				} else {
+					addLine(buildReport, ONE, rb.getString("buildErrorStagingFullNote"));
+					throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorStagingFull"),new Object[]{terminateLocation.getName()}));
+				}
 			}
 		}
 		
@@ -358,6 +363,9 @@ public class TrainBuilder extends TrainCommon{
 			}
 			if (departStageTrack == null){
 				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorStagingEmpty"),new Object[]{departLocation.getName()}));
+			 // departing staging and returning to same track?
+			} else if (terminateStageTrack == null && departLocation == terminateLocation  && Setup.isBuildAggressive() && Setup.isStagingTrackImmediatelyAvail()){
+				terminateStageTrack = departStageTrack;	// use the same track
 			}
 		} else {
 			// load engines for this train
@@ -439,7 +447,7 @@ public class TrainBuilder extends TrainCommon{
 		
 		// now find destinations for cars 
 		addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildTrain"),new Object[]{requested, train.getName(), carList.size()}));
-		// try to block cars departing staging
+		
 		if (Setup.isBuildAggressive() && !train.isBuildTrainNormalEnabled()){
 			// perform a two pass build for this train
 			placeCars(50);	// find destination for 50% of the available moves
@@ -528,6 +536,10 @@ public class TrainBuilder extends TrainCommon{
 		Track terminateTrack = null;
 		if (rld == train.getTrainTerminatesRouteLocation())
 			terminateTrack = terminateStageTrack;
+		// departing staging and returning to same track?
+		if (departStageTrack != null && terminateTrack == null && rld == train.getTrainTerminatesRouteLocation() 
+				&& departLocation == terminateLocation  && Setup.isBuildAggressive() && Setup.isStagingTrackImmediatelyAvail())
+			terminateTrack = departStageTrack;
 		
 		// if not departing staging track and engines aren't required done!
 		if (departTrack == null && numberOfEngines == 0)
@@ -1816,13 +1828,17 @@ public class TrainBuilder extends TrainCommon{
 	 * car and engine types, roads, and loads.
 	 */
 	private boolean checkTerminateStagingTrack(Track terminateStageTrack){
-		if (terminateStageTrack.getNumberRS() != 0){
+		// In normal mode, find a completely empty track.  In aggressive mode, a track that scheduled to depart is okay
+		if (((!Setup.isBuildAggressive() || !Setup.isStagingTrackImmediatelyAvail()) && terminateStageTrack.getNumberRS() != 0) || terminateStageTrack.getNumberRS() != terminateStageTrack.getPickupRS()){
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingTrackOccupied"),new Object[]{terminateStageTrack.getName(), terminateStageTrack.getNumberEngines(), terminateStageTrack.getNumberCars()}));
 			return false;
 		}
 		if (terminateStageTrack.getDropRS() != 0){
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingTrackReserved"),new Object[]{terminateStageTrack.getName(), terminateStageTrack.getDropRS()}));
 			return false;
+		}
+		if (terminateStageTrack.getPickupRS()>0){
+			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingTrackDepart"),new Object[]{terminateStageTrack.getName()}));
 		}
 		if (!terminateStageTrack.acceptsDropTrain(train)){
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingNotTrain"),new Object[]{terminateStageTrack.getName()}));

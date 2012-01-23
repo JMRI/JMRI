@@ -220,9 +220,12 @@ public class Setup {
 	private static boolean allowLocalInterchangeMoves = false;	// when true local interchange to interchange moves are allowed
 	private static boolean allowLocalYardMoves = false;		// when true local yard to yard moves are allowed
 	private static boolean allowLocalSidingMoves = false;	// when true local spur to spur moves are allowed
+	
 	private static boolean trainIntoStagingCheck = true;	// when true staging track must accept train's rolling stock types and roads
+	private static boolean trackImmediatelyAvail = false; 	// when true staging track is immediately available for arrivals after a train is built
 	private static boolean promptFromStaging = false;		// when true prompt user to specify which departure staging track to use
 	private static boolean promptToStaging = false;			// when true prompt user to specify which arrival staging track to use
+	
 	private static boolean generateCsvManifest = false;		// when true generate csv manifest
 	private static boolean generateCsvSwitchList = false;	// when true generate csv switch list
 	private static boolean enableVsdPhysicalLocations = false;
@@ -371,6 +374,13 @@ public class Setup {
 		trainIntoStagingCheck = enabled;
 	}
 	
+	public static boolean isStagingTrackImmediatelyAvail(){
+		return trackImmediatelyAvail;
+	}
+	
+	public static void setStagingTrackImmediatelyAvail(boolean enabled){
+		trackImmediatelyAvail = enabled;
+	}
 	public static boolean isPromptFromStagingEnabled(){
 		return promptFromStaging;
 	}
@@ -1361,12 +1371,16 @@ public class Setup {
     	
     	e.addContent(values = new Element("buildOptions"));
     	values.setAttribute("aggressive", isBuildAggressive()?"true":"false");
+    	
     	values.setAttribute("allowLocalInterchange", isLocalInterchangeMovesEnabled()?"true":"false");
     	values.setAttribute("allowLocalSiding", isLocalSidingMovesEnabled()?"true":"false");
     	values.setAttribute("allowLocalYard", isLocalYardMovesEnabled()?"true":"false");
+    	
     	values.setAttribute("stagingRestrictionEnabled", isTrainIntoStagingCheckEnabled()?"true":"false");
+    	values.setAttribute("stagingTrackAvail", isStagingTrackImmediatelyAvail()?"true":"false");
     	values.setAttribute("promptStagingEnabled", isPromptFromStagingEnabled()?"true":"false");
     	values.setAttribute("promptToStagingEnabled", isPromptToStagingEnabled()?"true":"false");
+    	
     	values.setAttribute("generateCsvManifest", isGenerateCsvManifestEnabled()?"true":"false");
     	values.setAttribute("generateCsvSwitchList", isGenerateCsvSwitchListEnabled()?"true":"false");
     	
@@ -1777,6 +1791,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("stagingRestrictionEnabled: "+enable);
         		setTrainIntoStagingCheckEnabled(enable.equals("true"));
+        	}
+           	if((a = operations.getChild("buildOptions").getAttribute("stagingTrackAvail")) != null) {
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("stagingTrackAvail: "+enable);
+        		setStagingTrackImmediatelyAvail(enable.equals("true"));
         	}
            	if((a = operations.getChild("buildOptions").getAttribute("promptStagingEnabled")) != null) {
         		String enable = a.getValue();

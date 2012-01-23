@@ -51,15 +51,17 @@ public class OptionFrame extends OperationsFrame{
 	JCheckBox localInterchangeCheckBox = new JCheckBox(rb.getString("AllowLocalInterchange"));
 	JCheckBox localSidingCheckBox = new JCheckBox(rb.getString("AllowLocalSiding"));
 	JCheckBox localYardCheckBox = new JCheckBox(rb.getString("AllowLocalYard"));
+	
 	JCheckBox trainIntoStagingCheckBox = new JCheckBox(rb.getString("TrainIntoStaging"));
+	JCheckBox stagingAvailCheckBox = new JCheckBox(rb.getString("StagingAvailable"));
 	JCheckBox promptFromTrackStagingCheckBox = new JCheckBox(rb.getString("PromptFromStaging"));
 	JCheckBox promptToTrackStagingCheckBox = new JCheckBox(rb.getString("PromptToStaging"));
+	
 	JCheckBox generateCvsManifestCheckBox = new JCheckBox(rb.getString("GenerateCsvManifest"));
 	JCheckBox generateCvsSwitchListCheckBox = new JCheckBox(rb.getString("GenerateCsvSwitchList"));
 	
 	JCheckBox enableVsdCheckBox = new JCheckBox(rb.getString("EnableVSD"));
-	//JCheckBox createReportersCheckBox = new JCheckBox(rb.getString("CreateReporters"));
-	
+
 	// text field
 	JTextField rfidTextField = new JTextField(10);
 	JTextField valueTextField = new JTextField(10);
@@ -85,12 +87,12 @@ public class OptionFrame extends OperationsFrame{
 		localSidingCheckBox.setSelected(Setup.isLocalSidingMovesEnabled());
 		localYardCheckBox.setSelected(Setup.isLocalYardMovesEnabled());
 		trainIntoStagingCheckBox.setSelected(Setup.isTrainIntoStagingCheckEnabled());
+		stagingAvailCheckBox.setSelected(Setup.isStagingTrackImmediatelyAvail());
 		promptToTrackStagingCheckBox.setSelected(Setup.isPromptToStagingEnabled());
 		promptFromTrackStagingCheckBox.setSelected(Setup.isPromptFromStagingEnabled());
 		generateCvsManifestCheckBox.setSelected(Setup.isGenerateCsvManifestEnabled());
 		generateCvsSwitchListCheckBox.setSelected(Setup.isGenerateCsvSwitchListEnabled());
 		enableVsdCheckBox.setSelected(Setup.isVsdPhysicalLocationEnabled());
-		//createReportersCheckBox.setSelected(Setup.isCreateReportersEnabled());
 		
 		// load text fields
 		rfidTextField.setText(Setup.getRfidLabel());
@@ -135,8 +137,9 @@ public class OptionFrame extends OperationsFrame{
 		pStaging.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutStaging")));
 		
 		addItemLeft(pStaging, trainIntoStagingCheckBox, 1,4);
-		addItemLeft(pStaging, promptFromTrackStagingCheckBox, 1,5);
-		addItemLeft(pStaging, promptToTrackStagingCheckBox, 1,6);
+		addItemLeft(pStaging, stagingAvailCheckBox, 1,5);
+		addItemLeft(pStaging, promptFromTrackStagingCheckBox, 1,6);
+		addItemLeft(pStaging, promptToTrackStagingCheckBox, 1,7);
 		addItemLeft(pBuild, pStaging, 1, 2);
 		
 		// Router panel
@@ -163,7 +166,6 @@ public class OptionFrame extends OperationsFrame{
 		addItemLeft (pOption, rfidCheckBox, 1,3);
 		addItemLeft (pOption, rfidTextField, 2,3);
 		addItemLeft (pOption, enableVsdCheckBox, 1,4);
-		//addItemLeft (pOption, createReportersCheckBox, 1,5);
 		
 		// row 11
 		JPanel pControl = new JPanel();
@@ -189,6 +191,9 @@ public class OptionFrame extends OperationsFrame{
 		addRadioButtonAction(buildAggressive);
 		
 		setBuildOption();
+		
+		// disable staging option if normal mode
+		stagingAvailCheckBox.setEnabled(buildAggressive.isSelected());
 
 		//	build menu		
 		addHelpMenu("package.jmri.jmrit.operations.Operations_SettingsOptions", true);
@@ -215,6 +220,8 @@ public class OptionFrame extends OperationsFrame{
 					rb.getString("MustTerminateOrReset"),
 					JOptionPane.ERROR_MESSAGE);
 		}
+		// disable staging option if normal mode
+		stagingAvailCheckBox.setEnabled(buildAggressive.isSelected());
 	}
 	
 	// Save button
@@ -226,8 +233,9 @@ public class OptionFrame extends OperationsFrame{
 			Setup.setLocalInterchangeMovesEnabled(localInterchangeCheckBox.isSelected());
 			Setup.setLocalSidingMovesEnabled(localSidingCheckBox.isSelected());
 			Setup.setLocalYardMovesEnabled(localYardCheckBox.isSelected());
-			// Staging restriction?
+			// Staging options
 			Setup.setTrainIntoStagingCheckEnabled(trainIntoStagingCheckBox.isSelected());
+			Setup.setStagingTrackImmediatelyAvail(stagingAvailCheckBox.isSelected());
 			Setup.setPromptFromStagingEnabled(promptFromTrackStagingCheckBox.isSelected());
 			Setup.setPromptToStagingEnabled(promptToTrackStagingCheckBox.isSelected());
 			// Car routing enabled?
@@ -245,8 +253,6 @@ public class OptionFrame extends OperationsFrame{
 			Setup.setTrainLoggerEnabled(trainLoggerCheckBox.isSelected());
 			// VSD
 			Setup.setVsdPhysicalLocationEnabled(enableVsdCheckBox.isSelected());
-			// Reporters
-			//Setup.setCreateReportersEnabled(createReportersCheckBox.isSelected());
 			// write the file
 			OperationsSetupXml.instance().writeOperationsFile();
 		}

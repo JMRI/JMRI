@@ -74,6 +74,7 @@
 <!ATTLIST settings trainLogger 			(true | false ) "false"> 
 <!ATTLIST settings addCarComment		(true | false ) "false">
 <!ATTLIST settings printLocComments		(true | false ) "false"> 
+<!ATTLIST settings printValid			(true | false ) "true"> 
 <!ATTLIST settings printRouteComments	(true | false ) "false"> 
 <!ATTLIST settings printLoadsEmpties 	(true | false ) "false"> 
 <!ATTLIST settings printTimetable		(true | false ) "false"> 
@@ -116,6 +117,7 @@
 <!ATTLIST buildOptions allowLocalSiding				(true | false ) "false">
 <!ATTLIST buildOptions allowLocalYard				(true | false ) "false">   
 <!ATTLIST buildOptions stagingRestrictionEnabled	(true | false ) "true"> 
+<!ATTLIST buildOptions stagingTrackAvail			(true | false ) "false">
 <!ATTLIST buildOptions promptStagingEnabled			(true | false ) "false">   
 <!ATTLIST buildOptions promptToStagingEnabled		(true | false ) "false">
 <!ATTLIST buildOptions generateCsvManifest			(true | false ) "false">  
