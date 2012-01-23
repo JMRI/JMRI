@@ -426,7 +426,7 @@ import jmri.jmrix.lenz.XNetConstants;
 				case 2:
 					text = text + "Feedback Encoder " +
 					"Base Address: " + 
-					l.getFeedbackEncoderMsgAddr(i);
+					(l.getFeedbackEncoderMsgAddr(i)+1);
 					boolean highnibble = ((l.getElement(i+1) &0x10)==0x10);
 					text = text + " Contact: " + (highnibble?5:1);
 					text = text + " State: " + (((l.getElement(i+1) &0x01)==0x01)?"On;":"Off;");
