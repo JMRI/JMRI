@@ -16,10 +16,18 @@ import javax.swing.*;
  * Display and modify an Digitrax board configuration.
  * <P>
  * Supports boards which can be read and write using LocoNet
- * opcode OPC_MULTI_SENSE, such as PM4, DS64, SE8c, BDL16x.
+ * opcode OPC_MULTI_SENSE, such as PM4x, DS64, SE8c, BDL16x.
  * <P>
  * The read and write require a sequence of operations, which
  * we handle with a state variable.
+ * <p>
+ * Each read or write OpSw access requires a response from the
+ * addressed board.  If a response is not received within a fixed
+ * time, then the process will repeat the read or write OpSw access
+ * up to MAX_OPSW_ACCESS_RETRIES additional times to try to get a 
+ * response from the addressed board.  If the board does not 
+ * respond, the access sequence is aborted and a failure message is 
+ * populated in the "status" variable.
  * <P>
  * Programming of the board is done via configuration messages, so
  * the board should not be put into programming mode via the
@@ -51,6 +59,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     public boolean read = false;
     public int state = 0;
     boolean awaitingReply = false;
+    int replyTryCount = 0;
 
     /* The responseTimer provides a timeout mechanism for OpSw read and write
      * requests.
@@ -95,6 +104,10 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      */
     protected AbstractBoardProgPanel() {
         this(1,false);
+    }
+    
+    protected AbstractBoardProgPanel(boolean readOnInit) {
+        this(1,readOnInit);
     }
     
     protected AbstractBoardProgPanel(int boardNum, boolean readOnInit) {
@@ -314,6 +327,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     private final void nextRequest() {
         pacingTimer.stop();
         pacingTimer.restart();
+        replyTryCount = 0;
     }
 
     /**
@@ -490,7 +504,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         int origState;
         origState = state;
         if (origState != 0)
-            state = nextState(state);
+            state = nextState(origState);
         if ((origState == 0) || (state == 0)) {
             // done with sequence
             readAllButton.setSelected(false);
@@ -519,13 +533,29 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
             }
             else {
                 if (awaitingReply == true) {
-                    // have a case where are awaiting a reply from the device, 
+                    // Have a case where are awaiting a reply from the device, 
                     // but the response timer has expired without a reply.
-                    // Need to cancel the ongoing process and update the status 
-                    // line.
+                    
+                    if (replyTryCount < MAX_OPSW_ACCESS_RETRIES)
+                    {
+                        // have not reached maximum number of retries, so try 
+                        // the access again
+                        replyTryCount++;
+                        log.debug("retrying("+replyTryCount+") access to OpSw"+state);
+                        responseTimer.stop();
+                        delayedNextRequest();
+                        return;
+                    }
+                    
+                    // Have reached the maximum number of retries for accessing
+                    // a given OpSw.
+                    // Cancel the ongoing process and update the status line.
+                    
+                    log.warn("Reached OpSw access retry limit of "+MAX_OPSW_ACCESS_RETRIES+" when accessing OpSw "+state);
                     awaitingReply = false;
                     responseTimer.stop();
                     state = 0;
+                    replyTryCount = 0;
                     doTheNextThing();
                     }
             }
@@ -583,6 +613,10 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         }
     }
 
-     org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractBoardProgPanel.class.getName());
+    // maximum number of additional retries after board does not respond to 
+    // first attempt to access a given OpSw
+    private final int MAX_OPSW_ACCESS_RETRIES = 2;
+    
+    org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractBoardProgPanel.class.getName());
 
 }
