@@ -2129,18 +2129,21 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                Turnout key = keys.nextElement();
                if(log.isDebugEnabled())
                     log.debug(destination.getDisplayName() + " turnout " + key.getDisplayName());
-               if(!turnouts.containsKey(key)){
-                   if (key.getState()==Turnout.CLOSED){
-                        if (((key.getStraightLimit()<minimumBlockSpeed) || (minimumBlockSpeed==0)) && (key.getStraightLimit()!=-1)){
-                            minimumBlockSpeed = key.getStraightLimit();
-                            if(log.isDebugEnabled())
-                                log.debug(destination.getDisplayName() + " turnout " + key.getDisplayName() + " set speed to " + minimumBlockSpeed);
-                        }
-                    } else {
-                        if (((key.getDivergingLimit()<minimumBlockSpeed) || (minimumBlockSpeed==0)) && (key.getDivergingLimit()!=-1)){
-                            minimumBlockSpeed = key.getDivergingLimit();
-                            if(log.isDebugEnabled())
-                                log.debug(destination.getDisplayName() + " turnout " + key.getDisplayName() + " set speed to " + minimumBlockSpeed);
+               //if(!turnouts.containsKey(key)){
+                for(NamedBeanHandle<Turnout> nbTurn : turnouts.keySet()){
+                    if(nbTurn.getBean().equals(key)){
+                       if (key.getState()==Turnout.CLOSED){
+                            if (((key.getStraightLimit()<minimumBlockSpeed) || (minimumBlockSpeed==0)) && (key.getStraightLimit()!=-1)){
+                                minimumBlockSpeed = key.getStraightLimit();
+                                if(log.isDebugEnabled())
+                                    log.debug(destination.getDisplayName() + " turnout " + key.getDisplayName() + " set speed to " + minimumBlockSpeed);
+                            }
+                        } else {
+                            if (((key.getDivergingLimit()<minimumBlockSpeed) || (minimumBlockSpeed==0)) && (key.getDivergingLimit()!=-1)){
+                                minimumBlockSpeed = key.getDivergingLimit();
+                                if(log.isDebugEnabled())
+                                    log.debug(destination.getDisplayName() + " turnout " + key.getDisplayName() + " set speed to " + minimumBlockSpeed);
+                            }
                         }
                     }
                 }
