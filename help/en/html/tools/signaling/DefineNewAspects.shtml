@@ -125,6 +125,12 @@ turnout has been thrown in the path ahead.  The signalmast logic uses this eleme
 to help determine which aspect should be displayed where there are multiple 
 possible aspects.
 <p>
+The delay element, if present, allows a delay to be configured between changing the 
+aspects on each signal head where multiple heads are configured on a mast.<br>
+This is ideally used where in the prototype a manually operated signal (eg semaphore) 
+would have to be set by the signalman, therefore only one signal head (or Arm) would 
+be set at any one time.
+<p>
 Below the aspect blocks, there's a block that names all the valid
 appearance files, e.g.:
 <PRE>
@@ -159,6 +165,7 @@ described with a block like this:
       &lt;show&gt;green&lt;/show&gt;
       &lt;show&gt;red&lt;/show&gt;
       &lt;reference&gt;&lt;/reference&gt;
+      &lt;delay&gt;&lt;/delay&gt;
       &lt;imagelink&gt;&lt;/imagelink&gt;
     &lt;/appearance&gt;<br>
 </PRE>

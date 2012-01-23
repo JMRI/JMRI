@@ -7,6 +7,7 @@ import java.util.List;
 
 import java.io.File;
 import java.util.Vector;
+import java.util.HashMap;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 
@@ -148,10 +149,6 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     
     }
 
-    /*public final static int HELD = 0;
-    public final static int PERMISSIVE = 1;
-    public final static int DANGER = 2;
-    public final static int DARK = 3;*/
     public final static int NUMSPECIFIC = 4;
     
     static void loadSpecificMap(String signalSystemName, String aspectMapName, DefaultSignalAppearanceMap SMmap, Element root){
@@ -317,7 +314,15 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             log.warn("Attempt to set "+getSystemName()+" to undefined aspect: "+aspect);
         if (heads.size() > table.get(aspect).length)
             log.warn("setAppearance to \""+aspect+"\" finds "+heads.size()+" heads but only "+table.get(aspect).length+" settings");
-
+        
+        int delay = 0;
+        try {
+            delay = Integer.parseInt(getProperty(aspect, "delay"));
+        } catch (Exception e){
+            log.debug("No delay set");
+            //can be considered normal if does not exists or is invalid
+        }
+        HashMap<SignalHead, Integer> delayedSet = new HashMap<SignalHead, Integer>(heads.size());
         for (int i = 0; i < heads.size(); i++) {
             // some extensive checking
             boolean error = false;
@@ -333,15 +338,68 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
                 log.error("Couldn't get table array for aspect \""+aspect+"\" in setAppearances");
                 error = true;
             }
-            
-            if(!error)
-                heads.get(i).getBean().setAppearance(table.get(aspect)[i]);
-            else 
+
+            if(!error){
+                SignalHead head = heads.get(i).getBean();
+                int toSet = table.get(aspect)[i];
+                if(delay == 0){
+                    head.setAppearance(toSet);
+                    if (log.isDebugEnabled()) log.debug("Setting "+head.getSystemName()+" to "+
+                                    head.getAppearanceName(toSet));
+                } else {
+                    delayedSet.put(head, toSet);
+                }
+            }
+            else
                 log.error("head appearance not set due to an error");
-            if (log.isDebugEnabled()) log.debug("Setting "+heads.get(i).getBean().getSystemName()+" to "+
-                                                heads.get(i).getBean().getAppearanceName(table.get(aspect)[i]));
+        }
+        if(delay!=0){
+            //If a delay is required we will fire this off into a seperate thread and let it get on with it.
+            final HashMap<SignalHead, Integer> thrDelayedSet = delayedSet;
+            final int thrDelay = delay;
+            Runnable r = new Runnable() {
+                public void run() {
+                    setDelayedAppearances(thrDelayedSet, thrDelay);
+                }
+            };
+            Thread thr = new Thread(r);
+            thr.setName(getDisplayName() + " delayed set appearance");
+            try{
+                thr.start();
+            } catch (java.lang.IllegalThreadStateException ex){
+                log.error(ex.toString());
+            }
         }
         return;
+    }
+    
+    private void setDelayedAppearances(final HashMap<SignalHead, Integer> delaySet, final int delay){
+        for(SignalHead head: delaySet.keySet()){
+            final SignalHead thrHead = head;
+            Runnable r = new Runnable() {
+                public void run() {
+                    try {
+                        thrHead.setAppearance(delaySet.get(thrHead));
+                        if (log.isDebugEnabled()) log.debug("Setting "+thrHead.getSystemName()+" to "+
+                                thrHead.getAppearanceName(delaySet.get(thrHead)));
+                        Thread.sleep(delay);
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            };
+            
+            Thread thr = new Thread(r);
+            thr.setName(getDisplayName());
+            try{
+                thr.start();
+                thr.join();
+            } catch (java.lang.IllegalThreadStateException ex){
+                log.error(ex.toString());
+            } catch (InterruptedException ex) {
+                log.error(ex.toString());
+            }
+        }
     }
     
     public boolean checkAspect(String aspect) {

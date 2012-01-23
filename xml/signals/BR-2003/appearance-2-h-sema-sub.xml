@@ -41,7 +41,13 @@
         <date>2011-08-04</date>
         <authorinitials>KD</authorinitials>
         <revremark>Addition of Specific Appearances and aspect mapping</revremark>
-    </revision>  
+    </revision>
+    <revision>
+        <revnumber>1.4</revnumber>
+        <date>2012-01-23</date>
+        <authorinitials>KD</authorinitials>
+        <revremark>Addition of a delay between setting heads in an appearance to give a more prototypical effect</revremark>
+    </revision>
   </revhistory>
   
   <aspecttable>BR</aspecttable>
@@ -56,14 +62,17 @@
       <aspectname>Proceed</aspectname>
       <show>green</show>
       <show>dark</show>
+      <delay>1500</delay>
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeClear(ws).gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed.gif</imagelink>
+      
     </appearance>
 
     <appearance>
       <aspectname>Danger</aspectname>
       <show>red</show>
       <show>dark</show>
+      <delay>1500</delay>
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeDanger(ws).gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Danger.gif</imagelink>
     </appearance>
@@ -71,7 +80,8 @@
     <appearance>
       <aspectname>Off</aspectname>
       <show>red</show>
-      <show>green</show>      
+      <show>green</show>
+      <delay>1500</delay>
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeCallOn(ws).gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/DangerCallOn.gif</imagelink>
     </appearance>

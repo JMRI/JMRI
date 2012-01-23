@@ -223,7 +223,7 @@
                     <xs:element name="show" type="signalColorType" minOccurs="0" maxOccurs="unbounded" />
                     <xs:element name="reference" minOccurs="0" maxOccurs="unbounded" />
                     <xs:element name="comment" minOccurs="0" maxOccurs="unbounded" />
-                    
+                    <xs:element name="delay" minOccurs="0" maxOccurs="1" />
                     <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
                       <xs:annotation><xs:documentation>
                       *** Indicates a image location and type ***
@@ -238,6 +238,7 @@
                           </xs:simpleContent>
                          </xs:complexType>
                     </xs:element>
+                    
                     
                     <!-- next line causes a "Unique Particle Attribution" error -->
                     <!-- <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/> -->
