@@ -573,7 +573,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             firePropertyChange("state", oldActiveMast, null);
             log.debug("Remove listener from destination");
             destination.removePropertyChangeListener(propertyDestinationMastListener);
-            destList.get(destination).clearTurnoutLock();
+            if(destList.containsKey(destination))
+                destList.get(destination).clearTurnoutLock();
         }
         
         Enumeration<SignalMast> en = destList.keys();
@@ -732,7 +733,11 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         
         thr = new Thread(r);
         thr.setName(getSourceMast().getDisplayName());
-        thr.start();
+        try{
+            thr.start();
+        } catch (java.lang.IllegalThreadStateException ex){
+            log.error(ex.toString());
+        }
     }
     
     /**
@@ -1463,9 +1468,13 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 log.error("checkState called even though this has been disposed of " + getSourceMast().getDisplayName());
                 return;
             }
+            
+            if(!enable)
+                return;
             if (inWait){
                 return;
             }
+            
             log.debug("check Signal Dest State called");
             inWait=true;
 
@@ -1505,6 +1514,9 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             }
             if(inWait){
                 log.error("checkStateDetails called while we are waiting for things to settle");
+                return;
+            }
+            if(!enable){
                 return;
             }
             log.debug("From " + getSourceMast().getDisplayName() + " to " + destination.getDisplayName() + " internal check state");
@@ -2117,7 +2129,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                Turnout key = keys.nextElement();
                if(log.isDebugEnabled())
                     log.debug(destination.getDisplayName() + " turnout " + key.getDisplayName());
-               if(!turnouts.contains(key)){
+               if(!turnouts.containsKey(key)){
                    if (key.getState()==Turnout.CLOSED){
                         if (((key.getStraightLimit()<minimumBlockSpeed) || (minimumBlockSpeed==0)) && (key.getStraightLimit()!=-1)){
                             minimumBlockSpeed = key.getStraightLimit();
@@ -2361,7 +2373,9 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             }
         };
         
-        protected PropertyChangeListener propertySignalMastLogicManagerListener = new PropertyChangeListener() {
+        
+       /* Code currently not used commented out to remove unused error
+       protected PropertyChangeListener propertySignalMastLogicManagerListener = new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent e) {
                 if(log.isDebugEnabled())
                     log.debug(destination.getDisplayName() + " Signal Mast Manager Listener");
@@ -2374,7 +2388,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     }
                 }
             }
-        };
+        };*/
         
         protected boolean IsSensorIncluded(Sensor sen){
             Enumeration<NamedBeanHandle<Sensor>> sensorKeys = sensors.keys();
