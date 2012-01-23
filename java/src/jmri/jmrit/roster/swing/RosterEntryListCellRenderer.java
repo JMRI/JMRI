@@ -29,6 +29,7 @@ public class RosterEntryListCellRenderer extends JLabel implements ListCellRende
                 setText(rosterEntryTitle);
             } else {
                 setText(value.toString());
+                setIcon(null);
             }
         }
         return this;
