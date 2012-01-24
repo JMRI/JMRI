@@ -9,10 +9,13 @@ import jmri.jmrit.roster.*;
 import jmri.DccLocoAddress;
 
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
 
 import java.util.ArrayList;
+import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 
 /**
@@ -39,7 +42,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
 
     javax.swing.JLabel textLocoLabel = new javax.swing.JLabel();
     jmri.jmrit.DccLocoAddressSelector locoSelector = new jmri.jmrit.DccLocoAddressSelector();
-    javax.swing.JComboBox locoRosterBox;
+    RosterEntryComboBox locoRosterBox;
 
     javax.swing.JButton addLocoButton = new javax.swing.JButton();
     javax.swing.JButton resetLocoButton = new javax.swing.JButton();
@@ -155,17 +158,18 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         textLocoLabel.setVisible(true);
 
         locoSelector.setToolTipText(rb.getString("LocoSelectorToolTip"));
-	locoSelector.setVisible(true);
+        locoSelector.setVisible(true);
         
-        locoRosterBox = new RosterEntryComboBox();
-        locoRosterBox.insertItemAt("",0);
+        locoRosterBox = new GlobalRosterEntryComboBox();
+        locoRosterBox.setNonSelectedItem("");
         locoRosterBox.setSelectedIndex(0);
 
-        locoRosterBox.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e)
-                {
-                        locoSelected();
-                }
+        locoRosterBox.addPropertyChangeListener("selectedRosterEntries", new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent pce) {
+                locoSelected();
+            }
         });
 
         locoRosterBox.setVisible(true);
@@ -585,10 +589,8 @@ if(((DccLocoAddress)consistAdrBox.getSelectedItem())!=adrSelector.getAddress()) 
     }
 
     public void locoSelected() {
-	if (!(locoRosterBox.getSelectedItem().equals(""))){
-           String rosterEntryTitle = locoRosterBox.getSelectedItem().toString();
-           RosterEntry entry = Roster.instance().entryFromTitle(rosterEntryTitle);
-		locoSelector.setAddress(entry.getDccLocoAddress());
+        if (locoRosterBox.getSelectedRosterEntries().length == 1) {
+            locoSelector.setAddress(locoRosterBox.getSelectedRosterEntries()[0].getDccLocoAddress());
         }
     }
 
