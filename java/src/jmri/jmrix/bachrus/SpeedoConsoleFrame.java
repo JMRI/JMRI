@@ -24,13 +24,13 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.ThrottleListener;
 import jmri.jmrit.DccLocoAddressSelector;
-import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.JmriJFrame;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgListener;
+import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 
 
 /**
@@ -387,10 +387,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 		});
     	addrSelector.setAddress(null);
 
-		rosterBox = new RosterEntryComboBox();
-        rosterBox.setRosterListenerEnabled(false);
-		rosterBox.insertItemAt(new NullComboBoxItem(), 0);
-		rosterBox.setSelectedIndex(0);
+		rosterBox = new GlobalRosterEntryComboBox();
+		rosterBox.setNonSelectedItem(rb.getString("NoLocoSelected"));
 		rosterBox.setToolTipText(rb.getString("TTSelectLocoFromRoster"));
 		rosterBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -399,16 +397,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 				}
 			}
 		});
-        
-        Roster.instance().addPropertyChangeListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent pce) {
-                if (pce.getPropertyName().equals("add")
-                        || pce.getPropertyName().equals("remove")
-                        || pce.getPropertyName().equals("change")) {
-                    updateRosterBox();
-                }
-            }
-        });
         
         readAddressButton.setToolTipText(rb.getString("ReadLoco"));
 
@@ -588,36 +576,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 	}
 	
 	private void rosterItemSelected() {
-		if (!(rosterBox.getSelectedItem() instanceof NullComboBoxItem)) {
-			String rosterEntryTitle = rosterBox.getSelectedItem().toString();
-			setRosterEntry(Roster.instance().entryFromTitle(rosterEntryTitle));
-		}
-	}
-
-    private void updateRosterBox(){
-        //disable rosterbox actions when doing the update
-        disableRosterBoxActions=true;
-        boolean isNullSelected = false;
-        String selectedItem ="";
-        if(rosterBox.getSelectedItem() instanceof NullComboBoxItem)
-            isNullSelected = true;
-        else
-            selectedItem = rosterBox.getSelectedItem().toString();
-        rosterBox.update();
-        rosterBox.insertItemAt(new NullComboBoxItem(), 0);
-        if(isNullSelected)
-            rosterBox.setSelectedIndex(0);
-        else {
-            rosterBox.setSelectedItem(selectedItem);
+        if (rosterBox.getSelectedRosterEntries().length != 0) {
+            setRosterEntry(rosterBox.getSelectedRosterEntries()[0]);
         }
-        disableRosterBoxActions=false;
-    
-    }
-
-	static class NullComboBoxItem {
-		public String toString() {
-			return rb.getString("NoLocoSelected");
-		}
 	}
 
 	public void propertyChange(PropertyChangeEvent evt) {
