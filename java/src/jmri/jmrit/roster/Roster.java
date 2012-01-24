@@ -786,15 +786,15 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * @param str The group to be deleted
      * @param notify Flag to fire a property change
      */
-    private void delRosterGroupList(String str, boolean notify) {
-        _rosterGroupList.remove(str);
-        str = _rosterGroupPrefix + str;
+    private void delRosterGroupList(String rg, boolean notify) {
+        _rosterGroupList.remove(rg);
+        String str = _rosterGroupPrefix + rg;
         List<RosterEntry> groupentries = getEntriesWithAttributeKey(str);
         for (int i = 0; i < groupentries.size(); i++) {
             groupentries.get(i).deleteAttribute(str);
         }
         if (notify) {
-            firePropertyChange("RosterGroupRemoved", str, null);
+            firePropertyChange("RosterGroupRemoved", rg, null);
         }
     }
 
