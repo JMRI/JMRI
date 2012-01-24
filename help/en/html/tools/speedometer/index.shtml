@@ -23,8 +23,9 @@
 
 <h2>Speedometer</h2>
 
-<p>(See also the page
-on the <a href="NCE-Speedometer.shtml">NCE speedometer</A>)</p>
+<p>(See also the pages
+on the <a href="NCE-Speedometer.shtml">NCE speedometer</A> and the 
+<a href="../../hardware/bachrus/index.shtml">Bachrus speedometer</a>)</p>
 
 The JMRI libraries
 contain a speedometer tool that you can use directly from the screen,
