@@ -219,7 +219,15 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
                 decoderVersionID,
                 id);
         
-        _roster.addPropertyChangeListener(rosterListener);
+        _roster.addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent pce) {
+                if (pce.getPropertyName().equals("add")
+                        || pce.getPropertyName().equals("remove")
+                        || pce.getPropertyName().equals("change")) {
+                    update();
+                }
+            }
+        });
 
         this.addActionListener(new ActionListener() {
 
@@ -228,24 +236,6 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
                 fireSelectedRosterEntriesPropertyChange();
             }
         });
-    }
-    
-    PropertyChangeListener rosterListener = new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent pce) {
-                if (pce.getPropertyName().equals("add")
-                        || pce.getPropertyName().equals("remove")
-                        || pce.getPropertyName().equals("change")) {
-                    update(_group);
-                }
-            }
-        };
-
-    // I think this is no longer needed
-    public void setRosterListenerEnabled(boolean boo){
-        if(boo)
-            _roster.addPropertyChangeListener(rosterListener);
-        else
-            _roster.removePropertyChangeListener(rosterListener);
     }
 
     /**
