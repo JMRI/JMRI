@@ -66,6 +66,8 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     public jmri.progdebugger.DebugProgrammerManager getProgrammerManager() { return programManager; }
     
     public boolean provides(Class<?> type) {
+        if (getDisabled())
+            return false;
         if (type.equals(jmri.ProgrammerManager.class))
             return true;
         if (type.equals(jmri.ThrottleManager.class))
