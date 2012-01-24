@@ -5,6 +5,7 @@ package jmri.jmrix.zimo;
 import java.util.ResourceBundle;
 
 import javax.swing.JMenu;
+import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 
 /**
  * Create a "Systems" menu containing the Jmri Mx-1-specific tools
@@ -16,6 +17,10 @@ public class Mx1Menu extends JMenu {
     public Mx1Menu(String name) {
         this();
         setText(name);
+    }   
+    public Mx1Menu(Mx1SystemConnectionMemo memo) {
+        this();
+        setText(memo.getUserName());
     }
 
     public Mx1Menu() {

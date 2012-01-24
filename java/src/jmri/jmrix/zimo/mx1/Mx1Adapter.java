@@ -16,6 +16,7 @@ package jmri.jmrix.zimo.mx1;
 import jmri.jmrix.zimo.Mx1CommandStation;
 import jmri.jmrix.zimo.Mx1Packetizer;
 import jmri.jmrix.zimo.Mx1PortController;
+import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
@@ -28,6 +29,11 @@ import java.io.DataInputStream;
 import java.io.InputStream;
 
 public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPortAdapter {
+
+    public Mx1Adapter(){
+        super();
+        adaptermemo = new Mx1SystemConnectionMemo();
+    }
 
 	SerialPort activeSerialPort = null;
 
@@ -170,14 +176,14 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 	 * connected to this port
 	 */
 	public void configure() {
+            Mx1CommandStation cs = new Mx1CommandStation();
+            adaptermemo.setCommandStation(cs);
           // connect to a packetizing traffic controller
-            Mx1Packetizer packets = new Mx1Packetizer(new Mx1CommandStation());
+            Mx1Packetizer packets = new Mx1Packetizer(cs);
             packets.connectPort(this);
-
-            jmri.jmrix.zimo.Mx1Programmer.instance();
-            jmri.InstanceManager.setPowerManager(new jmri.jmrix.zimo.Mx1PowerManager());
-            //jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.zimo.Mx1TurnoutManager());
-            //jmri.InstanceManager.setThrottleManager(new jmri.jmrix.zimo.Mx1ThrottleManager());
+            
+            adaptermemo.setMx1TrafficController(packets);
+            adaptermemo.configureManagers();
 
              // start operation
              packets.startThreads();
@@ -267,6 +273,12 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
+    
+    public void dispose(){
+        if (adaptermemo!=null)
+            adaptermemo.dispose();
+        adaptermemo = null;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Mx1Adapter.class.getName());
 

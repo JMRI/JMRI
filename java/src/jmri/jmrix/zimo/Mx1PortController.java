@@ -34,6 +34,8 @@ public abstract class Mx1PortController extends jmri.jmrix.AbstractSerialPortCon
 	 * off if something goes wrong.
 	 */
 	public abstract boolean okToSend();
+    
+    protected Mx1SystemConnectionMemo adaptermemo = null;
 }
 
 
