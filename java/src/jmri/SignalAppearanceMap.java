@@ -17,14 +17,6 @@ import java.util.Vector;
 public interface SignalAppearanceMap  {
 
     /**
-     * Set the associated SignalHeads to the appropriate appearance for 
-     * a specified aspect.
-     * <p>
-     * Does not change state of map, just of the SignalHeads in the list.
-     */
-    public void setAppearances(String aspect, java.util.List<NamedBeanHandle<SignalHead>> heads);
-    
-    /**
      * Check if an aspect can be displayed by this particular Map
      */
     public boolean checkAspect(String aspect);
