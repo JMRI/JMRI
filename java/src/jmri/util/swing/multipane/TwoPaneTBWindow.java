@@ -134,18 +134,18 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     public void addToStatusBox(JLabel title, JLabel value){
         JPanel statusItemPanel = new JPanel();
         statusItemPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
-        //Set the font size of the status bar text to be 2points less than the default configured
-        int fontSize = apps.GuiLafConfigPane.getFontSize()-2;
+        //Set the font size of the status bar text to be 1points less than the default configured, also set as plain
+        int fontSize = apps.GuiLafConfigPane.getFontSize()-1;
         if(title!=null){
             if(fontSize<=4)
-                fontSize = title.getFont().getSize()-2;
-            title.setFont(title.getFont().deriveFont((float)fontSize));
+                fontSize = title.getFont().getSize()-1;
+            title.setFont(title.getFont().deriveFont(Font.PLAIN,(float)fontSize));
             statusItemPanel.add(title);
         }
         if(value!=null){
             if(fontSize<=4)
-                fontSize = value.getFont().getSize()-2;
-            value.setFont(value.getFont().deriveFont((float)fontSize));
+                fontSize = value.getFont().getSize()-1;
+            value.setFont(value.getFont().deriveFont(Font.PLAIN,(float)fontSize));
             statusItemPanel.add(value);
         }
         addToStatusBox(statusItemPanel);
