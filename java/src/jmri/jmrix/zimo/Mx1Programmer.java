@@ -32,13 +32,11 @@ import java.beans.PropertyChangeEvent;
  */
 public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 
-	public Mx1Programmer() {
+	protected Mx1Programmer() {
 		// error if more than one constructed?
-		/*if (self != null)
+		if (self != null)
 			log.error("Creating too many Mx1Programmer objects");
 		// register this as the default, register as the Programmer
-		self = this;
-		jmri.InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(this));*/
 
         // connect to listen
         controller().addMx1Listener(~0, this);

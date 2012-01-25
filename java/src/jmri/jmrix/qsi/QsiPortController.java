@@ -21,6 +21,14 @@ import java.io.DataOutputStream;
 
 	// check that this object is ready to operate
 	public abstract boolean status();
+    
+    protected QsiSystemConnectionMemo adaptermemo = null;
+    
+    public void setDisabled(boolean disabled) { 
+        mDisabled = disabled;
+        if(adaptermemo!=null)
+            adaptermemo.setDisabled(disabled);
+    }
 }
 
 

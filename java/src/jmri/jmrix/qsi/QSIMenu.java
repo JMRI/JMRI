@@ -17,6 +17,11 @@ public class QSIMenu extends JMenu {
         this();
         setText(name);
     }
+    
+    public QSIMenu(QsiSystemConnectionMemo memo) {
+        this();
+        setText(memo.getUserName());
+    }
 
     public QSIMenu() {
 

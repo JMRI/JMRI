@@ -17,15 +17,10 @@ import java.util.Vector;
  */
 public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
 
-    public QsiProgrammer() {
+    protected QsiProgrammer() {
         // error if more than one constructed?
         if (self != null)
             log.error("Creating too many QsiProgrammer objects");
-
-        // register this as the default, register as the Programmer
-        self = this;
-        jmri.InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(this));
-
     }
 
     /*

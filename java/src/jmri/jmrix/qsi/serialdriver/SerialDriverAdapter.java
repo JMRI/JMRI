@@ -4,6 +4,7 @@ package jmri.jmrix.qsi.serialdriver;
 
 import jmri.jmrix.qsi.QsiPortController;
 import jmri.jmrix.qsi.QsiTrafficController;
+import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -29,6 +30,11 @@ import gnu.io.SerialPort;
  * @version	$Revision$
  */
 public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix.SerialPortAdapter {
+
+    public SerialDriverAdapter() {
+        super();
+        adaptermemo = new QsiSystemConnectionMemo();
+    }
 
     SerialPort activeSerialPort = null;
 
@@ -116,23 +122,17 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
      * station connected to this port
      */
     public void configure() {
+    
+        adaptermemo.setQsiTrafficController(QsiTrafficController.instance());
         // connect to the traffic controller
         QsiTrafficController.instance().connectPort(this);
 
-        jmri.jmrix.qsi.QsiProgrammer.instance();  // create Programmer in InstanceManager
-
-        // jmri.InstanceManager.setPowerManager(new jmri.jmrix.qsi.QsiPowerManager());
-
-        // jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.qsi.QsiTurnoutManager());
-
-        // jmri.InstanceManager.setCommandStation(new jmri.jmrix.qsi.QsiCommandStation());
-
-        // start operation
-        // sourceThread = new Thread(p);
-        // sourceThread.start();
+        //jmri.jmrix.qsi.QsiProgrammer.instance();  // create Programmer in InstanceManager
+        adaptermemo.configureManagers();
+        
         sinkThread = new Thread(QsiTrafficController.instance());
         sinkThread.start();
-
+        
         // jmri.InstanceManager.setThrottleManager(new jmri.jmrix.qsi.QsiThrottleManager());
 
         jmri.jmrix.qsi.ActiveFlag.setActive();
