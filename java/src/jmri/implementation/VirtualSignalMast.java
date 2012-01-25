@@ -70,44 +70,6 @@ public class VirtualSignalMast extends AbstractSignalMast {
         configureAspectTable(system, mast);
     }
     
-    void configureSignalSystemDefinition(String name) {
-        systemDefn = InstanceManager.signalSystemManagerInstance().getSystem(name);
-        if (systemDefn == null) {
-            log.error("Did not find signal definition: "+name);
-            throw new IllegalArgumentException("Signal definition not found: "+name);
-        }
-    }
-    
-    void configureAspectTable(String signalSystemName, String aspectMapName) {
-        map = DefaultSignalAppearanceMap.getMap(signalSystemName, aspectMapName);
-    }
-    
-    /**
-    * returns a list of all the valid aspects, that have not been disabled
-    */
-    public Vector<String> getValidAspects() {
-        java.util.Enumeration<String> e = map.getAspects();
-        Vector<String> v = new Vector<String>();
-        while (e.hasMoreElements()) {
-            String aspect = e.nextElement();
-            if(!disabledAspects.contains(aspect))
-                v.add(aspect);
-        }
-        return v;
-    }
-    
-    /**
-    * returns a list of all the known aspects for this mast, including those that have been disabled
-    */
-    public Vector<String> getAllKnownAspects(){
-        java.util.Enumeration<String> e = map.getAspects();
-        Vector<String> v = new Vector<String>();
-        while (e.hasMoreElements()) {
-            v.add(e.nextElement());
-        }
-        return v;
-    }
-
     @Override
     public void setAspect(String aspect) { 
         // check it's a choice
@@ -121,45 +83,6 @@ public class VirtualSignalMast extends AbstractSignalMast {
         }
         super.setAspect(aspect);
     }
-    
-    ArrayList<String> disabledAspects = new ArrayList<String>(1);
-
-    public void setAspectDisabled(String aspect){
-        if(aspect==null || aspect.equals(""))
-            return;
-        if(!map.checkAspect(aspect)){
-            log.warn("attempting to disable an aspect: " + aspect + " that is not on the mast " + getDisplayName());
-            return;
-        }
-        if(!disabledAspects.contains(aspect))
-            disabledAspects.add(aspect);
-    }
-    
-    public void setAspectEnabled(String aspect){
-        if(aspect==null || aspect.equals(""))
-            return;
-        if(!map.checkAspect(aspect)){
-            log.warn("attempting to disable an aspect: " + aspect + " that is not on the mast " + getDisplayName());
-            return;
-        }
-        if(disabledAspects.contains(aspect))
-            disabledAspects.remove(aspect);
-    }
-    
-    public List<String> getDisabledAspects(){
-        return disabledAspects;
-    }
-
-    public SignalSystem getSignalSystem() {
-        return systemDefn;
-    }
-    
-    public SignalAppearanceMap getAppearanceMap() {
-        return map;
-    }
-
-    DefaultSignalAppearanceMap map;
-    SignalSystem systemDefn;
     
     public static int getLastRef(){ return lastRef; }
     

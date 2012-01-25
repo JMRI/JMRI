@@ -81,18 +81,6 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         }
     }
     
-    void configureSignalSystemDefinition(String name) {
-        systemDefn = InstanceManager.signalSystemManagerInstance().getSystem(name);
-        if (systemDefn == null) {
-            log.error("Did not find signal definition: "+name);
-            throw new IllegalArgumentException("Signal definition not found: "+name);
-        }
-    }
-    
-    void configureAspectTable(String signalSystemName, String aspectMapName) {
-        map = DefaultSignalAppearanceMap.getMap(signalSystemName, aspectMapName);
-    }
-    
     void configureHeads(String parts[], int start) {
         heads = new ArrayList<NamedBeanHandle<SignalHead>>();
         for (int i = start; i < parts.length; i++) {
@@ -118,71 +106,9 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         
         // set the outputs
         if (log.isDebugEnabled()) log.debug("setAspect \""+aspect+"\", numHeads= "+heads.size());
-        map.setAppearances(aspect, heads);
+        setAppearances(aspect);
         // do standard processing
         super.setAspect(aspect);
-    }
-    
-    /**
-    * returns a list of all the valid aspects, that have not been disabled
-    */
-    public Vector<String> getValidAspects() {
-        java.util.Enumeration<String> e = map.getAspects();
-        Vector<String> v = new Vector<String>();
-        while (e.hasMoreElements()) {
-            String aspect = e.nextElement();
-            if(!disabledAspects.contains(aspect))
-                v.add(aspect);
-        }
-        return v;
-    }
-    
-    /**
-    * returns a list of all the known aspects for this mast, including those that have been disabled
-    */
-    public Vector<String> getAllKnownAspects(){
-        java.util.Enumeration<String> e = map.getAspects();
-        Vector<String> v = new Vector<String>();
-        while (e.hasMoreElements()) {
-            v.add(e.nextElement());
-        }
-        return v;
-    }
-    
-    ArrayList<String> disabledAspects = new ArrayList<String>(1);
-    
-    public void setAspectDisabled(String aspect){
-        if(aspect==null || aspect.equals(""))
-            return;
-        if(!map.checkAspect(aspect)){
-            log.warn("attempting to disable an aspect: " + aspect + " that is not on the mast " + getDisplayName());
-            return;
-        }
-        if(!disabledAspects.contains(aspect))
-            disabledAspects.add(aspect);
-    }
-    
-    public void setAspectEnabled(String aspect){
-        if(aspect==null || aspect.equals(""))
-            return;
-        if(!map.checkAspect(aspect)){
-            log.warn("attempting to disable an aspect: " + aspect + " that is not on the mast " + getDisplayName());
-            return;
-        }
-        if(disabledAspects.contains(aspect))
-            disabledAspects.remove(aspect);
-    }
-    
-    public List<String> getDisabledAspects(){
-        return disabledAspects;
-    }
-    
-    public SignalSystem getSignalSystem() {
-        return systemDefn;
-    }
-    
-    public SignalAppearanceMap getAppearanceMap() {
-        return map;
     }
     
     @Override
@@ -212,11 +138,103 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
     }
     
     List<NamedBeanHandle<SignalHead>> heads;
-    DefaultSignalAppearanceMap map;
-    SignalSystem systemDefn;
     
     public List<NamedBeanHandle<SignalHead>> getHeadsUsed(){
         return heads;
+    }
+    
+    //taken out of the defaultsignalappearancemap
+    public void setAppearances(String aspect) {
+        if (map != null && map.getSignalSystem() !=null &&  map.getSignalSystem().checkAspect(aspect))
+            log.warn("Attempt to set "+getSystemName()+" to undefined aspect: "+aspect);
+        if (heads.size() > map.getAspectSettings(aspect).length)
+            log.warn("setAppearance to \""+aspect+"\" finds "+heads.size()+" heads but only "+map.getAspectSettings(aspect).length+" settings");
+        
+        int delay = 0;
+        try {
+            delay = Integer.parseInt(map.getProperty(aspect, "delay"));
+        } catch (Exception e){
+            log.debug("No delay set");
+            //can be considered normal if does not exists or is invalid
+        }
+        HashMap<SignalHead, Integer> delayedSet = new HashMap<SignalHead, Integer>(heads.size());
+        for (int i = 0; i < heads.size(); i++) {
+            // some extensive checking
+            boolean error = false;
+            if (heads.get(i) == null){
+                log.error("Null head "+i+" in setAppearances");
+                error = true;
+            }
+            if (heads.get(i).getBean() == null){
+                log.error("Could not get bean for head "+i+" in setAppearances");
+                error = true;
+            }
+            if (map.getAspectSettings(aspect) == null){
+                log.error("Couldn't get table array for aspect \""+aspect+"\" in setAppearances");
+                error = true;
+            }
+
+            if(!error){
+                SignalHead head = heads.get(i).getBean();
+                int toSet = map.getAspectSettings(aspect)[i];
+                if(delay == 0){
+                    head.setAppearance(toSet);
+                    if (log.isDebugEnabled()) log.debug("Setting "+head.getSystemName()+" to "+
+                                    head.getAppearanceName(toSet));
+                } else {
+                    delayedSet.put(head, toSet);
+                }
+            }
+            else
+                log.error("head appearance not set due to an error");
+        }
+        if(delay!=0){
+            //If a delay is required we will fire this off into a seperate thread and let it get on with it.
+            final HashMap<SignalHead, Integer> thrDelayedSet = delayedSet;
+            final int thrDelay = delay;
+            Runnable r = new Runnable() {
+                public void run() {
+                    setDelayedAppearances(thrDelayedSet, thrDelay);
+                }
+            };
+            Thread thr = new Thread(r);
+            thr.setName(getDisplayName() + " delayed set appearance");
+            try{
+                thr.start();
+            } catch (java.lang.IllegalThreadStateException ex){
+                log.error(ex.toString());
+            }
+        }
+        return;
+    }
+    
+    private void setDelayedAppearances(final HashMap<SignalHead, Integer> delaySet, final int delay){
+        for(SignalHead head: delaySet.keySet()){
+            final SignalHead thrHead = head;
+            Runnable r = new Runnable() {
+                public void run() {
+                    try {
+                        thrHead.setAppearance(delaySet.get(thrHead));
+                        if (log.isDebugEnabled()) log.debug("Setting "+thrHead.getSystemName()+" to "+
+                                thrHead.getAppearanceName(delaySet.get(thrHead)));
+                        Thread.sleep(delay);
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            };
+            
+            Thread thr = new Thread(r);
+            thr.setName(getDisplayName());
+            try{
+                thr.start();
+                thr.join();
+            } catch (java.lang.IllegalThreadStateException ex){
+                log.error(ex.toString());
+            } catch (InterruptedException ex) {
+                log.error(ex.toString());
+            }
+        }
     }
     
     static final protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadSignalMast.class.getName());

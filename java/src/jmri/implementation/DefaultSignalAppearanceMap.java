@@ -309,99 +309,6 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         else log.error("no default green aspect");
     }
     
-    public void setAppearances(String aspect, List<NamedBeanHandle<SignalHead>> heads) {
-        if (systemDefn != null && systemDefn.checkAspect(aspect))
-            log.warn("Attempt to set "+getSystemName()+" to undefined aspect: "+aspect);
-        if (heads.size() > table.get(aspect).length)
-            log.warn("setAppearance to \""+aspect+"\" finds "+heads.size()+" heads but only "+table.get(aspect).length+" settings");
-        
-        int delay = 0;
-        try {
-            delay = Integer.parseInt(getProperty(aspect, "delay"));
-        } catch (Exception e){
-            log.debug("No delay set");
-            //can be considered normal if does not exists or is invalid
-        }
-        HashMap<SignalHead, Integer> delayedSet = new HashMap<SignalHead, Integer>(heads.size());
-        for (int i = 0; i < heads.size(); i++) {
-            // some extensive checking
-            boolean error = false;
-            if (heads.get(i) == null){
-                log.error("Null head "+i+" in setAppearances");
-                error = true;
-            }
-            if (heads.get(i).getBean() == null){
-                log.error("Could not get bean for head "+i+" in setAppearances");
-                error = true;
-            }
-            if (table.get(aspect) == null){
-                log.error("Couldn't get table array for aspect \""+aspect+"\" in setAppearances");
-                error = true;
-            }
-
-            if(!error){
-                SignalHead head = heads.get(i).getBean();
-                int toSet = table.get(aspect)[i];
-                if(delay == 0){
-                    head.setAppearance(toSet);
-                    if (log.isDebugEnabled()) log.debug("Setting "+head.getSystemName()+" to "+
-                                    head.getAppearanceName(toSet));
-                } else {
-                    delayedSet.put(head, toSet);
-                }
-            }
-            else
-                log.error("head appearance not set due to an error");
-        }
-        if(delay!=0){
-            //If a delay is required we will fire this off into a seperate thread and let it get on with it.
-            final HashMap<SignalHead, Integer> thrDelayedSet = delayedSet;
-            final int thrDelay = delay;
-            Runnable r = new Runnable() {
-                public void run() {
-                    setDelayedAppearances(thrDelayedSet, thrDelay);
-                }
-            };
-            Thread thr = new Thread(r);
-            thr.setName(getDisplayName() + " delayed set appearance");
-            try{
-                thr.start();
-            } catch (java.lang.IllegalThreadStateException ex){
-                log.error(ex.toString());
-            }
-        }
-        return;
-    }
-    
-    private void setDelayedAppearances(final HashMap<SignalHead, Integer> delaySet, final int delay){
-        for(SignalHead head: delaySet.keySet()){
-            final SignalHead thrHead = head;
-            Runnable r = new Runnable() {
-                public void run() {
-                    try {
-                        thrHead.setAppearance(delaySet.get(thrHead));
-                        if (log.isDebugEnabled()) log.debug("Setting "+thrHead.getSystemName()+" to "+
-                                thrHead.getAppearanceName(delaySet.get(thrHead)));
-                        Thread.sleep(delay);
-                    } catch (InterruptedException ex) {
-                        Thread.currentThread().interrupt();
-                    }
-                }
-            };
-            
-            Thread thr = new Thread(r);
-            thr.setName(getDisplayName());
-            try{
-                thr.start();
-                thr.join();
-            } catch (java.lang.IllegalThreadStateException ex){
-                log.error(ex.toString());
-            } catch (InterruptedException ex) {
-                log.error(ex.toString());
-            }
-        }
-    }
-    
     public boolean checkAspect(String aspect) {
         if (aspect==null) return false;
         return table.containsKey(aspect);// != null;
@@ -456,6 +363,10 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     
     public void setState(int s) {
         throw new NoSuchMethodError();
+    }
+    
+    public int[] getAspectSettings(String aspect){
+        return table.get(aspect);
     }
 
     static private java.lang.ref.SoftReference<ResourceBundle> rbr;

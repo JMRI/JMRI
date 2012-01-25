@@ -238,8 +238,11 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         		 
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
         if(e.getPropertyName().indexOf("Aspect")>=0 || e.getPropertyName().indexOf("Lit")>=0 
-		        || e.getPropertyName().indexOf("Held")>=0)
+		        || e.getPropertyName().indexOf("Held")>=0 || e.getPropertyName().indexOf("aspectDisabled")>=0
+                || e.getPropertyName().indexOf("aspectEnabled")>=0){
+                
             return true;
+        }
         return super.matchPropertyName(e);
     }
     

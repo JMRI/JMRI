@@ -463,12 +463,13 @@ public class AddSignalMastPanel extends JPanel {
                 TurnoutSignalMast turnMast = new TurnoutSignalMast(name);
                 for(String aspect: turnoutAspect.keySet()){
                     turnoutAspect.get(aspect).setReference(name + ":" + aspect);
-                    turnMast.setTurnout(aspect, turnoutAspect.get(aspect).getTurnoutName(), turnoutAspect.get(aspect).getTurnoutState());
                     turnoutMastPanel.add(turnoutAspect.get(aspect).getPanel());
                     if(turnoutAspect.get(aspect).isAspectDisabled())
                         turnMast.setAspectDisabled(aspect);
-                    else
+                    else {
                         turnMast.setAspectEnabled(aspect);
+                        turnMast.setTurnout(aspect, turnoutAspect.get(aspect).getTurnoutName(), turnoutAspect.get(aspect).getTurnoutState());
+                    }
                 }
                 turnMast.resetPreviousStates(resetPreviousState.isSelected());
                 if (!user.equals("")) turnMast.setUserName(user);
