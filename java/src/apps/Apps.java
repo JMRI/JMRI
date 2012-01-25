@@ -368,7 +368,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         menuBar.add(fileMenu);
         
-        fileMenu.add(new apps.gui3.dp3.DecoderPro3Action(rb.getString("MenuItemDP3"), false));
         fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rb.getString("MenuPrintDecoderDefinitions"), wi.getFrame(), false));
         fileMenu.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rb.getString("MenuPrintPreviewDecoderDefinitions"), wi.getFrame(), true));
 

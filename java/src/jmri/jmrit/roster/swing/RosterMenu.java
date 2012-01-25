@@ -63,6 +63,9 @@ public class RosterMenu extends JMenu {
 
         // create the menu
 
+        AbstractAction dp3Action = new apps.gui3.dp3.DecoderPro3Action(rb.getString("MenuItemRoster"), false);
+        dp3Action.setEnabled(true);
+
         AbstractAction createAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneNewProgAction(rb.getString("MenuItemCreate"));
         createAction.setEnabled(false);
 
@@ -112,8 +115,10 @@ public class RosterMenu extends JMenu {
         groupMenu.add(rosterGroupTableAction);
         groupMenu.add(rosterEntryToGroupAction);
         groupMenu.add(removeRosterEntryToGroupAction);
+
         
-        
+        add(dp3Action);
+        addSeparator();
         add(createAction);
         add(editAction);
         add(copyAction);
