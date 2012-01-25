@@ -1998,7 +1998,7 @@ public class TrainBuilder extends TrainCommon{
 			return;
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchTrackNewLoad"),
-				new Object[]{car.toString(), car.getType(), car.getLoad(), ""}));
+				new Object[]{car.toString(), car.getType(), car.getLoad(), car.getTrackName()}));
 		List<Track> tracks = locationManager.getTracks(Track.SIDING);
 		log.debug("Found "+tracks.size()+" spurs");
 		for (int i=0; i<tracks.size(); i++){
@@ -2329,7 +2329,7 @@ public class TrainBuilder extends TrainCommon{
 	 * @throws BuildFailedException
 	 */
 	private boolean findDestinationAndTrack(Car car, RouteLocation rl, int routeIndex, int routeEnd) throws BuildFailedException {
-		addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildFindDestinationForCar"),new Object[]{car.toString(), (car.getLocationName()+", " +car.getTrackName())}));
+		addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildFindDestinationForCar"),new Object[]{car.toString(), car.getType(), (car.getLocationName()+", " +car.getTrackName())}));
 		int start = routeIndex;					// start looking after car's current location
 		RouteLocation rld = null;				// the route location destination being checked for the car
 		RouteLocation rldSave = null;			// holds the best route location destination for the car
