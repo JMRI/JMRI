@@ -219,7 +219,7 @@ assign the proper NMRA weight for a car based on scale and length.
 <H3>Maximum Train Length</H3>
 
 Now enter the default "Maximum Train Length" you desire for your trains.
-This field provides the maximum default train length between cities.
+This field provides the maximum default train length between stations.
 Later you can override this length if you wish a shorter train between
 any two locations. A 1000 foot train can carry approximately 20 cars,
 and is of course dependent on the car lengths assigned to the train.
@@ -987,7 +987,7 @@ custom loads.</P>
 <A NAME="ShowSchedulesByCarTypeAndLoad"></A>
 <H3>Show Schedules by Car Type and Load</H3>
 
-<img src="images/ShowSchedulesBYCarTYpeAndLoad.png">
+<img src="images/ShowSchedulesByCarTypeAndLoad.png">
 
 <P>You can access this useful tool from the Schedules window.  It allows you to select a car type, and then
 any load that you've created for the that type of car.  The window then shows which schedules by location are receiving
@@ -1305,7 +1305,7 @@ the bottom of the "Tools-&gt;Operations-&gt;Cars" window.
 
 Then select the road
 for the car. If the desired road doesn't exist, press the "Edit" button
-across from the road select menu box. This will allow you to add a new
+to the right of the road select menu box. This will allow you to add a new
 road or delete any that you don't need.</P>
 
 <H3>Road Number</H3>
@@ -1320,7 +1320,7 @@ will drop the -1, -2, etc. from the car's road number.
 <H3>Car Type, Length, Weight</H3>
 
 Select the car's type and length from the menu boxes. Use the
-"Edit" button to add or delete car types, or lengths that you
+"Edit" button to the right of the menu boxes to add or delete car types, or lengths that you
 want to add or remove. The car's weight is automatically calculated, but
 you can enter a different weight if necessary. When entering the length
 of a car, enter the length of the body and not the total length. For
@@ -1489,13 +1489,13 @@ active, only when the car is set out by the program will the RWE destination bec
 
 <P>You can also change the car's load, or create new ones by using the "Edit" button.</P>
 
-<P>The next three set of fields are normally set by the program when
-building trains. We'll explain how they work in
-case you're interested in how the program works or if you want to
-manually override the program. The first is the "Destination" set of
-pull down boxes. The "Destination" is the next location that the car
-will be delivered to. The destination must be reachable by only one
-train or the car will not be serviced.</P>
+   <P>The next three set of fields are normally set by the program when building trains. We'll
+    explain how they work in case you're interested in how the program works or if you want to
+    manually override the program. The first is the "Destination" set of pull down boxes. The
+    "Destination" is the next location that the car will be delivered to. The destination must be
+    reachable by only one train from the car's current location or the car will not be serviced. We
+    recommend that you don't use the "Destination" field to forward a car to a location, but use the
+    "Final Destination" as described below.</P>
 
 <P>The next field is the "Final Destination" set of pull down boxes.
 You can select any destination or track, the program will figure out the
