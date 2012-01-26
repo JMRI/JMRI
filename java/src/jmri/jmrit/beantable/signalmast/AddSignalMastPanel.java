@@ -273,7 +273,7 @@ public class AddSignalMastPanel extends JPanel {
     void updateDisabledOption(){
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType =  mastType.substring(11, mastType.indexOf(".xml"));
-        jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap((String) sigSysBox.getSelectedItem(), mastType);
+        jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         java.util.Enumeration<String> aspects = sigMap.getAspects();
         disabledAspects = new HashMap<String, JCheckBox>(5);
 
@@ -648,7 +648,7 @@ public class AddSignalMastPanel extends JPanel {
         //jmri.implementation.DefaultSignalAppearanceMap sigMap = new jmri.implementation.DefaultSignalAppearanceMap((String) sigSysBox.getSelectedItem(), (String)mastBox.getSelectedItem());
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType =  mastType.substring(11, mastType.indexOf(".xml"));
-        jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap((String) sigSysBox.getSelectedItem(), mastType);
+        jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         java.util.Enumeration<String> aspects = sigMap.getAspects();
         while(aspects.hasMoreElements()){ 
             String aspect = aspects.nextElement();
