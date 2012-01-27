@@ -108,8 +108,9 @@ public class RosterGroupComboBox extends JComboBox implements RosterGroupSelecto
         }
     }
 
+    @Override
     public String getSelectedRosterGroup() {
-        if (getSelectedItem().equals(Roster.ALLENTRIES)) {
+        if (getSelectedItem() == null || getSelectedItem().equals(Roster.ALLENTRIES)) {
             return null;
         } else {
             return getSelectedItem().toString();
