@@ -10,10 +10,12 @@ import jmri.util.swing.JmriBeanComboBox;
 import jmri.implementation.TurnoutSignalMast;
 import jmri.implementation.SignalHeadSignalMast;
 import jmri.implementation.VirtualSignalMast;
+import jmri.implementation.DccSignalMast;
 import javax.swing.BorderFactory;
 import javax.swing.border.TitledBorder;
 import java.awt.Color;
 import java.text.DecimalFormat;
+import jmri.util.ConnectionNameFromSystemName;
 
 import java.awt.event.*;
 import java.io.*;
@@ -44,6 +46,12 @@ public class AddSignalMastPanel extends JPanel {
     JPanel signalHeadPanel = new JPanel();
     JPanel turnoutMastPanel = new JPanel();
     JScrollPane turnoutMastScroll;
+    JScrollPane dccMastScroll;
+    JPanel dccMastPanel = new JPanel();
+    JLabel prefixBoxLabel = new JLabel("System : ");
+    JComboBox prefixBox = new JComboBox();
+    JLabel dccAspectAddressLabel = new JLabel("DCC Accessory Address");
+    JTextField dccAspectAddressField = new JTextField(5);
     
     JButton cancel = new JButton(rb.getString("ButtonCancel"));
     
@@ -52,7 +60,7 @@ public class AddSignalMastPanel extends JPanel {
     public AddSignalMastPanel() {
         
         signalMastDriver = new JComboBox(new String[]{
-                rb.getString("HeadCtlMast"), rb.getString("TurnCtlMast"), rb.getString("VirtualMast")
+                rb.getString("HeadCtlMast"), rb.getString("TurnCtlMast"), rb.getString("VirtualMast"), rb.getString("DCCMast")
             });
         
         refreshComboBox();
@@ -96,6 +104,10 @@ public class AddSignalMastPanel extends JPanel {
         turnoutMastScroll = new JScrollPane(turnoutMastPanel);
         turnoutMastScroll.setVisible(false);
         add(turnoutMastScroll);
+        
+        dccMastScroll = new JScrollPane(dccMastPanel);
+        dccMastScroll.setVisible(false);
+        add(dccMastScroll);
         
         JButton ok;
         JPanel buttonHolder = new JPanel();
@@ -171,6 +183,11 @@ public class AddSignalMastPanel extends JPanel {
         
         signalMastDriver.setEnabled(false);
         
+        prefixBoxLabel.setEnabled(true);
+        prefixBox.setEnabled(true);
+        dccAspectAddressLabel.setEnabled(true);
+        dccAspectAddressField.setEnabled(true);
+
         if(mast instanceof jmri.implementation.SignalHeadSignalMast){
             signalMastDriver.setSelectedItem(rb.getString("HeadCtlMast"));
             updateSelectedDriver();
@@ -217,6 +234,38 @@ public class AddSignalMastPanel extends JPanel {
                     }
                 }
             }
+        } else if (mast instanceof jmri.implementation.DccSignalMast){
+            signalMastDriver.setSelectedItem(rb.getString("DCCMast"));
+
+            updateSelectedDriver();
+            SignalAppearanceMap appMap = mast.getAppearanceMap();
+            DccSignalMast dmast = (DccSignalMast) mast;
+            
+            if(appMap!=null){
+                java.util.Enumeration<String> aspects = appMap.getAspects();
+                while(aspects.hasMoreElements()){
+                    String key = aspects.nextElement();
+                    DCCAspectPanel dccPanel = dccAspect.get(key);
+                    dccPanel.setAspectId(dmast.getOutputForAppearance(key));
+                    dccPanel.setAspectDisabled(dmast.isAspectDisabled(key));
+                }
+            }
+            java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+            if(connList!=null){
+                for(int x = 0; x < connList.size(); x++){
+                    jmri.CommandStation station = (jmri.CommandStation) connList.get(x);
+                    prefixBox.addItem(station.getUserName());
+                }
+            } else {
+                prefixBox.addItem("None");
+            }
+            dccAspectAddressField.setText(""+dmast.getDccSignalMastAddress());
+            prefixBox.setSelectedItem(dmast.getCommandStation().getUserName());
+            
+            prefixBoxLabel.setEnabled(false);
+            prefixBox.setEnabled(false);
+            dccAspectAddressLabel.setEnabled(false);
+            dccAspectAddressField.setEnabled(false);
         }
         
         cancel.setVisible(true);
@@ -225,7 +274,6 @@ public class AddSignalMastPanel extends JPanel {
                 ((jmri.util.JmriJFrame)getTopLevelAncestor()).dispose();
             }
         });
-        
     }
     
     String extractMastTypeFromMast(String name){
@@ -237,10 +285,10 @@ public class AddSignalMastPanel extends JPanel {
         signalHeadPanel.setVisible(false);
         turnoutMastScroll.setVisible(false);
         disabledAspectsPanel.setVisible(false);
+        dccMastScroll.setVisible(false);
         if(rb.getString("TurnCtlMast").equals(signalMastDriver.getSelectedItem())){
             updateTurnoutAspectPanel();
             turnoutMastScroll.setVisible(true);
-            
         } else if(rb.getString("HeadCtlMast").equals(signalMastDriver.getSelectedItem())){
             updateHeads();
             updateDisabledOption();
@@ -249,6 +297,9 @@ public class AddSignalMastPanel extends JPanel {
         } else if(rb.getString("VirtualMast").equals(signalMastDriver.getSelectedItem())){
             updateDisabledOption();
             disabledAspectsPanel.setVisible(true);
+        } else if (rb.getString("DCCMast").equals(signalMastDriver.getSelectedItem())){
+            updateDCCMastPanel();
+            dccMastScroll.setVisible(true);
         }
         validate();
         if (getTopLevelAncestor()!=null){
@@ -492,6 +543,30 @@ public class AddSignalMastPanel extends JPanel {
                         virtMast.setAspectEnabled(aspect);
                 
                 }
+            } else if(rb.getString("DCCMast").equals(signalMastDriver.getSelectedItem())){
+                if(!checkUserName(userName.getText()))
+                    return;
+                String systemNameText = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
+                //if we return a null string then we will set it to use internal, thus picking up the default command station at a later date.
+                if(systemNameText.equals("\0"))
+                    systemNameText = "I";
+                String name = systemNameText+ "F$dsm:"
+                        +sigsysname
+                        +":"+mastname.substring(11,mastname.length()-4);
+                name += "("+dccAspectAddressField.getText()+")";
+                DccSignalMast dccMast = new DccSignalMast(name);
+                for(String aspect: dccAspect.keySet()){
+                    dccMastPanel.add(dccAspect.get(aspect).getPanel());
+                    if(dccAspect.get(aspect).isAspectDisabled())
+                        dccMast.setAspectDisabled(aspect);
+                    else {
+                        dccMast.setAspectEnabled(aspect);
+                        dccMast.setOutputForAppearance(aspect, dccAspect.get(aspect).getAspectId());
+                    }
+                }
+                if (!user.equals("")) dccMast.setUserName(user);
+                InstanceManager.signalMastManagerInstance().register(dccMast);
+            
             }
             prefs.addComboBoxLastSelection(systemSelectionCombo, (String) sigSysBox.getSelectedItem());
             prefs.addComboBoxLastSelection(driverSelectionCombo, (String) signalMastDriver.getSelectedItem());
@@ -530,6 +605,17 @@ public class AddSignalMastPanel extends JPanel {
                         virtMast.setAspectDisabled(aspect);
                     else
                         virtMast.setAspectEnabled(aspect);
+                }
+            } else if(rb.getString("DCCMast").equals(signalMastDriver.getSelectedItem())){
+                DccSignalMast dccMast = (DccSignalMast) mast;
+                for(String aspect: dccAspect.keySet()){
+                    dccMastPanel.add(dccAspect.get(aspect).getPanel());
+                    if(dccAspect.get(aspect).isAspectDisabled())
+                        dccMast.setAspectDisabled(aspect);
+                    else {
+                        dccMast.setAspectEnabled(aspect);
+                        dccMast.setOutputForAppearance(aspect, dccAspect.get(aspect).getAspectId());
+                    }
                 }
             }
         }
@@ -644,8 +730,7 @@ public class AddSignalMastPanel extends JPanel {
     void updateTurnoutAspectPanel(){
         if(!rb.getString("TurnCtlMast").equals(signalMastDriver.getSelectedItem()))
             return;
-        turnoutAspect = new HashMap<String, TurnoutAspectPanel>();
-        //jmri.implementation.DefaultSignalAppearanceMap sigMap = new jmri.implementation.DefaultSignalAppearanceMap((String) sigSysBox.getSelectedItem(), (String)mastBox.getSelectedItem());
+        turnoutAspect = new HashMap<String, TurnoutAspectPanel>(10);
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType =  mastType.substring(11, mastType.indexOf(".xml"));
         jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
@@ -659,13 +744,11 @@ public class AddSignalMastPanel extends JPanel {
         turnoutMastPanel.removeAll();
         turnoutMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(turnoutAspect.size()+1,2));
         for(String aspect: turnoutAspect.keySet()){
-            //turnoutMastPanel.add(new JLabel(aspect));
             turnoutMastPanel.add(turnoutAspect.get(aspect).getPanel());
         }
         
         turnoutMastPanel.add(resetPreviousState);
         
-
     }
     
     ArrayList<JmriBeanComboBox> headList = new ArrayList<JmriBeanComboBox>(5);
@@ -759,6 +842,118 @@ public class AddSignalMastPanel extends JPanel {
                 turnDetails.add(turnoutStateLabel);
                 turnDetails.add(turnoutState);
                 panel.add(turnDetails);
+                panel.add(disabledCheck);
+                TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+                border.setTitle(aspect);
+                panel.setBorder(border);
+                
+                disabledCheck.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        setAspectDisabled(disabledCheck.isSelected());
+                    }
+                });
+                
+            }
+            return panel;
+        }
+    
+    }
+    
+    HashMap<String, DCCAspectPanel> dccAspect = new HashMap<String, DCCAspectPanel>(10);
+    
+    void updateDCCMastPanel(){
+        if(!rb.getString("DCCMast").equals(signalMastDriver.getSelectedItem()))
+            return;
+        dccAspect = new HashMap<String, DCCAspectPanel>(10);
+        java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+        if(connList!=null){
+            for(int x = 0; x < connList.size(); x++){
+                jmri.CommandStation station = (jmri.CommandStation) connList.get(x);
+                prefixBox.addItem(station.getUserName());
+            }
+        } else {
+            prefixBox.addItem("None");
+        }
+        String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
+        mastType =  mastType.substring(11, mastType.indexOf(".xml"));
+        jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
+        java.util.Enumeration<String> aspects = sigMap.getAspects();
+        while(aspects.hasMoreElements()){
+            String aspect = aspects.nextElement();
+            DCCAspectPanel aPanel = new DCCAspectPanel(aspect);
+            dccAspect.put(aspect, aPanel);        
+        }
+        dccMastPanel.removeAll();
+        dccMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(dccAspect.size()+2,2));
+        dccMastPanel.add(prefixBoxLabel);
+        dccMastPanel.add(prefixBox);
+        dccMastPanel.add(dccAspectAddressLabel);
+        dccMastPanel.add(dccAspectAddressField);
+        if(mast==null){
+            prefixBoxLabel.setEnabled(true);
+            prefixBox.setEnabled(true);
+            dccAspectAddressLabel.setEnabled(true);
+            dccAspectAddressField.setEnabled(true);
+        } else {
+
+        }
+        for(String aspect: dccAspect.keySet()){
+            dccMastPanel.add(dccAspect.get(aspect).getPanel());
+        }
+    }
+    
+    static class DCCAspectPanel{
+        
+        String aspect = "";
+        JCheckBox disabledCheck = new JCheckBox("Disable Aspect");
+        JLabel aspectLabel = new JLabel("Set Aspect Id");
+        JTextField aspectId = new JTextField(5);
+        
+        DCCAspectPanel(String aspect){
+            this.aspect = aspect;
+        }
+        
+        void setAspectDisabled(boolean boo){
+            disabledCheck.setSelected(boo);
+            if(boo){
+                aspectLabel.setEnabled(false);
+                aspectId.setEnabled(false);
+            }
+            else {
+                aspectLabel.setEnabled(true);
+                aspectId.setEnabled(true);
+            }
+        }
+        
+        boolean isAspectDisabled(){
+            return disabledCheck.isSelected();
+        }
+        
+        int getAspectId(){
+            try {
+                String value = aspectId.getText();
+                return Integer.parseInt(value);
+
+            } catch (Exception ex) {
+                log.error("failed to convert DCC number");
+            }
+            return -1;
+        }
+        
+        void setAspectId(int i){
+            aspectId.setText(""+i);
+        }
+        
+        JPanel panel;
+        
+        JPanel getPanel(){
+            if(panel==null){
+                panel = new JPanel();
+                panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                JPanel dccDetails = new JPanel();
+                dccDetails.add(aspectLabel);
+                dccDetails.add(aspectId);
+                panel.add(dccDetails);
                 panel.add(disabledCheck);
                 TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 border.setTitle(aspect);
