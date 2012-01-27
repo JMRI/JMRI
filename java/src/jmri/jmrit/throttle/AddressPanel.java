@@ -50,8 +50,6 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	private RosterEntrySelectorPanel rosterBox;
 	private JComboBox conRosterBox;
 	
-	private boolean disableRosterBoxActions = false;
-	
 	private RosterEntry rosterEntry;
 
 	/**
@@ -122,9 +120,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	 */
 	public void setRosterSelectedIndex(int index) {
 		if (getRosterEntrySelector().isEnabled() && index >= 0 && index < getRosterEntrySelector().getRosterEntryComboBox().getItemCount()) {
-			this.disableRosterBoxActions = true; //Temporarily disable roster box actions
 			getRosterEntrySelector().getRosterEntryComboBox().setSelectedIndex(index);
-			this.disableRosterBoxActions = false;
 		}
 		if ((backgroundPanel != null) && (!(rosterBox.getSelectedRosterEntries().length != 0))) {
 			backgroundPanel.setImagePath(null);
@@ -568,13 +564,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         return rosterBox;
     }
 
-	static class NullComboBoxItem {
-		public String toString() {
-			return rb.getString("NoLocoSelected");
-		}
-	}
-
 	static class NullComboBoxConsist {
+        @Override
 		public String toString() {
 			return rb.getString("NoConsistSelected");
 		}
