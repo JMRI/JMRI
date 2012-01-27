@@ -552,10 +552,9 @@ public class AddSignalMastPanel extends JPanel {
         if(!rb.getString("TurnCtlMast").equals(signalMastDriver.getSelectedItem()))
             return;
         turnoutAspect = new HashMap<String, TurnoutAspectPanel>();
-        //jmri.implementation.DefaultSignalAppearanceMap sigMap = new jmri.implementation.DefaultSignalAppearanceMap((String) sigSysBox.getSelectedItem(), (String)mastBox.getSelectedItem());
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType =  mastType.substring(11, mastType.indexOf(".xml"));
-        jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap((String) sigSysBox.getSelectedItem(), mastType);
+        jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         java.util.Enumeration<String> aspects = sigMap.getAspects();
         while(aspects.hasMoreElements()){ 
             String aspect = aspects.nextElement();
@@ -566,7 +565,6 @@ public class AddSignalMastPanel extends JPanel {
         turnoutMastPanel.removeAll();
         turnoutMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(turnoutAspect.size()+1,2));
         for(String aspect: turnoutAspect.keySet()){
-            //turnoutMastPanel.add(new JLabel(aspect));
             turnoutMastPanel.add(turnoutAspect.get(aspect).getPanel());
         }
         
@@ -581,7 +579,6 @@ public class AddSignalMastPanel extends JPanel {
     
     static class TurnoutAspectPanel{
         BeanSelectCreatePanel beanBox = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
-        //Border blackline = BorderFactory.createLineBorder(Color.black);
         
         String stateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
         String stateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
