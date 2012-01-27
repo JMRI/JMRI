@@ -685,6 +685,7 @@ public class SignalGroupSubTableAction {
                 case STATE_COLUMN: 
                     turnoutList.get(r).setSetToState((String)type);
                     break;
+                default: break;
             }
         }
     }
@@ -747,6 +748,7 @@ public class SignalGroupSubTableAction {
                 case STATE_COLUMN: 
                     sensorList.get(r).setSetToState((String)type);
                     break;
+                default: break;
             }
         }
     }

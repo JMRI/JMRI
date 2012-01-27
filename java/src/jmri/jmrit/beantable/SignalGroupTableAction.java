@@ -936,6 +936,7 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                 case APPEAR_COLUMN: 
                     appearList.get(r).setAppearance((String)type);
                     break;
+                default: break;
             }
         }
     
@@ -1093,7 +1094,8 @@ public class SignalGroupTableAction extends AbstractTableAction implements Prope
                     }
                     WindowMaker t = new WindowMaker(r);
                     javax.swing.SwingUtilities.invokeLater(t);
-                    
+                    break;
+                default: break;
             }
         }
         public void dispose() {
