@@ -689,6 +689,7 @@ public class DecoderPro3Window
             public void actionPerformed(ActionEvent e) {
                 ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
                 tf.toFront();
+                tf.getAddressPanel().getRosterEntrySelector().setSelectedRosterGroup(getSelectedRosterGroup());
                 tf.getAddressPanel().setRosterEntry(re);
             }
         });

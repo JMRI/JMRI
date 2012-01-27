@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
+import jmri.beans.Beans;
 
 /**
  * Create a new throttle.
@@ -50,7 +51,12 @@ public class ThrottleCreationAction extends JmriAbstractAction {
      * @param e The event causing the action.
      */
     public void actionPerformed(ActionEvent e) {
+        String group = null;
+        if (Beans.hasProperty(wi, "selectedRosterGroup")) {
+            group = (String) Beans.getProperty(wi, "selectedRosterGroup");
+        }
     	ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
+        tf.getAddressPanel().getRosterEntrySelector().setSelectedRosterGroup(group);
 		tf.toFront();
     }
     
