@@ -31,7 +31,7 @@
 
 <hr>
 <h3>Menus</h3>
-<p><img src="images/Ops_Setting_tool_menu.png" width="753" height="240" alt="menu"></p>
+<p><img src="images/Ops_Setting_tool_menu.png" width="900" height="199" alt="ops setting window"></p>
 
 
 <h3>Tools</h3>
@@ -68,7 +68,42 @@
 	    
     <p>Opens the <strong>Reset operations? </strong>dialog box</p>
     <p><img src="images/Ops_Setting04.png" width="445" height="122" alt="reset"></p>
-  </ul><h3>      Windows      </h3>
+  </ul>
+  <h3>Operations</h3>
+  <ul>
+    <li><strong>Settings</strong>
+      <blockquote>
+        <p>Opens <strong><a href="Ops_Settings.shtml">Operations Setting</a></strong> window.</p>
+      </blockquote>
+    </li>
+  
+    <li><strong>Locations</strong>    </li>
+    <blockquote>
+      <p>Opens <strong><a href="Ops_Locations.shtml">Locations</a></strong> window.</p>
+    </blockquote>
+    <li><strong>Cars</strong>    </li>
+    <blockquote>
+      <p>Opens <strong><a href="Ops_Cars.shtml">Cars</a></strong> window.</p>
+    </blockquote>
+    <li><strong>:Locomotives</strong>
+      <blockquote>
+        <p>Opens <strong><a href="Ops_Engines.shtml">Locomotives</a></strong> window.</p>
+      </blockquote>
+    </li>
+  
+    <li><strong>Routes</strong>
+      <blockquote>
+        <p>Opens <strong><a href="Ops_Routes.shtml">Routes</a></strong> window.</p>
+      </blockquote>
+    </li>
+  
+    <li><strong>Trains</strong>
+      <blockquote>
+        <p>Opens <a href="Ops_Trains.shtml">Trains</a> window.</p>
+      </blockquote>
+    </li>
+  </ul>
+<h3>      Windows      </h3>
   <blockquote>
     <p>JMRI normal window menu</p>
   </blockquote>
@@ -78,7 +113,7 @@
   .</blockquote>
   <table width="100%" border="0" cellspacing="1" cellpadding="2">
     <tr>
-      <td width="62%" align="left" valign="top"><p><img src="images/Ops_Setting01.png" width="742" height="624" alt="ops settings"></p></td>
+      <td width="62%" align="left" valign="top"><p><img src="images/Ops_Setting01.png" width="800" height="625" alt="ops set"></p></td>
       <td width="38%" align="left" valign="top"><p><strong>Railroad Name</strong>
         <input type="text" name="textfield" id="textfield">      
         <br>
@@ -92,7 +127,7 @@
         If your railroad depicts trains traveling north and south select the  "North/South" box, if your trains travel east and west select the  "East/West" box. You must select at least one direction, and can if  desired select both.      </p>
         <p><strong>Scale</strong><br>
           Select the radio button for the scale of your railroad. This will be used  in calculating scale feet when you enter actual inches.
-          <br>
+            <strong>S</strong>elect the scale you are modeling. This is useful when you enter  the length of cars and tracks. You can enter the number of actual inches  and the program will convert to scale feet. Append a double quote to the  length when entering actual inches. The program will also automatically  assign the proper NMRA weight for a car based on scale and length.<br>
           <br>
           <strong>Maximum Train Length(ft)</strong>
           <input type="text" name="textfield2" id="textfield2"> 
@@ -116,21 +151,27 @@
       </p></td>
     </tr>
     <tr>
-      <td colspan="2" align="left" valign="top"><p><strong>Scale</strong> Next select the scale you are modeling. This is useful when you enter  the length of cars and tracks. You can enter the number of actual inches  and the program will convert to scale feet. Append a double quote to the  length when entering actual inches. The program will also automatically  assign the proper NMRA weight for a car based on scale and length.<br>
-        <br>
-        <strong>Car Types</strong>
+      <td colspan="2" align="left" valign="top"><p><strong>Car Types</strong>
+        </p>
+        <p>
         <input name="radio" type="radio" id="radio" value="radio" checked>
         <strong>Descriptive </strong>
         <input type="radio" name="radio2" id="radio2" value="radio2">
         <strong>AAR Codes</strong><br>
         The program has two sets of car types for you to use. <strong>Descriptive </strong>provides type names like <strong>Boxcar </strong>and <strong>Tankcar</strong>, and <strong>AAR</strong> provides type  names like <strong>XM</strong> and <strong>T</strong> for boxcars and tank cars respectively. Select  the one that you prefer.</p>
+        <p><strong>Unit of Length  
+        <input name="radio5" type="radio" id="radio5" value="radio5" checked>
+        Feet 
+        <input type="radio" name="radio6" id="radio6" value="radio6">
+        Meters</strong></p>
         <p><strong>Optional Year Modeled</strong>
           <input type="text" name="textfield7" id="textfield7">
           <br>
           You can optionally enter the year you want printed on your train manifess.
           <br>
         <br>
-        <strong>Options</strong><br>
+        <strong>Options</strong></p>
+        <p><br>
         <input name="checkbox3" type="checkbox" id="checkbox3" checked>
         <strong>Add Operations Menu to Main Menu</strong><br>
         When selected, and saved, the operations menu will be added  to the main menu bar the next time you start JMRI..  To remove it go through  the same procedure&hellip; in the Settings window uncheck the box, &ldquo;Save&rdquo; the change  and restart DecoderPro&reg;. </p>
@@ -140,7 +181,8 @@
         <p><img src="images/Ops_Setting02.png" width="492" height="402" alt="operation menu"></p>
         <p><strong>Panel options</strong> will not be covered in this manual at this time. Panels are normally created as a part of PanelPro&reg;<br>
           <br>
-          <br>
+        <strong>Icon Colors</strong>  Not covered here and normally used with PanelPro&reg;</p>
+        <p><br>
           <input type="submit" name="button" id="button" value="Save">
           When you're finished with the settings window, press the save button to  store the setting in a file called <strong>Operations.xml.</strong> You can find this  file in your JMRI directory in a folder called <strong>operations</strong>. The program  will also create a backup file each time you press the 
           <input type="submit" name="button2" id="button2" value="Save">
@@ -153,7 +195,7 @@
       will prompt you to select which set of backup files you  wish to use to recover your operation files. You must quit and restart  DecoderPro&reg; to complete the restoration of the operation files.</p></td>
     </tr>
 </table>
-  <hr>
+<hr>
 	  
   <h3><a name="Options"></a>Options Window</h3>
   <p>The Options window allows you to set several options that can be modified.</p>
@@ -215,10 +257,13 @@ you would like the program to ask you which track a train should Arrive to stagi
       <p>If you want the operations program to log your locomotive, car, or train movements to file, select the appropriate checkboxes. The program will create a new directory called logger in the operations directory. For each day's session the program will create a new file(.csv) using the day's date.</p></td>
     </tr>
     <tr>
-      <td colspan="2" valign="top"><p><img src="images/Ops_Setting_tool_options05.png" width="410" height="191" alt="options"><br>        To create your own custom manifest using a comma separated value (.csv) file, select this option. You can use a program like Excel to create a manifest to your liking. The manifest is located in the operations directory in a directory called <strong>csvManifests. </strong>Each line of the file starts with a two or three letter code, followed by the code's description, and then any parameters associated with the code. </p>
+      <td colspan="2" valign="top"><p><img src="images/Ops_Setting_tool_options05.png" width="466" height="233" alt="ops settings"><br>        To create your own custom manifest using a comma separated value (.csv) file, select this option. You can use a program like Excel to create a manifest to your liking. The manifest is located in the operations directory in a directory called <strong>csvManifests. </strong>Each line of the file starts with a two or three letter code, followed by the code's description, and then any parameters associated with the code. </p>
       <p>
         <input type="checkbox" name="checkbox9" id="checkbox9">
         <strong>Enable Radio-Frequency Identification (RFID) Fields</strong> - This option allows the RFID to be renamed to anything you like and set the values that you want.</p>
+      <p>
+        <input type="checkbox" name="checkbox10" id="checkbox10">
+      <strong>Enable physical locations for Virtual Sound Decoder -</strong></p>
       <p>&nbsp;</p></td>
     </tr>
     <tr>
