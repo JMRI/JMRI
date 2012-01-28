@@ -78,7 +78,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
         if (Beans.hasProperty(wi, "selectedRosterEntries")) {
             entries = (RosterEntry[]) Beans.getProperty(wi, "selectedRosterEntries");
         } else {
-            entries = selectRosterEntry();
+            entries = selectRosterEntry(rosterGroup);
         }
         if (entries == null) {
             return;
@@ -133,9 +133,9 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
 
     }
 
-    protected RosterEntry[] selectRosterEntry(){
+    protected RosterEntry[] selectRosterEntry(String rosterGroup){
         // create a dialog to select the roster entry
-        JComboBox selections = new RosterEntryComboBox();
+        JComboBox selections = new RosterEntryComboBox(rosterGroup);
         int retval = JOptionPane.showOptionDialog(_who,
                                                   "Select one roster entry", "Delete roster entry",
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,
