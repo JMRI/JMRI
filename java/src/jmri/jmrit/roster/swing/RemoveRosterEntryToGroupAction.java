@@ -56,27 +56,18 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     JmriJFrame frame = null;
     JComboBox typeBox;
     JLabel jLabel = new JLabel("Select the Group");
-    JComboBox groupBox;
-    RosterEntryComboBox rosterBox;
+    RosterEntrySelectorPanel rosterBox;
     JButton okButton = new JButton("Remove");
     JButton cancelButton = new JButton("Exit");
     
     public void actionPerformed(ActionEvent event) {
         frame = new JmriJFrame("Remove Loco from Group");
-        rosterBox = new RosterEntryComboBox();
-        groupBox = new RosterGroupComboBox();
-        updateRosterEntry((String) groupBox.getSelectedItem());
-        groupBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                updateRosterEntry((String) groupBox.getSelectedItem());
-            }
-        });
+        rosterBox = new RosterEntrySelectorPanel();
         
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         JPanel p;
         p = new JPanel(); p.setLayout(new FlowLayout());
         p.add(jLabel);
-        p.add(groupBox);
         p.add(rosterBox);
         frame.getContentPane().add(p);
         
@@ -114,13 +105,19 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RemoveRosterEntryToGroupAction.class.getName());
 
-    public void okPressed(){
-        String group = Roster.instance().getRosterGroupPrefix()+((String) groupBox.getSelectedItem());
-        RosterEntry re = Roster.instance().entryFromTitle((String) rosterBox.getSelectedItem());
-        re.deleteAttribute(group);
-        re.updateFile();
-        Roster.writeRosterFile();
-        rosterBox.update((String) groupBox.getSelectedItem());
+    public void okPressed() {
+        String group = rosterBox.getSelectedRosterGroup();
+        log.info("Selected " + group);
+        if (group != null && !group.equals(Roster.ALLENTRIES)) {
+            if (rosterBox.getSelectedRosterEntries().length != 0) {
+                RosterEntry re = rosterBox.getSelectedRosterEntries()[0];
+                log.info("Preparing to remove " + re.getId() + " from " + group);
+                re.deleteAttribute(Roster.getRosterGroupProperty(group));
+                re.updateFile();
+                Roster.writeRosterFile();
+                rosterBox.getRosterEntryComboBox().update();
+            }
+        }
         frame.pack();
     
     }
@@ -130,9 +127,4 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     
     }
     
-    public void updateRosterEntry(String group) {
-        rosterBox.update(group);
-        Roster.instance().rosterGroupEntryChanged();
-        frame.pack();
-    }
 }
