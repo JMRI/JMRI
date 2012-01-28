@@ -244,7 +244,7 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
      * combo box.
      */
     public void update() {
-        update((String) this.getSelectedItem(),
+        update((String) this._group,
                 _roadName,
                 _roadNumber,
                 _dccAddress,
@@ -291,7 +291,7 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
             String decoderMfgID,
             String decoderVersionID,
             String id) {
-        update((String) this.getSelectedItem(),
+        update((String) this._group,
                 roadName,
                 roadNumber,
                 dccAddress,
