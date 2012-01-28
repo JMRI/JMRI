@@ -192,6 +192,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         return newWindowMenuItemAction;
     }
 
+    @SuppressWarnings("unchecked")
     private void setSelectionToGroup(String group) {
         _tree.removeTreeSelectionListener(_TSL);
         if (group == null || group.equals(Roster.ALLENTRIES) || group.equals("")) {
