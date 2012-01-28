@@ -717,14 +717,6 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     public static String getRosterGroupProperty(String name) {
         return _rosterGroupPrefix + name;
     }
-    
-    /**
-     * This is here so that when a roster entry is added to a group via the table entry,
-     * a propertyChangeEvent is fired off.  Not Ideal but it works.
-     */ 
-    public void rosterGroupEntryChanged(){
-        firePropertyChange("ActiveRosterGroup", null, null);
-    }
 
 
     protected ArrayList<String> _rosterGroupList = new ArrayList<String>();

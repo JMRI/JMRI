@@ -82,7 +82,6 @@ public class RosterEntryToGroupAction extends AbstractAction {
         re.putAttribute(selGroup, "yes");
         Roster.writeRosterFile();
         re.updateFile();
-        Roster.instance().rosterGroupEntryChanged();
         actionPerformed(event);
     }
 
