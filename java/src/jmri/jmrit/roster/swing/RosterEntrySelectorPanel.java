@@ -93,11 +93,11 @@ public class RosterEntrySelectorPanel extends JPanel implements RosterEntrySelec
         entryCombo.setNonSelectedItem(emptyEntry);
     }
 
-    public JComboBox getRosterEntryComboBox() {
+    public RosterEntryComboBox getRosterEntryComboBox() {
         return entryCombo;
     }
 
-    public JComboBox getRosterGroupComboBox() {
+    public RosterGroupComboBox getRosterGroupComboBox() {
         return groupCombo;
     }
 
@@ -110,5 +110,13 @@ public class RosterEntrySelectorPanel extends JPanel implements RosterEntrySelec
     @Override
     public boolean isEnabled() {
         return this.entryCombo.isEnabled();
+    }
+
+    public String getNonSelectedItem() {
+        return this.entryCombo.getNonSelectedItem();
+    }
+    
+    public void setNonSelectedItem(String itemText) {
+        this.entryCombo.setNonSelectedItem(itemText);
     }
 }
