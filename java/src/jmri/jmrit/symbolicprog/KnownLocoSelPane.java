@@ -2,21 +2,15 @@
 
 package jmri.jmrit.symbolicprog;
 
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.IdentifyLoco;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import java.awt.event.ActionListener;
-
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import java.util.List;
-import jmri.jmrit.roster.swing.RosterEntryComboBox;
+import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 
 /**
  * Provide GUI controls to select a known loco via the Roster.
@@ -38,9 +32,7 @@ public class KnownLocoSelPane extends LocoSelPane  {
     }
 
     public KnownLocoSelPane(boolean ident) {
-        mCanIdent = ident;
-        mStatusLabel = null;
-        init();
+        this(null, ident);
     }
 
     boolean mCanIdent;
@@ -66,7 +58,8 @@ public class KnownLocoSelPane extends LocoSelPane  {
         }
         add(pane2a);
 
-        locoBox = new RosterEntryComboBox();
+        locoBox = new RosterEntrySelectorPanel();
+        locoBox.setNonSelectedItem("Locomotive");
         add(locoBox);
 
         addProgrammerBox();
@@ -127,23 +120,33 @@ public class KnownLocoSelPane extends LocoSelPane  {
             RosterEntry r = l.get(0);
             String id = r.getId();
             if (log.isDebugEnabled()) log.debug("Loco id is "+id);
-            for (int i = 0; i<locoBox.getItemCount(); i++) {
-                if (id.equals(locoBox.getItemAt(i))) locoBox.setSelectedIndex(i);
+            String group = locoBox.getSelectedRosterGroup();
+            if (group != null && !group.equals(Roster.ALLENTRIES)) {
+                List entries = Roster.instance().getEntriesWithAttributeKeyValue(Roster.getRosterGroupProperty(group), "yes");
+                if (entries.contains(r)) {
+                    locoBox.setSelectedRosterEntry(r);
+                } else {
+                    locoBox.setSelectedRosterEntryAndGroup(r, Roster.ALLENTRIES);
+                }
+            } else {
+                locoBox.setSelectedRosterEntry(r);
             }
         } else {
             log.warn("Read address "+dccAddress+", but no such loco in roster");
         }
     }
 
-    private JComboBox locoBox = null;
+    private RosterEntrySelectorPanel locoBox = null;
 
     /** handle pushing the open programmer button by finding names, then calling a template method */
     protected void openButton() {
 
-        RosterEntry re = Roster.instance().entryFromTitle((String)locoBox.getSelectedItem());
-        if (re == null) log.error("RosterEntry is null during open; that shouldnt be possible");
-
-        startProgrammer(null, re, (String)programmerBox.getSelectedItem());
+        if (locoBox.getSelectedRosterEntries().length != 0) {
+            RosterEntry re = locoBox.getSelectedRosterEntries()[0];
+            startProgrammer(null, re, (String)programmerBox.getSelectedItem());
+        } else {
+            JOptionPane.showMessageDialog(this, "A locomotive must be selected.", "No selection", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /** meant to be overridden to start the desired type of programmer */
