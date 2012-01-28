@@ -66,7 +66,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
             }
         });
         int retval = JOptionPane.showOptionDialog(_who,
-                                                  "Select the roster entry and the group to assign it to\nA Roster Entry can belong to multiple groups. " , "Associate Roster Entry with Group",
+                                                  "Select the roster entry and the group to assign it to\nA Roster Entry can belong to multiple groups. " , "Add Roster Entry to Group",
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,
                                                   new Object[]{"Cancel", "OK", selections, rosterEntry}, null );
         log.debug("Dialog value "+retval+" selected "+selections.getSelectedIndex()+":"
