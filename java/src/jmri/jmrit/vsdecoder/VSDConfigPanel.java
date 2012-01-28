@@ -22,18 +22,19 @@ package jmri.jmrit.vsdecoder;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
-import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.swing.JmriPanel;
 import javax.swing.SwingWorker;
 import jmri.jmrit.DccLocoAddressSelector;
-import jmri.jmrit.roster.swing.RosterEntryComboBox;
+import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 
 @SuppressWarnings("serial")
 public class VSDConfigPanel extends JmriPanel {
@@ -50,7 +51,7 @@ public class VSDConfigPanel extends JmriPanel {
     private javax.swing.JTextField addressTextBox;
     private javax.swing.JButton addressSetButton;
     private DccLocoAddressSelector addressSelector;
-    private javax.swing.JComboBox rosterComboBox;
+    private RosterEntrySelectorPanel rosterSelector;
     private javax.swing.JLabel rosterLabel;
     private javax.swing.JButton rosterSaveButton;
     private javax.swing.JComboBox profileComboBox;
@@ -160,7 +161,7 @@ public class VSDConfigPanel extends JmriPanel {
 	if (profileComboBox.getItemCount() > 0) {
 	    profileComboBox.setEnabled(true);
 	    // Enable the roster save button if roster items are available.
-	    if (rosterComboBox.getItemCount() > 0)
+	    if (rosterSelector.getSelectedRosterEntries().length > 0)
 		rosterSaveButton.setEnabled(true);
 	}
 	
@@ -209,7 +210,7 @@ public class VSDConfigPanel extends JmriPanel {
 	if (profileComboBox.getItemCount() > 0) {
 	    profileComboBox.setEnabled(true);
 	    // Enable the roster save button if roster items are available.
-	    if (rosterComboBox.getItemCount() > 0)
+	    if (rosterSelector.getSelectedRosterEntries().length > 0)
 		rosterSaveButton.setEnabled(true);
 	}
 
@@ -246,16 +247,17 @@ public class VSDConfigPanel extends JmriPanel {
 	this.add(addressPanel, BorderLayout.CENTER);
 	this.add(rosterPanel, BorderLayout.PAGE_END);
 
-	rosterComboBox = new RosterEntryComboBox();
-	rosterComboBox.insertItemAt(new NullRosterBoxItem(), 0);
-	rosterComboBox.setSelectedIndex(0);
-	rosterComboBox.setToolTipText("tool tip for roster box");
-	rosterComboBox.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-		    rosterItemSelectAction(e);
-		}
-	    });
-        rosterPanel.add(rosterComboBox);
+	rosterSelector = new RosterEntrySelectorPanel();
+	rosterSelector.setNonSelectedItem("No Loco Selected");
+	//rosterComboBox.setToolTipText("tool tip for roster box");
+    rosterSelector.addPropertyChangeListener("selectedRosterEntries", new PropertyChangeListener(){
+
+            @Override
+            public void propertyChange(PropertyChangeEvent pce) {
+                rosterItemSelectAction(null);
+            }
+        });
+        rosterPanel.add(rosterSelector);
         rosterLabel = new javax.swing.JLabel();
         rosterLabel.setText("Roster");
         rosterPanel.add(rosterLabel);
@@ -333,17 +335,6 @@ public class VSDConfigPanel extends JmriPanel {
     // class NullComboBoxItem
     //
     // little object to insert into profileComboBox when it's empty
-    static class NullRosterBoxItem {
-        @Override
-	public String toString() {
-	    //return rb.getString("NoLocoSelected");
-	    return("No Loco Selected");
-	}
-    }
-
-    // class NullComboBoxItem
-    //
-    // little object to insert into profileComboBox when it's empty
     static class NullProfileBoxItem {
         @Override
 	public String toString() {
@@ -354,7 +345,7 @@ public class VSDConfigPanel extends JmriPanel {
 
     // setRosterEntry()
     //
-    // Respond to the user choosing an entry from the rosterComboBox
+    // Respond to the user choosing an entry from the rosterSelector
     public void setRosterEntry(RosterEntry entry){
 	String vsd_path;
 	String vsd_profile;
@@ -397,14 +388,13 @@ public class VSDConfigPanel extends JmriPanel {
 
     // rosterItemSelectAction()
     //
-    // ActionEventListener function for rosterComboBox
+    // ActionEventListener function for rosterSelector
     // Chooses a RosterEntry from the list and loads its relevant info.
     private void rosterItemSelectAction(ActionEvent e) {
-	if (!(rosterComboBox.getSelectedItem() instanceof NullRosterBoxItem)) {
-	    log.debug("Roster Item Selected...");
-	    String rosterEntryTitle = rosterComboBox.getSelectedItem().toString();
-	    setRosterEntry(Roster.instance().entryFromTitle(rosterEntryTitle));
-	}
+        if (rosterSelector.getSelectedRosterEntries().length != 0) {
+            log.debug("Roster Entry selected...");
+            setRosterEntry(rosterSelector.getSelectedRosterEntries()[0]);
+        }
     }
     
     // rosterSaveButtonAction()
@@ -412,15 +402,14 @@ public class VSDConfigPanel extends JmriPanel {
     // ActionEventListener method for rosterSaveButton
     // Writes VSDecoder info to the RosterEntry.
     private void rosterSaveButtonAction(ActionEvent e) {
-	log.debug("rosterSaveButton pressed");
-	String rosterEntryTitle = rosterComboBox.getSelectedItem().toString();
-	RosterEntry r = Roster.instance().entryFromTitle(rosterEntryTitle);
-	if (r != null) {
-	    r.putAttribute("VSDecoder_Path", main_pane.getDecoder().getVSDFilePath());
-	    r.putAttribute("VSDecoder_Profile", profileComboBox.getSelectedItem().toString());
+        log.debug("rosterSaveButton pressed");
+        if (rosterSelector.getSelectedRosterEntries().length != 0) {
+            RosterEntry r = rosterSelector.getSelectedRosterEntries()[0];
+            r.putAttribute("VSDecoder_Path", main_pane.getDecoder().getVSDFilePath());
+            r.putAttribute("VSDecoder_Profile", profileComboBox.getSelectedItem().toString());
 
-	    // Need to write RosterEntry to file.
-	}
+            // Need to write RosterEntry to file.
+        }
     }
 
     // profileComboBoxActionPerformed()
