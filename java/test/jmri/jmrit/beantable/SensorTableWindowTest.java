@@ -29,7 +29,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         JmriJFrame ft = JmriJFrame.getFrame("Sensor Table");
         
         // Find the add button
-        AbstractButtonFinder abfinder = new AbstractButtonFinder("Add ..." );
+        AbstractButtonFinder abfinder = new AbstractButtonFinder("Add..." );
         JButton button = ( JButton ) abfinder.find( ft, 0);
         Assert.assertNotNull(button);   
 

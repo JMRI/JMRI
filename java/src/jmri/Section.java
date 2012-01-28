@@ -433,6 +433,7 @@ public class Section extends AbstractNamedBean
                 return null;
 			}
             mReverseStoppingNamedSensor = nbhm.getNamedBeanHandle(mReverseStoppingSensorName, s);
+            return s;
 		}	
 		return null;
 	}

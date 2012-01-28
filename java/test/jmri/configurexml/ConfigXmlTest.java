@@ -31,6 +31,7 @@ public class ConfigXmlTest extends TestCase {
         suite.addTest(LoadFileTest.suite());
         suite.addTest(ConfigXmlManagerTest.suite());
         suite.addTest(BlockManagerXmlTest.suite());
+        suite.addTest(SectionManagerXmlTest.suite());
         suite.addTest(SchemaTest.suite());
         suite.addTest(DefaultJavaBeanConfigXMLTest.suite());
         return suite;

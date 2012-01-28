@@ -30,7 +30,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         JmriJFrame ft = JmriJFrame.getFrame("Turnout Table");
         
         // Find the add button
-        AbstractButtonFinder abfinder = new AbstractButtonFinder("Add ..." );
+        AbstractButtonFinder abfinder = new AbstractButtonFinder("Add..." );
         JButton button = ( JButton ) abfinder.find( ft, 0);
         Assert.assertNotNull(button);   
 
