@@ -4,8 +4,6 @@ package apps.configurexml;
 
 import apps.SystemConsole;
 import apps.SystemConsoleConfigPanel;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import jmri.util.swing.FontComboUtil;
 import org.jdom.Element;
 
@@ -39,6 +37,7 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
      * @param o Object to store, of type SystemConsole
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         Element e = new Element("console");
@@ -68,10 +67,10 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
      * @param e Top level Element to unpack.
      * @return true if successful
       */
+    @Override
     public boolean load(Element e) {
         boolean result = true;
         String value;
-        Element ce;
 
         try {
             if ((value = e.getAttributeValue("scheme"))!=null) {
@@ -121,6 +120,7 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
      * @param element Top level Element to unpack.
      * @param o  ignored
      */
+    @Override
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");
     }
