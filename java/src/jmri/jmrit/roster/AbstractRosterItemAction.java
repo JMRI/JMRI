@@ -11,6 +11,7 @@ import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import jmri.beans.Beans;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 
 /**
@@ -83,7 +84,11 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
 
     boolean selectExistingFromEntry() {
         // create a dialog to select the roster entry to copy
-        JComboBox selections = new RosterEntryComboBox();
+        String group = null;
+        if (Beans.hasProperty(wi, "selectedRosterGroup")) {
+            group = (String) Beans.getProperty(wi, "selectedRosterGroup");
+        }
+        JComboBox selections = new RosterEntryComboBox(group);
         int retval = JOptionPane.showOptionDialog(mParent,
                                                   "Select one roster entry", "Select roster entry",
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,
