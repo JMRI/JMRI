@@ -398,6 +398,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         		return c.getType()+" "+rb.getString("(C)");
         	else if (c.hasFred())
         		return c.getType()+" "+rb.getString("(F)");
+        	else if (c.isPassenger())
+        		return c.getType()+" "+rb.getString("(P)");
+        	else if (c.isUtility())
+        		return c.getType()+" "+rb.getString("(U)");
         	else if (c.isHazardous())
         		return c.getType()+" "+rb.getString("(H)");
         	else

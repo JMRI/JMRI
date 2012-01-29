@@ -18,7 +18,7 @@ import jmri.jmrit.operations.trains.TrainScheduleManager;
 /**
  * Represents a car on the layout
  * 
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2012
  * @version             $Revision$
  */
 public class Car extends RollingStock {
@@ -29,6 +29,7 @@ public class Car extends RollingStock {
 	protected boolean _hazardous = false;
 	protected boolean _caboose = false;
 	protected boolean _fred = false;
+	protected boolean _utility = false;
 	protected boolean _loadGeneratedByStaging = false;
 	protected Kernel _kernel = null;
 	protected String _load = carLoads.getDefaultEmptyName();
@@ -367,6 +368,17 @@ public class Car extends RollingStock {
 	
 	public boolean isCaboose(){
 		return _caboose;
+	}
+	
+	public void setUtility(boolean utility){
+		boolean old = _utility;
+		_utility = utility;
+		if (!old == utility)
+			firePropertyChange("car caol", old?"true":"false", utility?"true":"false");
+	}
+	
+	public boolean isUtility(){
+		return _utility;
 	}
 	
 	/**
@@ -772,6 +784,8 @@ public class Car extends RollingStock {
 			_caboose = a.getValue().equals("true");
 		if ((a = e.getAttribute("fred")) != null)
 			_fred = a.getValue().equals("true");
+		if ((a = e.getAttribute("utility")) != null)
+			_utility = a.getValue().equals("true");
 		if ((a = e.getAttribute("locUnknown")) != null)
 			_locationUnknown = a.getValue().equals("true");
 		if ((a = e.getAttribute("kernel")) != null){
@@ -845,6 +859,8 @@ public class Car extends RollingStock {
 			e.setAttribute("caboose", isCaboose()?"true":"false");
 		if (hasFred())
 			e.setAttribute("fred", hasFred()?"true":"false");
+		if (isUtility())
+			e.setAttribute("utility", isUtility()?"true":"false");
 		if (getKernel() != null){
 			e.setAttribute("kernel", getKernelName());
 			if (getKernel().isLead(this))

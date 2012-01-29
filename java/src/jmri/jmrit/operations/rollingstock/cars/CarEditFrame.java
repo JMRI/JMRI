@@ -71,6 +71,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	JCheckBox passengerCheckBox = new JCheckBox(rb.getString("Passenger"));
 	JCheckBox cabooseCheckBox = new JCheckBox(rb.getString("Caboose"));
 	JCheckBox fredCheckBox = new JCheckBox(rb.getString("Fred"));
+	JCheckBox utilityCheckBox = new JCheckBox(rb.getString("Utility"));
 	JCheckBox hazardousCheckBox = new JCheckBox(rb.getString("Hazardous"));
 
 	// text field
@@ -116,6 +117,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		passengerCheckBox.setToolTipText(rb.getString("TipCarPassenger"));
 		cabooseCheckBox.setToolTipText(rb.getString("TipCarCaboose"));
 		fredCheckBox.setToolTipText(rb.getString("TipCarFred"));
+		utilityCheckBox.setToolTipText(rb.getString("TipCarUtility"));
 		hazardousCheckBox.setToolTipText(rb.getString("TipCarHazardous"));
 		fillWeightButton.setToolTipText(rb.getString("TipCalculateCarWeight"));
 		builtTextField.setToolTipText(rb.getString("TipBuildDate"));
@@ -155,11 +157,12 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		pType.setLayout(new GridBagLayout());
 		pType.setBorder(BorderFactory.createTitledBorder(rb.getString("Type")));
 		addItem(pType, typeComboBox, 0, 0);
-		addItem(pType, editTypeButton, 1, 0);
+		addItem(pType, editTypeButton, 2, 0);
+		addItem(pType, hazardousCheckBox, 3, 0);
 		addItem(pType, passengerCheckBox, 0, 1);
 		addItem(pType, cabooseCheckBox, 1, 1);
 		addItem(pType, fredCheckBox, 2, 1);
-		addItem(pType, hazardousCheckBox, 2, 0);
+		addItem(pType, utilityCheckBox, 3, 1);		
 		pPanel.add(pType);
 		
 		// row 4
@@ -383,6 +386,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		weightTonsTextField.setText(car.getWeightTons());
 		passengerCheckBox.setSelected(car.isPassenger());
 		cabooseCheckBox.setSelected(car.isCaboose());
+		utilityCheckBox.setSelected(car.isUtility());
+		utilityCheckBox.setSelected(car.isUtility());
 		fredCheckBox.setSelected(car.hasFred());
 		hazardousCheckBox.setSelected(car.isHazardous());
 
@@ -636,6 +641,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		_car.setWeightTons(weightTonsTextField.getText());
 		_car.setPassenger(passengerCheckBox.isSelected());
 		_car.setCaboose(cabooseCheckBox.isSelected());
+		_car.setUtility(utilityCheckBox.isSelected());
 		_car.setFred(fredCheckBox.isSelected());
 		_car.setHazardous(hazardousCheckBox.isSelected());
 		_car.setBuilt(builtTextField.getText());

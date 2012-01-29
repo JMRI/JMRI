@@ -101,7 +101,7 @@ public class TrainCommon {
 		pickUpCar(file, car, new StringBuffer(Setup.getSwitchListPickupCarPrefix()), Setup.getSwitchListPickupCarMessageFormat(), Setup.getSwitchListOrientation());
 	}
 	
-	private void pickUpCar(PrintWriter file, Car car, StringBuffer buf, String[] format, String orientation){
+	protected void pickUpCar(PrintWriter file, Car car, StringBuffer buf, String[] format, String orientation){
 		if (car.getRouteLocation().equals(car.getRouteDestination()))
 			return; // print nothing local move, see dropCar
 		for (int i=0; i<format.length; i++){
@@ -157,7 +157,7 @@ public class TrainCommon {
 		dropCar(file, car, buf, format, local, Setup.getSwitchListOrientation());
 	}
 	
-	private void dropCar(PrintWriter file, Car car, StringBuffer buf, String[] format, boolean local, String orientation){
+	protected void dropCar(PrintWriter file, Car car, StringBuffer buf, String[] format, boolean local, String orientation){
 		for (int i=0; i<format.length; i++){
 			String s = getCarAttribute(car, format[i], !pickup, local);
 			if (buf.length()+s.length()>lineLength(orientation)){

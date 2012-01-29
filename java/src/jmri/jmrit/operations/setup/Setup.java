@@ -913,6 +913,28 @@ public class Setup {
 		switchListLocalMessageFormat = format;
 	}
 	
+	/**
+	 * Gets the manifest format for utility cars.  The car's
+	 * road, number, and color are not printed.
+	 * @return Utility car format
+	 */
+	public static String[] getPickupUtilityCarMessageFormat(){
+		return createUitlityCarMessageFormat(pickupCarMessageFormat.clone());
+	}
+	
+	public static String[] getSetoutUtilityCarMessageFormat(){
+		return createUitlityCarMessageFormat(dropCarMessageFormat.clone());
+	}
+	
+	private static String[] createUitlityCarMessageFormat(String[] format){
+		// remove car's road, number, color
+		for (int i=0; i<format.length; i++){
+			if (format[i].equals(ROAD) || format[i].equals(NUMBER) || format[i].equals(COLOR))
+				format[i] = NONE;
+		}
+		return format;
+	}
+	
 	public static String getDropTextColor(){
 		return dropColor;
 	}
