@@ -598,18 +598,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
      *          Include a header with the length of the string to be received.
      */
     public String sendRoster(){
-        if (rosterList == null) rosterList = new ArrayList <RosterEntry>();
-        List <RosterEntry> list = Roster.instance().matchingList(null, null, null, null, null, null, null);
-        for (RosterEntry roster : list) {
-            if (manager.getSelectedRosterGroup() != null) {
-                if (roster.getAttribute(Roster.getRosterGroupProperty(manager.getSelectedRosterGroup())) != null &&
-                    roster.getAttribute(Roster.getRosterGroupProperty(manager.getSelectedRosterGroup())).equals("yes")) {
-                    rosterList.add(roster);
-                }
-            } else {
-                rosterList.add(roster);
-            }
-        }
+        if (rosterList == null) rosterList = Roster.instance().getEntriesInGroup(manager.getSelectedRosterGroup());
         StringBuilder rosterString = new StringBuilder(rosterList.size()*25);
         for (int i=0;i<rosterList.size();i++){
             RosterEntry entry = rosterList.get(i);
