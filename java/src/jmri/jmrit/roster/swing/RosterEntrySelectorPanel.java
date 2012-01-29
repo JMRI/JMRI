@@ -85,14 +85,6 @@ public class RosterEntrySelectorPanel extends JPanel implements RosterEntrySelec
         groupCombo.update(rg);
     }
 
-    public String getEmptyEntry() {
-        return entryCombo.getNonSelectedItem();
-    }
-
-    public void setEmptyEntry(String emptyEntry) {
-        entryCombo.setNonSelectedItem(emptyEntry);
-    }
-
     public RosterEntryComboBox getRosterEntryComboBox() {
         return entryCombo;
     }

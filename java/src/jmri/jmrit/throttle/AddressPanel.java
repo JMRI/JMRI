@@ -299,7 +299,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 		});
 
 		rosterBox = new RosterEntrySelectorPanel();
-        getRosterEntrySelector().setEmptyEntry(rb.getString("NoLocoSelected"));
+        getRosterEntrySelector().setNonSelectedItem(rb.getString("NoLocoSelected"));
 		getRosterEntrySelector().setToolTipText(rb.getString("SelectLocoFromRosterTT"));
 		getRosterEntrySelector().addPropertyChangeListener("selectedRosterEntries", new PropertyChangeListener() {
 
