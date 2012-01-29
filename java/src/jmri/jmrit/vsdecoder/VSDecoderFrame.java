@@ -54,7 +54,7 @@ class VSDecoderFrame extends JmriJFrame {
 	//d.setSize(d.getWidth()+20.0, d.getHeight()+20.0);
 	//this.setMinimumSize(d);
 	//this.setSize(d);
-	this.setSize(new Dimension(350,260));
+	this.setSize(new Dimension(decpane.getPreferredSize().width + 20, decpane.getPreferredSize().height + 20));
 	log.debug("pane size + " + decpane.getPreferredSize());
 	this.setVisible(true);
 
