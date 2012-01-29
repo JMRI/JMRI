@@ -263,7 +263,15 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         }
         return result;
    }
-   
+
+   public List<RosterEntry> getEntriesInGroup(String group) {
+       if (group == null || group.equals(Roster.ALLENTRIES)) {
+           return this.matchingList(null, null, null, null, null, null, null);
+       } else {
+           return this.getEntriesWithAttributeKeyValue(Roster.getRosterGroupProperty(group), "yes");
+       }
+   }
+
     /**
      * List of contained {@link RosterEntry} elements.
      */
