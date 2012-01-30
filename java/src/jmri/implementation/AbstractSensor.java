@@ -37,12 +37,21 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     protected boolean useDefaultTimerSettings = false;
     
     public void setSensorDebounceGoingActiveTimer(long time) { 
-        sensorDebounceGoingActive = time; 
+        if(sensorDebounceGoingActive == time)
+            return;
+        long oldValue = sensorDebounceGoingActive;
+        sensorDebounceGoingActive = time;
+        firePropertyChange("ActiveTimer", oldValue, sensorDebounceGoingActive);
+        
     }
     public long getSensorDebounceGoingActiveTimer() { return sensorDebounceGoingActive; }
     
-    public void setSensorDebounceGoingInActiveTimer(long time) { 
+    public void setSensorDebounceGoingInActiveTimer(long time) {
+        if(sensorDebounceGoingInActive == time)
+            return;
+        long oldValue = sensorDebounceGoingInActive;
         sensorDebounceGoingInActive = time;
+        firePropertyChange("InActiveTimer", oldValue, sensorDebounceGoingInActive);
     }
     public long getSensorDebounceGoingInActiveTimer() { return sensorDebounceGoingInActive; }
     
@@ -52,8 +61,9 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         useDefaultTimerSettings = boo;
         if(useDefaultTimerSettings){
             sensorDebounceGoingActive = jmri.InstanceManager.sensorManagerInstance().getDefaultSensorDebounceGoingActive();
-            sensorDebounceGoingInActive =  jmri.InstanceManager.sensorManagerInstance().getDefaultSensorDebounceGoingInActive();
+            sensorDebounceGoingInActive = jmri.InstanceManager.sensorManagerInstance().getDefaultSensorDebounceGoingInActive();
         }
+        firePropertyChange("GlobalTimer", !boo, boo);
     }
     
     public boolean useDefaultTimerSettings() { return useDefaultTimerSettings; }

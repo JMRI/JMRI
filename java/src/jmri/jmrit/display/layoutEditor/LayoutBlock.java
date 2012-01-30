@@ -664,6 +664,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	JmriJFrame editLayoutBlockFrame = null;
 	Component callingPane;
 	JTextField sensorNameField = new JTextField(16);
+    JTextField sensorDebounceInactiveField = new JTextField(5);
+    JTextField sensorDebounceActiveField = new JTextField(5);
+    JCheckBox sensorDebounceGlobalCheck = new JCheckBox(rb.getString("OccupancySensorUseGlobal"));
 	JTextField memoryNameField = new JTextField(16);
     JTextField metricField = new JTextField(10);
     JComboBox senseBox = new JComboBox();
@@ -714,6 +717,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             panel3.add(sensorNameField);
             sensorNameField.setToolTipText( rb.getString("OccupancySensorToolTip") );
             contentPane.add(panel3);
+            
 			// set up occupied sense (changeable)
 			JPanel panel4 = new JPanel(); 
             panel4.setLayout(new FlowLayout());
@@ -727,6 +731,20 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 			panel4.add(senseBox);
             senseBox.setToolTipText( rb.getString("OccupiedSenseHint") );
             contentPane.add(panel4);
+            
+            contentPane.add(sensorDebounceGlobalCheck);
+            sensorDebounceGlobalCheck.setToolTipText(rb.getString("OccupancySensorUseGlobal"));
+            JPanel panel4a = new JPanel();
+            panel4a.add(new JLabel(rb.getString("OccupancySensorDebounceInActive")));
+            sensorDebounceInactiveField.setToolTipText(rb.getString("OccupancySensorDebounceInActiveToolTip"));
+            panel4a.add(sensorDebounceInactiveField);
+            contentPane.add(panel4a);
+            JPanel panel4b = new JPanel();
+            panel4b.add(new JLabel(rb.getString("OccupancySensorDebounceActive")));
+            panel4b.add(sensorDebounceActiveField);
+            sensorDebounceActiveField.setToolTipText(rb.getString("OccupancySensorDebounceActiveToolTip"));
+            contentPane.add(panel4b);
+            
 			// set up track color (changeable)
 			contentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 			JPanel panel6 = new JPanel(); 
@@ -833,6 +851,25 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 		else {
 			senseBox.setSelectedIndex(senseInactiveIndex);
 		}
+        if(getOccupancySensor()!=null){
+            sensorDebounceGlobalCheck.setSelected(getOccupancySensor().useDefaultTimerSettings());
+            sensorDebounceInactiveField.setText(String.valueOf(getOccupancySensor().getSensorDebounceGoingInActiveTimer()));
+            sensorDebounceActiveField.setText(String.valueOf(getOccupancySensor().getSensorDebounceGoingActiveTimer()));
+            sensorDebounceGlobalCheck.setSelected(getOccupancySensor().useDefaultTimerSettings());
+        }
+        sensorDebounceGlobalCheck.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                if(sensorDebounceGlobalCheck.isSelected()){
+                    sensorDebounceInactiveField.setEnabled(false);
+                    sensorDebounceActiveField.setEnabled(false);
+                    sensorDebounceActiveField.setText(String.valueOf(jmri.InstanceManager.sensorManagerInstance().getDefaultSensorDebounceGoingActive()));
+                    sensorDebounceInactiveField.setText(String.valueOf(jmri.InstanceManager.sensorManagerInstance().getDefaultSensorDebounceGoingInActive()));
+                } else {
+                    sensorDebounceInactiveField.setEnabled(true);
+                    sensorDebounceActiveField.setEnabled(true);
+                }
+            }
+        });
 		setColorCombo(trackColorBox,blockTrackColor);
 		setColorCombo(occupiedColorBox,blockOccupiedColor);
 		setColorCombo(extraColorBox,blockExtraColor);
@@ -872,6 +909,15 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 				needsRedraw = true;
 			}
 		}
+        if(getOccupancySensor()!=null){
+            if(sensorDebounceGlobalCheck.isSelected()){
+                getOccupancySensor().useDefaultTimerSettings(true);
+            } else {
+                getOccupancySensor().useDefaultTimerSettings(false);
+                getOccupancySensor().setSensorDebounceGoingInActiveTimer(Long.parseLong(sensorDebounceInactiveField.getText().trim()));
+                getOccupancySensor().setSensorDebounceGoingActiveTimer(Long.parseLong(sensorDebounceActiveField.getText().trim()));
+            }
+        }
 		// check if occupied sense changed
 		int k = senseBox.getSelectedIndex();
 		int oldSense = occupiedSense;
@@ -2532,6 +2578,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                                     InstanceManager.layoutBlockManagerInstance().setLastRoutingChange();
                                     removeRouteFromNeighbour(srcEvent, update);
                                     break;
+                    default :       break;
                 }
             }
         }

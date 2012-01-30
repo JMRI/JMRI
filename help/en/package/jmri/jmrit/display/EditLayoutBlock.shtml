@@ -87,6 +87,15 @@ to do otherwise will result in an error message. Normally, the state of an
 occupancy sensor is "Active" when a block is occupied, so "Active" for occupied 
 sense is the automatic default. This can be changed by selecting "Inactive" in 
 the <b>Occupied Sense:</b> selection box.</p>
+You can edit the sensor debounce options from this window, setting the Sensor Debounce 
+helps to prevent false triggers of a sensor being passed into the system and triggering 
+other events in the system.<br>
+Such false triggers could be due to a dirty piece of track or electrical interferance.
+<b>Use Global Debounce Values</b> check box, allows you to select if the sensor will
+ use the default sensor debounce values if configured.<br>
+<b>Sensor Inactive Debounce</b> and <b>Sensor Active Debounce</b> allow you to 
+specify the amount of time in milliSeconds that the system waits before registering 
+the state change of a sensor.
 <p>
 Block track colors are used instead of the default track color if a section of 
 track is in a block. The track items in a block are drawn with different track 
@@ -110,7 +119,7 @@ Name:</b> field. Assigning a memory variable is optional. An assigned memory
 variable will contain as its "value" the "value" of the Block, and is useful 
 in identifying trains as they are tracked around the layout (see above).
 <p>
-The <b>Permissive Working Allowed<b> check box allows the block to be set so that if it is
+The <b>Permissive Working Allowed</b> check box allows the block to be set so that if it is
 already occupied, then another train is allowed to enter that block.  This feature is 
 mainly used within the SignalMast logic.
 <p>

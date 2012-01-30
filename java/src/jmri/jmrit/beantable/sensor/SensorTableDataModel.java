@@ -196,7 +196,10 @@ public class SensorTableDataModel extends BeanTableDataModel {
     }
     
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().indexOf("inverted")>=0) return true;
+        if ((e.getPropertyName().indexOf("inverted")>=0) || (e.getPropertyName().indexOf("GlobalTimer")>=0) ||
+            (e.getPropertyName().indexOf("ActiveTimer")>=0) || (e.getPropertyName().indexOf("InActiveTimer")>=0)){
+                return true;
+        }
         else return super.matchPropertyName(e);
     }
     
