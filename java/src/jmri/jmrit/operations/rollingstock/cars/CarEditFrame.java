@@ -639,11 +639,71 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			_car.setColor(colorComboBox.getSelectedItem().toString());
 		_car.setWeight(weightTextField.getText());
 		_car.setWeightTons(weightTonsTextField.getText());
-		_car.setPassenger(passengerCheckBox.isSelected());
-		_car.setCaboose(cabooseCheckBox.isSelected());
+		// ask if all cars of this type should be passenger
+		if (_car.isPassenger() ^ passengerCheckBox.isSelected()){
+			if (JOptionPane.showConfirmDialog(this,
+					MessageFormat.format(passengerCheckBox.isSelected()?rb.getString("carModifyTypePassenger"):rb.getString("carRemoveTypePassenger"), new Object[]{_car.getType()}),
+					MessageFormat.format(rb.getString("carModifyAllType"), new Object[]{_car.getType()}),
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+				// go through the entire list and change the caboose setting for all cars of this type
+				List<String> cars = carManager.getByIdList();
+				for (int i=0; i<cars.size(); i++){
+					Car c = carManager.getById(cars.get(i));
+					if (c.getType().equals(_car.getType()))
+						c.setPassenger(passengerCheckBox.isSelected());
+				}
+			}
+		}
+		_car.setPassenger(passengerCheckBox.isSelected());	
+		// ask if all cars of this type should be caboose
+		if (_car.isCaboose() ^ cabooseCheckBox.isSelected()){
+			if (JOptionPane.showConfirmDialog(this,
+					MessageFormat.format(cabooseCheckBox.isSelected()?rb.getString("carModifyTypeCaboose"):rb.getString("carRemoveTypeCaboose"), new Object[]{_car.getType()}),
+					MessageFormat.format(rb.getString("carModifyAllType"), new Object[]{_car.getType()}),
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+				// go through the entire list and change the caboose setting for all cars of this type
+				List<String> cars = carManager.getByIdList();
+				for (int i=0; i<cars.size(); i++){
+					Car c = carManager.getById(cars.get(i));
+					if (c.getType().equals(_car.getType()))
+						c.setCaboose(cabooseCheckBox.isSelected());
+				}
+			}
+		}
+		_car.setCaboose(cabooseCheckBox.isSelected());		
+		// ask if all cars of this type should be utility
+		if (_car.isUtility() ^ utilityCheckBox.isSelected()){
+			if (JOptionPane.showConfirmDialog(this,
+					MessageFormat.format(utilityCheckBox.isSelected()?rb.getString("carModifyTypeUtility"):rb.getString("carRemoveTypeUtility"), new Object[]{_car.getType()}),
+					MessageFormat.format(rb.getString("carModifyAllType"), new Object[]{_car.getType()}),
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+				// go through the entire list and change the utility for all cars of this type
+				List<String> cars = carManager.getByIdList();
+				for (int i=0; i<cars.size(); i++){
+					Car c = carManager.getById(cars.get(i));
+					if (c.getType().equals(_car.getType()))
+						c.setUtility(utilityCheckBox.isSelected());
+				}
+			}
+		}
 		_car.setUtility(utilityCheckBox.isSelected());
-		_car.setFred(fredCheckBox.isSelected());
+		// ask if all cars of this type should be hazardous
+		if (_car.isHazardous() ^ hazardousCheckBox.isSelected()){
+			if (JOptionPane.showConfirmDialog(this,
+					MessageFormat.format(hazardousCheckBox.isSelected()?rb.getString("carModifyTypeHazardous"):rb.getString("carRemoveTypeHazardous"), new Object[]{_car.getType()}),
+					MessageFormat.format(rb.getString("carModifyAllType"), new Object[]{_car.getType()}),
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+				// go through the entire list and change the hazardous setting for all cars of this type
+				List<String> cars = carManager.getByIdList();
+				for (int i=0; i<cars.size(); i++){
+					Car c = carManager.getById(cars.get(i));
+					if (c.getType().equals(_car.getType()))
+						c.setHazardous(hazardousCheckBox.isSelected());
+				}
+			}
+		}
 		_car.setHazardous(hazardousCheckBox.isSelected());
+		_car.setFred(fredCheckBox.isSelected());
 		_car.setBuilt(builtTextField.getText());
 		if (ownerComboBox.getSelectedItem() != null)
 			_car.setOwner(ownerComboBox.getSelectedItem().toString());
