@@ -135,6 +135,12 @@ public class Setup {
 	public static final String NONE = " ";				// none has be a character or a space
 	public static final String BOX = " [ ] ";
 	
+	// these are for the utility printing when using tabs
+	public static final String NO_ROAD = "NO_ROAD";
+	public static final String NO_NUMBER = "NO_NUMBER";
+	public static final String NO_COLOR = "NO_COLOR";
+	
+	
 	public static final String BLACK = rb.getString("Black");	// the supported pick up and set out colors
 	public static final String BLUE = rb.getString("Blue");
 	public static final String GREEN = rb.getString("Green");
@@ -923,7 +929,7 @@ public class Setup {
 	}
 	
 	public static String[] getSetoutUtilityCarMessageFormat(){
-		return createUitlityCarMessageFormat(getSwitchListDropCarMessageFormat());
+		return createUitlityCarMessageFormat(getDropCarMessageFormat());
 	}
 	
 	public static String[] getLocalUtilityCarMessageFormat(){
@@ -945,8 +951,12 @@ public class Setup {
 	private static String[] createUitlityCarMessageFormat(String[] format){
 		// remove car's road, number, color
 		for (int i=0; i<format.length; i++){
-			if (format[i].equals(ROAD) || format[i].equals(NUMBER) || format[i].equals(COLOR))
-				format[i] = NONE;
+			if (format[i].equals(ROAD))
+				format[i] = NO_ROAD;
+			else if (format[i].equals(NUMBER))
+				format[i] = NO_NUMBER;
+			else if (format[i].equals(COLOR))
+				format[i] = NO_COLOR;
 		}
 		return format;
 	}

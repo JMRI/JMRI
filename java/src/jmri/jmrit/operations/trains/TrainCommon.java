@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Common routines for trains
- * @author Daniel Boudreau (C) Copyright 2008, 2009, 2010, 2011
+ * @author Daniel Boudreau (C) Copyright 2008, 2009, 2010, 2011, 2012
  * @version             $Revision: 1 $
  */
 public class TrainCommon {
@@ -314,6 +314,13 @@ public class TrainCommon {
 			return " "+rs.getComment();
 		else if (attribute.equals(Setup.NONE))
 			return "";
+		// the three utility attributes that don't get printed but need to be tabbed out
+		else if (attribute.equals(Setup.NO_NUMBER))
+			return " "+tabString("", Control.MAX_LEN_STRING_ROAD_NUMBER-7);	// (-4 -3) for utility quantity field
+		else if (attribute.equals(Setup.NO_ROAD))
+			return " "+tabString("", CarRoads.instance().getCurMaxNameLength());
+		else if (attribute.equals(Setup.NO_COLOR))
+			return " "+tabString("", CarColors.instance().getCurMaxNameLength());
 		return " ("+rb.getString("ErrorPrintOptions")+") ";	// maybe user changed locale
 	}
 	
