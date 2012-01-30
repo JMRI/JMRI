@@ -919,11 +919,27 @@ public class Setup {
 	 * @return Utility car format
 	 */
 	public static String[] getPickupUtilityCarMessageFormat(){
-		return createUitlityCarMessageFormat(pickupCarMessageFormat.clone());
+		return createUitlityCarMessageFormat(getPickupCarMessageFormat());
 	}
 	
 	public static String[] getSetoutUtilityCarMessageFormat(){
-		return createUitlityCarMessageFormat(dropCarMessageFormat.clone());
+		return createUitlityCarMessageFormat(getSwitchListDropCarMessageFormat());
+	}
+	
+	public static String[] getLocalUtilityCarMessageFormat(){
+		return createUitlityCarMessageFormat(getLocalMessageFormat());
+	}
+	
+	public static String[] getSwitchListPickupUtilityCarMessageFormat(){
+		return createUitlityCarMessageFormat(getSwitchListPickupCarMessageFormat());
+	}
+	
+	public static String[] getSwitchListSetoutUtilityCarMessageFormat(){
+		return createUitlityCarMessageFormat(getSwitchListDropCarMessageFormat());
+	}
+	
+	public static String[] getSwitchListLocalUtilityCarMessageFormat(){
+		return createUitlityCarMessageFormat(getSwitchListLocalMessageFormat());
 	}
 	
 	private static String[] createUitlityCarMessageFormat(String[] format){

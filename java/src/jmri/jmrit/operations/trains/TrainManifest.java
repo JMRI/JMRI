@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
@@ -16,8 +15,6 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -29,17 +26,8 @@ import jmri.jmrit.operations.setup.Setup;
  */
 public class TrainManifest extends TrainCommon {
 	
-	EngineManager engineManager = EngineManager.instance();
-	CarManager carManager = CarManager.instance();
 	LocationManager locationManager = LocationManager.instance();
-	String[] pickupUtilityMessageFormat = Setup.getPickupUtilityCarMessageFormat();
-	String[] setoutUtilityMessageFormat = Setup.getSetoutUtilityCarMessageFormat();
-	boolean showUtilityCarLengthPickup = showUtilityCarLength(pickupUtilityMessageFormat);
-	boolean showUtilityCarLoadPickup = showUtilityCarLoad(pickupUtilityMessageFormat);
-	boolean showUtilityCarLengthSetout = showUtilityCarLength(setoutUtilityMessageFormat);
-	boolean showUtilityCarLoadSetout = showUtilityCarLoad(setoutUtilityMessageFormat);
 
-	
 	public TrainManifest(Train train){
 		// create manifest file
 		File file = TrainManagerXml.instance().createTrainManifestFile(
@@ -159,55 +147,31 @@ public class TrainManifest extends TrainCommon {
 
 			// block cars by destination
 			for (int j = r; j < routeList.size(); j++) {
-				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
-				// list utility cars by quantity
-				List<String> utilityCarTypes = new ArrayList<String>();
+				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));				
+				utilityCarTypes.clear();	// list utility cars by quantity
 				for (int k = 0; k < carList.size(); k++) {
 					Car car = carManager.getById(carList.get(k));
 					if (car.getRouteLocation() == rl
 							&& car.getRouteDestination() == rld) {
-						if (car.isUtility()){
-							// list utility cars by type, track, length, and load
-							String[] carType = car.getType().split("-");
-							String carAttributes = carType[0] + splitString(car.getTrackName());
-							if (showUtilityCarLengthPickup)
-								carAttributes = carAttributes + car.getLength();
-							if (showUtilityCarLoadPickup)
-								carAttributes = carAttributes + car.getLoad();
-							if (!utilityCarTypes.contains(carAttributes)) {
-								pickupUtilityCars(fileOut, carList, car, rl, rld);
-								utilityCarTypes.add(carAttributes);	// don't do this type again
-							}
-						} else {
+						if (car.isUtility())
+							pickupCars(fileOut, carList, car, rl, rld);
+						else
 							pickUpCar(fileOut, car);
-						}
 						cars++;
 						newWork = true;
 						if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))
 							emptyCars++;
 					}
 				}
-			}
-			// list utility cars by quantity
-			List<String> utilityCarTypes = new ArrayList<String>();
+			}		
+			utilityCarTypes.clear();	// list utility cars by quantity
 			for (int j = 0; j < carList.size(); j++) {
 				Car car = carManager.getById(carList.get(j));
 				if (car.getRouteDestination() == rl) {
-					if (car.isUtility()){
-						// list utility cars by type, track, length, and load
-						String[] carType = car.getType().split("-");
-						String carAttributes = carType[0];
-						if (showUtilityCarLengthSetout)
-							carAttributes = carAttributes + car.getLength();
-						if (showUtilityCarLoadSetout)
-							carAttributes = carAttributes + car.getLoad();
-						if (!utilityCarTypes.contains(carAttributes)) {
-							setoutUtilityCars(fileOut, carList, car, rl);
-							utilityCarTypes.add(carAttributes);	// don't do this type again
-						}
-					} else {
+					if (car.isUtility())
+						setoutCars(fileOut, carList, car, rl, car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null);
+					else
 						dropCar(fileOut, car);
-					}
 					cars--;
 					newWork = true;
 					if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))
@@ -269,62 +233,6 @@ public class TrainManifest extends TrainCommon {
 			addLine(fileOut, MessageFormat.format(rb.getString("EngineChangeAt"), new Object[]{splitString(rl.getName())}));
 		else if ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE || (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE)
 			addLine(fileOut, MessageFormat.format(rb.getString("CabooseChangeAt"), new Object[]{splitString(rl.getName())}));
-	}
-	
-	private void pickupUtilityCars(PrintWriter fileOut, List<String> carList, Car car, RouteLocation rl, RouteLocation rld){
-		// first we need the quantity
-		int count = 0;
-		for (int i = 0; i < carList.size(); i++) {
-			Car c = carManager.getById(carList.get(i));
-			String[] cType = c.getType().split("-");
-			String[] carType = car.getType().split("-");
-			if (c.getRouteLocation() == rl
-					&& c.getRouteDestination() == rld
-					&& c.isUtility()
-					&& cType[0].equals(carType[0])
-					&& splitString(c.getTrackName()).equals(splitString(car.getTrackName()))
-					&& (!showUtilityCarLengthPickup || c.getLength().equals(car.getLength()))
-					&& (!showUtilityCarLoadPickup || c.getLoad().equals(car.getLoad()))) {
-				count++;
-			}
-		}
-		log.debug("Car ("+car.toString()+ ") type ("+car.getType()+") length ("+car.getLength()+") load ("+car.getLoad()+") track ("+ car.getTrackName()+")");
-		pickUpCar(fileOut, car, new StringBuffer(Setup.getPickupCarPrefix() +" "+tabString(Integer.toString(count), 2)), pickupUtilityMessageFormat, Setup.getManifestOrientation());
-	}
-	
-	private void setoutUtilityCars(PrintWriter fileOut, List<String> carList, Car car, RouteLocation rl){
-		// first we need the quantity
-		int count = 0;
-		for (int i = 0; i < carList.size(); i++) {
-			Car c = carManager.getById(carList.get(i));
-			String[] cType = c.getType().split("-");
-			String[] carType = car.getType().split("-");
-			if (c.getRouteDestination() == rl
-					&& c.isUtility()
-					&& cType[0].equals(carType[0])
-					&& (!showUtilityCarLengthSetout || c.getLength().equals(car.getLength()))
-					&& (!showUtilityCarLoadSetout || c.getLoad().equals(car.getLoad()))) {
-				count++;
-			}
-		}
-		log.debug("Car ("+car.toString()+ ") type ("+car.getType()+") length ("+car.getLength()+") load ("+car.getLoad()+") track ("+ car.getTrackName()+")");
-		dropCar(fileOut, car, new StringBuffer(Setup.getDropCarPrefix() +" "+tabString(Integer.toString(count), 2)), setoutUtilityMessageFormat, false, Setup.getManifestOrientation());
-	}
-	
-	private boolean showUtilityCarLength(String[] mFormat){
-		for (int i=0; i<mFormat.length; i++){
-			if (mFormat[i].equals(Setup.LENGTH))
-				return true;
-		}
-		return false;
-	}
-	
-	private boolean showUtilityCarLoad(String[] mFormat){
-		for (int i=0; i<mFormat.length; i++){
-			if (mFormat[i].equals(Setup.LOAD))
-				return true;
-		}
-		return false;
 	}
 }
 

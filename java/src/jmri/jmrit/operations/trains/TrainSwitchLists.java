@@ -29,9 +29,14 @@ public class TrainSwitchLists extends TrainCommon {
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
 	TrainManager manager = TrainManager.instance();
-	
+		
 	// builds a switch list for a location
 	public void buildSwitchList(Location location, boolean newTrainsOnly){
+		// load message formats
+		pickupUtilityMessageFormat = Setup.getSwitchListPickupUtilityCarMessageFormat();
+		setoutUtilityMessageFormat = Setup.getSwitchListSetoutUtilityCarMessageFormat();
+		localUtilityMessageFormat = Setup.getSwitchListLocalUtilityCarMessageFormat();
+		
 		// create manifest file
 		File file = TrainManagerXml.instance().createSwitchListFile(
 				location.getName());
@@ -128,13 +133,17 @@ public class TrainSwitchLists extends TrainCommon {
 
 					// get a list of cars and determine if this location is serviced
 					// block cars by destination
-					for (int j = 0; j < routeList.size(); j++) {
+					for (int j = 0; j < routeList.size(); j++) {						
 						RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
+						utilityCarTypes.clear();	// list utility cars by quantity
 						for (int k = 0; k < carList.size(); k++) {
 							Car car = carManager.getById(carList.get(k));
 							if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
 									&& car.getRouteDestination() == rld) {
-								switchListPickUpCar(fileOut, car);
+								if (car.isUtility())
+									pickupCars(fileOut, carList, car, rl, rld);
+								else
+									switchListPickUpCar(fileOut, car);
 								pickupCars++;
 							}
 						}
@@ -142,10 +151,14 @@ public class TrainSwitchLists extends TrainCommon {
 					
 					dropEngines(fileOut, enginesList, rl);
 					
+					utilityCarTypes.clear();	// list utility cars by quantity
 					for (int j=0; j<carList.size(); j++){
 						Car car = carManager.getById(carList.get(j));
 						if (car.getRouteDestination() == rl){
-							switchListDropCar(fileOut, car);
+							if (car.isUtility())
+								setoutCars(fileOut, carList, car, rl, car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null);
+							else
+								switchListDropCar(fileOut, car);
 							dropCars++;
 						}
 					}

@@ -1349,7 +1349,8 @@ public class TrainBuilder extends TrainCommon{
 					continue; // no
 				if (secondPass && messageFlag){
 					messageFlag = false;
-					addLine(buildReport, THREE, "Second pass for location "+rl.getName());
+					noMoreMoves = false;
+					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildSecondPassForLocation"),new Object[]{rl.getName()}));
 				}
 				// check for car order?
 				car = getCarOrder(car);
