@@ -91,9 +91,11 @@ public class PrintOptionFrame extends OperationsFrame{
 	JTextField switchListPickupCarPrefix = new JTextField(10);
 	JTextField switchListDropCarPrefix = new JTextField(10);
 	JTextField switchListLocalPrefix = new JTextField(10);
+	JTextField hazardousTextField = new JTextField(20);
 	
 	// text area
 	JTextArea commentTextArea	= new JTextArea(2,90);
+	
 	JScrollPane commentScroller = new JScrollPane(commentTextArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	Dimension minScrollerDim = new Dimension(700,60);
 	
@@ -354,14 +356,16 @@ public class PrintOptionFrame extends OperationsFrame{
 		pManifestComment.add(printLoadsEmptiesCheckBox);
 		pManifestComment.add(use12hrFormatCheckBox);
 		pManifestComment.add(printTimetableNameCheckBox);
-		
+				
 		// manifest logo
 		JPanel pLogo = new JPanel();
 		pLogo.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutLogo")));
 		pLogo.add(removeLogoButton);
 		pLogo.add(addLogoButton);
 		pLogo.add(logoURL);
+		
 		p2.add(pManifestComment);
+		//p2.add(pHazardous);
 		p2.add(pLogo);
 		
 		pManifest.add(p1);
@@ -376,12 +380,26 @@ public class PrintOptionFrame extends OperationsFrame{
 		pManifest.add(pSwLocal);
 		pManifest.add(p2);
 		
-		// manifest comment
+		// comments
+		JPanel pComments = new JPanel();
+		pComments.setLayout(new BoxLayout(pComments, BoxLayout.X_AXIS));
+		JScrollPane pCommentsPane = new JScrollPane(pComments);
+		pCommentsPane.setBorder(BorderFactory.createTitledBorder(""));
+		
+		// missing cars comment
 		JPanel pComment = new JPanel();
 		pComment.setLayout(new GridBagLayout());
-		JScrollPane pCommentPane = new JScrollPane(pComment);
-		pCommentPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutCommentOptions")));
+		//JScrollPane pCommentPane = new JScrollPane(pComment);
+		pComment.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutCommentOptions")));
 		addItem (pComment, commentScroller, 0, 0);
+		
+		// Hazardous comment
+		JPanel pHazardous = new JPanel();
+		pHazardous.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutHazardous")));
+		pHazardous.add(hazardousTextField);
+
+		pComments.add(pComment);
+		pComments.add(pHazardous);
 		
 		// panel options
 		JPanel pOptions = new JPanel();
@@ -415,7 +433,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		addItem(pControl, saveButton, 0, 0);
 		
 		getContentPane().add(pManifestPane);	
-		getContentPane().add(pCommentPane);
+		getContentPane().add(pCommentsPane);
 		getContentPane().add(pOptionsPane);
 		getContentPane().add(pControl);
 		
@@ -432,6 +450,8 @@ public class PrintOptionFrame extends OperationsFrame{
 		printValidCheckBox.setSelected(Setup.isPrintValidEnabled());
 		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
 		editManifestCheckBox.setSelected(Setup.isManifestEditorEnabled());
+		
+		hazardousTextField.setText(Setup.getHazardousMsg());
 		
 		setSwitchListVisible(!formatSwitchListCheckBox.isSelected());
 		
@@ -618,6 +638,8 @@ public class PrintOptionFrame extends OperationsFrame{
 				format[i] = (String)b.getSelectedItem();
 			}
 			Setup.setSwitchListLocalMessageFormat(format);
+			// hazardous comment
+			Setup.setHazardousMsg(hazardousTextField.getText());
 			// misplaced car comment
 			Setup.setMiaComment(commentTextArea.getText());
 			// build report level
