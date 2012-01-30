@@ -1341,7 +1341,7 @@ information to assign and deliver cars to their appropriate trains and
 locations respectively.</P>
 
 <A	NAME="CabooseFredHazardous"></A>
-<H3>Passenger, Caboose, FRED, Hazardous Checkboxes</H3>
+<H3>Passenger, Caboose, FRED, Utility, and Hazardous Checkboxes</H3>
 
 If the car is used in passenger service select the passenger checkbox. The
 program will place passenger cars towards the rear of a mixed service
@@ -1354,7 +1354,19 @@ note to the switch list that the car is transporting hazardous
 materials. Your railroad's policy regarding hazardous materials can than
 be applied to this car!
 
-<H3>Car Location</H3>
+   <P>When the utility checkbox is selected, it instructions the program when printing manifests
+    and switch lists to not show the individual car's road and road number, but rather the quantity of cars
+    needed of that type. For example, prototype trains when shipping coal don't normally list the
+    cars in the train by the car's road number but instead show the number of cars, the type of car,
+    and the car's load on the train's manifest.</P>
+
+   <P>If you use the utility feature, it is strongly recommended that you select the utility
+    feature for all cars of a given type. Since the car's road and number isn't displayed on the manifests
+    and switch list, any car of that type can be placed into a train. Later if you try and find a
+    car by its road number, it could very well have been shipped out on an earlier train. So you
+    have to decide, use road numbers or or not for a given type of car.</P>
+
+   <H3>Car Location</H3>
 
 Now set the car's location on the layout. If the car is off the layout,
 set the location to none (blank space).
