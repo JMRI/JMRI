@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
+import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Location;
@@ -302,6 +303,10 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
         getHelper().enterClickAndLeave( new MouseEventData( this, f.cabooseCheckBox ) );
 		Assert.assertFalse("still not a caboose", c6.isCaboose());
         getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
+        // Change all car type to caboose dialog window should appear
+	    // need to push the "No" button in the dialog window to close
+	    pressDialogButton(f, "No");
+        
 		Assert.assertTrue("now a caboose", c6.isCaboose());
 		Assert.assertFalse("not hazardous 2", c6.isHazardous());
 		
@@ -309,6 +314,8 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertTrue("still a caboose", c6.isCaboose());
 		Assert.assertFalse("still no fred", c6.hasFred());
         getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
+	    // need to push the "No" button in the dialog window to close
+	    pressDialogButton(f, "No");
 		Assert.assertFalse("no longer a caboose", c6.isCaboose());
 		Assert.assertTrue("now has a fred", c6.hasFred());
 		Assert.assertFalse("not hazardous 3", c6.isHazardous());
@@ -316,9 +323,21 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
         getHelper().enterClickAndLeave( new MouseEventData( this, f.hazardousCheckBox ) );
 		Assert.assertFalse("still not hazardous 3", c6.isHazardous());
         getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
+	    // need to push the "No" button in the dialog window to close
+	    pressDialogButton(f, "No");
 		Assert.assertFalse("still no longer a caboose", c6.isCaboose());
 		Assert.assertTrue("still has a fred", c6.hasFred());
 		Assert.assertTrue("now hazardous", c6.isHazardous());
+		
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.utilityCheckBox ) );
+		Assert.assertFalse("not utility", c6.isUtility());
+        getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
+	    // need to push the "No" button in the dialog window to close
+	    pressDialogButton(f, "No");
+	    Assert.assertTrue("now utility", c6.isUtility());
+		Assert.assertFalse("not a caboose", c6.isCaboose());
+		Assert.assertTrue("still has a fred", c6.hasFred());
+		Assert.assertTrue("still hazardous", c6.isHazardous());
 		
 		// should have 6 cars now
 		Assert.assertEquals("number of cars", 6, cManager.getNumEntries());
@@ -462,7 +481,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private void pressDialogButton(CarAttributeEditFrame f, String buttonName){
+	private void pressDialogButton(OperationsFrame f, String buttonName){
 		//  (with JfcUnit, not pushing this off to another thread)			                                            
 		// Locate resulting dialog box
         List<javax.swing.JDialog> dialogList = new DialogFinder(null).findAll(f);
