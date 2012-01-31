@@ -23,7 +23,7 @@ public class AddSignalMastJFrame extends JmriJFrame {
         addHelpMenu("package.jmri.jmrit.beantable.SignalMastAddEdit", true);
         getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
-        add(new AddSignalMastPanel());
+        add(sigMastPanel = new AddSignalMastPanel());
         pack();
     }
     
@@ -36,6 +36,13 @@ public class AddSignalMastJFrame extends JmriJFrame {
 
         add(new AddSignalMastPanel(mast));
         pack();
+    }
+    
+    AddSignalMastPanel sigMastPanel = null;
+    
+    public void refresh(){
+        if(sigMastPanel!=null)
+            sigMastPanel.updateSelectedDriver();
     }
     
 }

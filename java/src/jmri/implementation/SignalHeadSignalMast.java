@@ -237,6 +237,34 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         }
     }
     
+    public static List<SignalHead> getSignalHeadsUsed(){
+        List<SignalHead> headsUsed = new ArrayList<SignalHead>();
+        for(String val : InstanceManager.signalMastManagerInstance().getSystemNameList()){
+            SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(val);
+            if(mast instanceof jmri.implementation.SignalHeadSignalMast){
+                java.util.List<NamedBeanHandle<SignalHead>> masthead = ((jmri.implementation.SignalHeadSignalMast)mast).getHeadsUsed();
+                for(NamedBeanHandle<SignalHead> bean : masthead){
+                    headsUsed.add(bean.getBean());
+                }
+            }
+        }
+        return headsUsed;
+    }
+    
+    public static String isHeadUsed(SignalHead head){
+        for(String val : InstanceManager.signalMastManagerInstance().getSystemNameList()){
+            SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(val);
+            if(mast instanceof jmri.implementation.SignalHeadSignalMast){
+                java.util.List<NamedBeanHandle<SignalHead>> masthead = ((jmri.implementation.SignalHeadSignalMast)mast).getHeadsUsed();
+                for(NamedBeanHandle<SignalHead> bean : masthead){
+                    if((bean.getBean())==head)
+                        return ((jmri.implementation.SignalHeadSignalMast)mast).getDisplayName();
+                }
+            }
+        }
+        return null;
+    }
+    
     static final protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadSignalMast.class.getName());
 }
 

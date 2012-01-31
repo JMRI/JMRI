@@ -72,34 +72,7 @@ public class DefaultSignalMastManager extends AbstractManager
         return (SignalMast)_tuser.get(key);
     }
     
-    public List<SignalHead> getSignalHeadsUsed(){
-        List<SignalHead> headsUsed = new ArrayList<SignalHead>();
-        for(NamedBean val : _tsys.values()){
-            if(val instanceof jmri.implementation.SignalHeadSignalMast){
-                java.util.List<NamedBeanHandle<SignalHead>> masthead = ((jmri.implementation.SignalHeadSignalMast)val).getHeadsUsed();
-                for(NamedBeanHandle<SignalHead> bean : masthead){
-                    headsUsed.add(bean.getBean());
-                }
-            }
-        }
-        return headsUsed;
-    }
-    
-    public String isHeadUsed(SignalHead head){
-        for(NamedBean val : _tsys.values()){
-            if(val instanceof jmri.implementation.SignalHeadSignalMast){
-                java.util.List<NamedBeanHandle<SignalHead>> masthead = ((jmri.implementation.SignalHeadSignalMast)val).getHeadsUsed();
-                for(NamedBeanHandle<SignalHead> bean : masthead){
-                    if((bean.getBean())==head)
-                        return ((jmri.implementation.SignalHeadSignalMast)val).getDisplayName();
-                }
-            }
-        }
-        return null;
-    
-    }
-    
-    int lastAutoMastRef = 0;
+    //int lastAutoMastRef = 0;
 
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalMastManager.class.getName());

@@ -48,9 +48,9 @@ public class AddSignalMastPanel extends JPanel {
     JScrollPane turnoutMastScroll;
     JScrollPane dccMastScroll;
     JPanel dccMastPanel = new JPanel();
-    JLabel prefixBoxLabel = new JLabel("System : ");
-    JComboBox prefixBox = new JComboBox();
-    JLabel dccAspectAddressLabel = new JLabel("DCC Accessory Address");
+    JLabel systemPrefixBoxLabel = new JLabel(rb.getString("DCCSystem") + ":");
+    JComboBox systemPrefixBox = new JComboBox();
+    JLabel dccAspectAddressLabel = new JLabel(rb.getString("DCCMastAddress"));
     JTextField dccAspectAddressField = new JTextField(5);
     
     JButton cancel = new JButton(rb.getString("ButtonCancel"));
@@ -63,7 +63,7 @@ public class AddSignalMastPanel extends JPanel {
                 rb.getString("HeadCtlMast"), rb.getString("TurnCtlMast"), rb.getString("VirtualMast"), rb.getString("DCCMast")
             });
         
-        refreshComboBox();
+        refreshHeadComboBox();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
         JPanel p;
@@ -133,7 +133,7 @@ public class AddSignalMastPanel extends JPanel {
         
         includeUsed.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                refreshComboBox();
+                refreshHeadComboBox();
             }
         });
     
@@ -149,7 +149,7 @@ public class AddSignalMastPanel extends JPanel {
         loadMastDefinitions();
         updateSelectedDriver();
         updateHeads();
-        refreshComboBox();
+        refreshHeadComboBox();
         sigSysBox.addItemListener(new ItemListener(){
             public void itemStateChanged(ItemEvent e) {
                 loadMastDefinitions();
@@ -183,8 +183,8 @@ public class AddSignalMastPanel extends JPanel {
         
         signalMastDriver.setEnabled(false);
         
-        prefixBoxLabel.setEnabled(true);
-        prefixBox.setEnabled(true);
+        systemPrefixBoxLabel.setEnabled(true);
+        systemPrefixBox.setEnabled(true);
         dccAspectAddressLabel.setEnabled(true);
         dccAspectAddressField.setEnabled(true);
 
@@ -254,16 +254,16 @@ public class AddSignalMastPanel extends JPanel {
             if(connList!=null){
                 for(int x = 0; x < connList.size(); x++){
                     jmri.CommandStation station = (jmri.CommandStation) connList.get(x);
-                    prefixBox.addItem(station.getUserName());
+                    systemPrefixBox.addItem(station.getUserName());
                 }
             } else {
-                prefixBox.addItem("None");
+                systemPrefixBox.addItem("None");
             }
             dccAspectAddressField.setText(""+dmast.getDccSignalMastAddress());
-            prefixBox.setSelectedItem(dmast.getCommandStation().getUserName());
+            systemPrefixBox.setSelectedItem(dmast.getCommandStation().getUserName());
             
-            prefixBoxLabel.setEnabled(false);
-            prefixBox.setEnabled(false);
+            systemPrefixBoxLabel.setEnabled(false);
+            systemPrefixBox.setEnabled(false);
             dccAspectAddressLabel.setEnabled(false);
             dccAspectAddressField.setEnabled(false);
         }
@@ -281,7 +281,7 @@ public class AddSignalMastPanel extends JPanel {
         return parts[2].substring(0, parts[2].indexOf("("));
     }
     
-    void updateSelectedDriver(){
+    protected void updateSelectedDriver(){
         signalHeadPanel.setVisible(false);
         turnoutMastScroll.setVisible(false);
         disabledAspectsPanel.setVisible(false);
@@ -544,9 +544,13 @@ public class AddSignalMastPanel extends JPanel {
                 
                 }
             } else if(rb.getString("DCCMast").equals(signalMastDriver.getSelectedItem())){
-                if(!checkUserName(userName.getText()))
+                if(!checkUserName(userName.getText())){
                     return;
-                String systemNameText = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
+                }
+                if(!validateDCCAddress()){
+                    return;
+                }
+                String systemNameText = ConnectionNameFromSystemName.getPrefixFromName((String) systemPrefixBox.getSelectedItem());
                 //if we return a null string then we will set it to use internal, thus picking up the default command station at a later date.
                 if(systemNameText.equals("\0"))
                     systemNameText = "I";
@@ -571,7 +575,7 @@ public class AddSignalMastPanel extends JPanel {
             prefs.addComboBoxLastSelection(systemSelectionCombo, (String) sigSysBox.getSelectedItem());
             prefs.addComboBoxLastSelection(driverSelectionCombo, (String) signalMastDriver.getSelectedItem());
             prefs.addComboBoxLastSelection(mastSelectionCombo+":"+((String) sigSysBox.getSelectedItem()), (String) mastBox.getSelectedItem());
-            refreshComboBox();
+            refreshHeadComboBox();
         }
         else {
             if(rb.getString("HeadCtlMast").equals(signalMastDriver.getSelectedItem())){
@@ -668,7 +672,7 @@ public class AddSignalMastPanel extends JPanel {
                 }
             }
             if(includeUsed.isSelected()){
-                String isUsed = InstanceManager.signalMastManagerInstance().isHeadUsed((SignalHead)h);
+                String isUsed = SignalHeadSignalMast.isHeadUsed((SignalHead)h);
                 if((isUsed!=null) && (!headAssignedElseWhere(h.getDisplayName(), isUsed))){
                     return false;
                 }
@@ -700,13 +704,13 @@ public class AddSignalMastPanel extends JPanel {
         return false;
     }
     
-    void refreshComboBox(){
+    void refreshHeadComboBox(){
         if(!rb.getString("HeadCtlMast").equals(signalMastDriver.getSelectedItem()))
             return;
         if(includeUsed.isSelected()){
             alreadyUsed = new ArrayList<NamedBean>();
         } else {
-            List<SignalHead> alreadyUsedHeads = InstanceManager.signalMastManagerInstance().getSignalHeadsUsed();
+            List<SignalHead> alreadyUsedHeads = SignalHeadSignalMast.getSignalHeadsUsed();
             alreadyUsed = new ArrayList<NamedBean>();
             for(SignalHead head : alreadyUsedHeads){
                 alreadyUsed.add(head);
@@ -869,10 +873,10 @@ public class AddSignalMastPanel extends JPanel {
         if(connList!=null){
             for(int x = 0; x < connList.size(); x++){
                 jmri.CommandStation station = (jmri.CommandStation) connList.get(x);
-                prefixBox.addItem(station.getUserName());
+                systemPrefixBox.addItem(station.getUserName());
             }
         } else {
-            prefixBox.addItem("None");
+            systemPrefixBox.addItem("None");
         }
         String mastType = mastNames.get(mastBox.getSelectedIndex()).getName();
         mastType =  mastType.substring(11, mastType.indexOf(".xml"));
@@ -884,21 +888,93 @@ public class AddSignalMastPanel extends JPanel {
             dccAspect.put(aspect, aPanel);        
         }
         dccMastPanel.removeAll();
-        dccMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(dccAspect.size()+2,2));
-        dccMastPanel.add(prefixBoxLabel);
-        dccMastPanel.add(prefixBox);
+        dccMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(dccAspect.size()+3,2));
+        dccMastPanel.add(systemPrefixBoxLabel);
+        dccMastPanel.add(systemPrefixBox);
         dccMastPanel.add(dccAspectAddressLabel);
         dccMastPanel.add(dccAspectAddressField);
+        if(dccAddressListener==null){
+            dccAddressListener = new FocusListener() {
+                public void focusLost(FocusEvent e){
+                    if(dccAspectAddressField.getText().equals("")){
+                        return;
+                    }
+                    validateDCCAddress();
+                }
+                public void focusGained(FocusEvent e){ }
+                
+            };
+            
+            dccAspectAddressField.addFocusListener(dccAddressListener);
+        }
+
         if(mast==null){
-            prefixBoxLabel.setEnabled(true);
-            prefixBox.setEnabled(true);
+            systemPrefixBoxLabel.setEnabled(true);
+            systemPrefixBox.setEnabled(true);
             dccAspectAddressLabel.setEnabled(true);
             dccAspectAddressField.setEnabled(true);
-        } else {
-
         }
+        
         for(String aspect: dccAspect.keySet()){
             dccMastPanel.add(dccAspect.get(aspect).getPanel());
+        }
+        dccMastPanel.add(new JLabel(rb.getString("DCCMastCopyAspectId")));
+        dccMastPanel.add(copyFromMastSelection());
+    }
+    
+    FocusListener dccAddressListener = null;
+    
+    boolean validateDCCAddress(){
+        if(dccAspectAddressField.getText().equals("")){
+            JOptionPane.showMessageDialog(null, rb.getString("DCCMastAddressBlank"));
+            return false;
+        }
+        int address =-1;
+        try{
+            address=Integer.parseInt(dccAspectAddressField.getText().trim());
+        } catch (java.lang.NumberFormatException e){
+            JOptionPane.showMessageDialog(null, rb.getString("DCCMastAddressNumber"));
+            return false;
+        }
+        if(DccSignalMast.isDCCAddressUsed(address)!=null){
+            String msg = java.text.MessageFormat.format(rb
+                .getString("DCCMastAddressAssigned"), new Object[] { dccAspectAddressField.getText(), DccSignalMast.isDCCAddressUsed(address)});
+            JOptionPane.showMessageDialog(null, msg);
+            return false;
+        }
+        return true;
+    }
+    
+    JComboBox copyFromMastSelection(){
+        JComboBox mastSelect = new JComboBox();
+        List<String> names = InstanceManager.signalMastManagerInstance().getSystemNameList();
+        for(String name: names){
+            if((InstanceManager.signalMastManagerInstance().getNamedBean(name) instanceof DccSignalMast) && 
+                InstanceManager.signalMastManagerInstance().getSignalMast(name).getSignalSystem().getSystemName().equals(sigsysname)) {
+                mastSelect.addItem(InstanceManager.signalMastManagerInstance().getNamedBean(name).getDisplayName());
+            }
+        }
+        if(mastSelect.getItemCount()==0){
+            mastSelect.setEnabled(false);
+        } else {
+            mastSelect.insertItemAt("", 0);
+            mastSelect.setSelectedIndex(0);
+            mastSelect.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    JComboBox eb = (JComboBox) e.getSource();
+                    String sourceMast = (String)eb.getSelectedItem();
+                    if(sourceMast!=null && !sourceMast.equals(""))
+                        copyFromAnotherDCCMastAspect(sourceMast);
+                }
+            });
+        }
+        return mastSelect;
+    }
+    
+    void copyFromAnotherDCCMastAspect(String strMast){
+        DccSignalMast mast = (DccSignalMast)InstanceManager.signalMastManagerInstance().getNamedBean(strMast);
+        for(String aspect: dccAspect.keySet()){
+            dccAspect.get(aspect).setAspectId(mast.getOutputForAppearance(aspect));
         }
     }
     

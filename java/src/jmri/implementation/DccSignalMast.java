@@ -83,7 +83,6 @@ public class DccSignalMast extends AbstractSignalMast {
         } catch (NumberFormatException e){
             log.warn("DCC accessory address SystemName "+ systemName + " is not in the correct format");
         }
-        
         configureSignalSystemDefinition(system);
         configureAspectTable(system, mast);
     }
@@ -170,4 +169,17 @@ public class DccSignalMast extends AbstractSignalMast {
   CommandStation c;
 
   int DccSignalDecoderAddress;
+  
+  
+    public static String isDCCAddressUsed(int addr){
+        for(String val : InstanceManager.signalMastManagerInstance().getSystemNameList()){
+            SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(val);
+            if(mast instanceof jmri.implementation.DccSignalMast){
+                if(((DccSignalMast)mast).getDccSignalMastAddress() == addr){
+                    return ((DccSignalMast)mast).getDisplayName();
+                }
+            }
+        }
+        return null;
+    }
 }
