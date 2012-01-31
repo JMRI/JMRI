@@ -47,6 +47,10 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         else e.setAttribute("port", rb.getString("noneSelected"));
         if (adapter.getManufacturer()!=null)
             e.setAttribute("manufacturer", adapter.getManufacturer());
+        if (adapter.getSystemConnectionMemo()!=null){
+            e.setAttribute("userName", adapter.getSystemConnectionMemo().getUserName());
+            e.setAttribute("systemPrefix", adapter.getSystemConnectionMemo().getSystemPrefix());
+        }
         if (adapter.getDisabled())
             e.setAttribute("disabled", "yes");
         else e.setAttribute("disabled", "no");
@@ -65,6 +69,15 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         getInstance();
         // simulator has fewer options in the XML, so implement
         // just needed ones       
+        if (adapter.getSystemConnectionMemo()!=null){
+            if (e.getAttribute("userName")!=null) {
+                adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
+            }
+            
+            if (e.getAttribute("systemPrefix")!=null) {
+                adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
+            }
+        }
         if (e.getAttribute("option1")!=null) {
             String option1Setting = e.getAttribute("option1").getValue();
             adapter.configureOption1(option1Setting);

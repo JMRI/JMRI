@@ -39,7 +39,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     public AbstractNetworkConnectionConfig() {
     }
 
-    boolean init = false;
+    protected boolean init = false;
     
     protected void checkInitDone() {
     	if (log.isDebugEnabled()) log.debug("init called for "+name());

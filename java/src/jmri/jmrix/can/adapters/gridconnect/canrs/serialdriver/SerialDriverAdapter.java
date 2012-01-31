@@ -62,6 +62,12 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
     public String option2Name() { return "CAN ID for CAN-USB"; }
     
     public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
+        
+    public void dispose(){
+        if (adaptermemo!=null)
+            adaptermemo.dispose();
+        adaptermemo = null;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 

@@ -24,6 +24,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
     public NetworkDriverAdapter() {
         super();
         adaptermemo = new jmri.jmrix.can.CanSystemConnectionMemo();
+        adaptermemo.setUserName("OpenLCB");
         setManufacturer(jmri.jmrix.DCCManufacturerList.OPENLCB);
     }
     

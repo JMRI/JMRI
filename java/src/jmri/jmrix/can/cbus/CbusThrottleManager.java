@@ -240,6 +240,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     }
     
     public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l){
+        log.debug("disposeThrottle called for " + t);
         if ( super.disposeThrottle(t, l)){
             CbusThrottle lnt = (CbusThrottle) t;
             lnt.throttleDispose();
