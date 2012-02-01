@@ -50,7 +50,7 @@ public class SignalMastTableAction extends AbstractTableAction {
         return "package.jmri.jmrit.beantable.SignalMastTable";
     }
 
-    JmriJFrame addFrame = null;
+    jmri.jmrit.beantable.signalmast.AddSignalMastJFrame addFrame = null;
 
     // has to agree with number in SignalMastDataModel
     final static int VALUECOL = BeanTableDataModel.VALUECOL;
@@ -88,6 +88,8 @@ public class SignalMastTableAction extends AbstractTableAction {
     protected void addPressed(ActionEvent e) {
         if (addFrame==null) {
             addFrame = new jmri.jmrit.beantable.signalmast.AddSignalMastJFrame();
+        } else {
+            addFrame.refresh();
         }
         addFrame.setVisible(true);
     }
