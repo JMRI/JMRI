@@ -1286,6 +1286,7 @@ public class TrainBuilder extends TrainCommon{
 		}
 		if (percent == 100 && multipass)
 			addLine(buildReport, THREE, rb.getString("buildFinalPass"));
+		noMoreMoves = false;	// need to reset this in case noMoreMoves is true on first pass
 		// determine how many locations are serviced by this train
 		int numLocs = routeList.size();
 		if (numLocs > 1)  // don't find car destinations for the last location in the route
