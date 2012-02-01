@@ -337,10 +337,20 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		if (!ignoreStatusCheckBox.isSelected()){
 			rs.setLocationUnknown(locationUnknownCheckBox.isSelected());
 			rs.setOutOfService(outOfServiceCheckBox.isSelected());
-		}
+		}		
 		// update location and destination
 		if (!changeLocation(rs))
 			return false;
+		// check to see if rolling stock is in staging and out of service (also location unknown)
+		if (outOfServiceCheckBox.isSelected() && rs.getTrack()!=null && rs.getTrack().getLocType().equals(Track.STAGING)){
+			JOptionPane.showMessageDialog(this,
+					getRb().getString("rsNeedToRemoveStaging"),
+					getRb().getString("rsInStaging"),
+					JOptionPane.WARNING_MESSAGE);
+			// clear the rolling stock's location
+			locationBox.setSelectedItem("");
+			rs.setLocation(null, null);
+		}	
 		if (!changeDestination(rs))
 			return false;
 
