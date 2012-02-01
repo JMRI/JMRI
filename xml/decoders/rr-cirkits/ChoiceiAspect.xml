@@ -19,38 +19,38 @@
 <!-- Indexed aspect choices for DCC mode signals -->
 
 <ienumVal>
-  <ienumChoice choice="Stop"/>
-  <ienumChoice choice="Take Siding"/>
-  <ienumChoice choice="Stop-Orders"/>
-  <ienumChoice choice="Stop-Proceed"/>
-  <ienumChoice choice="Restricting"/>
-  <ienumChoice choice="Permissive"/>
-  <ienumChoice choice="Slow-Stop"/>
-  <ienumChoice choice="Slow"/>
-  <ienumChoice choice="Slow-Medium"/>
-  <ienumChoice choice="Slow-Limited"/>
-  <ienumChoice choice="Slow-Clear"/>
-  <ienumChoice choice="Medium-Stop"/>
-  <ienumChoice choice="Medium-Slow"/>
-  <ienumChoice choice="Medium"/>
-  <ienumChoice choice="Medium-Ltd"/>
-  <ienumChoice choice="Medium-Clr"/>
-  <ienumChoice choice="Limited-Stop"/>
-  <ienumChoice choice="Limited-Slow"/>
-  <ienumChoice choice="Limited-Med"/>
-  <ienumChoice choice="Limited"/>
-  <ienumChoice choice="Limited-Clear"/>
-  <ienumChoice choice="Approach"/>
-  <ienumChoice choice="Advance-Appr"/>
-  <ienumChoice choice="Appr-Slow"/>
-  <ienumChoice choice="Adv-Appr-Slow"/>
-  <ienumChoice choice="Appr-Medium"/>
-  <ienumChoice choice="Adv-Appr-Med"/>
-  <ienumChoice choice="Appr-Limited"/>
-  <ienumChoice choice="Adv-Appr-Ltd"/>
-  <ienumChoice choice="Clear"/>
-  <ienumChoice choice="Cab-Speed"/>
-  <ienumChoice choice="Dark"/>
+  <ienumChoice choice=" 0-Stop"/>
+  <ienumChoice choice=" 1-Take Siding"/>
+  <ienumChoice choice=" 2-Stop-Orders"/>
+  <ienumChoice choice=" 3-Stop-Proceed"/>
+  <ienumChoice choice=" 4-Restricting"/>
+  <ienumChoice choice=" 5-Permissive"/>
+  <ienumChoice choice=" 6-Slow-Approach"/>
+  <ienumChoice choice=" 7-Slow"/>
+  <ienumChoice choice=" 8-Slow-Medium"/>
+  <ienumChoice choice=" 9-Slow-Limited"/>
+  <ienumChoice choice="10-Slow-Clear"/>
+  <ienumChoice choice="11-Medium-Appr"/>
+  <ienumChoice choice="12-Medium-Slow"/>
+  <ienumChoice choice="13-Medium"/>
+  <ienumChoice choice="14-Medium-Ltd"/>
+  <ienumChoice choice="15-Medium-Clr"/>
+  <ienumChoice choice="16-Limited-Appr"/>
+  <ienumChoice choice="17-Limited-Slow"/>
+  <ienumChoice choice="18-Limited-Med"/>
+  <ienumChoice choice="19-Limited"/>
+  <ienumChoice choice="20-Limited-Clear"/>
+  <ienumChoice choice="21-Approach"/>
+  <ienumChoice choice="22-Advance-Appr"/>
+  <ienumChoice choice="23-Appr-Slow"/>
+  <ienumChoice choice="24-Adv-Appr-Slow"/>
+  <ienumChoice choice="25-Appr-Medium"/>
+  <ienumChoice choice="26-Adv-Appr-Med"/>
+  <ienumChoice choice="27-Appr-Limited"/>
+  <ienumChoice choice="28-Adv-Appr-Ltd"/>
+  <ienumChoice choice="29-Clear"/>
+  <ienumChoice choice="30-Cab-Speed"/>
+  <ienumChoice choice="31-Dark"/>
 </ienumVal>
       
  	  	 
