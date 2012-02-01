@@ -624,7 +624,7 @@ public class TrainBuilder extends TrainCommon{
 			}
 			// remove engines that are out of service
 			if (engine.isOutOfService()){
-				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeEngineOutOfService"),new Object[]{engine.toString()}));
+				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeEngineOutOfService"),new Object[]{engine.toString(), engine.getLocationName(), engine.getTrackName()}));
 				engineList.remove(indexEng);
 				indexEng--;
 				continue;
@@ -932,15 +932,21 @@ public class TrainBuilder extends TrainCommon{
     		}
     		// remove cars that have been reported as missing
     		if (c.isLocationUnknown()){
-       			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarLocUnknown"),new Object[]{c.toString()}));
-				carList.remove(c.getId());
+       			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarLocUnknown"),new Object[]{c.toString(), c.getLocationName(), c.getTrackName()}));
+				if (c.getTrack().equals(departStageTrack))
+					throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorLocationUnknown"),
+							new Object[]{c.getLocationName(), c.getTrackName(), c.toString()}));
+       			carList.remove(c.getId());
 				carIndex--;
 				continue;
     		}
     		// remove cars that are out of service
     		if (c.isOutOfService()){
-       			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarOutOfService"),new Object[]{c.toString()}));
-				carList.remove(c.getId());
+       			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarOutOfService"),new Object[]{c.toString(), c.getLocationName(), c.getTrackName()}));
+    			if (c.getTrack().equals(departStageTrack))
+					throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorLocationOutOfService"),
+							new Object[]{c.getLocationName(), c.getTrackName(), c.toString()}));
+       			carList.remove(c.getId());
 				carIndex--;
 				continue;
     		}
