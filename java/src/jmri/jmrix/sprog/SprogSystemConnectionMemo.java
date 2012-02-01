@@ -25,6 +25,14 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         this.st = st;
         sprogMode = sm;  // static
         register();
+        InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
+    }
+    
+    public SprogSystemConnectionMemo(SprogMode sm) {
+        super("S", "Sprog");
+        sprogMode = sm;  // static
+        register();
+        InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
     }
     
      public SprogSystemConnectionMemo() {

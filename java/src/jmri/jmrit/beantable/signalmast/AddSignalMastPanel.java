@@ -870,6 +870,7 @@ public class AddSignalMastPanel extends JPanel {
             return;
         dccAspect = new HashMap<String, DCCAspectPanel>(10);
         java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+        systemPrefixBox.removeAllItems();
         if(connList!=null){
             for(int x = 0; x < connList.size(); x++){
                 jmri.CommandStation station = (jmri.CommandStation) connList.get(x);
@@ -885,7 +886,7 @@ public class AddSignalMastPanel extends JPanel {
         while(aspects.hasMoreElements()){
             String aspect = aspects.nextElement();
             DCCAspectPanel aPanel = new DCCAspectPanel(aspect);
-            dccAspect.put(aspect, aPanel);        
+            dccAspect.put(aspect, aPanel);
         }
         dccMastPanel.removeAll();
         dccMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(dccAspect.size()+3,2));
@@ -918,11 +919,30 @@ public class AddSignalMastPanel extends JPanel {
         for(String aspect: dccAspect.keySet()){
             dccMastPanel.add(dccAspect.get(aspect).getPanel());
         }
+        if((dccAspect.size() & 1) == 1)
+            dccMastPanel.add(new JLabel());
         dccMastPanel.add(new JLabel(rb.getString("DCCMastCopyAspectId")));
         dccMastPanel.add(copyFromMastSelection());
     }
     
     FocusListener dccAddressListener = null;
+    
+    static boolean validateAspectId(String strAspect){
+        int aspect = -1;
+        try{
+            aspect=Integer.parseInt(strAspect.trim());
+        } catch (java.lang.NumberFormatException e){
+            JOptionPane.showMessageDialog(null, rb.getString("DCCMastAspectNumber"));
+            return false;
+        }
+        
+        if (aspect < 0 || aspect>31) {
+            JOptionPane.showMessageDialog(null, rb.getString("DCCMastAspectOutOfRange"));
+            log.error("invalid aspect " + aspect);
+            return false;
+        }
+        return true;
+    }
     
     boolean validateDCCAddress(){
         if(dccAspectAddressField.getText().equals("")){
@@ -934,6 +954,12 @@ public class AddSignalMastPanel extends JPanel {
             address=Integer.parseInt(dccAspectAddressField.getText().trim());
         } catch (java.lang.NumberFormatException e){
             JOptionPane.showMessageDialog(null, rb.getString("DCCMastAddressNumber"));
+            return false;
+        }
+        
+        if (address < 1 || address>2044) {
+            JOptionPane.showMessageDialog(null, rb.getString("DCCMastAddressOutOfRange"));
+            log.error("invalid address " + address);
             return false;
         }
         if(DccSignalMast.isDCCAddressUsed(address)!=null){
@@ -1034,7 +1060,17 @@ public class AddSignalMastPanel extends JPanel {
                 TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 border.setTitle(aspect);
                 panel.setBorder(border);
-                
+                aspectId.addFocusListener(new FocusListener() {
+                        public void focusLost(FocusEvent e){
+                            if(aspectId.getText().equals("")){
+                                return;
+                            }
+                            if(!validateAspectId(aspectId.getText()))
+                                aspectId.requestFocusInWindow();
+                        }
+                        public void focusGained(FocusEvent e){ }
+                        
+                    });                
                 disabledCheck.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         setAspectDisabled(disabledCheck.isSelected());

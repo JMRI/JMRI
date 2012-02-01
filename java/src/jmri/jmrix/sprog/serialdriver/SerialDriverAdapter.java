@@ -35,8 +35,14 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
 
     public SerialDriverAdapter() {
         super();
-        adaptermemo = new SprogSystemConnectionMemo();
+        adaptermemo = new SprogSystemConnectionMemo(SprogMode.SERVICE);
         //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
+        adaptermemo.setUserName("SPROG");
+    }
+    
+    public SerialDriverAdapter(SprogMode sm){
+        super();
+        adaptermemo = new SprogSystemConnectionMemo(sm);
         adaptermemo.setUserName("SPROG");
     }
     
@@ -192,10 +198,13 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
 
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                justification="temporary until mult-system; only set when disposed")
     public void dispose(){
         if (adaptermemo!=null)
             adaptermemo.dispose();
         adaptermemo = null;
+        mInstance = null;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());

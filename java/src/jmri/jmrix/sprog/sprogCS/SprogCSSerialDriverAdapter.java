@@ -26,7 +26,7 @@ public class SprogCSSerialDriverAdapter
 extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
 
     public SprogCSSerialDriverAdapter() {
-        super();
+        super(SprogMode.OPS);
         //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
         adaptermemo.setUserName("SPROG Command Station");
     }
@@ -39,8 +39,7 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
         // connect to the traffic controller
         SprogTrafficController control = SprogTrafficController.instance();
         control.connectPort(this);
-                
-        adaptermemo.setSprogMode(SprogMode.OPS);
+
         adaptermemo.setSprogTrafficController(control);
         adaptermemo.configureCommandStation();
         adaptermemo.configureManagers();
@@ -61,6 +60,15 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
     }
     static volatile SprogCSSerialDriverAdapter mInstance = null;
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification="temporary until mult-system; only set when disposed")
+    public void dispose(){
+        if (adaptermemo!=null)
+            adaptermemo.dispose();
+        adaptermemo = null;
+        mInstance = null;
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogCSSerialDriverAdapter.class.getName());
 
 }
