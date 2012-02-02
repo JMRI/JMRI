@@ -138,10 +138,16 @@ use the appropriate checkbox to generate what you want.</P>
 
 <h2>Building and running JMRI using Eclipse</h2>
 
-<P>After completing the ant build as described above, you need to refresh the jmri directory.  Right click on the jmri directory name
-and select "Refresh".  The refresh operation should trigger a build of the workspace and the build should complete without error. 
-
-<P>To run an application do the following:</P>
+ <P>After completing the ant build as described above, you need to refresh the jmri directory.
+  Right click on the jmri directory name and select "Refresh". The refresh operation should trigger
+  a build of the workspace and the build should complete without error.
+ 
+ <P>As of early 2012, the JMRI build path has a library reference to "jre6" which is Java version
+  6. When installing your JRE be sure and name it "jre6" or you will get an error message stating
+  that the reference to jre6 could not be found.
+  
+ <P>To run an application do the following:</P>
+ 
 <ol>
 
 <LI>You need to configure the Java complier to not scrub the output
