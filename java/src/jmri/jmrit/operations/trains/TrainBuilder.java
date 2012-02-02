@@ -2387,7 +2387,7 @@ public class TrainBuilder extends TrainCommon{
 			Track trackTemp = null;
 			Location testDestination = locationManager.getLocationByName(rld.getName());
 			if (testDestination == null){
-				// The following code should not be executed, all locations in the route have been already tested
+				// The following code should not be executed, all locations in the route have been already checked
 				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorRouteLoc"),
 						new Object[]{train.getRoute().getName(), rld.getName()}));
 			}
@@ -2409,6 +2409,14 @@ public class TrainBuilder extends TrainCommon{
 				if (status.equals(Track.OKAY)){
 					trackTemp = terminateStageTrack;
 					destinationTemp = testDestination;
+				} else if (status.contains(Track.LOAD) && car.getTrack() == departStageTrack && rldSave == null
+						&& (departStageTrack.isAddLoadsEnabled() || departStageTrack.isAddLoadsEnabledAnySiding())){
+					// try and generate a load for this car into staging
+					if (generateLoadForCarDepartingAndTerminatingIntoStaging(car)){
+						trackTemp = terminateStageTrack;
+						destinationTemp = testDestination;
+					} else		
+						continue;	// failed to create load
 				} else {
 					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), terminateStageTrack.getName(), status}));
 					continue;
@@ -2585,6 +2593,27 @@ public class TrainBuilder extends TrainCommon{
 			}
 		}
 		return false;	// no build errors, but car not given destination
+	}
+	
+	private boolean generateLoadForCarDepartingAndTerminatingIntoStaging(Car car){
+		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchTrackNewLoad"),
+				new Object[]{car.toString(), car.getType(), car.getLoad(), car.getTrackName()}));
+		// figure out which loads the car can use
+		List<String> loads = CarLoads.instance().getNames(car.getType());
+		for (int i=0; i<loads.size(); i++){
+			String load = loads.get(i);
+			if (terminateStageTrack.acceptsLoadName(load)){
+				car.setLoad(load);
+				car.setLoadGeneratedFromStaging(true);
+				// is car part of kernel?
+				car.updateKernel();
+				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCreateNewLoadForCar"),
+						new Object[]{car.toString(), car.getLoad(), terminateStageTrack.getLocation().getName(), terminateStageTrack.getName()}));
+				return true;
+			}				
+		}
+		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildUnableNewLoad"), new Object[]{car.toString()}));
+		return false;
 	}
 
 	private void buildFailed(BuildFailedException e){
