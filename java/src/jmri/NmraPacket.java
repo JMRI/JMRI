@@ -345,25 +345,69 @@ public class NmraPacket {
           return null;
       }
 
-      if (aspect < 0 || aspect >31) {
+      /*if (aspect < 0 || aspect >31) {
           log.error("invalid aspect "+aspect);
           return null;
-      }
+      }*/
 
       outputAddr -= 1; // Make the address 0 based
       int lowAddr = (outputAddr & 0x03 ) ;  // Output Pair Address
       int boardAddr = (outputAddr >> 2) + 1 ; // Board Address
-      int midAddr =  boardAddr & 0x3F ;
+      
+      /*int midAddr =  boardAddr & 0x3F ;
       int highAddr = ( (~boardAddr) >> 6) & 0x07;
 
       byte[] retVal = new byte[4];
       retVal[0] = (byte) (0x80 | midAddr ) ;
       retVal[1] = (byte) (0x01 | (highAddr<<4) | (lowAddr << 1)) ;
       retVal[2] = (byte) (0x1F & aspect);
-      retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]);
+      retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]);*/
 
-      return retVal;
+      return accSignalDecoderPktCommon(lowAddr, boardAddr, aspect);
     }
+    
+    /**
+     * An alternative interpretation of RP-9.2.1 due to an omission in the address definition of extended accessory packets.
+     * Since there is no such description for the address bits of the Extended Accessory Decoder Control Packet, 
+     * this interpretation assumes that the least significant bits of the extended packet type are still 
+     * in bits 1 and 2 of byte two, see Basic Accessory Packet.
+     * @param outputAddr Address of accessory output, starting with 1 and a maximum of 2044
+     * @param aspect Aspect Number starting with 0 and a maximum of 31
+     */
+    public static byte[] altAccSignalDecoderPkt(int outputAddr, int aspect) {
+
+        if (outputAddr < 1 || outputAddr>2048) {
+            log.error("invalid address " + outputAddr);
+            return null;
+        }
+
+        outputAddr -= 1; // Make the address 0 based
+        int lowAddr = (outputAddr & 0x03 ) ;  // Output Pair Address
+        int boardAddr = (outputAddr >> 2); // Board Address
+
+        return accSignalDecoderPktCommon(lowAddr, boardAddr, aspect);
+    }
+    
+    protected static byte[] accSignalDecoderPktCommon(int lowAddr, int boardAddr, int aspect){
+    
+        if (aspect < 0 || aspect >31) {
+            log.error("invalid aspect "+aspect);
+            return null;
+        }
+        
+        int midAddr =  boardAddr & 0x3F ;
+        int highAddr = ( (~boardAddr) >> 6) & 0x07;
+
+        byte[] retVal = new byte[4];
+        retVal[0] = (byte) (0x80 | midAddr ) ;
+        retVal[1] = (byte) (0x01 | (highAddr<<4) | (lowAddr << 1)) ;
+        retVal[2] = (byte) (0x1F & aspect);
+        retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]);
+        
+        return retVal;
+    }
+    
+    
     
     /**
      * Provide an accessory control packet via a simplified interface

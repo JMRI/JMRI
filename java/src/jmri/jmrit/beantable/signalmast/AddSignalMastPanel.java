@@ -957,7 +957,7 @@ public class AddSignalMastPanel extends JPanel {
             return false;
         }
         
-        if (address < 1 || address>2044) {
+        if (address < 1 || address>2048) {
             JOptionPane.showMessageDialog(null, rb.getString("DCCMastAddressOutOfRange"));
             log.error("invalid address " + address);
             return false;

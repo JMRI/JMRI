@@ -150,7 +150,7 @@ public class DccSignalMast extends AbstractSignalMast {
 
     public void setAspect(String aspect){
         if(appearanceToOutput.containsKey(aspect)){
-            c.sendPacket( NmraPacket.accSignalDecoderPkt( DccSignalDecoderAddress, appearanceToOutput.get(aspect) ), 3);
+            c.sendPacket( NmraPacket.altAccSignalDecoderPkt( DccSignalDecoderAddress, appearanceToOutput.get(aspect) ), 3);
         } else {
             log.warn("Trying to set aspect that has not been configured");
         }
