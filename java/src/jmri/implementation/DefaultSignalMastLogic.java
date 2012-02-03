@@ -1875,7 +1875,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             if((!useLayoutEditorTurnouts) && (!useLayoutEditorBlocks))
                 return;
             try {
-                if(!InstanceManager.layoutBlockManagerInstance().checkValidDest(facingBlock, protectingBlock, destinationBlock, remoteProtectingBlock))
+                if(!InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(facingBlock, protectingBlock, destinationBlock, remoteProtectingBlock))
                     throw new jmri.JmriException("Path not valid");
             } catch (jmri.JmriException e){
                 throw e;
@@ -1897,7 +1897,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 Hashtable<Turnout, Integer> turnoutSettings = new Hashtable<Turnout, Integer>();
                 
                 try {
-                    ArrayList<LayoutBlock> lblks = InstanceManager.layoutBlockManagerInstance().getLayoutBlocks(facingBlock, destinationBlock, protectingBlock, true, jmri.jmrit.display.layoutEditor.LayoutBlockManager.MASTTOMAST);                    
+                    ArrayList<LayoutBlock> lblks = InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, protectingBlock, true, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.MASTTOMAST);                    
                     ConnectivityUtil connection;
                     ArrayList<LayoutTurnout> turnoutlist;
                     ArrayList<Integer> throwlist;

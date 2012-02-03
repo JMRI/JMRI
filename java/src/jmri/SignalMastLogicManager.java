@@ -49,7 +49,7 @@ public interface SignalMastLogicManager extends Manager {
      * @param destMast Destination SignalMast
      * @return true if valid, false if not valid.
      */
-    public boolean checkValidDest(SignalMast sourceMast, SignalMast destMast) throws JmriException;
+   // public boolean checkValidDest(SignalMast sourceMast, SignalMast destMast) throws JmriException;
 
     /**
      * Discover valid destination signalmasts for a given source signal on a

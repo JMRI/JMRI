@@ -110,8 +110,8 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             }
         });
         
-        if(!jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled())
-            discoverPairs.setEnabled(false);
+        /*if(!jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled())
+            discoverPairs.setEnabled(false);*/
         add(footer, BorderLayout.SOUTH);
     }
     
@@ -119,11 +119,20 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
     JLabel sourceLabel = new JLabel();
     
     void discoverPressed(ActionEvent e){
-        signalMastLogicFrame = new JmriJFrame("Discover Signal Mast Pairs");
+        if (!jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+            int response = JOptionPane.showConfirmDialog(null, rb.getString("EnableLayoutBlockRouting"));
+            if (response == 0){
+                jmri.InstanceManager.layoutBlockManagerInstance().enableAdvancedRouting(true);
+                JOptionPane.showMessageDialog(null, rb.getString("LayoutBlockRoutingEnabledShort"));
+            }
+        }
+    
+        signalMastLogicFrame = new JmriJFrame("Discover Signal Mast Pairs", false, false);
         signalMastLogicFrame.setPreferredSize(null);
-        Container theContentPane = signalMastLogicFrame.getContentPane();
-        theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
+        JPanel panel1 = new JPanel();
         sourceLabel = new JLabel("Discovering Signalmasts");
+        panel1.add(sourceLabel);
+        signalMastLogicFrame.add(sourceLabel);
         signalMastLogicFrame.pack();
         signalMastLogicFrame.setVisible(true);
         
@@ -143,6 +152,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("autoSignalMastGenerateComplete")){
             signalMastLogicFrame.setVisible(false);
+            signalMastLogicFrame.dispose();
 
             if(sml==null){
                 updateDetails();

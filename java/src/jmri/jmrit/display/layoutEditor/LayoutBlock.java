@@ -2107,7 +2107,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                             maxtSet.set(i, 2);
                         }
                     }
-                
                 }
                 if(allowAddition){
                     if(enableAddRouteLogging)
@@ -2432,7 +2431,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         int bestIndex = -1;
         int lastValue = 0;
         if ((lastIndex!=-1) && (lastIndex<routes.size())) {
-            if (routingMethod==LayoutBlockManager.METRIC){
+            if (routingMethod==LayoutBlockConnectivityTools.METRIC){
                 lastValue = routes.get(lastIndex).getMetric();
             } else /* if (routingMethod==LayoutBlockManager.HOPCOUNT)*/{
                 lastValue = routes.get(lastIndex).getHopCount();
@@ -2444,7 +2443,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             if (i!=lastIndex){
                 Routes r = routes.get(i);
                 int currentValue;
-                if (routingMethod==LayoutBlockManager.METRIC){
+                if (routingMethod==LayoutBlockConnectivityTools.METRIC){
                     currentValue = routes.get(i).getMetric();
                 
                 } else /*if (routingMethod==InstanceManager.layoutBlockManagerInstance().HOPCOUNT)*/{
@@ -2460,7 +2459,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         if(validThroughPath(previousBlock, r.getNextBlock())){
                             if(enableSearchRouteLogging)
                                 log.info("valid through path");
-                            if (routingMethod==LayoutBlockManager.METRIC){
+                            if (routingMethod==LayoutBlockConnectivityTools.METRIC){
                                 if (r.getMetric()<bestCount){
                                     bestIndex = i;
                                     bestCount = r.getMetric();

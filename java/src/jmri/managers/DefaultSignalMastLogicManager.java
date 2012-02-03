@@ -295,11 +295,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     
     boolean runWhenStablised = false;
     
-    /* The following is used in conjunction with the layout editor to discover 
-    signalmast source/destination pairs, these tools have yet to be initialised
-    */
-    
-
     /**
     * Discover valid destination signalmasts for a given source signal on a 
     * given layout editor panel.
@@ -309,7 +304,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     public void discoverSignallingDest(SignalMast source, LayoutEditor layout) throws JmriException{
         firePropertyChange("autoSignalMastGenerateStart", null, source.getDisplayName());
 
-        validPaths = new Hashtable<SignalMast, ArrayList<SignalMast>>();
+        Hashtable<NamedBean, List<NamedBean>> validPaths = new Hashtable<NamedBean, List<NamedBean>>();
         jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
         if(!lbm.isAdvancedRoutingEnabled()){
             //log.debug("advanced routing not enabled");
@@ -319,84 +314,36 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
             throw new JmriException("routing not stablised");
         }
         
-        LayoutBlock lFacing = lbm.getFacingBlockByMast(source, layout);
-        LayoutBlock lProtecting = lbm.getProtectedBlockByMast(source, layout);
         try{
-            discoverSignallingDest(source, lProtecting, lFacing);
+            validPaths.put(source, lbm.getLayoutBlockConnectivityTools().discoverPairDest(source, layout, SignalMast.class));
         } catch (JmriException e){
             throw e;
         }
         
-        Enumeration<SignalMast> en = validPaths.keys();
+        Enumeration<NamedBean> en = validPaths.keys();
         while (en.hasMoreElements()) {
-            SignalMast key = en.nextElement();
+            SignalMast key = (SignalMast)en.nextElement();
             SignalMastLogic sml = getSignalMastLogic(key);
             if(sml==null){
                 sml=newSignalMastLogic(key);
             }
-            ArrayList<SignalMast> validDestMast = validPaths.get(key);
+            List<NamedBean> validDestMast = validPaths.get(key);
             for(int i = 0; i<validDestMast.size(); i++){
-                try{
-                    sml.setDestinationMast(validDestMast.get(i));
-                    sml.useLayoutEditorDetails(true, true, validDestMast.get(i));
-                    sml.useLayoutEditor(true, validDestMast.get(i));
-                } catch (JmriException e){
-                    //log.debug("We shouldn't get an exception here");
-                    log.error("Exception found " + e);
-                    throw e;
+                if(!sml.isDestinationValid((SignalMast)validDestMast.get(i))){
+                    try{
+                        sml.setDestinationMast((SignalMast)validDestMast.get(i));
+                        sml.useLayoutEditorDetails(true, true, (SignalMast)validDestMast.get(i));
+                        sml.useLayoutEditor(true, (SignalMast)validDestMast.get(i));
+                    } catch (JmriException e){
+                        //log.debug("We shouldn't get an exception here");
+                        log.error("Exception found " + e);
+                        throw e;
+                    }
                 }
             }
         }
         firePropertyChange("autoSignalMastGenerateComplete", null, source.getDisplayName());
     }
-    
-    protected void discoverSignallingDest(SignalMast source, LayoutBlock lProtecting, LayoutBlock lFacing) throws JmriException{
-        jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
-        if(!lbm.isAdvancedRoutingEnabled()){
-                //log.debug("advanced routing not enabled");
-            throw new JmriException("advanced routing not enabled");
-        }
-        if(!lbm.routingStablised()){
-            throw new JmriException("routing not stablised");
-        }
-        if(!validPaths.containsKey(source)){
-            validPaths.put(source, new ArrayList<SignalMast>());
-        }
-        ArrayList<SignalMast> validDestMast = validPaths.get(source);
-        ArrayList<FacingProtecting> signalMastList = generateBlocksWithSignals();
-        SignalMastLogic sml = getSignalMastLogic(source);
-        for (int j = 0; j<signalMastList.size(); j++){
-            if (signalMastList.get(j).getMast()!=source){
-                boolean alreadyExist = false;
-                SignalMast destMast = signalMastList.get(j).getMast();
-                if(sml!=null){
-                    alreadyExist = sml.isDestinationValid(destMast);
-                }
-                if(!alreadyExist){
-                    if(log.isDebugEnabled())
-                        log.debug("looking for pair " + source.getDisplayName() + " " + destMast.getDisplayName());
-                    try {
-                        if(checkValidDest(source, destMast)){
-                            LayoutBlock ldstBlock = lbm.getLayoutBlock(signalMastList.get(j).getFacing());
-                            log.debug("Past valid now getting layout block " +ldstBlock.getDisplayName());
-                            try {
-                                ArrayList<LayoutBlock> lblks = lbm.getLayoutBlocks(lFacing, ldstBlock, lProtecting, true, jmri.jmrit.display.layoutEditor.LayoutBlockManager.MASTTOMAST);
-                                if(log.isDebugEnabled())
-                                    log.debug("Size of blocks " + lblks.size());
-                                validDestMast.add(destMast);
-                            } catch (jmri.JmriException e){  // Considered normal if route not found.
-                                log.debug("not a valid route through " + source.getDisplayName() + " - " + destMast.getDisplayName());
-                            }
-                        }
-                    } catch (jmri.JmriException ex) {
-                        log.debug(ex.toString());
-                    }
-                }
-            }
-        }
-    }
-
-    Hashtable<SignalMast, ArrayList<SignalMast>> validPaths = new Hashtable<SignalMast, ArrayList<SignalMast>>();
     
     /**
     * Discover all possible valid source and destination signalmasts past pairs 
@@ -404,7 +351,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     */
     
     public void automaticallyDiscoverSignallingPairs() throws JmriException{
-        validPaths = new Hashtable<SignalMast, ArrayList<SignalMast>>();
         runWhenStablised=false;
         jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
         if(!lbm.isAdvancedRoutingEnabled()){
@@ -415,41 +361,27 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
             log.info("Layout block routing has not yet stabilsed discovery will happen once it has");
             return;
         }
-        ArrayList<FacingProtecting> signalMastList = generateBlocksWithSignals();
-        int total = signalMastList.size()*signalMastList.size();
-        firePropertyChange("autoGenerateTotal", null, total);
-        for(int i = 0; i<signalMastList.size(); i++){
-            if(log.isDebugEnabled())
-                try{
-                    log.debug("\nSource " + signalMastList.get(i).getMast().getDisplayName());
-                    log.debug("facing " + signalMastList.get(i).getFacing().getDisplayName());
-                    log.debug("protecting " + signalMastList.get(i).getProtecting().getDisplayName());
-                } catch (java.lang.NullPointerException e){
-                    //Can be considered normal if the signalmast is assigned to an end bumper.
-                }
-            Block facing = signalMastList.get(i).getFacing();
-            LayoutBlock lFacing = lbm.getLayoutBlock(facing);
-            Block protecting = signalMastList.get(i).getProtecting();
-            LayoutBlock lProtecting = lbm.getLayoutBlock(protecting);
-            SignalMast source = signalMastList.get(i).getMast();
-            discoverSignallingDest(source, lProtecting, lFacing);
-        }
-        Enumeration<SignalMast> en = validPaths.keys();
+
+        Hashtable<NamedBean, ArrayList<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(null, SignalMast.class);
+        Enumeration<NamedBean> en = validPaths.keys();
+
         while (en.hasMoreElements()) {
-            SignalMast key = en.nextElement();
+            SignalMast key = (SignalMast)en.nextElement();
             SignalMastLogic sml = getSignalMastLogic(key);
             if(sml==null){
                 sml=newSignalMastLogic(key);
             }
-            ArrayList<SignalMast> validDestMast = validPaths.get(key);
+            ArrayList<NamedBean> validDestMast = validPaths.get(key);
             for(int i = 0; i<validDestMast.size(); i++){
-                try{
-                    sml.setDestinationMast(validDestMast.get(i));
-                    sml.useLayoutEditorDetails(true, true, validDestMast.get(i));
-                    sml.useLayoutEditor(true, validDestMast.get(i));
-                } catch (jmri.JmriException ex){
-                    //log.debug("we shouldn't get an exception here!");
-                    log.debug(ex);
+                if(!sml.isDestinationValid((SignalMast)validDestMast.get(i))){
+                    try{
+                        sml.setDestinationMast((SignalMast)validDestMast.get(i));
+                        sml.useLayoutEditorDetails(true, true, (SignalMast)validDestMast.get(i));
+                        sml.useLayoutEditor(true, (SignalMast)validDestMast.get(i));
+                    } catch (jmri.JmriException ex){
+                        //log.debug("we shouldn't get an exception here!");
+                        log.debug(ex);
+                    }
                 }
             }
         }
@@ -457,116 +389,5 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         firePropertyChange("autoGenerateComplete", null, null);
     }
     
-    
-    private ArrayList<FacingProtecting> generateBlocksWithSignals(){
-        jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
-        ArrayList<FacingProtecting> signalMastList = new ArrayList<FacingProtecting>();
-    
-        List<String> lblksSysName = lbm.getSystemNameList();
-        for(int i = 0; i<lblksSysName.size(); i++){
-            LayoutBlock curLblk = lbm.getLayoutBlock(lblksSysName.get(i));
-            Block curBlk = curLblk.getBlock();
-            if(curBlk!=null){
-                int noNeigh = curLblk.getNumberOfNeighbours();
-                for(int x = 0; x<noNeigh; x++){
-                    Block blk = curLblk.getNeighbourAtIndex(x);
-                    SignalMast sourceMast = lbm.getFacingSignalMast(curBlk, blk);
-                    if(sourceMast!=null){
-                        FacingProtecting toadd = new FacingProtecting(curBlk, blk, sourceMast);
-                        if(!signalMastList.contains(toadd))
-                            signalMastList.add(toadd);
-                    }
-                }
-                if (noNeigh==1){
-                    if(log.isDebugEnabled())
-                        log.debug("We have a dead end " + curBlk.getDisplayName());
-                    SignalMast destMast = lbm.getSignalMastAtEndBumper(curBlk, null);
-                    if(destMast!=null){
-                        FacingProtecting toadd = new FacingProtecting(curBlk, null, destMast);
-                        if(!signalMastList.contains(toadd))
-                            signalMastList.add(toadd);
-                        if(log.isDebugEnabled())
-                            log.debug("We have found dest signal " + destMast.getDisplayName());
-                    }
-                }
-            }
-        }
-        return signalMastList;
-    }
-    
-    static class FacingProtecting{
-        
-        Block facing;
-        Block protecting;
-        SignalMast mast;
-        
-        FacingProtecting(Block facing, Block protecting, SignalMast mast){
-            this.facing = facing;
-            this.protecting = protecting;
-            this.mast = mast;
-        }
-        
-        Block getFacing() { return facing; }
-        
-        Block getProtecting() { return protecting; }
-        
-        SignalMast getMast() { return mast; }
-        
-    }
-    
-    /**
-    * This uses the layout editor to check if the destination signalmast is 
-    * reachable from the source signalmast
-    *
-    * @param sourceMast Source SignalMast
-    * @param destMast Destination SignalMast
-    * @return true if valid, false if not valid.
-    */
-    
-    public boolean checkValidDest(SignalMast sourceMast, SignalMast destMast) throws JmriException{
-        LayoutBlock facingBlock = null;
-        LayoutBlock protectingBlock = null;
-        LayoutBlock destFacingBlock = null;
-        LayoutBlock destProtectBlock = null;
-        ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
-        for(int i = 0; i<layout.size(); i++){
-            if(log.isDebugEnabled())
-                log.debug("Layout name " + layout.get(i).getLayoutName());
-            if (facingBlock==null){
-                facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(sourceMast.getUserName(), layout.get(i));
-                if (facingBlock==null)
-                    facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(sourceMast.getSystemName(), layout.get(i));
-            }
-            if (protectingBlock==null){
-                protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(sourceMast.getUserName(), layout.get(i));
-                if (protectingBlock==null)
-                    protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(sourceMast.getSystemName(), layout.get(i));
-            }
-            if(destFacingBlock==null){
-                destFacingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(destMast.getUserName(), layout.get(i));
-                if (destFacingBlock==null)
-                    destFacingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(destMast.getSystemName(), layout.get(i));
-            }
-            if(destProtectBlock==null){
-                destProtectBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(destMast.getUserName(), layout.get(i));
-                if(destProtectBlock==null)
-                    destProtectBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(destMast.getSystemName(), layout.get(i));
-            }
-            if((destFacingBlock!=null) && (facingBlock!=null) && (protectingBlock!=null)){
-                /*Destination protecting block is allowed to be null, as the destination signalmast
-                could be assigned to an end bumper */
-                //A simple to check to see if the remote signal is in the correct direction to ours.
-                try{
-                    return InstanceManager.layoutBlockManagerInstance().checkValidDest(facingBlock, protectingBlock, destFacingBlock, destProtectBlock);
-                } catch (jmri.JmriException e){
-                    throw e;
-                }
-            } else {
-                log.debug("blocks not found");
-            }
-        }
-        throw new JmriException("Blocks Not Found");
-    }
-
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalMastLogicManager.class.getName());
 }

@@ -134,8 +134,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             public void actionPerformed(ActionEvent e) {
                 if (useLayoutEditor.isSelected()){
                     try {
-                        boolean valid = InstanceManager.signalMastLogicManagerInstance().checkValidDest((SignalMast)sourceMastBox.getSelectedBean(), 
-                            (SignalMast)destMastBox.getSelectedBean());
+                        boolean valid = InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedBean(), 
+                            destMastBox.getSelectedBean());
                         if(!valid)
                             JOptionPane.showMessageDialog(null, rb.getString("ErrorUnReachableDestination"));
                     }
@@ -186,8 +186,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                             JOptionPane.showMessageDialog(null, je.toString());
                         }
                         try {
-                            valid = InstanceManager.signalMastLogicManagerInstance().checkValidDest((SignalMast)sourceMastBox.getSelectedBean(), 
-                                (SignalMast)destMastBox.getSelectedBean());
+                            valid = InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedBean(), 
+                                destMastBox.getSelectedBean());
                             if(!valid){
                                 JOptionPane.showMessageDialog(null, rb.getString("ErrorUnReachableDestination"));
                             }
@@ -767,7 +767,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         if((sml==null) && (useLayoutEditor.isSelected())){
             boolean valid = false;
             try {
-                valid = InstanceManager.signalMastLogicManagerInstance().checkValidDest(sourceMast, 
+                valid = InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(sourceMast, 
                     destMast);
                 if(!valid){
                     JOptionPane.showMessageDialog(null,  rb.getString("ErrorUnReachableDestination"));
