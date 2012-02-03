@@ -15,6 +15,9 @@ import java.util.List;
 * when the advanced layout block routing has been enabled.
 * These tools can determine if a path from a source to destination bean is valid.
 * If a route between two layout blocks is usable and free.
+*
+* @author Kevin Dickerson  Copyright (C) 2011
+* @version			$Revision: 19923 $
 */
 
 public class LayoutBlockConnectivityTools{
@@ -487,8 +490,6 @@ public class LayoutBlockConnectivityTools{
    /**
     *   Returns a list of valid destination beans reachable from a given source bean.
     * @param source Either a SignalMast or Sensor
-    * @param lProtecting The layout block that the source is facing.
-    * @param lFacing The layout block that is facing the source
     * @param editor The layout editor that the source is located on, if null, then all editors are considered
     * @param T The class of the remote destination, if null, then both SignalMasts and Sensors are considered
     * @return A list of all reachable NamedBeans
