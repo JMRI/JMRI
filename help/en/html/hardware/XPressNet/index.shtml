@@ -601,6 +601,49 @@ this page
     <li>Restart the program. You should be up and running.
 </ol>
 
+<H2>Connecting to an XPressNet based DCC System using a Lenz LIUSB Ethernet (Lenz Part Number 23151) via the Ethernet connection</H2>
+
+<b>NOTE: The first JMRI release supporting the Lenz LIUSB Ethernet connection is 2.13.7</b> 
+<ol> 
+    <li>To connect your computer to one of these XPressNet based DCC
+    systems, you can use a Lenz LIUSB Ethernet interface unit in ethernet mode.     Connect the LIUSB to your DCC command station via their XPressNet 
+    connection, then connect the LIUSB Ethernet to your computer Network using i
+    the supplied ethernet cable.
+    
+    <P> When the device is properly connected to the XPressNet, the Red 
+    XPressNet LED will turn on.  
+    <P> When the Ethernet is properly connected, a Green status LED will turn 
+    on.  This LED is located on the ethernet port itself.  drivers are 
+    installed, and the LIUSB is connected
+
+    <li>Once the device is connected, refer to the device documentation 
+    for information on setting the IP address.  The default IP address 
+    is 192.168.0.200.  Make note of the IP address for use when configuring 
+    the device.
+
+    <li>Start one of the JMRI-based programs, Then go to the preferences 
+    panel. This opens automatically the first time a program is run, or you 
+    can select it from the "Edit" menu.  
+
+    <li>Select "Lenz LIUSB Ethernet" from the top selection box.  Enter
+    the IP address you saved earlier into the box labeld "IP Address".
+    
+    <li>The series of radio buttons labeled "GUI style" allows you to
+    select how the program will look.  "Metal" is the native Java look
+    available on all types.  Other choices will vary with your computer
+    type. "Motif", "Windows", "MacOS" and "MacOS Adaptive" look native
+    on Linux, Windows, MacOS "Classic" and MacOS X respectively.
+
+    <li>In the bottom selection box, you can pick the default
+    programmer format. You can override this each time you open the
+    programmer, so this is here just for convenience.
+
+    <li>Click "Save".  You'll be asked if it's OK for the program to  
+    quit, click "Yes".
+
+    <li>Restart the program. You should be up and running.
+</ol>
+
 <H2>Connecting to the XPressNet Simulator</H2>
 <b>NOTE: The first JMRI release supporting the Lenz LIUSB Server connection is 2.5.5</b> 
 
