@@ -45,7 +45,7 @@ JMRI: XPressNet
 	<a href="http://www.roco.co.at">Roco</a>.
     It was developed by Lenz.  
     The XPressNet specification (available from
-    the <a href="http://www.lenz.com/techinfo/index.htm">Lenz website</a>) 
+    the <a href="http://www.lenzusa.com/techinfo/index.htm">Lenz website</a>) 
     specifies the electrical communications standards and
     command set needed for devices to communicate with the command station.
     While the command stations support the same commands over the XPressNet
@@ -169,7 +169,7 @@ this page
 	an XPressNet interface circuit similar to that of the LI101F.  
 	Note:  If you are using the XPressNet version 3.6 update in your command station, 
 	you should also update your LI-USB to version 3.6.  There are instructions
-	<a href="http://groups.yahoo.com/group/DigitalPlusbyLenz/message/13501">in this user group message</a> or on <a href="http://www.lenz.com/manuals/xpressnet/liusbupdatev36.pdf">the Lenz website</a>.
+	<a href="http://groups.yahoo.com/group/DigitalPlusbyLenz/message/13501">in this user group message</a> or on <a href="http://www.lenzusa.com/manuals/xpressnet/liusbupdatev36.pdf">the Lenz website</a>.
 	The device is configured via a software tool provided by Lenz which 
 	runs on Windows only.  We have provided a tool that will allow users 
         of other operating systems to configure their LIUSB as well.  On 
@@ -864,12 +864,12 @@ since the IP address can change due to DHCP addressing.
     		<li><a href="http://www.atlasrr.com/dcc/CommanderManual1.pdf">Atlas Commander Manual</a>
                 (pdf file; 363 kb)</li>
 
-    		<li><a href="http://www.atlasrr.com/dcc/Atlas_Commander_Consisting.doc">Atlas
-        	Commander Consisting Instructions</a> (not included in the above manual; Word doc.)</li>
+    		<li><a href="http://www.atlasrr.com/consisting.htm">Atlas
+        	Commander Consisting Instructions</a> (not included in the above manual)</li>
 
-    		<li><a href="http://www.lenz.com/manuals/index.htm">Lenz Product Manuals</a></li>
+    		<li><a href="http://www.lenzusa.com/manuals/index.htm">Lenz Product Manuals</a></li>
 
-    		<li><a href="http://www.lenz.com/techinfo/index.htm">Lenz XPressNet Documentation</a></li>
+    		<li><a href="http://www.lenzusa.com/techinfo/index.htm">Lenz XPressNet Documentation</a></li>
 	</ul>
 <H3>JMRI Documentation</H3>
 	<ul>
