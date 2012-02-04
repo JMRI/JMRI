@@ -5,6 +5,8 @@ package jmri.jmrit.roster;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+import javax.swing.JOptionPane;
+
 import java.util.*;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
@@ -608,6 +610,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         try {
             Roster.instance().writeFile(defaultRosterFilename());
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,  "An error occured writing the roster file, may not be complete:\n"+e.getMessage(), "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
             log.error("Exception while writing the new roster file, may not be complete: "+e);
         }
     }

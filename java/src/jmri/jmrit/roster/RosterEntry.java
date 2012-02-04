@@ -700,6 +700,7 @@ public class RosterEntry {
             df.writeFile(f, mRootElement, this.store());
 
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "An error occured saving the roster file " + getId() + " and the file may not be complete:\n"+e.getMessage(), "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
             log.error("error during locomotive file output", e);
         }
     }
@@ -732,6 +733,7 @@ public class RosterEntry {
             df.writeFile(f, cvModel, iCvModel, variableModel, this);
 
         } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "An error occured saving the roster file " + getId() + " and the file may not be complete:\n"+e.getMessage(), "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
             log.error("error during locomotive file output", e);
         }
     }
@@ -758,7 +760,11 @@ public class RosterEntry {
     public void loadCvModel(CvTableModel cvModel, IndexedCvTableModel iCvModel) {
         if (cvModel == null) log.error("loadCvModel must be given a non-null argument");
         if (mRootElement == null) log.error("loadCvModel called before readFile() succeeded");
-        LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, iCvModel);
+        try{
+            LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, iCvModel);
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null,  "An error occured while trying to read the roster entry " + getId() + "\nPlease check the console for more information", "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void printEntry(HardcopyWriter w){
