@@ -6,6 +6,8 @@ import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 
 import javax.swing.*;
@@ -25,6 +27,7 @@ import jmri.jmrit.operations.trains.TrainIcon;
 import jmri.jmrit.picker.PickListModel;
 
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
+import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.util.JmriJFrame;
 //import jmri.configurexml.*;
 
@@ -1052,28 +1055,34 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         javax.swing.JLabel mtext = new javax.swing.JLabel();
         mtext.setText(rb.getString("SelectLoco")+":");
         locoRosterFrame.getContentPane().add(mtext);
-        final JComboBox rosterBox = new RosterEntryComboBox();
-        rosterBox.insertItemAt("", 0);
-        rosterBox.setSelectedIndex(0);
-        rosterBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                selectLoco(rosterBox.getSelectedItem().toString());
+        final RosterEntrySelectorPanel rosterBox = new RosterEntrySelectorPanel();
+        rosterBox.addPropertyChangeListener("selectedRosterEntries", new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent pce) {
+                if (rosterBox.getSelectedRosterEntries().length != 0) {
+                    selectLoco(rosterBox.getSelectedRosterEntries()[0]);
+                }
             }
         });
         locoRosterFrame.getContentPane().add(rosterBox);
         locoRosterFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     locoRosterFrame.dispose();
-                }
-            });			
+        }
+            });
         locoRosterFrame.pack();
-    	locoRosterFrame.setVisible(true);	
+    	locoRosterFrame.setVisible(true);
     }
+
     protected LocoIcon selectLoco(String rosterEntryTitle){
-		if (rosterEntryTitle == "")
+		if ("".equals(rosterEntryTitle))
 			return null;
+		return selectLoco(Roster.instance().entryFromTitle(rosterEntryTitle));
+    }
+
+    protected LocoIcon selectLoco(RosterEntry entry) {
         LocoIcon l = null;
-		RosterEntry entry = Roster.instance().entryFromTitle(rosterEntryTitle);
         if (entry==null) {
             return null;
         }
