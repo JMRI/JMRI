@@ -114,16 +114,27 @@ abstract public class AbstractOperationsServer implements
 		log.debug("Set train " + trainName + " Location " + locationName);
 		Train train = tm.getTrainByName(trainName);
 		if (train != null) {
-			if (train.move(locationName)) {
+			if (!exactLocationName && train.move(locationName)
+					|| exactLocationName && train.moveToNextLocation(locationName)) {
 				return constructTrainLocation(trainName);
 			}
 			else {
-				sendErrorStatus("ERROR Move of " + trainName + " to location " + locationName + " failed.");
+				sendErrorStatus("WARNING move of " + trainName + " to location " + locationName 
+						+ " failed. Train's current location " +train.getCurrentLocationName()
+						+ " next location " + train.getNextLocationName());
 			}
 		} else {
 			sendErrorStatus("ERROR train name doesn't exist " + trainName);
 		}
 		return null;
+	}
+	
+	private static boolean exactLocationName = true;
+	public static void setExactLocationName(boolean enabled){
+		exactLocationName = enabled;
+	}
+	public static boolean isExactLoationNameEnabled(){
+		return exactLocationName;
 	}
 
 	/**

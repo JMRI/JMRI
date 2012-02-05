@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import java.util.List;
 import javax.swing.JComboBox;
 
+import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.trains.TrainLogger;
 
@@ -1455,12 +1456,10 @@ public class Setup {
     		values.setAttribute("enablePhysicalLocations", isVsdPhysicalLocationEnabled()?"true":"false");
     	}
     	
-    	/*
-    	if (isCreateReportersEnabled()){
-    		e.addContent(values = new Element("reporters"));
-    		values.setAttribute("enable", isCreateReportersEnabled()?"true":"false");
-    	} 
-    	*/  	
+    	// Save CATS setting
+    	e.addContent(values = new Element("CATS"));
+    	values.setAttribute("exactLocationName", AbstractOperationsServer.isExactLoationNameEnabled()?"true":"false");
+  	
     	
     	/* all JMRI window position and size are now saved
     	Element options;
@@ -1930,14 +1929,12 @@ public class Setup {
         		setVsdPhysicalLocationEnabled(enable.equals("true"));
         	}
         }
-        /*
-        if (operations.getChild("reporters") != null){
-        	if ((a = operations.getChild("reporters").getAttribute("enable"))!= null){
+        if (operations.getChild("CATS") != null){
+        	if ((a = operations.getChild("CATS").getAttribute("exactLocationName"))!= null){
         		String enable = a.getValue();
-        		setCreateReportersEnabled(enable.equals("true"));
+        		AbstractOperationsServer.setExactLocationName(enable.equals("true"));
         	}
         }
-        */
         
         /* all JMRI window position and size are now saved
         Element frameOptions;

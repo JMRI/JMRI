@@ -1960,6 +1960,21 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 		return false;
 	}
+	
+	/**
+	 * Move train to the next location in the train's route.
+	 * The location name provided must be equal to the next
+	 * location name in the train's route.
+	 * @param locationName The next location name in the train's route.
+	 * @return true if successful.
+	 */
+	public boolean moveToNextLocation(String locationName){
+		if (getNextLocationName().equals(locationName)){
+			move();
+			return true;
+		}
+		return false;
+	}
 
 	public void loadTrainIcon(){
 		if (getCurrentLocation() != null)
