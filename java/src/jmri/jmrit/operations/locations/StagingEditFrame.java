@@ -85,6 +85,10 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 			loadCheckBox.setSelected(_track.isAddLoadsEnabled());
 			loadAnyCheckBox.setSelected(_track.isAddLoadsEnabledAnySiding());
 			blockCarsCheckBox.setSelected(_track.isBlockCarsEnabled());
+			if (loadCheckBox.isSelected() || loadAnyCheckBox.isSelected()){
+				blockCarsCheckBox.setSelected(false);
+				blockCarsCheckBox.setEnabled(false);
+			}				
 		}
 		
 		addCheckBoxAction(swapLoadsCheckBox);
@@ -114,6 +118,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		emptyCustomCheckBox.setEnabled(enabled);
 		loadCheckBox.setEnabled(enabled);
 		loadAnyCheckBox.setEnabled(enabled);
+		blockCarsCheckBox.setEnabled(enabled);
 		super.enableButtons(enabled);
 	}
 	
