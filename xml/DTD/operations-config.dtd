@@ -19,7 +19,7 @@
  | pickupEngFormat | dropEngFormat | pickupCarFormat | dropCarFormat | localFormat
  | missingCarFormat | tab | manifest | vsd | reporters | switchList
  | switchListPickupCarFormat | switchListDropCarFormat | switchListLocalFormat 
- | pageOrientation | comments)*>
+ | pageOrientation | CATS | comments)*>
 
 <!ELEMENT railRoad EMPTY>
 <!ELEMENT settings EMPTY>
@@ -48,6 +48,7 @@
 <!ELEMENT switchListDropCarFormat EMPTY>
 <!ELEMENT switchListLocalFormat EMPTY>
 <!ELEMENT pageOrientation EMPTY>
+<!ELEMENT CATS EMPTY>
 <!ELEMENT comments EMPTY>
 
 <!ATTLIST railRoad name				CDATA #IMPLIED>  
@@ -148,6 +149,8 @@
 
 <!ATTLIST pageOrientation manifest		CDATA #IMPLIED>
 <!ATTLIST pageOrientation switchList	CDATA #IMPLIED>
+
+<!ATTLIST CATS exactLocationName		CDATA #IMPLIED> 
 
 <!ATTLIST comments misplacedCars		CDATA #IMPLIED> 
 
