@@ -149,6 +149,25 @@ public class EasyDccThrottle extends AbstractThrottle
 			result = jmri.NmraPacket.speedStep128Packet(address.getNumber(),
 					address.isLongAddress(), value, isForward);
 		} else {
+
+                /* [A Crosland 05Feb12] There is a potential issue in the way
+                 * the float speed value is converted to integer speed step.
+                 * A max speed value of 1 is first converted to int 28 then incremented
+                 * to 29 which is too large. The next highest speed value also
+                 * results in a value of 28. So two discrete throttle steps
+                 * both map to speed step 28.
+                 *
+                 * This is compounded by the bug in speedStep28Packet() which
+                 * cannot generate a DCC packet with speed step 28.
+                 *
+                 * Suggested correct code is
+		 *   value = (int) ((31-3) * speed); // -3 for rescale to avoid stop and estop x2
+                 * 		if (value > 0) value = value + 3; // skip stop and estop x2
+                 * 		if (value > 31) value = 31; // max possible speed
+                 * 		if (value < 0)	value = 1; // emergency stop
+                 * 		bl = jmri.NmraPacket.speedStep28Packet(true, address.getNumber(),
+                 * 				address.isLongAddress(), value, isForward);
+                 */
 	        int value = (int)((28)*speed);     // -1 for rescale to avoid estop
 	        if (value>0) value = value+1;  	// skip estop
 	        if (value>28) value = 28;    	// max possible speed

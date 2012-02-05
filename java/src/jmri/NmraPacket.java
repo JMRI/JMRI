@@ -555,6 +555,15 @@ public class NmraPacket {
     
     /**
      * From NMRA RP 9.2.1
+         * [A Crosland 05/02/12] There is an issue with this method in that it cannot
+         * create a 28 step speed packet for maximum speed. Input speed value in the
+         * range 0 - 28 is converted to speed steps, 0, estop, 1, 2, ..., 27.
+         *
+         * This method should probably be deprecated. It is used only by
+         * NceThrottle.java and EasyDccThrottle.java which themselves have issues
+         * in the way floating point speed values are converted to integer
+         * speed steps.
+         *
 	 * A speed and direction instruction is used send information to motors
 	 * connected to Multi Function Digital Decoders. Instruction "010" indicates
 	 * a Speed and Direction Instruction for reverse operation and instruction
@@ -582,6 +591,63 @@ public class NmraPacket {
         int speedC = (speed&0x1F) >> 1;
         if (speed > 0)
         	speedC = speedC +1;
+        int c = (speed&0x01) << 4;	// intermediate speed step
+
+        speedC = speedC + c;
+ 
+        // end sanity checks, format output
+        byte[] retVal;
+        int arg1 = (fwd ? 0x60 : 0x40)| speedC;
+
+        if (longAddr) {
+            // long address form
+            retVal = new byte[4];
+            retVal[0] = (byte) (192+((address/256)&0x3F));
+            retVal[1] = (byte) (address&0xFF);
+            retVal[2] = (byte) arg1;
+            retVal[3] = (byte) (retVal[0]^retVal[1]^retVal[2]^retVal[3]);
+        } else {
+            // short address form
+            retVal = new byte[3];
+            retVal[0] = (byte) (address&0xFF);
+            retVal[1] = (byte) arg1;
+            retVal[2] = (byte) (retVal[0]^retVal[1]^retVal[2]);
+        }
+        return retVal;
+    }
+    
+    /**
+     * New version of speedStep28Packet to allow access to the whole range of 28
+     * step speed packets
+     * 
+     * Simply constructs a packet using the 5 bit speed value. This is consistent
+     * with the 128 and 14 step methods which do no further processing of the
+     * speed value.
+     * 
+     * @param full      must be true
+     * @param address
+     * @param longAddr
+     * @param speed     speed step value 0 - 31 for insertion into DC packet
+     * @param fwd
+     * @return
+     */
+    public static byte[] speedStep28Packet(Boolean full, int address, boolean longAddr, int speed, boolean fwd ) {
+        if (log.isDebugEnabled()) log.debug("28 step packet "+address+" "+speed);
+
+        if (full != true) {
+            log.error("invalid method invocation");
+            return null;    // failed!
+        }
+
+        if (!addressCheck(address, longAddr)) {
+            return null;  // failed!
+        }
+
+        if (speed<0 || speed>31) {
+            log.error("invalid speed "+speed);
+            return null;
+        }
+        int speedC = (speed&0x1F) >> 1;
         int c = (speed&0x01) << 4;	// intermediate speed step
 
         speedC = speedC + c;
