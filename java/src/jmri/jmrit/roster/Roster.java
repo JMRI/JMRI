@@ -76,6 +76,11 @@ public class Roster extends XmlFile implements RosterGroupSelector {
             this.readFile(rosterFilename);
         } catch (Exception e) {
             log.error("Exception during roster reading: " + e);
+            try {
+                JOptionPane.showMessageDialog(null,  "An error occured while trying to read the roster index file:\n"+e.getMessage(), "Error Reading Roster Index", JOptionPane.ERROR_MESSAGE);
+            } catch (HeadlessException he) {
+            // ignore inability to display dialog
+            }
         }
     }
 
