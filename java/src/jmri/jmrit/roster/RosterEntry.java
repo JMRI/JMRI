@@ -2,6 +2,7 @@
 
 package jmri.jmrit.roster;
 
+import java.awt.HeadlessException;
 import jmri.DccLocoAddress;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.CvTableModel;
@@ -700,8 +701,13 @@ public class RosterEntry {
             df.writeFile(f, mRootElement, this.store());
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "An error occured saving the roster file " + getId() + " and the file may not be complete:\n"+e.getMessage(), "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
             log.error("error during locomotive file output", e);
+            try {
+                JOptionPane.showMessageDialog(null, "An error occured saving the roster file " + getId() + " and the file may not be complete:\n"+e.getMessage(), "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
+            } catch (HeadlessException he) {
+                // silently ignore inability to display dialog
+            }
+
         }
     }
      
@@ -733,8 +739,13 @@ public class RosterEntry {
             df.writeFile(f, cvModel, iCvModel, variableModel, this);
 
         } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "An error occured saving the roster file " + getId() + " and the file may not be complete:\n"+e.getMessage(), "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
             log.error("error during locomotive file output", e);
+            try {
+                JOptionPane.showMessageDialog(null, "An error occured saving the roster file " + getId() + " and the file may not be complete:\n"+e.getMessage(), "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
+            } catch (HeadlessException he) {
+                // silently ignore inability to display dialog
+            }
+
         }
     }
 
@@ -763,7 +774,12 @@ public class RosterEntry {
         try{
             LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, iCvModel);
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(null,  "An error occured while trying to read the roster entry " + getId() + "\nPlease check the console for more information", "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
+            log.error("Error reading roster entry", ex);
+            try {
+                JOptionPane.showMessageDialog(null,  "An error occured while trying to read the roster entry " + getId() + "\nPlease check the console for more information", "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
+            } catch (HeadlessException he) {
+                // silently ignore inability to display dialog
+            }
         }
     }
 

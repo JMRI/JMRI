@@ -2,6 +2,7 @@
 
 package jmri.jmrit.roster;
 
+import java.awt.HeadlessException;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
@@ -610,8 +611,12 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         try {
             Roster.instance().writeFile(defaultRosterFilename());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,  "An error occured writing the roster file, may not be complete:\n"+e.getMessage(), "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
             log.error("Exception while writing the new roster file, may not be complete: "+e);
+            try {
+                JOptionPane.showMessageDialog(null,  "An error occured writing the roster file, may not be complete:\n"+e.getMessage(), "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
+            } catch (HeadlessException he) {
+                // silently ignore failure to display dialog
+            }
         }
     }
 
