@@ -1964,8 +1964,6 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			}
 		});
 
-		locoRosterBox.insertItemAt("", 0);
-		locoRosterBox.setSelectedIndex(0);
 		locoRosterBox.setVisible(true);
 		locoRosterBox.setEnabled(false);
 		locoRosterBox.setToolTipText("Select loco from roster");
