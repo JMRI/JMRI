@@ -46,7 +46,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
 
     Component _who;
     JComboBox rosterEntry = new JComboBox();
-    JComboBox selections;
+    RosterGroupComboBox selections;
     Roster roster;
     String lastGroupSelect = null;
     
@@ -55,6 +55,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
         roster = Roster.instance();
 
         selections = new RosterGroupComboBox();
+        selections.setAllEntriesEnabled(false);
         if (lastGroupSelect!=null){
             selections.setSelectedItem(lastGroupSelect);
         }

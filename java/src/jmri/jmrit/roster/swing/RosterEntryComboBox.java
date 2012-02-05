@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.swing.JComboBox;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -34,7 +35,7 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
     protected String _decoderMfgID;
     protected String _decoderVersionID;
     protected String _id;
-    protected String _emptyEntry;
+    protected String _nonSelectedItem = "Select Loco";
     protected RosterEntry[] _currentSelection = null;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterEntryComboBox.class.getName());
@@ -209,7 +210,6 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
         setRenderer(new jmri.jmrit.roster.swing.RosterEntryListCellRenderer());
         _roster = roster;
         _group = rosterGroup;
-        _emptyEntry = null;
         update(rosterGroup,
                 roadName,
                 roadNumber,
@@ -236,6 +236,9 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
                 fireSelectedRosterEntriesPropertyChange();
             }
         });
+
+        ResourceBundle resources = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
+        _nonSelectedItem = resources.getString("RosterEntryComboBoxNoSelection");
     }
 
     /**
@@ -348,9 +351,9 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
         _decoderVersionID = decoderVersionID;
         _id = id;
         removeAllItems();
-        if (_emptyEntry != null) {
-            this.insertItemAt(_emptyEntry, 0);
-            this.setSelectedItem(_emptyEntry);
+        if (_nonSelectedItem != null) {
+            this.insertItemAt(_nonSelectedItem, 0);
+            this.setSelectedItem(_nonSelectedItem);
         }
         for (RosterEntry r : l) {
             if (rosterGroup != null && !rosterGroup.equals(Roster.ALLENTRIES)) {
@@ -388,7 +391,7 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
      * @param itemText
      */
     public void setNonSelectedItem(String itemText) {
-        _emptyEntry = itemText;
+        _nonSelectedItem = itemText;
         update(_group);
     }
 
@@ -402,7 +405,7 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
      * @return The text or null
      */
     public String getNonSelectedItem() {
-        return _emptyEntry;
+        return _nonSelectedItem;
     }
 
     @Override
@@ -414,7 +417,7 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
     // the cached value returned by getSelectedRosterEntries
     private RosterEntry[] getSelectedRosterEntries(boolean force) {
         if (_currentSelection == null || force) {
-            if (this.getSelectedItem() != null && !this.getSelectedItem().equals(_emptyEntry)) {
+            if (this.getSelectedItem() != null && !this.getSelectedItem().equals(_nonSelectedItem)) {
                 _currentSelection = new RosterEntry[1];
                 _currentSelection[0] = (RosterEntry) this.getSelectedItem();
             } else {

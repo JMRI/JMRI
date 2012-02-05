@@ -5,6 +5,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.ResourceBundle;
 import javax.swing.JComboBox;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
@@ -19,6 +20,8 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 public class RosterGroupComboBox extends JComboBox implements RosterGroupSelector {
 
     private Roster _roster;
+    private boolean allEntriesEnabled = true;
+    private static ResourceBundle resources = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
 
     /**
      * Create a RosterGroupComboBox with an arbitrary Roster instead of the
@@ -50,7 +53,7 @@ public class RosterGroupComboBox extends JComboBox implements RosterGroupSelecto
         super();
         _roster = roster;
         update(selection);
-        Roster.instance().addPropertyChangeListener(new PropertyChangeListener(){
+        roster.addPropertyChangeListener(new PropertyChangeListener(){
 
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
@@ -89,16 +92,26 @@ public class RosterGroupComboBox extends JComboBox implements RosterGroupSelecto
      * @param selection
      */
     public final void update(String selection) {
-        if (selection == null) {
-            selection = Roster.ALLENTRIES;
-        }
         removeAllItems();
         ArrayList<String> l = _roster.getRosterGroupList();
         Collections.sort(l);
         for (String g : l) {
             addItem(g);
         }
-        insertItemAt(Roster.ALLENTRIES, 0);
+        if (allEntriesEnabled) {
+            insertItemAt(Roster.ALLENTRIES, 0);
+            if (selection == null) {
+                selection = Roster.ALLENTRIES;
+            }
+            this.setToolTipText(null);
+        } else {
+            if (this.getItemCount() == 0) {
+                this.addItem(resources.getString("RosterGroupComboBoxNoGroups"));
+                this.setToolTipText(resources.getString("RosterGroupComboBoxNoGroupsToolTip"));
+            } else {
+                this.setToolTipText(null);
+            }
+        }
         setSelectedItem(selection);
         if (this.getItemCount() == 1) {
             this.setSelectedIndex(0);
@@ -110,10 +123,27 @@ public class RosterGroupComboBox extends JComboBox implements RosterGroupSelecto
 
     @Override
     public String getSelectedRosterGroup() {
-        if (getSelectedItem() == null || getSelectedItem().equals(Roster.ALLENTRIES)) {
+        if (getSelectedItem() == null) {
+            return null;
+        } else if (getSelectedItem().equals(Roster.ALLENTRIES)) {
             return null;
         } else {
             return getSelectedItem().toString();
         }
+    }
+
+    /**
+     * @return the allEntriesEnabled
+     */
+    public boolean isAllEntriesEnabled() {
+        return allEntriesEnabled;
+    }
+
+    /**
+     * @param allEntriesEnabled the allEntriesEnabled to set
+     */
+    public void setAllEntriesEnabled(boolean allEntriesEnabled) {
+        this.allEntriesEnabled = allEntriesEnabled;
+        this.update();
     }
 }

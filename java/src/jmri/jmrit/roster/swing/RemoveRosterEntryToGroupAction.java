@@ -63,7 +63,7 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     public void actionPerformed(ActionEvent event) {
         frame = new JmriJFrame("Remove Loco from Group");
         rosterBox = new RosterEntrySelectorPanel();
-        
+        rosterBox.getRosterGroupComboBox().setAllEntriesEnabled(false);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         JPanel p;
         p = new JPanel(); p.setLayout(new FlowLayout());
