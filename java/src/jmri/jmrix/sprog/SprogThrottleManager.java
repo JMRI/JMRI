@@ -2,13 +2,15 @@ package jmri.jmrix.sprog;
 
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
+import jmri.DccThrottle;
 
 
 import jmri.jmrix.AbstractThrottleManager;
 
 /**
  * SPROG implementation of a ThrottleManager.
- * <P>
+ * <P> Updated by Andrew Crosland February 2012 to enable 28 step
+ * speed packets</P>
  * @author	    Bob Jacobsen  Copyright (C) 2001
  * @version         $Revision$
  */
@@ -56,6 +58,15 @@ public class SprogThrottleManager extends AbstractThrottleManager {
         }
     }
 
+    /**
+     * What speed modes are supported by this system?                       
+     * value should be or of possible modes specified by the
+     * DccThrottle interface
+     */
+    public int supportedSpeedModes() {
+        return(DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+    }
+    
     /**
      * Address 100 and above is a long address
      **/

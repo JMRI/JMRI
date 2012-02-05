@@ -2,6 +2,7 @@
 
 package jmri.jmrix.sprog;
 
+import jmri.DccThrottle;
 import jmri.NmraPacket;
 
 /**
@@ -10,14 +11,16 @@ import jmri.NmraPacket;
  * <P>
  * A SlotListener can be registered to hear of changes in this slot.  All
  * changes in values will result in notification.
- * <P>
- * @author			Andrew Crosland Copyright (C) 2006
+ * <P> Updated by Andrew Crosland February 2012 to allow slots to hold 28 step
+ * speed packets</P>
+ * @author			Andrew Crosland Copyright (C) 2006, 2012
  * @author			Andrew Berridge 2010
  * @version			$Revision$
  */
  public class SprogSlot {
 	 
    private boolean speedPacket = false;
+   private int speedMode = DccThrottle.SpeedStepMode128;
 
    public SprogSlot(int num) {
      payload = new byte[SprogConstants.MAX_PACKET_LENGTH];
@@ -100,14 +103,20 @@ private boolean f5to8Packet = false;
      }
      public boolean isSpeedPacket() { return speedPacket; }
      
-     public void setSpeed(int address, int speed, boolean forward) {
+     public void setSpeed(int mode, int address, int speed, boolean forward) {
     	 addr = address;
     	 spd = speed;
     	 this.speedPacket = true;
+         this.speedMode = mode;
     	 this.f0to4Packet = false;
     	 this.forward = forward;
-    	 this.payload = jmri.NmraPacket.speedStep128Packet(address,
-    	          (address >= SprogConstants.LONG_START), spd, forward);
+	 if((mode & DccThrottle.SpeedStepMode28) != 0) {
+             this.payload = jmri.NmraPacket.speedStep28Packet(true, address,
+                      (address >= SprogConstants.LONG_START), spd, forward);
+         } else {
+             this.payload = jmri.NmraPacket.speedStep128Packet(address,
+                      (address >= SprogConstants.LONG_START), spd, forward);
+         }
     	 status = SprogConstants.SLOT_IN_USE;
      }
      
@@ -251,7 +260,7 @@ private boolean f5to8Packet = false;
      }
      
      public void eStop() {
-    	 this.setSpeed(this.locoAddr(), 1, this.forward); 
+    	 this.setSpeed(this.speedMode, this.locoAddr(), 1, this.forward);
      }
 
      // Access methods

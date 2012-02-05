@@ -2,10 +2,10 @@ package jmri.jmrix.sprog;
 
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
+import jmri.DccThrottle;
 
 import jmri.jmrix.AbstractThrottle;
 
-import jmri.jmrix.sprog.SprogCommandStation;
 
 /**
  * An implementation of DccThrottle with code specific to a SPROG Command
@@ -13,9 +13,10 @@ import jmri.jmrix.sprog.SprogCommandStation;
  * <P>
  * Addresses of 99 and below are considered short addresses, and
  * over 100 are considered long addresses.
- * <P>
+ * <P> Updated by Andrew Crosland February 2012 to enable 28 step
+ * speed packets</P>
  *
- * @author	Andrew Crosland  Copyright (C) 2006
+ * @author	Andrew Crosland  Copyright (C) 2006, 2012
  * @version     $Revision$
  */
 public class SprogCSThrottle extends AbstractThrottle
@@ -103,20 +104,38 @@ public class SprogCSThrottle extends AbstractThrottle
     /**
      * Set the speed & direction.
      * <P>
-     * This intentionally skips the emergency stop value of 1.
+     * This intentionally skips the emergency stop value of 1 in 128 step mode
+     * and the stop and estop values 1-3 in 28 step mode.
+     *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     public void setSpeedSetting(float speed) {
-        float oldSpeed = this.speedSetting;
-        this.speedSetting = speed;
-        int value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
-        if (value>0) value = value+1;  // skip estop
-        if (value>127) value = 127;    // max possible speed
-        if (value<0) value = 1;        // emergency stop
-        commandStation.setSpeed(address, value, isForward );
-//        if (oldSpeed != this.speedSetting)
-        if (Math.abs(oldSpeed - this.speedSetting) > 0.0001)
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
+	int mode = getSpeedStepMode();
+	if((mode & DccThrottle.SpeedStepMode28) != 0) {
+            // 28 step mode speed commands are 
+            // stop, estop, stop, estop, 4, 5, ..., 31
+            float oldSpeed = this.speedSetting;
+            this.speedSetting = speed;
+            int value = (int)((31-3)*speed);     // -1 for rescale to avoid estop
+            if (value>0) value = value+3;  // skip estopx2 and stop
+            if (value>31) value = 31;      // max possible speed
+            if (value<0) value = 1;        // emergency stop
+            commandStation.setSpeed(DccThrottle.SpeedStepMode28, address, value, isForward );
+            if (Math.abs(oldSpeed - this.speedSetting) > 0.0001)
+                notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
+        } else {
+            // 128 step mode speed commands are
+            // stop, estop, 2, 3, ..., 127
+            float oldSpeed = this.speedSetting;
+            this.speedSetting = speed;
+            int value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
+            if (value>0) value = value+1;  // skip estop
+            if (value>127) value = 127;    // max possible speed
+            if (value<0) value = 1;        // emergency stop
+            commandStation.setSpeed(DccThrottle.SpeedStepMode128, address, value, isForward );
+            if (Math.abs(oldSpeed - this.speedSetting) > 0.0001)
+                notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
+        }
     }
 
     public void setIsForward(boolean forward) {

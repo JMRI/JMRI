@@ -2,14 +2,16 @@ package jmri.jmrix.sprog;
 
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
+import jmri.DccThrottle;
 
 
 import jmri.jmrix.AbstractThrottleManager;
 
 /**
  * SPROG Command Station implementation of a ThrottleManager.
- * <P>
- * @author	    Andrew Crosland  Copyright (C) 2006
+ * <P> Updated by Andrew Crosland February 2012 to enable 28 step
+ * speed packets</P>
+ * @author	    Andrew Crosland  Copyright (C) 2006, 2012
  * @version         $Revision$
  */
 public class SprogCSThrottleManager extends AbstractThrottleManager {
@@ -27,6 +29,15 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
         DccLocoAddress address = (DccLocoAddress) a;
         log.debug("new SprogThrottle for "+address);
         notifyThrottleKnown(new SprogCSThrottle((SprogSystemConnectionMemo)adapterMemo, address), address);
+    }
+
+    /**
+     * What speed modes are supported by this system?
+     * value should be or of possible modes specified by the
+     * DccThrottle interface
+     */
+    public int supportedSpeedModes() {
+        return(DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
     }
 
     /**
@@ -62,7 +73,6 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
             return true;
         }
         return false;
-        //LocoNetSlot tSlot = lnt.getLocoNetSlot();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogCSThrottleManager.class.getName());

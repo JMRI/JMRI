@@ -2,6 +2,7 @@ package jmri.jmrix.sprog;
 
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
+import jmri.DccThrottle;
 
 import jmri.jmrix.AbstractThrottle;
 
@@ -12,6 +13,8 @@ import jmri.jmrix.AbstractThrottle;
  * 128 and over are considered long addresses.
  * <P>
  * Based on the {@link jmri.jmrix.nce.NceThrottle} implementation.
+ * <P> Updated by Andrew Crosland February 2012 to enable 28 step
+ * speed packets</P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @version     $Revision$
@@ -111,33 +114,65 @@ public class SprogThrottle extends AbstractThrottle
     /**
      * Set the speed & direction.
      * <P>
-     * This intentionally skips the emergency stop value of 1.
+     * This intentionally skips the emergency stop value of 1 in 128 step mode
+     * and the stop and estop values 1-3 in 28 step mode.
+     * 
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     public void setSpeedSetting(float speed) {
-        float oldSpeed = this.speedSetting;
-        this.speedSetting = speed;
-//        int value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
-        int value = Math.round((127-1)*speed);     // -1 for rescale to avoid estop
-        if (value>0) value = value+1;  // skip estop
-        if (value>127) value = 127;    // max possible speed
-        if (value<0) value = 1;        // emergency stop
+	int mode = getSpeedStepMode();
+	if((mode & DccThrottle.SpeedStepMode28) != 0) {
+            // 28 step mode speed commands are 
+            // stop, estop, stop, estop, 4, 5, ..., 31
+            float oldSpeed = this.speedSetting;
+            this.speedSetting = speed;
+            int value = Math.round((31-3)*speed);     // -3 for rescale to avoid estopx2 and stop
 
-        String step = ""+value;
+            log.debug("Speed: " + speed + " value: " + value);
 
-        SprogMessage m = new SprogMessage(1+step.length());
-        int i = 0;  // message index counter
-        if (isForward) m.setElement(i++, '>');
-        else           m.setElement(i++, '<');
+            if (value>0) value = value+3;  // skip estopx2 and stop
+            if (value>31) value = 31;      // max possible speed
+            if (value<0) value = 0;        // emergency stop
 
-        for (int j = 0; j<step.length(); j++) {
-            m.setElement(i++, step.charAt(j));
+            String step = ""+value;
+
+            SprogMessage m = new SprogMessage(1+step.length());
+            int i = 0;  // message index counter
+            if (isForward) m.setElement(i++, '>');
+            else           m.setElement(i++, '<');
+
+            for (int j = 0; j<step.length(); j++) {
+                m.setElement(i++, step.charAt(j));
+            }
+
+            SprogTrafficController.instance().sendSprogMessage(m, null);
+            if (Math.abs(oldSpeed - this.speedSetting) > 0.0001)
+                notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
+        } else {
+            // 128 step mode speed commands are
+            // stop, estop, 2, 3, ..., 127
+            float oldSpeed = this.speedSetting;
+            this.speedSetting = speed;
+            int value = Math.round((127-1)*speed);     // -1 for rescale to avoid estop
+            if (value>0) value = value+1;  // skip estop
+            if (value>127) value = 127;    // max possible speed
+            if (value<0) value = 1;        // emergency stop
+
+            String step = ""+value;
+
+            SprogMessage m = new SprogMessage(1+step.length());
+            int i = 0;  // message index counter
+            if (isForward) m.setElement(i++, '>');
+            else           m.setElement(i++, '<');
+
+            for (int j = 0; j<step.length(); j++) {
+                m.setElement(i++, step.charAt(j));
+            }
+
+            SprogTrafficController.instance().sendSprogMessage(m, null);
+            if (Math.abs(oldSpeed - this.speedSetting) > 0.0001)
+                notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
         }
-
-        SprogTrafficController.instance().sendSprogMessage(m, null);
-//        if (oldSpeed != this.speedSetting)
-        if (Math.abs(oldSpeed - this.speedSetting) > 0.0001)
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
     }
 
     public void setIsForward(boolean forward) {

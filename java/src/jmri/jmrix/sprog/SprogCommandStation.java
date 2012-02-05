@@ -25,8 +25,10 @@ import jmri.jmrix.sprog.sprogslotmon.*;
  * <P> Updated by Andrew Berridge, January 2010 - state management code now safer,
  * uses enum, etc. Amalgamated with Sprog Slot Manager into a single class - 
  * reduces code duplication </P>
+ * <P> Updated by Andrew Crosland February 2012 to allow slots to hold 28 step
+ * speed packets</P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- *              Andrew Crosland         (C) 2006 ported to SPROG
+ *              Andrew Crosland         (C) 2006 ported to SPROG, 2012
  * @version     $Revision$
  */
 public class SprogCommandStation implements CommandStation, SprogListener, Runnable {
@@ -196,10 +198,10 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         notifySlotListeners(s);
     }
 
-    public void setSpeed(int address, int spd, boolean isForward) {
+    public void setSpeed(int mode, int address, int spd, boolean isForward) {
     	SprogSlot s = this.findAddressSpeedPacket(address);
     	if (s != null) { // May need an error here - if all slots are full!
-    		s.setSpeed(address, spd, isForward);
+    		s.setSpeed(mode, address, spd, isForward);
     		notifySlotListeners(s); 
     	}
     }
@@ -397,12 +399,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                 //Check that we got a status message before acting on it
                 //by checking that "h" was found in the reply
                 if (i > -1) { 
-	//                float volts = Integer.decode("0x"+s.substring(i+1, i+5)).intValue();
 	                int milliAmps = ((Integer.decode("0x"+s.substring(i+7, i+11)).intValue())*488)/47;
-	//                statusA[statusIdx] = milliAmps;
-	//                statusIdx = (statusIdx+1)%4;
-	//                String voltString, ampString;
-	//                ampString = Float.toString((float)((statusA[0] + statusA[1] + statusA[2] + statusA[3])/4)/1000);
 	                statusA[0] = milliAmps;
 	                String ampString;
 	                ampString = Float.toString((float)statusA[0]/1000);
