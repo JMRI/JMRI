@@ -1131,7 +1131,14 @@ the types of loads the train departing from staging is allowed to
 service. See "Select loads serviced by this train" under Edit-&gt;Train,
 then Tools-&gt;<A HREF="#TrainBuildOptions">Train Build Options</A>.</P>
 
-<H3>Blocking Cars from Staging</H3>
+   <P>The program provides another feature with regards to car loads. If the train departs from
+    staging and also terminates into staging, the program will automatically generate the
+    appropriate load for your cars that depart and terminate into staging. To use this feature, one
+    of the two "Generate custom loads ..." from staging must be selected for the departure track.
+    Use the terminating staging track's "Select loads serviced by this track" to control which
+    type of loads the program will generate from the departure staging track.</P>
+
+   <H3>Blocking Cars from Staging</H3>
 
 The program provides a very simplistic algorithm to block cars from
 staging. Since cars that have been sent to staging can reside
