@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import java.util.List;
-import jmri.jmrit.roster.swing.RosterEntryComboBox;
+import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 
 /**
  * Provide GUI controls to select a decoder for a new loco and/or copy an existing config.
@@ -53,15 +53,13 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel  {
         last.setBorder(new EmptyBorder(6,0,6,0));
         add(new JLabel("Copy settings from existing locomotive:"));
 
-        locoBox = new RosterEntryComboBox();
+        locoBox = new GlobalRosterEntryComboBox();
         locoBox.addActionListener( new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) log.debug("Locomotive selected changed");
                 matchDecoderToLoco();
             }
         });
-        locoBox.insertItemAt("<none>",0);
-        locoBox.setSelectedIndex(0);
         add(locoBox);
 
         JPanel pane1a = new JPanel();
