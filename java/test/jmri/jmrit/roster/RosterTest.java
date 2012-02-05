@@ -106,18 +106,20 @@ public class RosterTest extends TestCase {
         
         javax.swing.JComboBox box;
         
+        // "Select Loco" is the first entry in the RosterEntryComboBox, so an
+        // empty comboBox has 1 item, and the first item is not a RosterEntry
         box = new RosterEntryComboBox(r, null, "321", null, null, null, null, null);
-        Assert.assertEquals("search for zero matches", 0, box.getItemCount() );
+        Assert.assertEquals("search for zero matches", 1, box.getItemCount() );
 
         box = new RosterEntryComboBox(r, "UP", null, null, null, null, null, null);
-        Assert.assertEquals("search for one match", 1, box.getItemCount() );
-        Assert.assertEquals("search for one match", e3, box.getItemAt(0) );
+        Assert.assertEquals("search for one match", 2, box.getItemCount() );
+        Assert.assertEquals("search for one match", e3, box.getItemAt(1) );
 
         box = new RosterEntryComboBox(r, null, "123", null, null, null, null, null);
-        Assert.assertEquals("search for three matches", 3, box.getItemCount() );
-        Assert.assertEquals("search for three matches", e1, box.getItemAt(0) );
-        Assert.assertEquals("search for three matches", e2, box.getItemAt(1) );
-        Assert.assertEquals("search for three matches", e3, box.getItemAt(2) );
+        Assert.assertEquals("search for three matches", 4, box.getItemCount() );
+        Assert.assertEquals("search for three matches", e1, box.getItemAt(1) );
+        Assert.assertEquals("search for three matches", e2, box.getItemAt(2) );
+        Assert.assertEquals("search for three matches", e3, box.getItemAt(3) );
 
     }
 
