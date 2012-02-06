@@ -4154,7 +4154,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			t = turnoutList.get(i);
 			log.debug("LT '"+t.getName()+"', Turnout tested '"+t.getTurnoutName()+"' ");
 			Turnout to = t.getTurnout();
-            Turnout to2 = t.getSecondTurnout();
+            /*Only check for the second turnout if the type is a double cross over
+            otherwise the second turnout is used to throw an additional turnout at 
+            the same time.*/
+            Turnout to2 = null;
+            if(t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER){
+                to2 = t.getSecondTurnout();
+            }
 			if (to!=null) {
 				if ( (to.getSystemName().equals(turnoutName.toUpperCase())) ||
 					((to.getUserName()!=null) && (to.getUserName().equals(turnoutName))) ) {
@@ -5502,6 +5508,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		for (int i = 0; i<turnoutList.size(); i++) {
 			LayoutTurnout t = turnoutList.get(i);
 			if (t.getName().equals(name)) {
+				return t;
+			}
+		}
+		return null;
+	}
+    
+    public LayoutTurnout findLayoutTurnoutByTurnoutName(String name) {
+		if (name.length()<=0) return null;
+		for (int i = 0; i<turnoutList.size(); i++) {
+			LayoutTurnout t = turnoutList.get(i);
+			if (t.getTurnoutName().equals(name)) {
 				return t;
 			}
 		}

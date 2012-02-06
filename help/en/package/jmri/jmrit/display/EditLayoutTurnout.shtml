@@ -59,6 +59,16 @@ you can create your turnout drawings first, then select <b>Edit...</b> in each
 turnout's popup menu to open an <b>Edit Turnout</b> dialog that allows entry of 
 the turnout name.</P>
 
+<p>It is also possible to link in a second turnout to operate at the same time as 
+the one specified for this turnout.  Where the turnout is a Xover, a second turnout 
+address can be specified, so that if the Xover is controlled by two different DCC 
+turnout addresses both turnouts will be throw.<br>
+Where the turnout is either a LH, RH or WYE, and two physcial turnouts are controlled 
+by the same DCC address you can add one turnout to the panel using the real address 
+and the second turnout using an "Internal" turnout, you can then link the two together 
+so that if one turnout is thrown the other will follow.
+
+
 <H2> Setting a Turnout's Block</H2>
 
 Optionally, you can designate which <b>Block</b> a turnout is in either by 
