@@ -189,9 +189,16 @@ If you are creating or using custom images then these should be placed in a
 sub-directory within the user preference area, the image link should then 
 be prefixed with "preference:" followed by the remainder of the path.
 <h4>Specific Appearances</h4>
-As the appearance names are all user defined and can be in any language, 
-it is necessary to identify some specifically used aspects that various 
-parts of JMRI will specifically ask for.<br>
+There are four specific appearances that JMRI will and can refer to, as the appearance names
+are all user defined and can be in any language all are optional and dependant upon the signalmast<br>
+<b>danger</b> This is the most restrictive aspect that the signal mast can show. 
+When the path ahead is not set or clear the signal mast logic will set the signal mast to this appearance.<br>
+<b>permissive</b> (Call-On) this appearance is displayed if the block ahead is occupied, 
+but another train is allowed to enter it.<br>
+<b>held</b> is used to provide an alternative image on the panel to indicate that
+the signal has been held at Danger.<br>
+<b>dark</b> is used to provide an alternative image on the panel to indicate that
+the signal is not lit.<br>
 Each specific aspect can be given an alternative image to use other than that given
 in the main appearance definition.<br>
 This information can be entered at after the appearance information in the following form.
@@ -213,8 +220,10 @@ This information can be entered at after the appearance information in the follo
     &lt;/dark&gt;
   &lt;/specificappearances&gt;
 </PRE>
-The specific appearances entered in must match appearances that are valid 
-for the mast, if a mast does not support the appearance, then there is no need to include it.
+Only one aspect can be defined for each specific appearance.
+For each specific appearance entered, the corresponding <aspect> entry
+must be a valid <aspectname> that occurs in the appearance definitions
+for the mast
 <h4>Aspect Mapping</h4>
 The aspect mapping is used to help determine the progression of signalling appearances.  
 The purpose of the map is to define which potential appearances are valid depending upon
