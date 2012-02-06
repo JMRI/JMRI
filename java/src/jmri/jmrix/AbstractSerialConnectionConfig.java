@@ -68,7 +68,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         baudBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 adapter.configureBaudRate((String)baudBox.getSelectedItem());
-                p.addComboBoxLastSelection(adapter.getClass().getName()+".baud", (String) portBox.getSelectedItem());
+                p.addComboBoxLastSelection(adapter.getClass().getName()+".baud", (String) baudBox.getSelectedItem());
             }
         });
         opt1Box.addActionListener(new ActionListener() {
@@ -210,12 +210,23 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             }
         }
         updateSerialPortNames(portName, portBox, v);
+        if (portName == null || portName.equals(rb.getString("noneSelected")) || portName.equals(rb.getString("noPortsFound"))){
+            for (int i=0; i<portBox.getItemCount(); i++) {
+                outerloop:
+                for(String friendlyName: getPortFriendlyNames()){
+                    if(((String)portBox.getItemAt(i)).contains(friendlyName)){
+                        portBox.setSelectedIndex(i);
+                        adapter.setPort(PortNameMapper.getPortFromName((String)portBox.getItemAt(i)));
+                        break outerloop;
+                    }
+                }
+            }
+        }
 
         portBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String port = PortNameMapper.getPortFromName((String)portBox.getSelectedItem());
                 adapter.setPort(port);
-                p.addComboBoxLastSelection(adapter.getClass().getName()+".port", (String) portBox.getSelectedItem());
             }
         });
     }
@@ -484,7 +495,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         for(Entry<String, SerialPortFriendlyName> en : PortNameMapper.getPortNameMap().entrySet()){
             en.getValue().setValidPort(false);
         }
-        
         for (int i=0; i<portList.size(); i++) {
             String commPort = portList.elementAt(i);
             SerialPortFriendlyName port = PortNameMapper.getPortNameMap().get(commPort);
@@ -498,6 +508,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 portCombo.setSelectedIndex(i);
             }
         }
+
     }
         
     @SuppressWarnings("unchecked")
@@ -515,6 +526,14 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             	portNameVector.addElement(id.getName());
 		  }
          return portNameVector;
+    }
+    
+    /**
+    * This provides a method to return potentially meaningfull names that are used 
+    * in OS to help identify ports againsts Hardware.
+    */
+    protected String[] getPortFriendlyNames() {
+        return new String[]{};
     }
     
     /**

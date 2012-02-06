@@ -3,6 +3,7 @@
 package jmri.jmrix.sprog.sprog;
 
 import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
+import java.util.Vector;
 
 
 /**
@@ -29,6 +30,14 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     }
 
     public String name() { return "SPROG"; }
+    
+    @Override
+    protected String[] getPortFriendlyNames() {
+        if(System.getProperty("os.name").toLowerCase().contains("windows")){
+            return new String[]{"SPROG"};
+        }
+        return new String[]{};
+    }
     
     protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }
