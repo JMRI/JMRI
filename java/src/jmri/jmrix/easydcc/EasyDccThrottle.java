@@ -164,7 +164,7 @@ public class EasyDccThrottle extends AbstractThrottle
 		 *   value = (int) ((31-3) * speed); // -3 for rescale to avoid stop and estop x2
                  * 		if (value > 0) value = value + 3; // skip stop and estop x2
                  * 		if (value > 31) value = 31; // max possible speed
-                 * 		if (value < 0)	value = 1; // emergency stop
+                 * 		if (value < 0)	value = 2; // emergency stop
                  * 		bl = jmri.NmraPacket.speedStep28Packet(true, address.getNumber(),
                  * 				address.isLongAddress(), value, isForward);
                  */
