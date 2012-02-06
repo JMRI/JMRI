@@ -2303,8 +2303,10 @@ public class TrainBuilder extends TrainCommon{
 			if (!carAdded){
 				log.debug("car ("+car.toString()+") not added to train");
 				// remove destination and change to next destination
-				car.setNextDestination(car.getDestination());
-				car.setNextDestTrack(car.getDestinationTrack());
+				if (car.getNextDestination() == null && car.getNextDestTrack() == null){
+					car.setNextDestination(car.getDestination());
+					car.setNextDestTrack(car.getDestinationTrack());
+				}
 				car.setDestination(null,null);
 			}
 		}
