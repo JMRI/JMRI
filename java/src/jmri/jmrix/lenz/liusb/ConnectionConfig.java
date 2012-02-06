@@ -32,6 +32,14 @@ public class ConnectionConfig  extends jmri.jmrix.lenz.AbstractXNetSerialConnect
     }
 
     public String name() { return "Lenz LIUSB"; }
+    
+    @Override
+    protected String[] getPortFriendlyNames() {
+        if(System.getProperty("os.name").toLowerCase().contains("windows")){
+            return new String[]{"LI-USB Serial Port","LI-USB"};
+        }
+        return new String[]{};
+    }
 
     protected void setInstance() { if(adapter==null) adapter = new LIUSBAdapter(); }
 }

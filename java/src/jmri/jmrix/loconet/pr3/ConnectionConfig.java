@@ -29,6 +29,14 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public String name() { return "LocoNet PR3"; }
     
     public boolean isOptList2Advanced() { return false; }
+    
+    @Override
+    protected String[] getPortFriendlyNames() {
+        if(System.getProperty("os.name").toLowerCase().contains("windows")){
+            return new String[]{"Communications Port"};
+        }
+        return new String[]{};
+    }
 
     protected void setInstance() {
         if (adapter == null)

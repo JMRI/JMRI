@@ -36,5 +36,14 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         if (adapter == null)
             adapter = new UsbDriverAdapter();      
     }
+    
+        
+    @Override
+    protected String[] getPortFriendlyNames() {
+        if(System.getProperty("os.name").toLowerCase().contains("windows")){
+            return new String[]{"Silicon Labs CP210x USB to UART Bridge", "Silicon Labs CP210x"};
+        }
+        return new String[]{};
+    }
 }
 

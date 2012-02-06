@@ -34,5 +34,13 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         if (adapter == null)
             adapter = new LocoBufferUsbAdapter();
     }
+    
+    @Override
+    protected String[] getPortFriendlyNames() {
+        if(System.getProperty("os.name").toLowerCase().contains("windows")){
+            return new String[]{"LocoBuffer-USB","LocoBuffer"};
+        }
+        return new String[]{};
+    }
 }
 

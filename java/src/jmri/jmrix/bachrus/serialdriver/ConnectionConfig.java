@@ -29,6 +29,14 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
     public String name() { return "Speedo"; }
 
+    @Override
+    protected String[] getPortFriendlyNames() {
+        if(System.getProperty("os.name").toLowerCase().contains("windows")){
+            return new String[]{"Bachrus Speedo","Bachrus"};
+        }
+        return new String[]{};
+    }
+    
     protected void setInstance() {         
         if (adapter == null){
             adapter = new SerialDriverAdapter();
