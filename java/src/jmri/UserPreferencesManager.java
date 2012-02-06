@@ -5,6 +5,7 @@ package jmri;
 import java.awt.Dimension;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.awt.Point;
 
@@ -388,6 +389,61 @@ public interface UserPreferencesManager {
      */
     public java.util.Set<Object> getPropertyKeys(String strClass);
     
+    /**
+     * Stores the details of a tables column, so that it can be saved and re-applied
+     * when jmri is re-started
+     * @param table The reference for the table
+     * @param column The column name
+     * @param order The position that the column appears in the header
+     * @param width The width of the column
+     * @param sort The sort order of the column
+     */
+    public void setTableColumnPreferences(String table, String column, int order, int width, int sort);
+    
+    /**
+     * Get the stored position of the column for a given table
+     * @param table The reference for the table
+     * @param column The column name
+     * @return -1 if not found
+     */
+    public int getTableColumnOrder(String table, String column);   
+    
+    /**
+     * Get the stored column width for a given table
+     * @param table The reference for the table
+     * @param column The column name
+     * @return -1 if not found
+     */
+    public int getTableColumnWidth(String table, String column);    
+    
+    /**
+     * Get the stored column sort order for a given table
+     * @param table The reference for the table
+     * @param column The column name
+     * @return 0 if not found
+     */
+    public int getTableColumnSort(String table, String column);
+    
+    /**
+     * Get a name for a column at index i
+     * @param table The reference for the table
+     * @param i The column index
+     * returns null if not found, otherwise the column name
+     */
+    public String getTableColumnAtNum(String table, int i);
+    
+    /**
+     * Get a list of all the table preferences stored
+     * @return a List of all the tables, if no tables exist then an empty list is returned
+     */
+    public List<String> getTablesList();
+    
+    /**
+     * Get a list of all the column settings for a specific table
+     * @param table
+     * @return a List of all the columns in a table, if the table is not valid an empty list is returned
+     */
+    public List<String> getTablesColumnList(String table);
     /*
         Example informational message dialog box.
         

@@ -157,6 +157,30 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     messages.addContent(windowElement);
             }
         }
+        
+        if(p.getTablesList().size()!=0){
+            Element tablesElement = new Element("tableDetails");
+            for(String table: p.getTablesList()){
+                Element tableElement = new Element("table");
+                tableElement.setAttribute("name", table);
+                for(String column: p.getTablesColumnList(table)){
+                    Element columnElement = new Element("column");
+                    columnElement.setAttribute("name", column);
+                    if(p.getTableColumnOrder(table, column)!=-1){
+                        columnElement.addContent(new Element("order").addContent(Integer.toString(p.getTableColumnOrder(table, column))));
+                    }
+                    if(p.getTableColumnWidth(table, column)!=-1){
+                        columnElement.addContent(new Element("width").addContent(Integer.toString(p.getTableColumnWidth(table, column))));
+                    }
+                    if(p.getTableColumnSort(table, column)!=0){
+                        columnElement.addContent(new Element("sort").addContent(Integer.toString(p.getTableColumnSort(table, column))));
+                    }
+                    tableElement.addContent(columnElement);
+                }
+                tablesElement.addContent(tableElement);
+            }
+            messages.addContent(tablesElement);
+        }
         return messages;
     }
      
@@ -297,6 +321,32 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     } catch (Exception ex) {
                         log.error("Error loading properties", ex);
                     }
+                }
+            }
+        
+        }
+        
+        List<Element> tablesList = messages.getChildren("tableDetails");
+        for (Element tables : tablesList) {
+            List<Element> tableList = tables.getChildren("table");
+            for (Element table : tableList) {
+                List<Element> columnList = table.getChildren("column");
+                String strTableName = table.getAttribute("name").getValue();
+                for(Element column: columnList){
+                    String strColumnName = column.getAttribute("name").getValue();
+                    int order = -1;
+                    int width = -1;
+                    int sort = 0;
+                    if(column.getChild("order")!=null){
+                        order = Integer.parseInt(column.getChild("order").getText());
+                    }
+                    if(column.getChild("width")!=null){
+                        width = Integer.parseInt(column.getChild("width").getText());
+                    }
+                    if(column.getChild("sort")!=null){
+                        sort = Integer.parseInt(column.getChild("sort").getText());
+                    }
+                    p.setTableColumnPreferences(strTableName, strColumnName, order, width, sort);
                 }
             }
         

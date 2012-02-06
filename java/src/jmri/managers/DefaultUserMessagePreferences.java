@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.List;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
@@ -965,6 +966,70 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
         displayRememberMsg();
         setChangeMade(true);
     }
+    
+    Hashtable<String, Hashtable<String, TableColumnPreferences>> tableColumnPrefs = new Hashtable<String, Hashtable<String,TableColumnPreferences>>();
+    public void setTableColumnPreferences(String table, String column, int order, int width, int sort){
+        if(!tableColumnPrefs.containsKey(table)){
+            tableColumnPrefs.put(table, new Hashtable<String, TableColumnPreferences>());
+        }
+        Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
+        columnPrefs.put(column,  new TableColumnPreferences(order, width, sort));
+    }
+    
+    public int getTableColumnOrder(String table, String column){
+        if(tableColumnPrefs.containsKey(table)){
+            Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
+            if(columnPrefs.containsKey(column)){
+                return columnPrefs.get(column).getOrder();
+            }
+        }
+        return -1;
+    }    
+    
+    public int getTableColumnWidth(String table, String column){
+        if(tableColumnPrefs.containsKey(table)){
+            Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
+            if(columnPrefs.containsKey(column)){
+                return columnPrefs.get(column).getWidth();
+            }
+        }
+        return -1;
+    }    
+    
+    public int getTableColumnSort(String table, String column){
+        if(tableColumnPrefs.containsKey(table)){
+            Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
+            if(columnPrefs.containsKey(column)){
+                return columnPrefs.get(column).getSort();
+            }
+        }
+        return 0;
+    }
+    
+    public String getTableColumnAtNum(String table, int i){
+        if(tableColumnPrefs.containsKey(table)){
+            Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
+            for(String column: columnPrefs.keySet()){
+                if(columnPrefs.get(column).getOrder()==i){
+                    return column;
+                }
+            }
+        
+        }
+        return null;
+    }
+    
+    public List<String> getTablesList(){
+        return new ArrayList<String>(tableColumnPrefs.keySet());
+    }
+    
+    public List<String> getTablesColumnList(String table){
+        if(tableColumnPrefs.containsKey(table)){
+            Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
+            return new ArrayList<String>(columnPrefs.keySet());
+        }
+        return new ArrayList<String>();
+    }
 
     public String getClassDescription() { return "Preference Manager"; }
     
@@ -1190,6 +1255,30 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
     
     }
 
+    static class TableColumnPreferences{
+        
+        int order;
+        int width;
+        int sort;
+    
+        TableColumnPreferences(int order, int width, int sort){
+            this.order = order;
+            this.width = width;
+            this.sort = sort;
+        }
+        
+        int getOrder(){
+            return order;
+        }
+        
+        int getWidth(){
+            return width;
+        }
+        
+        int getSort(){
+            return sort;
+        }
+    }
     File file;
     public void readUserPreferences() {
         if(System.getProperty("org.jmri.Apps.configFilename")==null){

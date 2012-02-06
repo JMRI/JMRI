@@ -372,9 +372,9 @@ public class DecoderPro3Window
         ((RosterTableModel)rtable.getModel().getTableModel()).setRosterGroup(this.getSelectedRosterGroup());
         rtable.setRosterGroupSource(groups);
         rosters.add(rtable, BorderLayout.CENTER);
-
+        JTable jtable = rtable.getTable();
         // add selection listener
-        rtable.getTable().getSelectionModel().addListSelectionListener(
+        jtable.getSelectionModel().addListSelectionListener(
             tableSelectionListener = new ListSelectionListener() {
                     public void valueChanged(ListSelectionEvent e) {
                         if (!e.getValueIsAdjusting()) {
@@ -392,23 +392,32 @@ public class DecoderPro3Window
                     }
             }
         );
-
-        TableModel jModel = rtable.getModel();
-        int count = jModel.getColumnCount();
         
-        for (int i = 0; i <count; i++){
-            if(p.getProperty(getWindowFrameRef(), "rosterOrder:"+ jModel.getColumnName(i))!=null){
-                int sort = (Integer) p.getProperty(getWindowFrameRef(), "rosterOrder:"+ jModel.getColumnName(i));
+        String rostertableref = getWindowFrameRef()+":roster";
+        for (int i = 0; i <jtable.getColumnCount(); i++){
+            String columnName = p.getTableColumnAtNum(rostertableref, i);
+            if(columnName!=null){
+                int originalLocation = -1;
+                for(int j = 0; j<jtable.getColumnCount(); j++){
+                    if(jtable.getColumnName(j).equals(columnName)){
+                        originalLocation = j;
+                    }
+                }
+                if(originalLocation!=-1 && (originalLocation!=i)){
+                    jtable.moveColumn(originalLocation, i);
+                }
+                
+                int sort = p.getTableColumnSort(rostertableref, columnName);
                 rtable.getModel().setSortingStatus(i, sort);
-            }
-            
-            if(p.getProperty(getWindowFrameRef(), "rosterWidth:"+ jModel.getColumnName(i))!=null){
-                int width = (Integer) p.getProperty(getWindowFrameRef(), "rosterWidth:"+ jModel.getColumnName(i));
-                rtable.getTable().getColumnModel().getColumn(i).setPreferredWidth(width);
+                
+                if(p.getTableColumnWidth(rostertableref, columnName)!=-1){
+                    int width = p.getTableColumnWidth(rostertableref, columnName);
+                    jtable.getColumnModel().getColumn(i).setPreferredWidth(width);
+                }
             }
         }
-        rtable.getTable().setDragEnabled(true);
-        rtable.getTable().setTransferHandler(new TransferHandler() {
+        jtable.setDragEnabled(true);
+        jtable.setTransferHandler(new TransferHandler() {
 
             @Override
             public int getSourceActions(JComponent c) {
@@ -431,7 +440,7 @@ public class DecoderPro3Window
         });
         
         MouseListener rosterMouseListener = new rosterPopupListener();
-        rtable.getTable().addMouseListener(rosterMouseListener);
+        jtable.addMouseListener(rosterMouseListener);
         
         try {
             clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval")).intValue();
@@ -1260,13 +1269,10 @@ public class DecoderPro3Window
         p.setSimplePreferenceState(DecoderPro3Window.class.getName() + ".hideGroups", hideGroups);
         p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideRosterImage",hideRosterImage);
         p.setProperty(getWindowFrameRef(), "selectedRosterGroup", groups.getSelectedRosterGroup());
-        //Method to save table sort status
-        int count = rtable.getModel().getColumnCount();
-        for (int i = 0; i <count; i++){
-            //This should probably store the sort with real names rather than numbers
-            //But conversion back on the headers is a pain.
-            p.setProperty(getWindowFrameRef(), "rosterOrder:"+rtable.getTable().getColumnName(i), rtable.getModel().getSortingStatus(i));
-            p.setProperty(getWindowFrameRef(), "rosterWidth:"+rtable.getTable().getColumnName(i), rtable.getTable().getColumnModel().getColumn(i).getPreferredWidth());
+        //Method to save table sort, width and column order status
+        String rostertableref = getWindowFrameRef()+":roster";
+        for (int i = 0; i <rtable.getTable().getColumnCount(); i++){ 
+            p.setTableColumnPreferences(rostertableref, rtable.getTable().getColumnName(i), i, rtable.getTable().getColumnModel().getColumn(i).getPreferredWidth(), rtable.getModel().getSortingStatus(i));
         }
         
         
