@@ -563,19 +563,32 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return Train's next route location name
 	 */
 	public String getNextLocationName(){
-		RouteLocation rl = getNextLocation();
-		if (rl != null)
-			return rl.getName();
-		return "";
+		return getNextLocationName(1);
 	}
 	
-	public RouteLocation getNextLocation(){
+	/**
+	 * Get a location name in a train's route from the current train's location.
+	 * A number of "1" means get the next location name in a train's route.
+	 * @param number The stop number, must be greater than 0
+	 * @return Name of the location that is the number of stops away from the train's current location.
+	 */
+	public String getNextLocationName(int number){
+		RouteLocation rl = getCurrentLocation();
+		while (number-- > 0){
+			rl = getNextLocation(rl);
+			if (rl == null)
+				return "";
+		}
+		return rl.getName();
+	}
+	
+	public RouteLocation getNextLocation(RouteLocation rlc){
 		if (getRoute() == null)
 			return null;
 		List<String> routeList = getRoute().getLocationsBySequenceList();
 		for (int i=0; i<routeList.size(); i++){
 			RouteLocation rl = getRoute().getLocationById(routeList.get(i));
-			if (rl == getCurrentLocation()){
+			if (rl == rlc){
 				i++;
 				if (i < routeList.size()){
 					rl = getRoute().getLocationById(routeList.get(i));
@@ -584,8 +597,7 @@ public class Train implements java.beans.PropertyChangeListener {
 				break;
 			}
 		}
-		return null;	// At end of route
-		
+		return null;	// At end of route		
 	}
 	
 	/**
