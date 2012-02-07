@@ -415,7 +415,7 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
 
     // internally, we sometimes want to be able to force the reconstruction of
     // the cached value returned by getSelectedRosterEntries
-    private RosterEntry[] getSelectedRosterEntries(boolean force) {
+    protected RosterEntry[] getSelectedRosterEntries(boolean force) {
         if (_currentSelection == null || force) {
             if (this.getSelectedItem() != null && !this.getSelectedItem().equals(_nonSelectedItem)) {
                 _currentSelection = new RosterEntry[1];
@@ -428,7 +428,7 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
     }
 
     // this method allows anonymous listeners to fire the "selectedRosterEntries" property change
-    private void fireSelectedRosterEntriesPropertyChange() {
+    protected void fireSelectedRosterEntriesPropertyChange() {
         this.firePropertyChange(RosterEntrySelector.SELECTED_ROSTER_ENTRIES,
                 _currentSelection,
                 this.getSelectedRosterEntries(true));
