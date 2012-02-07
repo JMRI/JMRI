@@ -69,6 +69,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
 
     /**
      * Create the panel used to select the decoder
+     *
      * @return a JPanel for handling the decoder-selection GUI
      */
     protected JPanel layoutDecoderSelection() {
@@ -76,26 +77,29 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         pane1a.setLayout(new BoxLayout(pane1a, BoxLayout.X_AXIS));
         pane1a.add(new JLabel("Decoder installed: "));
         decoderBox = DecoderIndexFile.instance().matchingComboBox(null, null, null, null, null, null);
-        decoderBox.insertItemAt("<from locomotive settings>",0);
+        decoderBox.insertItemAt("<from locomotive settings>", 0);
         decoderBox.setSelectedIndex(0);
         decoderBox.addActionListener(new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (decoderBox.getSelectedIndex()!=0) {
-                        // reset and disable loco selection
-                        locoBox.setSelectedIndex(0);
-                        go2.setEnabled(true);
-                        go2.setRequestFocusEnabled(true);
-                        go2.requestFocus();
-                        go2.setToolTipText(rbt.getString("CLICK TO OPEN THE PROGRAMMER"));
-                    } else {
-                        go2.setEnabled(false);
-                        go2.setToolTipText(rbt.getString("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
-                    }
+
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                if (decoderBox.getSelectedIndex() != 0) {
+                    // reset and disable loco selection
+                    locoBox.setSelectedIndex(0);
+                    go2.setEnabled(true);
+                    go2.setRequestFocusEnabled(true);
+                    go2.requestFocus();
+                    go2.setToolTipText(rbt.getString("CLICK TO OPEN THE PROGRAMMER"));
+                } else {
+                    go2.setEnabled(false);
+                    go2.setToolTipText(rbt.getString("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
                 }
-            });
+            }
+        });
         pane1a.add(decoderBox);
         iddecoder = addDecoderIdentButton();
-        if (iddecoder!=null) pane1a.add(iddecoder);
+        if (iddecoder != null) {
+            pane1a.add(iddecoder);
+        }
         pane1a.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
         return pane1a;
     }
@@ -151,15 +155,14 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         JPanel pane2a = new JPanel();
         pane2a.setLayout(new BoxLayout(pane2a, BoxLayout.X_AXIS));
         pane2a.add(new JLabel(rbt.getString("USE LOCOMOTIVE SETTINGS FOR: ")));
-        locoBox = new GlobalRosterEntryComboBox();
         locoBox.setNonSelectedItem(rbt.getString("<NONE - NEW LOCO>"));
         Roster.instance().addPropertyChangeListener(this);
         pane2a.add(locoBox);
         locoBox.addActionListener(new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (locoBox.getSelectedIndex()!=0) {
+                    if (locoBox.getSelectedRosterEntries().length != 0) {
                         // reset and disable decoder selection
-                        setDecoderSelectionFromLoco(((RosterEntry)locoBox.getSelectedItem()).titleString());
+                        setDecoderSelectionFromLoco(locoBox.getSelectedRosterEntries()[0].titleString());
                         go2.setEnabled(true);
                         go2.setRequestFocusEnabled(true);
                         go2.requestFocus();
@@ -314,11 +317,8 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         if (log.isDebugEnabled()) log.debug("selectLoco found "+l.size()+" matches");
         if (l.size() > 0) {
             RosterEntry r = l.get(0);
-            String id = r.getId();
-            if (log.isDebugEnabled()) log.debug("Loco id is "+id);
-            for (int i = 0; i<locoBox.getItemCount(); i++) {
-                if (id.equals(locoBox.getItemAt(i))) locoBox.setSelectedIndex(i);
-            }
+            if (log.isDebugEnabled()) log.debug("Loco id is "+ r.getId());
+            locoBox.setSelectedItem(r);
         } else {
             log.warn("Read address "+dccAddress+", but no such loco in roster");
             _statusLabel.setText(rbt.getString("READ ADDRESS ")+dccAddress+rbt.getString(", BUT NO SUCH LOCO IN ROSTER"));
@@ -417,17 +417,20 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         decoderBox.setSelectedIndex(1);
     }
 
-    protected GlobalRosterEntryComboBox locoBox = null;
+    protected GlobalRosterEntryComboBox locoBox = new GlobalRosterEntryComboBox();
     private JComboBox decoderBox = null;       // private because children will override this
     protected JComboBox programmerBox = null;
     protected JToggleButton iddecoder;
     protected JToggleButton idloco;
     protected JButton go2;
 
-    /** handle pushing the open programmer button by finding names, then calling a template method */
+    /**
+     * handle pushing the open programmer button by finding names, then calling
+     * a template method
+     */
     protected void openButton() {
         // figure out which we're dealing with
-        if (locoBox != null && locoBox.getSelectedIndex()!=0) {
+        if (locoBox.getSelectedRosterEntries().length != 0) {
             // known loco
             openKnownLoco();
         } else if (isDecoderSelected()) {
@@ -445,13 +448,16 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      */
     protected void openKnownLoco() {
 
-        RosterEntry re = Roster.instance().entryFromTitle((String)locoBox.getSelectedItem());
-        if (re == null) log.error("RosterEntry is null during open; that shouldnt be possible");
+        if (locoBox.getSelectedRosterEntries().length != 0) {
+            RosterEntry re = locoBox.getSelectedRosterEntries()[0];
+            if (log.isDebugEnabled()) {
+                log.debug("loco file: " + re.getFileName());
+            }
 
-        if (log.isDebugEnabled()) log.debug("loco file: "
-                                            +Roster.instance().fileFromTitle((String)locoBox.getSelectedItem()));
-
-        startProgrammer(null, re, (String)programmerBox.getSelectedItem());
+            startProgrammer(null, re, (String) programmerBox.getSelectedItem());
+        } else {
+            log.error("No roster entry was selected to open.");
+        }
     }
 
     /**
