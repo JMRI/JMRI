@@ -17,6 +17,8 @@ import java.beans.PropertyChangeListener;
  */
 public interface RosterEntrySelector {
 
+    static final String SELECTED_ROSTER_ENTRIES = "selectedRosterEntries";
+    
     /**
      * Get the currently selected roster entries. Since the selection could contain
      * multiple roster entries, this returns an array of RosterEntry instead of a

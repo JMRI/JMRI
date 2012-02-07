@@ -429,6 +429,8 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
 
     // this method allows anonymous listeners to fire the "selectedRosterEntries" property change
     private void fireSelectedRosterEntriesPropertyChange() {
-        this.firePropertyChange("selectedRosterEntries", _currentSelection, this.getSelectedRosterEntries(true));
+        this.firePropertyChange(RosterEntrySelector.SELECTED_ROSTER_ENTRIES,
+                _currentSelection,
+                this.getSelectedRosterEntries(true));
     }
 }

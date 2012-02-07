@@ -50,7 +50,7 @@ public class RosterEntrySelectorPanel extends JPanel implements RosterEntrySelec
 
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
-                if (pce.getPropertyName().equals("selectedRosterEntries")) {
+                if (pce.getPropertyName().equals(RosterEntrySelector.SELECTED_ROSTER_ENTRIES)) {
                     fireSelectedRosterEntriesPropertyChange(pce.getOldValue(), pce.getNewValue());
                 }
             }
@@ -59,7 +59,7 @@ public class RosterEntrySelectorPanel extends JPanel implements RosterEntrySelec
     }
 
     protected void fireSelectedRosterEntriesPropertyChange(Object oldValue, Object newValue) {
-        this.firePropertyChange("selectedRosterEntries", oldValue, newValue);
+        this.firePropertyChange(RosterEntrySelector.SELECTED_ROSTER_ENTRIES, oldValue, newValue);
     }
 
     @Override
