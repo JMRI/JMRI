@@ -304,18 +304,18 @@ public class RouteTableAction extends AbstractTableAction {
 
     JTextField soundFile = new JTextField(20);
     JTextField scriptFile = new JTextField(20);
-    JmriBeanComboBox turnoutsAlignedSensor = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
+    JmriBeanComboBox turnoutsAlignedSensor;
 
-    JmriBeanComboBox sensor1 = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
+    JmriBeanComboBox sensor1;
     
     JComboBox  sensor1mode = new JComboBox(sensorInputModes);
-    JmriBeanComboBox sensor2 = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
+    JmriBeanComboBox sensor2;
     JComboBox  sensor2mode = new JComboBox(sensorInputModes);
-    JmriBeanComboBox sensor3 = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
+    JmriBeanComboBox sensor3;
     JComboBox  sensor3mode = new JComboBox(sensorInputModes);
     
-    JmriBeanComboBox cTurnout = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance());
-    JmriBeanComboBox cLockTurnout = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance());
+    JmriBeanComboBox cTurnout;
+    JmriBeanComboBox cLockTurnout;
 	JTextField timeDelay = new JTextField(5);
 
     JComboBox cTurnoutStateBox = new JComboBox(turnoutInputModes);
@@ -380,6 +380,12 @@ public class RouteTableAction extends AbstractTableAction {
         
         // Set up window
         if (addFrame==null) {
+            turnoutsAlignedSensor = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
+            sensor1 = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
+            sensor2 = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
+            sensor3 = new JmriBeanComboBox(InstanceManager.sensorManagerInstance());
+            cTurnout = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance());
+            cLockTurnout = new JmriBeanComboBox(InstanceManager.turnoutManagerInstance());
             addFrame = new JmriJFrame("Add/Edit Route", false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.RouteAddEdit", true);
             addFrame.setLocation(100,30);
