@@ -1,6 +1,7 @@
 package jmri.jmrix.ecos.utilities;
 
 import java.util.Enumeration;
+import java.util.ArrayList;
 
 import jmri.jmrix.ecos.*;
 import jmri.jmrit.roster.RosterEntry;
@@ -47,16 +48,145 @@ public class EcosLocoToRoster implements EcosListener {
     protected JToggleButton iddecoder;
     JFrame frame;
     EcosSystemConnectionMemo adaptermemo;
+    EcosPreferences p;
 
-    public EcosLocoToRoster(){}
+    public EcosLocoToRoster(EcosSystemConnectionMemo memo){
+        adaptermemo =  memo;
+        p = adaptermemo.getPreferenceManager();
+    }
+    
+    public void addToQueue(EcosLocoAddress ecosObject){
+        locoList.add(ecosObject);
+    }
+    boolean waitingForComplete = false;
+    boolean inProcess = false;
+    public void processQueue(){
+        if(inProcess)
+            return;
+        inProcess=true;
+        Runnable run = new Runnable() {
+          public void run() {
+            while(locoList.size()!=0){
+                final EcosLocoAddress tmploco=locoList.get(0);
+                waitingForComplete = false;
+                if (p.getAddLocoToJMRI()==0x02){
+                    adaptermemo.getLocoAddressManager().setLocoToRoster();
+                    ecosLocoToRoster(tmploco.getEcosObject());
+                } else if(p.getAddLocoToJMRI()==0x00 && tmploco.addToRoster() && (tmploco.getRosterId()==null)){
+                    class WindowMaker implements Runnable {
+                        EcosLocoAddress ecosObject;
+                        WindowMaker(EcosLocoAddress o){
+                            ecosObject = o;
+                        }
+                        public void run() {
+                            final JDialog dialog = new JDialog();
+                            dialog.setTitle("Add Roster Entry From JMRI?");
+                            dialog.setLocationRelativeTo(null);
+                            dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                            JPanel container = new JPanel();
+                            container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+                            container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+                            JLabel question = new JLabel("Loco " + ecosObject.getEcosDescription() + " has been add to the " + adaptermemo.getUserName());
+                            question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                            container.add(question);
+                            
+                            question = new JLabel("Do you want to add it to JMRI?");
+                            question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                            container.add(question);
+                            final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                            remember.setFont(remember.getFont().deriveFont(10f));
+                            remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+                            //user preferences do not have the save option, but once complete the following line can be removed
+                            //Need to get the method to save connection configuration.
+                            remember.setVisible(true);
+                            JButton yesButton = new JButton("Yes");
+                            JButton noButton = new JButton("No");
+                            JPanel button = new JPanel();
+                            button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                            button.add(yesButton);
+                            button.add(noButton);
+                            container.add(button);
+
+                            noButton.addActionListener(new ActionListener(){
+                                public void actionPerformed(ActionEvent e) {
+                                    ecosObject.doNotAddToRoster();
+                                    waitingForComplete=true;
+                                    if(remember.isSelected()){
+                                        p.setAddLocoToJMRI(0x01);
+                                    }
+                                    dialog.dispose();
+                                }
+                            });
+
+                            yesButton.addActionListener(new ActionListener(){
+                                public void actionPerformed(ActionEvent e) {
+                                    if(remember.isSelected()) {
+                                        p.setAddLocoToJMRI(0x02);
+                                    }
+                                    ecosLocoToRoster(ecosObject.getEcosObject());
+                                    dialog.dispose();
+                                }
+                            });
+                            container.add(remember);
+                            container.setAlignmentX(Component.CENTER_ALIGNMENT);
+                            container.setAlignmentY(Component.CENTER_ALIGNMENT);
+                            dialog.getContentPane().add(container);
+                            dialog.pack();
+                            dialog.setModal(true);
+                            dialog.setVisible(true);
+                        }
+                    }
+                    try {
+                        WindowMaker t = new WindowMaker(tmploco);
+                        javax.swing.SwingUtilities.invokeAndWait(t);
+                    } catch (Exception ex) {
+                       // Thread.currentThread().interrupt();
+                    }
+                } else {
+                    waitingForComplete = true;
+                }
+                Runnable r = new Runnable() {
+                  public void run() {
+                    try {
+                      while (!waitingForComplete) {
+                        Thread.sleep(500L);
+                      }
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+
+                    }
+                  }
+                };
+                Thread thr = new Thread(r);
+                thr.start();
+                thr.setName("Ecos Loco To Roster Inner thread");
+                try {
+                    thr.join();
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+                locoList.remove(0);
+            }
+            inProcess=false;
+          }
+        };
+        Thread thread = new Thread(run);
+        thread.setName("Ecos Loco To Roster");
+        thread.start();
+    
+    }
+    
+    
+    ArrayList<EcosLocoAddress> locoList = new ArrayList<EcosLocoAddress>();
     //Same Name as the constructor need to sort it out!
-    public void ecosLocoToRoster(String ecosObject, EcosSystemConnectionMemo memo){
+    public void ecosLocoToRoster(String ecosObject){
         frame = new JFrame();
-        adaptermemo = memo;
+
         _ecosObject = ecosObject;
         _ecosObjectInt = Integer.parseInt(_ecosObject);
         ecosManager = adaptermemo.getLocoAddressManager();
-        //ecosManager = jmri.jmrix.ecos.EcosLocoAddressManager.instance();
+
         ecosLoco = ecosManager.getByEcosObject(ecosObject);
         String rosterId=ecosLoco.getEcosDescription();
         if(checkDuplicate(rosterId)){
@@ -75,19 +205,24 @@ public class EcosLocoToRoster implements EcosListener {
             SelectedDecoder(pDecoderFile);
             
         } else {
-        	comboPanel();
+        
+            class WindowMaker implements Runnable {
+                WindowMaker(){
+                }
+                public void run() {
+                        comboPanel();
+                    }
+            }
+            WindowMaker t = new WindowMaker();
+            javax.swing.SwingUtilities.invokeLater(t);
+            
         }
     }
     
     public void reply(EcosReply m) {
         int startval;
         int endval;
-        
-        
-        //int addr;
-        //String description;
-        //String protocol;
-        //String strde;
+
         String msg = m.toString();
         String[] lines = msg.split("\n");
         if (m.getResultCode()==0){
@@ -110,63 +245,71 @@ public class EcosLocoToRoster implements EcosListener {
                      }
                 }
             } else if (lines[0].startsWith("<REPLY get("+_ecosObject+", funcdesc")){
-                startval = lines[1].indexOf("[")+1;
-                endval = (lines[1].substring(startval)).indexOf(",")+startval;
-                boolean moment = true;
-                int functNo = Integer.parseInt(lines[1].substring(startval, endval));
-                startval = endval + 1;
-                endval = (lines[1].substring(startval)).indexOf(",")+startval;
-                if(endval == -1){
-                    endval = (lines[1].substring(startval)).indexOf("]")+startval;
-                    moment = false;
-                }
-                if(lines[1].contains("moment"))
-                    moment=true;
-                int functDesc = Integer.parseInt(lines[1].substring(startval, endval));
+                int functNo = 0;
+                try {
+                    startval = lines[1].indexOf("[")+1;
+                    endval = (lines[1].substring(startval)).indexOf(",")+startval;
+                    boolean moment = true;
+                    functNo = Integer.parseInt(lines[1].substring(startval, endval));
+                    startval = endval + 2;
+                    endval = (lines[1].substring(startval)).indexOf(",");//+startval;
+                    if(endval == -1){
+                        endval = (lines[1].substring(startval)).indexOf("]");//+startval;
+                        moment = false;
+                    }
+                    endval = endval+startval;
+                    if(lines[1].contains("moment"))
+                        moment=true;
                 
-                String functionLabel = "";
-                switch(functDesc){
-                //Default descriptions for ESU function icons
-                   case 2: functionLabel = "function"; break;
-                   case 3: functionLabel = "light"; break;
-                   case 4: functionLabel = "light_0"; break;
-                   case 5: functionLabel = "light_1"; break;
-                   case 7: functionLabel = "sound"; break;
-                   case 8: functionLabel = "music"; break;
-                   case 9: functionLabel = "announce"; break;
-                   case 10: functionLabel = "routing_speed"; break;
-                   case 11: functionLabel = "abv"; break;
-                   case 32: functionLabel = "coupler"; break;
-                   case 33: functionLabel = "steam"; break;
-                   case 34: functionLabel = "panto"; break;
-                   case 35: functionLabel = "highbeam"; break;
-                   case 36: functionLabel = "bell"; break;
-                   case 37: functionLabel = "horn"; break;
-                   case 38: functionLabel = "whistle"; break;
-                   case 39: functionLabel = "door_sound"; break;
-                   case 40: functionLabel = "fan"; break;
-                   case 42: functionLabel = "shovel_work_sound"; break;
-                   case 44: functionLabel = "shift"; break;
-                   case 260: functionLabel = "interior_lighting"; break;
-                   case 261: functionLabel = "plate_light"; break;
-                   case 263: functionLabel = "brakesound"; break;
-                   case 299: functionLabel = "crane_raise_lower"; break;
-                   case 555: functionLabel = "hook_up_down"; break;
-                   case 773: functionLabel = "wheel_light"; break;
-                   case 811: functionLabel = "turn"; break;
-                   case 1031: functionLabel = "steam-blow"; break;
-                   case 1033: functionLabel = "radio_sound"; break;
-                   case 1287: functionLabel = "coupler_sound"; break;
-                   case 1543: functionLabel = "track_sound"; break;
-                   case 1607: functionLabel = "notch_up"; break;
-                   case 1608: functionLabel = "notch_down"; break;
-                   case 2055: functionLabel = "thunderer_whistle"; break;
-                   case 3847: functionLabel = "buffer_sound"; break;
-                   default: break;
+                    int functDesc = Integer.parseInt(lines[1].substring(startval, endval));
+
+                    
+                    String functionLabel = "";
+                    switch(functDesc){
+                    //Default descriptions for ESU function icons
+                       case 2: functionLabel = "function"; break;
+                       case 3: functionLabel = "light"; break;
+                       case 4: functionLabel = "light_0"; break;
+                       case 5: functionLabel = "light_1"; break;
+                       case 7: functionLabel = "sound"; break;
+                       case 8: functionLabel = "music"; break;
+                       case 9: functionLabel = "announce"; break;
+                       case 10: functionLabel = "routing_speed"; break;
+                       case 11: functionLabel = "abv"; break;
+                       case 32: functionLabel = "coupler"; break;
+                       case 33: functionLabel = "steam"; break;
+                       case 34: functionLabel = "panto"; break;
+                       case 35: functionLabel = "highbeam"; break;
+                       case 36: functionLabel = "bell"; break;
+                       case 37: functionLabel = "horn"; break;
+                       case 38: functionLabel = "whistle"; break;
+                       case 39: functionLabel = "door_sound"; break;
+                       case 40: functionLabel = "fan"; break;
+                       case 42: functionLabel = "shovel_work_sound"; break;
+                       case 44: functionLabel = "shift"; break;
+                       case 260: functionLabel = "interior_lighting"; break;
+                       case 261: functionLabel = "plate_light"; break;
+                       case 263: functionLabel = "brakesound"; break;
+                       case 299: functionLabel = "crane_raise_lower"; break;
+                       case 555: functionLabel = "hook_up_down"; break;
+                       case 773: functionLabel = "wheel_light"; break;
+                       case 811: functionLabel = "turn"; break;
+                       case 1031: functionLabel = "steam-blow"; break;
+                       case 1033: functionLabel = "radio_sound"; break;
+                       case 1287: functionLabel = "coupler_sound"; break;
+                       case 1543: functionLabel = "track_sound"; break;
+                       case 1607: functionLabel = "notch_up"; break;
+                       case 1608: functionLabel = "notch_down"; break;
+                       case 2055: functionLabel = "thunderer_whistle"; break;
+                       case 3847: functionLabel = "buffer_sound"; break;
+                       default: break;
+                    }
+                    
+                    re.setFunctionLabel(functNo, functionLabel);
+                    re.setFunctionLockable(functNo, !moment);
+                } catch (Exception e){
+                    log.error("Error occured while getting the function information : " + e.toString());
                 }
-                
-                re.setFunctionLabel(functNo, functionLabel);
-                re.setFunctionLockable(functNo, !moment);
                 getFunctionDetails(functNo+1);
             }
         }
@@ -308,6 +451,7 @@ public class EcosLocoToRoster implements EcosListener {
         re.writeFile(cvModel, iCvModel, variableModel );
         getFunctionDetails(0);
         JOptionPane.showMessageDialog(frame, "Loco Added to the JMRI Roster");
+        waitingForComplete = true;
     }
     
     /**
@@ -674,8 +818,9 @@ public class EcosLocoToRoster implements EcosListener {
     
     void getFunctionDetails(int func){
         //Only gets information for function numbers upto 28
-        if(func>=29)
+        if(func>=29){
             return;
+        }
         String message = "get("+_ecosObject+", funcdesc["+ func +"])";
         EcosMessage m = new EcosMessage(message);
         adaptermemo.getTrafficController().sendEcosMessage(m, this);

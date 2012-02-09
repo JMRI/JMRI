@@ -418,9 +418,13 @@ public class EcosLocoTableAction extends AbstractTableAction {
             });
     }    
     void addToRoster(int row, int col){
-        if (locoManager.getByEcosObject(ecosObjectIdList.get(row)).getRosterId()==null){
-            EcosLocoToRoster addLoco = new EcosLocoToRoster();
-            addLoco.ecosLocoToRoster(ecosObjectIdList.get(row), adaptermemo);
+    //locoManager.
+        if (getByEcosObject(ecosObjectIdList.get(row)).getRosterId()==null){
+            EcosLocoToRoster addLoco = new EcosLocoToRoster(adaptermemo);
+            //addLoco.ecosLocoToRoster(ecosObjectIdList.get(row), adaptermemo);
+            getByEcosObject(ecosObjectIdList.get(row)).allowAddToRoster();
+            addLoco.addToQueue(getByEcosObject(ecosObjectIdList.get(row)));
+            addLoco.processQueue();
             m.fireTableRowsUpdated(row, row);
         }
     }

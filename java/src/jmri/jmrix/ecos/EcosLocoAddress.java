@@ -73,6 +73,10 @@ public class EcosLocoAddress {
     public void doNotAddToRoster(){
         doNotAddToRoster=true;
     }
+    
+    public void allowAddToRoster(){
+        doNotAddToRoster=false;
+    }
 
     public boolean addToRoster(){
         return !doNotAddToRoster;

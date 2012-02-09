@@ -27,6 +27,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
     
     public EcosLocoAddressManager(EcosSystemConnectionMemo memo){
         adaptermemo = memo;
+        locoToRoster = new EcosLocoToRoster(adaptermemo);
         tc = adaptermemo.getTrafficController();
         p = adaptermemo.getPreferenceManager();
         rosterAttribute = p.getRosterAttribute();
@@ -579,8 +580,10 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                                     tmploco.setProtocol(getProtocol(lines[i]));
                                 }
                                 register(tmploco);
+                                locoToRoster.addToQueue(tmploco);
                              }
                         }
+                        locoToRoster.processQueue();
                     }
                 } else if (replyType.equals("get")){
                 //Need to really check if this all fits together correctly!  Might need to get the loco id from the reply string to
@@ -617,7 +620,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                                 case 7 :    tmploco.setCV7(cvval);
                                             break;
                                 case 8  :   tmploco.setCV8(cvval);
-                                            checkInRoster(tmploco);
+                                            locoToRoster.processQueue();
                                             break;
                                 default : break;
                             }
@@ -779,78 +782,8 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         
         
     }
-    /* This checks firstly to see if we syncronise up ecos loco objects and roster
-     * entries then to see if the Ecos loco is already registered with a roster
-     * entry.  If it isn't registered then we will call the procdure to add the
-     * loco from the ecos into the roster.
-     */
-    private void checkInRoster(final EcosLocoAddress tmploco){
-       // final EcosPreferences p = adaptermemo.getPreferenceManager();
-        if (p.getAddLocoToJMRI()==0x02){
-            setLocoToRoster();
-            EcosLocoToRoster tmp = new EcosLocoToRoster();
-            tmp.ecosLocoToRoster(tmploco.getEcosObject(), adaptermemo);
-        } else if(p.getAddLocoToJMRI()==0x00 && tmploco.addToRoster() && (tmploco.getRosterId()==null)){
-            final JDialog dialog = new JDialog();
-            dialog.setTitle("Add Roster Entry From JMRI?");
-            dialog.setLocationRelativeTo(null);
-            dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-            JPanel container = new JPanel();
-            container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-            container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-
-            JLabel question = new JLabel("Loco " + tmploco.getEcosDescription() + " has been add to the " + adaptermemo.getUserName());
-            question.setAlignmentX(Component.CENTER_ALIGNMENT);
-            container.add(question);
-            
-            question = new JLabel("Do you want to add it to JMRI?");
-            question.setAlignmentX(Component.CENTER_ALIGNMENT);
-            container.add(question);
-            final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
-            remember.setFont(remember.getFont().deriveFont(10f));
-            remember.setAlignmentX(Component.CENTER_ALIGNMENT);
-            //user preferences do not have the save option, but once complete the following line can be removed
-            //Need to get the method to save connection configuration.
-            remember.setVisible(true);
-            JButton yesButton = new JButton("Yes");
-            JButton noButton = new JButton("No");
-            JPanel button = new JPanel();
-            button.setAlignmentX(Component.CENTER_ALIGNMENT);
-            button.add(yesButton);
-            button.add(noButton);
-            container.add(button);
-
-            noButton.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e) {
-                    tmploco.doNotAddToRoster();
-                    if(remember.isSelected()){
-                        p.setAddLocoToJMRI(0x01);
-                    }
-                    dialog.dispose();
-                }
-            });
-
-            yesButton.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e) {
-                    if(remember.isSelected()) {
-                        p.setAddLocoToJMRI(0x02);
-                    }
-                    EcosLocoToRoster tmp = new EcosLocoToRoster();
-                    tmp.ecosLocoToRoster(tmploco.getEcosObject(), adaptermemo);
-                    dialog.dispose();
-                }
-            });
-            container.add(remember);
-            container.setAlignmentX(Component.CENTER_ALIGNMENT);
-            container.setAlignmentY(Component.CENTER_ALIGNMENT);
-            dialog.getContentPane().add(container);
-            dialog.pack();
-            dialog.setModal(true);
-            dialog.setVisible(true);
-
-
-        }
-    }
+    
+    EcosLocoToRoster locoToRoster;
     
     Thread waitPrefLoad;
     
