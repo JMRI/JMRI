@@ -105,6 +105,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _leg3Model = "";			// engine model 3rd leg
 	protected String _leg3CabooseRoad = "";			// road name for caboose 3rd leg
 	
+	// engine change and helper options
 	public static final int CHANGE_ENGINES = 1;		// change engines
 	public static final int HELPER_ENGINES = 2;		// add helper engines
 	public static final int ADD_CABOOSE = 4;		// add caboose
@@ -137,7 +138,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String TRAINRESET = rb.getString("TrainReset");
 	public static final String TRAININROUTE = rb.getString("TrainInRoute");
 	
-	public static final int NONE = 0;		// train requirements
+	// train requirements
+	public static final int NONE = 0;		// default
 	public static final int CABOOSE = 1;
 	public static final int FRED = 2;
 	
@@ -1522,6 +1524,10 @@ public class Train implements java.beans.PropertyChangeListener {
 		return getThirdLegEndLocation().getName();
 	}
 	
+	/**
+	 * Optional changes to train while in route.
+	 * @param options NONE, CHANGE_ENGINES, ADD_CABOOSE, HELPER_ENGINES, REMOVE_CABOOSE 
+	 */
 	public void setSecondLegOptions(int options){
 		_leg2Options = options;
 	}
@@ -1530,6 +1536,10 @@ public class Train implements java.beans.PropertyChangeListener {
 		return _leg2Options;
 	}
 	
+	/**
+	 * Optional changes to train while in route.
+	 * @param options NONE, CHANGE_ENGINES, ADD_CABOOSE, HELPER_ENGINES, REMOVE_CABOOSE 
+	 */
 	public void setThirdLegOptions(int options){
 		_leg3Options = options;
 	}
