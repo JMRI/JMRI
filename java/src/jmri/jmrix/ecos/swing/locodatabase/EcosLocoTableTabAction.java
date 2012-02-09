@@ -85,6 +85,18 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
             }
         };
     }
+    
+    public void addToFrame(jmri.jmrit.beantable.BeanTableFrame f){
+        if(tabbedTableArray.size()>1){
+            super.addToFrame(f);
+        }
+    }
+    
+    public void setMenuBar(jmri.jmrit.beantable.BeanTableFrame f){
+        if(tabbedTableArray.size()>1){
+            super.setMenuBar(f);
+        }
+    }
 
     @Override
     protected void setTitle() {
