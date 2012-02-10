@@ -32,6 +32,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	public static final String DESTINATION_CHANGED_PROPERTY = "destination";
 	public static final String DESTINATION_TRACK_CHANGED_PROPERTY = "destinationTrack";
 	public static final String WAIT_CHANGED_PROPERTY = "wait";
+	public static final String HITS_CHANGED_PROPERTY = "hits";
 	public static final String DISPOSE = "dispose";
 	
 	/**
@@ -151,7 +152,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	public void setHits(int hit){
 		int old = _hits;
 		_hits = hit;
-		firePropertyChange (WAIT_CHANGED_PROPERTY, old, hit);
+		firePropertyChange (HITS_CHANGED_PROPERTY, old, hit);
 	}
 	
 	public Location getDestination() {

@@ -221,7 +221,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			}
 		}
 		// check to see if there's a schedule when placing the car at a spur
-		if (trackLocationBox.getSelectedItem() != null && !trackLocationBox.getSelectedItem().equals("") 
+		if (!ignoreLocationCheckBox.isSelected() && trackLocationBox.getSelectedItem() != null && !trackLocationBox.getSelectedItem().equals("") 
 				&& saveTrack != trackLocationBox.getSelectedItem()){
 			Track track = (Track)trackLocationBox.getSelectedItem();
 			if (track.getSchedule() != null){

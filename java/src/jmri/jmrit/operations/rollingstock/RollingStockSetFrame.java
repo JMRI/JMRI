@@ -634,7 +634,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		autoFinalDestTrackCheckBox.setEnabled(!ignoreFinalDestinationCheckBox.isSelected() & enabled);
 		autoReturnWhenEmptyTrackCheckBox.setEnabled(!ignoreRWECheckBox.isSelected() & enabled);
 		autoTrainCheckBox.setEnabled(!ignoreTrainCheckBox.isSelected() & enabled);
-		outOfServiceCheckBox.setEnabled(enabled);
+		locationUnknownCheckBox.setEnabled(!ignoreStatusCheckBox.isSelected() & enabled);
+		outOfServiceCheckBox.setEnabled(!ignoreStatusCheckBox.isSelected() & enabled);
 		
 		ignoreStatusCheckBox.setEnabled(enabled);
 		ignoreLocationCheckBox.setEnabled(enabled);

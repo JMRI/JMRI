@@ -69,6 +69,15 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 	}
 	
 	protected boolean save(){
+		// save ignore states
+		ignoreStatusCheckBoxSelected = ignoreStatusCheckBox.isSelected();
+		ignoreLocationCheckBoxSelected = ignoreLocationCheckBox.isSelected();
+		ignoreRWECheckBoxSelected = ignoreRWECheckBox.isSelected();
+		ignoreLoadCheckBoxSelected = ignoreLoadCheckBox.isSelected();
+		ignoreDestinationCheckBoxSelected = ignoreDestinationCheckBox.isSelected();
+		ignoreFinalDestinationCheckBoxSelected = ignoreFinalDestinationCheckBox.isSelected();
+		ignoreTrainCheckBoxSelected = ignoreTrainCheckBox.isSelected();
+
 		int rows[] = _carsTable.getSelectedRows();
 		if (rows.length == 0)					
 			JOptionPane.showMessageDialog(this,
@@ -81,15 +90,6 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 			if (!super.change(car))
 				return false;
 		}
-		// save ignore states
-		ignoreStatusCheckBoxSelected = ignoreStatusCheckBox.isSelected();
-		ignoreLocationCheckBoxSelected = ignoreLocationCheckBox.isSelected();
-		ignoreRWECheckBoxSelected = ignoreRWECheckBox.isSelected();
-		ignoreLoadCheckBoxSelected = ignoreLoadCheckBox.isSelected();
-		ignoreDestinationCheckBoxSelected = ignoreDestinationCheckBox.isSelected();
-		ignoreFinalDestinationCheckBoxSelected = ignoreFinalDestinationCheckBox.isSelected();
-		ignoreTrainCheckBoxSelected = ignoreTrainCheckBox.isSelected();
-
 		return true;
 	}
 
