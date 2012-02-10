@@ -179,6 +179,12 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				car.setNextDestTrack(finalDestTrack);
 			}
 		}
+		// car load
+		if (!ignoreLoadCheckBox.isSelected() && loadComboBox.getSelectedItem() != null){
+			String load = (String)loadComboBox.getSelectedItem();
+			if (CarLoads.instance().containsName(car.getType(), load))
+				car.setLoad(load);
+		}
 		// save car's track
 		Track saveTrack = car.getTrack();
 		if (!super.change(car))
@@ -214,19 +220,13 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				car.setReturnWhenEmptyDestination((Location) destReturnWhenEmptyBox.getSelectedItem());
 			}
 		}
-		// car load
-		if (!ignoreLoadCheckBox.isSelected() && loadComboBox.getSelectedItem() != null){
-			String load = (String)loadComboBox.getSelectedItem();
-			if (CarLoads.instance().containsName(car.getType(), load))
-				car.setLoad(load);
-		}
 		// check to see if there's a schedule when placing the car at a spur
 		if (trackLocationBox.getSelectedItem() != null && !trackLocationBox.getSelectedItem().equals("") 
 				&& saveTrack != trackLocationBox.getSelectedItem()){
 			Track track = (Track)trackLocationBox.getSelectedItem();
 			if (track.getSchedule() != null){
 				if (JOptionPane.showConfirmDialog(this,
-						getRb().getString("rsDoYouWantSchedule"),
+						MessageFormat.format(getRb().getString("rsDoYouWantSchedule"),new Object[]{car.toString()}),
 						MessageFormat.format(getRb().getString("rsSpurHasSchedule"),new Object[]{track.getName(), track.getScheduleName()}),					
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 					String results = car.testSchedule(track);
