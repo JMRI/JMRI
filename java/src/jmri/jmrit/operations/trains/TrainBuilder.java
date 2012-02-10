@@ -1782,7 +1782,10 @@ public class TrainBuilder extends TrainCommon{
 						return false;
 					}
 					// does the train accept the car load from the staging track?
-					if (!train.acceptsLoadName(car.getLoad())){
+					if (!car.isCaboose() && !car.isPassenger() 
+							&& (!car.getLoad().equals(CarLoads.instance().getDefaultEmptyName()) 
+							||  !departStageTrack.isAddLoadsEnabled() && !departStageTrack.isAddLoadsEnabledAnySiding())
+							&& !train.acceptsLoadName(car.getLoad())){
 						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingDepartCarLoad"),
 								new Object[]{departStageTrack.getName(), car.toString(), car.getLoad(), train.getName()}));
 						return false;
@@ -2604,7 +2607,7 @@ public class TrainBuilder extends TrainCommon{
 		List<String> loads = CarLoads.instance().getNames(car.getType());
 		for (int i=0; i<loads.size(); i++){
 			String load = loads.get(i);
-			if (terminateStageTrack.acceptsLoadName(load)){
+			if (terminateStageTrack.acceptsLoadName(load) && train.acceptsLoadName(load)){
 				car.setLoad(load);
 				car.setLoadGeneratedFromStaging(true);
 				// is car part of kernel?
