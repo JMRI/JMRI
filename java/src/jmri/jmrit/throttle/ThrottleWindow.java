@@ -677,6 +677,7 @@ public class ThrottleWindow extends JmriJFrame {
         }
         
         // Save Jynstruments
+        if (throttleToolBar!=null){
 		Component[] cmps = throttleToolBar.getComponents();
 		if (cmps != null)
 			for (int i=0; i<cmps.length; i++) {
@@ -698,7 +699,7 @@ public class ThrottleWindow extends JmriJFrame {
 					log.debug("Got exception (no panic) "+ex);
 				}
 			}
-
+        }
         me.setContent(children);        
         return me;
 	}
