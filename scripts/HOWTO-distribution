@@ -72,8 +72,11 @@ Second, we build the release branch:
 
 ( ) Start the release by copying the current HEAD onto a new SVN "release branch"
 
-    ant make-test-release-branch
+    ant -Dsourceforge.userid='you' -Dsourceforge.password='password' make-test-release-branch
 
+    (Yes, you probably do have to provide both userid and password, or it will
+    silently hang)
+    
     This will do (more or less) the following actions:
 
     svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/2.13.5
@@ -104,6 +107,9 @@ Second, we build the release branch:
 Third, we do any necessary release-specific updates.
     (we need to work through automation of version number values)
 
+( ) Create the _next_ release note, so that people will document new (overlapping)
+    changes there.
+    
 ( ) Edit the version number into the top help page on the branch (one place):
     bbedit help/en/index.html
 
@@ -113,6 +119,8 @@ Third, we do any necessary release-specific updates.
 
 ( ) Commit back; if using CI builds, this will trigger a rebuild, so wait for it.
     If using manual builds, see section below.
+    
+( ) Change the release note to point to the CI files, commit, wait (or force) update.
 
 ( ) Announce the file set to jmri-developers with a download URL like:
 
