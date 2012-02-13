@@ -50,7 +50,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     public SlotManager(LnTrafficController tc) {
         this.tc = tc;
-        
         // need a longer LONG_TIMEOUT for Fleischman command stations
         LONG_TIMEOUT=180000;
         
@@ -1074,6 +1073,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public String getSystemPrefix() { 
         if(adaptermemo==null) return "L";
         return adaptermemo.getSystemPrefix();
+    }
+    
+    public LocoNetSystemConnectionMemo getSystemConnectionMemo(){
+        return adaptermemo;
     }
     
     // initialize logging
