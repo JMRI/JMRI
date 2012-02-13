@@ -698,6 +698,56 @@
       </xs:annotation>
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="icons" minOccurs="0" maxOccurs="unbounded" >
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="closed" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="rotation" type="xs:string" />
+                  </xs:sequence>
+                  <xs:attribute name="url" type="xs:string"/>
+                  <xs:attribute name="degrees" type="xs:string"/>
+                  <xs:attribute name="scale" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="thrown" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="rotation" type="xs:string" />
+                  </xs:sequence>
+                  <xs:attribute name="url" type="xs:string"/>
+                  <xs:attribute name="degrees" type="xs:string"/>
+                  <xs:attribute name="scale" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="unknown" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="rotation" type="xs:string" />
+                  </xs:sequence>
+                  <xs:attribute name="url" type="xs:string"/>
+                  <xs:attribute name="degrees" type="xs:string"/>
+                  <xs:attribute name="scale" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="inconsistent" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="rotation" type="xs:string" />
+                  </xs:sequence>
+                  <xs:attribute name="url" type="xs:string"/>
+                  <xs:attribute name="degrees" type="xs:string"/>
+                  <xs:attribute name="scale" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="iconmaps" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="closed" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="thrown" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="unknown" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
