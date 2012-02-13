@@ -114,6 +114,7 @@
         <xs:element name="setting" type="OBlockSettingType" minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
       <xs:attribute name="pathName" type="xs:string" />
+      <xs:attribute name="blockName" type="xs:string" />
       <xs:attribute name="fromDirection" type="xs:string" />
       <xs:attribute name="toDirection" type="xs:string" />
       <xs:attribute name="fromPortal" type="xs:string" />
