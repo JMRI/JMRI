@@ -33,10 +33,10 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     }
 
     public String getAspect() { return aspect; }
-    private String aspect = null;
+    protected String aspect = null;
     
     public String getSpeed() { return speed; }
-    private String speed = null;
+    protected String speed = null;
 
     /**
      * The state is the index of the current aspect

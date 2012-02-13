@@ -118,7 +118,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     }
     
     public synchronized void updateListenerRef(java.beans.PropertyChangeListener l, String newName){
-        if(listenerRefs.contains(l)){
+        if(listenerRefs.containsKey(l)){
             listenerRefs.put(l, newName);
         }
     }
