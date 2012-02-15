@@ -16,6 +16,7 @@ import java.beans.PropertyChangeListener;
 import java.util.Vector;
 import java.util.Hashtable;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Enumeration;
 import java.lang.reflect.Method;
 
@@ -1009,9 +1010,10 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
     public String getTableColumnAtNum(String table, int i){
         if(tableColumnPrefs.containsKey(table)){
             Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
-            for(String column: columnPrefs.keySet()){
-                if(columnPrefs.get(column).getOrder()==i){
-                    return column;
+            for(Object o: columnPrefs.entrySet()){
+                Map.Entry entry = (Map.Entry) o;
+                if(((TableColumnPreferences)entry.getValue()).getOrder()==i){
+                    return (String)entry.getKey();
                 }
             }
         

@@ -11,26 +11,10 @@ import jmri.NmraPacket;
  * This implementation writes out to the physical signal when
  * it's commanded to change appearance, and updates its internal state
  * when it hears commands from other places.
- * <P>To get a complete set of aspects, we assume that the
- * SE8C board has been configured such that the 4th aspect is "dark".
- * We then do flashing aspects by commanding the lit appearance to change.
- *
  * <p>
- * This is a grandfathered implementation that is specific to 
- * loconet systems.  A more general implementation, which can work
- * with any system(s), is available in {@link jmri.implementation.LNCPSignalMast}.
- * This package is maintained so that existing XML files can continue
- * to be read.  In particular, it only works with the first LocoNet 
- * connection (names LHnnn, not L2Hnnn etc).
- *
- * <P>The algorithms in this class are a collaborative effort of Digitrax, Inc
- * and Bob Jacobsen.
- * <P>
- * Some of the message formats used in this class are Copyright Digitrax, Inc.
- * and used with permission as part of the JMRI project.  That permission
- * does not extend to uses in other software products.  If you wish to
- * use this code, algorithm or these message formats outside of JMRI, please
- * contact Digitrax Inc for separate permission.
+ * This is a specific implementation for the RR-cirkits LNCP interface board
+ * A more general implementation, which can work
+ * with any system(s), is available in {@link jmri.implementation.DCCSignalMast}.
  *
  * @author			Kevin Dickerson Copyright (C) 2002
  * @version			$Revision: 17977 $
