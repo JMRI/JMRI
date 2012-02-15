@@ -145,7 +145,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
     
     //taken out of the defaultsignalappearancemap
     public void setAppearances(String aspect) {
-        if (map != null && map.getSignalSystem() !=null &&  map.getSignalSystem().checkAspect(aspect))
+        if (map != null && map.getSignalSystem() !=null &&  map.getSignalSystem().checkAspect(aspect) && map.getAspectSettings(aspect)!=null)
             log.warn("Attempt to set "+getSystemName()+" to undefined aspect: "+aspect);
         if (heads.size() > map.getAspectSettings(aspect).length)
             log.warn("setAppearance to \""+aspect+"\" finds "+heads.size()+" heads but only "+map.getAspectSettings(aspect).length+" settings");
