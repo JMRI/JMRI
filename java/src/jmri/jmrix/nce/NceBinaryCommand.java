@@ -100,6 +100,8 @@ public class NceBinaryCommand {
     public static final int WRITE4_CMD = 0x99;		//NCE write 4 bytes of memory command
     public static final int WRITE8_CMD = 0x9A;		//NCE write 8 bytes of memory command
     public static final int READ1_CMD = 0x9D;		//NCE read 1 byte of memory command
+    
+    public static final int MACRO_CMD = 0x9C;		//NCE execute macro n
 
     public static final int ACC_CMD = 0xAD;			//NCE accessory command
     public static final int LOCO_CMD = 0xA2;		//NCE Loco control command 

@@ -156,7 +156,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
 			// We need to send this version of macro command to cause turnout
 			// state to change in NCE CS
 			NceMessage m = new NceMessage(5);
-			m.setElement(0, 0xAD); 		// Macro cmd
+			m.setElement(0, NceBinaryCommand.ACC_CMD); 		// Macro cmd
 			m.setElement(1, 0x00); 		// addr_h
 			m.setElement(2, 0x01); 		// addr_l
 			m.setElement(3, 0x01); 		// Macro cmd
@@ -169,7 +169,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
 			
 			// NCE responds with okay (!) if macro exist, (0) if not
 			NceMessage m = new NceMessage(2);
-			m.setElement(0, 0x9C); 		// Macro cmd
+			m.setElement(0, NceBinaryCommand.MACRO_CMD); 		// Macro cmd
 			m.setElement(1, macroNum); 	// Macro #
 			m.setBinary(true);
 			m.setReplyLen(REPLY_LEN);
@@ -191,7 +191,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
 
 		// NCE responds with okay (!) if macro exist, (0) if not
 		NceMessage m = new NceMessage(2);
-		m.setElement(0, 0x9C); // Macro cmd
+		m.setElement(0, NceBinaryCommand.MACRO_CMD); // Macro cmd
 		m.setElement(1, macroNum); // Macro #
 		m.setBinary(true);
 		m.setReplyLen(REPLY_LEN);
