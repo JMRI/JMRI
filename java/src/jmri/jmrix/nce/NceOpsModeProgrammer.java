@@ -45,6 +45,8 @@ public class NceOpsModeProgrammer extends NceProgrammer  {
 			// create the message and fill it,
 			byte[] contents = NmraPacket.opsCvWriteByte(mAddress, mLongAddr,
 					CV, val);
+			if (contents == null)
+				throw new ProgrammerException();
 			msg = NceMessage.sendPacketMessage(tc, contents, 5);	// retry 5 times
 		}
         // record state. COMMANDSENT is just waiting for a reply...
