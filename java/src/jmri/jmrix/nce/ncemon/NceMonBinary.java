@@ -30,6 +30,7 @@ public class NceMonBinary {
 	private static final int REPLY_UNKNOWN = 0;
 	private static final int REPLY_STANDARD = 1;
 	private static final int REPLY_DATA = 2;
+	private static final int REPLY_ENTER_PROGRAMMING_MODE = 3;
 	
 	// The standard replies
 	private static final int REPLY_ZERO = 0;
@@ -86,30 +87,32 @@ public class NceMonBinary {
 						new Object[] { m.getElement(3), getAddress(m), getDataBytes(m, 4, 16)});
 			break;
 		}
-		case (NceMessage.QUEUEn_BYTES_CMD + 3):{
+		// Send n bytes commands 0x93 - 0x96
+		case (NceMessage.SENDn_BYTES_CMD + 3):{
 			if (m.getNumDataElements() == 5)
-				return MessageFormat.format(rb.getString("QUEUEn_BYTES_CMD"),
+				return MessageFormat.format(rb.getString("SENDn_BYTES_CMD"),
 						new Object[] {"3", m.getElement(1), getDataBytes(m, 2, 3)});
 			break;
 		}
-		case (NceMessage.QUEUEn_BYTES_CMD + 4):{
+		case (NceMessage.SENDn_BYTES_CMD + 4):{
 			if (m.getNumDataElements() == 6)
-				return MessageFormat.format(rb.getString("QUEUEn_BYTES_CMD"),
+				return MessageFormat.format(rb.getString("SENDn_BYTES_CMD"),
 						new Object[] {"4", m.getElement(1), getDataBytes(m, 2, 4)});
 			break;
 		}
-		case (NceMessage.QUEUEn_BYTES_CMD + 5):{
+		case (NceMessage.SENDn_BYTES_CMD + 5):{
 			if (m.getNumDataElements() == 7)
-				return MessageFormat.format(rb.getString("QUEUEn_BYTES_CMD"),
+				return MessageFormat.format(rb.getString("SENDn_BYTES_CMD"),
 						new Object[] {"5", m.getElement(1), getDataBytes(m, 2, 5)});
 			break;
 		}
-		case (NceMessage.QUEUEn_BYTES_CMD + 6):{
+		case (NceMessage.SENDn_BYTES_CMD + 6):{
 			if (m.getNumDataElements() == 8)
-				return MessageFormat.format(rb.getString("QUEUEn_BYTES_CMD"),
+				return MessageFormat.format(rb.getString("SENDn_BYTES_CMD"),
 						new Object[] {"6", m.getElement(1), getDataBytes(m, 2, 6)});
 			break;
 		}
+
 		case (NceBinaryCommand.WRITE1_CMD):{
 			if (m.getNumDataElements() == 4)
 				return MessageFormat.format(rb.getString("WRITE1_CMD"),
@@ -140,10 +143,18 @@ public class NceMonBinary {
 						new Object[] {m.getElement(1)});
 			break;	
 		}
-		case (NceMessage.ENTER_PROG_CMD):
+		case (NceMessage.ENTER_PROG_CMD):{
+			replyType = REPLY_ENTER_PROGRAMMING_MODE;
 			return rb.getString("ENTER_PROG_CMD");
+		}
 		case (NceMessage.EXIT_PROG_CMD):
 			return rb.getString("EXIT_PROG_CMD");
+		case (NceMessage.WRITE_PAGED_CV_CMD):{
+			if (m.getNumDataElements() == 4)
+				return MessageFormat.format(rb.getString("WRITE_PAGED_CV_CMD"),
+						new Object[] {getNumber(m), getDataBytes(m, 3, 1)});
+			break;
+		}
 		case (NceBinaryCommand.LOCO_CMD):{
 			if (m.getNumDataElements() == 5){
 				// byte three is the Op_1
@@ -215,6 +226,37 @@ public class NceMonBinary {
 			}
 			break;
 		}
+		// Queue commands 0xA3 - 0xA5
+		case (NceMessage.QUEUEn_BYTES_CMD + 3):{
+			if (m.getNumDataElements() == 5)
+				return MessageFormat.format(rb.getString("QUEUEn_BYTES_CMD"),
+						new Object[] {"3", m.getElement(1), getDataBytes(m, 2, 3)});
+			break;
+		}
+		case (NceMessage.QUEUEn_BYTES_CMD + 4):{
+			if (m.getNumDataElements() == 6)
+				return MessageFormat.format(rb.getString("QUEUEn_BYTES_CMD"),
+						new Object[] {"4", m.getElement(1), getDataBytes(m, 2, 4)});
+			break;
+		}
+		case (NceMessage.QUEUEn_BYTES_CMD + 5):{
+			if (m.getNumDataElements() == 7)
+				return MessageFormat.format(rb.getString("QUEUEn_BYTES_CMD"),
+						new Object[] {"5", m.getElement(1), getDataBytes(m, 2, 5)});
+			break;
+		}
+		case (NceMessage.WRITE_REG_CMD):{
+			if (m.getNumDataElements() == 3)
+				return MessageFormat.format(rb.getString("WRITE_REG_CMD"),
+						new Object[] {m.getElement(1), getDataBytes(m, 2, 1)});
+			break;
+		}
+		case (NceMessage.WRITE_DIR_CV_CMD):{
+			if (m.getNumDataElements() == 4)
+				return MessageFormat.format(rb.getString("WRITE_DIR_CV_CMD"),
+						new Object[] {getNumber(m), getDataBytes(m, 3, 1)});
+			break;
+		}
 		case (NceBinaryCommand.ACC_CMD):{
 			if (m.getNumDataElements() == 5){
 				// byte three is the Op_1
@@ -241,30 +283,50 @@ public class NceMonBinary {
 		switch (m.getOpCode() & 0xFF) {
 		case (NceBinaryCommand.READ_CLOCK_CMD):
 			return rb.getString("READ_CLOCK_CMD");
-		case (NceBinaryCommand.READ_AUI4_CMD):
-			return MessageFormat.format(rb.getString("READ_AUI4_CMD"),
-					new Object[] {m.getElement(1)});
-		case (NceBinaryCommand.READ16_CMD):
-			return MessageFormat.format(rb.getString("READ16_CMD"),
-					new Object[] {getAddress(m)});
-		case (NceBinaryCommand.READ1_CMD):
-			return MessageFormat.format(rb.getString("READ1_CMD"),
-					new Object[] {getAddress(m)});
-		case (NceMessage.READ_PAGED_CV_CMD):
-			return MessageFormat.format(rb.getString("READ_PAGED_CV_CMD"),
-					new Object[] {getNumber(m)});	
-		case (NceMessage.READ_REG_CMD):
-			return MessageFormat.format(rb.getString("READ_REG_CMD"),
-					new Object[] {m.getElement(1)});
-		case (NceMessage.READ_DIR_CV_CMD):
-			return MessageFormat.format(rb.getString("READ_DIR_CV_CMD"),
-					new Object[] {getNumber(m)});	
+		case (NceBinaryCommand.READ_AUI4_CMD):{
+			if (m.getNumDataElements() == 2)
+				return MessageFormat.format(rb.getString("READ_AUI4_CMD"),
+						new Object[] {m.getElement(1)});
+			break;
+		}
+		case (NceBinaryCommand.DUMMY_CMD):
+			return rb.getString("DUMMY_CMD");
+		case (NceBinaryCommand.READ16_CMD):{
+			if (m.getNumDataElements() == 3)
+				return MessageFormat.format(rb.getString("READ16_CMD"),
+						new Object[] {getAddress(m)});
+			break;
+		}
+		case (NceBinaryCommand.READ1_CMD):{
+			if (m.getNumDataElements() == 3)
+				return MessageFormat.format(rb.getString("READ1_CMD"),
+						new Object[] {getAddress(m)});
+			break;
+		}
+		case (NceMessage.READ_PAGED_CV_CMD):{
+			if (m.getNumDataElements() == 3)
+				return MessageFormat.format(rb.getString("READ_PAGED_CV_CMD"),
+						new Object[] {getNumber(m)});
+			break;
+		}
+		case (NceMessage.READ_REG_CMD):{
+			if (m.getNumDataElements() == 2)
+				return MessageFormat.format(rb.getString("READ_REG_CMD"),
+						new Object[] {m.getElement(1)});
+			break;
+		}
+		case (NceMessage.READ_DIR_CV_CMD):{
+			if (m.getNumDataElements() == 3)
+				return MessageFormat.format(rb.getString("READ_DIR_CV_CMD"),
+						new Object[] {getNumber(m)});
+			break;
+		}
 		case (NceBinaryCommand.SW_REV_CMD):
 			return rb.getString("SW_REV_CMD");
 		}		
 		// this is one we don't know about or haven't coded it up 
 		replyType = REPLY_UNKNOWN;
-		return "binary cmd: " + m.toString();
+		return MessageFormat.format(rb.getString("BIN_CMD"), new Object[] {m.toString()});
 	}
 	
 	private String getAddress(NceMessage m){
@@ -310,6 +372,19 @@ public class NceMonBinary {
 				case(REPLY_TWO): return rb.getString("NceReplyTwo");
 				case(REPLY_THREE): return rb.getString("NceReplyThree");
 				case(REPLY_FOUR): return rb.getString("NceReplyFour");
+				case(REPLY_OK): return rb.getString("NceReplyOK");
+				}
+			}
+			break;
+		}
+		case(REPLY_ENTER_PROGRAMMING_MODE):{
+			/* enter programming mode reply is a single byte
+			 * '3'= short circuit
+			 * '!'= command completed successfully
+			 */
+			if (r.getNumDataElements() == 1){
+				switch(r.getOpCode() & 0xFF){
+				case(REPLY_THREE): return rb.getString("NceReplyThreeProg");
 				case(REPLY_OK): return rb.getString("NceReplyOK");
 				}
 			}
