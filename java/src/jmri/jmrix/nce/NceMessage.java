@@ -295,7 +295,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             NceMessage m = new NceMessage(3);
             m.setBinary(true);
-            m.setReplyLen(2);
+            m.setReplyLen(1);
             m.setOpCode(WRITE_REG_CMD);
             m.setElement(1,reg);
             m.setElement(2,val);
