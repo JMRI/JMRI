@@ -575,7 +575,8 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 			carManagerXml.writeOperationsFile(); 	//save road names, and owners
 			LocationManagerXml.instance().writeOperationsFile();
 			TrainManagerXml.instance().writeOperationsFile();
-		}	
+		} else
+			LocationManagerXml.instance().writeFileIfDirty();	// write location file if track is part of pool	
 	}
 
 	private boolean editActive = false;

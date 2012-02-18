@@ -20,7 +20,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import jmri.DccLocoAddress;
-import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.jmrix.nce.NceBinaryCommand;

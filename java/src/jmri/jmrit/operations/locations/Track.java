@@ -185,6 +185,8 @@ public class Track {
 		_length = length;
 		if (old != length)
 			firePropertyChange(LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
+    	// set dirty, length can change if track is part of a pool
+    	LocationManagerXml.instance().setDirty(true);
 	}
 
 	public int getLength(){
