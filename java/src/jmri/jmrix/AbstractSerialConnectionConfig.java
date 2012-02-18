@@ -126,6 +126,18 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         });
         init = true;
     }
+
+    public void updateAdapter(){
+        adapter.setPort(PortNameMapper.getPortFromName((String)portBox.getSelectedItem()));
+        adapter.configureBaudRate((String)baudBox.getSelectedItem());
+        adapter.configureOption1((String)opt1Box.getSelectedItem());
+        adapter.configureOption2((String)opt2Box.getSelectedItem());
+        if(!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())){
+            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+            connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
+        }
+    }
+
     jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     //protected ComboBoxRenderer portBoxRenderer = new ComboBoxRenderer();
     protected JComboBox portBox = new JComboBox();

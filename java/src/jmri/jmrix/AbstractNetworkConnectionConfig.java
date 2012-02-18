@@ -132,6 +132,17 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         }        init = true;
     }
 
+    public void updateAdapter(){
+        adapter.setHostName(hostNameField.getText());
+        adapter.setPort(Integer.parseInt(portField.getText()));
+        adapter.configureOption1((String)opt1Box.getSelectedItem());
+        adapter.configureOption2((String)opt2Box.getSelectedItem());
+        if(!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())){
+            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+            connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
+        }
+    }
+
     jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     protected JTextField hostNameField = new JTextField();
     protected JLabel hostNameFieldLabel;
