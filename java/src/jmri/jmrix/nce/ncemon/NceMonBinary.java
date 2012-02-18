@@ -21,7 +21,7 @@ import jmri.util.StringUtil;
 
 public class NceMonBinary {
 	
-	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.NceMonBinaryBundle");
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.ncemon.NceMonBinaryBundle");
 	
 	private static final String NEW_LINE = "\n";
 
@@ -346,7 +346,11 @@ public class NceMonBinary {
 	}
 	
 	private String getLocoAddress(NceMessage m){
-		return Integer.toString((m.getElement(1) & 0x3F)*256 + m.getElement(2));
+		// show address type
+		String appendix = " (short)";
+		if ((m.getElement(1) & 0xE0) > 0)
+			appendix = " (long)";
+		return Integer.toString((m.getElement(1) & 0x3F)*256 + m.getElement(2)) + appendix;
 	}
 	
 	public String displayReply(NceReply r){
