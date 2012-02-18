@@ -661,22 +661,24 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	// load a loco from roster
 	private void rosterBoxSelect(JComboBox locoRosterBox,
 			JTextField locoTextField, JButton adrButton) {
-		String rosterEntryTitle = locoRosterBox.getSelectedItem().toString();
-		if (rosterEntryTitle.equals(""))
-			return;
-		RosterEntry entry = Roster.instance().entryFromTitle(rosterEntryTitle);
-		DccLocoAddress a = entry.getDccLocoAddress();
-		if (a != null) {
-			locoTextField.setText("" + a.getNumber());
-			if (a.isLongAddress())
-				adrButton.setText(rb.getString("KeyLONG"));
-			else
-				adrButton.setText(rb.getString("KeySHORT"));
-			// if lead loco get road number and name
-			if (locoRosterBox == locoRosterBox1){
-				textConRoadName.setText(entry.getRoadName());
-				textConRoadNumber.setText(entry.getRoadNumber());
-				textConModel.setText(entry.getModel());
+		RosterEntry entry = null;
+		Object o = locoRosterBox.getSelectedItem();
+		if (o.getClass().equals(RosterEntry.class))
+			entry = (RosterEntry)o;
+		if (entry != null){
+			DccLocoAddress a = entry.getDccLocoAddress();
+			if (a != null) {
+				locoTextField.setText("" + a.getNumber());
+				if (a.isLongAddress())
+					adrButton.setText(rb.getString("KeyLONG"));
+				else
+					adrButton.setText(rb.getString("KeySHORT"));
+				// if lead loco get road number and name
+				if (locoRosterBox == locoRosterBox1){
+					textConRoadName.setText(entry.getRoadName());
+					textConRoadNumber.setText(entry.getRoadNumber());
+					textConModel.setText(entry.getModel());
+				}
 			}
 		}
 	}
