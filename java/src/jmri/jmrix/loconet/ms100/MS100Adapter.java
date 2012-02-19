@@ -78,6 +78,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
                 }
             }
             catch (java.io.IOException e) { log.error("IO exception listing ports: "+e); }
+            catch (java.lang.UnsatisfiedLinkError e) { log.error("Exception listing ports: "+ e); }
             return portNameVector;
         }
         public String openPort(String portName, String appName) throws java.io.IOException {
