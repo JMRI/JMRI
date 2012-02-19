@@ -1,0 +1,13 @@
+
+Items still working with raw CAN:
+    TurnoutManager
+    SensorManager
+    MonitorWindow (?)
+    SendWindow(?)
+    
+basic setup is done in 
+    java/src/jmri/jmrix/openlcb/OlcbConfigurationManager.java
+    
+But see also 
+    jmri/jmrix/openlcb/CanConverter
+    
