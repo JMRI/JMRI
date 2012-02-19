@@ -185,6 +185,8 @@ public class Track {
 		_length = length;
 		if (old != length)
 			firePropertyChange(LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
+    	// set dirty, length can change if track is part of a pool
+    	// LocationManagerXml.instance().setDirty(true);
 	}
 
 	public int getLength(){
@@ -250,7 +252,9 @@ public class Track {
 	 * @param factor A number from 0 to 10000.
 	 */
 	public void setReservationFactor(int factor){
+		int old = _reservationFactor;
 		_reservationFactor = factor;
+		firePropertyChange("reservationFactor", old, factor);
 	}
 	
 	public int getReservationFactor(){
@@ -448,7 +452,9 @@ public class Track {
 	}
 
 	public void setComment(String comment){
+		String old = _comment;
 		_comment = comment;
+		firePropertyChange("trackComment", old, comment);
 	}
 
 	public String getComment(){
@@ -890,9 +896,11 @@ public class Track {
     }
     
     public void setMoves(int moves){
+    	int old = _moves;
     	_moves = moves;
+    	firePropertyChange("trackMoves", old, moves);
     	// set dirty
-    	LocationManagerXml.instance().setDirty(true);
+    	//LocationManagerXml.instance().setDirty(true);
     }
     
     /**
@@ -907,7 +915,9 @@ public class Track {
     }
     
     public void setServiceOrder(String order){
+    	String old = _order;
     	_order = order;
+    	firePropertyChange("trackServiceOrder", old, order);
     }
     
     /**
@@ -1400,6 +1410,7 @@ public class Track {
 	}
 
 	protected void firePropertyChange(String p, Object old, Object n) {
+    	LocationManagerXml.instance().setDirty(true);
 		pcs.firePropertyChange(p, old, n);
 	}
 

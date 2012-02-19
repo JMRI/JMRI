@@ -553,7 +553,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			filesModified = false;
 			LocationManagerXml.instance().writeOperationsFile();
 			TrainManagerXml.instance().writeOperationsFile();
-		}
+		} else
+			LocationManagerXml.instance().writeFileIfDirty();	// write location file if track is part of pool
 		
 	}
 	

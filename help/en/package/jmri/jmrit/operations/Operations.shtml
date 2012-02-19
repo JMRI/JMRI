@@ -59,8 +59,87 @@ of tools and can be found under the main menu heading
 <P>
 <img src="images/MainMenuDecoderPro.png">
 </P>
+   <H3>Table of Contents</H3>
+   <UL>
+    <LI><A HREF="#demo">Operations Demo Files</A></LI>
+    <LI><A HREF="#QuickStartHelp">Quick Start Help</A></LI>
+    <LI><A HREF="#Settings">Settings</A>
+     <UL>
+      <LI><A HREF="#BackupRestore">Backup and Restore</A></LI>
+      <LI><A HREF="#SettingsOptions">Options</A></LI>
+     </UL></LI>
+    <LI><A HREF="#PrintOptions">Print Options</A></LI>
+    <LI><A HREF="#Locations">Locations</A>
+     <UL>
+      <LI><A HREF="#Yards">Yards</A></LI>
+      <LI><A HREF="#Sidings">Spurs</A>
+       <UL>
+        <LI><A HREF="#Schedules">Schedules</A></LI>
+        <LI><A HREF="#SchedulesAndLoads">Schedules and Loads</A></LI>
+        <LI><A HREF="#ShowSchedulesByCarTypeAndLoad">Show Schedules by Car Type and Load</A></LI>
+       </UL></LI>
+      <LI><A HREF="#Interchange">Interchange Tracks</A>
+       <UL>
+        <LI><A HREF="#CreateClassificationYard">How to Create a Classification Yard</A></LI>
+       </UL></LI>
+      <LI><A HREF="#Staging">Staging Tracks</A>
+       <UL>
+        <LI><A HREF="#StagingAndCarLoads">Staging and Car loads</A></LI>
+        <LI><A HREF="#BlockingCarsFromStaging">Blocking Cars from Staging</A></LI>
+        <LI><A HREF="#LoopingTrainsThroughStaging">Looping Trains through Staging</A></LI>
+       </UL></LI>
+      <LI><A HREF="#ChangeTrackType">Change Track Type</A></LI>
+      <LI><A HREF="#Pools">Track Pools</A></LI>
+      <LI><A HREF="#ModifyLocationsByCarType">Modify Locations and Tracks by Car Type</A></LI>
+     </UL></LI>
+    <LI><A HREF="#Cars">Cars</A>
+     <UL>
+      <LI><A HREF="#ImportingCars">Importing Cars from a File</A></LI>
+      <LI><A HREF="#CarsEdit">Adding Cars to your Roster</A></LI>
+      <LI><A HREF="#CarLoad">Car Loads</A></LI>
+      <LI><A HREF="#Kernel">Kernel, or Group of Cars</A></LI>
+      <LI><A HREF="#EditCarAttributes">Edit Car Attributes</A></LI>
+      <LI><A HREF="#EditCarLoads">Edit Car Loads</A></LI>
+      <LI><A HREF="#CarsSet">Set Car</A></LI>
+     </UL></LI>
+    <LI><A HREF="#Locomotives">Locomotives</A>
+     <UL>
+      <LI><A HREF="#ImportLocomotives">Import Locomotives</A></LI>
+      <LI><A HREF="#LocomotivesAdd">Adding Locomotives to your Roster</A>
+       <UL>
+        <LI><A HREF="#LocomotiveModels">Locomotive Models</A></LI>
+       </UL></LI>
+      <LI><A HREF="#LocomotivesSet">Locomotive Set</A></LI>
+      <LI><A HREF="#SynchronizeWithNCEConsists">Synchronize with NCE Consists</A></LI>
+     </UL></LI>
+    <LI><A HREF="#Routes">Routes</A>
+     <UL>
+      <LI><A HREF="#EditRoute">Edit Route</A></LI>
+      <LI><A HREF="#RouteFeatures">Route Features</A></LI>
+      <LI><A HREF="#SetTrainIconCoordinates">Set Train Icon Coordinates</A></LI>
+     </UL></LI>
+    <LI><A HREF="#Trains">Trains</A>
+     <UL>
+      <LI><A HREF="#TrainReset">Reset Train</A></LI>
+      <LI><A HREF="#TrainOptions">Train Options</A></LI>
+      <LI><A HREF="#TrainScripts">Scripts</A></LI>
+      <LI><A HREF="#TrainShowCarTypesServiced">Show Car Types Serviced</A></LI>
+      <LI><A HREF="#ModifyTrainsByCarType">Modify Trains by Car Type</A></LI>
+      <LI><A HREF="#SwitcherService">Switcher Service</A></LI>
+      <LI><A HREF="#BuildingTrains">Building Trains</A></LI>
+      <LI><A HREF="#Timetable">Timetable</A></LI>
+      <LI><A HREF="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</A></LI>
+      <LI><A HREF="#PrintingManifests">Printing Manifests</A></LI>
+      <LI><A HREF="#SwitchList">Switch Lists</A></LI>
+      <LI><A HREF="#TrainMove">Moving Trains</A></LI>
+      <LI><A HREF="#TerminateTrain">Terminate Train</A></LI>
+      <LI><A HREF="#SaveBuilds">Save Builds</A></LI>
+      <LI><A HREF="#BuildingMultipleTrainsSession">Building Multiple Trains for a Session</A></LI>
+     </UL></LI>
+    <LI><A HREF="#OperationWindows">Operation Windows</A></LI>
+   </UL>
 
-<A NAME="demo"></A>
+   <A NAME="demo"></A>
 <H3>Operations Demo Files</H3>
 
 The operations program provides a set of demo files to help introduce
@@ -79,6 +158,7 @@ open the "operations" directory and then open the "Operations Demo
 Panel" xml file.
 </P>
 
+<A NAME="QuickStartHelp"></A>
 <H3>Quick Start Help</H3>
 
 In the top level menu for JMRI find the "Tools-&gt;Operations" menu. There
@@ -172,6 +252,7 @@ of your first train.</P>
 operations. Help is also available at the <A
 	HREF="http://groups.yahoo.com/group/jmriusers/">jmriusers list</A></P>
 
+<A NAME="BritishRailways"></A>
 <H3>British Railways</H3>
 
 The program supports an alternate set of railway terminology for our
@@ -620,7 +701,7 @@ lists, select this option.
 <H2>Locations</H2>
 
 Locations are places on your railroad that trains visit to pick up or
-set out cars and locomotives. Locations can be cities, towns, or just
+set out cars and locomotives. Locations can be cities, towns, stations, or just
 places where trains need to work cars. Select
 "Tools-&gt;Operations-&gt;Locations" to add or edit the locations on your
 railroad. 
@@ -756,26 +837,6 @@ file (OperationsLocationRoster.xml) in your JMRI directory in a folder
 called "operations". The program will also create a backup file
 containing the last settings for all of your locations. 
 
-<A NAME="ChangeTrackType"></A>
-<H3>Change Track Type</H3>
-
-If you want to change the track type to a spur, interchange or yard, in the edit track
-window, select Tools-&gt;Change Track Type.  Select the desired track type and press "Save".
-
-<A NAME="Pools"></A>
-<H3>Pools</H3>
-
-The program allows you to "pool" a set of tracks at a location. Tracks
-in a pool share their track lengths with each other. This is useful if
-you've divided a location into track segments and you want each segment to
-adjust its length based on the program's demands. To create and place a
-track into a pool, select Tools-&gt;Pools in one of the track edit
-windows. Enter a name for your pool and press the "Add" button. You can
-also specify the minimum length for the track. A minimum track length
-prevents the other tracks in the pool from acquiring all of the track's
-length. Next select a pool name for the track and press "Save". The
-bottom of the pool window will show the other tracks that are in the
-track's pool. 
 
 <A	NAME="Sidings"></A>
 <H3>Spurs</H3>
@@ -1012,6 +1073,7 @@ interchange track.
 operate, you can optionally specify a train or route to pick up or set out
 cars at an interchange track.</P>
 
+<A NAME="CreateClassificationYard"></A>
 <H3>How to Create a Classification Yard</H3>
 
 A classification yard is used to sort cars into various trains. Normally
@@ -1138,6 +1200,7 @@ then Tools-&gt;<A HREF="#TrainBuildOptions">Train Build Options</A>.</P>
     Use the terminating staging track's "Select loads serviced by this track" to control which
     type of loads the program will generate from the departure staging track.</P>
 
+<A NAME="BlockingCarsFromStaging"></A>
    <H3>Blocking Cars from Staging</H3>
 
 The program provides a very simplistic algorithm to block cars from
@@ -1167,6 +1230,7 @@ Track, "Optional Car Blocking" in the lower right corner of the
 window.  There are many reasons why this option will not block cars
 correctly.  See the train's build report for more details.
 
+<A NAME="LoopingTrainsThroughStaging"></A>
 <H3>Looping Trains through Staging</H3>
 
 Sometimes for operations a train enters staging at one location (call it
@@ -1185,6 +1249,26 @@ show that the train originated from B and not A.
 	HREF="#TrainScripts">script</A> that is activated when the train is
 terminated into staging.</P>
 
+<A NAME="ChangeTrackType"></A>
+<H3>Change Track Type</H3>
+
+If you want to change the track type to a spur, interchange or yard, in the edit track
+window, select Tools-&gt;Change Track Type.  Select the desired track type and press "Save".
+
+<A NAME="Pools"></A>
+<H3>Track Pools</H3>
+
+The program allows you to "pool" a set of tracks at a location. Tracks
+in a pool share their track lengths with each other. This is useful if
+you've divided a location into track segments and you want each segment to
+adjust its length based on the program's demands. To create and place a
+track into a pool, select Tools-&gt;Pools in one of the track edit
+windows. Enter a name for your pool and press the "Add" button. You can
+also specify the minimum length for the track. A minimum track length
+prevents the other tracks in the pool from acquiring all of the track's
+length. Next select a pool name for the track and press "Save". The
+bottom of the pool window will show the other tracks that are in the
+track's pool. 
 
 <A NAME="ModifyLocationsByCarType"></A>
 <H3>Modify Locations by Car Type</H3>
@@ -1379,7 +1463,7 @@ Now set the car's location on the layout. If the car is off the layout,
 set the location to none (blank space).
 
 <A	NAME="CarLoad"></A>
-<H3>Car Load</H3>
+<H3>Car Loads</H3>
 
 You can optionally set the load state of the car. Select E for empty or
 L for loaded. You can also create your own custom <A HREF="#EditCarLoads">car loads</A>,
@@ -1677,6 +1761,7 @@ destination and assigned train are generated by the program, but you can
 use these fields to force a locomotive to a specific location using a
 specified train.
 
+<A NAME="SynchronizeWithNCEConsists"></A>
 <H3>Synchronize with NCE Consists</H3>
 
 If you are using NCE as your DCC command station, you can have the
@@ -2199,7 +2284,7 @@ you want by selecting the appropriate radio button. Then press the
 button to store any changes you made to the timetable. 
 
 <A NAME="TroubleShootingBuildingTrains"></A>
-<H2>Problems Building Trains</H2>
+<H2>Problems Building Trains How to Fix</H2>
 
 If you have a problem building a train you can select the "Build
 Reports" checkbox at the bottom of the train window. When a build fails
@@ -2347,7 +2432,8 @@ set out, the program increments a count associated with that location.
 The program tries to move cars to locations that have experienced the
 least number of car operations.</P>
 
-<H3>Terminate Trains</H3>
+<A NAME="TerminateTrain"></A>
+<H3>Terminate Train</H3>
 
 When you terminate a train, you are asking the program to move the train
 from its current location to its final destination. The cars and locomotives
@@ -2360,6 +2446,7 @@ several trains, select the trains you wish to terminate in the build
 column and press the "Terminate" button at the bottom of the Trains
 window.
 
+<A NAME="SaveBuilds"></A>
 <H3>Save Builds</H3>
 
 Pressing the "Save Builds" button causes the program to update the
@@ -2371,6 +2458,7 @@ program made to move a train to the next location. Pressing the "Save
 Builds" button before quitting JMRI allows the operations program to
 resume exactly at the point where you pressed the "Save Builds" button.
 
+<A NAME="BuildingMultipleTrainsSession"></A>
 <H2>Building Multiple Trains for a Session</H2>
 
 Most operating sessions require more than one train to keep your
@@ -2399,6 +2487,7 @@ for each train to track the actual movement of the trains during your
 session. As long as the trains on your layout match the locations in the
 program you can build a new train.</P>
 
+<A NAME="OperationWindows"></A>
 <H2>Operation Windows</H2>
 
 All of the operation windows can be resized and placed to your liking.

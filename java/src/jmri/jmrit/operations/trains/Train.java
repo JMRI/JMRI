@@ -1303,7 +1303,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	public void setNumberEngines(String number) {
+		String old = _numberEngines;
 		_numberEngines = number;
+		if (!old.equals(number))
+			firePropertyChange("trainNmberEngines", old, number);
 	}
 	
 	/**
@@ -1323,7 +1326,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	public void setSecondLegNumberEngines(String number) {
+		String old = _leg2Engines;
 		_leg2Engines = number;
+		if (!old.equals(number))
+			firePropertyChange("trainNmberEngines", old, number);
 	}
 
 	/**
@@ -1335,7 +1341,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	public void setThirdLegNumberEngines(String number) {
+		String old = _leg3Engines;
 		_leg3Engines = number;
+		if (!old.equals(number))
+			firePropertyChange("trainNmberEngines", old, number);
 	}
 
 	/**
@@ -1343,7 +1352,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @param road The road name of engines servicing this train.
 	 */
 	public void setEngineRoad(String road) {
+		String old = _engineRoad;
 		_engineRoad = road;
+		if (!old.equals(road))
+			firePropertyChange("trainEngineRoad", old, road);
 	}
 
 	/**
@@ -1359,7 +1371,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @param road The road name of engines servicing this train.
 	 */
 	public void setSecondLegEngineRoad(String road) {
+		String old = _leg2Road;
 		_leg2Road = road;
+		if (!old.equals(road))
+			firePropertyChange("trainEngineRoad", old, road);
 	}
 
 	/**
@@ -1375,7 +1390,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @param road The road name of engines servicing this train.
 	 */
 	public void setThirdLegEngineRoad(String road) {
+		String old = _leg3Road;
 		_leg3Road = road;
+		if (!old.equals(road))
+			firePropertyChange("trainEngineRoad", old, road);
 	}
 
 	/**
@@ -1392,7 +1410,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @param model The model name of engines servicing this train.
 	 */
 	public void setEngineModel(String model) {
+		String old = _engineModel;
 		_engineModel = model;
+		if (!old.equals(model))
+			firePropertyChange("trainEngineModel", old, model);
 	}
 
 	public String getEngineModel() {
@@ -1404,7 +1425,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @param model The model name of engines servicing this train.
 	 */
 	public void setSecondLegEngineModel(String model) {
+		String old = _leg2Model;
 		_leg2Model = model;
+		if (!old.equals(model))
+			firePropertyChange("trainEngineModel", old, model);
 	}
 
 	public String getSecondLegEngineModel() {
@@ -1416,7 +1440,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @param model The model name of engines servicing this train.
 	 */
 	public void setThirdLegEngineModel(String model) {
+		String old = _leg3Model;
 		_leg3Model = model;
+		if (!old.equals(model))
+			firePropertyChange("trainEngineModel", old, model);
 	}
 
 	public String getThirdLegEngineModel() {
@@ -1437,7 +1464,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @param road The road name of the caboose servicing this train.
 	 */
 	public void setCabooseRoad(String road) {
+		String old = _cabooseRoad;
 		_cabooseRoad = road;
+		if (!old.equals(road))
+			firePropertyChange("trainCabooseRoad", old, road);
 	}
 
 	public String getCabooseRoad() {
@@ -1449,7 +1479,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @param road The road name of the caboose servicing this train's 2nd leg.
 	 */
 	public void setSecondLegCabooseRoad(String road) {
+		String old = _leg2CabooseRoad;
 		_leg2CabooseRoad = road;
+		if (!old.equals(road))
+			firePropertyChange("trainCabooseRoad", old, road);
 	}
 
 	public String getSecondLegCabooseRoad() {
@@ -1461,7 +1494,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @param road The road name of the caboose servicing this train's 3rd leg.
 	 */
 	public void setThirdLegCabooseRoad(String road) {
+		String old = _leg3CabooseRoad;
 		_leg3CabooseRoad = road;
+		if (!old.equals(road))
+			firePropertyChange("trainCabooseRoad", old, road);
 	}
 
 	public String getThirdLegCabooseRoad() {
@@ -1529,7 +1565,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @param options NONE, CHANGE_ENGINES, ADD_CABOOSE, HELPER_ENGINES, REMOVE_CABOOSE 
 	 */
 	public void setSecondLegOptions(int options){
+		int old = _leg2Options;
 		_leg2Options = options;
+		if (old != options)
+			firePropertyChange("trainLegOptions", old, options);
 	}
 	
 	public int getSecondLegOptions(){
@@ -1541,7 +1580,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @param options NONE, CHANGE_ENGINES, ADD_CABOOSE, HELPER_ENGINES, REMOVE_CABOOSE 
 	 */
 	public void setThirdLegOptions(int options){
+		int old = _leg3Options;
 		_leg3Options = options;
+		if (old != options)
+			firePropertyChange("trainLegOptions", old, options);
 	}
 	
 	public int getThirdLegOptions(){
@@ -1549,7 +1591,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	public void setComment(String comment) {
+		String old = _comment;
 		_comment = comment;
+		if (!old.equals(comment))
+			firePropertyChange("trainComment", old, comment);
 	}
 
 	public String getComment() {
@@ -1649,7 +1694,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @param name The railroad name for this train.
 	 */
 	public void setRailroadName(String name){
+		String old = _railroadName;
 		_railroadName = name;
+		if (!old.equals(name))
+			firePropertyChange("trainRailroadName", old, name);
 	}
 	
 	public String getManifestLogoURL(){
@@ -1888,7 +1936,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	private void setPrinted (boolean printed){
+		boolean old = _printed;
 		_printed = printed;
+		if (old != printed)
+			firePropertyChange("trainPrinted", old?"true":"false", printed?"true":"false");
 	}
 	
 	public boolean getPrinted(){
@@ -2136,7 +2187,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			_trainIcon.setLocoColor(Setup.getTrainIconColorWest());
 	}
 	
-	LocationManager locationManager = LocationManager.instance();
+	//LocationManager locationManager = LocationManager.instance();
 
 	private void updateStatus(RouteLocation old, RouteLocation next){
 		if (next != null){
@@ -2581,6 +2632,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 
 	protected void firePropertyChange(String p, Object old, Object n) {
+		TrainManagerXml.instance().setDirty(true);
 		pcs.firePropertyChange(p, old, n);
 	}
 

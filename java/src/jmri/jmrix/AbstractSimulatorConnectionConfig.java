@@ -103,6 +103,15 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         init = true;
     }
 
+    public void updateAdapter(){
+        adapter.configureOption1((String)opt1Box.getSelectedItem());
+        adapter.configureOption2((String)opt2Box.getSelectedItem());
+        if(!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())){
+            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+            connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
+        }
+    }
+
     
     protected String[] baudList;
     protected jmri.jmrix.SerialPortAdapter adapter = null;

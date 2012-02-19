@@ -15,10 +15,10 @@ import jmri
 # of course possible.
 class MyListener(java.beans.PropertyChangeListener):    
   def propertyChange(self, event):
-    print "Change:", event.propertyName," from: ",event.oldValue," to: ",event.newValue
-    print "Train name: ",event.source.getName()
-    print "Train id: ",event.source.getId()
-    print "Train status: ",event.source.getStatus()
+    print "Train name:",event.source.getName()
+    print "Train id:",event.source.getId()
+    print "Train status:",event.source.getStatus()
+    print "Change:", event.propertyName," from: ",event.oldValue," to: ",event.newValue 
     
     # Some sample code
     # Get the train and show if it was built.
@@ -27,20 +27,21 @@ class MyListener(java.beans.PropertyChangeListener):
     tm = jmri.jmrit.operations.trains.TrainManager.instance()
     train = tm.getTrainById(trainId)
     if (train.isBuilt() == True):
-    	print "train", train.getName(), "is built"
+    	print "Train", train.getName(), "is built"
     else: 
-   		print "train", train.getName(), "not built"
+   		print "Train", train.getName(), "not built"
    		if (train.getStatus() == "Terminated"):
-   			print "train", train.getName(), "has been terminated"
+   			print "Train", train.getName(), "has been terminated"
 
 class listenAllTrains(jmri.jmrit.automat.AbstractAutomaton) :      
   def init(self):
     # get the train manager
     self.tm = jmri.jmrit.operations.trains.TrainManager.instance()
+    print "Listen to all trains in operations"
     return
 
   def handle(self):
-    print "number of trains", self.tm.numEntries()
+    print "Number of trains", self.tm.numEntries()
     # get a list of trains from the manager
     tList = self.tm.getTrainsByIdList()
     count = 1
@@ -48,7 +49,7 @@ class listenAllTrains(jmri.jmrit.automat.AbstractAutomaton) :
     # show a list of trains and connect property change
     for trainId in tList :
       train = self.tm.getTrainById(trainId)
-      print "train", count, train.getName(), train.getDescription()
+      print "Train", count, train.getName(), train.getDescription()
       m = MyListener()
       train.addPropertyChangeListener(m)
       count = count + 1

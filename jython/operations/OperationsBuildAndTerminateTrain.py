@@ -19,20 +19,21 @@ class buildAndTerminate(jmri.jmrit.automat.AbstractAutomaton) :
     # Build and terminate train
       trainName = "BL"
       train = self.tm.getTrainByName(trainName)
+      print "Build and terminate train", trainName
 
     # Build train 
       if (train != None):
         train.build()
         built = train.isBuilt()
-        train.setBuildEnabled(False)	# deselect build option
+        train.setBuildEnabled(False)	# deselect build option (Checkbox in Trains window)
         if (built == True):
-          print "train", trainName, "has been built"
+          print "Train", trainName, "has been built"
           train.terminate()	# now terminate the train
-          print "train", trainName, "has been terminated"
+          print "Train", trainName, "has been terminated"
         else:
-          print "train", trainName, "build failed"
+          print "Train", trainName, "build failed"
       else:
-        print "train", trainName, "does not exist"
+        print "Train", trainName, "does not exist"
       return False              # all done, don't repeat again
 
 buildAndTerminate().start()    # create one of these, and start it running

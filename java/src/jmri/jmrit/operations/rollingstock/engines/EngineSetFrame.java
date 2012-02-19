@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
+import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
 
@@ -73,6 +74,7 @@ public class EngineSetFrame extends RollingStockSetFrame implements java.beans.P
 			}
 		}
 		managerXml.writeOperationsFile();
+		LocationManagerXml.instance().writeFileIfDirty();	// write location file if track is part of pool	
 		return true;
 	}
 

@@ -8,6 +8,8 @@
  * @version		$Revision$
  * @author		kcameron Copyright (C) 2011
  * 	copied from SerialMonPane.java
+ * @author		Daniel Boudreau Copyright (C) 2012
+ *  added human readable format
  */
 
 package jmri.jmrix.nce.ncemon;
@@ -21,6 +23,8 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
     public NceMonPanel() {
         super();
     }
+    
+    NceMonBinary nceMon = new NceMonBinary();
     
     public String getHelpTarget() { return null; }
 
@@ -55,28 +59,28 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
     
     public void initComponents(NceSystemConnectionMemo memo) {
         this.memo = memo;
-        // connect to the LnTrafficController
+        // connect to the NceTrafficController
         memo.getNceTrafficController().addNceListener(this);
     }
 
-    public synchronized void message(NceMessage l) {  // receive a message and log it
-        if (l.isBinary())
-          	nextLine("binary cmd: "+l.toString()+"\n", null);
+    public synchronized void message(NceMessage m) {  // receive a message and log it
+        if (m.isBinary())
+          	nextLine(nceMon.displayMessage(m), m.toString());
         else
-            nextLine("cmd: \""+l.toString()+"\"\n", null);
+            nextLine("cmd: \""+m.toString()+"\"\n", null);
 	}
     
-	public synchronized void reply(NceReply l) {  // receive a reply message and log it
+	public synchronized void reply(NceReply r) {  // receive a reply message and log it
 	    String raw = "";
-	    for (int i=0;i<l.getNumDataElements(); i++) {
+	    for (int i=0;i<r.getNumDataElements(); i++) {
 	        if (i>0) raw+=" ";
-            raw = jmri.util.StringUtil.appendTwoHexFromInt(l.getElement(i)&0xFF, raw);
+            raw = jmri.util.StringUtil.appendTwoHexFromInt(r.getElement(i)&0xFF, raw);
         }
 	        
-	    if (l.isUnsolicited()) {    
-            nextLine("msg: \""+l.toString()+"\"\n", raw);
+	    if (r.isUnsolicited()) {    
+            nextLine("msg: \""+r.toString()+"\"\n", raw);
         } else {
-            nextLine("rep: \""+l.toString()+"\"\n", raw);
+            nextLine(nceMon.displayReply(r), raw);
         }
 	}
     

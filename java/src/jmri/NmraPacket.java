@@ -397,7 +397,7 @@ public class NmraPacket {
         
         int midAddr =  boardAddr & 0x3F ;
         int highAddr = ( (~boardAddr) >> 6) & 0x07;
-
+        
         byte[] retVal = new byte[4];
         retVal[0] = (byte) (0x80 | midAddr ) ;
         retVal[1] = (byte) (0x01 | (highAddr<<4) | (lowAddr << 1)) ;
@@ -629,7 +629,6 @@ public class NmraPacket {
      * @param longAddr
      * @param speed     speed step value 0 - 31 for insertion into DC packet
      * @param fwd
-     * @return
      */
     public static byte[] speedStep28Packet(Boolean full, int address, boolean longAddr, int speed, boolean fwd ) {
         if (log.isDebugEnabled()) log.debug("28 step packet "+address+" "+speed);

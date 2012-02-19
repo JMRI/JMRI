@@ -47,15 +47,29 @@ public class DccSignalMast extends AbstractSignalMast {
     configureFromName(sys);
   }
   
-  void configureFromName(String systemName) {
+  public DccSignalMast( String sys, String user, String mastSubType ) {
+    super(sys, user);
+    mastType = mastSubType;
+    configureFromName(sys);
+  }
+
+  /*public DccSignalMast( String sys, String mastSubType ) {
+    super(sys);
+    mastType = mastSubType;
+    configureFromName(sys);
+  }*/
+  
+  protected String mastType = "F$dsm";
+  
+  protected void configureFromName(String systemName) {
         // split out the basic information
         String[] parts = systemName.split(":");
         if (parts.length < 3) { 
             log.error("SignalMast system name needs at least three parts: "+systemName);
             throw new IllegalArgumentException("System name needs at least three parts: "+systemName);
         }
-        if (!parts[0].endsWith("F$dsm")) {
-            log.warn("First part of signal mast is incorrect "+systemName);
+        if (!parts[0].endsWith(mastType)) {
+            log.warn("First part of signal mast is incorrect "+systemName + " : " + mastType);
         } else {
             String commandStationPrefix = parts[0].substring(0, parts[0].indexOf("$")-1);
             java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
@@ -79,7 +93,7 @@ public class DccSignalMast extends AbstractSignalMast {
         mast = mast.substring(0, mast.indexOf("("));
         String tmp = parts[2].substring(parts[2].indexOf("(")+1, parts[2].indexOf(")"));
         try {
-            DccSignalDecoderAddress = Integer.parseInt(tmp);
+            dccSignalDecoderAddress = Integer.parseInt(tmp);
         } catch (NumberFormatException e){
             log.warn("DCC accessory address SystemName "+ systemName + " is not in the correct format");
         }
@@ -87,7 +101,7 @@ public class DccSignalMast extends AbstractSignalMast {
         configureAspectTable(system, mast);
     }
 
-    HashMap<String, Integer> appearanceToOutput = new HashMap<String, Integer>();
+    protected HashMap<String, Integer> appearanceToOutput = new HashMap<String, Integer>();
     
     public void setOutputForAppearance(String appearance, int number){
         if(appearanceToOutput.containsKey(appearance)){
@@ -147,10 +161,12 @@ public class DccSignalMast extends AbstractSignalMast {
 30. "Cab-Speed"
 31. "Dark"
         */
-
+    protected int packetRepeatCount = 3;
+    
     public void setAspect(String aspect){
+        
         if(appearanceToOutput.containsKey(aspect)){
-            c.sendPacket( NmraPacket.altAccSignalDecoderPkt( DccSignalDecoderAddress, appearanceToOutput.get(aspect) ), 3);
+            c.sendPacket( NmraPacket.altAccSignalDecoderPkt( dccSignalDecoderAddress, appearanceToOutput.get(aspect) ), packetRepeatCount);
         } else {
             log.warn("Trying to set aspect that has not been configured");
         }
@@ -159,17 +175,16 @@ public class DccSignalMast extends AbstractSignalMast {
     }
     
     public int getDccSignalMastAddress(){
-        return DccSignalDecoderAddress;
+        return dccSignalDecoderAddress;
     }
     
     public CommandStation getCommandStation(){
         return c;
     }
   
-  CommandStation c;
+  protected CommandStation c;
 
-  int DccSignalDecoderAddress;
-  
+  protected int dccSignalDecoderAddress;
   
     public static String isDCCAddressUsed(int addr){
         for(String val : InstanceManager.signalMastManagerInstance().getSystemNameList()){

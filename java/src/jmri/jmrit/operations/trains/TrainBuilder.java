@@ -975,7 +975,7 @@ public class TrainBuilder extends TrainCommon{
     				carIndex--;
     				continue;
     			}
-    			if (!c.isCaboose() && !train.acceptsLoadName(c.getLoad())){
+    			if (!c.isCaboose() && !c.isPassenger() && !train.acceptsLoadName(c.getLoad())){
     				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarLoadAtLoc"),new Object[]{c.toString(), c.getLoad(), (c.getLocationName()+", "+c.getTrackName())}));
     				carList.remove(c.getId());
     				carIndex--;

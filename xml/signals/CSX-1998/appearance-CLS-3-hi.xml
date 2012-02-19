@@ -33,6 +33,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Added missing map information</revremark>
     </revision>    
+    <revision>
+        <revnumber>1.2</revnumber>
+        <date>2012-02-09</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Removed duplicate aspect information</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSX</aspecttable>
@@ -69,15 +75,8 @@
       <imagelink>../../../resources/icons/smallschematics/aspects/CSX-1998/CLS-3-hi/rule-292.gif</imagelink>
     </appearance>
 
-    <appearance>
-      <aspectname>Stop</aspectname>
-      <show>red</show>
-      <show>red</show>
-      <reference>292 (b)</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/CSX-1998/CLS-3-hi/rule-292.gif</imagelink>
-    </appearance>
-
   </appearances>
+
   <specificappearances>
     <danger>
       <aspect>Stop</aspect>

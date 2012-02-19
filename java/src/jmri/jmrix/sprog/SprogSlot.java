@@ -3,6 +3,7 @@
 package jmri.jmrix.sprog;
 
 import jmri.DccThrottle;
+import java.util.Arrays;
 import jmri.NmraPacket;
 
 /**
@@ -270,9 +271,11 @@ private boolean f5to8Packet = false;
        spd = 0;
        speedPacket = false;
        f0to4Packet = false;
-       payload[0] = 0;
-       payload[1] = 0;
-       payload[2] = 0;
+       if(payload!=null){
+            payload[0] = 0;
+            payload[1] = 0;
+            payload[2] = 0;
+       }
        opsPkt = false;
      }
 
@@ -306,15 +309,20 @@ private boolean f5to8Packet = false;
       */
      public byte[] getPayload() {
 
-       // p = Arrays.copyOf(payload, getPayloadLength()), a Java 1.6 construct
-       byte [] p = new byte[getPayloadLength()];
-       for (int i = 0; i<getPayloadLength(); i++) p[i] = payload[i];
+        byte [] p;
+        if(payload!=null){
+            p = Arrays.copyOf(payload, getPayloadLength());//, a Java 1.6 construct
+        } else {
+            p = new byte [0];
+        }
+        /*byte [] p = new byte[getPayloadLength()];
+       for (int i = 0; i<getPayloadLength(); i++) p[i] = payload[i];*/
 
        //decrement repeat counter if appropriate
-       doRepeat();
-       return p;
+        doRepeat();
+        return p;
        
-     }
+    }
 
     public int getSlotNumber() { return slot; }
 

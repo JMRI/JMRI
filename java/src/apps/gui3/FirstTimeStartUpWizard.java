@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 import java.awt.Component;
+import java.awt.Cursor;
 
 import java.util.ArrayList;
 import java.io.File;
@@ -148,7 +149,6 @@ public class FirstTimeStartUpWizard {
         text.setMinimumSize(minHelpFieldDim);
         text.setMaximumSize(maxHelpFieldDim);
         h.add(text);
-
         //h.add(
         wizPage.add(new WizardPage(p, h, "Select your DCC Connection"));
     }
@@ -242,14 +242,16 @@ public class FirstTimeStartUpWizard {
             });
         
         finish.addActionListener( new ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+            public void actionPerformed(java.awt.event.ActionEvent e){
+                Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
+                parent.setCursor(hourglassCursor);
                 Object connect = JmrixConfigPane.instance(0).getCurrentObject();
                 jmri.InstanceManager.configureManagerInstance().registerPref(connect);
                 if(connect instanceof jmri.jmrix.AbstractConnectionConfig){
+                    ((jmri.jmrix.AbstractConnectionConfig)connect).updateAdapter();
                     jmri.jmrix.PortAdapter adp = ((jmri.jmrix.AbstractConnectionConfig)connect).getAdapter();
                     try{
                         adp.connect();
-                        
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, "An error occured while trying to connect to " + ((jmri.jmrix.AbstractConnectionConfig)connect).getConnectionName() + ", press the back button and check the connection details","Error Opening Connection" , JOptionPane.ERROR_MESSAGE);
                         return;
@@ -267,6 +269,8 @@ public class FirstTimeStartUpWizard {
                 /*We have to double register the connection as when the saveContents is called is removes the original pref and 
                 replaces it with the jmrixconfigpane, which is not picked up by the DP3 window*/
                 jmri.InstanceManager.configureManagerInstance().registerPref(connect);
+                Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+                parent.setCursor(normalCursor);
                 dispose();
             }
         });

@@ -60,8 +60,19 @@ public class AddSignalMastPanel extends JPanel {
     public AddSignalMastPanel() {
         
         signalMastDriver = new JComboBox(new String[]{
-                rb.getString("HeadCtlMast"), rb.getString("TurnCtlMast"), rb.getString("VirtualMast"), rb.getString("DCCMast")
+                rb.getString("HeadCtlMast"), rb.getString("TurnCtlMast"), rb.getString("VirtualMast")
             });
+        //Only allow the creation of DCC SignalMast if a command station instance is present, otherwise it will not work, so no point in adding it.
+        if(jmri.InstanceManager.getList(jmri.CommandStation.class)!=null){
+            signalMastDriver.addItem(rb.getString("DCCMast"));
+            java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
+            for(int x = 0; x < connList.size(); x++){
+                if(connList.get(x) instanceof jmri.jmrix.loconet.SlotManager){
+                    signalMastDriver.addItem(rb.getString("LNCPMast"));
+                    break;
+                }
+            }
+        }
         
         refreshHeadComboBox();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -145,7 +156,7 @@ public class AddSignalMastPanel extends JPanel {
         }
         if(prefs.getComboBoxLastSelection(systemSelectionCombo)!=null)
             sigSysBox.setSelectedItem(prefs.getComboBoxLastSelection(systemSelectionCombo));
-     
+        
         loadMastDefinitions();
         updateSelectedDriver();
         updateHeads();
@@ -235,8 +246,12 @@ public class AddSignalMastPanel extends JPanel {
                 }
             }
         } else if (mast instanceof jmri.implementation.DccSignalMast){
-            signalMastDriver.setSelectedItem(rb.getString("DCCMast"));
-
+            if(mast instanceof jmri.jmrix.loconet.LNCPSignalMast){
+                signalMastDriver.setSelectedItem(rb.getString("LNCPMast"));
+            } else {
+                signalMastDriver.setSelectedItem(rb.getString("DCCMast"));
+            }
+            
             updateSelectedDriver();
             SignalAppearanceMap appMap = mast.getAppearanceMap();
             DccSignalMast dmast = (DccSignalMast) mast;
@@ -297,7 +312,7 @@ public class AddSignalMastPanel extends JPanel {
         } else if(rb.getString("VirtualMast").equals(signalMastDriver.getSelectedItem())){
             updateDisabledOption();
             disabledAspectsPanel.setVisible(true);
-        } else if (rb.getString("DCCMast").equals(signalMastDriver.getSelectedItem())){
+        } else if ((rb.getString("DCCMast").equals(signalMastDriver.getSelectedItem())) || (rb.getString("LNCPMast").equals(signalMastDriver.getSelectedItem()))){
             updateDCCMastPanel();
             dccMastScroll.setVisible(true);
         }
@@ -543,7 +558,7 @@ public class AddSignalMastPanel extends JPanel {
                         virtMast.setAspectEnabled(aspect);
                 
                 }
-            } else if(rb.getString("DCCMast").equals(signalMastDriver.getSelectedItem())){
+            } else if((rb.getString("DCCMast").equals(signalMastDriver.getSelectedItem())) || (rb.getString("LNCPMast").equals(signalMastDriver.getSelectedItem()))){
                 if(!checkUserName(userName.getText())){
                     return;
                 }
@@ -554,11 +569,22 @@ public class AddSignalMastPanel extends JPanel {
                 //if we return a null string then we will set it to use internal, thus picking up the default command station at a later date.
                 if(systemNameText.equals("\0"))
                     systemNameText = "I";
-                String name = systemNameText+ "F$dsm:"
+                if(rb.getString("LNCPMast").equals(signalMastDriver.getSelectedItem())){
+                    systemNameText = systemNameText+ "F$lncpsm:";
+                } else {
+                    systemNameText = systemNameText+ "F$dsm:";
+                }
+                String name = systemNameText
                         +sigsysname
                         +":"+mastname.substring(11,mastname.length()-4);
                 name += "("+dccAspectAddressField.getText()+")";
-                DccSignalMast dccMast = new DccSignalMast(name);
+                DccSignalMast dccMast;
+                if(rb.getString("LNCPMast").equals(signalMastDriver.getSelectedItem())){
+                    dccMast = new jmri.jmrix.loconet.LNCPSignalMast(name);
+                } else {
+                    dccMast = new DccSignalMast(name);
+                }
+                 
                 for(String aspect: dccAspect.keySet()){
                     dccMastPanel.add(dccAspect.get(aspect).getPanel());
                     if(dccAspect.get(aspect).isAspectDisabled())
@@ -610,7 +636,7 @@ public class AddSignalMastPanel extends JPanel {
                     else
                         virtMast.setAspectEnabled(aspect);
                 }
-            } else if(rb.getString("DCCMast").equals(signalMastDriver.getSelectedItem())){
+            } else if((rb.getString("DCCMast").equals(signalMastDriver.getSelectedItem())) || (rb.getString("LNCPMast").equals(signalMastDriver.getSelectedItem()))){
                 DccSignalMast dccMast = (DccSignalMast) mast;
                 for(String aspect: dccAspect.keySet()){
                     dccMastPanel.add(dccAspect.get(aspect).getPanel());
@@ -866,7 +892,7 @@ public class AddSignalMastPanel extends JPanel {
     HashMap<String, DCCAspectPanel> dccAspect = new HashMap<String, DCCAspectPanel>(10);
     
     void updateDCCMastPanel(){
-        if(!rb.getString("DCCMast").equals(signalMastDriver.getSelectedItem()))
+        if((!rb.getString("DCCMast").equals(signalMastDriver.getSelectedItem())) && (!rb.getString("LNCPMast").equals(signalMastDriver.getSelectedItem())))
             return;
         dccAspect = new HashMap<String, DCCAspectPanel>(10);
         java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);

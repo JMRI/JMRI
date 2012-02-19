@@ -61,7 +61,6 @@ public class DccSignalMastXml
      * @param element Top level Element to unpack.
      * @return true if successful
      */
-    @SuppressWarnings("unchecked")
     public boolean load(Element element) {
         DccSignalMast m;
         String sys = getSystemName(element);
@@ -70,6 +69,11 @@ public class DccSignalMastXml
         if (getUserName(element) != null)
             m.setUserName(getUserName(element));
         
+        return loadCommonDCCMast(m, element);
+    }
+    
+    @SuppressWarnings("unchecked")
+    protected boolean loadCommonDCCMast(DccSignalMast m, Element element){
         loadCommon(m, element);
         
         List<Element> list = element.getChildren("aspect");
@@ -97,6 +101,7 @@ public class DccSignalMastXml
         InstanceManager.signalMastManagerInstance()
             .register(m);
         return true;
+    
     }
 
     public void load(Element element, Object o) {
