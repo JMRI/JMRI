@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20120111-0531-jake on Tue Jan 10 21:32:03 PST 2012 $Id$-->
-  <decoderIndex version="228">
+  <!--Written by JMRI version 20120219-1934-jake on Sun Feb 19 11:35:00 PST 2012 $Id$-->
+  <decoderIndex version="230">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -4795,6 +4795,68 @@
       </family>
       <family name="Servo Accessory Decoders" mfg="SPROG DCC" comment="Servo6 is an accessory decoder for servo motors, it can be programmed via CV1... and/or CV513..." file="SPROG_DCC_Servo6.xml">
         <model model="Servo6" lowVersionID="10" highVersionID="10" />
+      </family>
+      <family name="Bachmann Sound Value" mfg="Throttle-Up (SoundTraxx)" comment="Bachmann Standard line HO locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value" file="SoundTraxx_Bachmann_SndVal_Dsl.xml">
+        <model model="Alco S4" numOuts="2" numFns="14" connector="other" productID="Alco S4" comment="Model Diesel">
+          <versionCV lowVersionID="82" />
+          <output name="Bell" />
+          <output name="Air Horn" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Short Horn" />
+          <output name="Dimming" />
+          <output name="Mute" />
+        </model>
+        <model model="Alco FA2" numOuts="2" numFns="14" connector="other" productID="Alco FA2" comment="Model Diesel">
+          <versionCV lowVersionID="82" />
+          <output name="Bell" />
+          <output name="Air Horn" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Short Horn" />
+          <output name="Dimming" />
+          <output name="Mute" />
+        </model>
+        <model model="Alco FB2" numOuts="2" numFns="14" connector="other" productID="Alco FB2" comment="Model Diesel">
+          <versionCV lowVersionID="82" />
+          <output name="Bell" />
+          <output name="Air Horn" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Short Horn" />
+          <output name="Dimming" />
+          <output name="Mute" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Air Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="7" lockable="true">Dimming</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Bachmann Sound Value" mfg="Throttle-Up (SoundTraxx)" comment="Bachmann Standard line HO locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value" file="SoundTraxx_Bachmann_SndVal_Stm.xml">
+        <model model="Alco 2-6-0" numOuts="2" numFns="14" connector="other" productID="Alco 2-6-0" comment="Model 2-6-0">
+          <versionCV lowVersionID="82" />
+          <output name="Bell" />
+          <output name="Whistle" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Short Whistle" />
+          <output name="Steam-Release" />
+          <output name="Dimming" />
+          <output name="Mute" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Short Whistle</functionlabel>
+          <functionlabel num="4" lockable="true">Steam-Release</functionlabel>
+          <functionlabel num="7" lockable="true">Dimming</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+        </functionlabels>
       </family>
       <family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)" file="SoundTraxx_DSD_Diesel.xml">
         <model model="DSD diesel" numOuts="4" numFns="10">
