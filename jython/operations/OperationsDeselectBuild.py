@@ -16,16 +16,17 @@ class terminateCheckBoxTrain(jmri.jmrit.automat.AbstractAutomaton) :
     return
 
   def handle(self):
+    print "Deselect build checkbox for terminated trains"
     # get a list of trains from the manager
     tList = self.tm.getTrainsByIdList()
 
     # show a list of trains
     for trainId in tList :
       train = self.tm.getTrainById(trainId)
-      # print "checking train", train.getName(), train.getDescription(), "status", train.getStatus()
+      print "checking train", train.getName(), train.getDescription(), "status:", train.getStatus()
       if (train.getStatus() == jmri.jmrit.operations.trains.Train.TERMINATED):
-        print "train", train.getName(), train.getDescription(), "is terminated"
-        train.setBuild(False);
+        print "train", train.getName(), train.getDescription(), "is terminated, deselect build checkbox"
+        train.setBuildEnabled(False);
 
     return False              # all done, don't repeat again
 
