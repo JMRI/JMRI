@@ -87,6 +87,8 @@ public class FirstTimeStartUpWizard {
     }
     
     public void dispose(){
+        Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+        parent.setCursor(normalCursor);
         app.createAndDisplayFrame();
         parent.setVisible(false);
         parent.dispose();
@@ -243,35 +245,10 @@ public class FirstTimeStartUpWizard {
         
         finish.addActionListener( new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e){
-                Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
-                parent.setCursor(hourglassCursor);
-                Object connect = JmrixConfigPane.instance(0).getCurrentObject();
-                jmri.InstanceManager.configureManagerInstance().registerPref(connect);
-                if(connect instanceof jmri.jmrix.AbstractConnectionConfig){
-                    ((jmri.jmrix.AbstractConnectionConfig)connect).updateAdapter();
-                    jmri.jmrix.PortAdapter adp = ((jmri.jmrix.AbstractConnectionConfig)connect).getAdapter();
-                    try{
-                        adp.connect();
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, "An error occured while trying to connect to " + ((jmri.jmrix.AbstractConnectionConfig)connect).getConnectionName() + ", press the back button and check the connection details","Error Opening Connection" , JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                    try{
-                        adp.configure();
-                    } catch (Exception ex){
-                    
-                    }
-                }
-                
-                RosterEntry.setDefaultOwner(owner.getText());
-                jmri.InstanceManager.tabbedPreferencesInstance().init();
-                jmri.InstanceManager.tabbedPreferencesInstance().saveContents();
-                /*We have to double register the connection as when the saveContents is called is removes the original pref and 
-                replaces it with the jmrixconfigpane, which is not picked up by the DP3 window*/
-                jmri.InstanceManager.configureManagerInstance().registerPref(connect);
-                Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
-                parent.setCursor(normalCursor);
-                dispose();
+                Runnable r = new connect();
+                Thread connectThread = new Thread(r);
+                connectThread.start();
+                connectThread.setName("Start-Up Wizard Connect");
             }
         });
         
@@ -283,6 +260,37 @@ public class FirstTimeStartUpWizard {
         previous.setEnabled(false);
     
         return buttonPanel;
+    }
+    
+    //The connection process is placed into its own thread so that it doens't hog the swingthread while waiting for the connections to open.
+    protected class connect implements Runnable {
+        public void run(){
+            Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
+            parent.setCursor(hourglassCursor);
+            Object connect = JmrixConfigPane.instance(0).getCurrentObject();
+            jmri.InstanceManager.configureManagerInstance().registerPref(connect);
+            if(connect instanceof jmri.jmrix.AbstractConnectionConfig){
+                ((jmri.jmrix.AbstractConnectionConfig)connect).updateAdapter();
+                jmri.jmrix.PortAdapter adp = ((jmri.jmrix.AbstractConnectionConfig)connect).getAdapter();
+                try{
+                    adp.connect();
+                    adp.configure();
+                } catch (Exception ex) {
+                    log.error(ex);
+                    Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+                    parent.setCursor(normalCursor);
+                    JOptionPane.showMessageDialog(null, "An error occured while trying to connect to " + ((jmri.jmrix.AbstractConnectionConfig)connect).getConnectionName() + ", press the back button and check the connection details","Error Opening Connection" , JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+            RosterEntry.setDefaultOwner(owner.getText());
+            jmri.InstanceManager.tabbedPreferencesInstance().init();
+            jmri.InstanceManager.tabbedPreferencesInstance().saveContents();
+            /*We have to double register the connection as when the saveContents is called is removes the original pref and 
+            replaces it with the jmrixconfigpane, which is not picked up by the DP3 window*/
+            jmri.InstanceManager.configureManagerInstance().registerPref(connect);
+            dispose();
+        }
     }
     
     public JPanel doLocale() {
@@ -378,5 +386,7 @@ public class FirstTimeStartUpWizard {
         }
     
     }
+
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FirstTimeStartUpWizard.class.getName());
   
 }
