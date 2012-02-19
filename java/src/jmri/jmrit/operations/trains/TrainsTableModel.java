@@ -260,6 +260,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         	if (train.isBuilt())
         		if (manager.isPrintPreviewEnabled())
         			return rb.getString("Preview");
+        		else if (train.getPrinted())
+        			return rb.getString("Printed");
         		else
         			return rb.getString("Print");
         	return rb.getString("Build");
