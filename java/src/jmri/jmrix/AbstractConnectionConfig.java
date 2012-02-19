@@ -30,6 +30,8 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
 
     abstract void checkInitDone();
 
+    abstract public void updateAdapter();
+
     protected JComboBox opt1Box = new JComboBox();
     protected JLabel opt1BoxLabel = new JLabel();
     
