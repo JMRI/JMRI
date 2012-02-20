@@ -68,14 +68,16 @@ public class PythonInterp {
             try {
                 log.error("InvocationTargetException while invoking command "+command
                     +": "+e2.getCause());
-                // dboudreau 2012 the following line breaks the text output to the console when running subsequent scripts
-                getOutputArea().append("Error: "+e2.getCause());
+                // Send error message to script output window if open
+                if (outputlog != null)
+                	getOutputArea().append("Error: "+e2.getCause());
             } catch (java.lang.NoSuchMethodError e3) {
                 // most likely, this is 1.1.8 JVM
                 log.error("InvocationTargetException while invoking command "+command
                     +": "+e2.getTargetException());
-                // dboudreau 2012 the following line breaks the text output to the console when running subsequent scripts
-                getOutputArea().append("Error: "+e2.getTargetException());
+                // Send error message to script output window if open
+                if (outputlog != null)
+                	getOutputArea().append("Error: "+e2.getTargetException());
             }
         } catch (NoSuchMethodException e1) {
             log.error("NoSuchMethod error while invoking command "+command);
