@@ -164,7 +164,10 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             
             OpenLcbCanFrame frame = new OpenLcbCanFrame(header & 0xFFF);
             frame.setHeader(l.getHeader());
-            if (l.getNumDataElements() != 0) {
+            if (l.getNumDataElements() < 0) {
+                log.error("Unexpected negative length in "+l);
+            }
+            if (l.getNumDataElements() > 0) {
                 byte[] data = new byte[l.getNumDataElements()];
                 for (int i = 0; i < data.length; i++) {
                     data[i] = (byte)l.getElement(i);
