@@ -396,13 +396,19 @@ public class RosterEntry {
         loadAttributes(e.getChild("attributepairs"));
 
     }
-
+    
+    boolean loadedOnce = false;
     /**
      * Loads function names from a 
      * JDOM element.  Does not change values that are already present!
      */
     @SuppressWarnings("unchecked")
 	public void loadFunctions(Element e3) {
+        /*Load flag once, means that when the roster entry is edited only the first set of function labels are displayed 
+        ie those saved in the roster file, rather than those being left blank
+        rather than being over-written by the defaults linked to the decoder def*/
+        if(loadedOnce)
+            return;
         if (e3 != null)  {
             // load function names
             java.util.List<Element> l = e3.getChildren("functionlabel");
@@ -422,6 +428,7 @@ public class RosterEntry {
                 }
             }
         }
+        loadedOnce = true;
     }
 
     /**
