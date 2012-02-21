@@ -663,6 +663,8 @@ abstract public class AbstractMRTrafficController {
 
     protected boolean rcvException = false;
     
+    protected int maxRcvExceptionCount = 100;
+    
     /**
      * Handle incoming characters.  This is a permanent loop,
      * looking for input messages in character form on the
@@ -671,9 +673,11 @@ abstract public class AbstractMRTrafficController {
      */
     public void receiveLoop() {
         log.debug("receiveLoop starts");
-        while (true) {   // loop permanently, stream close will exit via exception
+        int errorCount = 0;
+        while (errorCount<maxRcvExceptionCount) {   // loop permanently, stream close will exit via exception
             try {
                 handleOneIncomingReply();
+                errorCount=0;
             }
             catch (java.io.IOException e) {
                 rcvException = true;
@@ -683,6 +687,11 @@ abstract public class AbstractMRTrafficController {
             catch (Exception e1) {
                 log.error("Exception in receive loop: "+e1);
                 e1.printStackTrace();
+                errorCount++;
+                if(errorCount==maxRcvExceptionCount){
+                    rcvException = true;
+                    reportReceiveLoopException(e1);
+                }
             }
         }
         ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
