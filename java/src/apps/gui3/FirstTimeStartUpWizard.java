@@ -245,7 +245,7 @@ public class FirstTimeStartUpWizard {
         
         finish.addActionListener( new ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e){
-                Runnable r = new connect();
+                Runnable r = new Connect();
                 Thread connectThread = new Thread(r);
                 connectThread.start();
                 connectThread.setName("Start-Up Wizard Connect");
@@ -263,7 +263,7 @@ public class FirstTimeStartUpWizard {
     }
     
     //The connection process is placed into its own thread so that it doens't hog the swingthread while waiting for the connections to open.
-    protected class connect implements Runnable {
+    protected class Connect implements Runnable {
         public void run(){
             Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
             parent.setCursor(hourglassCursor);

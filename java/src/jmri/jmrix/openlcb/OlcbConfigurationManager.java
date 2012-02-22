@@ -186,7 +186,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
     }
     
-    class TransmittedFrameAdapter implements Connection {
+    static class TransmittedFrameAdapter implements Connection {
         public void put(org.openlcb.Message m,org.openlcb.Connection c) {
             System.out.println("c: "+m);
         }

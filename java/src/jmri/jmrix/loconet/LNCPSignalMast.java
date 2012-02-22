@@ -14,7 +14,7 @@ import jmri.NmraPacket;
  * <p>
  * This is a specific implementation for the RR-cirkits LNCP interface board
  * A more general implementation, which can work
- * with any system(s), is available in {@link jmri.implementation.DCCSignalMast}.
+ * with any system(s), is available in {@link jmri.implementation.DccSignalMast}.
  *
  * @author			Kevin Dickerson Copyright (C) 2002
  * @version			$Revision: 17977 $
