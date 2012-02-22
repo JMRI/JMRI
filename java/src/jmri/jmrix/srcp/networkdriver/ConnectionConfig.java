@@ -29,6 +29,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
 
     protected void setInstance() {
         adapter = NetworkDriverAdapter.instance();
+        adapter.setPort(12345);
     }
 
     public boolean isPortAdvanced() {return false;}
