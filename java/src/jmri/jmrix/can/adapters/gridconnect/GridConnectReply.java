@@ -43,6 +43,14 @@ public class GridConnectReply extends AbstractMRReply {
         CanReply ret = new CanReply();
 
         if (log.isDebugEnabled()) log.debug("createReply converts from ["+this+"]");
+
+        // basic checks drop out the frame
+        if (!basicFormatCheck()) {
+            ret.setHeader(0);
+            ret.setNumDataElements(0);
+            return ret;
+        }
+
         // Is it an Extended frame?
 	    if (isExtended()) ret.setExtended(true);
 	    
@@ -58,6 +66,11 @@ public class GridConnectReply extends AbstractMRReply {
         }
         ret.setNumDataElements(getNumBytes());
         return ret;
+    }
+    
+    protected boolean basicFormatCheck() {
+        if ( (getElement(1) != 'X') && (getElement(1) != 'S') ) return false;
+        return true;
     }
     
     protected int skipPrefix(int index) {

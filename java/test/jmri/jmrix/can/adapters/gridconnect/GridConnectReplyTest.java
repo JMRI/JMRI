@@ -108,7 +108,19 @@ public class GridConnectReplyTest extends TestCase {
         Assert.assertEquals("el 1", 0x63, r.getElement(0));
     }
 
-    // from here down is testing infrastructure
+     public void testNotNegative() {
+        
+        // remnant of Arduino CAN2USBino startup message
+        GridConnectReply g = new GridConnectReply(": 1;");
+        
+        CanReply r = g.createReply();
+        
+        Assert.assertEquals("extended", false, r.isExtended());
+        Assert.assertEquals("rtr", false, r.isRtr());
+        Assert.assertEquals("header", 0x0, r.getHeader());
+        Assert.assertEquals("num elements", 0, r.getNumDataElements());
+    }
+   // from here down is testing infrastructure
 
     public GridConnectReplyTest(String s) {
         super(s);
