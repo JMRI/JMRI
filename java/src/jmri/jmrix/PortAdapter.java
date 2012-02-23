@@ -110,4 +110,6 @@ public interface PortAdapter  {
 
     public void dispose();
 
+    public void recover();
+
 }

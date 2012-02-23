@@ -37,12 +37,14 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     }
     
     public void connect() throws Exception {
+        opened=false;
         if (m_HostName==null || m_port==0){
             log.error("No host name or port set :" + m_HostName + ":" + m_port);
             return;
         }
         try {
             socketConn = new Socket(m_HostName,  m_port);
+            socketConn.setKeepAlive(true);
             opened = true;
         } catch (Exception e) {
             log.error("error opening network connection: "+e);
@@ -163,6 +165,99 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     /*Dispose should be handled by the port adapters and this should be abstract
     However this is in place until all the other code has been refactored */
     public void dispose(){ return; }
+
+    //private boolean allowConnectionRecovery = false;
+
+    /**
+     * This is called when a connection is initially lost.  It closes the client side
+     * socket connection, resets the open flag and attempts a reconnection.
+     */
+    public void recover(){
+        if (!allowConnectionRecovery) return;
+        opened = false;
+        try {
+            socketConn.close();
+        } catch (Exception e) { }
+        reconnect();
+    }
+
+    /**
+     * Attempts to reconnect to a failed Server
+     */
+    public void reconnect(){
+		
+        // If the connection is already open, then we shouldn't try a re-connect.
+        if (opened && !allowConnectionRecovery) return;
+        reconnectwait thread = new reconnectwait();
+        thread.start();
+        try{
+            thread.join();
+        } catch (InterruptedException e) {
+            log.error("Unable to join to the reconnection thread");
+        }
+
+        if (!opened){
+            log.error("Failed to re-establish connectivity");
+        } else {
+            resetupConnection();
+            log.info("Reconnected to " + getHostName());
+        }
+    }
+
+    /**
+     * Customizable method to deal with resetting a system connection after
+     * a sucessful recovery of a connection.
+     */
+    protected void resetupConnection() {}
+
+    /*public static void safeSleep(long milliseconds, String s) {
+      try {
+         Thread.sleep(milliseconds);
+      }
+      catch (InterruptedException e) {
+         log.error("Sleep Exception raised during reconnection attempt" +s);
+      }
+    }*/
+
+    int reconnectinterval = 1000;
+    int retryAttempts = 10;
+
+    class reconnectwait extends Thread{
+        public final static int THREADPASS     = 0;
+        public final static int THREADFAIL     = 1;
+        int         _status;
+
+        public int status() {
+            return _status;
+        }
+        public reconnectwait() {
+            _status = THREADFAIL;
+        }
+        public void run() {
+            boolean reply = true;
+            int count = 0;
+            int secondCount = 0;
+            while(reply){
+                safeSleep(reconnectinterval, "Waiting");
+                count++;
+                try {
+                    connect();
+                } catch (Exception e) {}
+                reply=!opened;
+                if (count >=retryAttempts){
+                    log.error("Unable to reconnect after " + count + " Attempts, increasing duration of retries");
+                    //retrying but with twice the retry interval.
+                    reconnectinterval = reconnectinterval*2;
+                    count = 0;
+                    secondCount++;
+                }
+                if (secondCount >=10){
+                    log.error("Giving up on reconnecting after 100 attempts");
+                    reply=false;
+                }
+            }
+        }
+    }
    
     final static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractNetworkPortController.class.getName());
     

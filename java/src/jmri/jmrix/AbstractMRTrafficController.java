@@ -234,7 +234,7 @@ abstract public class AbstractMRTrafficController {
         log.debug("transmitLoop starts");
         
         // loop forever
-        while(true) {
+        while(!connectionError) {
             AbstractMRMessage m = null;
             AbstractMRListener l = null;
             // check for something to do
@@ -577,8 +577,10 @@ abstract public class AbstractMRTrafficController {
         log.warn("sendMessage: Exception: port warn "+e.toString());
     }
 
+    boolean connectionError=false;
     protected void portWarnTCP(Exception e) {
         log.warn("Exception java net: "+e.toString());
+        connectionError=true;
     }
     // methods to connect/disconnect to a source of data in a AbstractPortController
     public AbstractPortController controller = null;
@@ -595,6 +597,9 @@ abstract public class AbstractMRTrafficController {
      * Make connection to existing PortController object.
      */
     public void connectPort(AbstractPortController p) {
+        rcvException=false;
+        connectionError=false;
+        xmtException=false;
         try {
             istream = p.getInputStream();
             ostream = p.getOutputStream();
@@ -696,8 +701,14 @@ abstract public class AbstractMRTrafficController {
         }
         ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
         log.error("Exit from rcv loop");
+        recovery();
     }
-    
+
+    private void recovery(){
+        AbstractPortController adapter = controller;
+        disconnectPort(controller);
+        adapter.recover();
+    }
     
     /**
      * Report error on receive loop. Separated so tests can suppress,

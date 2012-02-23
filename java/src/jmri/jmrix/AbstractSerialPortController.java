@@ -160,6 +160,105 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     However this is in place until all the other code has been refactored */
     public void dispose(){
     }
+
+            /**
+     * This is called when a connection is initially lost.  It closes the client side
+     * socket connection, resets the open flag and attempts a reconnection.
+     */
+    public void recover(){
+        if (!allowConnectionRecovery) return;
+        opened = false;
+        try {
+            closeConnection();
+        } catch (Exception e) { }
+        reconnect();
+    }
+    /*Each serial port adapter should handle this and it should be abstract.
+     However this is in place until all the other code has been refactored */
+    protected void closeConnection() throws Exception { System.out.println("crap Called"); }
+
+    /*Each port adapter shoudl handle this and it should be abstract.
+     However this is in place until all the other code has been refactored */
+    protected void resetupConnection(){ }
+
+    /**
+     * Attempts to reconnect to a failed Server
+     */
+    public void reconnect(){
+        // If the connection is already open, then we shouldn't try a re-connect.
+        if (opened && !allowConnectionRecovery){
+            return;
+        }
+        reconnectwait thread = new reconnectwait();
+        thread.start();
+        try{
+            thread.join();
+        } catch (InterruptedException e) {
+            log.error("Unable to join to the reconnection thread " + e.getMessage());
+        }
+        if (!opened){
+            log.error("Failed to re-establish connectivity");
+        } else {
+            log.info("Reconnected to " + getCurrentPortName());
+            resetupConnection();
+        }
+    }
+
+    class reconnectwait extends Thread{
+        public final static int THREADPASS     = 0;
+        public final static int THREADFAIL     = 1;
+        int         _status;
+
+        public int status() {
+            return _status;
+        }
+        public reconnectwait() {
+            _status = THREADFAIL;
+        }
+
+        @SuppressWarnings("unchecked")
+        public void run() {
+            boolean reply = true;
+            int count = 0;
+            int secondCount = 0;
+            while(reply){
+                safeSleep(reconnectinterval, "Waiting");
+                count++;
+                try {
+                    log.error("Retrying Connection attempt " + secondCount + "-" + count);
+                    Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
+                    while (portIDs.hasMoreElements()) {
+                        CommPortIdentifier id = portIDs.nextElement();
+                        // filter out line printers
+                        if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL)
+                            // accumulate the names in a vector
+                            if (id.getName().equals(mPort)){
+                                log.info(mPort + " port has reappeared as being valid trying to reconnect");
+                                openPort(mPort, "jmri");
+                            }
+                        }
+                } catch (Exception e) {}
+                reply=!opened;
+                if (count >=retryAttempts){
+                    log.error("Unable to reconnect after " + count + " Attempts, increasing duration of retries");
+                    //retrying but with twice the retry interval.
+                    reconnectinterval = reconnectinterval*2;
+                    count = 0;
+                    secondCount++;
+                }
+                if (secondCount >=10){
+                    log.error("Giving up on reconnecting after 100 attempts to reconnect");
+                    reply=false;
+                }
+            }
+            if (!opened){
+                log.error("Failed to re-establish connectivity");
+            } else {
+                log.error("Reconnected to " + getCurrentPortName());
+                resetupConnection();
+            }
+        }
+    }
     
     final static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSerialPortController.class.getName());
 

@@ -30,6 +30,9 @@ abstract public class AbstractPortController implements PortAdapter {
     public boolean status() {return opened;}
     
     protected boolean opened = false;
+    
+    protected void setOpened() {opened = true; }
+    protected void setClosed() {opened = false; }
 
     abstract public String getCurrentPortName();
     
@@ -98,6 +101,22 @@ abstract public class AbstractPortController implements PortAdapter {
     protected boolean mDisabled = false;
     
     abstract public SystemConnectionMemo getSystemConnectionMemo();
+
+    protected boolean allowConnectionRecovery = false;
+
+    abstract public void recover();
+
+    protected int reconnectinterval = 1000;
+    protected int retryAttempts = 10;
+
+    protected static void safeSleep(long milliseconds, String s) {
+          try {
+             Thread.sleep(milliseconds);
+          }
+          catch (InterruptedException e) {
+             log.error("Sleep Exception raised during reconnection attempt" +s);
+          }
+    }
 
     static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractPortController.class.getName());
 
