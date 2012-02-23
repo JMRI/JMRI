@@ -445,7 +445,7 @@ public class TrainCommon {
 		}
 		// list utility cars by type, track, length, and load
 		String[] carType = car.getType().split("-");
-		String carAttributes = carType[0] + splitString(car.getTrackName()) + car.getRouteDestinationId();
+		String carAttributes = carType[0] + splitString(car.getDestinationTrackName()) + car.getRouteDestinationId();
 		if (showLength)
 			carAttributes = carAttributes + car.getLength();
 		if (showLoad)
@@ -458,7 +458,7 @@ public class TrainCommon {
 				String[] cType = c.getType().split("-");
 				if (c.getRouteDestination() == rl
 						&& c.isUtility()
-						&& splitString(c.getTrackName()).equals(splitString(car.getTrackName()))
+						&& splitString(c.getDestinationTrackName()).equals(splitString(car.getDestinationTrackName()))
 						&& c.getRouteDestination().equals(car.getRouteDestination())					
 						&& cType[0].equals(carType[0])
 						&& (!showLength || c.getLength().equals(car.getLength()))
