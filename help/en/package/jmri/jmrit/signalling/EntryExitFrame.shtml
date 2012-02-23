@@ -18,17 +18,45 @@
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
-<h1>JMRI: Entry Exit Window</h1>
+<h1>JMRI: Entry/Exit (NX) Window</h1>
 
-The Entry Exit system allows you to assign sensors to various location on a layout panel, 
-then get the system to automatically set the route up between those sensors when they both go 
-active.  If a block within the path is already Occupied, then the system will try to find an 
-alternative path.
+The Entry Exit system uses sensors assigned to block boundaries in the layout editor 
+to set a route up between the two locations on the layout editor when the sensors activated in 
+the correct order. These two sensors are refered to as the NX Pair.
+<p>
+There are three different types of Entry/Exit that can be configured.
+<ul>
+    <li>Turnout Only</li>
+    <li>Turnout and SignalMast Logic</li>
+    <li>Full Interlocking</li>
+<ul>
+
+<p>
+<b>Turnout Only</b> With turnout only, the NX Pair will only set the turnouts to the correct state for
+that route.  If a block is already showing as occupied or reserved within that route, and an alternative 
+one is available then the alternative route will be set, otherwise the route will not be set.
+<p>
+<b>Turnout and SignalMast Logic<b> This option includes what is covered by "Turnout Only" 
+and will also generate the SignalMast Logic for that route.  The logic will include the turnout states 
+and the blocks that are within that route.  For this to work, SignalMasts must also be placed at the 
+same boundary points as the sensors working in the same direction.  The SignalMast logic will remain 
+for the duration of the operating session, however it is not saved and will be re-created the next time 
+the panel is open.
+<p>
+<b>Full Interlock</b> This covers the same things as the other two items above.  In addition, it will also 
+"reserve" or "lock out" each block in the route so that no other conflicting route can be set.  If block occupancy 
+detection is being used the route will automatically be cleared down.  If no block occupancy is being used, then
+it is possible to manually clear the route down by selecting the corresponding NX pair, it will leave the last block 
+as showing occupied, as if the train had travelled the route and was now sitting waiting at the next signal.<br>
+If there are no Signalmasts configured between the NX pair, then the route will still be set and reserved, but no 
+SignalMast Logic will be generated.<br>
+The route will stay active, until either a train has passed through the blocks and they have returned to an unoccupied 
+state, the route has been manually cleared down, or has been cancelled.
 <p>
 From this window you can create and delete Entry Exit Pairs for a given layout panel
 <p>
 You first need to assign sensors at Block boundaries on the layout editor, by using the pop up window
-on block boundaries, the popup menu on turnouts or Level Crossings.
+on block boundaries, turnouts or Level Crossings.
 <p>
 From the Entry Exit window, select the layout panel that you are working on, you can then either 
 manually select the source and destination sensor pair, or all the system to automatically discover 
@@ -46,5 +74,19 @@ It is possible to manually add Entry Exit pairs for sensors that are in effect p
 work in opposite directions.  Here you will need to use the drop down options to select the start and 
 finish locations against a layout panel.  Again you can select this pair to be "Both Way" working.
 <!--#include virtual="/Footer" -->
+<p>
+<b>Block Boundaries</b>
+Sensors, like signals(either heads or masts), should be added at block boundaries. 
+ To do this, if you right click on the "Anchor Point" between two track segments, 
+ if this location is a boundary point (ie a different block on each side), then you 
+ will get the option in the menu to set Signals, Sensors or SignalMasts. 
+ What this does is then associate that item with that particular location on the layout.  
+ <br> The window that pops up allows you to assign the item to work in a particular direction 
+ (or protecting a certain block). 
+<p>
+For turnouts you need to right click on the circle at the centre, again this will bring up 
+the same options to set, if there are block boundaries present.  
+On a turnout you can only assign items that will protect the block the turnout is in, 
+you can not protect/assign an item on the way out of a turnout so to speak. The same with level-crossings.
 </body>
 </html>
