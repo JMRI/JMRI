@@ -240,7 +240,7 @@ public class DccConsist implements Consist, ProgListener{
 
         /*
 	 *  Remove a Locomotive from an Advanced Consist
-	 *  @param address is the Locomotive address to add to the locomotive
+	 *  @param address is the Locomotive address to remove from the consist
          */
 	protected void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
 		Programmer opsProg = InstanceManager.programmerManagerInstance()
@@ -270,18 +270,18 @@ public class DccConsist implements Consist, ProgListener{
          * @param address is the Locomotive address of interest
          */
         public int getPosition(DccLocoAddress address){
-             if(ConsistPosition.contains(address))
-		return(ConsistPosition.get(address).intValue());
-             // if the consist order hasn't been set, we'll use default
-             // positioning based on index in the arraylist.  Lead locomotive 
-             // is position 0 in the list and the trail is the last locomtoive
-             // in the list.             
-             int index=ConsistList.indexOf(address);
-                if(index==0)
-                   return(Consist.POSITION_LEAD);
-                else if(index==(ConsistList.size()-1))
-                   return(Consist.POSITION_TRAIL);
-                else return index;
+        	if(ConsistPosition.containsKey(address))
+        		return(ConsistPosition.get(address).intValue());
+        	// if the consist order hasn't been set, we'll use default
+        	// positioning based on index in the arraylist.  Lead locomotive 
+        	// is position 0 in the list and the trail is the last locomtoive
+        	// in the list.             
+        	int index=ConsistList.indexOf(address);
+        	if(index==0)
+        		return(Consist.POSITION_LEAD);
+        	else if(index==(ConsistList.size()-1))
+        		return(Consist.POSITION_TRAIL);
+        	else return index;
         }
 
 
