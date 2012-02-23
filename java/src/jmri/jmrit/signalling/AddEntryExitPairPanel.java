@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
 import javax.swing.JOptionPane;
 import java.util.ResourceBundle;
 import jmri.util.table.ButtonEditor;
@@ -38,6 +39,9 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
     JComboBox selectPanel = new JComboBox();
     JComboBox fromPoint = new JComboBox();
     JComboBox toPoint = new JComboBox();
+    String [] interlockTypes = {"Set Turnouts Only", "Set Turnouts and SignalMasts", "Full Interlock"};
+    JComboBox typeBox = new JComboBox(interlockTypes);
+    
     ArrayList<LayoutEditor> panels;
     
     protected static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.EntryExitBundle");
@@ -48,7 +52,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
         JPanel top = new JPanel();
-        top.setLayout(new GridLayout(3,2));
+        top.setLayout(new GridLayout(4,2));
 
         top.add(new JLabel(rb.getString("SelectPanel")));
         top.add(selectPanel);
@@ -76,6 +80,8 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
 
         top.add(new JLabel(rb.getString("ToLocation")));
         top.add(toPoint);
+        top.add(new JLabel("NX Type"));
+        top.add(typeBox);
         add(top);
 
         JPanel p=new JPanel();
@@ -105,6 +111,8 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         nxSorter.setTableHeader(nxDataTable.getTableHeader());
         nxDataScroll	= new JScrollPane(nxDataTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         configDeleteColumn(nxDataTable);
+
+//        setColumnToHoldCombo(nxDataTable, 4, typeCombo);
         
         add(nxDataScroll);
     }
@@ -118,6 +126,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         
         EntryExitPairs entryexit = EntryExitPairs.instance();
         entryexit.addNXDestination(from.getPoint(), to.getPoint(), panel);
+        entryexit.setEntryExitType(from.getPoint(), panel, to.getPoint(), typeBox.getSelectedIndex());
     }
     
     jmri.util.JmriJFrame entryExitFrame = null;
@@ -131,6 +140,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
                 JOptionPane.showMessageDialog(null, rb.getString("LayoutBlockRoutingEnabled"));
             }
         }
+        log.info("Passed the enable " + InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled());
         entryExitFrame = new jmri.util.JmriJFrame("Discover Entry Exit Pairs", false, false);
         entryExitFrame.setPreferredSize(null);
         JPanel panel1 = new JPanel();
@@ -146,8 +156,10 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             final PropertyChangeListener propertyNXListener = new PropertyChangeListener(){
                 public void propertyChange(PropertyChangeEvent evt) {
                     if (evt.getPropertyName().equals("autoGenerateComplete")){
-                        if (entryExitFrame!=null)
+                        if (entryExitFrame!=null){
                             entryExitFrame.setVisible(false);
+                            entryExitFrame.dispose();
+                        }
                         EntryExitPairs.instance().removePropertyChangeListener(this);
                         JOptionPane.showMessageDialog(null, "Generation of Entry Exit Pairs Completed");
                     }
@@ -158,6 +170,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
                 entryexit.addPropertyChangeListener(propertyNXListener);
                 entryexit.automaticallyDiscoverEntryExitPairs(panels.get(selectPanel.getSelectedIndex()));
             } catch (jmri.JmriException e){
+                log.info("Exception here");
                 EntryExitPairs.instance().removePropertyChangeListener(propertyNXListener);
                 JOptionPane.showMessageDialog(null, e.toString());
                 entryExitFrame.setVisible(false);
@@ -203,13 +216,13 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
                 source = InstanceManager.signalHeadManagerInstance().getSignalHead(pp.get(i).getWestBoundSignal());
             } else*/ 
             if ((pp.get(i).getWestBoundSensor()!=null) && (!pp.get(i).getWestBoundSensor().equals(""))){
-                /*if ((pp.get(i).getWestBoundSignalMast()!=null) && (!pp.get(i).getWestBoundSignalMast().equals(""))){
+                if ((pp.get(i).getWestBoundSignalMast()!=null) && (!pp.get(i).getWestBoundSignalMast().equals(""))){
                     description = pp.get(i).getWestBoundSignalMast();
                     source = InstanceManager.signalMastManagerInstance().getSignalMast(pp.get(i).getWestBoundSignalMast());
-                } else {*/
+                } else {
                     description = pp.get(i).getWestBoundSensor();
                     source = InstanceManager.sensorManagerInstance().getSensor(pp.get(i).getWestBoundSensor());
-                //}
+                }
             }
 
             if(source!=null){
@@ -232,13 +245,13 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
 
             } else*/ 
             if ((pp.get(i).getEastBoundSensor()!=null) && (!pp.get(i).getEastBoundSensor().equals(""))){
-                /*if ((pp.get(i).getEastBoundSignalMast()!=null)&& (!pp.get(i).getEastBoundSignalMast().equals(""))){
+                if ((pp.get(i).getEastBoundSignalMast()!=null)&& (!pp.get(i).getEastBoundSignalMast().equals(""))){
                     description = pp.get(i).getEastBoundSignalMast();
                     source = InstanceManager.signalMastManagerInstance().getSignalMast(pp.get(i).getEastBoundSignalMast());
-                } else {*/
+                } else {
                     description = pp.get(i).getEastBoundSensor();
                     source = InstanceManager.sensorManagerInstance().getSensor(pp.get(i).getEastBoundSensor());
-                //}
+                }
             }
             if(source!=null){
                 //description = getPointAsString(pp.get(i),true);
@@ -404,8 +417,10 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
     static final int ACTIVECOL = 2;
     static final int DELETECOL = 4;
     static final int BOTHWAYCOL = 3;
+    static final int TYPECOL = 5;
+    static final int ENABLEDCOL = 6;
 
-    static final int NUMCOL = 4+1;
+    static final int NUMCOL = 6+1;
     //Need to add a property change listener to catch when paths go active.
     class TableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener{
         //needs a method to for when panel changes
@@ -458,10 +473,13 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
                 case TOPOINTCOL:    return nxPairs.getPointAsString((NamedBean)dest.get(row), panel);
                 case ACTIVECOL:    return isPairActive(row);
                 case BOTHWAYCOL:    return !nxPairs.isUniDirection(source.get(row), panel, dest.get(row));
+                case ENABLEDCOL:    return !nxPairs.isEnabled(source.get(row), panel, dest.get(row));
                 case DELETECOL:  //
                     return jmri.jmrit.beantable.AbstractTableAction.rb.getString("ButtonDelete");
+                case TYPECOL:
+                    return NXTYPE_NAMES[nxPairs.getEntryExitType(source.get(row), panel, dest.get(row))];
+                default: return "";
             }
-            return "";
         }
         
         public void setValueAt(Object value, int row, int col) {
@@ -472,6 +490,19 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             if (col==BOTHWAYCOL){
                 boolean b = !((Boolean)value).booleanValue();
                 nxPairs.setUniDirection(source.get(row), panel,dest.get(row), b);
+            }            
+            if (col==ENABLEDCOL){
+                boolean b = !((Boolean)value).booleanValue();
+                nxPairs.setEnabled(source.get(row), panel,dest.get(row), b);
+            }
+            if(col==TYPECOL){
+                String val = (String) value;
+                if(val.equals("Turnout"))
+                    nxPairs.setEntryExitType(source.get(row), panel,dest.get(row), 0x00);
+                else if(val.equals("SignalMast"))
+                    nxPairs.setEntryExitType(source.get(row), panel,dest.get(row), 0x01);
+                else if(val.equals("Full InterLock"))
+                    nxPairs.setEntryExitType(source.get(row), panel,dest.get(row), 0x02);
             }
         
         }
@@ -497,6 +528,8 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             case ACTIVECOL:    return rb.getString("ColumnActive");
             case DELETECOL:    return "";
             case BOTHWAYCOL:    return rb.getString("ColumnBoth");
+            case TYPECOL:    return "NX Type";
+            case ENABLEDCOL:    return "Disabled";
             default:            return "<UNKNOWN>";
             }
         }
@@ -510,7 +543,10 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             case DELETECOL:
                 return JButton.class;
             case BOTHWAYCOL:
+            case ENABLEDCOL:
                 return Boolean.class;
+            case TYPECOL:
+                return String.class;
             default:
                 return null;
             }
@@ -527,8 +563,14 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
                             return false;
                         }
                     }
+                    if(nxPairs.getEntryExitType(source.get(row), panel, dest.get(row))!=0x00){
+                        JOptionPane.showMessageDialog(null, rb.getString("BothWayTurnoutOnly"));
+                        return false;
+                    }
                     return true;
                 case DELETECOL:
+                case ENABLEDCOL:
+                case TYPECOL:
                     return true;
                 default:
                     return false;
@@ -547,10 +589,19 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         }
     }
     
+        String [] NXTYPE_NAMES = { "Turnout", "SignalMast", "Full InterLock" };
         protected void configDeleteColumn(JTable table) {
             // have the delete column hold a button
             setColumnToHoldButton(table, DELETECOL, 
                     new JButton(rb.getString("ButtonDelete")));
+                    
+            JComboBox typeCombo = new JComboBox(NXTYPE_NAMES);
+            /*typeCombo.addItem("Turnout");
+            typeCombo.addItem("SignalMast");
+            typeCombo.addItem("Full");*/
+        
+            TableColumn col = table.getColumnModel().getColumn(TYPECOL);
+            col.setCellEditor(new DefaultCellEditor(typeCombo));
         }
         
         /**
@@ -572,6 +623,12 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             table.getColumnModel().getColumn(column)
                 .setPreferredWidth((sample.getPreferredSize().width)+4);
         }
+        
+        /*protected void setColumnToHoldCombo(JTable table, int column, JComboBox sample){
+            table.getColumnModel().getColumn(column).setCellEditor(new DefaultCellEditor(sample));
+            
+        
+        }*/
 
     static class ValidPoints{
 
@@ -592,8 +649,8 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         }
     }
     
-    boolean runWhenStablised = false;
-    LayoutEditor toUseWhenStable;
+    //boolean runWhenStablised = false;
+    //LayoutEditor toUseWhenStable;
     
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AddEntryExitPairPanel.class.getName());
 }
