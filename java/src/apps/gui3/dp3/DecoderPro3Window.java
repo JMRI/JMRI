@@ -40,7 +40,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
-import javax.swing.table.TableModel;
 import javax.swing.JTextPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -363,6 +362,7 @@ public class DecoderPro3Window
         Object selectedRosterGroup = p.getProperty(getWindowFrameRef(), "selectedRosterGroup");
         groups = new RosterGroupsPanel((selectedRosterGroup != null) ? selectedRosterGroup.toString() : null);
         groups.setNewWindowMenuAction(new DecoderPro3Action("newWindow", this));
+        setTitle(groups.getSelectedRosterGroup());
         
         final JPanel rosters = new JPanel();
         rosters.setLayout(new BorderLayout());
@@ -495,6 +495,7 @@ public class DecoderPro3Window
 
             public void propertyChange(PropertyChangeEvent pce) {
                 p.setProperty(this.getClass().getName(), "selectedRosterGroup", pce.getNewValue());
+                setTitle((String) pce.getNewValue());
             }
             
         });
@@ -1068,6 +1069,7 @@ public class DecoderPro3Window
         progModePanel.add(edit);
 
         programModeListener = new ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 updateProgMode();
             }
@@ -1486,10 +1488,19 @@ public class DecoderPro3Window
         }
     }
 
+    @Override
+    public void setTitle(String title) {
+        if (title == null || title.isEmpty()) {
+            title = Roster.ALLENTRIES;
+        }
+        super.setTitle("DecoderPro 3: " + title);
+    }
+
     public Object getRemoteObject(String value) {
         return getProperty(value);
     }
 
+    @Override
     public String getSelectedRosterGroup() {
         return groups.getSelectedRosterGroup();
     }
