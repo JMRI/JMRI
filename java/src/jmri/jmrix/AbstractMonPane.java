@@ -34,6 +34,7 @@ public abstract class AbstractMonPane extends JmriPanel  {
     public void dispose() { 
         p.setSimplePreferenceState(timeStampCheck, timeCheckBox.isSelected());
         p.setSimplePreferenceState(rawDataCheck, rawCheckBox.isSelected());
+        p.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTopCheckBox.isSelected());
         super.dispose();
     }
     // you'll also have to add the message(Foo) members to handle info to be logged.
@@ -48,11 +49,13 @@ public abstract class AbstractMonPane extends JmriPanel  {
     protected JButton stopLogButton = new JButton();
     protected JCheckBox rawCheckBox = new JCheckBox();
     protected JCheckBox timeCheckBox = new JCheckBox();
+    protected JCheckBox alwaysOnTopCheckBox = new JCheckBox();
     protected JButton openFileChooserButton = new JButton();
     protected JTextField entryField = new JTextField();
     protected JButton enterButton = new JButton();
     String rawDataCheck = this.getClass().getName()+".RawData";
     String timeStampCheck = this.getClass().getName()+".TimeStamp";
+    String alwaysOnTopCheck = this.getClass().getName()+".AlwaysOnTop";
     jmri.UserPreferencesManager p;
 	// for locking
 	AbstractMonPane self;
@@ -117,7 +120,15 @@ public abstract class AbstractMonPane extends JmriPanel  {
         timeCheckBox.setVisible(true);
         timeCheckBox.setToolTipText("If checked, show timestamps before each message");
         timeCheckBox.setSelected(p.getSimplePreferenceState(timeStampCheck));
-
+        
+        alwaysOnTopCheckBox.setText("Window always on Top");
+        alwaysOnTopCheckBox.setVisible(true);
+        alwaysOnTopCheckBox.setToolTipText("If checked, this window be always be displayed in front of any other window");
+        alwaysOnTopCheckBox.setSelected(p.getSimplePreferenceState(alwaysOnTopCheck));
+        if (getTopLevelAncestor()!=null){
+            ((jmri.util.JmriJFrame)getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
+        }
+        
         openFileChooserButton.setText("Choose log file");
         openFileChooserButton.setVisible(true);
         openFileChooserButton.setToolTipText("Click here to select a new output log file");
@@ -136,6 +147,7 @@ public abstract class AbstractMonPane extends JmriPanel  {
         pane1.add(freezeButton);
         pane1.add(rawCheckBox);
         pane1.add(timeCheckBox);
+        pane1.add(alwaysOnTopCheckBox);
 	    paneA.add(pane1);
 
         JPanel pane2 = new JPanel();
@@ -178,6 +190,14 @@ public abstract class AbstractMonPane extends JmriPanel  {
         enterButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     enterButtonActionPerformed(e);
+                }
+            });
+            
+        alwaysOnTopCheckBox.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    if (getTopLevelAncestor()!=null){
+                        ((jmri.util.JmriJFrame)getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
+                    }
                 }
             });
 

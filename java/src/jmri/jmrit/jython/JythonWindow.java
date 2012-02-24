@@ -49,6 +49,7 @@ public class JythonWindow extends AbstractAction {
      * @param e
      */
     public void actionPerformed(ActionEvent e) {
+        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         jmri.util.PythonInterp.getPythonInterpreter();
 
         java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.jython.JythonBundle");
@@ -64,6 +65,14 @@ public class JythonWindow extends AbstractAction {
         // Add checkbox to enable/disable auto-scrolling
         JPanel p = new JPanel();
         p.add(autoScroll  = new JCheckBox(rb.getString("CheckBoxAutoScroll"), true));
+        autoScroll.setSelected(pref.getSimplePreferenceState(alwaysScrollCheck));
+        alwaysOnTopCheckBox.setText("Window always on Top");
+        alwaysOnTopCheckBox.setVisible(true);
+        alwaysOnTopCheckBox.setToolTipText("If checked, this window be always be displayed in front of any other window");
+        alwaysOnTopCheckBox.setSelected(pref.getSimplePreferenceState(alwaysOnTopCheck));
+        p.add(alwaysOnTopCheckBox);
+        f.setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
+        
         autoScroll.addItemListener(new ItemListener() {
 
             // Reference to the JTextArea of this instantiation
@@ -72,9 +81,17 @@ public class JythonWindow extends AbstractAction {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange()==ItemEvent.SELECTED) {
                     doAutoScroll(ta, true);
+                    pref.setSimplePreferenceState(alwaysScrollCheck, autoScroll.isSelected());
                 }
             }
         });
+        
+        alwaysOnTopCheckBox.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    f.setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
+                    pref.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTopCheckBox.isSelected());
+                }
+            });
         f.getContentPane().add(p, BorderLayout.PAGE_END);
         
         // set a monospaced font
@@ -126,6 +143,11 @@ public class JythonWindow extends AbstractAction {
     JTextArea area;
     JFrame f;
     JCheckBox autoScroll;
+    jmri.UserPreferencesManager pref;
+    
+    String alwaysOnTopCheck = this.getClass().getName()+".alwaysOnTop";
+    String alwaysScrollCheck = this.getClass().getName()+".alwaysScroll";
+    protected JCheckBox alwaysOnTopCheckBox = new JCheckBox();
 
 }
 

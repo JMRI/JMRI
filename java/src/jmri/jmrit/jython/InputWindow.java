@@ -4,6 +4,7 @@ package jmri.jmrit.jython;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.awt.Font;
@@ -30,10 +31,11 @@ public class InputWindow extends JPanel {
     JButton button;
     JButton loadButton;
     JButton storeButton;
+    JCheckBox alwaysOnTopCheckBox = new JCheckBox();
     static java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.jython.JythonBundle");
 
     public InputWindow() {
-
+    
         //setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
         setLayout(new BorderLayout());
         
@@ -48,6 +50,11 @@ public class InputWindow extends JPanel {
         p.add(loadButton = new JButton(rb.getString("ButtonLoad")));
         p.add(storeButton = new JButton(rb.getString("ButtonStore")));
         p.add(button = new JButton(rb.getString("ButtonExecute")));
+        
+        alwaysOnTopCheckBox.setText("Window always on Top");
+        alwaysOnTopCheckBox.setVisible(true);
+        alwaysOnTopCheckBox.setToolTipText("If checked, this window be always be displayed in front of any other window");
+        p.add(alwaysOnTopCheckBox);
         add(p, BorderLayout.SOUTH);
         
         button.addActionListener(new java.awt.event.ActionListener() {
@@ -65,6 +72,14 @@ public class InputWindow extends JPanel {
         storeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 storeButtonPressed();
+            }
+        });
+        
+        alwaysOnTopCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                if (getTopLevelAncestor()!=null){
+                    ((jmri.util.JmriJFrame)getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
+                }
             }
         });
 
