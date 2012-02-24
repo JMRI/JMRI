@@ -13,7 +13,7 @@ import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2008
  * @version	$Revision$
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;
@@ -47,13 +47,13 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         
     }
     
-	protected Vector<String> getPortNames() {
+	/*protected Vector<String> getPortNames() {
         Vector<String> portNameVector = new Vector<String>();
         portNameVector.addElement("(None)");
         return portNameVector;
-    }
+    }*/
 
-    public boolean isPortAdvanced() { return true; }
+    //public boolean isPortAdvanced() { return true; }
     
     public String name() { return "Simulator"; }
 

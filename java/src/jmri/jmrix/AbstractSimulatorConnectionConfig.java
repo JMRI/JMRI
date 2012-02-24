@@ -48,7 +48,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         adapter = null;
     }
 
-    boolean init = false;
+    protected boolean init = false;
 
     protected void checkInitDone() {
     	if (log.isDebugEnabled()) log.debug("init called for "+name());

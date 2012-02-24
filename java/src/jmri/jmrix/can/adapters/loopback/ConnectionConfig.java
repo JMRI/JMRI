@@ -15,7 +15,7 @@ import jmri.jmrix.can.ConfigurationManager;
  * @author      Bob Jacobsen   Copyright (C) 2008
  * @version	$Revision$
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;
@@ -70,13 +70,13 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         }
     }
     
-	protected Vector<String> getPortNames() {
+	/*protected Vector<String> getPortNames() {
         Vector<String> portNameVector = new Vector<String>();
         portNameVector.addElement("(None)");
         return portNameVector;
-    }
+    }*/
     
-    @Override
+    //@Override
     protected ResourceBundle getActionModelResourceBundle(){
         return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }
