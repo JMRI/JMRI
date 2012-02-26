@@ -1,6 +1,6 @@
 // FleischmannConnectionTypeList.java.java
 
-package jmri.jmrix.loconet.Uhlenbrock;
+package jmri.jmrix.loconet.uhlenbrock;
 
 
 /**
