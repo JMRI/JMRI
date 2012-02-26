@@ -443,6 +443,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 					&& _engine.getRoad().equals(roadComboBox.getSelectedItem().toString())
 					&& _engine.getNumber().equals(roadNumberTextField.getText())) {
 				manager.deregister(_engine);
+				_engine = null;
 				// save engine file
 				writeFiles();
 			} else {

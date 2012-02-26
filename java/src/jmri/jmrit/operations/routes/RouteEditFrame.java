@@ -221,6 +221,11 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (ae.getSource() == deleteRouteButton){
 			log.debug("route delete button actived");
+			if (JOptionPane.showConfirmDialog(this,
+					MessageFormat.format(rb.getString("AreYouSure?"),new Object[]{routeNameTextField.getText()}), rb.getString("DeleteRoute?"),
+					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION){
+				return;
+			}
 			Route route = manager.getRouteByName(routeNameTextField.getText());
 			if (route == null)
 				return;
