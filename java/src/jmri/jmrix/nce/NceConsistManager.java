@@ -12,11 +12,8 @@
 
 package jmri.jmrix.nce;
 
-import java.util.List;
-
 import jmri.Consist;
 import jmri.DccLocoAddress;
-import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 
@@ -70,8 +67,6 @@ public class NceConsistManager extends jmri.jmrix.AbstractConsistManager impleme
     
     public void startConsistReader(){
     	// read command station memory (not USB and not simulator) Can't determine if simulator selected, but can determine if port name is the default
-    	List<Object> connections = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
-    	ConnectionConfig c = (ConnectionConfig) connections.get(0);
     	if (memo.getNceUSB() == NceTrafficController.USB_SYSTEM_NONE && !memo.getNceTrafficController().getPortName().equals(JmrixConfigPane.NONE_SELECTED))
     		new NceConsistReader();
     }
