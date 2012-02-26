@@ -11,8 +11,8 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.jmrit.consisttool.ConsistFile;
-import jmri.jmrix.nce.consist.NceConsistRoster;
-import jmri.jmrix.nce.consist.NceConsistRosterEntry;
+//import jmri.jmrix.nce.consist.NceConsistRoster;
+//import jmri.jmrix.nce.consist.NceConsistRosterEntry;
 
 
 /**
@@ -62,10 +62,12 @@ public class ConsistController extends AbstractController implements ProgListene
         if (listeners == null) return;
         String message;
         
-        int numConsists = manager.getConsistList().size()  //number of JMRI consists found
-          + NceConsistRoster.instance().numEntries();      //  plus number of NCE consists found
+        int numConsists = manager.getConsistList().size();  //number of JMRI consists found
+        		// dboudreau 2/26/2012 added consist manager for NCE
+         // + NceConsistRoster.instance().numEntries();      //  plus number of NCE consists found
         if (log.isDebugEnabled()) {
-        	log.debug(numConsists+" consists found,"+manager.getConsistList().size()+" JMRI and "+NceConsistRoster.instance().numEntries()+" NCE");
+        	log.debug(numConsists+" consists found,"+manager.getConsistList().size());
+        	//+" JMRI and "+NceConsistRoster.instance().numEntries()+" NCE");
         }
 
         if (isConsistAllowed){  //  Allow Make & Break consists
@@ -86,15 +88,18 @@ public class ConsistController extends AbstractController implements ProgListene
         }
         
         // Loop through the NCE consists and send consist detail for each
+    	/* dboudreau 2/26/2012 added consist manager for NCE
         NceConsistRoster r = NceConsistRoster.instance();
         List<NceConsistRosterEntry> l = r.matchingList(null, null, null, null, null, null, null, null, null, null); // take all
         int i=-1;
         for (i = 0; i<l.size(); i++) {
         	sendDataForNCEConsist(l.get(i));
         }
+        */
     }
     
     //send consist detail record for a single NCE consist, e.g. RCD}|{127(S)}|{2591]\[2591(L)}|{true]\[6318(L)}|{true]\[2608(L)}|{false
+    /* dboudreau 2/26/2012 added consist manager for NCE
     public void sendDataForNCEConsist(NceConsistRosterEntry con){
         if (listeners == null) return;
         StringBuilder list = new StringBuilder("RCD");  //  Roster Consist Data
@@ -153,6 +158,7 @@ public class ConsistController extends AbstractController implements ProgListene
             listener.sendPacketToDevice(message);
         }
     }
+    */
     
     public void sendDataForConsist(Consist con){
         if (listeners == null) return;
