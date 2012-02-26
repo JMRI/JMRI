@@ -91,6 +91,8 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return true;
         if (type.equals(jmri.CommandStation.class))
             return true;
+        if (type.equals(jmri.ConsistManager.class))
+            return true;
         return false; // nothing, by default
     }
     
@@ -117,6 +119,8 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return (T)getClockControl();
         if (T.equals(jmri.CommandStation.class))
             return (T)getNceTrafficController();
+        if (T.equals(jmri.ConsistManager.class))
+            return (T)getConsistManager();
         return null; // nothing, by default
     }
 
@@ -126,6 +130,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private NceSensorManager sensorManager;
     private NceThrottleManager throttleManager;
     private NceClockControl clockManager;
+    private NceConsistManager consistManager;
     
     /**
      * Configure the common managers for NCE connections.
@@ -159,6 +164,9 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         clockManager = new jmri.jmrix.nce.NceClockControl(getNceTrafficController(), getSystemPrefix());
         InstanceManager.addClockControl(clockManager);
+        
+        consistManager = new jmri.jmrix.nce.NceConsistManager(this);
+        InstanceManager.setConsistManager(consistManager);
 
     }
 
@@ -168,6 +176,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public NceSensorManager  getSensorManager() { return sensorManager; }
     public NceThrottleManager  getThrottleManager() { return throttleManager; }
     public NceClockControl  getClockControl() { return clockManager; }
+    public NceConsistManager  getConsistManager() { return consistManager; }
     
     protected ResourceBundle getActionModelResourceBundle(){
         return ResourceBundle.getBundle("jmri.jmrix.nce.NceActionListBundle");
@@ -190,6 +199,9 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             InstanceManager.deregister(throttleManager, jmri.jmrix.nce.NceThrottleManager.class);
         if (clockManager != null) 
             InstanceManager.deregister(clockManager, jmri.jmrix.nce.NceClockControl.class);
+        if (consistManager != null)
+        	InstanceManager.deregister(consistManager, jmri.jmrix.nce.NceConsistManager.class);
+        	
         super.dispose();
     }
     
