@@ -136,7 +136,7 @@ public class ConsistFile extends jmri.jmrit.XmlFile {
     						   true);
     				   newConsist.restore(address,true);
     			   }
-    			   if(position!=null && position.getValue().equals("mid")){
+    			   if(position!=null && !position.getValue().equals("mid")){
     				   if(position.getValue().equals("lead")) {
     					   newConsist.setPosition(address,Consist.POSITION_LEAD);
     				   } else if(position.getValue().equals("rear")) {

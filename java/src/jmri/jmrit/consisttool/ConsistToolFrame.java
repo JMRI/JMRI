@@ -151,7 +151,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
             }
         });
 
-        // Set up the controlls for the First Locomotive in the consist.
+        // Set up the controls for the First Locomotive in the consist.
 
         textLocoLabel.setText(rb.getString("LocoLabelText"));
         textLocoLabel.setVisible(true);
