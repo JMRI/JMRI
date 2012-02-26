@@ -24,6 +24,7 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
 
         validSpeeds = new String[]{"19200", "38400", "57600", "115200"};
         validSpeedValues = new int[]{19200, 38400, 57600, 115200};
+        configureBaudRate("115200");
     }
 
     /**
