@@ -11,6 +11,8 @@
 
 package jmri.jmrix.nce;
 
+import java.util.ArrayList;
+
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccConsist;
@@ -26,8 +28,8 @@ public class NceConsist extends jmri.DccConsist implements jmri.jmrix.nce.NceLis
 	// state machine stuff
 	private int _busy = 0;
 	private int _replyLen = 0; 					// expected byte length
-	private static final int REPLY_1 = 1; 	// reply length of 16 bytes expected
-	private byte _consistNum = 0;
+	private static final int REPLY_1 = 1; 		// reply length of 16 bytes expected
+	private byte _consistNum = 0;				// consist number (short address of consist)
 
 	// Initialize a consist for the specific address
     // the Default consist type is an advanced consist 
@@ -51,8 +53,7 @@ public class NceConsist extends jmri.DccConsist implements jmri.jmrix.nce.NceLis
 			// kill this consist
 			DccLocoAddress locoAddress = ConsistList.get(0);
 			killConsist(locoAddress.getNumber(), locoAddress.isLongAddress());
-		}
-			
+		}			
 		super.dispose();
 	}
 
@@ -119,6 +120,7 @@ public class NceConsist extends jmri.DccConsist implements jmri.jmrix.nce.NceLis
 	public void restore(DccLocoAddress locoAddress, boolean directionNormal, int position) {
 		ConsistPosition.put(locoAddress, position);
 		super.restore(locoAddress, directionNormal);
+		//notifyConsistListeners(locoAddress, ConsistListener.OPERATION_SUCCESS);
 	}
 
 	/**
@@ -152,13 +154,36 @@ public class NceConsist extends jmri.DccConsist implements jmri.jmrix.nce.NceLis
 			return;
 		}
 		_consistNum = (byte)consistNum;
+		startReadNCEconsistThread(false);
+	}
+	
+	public void checkConsist(){
+		if (!isValid())
+			return;	// already checking the consist
+		setValid(false);
+		startReadNCEconsistThread(true);
+	}
+	
+	private void startReadNCEconsistThread(boolean check){
 		// read command station memory to get the current consist (can't be a USB, only PH)
 		if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
 			NceReadConsist mb = new NceReadConsist();
-			mb.setName("Read Consist "+consistNum);
-			mb.setConsist(consistNum);
+			mb.setName("Read Consist "+_consistNum);
+			mb.setConsist(_consistNum);
+			mb.setCheck(check);
 			mb.start();
 		}
+	}
+	
+	public DccLocoAddress getLocoAddressByPosition(int position){
+		DccLocoAddress locoAddress;
+		ArrayList<DccLocoAddress> list = getConsistList();
+		for (int i=0; i<list.size(); i++){
+			locoAddress = list.get(i);
+			if (getPosition(locoAddress) == position)
+				return locoAddress;
+		}
+		return null;
 	}
 	
 	/**
@@ -242,12 +267,14 @@ public class NceConsist extends jmri.DccConsist implements jmri.jmrix.nce.NceLis
 		// state machine stuff
 		private int _consistNum = 0;
 		private int _busy = 0;
+		private boolean _validConsist = false;				// true when there's a lead and rear loco in the consist
+		private boolean _check = false;				// when true update consist to match NCE CS
 
 		private int _replyLen = 0; 					// expected byte length
 		//private static final int REPLY_1 = 1; 	// reply length of 16 bytes expected
 		private static final int REPLY_16 = 16; 	// reply length of 16 bytes expected
 
-		private int locoNum = LEAD; 				// which loco, 0 = lead, 1 = rear, 2 = mid
+		private int _locoNum = LEAD; 				// which loco, 0 = lead, 1 = rear, 2 = mid
 		private static final int LEAD = 0;
 		private static final int REAR = 1;
 		private static final int MID = 2;
@@ -256,11 +283,13 @@ public class NceConsist extends jmri.DccConsist implements jmri.jmrix.nce.NceLis
 		private static final int CS_CON_MEM_REAR = 0xF600; 	// address of rear consist locos
 		private static final int CS_CON_MEM_MID = 0xF700; 	// address of mid consist locos
 		
-		private boolean valid = false;
-
 
 		public void setConsist(int number){
 			_consistNum = number;
+		}
+		
+		public void setCheck(boolean check){
+			_check = check;
 		}
 		
 		// load up the consist lists by lead, rear, and then mid
@@ -285,14 +314,16 @@ public class NceConsist extends jmri.DccConsist implements jmri.jmrix.nce.NceLis
 				log.error("Time out reading NCE command station consist memory");
 				return;
 			}					
-			locoNum = eNum;
+			_locoNum = eNum;
 			int nceMemAddr = (consistNum * 2) + CS_CONSIST_MEM;
 			if (eNum == REAR)
 				nceMemAddr = (consistNum * 2) + CS_CON_MEM_REAR;
 			if (eNum == MID) 
 				nceMemAddr = (consistNum * 8) + CS_CON_MEM_MID;
-			byte[] bl = NceBinaryCommand.accMemoryRead(nceMemAddr);
-			sendNceMessage(bl, REPLY_16);
+			if (eNum == LEAD || _validConsist){
+				byte[] bl = NceBinaryCommand.accMemoryRead(nceMemAddr);
+				sendNceMessage(bl, REPLY_16);
+			}
 		}
 
 		private void sendNceMessage(byte[] b, int replyLength) {
@@ -331,23 +362,39 @@ public class NceConsist extends jmri.DccConsist implements jmri.jmrix.nce.NceLis
 				log.debug("Consist "+_consistNum+" read reply not for this consist");
 				return;
 			}
-			log.debug("Consist "+_consistNum+" read reply number " +locoNum);
+			log.debug("Consist "+_consistNum+" read reply number " +_locoNum);
 			if (r.getNumDataElements() != _replyLen) {
 				log.error("reply length error, expecting: " + _replyLen + " got: "
 						+ r.getNumDataElements());
 				return;
 			}
 			
-			if (locoNum == LEAD)
-				valid = addLocoConsist(r, 0, DccConsist.POSITION_LEAD);	// consist is valid if there's at least a lead & rear loco
-			
-			if (valid && locoNum == REAR){
-				valid = addLocoConsist(r, 0, DccConsist.POSITION_TRAIL);
+			// are we checking to see if the consist matches CS memory?
+			if (_check){
+				log.debug("Checking " +_consistNum);
+				if (_locoNum == LEAD)
+					_validConsist = checkLocoConsist(r, 0, DccConsist.POSITION_LEAD);	// consist is valid if there's at least a lead & rear loco
+
+				if (_validConsist && _locoNum == REAR){
+					_validConsist = checkLocoConsist(r, 0, DccConsist.POSITION_TRAIL);
+				}
+
+				if (_validConsist && _locoNum == MID)
+					for (int index = 0; index < 8; index = index + 2)
+						checkLocoConsist(r, index, ConsistPosition.size());
+
+			} else {
+				if (_locoNum == LEAD)
+					_validConsist = addLocoConsist(r, 0, DccConsist.POSITION_LEAD);	// consist is valid if there's at least a lead & rear loco
+
+				if (_validConsist && _locoNum == REAR){
+					_validConsist = addLocoConsist(r, 0, DccConsist.POSITION_TRAIL);
+				}
+
+				if (_validConsist && _locoNum == MID)
+					for (int index = 0; index < 8; index = index + 2)
+						addLocoConsist(r, index, ConsistPosition.size());	
 			}
-			
-			if (valid && locoNum == MID)
-				for (int index = 0; index < 8; index = index + 2)
-					addLocoConsist(r, index, ConsistPosition.size());	
 
 			_busy--;
 			
@@ -362,13 +409,33 @@ public class NceConsist extends jmri.DccConsist implements jmri.jmrix.nce.NceLis
 		 */
 		private boolean addLocoConsist(NceReply r, int index, int position){
 			int address = getLocoAddrText(r, index);
-			boolean locoType = getLocoAddressType(r, index); // Long (true) or short (false) address?
+			boolean isLong = getLocoAddressType(r, index); // Long (true) or short (false) address?			
 			if (address != 0) {
 				log.debug("Add loco address "+address+" to consist "+_consistNum);
-				restore(new DccLocoAddress(address, locoType), true, position);	// we don't know the direction of the loco
+				restore(new DccLocoAddress(address, isLong), true, position);	// we don't know the direction of the loco
 				return true;
 			}
 			return false;
+		}
+		
+		private boolean checkLocoConsist(NceReply r, int index, int position){
+			int address = getLocoAddrText(r, index);
+			boolean isLong = getLocoAddressType(r, index); // Long (true) or short (false) address?
+			DccLocoAddress locoAddress = new DccLocoAddress(address, isLong);
+			if (contains(locoAddress)){
+				log.debug("Loco address "+locoAddress+" found match for consist "+_consistNum);
+			}
+			else if (address != 0) {
+				log.debug("New loco address "+locoAddress+" found for consist "+_consistNum);
+				restore(locoAddress, true, position);	// we don't know the direction of the loco
+			} else {
+				log.debug("Found loco address 0 for consist "+_consistNum+" index "+index+ " position "+position);
+				// remove loco by position in consist
+				locoAddress = getLocoAddressByPosition(position);
+				if (locoAddress != null)
+					remove(locoAddress);
+			}
+			return true;
 		}
 		
 		private int getLocoAddrText(NceReply r, int index) {

@@ -57,6 +57,14 @@ public class NceConsistManager extends jmri.jmrix.AbstractConsistManager impleme
         consistList.add(consist.getConsistAddress());
     }
     
+    public Consist getConsist(DccLocoAddress locoAddress){
+    	log.debug("Requesting NCE consist "+locoAddress);
+    	NceConsist consist = (NceConsist) super.getConsist(locoAddress);
+    	// Checking the CS memory each time a consist is requested creates lots of NCE messages!
+    	//consist.checkConsist();
+    	return consist;
+    }
+    
 	// remove the old Consist
 	public void delConsist(DccLocoAddress locoAddress){
 		NceConsist consist = (NceConsist) getConsist(locoAddress);
