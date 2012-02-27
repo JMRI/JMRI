@@ -59,6 +59,7 @@ station over the LocoNet&reg; using one of several types of &reg; adapter.</p>
   <li>DCS200 Command Station/Booster</li>
   <li><a href="Uhlenbrock.shtml">Intellibox: The Uhlenbrock Central
   Unit</a></li>
+  <li><a href="Uhlenbrock.shtml">Intellibox II or IB-Com</a></li>
   <li>DCC-Mux: DCC data combiner with built-in LocoNet&reg; command station </li>
 </ul>
 <p>For systems which do not provide a LocoNet&reg; command station, two additional 
@@ -204,6 +205,14 @@ called LocoNet&reg;-T and LocoNet&reg;-B. The LocoNet&reg;-T connection can driv
 devices, but does not provide the Rail-Synch signals that some LocoNet&reg; devices
 (particularly the BDL-16, -162 and -168) require. A LocoBuffer should be
 connected to the LocoNet&reg;-T connection. </p>
+
+<p><b>Uhlenbrock Intellibox II and IB-Com</b> - These systems currently do not support 
+programming, either via a programming track on on the main.<br>
+The Intellibox II and IB-Com has two 
+LocoNet&reg; connections, called LocoNet&reg;-T and LocoNet&reg;-B. The LocoNet&reg;-T 
+connection can drive more devices, but does not provide the Rail-Synch signals that 
+some LocoNet&reg; devices (particularly the BDL-16, -162 and -168) require. 
+A LocoBuffer should be connected to the LocoNet&reg;-T connection. </p>
 
 <p><strong>PR-1 not supported</strong> - Note that DecoderPro cannot directly
 program decoders via a PR1 programmer. JMRI supports decoder programming either

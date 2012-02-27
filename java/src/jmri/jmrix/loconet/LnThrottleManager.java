@@ -18,9 +18,8 @@ import jmri.jmrix.AbstractThrottleManager;
  * @version 		$Revision$
  */
 public class LnThrottleManager extends AbstractThrottleManager implements ThrottleManager, SlotListener {
-    private SlotManager slotManager;
-    private LnTrafficController tc;
-    //private HashMap throttleListeners;
+    protected SlotManager slotManager;
+    protected LnTrafficController tc;
 
     /**
      * Constructor. Gets a reference to the LocoNet SlotManager.
@@ -85,7 +84,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     /*
      * Local method for deciding short/long address
      */
-    static boolean isLongAddress(int num) {
+    protected static boolean isLongAddress(int num) {
         return (num>=128);
     }
 

@@ -21,10 +21,14 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
 
     public UhlenbrockAdapter() {
         super();
-
+        if (adaptermemo!=null){
+            adaptermemo.dispose();
+        }
+        adaptermemo = new UhlenbrockSystemConnectionMemo();
+        
         validSpeeds = new String[]{"19200", "38400", "57600", "115200"};
         validSpeedValues = new int[]{19200, 38400, 57600, 115200};
-        configureBaudRate("115200");
+        configureBaudRate("115200"); //Set the default baud rate
     }
 
     /**
@@ -82,7 +86,7 @@ public void configure() {
      * Set the second port option.
      */
     public void configureOption1(String value) { mOpt1 = value; }
-    protected String mOpt1 = null;
+
     public String getCurrentOption1Setting() {
         if (mOpt1 == null) return validOption1()[0];
         return mOpt1;
@@ -104,7 +108,7 @@ public void configure() {
      * Set the second port option.
      */
     public void configureOption2(String value) { mOpt2 = value; }
-    protected String mOpt2  = null;
+    
     public String getCurrentOption2Setting() {
         if (mOpt2 == null) return validOption2()[0];
         return mOpt2;
