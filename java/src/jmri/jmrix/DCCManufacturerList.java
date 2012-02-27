@@ -48,7 +48,7 @@ public class DCCManufacturerList {
     public static final String UHLEN = "Uhlenbrock";
     public static final String WANGROW = "Wangrow";
     public static final String ZIMO = "Zimo";
-    public static final String ZTC = "ZTC";    
+    public static final String ZTC = "ZTC";
     
     final static private String[] systemNames = new String[]{
           
@@ -119,7 +119,7 @@ public class DCCManufacturerList {
         if(System.equals(SPROG)) { return new jmri.jmrix.sprog.SprogConnectionTypeList().getAvailableProtocolClasses();  }
         if(System.equals(SRCP)) { return new jmri.jmrix.srcp.SRCPConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(TRACTRONICS)) { return new jmri.jmrix.secsi.SerialConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(UHLEN)) { return new jmri.jmrix.loconet.Intellibox.IbxConnectionTypeList().getAvailableProtocolClasses();   }
+        if(System.equals(UHLEN)) { return new jmri.jmrix.loconet.uhlenbrock.UhlenbrockConnectionTypeList().getAvailableProtocolClasses();   }
         if(System.equals(WANGROW)) { return new jmri.jmrix.wangrow.WangrowConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(ZIMO)) { return new jmri.jmrix.zimo.Mx1ConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(ZTC)) { return new jmri.jmrix.lenz.ztc640.ZTC640ConnectionTypeList().getAvailableProtocolClasses(); }
@@ -128,6 +128,7 @@ public class DCCManufacturerList {
         return new jmri.jmrix.internal.InternalConnectionTypeList().getAvailableProtocolClasses();
     }
     
+    //Some of these are now redundant if the connection has been converted to SystemConnectionMemo
     public static String getDCCSystemFromType(char a) {
         if (a=='I') return "Internal";
         else if (a=='A') return "Acela";
@@ -155,6 +156,7 @@ public class DCCManufacturerList {
         return "Unknown";
     }
     
+    //Some of these are now redundant if the connection has been converted to SystemConnectionMemo
     public static char getTypeFromDCCSystem(String a){
         if (a.equals("Internal")) return 'I';
         else if (a.equals("Acela")) return 'A';
