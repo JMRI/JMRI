@@ -110,8 +110,9 @@ public class Pool{
     		// note that the reserved track length can be both positive and negative, that's the reason
     		// for the second check that doesn't include the reserve, this prevent overloading.
     		if (t != track && (t.getUsedLength() + t.getReserved() + additionalLength) <= t.getLength()
-    				&& (t.getLength() - additionalLength) >= t.getMinimumLength()
-    				&& (t.getUsedLength() + additionalLength) <= t.getLength()){
+    				&& (t.getLength() - additionalLength) >= t.getMinimumLength()){
+    			// allow overloading.  Even tracks out of pools experience overloading.
+    				//&& (t.getUsedLength() + additionalLength) <= t.getLength()){
     			log.debug("Increasing track ("+track.getName()+") length ("+additionalLength+") decreasing ("+t.getName()+")");
     			t.setLength(t.getLength()-additionalLength);
     			track.setLength(track.getLength()+additionalLength);
