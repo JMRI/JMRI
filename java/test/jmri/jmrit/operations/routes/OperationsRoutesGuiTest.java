@@ -14,6 +14,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.extensions.jfcunit.eventdata.*;
+import junit.extensions.jfcunit.finder.AbstractButtonFinder;
+import junit.extensions.jfcunit.finder.DialogFinder;
 
 import java.io.File;
 import java.util.List;
@@ -123,6 +125,9 @@ public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
 		// test delete button
 		//f.deleteRouteButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteRouteButton ) );
+		// click "Yes" in the confirm popup
+		pressDialogButton(f, "Yes");
+		
 		Assert.assertEquals("should be 5 routes", 5, rManager.getRoutesByNameList().size());
 		
 		f.dispose();
@@ -179,6 +184,20 @@ public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
 		return suite;
 	}
 
+	@SuppressWarnings("unchecked")
+	private void pressDialogButton(JmriJFrame f, String buttonName){
+		//  (with JfcUnit, not pushing this off to another thread)			                                            
+		// Locate resulting dialog box
+        List<javax.swing.JDialog> dialogList = new DialogFinder(null).findAll(f);
+        javax.swing.JDialog d = dialogList.get(0);
+        // Find the button
+        AbstractButtonFinder finder = new AbstractButtonFinder(buttonName);
+        javax.swing.JButton button = ( javax.swing.JButton ) finder.find( d, 0);
+        Assert.assertNotNull("button not found", button);   
+        // Click button
+        getHelper().enterClickAndLeave( new MouseEventData( this, button ) );		
+	}
+	
 	// The minimal setup for log4J
 	@Override
     protected void tearDown() throws Exception { 
