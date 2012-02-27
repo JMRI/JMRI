@@ -19,7 +19,7 @@ import java.util.Hashtable;
  * Works in cooperation with the SlotManager, which actually
  * handles the communications.
  *
- * @see SlotManager
+ * @see jmri.jmrix.loconet.SlotManager
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @version 		$Revision: 19121 $
  */
