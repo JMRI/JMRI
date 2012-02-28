@@ -180,7 +180,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		for (int i =0; i<locationCheckBoxes.size(); i++){
 			String locationName = locationCheckBoxes.get(i).getName();
 			Location location = manager.getLocationByName(locationName);
-			if (location.getSwitchList() 
+			if (location.isSwitchListEnabled() 
 					&& (location.getStatus().equals(Location.MODIFIED) || !isChanged)){
 				if (!isCsv){
 					ts.buildSwitchList(location, isChanged);
@@ -211,7 +211,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		for (int i =0; i<locationCheckBoxes.size(); i++){
 			String locationName = locationCheckBoxes.get(i).getName();
 			Location l = manager.getLocationByName(locationName);
-			l.setSwitchList(enable);
+			l.setSwitchListEnabled(enable);
 		}
 	}
 	
@@ -250,7 +250,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			
 			JCheckBox checkBox = new JCheckBox();
 			locationCheckBoxes.add(checkBox);
-			checkBox.setSelected(l.getSwitchList());
+			checkBox.setSelected(l.isSwitchListEnabled());
 			checkBox.setText(name);
 			checkBox.setName(l.getName());
 			addLocationCheckBoxAction(checkBox);
@@ -284,7 +284,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		for (int i=0; i<locationCheckBoxes.size(); i++){
 			JCheckBox checkBox = locationCheckBoxes.get(i);
 			if (checkBox.getName().equals(l.getName())){
-				checkBox.setSelected(l.getSwitchList());
+				checkBox.setSelected(l.isSwitchListEnabled());
 				break;
 			}
 		}
@@ -302,7 +302,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		JCheckBox b =  (JCheckBox)ae.getSource();
 		log.debug("checkbox change "+ b.getName());
 		Location l = manager.getLocationByName(b.getName());
-		l.setSwitchList(b.isSelected());
+		l.setSwitchListEnabled(b.isSelected());
 	}
 
 	public void dispose() {

@@ -1262,7 +1262,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 1 Initial Length", 0, l1.getLength());
 		l1.setLocationOps(Location.STAGING);
 		l1.setTrainDirections(DIRECTION_ALL);
-		l1.setSwitchList(true);
+		l1.setSwitchListEnabled(true);
 		lmanager.register(l1);
 
 		Track l1s1 = new Track("1s1", "North End 1", Track.STAGING, l1);
@@ -1309,7 +1309,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 2 Name", "North Industries", l2.getName());
 		l2.setLocationOps(Location.NORMAL);
 		l2.setTrainDirections(DIRECTION_ALL);
-		l2.setSwitchList(true);
+		l2.setSwitchListEnabled(true);
 		lmanager.register(l2);
 				
 		Track l2s1 = new Track("2s1", "NI Yard", Track.YARD, l2);
@@ -1329,7 +1329,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 3 Initial Length", 0, l3.getLength());
 		l3.setLocationOps(Location.STAGING);
 		l3.setTrainDirections(DIRECTION_ALL);
-		l3.setSwitchList(true);
+		l3.setSwitchListEnabled(true);
 		lmanager.register(l3);
 
 		Track l3s1 = new Track("3s1", "South End 1", Track.STAGING, l3);

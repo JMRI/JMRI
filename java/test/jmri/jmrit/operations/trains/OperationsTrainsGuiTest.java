@@ -390,7 +390,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		// default switch list will print all locations
 		for (int i=0; i<locations.size(); i++){
 			Location l = lmanager.getLocationById(locations.get(i));
-			Assert.assertTrue("print switchlist 1", l.getSwitchList());
+			Assert.assertTrue("print switchlist 1", l.isSwitchListEnabled());
 		}
 		// now clear all locations
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.clearButton ) );
@@ -398,7 +398,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		jmri.util.JUnitUtil.releaseThread(f, 1);	// compensate for race between GUI and test thread
 		for (int i=0; i<locations.size(); i++){
 			Location l = lmanager.getLocationById(locations.get(i));
-			Assert.assertFalse("print switchlist 2", l.getSwitchList());
+			Assert.assertFalse("print switchlist 2", l.isSwitchListEnabled());
 		}
 		// now set all locations
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.setButton ) );
@@ -406,7 +406,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		jmri.util.JUnitUtil.releaseThread(f, 1);	// compensate for race between GUI and test thread
 		for (int i=0; i<locations.size(); i++){
 			Location l = lmanager.getLocationById(locations.get(i));
-			Assert.assertTrue("print switchlist 3", l.getSwitchList());
+			Assert.assertTrue("print switchlist 3", l.isSwitchListEnabled());
 		}
 		
 		f.dispose();

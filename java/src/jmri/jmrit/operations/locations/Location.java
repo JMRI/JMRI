@@ -206,7 +206,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * Used for preview and printing a manifest for a single location
 	 * @param switchList
 	 */
-	public void setSwitchList(boolean switchList) {
+	public void setSwitchListEnabled(boolean switchList) {
 		boolean old = _switchList;
 		_switchList = switchList;
 		if (old != switchList)
@@ -217,7 +217,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * Used to determine if switch list is needed for this location
 	 * @return true if switch list needed
 	 */
-	public boolean getSwitchList() {
+	public boolean isSwitchListEnabled() {
 		return _switchList;
 	}
 	
@@ -799,7 +799,7 @@ public class Location implements java.beans.PropertyChangeListener {
         e.setAttribute("name", getName());
         e.setAttribute("ops", Integer.toString(getLocationOps()));
         e.setAttribute("dir", Integer.toString(getTrainDirections()));
-        e.setAttribute("switchList", getSwitchList()?"true":"false");
+        e.setAttribute("switchList", isSwitchListEnabled()?"true":"false");
         if (!getDefaultPrinterName().equals("")){
         	e.setAttribute("printerName", getDefaultPrinterName());
         }

@@ -795,11 +795,11 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location id", "Test id", l.getId());
 		Assert.assertEquals("Location Name", "Test Name", l.getName());
 
-		l.setSwitchList(true);
-		Assert.assertEquals("Location Switch List True", true, l.getSwitchList());
+		l.setSwitchListEnabled(true);
+		Assert.assertEquals("Location Switch List True", true, l.isSwitchListEnabled());
 
-		l.setSwitchList(false);
-		Assert.assertEquals("Location Switch List True", false, l.getSwitchList());
+		l.setSwitchListEnabled(false);
+		Assert.assertEquals("Location Switch List True", false, l.isSwitchListEnabled());
 	}
 
 	// test typename support
@@ -1359,7 +1359,7 @@ public class OperationsLocationsTest extends TestCase {
 
 		manager.getLocationByName("Test Location 1").setComment("Test Location 1 Comment");
 		manager.getLocationByName("Test Location 1").setLocationOps(Location.NORMAL);
-		manager.getLocationByName("Test Location 1").setSwitchList(true);
+		manager.getLocationByName("Test Location 1").setSwitchListEnabled(true);
 		manager.getLocationByName("Test Location 1").setTrainDirections(Location.EAST);
 		manager.getLocationByName("Test Location 1").addTypeName("Baggage");
 		manager.getLocationByName("Test Location 1").addTypeName("BoxCar");
@@ -1369,7 +1369,7 @@ public class OperationsLocationsTest extends TestCase {
 		manager.getLocationByName("Test Location 1").addTypeName("Hopper");
 		manager.getLocationByName("Test Location 2").setComment("Test Location 2 Comment");
 		manager.getLocationByName("Test Location 2").setLocationOps(Location.NORMAL);
-		manager.getLocationByName("Test Location 2").setSwitchList(false);
+		manager.getLocationByName("Test Location 2").setSwitchListEnabled(false);
 		manager.getLocationByName("Test Location 2").setTrainDirections(Location.WEST);
 		manager.getLocationByName("Test Location 2").addTypeName("Baggage");
 		manager.getLocationByName("Test Location 2").addTypeName("Boxcar");
@@ -1380,7 +1380,7 @@ public class OperationsLocationsTest extends TestCase {
 		manager.getLocationByName("Test Location 2").addTypeName("Track 2 Type");
 		manager.getLocationByName("Test Location 3").setComment("Test Location 3 Comment");
 		manager.getLocationByName("Test Location 3").setLocationOps(Location.STAGING);
-		manager.getLocationByName("Test Location 3").setSwitchList(true);
+		manager.getLocationByName("Test Location 3").setSwitchListEnabled(true);
 		manager.getLocationByName("Test Location 3").setTrainDirections(Location.EAST+Location.WEST+Location.NORTH);
 		manager.getLocationByName("Test Location 3").addTypeName("Baggage");
 		manager.getLocationByName("Test Location 3").addTypeName("boxCar");
@@ -1493,7 +1493,7 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 1 operations", Location.NORMAL, loc.getLocationOps());
 				Assert.assertEquals("Location 1 direction", Location.EAST, loc.getTrainDirections());
 				Assert.assertEquals("Location 1 comment", "Test Location 1 Comment", loc.getComment());
-				Assert.assertEquals("Location 1 switchList", true, loc.getSwitchList());
+				Assert.assertEquals("Location 1 switchList", true, loc.isSwitchListEnabled());
 				Assert.assertEquals("Location 1 car type", true, loc.acceptsTypeName("BoxCar"));
 				Assert.assertEquals("Location 1 car type", false, loc.acceptsTypeName("boxCar"));
 				Assert.assertEquals("Location 1 car type", true, loc.acceptsTypeName("Boxcar"));
@@ -1511,7 +1511,7 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 2 operations", Location.NORMAL, loc.getLocationOps());
 				Assert.assertEquals("Location 2 direction", Location.WEST, loc.getTrainDirections());
 				Assert.assertEquals("Location 2 comment", "Test Location 2 Comment", loc.getComment());
-				Assert.assertEquals("Location 2 switchList", false, loc.getSwitchList());
+				Assert.assertEquals("Location 2 switchList", false, loc.isSwitchListEnabled());
 				Assert.assertEquals("Location 2 car type", true, loc.acceptsTypeName("Boxcar"));
 				Assert.assertEquals("Location 2 car type", false, loc.acceptsTypeName("boxCar"));
 				Assert.assertEquals("Location 2 car type", false, loc.acceptsTypeName("BoxCar"));
@@ -1554,7 +1554,7 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 3 operations", Location.STAGING, loc.getLocationOps());
 				Assert.assertEquals("Location 3 direction", Location.EAST+Location.WEST+Location.NORTH, loc.getTrainDirections());
 				Assert.assertEquals("Location 3 comment", "Test Location 3 Comment", loc.getComment());
-				Assert.assertEquals("Location 3 switchList", true, loc.getSwitchList());
+				Assert.assertEquals("Location 3 switchList", true, loc.isSwitchListEnabled());
 				Assert.assertEquals("Location 3 car type", true, loc.acceptsTypeName("boxCar"));
 				Assert.assertEquals("Location 3 car type", false, loc.acceptsTypeName("BoxCar"));
 				Assert.assertEquals("Location 3 car type", true, loc.acceptsTypeName("Boxcar"));
