@@ -32,6 +32,7 @@
 <!ATTLIST location dir				CDATA #IMPLIED> 
 <!ATTLIST location carTypes			CDATA #IMPLIED> 
 <!ATTLIST location switchList		(true | false) "false">
+<!ATTLIST location switchListState	CDATA #IMPLIED>
 <!ATTLIST location printerName		CDATA #IMPLIED>
 <!ATTLIST location eastTrainIconX	CDATA #IMPLIED>
 <!ATTLIST location eastTrainIconY	CDATA #IMPLIED>

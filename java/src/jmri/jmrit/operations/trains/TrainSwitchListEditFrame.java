@@ -33,7 +33,7 @@ import java.beans.PropertyChangeEvent;
 /**
  * Frame for user selection of switch lists
  * 
- * @author Dan Boudreau Copyright (C) 2008
+ * @author Dan Boudreau Copyright (C) 2008, 2012
  * @version $Revision$
  */
 
@@ -64,6 +64,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	JButton changeButton = new JButton(rb.getString("PrintChanges"));
 	JButton csvGenerateButton = new JButton(rb.getString("CsvGenerate"));
 	JButton csvChangeButton = new JButton(rb.getString("CsvChanges"));
+	JButton updateButton = new JButton(rb.getString("Update"));
 	JButton saveButton = new JButton(rb.getString("Save"));
 
 	// text field
@@ -104,6 +105,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     	addItem(controlpanel, changeButton, 2, 2);
     	
     	// row 4
+    	if (!Setup.isSwitchListRealTime()){
+    		addItem(controlpanel, updateButton, 0, 3);
+    	}
     	if (Setup.isGenerateCsvSwitchListEnabled()){
     		addItem(controlpanel, csvGenerateButton, 1, 3);
     		addItem(controlpanel, csvChangeButton, 2, 3);
@@ -119,6 +123,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		addButtonAction(changeButton);
 		addButtonAction(csvGenerateButton);
 		addButtonAction(csvChangeButton);
+		addButtonAction(updateButton);
 		addButtonAction(saveButton);
 		
         // add help menu to window
@@ -138,24 +143,27 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			selectCheckboxes(true);
 		}
 		if (ae.getSource() == previewButton){
-			buildSwitchList(true, false, false);
+			buildSwitchList(true, false, false, false);
 		}
 		if (ae.getSource() == printButton){
-			buildSwitchList(false, false, false);
+			buildSwitchList(false, false, false, false);
 		}
 		if (ae.getSource() == changeButton){
-			buildSwitchList(false, true, false);
+			buildSwitchList(false, true, false, false);
 		}
 		if (ae.getSource() == csvGenerateButton){
-			buildSwitchList(false, false, true);
+			buildSwitchList(false, false, true, false);
 		}
 		if (ae.getSource() == csvChangeButton){
-			buildSwitchList(false, true, true);
+			buildSwitchList(false, true, true, false);
+		}
+		if (ae.getSource() == updateButton){
+			buildSwitchList(true, true, false, true);
 		}
 		if (ae.getSource() == saveButton){
 			save();
-			// save location file
-			LocationManagerXml.instance().writeOperationsFile();
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
 		}
 	}
 	
@@ -172,21 +180,26 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 				log.debug("Location "+l.getName()+" has selected printer "+printerName);
 				l.setDefaultPrinterName(printerName);
 			}
-		}		
+		}
+		// save location file
+		LocationManagerXml.instance().writeOperationsFile();
 	}
 	
-	private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv){
+	private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv, boolean isUpdate){
 		TrainSwitchLists ts = new TrainSwitchLists();
 		for (int i =0; i<locationCheckBoxes.size(); i++){
 			String locationName = locationCheckBoxes.get(i).getName();
 			Location location = manager.getLocationByName(locationName);
 			if (location.isSwitchListEnabled() 
-					&& (location.getStatus().equals(Location.MODIFIED) || !isChanged)){
+					&& (location.getStatus().equals(Location.MODIFIED) || !isChanged || isUpdate)){
 				if (!isCsv){
 					ts.buildSwitchList(location, isChanged);
-					ts.printSwitchList(location, isPreview);
-					if (!isPreview)
+					if (!isUpdate)
+						ts.printSwitchList(location, isPreview);
+					if (!isPreview){
 						location.setStatus(Location.PRINTED);
+						location.setSwitchListState(Location.SW_PRINTED);
+					}
 				}
 				if (isCsv && Setup.isGenerateCsvSwitchListEnabled()){
 					TrainCsvSwitchLists tCSVs = new TrainCsvSwitchLists();

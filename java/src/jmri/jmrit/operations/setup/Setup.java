@@ -206,6 +206,7 @@ public class Setup {
 	private static boolean tab = false;
 	private static boolean manifestEditorEnabled = false;	// when true use text editor to view build report
 	private static boolean switchListSameManifest = true;	// when true switch list format is the same as the manifest
+	private static boolean switchListRealTime = true;			// when true switch list only show work for built trains
 	private static boolean buildReportEditorEnabled = false;	// when true use text editor to view build report
 	private static boolean enableTrainIconXY = true;
 	private static boolean appendTrainIcon = false;		//when true, append engine number to train name
@@ -573,7 +574,15 @@ public class Setup {
 	
 	public static boolean isSwitchListFormatSameAsManifest(){
 		return switchListSameManifest;
-	}	
+	}
+	
+	public static void setSwitchListRealTime(boolean b){
+		switchListRealTime = b;
+	}
+	
+	public static boolean isSwitchListRealTime(){
+		return switchListRealTime;
+	}
 
 	public static void setPrintLocationCommentsEnabled(boolean enable){
 		printLocationComments = enable;
@@ -1360,6 +1369,7 @@ public class Setup {
        	
        	e.addContent(values = new Element("switchList"));
        	values.setAttribute("sameAsManifest", isSwitchListFormatSameAsManifest()?"true":"false");
+       	values.setAttribute("realTime", isSwitchListRealTime()?"true":"false");
        	
       	e.addContent(values = new Element("switchListPickupCarFormat"));
       	values.setAttribute("prefix", getSwitchListPickupCarPrefix());
@@ -1694,6 +1704,11 @@ public class Setup {
         		String b = a.getValue();
         		if (log.isDebugEnabled()) log.debug("sameAsManifest: "+b);
         		setSwitchListFormatSameAsManifest(b.equals("true"));
+        	}
+        	if ((a = operations.getChild("switchList").getAttribute("realTime"))!= null){
+        		String b = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("realTime: "+b);
+        		setSwitchListRealTime(b.equals("true"));
         	}
         }
         if (operations.getChild("switchListPickupCarFormat") != null){

@@ -73,6 +73,7 @@ public class PrintOptionFrame extends OperationsFrame{
     // check boxes
     JCheckBox tabFormatCheckBox = new JCheckBox(rb.getString("TabFormat"));
     JCheckBox formatSwitchListCheckBox = new JCheckBox(rb.getString("SameAsManifest"));
+    JCheckBox switchListRealTimeCheckBox = new JCheckBox(rb.getString("SwitchListRealTime"));
     JCheckBox editManifestCheckBox = new JCheckBox(rb.getString("UseTextEditor"));
 	JCheckBox buildReportCheckBox = new JCheckBox(rb.getString("BuildReportEdit"));
 	JCheckBox printLocCommentsCheckBox = new JCheckBox(rb.getString("PrintLocationComments"));
@@ -128,6 +129,7 @@ public class PrintOptionFrame extends OperationsFrame{
 	
 	// switch list panels
 	JPanel pSwitchListOrientation = new JPanel();
+	JPanel pSwitchListOptions = new JPanel();
 	JPanel pSwPickup = new JPanel();
 	JPanel pSwDrop = new JPanel();
 	JPanel pSwLocal = new JPanel();
@@ -293,16 +295,28 @@ public class PrintOptionFrame extends OperationsFrame{
 		pLocal.add(addLocalComboboxButton);
 		pLocal.add(deleteLocalComboboxButton);
 
-		// switch list car pickup message format
-		pSwitchListOrientation = new JPanel();
+		// Optional Switch List Panel
+		JPanel pSl = new JPanel();
+		pSl.setLayout(new BoxLayout(pSl, BoxLayout.X_AXIS));
+		
 		pSwitchListOrientation.setLayout(new GridBagLayout());
 		pSwitchListOrientation.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListOrientation")));		
 		addItem(pSwitchListOrientation, switchListOrientationComboBox, 0, 0);
 		addItem(pSwitchListOrientation, new JLabel(" "), 1, 0);	// pad
 		addItem(pSwitchListOrientation, new JLabel(" "), 2, 0);	// pad
 		addItem(pSwitchListOrientation, new JLabel(" "), 3, 0);	// pad
-		//pSwitchListOrientation.add(switchListOrientationComboBox);
 		
+		pSwitchListOptions.setLayout(new GridBagLayout());
+		pSwitchListOptions.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListOptions")));		
+		addItem(pSwitchListOptions, switchListRealTimeCheckBox, 0, 0);
+		addItem(pSwitchListOptions, new JLabel(" "), 1, 0);	// pad
+		addItem(pSwitchListOptions, new JLabel(" "), 2, 0);	// pad
+		addItem(pSwitchListOptions, new JLabel(" "), 3, 0);	// pad
+		
+		pSl.add(pSwitchListOrientation);
+		pSl.add(pSwitchListOptions);
+		
+		// switch list car pickup message format
 		pSwPickup.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListPickupCar")));
 		pSwPickup.add(switchListPickupCarPrefix);
 		switchListPickupCarPrefix.setText(Setup.getSwitchListPickupCarPrefix());
@@ -374,7 +388,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		pManifest.add(pPickup);
 		pManifest.add(pDrop);
 		pManifest.add(pLocal);
-		pManifest.add(pSwitchListOrientation);
+		pManifest.add(pSl);
 		pManifest.add(pSwPickup);
 		pManifest.add(pSwDrop);
 		pManifest.add(pSwLocal);
@@ -442,6 +456,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		
 		tabFormatCheckBox.setSelected(Setup.isTabEnabled());
 		formatSwitchListCheckBox.setSelected(Setup.isSwitchListFormatSameAsManifest());
+		switchListRealTimeCheckBox.setSelected(Setup.isSwitchListRealTime());
 		printLocCommentsCheckBox.setSelected(Setup.isPrintLocationCommentsEnabled());
 		printRouteCommentsCheckBox.setSelected(Setup.isPrintRouteCommentsEnabled());
 		printLoadsEmptiesCheckBox.setSelected(Setup.isPrintLoadsAndEmptiesEnabled());
@@ -653,6 +668,7 @@ public class PrintOptionFrame extends OperationsFrame{
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
 			Setup.setTabEnabled(tabFormatCheckBox.isSelected());
 			Setup.setSwitchListFormatSameAsManifest(formatSwitchListCheckBox.isSelected());
+			Setup.setSwitchListRealTime(switchListRealTimeCheckBox.isSelected());
 			Setup.setPrintLocationCommentsEnabled(printLocCommentsCheckBox.isSelected());
 			Setup.setPrintRouteCommentsEnabled(printRouteCommentsCheckBox.isSelected());
 			Setup.setPrintLoadsAndEmptiesEnabled(printLoadsEmptiesCheckBox.isSelected());

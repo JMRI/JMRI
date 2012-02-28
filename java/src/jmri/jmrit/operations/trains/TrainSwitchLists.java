@@ -30,27 +30,38 @@ public class TrainSwitchLists extends TrainCommon {
 	
 	TrainManager manager = TrainManager.instance();
 		
-	// builds a switch list for a location
+	/**
+	 * builds a switch list for a location
+	 * @param location The Location needing a switch list
+	 * @param newTrainsOnly When true, ignore trains that have already been added to the switch lists
+	 */
 	public void buildSwitchList(Location location, boolean newTrainsOnly){
 		// load message formats
 		pickupUtilityMessageFormat = Setup.getSwitchListPickupUtilityCarMessageFormat();
 		setoutUtilityMessageFormat = Setup.getSwitchListSetoutUtilityCarMessageFormat();
 		localUtilityMessageFormat = Setup.getSwitchListLocalUtilityCarMessageFormat();
-		
-		// create manifest file
-		File file = TrainManagerXml.instance().createSwitchListFile(
-				location.getName());
-		PrintWriter fileOut;
 
+		// create manifest file
+		File file = TrainManagerXml.instance().createSwitchListFile(location.getName());
+		
+		// Append switch list data if not operating in real time
+		boolean append = !Setup.isSwitchListRealTime() && location.getSwitchListState() == Location.SW_APPEND;
+		if (append)
+			newTrainsOnly = true;
+		if (!Setup.isSwitchListRealTime() && location.getSwitchListState() != Location.SW_APPEND){
+			location.setSwitchListState(Location.SW_APPEND);
+		}
+		
+		PrintWriter fileOut;
 		try {
-			fileOut = new PrintWriter(new BufferedWriter(new FileWriter(file)),
-					true);
+			fileOut = new PrintWriter(new BufferedWriter(new FileWriter(file, append)), true);
 		} catch (IOException e) {
 			log.error("can not open switchlist file");
 			return;
 		}
 		// build header
-		addLine(fileOut, Setup.getRailroadName());
+		if (!append)
+			addLine(fileOut, Setup.getRailroadName());
 		newLine(fileOut);
 		addLine(fileOut, MessageFormat.format(rb.getString("SwitchListFor"), new Object[]{splitString(location.getName())}));
 		String valid = MessageFormat.format(rb.getString("Valid"), new Object[]{getDate()});

@@ -13,6 +13,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.PhysicalLocation;
 
 import org.jdom.Attribute;
@@ -34,14 +35,15 @@ public class Location implements java.beans.PropertyChangeListener {
 	protected int _numberRS = 0;
 	protected int _pickupRS = 0;
 	protected int _dropRS = 0;
-	protected int _locationOps = NORMAL;	//type of operations at this location
+	protected int _locationOps = NORMAL;			//type of operations at this location
 	protected int _trainDir = EAST+WEST+NORTH+SOUTH; //train direction served by this location
-	protected int _length = 0;				//length of all tracks at this location
-	protected int _usedLength = 0;			//length of track filled by cars and engines 
+	protected int _length = 0;						//length of all tracks at this location
+	protected int _usedLength = 0;					//length of track filled by cars and engines 
 	protected String _comment = "";
-	protected boolean _switchList = true;	//when true print switchlist for this location
-	protected String _defaultPrinter = "";	//the default printer name when printing a switchlist
-	protected String _status = UNKNOWN;		//print switch list status
+	protected boolean _switchList = true;			//when true print switchlist for this location
+	protected String _defaultPrinter = "";			//the default printer name when printing a switchlist
+	protected String _status = UNKNOWN;				//print switch list status
+	protected int _switchListState = SW_CREATE;		//switch list state, saved between sessions
 	protected Point _trainIconEast = new Point();	//coordinates of east bound train icons
 	protected Point _trainIconWest = new Point();
 	protected Point _trainIconNorth = new Point();
@@ -66,6 +68,11 @@ public class Location implements java.beans.PropertyChangeListener {
 	public static final String PRINTED = rb.getString("Printed");
 	public static final String CSV_GENERATED = rb.getString("CsvGenerated");
 	public static final String MODIFIED = rb.getString("Modified");
+	
+	// Switch list states
+	public static final int SW_CREATE = 0;		// create new switch list
+	public static final int SW_APPEND = 1;		// append train into to switch list
+	public static final int SW_PRINTED = 2;		// switch list printed
 	
 	// For property change
 	public static final String TRACK_LISTLENGTH_CHANGED_PROPERTY = "trackListLength";
@@ -254,6 +261,17 @@ public class Location implements java.beans.PropertyChangeListener {
 	
 	public String getStatus(){
 		return _status;
+	}
+	
+	public void setSwitchListState(int state){
+		int old = _switchListState;
+		_switchListState = state;
+		if (old != state)
+			firePropertyChange("SwitchListState", old, state);
+	}
+	
+	public int getSwitchListState(){
+		return _switchListState;
 	}
 	
 	/**
@@ -745,6 +763,7 @@ public class Location implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute("ops")) != null )  _locationOps = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("dir")) != null )  _trainDir = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("switchList")) != null )  _switchList = (a.getValue().equals("true"));
+        if ((a = e.getAttribute("switchListState")) != null )  _switchListState = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("printerName")) != null )  _defaultPrinter = a.getValue();
         // load train icon coordinates
         Attribute x;
@@ -800,6 +819,8 @@ public class Location implements java.beans.PropertyChangeListener {
         e.setAttribute("ops", Integer.toString(getLocationOps()));
         e.setAttribute("dir", Integer.toString(getTrainDirections()));
         e.setAttribute("switchList", isSwitchListEnabled()?"true":"false");
+        if (!Setup.isSwitchListRealTime())
+        	e.setAttribute("switchListState", Integer.toString(getSwitchListState()));
         if (!getDefaultPrinterName().equals("")){
         	e.setAttribute("printerName", getDefaultPrinterName());
         }
