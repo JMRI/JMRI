@@ -900,7 +900,13 @@ public class AddSignalMastPanel extends JPanel {
         if(connList!=null){
             for(int x = 0; x < connList.size(); x++){
                 jmri.CommandStation station = (jmri.CommandStation) connList.get(x);
-                systemPrefixBox.addItem(station.getUserName());
+                if(rb.getString("LNCPMast").equals(signalMastDriver.getSelectedItem())){
+                    if(station instanceof jmri.jmrix.loconet.SlotManager){
+                        systemPrefixBox.addItem(station.getUserName());
+                    }
+                } else {
+                    systemPrefixBox.addItem(station.getUserName());
+                }
             }
         } else {
             systemPrefixBox.addItem("None");
