@@ -29,14 +29,14 @@ There are three different types of Entry/Exit that can be configured.
     <li>Turnout Only</li>
     <li>Turnout and SignalMast Logic</li>
     <li>Full Interlocking</li>
-<ul>
+</ul>
 
 <p>
 <b>Turnout Only</b> With turnout only, the NX Pair will only set the turnouts to the correct state for
 that route.  If a block is already showing as occupied or reserved within that route, and an alternative 
 one is available then the alternative route will be set, otherwise the route will not be set.
 <p>
-<b>Turnout and SignalMast Logic<b> This option includes what is covered by "Turnout Only" 
+<b>Turnout and SignalMast Logic</b> This option includes what is covered by "Turnout Only" 
 and will also generate the SignalMast Logic for that route.  The logic will include the turnout states 
 and the blocks that are within that route.  For this to work, SignalMasts must also be placed at the 
 same boundary points as the sensors working in the same direction.  The SignalMast logic will remain 
@@ -68,12 +68,11 @@ The auto discovery will only discover fully valid pairs for sensors that are eff
  blocks that are in the same direction.  This also means that to set the route through you must first 
  set the "From" sensor then set the "To" sensor, if you want to be able to set the route by selecting 
  either sensor first, then you will need to check the "Both Way" option.  If the end point is assigned 
- an end Bumper then this will not be possible.
+ to an end Bumper then this will not be possible.
 <p>
 It is possible to manually add Entry Exit pairs for sensors that are in effect protecting blocks that 
 work in opposite directions.  Here you will need to use the drop down options to select the start and 
 finish locations against a layout panel.  Again you can select this pair to be "Both Way" working.
-<!--#include virtual="/Footer" -->
 <p>
 <b>Block Boundaries</b>
 Sensors, like signals(either heads or masts), should be added at block boundaries. 
@@ -88,5 +87,7 @@ For turnouts you need to right click on the circle at the centre, again this wil
 the same options to set, if there are block boundaries present.  
 On a turnout you can only assign items that will protect the block the turnout is in, 
 you can not protect/assign an item on the way out of a turnout so to speak. The same with level-crossings.
+
+<!--#include virtual="/Footer" -->
 </body>
 </html>
