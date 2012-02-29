@@ -68,6 +68,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	public static final String PRINTED = rb.getString("Printed");
 	public static final String CSV_GENERATED = rb.getString("CsvGenerated");
 	public static final String MODIFIED = rb.getString("Modified");
+	public static final String UPDATED = rb.getString("Updated");
 	
 	// Switch list states
 	public static final int SW_CREATE = 0;		// create new switch list
@@ -244,7 +245,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * 
 	 */
 	public void setStatus(){
-		if (getStatus().equals(PRINTED) || getStatus().equals(CSV_GENERATED))
+		if (getStatus().equals(PRINTED) || getStatus().equals(CSV_GENERATED) || !Setup.isSwitchListRealTime())
 			setStatus(MODIFIED);
 	}
 	
@@ -763,7 +764,11 @@ public class Location implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute("ops")) != null )  _locationOps = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("dir")) != null )  _trainDir = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("switchList")) != null )  _switchList = (a.getValue().equals("true"));
-        if ((a = e.getAttribute("switchListState")) != null )  _switchListState = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute("switchListState")) != null ) {
+        	_switchListState = Integer.parseInt(a.getValue());
+        	if (getSwitchListState() == SW_PRINTED)
+        		setStatus(PRINTED);
+        }
         if ((a = e.getAttribute("printerName")) != null )  _defaultPrinter = a.getValue();
         // load train icon coordinates
         Attribute x;

@@ -143,10 +143,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			selectCheckboxes(true);
 		}
 		if (ae.getSource() == previewButton){
-			buildSwitchList(true, false, false, false);
+			buildSwitchList(true, !Setup.isSwitchListRealTime(), false, false);
 		}
 		if (ae.getSource() == printButton){
-			buildSwitchList(false, false, false, false);
+			buildSwitchList(false, !Setup.isSwitchListRealTime(), false, false);
 		}
 		if (ae.getSource() == changeButton){
 			buildSwitchList(false, true, false, false);
@@ -191,20 +191,24 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			String locationName = locationCheckBoxes.get(i).getName();
 			Location location = manager.getLocationByName(locationName);
 			if (location.isSwitchListEnabled() 
-					&& (location.getStatus().equals(Location.MODIFIED) || !isChanged || isUpdate)){
-				if (!isCsv){
+					&& (location.getStatus().equals(Location.MODIFIED) || !isChanged)){
+				if (!isCsv)
 					ts.buildSwitchList(location, isChanged);
-					if (!isUpdate)
-						ts.printSwitchList(location, isPreview);
-					if (!isPreview){
-						location.setStatus(Location.PRINTED);
-						location.setSwitchListState(Location.SW_PRINTED);
-					}
-				}
 				if (isCsv && Setup.isGenerateCsvSwitchListEnabled()){
 					TrainCsvSwitchLists tCSVs = new TrainCsvSwitchLists();
 					tCSVs.buildSwitchList(location, isChanged);
 					location.setStatus(Location.CSV_GENERATED);
+				}
+			}
+			if (location.isSwitchListEnabled() && !isCsv){
+				// change status to updated if not running in real time mode for switch lists
+				if (location.getStatus().equals(Location.MODIFIED) && !Setup.isSwitchListRealTime())
+					location.setStatus(Location.UPDATED);
+				if (!isUpdate)
+					ts.printSwitchList(location, isPreview);
+				if (!isPreview){
+					location.setStatus(Location.PRINTED);
+					location.setSwitchListState(Location.SW_PRINTED);
 				}
 			}
 		}
