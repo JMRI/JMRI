@@ -211,7 +211,7 @@ then
 fi
 
 # locate alternate serial ports
-ALTPORTS=`(echo "$JMRI_SERIAL_PORTS"; ls -fm /dev/serial/by-id/* /dev/ttyUSB* /dev/ttyACM* 2>/dev/null ) | tr -d " \n" | tr "," ":"`
+ALTPORTS=`(echo "$JMRI_SERIAL_PORTS"; ls -fm /dev/ttyUSB* /dev/ttyACM* 2>/dev/null ) | tr -d " \n" | tr "," ":"`
 if [ "${ALTPORTS}" ]
 then
   ALTPORTS=-Dgnu.io.rxtx.SerialPorts=${ALTPORTS}
