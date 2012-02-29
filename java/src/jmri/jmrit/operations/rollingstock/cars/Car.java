@@ -614,7 +614,6 @@ public class Car extends RollingStock {
 				ScheduleItem si = sch.getItemById(getScheduleId());
 				setScheduleId("");
 				if (si != null){
-					si.setHits(si.getHits()+1);	// bump hit count for this schedule item
 					loadNext(si);
 					return;
 				}
@@ -658,6 +657,8 @@ public class Car extends RollingStock {
 		setNextDestTrack(scheduleItem.getDestinationTrack());
 		// set the wait count
 		setNextWait(scheduleItem.getWait());
+		// bump hit count for this schedule item
+		scheduleItem.setHits(scheduleItem.getHits()+1);	
 
 		log.debug("Car ("+toString()+") type ("+getType()+") next load ("+getNextLoad()+") next destination ("+getNextDestinationName()+", "+getNextDestTrackName()+") next wait: "+getWait());
 		// set all cars in kernel to the next load
