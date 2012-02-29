@@ -377,8 +377,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     		log.error("Schedule count must be greater than 0");
     		return;
     	}
-    	if (count > 10){
-    		log.error("Schedule count must be less than 11");
+    	if (count > 100){
+    		log.error("Schedule count must be less than 101");
     		return;
     	}
     	si.setCount(count);
