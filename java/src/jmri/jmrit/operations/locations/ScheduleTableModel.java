@@ -378,8 +378,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     		return;
     	}
     	if (count > 100){
-    		log.error("Schedule count must be less than 101");
-    		return;
+    		log.warn("Schedule count must be 100 or less");
+    		count = 100;
     	}
     	si.setCount(count);
     }
@@ -398,8 +398,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     		return;
     	}
     	if (wait > 10){
-    		log.error("Schedule wait must be less than 11");
-    		return;
+    		log.warn("Schedule wait must be 10 or less");
+    		wait = 10;
     	}
     	si.setWait(wait);
     }

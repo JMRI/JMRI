@@ -887,7 +887,7 @@ See Trains-&gt;Tools-&gt;<A HREF="#Timetable">Timetable</A> to select
 the train timetable for your session.</P>
 
 <P> If you wanted more than one car type to be delivered consecutively,
-increase the count to the number that you wish. The maximum count is 10
+increase the count to the number that you wish. The maximum count is 100
 and the minimum is 1. In the schedule shown above, the schedule is requesting two
 SP Boxcars in a row, then a TankOil car with with a load of "L(Oil)".  After
 the TankOil car is delivered the schedule starts from the beginning, again requesting
