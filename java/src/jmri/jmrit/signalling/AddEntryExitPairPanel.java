@@ -168,7 +168,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             try {
                 EntryExitPairs entryexit = EntryExitPairs.instance();
                 entryexit.addPropertyChangeListener(propertyNXListener);
-                entryexit.automaticallyDiscoverEntryExitPairs(panels.get(selectPanel.getSelectedIndex()));
+                entryexit.automaticallyDiscoverEntryExitPairs(panels.get(selectPanel.getSelectedIndex()), typeBox.getSelectedIndex());
             } catch (jmri.JmriException e){
                 log.info("Exception here");
                 EntryExitPairs.instance().removePropertyChangeListener(propertyNXListener);
@@ -343,24 +343,6 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
     TableModel nxModel;
     
     EntryExitPairs nxPairs = EntryExitPairs.instance();
-    
-    /*void signalMastCombo(JComboBox box, SignalMast select){
-        jmri.SignalMastManager smm = jmri.InstanceManager.signalMastManagerInstance();
-        box.removeAllItems();
-        List<String> nameList = smm.getSystemNameList();
-        String[] displayList = new String[nameList.size()];
-        for(int i = 0; i<nameList.size(); i++){
-            NamedBean sm = smm.getBySystemName(nameList.get(i));
-            displayList[i] = sm.getDisplayName();
-            validPoints.add(new ValidPoints(sm, sm.getDisplayName()));
-        }
-        java.util.Arrays.sort(displayList);
-        for(int i = 0; i<displayList.length; i++){
-            box.addItem(displayList[i]);
-            if ((select!=null) && (displayList[i].equals(select.getDisplayName()))){
-                box.setSelectedIndex(i);
-            }
-    }*/
     
     void beanComboBox(JComboBox box, NamedBean select){
         String[] displayList = new String[validPoints.size()];
@@ -623,12 +605,6 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             table.getColumnModel().getColumn(column)
                 .setPreferredWidth((sample.getPreferredSize().width)+4);
         }
-        
-        /*protected void setColumnToHoldCombo(JTable table, int column, JComboBox sample){
-            table.getColumnModel().getColumn(column).setCellEditor(new DefaultCellEditor(sample));
-            
-        
-        }*/
 
     static class ValidPoints{
 
@@ -648,9 +624,6 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             return description;
         }
     }
-    
-    //boolean runWhenStablised = false;
-    //LayoutEditor toUseWhenStable;
     
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AddEntryExitPairPanel.class.getName());
 }
