@@ -1371,9 +1371,6 @@ public class TrainBuilder extends TrainCommon{
 					// did the router set a destination? If not this train doesn't service this car.
 					if (car.getTrack() != departStageTrack && car.getNextDestination() != null && car.getDestination() == null){
 						log.debug("Removing car ("+car.toString()+") from list");
-						// restore the next destination to null
-						car.setNextDestination(null);
-						car.setNextDestTrack(null);
 						carList.remove(car.getId());
 						carIndex--;
 						continue;
