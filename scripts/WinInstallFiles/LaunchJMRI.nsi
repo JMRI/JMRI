@@ -25,6 +25,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.15.0
+; - Add flag to allow 64-bit Windows to force the use of a 32-bit JRE
+; -------------------------------------------------------------------------
 ; - Version 0.1.14.0
 ; - Modification to monitor launched Java process for a return code that
 ; - signals a re-launch of JMRI
@@ -110,7 +113,7 @@
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
 !define COPYRIGHT  "© 1997-2012 JMRI Community"   ; Copyright string
-!define VER        "0.1.14.0"                     ; Launcher version
+!define VER        "0.1.15.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -141,12 +144,17 @@ Var PARAMETERS ; holds the commandline parameters (class and config file)
 Var NOISY      ; used to determine if console should be visible or not
 Var x64        ; used to determine OS architecture
 Var x64JRE     ; used to determine JRE architecture
+Var FORCE32BIT ; used to determine if 32-bit JRE should always be used
 
 ; -------------------------------------------------------------------------
-; - WinAPI constants
+; - Various constants
 ; -------------------------------------------------------------------------
-!define SW_NORMAL   1
-!define SW_MINIMIZE 6
+!define SW_NORMAL   1   ; from WinAPI for Normal window
+!define SW_MINIMIZE 6   ; from WinAPI for Minimized window
+!define ARCH_32BIT  0   ; represents 32-bit architecture
+!define ARCH_64BIT  1   ; represents 64-bit architecture
+!define FLAG_NO     0
+!define FLAG_YES    1
 
 ; -------------------------------------------------------------------------
 ; - Compiler Flags (to reduce executable size, saves some bytes)
@@ -210,7 +218,7 @@ Section "Main"
   ; -- Find the JAVA install
   
   ; -- Initialise JRE architecture variable
-  StrCpy $x64JRE 0
+  StrCpy $x64JRE ARCH_32BIT
   
   ; -- Determine which JAVA exe to use
   StrCpy $R0 "java"
@@ -220,10 +228,13 @@ Section "Main"
   StrCpy $JAVAEXE "$R0.exe"
   
   ; -- If we're running x64, first check for 64-bit JRE
-  StrCmp 0 $x64 JRESearch
-    DetailPrint "Setting x64 registry view..."
-    SetRegView 64
-    StrCpy $x64JRE 1
+  StrCmp ARCH_32BIT $x64 JRESearch
+    ; -- Now check if we should force 32-bit JRE usage on x64
+    StrCmp FLAG_YES $FORCE32BIT JRESearch
+      ; -- No need to force
+      DetailPrint "Setting x64 registry view..."
+      SetRegView 64
+      StrCpy $x64JRE ARCH_64BIT
 
   ; -- Read from machine registry
   JRESearch:
@@ -235,11 +246,11 @@ Section "Main"
   ; -- Not found
   IfErrors 0 JreFound
     ; -- If we've got an error here on x64, switch to the 32-bit registry
-    ; -- and retry
-    StrCmp 0 $x64JRE JRENotFound
+    ; -- and retry (not needed if we've forced 32-bit above)
+    StrCmp ARCH_32BIT $x64JRE JRENotFound
       SetRegView 32
       DetailPrint "Setting x86 registry view..."
-      StrCpy $x64JRE 0
+      StrCpy $x64JRE ARCH_32BIT
       Goto JRESearch
     
   JreNotFound:
@@ -250,8 +261,8 @@ Section "Main"
   StrCpy $JAVAPATH $R0
   DetailPrint "JavaPath: $JAVAPATH"
   
-  ; -- Now we've found Java, copy the file to a temporary location
-  ; -- and rename it
+  ; -- Now we've determined Java is basically OK, copy the file to a
+  ; -- temporary location and rename it
   
   ; -- First try to remove any old temporary launchers
   RMDir /r $TEMP\LaunchJMRI
@@ -274,7 +285,7 @@ Section "Main"
   DetailPrint "JExePath: $JEXEPATH"
 
   ; -- Get the memory status
-  StrCmp 0 $x64 Notx64
+  StrCmp ARCH_32BIT $x64 Notx64
   Call GetSystemMemoryStatus64
   Goto CalcFreeMem
   Notx64:
@@ -313,7 +324,7 @@ Section "Main"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
   StrCpy $OPTIONS "$OPTIONS -Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"
-  StrCmp 1 $x64JRE x64Libs x86Libs
+  StrCmp ARCH_64BIT $x64JRE x64Libs x86Libs
   x86Libs:
     ; -- 32-bit libraries
     StrCpy $OPTIONS "$OPTIONS -Djava.library.path=.;lib\x86;lib"
@@ -343,7 +354,7 @@ Section "Main"
   ; -- If not defined, check user home is consistent
   Call CheckUserHome
   Pop $0
-  StrCmp $0 0 ReadPrefsDir
+  StrCmp $0 FLAG_YES ReadPrefsDir
     ; -- Not consistent - set to Profile
     DetailPrint "Set user.home to %USERPROFILE%: $PROFILE"
     StrCpy $OPTIONS `$OPTIONS -Duser.home="$PROFILE"`
@@ -436,13 +447,14 @@ Function .onInit
   ; -- Setup the default environment
   SetSilent silent
   StrCpy $NOISY SW_MINIMIZE
+  StrCpy $FORCE32BIT FLAG_NO
   ; -- Start reading commandline parameters
   cmdLoop:
   Push $0
   Call GetParameters
   Pop $0
   StrCmp $0 "" 0 cmdlineOk
-    MessageBox MB_OK|MB_ICONSTOP "No command line parameter. Usage 'LaunchJMRI.exe [/debug] [/noisy] class [config]'"
+    MessageBox MB_OK|MB_ICONSTOP "No command line parameter. Usage 'LaunchJMRI.exe [/debug] [/noisy] [/32bit] class [config]'"
     Abort
 
   cmdlineOk:
@@ -456,6 +468,7 @@ Function .onInit
   ; -- Process the possible commandline options
   StrCmp $1 "/debug" optsDebug
   StrCmp $1 "/noisy" optsNoisy
+  StrCmp $1 "/32bit" opts32bit
   ; -- If we've got here, the commandline option is not known so give an error.
     MessageBox MB_OK|MB_ICONSTOP "Command line option '$1' not known."
     Abort
@@ -467,6 +480,10 @@ Function .onInit
   
   optsNoisy:
   StrCpy $NOISY SW_NORMAL
+  Goto cmdLoop
+  
+  opts32bit:
+  StrCpy $FORCE32BIT FLAG_YES
   Goto cmdLoop
 
   cmdlineOptsDone:
@@ -694,9 +711,9 @@ Function CheckUserHome
 ; -------------------------------------------------------------------------
 ; - Check if the value of the registry key that Java uses to detemine
 ; - user.home points to the user profile directory.
-; - For non NT-based systems, always return 0
+; - For non NT-based systems, always return FLAG_YES
 ; - input:  none
-; - output: result on top of stack (0 if OK; 1 if not)
+; - output: result on top of stack (FLAG_YES if OK; FLAG_NO if not)
 ; -------------------------------------------------------------------------
 
   ; -- Save variables to the stack
@@ -724,12 +741,12 @@ Function CheckUserHome
 
   ; -- Not equal
   DetailPrint "user.home not OK"
-  StrCpy $0 1
+  StrCpy $0 FLAG_NO
   Goto CheckUserHomeDone
 
   CheckUserHomeOK:
   DetailPrint "user.home OK"
-  StrCpy $0 0
+  StrCpy $0 FLAG_YES
 
   CheckUserHomeDone:
   ; -- Restore variables from the stack
