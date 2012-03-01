@@ -23,6 +23,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.Timer;
 //import javax.swing.JLabel;
 
 /**
@@ -836,7 +837,55 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
         setSensor(handle);
     }
-
+    
+    int flashStateOn = -1;
+    int flashStateOff = -1;
+    boolean flashon = false;
+    ActionListener taskPerformer;
+    Timer flashTimer;
+    
+    synchronized public void flashSensor(int tps, int state1, int state2){
+        if((flashTimer!=null) && flashTimer.isRunning())
+            return;
+        //Set the maximum number of state changes to 10 per second
+        if(tps >10){
+            tps=10;
+        } else if (tps<=0) {
+            return;
+        }
+        if((_state2nameMap.get(state1)==null) || _state2nameMap.get(state2)==null){
+            log.error("one or other of the states passed for flash is null");
+            return;
+        } else if (state1==state2){
+            log.info("Both states to flash between are the same, therefore no flashing will occur");
+            return;
+        }
+        int interval = (1000/tps)/2;
+        flashStateOn = state1;
+        flashStateOff = state2;
+        if(taskPerformer==null){
+            taskPerformer = new ActionListener() {
+                  public void actionPerformed(ActionEvent evt) {
+                      if(flashon){
+                        flashon=false;
+                        displayState(flashStateOn);
+                      } else {
+                        flashon=true;
+                        displayState(flashStateOff);
+                      }
+                  }
+            };
+        }
+        flashTimer = new Timer(interval, taskPerformer);
+        flashTimer.start();
+    }
+    
+    public void stopFlash(){
+        if(flashTimer!=null)
+            flashTimer.stop();
+        displayState(sensorState());
+    }
+    
     class SensorPopupUtil extends PositionablePopupUtil {
 
         SensorPopupUtil(Positionable parent, javax.swing.JComponent textComp) {
@@ -917,6 +966,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                         case INCONSISTENT_BACKGROUND_COLOR : 
                             setBackgroundInconsistent(desiredColor); 
                             break;
+                        default : break;
                     }
                 }
             };
@@ -957,6 +1007,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 case INCONSISTENT_BACKGROUND_COLOR:
                     setColorButton(getBackgroundInconsistent(), color, r);
                     break;
+                default : break;
             }
             colorButtonGroup.add(r);
             menu.add(r);
