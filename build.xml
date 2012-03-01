@@ -516,6 +516,16 @@
             </and>
         </condition>
 
+        <condition property="baseArch" value="armel">
+            <and>
+                <os family="unix" />
+            <or>
+                <equals arg1="${os.arch}" arg2='armel' />
+                <equals arg1="${os.arch}" arg2='armv5tel' />
+            </or>
+            </and>
+        </condition>
+     
         <property name="arch.lib.path" value="${libdir}/${baseOS}/${baseArch}:${libdir}/${baseOS}"/>
         <echo message="arch.lib.path ${arch.lib.path}"/>
     </target>

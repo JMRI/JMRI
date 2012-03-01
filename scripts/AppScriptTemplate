@@ -117,6 +117,12 @@ then
 	      ARCH="i386"
 	    fi
 
+            # Now deal with ARM architecture
+            if [ "$ARCH" = "armv5tel" ]
+            then
+              ARCH="armel"
+            fi
+
 	    if [ -d "${SYSLIBPATH}/$ARCH" ]
 	    then
 	       SYSLIBPATH="${SYSLIBPATH}/$ARCH:$SYSLIBPATH"
