@@ -145,6 +145,7 @@ public class TrainManagerXml extends OperationsXml {
     		log.error("Unrecognized operations train file contents in file: "+name);
     	}
 		log.debug("Trains have been loaded!");
+		setDirty(false);	// clear dirty flag 
 		TrainLogger.instance().enableTrainLogging(Setup.isTrainLoggerEnabled());
     }
     
