@@ -129,7 +129,6 @@ public class PrintOptionFrame extends OperationsFrame{
 	
 	// switch list panels
 	JPanel pSwitchListOrientation = new JPanel();
-	JPanel pSwitchListOptions = new JPanel();
 	JPanel pSwPickup = new JPanel();
 	JPanel pSwDrop = new JPanel();
 	JPanel pSwLocal = new JPanel();
@@ -306,15 +305,8 @@ public class PrintOptionFrame extends OperationsFrame{
 		addItem(pSwitchListOrientation, new JLabel(" "), 2, 0);	// pad
 		addItem(pSwitchListOrientation, new JLabel(" "), 3, 0);	// pad
 		
-		pSwitchListOptions.setLayout(new GridBagLayout());
-		pSwitchListOptions.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListOptions")));		
-		addItem(pSwitchListOptions, switchListRealTimeCheckBox, 0, 0);
-		addItem(pSwitchListOptions, new JLabel(" "), 1, 0);	// pad
-		addItem(pSwitchListOptions, new JLabel(" "), 2, 0);	// pad
-		addItem(pSwitchListOptions, new JLabel(" "), 3, 0);	// pad
-		
 		pSl.add(pSwitchListOrientation);
-		pSl.add(pSwitchListOptions);
+		//pSl.add(pSwitchListOptions);
 		
 		// switch list car pickup message format
 		pSwPickup.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListPickupCar")));
@@ -420,6 +412,11 @@ public class PrintOptionFrame extends OperationsFrame{
 		pOptions.setLayout(new BoxLayout(pOptions, BoxLayout.X_AXIS));
 		JScrollPane pOptionsPane = new JScrollPane(pOptions);
 		pOptionsPane.setBorder(BorderFactory.createTitledBorder(""));
+			
+		JPanel pSwitchListOptions = new JPanel();
+		pSwitchListOptions.setLayout(new GridBagLayout());
+		pSwitchListOptions.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListOptions")));		
+		addItem(pSwitchListOptions, switchListRealTimeCheckBox, 0, 0);
 
 		JPanel pEdit = new JPanel();
 		pEdit.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifestPreview")));
@@ -437,6 +434,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		addItemLeft (pReport, buildReportVD, 4, 16);
 		addItemWidth (pReport, buildReportCheckBox, 3, 1, 17);	
 		
+		pOptions.add(pSwitchListOptions);
 		pOptions.add(pEdit);
 		pOptions.add(pReport);
 

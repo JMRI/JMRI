@@ -671,7 +671,28 @@ The program provides a comment for your operators to search for
 <A	HREF="#CarsSet">misplaced</A> cars.  You can modify
 the comment to your liking.
 
-<H3>Preview Manifest</H3>
+<H3>Switch List Options</H3>
+
+Normally you would generate your switch lists in real time.  In this mode the switch list for a location shows
+the work planned for trains that are built and not yet terminated.  If you have a small layout, you might have to
+build and terminate a few trains in order to generate enough work for your operators.  To use switch lists in real
+time you have to print them out before you terminate your trains.  Now if there isn't much work your switch list
+is going to be pretty short.  By deselecting the "Switch List Show Only Active Trains" you can consolidate
+several small switch lists in to one larger one.
+
+It's a bit complicated, so here's the order you need to do things:
+<uL>
+<li>In the "Print Options" window, deselect the "Switch List Show Only Active Trains" and press "Save".
+<li>Then build the trains you want consolidated switch lists for, then</li>
+<li>press the "Switch Lists" button found at the bottom the "Trains" window, then</li>
+<li>select which locations you want switch lists for in the "Switch Lists by Location" window.</li>
+<li>Then press the "Preview Switch Lists"  or "Update Switch Lists" button.</li>
+<li>Now print out your train manifests and terminate the trains you want terminated.</li>
+<li>Continue building, updating switch lists, and terminating trains until your happy with the amount of work generated.</li>
+<li>Finally, print out your switch lists.</li>
+</uL>
+
+<H3>Manifest Preview</H3>
 
 If you want to use a text editor to preview your manifests and switch
 lists, select this option.
