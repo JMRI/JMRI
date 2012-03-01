@@ -219,8 +219,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     	Schedule s = manager.getScheduleById(sysList.get(row));
     	if (JOptionPane.showConfirmDialog(null,
     			MessageFormat.format(rb.getString("DoYouWantToDeleteSchedule"),new Object[]{s.getName()}),
-    			rb.getString("DeleteSchedule"),
-    			JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+    			rb.getString("DeleteSchedule?"),
+    			JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
     		manager.deregister(s);
     		LocationManagerXml.instance().writeOperationsFile();
     	}

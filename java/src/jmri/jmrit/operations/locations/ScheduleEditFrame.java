@@ -226,6 +226,11 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		}
 		if (ae.getSource() == deleteScheduleButton){
 			log.debug("schedule delete button actived");
+			if (JOptionPane.showConfirmDialog(this,
+					MessageFormat.format(rb.getString("DoYouWantToDeleteSchedule"),new Object[]{scheduleNameTextField.getText()}), rb.getString("DeleteSchedule?"),
+					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION){
+				return;
+			}
 			Schedule schedule = manager.getScheduleByName(scheduleNameTextField.getText());
 			if (schedule == null)
 				return;
