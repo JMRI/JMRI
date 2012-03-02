@@ -18,6 +18,8 @@ public class JythonTest extends TestCase {
 
     // Really a check of Jython init, including the defaults file
     public void testExec() {
+        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
+        jmri.util.JUnitAppender.clearBacklog();
         // open output window
         try {
             new JythonWindow().actionPerformed(null);
