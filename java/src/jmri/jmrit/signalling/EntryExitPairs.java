@@ -17,7 +17,18 @@ import java.util.ResourceBundle;
 import java.util.Enumeration;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Container;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import javax.swing.JOptionPane;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -81,6 +92,7 @@ public class EntryExitPairs {
     
     static int nxButtonTimeout = 10;
     
+    static JPanel glassPane = new JPanel();
     
     //Method to get delay between issuing Turnout commands
     int turnoutSetDelay = 0;
@@ -89,6 +101,14 @@ public class EntryExitPairs {
         _instance = this;
         InstanceManager.configureManagerInstance().registerUser(this);
         InstanceManager.layoutBlockManagerInstance().addPropertyChangeListener(propertyBlockManagerListener);
+        
+        glassPane.setOpaque(false);
+        glassPane.setLayout(null);
+        glassPane.addMouseListener(new MouseAdapter() { 
+          public void mousePressed(MouseEvent e) {
+            e.consume();
+          } 
+        }); 
     }
     
     static public EntryExitPairs instance() {
@@ -445,7 +465,7 @@ public class EntryExitPairs {
             return pd.getProtecting();
         }
         
-        final static int CANCELROUTE = 1;
+        final static int CANCELROUTE = 0;
         final static int CLEARROUTE = 1;
         
         void addDestination(PointDetails dest){
@@ -645,7 +665,6 @@ public class EntryExitPairs {
                 } else {
                     setNXButtonState(pd, NXBUTTONINACTIVE);
                 }
-            
             }
             
             boolean isRouteToPointSet() { return point.isRouteToPointSet(); }
@@ -667,7 +686,6 @@ public class EntryExitPairs {
             protected PropertyChangeListener propertyBlockListener = new PropertyChangeListener() {
                 public void propertyChange(PropertyChangeEvent e) {
                     Block blk = (Block) e.getSource();
-                    
                     if (e.getPropertyName().equals("state")) {
                         if (log.isDebugEnabled()) log.debug(ref + "  We have a change of state on the block " + blk.getDisplayName());
                         //int now = ((Integer) e.getNewValue()).intValue();
@@ -726,7 +744,6 @@ public class EntryExitPairs {
             void setRoute(boolean state){
                 //int buttonState = NXBUTTONINACTIVE;
                 Hashtable<Turnout, Integer> turnoutSettings = new Hashtable<Turnout, Integer>();
-                int cancelClear = 2; //canel = 0, clear = 1, Exit do nothing = 2;
                 if(routeDetails==null){
                     log.error ("No route to set or clear down");
                     activeEntryExit = false;
@@ -740,20 +757,8 @@ public class EntryExitPairs {
                     return;
                 }
                 if(!state){
-                    Object[] options = {"Cancel",
-                        "Clear Down",
-                        "Exit"};
-                    cancelClear = JOptionPane.showOptionDialog(null,
-                        "What would you like to do with this interlock",
-                        "Interlock",
-                        JOptionPane.YES_NO_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        null,
-                        options,
-                        options[2]);
-                    if (cancelClear==2)
-                        return;
-                
+                    cancelClearOptionBox();
+                    return;
                 }
 
                 ConnectivityUtil connection = new ConnectivityUtil(point.getLayoutEditor());
@@ -761,7 +766,7 @@ public class EntryExitPairs {
                 //This for loop was after the if statement
                 //Last block in the route is the one that we are protecting at the last sensor/signalmast
                 for (int i = 0; i<routeDetails.size(); i++){
-                    if ((state) && (i>0)) {
+                    if (i>0) {
                         ArrayList<LayoutTurnout> turnoutlist;
                         int nxtBlk = i+1;
                         int preBlk = i-1;
@@ -796,110 +801,19 @@ public class EntryExitPairs {
                             }
                         }
                         if(getEntryExitType()==FULLINTERLOCK){
-                            routeDetails.get(i).setUseExtraColor(state);
+                            routeDetails.get(i).setUseExtraColor(true);
                         }
                     }
-                    if((!state) && (getEntryExitType()==FULLINTERLOCK)){
-                        routeDetails.get(i).setUseExtraColor(state);
-                    }
-                    if ((state) && (getEntryExitType()!=SETUPTURNOUTSONLY))
-                        routeDetails.get(i).getBlock().addPropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
-                    else {
+                    if ((getEntryExitType()!=SETUPTURNOUTSONLY)){
+                        if(getStart().getBlock()!=routeDetails.get(i).getBlock()){
+                            routeDetails.get(i).getBlock().addPropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
+                        }
+                    } else {
                         routeDetails.get(i).getBlock().removePropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
                     }
                 }
-                
-                if((!state) && (getEntryExitType()!=SETUPTURNOUTSONLY)){
-                    //If we are to clear the route down, first we need to hold the signal!
-                    if (sourceSignal instanceof SignalMast){
-                        SignalMast mast = (SignalMast) sourceSignal;
-                        mast.setAspect(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
-                        mast.setHeld(true);
-                    } else if (sourceSignal instanceof SignalHead){
-                        SignalHead head = (SignalHead) sourceSignal;
-                        head.setHeld(true);
-                    } else {
-                        log.error("No signal found");
-                    }
 
-                    if (cancelClear == CLEARROUTE){
-                        if (routeDetails.size()==0){
-                            if (log.isDebugEnabled()) log.debug(ref + "  all blocks have automatically been cleared down");
-                        } else {
-                            if (log.isDebugEnabled()) log.debug(ref + "  No blocks were cleared down " + routeDetails.size());
-                            //Might need to consider if this is a reversed route
-                            try{
-                                if (log.isDebugEnabled()) log.debug(ref + "  set first block as active so that we can manually clear this down " + routeDetails.get(0).getBlock().getSensor().getDisplayName());
-                                routeDetails.get(0).getBlock().getSensor().setState(Sensor.ACTIVE);
-                                getStart().getBlock().getSensor().setState(Sensor.INACTIVE);
-                            } catch (java.lang.NullPointerException e){
-
-                            }  catch (JmriException e){
-
-                            }
-                            if (log.isDebugEnabled()){ 
-                                log.debug(ref + "  Going to clear routeDetails down " + routeDetails.size());
-                            //We will remove the propertychange listeners on the sensors as we will now manually clear things down.
-                            //Should we just be updating the block status and not the sensor
-                                for(int i = 0; i<routeDetails.size(); i++){
-                                    log.debug("Block at " + i + " " + routeDetails.get(i).getDisplayName());
-                                
-                                }
-                            }
-                            
-                            for (int i = 1; i <routeDetails.size()-1; i++){
-                                if (log.isDebugEnabled()) log.debug(ref + " in loop Set active " + routeDetails.get(i).getDisplayName() + " " + routeDetails.get(i).getBlock().getSystemName());
-                                try{
-                                    routeDetails.get(i).getOccupancySensor().setState(Sensor.ACTIVE); //was getBlock().getSensor()
-                                    routeDetails.get(i).getBlock().goingActive();
-                                    
-                                    
-                                    if (log.isDebugEnabled()) log.debug(ref + " in loop Set inactive " + routeDetails.get(i-1).getDisplayName() + " " + routeDetails.get(i-1).getBlock().getSystemName());
-                                    routeDetails.get(i-1).getOccupancySensor().setState(Sensor.INACTIVE); //was getBlock().getSensor()
-                                    routeDetails.get(i-1).getBlock().goingInactive();
-                                } catch (java.lang.NullPointerException e){
-
-                                }   catch (JmriException e){
-
-                            }
-                            }
-                            try{
-                                if (log.isDebugEnabled()) log.debug(ref + " out of loop Set active " + routeDetails.get(routeDetails.size()-1).getDisplayName() + " " + routeDetails.get(routeDetails.size()-1).getBlock().getSystemName());
-                                //Get the last block an set it active.
-                                routeDetails.get(routeDetails.size()-1).getOccupancySensor().setState(Sensor.ACTIVE);
-                                if (log.isDebugEnabled()) log.debug(ref + " out of loop Set inactive " + routeDetails.get(routeDetails.size()-2).getUserName() + " " + routeDetails.get(routeDetails.size()-2).getBlock().getSystemName());
-                                routeDetails.get(routeDetails.size()-2).getOccupancySensor().setState(Sensor.INACTIVE);
-                            } catch (java.lang.NullPointerException e){
-                                log.error(e);
-                            } catch (java.lang.ArrayIndexOutOfBoundsException e){
-                                log.error(e);
-                            }   catch (JmriException e){
-
-                            }
-                        }
-                    } else {
-                        for(LayoutBlock blk : routeDetails){
-                            blk.getBlock().removePropertyChangeListener(propertyBlockListener);
-                        }
-                        //Need sort out the method to cancel said route.
-                    }
-                    activeEntryExit = false;
-                    setRouteTo(false);
-                    setRouteFrom(false);
-                    routeDetails=null;
-                    if(getSignal() instanceof SignalMast){
-                        SignalMast mast = (SignalMast) getSignal();
-                        mast.setHeld(false);
-                        if ((sml!=null) && (sml.getStoreState(mast)==jmri.SignalMastLogic.STORENONE))
-                            sml.removeDestination(mast);
-                    }
-                    sml=null;
-                }
-
-                if ((state) && (getEntryExitType()!=SETUPTURNOUTSONLY)){
-                    /*if(getEntryExitType()==FULLINTERLOCK){
-                        setRouteTo(true);
-                    }*/
+                if (getEntryExitType()!=SETUPTURNOUTSONLY){
                     if((sourceSignal instanceof SignalMast) && (getSignal() instanceof SignalMast)){
                         SignalMast smSource = (SignalMast) sourceSignal;
                         SignalMast smDest = (SignalMast) getSignal();
@@ -921,8 +835,17 @@ public class EntryExitPairs {
                         sml.setAutoBlocks(blks, smDest);
                         sml.setAutoTurnouts(turnoutSettings, smDest);
                         sml.initialise(smDest);
+                        smSource.addPropertyChangeListener( new PropertyChangeListener() {
+                            public void propertyChange(PropertyChangeEvent e) {
+                                SignalMast source = (SignalMast)e.getSource();
+                                source.removePropertyChangeListener(this);
+                                setRouteFrom(true);
+                                setRouteTo(true);
+                            }
+                        });
+                        pd.extendedtime=true;
+                        point.extendedtime=true;
                     } else {
-                        //If we are to clear the route down, first we need to hold the signal!
                         if (sourceSignal instanceof SignalMast){
                             SignalMast mast = (SignalMast) sourceSignal;
                             mast.setHeld(false);
@@ -930,15 +853,195 @@ public class EntryExitPairs {
                             SignalHead head = (SignalHead) sourceSignal;
                             head.setHeld(false);
                         }
-                    }
-                    if(getEntryExitType()==FULLINTERLOCK){
                         setRouteFrom(true);
                         setRouteTo(true);
-                        //return;
+                    }
+                } else {
+                    setNXButtonState(pd, NXBUTTONINACTIVE);
+                    setNXButtonState(point, NXBUTTONINACTIVE);
+                }
+            }
+            
+            private JFrame cancelClearFrame;
+            private Thread threadAutoClearFrame = null;
+            
+            void cancelClearOptionBox(){
+                if(cancelClearFrame==null){
+                    JButton jButton_Clear = new JButton("Clear Down");
+                    JButton jButton_Cancel = new JButton("Cancel");
+                    JButton jButton_Exit = new JButton("Exit");
+                    JLabel jLabel = new JLabel("What would you like to do with this interlock?");
+                    JLabel jIcon = new JLabel(javax.swing.UIManager.getIcon("OptionPane.questionIcon"));
+                    cancelClearFrame = new JFrame("Interlock");
+                    Container cont = cancelClearFrame.getContentPane();  
+                    JPanel qPanel = new JPanel();
+                    qPanel.add(jIcon);
+                    qPanel.add(jLabel);
+                    cont.add(qPanel, BorderLayout.CENTER);  
+                    JPanel buttonsPanel = new JPanel();
+                    buttonsPanel.add(jButton_Cancel);  
+                    buttonsPanel.add(jButton_Clear);  
+                    buttonsPanel.add(jButton_Exit);  
+                    cont.add(buttonsPanel, BorderLayout.SOUTH);  
+                    cancelClearFrame.pack();
+                    
+                    jButton_Clear.addActionListener( new ActionListener() {
+                                public void actionPerformed(ActionEvent e) {
+                                    cancelClearFrame.setVisible(false);
+                                    threadAutoClearFrame.interrupt();
+                                    cancelClearInterlock(CLEARROUTE);
+                                }
+                            });
+                    jButton_Cancel.addActionListener( new ActionListener() {
+                                public void actionPerformed(ActionEvent e) {
+                                    cancelClearFrame.setVisible(false);
+                                    threadAutoClearFrame.interrupt();
+                                    cancelClearInterlock(CANCELROUTE);
+                                }
+                            });
+                    jButton_Exit.addActionListener( new ActionListener() {
+                                public void actionPerformed(ActionEvent e) {
+                                    cancelClearFrame.setVisible(false);
+                                    threadAutoClearFrame.interrupt();
+                                    cancelClearInterlock(2);
+                                }
+                            });
+                    getPoint().getPanel().setGlassPane(glassPane);
+                }
+                if(cancelClearFrame.isVisible()){
+                    return;
+                }
+                pd.extendedtime=true;
+                point.extendedtime =true;
+                
+                class MessageTimeOut implements Runnable {
+                    MessageTimeOut(){
+                    }
+                    public void run() {
+                        try {
+                            //Set a timmer before this window is automatically closed to 30 seconds
+                            Thread.sleep(30000);
+                            cancelClearFrame.setVisible(false);
+                            cancelClearInterlock(2);
+                        } catch (InterruptedException ex) {
+                            log.debug("Flash timer cancelled");
+                        }
                     }
                 }
-                setNXButtonState(pd, NXBUTTONINACTIVE);
-                setNXButtonState(point, NXBUTTONINACTIVE);
+                MessageTimeOut mt = new MessageTimeOut();
+                threadAutoClearFrame = new Thread(mt, "NX Button Message Timeout ");
+                threadAutoClearFrame.start();
+                cancelClearFrame.setAlwaysOnTop(true);
+                getPoint().getPanel().getGlassPane().setVisible(true);
+                int w = cancelClearFrame.getSize().width;
+                int h = cancelClearFrame.getSize().height;
+                int x = (int)getPoint().getPanel().getLocation().getX()+((getPoint().getPanel().getSize().width-w)/2);
+                int y = (int)getPoint().getPanel().getLocation().getY()+((getPoint().getPanel().getSize().height-h)/2);
+                cancelClearFrame.setLocation(x, y);
+                cancelClearFrame.setVisible(true);
+            }
+            
+            void cancelClearInterlock(int cancelClear){
+                if (cancelClear==2){
+                    setNXButtonState(pd, NXBUTTONINACTIVE);
+                    setNXButtonState(point, NXBUTTONINACTIVE);
+                    getPoint().getPanel().getGlassPane().setVisible(false);
+                    return;
+                }
+                
+                if (sourceSignal instanceof SignalMast){
+                    SignalMast mast = (SignalMast) sourceSignal;
+                    mast.setAspect(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
+                    mast.setHeld(true);
+                } else if (sourceSignal instanceof SignalHead){
+                    SignalHead head = (SignalHead) sourceSignal;
+                    head.setHeld(true);
+                } else {
+                    log.error("No signal found");
+                }
+                
+                //Get rid of the signal mast logic to the destination mast.
+                if((getSignal() instanceof SignalMast) && (sml!=null)){
+                    SignalMast mast = (SignalMast) getSignal();
+                    if (sml.getStoreState(mast)==jmri.SignalMastLogic.STORENONE)
+                        sml.removeDestination(mast);
+                }
+                sml=null;
+                
+                for (int i = 0; i<routeDetails.size(); i++){
+                    if((getEntryExitType()==FULLINTERLOCK)){
+                        routeDetails.get(i).setUseExtraColor(false);
+                    }
+                    routeDetails.get(i).getBlock().removePropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
+                }
+                
+                if (cancelClear == CLEARROUTE){
+                    if (routeDetails.size()==0){
+                        if (log.isDebugEnabled()) log.debug(ref + "  all blocks have automatically been cleared down");
+                    } else {
+                        if (log.isDebugEnabled()) log.debug(ref + "  No blocks were cleared down " + routeDetails.size());
+                        try{
+                            if (log.isDebugEnabled()) log.debug(ref + "  set first block as active so that we can manually clear this down " + routeDetails.get(0).getBlock().getSensor().getDisplayName());
+                            routeDetails.get(0).getBlock().getSensor().setState(Sensor.ACTIVE);
+                            getStart().getBlock().getSensor().setState(Sensor.INACTIVE);
+                        } catch (java.lang.NullPointerException e){
+                            log.error(e);
+                        } catch (JmriException e){
+                            log.error(e);
+                        }
+                        if (log.isDebugEnabled()){ 
+                            log.debug(ref + "  Going to clear routeDetails down " + routeDetails.size());
+                            for(int i = 0; i<routeDetails.size(); i++){
+                                log.debug("Block at " + i + " " + routeDetails.get(i).getDisplayName());
+                            }
+                        }
+                        if(routeDetails.size()>1){
+                            //We will remove the propertychange listeners on the sensors as we will now manually clear things down.
+                            //Should we just be updating the block status and not the sensor
+                            for (int i = 1; i <routeDetails.size()-1; i++){
+                                if (log.isDebugEnabled()) log.debug(ref + " in loop Set active " + routeDetails.get(i).getDisplayName() + " " + routeDetails.get(i).getBlock().getSystemName());
+                                try{
+                                    routeDetails.get(i).getOccupancySensor().setState(Sensor.ACTIVE); //was getBlock().getSensor()
+                                    routeDetails.get(i).getBlock().goingActive();
+                                    
+                                    if (log.isDebugEnabled()) log.debug(ref + " in loop Set inactive " + routeDetails.get(i-1).getDisplayName() + " " + routeDetails.get(i-1).getBlock().getSystemName());
+                                    routeDetails.get(i-1).getOccupancySensor().setState(Sensor.INACTIVE); //was getBlock().getSensor()
+                                    routeDetails.get(i-1).getBlock().goingInactive();
+                                } catch (java.lang.NullPointerException e){
+                                    log.error(e);
+                                } catch (JmriException e){
+                                    log.error(e);
+                                }
+                            }
+                            try{
+                                if (log.isDebugEnabled()) log.debug(ref + " out of loop Set active " + routeDetails.get(routeDetails.size()-1).getDisplayName() + " " + routeDetails.get(routeDetails.size()-1).getBlock().getSystemName());
+                                //Get the last block an set it active.
+                                routeDetails.get(routeDetails.size()-1).getOccupancySensor().setState(Sensor.ACTIVE);
+                                if (log.isDebugEnabled()) log.debug(ref + " out of loop Set inactive " + routeDetails.get(routeDetails.size()-2).getUserName() + " " + routeDetails.get(routeDetails.size()-2).getBlock().getSystemName());
+                                routeDetails.get(routeDetails.size()-2).getOccupancySensor().setState(Sensor.INACTIVE);
+                            } catch (java.lang.NullPointerException e){
+                                log.error(e);
+                            } catch (java.lang.ArrayIndexOutOfBoundsException e){
+                                log.error(e);
+                            }   catch (JmriException e){
+                                log.error(e);
+                            }
+                        }
+                    }
+                } else {
+                    for(LayoutBlock blk : routeDetails){
+                        blk.getBlock().removePropertyChangeListener(propertyBlockListener);
+                    }
+                    //Need sort out the method to cancel said route.
+                }
+                activeEntryExit = false;
+                setRouteTo(false);
+                setRouteFrom(false);
+                routeDetails=null;
+                pd.cancelNXButtonTimeOut();
+                point.cancelNXButtonTimeOut();
+                getPoint().getPanel().getGlassPane().setVisible(false);
+            
             }
         
             void activeBean(boolean reverseDirection){
@@ -1605,6 +1708,7 @@ public class EntryExitPairs {
             if((nxButtonTimeOutThr!=null) && (nxButtonTimeOutThr.isAlive())){
                 return;
             }
+            extendedtime = true;
             class ButtonTimeOut implements Runnable {
                 ButtonTimeOut(PointDetails pd){
                     this.pd=pd;
@@ -1612,9 +1716,14 @@ public class EntryExitPairs {
                 PointDetails pd;
                 public void run() {
                     try {
+                        //Stage one default timer for the button if no other button has been pressed
                         Thread.sleep(nxButtonTimeout*1000);
+                        //Stage two if an extended time out has been requested
+                        if(extendedtime){
+                            Thread.sleep(60000);  //timeout after a minute waiting for the sml to set.
+                        }
                     } catch (InterruptedException ex) {
-                        log.error(ex);
+                        log.debug("Flash timer cancelled");
                     }
                     instance().setNXButtonState(pd, NXBUTTONINACTIVE);
                 }
@@ -1630,6 +1739,8 @@ public class EntryExitPairs {
                 nxButtonTimeOutThr.interrupt();
         
         }
+        
+        boolean extendedtime = false;
         
         @Override
         public boolean equals(Object obj){
