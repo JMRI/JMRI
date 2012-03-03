@@ -63,7 +63,7 @@ public class RosterMenu extends JMenu {
 
         // create the menu
 
-        AbstractAction dp3Action = new apps.gui3.dp3.DecoderPro3Action(rb.getString("MenuItemRoster"), false);
+        AbstractAction dp3Action = new jmri.jmrit.roster.swing.RosterFrameAction(rb.getString("MenuItemRoster"), false);
         dp3Action.setEnabled(true);
 
         AbstractAction createAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneNewProgAction(rb.getString("MenuItemCreate"));

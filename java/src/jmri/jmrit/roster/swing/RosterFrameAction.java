@@ -1,5 +1,6 @@
-// DecoderPro3Action.java
-package apps.gui3.dp3;
+// RosterFrameAction.java
+
+package jmri.jmrit.roster.swing;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -9,54 +10,57 @@ import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.JmriAbstractAction;
-import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
 
 /**
- * AbstractAction for the DP3 window so that further windows can be opened
+ * AbstractAction for the RosterFrane so that multiple windows can be opened
  *
  * @author Kevin Dickerson Copyright (C) 2011
+ * @author Randall Wood Copyright (C) 2012
  */
-public class DecoderPro3Action extends JmriAbstractAction {
-
-    DecoderPro3Window mainFrame;
-    boolean allowQuit = true;
-
-    public DecoderPro3Action(String s, WindowInterface wi) {
-        super(s, wi);
+public class RosterFrameAction extends JmriAbstractAction
+     {
+    
+    public RosterFrameAction(String s, WindowInterface wi) {
+    	super(s, wi);
     }
-
-    public DecoderPro3Action(String s, Icon i, WindowInterface wi) {
-        super(s, i, wi);
+     
+ 	public RosterFrameAction(String s, Icon i, WindowInterface wi) {
+    	super(s, i, wi);
     }
-
+    
     /**
-     * Method for opening a new window via the classic JMRI interface
-     */
-    public DecoderPro3Action(String pName, boolean allowQuit) {
+    * Method for opening a new window via the classic JMRI interface
+    */
+    public RosterFrameAction(String pName, boolean allowQuit) {
         super(pName);
-        this.allowQuit = allowQuit;
+        this.allowQuit=allowQuit;
     }
-
+    
+    boolean allowQuit = true;
+    
     @Override
     public void actionPerformed(ActionEvent event) {
-        mainFrame = new DecoderPro3Window(DecoderPro3.getMenuFile(), DecoderPro3.getToolbarFile());
+        mainFrame = new RosterFrame();
         UserPreferencesManager p = InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        if (!p.isWindowPositionSaved(mainFrame.getWindowFrameRef())) {
+        if(!p.isWindowPositionSaved(mainFrame.getWindowFrameRef())) {
             mainFrame.setSize(new Dimension(1024, 600));
             mainFrame.setPreferredSize(new Dimension(1024, 600));
         }
         if (wi instanceof RosterGroupSelector) {
-            mainFrame.setSelectedRosterGroup(((RosterGroupSelector) wi).getSelectedRosterGroup());
+            mainFrame.setSelectedRosterGroup(((RosterGroupSelector)wi).getSelectedRosterGroup());
         }
         mainFrame.setVisible(true);
         mainFrame.setAllowQuit(allowQuit);
         mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
-
+    
     // never invoked, because we overrode actionPerformed above
     @Override
-    public JmriPanel makePanel() {
+    public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
+    
+    RosterFrame mainFrame;
 }
+

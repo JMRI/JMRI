@@ -11,7 +11,7 @@
     <name xml:lang="en">File</name>
     <name xml:lang="fr">Fichier</name>
     <mnemonic>f</mnemonic>
-    <node name="New DecoderPro Window">
+    <node name="New Roster Window">
         <mnemonic>n</mnemonic>
         <current>newwindow</current>
     </node>
