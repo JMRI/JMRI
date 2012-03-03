@@ -138,7 +138,8 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) 
 			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(ScheduleManager.LISTLENGTH_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(ScheduleManager.LISTLENGTH_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(Track.SCHEDULE_CHANGED_PROPERTY)){
 			updateScheduleComboBox();
 		}
 		super.propertyChange(e);

@@ -235,12 +235,12 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 			if (schedule == null)
 				return;
 			
+			if (_track != null)
+				_track.setScheduleId("");
+			
 			manager.deregister(schedule);
 			_schedule = null;
 			
-			if (_track != null)
-				_track.setScheduleId("");
-
 			enableButtons(false);
 			// save schedule file
 			managerXml.writeOperationsFile();
