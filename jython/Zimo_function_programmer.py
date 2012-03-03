@@ -304,7 +304,7 @@ class LocoZimoProg(jmri.jmrit.automat.AbstractAutomaton) :
 		
     def rosterBoxChange(self, event) :
 		#print "roster changing in rosterBoxChange"
-		entry = self.roster.entryFromTitle(self.box.getSelectedItem())
+		entry = self.box.getSelectedItem()
 		#print entry
 		theDccAddress = entry.getDccAddress()
 		# print theDccAddress
@@ -340,10 +340,10 @@ class LocoZimoProg(jmri.jmrit.automat.AbstractAutomaton) :
 
         temppanel1.add(self.startButton)
         
-        self.address.text = "3"
-        entry = self.roster.entryFromTitle(self.box.getSelectedItem())
-        theDccAddress = entry.getDccAddress()
-        self.address.text = theDccAddress
+        #self.address.text = "3"
+        #entry = self.roster.entryFromTitle(self.box.getSelectedItem())
+        #theDccAddress = entry.getDccAddress()
+        #self.address.text = theDccAddress
 
 		
 		# top explanatory panel, text only
