@@ -135,6 +135,8 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	
 	private static final int CS_CAB_MEM = 0x8800;	// start of NCE CS cab context page for cab 0
 													// memory
+	private static final int CAB_LINE_1 = 0;		// start of first line for cab display
+	private static final int CAB_LINE_2 = 16;		// start of second line for cab display
 	private static final int CAB_SIZE = 256;		// Each cab has 256 bytes
 	private static final int CAB_CURR_SPEED = 32;	// NCE cab speed
 	private static final int CAB_ADDR_H = 33; 		// loco address, high byte
@@ -143,10 +145,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	private static final int CAB_FUNC_L = 36;		// Function keys low
 	private static final int CAB_FUNC_H = 37;		// Function keys high
 	private static final int CAB_ALIAS = 38;		// Consist address
+	private static final int CAB_FUNC_13_20 = 82;	// Function keys 13 - 30
+	private static final int CAB_FUNC_21_28 = 83;	// Function keys 21 - 28
 	private static final int CAB_FLAGS1 = 101;		// NCE flag 1
 	private static final int CAB_MAX = 64;			// There are up to 64 cabs
 	private static final int REPLY_1 = 1;			// reply length of 1 byte
-	private static final int REPLY_16 = 16;			// reply length of 16 bytes			
+	private static final int REPLY_16 = 16;			// reply length of 16 bytes	
+	private static final int CAB_LINE_LEN = 16;			// display line length of 16 bytes			
 	
 	private int replyLen = 0;						// expected byte length
 	private int waiting = 0;						// to catch responses not
@@ -174,6 +179,24 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	private static final int FUNC_H_F11 = 0x40;		// F11
 	private static final int FUNC_H_F12 = 0x80;		// F12
 	
+	private static final int FUNC_H_F13 = 0x01;		// F13
+	private static final int FUNC_H_F14 = 0x02;		// F14
+	private static final int FUNC_H_F15 = 0x04;		// F15
+	private static final int FUNC_H_F16 = 0x08;		// F16
+	private static final int FUNC_H_F17 = 0x10;		// F17
+	private static final int FUNC_H_F18 = 0x20;		// F18
+	private static final int FUNC_H_F19 = 0x40;		// F10
+	private static final int FUNC_H_F20 = 0x80;		// F20
+	
+	private static final int FUNC_H_F21 = 0x01;		// F21
+	private static final int FUNC_H_F22 = 0x02;		// F22
+	private static final int FUNC_H_F23 = 0x04;		// F23
+	private static final int FUNC_H_F24 = 0x08;		// F24
+	private static final int FUNC_H_F25 = 0x10;		// F25
+	private static final int FUNC_H_F26 = 0x20;		// F26
+	private static final int FUNC_H_F27 = 0x40;		// F27
+	private static final int FUNC_H_F28 = 0x80;		// F28
+	
 	Thread NceCabUpdateThread;	
 	private int[] cabFlag1Array = new int[CAB_MAX];
 	private Calendar[] cabLastChangeArray = new Calendar[CAB_MAX];
@@ -183,6 +206,10 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	private int[] cabConsistArray = new int[CAB_MAX];
 	private int[] cabF0Array = new int[CAB_MAX];
 	private int[] cabF5Array = new int[CAB_MAX];
+	private int[] cabF13Array = new int[CAB_MAX];
+	private int[] cabF21Array = new int[CAB_MAX];
+	private int[][] cabLine1Array = new int[CAB_MAX][CAB_LINE_LEN];
+	private int[][] cabLine2Array = new int[CAB_MAX][CAB_LINE_LEN];
 	
 	// member declarations
 	JLabel textNumer = new JLabel(rb.getString("Number"));
@@ -191,6 +218,8 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     JLabel textSpeed = new JLabel(rb.getString("Speed"));
     JLabel textConsist = new JLabel(rb.getString("Consist"));
     JLabel textFunctions = new JLabel(rb.getString("Functions"));
+    JLabel textDisplay1 = new JLabel(rb.getString("Display1"));
+    JLabel textDisplay2 = new JLabel(rb.getString("Display2"));
     JLabel textReply = new JLabel(rb.getString("Reply"));
     JLabel textStatus = new JLabel("");
     JLabel textLastUsed = new JLabel(rb.getString("LastUsed"));
@@ -273,9 +302,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	addItem(p1, space1b, 5, 1);
     	addItem(p1, checkBoxActive, 6, 1);
     	addItem(p1, space1c, 7, 1);
-    	addItem(p1, purgeCabId, 8, 1);
-    	addItem(p1, space1d, 9, 1);
-    	addItem(p1, purgeButton, 10, 1);
+    	addItem(p1, purgeCabId, 10, 1);
+    	addItem(p1, space1d, 11, 1);
+    	addItem(p1, purgeButton, 12, 1);
     	
     	// row 2
     	addItem(p1, space2, 4, 2);
@@ -289,7 +318,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         addItemLeft(p2, textSpeed, 4, 3);
         addItemLeft(p2, textConsist, 5, 3);
         addItemLeft(p2, textFunctions, 6, 3);
-        addItemLeft(p2, textLastUsed, 7, 3);
+        addItemLeft(p2, textDisplay1, 7, 3);
+        addItemLeft(p2, textDisplay2, 8, 3);
+        addItemLeft(p2, textLastUsed, 9, 3);
         
     	addButtonAction(refreshButton);
     	addButtonAction(purgeButton);
@@ -376,7 +407,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	cabsPanel.removeAll();
     	int numberOfCabs = 0;
         // build table of cabs
-        for (int i=2; i<CAB_MAX; i++){
+        for (int currCabId=2; currCabId<CAB_MAX; currCabId++){
         	JLabel number = new JLabel();
         	JLabel type = new JLabel();
          	JLabel address = new JLabel();
@@ -384,22 +415,24 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
            	JLabel consist = new JLabel();
            	JLabel functions = new JLabel();
            	JLabel lastUsed = new JLabel();
+           	JLabel line1 = new JLabel();
+           	JLabel line2 = new JLabel();
            	
            	int foundChange = 0;
            	recChar = -1;
            	// create cab type by reading the FLAGS1 byte
-        	readCabMemory1(i, CAB_FLAGS1);
+        	readCabMemory1(currCabId, CAB_FLAGS1);
            	if (!waitNce())
         		return;
-           	if (log.isDebugEnabled()) log.debug("Read flag1 character "+recChar);
+           	if (log.isDebugEnabled()) log.debug("Read flag1 character " + recChar);
            	// test it really changed
            	if (recChar != -1) {
 	        	// save value for purge
-	        	if (recChar != cabFlag1Array[i]) {
+	        	if (recChar != cabFlag1Array[currCabId]) {
 	        		foundChange++;
-	        		if (log.isDebugEnabled()) log.debug(i + ": Flag1 " + recChar + "<->" + cabFlag1Array[i]);
+	        		if (log.isDebugEnabled()) log.debug(currCabId + ": Flag1 " + recChar + "<->" + cabFlag1Array[currCabId]);
 	        	}
-	        	cabFlag1Array[i] = recChar;
+	        	cabFlag1Array[currCabId] = recChar;
 	        	if ((recChar & FLAGS1_MASK_CABISACTIVE) != FLAGS1_CABISACTIVE) {
 	        		// not active slot
 	            	if (checkBoxActive.isSelected())
@@ -424,35 +457,37 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	            	type.setText(rb.getString("UnknownCabType") + ": " + recChar);
 	            }
 	        	// add items to table
-	        	addItem(cabsPanel, number, 1, i);
-	        	number.setText(Integer.toString(i));
-	        	addItem(cabsPanel, type, 2, i);
-	        	addItem(cabsPanel, address, 3, i);
-	          	addItem(cabsPanel, speed, 4, i);
-	          	addItem(cabsPanel, consist, 5, i);
-	          	addItem(cabsPanel, functions, 6, i);
-	          	addItem(cabsPanel, lastUsed, 7, i);
+	        	addItem(cabsPanel, number, 1, currCabId);
+	        	number.setText(Integer.toString(currCabId));
+	        	addItem(cabsPanel, type, 2, currCabId);
+	        	addItem(cabsPanel, address, 3, currCabId);
+	          	addItem(cabsPanel, speed, 4, currCabId);
+	          	addItem(cabsPanel, consist, 5, currCabId);
+	          	addItem(cabsPanel, functions, 6, currCabId);
+	          	addItem(cabsPanel, line1, 7, currCabId);
+	          	addItem(cabsPanel, line2, 8, currCabId);
+	          	addItem(cabsPanel, lastUsed, 9, currCabId);
 	          	if (cabId != FLAGS1_CABID_AIU) {
 		          	// read 16 bytes of memory, we'll use 7 of the 16
-		        	readCabMemory16(i, CAB_CURR_SPEED);
+		        	readCabMemory16(currCabId, CAB_CURR_SPEED);
 		        	if (!waitNce())
 		        		return;
 		        	// read the Speed byte
 		        	int readChar = recChars[0];
-		        	if (cabSpeedArray[i] != readChar) {
+		        	if (cabSpeedArray[currCabId] != readChar) {
 		        		foundChange++;
-		        		if (log.isDebugEnabled()) log.debug(i + ": Speed " + readChar + "<->" + cabSpeedArray[i]);
+		        		if (log.isDebugEnabled()) log.debug(currCabId + ": Speed " + readChar + "<->" + cabSpeedArray[currCabId]);
 		        	}
-		        	cabSpeedArray[i] = readChar;
+		        	cabSpeedArray[currCabId] = readChar;
 		        	if (log.isDebugEnabled()) log.debug("Read speed character "+Integer.toString(readChar));
 		        	String sped = Integer.toString(readChar);
 		        	// read the FLAGS byte
 		        	readChar = recChars[CAB_FLAGS-CAB_CURR_SPEED];
-		        	if (cabFlagsArray[i] != readChar) {
+		        	if (cabFlagsArray[currCabId] != readChar) {
 		        		foundChange++;
-		        		if (log.isDebugEnabled()) log.debug(i + ": Flags " + readChar + "<->" + cabFlagsArray[i]);
+		        		if (log.isDebugEnabled()) log.debug(currCabId + ": Flags " + readChar + "<->" + cabFlagsArray[currCabId]);
 		        	}
-		        	cabFlagsArray[i] = readChar;
+		        	cabFlagsArray[currCabId] = readChar;
 		        	int direction = readChar & 0x04;
 		        	if (direction > 0)
 		        		sped = sped + " F";
@@ -476,20 +511,20 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 		        	readChar = recChars[CAB_ADDR_L-CAB_CURR_SPEED];
 		        	if (log.isDebugEnabled()) log.debug("Read address low character "+readChar);
 		        	locoAddress = locoAddress + (readChar & 0xFF);
-		        	if (cabLocoArray[i] != locoAddress) {
+		        	if (cabLocoArray[currCabId] != locoAddress) {
 		        		foundChange++;
-		        		if (log.isDebugEnabled()) log.debug(i + ": Loco " + locoAddress + "<->" + cabLocoArray[i]);
+		        		if (log.isDebugEnabled()) log.debug(currCabId + ": Loco " + locoAddress + "<->" + cabLocoArray[currCabId]);
 		        	}
-		        	cabLocoArray[i] = locoAddress;
+		        	cabLocoArray[currCabId] = locoAddress;
 		        	address.setText(Integer.toString(locoAddress));
 		        	
 		        	// create consist address
 		        	readChar = recChars[CAB_ALIAS-CAB_CURR_SPEED];
-		        	if (cabConsistArray[i] != readChar) {
+		        	if (cabConsistArray[currCabId] != readChar) {
 		        		foundChange++;
-		        		if (log.isDebugEnabled()) log.debug(i + ": Consist " + readChar + "<->" + cabConsistArray[i]);
+		        		if (log.isDebugEnabled()) log.debug(currCabId + ": Consist " + readChar + "<->" + cabConsistArray[currCabId]);
 		        	}
-		        	cabConsistArray[i] = readChar;
+		        	cabConsistArray[currCabId] = readChar;
 		        	if(readChar == 0)
 		        		consist.setText(" ");
 		        	else
@@ -497,82 +532,211 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 		        	
 		        	// create function keys
 		        	readChar = recChars[CAB_FUNC_L-CAB_CURR_SPEED];
-		        	if (cabF0Array[i] != readChar) {
+		        	if (cabF0Array[currCabId] != readChar) {
 		        		foundChange++;
-		        		if (log.isDebugEnabled()) log.debug(i + ": F0 " + readChar + "<->" + cabF0Array[i]);
+		        		if (log.isDebugEnabled()) log.debug(currCabId + ": F0 " + readChar + "<->" + cabF0Array[currCabId]);
 		        	}
-		        	cabF0Array[i] = readChar;
+		        	cabF0Array[currCabId] = readChar;
 		        	if (log.isDebugEnabled()) log.debug("Function low character "+readChar);
 		        	StringBuilder func = new StringBuilder();
 		        	if ((readChar & FUNC_L_F0) > 0)
-		        		func.append("L");
+		        		func.append(" L");
 		        	else
-		        		func.append("-");
+		        		func.append(" -");
 		           	if ((readChar & FUNC_L_F1) > 0)
-		           		func.append("1");
+		           		func.append(" 1");
 		        	else
-		        		func.append("-");
+		        		func.append(" -");
 		           	if ((readChar & FUNC_L_F2) > 0)
-		           		func.append("2");
+		           		func.append(" 2");
 		        	else
-		        		func.append("-");
+		        		func.append(" -");
 		           	if ((readChar & FUNC_L_F3) > 0)
-		           		func.append("3");
+		           		func.append(" 3");
 		        	else
-		        		func.append("-");
+		        		func.append(" -");
 		           	if ((readChar & FUNC_L_F4) > 0)
-		           		func.append("4");
+		           		func.append(" 4");
 		        	else
-		        		func.append("-");
+		        		func.append(" -");
 		        	readChar = recChars[CAB_FUNC_H-CAB_CURR_SPEED];
-		        	if (cabF5Array[i] != readChar) {
+		        	if (cabF5Array[currCabId] != readChar) {
 		        		foundChange++;
-		        		if (log.isDebugEnabled()) log.debug(i + ": F5 " + readChar + "<->" + cabF5Array[i]);
+		        		if (log.isDebugEnabled()) log.debug(currCabId + ": F5 " + readChar + "<->" + cabF5Array[currCabId]);
 		        	}
-		        	cabF5Array[i] = readChar;
+		        	cabF5Array[currCabId] = readChar;
 		        	if (log.isDebugEnabled()) log.debug("Function high character "+readChar);
 		           	if ((readChar & FUNC_H_F5) > 0)
-		           		func.append("5");
+		           		func.append(" 5");
 		        	else
-		        		func.append("-");
+		        		func.append(" -");
 		           	if ((readChar & FUNC_H_F6) > 0)
-		           		func.append("6");
+		           		func.append(" 6");
 		        	else
-		        		func.append("-");
+		        		func.append(" -");
 		           	if ((readChar & FUNC_H_F7) > 0)
-		           		func.append("7");
+		           		func.append(" 7");
 		        	else
-		        		func.append("-");
+		        		func.append(" -");
 		           	if ((readChar & FUNC_H_F8) > 0)
-		           		func.append("8");
+		           		func.append(" 8");
 		        	else
-		        		func.append("-");
+		        		func.append(" -");
 		           	if ((readChar & FUNC_H_F9) > 0)
-		           		func.append("9");
+		           		func.append(" 9");
 		        	else
-		        		func.append("-");
+		        		func.append(" -");
 		           	if ((readChar & FUNC_H_F10) > 0)
-		           		func.append("A");
+		           		func.append(" 10");
 		        	else
-		        		func.append("-");
+		        		func.append(" - ");
 		          	if ((readChar & FUNC_H_F11) > 0)
-		          		func.append("B");
+		          		func.append(" 11");
 		        	else
-		        		func.append("-");
+		        		func.append(" - ");
 		          	if ((readChar & FUNC_H_F12) > 0)
-		          		func.append("C");
+		          		func.append(" 12");
 		        	else
-		        		func.append("-");
+		        		func.append(" - ");
+
+		          	// get the functions 13-20 values
+		        	readCabMemory1(currCabId, CAB_FUNC_13_20);
+		        	if (!waitNce())
+		        		return;
+		        	if (cabF13Array[currCabId] != recChar) {
+		        		foundChange++;
+		        		if (log.isDebugEnabled()) log.debug(currCabId + ": F13 " + recChar + "<->" + cabF13Array[currCabId]);
+		        	}
+		        	cabF13Array[currCabId] = recChar;
+		           	if ((recChar & FUNC_H_F13) > 0)
+		           		func.append(" 13");
+		        	else
+		        		func.append(" -");
+		           	if ((recChar & FUNC_H_F14) > 0)
+		           		func.append(" 14");
+		        	else
+		        		func.append(" -");
+		           	if ((recChar & FUNC_H_F15) > 0)
+		           		func.append(" 15");
+		        	else
+		        		func.append(" -");
+		           	if ((recChar & FUNC_H_F16) > 0)
+		           		func.append(" 16");
+		        	else
+		        		func.append(" -");
+		           	if ((recChar & FUNC_H_F17) > 0)
+		           		func.append(" 17");
+		        	else
+		        		func.append(" -");
+		           	if ((recChar & FUNC_H_F18) > 0)
+		           		func.append(" 18");
+		        	else
+		        		func.append(" - ");
+		          	if ((recChar & FUNC_H_F19) > 0)
+		          		func.append(" 19");
+		        	else
+		        		func.append(" - ");
+		          	if ((recChar & FUNC_H_F20) > 0)
+		          		func.append(" 20");
+		        	else
+		        		func.append(" - ");
+
+		          	// get the functions 13-20 values
+		        	readCabMemory1(currCabId, CAB_FUNC_21_28);
+		        	if (!waitNce())
+		        		return;
+		        	if (cabF21Array[currCabId] != recChar) {
+		        		foundChange++;
+		        		if (log.isDebugEnabled()) log.debug(currCabId + ": F21 " + recChar + "<->" + cabF21Array[currCabId]);
+		        	}
+		        	cabF21Array[currCabId] = recChar;
+		           	if ((recChar & FUNC_H_F21) > 0)
+		           		func.append(" 21");
+		        	else
+		        		func.append(" -");
+		           	if ((recChar & FUNC_H_F22) > 0)
+		           		func.append(" 22");
+		        	else
+		        		func.append(" -");
+		           	if ((recChar & FUNC_H_F23) > 0)
+		           		func.append(" 23");
+		        	else
+		        		func.append(" -");
+		           	if ((recChar & FUNC_H_F24) > 0)
+		           		func.append(" 24");
+		        	else
+		        		func.append(" -");
+		           	if ((recChar & FUNC_H_F25) > 0)
+		           		func.append(" 25");
+		        	else
+		        		func.append(" -");
+		           	if ((recChar & FUNC_H_F26) > 0)
+		           		func.append(" 26");
+		        	else
+		        		func.append(" - ");
+		          	if ((recChar & FUNC_H_F27) > 0)
+		          		func.append(" 27");
+		        	else
+		        		func.append(" - ");
+		          	if ((recChar & FUNC_H_F28) > 0)
+		          		func.append(" 28");
+		        	else
+		        		func.append(" - ");
+		        	
 		          	functions.setText(func.toString());
+		          	
+		          	// get the display values
+		        	readCabMemory16(currCabId, CAB_LINE_1);
+		        	if (!waitNce())
+		        		return;
+		        	StringBuilder text1 = new StringBuilder();
+		        	StringBuilder debug1 = new StringBuilder();
+		        	for(int i = 0; i < CAB_LINE_LEN; i++) {
+			        	if (cabLine1Array[currCabId][i] != recChars[i]) {
+			        		foundChange++;
+			        		if (log.isDebugEnabled()) log.debug(currCabId + ": CabLine1[" + i + "] " + recChars[i] + "<->" + cabLine1Array[currCabId][i]);
+			        	}
+			        	cabLine1Array[currCabId][i] = recChars[i];
+			        	if (recChars[i] >= 0x20 && recChars[i] <= 0x7F) {
+			        		text1.append((char)recChars[i]);
+			        	} else {
+			        		text1.append(" ");
+			        	}
+		        		debug1.append(" " + (int)recChars[i]);
+		        	}
+		        	line1.setText(text1.toString());
+		        	if (log.isDebugEnabled()) log.debug("TextLine1Debug: " + debug1);
+		        	
+		        	readCabMemory16(currCabId, CAB_LINE_2);
+		        	if (!waitNce())
+		        		return;
+		        	StringBuilder text2 = new StringBuilder();
+		        	StringBuilder debug2 = new StringBuilder();
+		        	for(int i = 0; i < CAB_LINE_LEN; i++) {
+			        	if (cabLine2Array[currCabId][i] != recChars[i]) {
+			        		foundChange++;
+			        		if (log.isDebugEnabled()) log.debug(currCabId + ": CabLine2[" + i + "] " + recChars[i] + "<->" + cabLine2Array[currCabId][i]);
+			        	}
+			        	cabLine2Array[currCabId][i] = recChars[i];
+			        	if (recChars[i] >= 0x20 && recChars[i] <= 0x7F) {
+			        		text2.append((char)recChars[i]);
+			        	} else {
+			        		text2.append(" ");
+			        	}
+		        		debug2.append(" " + (int)recChars[i]);
+		        	}
+		        	line2.setText(text2.toString());
+		        	if (log.isDebugEnabled()) log.debug("TextLine2Debug: " + debug2);
+		        	
+		          	if (foundChange > 0 || cabLastChangeArray[currCabId] == null) {
+		            	cabLastChangeArray[currCabId] = Calendar.getInstance();
+		            }
 	          	}
-	          	if (foundChange > 0 || cabLastChangeArray[i] == null) {
-	            	cabLastChangeArray[i] = Calendar.getInstance();
-	            }
 	          	
 	          	StringBuilder txt = new StringBuilder();
-	          	int h = cabLastChangeArray[i].get(Calendar.HOUR_OF_DAY);
-	          	int m = cabLastChangeArray[i].get(Calendar.MINUTE);
-	          	int s = cabLastChangeArray[i].get(Calendar.SECOND);
+	          	int h = cabLastChangeArray[currCabId].get(Calendar.HOUR_OF_DAY);
+	          	int m = cabLastChangeArray[currCabId].get(Calendar.MINUTE);
+	          	int s = cabLastChangeArray[currCabId].get(Calendar.SECOND);
 	          	if (h < 10) {
 	          		txt.append("0");
 	          	}
