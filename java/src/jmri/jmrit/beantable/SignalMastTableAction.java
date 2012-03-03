@@ -10,8 +10,6 @@ import javax.swing.*;
 import javax.swing.table.*;
 import jmri.util.com.sun.TableSorter;
 
-import jmri.util.JmriJFrame;
-
 /**
  * Swing action to create and register a
  * SignalMastTable GUI.

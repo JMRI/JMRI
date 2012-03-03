@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.configurexml;
 
-import jmri.InstanceManager;
 //import jmri.SignalHead;
 import jmri.jmrix.loconet.LNCPSignalMast;
 import org.jdom.Element;

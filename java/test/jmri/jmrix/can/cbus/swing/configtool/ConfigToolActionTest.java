@@ -2,10 +2,6 @@
 
 package jmri.jmrix.can.cbus.swing.configtool;
 
-import javax.swing.JFrame;
-
-import jmri.jmrix.can.TestTrafficController;
-
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;

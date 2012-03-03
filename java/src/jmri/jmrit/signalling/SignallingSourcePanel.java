@@ -15,7 +15,6 @@ import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;

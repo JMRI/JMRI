@@ -1,8 +1,5 @@
 // VirtualSignalMast.javaa
 package jmri.implementation;
-import java.util.*;
-
-import jmri.*;
 
  /**
  * SignalMast implemented via one SignalHead object.

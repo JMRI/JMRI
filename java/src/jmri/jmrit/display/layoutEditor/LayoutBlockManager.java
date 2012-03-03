@@ -10,13 +10,8 @@ import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.NamedBeanHandle;
 import jmri.NamedBean;
-import jmri.JmriException;
-
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.Hashtable;
-import java.util.List;
-
 import javax.swing.JOptionPane;
 
 /**

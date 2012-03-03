@@ -7,11 +7,9 @@ import java.util.List;
 
 import java.io.File;
 import java.util.Vector;
-import java.util.HashMap;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 
-import jmri.NamedBeanHandle;
 import jmri.jmrit.XmlFile;
 
 import jmri.SignalHead;

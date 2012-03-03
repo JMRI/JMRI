@@ -5,20 +5,15 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.util.Date;
 
-import javax.swing.BoxLayout;
 import javax.swing.JTable;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import jmri.Reporter;
 import jmri.RailCom;
 import jmri.RailComManager;
-
-import jmri.util.JmriJFrame;
 
 /**
  * Swing action to create and register a

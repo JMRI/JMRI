@@ -3,7 +3,6 @@
 package jmri.jmrix.cmri.serial.sim;
 
 import javax.swing.*;
-import java.util.Vector;
 import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
 
 /**

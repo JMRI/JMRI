@@ -1,7 +1,6 @@
 // SignalAppearanceMap.java
 package jmri;
 
-import jmri.NamedBeanHandle;
 import java.util.Vector;
 
  /**

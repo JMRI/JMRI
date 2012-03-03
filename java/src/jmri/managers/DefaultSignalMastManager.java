@@ -4,8 +4,6 @@ package jmri.managers;
 
 import jmri.*;
 import jmri.managers.AbstractManager;
-import java.util.List;
-import java.util.ArrayList;
 
 /**
  * Default implementation of a SignalMastManager.

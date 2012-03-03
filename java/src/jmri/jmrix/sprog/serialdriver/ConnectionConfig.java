@@ -2,8 +2,6 @@
 
 package jmri.jmrix.sprog.serialdriver;
 
-import java.util.Vector;
-
 /**
  * Definition of objects to handle configuring a layout connection
  * via an SPROG SerialDriverAdapter object.

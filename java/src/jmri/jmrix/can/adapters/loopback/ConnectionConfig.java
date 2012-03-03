@@ -1,8 +1,6 @@
 // ConnectionConfig.java
 
 package jmri.jmrix.can.adapters.loopback;
-import java.util.Vector;
-
 import java.util.ResourceBundle;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
