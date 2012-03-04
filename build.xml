@@ -128,7 +128,7 @@
         <pathelement location="${libdir}/joal.jar"/>
         <pathelement location="${libdir}/jython.jar"/>
         <pathelement location="${libdir}/log4j.jar"/>
-        <pathelement location="${libdir}/servlet.jar"/>
+        <pathelement location="${libdir}/servlet-api-3.0.jar"/>
         <pathelement location="${libdir}/vecmath.jar"/>
         <pathelement location="${libdir}/activation.jar"/>
         <pathelement location="${libdir}/mailapi.jar"/>
@@ -138,6 +138,13 @@
         <pathelement location="${libdir}/jfcunit.jar"/>
         <pathelement location="${libdir}/WinRegistry-4.4.jar"/>
         <pathelement location="${libdir}/jakarta-regexp-1.5.jar"/>
+        <pathelement location="${libdir}/jetty-continuation-8.1.0.v20120127.jar"/>
+        <pathelement location="${libdir}/jetty-http-8.1.0.v20120127.jar"/>
+        <pathelement location="${libdir}/jetty-security-8.1.0.v20120127.jar"/>
+        <pathelement location="${libdir}/jetty-server-8.1.0.v20120127.jar"/>
+        <pathelement location="${libdir}/jetty-servlet-8.1.0.v20120127.jar"/>
+        <pathelement location="${libdir}/jetty-util-8.1.0.v20120127.jar"/>
+        <pathelement location="${libdir}/jetty-io-8.1.0.v20120127.jar"/>
     </path>
 
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
