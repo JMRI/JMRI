@@ -24,7 +24,7 @@ import jmri.util.com.sun.TableSorter;
 /**
  * Frame for operations
  * 
- * @author Dan Boudreau Copyright (C) 2008
+ * @author Dan Boudreau Copyright (C) 2008, 2012
  * @version $Revision$
  */
 
@@ -195,7 +195,8 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 			sorter = (TableSorter) table.getModel();
 		} catch (Exception e) {
 			log.debug("table "+tableref+" doesn't use sorter");
-		}       
+		} 
+
 		for (int i = 0; i <table.getColumnCount(); i++) {
 			int sortStatus = 0;
 			if (sorter != null)
@@ -212,36 +213,49 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
 		TableSorter sorter = null;
 		String tableref = getWindowFrameRef() + ":table";
+		if (p.getTablesColumnList(tableref).size() == 0)
+			return false;
 		try {
 			sorter = (TableSorter) table.getModel();
 		} catch (Exception e) {
 			log.debug("table "+tableref+" doesn't use sorter");
 		}    
+		// bubble sort
+		int count = 0;
+		while (!sortTable(table, p, tableref) && count < 10) {
+			count++;
+		}
+		// Some tables have more than one name, so use the current one for size
 		for (int i = 0; i <table.getColumnCount(); i++) {
-			String columnName = p.getTableColumnAtNum(tableref, i);
-			if (columnName == null) {
-				return false;
-			} else {
-				int originalLocation = -1;
-				for (int j = 0; j < table.getColumnCount(); j++) {
-					if (table.getColumnName(j).equals(columnName)) {
-						originalLocation = j;
-					}
-				}
-				if (originalLocation != -1 && (originalLocation != i)) {
-					table.moveColumn(originalLocation, i);
-				}
-				int sort = p.getTableColumnSort(tableref, columnName);
-				if (sorter != null)
-					sorter.setSortingStatus(i, sort);
-				int width = p.getTableColumnWidth(tableref, columnName);
-				if (width != -1) {
-					table.getColumnModel().getColumn(i).setPreferredWidth(width);
-					log.debug("Setting column number " + i + " name " +columnName+" width "+width);
-				}
+			String columnName = table.getColumnName(i);
+			int sort = p.getTableColumnSort(tableref, columnName);
+			if (sorter != null)
+				sorter.setSortingStatus(i, sort);		
+			int width = p.getTableColumnWidth(tableref, columnName);
+			if (width != -1) {
+				table.getColumnModel().getColumn(i).setPreferredWidth(width);
 			}
 		}
 		return true;
+	}
+	
+	private boolean sortTable(JTable table, UserPreferencesManager p, String tableref){
+		boolean sortDone = true;
+		for (int i = 0; i <table.getColumnCount(); i++) {
+			String columnName = table.getColumnName(i);
+			int order = p.getTableColumnOrder(tableref, columnName);
+			//log.debug("Column number " + i + " name " +columnName+" order "+order);
+			if (order == -1){
+				log.debug("Column name "+columnName+" not found in user preference file");
+				continue;
+			}
+			if (i != order) {
+				table.moveColumn(i, order);
+				log.debug("Move column number " + i + " name " +columnName+" to "+order);
+				sortDone = false;
+			}
+		}
+		return sortDone;	
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
