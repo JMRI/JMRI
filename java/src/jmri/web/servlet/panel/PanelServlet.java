@@ -1,0 +1,84 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package jmri.web.servlet.panel;
+
+import java.awt.Dimension;
+import java.util.List;
+import javax.swing.JFrame;
+import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.web.server.WebServer;
+import org.jdom.Attribute;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
+
+/**
+ *
+ * @author rhwood
+ */
+public class PanelServlet extends AbstractPanelServlet {
+
+    @Override
+    protected String getPanelType() {
+        return "Panel";
+    }
+
+    @Override
+    protected String getPanel(String name) {
+        if (log.isDebugEnabled()) {
+            log.debug("Getting " + getPanelType() + " for " + name);
+        }
+        try {
+            PanelEditor editor = (PanelEditor) getEditor(name);
+
+            Element panel = new Element("panel");
+
+            JFrame frame = editor.getTargetFrame();
+            log.info("Target Frame [" + frame.getTitle() + "]");
+            Dimension size = frame.getSize();
+
+            panel.setAttribute("name", name);
+            panel.setAttribute("height", "" + size.height);
+            panel.setAttribute("width", "" + size.width);
+
+            panel.setAttribute("showtooltips", "" + (editor.showTooltip() ? "yes" : "no"));
+            panel.setAttribute("controlling", "" + (editor.allControlling() ? "yes" : "no"));
+            if (editor.getBackgroundColor() != null) {
+                Element color = new Element("backgroundColor");
+                color.setAttribute("red", "" + editor.getBackgroundColor().getRed());
+                color.setAttribute("green", "" + editor.getBackgroundColor().getGreen());
+                color.setAttribute("blue", "" + editor.getBackgroundColor().getBlue());
+                panel.addContent(color);
+            }
+
+            // include contents
+            List<Positionable> contents = editor.getContents();
+            if (log.isDebugEnabled()) {
+                log.debug("N elements: " + contents.size());
+            }
+            for (Positionable sub : contents) {
+                if (sub != null) {
+                    try {
+                        Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                        if (e != null) {
+                            parsePortableURIs(e);
+                            panel.addContent(e);
+                        }
+                    } catch (Exception ex) {
+                        log.error("Error storing panel element: " + ex, ex);
+                    }
+                }
+            }
+
+            Document doc = new Document(panel);
+            XMLOutputter out = new XMLOutputter();
+
+            return out.outputString(doc);
+        } catch (NullPointerException ex) {
+            return "ERROR Requested panel [" + name + "] does not exist.";
+        }
+    }
+}
