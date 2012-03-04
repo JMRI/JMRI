@@ -225,8 +225,10 @@ public class ZeroConfService {
         if (log.isDebugEnabled()) {
             log.debug("Stopping ZeroConfService " + key());
         }
-        ZeroConfService.jmdns().unregisterService(_serviceInfo);
-        ZeroConfService.services().remove(key());
+        if (ZeroConfService.services().containsKey(key())) {
+            ZeroConfService.jmdns().unregisterService(_serviceInfo);
+            ZeroConfService.services().remove(key());
+        }
     }
 
     /**
