@@ -10,7 +10,7 @@ $(document).ready(
                         $('div#formattedLabel').text("Waiting....  Sent:");
 
                         $.post(
-                                '/xmlio', //<--url
+                                '/xmlio/', //<--url
                                 $commandstr, //<--data
                                 function($r, $s, $x) { //<--success
                                     $processResponse($r, $s, $x)

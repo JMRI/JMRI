@@ -47,7 +47,7 @@ var $sendXMLIOList = function($commandstr){
 //	$gXHRList = $.ajax({ 
 	$.ajax({
 		type: 'POST',
-		url:  '/xmlio',
+		url:  '/xmlio/',
 		data: $commandstr,
 		success: function($r, $s, $x){
 			$processResponse($r, $s, $x); //handle returned data
@@ -62,7 +62,7 @@ var $sendXMLIOList = function($commandstr){
 var $sendXMLIOChg = function($commandstr){
 	$.ajax({  
 		type: 'POST',
-		url:  '/xmlio',
+		url:  '/xmlio/',
 		data: $commandstr,
 		success: function($r, $s, $x){
 			//ignore this response
