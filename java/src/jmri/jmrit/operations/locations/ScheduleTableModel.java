@@ -62,6 +62,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     Location _location;
     Track _track;
     JTable _table;
+    ScheduleEditFrame _frame;
     boolean _matchMode = false;
     
     synchronized void updateList() {
@@ -80,11 +81,12 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	List<String> _list = new ArrayList<String>();
     
-	void initTable(JTable table, Schedule schedule, Location location, Track track) {
+	void initTable(ScheduleEditFrame frame, JTable table, Schedule schedule, Location location, Track track) {
 		_schedule = schedule;
 		_location = location;
 		_track = track;
 		_table = table;
+		_frame = frame;
 		
 		// add property listeners
 		if (_schedule != null)
@@ -96,8 +98,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		initTable(table);
 	}
 	
-	private void initTable(JTable table) {
-		
+	private void initTable(JTable table) {		
 		// Install the button handlers
 		TableColumnModel tcm = table.getColumnModel();
 		ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -110,7 +111,21 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		tcm.getColumn(DELETECOLUMN).setCellEditor(buttonEditor);
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+       
+        setPreferredWidths(table);
 
+		// set row height
+		table.setRowHeight(new JComboBox().getPreferredSize().height);
+        updateList();
+		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	}
+	
+
+	private void setPreferredWidths(JTable table){
+		if (_frame.loadTableDetails(table))
+			return;	// done
+        log.debug("Setting preferred widths");
 		// set column preferred widths
 		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(35);
 		table.getColumnModel().getColumn(CURRENTCOLUMN).setPreferredWidth(50);
@@ -126,11 +141,6 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		table.getColumnModel().getColumn(UPCOLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(DOWNCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(70);
-		// set row height
-		table.setRowHeight(new JComboBox().getPreferredSize().height);
-        updateList();
-		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
     
     public int getRowCount() { return _list.size(); }
@@ -153,9 +163,9 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         		return rb.getString("Hits");
         	return rb.getString("Count");
         case WAITCOLUMN: return rb.getString("Wait");
-        case UPCOLUMN: return "";
-        case DOWNCOLUMN: return "";
-        case DELETECOLUMN: return "";		//edit column
+        case UPCOLUMN: return rb.getString("Up");
+        case DOWNCOLUMN: return rb.getString("Down");
+        case DELETECOLUMN: return rb.getString("Delete");
         default: return "unknown";
         }
     }

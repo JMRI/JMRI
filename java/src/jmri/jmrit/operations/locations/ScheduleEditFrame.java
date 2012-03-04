@@ -84,7 +84,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
     	schedulePane = new JScrollPane(scheduleTable);
     	schedulePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-      	scheduleModel.initTable(scheduleTable, schedule, _location, _track);
+      	scheduleModel.initTable(this, scheduleTable, schedule, _location, _track);
 		if (_schedule != null){
 			scheduleNameTextField.setText(_schedule.getName());
 			commentTextField.setText(_schedule.getComment());
@@ -274,7 +274,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		if (!checkName(rb.getString("add")))
 			return;
 		Schedule schedule = manager.newSchedule(scheduleNameTextField.getText());
-		scheduleModel.initTable(scheduleTable, schedule, _location, _track);
+		scheduleModel.initTable(this, scheduleTable, schedule, _location, _track);
 		_schedule = schedule;
 		// enable checkboxes
 		enableButtons(true);
@@ -298,7 +298,8 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 			else
 				_track.setScheduleMode(Track.MATCH);
 		}
-
+		
+		saveTableDetails(scheduleTable);
 		// save schedule file
 		managerXml.writeOperationsFile();
 	}

@@ -158,7 +158,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     
     public static final String IDCOLUMNNAME = rb.getString("Id");
     public static final String TIMECOLUMNNAME = rb.getString("Time");
-    public static final String BUILDCOLUMNNAME = rb.getString("Build");
+    public static final String BUILDBOXCOLUMNNAME = rb.getString("Build");
+    public static final String BUILDCOLUMNNAME = rb.getString("Function");
     public static final String NAMECOLUMNNAME = rb.getString("Name");
     public static final String DESCRIPTIONCOLUMNNAME = rb.getString("Description");
     public static final String ROUTECOLUMNNAME = rb.getString("Route");
@@ -167,6 +168,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public static final String TERMINATESCOLUMNNAME = rb.getString("Terminates");
     public static final String STATUSCOLUMNNAME = rb.getString("Status");
     public static final String ACTIONCOLUMNNAME = rb.getString("Action");
+    public static final String EDITCOLUMNNAME = rb.getString("Edit");
 
     public String getColumnName(int col) {
         switch (col) {
@@ -175,8 +177,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         		return IDCOLUMNNAME;
         	return TIMECOLUMNNAME;
         }
-        case BUILDBOXCOLUMN: return BUILDCOLUMNNAME;
-        case BUILDCOLUMN: return "";
+        case BUILDBOXCOLUMN: return BUILDBOXCOLUMNNAME;
+        case BUILDCOLUMN: return BUILDCOLUMNNAME;
         case NAMECOLUMN: return NAMECOLUMNNAME;
         case DESCRIPTIONCOLUMN: return DESCRIPTIONCOLUMNNAME;
         case ROUTECOLUMN: return ROUTECOLUMNNAME;
@@ -185,7 +187,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         case TERMINATESCOLUMN: return TERMINATESCOLUMNNAME;
         case STATUSCOLUMN: return STATUSCOLUMNNAME;
         case ACTIONCOLUMN: return ACTIONCOLUMNNAME;
-        case EDITCOLUMN: return "";		//edit column
+        case EDITCOLUMN: return EDITCOLUMNNAME;
         default: return "unknown";
         }
     }

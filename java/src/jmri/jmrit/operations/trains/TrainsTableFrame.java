@@ -473,6 +473,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		/* all JMRI window position and size are now saved
 		trainManager.setTrainsFrame(this);					//save frame size and location
 		*/
+		saveTableDetails(trainsTable);
 		trainManager.setTrainsFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
 		trainManager.setTrainsFrameSortBy(getSortBy());		//save how the table is sorted
 		trainManager.setTrainsFrameSortStatus(_status);

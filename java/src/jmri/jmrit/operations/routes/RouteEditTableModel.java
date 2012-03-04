@@ -49,6 +49,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     
     private boolean _showWait = true;
     private JTable _table;
+    private Route _route;
+    private RouteEditFrame _frame;
 
     public RouteEditTableModel() {
         super();
@@ -60,7 +62,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     	initTable(_table);
     }
  
-    Route _route;
+
     
     synchronized void updateList() {
     	if (_route == null)
@@ -78,7 +80,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
 	List<String> list = new ArrayList<String>();
     
-	void initTable(JTable table, Route route) {
+	void initTable(RouteEditFrame frame, JTable table, Route route) {
+		_frame = frame;
 		_table = table;
 		_route = route;
 		if (_route != null)
@@ -102,7 +105,19 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
+        setPreferredWidths(table);
+
+		// set row height
+		table.setRowHeight(new JComboBox().getPreferredSize().height);
+        updateList();
+		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	}
+	
+	private void setPreferredWidths(JTable table) {
 		// set column preferred widths
+		if (_frame.loadTableDetails(table))
+			return;		// done
 		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(150);
 		table.getColumnModel().getColumn(TRAINCOLUMN).setPreferredWidth(95);
@@ -118,11 +133,6 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		table.getColumnModel().getColumn(UPCOLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(DOWNCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(70);
-		// set row height
-		table.setRowHeight(new JComboBox().getPreferredSize().height);
-        updateList();
-		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
     
     public int getRowCount() { return list.size(); }
@@ -148,9 +158,9 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         case TRAINICONX: return rb.getString("X");
         case TRAINICONY: return rb.getString("Y");
         case COMMENTCOLUMN: return rb.getString("Comment");
-        case UPCOLUMN: return "";
-        case DOWNCOLUMN: return "";
-        case DELETECOLUMN: return "";		//edit column
+        case UPCOLUMN: return rb.getString("Up");
+        case DOWNCOLUMN: return rb.getString("Down");
+        case DELETECOLUMN: return rb.getString("Delete");
         default: return "unknown";
         }
     }

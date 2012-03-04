@@ -89,7 +89,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 			routeName = _route.getName();
 			routeNameTextField.setText(routeName);
 			commentTextField.setText(_route.getComment());
-	      	routeModel.initTable(routeTable, route);
+	      	routeModel.initTable(this, routeTable, route);
 	      	enableButtons(true);
 		} else {
 			enableButtons(false);
@@ -270,7 +270,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		if (!checkName(rb.getString("add")))
 			return;
 		Route route = manager.newRoute(routeNameTextField.getText());
-		routeModel.initTable(routeTable, route);
+		routeModel.initTable(this, routeTable, route);
 		_route = route;
 		// enable checkboxes
 		enableButtons(true);
@@ -287,6 +287,8 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 			log.debug("route table edit true");
 			routeTable.getCellEditor().stopCellEditing();
 		}
+		
+		saveTableDetails(routeTable);
 
 		// save route file
 		managerXml.writeOperationsFile();
