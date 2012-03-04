@@ -72,7 +72,7 @@
     <sensoricon sensor="CS27" x="967" y="91" active="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
 	<!-- Indicator for the "gate" sensor -->
-    <sensoricon sensor="CS59" x="160" y="260" active="resource:resources/icons/mediumschematics/LEDs/GREENLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/YELLOWLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
+    <sensoricon sensor="CS59" x="160" y="260" active="resource:resources/icons/mediumschematics/LEDs/GREENLED.gif" inactive="resource:resources/icons/mediumschematics/LEDs/REDLED.gif" unknown="resource:resources/icons/mediumschematics/LEDs/GRAYLED.gif" inconsistent="resource:resources/icons/mediumschematics/LEDs/AMBERLED.gif" rotate="0" class="jmri.jmrit.display.configurexml.SensorIconXml" />
 
 	<!-- turnouts on the upper schematic (left to right); the C/MRI ones are inputs only, so are coded with sensors -->
     <sensoricon sensor="CS52" x="19" y="111" active="resource:resources/icons/cornwall/TurnoutClosedL.gif" inactive="resource:resources/icons/cornwall/TurnoutThrownL.gif" unknown="resource:resources/icons/cornwall/TurnoutNeitherL.gif" inconsistent="resource:resources/icons/cornwall/TurnoutBothL.gif" rotate="2" class="jmri.jmrit.display.configurexml.SensorIconXml" />
