@@ -1023,15 +1023,15 @@ public class Track {
     public void bumpSchedule(){
     	// bump the track move count
     	setMoves(getMoves()+1);
-    	// is the schedule in match mode?
-    	if (getScheduleMode() == Track.MATCH)
-    		return;
     	// bump the schedule count
     	setScheduleCount(getScheduleCount()+1);
     	if (getScheduleCount() < getCurrentScheduleItem().getCount())
     		return;
-    	// go to the next item on the schedule
     	setScheduleCount(0);
+    	// is the schedule in match mode?
+    	if (getScheduleMode() == Track.MATCH)
+    		return;
+    	// go to the next item on the schedule
     	getNextScheduleItem();
     }
     

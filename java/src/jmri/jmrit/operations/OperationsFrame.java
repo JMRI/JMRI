@@ -213,7 +213,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
 		TableSorter sorter = null;
 		String tableref = getWindowFrameRef() + ":table";
-		if (p.getTablesColumnList(tableref).size() == 0)
+		if (p == null || p.getTablesColumnList(tableref).size() == 0)
 			return false;
 		try {
 			sorter = (TableSorter) table.getModel();
