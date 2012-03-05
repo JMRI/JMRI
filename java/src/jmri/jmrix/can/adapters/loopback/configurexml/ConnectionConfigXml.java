@@ -99,11 +99,16 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                     else if (yesno.equals("yes")) adapter.setDisabled(true);
                 }
         }
-        
-        adapter.configure();
-        
-        // register, so can be picked up
+        // register, so can be picked up next time
         register();
+        
+        
+        if (adapter.getDisabled()){
+            unpackElement(e);
+            return result;
+        }
+        adapter.configure();
+
         return result;
     }
 
