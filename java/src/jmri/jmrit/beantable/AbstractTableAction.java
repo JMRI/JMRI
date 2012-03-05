@@ -65,13 +65,15 @@ abstract public class AbstractTableAction extends AbstractAction {
              * Include an "add" button
              */
             void extras() {
-                JButton addButton = new JButton(this.rb.getString("ButtonAdd"));
-                addToBottomBox(addButton, this.getClass().getName());
-                addButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        addPressed(e);
-                    }
-                });
+                if(includeAddButton){
+                    JButton addButton = new JButton(this.rb.getString("ButtonAdd"));
+                    addToBottomBox(addButton, this.getClass().getName());
+                    addButton.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            addPressed(e);
+                        }
+                    });
+                }
             }
         };
         setMenuBar(f);
@@ -155,6 +157,10 @@ abstract public class AbstractTableAction extends AbstractAction {
     }
 
     protected abstract String getClassName();
+    
+    public boolean includeAddButton(){ return includeAddButton; }
+    
+    protected boolean includeAddButton = true;
 
     /**
     * Used with the Tabbed instances of table action, so that the print option 
