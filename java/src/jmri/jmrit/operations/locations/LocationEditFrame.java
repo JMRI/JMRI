@@ -588,10 +588,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		}
 	}
 	
-	private int getNumberOfCheckboxes(){
-		return getNumberOfCheckboxes(getPreferredSize());
-	}
-	
 	/**
 	 * Adjust the location's car service types to only reflect 
 	 * the car types serviced by the location's tracks. 

@@ -849,10 +849,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			}
 		}
 	}
-
-	private int getNumberOfCheckboxes(){
-		return getNumberOfCheckboxes(getPreferredSize());
-	}
 	
 	// there are three road combo boxes to update
 	private void updateRoadComboBoxes(){
