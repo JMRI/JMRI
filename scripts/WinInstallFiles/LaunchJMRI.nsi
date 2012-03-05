@@ -153,8 +153,8 @@ Var FORCE32BIT ; used to determine if 32-bit JRE should always be used
 !define SW_MINIMIZE 6   ; from WinAPI for Minimized window
 !define ARCH_32BIT  0   ; represents 32-bit architecture
 !define ARCH_64BIT  1   ; represents 64-bit architecture
-!define FLAG_NO     0
-!define FLAG_YES    1
+!define FLAG_NO     0   ; represents a NO return value from subroutines
+!define FLAG_YES    1   ; represents a YES return value from subroutines
 
 ; -------------------------------------------------------------------------
 ; - Compiler Flags (to reduce executable size, saves some bytes)
@@ -207,6 +207,8 @@ Section "Main"
   DetailPrint "AppName: $APPNAME"
   DetailPrint "Class: $CLASS"
   DetailPrint "Parameters: $PARAMETERS"
+  DetailPrint "Noisy: $NOISY"
+  DetailPrint "Force32bit: $FORCE32BIT"
 
   ; -- First determine if we're running on x64
   DetailPrint "Testing for x64..."
@@ -218,23 +220,23 @@ Section "Main"
   ; -- Find the JAVA install
   
   ; -- Initialise JRE architecture variable
-  StrCpy $x64JRE ARCH_32BIT
+  StrCpy $x64JRE ${ARCH_32BIT}
   
   ; -- Determine which JAVA exe to use
   StrCpy $R0 "java"
-  StrCmp $NOISY SW_NORMAL IsNoisy
+  StrCmp $NOISY ${SW_NORMAL} IsNoisy
   StrCpy $R0 "$R0w"
   IsNoisy:
   StrCpy $JAVAEXE "$R0.exe"
   
   ; -- If we're running x64, first check for 64-bit JRE
-  StrCmp ARCH_32BIT $x64 JRESearch
+  StrCmp ${ARCH_32BIT} $x64 JRESearch
     ; -- Now check if we should force 32-bit JRE usage on x64
-    StrCmp FLAG_YES $FORCE32BIT JRESearch
+    StrCmp ${FLAG_YES} $FORCE32BIT JRESearch
       ; -- No need to force
       DetailPrint "Setting x64 registry view..."
       SetRegView 64
-      StrCpy $x64JRE ARCH_64BIT
+      StrCpy $x64JRE ${ARCH_64BIT}
 
   ; -- Read from machine registry
   JRESearch:
@@ -247,10 +249,10 @@ Section "Main"
   IfErrors 0 JreFound
     ; -- If we've got an error here on x64, switch to the 32-bit registry
     ; -- and retry (not needed if we've forced 32-bit above)
-    StrCmp ARCH_32BIT $x64JRE JRENotFound
+    StrCmp ${ARCH_32BIT} $x64JRE JRENotFound
       SetRegView 32
       DetailPrint "Setting x86 registry view..."
-      StrCpy $x64JRE ARCH_32BIT
+      StrCpy $x64JRE ${ARCH_32BIT}
       Goto JRESearch
     
   JreNotFound:
@@ -285,7 +287,7 @@ Section "Main"
   DetailPrint "JExePath: $JEXEPATH"
 
   ; -- Get the memory status
-  StrCmp ARCH_32BIT $x64 Notx64
+  StrCmp ${ARCH_32BIT} $x64 Notx64
   Call GetSystemMemoryStatus64
   Goto CalcFreeMem
   Notx64:
@@ -324,7 +326,7 @@ Section "Main"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
   StrCpy $OPTIONS "$OPTIONS -Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"
-  StrCmp ARCH_64BIT $x64JRE x64Libs x86Libs
+  StrCmp ${ARCH_64BIT} $x64JRE x64Libs x86Libs
   x86Libs:
     ; -- 32-bit libraries
     StrCpy $OPTIONS "$OPTIONS -Djava.library.path=.;lib\x86;lib"
@@ -354,7 +356,7 @@ Section "Main"
   ; -- If not defined, check user home is consistent
   Call CheckUserHome
   Pop $0
-  StrCmp $0 FLAG_YES ReadPrefsDir
+  StrCmp $0 ${FLAG_YES} ReadPrefsDir
     ; -- Not consistent - set to Profile
     DetailPrint "Set user.home to %USERPROFILE%: $PROFILE"
     StrCpy $OPTIONS `$OPTIONS -Duser.home="$PROFILE"`
@@ -446,8 +448,8 @@ Function .onInit
   StrCpy $0 $CMDLINE
   ; -- Setup the default environment
   SetSilent silent
-  StrCpy $NOISY SW_MINIMIZE
-  StrCpy $FORCE32BIT FLAG_NO
+  StrCpy $NOISY ${SW_MINIMIZE}
+  StrCpy $FORCE32BIT ${FLAG_NO}
   ; -- Start reading commandline parameters
   cmdLoop:
   Push $0
@@ -479,11 +481,11 @@ Function .onInit
   Goto cmdLoop
   
   optsNoisy:
-  StrCpy $NOISY SW_NORMAL
+  StrCpy $NOISY ${SW_NORMAL}
   Goto cmdLoop
   
   opts32bit:
-  StrCpy $FORCE32BIT FLAG_YES
+  StrCpy $FORCE32BIT ${FLAG_YES}
   Goto cmdLoop
 
   cmdlineOptsDone:
@@ -741,12 +743,12 @@ Function CheckUserHome
 
   ; -- Not equal
   DetailPrint "user.home not OK"
-  StrCpy $0 FLAG_NO
+  StrCpy $0 ${FLAG_NO}
   Goto CheckUserHomeDone
 
   CheckUserHomeOK:
   DetailPrint "user.home OK"
-  StrCpy $0 FLAG_YES
+  StrCpy $0 ${FLAG_YES}
 
   CheckUserHomeDone:
   ; -- Restore variables from the stack
