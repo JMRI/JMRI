@@ -189,6 +189,8 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	 */
 	protected void saveTableDetails(JTable table) {
 		UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
+		if (p == null)
+			return;
 		TableSorter sorter = null;
 		String tableref = getWindowFrameRef() + ":table";
 		try {
