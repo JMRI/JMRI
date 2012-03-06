@@ -19,7 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import jmri.util.JmriJFrame;
-import jmri.web.miniserver.MiniServerManager;
+import jmri.web.server.WebServerManager;
 import org.apache.log4j.Logger;
 
 /**
@@ -39,12 +39,11 @@ import org.apache.log4j.Logger;
  */
 public class JmriJFrameServlet extends HttpServlet {
 
-    static String clickRetryTime = ((Integer) MiniServerManager.miniServerPreferencesInstance().getClickDelay()).toString();
-    static String noclickRetryTime = ((Integer) MiniServerManager.miniServerPreferencesInstance().getRefreshDelay()).toString();
-    static ArrayList<String> disallowedFrames = new ArrayList<String>(
-            Arrays.asList(MiniServerManager.miniServerPreferencesInstance().getDisallowedFrames().split("\n")));
-    boolean useAjax = MiniServerManager.miniServerPreferencesInstance().useAjax();
-    boolean plain = MiniServerManager.miniServerPreferencesInstance().isPlain();
+    static String clickRetryTime = Integer.toString(WebServerManager.getWebServerPreferences().getClickDelay());
+    static String noclickRetryTime = Integer.toString(WebServerManager.getWebServerPreferences().getRefreshDelay());
+    static List<String> disallowedFrames = WebServerManager.getWebServerPreferences().getDisallowedFrames();
+    boolean useAjax = WebServerManager.getWebServerPreferences().useAjax();
+    boolean plain = WebServerManager.getWebServerPreferences().isPlain();
     boolean protect = false;
     protected int maxRequestLines = 50;
     protected String serverName = "JMRI-JFrameServer";
