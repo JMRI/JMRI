@@ -8,15 +8,22 @@ package jmri.web.server;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
+import jmri.swing.DefaultEditableListModel;
+import jmri.swing.DefaultListCellEditor;
 import jmri.swing.EditableList;
+import org.apache.log4j.Logger;
 
-public class WebServerPreferencesPanel extends JPanel {
+public class WebServerPreferencesPanel extends JPanel implements ListDataListener {
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.web.server.WebServerStrings");
+    static Logger log = Logger.getLogger(WebServerPreferencesPanel.class.getName());
     Border lineBorder;
     JSpinner clickDelaySpinner;
     JSpinner refreshDelaySpinner;
@@ -54,7 +61,13 @@ public class WebServerPreferencesPanel extends JPanel {
     private void setGUI() {
         clickDelaySpinner.setValue(preferences.getClickDelay());
         refreshDelaySpinner.setValue(preferences.getRefreshDelay());
-        disallowedFrames.setListData(preferences.getDisallowedFrames().toArray());
+        DefaultEditableListModel model = new DefaultEditableListModel();
+        for (String frame : preferences.getDisallowedFrames()) {
+            model.addElement(frame);
+        }
+        model.addElement(" ");
+        disallowedFrames.setModel(model);
+        disallowedFrames.getModel().addListDataListener(this);
         useAjaxCB.setSelected(preferences.useAjax());
         rebuildIndexCB.setSelected(preferences.isRebuildIndex());
         port.setText(Integer.toString(preferences.getPort()));
@@ -78,8 +91,14 @@ public class WebServerPreferencesPanel extends JPanel {
         boolean didSet = true;
         preferences.setClickDelay((Integer) clickDelaySpinner.getValue());
         preferences.setRefreshDelay((Integer) refreshDelaySpinner.getValue());
-        // TODO: need to set disallowedFrames as they change
-        // preferences.setDisallowedFrames(disallowedFrames.getText());
+        ArrayList<String> frames = new ArrayList<String>();
+        for (int i = 0; i < disallowedFrames.getModel().getSize(); i++) {
+            String frame = disallowedFrames.getModel().getElementAt(i).toString().trim();
+            if (!frame.equals("")) {
+                frames.add(frame);
+            }
+        }
+        preferences.setDisallowedFrames(frames);
         preferences.setUseAjax(useAjaxCB.isSelected());
         preferences.setRebuildIndex(rebuildIndexCB.isSelected());
         int portNum;
@@ -153,6 +172,9 @@ public class WebServerPreferencesPanel extends JPanel {
 
         JPanel dfPanel = new JPanel();
         disallowedFrames = new EditableList();
+        JTextField tf = new JTextField();
+        tf.setBorder(BorderFactory.createLineBorder(Color.black));
+        disallowedFrames.setListCellEditor(new DefaultListCellEditor(tf));
         dfPanel.add(new JScrollPane(disallowedFrames));
         dfPanel.add(new JLabel(rb.getString("LabelDisallowedFrames")));
 
@@ -220,5 +242,25 @@ public class WebServerPreferencesPanel extends JPanel {
         panel.add(new JLabel(rb.getString("LabelApplyWarning")));
         panel.add(applyB);
         return panel;
+    }
+
+    @Override
+    public void intervalAdded(ListDataEvent lde) {
+        // throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void intervalRemoved(ListDataEvent lde) {
+        // throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void contentsChanged(ListDataEvent lde) {
+        DefaultEditableListModel model = (DefaultEditableListModel) disallowedFrames.getModel();
+        if (!model.getElementAt(model.getSize() - 1).equals(" ")) {
+            model.addElement(" ");
+        } else if (model.getElementAt(lde.getIndex0()).toString().isEmpty()) {
+            model.removeElementAt(lde.getIndex0());
+        }
     }
 }

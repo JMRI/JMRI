@@ -76,6 +76,7 @@ public class WebServerPreferences {
         }
         Element df = child.getChild("disallowedFrames");
         if (df != null) {
+            this.disallowedFrames.clear();
             for (Object f : df.getChildren("frame")) {
                 this.addDisallowedFrame(((Element)f).getText().trim());
             }
@@ -118,17 +119,24 @@ public class WebServerPreferences {
     }
 
     public Element store() {
-        Element element = new Element("WebServerPreferences");
-        element.setAttribute("clickDelay", "" + getClickDelay());
-        element.setAttribute("refreshDelay", "" + getRefreshDelay());
-        element.setAttribute("useAjax", "" + useAjax());
-        element.setAttribute("simple", "" + isPlain());
-        element.setAttribute("disallowedFrames", "" + getDisallowedFrames());
-        element.setAttribute("rebuildIndex", "" + isRebuildIndex());
-        element.setAttribute("port", "" + getPort());
-        element.setAttribute("railRoadName", getRailRoadName());
+        Element prefs = new Element("WebServerPreferences");
+        prefs.setAttribute("clickDelay", "" + getClickDelay());
+        prefs.setAttribute("refreshDelay", "" + getRefreshDelay());
+        prefs.setAttribute("useAjax", "" + useAjax());
+        prefs.setAttribute("simple", "" + isPlain());
+        prefs.setAttribute("disallowedFrames", "" + getDisallowedFrames());
+        prefs.setAttribute("rebuildIndex", "" + isRebuildIndex());
+        prefs.setAttribute("port", "" + getPort());
+        prefs.setAttribute("railRoadName", getRailRoadName());
+        Element df = new Element("disallowedFrames");
+        for (String name : getDisallowedFrames()) {
+            Element frame = new Element("frame");
+            frame.addContent(name);
+            df.addContent(frame);
+        }
+        prefs.addContent(df);
         setIsDirty(false);  //  Resets only when stored
-        return element;
+        return prefs;
     }
     private String fileName;
 
