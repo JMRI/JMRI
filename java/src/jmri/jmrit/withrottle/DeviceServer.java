@@ -91,6 +91,7 @@ import jmri.CommandStation;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.web.miniserver.MiniServerManager;
+import jmri.web.server.WebServerManager;
 
 public class DeviceServer implements Runnable, ThrottleControllerListener, ControllerInterface {
 
@@ -535,8 +536,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     }
     
     public static String getWebServerPort(){
-        String port = MiniServerManager.miniServerPreferencesInstance().getPort();
-        return port;
+        return Integer.toString(WebServerManager.getWebServerPreferences().getPort());
     }
     
 /**
