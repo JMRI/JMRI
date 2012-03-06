@@ -395,6 +395,8 @@ public class LayoutBlockConnectivityTools{
     String lastErrorMessage = "Unknown Error Occured";
     //We need to take into account if the returned block has a signalmast attached.
     int findBestHop(final Block preBlock, final Block currentBlock, Block destBlock, int direction, int offSet, boolean validateOnly, int pathMethod){
+        org.apache.log4j.Logger lBlockManLog = org.apache.log4j.Logger.getLogger(InstanceManager.layoutBlockManagerInstance().getClass().getName());
+        org.apache.log4j.Level currentLevel = lBlockManLog.getLevel();
         int blockindex = 0;
         Block block;
         LayoutBlock currentLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(currentBlock);
@@ -426,11 +428,15 @@ public class LayoutBlockConnectivityTools{
                         blocktoCheck=destBlock;
                     }
                     jmri.NamedBean signal = null;
+                    /* We change the logging level to fatal in the layout block manager as we are testing to make sure that no signalhead/mast exists
+                       this would generate an error message that is expected.*/
+                    lBlockManLog.setLevel(org.apache.log4j.Level.FATAL);
                     switch(pathMethod){
                         case MASTTOMAST : signal = InstanceManager.layoutBlockManagerInstance().getFacingSignalMast(currentBlock, blocktoCheck); break;
                         case HEADTOHEAD : signal = InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(currentBlock, blocktoCheck); break;
                         case ANY : signal = (jmri.NamedBean) InstanceManager.layoutBlockManagerInstance().getFacingSignalObject(currentBlock, blocktoCheck); break;
                     }
+                    lBlockManLog.setLevel(currentLevel);
                     if (signal==null){
                         log.debug("No object found so okay to return");
                         return blockindex;

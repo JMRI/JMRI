@@ -6,12 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.GridLayout;
+import java.awt.Dimension;
 
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import java.util.ResourceBundle;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -21,6 +23,7 @@ import java.beans.PropertyChangeListener;
 
 import jmri.NamedBean;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.util.com.sun.TableSorter;
@@ -68,14 +71,12 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         top.add(new JLabel(rb.getString("FromLocation")));
         top.add(fromPoint);
         ActionListener selectPanelListener = new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    beanComboBox(fromPoint, null);
-                    beanComboBox(toPoint, null);
-                }
-            };
+            public void actionPerformed(ActionEvent e) {
+                selectPointsFromPanel();
+                nxModel.setPanel(panels.get(selectPanel.getSelectedIndex())); 
+            }
+        };
         selectPointsFromPanel();
-        beanComboBox(fromPoint, null);
-        beanComboBox(toPoint, null);
         selectPanel.addActionListener(selectPanelListener);
 
         top.add(new JLabel(rb.getString("ToLocation")));
@@ -109,11 +110,13 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         nxSorter = new TableSorter(nxModel);
     	nxDataTable = new JTable(nxSorter);
         nxSorter.setTableHeader(nxDataTable.getTableHeader());
-        nxDataScroll	= new JScrollPane(nxDataTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        configDeleteColumn(nxDataTable);
-
-//        setColumnToHoldCombo(nxDataTable, 4, typeCombo);
-        
+        nxDataScroll = new JScrollPane(nxDataTable);
+        nxModel.configureTable(nxDataTable);
+        java.awt.Dimension dataTableSize = nxDataTable.getPreferredSize();
+        // width is right, but if table is empty, it's not high
+        // enough to reserve much space.
+        dataTableSize.height = Math.max(dataTableSize.height, 400);
+        nxDataScroll.getViewport().setPreferredSize(dataTableSize);
         add(nxDataScroll);
     }
 
@@ -189,153 +192,51 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         return null;
     }
 
-    public void itemStateChanged(ItemEvent e){
-        fromButtonPressed();
-    }
-
     ArrayList<ValidPoints> validPoints = new ArrayList<ValidPoints>();
-
-    private void fromButtonPressed(){
-
-    }
-
+    
     private void selectPointsFromPanel(){
         if(selectPanel.getSelectedIndex()==-1)
             return;
+        if(panel == panels.get(selectPanel.getSelectedIndex())){
+            return;
+        }
         panel= panels.get(selectPanel.getSelectedIndex());
-        ArrayList<PositionablePoint> pp = panel.pointList;
         fromPoint.removeAllItems();
         toPoint.removeAllItems();
-        for(int i = 0; i<panel.pointList.size(); i++){
-            String description = "";
-            NamedBean source = null;
-            /* Initial release to deal with sensors only
-
-            else if((pp.get(i).getWestBoundSignal()!=null) && (!pp.get(i).getWestBoundSignal().equals(""))){
-                description = pp.get(i).getWestBoundSignal();
-                source = InstanceManager.signalHeadManagerInstance().getSignalHead(pp.get(i).getWestBoundSignal());
-            } else*/ 
-            if ((pp.get(i).getWestBoundSensor()!=null) && (!pp.get(i).getWestBoundSensor().equals(""))){
-                if ((pp.get(i).getWestBoundSignalMast()!=null) && (!pp.get(i).getWestBoundSignalMast().equals(""))){
-                    description = pp.get(i).getWestBoundSignalMast();
-                    source = InstanceManager.signalMastManagerInstance().getSignalMast(pp.get(i).getWestBoundSignalMast());
-                } else {
-                    description = pp.get(i).getWestBoundSensor();
-                    source = InstanceManager.sensorManagerInstance().getSensor(pp.get(i).getWestBoundSensor());
-                }
-            }
-
-            if(source!=null){
-                //description = getPointAsString(pp.get(i),false);
-                validPoints.add(new ValidPoints(source, description));
-                
-                fromPoint.addItem(description);
-                toPoint.addItem(description);
-            }
-            source=null;
-            description = "";
-            /* Initial release to deal with sensors only
-            if ((pp.get(i).getEastBoundSignalMast()!=null)&& (!pp.get(i).getEastBoundSignalMast().equals(""))){
-                description = pp.get(i).getEastBoundSignalMast();
-                source = InstanceManager.signalMastManagerInstance().getSignalMast(pp.get(i).getEastBoundSignalMast());
-            }
-            else if((pp.get(i).getEastBoundSignal()!=null) && (!pp.get(i).getEastBoundSignal().equals(""))){
-                description = pp.get(i).getEastBoundSignal();
-                source = InstanceManager.signalHeadManagerInstance().getSignalHead(pp.get(i).getEastBoundSignal());
-
-            } else*/ 
-            if ((pp.get(i).getEastBoundSensor()!=null) && (!pp.get(i).getEastBoundSensor().equals(""))){
-                if ((pp.get(i).getEastBoundSignalMast()!=null)&& (!pp.get(i).getEastBoundSignalMast().equals(""))){
-                    description = pp.get(i).getEastBoundSignalMast();
-                    source = InstanceManager.signalMastManagerInstance().getSignalMast(pp.get(i).getEastBoundSignalMast());
-                } else {
-                    description = pp.get(i).getEastBoundSensor();
-                    source = InstanceManager.sensorManagerInstance().getSensor(pp.get(i).getEastBoundSensor());
-                }
-            }
-            if(source!=null){
-                //description = getPointAsString(pp.get(i),true);
-                validPoints.add(new ValidPoints(source, description));
-                fromPoint.addItem(description);
-                toPoint.addItem(description);
-            }
+        for(PositionablePoint pp: panel.pointList){
+            addPointToCombo(pp.getWestBoundSignalMast(), pp.getWestBoundSensor());
+            addPointToCombo(pp.getEastBoundSignalMast(), pp.getEastBoundSensor());
         }
         
-        ArrayList<LayoutTurnout> tt = panel.turnoutList;
-        
-        for(int i = 0; i<tt.size(); i++){
-            LayoutTurnout t = tt.get(i);
-            String description = "";
-            NamedBean source = null;
-            
-            if((t.getSignalAMast()!=null) && (!t.getSignalAMast().equals(""))){
-                description = t.getSignalAMast();
-                source = InstanceManager.signalMastManagerInstance().getSignalMast(description);
-            } else if((t.getSensorA()!=null) && (!t.getSensorA().equals(""))){
-                description = t.getSensorA();
-                source = InstanceManager.sensorManagerInstance().getSensor(description);
-            }
-            
-            
-            if(source!=null){
-                validPoints.add(new ValidPoints(source, description));
-                fromPoint.addItem(description);
-                toPoint.addItem(description);
-            }
-            source=null;
-            description = "";
-
-            if((t.getSignalBMast()!=null) && (!t.getSignalBMast().equals(""))){
-                description = t.getSignalBMast();
-                source = InstanceManager.signalMastManagerInstance().getSignalMast(description);
-            } else if((t.getSensorB()!=null) && (!t.getSensorB().equals(""))){
-                description = t.getSensorB();
-                source = InstanceManager.sensorManagerInstance().getSensor(description);
-            }
-            
-            if(source!=null){
-                validPoints.add(new ValidPoints(source, description));
-                fromPoint.addItem(description);
-                toPoint.addItem(description);
-            }
-            source=null;
-            description = "";
-            
-            if((t.getSignalCMast()!=null) && (!t.getSignalCMast().equals(""))){
-                description = t.getSignalCMast();
-                source = InstanceManager.signalMastManagerInstance().getSignalMast(description);
-            } else if((t.getSensorC()!=null) && (!t.getSensorC().equals(""))){
-                description = t.getSensorC();
-                source = InstanceManager.sensorManagerInstance().getSensor(description);
-            }
-            
-            if(source!=null){
-                validPoints.add(new ValidPoints(source, description));
-                fromPoint.addItem(description);
-                toPoint.addItem(description);
-            }
-            source=null;
-            description = "";
-            
-            if((t.getSignalDMast()!=null) && (!t.getSignalDMast().equals(""))){
-                description = t.getSignalDMast();
-                source = InstanceManager.signalMastManagerInstance().getSignalMast(description);
-            } else if((t.getSensorD()!=null) && (!t.getSensorD().equals(""))){
-                description = t.getSensorD();
-                source = InstanceManager.sensorManagerInstance().getSensor(description);
-            }
-            
-            if(source!=null){
-                validPoints.add(new ValidPoints(source, description));
-                fromPoint.addItem(description);
-                toPoint.addItem(description);
-            }
-            source=null;
-            description = "";
+        for(LayoutTurnout t: panel.turnoutList){
+            addPointToCombo(t.getSignalAMast(), t.getSensorA());
+            addPointToCombo(t.getSignalBMast(), t.getSensorB());
+            addPointToCombo(t.getSignalCMast(), t.getSensorC());
+            addPointToCombo(t.getSignalDMast(), t.getSensorD());
         }
-
+        
+        for(LevelXing xing: panel.xingList){
+            addPointToCombo(xing.getSignalAMastName(), xing.getSensorAName());
+            addPointToCombo(xing.getSignalBMastName(), xing.getSensorBName());
+            addPointToCombo(xing.getSignalCMastName(), xing.getSensorCName());
+            addPointToCombo(xing.getSignalDMastName(), xing.getSensorDName());
+        }
     }
-
+    
+    void addPointToCombo(String signalMastName, String sensorName){
+        NamedBean source=null;
+        if(sensorName!=null && !sensorName.isEmpty()){
+            String description = sensorName;
+            source = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+            if(signalMastName!=null && !signalMastName.isEmpty()){
+                description = sensorName + " (" + signalMastName + ")";
+            }
+            validPoints.add(new ValidPoints(source, description));
+            fromPoint.addItem(description);
+            toPoint.addItem(description);
+        }
+    }
+    
     TableSorter         nxSorter;
     JTable			    nxDataTable;
     JScrollPane 		nxDataScroll;
@@ -343,66 +244,17 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
     TableModel nxModel;
     
     EntryExitPairs nxPairs = EntryExitPairs.instance();
-    
-    void beanComboBox(JComboBox box, NamedBean select){
-        String[] displayList = new String[validPoints.size()];
-        for (int i =0 ; i<validPoints.size(); i++){
-            displayList[i] = validPoints.get(i).getDescription();
-        }
-    
-        box.removeAllItems();
-
-        java.util.Arrays.sort(displayList);
-        for(int i = 0; i<displayList.length; i++){
-            box.addItem(displayList[i]);
-            if ((select!=null) && (displayList[i].equals(select.getDisplayName()))){
-                box.setSelectedIndex(i);
-            }
-        }
-    
-    }
-
-    String getPointAsString(PositionablePoint p, Boolean direction){
-        String description = "";
-        if(direction) {
-            if ((p.getEastBoundSignalMast()!=null) && (!p.getEastBoundSignalMast().equals(""))){
-                description = p.getEastBoundSignalMast();
-                if ((p.getEastBoundSensor()!=null) && (!p.getEastBoundSensor().equals("")))
-                    description = description + " (" + p.getEastBoundSensor() + ")";
-            }
-            else if((p.getEastBoundSignal()!=null) && (!p.getEastBoundSignal().equals(""))){
-                description = p.getEastBoundSignal();
-                if ((p.getEastBoundSensor()!=null) && (!p.getEastBoundSensor().equals("")))
-                    description = description + " (" + p.getEastBoundSensor() + ")";
-            } else if ((p.getEastBoundSensor()!=null) && (!p.getEastBoundSensor().equals(""))){
-                description = p.getEastBoundSensor();
-            }
-        } else {
-            if ((p.getWestBoundSignalMast()!=null) && (!p.getWestBoundSignalMast().equals(""))){
-                description = p.getWestBoundSignalMast();
-                if ((p.getWestBoundSensor()!=null) && (!p.getWestBoundSensor().equals("")))
-                    description = description + " (" + p.getWestBoundSensor() + ")";
-            }
-            else if((p.getWestBoundSignal()!=null) && (!p.getWestBoundSignal().equals(""))){
-                description = p.getWestBoundSignal();
-                if ((p.getWestBoundSensor()!=null) && (!p.getWestBoundSensor().equals("")))
-                    description = description + " (" + p.getWestBoundSensor() + ")";
-            } else if ((p.getWestBoundSensor()!=null) && (!p.getWestBoundSensor().equals(""))){
-                description = p.getWestBoundSensor();
-            }
-        }
-        return (description);
-    }
 
     static final int FROMPOINTCOL= 0;
     static final int TOPOINTCOL = 1;
     static final int ACTIVECOL = 2;
-    static final int DELETECOL = 4;
-    static final int BOTHWAYCOL = 3;
-    static final int TYPECOL = 5;
-    static final int ENABLEDCOL = 6;
+    static final int CLEARCOL = 3;
+    static final int BOTHWAYCOL = 4;
+    static final int DELETECOL = 5;
+    static final int TYPECOL = 6;
+    static final int ENABLEDCOL = 7;
 
-    static final int NUMCOL = 6+1;
+    static final int NUMCOL = ENABLEDCOL+1;
     //Need to add a property change listener to catch when paths go active.
     class TableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener{
         //needs a method to for when panel changes
@@ -410,38 +262,52 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         //Possibly also to set a route.
         //Add a propertychange listener to hear when the route goes active.
         TableModel(LayoutEditor panel){
-            this.panel=panel;
+            setPanel(panel);
             nxPairs.addPropertyChangeListener(this);
             source = nxPairs.getNxSource(panel);
             dest = nxPairs.getNxDestination();
         }
-
+        
+        void setPanel(LayoutEditor panel){
+            if(this.panel==panel)
+                return;
+            this.panel = panel;
+            rowCount = nxPairs.getNxPairNumbers(panel);
+            updateNameList();
+            fireTableDataChanged();
+        }
+        
         LayoutEditor panel;
 
         ArrayList<Object> source=null;
         ArrayList<Object> dest=null;
 
         void updateNameList(){
-            if(source!=null){
-                for (int i=0; i<source.size();i++){
-                    //source.get(i).removePropertyChangeListener(this, source.get(i), panel);
-                }
-            }
-            if (dest!=null){
-                for (int i=0; i<source.size();i++){
-                   //source.get(i).removePropertyChangeListener(this);
-                }            
-            }
-            
             source = nxPairs.getNxSource(panel);
             dest = nxPairs.getNxDestination();
-        
         }
-
+        
+        int rowCount = 0;
         public int getRowCount() {
-            if (panel!=null)
-                return nxPairs.getNxPairNumbers(panel);
-            return 0;
+            return rowCount;
+        }
+        
+        public void configureTable(JTable table) {
+            // allow reordering of the columns
+            table.getTableHeader().setReorderingAllowed(true);
+
+            // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+            // resize columns as requested
+            for (int i=0; i<table.getColumnCount(); i++) {
+                int width = getPreferredWidth(i);
+                table.getColumnModel().getColumn(i).setPreferredWidth(width);
+            }
+            table.sizeColumnsToFit(-1);
+
+            configDeleteColumn(table);
+            
         }
 
         public Object getValueAt(int row, int col) {
@@ -456,6 +322,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
                 case ACTIVECOL:    return isPairActive(row);
                 case BOTHWAYCOL:    return !nxPairs.isUniDirection(source.get(row), panel, dest.get(row));
                 case ENABLEDCOL:    return !nxPairs.isEnabled(source.get(row), panel, dest.get(row));
+                case CLEARCOL:  return jmri.jmrit.beantable.AbstractTableAction.rb.getString("ButtonClear");
                 case DELETECOL:  //
                     return jmri.jmrit.beantable.AbstractTableAction.rb.getString("ButtonDelete");
                 case TYPECOL:
@@ -468,6 +335,9 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             if (col==DELETECOL) {
                 // button fired, delete Bean
                 deleteEntryExit(row, col);
+            }
+            if (col == CLEARCOL){
+                nxPairs.cancelInterlock(source.get(row), panel,dest.get(row));
             }
             if (col==BOTHWAYCOL){
                 boolean b = !((Boolean)value).booleanValue();
@@ -486,7 +356,24 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
                 else if(val.equals("Full InterLock"))
                     nxPairs.setEntryExitType(source.get(row), panel,dest.get(row), 0x02);
             }
+        }
         
+        public int getPreferredWidth(int col) {
+            switch (col) {
+                case FROMPOINTCOL:
+                case TOPOINTCOL:    return new JTextField(15).getPreferredSize().width;
+                case ACTIVECOL:    
+                case BOTHWAYCOL:    
+                case ENABLEDCOL:    return new JTextField(5).getPreferredSize().width;
+                case CLEARCOL:
+                case DELETECOL:  //
+                    return new JTextField(22).getPreferredSize().width;
+                case TYPECOL:
+                    return new JTextField(10).getPreferredSize().width;
+            default:
+                log.warn("Unexpected column in getPreferredWidth: "+col);
+                return new JTextField(8).getPreferredSize().width;
+            }
         }
         
         protected void deleteEntryExit(int row, int col) {
@@ -496,9 +383,8 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         }
 
         String isPairActive(int row){
-            // isPathActive
             if(nxPairs.isPathActive(source.get(row), dest.get(row), panel))
-                return ("*");
+                return ("yes");
             return ("");
         }
 
@@ -509,6 +395,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             case TOPOINTCOL:    return rb.getString("ColumnTo");
             case ACTIVECOL:    return rb.getString("ColumnActive");
             case DELETECOL:    return "";
+            case CLEARCOL:    return "";
             case BOTHWAYCOL:    return rb.getString("ColumnBoth");
             case TYPECOL:    return "NX Type";
             case ENABLEDCOL:    return "Disabled";
@@ -523,6 +410,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             case ACTIVECOL:
                 return String.class;
             case DELETECOL:
+            case CLEARCOL:
                 return JButton.class;
             case BOTHWAYCOL:
             case ENABLEDCOL:
@@ -551,6 +439,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
                     }
                     return true;
                 case DELETECOL:
+                case CLEARCOL:
                 case ENABLEDCOL:
                 case TYPECOL:
                     return true;
@@ -564,7 +453,8 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         }
         
         public void propertyChange(java.beans.PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("length")) {
+            if (e.getPropertyName().equals("length") || e.getPropertyName().equals("active")) {
+                rowCount = nxPairs.getNxPairNumbers(panel);
                 updateNameList();
                 fireTableDataChanged();
             }
@@ -577,14 +467,16 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             setColumnToHoldButton(table, DELETECOL, 
                     new JButton(rb.getString("ButtonDelete")));
                     
+            setColumnToHoldButton(table, CLEARCOL, 
+                    new JButton(rb.getString("ButtonClear")));
+                    
             JComboBox typeCombo = new JComboBox(NXTYPE_NAMES);
-            /*typeCombo.addItem("Turnout");
-            typeCombo.addItem("SignalMast");
-            typeCombo.addItem("Full");*/
         
             TableColumn col = table.getColumnModel().getColumn(TYPECOL);
             col.setCellEditor(new DefaultCellEditor(typeCombo));
         }
+        
+        
         
         /**
          * Service method to setup a column so that it will hold a
