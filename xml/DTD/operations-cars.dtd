@@ -95,14 +95,3 @@
 <!ATTLIST carLoad pickupComment		CDATA #IMPLIED>
 <!ATTLIST carLoad dropComment		CDATA #IMPLIED>
 
-<!ATTLIST carsOptions x				CDATA #IMPLIED> 
-<!ATTLIST carsOptions y				CDATA #IMPLIED> 
-<!ATTLIST carsOptions height		CDATA #IMPLIED> 
-<!ATTLIST carsOptions width			CDATA #IMPLIED> 
-<!ATTLIST carsOptions columnWidths	CDATA #IMPLIED>
-
-<!ATTLIST carEditOptions x			CDATA #IMPLIED> 
-<!ATTLIST carEditOptions y			CDATA #IMPLIED> 
-<!ATTLIST carEditOptions height		CDATA #IMPLIED> 
-<!ATTLIST carEditOptions width		CDATA #IMPLIED> 
-

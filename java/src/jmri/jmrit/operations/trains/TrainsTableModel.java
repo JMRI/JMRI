@@ -18,14 +18,13 @@ import javax.swing.table.TableColumnModel;
 
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.operations.setup.Control;
-import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
 /**
  * Table Model for edit of trains used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2008
+ * @author Daniel Boudreau Copyright (C) 2008, 2012
  * @version   $Revision$
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
@@ -72,7 +71,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	}
         updateList();
         fireTableStructureChanged();
-        initTable(table, frame);
+        initTable();
     }
     
     private boolean _showAll = true;
@@ -81,7 +80,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	_showAll = showAll;
         updateList();
         fireTableStructureChanged();
-        initTable(table, frame);
+        initTable();
     }
     
     public boolean isShowAll(){
@@ -126,14 +125,18 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 	}
 
 	List<String> sysList = null;
-	JTable table = null;
-	JmriJFrame frame = null;
+	JTable _table = null;
+	TrainsTableFrame _frame = null;
     
-	void initTable(JTable table, JmriJFrame frame) {
-		this.table = table;
-		this.frame = frame;
+	void initTable(JTable table, TrainsTableFrame frame) {
+		_table = table;
+		_frame = frame;
+		initTable();
+	}
+	
+	void initTable() {
 		// Install the button handlers
-		TableColumnModel tcm = table.getColumnModel();
+		TableColumnModel tcm = _table.getColumnModel();
 		ButtonRenderer buttonRenderer = new ButtonRenderer();
 		TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
 		tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
@@ -142,14 +145,17 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		tcm.getColumn(ACTIONCOLUMN).setCellEditor(buttonEditor);
 		tcm.getColumn(BUILDCOLUMN).setCellRenderer(buttonRenderer);
 		tcm.getColumn(BUILDCOLUMN).setCellEditor(buttonEditor);
-		table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
+		_table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 
 		// set column preferred widths
-		int[] tableColumnWidths = manager.getTrainsFrameTableColumnWidths();
-		for (int i=0; i<tcm.getColumnCount(); i++)
-			tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
+		if (!_frame.loadTableDetails(_table)) {
+			// load defaults, xml file data not found
+			int[] tableColumnWidths = manager.getTrainsFrameTableColumnWidths();
+			for (int i=0; i<tcm.getColumnCount(); i++)
+				tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
+		}
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
     
     public synchronized int getRowCount() { return sysList.size(); }
@@ -373,7 +379,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
        	if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY) ||
        			e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)){
        		manager.setFilesDirty();
-       		frame.setModifiedFlag(true);
+       		_frame.setModifiedFlag(true);
        	}
     	if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||
     			e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY) ||

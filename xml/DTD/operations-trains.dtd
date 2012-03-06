@@ -24,25 +24,8 @@
 <!ATTLIST trainOptions buildReport		(true | false) "false">
 <!ATTLIST trainOptions printPreview 	(true | false) "false">
 <!ATTLIST trainOptions buildMessages 	(true | false) "true">
-<!ATTLIST trainOptions x				CDATA #IMPLIED>
-<!ATTLIST trainOptions y				CDATA #IMPLIED>
-<!ATTLIST trainOptions height			CDATA #IMPLIED>
-<!ATTLIST trainOptions width			CDATA #IMPLIED>
-<!ATTLIST trainOptions sortBy			CDATA #IMPLIED>
-<!ATTLIST trainOptions sortStatus		CDATA #IMPLIED>
 <!ATTLIST trainOptions trainAction		CDATA #IMPLIED>
-<!ATTLIST trainOptions columnWidths		CDATA #IMPLIED>
 
-<!ATTLIST trainEditOptions x				CDATA #IMPLIED>
-<!ATTLIST trainEditOptions y				CDATA #IMPLIED>
-<!ATTLIST trainEditOptions height			CDATA #IMPLIED>
-<!ATTLIST trainEditOptions width			CDATA #IMPLIED>
-
-<!ATTLIST trainScheduleOptions x			CDATA #IMPLIED>
-<!ATTLIST trainScheduleOptions y			CDATA #IMPLIED>
-<!ATTLIST trainScheduleOptions height		CDATA #IMPLIED>
-<!ATTLIST trainScheduleOptions width		CDATA #IMPLIED>
-<!ATTLIST trainScheduleOptions columnWidths	CDATA #IMPLIED>
 <!ATTLIST trainScheduleOptions activeId		CDATA #IMPLIED>
 
 <!ELEMENT startUp EMPTY>

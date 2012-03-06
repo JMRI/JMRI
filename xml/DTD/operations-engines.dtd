@@ -60,14 +60,4 @@
 <!ATTLIST engine locUnknown				(true | false ) "false"> 
 <!ATTLIST engine outOfService			(true | false ) "false">
 
-<!ATTLIST enginesOptions x				CDATA #IMPLIED> 
-<!ATTLIST enginesOptions y				CDATA #IMPLIED> 
-<!ATTLIST enginesOptions height			CDATA #IMPLIED> 
-<!ATTLIST enginesOptions width			CDATA #IMPLIED> 
-<!ATTLIST enginesOptions columnWidths	CDATA #IMPLIED> 
-
-<!ATTLIST engineEditOptions x			CDATA #IMPLIED> 
-<!ATTLIST engineEditOptions y			CDATA #IMPLIED> 
-<!ATTLIST engineEditOptions height		CDATA #IMPLIED> 
-<!ATTLIST engineEditOptions width		CDATA #IMPLIED> 
 

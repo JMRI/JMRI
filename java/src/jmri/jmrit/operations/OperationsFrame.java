@@ -101,7 +101,6 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 
 	private final int minCheckboxes = 5;
 	private final int maxCheckboxes = 11;
-	private static int number = 0;
 	
 	/**
 	 * Gets the number of checkboxes(+1) that can fix in one row
@@ -120,7 +119,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 			pad = pad+"X";
 		}
 		JCheckBox box = new JCheckBox(pad);
-		number = size.width/(box.getPreferredSize().width);
+		int number = size.width/(box.getPreferredSize().width);
 		if (number < minCheckboxes)
 			number = minCheckboxes;
 		if (number > maxCheckboxes)
@@ -219,8 +218,9 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	}
 	
 	/**
-	 * Loads the table's width, position, and sorting status from the user preferences file
-	 * @param table Table to be loaded
+	 * Loads the table's width, position, and sorting status from the user preferences file.
+	 * @param table The table to be adjusted.
+	 * @return true if table has been adjusted by saved xml file.
 	 */
 	public boolean loadTableDetails(JTable table) {
 		UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
@@ -247,6 +247,12 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 			int width = p.getTableColumnWidth(tableref, columnName);
 			if (width != -1) {
 				table.getColumnModel().getColumn(i).setPreferredWidth(width);
+			} else {
+				// name not found so use one that exists
+				String name = p.getTableColumnAtNum(tableref, i);
+				width = p.getTableColumnWidth(tableref, name);
+				table.getColumnModel().getColumn(i).setPreferredWidth(width);
+				log.debug("Could not find column name "+columnName+" using name "+name+" setting width "+width);
 			}
 		}
 		return true;
@@ -262,7 +268,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 				log.debug("Column name "+columnName+" not found in user preference file");
 				continue;
 			}
-			if (i != order) {
+			if (i != order && order < table.getColumnCount()) {
 				table.moveColumn(i, order);
 				log.debug("Move column number " + i + " name " +columnName+" to "+order);
 				sortDone = false;

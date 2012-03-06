@@ -79,27 +79,27 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
       	if (sort == SORTBYMOVES){
     		showMoveCol = SHOWMOVES;
        		fireTableStructureChanged();
-    		initTable(_table);
+    		initTable();
     	}
        	else if (sort == SORTBYBUILT){
     		showMoveCol = SHOWBUILT;
        		fireTableStructureChanged();
-    		initTable(_table);
+    		initTable();
     	}
     	else if (sort == SORTBYOWNER){
     		showMoveCol = SHOWOWNER;
        		fireTableStructureChanged();
-    		initTable(_table);
+    		initTable();
     	}
        	else if (sort == SORTBYVALUE){
     		showMoveCol = SHOWVALUE;
        		fireTableStructureChanged();
-    		initTable(_table);
+    		initTable();
     	}
        	else if (sort == SORTBYRFID){
     		showMoveCol = SHOWRFID;
        		fireTableStructureChanged();
-    		initTable(_table);
+    		initTable();
     	}
     	else
     		fireTableDataChanged();
@@ -198,21 +198,31 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 	List<String> sysList = null;
     
 	JTable _table;
+	EnginesTableFrame _frame;
 	
-	void initTable(JTable table) {
+	void initTable(JTable table, EnginesTableFrame frame) {
 		_table = table;
+		_frame = frame;
+		initTable();
+	}
+	
+	void initTable() {
 		// Install the button handlers
-		TableColumnModel tcm = table.getColumnModel();
+		TableColumnModel tcm = _table.getColumnModel();
 		ButtonRenderer buttonRenderer = new ButtonRenderer();
 		tcm.getColumn(SETCOLUMN).setCellRenderer(buttonRenderer);
 		TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
 		tcm.getColumn(SETCOLUMN).setCellEditor(buttonEditor);
 		tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
 		tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
+		
 		// set column preferred widths
-		int[] tableColumnWidths = manager.getEnginesFrameTableColumnWidths();
-		for (int i=0; i<tcm.getColumnCount(); i++)
-			tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
+		if (!_frame.loadTableDetails(_table)) {
+			// load defaults, xml file data not found
+			int[] tableColumnWidths = manager.getEnginesFrameTableColumnWidths();
+			for (int i=0; i<tcm.getColumnCount(); i++)
+				tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
+		}
 		/*
 		table.getColumnModel().getColumn(NUMCOLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(ROADCOLUMN).setPreferredWidth(60);
@@ -228,7 +238,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
 		*/
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
     
     public int getRowCount() { return sysList.size(); }
@@ -258,8 +268,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         	else
         		return rb.getString("Moves");
         }
-        case SETCOLUMN: return "";
-        case EDITCOLUMN: return "";		//edit column
+        case SETCOLUMN: return rb.getString("Set");
+        case EDITCOLUMN: return rb.getString("Edit");
         default: return "unknown";
         }
     }
