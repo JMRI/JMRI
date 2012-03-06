@@ -370,32 +370,33 @@ public class ListedTableFrame extends BeanTableFrame {
         }
         
         void createDataModel(){
-                dataModel = tableAction.getTableDataModel();
-                TableSorter sorter = new TableSorter(dataModel);
-                dataTable = dataModel.makeJTable(sorter);
-                sorter.setTableHeader(dataTable.getTableHeader());
-                dataScroll	= new JScrollPane(dataTable);
-                
-                try {
-                    TableSorter tmodel = ((TableSorter)dataTable.getModel());
-                    tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-                    tmodel.setSortingStatus(BeanTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
-                } catch (java.lang.ClassCastException e) {}  // happens if not sortable table
-                dataModel.configureTable(dataTable);
-                
-                java.awt.Dimension dataTableSize = dataTable.getPreferredSize();
-                // width is right, but if table is empty, it's not high
-                // enough to reserve much space.
-                dataTableSize.height = Math.max(dataTableSize.height, 400);
-                dataScroll.getViewport().setPreferredSize(dataTableSize);
-                
-                // set preferred scrolling options
-                dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-                dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            dataModel = tableAction.getTableDataModel();
+            TableSorter sorter = new TableSorter(dataModel);
+            dataTable = dataModel.makeJTable(sorter);
+            sorter.setTableHeader(dataTable.getTableHeader());
+            dataScroll	= new JScrollPane(dataTable);
+            
+            try {
+                TableSorter tmodel = ((TableSorter)dataTable.getModel());
+                tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
+                tmodel.setSortingStatus(BeanTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
+            } catch (java.lang.ClassCastException e) {}  // happens if not sortable table
+            dataModel.configureTable(dataTable);
+            
+            java.awt.Dimension dataTableSize = dataTable.getPreferredSize();
+            // width is right, but if table is empty, it's not high
+            // enough to reserve much space.
+            dataTableSize.height = Math.max(dataTableSize.height, 400);
+            dataScroll.getViewport().setPreferredSize(dataTableSize);
+            
+            // set preferred scrolling options
+            dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+            dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-                dataPanel.add(dataScroll, BorderLayout.CENTER);
-                
-                dataPanel.add(bottomBox, BorderLayout.SOUTH);
+            dataPanel.add(dataScroll, BorderLayout.CENTER);
+            
+            dataPanel.add(bottomBox, BorderLayout.SOUTH);
+            if(tableAction.includeAddButton()){
                 JButton addButton = new JButton(rbean.getString("ButtonAdd"));
                 addToBottomBox(addButton);
                 addButton.addActionListener(new ActionListener() {
@@ -403,6 +404,7 @@ public class ListedTableFrame extends BeanTableFrame {
                         tableAction.addPressed(e);
                     }
                 });
+            }
         }
         
         void addPanelModel(){
