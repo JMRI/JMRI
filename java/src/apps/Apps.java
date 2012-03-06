@@ -479,7 +479,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
         // also add some tentative items from webserver
         d.add(new JSeparator());
-        d.add(new jmri.web.miniserver.MiniServerAction());
+        d.add(new jmri.web.server.WebServerAction());
 
         d.add(new JSeparator());
         d.add(new jmri.jmrit.withrottle.WiThrottleCreationAction());
