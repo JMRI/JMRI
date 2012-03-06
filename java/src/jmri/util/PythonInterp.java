@@ -103,7 +103,7 @@ public class PythonInterp {
      * Interpreter is returned as an Object, which is to
      * be invoked via reflection.
      */
-    static public Object getPythonInterpreter() {
+    synchronized static public Object getPythonInterpreter() {
 
         if (interp!=null) return interp;
 
