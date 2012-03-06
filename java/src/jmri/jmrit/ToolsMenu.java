@@ -137,8 +137,8 @@ public class ToolsMenu extends JMenu {
         add(new jmri.jmrit.operations.OperationsMenu());
 
         add(new JSeparator());
-        // add start miniserver
-        add(new jmri.web.miniserver.MiniServerAction());
+        // add start web server
+        add(new jmri.web.server.WebServerAction());
 
     }
 
