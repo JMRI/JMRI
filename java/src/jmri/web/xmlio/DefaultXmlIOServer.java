@@ -4,7 +4,6 @@ package jmri.web.xmlio;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import jmri.*;
@@ -15,7 +14,7 @@ import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
-import jmri.web.miniserver.MiniServerManager;
+import jmri.web.server.WebServerManager;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
@@ -43,8 +42,7 @@ import org.jdom.Element;
  */
 public class DefaultXmlIOServer implements XmlIOServer {
 	
-	static ArrayList<String> disallowedFrames = new ArrayList<String>(
-			Arrays.asList(MiniServerManager.miniServerPreferencesInstance().getDisallowedFrames().split("\n")));
+	static List<String> disallowedFrames = WebServerManager.getWebServerPreferences().getDisallowedFrames();
 
     @Override
     public Element immediateRequest(Element e) throws JmriException {
