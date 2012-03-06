@@ -29,7 +29,7 @@ public class XMLIOServlet extends HttpServlet implements XmlIORequestor {
 
     static XmlIOFactory factory = null;
     Thread thread = null;
-    static ResourceBundle htmlStrings = ResourceBundle.getBundle("jmri.web.miniserver.Html");
+    static ResourceBundle htmlStrings = ResourceBundle.getBundle("jmri.web.server.Html");
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XMLIOServlet.class.getName());
 
     @Override
