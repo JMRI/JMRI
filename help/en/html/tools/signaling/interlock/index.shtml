@@ -16,7 +16,7 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
+<!--#include virtual="../Sidebar" -->
 <div id="mainContent">
 <h1>Entry Exit and Interlocking </h1>
 This brief tutorial is designed to explain how the Entry Exit and Interlocking is set up and works within JMRI. It is based upon the signal mast logic  <a href="http://www.jmri.org/community/clinics/UK2011/">clinic</a> held in the UK and follows on from that.
