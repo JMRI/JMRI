@@ -43,11 +43,14 @@ class LocoSelector(jmri.jmrit.automat.AbstractAutomaton) :
 		return
 
     def rosterBoxChange(self, event) :
-		entry = self.roster.entryFromTitle(self.box.getSelectedItem())
-		print entry
-		theDccAddress = entry.getDccAddress()
-		# print theDccAddress
-		self.address.text = theDccAddress
+		entry = self.box.getSelectedItem()
+                if isinstance(entry, jmri.jmrit.roster.RosterEntry):
+   		    theDccAddress = entry.getDccAddress()
+		    # print theDccAddress
+		    self.address.text = theDccAddress
+                else:
+                    self.address.text = ""
+                    theDccAddress = 3
 		return 0
 
 		
@@ -75,8 +78,9 @@ class LocoSelector(jmri.jmrit.automat.AbstractAutomaton) :
         self.address = javax.swing.JTextField(5)    
         # Read the first entry from the roster drop box and write its DccAddress to the address box.
         entry = self.roster.entryFromTitle(self.box.getSelectedItem())
-        theDccAddress = entry.getDccAddress()
-        self.address.text = theDccAddress
+        if( entry != None ) :
+            theDccAddress = entry.getDccAddress()
+            self.address.text = theDccAddress
 
         # create the start button to perform actions.
         self.startButton = javax.swing.JButton("Start")
