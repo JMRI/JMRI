@@ -545,7 +545,7 @@ public class EntryExitPairs {
             if(pointToDest.containsKey(lookingFor)){
                 pointToDest.get(lookingFor).setEntryExitType(type);
             }
-            if(type!=SETUPTURNOUTSONLY){
+            if(type==FULLINTERLOCK){
                 if (sourceSignal instanceof SignalMast){
                     ((SignalMast) sourceSignal).setHeld(true);
                 }
@@ -611,19 +611,21 @@ public class EntryExitPairs {
             }
             
             void setRouteTo(boolean set) {
-                point.setRouteTo(set);
-                if(set){
+                if(set && getEntryExitType()==FULLINTERLOCK){
+                    point.setRouteTo(true);
                     setNXButtonState(point, NXBUTTONACTIVE);
                 } else {
+                     point.setRouteFrom(false);
                     setNXButtonState(point, NXBUTTONINACTIVE);
                 }
             }
             
             void setRouteFrom(boolean set){
-                pd.setRouteFrom(set);
-                if(set){
+                if(set && getEntryExitType()==FULLINTERLOCK){
+                    pd.setRouteFrom(true);
                     setNXButtonState(pd, NXBUTTONACTIVE);
                 } else {
+                    pd.setRouteFrom(false);
                     setNXButtonState(pd, NXBUTTONINACTIVE);
                 }
             }
@@ -673,6 +675,12 @@ public class EntryExitPairs {
                         routeDetails.remove(lBlock);
                         setRouteFrom(false);
                         setNXButtonState(pd, NXBUTTONINACTIVE);
+                        if(sml!=null && getEntryExitType()==FULLINTERLOCK){
+                            sml.getSourceMast().setHeld(true);
+                            SignalMast mast = (SignalMast) getSignal();
+                            if (sml.getStoreState(mast)==jmri.SignalMastLogic.STORENONE)
+                                sml.removeDestination(mast);
+                        }
                     }
                     if (log.isDebugEnabled()){
                         log.debug("Route details contents " + routeDetails);
@@ -768,7 +776,7 @@ public class EntryExitPairs {
                             routeDetails.get(i).setUseExtraColor(true);
                         }
                     }
-                    if ((getEntryExitType()!=SETUPTURNOUTSONLY)){
+                    if ((getEntryExitType()==FULLINTERLOCK)){
                         if(getStart().getBlock()!=routeDetails.get(i).getBlock()){
                             routeDetails.get(i).getBlock().addPropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
                         }
@@ -999,8 +1007,8 @@ public class EntryExitPairs {
                     //Need sort out the method to cancel said route.
                 }
                 setActiveEntryExit(false);
-                setRouteTo(false);
                 setRouteFrom(false);
+                setRouteTo(false);
                 routeDetails=null;
                 pd.cancelNXButtonTimeOut();
                 point.cancelNXButtonTimeOut();

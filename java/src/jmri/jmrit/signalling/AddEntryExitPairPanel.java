@@ -143,7 +143,6 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
                 JOptionPane.showMessageDialog(null, rb.getString("LayoutBlockRoutingEnabled"));
             }
         }
-        log.info("Passed the enable " + InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled());
         entryExitFrame = new jmri.util.JmriJFrame("Discover Entry Exit Pairs", false, false);
         entryExitFrame.setPreferredSize(null);
         JPanel panel1 = new JPanel();
