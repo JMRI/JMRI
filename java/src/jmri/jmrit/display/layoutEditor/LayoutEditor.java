@@ -492,10 +492,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         signalIconEditor.setIcon(8, "Lunar","resources/icons/smallschematics/searchlights/left-lunar-short-marker.gif");
         signalIconEditor.setIcon(9, "Flash Lunar","resources/icons/smallschematics/searchlights/left-flashlunar-short-marker.gif");
         signalIconEditor.complete();
-        signalFrame = new JmriJFrame(rb.getString("EditSignalIcons"), false, true);
+        signalFrame = new JFrame(rb.getString("EditSignalIcons"));
 		signalFrame.getContentPane().add(new JLabel("  "+rb.getString("IconChangeInfo")+"  "),BorderLayout.NORTH);
         signalFrame.getContentPane().add(signalIconEditor);
         signalFrame.pack();
+        signalFrame.setVisible(false);
         
         top4.add (new JLabel("    "));
         top4.add (signalMastBox);
