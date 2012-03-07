@@ -615,7 +615,7 @@ public class EntryExitPairs {
                     point.setRouteTo(true);
                     setNXButtonState(point, NXBUTTONACTIVE);
                 } else {
-                     point.setRouteFrom(false);
+                    point.setRouteTo(false);
                     setNXButtonState(point, NXBUTTONINACTIVE);
                 }
             }
@@ -645,32 +645,55 @@ public class EntryExitPairs {
                     uniDirection = true;
             }
             
-            //This should probably look at the changes being made at the block level not at the sensor level
             protected PropertyChangeListener propertyBlockListener = new PropertyChangeListener() {
                 public void propertyChange(PropertyChangeEvent e) {
                     Block blk = (Block) e.getSource();
                     if (e.getPropertyName().equals("state")) {
                         if (log.isDebugEnabled()) log.debug(ref + "  We have a change of state on the block " + blk.getDisplayName());
-                        //int now = ((Integer) e.getNewValue()).intValue();
-                        int old = ((Integer) e.getOldValue()).intValue();
+                        int now = ((Integer) e.getNewValue()).intValue();
                         
-                        if ((old==Block.OCCUPIED)||(old==Block.UNOCCUPIED)){
+                        if (now==Block.OCCUPIED){
                             LayoutBlock lBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(blk);
-                            //If the sourceSensor was previously active or inactive then we will 
+                            //If the block was previously active or inactive then we will 
                             //reset the useExtraColor, but not if it was previously unknown or inconsistent.
                             lBlock.setUseExtraColor(false);
                             blk.removePropertyChangeListener(propertyBlockListener); //was this
                             removeBlockFromRoute(lBlock);
                         } else {
-                            if (log.isDebugEnabled()) log.debug("old state was " + old + " did not go through reset");
+                            if (log.isDebugEnabled()) log.debug("state was " + now + " and did not go through reset");
                         }
                     }
                 }
             };
-        
-            void removeBlockFromRoute(LayoutBlock lBlock){
             
+            Object lastSeenActiveBlockObject;
+            
+            synchronized void removeBlockFromRoute(LayoutBlock lBlock){
+                
                 if (routeDetails!=null){
+                    if(routeDetails.indexOf(lBlock)==-1){
+                        if(getStart() == lBlock){
+                            log.debug("Start block went active");
+                            lastSeenActiveBlockObject = getStart().getBlock().getValue();
+                            lBlock.getBlock().removePropertyChangeListener(propertyBlockListener);
+                            return;
+                        } else {
+                            log.error("Block " + lBlock.getDisplayName() + " went active but it is not part of our NX path");
+                        }
+                    }
+                    if(routeDetails.indexOf(lBlock)!=0){
+                        log.debug("A block has been skipped will set the value of the active block to that of the original one");
+                        lBlock.getBlock().setValue(lastSeenActiveBlockObject);
+                        if(routeDetails.indexOf(lBlock)!=-1){
+                            while(routeDetails.indexOf(lBlock)!=0){
+                                LayoutBlock tbr = routeDetails.get(0);
+                                log.debug("Block skipped " + tbr.getDisplayName() + " and removed from list");
+                                tbr.getBlock().removePropertyChangeListener(propertyBlockListener);
+                                tbr.setUseExtraColor(false);
+                                routeDetails.remove(0);
+                            }
+                        }
+                    }
                     if(routeDetails.contains(lBlock)){
                         routeDetails.remove(lBlock);
                         setRouteFrom(false);
@@ -681,6 +704,8 @@ public class EntryExitPairs {
                             if (sml.getStoreState(mast)==jmri.SignalMastLogic.STORENONE)
                                 sml.removeDestination(mast);
                         }
+                    } else {
+                        log.info("Block that went Occupied was not in the routeDetails list");
                     }
                     if (log.isDebugEnabled()){
                         log.debug("Route details contents " + routeDetails);
@@ -688,24 +713,20 @@ public class EntryExitPairs {
                             log.debug("      " + routeDetails.get(i).getDisplayName());
                         }
                     }
-                    if((routeDetails.size()==2)&& (routeDetails.contains(destination)) && (routeDetails.contains(getStart()))){
-                        //We have reached our destination, therefore we shall clear our inter-lock
-                        routeDetails.get(0).getBlock().removePropertyChangeListener(propertyBlockListener);  // was set against block sensor
-                        routeDetails.remove(getStart());
-                    } if((routeDetails.size()==1) && (routeDetails.contains(destination))){
+                    if((routeDetails.size()==1) && (routeDetails.contains(destination))){
                         routeDetails.get(0).getBlock().removePropertyChangeListener(propertyBlockListener);  // was set against block sensor
                         routeDetails.remove(destination);
                     }
                 }
+                lastSeenActiveBlockObject = lBlock.getBlock().getValue();
 
                 if((routeDetails==null)||(routeDetails.size()==0)){
                     //At this point the route has cleared down/the last remaining block are now active.
-                    //Therefore we will 
                     routeDetails=null;
                     setRouteTo(false);
                     setRouteFrom(false);
-                    //setNXButtonState(point, NXBUTTONINACTIVE);
                     setActiveEntryExit(false);
+                    lastSeenActiveBlockObject = null;
                 }
             }
             
@@ -777,15 +798,21 @@ public class EntryExitPairs {
                         }
                     }
                     if ((getEntryExitType()==FULLINTERLOCK)){
-                        if(getStart().getBlock()!=routeDetails.get(i).getBlock()){
                             routeDetails.get(i).getBlock().addPropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
-                        }
                     } else {
                         routeDetails.get(i).getBlock().removePropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
                     }
                 }
 
                 if (getEntryExitType()!=SETUPTURNOUTSONLY){
+                    if(getEntryExitType()==FULLINTERLOCK){
+                        //If our start block is already active we will set it as our lastSeenActiveBlock.
+                        if(getStart().getState()==Block.OCCUPIED){
+                            getStart().removePropertyChangeListener(propertyBlockListener);
+                            lastSeenActiveBlockObject = getStart().getBlock().getValue();
+                            log.debug("Last seen value " + lastSeenActiveBlockObject);
+                        }
+                    }
                     if((sourceSignal instanceof SignalMast) && (getSignal() instanceof SignalMast)){
                         SignalMast smSource = (SignalMast) sourceSignal;
                         SignalMast smDest = (SignalMast) getSignal();
@@ -796,7 +823,7 @@ public class EntryExitPairs {
                             sml.setStore(jmri.SignalMastLogic.STORENONE, smDest);
                         }
                         Hashtable<Block, Integer> blks = new Hashtable<Block, Integer>();
-                        //Remove the first block
+                        //Remove the first block as it is our start block
                         routeDetails.remove(0);
                         for(int i = 0; i<routeDetails.size(); i++){
                             if (routeDetails.get(i).getBlock().getState()==Block.UNKNOWN)
@@ -1010,6 +1037,7 @@ public class EntryExitPairs {
                 setRouteFrom(false);
                 setRouteTo(false);
                 routeDetails=null;
+                lastSeenActiveBlockObject = null;
                 pd.cancelNXButtonTimeOut();
                 point.cancelNXButtonTimeOut();
                 getPoint().getPanel().getGlassPane().setVisible(false);
@@ -1103,6 +1131,7 @@ public class EntryExitPairs {
                 setRouteFrom(false);
                 setRouteTo(false);
                 point.removeDestination(this);
+                lastSeenActiveBlockObject = null;
                 disposed=true;
             }
             
