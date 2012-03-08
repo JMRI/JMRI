@@ -103,6 +103,90 @@ public class LayoutBlockConnectivityTools{
         throw new jmri.JmriException("Blocks Not Found");
     }
     
+   /**
+    * The is used in conjunction with the layout block routing protocol, to discover
+    * a clear path from a source layout block through to a destination layout block.
+    * By specifying the sourceLayoutBlock and protectingLayoutBlock or sourceLayoutBlock+1, 
+    * a direction of travel can then be termined, eg east to west, south to north etc.
+    * <p>
+    * @param sourceBean - The source bean (SignalHead, SignalMast or Sensor) assigned to a 
+    *                      block boundary that we are starting from.
+    * @param destBean - The destination bean.
+    * @param validateOnly - When set false, the system will not use layout blocks
+    *                       that are set as either reserved(useExtraColor set) or occupied, if it 
+    *                       finds any then it will try to find an alternative path
+    *                       When set false, no block state checking is performed.
+    * @param pathMethod - Performs a check to see if any signal heads/masts are 
+    *                     in the path, if there are then the system will try to find
+    *                     an alternative path.  If set to NONE, then no checking is performed.
+    * @return an ArrayList of all the layoutblocks in the path.
+    * @throws jmri.JmriException if it can not find a valid path or the routing 
+    *                            has not been enabled.
+    */
+    public ArrayList<LayoutBlock> getLayoutBlocks(NamedBean sourceBean, NamedBean destBean, boolean validateOnly, int pathMethod) throws jmri.JmriException{
+        ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
+        LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+        LayoutBlock facingBlock = null;
+        LayoutBlock protectingBlock = null;
+        LayoutBlock destFacingBlock = null;
+        for(int i = 0; i<layout.size(); i++){
+            if(log.isDebugEnabled())
+                log.debug("Layout name " + layout.get(i).getLayoutName());
+            if (facingBlock==null){
+                facingBlock = lbm.getFacingBlockByNamedBean(sourceBean, layout.get(i));
+            }
+            if (protectingBlock==null){
+                protectingBlock = lbm.getProtectedBlockByNamedBean(sourceBean, layout.get(i));
+            }
+            if(destFacingBlock==null){
+                destFacingBlock = lbm.getFacingBlockByNamedBean(destBean, layout.get(i));
+            }
+            if((destFacingBlock!=null) && (facingBlock!=null) && (protectingBlock!=null)){
+                try{
+                    return getLayoutBlocks(facingBlock, destFacingBlock, protectingBlock, validateOnly, pathMethod);
+                } catch (jmri.JmriException e){
+                    throw e;
+                }
+            } else {
+                log.debug("blocks not found");
+            }
+        }
+        if(log.isDebugEnabled())
+            log.debug("No valid route from " + sourceBean.getDisplayName() + " to " + destBean.getDisplayName());
+        throw new jmri.JmriException("Blocks Not Found");
+    }
+    
+    /**
+    * Returns a list of NamedBeans (Signalhead, Signalmast or Sensor) that are assinged to block boundaries
+    * in a given list
+    * @param blocklist The list of block in order that need to be checked.
+    * @param panel (Optional) panel that the blocks need to be checked against
+    * @param T (Optional) the class that we want to check against, either Sensor, SignalMast or SignalHead, set null will return any.
+    */
+    public List<NamedBean> getBeansInPath(List<LayoutBlock> blocklist, LayoutEditor panel, Class<?> T){
+        ArrayList<NamedBean> beansInPath = new ArrayList<NamedBean>();
+        if(blocklist.size()>=2){
+            LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+            for(int x = 1; x<blocklist.size(); x++){
+                LayoutBlock facingBlock = blocklist.get(x-1);
+                LayoutBlock protectingBlock = blocklist.get(x);
+                NamedBean nb = null;
+                if(T==null){
+                    nb = lbm.getFacingNamedBean(facingBlock.getBlock(), protectingBlock.getBlock(), panel);
+                } else if(T.equals(jmri.SignalMast.class)){
+                    nb = lbm.getFacingSignalMast(facingBlock.getBlock(), protectingBlock.getBlock(), panel);
+                } else if (T.equals(jmri.Sensor.class)){
+                    nb = lbm.getFacingSensor(facingBlock.getBlock(), protectingBlock.getBlock(), panel);
+                } else if (T.equals(jmri.SignalHead.class)){
+                    nb = lbm.getFacingSignalHead(facingBlock.getBlock(), protectingBlock.getBlock());
+                }
+                if(nb!=null)
+                    beansInPath.add(nb);
+            }
+        }
+        return beansInPath;
+    }
+
     /**
      * Determines if one set of blocks is reachable from another set of blocks
      * based upon the directions of the set of blocks.
@@ -186,7 +270,6 @@ public class LayoutBlockConnectivityTools{
         throw new jmri.JmriException("BlockIsNull");
     }
     
-
     /**
     * This uses the layout editor to check if the destination location is 
     * reachable from the source location
