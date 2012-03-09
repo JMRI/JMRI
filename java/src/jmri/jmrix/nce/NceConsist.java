@@ -357,6 +357,7 @@ public class NceConsist extends jmri.DccConsist implements jmri.jmrix.nce.NceLis
 			// not used
 		}
 
+		@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NN_NAKED_NOTIFY") // notify not naked
 		public void reply(NceReply r) {
 			if (_busy == 0){
 				log.debug("Consist "+_consistNum+" read reply not for this consist");
