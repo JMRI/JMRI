@@ -104,7 +104,6 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	
 	/**
 	 * Gets the number of checkboxes(+1) that can fix in one row
-	 * @param size window size
 	 * @return the number of checkboxes, minimum is 5 (6 checkboxes)
 	 */
 	protected int getNumberOfCheckboxes(){
