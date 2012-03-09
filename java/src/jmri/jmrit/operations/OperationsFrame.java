@@ -113,11 +113,11 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	private int getNumberOfCheckboxes(Dimension size){
 		if (size== null)
 			return minCheckboxes;	// default is 6 checkboxes per row
-		String pad ="X";
-		for (int i=0; i<Control.MAX_LEN_STRING_ATTRIBUTE; i++) {
-			pad = pad+"X";
-		}
-		JCheckBox box = new JCheckBox(pad);
+		StringBuffer pad = new StringBuffer("X");
+		for (int i=0; i<Control.MAX_LEN_STRING_ATTRIBUTE; i++)
+			pad.append("X");
+		
+		JCheckBox box = new JCheckBox(pad.toString());
 		int number = size.width/(box.getPreferredSize().width);
 		if (number < minCheckboxes)
 			number = minCheckboxes;
