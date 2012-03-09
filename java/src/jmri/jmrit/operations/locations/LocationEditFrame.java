@@ -568,6 +568,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	int x = 0;
 	int y = 0;	// vertical position in panel
 	private void loadTypes(String[] types){
+		int numberOfCheckBoxes = getNumberOfCheckboxes();
 		for (int i =0; i<types.length; i++){
 			JCheckBox checkBox = new JCheckBox();
 			checkBoxes.add(checkBox);
@@ -581,7 +582,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 				checkBox.setEnabled(false);
 			}
 			// default is seven types per row
-			if (x > getNumberOfCheckboxes()){
+			if (x > numberOfCheckBoxes){
 				y++;
 				x = 0;
 			}

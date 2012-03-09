@@ -802,6 +802,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	//TODO only update comboBox when train or route list changes. 
 	private void updateDropOptions(){
 		dropPanel.removeAll();
+		int numberOfCheckboxes = getNumberOfCheckboxes();
 		
     	JPanel p = new JPanel();
     	p.setLayout(new GridBagLayout());
@@ -809,7 +810,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     	p.add(trainDrop, 1);
     	p.add(routeDrop, 2);
     	GridBagConstraints gc = new GridBagConstraints();
-    	gc.gridwidth = getNumberOfCheckboxes()+1;
+    	gc.gridwidth = numberOfCheckboxes+1;
     	dropPanel.add(p, gc);
 		
 		int y = 1;		// vertical position in panel
@@ -852,7 +853,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		    			_track.deleteDropId(dropIds[i]);
 		    		names.setText(name);
 		    		addItem(dropPanel, names, x++, y);
-		    		if (x > getNumberOfCheckboxes()){
+		    		if (x > numberOfCheckboxes){
 		    			y++;
 		    			x = 0;
 		    		}
@@ -869,6 +870,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	private void updatePickupOptions(){
 		log.debug("update pick up options");
 		pickupPanel.removeAll();
+		int numberOfCheckboxes = getNumberOfCheckboxes();
 		
     	JPanel p = new JPanel();
     	p.setLayout(new GridBagLayout());
@@ -876,7 +878,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     	p.add(trainPickup, 1);
     	p.add(routePickup, 2);
     	GridBagConstraints gc = new GridBagConstraints();
-    	gc.gridwidth = getNumberOfCheckboxes()+1;
+    	gc.gridwidth = numberOfCheckboxes+1;
     	pickupPanel.add(p, gc);
 		
 		int y = 1;		// vertical position in panel
@@ -919,7 +921,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		    			_track.deletePickupId(pickupIds[i]);
 		    		names.setText(name);
 		    		addItem(pickupPanel, names, x++, y);
-		    		if (x > getNumberOfCheckboxes()){
+		    		if (x > numberOfCheckboxes){
 		    			y++;
 		    			x = 0;
 		    		}
@@ -994,6 +996,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	int x = 0;
 	int y = 0;	// vertical position in panel
 	private void loadTypes(String[] types){
+		int numberOfCheckboxes = getNumberOfCheckboxes();
 		for (int i =0; i<types.length; i++){
 			if(_location.acceptsTypeName(types[i])){
 				JCheckBox checkBox = new JCheckBox();
@@ -1004,7 +1007,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				if(_track != null && _track.acceptsTypeName(types[i]))
 					checkBox.setSelected(true);
 			} 
-			if (x > getNumberOfCheckboxes()){
+			if (x > numberOfCheckboxes){
 				y++;
 				x = 0;
 			}
@@ -1013,6 +1016,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		
 	private void updateRoadNames(){
 		panelRoadNames.removeAll();
+		int numberOfCheckboxes = getNumberOfCheckboxes();
 		
     	JPanel p = new JPanel();
     	p.setLayout(new GridBagLayout());
@@ -1020,7 +1024,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     	p.add(roadNameInclude, 1);
     	p.add(roadNameExclude, 2);
     	GridBagConstraints gc = new GridBagConstraints();
-    	gc.gridwidth = getNumberOfCheckboxes()+1;
+    	gc.gridwidth = numberOfCheckboxes+1;
     	panelRoadNames.add(p, gc);
 		
 		int y = 1;		// vertical position in panel
@@ -1047,7 +1051,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		    		JLabel road = new JLabel();
 		    		road.setText(carRoads[i]);
 		    		addItem(panelRoadNames, road, x++, y);
-		    		if (x > getNumberOfCheckboxes()){
+		    		if (x > numberOfCheckboxes){
 		    			y++;
 		    			x = 0;
 		    		}
@@ -1064,13 +1068,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	private void updateLoadNames(){
 		panelLoadNames.removeAll();
 		
+		int numberOfCheckboxes = getNumberOfCheckboxes();
     	JPanel p = new JPanel();
     	p.setLayout(new GridBagLayout());
     	p.add(loadNameAll, 0);
     	p.add(loadNameInclude, 1);
     	p.add(loadNameExclude, 2);
     	GridBagConstraints gc = new GridBagConstraints();
-    	gc.gridwidth = getNumberOfCheckboxes()+1;
+    	gc.gridwidth = numberOfCheckboxes+1;
     	panelLoadNames.add(p, gc);
 		
 		int y = 1;		// vertical position in panel
@@ -1098,7 +1103,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		    		JLabel load = new JLabel();
 		    		load.setText(carLoads[i]);
 		    		addItem(panelLoadNames, load, x++, y);
-		    		if (x > getNumberOfCheckboxes()){
+		    		if (x > numberOfCheckboxes){
 		    			y++;
 		    			x = 0;
 		    		}
