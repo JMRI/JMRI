@@ -297,8 +297,8 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         while (isListen){ //Create DeviceServer threads
             DeviceServer device;
             try{
-                log.debug("Creating new DeviceServer(socket)");
-                device = new DeviceServer(socket.accept(), this);
+                log.debug("Creating new DeviceServer(socket), waiting for connection...");
+                device = new DeviceServer(socket.accept(), this);  //blocks here until a connection is made
 
                 Thread t = new Thread(device);
                 device.addDeviceListener(this);
@@ -400,7 +400,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         stopDevices();
         try{
             socket.close();
-            log.debug("UI socket just closed");
+            log.debug("UI socket in ServerThread just closed");
             service.stop();
         } catch (IOException ex){
             log.error("socket in ServerThread won't close");
