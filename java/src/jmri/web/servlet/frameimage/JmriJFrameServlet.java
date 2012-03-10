@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.imageio.ImageIO;
@@ -62,20 +63,15 @@ public class JmriJFrameServlet extends HttpServlet {
 
         if (c.getClass().equals(JButton.class)) {
             ((JButton) c).doClick();
-            return;
         } else if (c.getClass().equals(JCheckBox.class)) {
             ((JCheckBox) c).doClick();
-            return;
         } else if (c.getClass().equals(JRadioButton.class)) {
             ((JRadioButton) c).doClick();
-            return;
         } else if (c instanceof MouseListener) {
             if (log.isDebugEnabled()) {
                 log.debug("Invoke directly on MouseListener, at " + x + "," + y);
             }
             sendClickSequence((MouseListener) c, c, x, y);
-            return;
-
         } else if (c instanceof jmri.jmrit.display.MultiSensorIcon) {
             if (log.isDebugEnabled()) {
                 log.debug("Invoke Clicked on MultiSensorIcon");
@@ -89,8 +85,6 @@ public class JmriJFrameServlet extends HttpServlet {
                     false // not a popup
                     );
             ((jmri.jmrit.display.MultiSensorIcon) c).doMouseClicked(e);
-            return;
-
         } else if (c instanceof jmri.jmrit.display.Positionable) {
             if (log.isDebugEnabled()) {
                 log.debug("Invoke Pressed, Released and Clicked on Positionable");
@@ -125,8 +119,6 @@ public class JmriJFrameServlet extends HttpServlet {
                     false // not a popup
                     );
             ((jmri.jmrit.display.Positionable) c).doMouseClicked(e);
-            return;
-
         } else {
             MouseListener[] la = c.getMouseListeners();
             if (log.isDebugEnabled()) {
@@ -155,7 +147,6 @@ public class JmriJFrameServlet extends HttpServlet {
                 }
                 sendClickSequence(la[i], c, x, y);
             }
-            return;
         }
     }
 
@@ -284,19 +275,17 @@ public class JmriJFrameServlet extends HttpServlet {
             (plain ? "-plain" : ""),
             Boolean.toString(useAjax),
             Boolean.toString(protect)};
-        String s = rb.getString("FrameDocType");
-        s += java.text.MessageFormat.format(rb.getString("FramePart1"), args);
+        response.getWriter().write(rb.getString("FrameDocType"));
+        response.getWriter().write(MessageFormat.format(rb.getString("FramePart1"), args));
         if (useAjax) {
-            s += java.text.MessageFormat.format(rb.getString("FramePart2Ajax"), args);
+            response.getWriter().write(MessageFormat.format(rb.getString("FramePart2Ajax"), args));
         } else {
-            s += java.text.MessageFormat.format(rb.getString("FramePart2NonAjax"), args);
+            response.getWriter().write(MessageFormat.format(rb.getString("FramePart2NonAjax"), args));
         }
-        s += java.text.MessageFormat.format(rb.getString("FrameFooter"), args);
+        response.getWriter().write(MessageFormat.format(rb.getString("FrameFooter"), args));
 
-        response.setContentLength(s.length());
-        response.getWriter().print(s);
         if (log.isDebugEnabled()) {
-            log.debug("Sent " + s.length() + " bytes jframe html with click=" + (click ? "True" : "False"));
+            log.debug("Sent jframe html with click=" + (click ? "True" : "False"));
         }
     }
 
@@ -333,37 +322,28 @@ public class JmriJFrameServlet extends HttpServlet {
         response.setDateHeader("Last-Modified", now.getTime());
         response.setDateHeader("Expires", now.getTime());
 
-        StringBuilder sb = new StringBuilder(rb.getString("FrameDocType"));
-        sb.append(rb.getString("ListFront"));
+        response.getWriter().append(rb.getString("FrameDocType"));
+        response.getWriter().append(rb.getString("ListFront"));
         // list frames, (open JMRI windows)
         for (JmriJFrame frame : JmriJFrame.getFrameList()) {
             String title = frame.getTitle();
             //don't add to list if blank or disallowed
             if (!title.equals("") && frame.getAllowInFrameServlet() && !disallowedFrames.contains(title)) {
                 //format a table row for each valid window (frame)
-                String html = "/frame/" + title.replaceAll(" ", "%20") + ".html";
-                String png = "/frame/" + title.replaceAll(" ", "%20") + ".png";
-                sb.append("<tr><td>");
-                sb.append(title);
-                sb.append("</td>");
-                sb.append("<td><a href='");
-                sb.append(html);
-                sb.append("'><img src='");
-                sb.append(png);
-                sb.append("' /></a></td></tr>\n");
+                response.getWriter().append("<tr><td>");
+                response.getWriter().append(title);
+                response.getWriter().append("</td>");
+                response.getWriter().append("<td><a href='");
+                response.getWriter().append("/frame/" + title.replaceAll(" ", "%20") + ".html");
+                response.getWriter().append("'><img src='");
+                response.getWriter().append("/frame/" + title.replaceAll(" ", "%20") + ".png");
+                response.getWriter().append("' /></a></td></tr>\n");
             }
         }
 
-        sb.append("</table>");
-        sb.append(rb.getString("ListFooter"));
+        response.getWriter().append("</table>");
+        response.getWriter().append(rb.getString("ListFooter"));
 
-        String s = sb.toString();
-        response.setContentLength(s.length());
-        response.getWriter().print(s);
-
-        if (log.isDebugEnabled()) {
-            log.debug("Sent " + s.length() + " bytes html.");
-        }
     }
 
     // Requests for frames are always /frame/<name>.html or /frame/<name>.png
