@@ -324,26 +324,31 @@ public class JmriJFrameServlet extends HttpServlet {
 
         response.getWriter().append(rb.getString("FrameDocType"));
         response.getWriter().append(rb.getString("ListFront"));
+        doListMarkup(request, response);
+        response.getWriter().append(rb.getString("ListFooter"));
+
+    }
+
+    public static void doListMarkup(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.getWriter().write(rb.getString("TableHeader"));
         // list frames, (open JMRI windows)
         for (JmriJFrame frame : JmriJFrame.getFrameList()) {
             String title = frame.getTitle();
             //don't add to list if blank or disallowed
             if (!title.equals("") && frame.getAllowInFrameServlet() && !disallowedFrames.contains(title)) {
+                String link = "/frame/" + title.replaceAll(" ", "%20") + ".html";
                 //format a table row for each valid window (frame)
-                response.getWriter().append("<tr><td>");
+                response.getWriter().append("<tr><td><a href='" + link + "'>");
                 response.getWriter().append(title);
-                response.getWriter().append("</td>");
+                response.getWriter().append("</a></td>");
                 response.getWriter().append("<td><a href='");
-                response.getWriter().append("/frame/" + title.replaceAll(" ", "%20") + ".html");
+                response.getWriter().append(link);
                 response.getWriter().append("'><img src='");
                 response.getWriter().append("/frame/" + title.replaceAll(" ", "%20") + ".png");
-                response.getWriter().append("' /></a></td></tr>\n");
+                response.getWriter().append("'></a></td></tr>\n");
             }
         }
-
         response.getWriter().append("</table>");
-        response.getWriter().append(rb.getString("ListFooter"));
-
     }
 
     // Requests for frames are always /frame/<name>.html or /frame/<name>.png
