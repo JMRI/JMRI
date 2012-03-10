@@ -340,7 +340,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     public void sendDatagramReply(java.awt.event.ActionEvent e) {
-        String data = "[1e"+dstAliasField.getText()+srcAliasField.getText()+"] 04";
+        String data = "[1e"+dstAliasField.getText()+srcAliasField.getText()+"] 4C";
         System.out.println("|"+data+"|");
         CanMessage m = createPacket(data);
         log.debug("sendDatagramPerformed: "+m);

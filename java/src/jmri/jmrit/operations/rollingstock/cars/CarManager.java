@@ -427,57 +427,12 @@ public class CarManager extends RollingStockManager{
 
 	   /**
      * Create an XML element to represent this Entry. This member has to remain synchronized with the
-     * detailed DTD in operations-locations.dtd.
+     * detailed DTD in operations-cars.dtd.
      * @return Contents in a JDOM Element
      */
     public Element store() {
     	Element values = new Element("options");
-        // now save Cars frame size and position
-        Element e = new Element("carsOptions");
-        /* all JMRI window position and size are now saved
-        Dimension size = getCarsFrameSize();
-        Point posn = getCarsFramePosition();
-        if (_carsFrame != null){
-        	size = _carsFrame.getSize();
-        	posn = _carsFrame.getLocation();
-        	_carsFrameDimension = size;
-        	_carsFramePosition = posn;
-        }
-        if (posn != null){
-        	e.setAttribute("x", ""+posn.x);
-        	e.setAttribute("y", ""+posn.y);
-        }
-        if (size != null){
-        	e.setAttribute("height", ""+size.height);
-        	e.setAttribute("width", ""+size.width); 
-        }
-        */
-        StringBuffer buf = new StringBuffer();
-        for (int i=0; i<_carsTableColumnWidths.length; i++){
-        	buf.append(Integer.toString(_carsTableColumnWidths[i])+" ");
-        }
-        e.setAttribute("columnWidths", buf.toString());
-        values.addContent(e);
-        /* all JMRI window position and size are now saved
-        e = new Element("carEditOptions");
-        size = getEditFrameSize();
-        posn = getEditFramePosition();
-        if (_editFrame != null){
-        	size = _editFrame.getSize();
-        	posn = _editFrame.getLocation();
-        	_editFrameDimension = size;
-        	_editFramePosition = posn;
-        }
-        if (posn != null){
-        	e.setAttribute("x", ""+posn.x);
-        	e.setAttribute("y", ""+posn.y);
-        }
-        if (size != null){
-        	e.setAttribute("height", ""+size.height);
-        	e.setAttribute("width", ""+size.width); 
-        }
-        values.addContent(e);
-        */
+    	// nothing to save!
         return values;
     }
 

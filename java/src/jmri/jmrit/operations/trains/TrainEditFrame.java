@@ -803,6 +803,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	private void loadCarTypes(){
 		String[] types = CarTypes.instance().getNames();
+		int numberOfCheckboxes = getNumberOfCheckboxes();
 		int x = 0;
 		int y = 1;	// vertical position in panel
 		for (int i =0; i<types.length; i++){
@@ -813,7 +814,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			addItemLeft(typeCarPanelCheckBoxes, checkBox, x++, y);
 			if(_train != null && _train.acceptsTypeName(types[i]))
 				checkBox.setSelected(true);
-			if (x > getNumberOfCheckboxes()){
+			if (x > numberOfCheckboxes){
 				y++;
 				x = 0;
 			}
@@ -833,6 +834,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	private void loadEngineTypes(){
 		String[] types = EngineTypes.instance().getNames();
+		int numberOfCheckboxes = getNumberOfCheckboxes();
 		int x = 0;
 		int y = 1;
 		for (int i =0; i<types.length; i++){
@@ -843,15 +845,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			addItemLeft(typeEnginePanelCheckBoxes, checkBox, x++, y);
 			if(_train != null && _train.acceptsTypeName(types[i]))
 				checkBox.setSelected(true);
-			if (x > getNumberOfCheckboxes()){
+			if (x > numberOfCheckboxes){
 				y++;
 				x = 0;
 			}
 		}
-	}
-
-	private int getNumberOfCheckboxes(){
-		return getNumberOfCheckboxes(getPreferredSize());
 	}
 	
 	// there are three road combo boxes to update

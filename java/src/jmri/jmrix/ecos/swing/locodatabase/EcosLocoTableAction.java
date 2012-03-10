@@ -44,6 +44,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
     public EcosLocoTableAction(String s, EcosSystemConnectionMemo memo) { 
         this(s);
         setAdapterMemo(memo);
+        includeAddButton = false;
     }
     
     @Override
@@ -371,7 +372,6 @@ public class EcosLocoTableAction extends AbstractTableAction {
             protected void showPopup(MouseEvent e){
             
             }
-            
         };
     }
     

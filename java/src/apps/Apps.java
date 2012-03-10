@@ -227,7 +227,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             }
           }
         };
-        Thread thr = new Thread(r);
+        Thread thr = new Thread(r, "initialize preferences");
         thr.start();
         //Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
         r = new Runnable() {
@@ -235,12 +235,24 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             try {
                 DecoderIndexFile.instance();
             } catch (Exception ex) {
-                log.error("Error in trying to setup preferences " + ex.toString());
+                log.error("Error in trying to initialize decoder index file " + ex.toString());
             }
           }
         };
-        Thread thr2 = new Thread(r);
+        Thread thr2 = new Thread(r, "initialize decoder index");
         thr2.start();
+        
+        r = new Runnable() {
+          public void run() {
+            try {
+                jmri.util.PythonInterp.getPythonInterpreter();
+            } catch (Exception ex) {
+                log.error("Error in trying to initialize python interpreter " + ex.toString());
+            }
+          }
+        };
+        Thread thr3 = new Thread(r, "initialize python interpreter");
+        thr3.start();
         // if the configuration didn't complete OK, pop the prefs frame and help
         log.debug("Config go OK? "+(configOK||configDeferredLoadOK));
         if (!configOK||!configDeferredLoadOK) {

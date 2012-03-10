@@ -15,6 +15,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.extensions.jfcunit.eventdata.*;
+import junit.extensions.jfcunit.finder.AbstractButtonFinder;
+import junit.extensions.jfcunit.finder.DialogFinder;
 
 import java.io.File;
 import java.util.List;
@@ -515,6 +517,8 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		
 		//f.deleteScheduleButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteScheduleButton ) );
+		// Yes to pop up
+		pressDialogButton(f, "Yes");
 		s = m.getScheduleByName("Test Schedule A");	
 		Assert.assertNull("Test Schedule A exists", s);
 		
@@ -525,6 +529,20 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		SchedulesTableFrame f = new SchedulesTableFrame();
 		f.setVisible(true);
 		f.dispose();
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void pressDialogButton(JmriJFrame f, String buttonName){
+		//  (with JfcUnit, not pushing this off to another thread)			                                            
+		// Locate resulting dialog box
+        List<javax.swing.JDialog> dialogList = new DialogFinder(null).findAll(f);
+        javax.swing.JDialog d = dialogList.get(0);
+        // Find the button
+        AbstractButtonFinder finder = new AbstractButtonFinder(buttonName);
+        javax.swing.JButton button = ( javax.swing.JButton ) finder.find( d, 0);
+        Assert.assertNotNull("button not found", button);   
+        // Click button
+        getHelper().enterClickAndLeave( new MouseEventData( this, button ) );		
 	}
 	
 	// Ensure minimal setup for log4J

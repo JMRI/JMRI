@@ -99,17 +99,26 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		p.add(c, gc);
 	}
 
-	private final int minCheckboxes = 6;
+	private final int minCheckboxes = 5;
 	private final int maxCheckboxes = 11;
+	
 	/**
 	 * Gets the number of checkboxes(+1) that can fix in one row
-	 * @param size window size
-	 * @return the number of checkboxes, minimum is 6 (7 checkboxes)
+	 * @return the number of checkboxes, minimum is 5 (6 checkboxes)
 	 */
-	protected int getNumberOfCheckboxes(Dimension size){
+	protected int getNumberOfCheckboxes(){
+		return getNumberOfCheckboxes(getPreferredSize());
+	}
+
+	private int getNumberOfCheckboxes(Dimension size){
 		if (size== null)
-			return minCheckboxes;	// default is 7 checkboxes per row
-		int number = size.width/(10*Control.MAX_LEN_STRING_ATTRIBUTE);
+			return minCheckboxes;	// default is 6 checkboxes per row
+		StringBuffer pad = new StringBuffer("X");
+		for (int i=0; i<Control.MAX_LEN_STRING_ATTRIBUTE; i++)
+			pad.append("X");
+		
+		JCheckBox box = new JCheckBox(pad.toString());
+		int number = size.width/(box.getPreferredSize().width);
 		if (number < minCheckboxes)
 			number = minCheckboxes;
 		if (number > maxCheckboxes)
@@ -189,6 +198,8 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	 */
 	protected void saveTableDetails(JTable table) {
 		UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
+		if (p == null)
+			return;
 		TableSorter sorter = null;
 		String tableref = getWindowFrameRef() + ":table";
 		try {
@@ -206,14 +217,15 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	}
 	
 	/**
-	 * Loads the table's width, position, and sorting status from the user preferences file
-	 * @param table Table to be loaded
+	 * Loads the table's width, position, and sorting status from the user preferences file.
+	 * @param table The table to be adjusted.
+	 * @return true if table has been adjusted by saved xml file.
 	 */
 	public boolean loadTableDetails(JTable table) {
 		UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
 		TableSorter sorter = null;
 		String tableref = getWindowFrameRef() + ":table";
-		if (p.getTablesColumnList(tableref).size() == 0)
+		if (p == null || p.getTablesColumnList(tableref).size() == 0)
 			return false;
 		try {
 			sorter = (TableSorter) table.getModel();
@@ -234,6 +246,12 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 			int width = p.getTableColumnWidth(tableref, columnName);
 			if (width != -1) {
 				table.getColumnModel().getColumn(i).setPreferredWidth(width);
+			} else {
+				// name not found so use one that exists
+				String name = p.getTableColumnAtNum(tableref, i);
+				width = p.getTableColumnWidth(tableref, name);
+				table.getColumnModel().getColumn(i).setPreferredWidth(width);
+				log.debug("Could not find column name "+columnName+" using name "+name+" setting width "+width);
 			}
 		}
 		return true;
@@ -249,7 +267,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 				log.debug("Column name "+columnName+" not found in user preference file");
 				continue;
 			}
-			if (i != order) {
+			if (i != order && order < table.getColumnCount()) {
 				table.moveColumn(i, order);
 				log.debug("Move column number " + i + " name " +columnName+" to "+order);
 				sortDone = false;

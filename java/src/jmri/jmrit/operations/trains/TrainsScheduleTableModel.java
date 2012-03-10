@@ -12,12 +12,11 @@ import javax.swing.table.TableColumnModel;
 
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.operations.setup.Control;
-import jmri.util.JmriJFrame;
 
 /**
  * Table Model for edit of train schedules used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2010
+ * @author Daniel Boudreau Copyright (C) 2010, 2012
  * @version   $Revision$
  */
 public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
@@ -57,7 +56,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     	}
         updateList();
         fireTableStructureChanged();
-        initTable(table, frame);
+        initTable();
     }
      
     private synchronized void updateList() {
@@ -86,26 +85,31 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     }
 
 	List<String> sysList = null;
-	JTable table = null;
-	JmriJFrame frame = null;
+	JTable _table = null;
+	TrainsScheduleTableFrame _frame = null;
     
-	void initTable(JTable table, JmriJFrame frame) {
-		this.table = table;
-		this.frame = frame;
+	void initTable(JTable table, TrainsScheduleTableFrame frame) {
+		_table = table;
+		_frame = frame;
+		initTable();
+	}
+	void initTable(){
 		// Install the button handlers
-		TableColumnModel tcm = table.getColumnModel();
-		table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
+		TableColumnModel tcm = _table.getColumnModel();
+		_table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 
-		// set column preferred widths
-		int[] widths = trainManager.getTrainScheduleFrameTableColumnWidths();
-		int numCol = widths.length;
-		if (widths.length > getColumnCount())
-			numCol = getColumnCount();
-		for (int i=0; i<numCol; i++){
-			tcm.getColumn(i).setPreferredWidth(widths[i]);
+		if (!_frame.loadTableDetails(_table)){
+			// set column preferred widths, note that columns can be deleted
+			int[] widths = trainManager.getTrainScheduleFrameTableColumnWidths();
+			int numCol = widths.length;
+			if (widths.length > getColumnCount())
+				numCol = getColumnCount();
+			for (int i=0; i<numCol; i++){
+				tcm.getColumn(i).setPreferredWidth(widths[i]);
+			}
 		}
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
     
     public synchronized int getRowCount() { return sysList.size(); }
@@ -207,6 +211,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     		removePropertyChangeTrainSchedules();
     		addPropertyChangeTrainSchedules();
     		fireTableStructureChanged();
+    		initTable();
     	} else if (e.getSource().getClass().equals(Train.class)){
     		String trainId = ((Train) e.getSource()).getId();
     		int row = sysList.indexOf(trainId);

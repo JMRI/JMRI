@@ -72,11 +72,13 @@ public abstract class AppsBase {
         installManagers();
 
         setAndLoadPreferenceFile();
+        
+        Runnable r;
         /*Once all the preferences have been loaded we can initial the preferences
         doing it in a thread at this stage means we can let it work in the background
         if the file doesn't exist then we do not initilise it*/
         if(preferenceFileExists){
-            Runnable r = new Runnable() {
+            r = new Runnable() {
               public void run() {
                 try {
                      jmri.InstanceManager.tabbedPreferencesInstance().init();
@@ -88,6 +90,18 @@ public abstract class AppsBase {
             Thread thr = new Thread(r);
             thr.start();
         }
+        
+        r = new Runnable() {
+          public void run() {
+            try {
+                jmri.util.PythonInterp.getPythonInterpreter();
+            } catch (Exception ex) {
+                log.error("Error in trying to initialize python interpreter " + ex.toString());
+            }
+          }
+        };
+        Thread thr2 = new Thread(r, "initialize python interpreter");
+        thr2.start();
     }
     
     protected void installConfigurationManager() {

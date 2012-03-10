@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
+import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
@@ -64,6 +65,7 @@ public class JythonWindow extends AbstractAction {
 
         // Add checkbox to enable/disable auto-scrolling
         JPanel p = new JPanel();
+        p.add(clearButton = new JButton(rb.getString("ButtonClear")));
         p.add(autoScroll  = new JCheckBox(rb.getString("CheckBoxAutoScroll"), true));
         autoScroll.setSelected(pref.getSimplePreferenceState(alwaysScrollCheck));
         alwaysOnTopCheckBox.setText("Window always on Top");
@@ -87,11 +89,17 @@ public class JythonWindow extends AbstractAction {
         });
         
         alwaysOnTopCheckBox.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    f.setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
-                    pref.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTopCheckBox.isSelected());
-                }
-            });
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                f.setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
+                pref.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTopCheckBox.isSelected());
+            }
+        });
+        
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                area.setText("");
+            }
+        });
         f.getContentPane().add(p, BorderLayout.PAGE_END);
         
         // set a monospaced font
@@ -144,6 +152,7 @@ public class JythonWindow extends AbstractAction {
     JFrame f;
     JCheckBox autoScroll;
     jmri.UserPreferencesManager pref;
+    JButton clearButton;
     
     String alwaysOnTopCheck = this.getClass().getName()+".alwaysOnTop";
     String alwaysScrollCheck = this.getClass().getName()+".alwaysScroll";

@@ -56,18 +56,14 @@ public class ConsistController extends AbstractController implements ProgListene
  * Allows device to decide how to handle consisting.
  * Just selection or selection and Make & Break.
  * .size() indicates how many consists are being sent so the device can wait before displaying them
- * Since users can have JMRI and NCE consists, this checks for both
  */
     public void sendConsistListType(){
         if (listeners == null) return;
         String message;
         
         int numConsists = manager.getConsistList().size();  //number of JMRI consists found
-        		// dboudreau 2/26/2012 added consist manager for NCE
-         // + NceConsistRoster.instance().numEntries();      //  plus number of NCE consists found
         if (log.isDebugEnabled()) {
-        	log.debug(numConsists+" consists found,"+manager.getConsistList().size());
-        	//+" JMRI and "+NceConsistRoster.instance().numEntries()+" NCE");
+        	log.debug(numConsists+" consists found.");
         }
 
         if (isConsistAllowed){  //  Allow Make & Break consists

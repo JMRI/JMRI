@@ -81,6 +81,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	String locationName = null;		// only show cars with this location
 	String trackName = null;		// only show cars with this track
 	JTable _table;
+	CarsTableFrame _frame;
     
     public CarsTableModel(boolean showAllCars, String locationName, String trackName) {
         super();
@@ -97,47 +98,47 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     	if (sort == SORTBYCOLOR && !showColor){
     		showColor = true;
     		fireTableStructureChanged();
-    		initTable(_table);
+    		initTable();
     	}
     	else if (sort == SORTBYLOAD && showColor){
     		showColor = false;
     		fireTableStructureChanged();
-    		initTable(_table);
+    		initTable();
     	}
     	else if (sort == SORTBYDESTINATION || sort == SORTBYFINALDESTINATION){
     		showDest = true;
     		fireTableStructureChanged();
-    		initTable(_table);
+    		initTable();
     	}
        	else if (sort == SORTBYRWE && showDest){
     		showDest = false;
     		fireTableStructureChanged();
-    		initTable(_table);
+    		initTable();
     	}
        	else if (sort == SORTBYMOVES){
     		showMoveCol = SHOWMOVES;
        		fireTableStructureChanged();
-    		initTable(_table);
+    		initTable();
     	}
        	else if (sort == SORTBYBUILT){
     		showMoveCol = SHOWBUILT;
        		fireTableStructureChanged();
-    		initTable(_table);
+    		initTable();
     	}
     	else if (sort == SORTBYOWNER){
     		showMoveCol = SHOWOWNER;
        		fireTableStructureChanged();
-    		initTable(_table);
+    		initTable();
     	}
     	else if (sort == SORTBYVALUE){
     		showMoveCol = SHOWVALUE;
        		fireTableStructureChanged();
-    		initTable(_table);
+    		initTable();
     	}
     	else if (sort == SORTBYRFID){
     		showMoveCol = SHOWRFID;
        		fireTableStructureChanged();
-    		initTable(_table);
+    		initTable();
     	}
     	else
     		fireTableDataChanged();
@@ -272,22 +273,31 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     	}
     }
     
-	void initTable(JTable table) {
+	void initTable(JTable table, CarsTableFrame frame) {
 		_table = table;
+		_frame = frame;
+		initTable();
+	}
+	
+	void initTable() {
 		// Install the button handlers
-		TableColumnModel tcm = table.getColumnModel();
+		TableColumnModel tcm = _table.getColumnModel();
 		ButtonRenderer buttonRenderer = new ButtonRenderer();
 		tcm.getColumn(SETCOLUMN).setCellRenderer(buttonRenderer);
 		TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
 		tcm.getColumn(SETCOLUMN).setCellEditor(buttonEditor);
 		tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
 		tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
+		
 		// set column preferred widths
-		int[] tableColumnWidths = manager.getCarsFrameTableColumnWidths();
-		for (int i=0; i<tcm.getColumnCount(); i++)
-			tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);		
+		if (!_frame.loadTableDetails(_table)) {
+			// load defaults, xml file data not found
+			int[] tableColumnWidths = manager.getCarsFrameTableColumnWidths();
+			for (int i=0; i<tcm.getColumnCount(); i++)
+				tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
+		}
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
     
     public int getRowCount() { return sysList.size(); }
@@ -329,8 +339,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         	else
         		return rb.getString("Moves");
         }
-        case SETCOLUMN: return "";
-        case EDITCOLUMN: return "";		//edit column
+        case SETCOLUMN: return rb.getString("Set");
+        case EDITCOLUMN: return rb.getString("Edit");
         default: return "unknown";
         }
     }

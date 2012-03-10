@@ -41,7 +41,7 @@ public class RailComTableAction extends AbstractTableAction {
         if (InstanceManager.getDefault(RailComManager.class) == null) {
             setEnabled(false);
         }
-
+        includeAddButton = false;
     }
 
     public RailComTableAction() {

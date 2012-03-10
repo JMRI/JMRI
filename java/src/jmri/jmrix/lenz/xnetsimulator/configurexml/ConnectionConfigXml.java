@@ -91,10 +91,16 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
                 }
         }
         
-        adapter.configure();
-        // register, so can be picked up
-        //getInstance();
+        // register, so can be picked up next time
         register();
+        
+        if (adapter.getDisabled()){
+            unpackElement(e);
+            return result;
+        }
+        
+        adapter.configure();
+
         return result;
     }
 

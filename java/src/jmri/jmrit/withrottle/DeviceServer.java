@@ -138,9 +138,9 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         }
         
         try{
-            log.debug("Creating input stream reader");
+            if (log.isDebugEnabled()) log.debug("Creating input  stream reader for " + device.getRemoteSocketAddress() );
             in = new BufferedReader(new InputStreamReader(device.getInputStream(),"UTF8"));
-            log.debug("Creating output stream writer");
+            if (log.isDebugEnabled()) log.debug("Creating output stream writer for " + device.getRemoteSocketAddress() );
             out = new PrintStream(device.getOutputStream(),true, "UTF8");
 
         } catch (IOException e){
@@ -263,8 +263,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                             
                             if (WiThrottleManager.withrottlePreferencesInstance().isUseEStop()){
                                 pulseInterval = WiThrottleManager.withrottlePreferencesInstance().getEStopDelay();
-                                if (log.isDebugEnabled()) log.debug("Sent:*"+pulseInterval);
-                                out.println("*"+pulseInterval+newLine); //  Turn on heartbeat, if used
+                                sendPacketToDevice("*"+pulseInterval); //  Turn on heartbeat, if used
                             }
                             break;
                         }
@@ -408,9 +407,14 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
         keepReading = false;
         try{
-                device.close();
+            if (device.isClosed()) {
+                if (log.isDebugEnabled()) log.debug("device socket " + device.getRemoteSocketAddress() + " already closed.");
+            } else {
+            	device.close();
+            	if (log.isDebugEnabled()) log.debug("device socket " + device.getRemoteSocketAddress() + " closed.");
+            }
         }catch (IOException e){
-                log.error("device socket won't close");
+        	if (log.isDebugEnabled()) log.error("device socket " + device.getRemoteSocketAddress() + " close failed with IOException.");
         }
     }
     
@@ -546,8 +550,8 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
  */
     public void sendPacketToDevice(String message){
         if (message == null) return; //  Do not send a null.
-        if (log.isDebugEnabled()) log.debug("Sent: "+message);
         out.println(message + newLine);
+        if (log.isDebugEnabled()) log.debug("Sent: "+message);
     }
 
     /**

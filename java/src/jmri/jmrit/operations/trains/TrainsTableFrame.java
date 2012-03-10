@@ -22,7 +22,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.table.TableColumnModel;
+//import javax.swing.table.TableColumnModel;
 
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.OperationsFrame;
@@ -249,7 +249,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     	setSize(trainManager.getTrainsFrameSize());
     	setLocation(trainManager.getTrainsFramePosition());
     	*/
-    	setSortBy(trainManager.getTrainsFrameSortBy(), trainManager.getTrainsFrameSortStatus());
+    	setSortBy();
     	
     	// listen for timetable changes
     	trainManager.addPropertyChangeListener(this);
@@ -355,7 +355,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		}
 	}
 	
-	private void setSortBy(String sortBy, int status){
+	private void setSortBy(){
+		String sortBy = getSortBy();
 		if(sortBy.equals(TIME)){
 			showTime.setSelected(true);
 			trainsModel.setSort(trainsModel.SORTBYTIME);
@@ -364,16 +365,18 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			showId.setSelected(true);
 			trainsModel.setSort(trainsModel.SORTBYID);
 		}
+		/*
 		for (int i=0; i<sorter.getColumnCount(); i++){
 			if (sorter.getColumnName(i).equals(sortBy)){
 				log.debug("Set sort column ("+sortBy+")");
-				sorter.setSortingStatus(i, status);
+				sorter.setSortingStatus(i, _status);
 			}
 		}
+		*/
 	}
 	
 	int _status = TableSorter.ASCENDING;
-	private String getSortBy(){
+	protected String getSortBy(){
 		// set the defaults
 		String sortBy = NAME;
 		_status = TableSorter.ASCENDING;
@@ -472,15 +475,16 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	protected void storeValues(){
 		/* all JMRI window position and size are now saved
 		trainManager.setTrainsFrame(this);					//save frame size and location
-		*/
-		saveTableDetails(trainsTable);
 		trainManager.setTrainsFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
 		trainManager.setTrainsFrameSortBy(getSortBy());		//save how the table is sorted
 		trainManager.setTrainsFrameSortStatus(_status);
+		*/
 		trainManager.save();
+		saveTableDetails(trainsTable);
 		setModifiedFlag(false);
 	}
 	
+	/* column widths now saved in user preference file 2012
 	protected int[] getCurrentTableColumnWidths(){	
 		TableColumnModel tcm = trainsTable.getColumnModel();
 		int[] widths = new int[tcm.getColumnCount()];
@@ -488,6 +492,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			widths[i] = tcm.getColumn(i).getWidth();
 		return widths;
 	}
+	*/
 	
 	private synchronized void createShutDownTask(){
 		if (jmri.InstanceManager.shutDownManagerInstance() != null && trainDirtyTask == null) {
@@ -553,11 +558,11 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     }
 	
     public void dispose() {
+      	/* all JMRI window position and size are now saved in user preference file
     	trainManager.setTrainsFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
-    	trainsModel.dispose();
-    	/* all JMRI window position and size are now saved
     	trainManager.setTrainsFrame(null);
     	*/
+       	trainsModel.dispose();
     	trainManager.runShutDownScripts();
     	trainManager.removePropertyChangeListener(this);
     	removePropertyChangeLocations();

@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.Enumeration;
 import java.beans.PropertyChangeListener;
@@ -74,7 +75,6 @@ public class EntryExitPairs {
     final static int SETUPTURNOUTSONLY = 0x00;
     
     /**
-    * ### Not yet fully impliemented ###
     * Constant value to represent that the entryExit will set up the
     * turnouts between two different points and configure the signalmast logic
     * to use the correct blocks.
@@ -82,13 +82,13 @@ public class EntryExitPairs {
     final static int SETUPSIGNALMASTLOGIC = 0x01;
     
    /**
-    * ### Not yet fully impliemented ###
     * Constant value to represent that the entryExit will do full interlocking
     * it will set the turnouts and "reserve" the blocks.
     */
     final static int FULLINTERLOCK = 0x02;
     
     static int nxButtonTimeout = 10;
+    static int nxMessageBoxClearTimeout = 30;
     
     static JPanel glassPane = new JPanel();
     
@@ -220,9 +220,10 @@ public class EntryExitPairs {
             PointDetails key = e.getKey();
             LayoutEditor pan = key.getLayoutEditor();
             if(pan==panel){
-                total = total+nxpair.get(key).getNumberOfDestinations();
+                total = total+e.getValue().getNumberOfDestinations();
             } // end while
         }
+
         return total;
     }
 
@@ -239,7 +240,7 @@ public class EntryExitPairs {
             PointDetails key = e.getKey();
             LayoutEditor pan = key.getLayoutEditor();
             if(pan==panel){
-               ArrayList<PointDetails> dest = nxpair.get(key).getDestinationPoints();
+               List<PointDetails> dest = nxpair.get(key).getDestinationPoints();
                for(int i = 0; i<dest.size(); i++){
                    destinationList.add(dest.get(i).getRefObject());
                    source.add(key.getRefObject());
@@ -310,7 +311,7 @@ public class EntryExitPairs {
     public ArrayList<Object> getDestinationList(Object obj, LayoutEditor panel){
         ArrayList<Object> list = new ArrayList<Object>();
         if(nxpair.containsKey(getPointDetails(obj, panel))){
-            ArrayList<PointDetails> from = nxpair.get(getPointDetails(obj, panel)).getDestinationPoints();
+            List<PointDetails> from = nxpair.get(getPointDetails(obj, panel)).getDestinationPoints();
             for(int i = 0; i<from.size(); i++){
                 list.add(from.get(i).getRefObject());
             }
@@ -402,9 +403,24 @@ public class EntryExitPairs {
         }
         return false;
     }
+    
+    public void cancelInterlock(Object source, LayoutEditor panel, Object dest){
+        if(nxpair.containsKey(getPointDetails(source, panel))){
+            nxpair.get(getPointDetails(source, panel)).cancelInterlock(dest, panel);
+        }
+    
+    }
 
     jmri.SignalMastLogicManager smlm = InstanceManager.signalMastLogicManagerInstance();
 
+    final static int PROMPTUSER = 0x00;
+    final static int AUTOCLEAR = 0x01;
+    final static int AUTOCANCEL = 0x02;
+    
+    final static int CANCELROUTE = 0;
+    final static int CLEARROUTE = 1;
+    final static int EXITROUTE = 2;
+    
     class Source {
     
         NamedBean sourceObject = null;
@@ -415,28 +431,22 @@ public class EntryExitPairs {
         
         //Using Object here rather than sourceSensor, working on the basis that it might
         //one day be possible to have a signal icon selectable on a panel and 
-        //generate an propertychange, so hence do not want to tie it down at this stage.
-        HashMap<Object, DestinationPoints> destObject = new HashMap<Object, DestinationPoints>();
-        HashMap<DestinationPoints, Object> revDestObject = new HashMap<DestinationPoints, Object>();
+        //generate a propertychange, so hence do not want to tie it down at this stage.
+        HashMap<PointDetails, DestinationPoints> pointToDest = new HashMap<PointDetails, DestinationPoints>();
+        
         
         boolean isEnabled(Object dest,LayoutEditor panel){
             PointDetails lookingFor = getPointDetails(dest, panel);
-            for(Entry<DestinationPoints, Object> en : revDestObject.entrySet()){
-                PointDetails point = (en.getKey()).getPoint();
-                if(point.equals(lookingFor)){
-                    return en.getKey().isEnabled();
-                }
+            if(pointToDest.containsKey(lookingFor)){
+                return pointToDest.get(lookingFor).isEnabled();
             }
             return true;
         }
         
         void setEnabled(Object dest, LayoutEditor panel, boolean boo){
             PointDetails lookingFor = getPointDetails(dest, panel);
-            for(Entry<DestinationPoints, Object> en : revDestObject.entrySet()){
-                PointDetails point = (en.getKey()).getPoint();
-                if(point.equals(lookingFor)){
-                    en.getKey().setEnabled(boo);
-                }
+            if(pointToDest.containsKey(lookingFor)){
+                pointToDest.get(lookingFor).setEnabled(boo);
             }
         }
         
@@ -463,45 +473,21 @@ public class EntryExitPairs {
             return pd.getProtecting();
         }
         
-        final static int CANCELROUTE = 0;
-        final static int CLEARROUTE = 1;
         
         void addDestination(PointDetails dest){
-            for(Entry<DestinationPoints, Object> en : revDestObject.entrySet()){
-                PointDetails point = (en.getKey()).getPoint();
-                if(point.equals(dest))
-                    return;
+            if(pointToDest.containsKey(dest)){
+                return;
             }
             
             DestinationPoints dstPoint = new DestinationPoints(dest);
-            Sensor destSensor = getSensorFromPoint(dest);
             dest.setDestination(dstPoint, this);
-            if(destSensor!=null){
-                if(!revDestObject.containsKey(dstPoint)){
-//                    destSensor.addPropertyChangeListener(propertyDestinationListener);
-                    destObject.put(destSensor, dstPoint);
-                    revDestObject.put(dstPoint, destSensor);
-                }
-            }
+            pointToDest.put(dest, dstPoint);
         }
         
         void removeDestination(PointDetails dest){
-            DestinationPoints destPoint2Remove = null;
-            for(Entry<DestinationPoints, Object> en : revDestObject.entrySet()){
-                PointDetails point = (en.getKey()).getPoint();
-                if(point.equals(dest)){
-                    if(revDestObject.get(en.getKey()) instanceof Sensor){
-                        en.getKey().getPoint().removeDestination(en.getKey());
-                    }
-                    if(point.getSensor()!=null){
-                        point.removeDestination(en.getKey());
-                    }
-                    destPoint2Remove = en.getKey();
-                    destObject.remove(revDestObject.get(en.getKey()));
-                }
-            }
-            revDestObject.remove(destPoint2Remove);
-            if(revDestObject.size()==0){
+            pointToDest.get(dest).dispose();
+            pointToDest.remove(dest);
+            if(pointToDest.size()==0){
                 getPoint().removeSource(this);
             }
         }
@@ -515,74 +501,51 @@ public class EntryExitPairs {
         Object getSourceObject() { return sourceObject; }
         
         ArrayList<PointDetails> getDestinationPoints() {
-            ArrayList<PointDetails> rtn = new ArrayList<PointDetails>();
-            for(Entry<DestinationPoints, Object> en : revDestObject.entrySet()){
-                rtn.add(en.getKey().getPoint());
-            }
-            return rtn;
+            //ArrayList<PointDetails> rtn = 
+            return new ArrayList<PointDetails>(pointToDest.keySet());
         }
         
         boolean isDestinationValid(PointDetails destPoint){
-            boolean exists = false;
-            for(Entry<DestinationPoints, Object> en : revDestObject.entrySet()){
-                if((en.getKey()).getPoint().equals(destPoint))
-                    exists = true;
-            }
-            return exists;
+            return pointToDest.containsKey(destPoint);
+                
         }
         
         boolean getUniDirection(Object dest, LayoutEditor panel){
             //Work on the principle that if the source is uniDirection, then the destination has to be.
-            //if(uniDirection) return uniDirection;
             PointDetails lookingFor = getPointDetails(dest, panel);
-            for(Entry<DestinationPoints, Object> en : revDestObject.entrySet()){
-                PointDetails point = (en.getKey()).getPoint();
-                if(point.equals(lookingFor)){
-                    return en.getKey().getUniDirection();
-                }
+            if(pointToDest.containsKey(lookingFor)){
+                return pointToDest.get(lookingFor).getUniDirection();
             }
-            
             return true;
         }
         
         void setUniDirection(Object dest, LayoutEditor panel, boolean set){
             
             PointDetails lookingFor = getPointDetails(dest, panel);
-            for(Entry<DestinationPoints, Object> en : revDestObject.entrySet()){
-                PointDetails point = (en.getKey()).getPoint();
-                if(point.equals(lookingFor)){
-                    en.getKey().setUniDirection(set);
-                }
+            if(pointToDest.containsKey(lookingFor)){
+                pointToDest.get(lookingFor).setUniDirection(set);
             }
         }
         
         boolean isRouteActive(PointDetails endpoint){
-            for(Entry<DestinationPoints, Object> en : revDestObject.entrySet()){
-                PointDetails point = (en.getKey()).getPoint();
-                if(point.equals(endpoint)){
-                    return en.getKey().activeEntryExit;
-                }
+            if(pointToDest.containsKey(endpoint)){
+                return pointToDest.get(endpoint).activeEntryExit;
             }
             return false;
         }
         
         void activeBean(DestinationPoints dest, boolean reverseDirection){
-            /*DestinationPoints fromSen = destObject.get(dest);
-            fromSen.getPoint().nxButtonTimeOut();*/
             dest.activeBean(reverseDirection);
         }
 
-        int getNumberOfDestinations() { return revDestObject.size(); }
+        int getNumberOfDestinations() { return pointToDest.size(); }
         
         void setEntryExitType(Object dest, LayoutEditor panel, int type){
             PointDetails lookingFor = getPointDetails(dest, panel);
-            for(Entry<DestinationPoints, Object> en : revDestObject.entrySet()){
-                PointDetails point = (en.getKey()).getPoint();
-                if(point.equals(lookingFor)){
-                    en.getKey().setEntryExitType(type);
-                }
+            if(pointToDest.containsKey(lookingFor)){
+                pointToDest.get(lookingFor).setEntryExitType(type);
             }
-            if(type!=SETUPTURNOUTSONLY){
+            if(type==FULLINTERLOCK){
                 if (sourceSignal instanceof SignalMast){
                     ((SignalMast) sourceSignal).setHeld(true);
                 }
@@ -591,20 +554,19 @@ public class EntryExitPairs {
         
         int getEntryExitType(Object dest, LayoutEditor panel){
             PointDetails lookingFor = getPointDetails(dest, panel);
-            for(Entry<DestinationPoints, Object> en : revDestObject.entrySet()){
-                PointDetails point = (en.getKey()).getPoint();
-                if(point.equals(lookingFor)){
-                    return en.getKey().getEntryExitType();
-                }
+            if(pointToDest.containsKey(lookingFor)){
+                return pointToDest.get(lookingFor).getEntryExitType();
             }
             
             return 0x00;
-        
         }
         
-        final static int PROMPTUSER = 0x00;
-        final static int AUTOCLEAR = 0x01;
-        final static int AUTOCANCEL = 0x02;
+        void cancelInterlock(Object dest, LayoutEditor panel){
+            PointDetails lookingFor = getPointDetails(dest, panel);
+            if(pointToDest.containsKey(lookingFor)){
+                pointToDest.get(lookingFor).cancelClearInterlock(CANCELROUTE);
+            }
+        }
         
         class DestinationPoints{
         
@@ -615,6 +577,7 @@ public class EntryExitPairs {
             boolean activeEntryExit = false;
             ArrayList<LayoutBlock> routeDetails = new ArrayList<LayoutBlock>();
             LayoutBlock destination;
+            boolean disposed = false;
             
             boolean isEnabled(){
                 return enabled;
@@ -648,19 +611,21 @@ public class EntryExitPairs {
             }
             
             void setRouteTo(boolean set) {
-                point.setRouteTo(set);
-                if(set){
+                if(set && getEntryExitType()==FULLINTERLOCK){
+                    point.setRouteTo(true);
                     setNXButtonState(point, NXBUTTONACTIVE);
                 } else {
+                    point.setRouteTo(false);
                     setNXButtonState(point, NXBUTTONINACTIVE);
                 }
             }
             
             void setRouteFrom(boolean set){
-                pd.setRouteFrom(set);
-                if(set){
+                if(set && getEntryExitType()==FULLINTERLOCK){
+                    pd.setRouteFrom(true);
                     setNXButtonState(pd, NXBUTTONACTIVE);
                 } else {
+                    pd.setRouteFrom(false);
                     setNXButtonState(pd, NXBUTTONINACTIVE);
                 }
             }
@@ -680,36 +645,67 @@ public class EntryExitPairs {
                     uniDirection = true;
             }
             
-            //This should probably look at the changes being made at the block level not at the sensor level
             protected PropertyChangeListener propertyBlockListener = new PropertyChangeListener() {
                 public void propertyChange(PropertyChangeEvent e) {
                     Block blk = (Block) e.getSource();
                     if (e.getPropertyName().equals("state")) {
                         if (log.isDebugEnabled()) log.debug(ref + "  We have a change of state on the block " + blk.getDisplayName());
-                        //int now = ((Integer) e.getNewValue()).intValue();
-                        int old = ((Integer) e.getOldValue()).intValue();
+                        int now = ((Integer) e.getNewValue()).intValue();
                         
-                        if ((old==Block.OCCUPIED)||(old==Block.UNOCCUPIED)){
+                        if (now==Block.OCCUPIED){
                             LayoutBlock lBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(blk);
-                            //If the sourceSensor was previously active or inactive then we will 
+                            //If the block was previously active or inactive then we will 
                             //reset the useExtraColor, but not if it was previously unknown or inconsistent.
                             lBlock.setUseExtraColor(false);
                             blk.removePropertyChangeListener(propertyBlockListener); //was this
                             removeBlockFromRoute(lBlock);
                         } else {
-                            if (log.isDebugEnabled()) log.debug("old state was " + old + " did not go through reset");
+                            if (log.isDebugEnabled()) log.debug("state was " + now + " and did not go through reset");
                         }
                     }
                 }
             };
-        
-            void removeBlockFromRoute(LayoutBlock lBlock){
             
+            Object lastSeenActiveBlockObject;
+            
+            synchronized void removeBlockFromRoute(LayoutBlock lBlock){
+                
                 if (routeDetails!=null){
+                    if(routeDetails.indexOf(lBlock)==-1){
+                        if(getStart() == lBlock){
+                            log.debug("Start block went active");
+                            lastSeenActiveBlockObject = getStart().getBlock().getValue();
+                            lBlock.getBlock().removePropertyChangeListener(propertyBlockListener);
+                            return;
+                        } else {
+                            log.error("Block " + lBlock.getDisplayName() + " went active but it is not part of our NX path");
+                        }
+                    }
+                    if(routeDetails.indexOf(lBlock)!=0){
+                        log.debug("A block has been skipped will set the value of the active block to that of the original one");
+                        lBlock.getBlock().setValue(lastSeenActiveBlockObject);
+                        if(routeDetails.indexOf(lBlock)!=-1){
+                            while(routeDetails.indexOf(lBlock)!=0){
+                                LayoutBlock tbr = routeDetails.get(0);
+                                log.debug("Block skipped " + tbr.getDisplayName() + " and removed from list");
+                                tbr.getBlock().removePropertyChangeListener(propertyBlockListener);
+                                tbr.setUseExtraColor(false);
+                                routeDetails.remove(0);
+                            }
+                        }
+                    }
                     if(routeDetails.contains(lBlock)){
                         routeDetails.remove(lBlock);
                         setRouteFrom(false);
                         setNXButtonState(pd, NXBUTTONINACTIVE);
+                        if(sml!=null && getEntryExitType()==FULLINTERLOCK){
+                            sml.getSourceMast().setHeld(true);
+                            SignalMast mast = (SignalMast) getSignal();
+                            if (sml.getStoreState(mast)==jmri.SignalMastLogic.STORENONE)
+                                sml.removeDestination(mast);
+                        }
+                    } else {
+                        log.info("Block that went Occupied was not in the routeDetails list");
                     }
                     if (log.isDebugEnabled()){
                         log.debug("Route details contents " + routeDetails);
@@ -717,34 +713,33 @@ public class EntryExitPairs {
                             log.debug("      " + routeDetails.get(i).getDisplayName());
                         }
                     }
-                    if((routeDetails.size()==2)&& (routeDetails.contains(destination)) && (routeDetails.contains(getStart()))){
-                        //We have reached our destination, therefore we shall clear our inter-lock
-                        routeDetails.get(0).getBlock().removePropertyChangeListener(propertyBlockListener);  // was set against block sensor
-                        routeDetails.remove(getStart());
-                    } if((routeDetails.size()==1) && (routeDetails.contains(destination))){
+                    if((routeDetails.size()==1) && (routeDetails.contains(destination))){
                         routeDetails.get(0).getBlock().removePropertyChangeListener(propertyBlockListener);  // was set against block sensor
                         routeDetails.remove(destination);
                     }
                 }
+                lastSeenActiveBlockObject = lBlock.getBlock().getValue();
 
                 if((routeDetails==null)||(routeDetails.size()==0)){
                     //At this point the route has cleared down/the last remaining block are now active.
-                    //Therefore we will 
                     routeDetails=null;
                     setRouteTo(false);
                     setRouteFrom(false);
-                    //setNXButtonState(point, NXBUTTONINACTIVE);
-                    activeEntryExit=false;
+                    setActiveEntryExit(false);
+                    lastSeenActiveBlockObject = null;
                 }
             }
             
             //For a clear down we need to add a message, if it is a cancel, manual clear down or I didn't mean it.
             void setRoute(boolean state){
-                //int buttonState = NXBUTTONINACTIVE;
+                if(disposed){
+                    log.error("Set route called even though interlock has been disposed of");
+                    return;
+                }
                 Hashtable<Turnout, Integer> turnoutSettings = new Hashtable<Turnout, Integer>();
                 if(routeDetails==null){
                     log.error ("No route to set or clear down");
-                    activeEntryExit = false;
+                    setActiveEntryExit(false);
                     setRouteTo(false);
                     setRouteFrom(false);
                     if((getSignal() instanceof SignalMast) && (getEntryExitType()!=FULLINTERLOCK)){
@@ -790,7 +785,7 @@ public class EntryExitPairs {
                                 }
                               }
                             };
-                            Thread thr = new Thread(r);
+                            Thread thr = new Thread(r, "Entry Exit Route, turnout setting");
                             thr.start();
                             try{
                                 thr.join();
@@ -802,16 +797,22 @@ public class EntryExitPairs {
                             routeDetails.get(i).setUseExtraColor(true);
                         }
                     }
-                    if ((getEntryExitType()!=SETUPTURNOUTSONLY)){
-                        if(getStart().getBlock()!=routeDetails.get(i).getBlock()){
+                    if ((getEntryExitType()==FULLINTERLOCK)){
                             routeDetails.get(i).getBlock().addPropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
-                        }
                     } else {
                         routeDetails.get(i).getBlock().removePropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
                     }
                 }
 
                 if (getEntryExitType()!=SETUPTURNOUTSONLY){
+                    if(getEntryExitType()==FULLINTERLOCK){
+                        //If our start block is already active we will set it as our lastSeenActiveBlock.
+                        if(getStart().getState()==Block.OCCUPIED){
+                            getStart().removePropertyChangeListener(propertyBlockListener);
+                            lastSeenActiveBlockObject = getStart().getBlock().getValue();
+                            log.debug("Last seen value " + lastSeenActiveBlockObject);
+                        }
+                    }
                     if((sourceSignal instanceof SignalMast) && (getSignal() instanceof SignalMast)){
                         SignalMast smSource = (SignalMast) sourceSignal;
                         SignalMast smDest = (SignalMast) getSignal();
@@ -822,7 +823,7 @@ public class EntryExitPairs {
                             sml.setStore(jmri.SignalMastLogic.STORENONE, smDest);
                         }
                         Hashtable<Block, Integer> blks = new Hashtable<Block, Integer>();
-                        //Remove the first block
+                        //Remove the first block as it is our start block
                         routeDetails.remove(0);
                         for(int i = 0; i<routeDetails.size(); i++){
                             if (routeDetails.get(i).getBlock().getState()==Block.UNKNOWN)
@@ -901,7 +902,7 @@ public class EntryExitPairs {
                                 public void actionPerformed(ActionEvent e) {
                                     cancelClearFrame.setVisible(false);
                                     threadAutoClearFrame.interrupt();
-                                    cancelClearInterlock(2);
+                                    cancelClearInterlock(EXITROUTE);
                                 }
                             });
                     getPoint().getPanel().setGlassPane(glassPane);
@@ -918,16 +919,16 @@ public class EntryExitPairs {
                     public void run() {
                         try {
                             //Set a timmer before this window is automatically closed to 30 seconds
-                            Thread.sleep(30000);
+                            Thread.sleep(nxMessageBoxClearTimeout*1000);
                             cancelClearFrame.setVisible(false);
-                            cancelClearInterlock(2);
+                            cancelClearInterlock(EXITROUTE);
                         } catch (InterruptedException ex) {
                             log.debug("Flash timer cancelled");
                         }
                     }
                 }
                 MessageTimeOut mt = new MessageTimeOut();
-                threadAutoClearFrame = new Thread(mt, "NX Button Message Timeout ");
+                threadAutoClearFrame = new Thread(mt, "NX Button Clear Message Timeout ");
                 threadAutoClearFrame.start();
                 cancelClearFrame.setAlwaysOnTop(true);
                 getPoint().getPanel().getGlassPane().setVisible(true);
@@ -940,7 +941,7 @@ public class EntryExitPairs {
             }
             
             void cancelClearInterlock(int cancelClear){
-                if (cancelClear==2){
+                if (cancelClear==EXITROUTE){
                     setNXButtonState(pd, NXBUTTONINACTIVE);
                     setNXButtonState(point, NXBUTTONINACTIVE);
                     getPoint().getPanel().getGlassPane().setVisible(false);
@@ -1032,10 +1033,11 @@ public class EntryExitPairs {
                     }
                     //Need sort out the method to cancel said route.
                 }
-                activeEntryExit = false;
-                setRouteTo(false);
+                setActiveEntryExit(false);
                 setRouteFrom(false);
+                setRouteTo(false);
                 routeDetails=null;
+                lastSeenActiveBlockObject = null;
                 pd.cancelNXButtonTimeOut();
                 point.cancelNXButtonTimeOut();
                 getPoint().getPanel().getGlassPane().setVisible(false);
@@ -1116,11 +1118,27 @@ public class EntryExitPairs {
                         }
 
                         if(getEntryExitType()==FULLINTERLOCK){
-                            activeEntryExit = true;
+                            setActiveEntryExit(true);
                         }
                         setRoute(true);
                     }
                 }
+            }
+            void dispose(){
+                enabled = false;
+                setActiveEntryExit(false);
+                cancelClearInterlock(CANCELROUTE);
+                setRouteFrom(false);
+                setRouteTo(false);
+                point.removeDestination(this);
+                lastSeenActiveBlockObject = null;
+                disposed=true;
+            }
+            
+            void setActiveEntryExit(boolean boo){
+                firePropertyChange("active", activeEntryExit, boo);
+                activeEntryExit = boo;
+                
             }
         }
     }
@@ -1484,7 +1502,8 @@ public class EntryExitPairs {
             if(sensor!=null)
                 sensor.removePropertyChangeListener(nxButtonListener);
             sensor = sen;
-            sensor.addPropertyChangeListener(nxButtonListener);
+            if(sensor!=null)
+                sensor.addPropertyChangeListener(nxButtonListener);
         }
         
         void addSensorList(){
@@ -1524,12 +1543,12 @@ public class EntryExitPairs {
                 if(sourceRoute!=null){
                     if(now==Sensor.ACTIVE && getNXState()==NXBUTTONINACTIVE){
                         setButtonState(NXBUTTONSELECTED);
-                        for(Entry<Source.DestinationPoints, Object> en : sourceRoute.revDestObject.entrySet()){
+                        for(Entry<PointDetails, Source.DestinationPoints> en : sourceRoute.pointToDest.entrySet()){
                             //Sensor sen = getSensorFromPoint(en.getKey().getPoint());
                             //Set a time out on the source sensor, so that if its state hasn't been changed, then we will clear it out.
-                            if(!en.getKey().getUniDirection()){
-                                if(en.getKey().getPoint().getNXState()==NXBUTTONSELECTED){
-                                    sourceRoute.activeBean(en.getKey(), true);
+                            if(!en.getValue().getUniDirection()){
+                                if(en.getKey().getNXState()==NXBUTTONSELECTED){
+                                    sourceRoute.activeBean(en.getValue(), true);
                                 }
                             }
                         }
@@ -1567,8 +1586,9 @@ public class EntryExitPairs {
         }
         
         void setDestination(Source.DestinationPoints srcdp, Source src){
-            if(!destinations.containsKey(srcdp))
+            if(!destinations.containsKey(srcdp)){
                 destinations.put(srcdp, src);
+            }
         }
         
         void removeDestination(Source.DestinationPoints srcdp){
@@ -1576,6 +1596,7 @@ public class EntryExitPairs {
             if(sourceRoute==null && destinations.size()==0){
                 stopFlashSensor(this);
                 sensor.removePropertyChangeListener(nxButtonListener);
+                setSensor(null);
             }
         }
         
@@ -1584,6 +1605,7 @@ public class EntryExitPairs {
             if(destinations.size()==0) {
                 stopFlashSensor(this);
                 sensor.removePropertyChangeListener(nxButtonListener);
+                setSensor(null);
             }
         }
         
@@ -1690,6 +1712,14 @@ public class EntryExitPairs {
         boolean isRouteFromPointSet() { return routeFromSet; }
         
         String getDisplayName(){
+            if(sensor!=null){
+                String description = sensor.getDisplayName();
+                if(signalmast!=null){
+                    description = description + " (" + signalmast.getDisplayName() +")";
+                }
+                return description;
+            }
+             
             if(refObj instanceof SignalMast){
                 return ((SignalMast)refObj).getDisplayName();
             } else if (refObj instanceof Sensor) {

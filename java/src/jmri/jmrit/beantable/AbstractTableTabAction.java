@@ -201,13 +201,15 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
             dataPanel.add(dataScroll, BorderLayout.CENTER);
             
             dataPanel.add(bottomBox, BorderLayout.SOUTH);
-            JButton addButton = new JButton(rbean.getString("ButtonAdd"));
-            addToBottomBox(addButton);
-            addButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    tableAction.addPressed(e);
-                }
-            });       
+            if(tableAction.includeAddButton()){
+                JButton addButton = new JButton(rbean.getString("ButtonAdd"));
+                addToBottomBox(addButton);
+                addButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        tableAction.addPressed(e);
+                    }
+                });
+            }
         }
         
         void addPanelModel(){

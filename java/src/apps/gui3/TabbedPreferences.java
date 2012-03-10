@@ -452,6 +452,7 @@ public class TabbedPreferences extends AppConfigBase {
         tabCloseButton.setPreferredSize(deleteConnectionButtonSize);
         tabCloseButton.setBorderPainted(false);
         tabCloseButton.setRolloverIcon(deleteConnectionIconRollOver);
+        tabCloseButton.setVisible(false);
         
         JPanel c = new JPanel();
         c.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -481,7 +482,7 @@ public class TabbedPreferences extends AppConfigBase {
             }
         }
         
-        final JPanel tabTitle = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+        final JPanel tabTitle = new JPanel(new BorderLayout(5, 0));
         tabTitle.setOpaque(false);
         p.setName(title);
         
@@ -489,7 +490,7 @@ public class TabbedPreferences extends AppConfigBase {
             title = "(" + title + ")";
         }
         
-        JLabel tabLabel = new JLabel(title);
+        JLabel tabLabel = new JLabel(title, JLabel.LEFT);
         tabTitle.add(tabLabel, BorderLayout.WEST);
         tabTitle.add(tabCloseButton, BorderLayout.EAST);
         
@@ -501,7 +502,6 @@ public class TabbedPreferences extends AppConfigBase {
                     public void actionPerformed(ActionEvent e){
                 removeTab(e, connectionPanel.indexOfTabComponent(tabTitle));
             }
-        
         });
 
         connectionPanel.setToolTipTextAt(tabPosition, title);
@@ -558,28 +558,52 @@ public class TabbedPreferences extends AppConfigBase {
             if(connectionPanel.getTabCount()==1){
                 addConnectionTab();
             }
-            connectionPanel.setSelectedIndex(connectionPanel.getTabCount()-2);
+            if(x!=0)
+                connectionPanel.setSelectedIndex(x-1);
+            else
+                connectionPanel.setSelectedIndex(0);
             connectionPanel.addChangeListener(addTabListener);
         }
+        activeTab();
     }
 
     transient ChangeListener addTabListener = new ChangeListener() {
-            // This method is called whenever the selected tab changes 
-                public void stateChanged(ChangeEvent evt) { 
-                    JTabbedPane pane = (JTabbedPane)evt.getSource(); 
-                    // Get current tab 
-                    int sel = pane.getSelectedIndex();
-                    if (sel == -1){
-                        addConnectionTab();
-                    }
-                    else {
-                        Icon icon = pane.getIconAt(sel);
-                        if(icon == addConnectionIcon){
-                            addConnectionTab();
-                        }
-                    }
-                } 
+    // This method is called whenever the selected tab changes 
+        public void stateChanged(ChangeEvent evt) {
+            JTabbedPane pane = (JTabbedPane)evt.getSource(); 
+            int sel = pane.getSelectedIndex();
+            if (sel == -1){
+                addConnectionTab();
+                return;
+            }
+            else {
+                Icon icon = pane.getIconAt(sel);
+                if(icon == addConnectionIcon){
+                    addConnectionTab();
+                    return;
+                }
+            }
+            activeTab();
+        } 
     };
+    
+    void activeTab(){
+        int sel = connectionPanel.getSelectedIndex();
+        for(int i = 0; i<connectionPanel.getTabCount()-1; i++){
+            JPanel panel = (JPanel)connectionPanel.getTabComponentAt(i);
+            panel.invalidate();
+            Component[] comp = panel.getComponents();
+            for(Component c:comp){
+                if(c instanceof JButton){
+                    if(i==sel){
+                        c.setVisible(true);
+                    } else {
+                        c.setVisible(false);
+                    }
+                }
+            }
+        }
+    }
 
     private ImageIcon deleteConnectionIcon;
     private ImageIcon deleteConnectionIconRollOver;

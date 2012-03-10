@@ -102,7 +102,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         sorter.setTableHeader(carsTable.getTableHeader());        
         JScrollPane carsPane = new JScrollPane(carsTable);
     	carsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-       	carsModel.initTable(carsTable);
+       	carsModel.initTable(carsTable, this);
      	
     	// load the number of cars and listen for changes
        	updateNumCars();
@@ -320,6 +320,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 			carManager.setCarsFrameTableColumnWidths(getCurrentTableColumnWidths());
 			LocationManagerXml.instance().writeFileIfDirty();	// could have created locations or tracks during import
 			CarManagerXml.instance().writeOperationsFile();
+			saveTableDetails(carsTable);
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
 		}

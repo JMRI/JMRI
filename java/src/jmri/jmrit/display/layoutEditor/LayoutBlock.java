@@ -2004,10 +2004,19 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         Connection = new ConnectivityUtil(panel);
         ArrayList<LayoutTurnout> stod = new ArrayList<LayoutTurnout>();
         ArrayList<Integer> stodSet = new ArrayList<Integer>();
+        
+        /* We change the logging level to fatal in the connectivity Util as we are testing all possible 
+        combinations including those that are invalid which would generate errors */
+        org.apache.log4j.Logger connectionLog = org.apache.log4j.Logger.getLogger(Connection.getClass().getName());
+        org.apache.log4j.Level currentLevel = connectionLog.getLevel();
+       
         try{
+            connectionLog.setLevel(org.apache.log4j.Level.FATAL);
             stod = Connection.getTurnoutList(block, srcBlock, dstBlock);
             stodSet = Connection.getTurnoutSettingList();
+            connectionLog.setLevel(currentLevel);
         } catch (java.lang.NullPointerException ex){
+            connectionLog.setLevel(currentLevel);
             log.error("Exception caught while trying to dicover turnout connectivity\n"  + block.getDisplayName() + " Source " + srcBlock.getDisplayName() + ", dest  " + dstBlock.getDisplayName());
         }
         
@@ -2018,9 +2027,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         ArrayList<Integer> tmpdtosSet = new ArrayList<Integer>();
         
         try{
+            connectionLog.setLevel(org.apache.log4j.Level.FATAL);
             tmpdtos = Connection.getTurnoutList(block, dstBlock, srcBlock);
             tmpdtosSet = Connection.getTurnoutSettingList();
+            connectionLog.setLevel(currentLevel);
         } catch (java.lang.NullPointerException ex){
+            connectionLog.setLevel(currentLevel);
             log.error("Exception caught while trying to dicover turnout connectivity\n" + block.getDisplayName() + " Source " + srcBlock.getDisplayName() + ", dest  " + dstBlock.getDisplayName());
         }
         

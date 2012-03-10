@@ -103,13 +103,13 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
 		// set column preferred widths
 		tcm.getColumn(IDCOLUMN).setPreferredWidth(40);
 		tcm.getColumn(NAMECOLUMN).setPreferredWidth(200);
-		tcm.getColumn(LENGTHCOLUMN).setPreferredWidth(50);
+		tcm.getColumn(LENGTHCOLUMN).setPreferredWidth(Math.max(50, new JLabel(getColumnName(LENGTHCOLUMN)).getPreferredSize().width+10));
 		tcm.getColumn(USEDLENGTHCOLUMN).setPreferredWidth(50);
-		tcm.getColumn(RESERVEDCOLUMN).setPreferredWidth(65);
+		tcm.getColumn(RESERVEDCOLUMN).setPreferredWidth(Math.max(65, new JLabel(getColumnName(RESERVEDCOLUMN)).getPreferredSize().width+10));
 		tcm.getColumn(ENGINESCOLUMN).setPreferredWidth(60);
 		tcm.getColumn(CARSCOLUMN).setPreferredWidth(60);
-		tcm.getColumn(PICKUPSCOLUMN).setPreferredWidth(60);
-		tcm.getColumn(DROPSCOLUMN).setPreferredWidth(60);
+		tcm.getColumn(PICKUPSCOLUMN).setPreferredWidth(Math.max(60, new JLabel(getColumnName(PICKUPSCOLUMN)).getPreferredSize().width+10));
+		tcm.getColumn(DROPSCOLUMN).setPreferredWidth(Math.max(60, new JLabel(getColumnName(DROPSCOLUMN)).getPreferredSize().width+10));
 		tcm.getColumn(EDITPOOLCOLUMN).setPreferredWidth(70);
 		if (_showPoolColumn){
 			tcm.getColumn(EDITCOLUMN).setPreferredWidth(70);

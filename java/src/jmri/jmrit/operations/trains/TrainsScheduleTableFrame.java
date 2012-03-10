@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for adding and editing train schedules for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2010
+ * @author Daniel Boudreau Copyright (C) 2010, 2012
  * @version             $Revision$
  */
 public class TrainsScheduleTableFrame extends OperationsFrame implements PropertyChangeListener {
@@ -155,10 +155,6 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     		
     	pack();
     	
-    	/* all JMRI window position and size are now saved
-    	setSize(trainManager.getTrainScheduleFrameSize());
-    	setLocation(trainManager.getTrainScheduleFramePosition());
-    	*/
     	setSortBy(trainManager.getTrainsFrameSortBy());
     	
     	scheduleManager.addPropertyChangeListener(this);
@@ -243,10 +239,8 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	
 	protected void storeValues(){
 		setActiveId();
-		/* all JMRI window position and size are now saved
-		trainManager.setTrainScheduleFrame(this);
-		*/
-		trainManager.setTrainScheduleFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
+		saveTableDetails(trainsScheduleTable);
+		//trainManager.setTrainScheduleFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
 		trainManager.setTrainSecheduleActiveId(_activeId);
 		trainManager.save();
 	}
@@ -260,7 +254,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	}
 	
     public void dispose() {
-    	trainManager.setTrainScheduleFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
+    	//trainManager.setTrainScheduleFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
     	scheduleManager.removePropertyChangeListener(this);
     	removePropertyChangeTrainSchedules();
     	trainsScheduleModel.dispose();

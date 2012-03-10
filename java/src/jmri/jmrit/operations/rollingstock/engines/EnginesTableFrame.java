@@ -91,7 +91,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         sorter.setTableHeader(enginesTable.getTableHeader());  
     	enginesPane = new JScrollPane(enginesTable);
     	enginesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-       	enginesModel.initTable(enginesTable);
+       	enginesModel.initTable(enginesTable, this);
      	
        	// load the number of engines and listen for changes
      	numEngines.setText(Integer.toString(engineManager.getNumEntries()));
@@ -272,10 +272,11 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		if (ae.getSource() == saveButton){
 			/* all JMRI window position and size are now saved
 			engineManager.setEnginesFrame(this);
-			*/
 			engineManager.setEnginesFrameTableColumnWidths(getCurrentTableColumnWidths());
+			*/
 			LocationManagerXml.instance().writeFileIfDirty();	// could have created locations or tracks during import
 			EngineManagerXml.instance().writeOperationsFile();
+			saveTableDetails(enginesTable);
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
 		}
@@ -290,7 +291,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 	}
 
     public void dispose() {
-    	engineManager.setEnginesFrameTableColumnWidths(getCurrentTableColumnWidths());
+    	//engineManager.setEnginesFrameTableColumnWidths(getCurrentTableColumnWidths());
     	engineManager.removePropertyChangeListener(this);
     	enginesModel.dispose();
     	if (f != null)

@@ -27,13 +27,10 @@
 # xprop -root -remove _MOTIF_DEFAULT_BINDINGS
 #
 # For more information, please see
-# http://jmri.org/install/ShellScripts.shtml
+# http://jmri.org/help/en/html/doc/Technical/StartUpScripts.shtml
 #
 # $Revision$ (SVN maintains this line, do not edit please)
 #
-
-# keep track of the original location
-ORIGDIR="${PWD}"
 
 # get the script's location as an absolute path
 SCRIPTDIR=$(cd "$( dirname "${0}" )" && pwd)
@@ -172,9 +169,9 @@ fi
 if [ "$APPNAME" != "$DEFAULT_APP_NAME" ]
 then
 
-    CONFIGNAME=`echo $APPNAME | tr -d '[:space:]'`
+    CONFIGNAME=`echo $APPNAME | tr -d '[:space:]' | tr -d '=' `
 
-    CONFIGFILE="${CONFIGNAME}Config.xml"
+    CONFIGFILE="config=${CONFIGNAME}Config.xml"
 
     [ ${DEBUG} ] && echo "CONFIGFILE: '${CONFIGFILE}'"
 fi
@@ -189,8 +186,8 @@ if [ "$OS" = "macosx" ]; then
     MEMORY_OPTIONS="-Xms96m -Xmx640m"
     OS_OPTIONS="-Dapple.laf.useScreenMenuBar=true"
     OS_OPTIONS="${OS_OPTIONS} -Dcom.apple.macos.useScreenMenuBar=true"
-    if [ -f "${BUNDLEDIR}/Contents/Resources/@NAME@.icns" ]; then
-        APPICON="${BUNDLEDIR}/Contents/Resources/@NAME@.icns"
+    if [ -f "${BUNDLEDIR}/Contents/Resources/@ICON@.icns" ]; then
+        APPICON="${BUNDLEDIR}/Contents/Resources/@ICON@.icns"
     else
         APPICON=`find "${BUNDLEDIR}" | grep -s -m 1 icns`
     fi
