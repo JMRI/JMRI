@@ -31,6 +31,8 @@ class filestruct:
         self.kinds = []
         self.files = []
         self.Defaults = []
+        self.statistic = []
+        self.statrun = 0
         #self.sortgroups = []
         self.refdata = []
         self.currdata = []
@@ -231,140 +233,176 @@ class filestruct:
                     repfile.write(str("File: " + group.original.fullfilename + " \n"))
         
     def getstat(self, languagestring):
-        Num_of_total_properties = 0
-        Num_of_translated_properties = 0
-        Files_not_exist_list = []
-        Files_new_list = []
-        Files_incomplete_list = []
-        Files_nontrans_list = []
-        Files_complete_list = []
-        self.dm.gotodaydir()
-        self.dm.gosubdir(languagestring,0)
-        langdir = os.getcwd()
-        statfile = open("Statisticfile_" + languagestring +".txt",'w')
-        statfile.flush()
-        statfile.write(str("Statistic Output generated " + self.dm.getnow() + "\n\n"))
-        for currgroup in self.currdata:
-            #print ('Testing ' + currgroup.corename.strip() + ' ...')
-            refgroup = []
-            for tempgroup in self.refdata:
-                #print ('Checking '+  tempgroup.corename.strip())
-                if tempgroup.corename.strip() == currgroup.corename.strip():
-                    refgroup = tempgroup
-                    #print ('Refgroup fond!')
-                    break
-            reforigfile = []
-            reftransfile = []
-            if not refgroup == []:
-                reforigfile = refgroup.original
-                reftransfile = refgroup.get(languagestring)
-            currorigfile = currgroup.original
-            currtransfile = currgroup.get(languagestring)
-            if currtransfile == []:
-                if self.tm.isNonTrans(currorigfile.fullfilename):
-                    Files_nontrans_list.append(currorigfile)
-                else:
-                    Files_not_exist_list.append(currorigfile)
+        #self.statistics = []
+        if languagestring.strip() == "All":
+            self.dm.gotodaydir()
+            statfilename = self.dm.getnext('Statisticfile')
+            self.statrun = 1
+            self.statistics = open(statfilename,'w')
+            self.statistics.flush()
+            if (len(self.currdata) > 0):
+                self.statistics.write(str("\n" + "Number of original Files: " + str(len(self.currdata))) + "\n")
+                self.statistics.write(self.dm.Lineseparator)
+                for kind in self.kinds:
+                    if not kind is "":
+                        idx = 0
+                        for group in self.currdata:
+                            if group.exist( kind):
+                                idx = idx + 1
+                        self.statistics.write(str("Number of " + kind + " Files: " + str(idx) + " (" + str((100*idx)/len(self.currdata)) + "%)" + "\n"))
             else:
-                numMissing, numNontrans, numObsolete = currtransfile.compare(self.tm, currorigfile)
-                if not reftransfile == []:
-                    if (numMissing == 0) and (numNontrans == 0) and (numObsolete == 0):
-                        Files_complete_list.append(currorigfile)
-                        Files_complete_list.append(currtransfile)
+                self.statistics.write(str("\n No Files loaded! \n"))
+            #print self.statistics
+            for actlang in self.kinds:
+                if not actlang.strip() == '':
+                    self.getstat(actlang.strip())
+            self.statistics.close()
+            self.statrun = 0
+        else:            
+            Num_of_total_properties = 0
+            Num_of_translated_properties = 0
+            Files_not_exist_list = []
+            Files_new_list = []
+            Files_incomplete_list = []
+            Files_nontrans_list = []
+            Files_complete_list = []
+            #print self.statistics
+            self.dm.gotodaydir()
+            self.dm.gosubdir(languagestring,0)
+            langdir = os.getcwd()
+            statfile = open("Statisticfile_" + languagestring + ".txt",'w')
+            statfile.flush()
+            statfile.write(str("Statistic Output generated " + self.dm.getnow() + "\n\n"))
+            for currgroup in self.currdata:
+                #print ('Testing ' + currgroup.corename.strip() + ' ...')
+                refgroup = []
+                for tempgroup in self.refdata:
+                    #print ('Checking '+  tempgroup.corename.strip())
+                    if tempgroup.corename.strip() == currgroup.corename.strip():
+                        refgroup = tempgroup
+                        #print ('Refgroup fond!')
+                        break
+                reforigfile = []
+                reftransfile = []
+                if not refgroup == []:
+                    reforigfile = refgroup.original
+                    reftransfile = refgroup.get(languagestring)
+                currorigfile = currgroup.original
+                currtransfile = currgroup.get(languagestring)
+                if currtransfile == []:
+                    if self.tm.isNonTrans(currorigfile.fullfilename):
+                        Files_nontrans_list.append(currorigfile)
                     else:
-                        Files_incomplete_list.append(currorigfile)
-                        Files_incomplete_list.append(currtransfile)
+                        Files_not_exist_list.append(currorigfile)
                 else:
-                    if (numMissing == 0) and (numNontrans == 0) and (numObsolete == 0):
-                        Files_complete_list.append(currorigfile)
-                        Files_complete_list.append(currtransfile)
+                    numMissing, numNontrans, numObsolete = currtransfile.compare(self.tm, currorigfile)
+                    if not reftransfile == []:
+                        if (numMissing == 0) and (numNontrans == 0) and (numObsolete == 0):
+                            Files_complete_list.append(currorigfile)
+                            Files_complete_list.append(currtransfile)
+                        else:
+                            Files_incomplete_list.append(currorigfile)
+                            Files_incomplete_list.append(currtransfile)
                     else:
-                        Files_new_list.append(currorigfile)
-                        Files_new_list.append(currtransfile)
-                Num_of_translated_properties = Num_of_translated_properties + currtransfile.numkeys
-            Num_of_total_properties = Num_of_total_properties + currorigfile.numkeys
-        os.chdir(langdir)
-        statfile.write(str("\nNon translatable files: " + str(len(Files_nontrans_list)) + " \n"))
-        if len(Files_nontrans_list) > 0:
-            self.dm.gosubdir('Non_Translatable')
-            for filename in Files_nontrans_list:
-                if filename.key == "":
-                    statfile.write(str(filename.fullfilename + ":\n"))
-                    statfile.write(str("Nontrans: " + str(filename.numkeys) + "\n"))
-                transfile = open(filename.fullfilename,'w')
-                filename.write(transfile)
-                transfile.close()
-        os.chdir(langdir)
-        statfile.write(str("\nNot existing files: " + str(len(Files_not_exist_list)) + " \n"))
-        if len(Files_not_exist_list) > 0:
-            self.dm.gosubdir('Not_Existing')
-            for filename in Files_not_exist_list:
-                if filename.key == "":
-                    statfile.write(str(filename.fullfilename + ":\n"))
-                    statfile.write(str("Missing: " + str(filename.numkeys) + "\n"))
-                transfile = open(filename.fullfilename,'w')
-                filename.write(transfile)
-                transfile.close()
-        os.chdir(langdir)
-        statfile.write(str("\nNew files: " + str(len(Files_new_list)/2) + " \n"))
-        if len(Files_new_list) > 0:
-            self.dm.gosubdir('New_Files')
-            for filename in Files_new_list:
-                if filename.key == "":
-                    statfile.write(str(filename.fullfilename + "\n"))
-                transfile = open(filename.fullfilename,'w')
-                filename.write(transfile)
-                transfile.close()
-                if not filename.getreport() == []:
-                    updfile = open(str(filename.corename + "_todo.txt"),'w')
-                    updfile.write(filename.getreport())
-                    updfile.close()            
-                    statfile.write(str("Total: " + str(filename.numkeys) + "Missing: " + str(filename.numMissing) + ", Nontrans: " + str(filename.numNontrans) + ", Obsolete: " + str(filename.numObsolete) + "\n"))
-        os.chdir(langdir)
-        statfile.write(str("\nIncomplete files: " + str(len(Files_incomplete_list)/2) + " \n"))
-        if len(Files_incomplete_list) > 0:
-            self.dm.gosubdir('Incomplete')
-            for filename in Files_incomplete_list:
-                if filename.key == "":
-                    statfile.write(str(filename.fullfilename + ":\n"))
-                transfile = open(filename.fullfilename,'w')
-                filename.write(transfile)
-                transfile.close()
-                if not filename.getreport() == []:
-                    updfile = open(str(filename.corename + "_todo.txt"),'w')
-                    updfile.write(filename.getreport())
-                    updfile.close()
-                    statfile.write(str("Total: " + str(filename.numkeys) + "Missing: " + str(filename.numMissing) + ", Nontrans: " + str(filename.numNontrans) + ", Obsolete: " + str(filename.numObsolete) + "\n"))
-        os.chdir(langdir)
-        statfile.write(str("\nComplete files: " + str(len(Files_complete_list)/2) + " \n"))
-        if len(Files_complete_list) > 0:
-            self.dm.gosubdir('Complete')
-            for filename in Files_complete_list:
-                if filename.key == "":
-                    statfile.write(str(filename.fullfilename + "\n"))
-                    statfile.write(str("Completed: " + str(filename.numkeys) + "\n"))
-                transfile = open(filename.fullfilename,'w')
-                filename.write(transfile)
-                transfile.close()            
-        statfile.write(str("\n"))
-        statfile.write("\n" + "Total number of properties: " + str(Num_of_total_properties) + "\n")
-        if Num_of_total_properties == 0:
-            statfile.write("Number of translated properties: " + str(Num_of_translated_properties) + " \n")
-        else:
-            statfile.write("Number of translated properties: " + str(Num_of_translated_properties) + " (" + str((100*Num_of_translated_properties)/Num_of_total_properties) + "%)" + "\n")
-        if (len(self.currdata) > 0):
-            statfile.write(str("\n" + "Number of original Files: " + str(len(self.currdata))) + "\n")
-            statfile.write(self.dm.Lineseparator)
-            for kinds in self.kinds:
-                if not kinds is "":
-                    idx = 0
-                    for group in self.currdata:
-                        if group.exist( kinds):
-                            idx = idx + 1
-                    statfile.write(str("Number of " + kinds + " Files: " + str(idx) + " (" + str((100*idx)/len(self.currdata)) + "%)" + "\n"))
-        else:
-            statfile.write(str("\n No Files loaded! \n"))
-        statfile.close()
+                        if (numMissing == 0) and (numNontrans == 0) and (numObsolete == 0):
+                            Files_complete_list.append(currorigfile)
+                            Files_complete_list.append(currtransfile)
+                        else:
+                            Files_new_list.append(currorigfile)
+                            Files_new_list.append(currtransfile)
+                    Num_of_translated_properties = Num_of_translated_properties + currtransfile.numkeys
+                Num_of_total_properties = Num_of_total_properties + currorigfile.numkeys
+            os.chdir(langdir)
+            statfile.write(str("\nNon translatable files: " + str(len(Files_nontrans_list)) + " \n"))
+            if len(Files_nontrans_list) > 0:
+                self.dm.gosubdir('Non_Translatable')
+                for filename in Files_nontrans_list:
+                    if filename.key == "":
+                        statfile.write(str(filename.fullfilename + ":\n"))
+                        statfile.write(str("Nontrans: " + str(filename.numkeys) + "\n"))
+                    transfile = open(filename.fullfilename,'w')
+                    filename.write(transfile)
+                    transfile.close()
+            os.chdir(langdir)
+            statfile.write(str("\nNot existing files: " + str(len(Files_not_exist_list)) + " \n"))
+            if len(Files_not_exist_list) > 0:
+                self.dm.gosubdir('Not_Existing')
+                for filename in Files_not_exist_list:
+                    if filename.key == "":
+                        statfile.write(str(filename.fullfilename + ":\n"))
+                        statfile.write(str("Missing: " + str(filename.numkeys) + "\n"))
+                    transfile = open(filename.fullfilename,'w')
+                    filename.write(transfile)
+                    transfile.close()
+            os.chdir(langdir)
+            statfile.write(str("\nNew files: " + str(len(Files_new_list)/2) + " \n"))
+            if len(Files_new_list) > 0:
+                self.dm.gosubdir('New_Files')
+                for filename in Files_new_list:
+                    if filename.key == "":
+                        statfile.write(str(filename.fullfilename + "\n"))
+                    transfile = open(filename.fullfilename,'w')
+                    filename.write(transfile)
+                    transfile.close()
+                    if not filename.getreport() == []:
+                        updfile = open(str(filename.corename + "_todo.txt"),'w')
+                        updfile.write(filename.getreport())
+                        updfile.close()            
+                        statfile.write(str("Total: " + str(filename.numkeys) + ", Missing: " + str(filename.numMissing) + ", Nontrans: " + str(filename.numNontrans) + ", Obsolete: " + str(filename.numObsolete) + "\n"))
+            os.chdir(langdir)
+            statfile.write(str("\nIncomplete files: " + str(len(Files_incomplete_list)/2) + " \n"))
+            if len(Files_incomplete_list) > 0:
+                self.dm.gosubdir('Incomplete')
+                for filename in Files_incomplete_list:
+                    if filename.key == "":
+                        statfile.write(str(filename.fullfilename + ":\n"))
+                    transfile = open(filename.fullfilename,'w')
+                    filename.write(transfile)
+                    transfile.close()
+                    if not filename.getreport() == []:
+                        updfile = open(str(filename.corename + "_todo.txt"),'w')
+                        updfile.write(filename.getreport())
+                        updfile.close()
+                        statfile.write(str("Total: " + str(filename.numkeys) + ", Missing: " + str(filename.numMissing) + ", Nontrans: " + str(filename.numNontrans) + ", Obsolete: " + str(filename.numObsolete) + "\n"))
+            os.chdir(langdir)
+            statfile.write(str("\nComplete files: " + str(len(Files_complete_list)/2) + " \n"))
+            if len(Files_complete_list) > 0:
+                self.dm.gosubdir('Complete')
+                for filename in Files_complete_list:
+                    if filename.key == "":
+                        statfile.write(str(filename.fullfilename + "\n"))
+                        statfile.write(str("Completed: " + str(filename.numkeys) + "\n"))
+                    transfile = open(filename.fullfilename,'w')
+                    filename.write(transfile)
+                    transfile.close()  
+            #print self.statistics
+            if self.statrun == 1:
+                self.statistics.write(str("\nNumber of " + languagestring + " Properties\n"))
+                self.statistics.write(str("\n" + "Total number of properties: " + str(Num_of_total_properties) + "\n"))
+                if Num_of_total_properties == 0:
+                    self.statistics.write(str("Number of translated properties: " + str(Num_of_translated_properties) + " \n"))
+                else:
+                    self.statistics.write(str("Number of translated properties: " + str(Num_of_translated_properties) + " (" + str((100*Num_of_translated_properties)/Num_of_total_properties) + "%)" + "\n"))
+            statfile.write(str("\n"))
+            statfile.write(str("\n" + "Total number of properties: " + str(Num_of_total_properties) + "\n"))
+            print self.statistics
+            if Num_of_total_properties == 0:
+                statfile.write("Number of translated properties: " + str(Num_of_translated_properties) + " \n")
+            else:
+                statfile.write("Number of translated properties: " + str(Num_of_translated_properties) + " (" + str((100*Num_of_translated_properties)/Num_of_total_properties) + "%)" + "\n")
+            if (len(self.currdata) > 0):
+                statfile.write(str("\n" + "Number of original Files: " + str(len(self.currdata))) + "\n")
+                for kind in self.kinds:
+                    #if not kind is "":
+                    if  kind is languagestring:
+                        idx = 0
+                        for group in self.currdata:
+                            if group.exist( kind):
+                                idx = idx + 1
+                        statfile.write(str("Number of " + kind + " Files: " + str(idx) + " (" + str((100*idx)/len(self.currdata)) + "%)" + "\n"))
+            else:
+                statfile.write(str("\n No Files loaded! \n"))
+            statfile.close()
         
     def export(self, languagestring):
         self.dm.gotodaydir()

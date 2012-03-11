@@ -95,6 +95,19 @@ class directorymanager:
 
     #def gosubdir(self,subdirname):
     #    gosubdir(subdirname, 1)
+ 
+    #    statfile = self.dm.getnext('Statisticfile')    
+    def getnext(self,checkname):
+        #path = os.getcwd()
+        filename = str(checkname + '.txt')
+        fullname = os.path.join(os.getcwd(), filename)
+        if os.path.exists(fullname):
+            idx = 1
+            fullname = os.path.join(os.getcwd(),str(checkname + "_" + str(idx)))
+            while os.path.exists(fullname):
+                idx = idx + 1
+                fullname = os.path.join(os.getcwd(),str(checkname + "_" + str(idx)))
+        return fullname
         
     def gosubdir(self,subdirname, overwrite = 1):
         fullpath = os.path.join(os.getcwd(),subdirname)
