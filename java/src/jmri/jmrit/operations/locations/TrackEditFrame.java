@@ -360,7 +360,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (ae.getSource() == deleteTrackButton){
 			log.debug("track delete button actived");
-//			Track y = _location.getTrackByName(trackNameTextField.getText());
 			if (_track != null){
 				int rs = _track.getNumberRS();
 				if (rs > 0){
@@ -381,6 +380,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == addTrackButton){
 			addNewTrack();
 		}
+		if(_track == null)
+			return;
 		if (ae.getSource() == addRoadButton){
 			_track.addRoadName((String) comboBoxRoads.getSelectedItem());
 			updateRoadNames();
