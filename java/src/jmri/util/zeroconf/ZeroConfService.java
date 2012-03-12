@@ -13,6 +13,7 @@ import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
+import jmri.web.server.WebServerManager;
 
 /**
  * ZeroConfService objects manage a zeroConf network service advertisement.
@@ -89,7 +90,7 @@ public class ZeroConfService {
      * @param properties Additional information to be listed in service advertisement
      */
     public static ZeroConfService create(String type, int port, HashMap<String, String> properties) {
-        return create(type, ZeroConfService.hostName(), port, 0, 0, properties);
+        return create(type, WebServerManager.getWebServerPreferences().getRailRoadName(), port, 0, 0, properties);
     }
 
     /**
@@ -122,6 +123,7 @@ public class ZeroConfService {
             // tight space constraints in terms of the number of bytes that properties 
             // can use, and there are some unconstrained properties that we would like to use.
             properties.put("jmri", jmri.Version.getCanonicalVersion());
+            properties.put("host", ZeroConfService.hostName());
             s = new ZeroConfService(ServiceInfo.create(type, name, port, weight, priority, properties));
             if (log.isDebugEnabled()) {
                 log.debug("Creating new ZeroConfService " + s.key());
