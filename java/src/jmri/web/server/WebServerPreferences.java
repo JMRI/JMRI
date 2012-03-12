@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
 import org.apache.log4j.Logger;
 import org.jdom.Attribute;
@@ -15,7 +16,7 @@ import org.jdom.Element;
  * @author Randall Wood Copyright (C) 2012
  * @version $Revision$
  */
-public class WebServerPreferences {
+public class WebServerPreferences extends Bean {
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.web.server.WebServerStrings");
     //  Flag that prefs have not been saved:
@@ -25,9 +26,9 @@ public class WebServerPreferences {
     private int refreshDelay = 5;
     private boolean useAjax = true;
     private boolean plain = false;
-    private ArrayList<String> disallowedFrames = new ArrayList<String>(Arrays.asList(rb.getString("DefaultDisallowedFrames").split("\n")));
+    private ArrayList<String> disallowedFrames = new ArrayList<String>(Arrays.asList(rb.getString("DefaultDisallowedFrames").split(";")));
     private boolean rebuildIndex = false;
-    private String railRoadName = "JMRI";
+    private String railRoadName = rb.getString("DefaultRailroadName");
     private int port = 12080;
     private static Logger log = Logger.getLogger(WebServerPreferences.class.getName());
 
