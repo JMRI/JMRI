@@ -94,12 +94,12 @@ public class TrainIcon extends LocoIcon {
 	private void createThrottle(){
 		tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
 		if (getConsistNumber() > 0){
+			tf.getAddressPanel().setAddress(getConsistNumber(), false);	// use consist address
 			if (JOptionPane.showConfirmDialog(null,
 					"Send function commands to lead loco?", "Consist Throttle",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				tf.getAddressPanel().setRosterEntry(entry);			 	// first notify for func button
-			}
-			tf.getAddressPanel().setAddress(getConsistNumber(), false);	// second notify for consist address
+				tf.getAddressPanel().setRosterEntry(entry);			 	// use lead loco address
+			}			
 		} else {
 			tf.getAddressPanel().setRosterEntry(entry);
 		}

@@ -445,12 +445,12 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			consistNum = validConsist(consistTextField.getText());
 			jmri.jmrit.throttle.ThrottleFrame tf=
 				jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
+			tf.getAddressPanel().setAddress(consistNum, false);	// use consist address
 			if (JOptionPane.showConfirmDialog(null,
 					rb.getString("DIALOG_Funct2Lead"), rb.getString("DIALOG_NceThrottle"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				tf.getAddressPanel().setAddress(locoAddr, isLong); 	// first notify for func button
-			}
-			tf.getAddressPanel().setAddress(consistNum, false);	// second notify for consist address
+				tf.getAddressPanel().setAddress(locoAddr, isLong); 	// use lead loco address
+			}			
 			tf.toFront();
 			return;
 		}
