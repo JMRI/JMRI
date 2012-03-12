@@ -10,14 +10,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javax.swing.GroupLayout.Group;
+import javax.swing.GroupLayout.ParallelGroup;
+import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import jmri.swing.DefaultEditableListModel;
 import jmri.swing.DefaultListCellEditor;
 import jmri.swing.EditableList;
+import jmri.swing.JTitledSeparator;
 import org.apache.log4j.Logger;
 
 public class WebServerPreferencesPanel extends JPanel implements ListDataListener {
@@ -31,6 +34,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     JCheckBox useAjaxCB;
     JCheckBox rebuildIndexCB;
     JTextField port;
+    JTextField railroadName;
     JButton saveB;
     JButton cancelB;
     WebServerPreferences preferences;
@@ -48,14 +52,37 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         parentFrame = f;
     }
 
+    private void initComponents() {
+        GroupLayout layout = new GroupLayout(this);
+        this.setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+        SequentialGroup group = layout.createSequentialGroup();
+        group.addComponent(new JTitledSeparator(rb.getString("TitleWebServerPreferences")));
+        group.addGroup(webServerPreferences(layout));
+        layout.setVerticalGroup(group);
+    }
+
     private void initGUI() {
-        lineBorder = BorderFactory.createLineBorder(Color.black);
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        add(new JTitledSeparator(rb.getString("TitleWebServerPreferences")));
+        add(rrNamePanel());
         add(rebuildIndexPanel());
         add(portPanel());
+        add(new JTitledSeparator(rb.getString("TitleDelayPanel")));
         add(delaysPanel());
+        add(new JSeparator());
         add(cancelApplySave());
+    }
 
+    private Group webServerPreferences(GroupLayout layout) {
+        railroadName = new JTextField(preferences.getRailRoadName());
+        railroadName.setToolTipText(rb.getString("ToolTipRailRoadName"));
+        railroadName.setColumns(30);
+        ParallelGroup group = layout.createParallelGroup(GroupLayout.Alignment.CENTER);
+        group.addComponent(new JLabel(rb.getString("LabelRailRoadName")), GroupLayout.Alignment.TRAILING);
+        group.addComponent(this.railroadName, GroupLayout.Alignment.LEADING);
+        return group;
     }
 
     private void setGUI() {
@@ -82,7 +109,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     }
 
     /**
-     * set the local prefs to match the GUI Local prefs are independant from the
+     * set the local prefs to match the GUI Local prefs are independent from the
      * singleton instance prefs.
      *
      * @return true if set, false if values are unacceptable.
@@ -116,7 +143,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         } else {
             preferences.setPort(portNum);
         }
-
+        preferences.setRailRoadName(railroadName.getText());
         return didSet;
     }
 
@@ -150,9 +177,6 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
 
     private JPanel delaysPanel() {
         JPanel panel = new JPanel();
-        TitledBorder border = BorderFactory.createTitledBorder(lineBorder,
-                rb.getString("TitleDelayPanel"), TitledBorder.CENTER, TitledBorder.TOP);
-        panel.setBorder(border);
 
         SpinnerNumberModel spinMod = new SpinnerNumberModel(1, 0, 999, 1);
         clickDelaySpinner = new JSpinner(spinMod);
@@ -183,12 +207,18 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         return panel;
     }
 
+    private JPanel rrNamePanel() {
+        JPanel panel = new JPanel();
+        railroadName = new JTextField(preferences.getRailRoadName());
+        railroadName.setToolTipText(rb.getString("ToolTipRailRoadName"));
+        railroadName.setColumns(30);
+        panel.add(new JLabel(rb.getString("LabelRailRoadName")));
+        panel.add(railroadName);
+        return panel;
+    }
+
     private JPanel rebuildIndexPanel() {
         JPanel panel = new JPanel();
-        TitledBorder border = BorderFactory.createTitledBorder(lineBorder,
-                rb.getString("TitleRebuildIndexPanel"), TitledBorder.CENTER, TitledBorder.TOP);
-
-        panel.setBorder(border);
         rebuildIndexCB = new JCheckBox(rb.getString("LabelRebuildIndex"));
         rebuildIndexCB.setToolTipText(rb.getString("ToolTipRebuildIndex"));
         panel.add(rebuildIndexCB);
@@ -197,13 +227,9 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
 
     private JPanel portPanel() {
         JPanel panel = new JPanel();
-        TitledBorder portBorder = BorderFactory.createTitledBorder(lineBorder,
-                rb.getString("TitlePortPanel"), TitledBorder.CENTER, TitledBorder.TOP);
-
-        panel.setBorder(portBorder);
         port = new JTextField();
         port.setText("12080");
-        port.setPreferredSize(port.getPreferredSize());
+        port.setColumns(6);
         panel.add(port);
         panel.add(new JLabel(rb.getString("LabelPort")));
         return panel;
