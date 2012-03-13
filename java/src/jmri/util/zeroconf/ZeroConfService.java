@@ -123,7 +123,6 @@ public class ZeroConfService {
             // tight space constraints in terms of the number of bytes that properties 
             // can use, and there are some unconstrained properties that we would like to use.
             properties.put("jmri", jmri.Version.getCanonicalVersion());
-            properties.put("host", ZeroConfService.hostName());
             s = new ZeroConfService(ServiceInfo.create(type, name, port, weight, priority, properties));
             if (log.isDebugEnabled()) {
                 log.debug("Creating new ZeroConfService " + s.key());
@@ -307,6 +306,14 @@ public class ZeroConfService {
         // we would have to check for the existance of . if we did not add .
         // to the string above.
         return hostName.substring(0, hostName.indexOf('.'));
+    }
+
+    /**
+     * Return the fully qualified domain name or "computer" if the system name
+     * cannot be determined. This method uses the JmDNS.getHostName() method.
+     */
+    public static String FQDN() {
+        return ZeroConfService.jmdns().getHostName();
     }
 
     /**
