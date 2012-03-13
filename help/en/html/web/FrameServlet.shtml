@@ -34,7 +34,7 @@ it's OK for the window to have been minimized to the Start Bar (Windows)
 or converted to an icon (MacOS X and Linux).
 
 <p>
-The MiniServer Preferences can be used to adjust the default delay after 
+The Web Server Preferences can be used to adjust the default delay after
 a click and adjust the periodic refresh between clicks.  You can also
 enter a list of frames which are not to be allowed, and enable ajax 
 refresh (new) or use the older meta-refresh.
@@ -47,7 +47,7 @@ a frame is requested.
 <p>
 Please note that this servlet has only been used with 
 the 
-<a href="MiniServer.shtml">JMRI mini-server</a>, and may 
+<a href="MiniServer.shtml">JMRI Web Server</a>, and may
 not work with other servlet containers.  We're committed to
 making it work, however, so just get in touch with 
 the JMRI developers if you encounter any problems.
