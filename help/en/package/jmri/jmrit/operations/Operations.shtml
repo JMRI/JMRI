@@ -1666,7 +1666,13 @@ print features use the same "Sort by" radio buttons as the cars window.
 One of the more useful sorts is by "Location", this allows you to
 quickly verify your car locations before or after an operations session.
 
-<A NAME="Locomotives"></A>
+   <P>You can if you wish only preview or print cars for a specific location or track. In the
+    "Edit Location" and "Edit Track" windows the "Tools" menu provides a "Show Cars" selection which
+    will bring up the "Cars" window but only listing the cars for that location or track. Use the
+    roster print or preview features of the "Cars" window to print out a list of the cars for that
+    location or track.</P>
+
+   <A NAME="Locomotives"></A>
 <H2>Locomotives</H2>
 
 The locomotives window allows you to edit your locomotive roster. You can enter
