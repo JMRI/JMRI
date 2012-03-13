@@ -90,7 +90,6 @@ import java.util.TimerTask;
 import jmri.CommandStation;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.web.miniserver.MiniServerManager;
 import jmri.web.server.WebServerManager;
 
 public class DeviceServer implements Runnable, ThrottleControllerListener, ControllerInterface {
