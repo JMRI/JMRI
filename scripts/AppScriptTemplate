@@ -80,7 +80,7 @@ if [ -z "${JMRI_HOME}" ]; then
 fi
 
 cd "${JMRI_HOME}"
-[ "${DEBUG}" ] && echo "PWD: '${PWD}'"
+[ -n "${DEBUG}" ] && echo "PWD: '${PWD}'"
 
 
 # build library path
@@ -154,7 +154,7 @@ then
     CP="${CP}":/System/Library/Java
 fi
 
-[ "${DEBUG}" ] && echo "CLASSPATH: '${CP}'"
+[ -n "${DEBUG}" ] && echo "CLASSPATH: '${CP}'"
 
 # configuration file name is 1st argument.
 # If not provided, build config file name dynamically
@@ -165,7 +165,7 @@ else
     APPNAME=`basename "$0"`
 fi
 
-[ ${DEBUG} ] && echo "APPNAME: '${APPNAME}'"
+[ -n "${DEBUG}" ] && echo "APPNAME: '${APPNAME}'"
 
 # we only process a config file name when the application is
 # NOT the default one this script was built for.
@@ -176,7 +176,7 @@ then
 
     CONFIGFILE="${CONFIGNAME}Config.xml"
 
-    [ ${DEBUG} ] && echo "CONFIGFILE: '${CONFIGFILE}'"
+    [ -n "${DEBUG}" ] && echo "CONFIGFILE: '${CONFIGFILE}'"
 fi
 
 # create the option string
@@ -209,7 +209,7 @@ OPTIONS="${OPTIONS} ${OS_OPTIONS} ${MEMORY_OPTIONS}"
 
 # RXTX options (only works in some versions)
 OPTIONS="${OPTIONS} -Dgnu.io.rxtx.NoVersionOutput=true"
-[ "${DEBUG}" ] && echo "OPTIONS: '${OPTIONS}'"
+[ -n "${DEBUG}" ] && echo "OPTIONS: '${OPTIONS}'"
 
 if [ -n "$JMRI_SERIAL_PORTS" ]
 then
@@ -217,12 +217,12 @@ then
 fi
 
 # locate alternate serial ports
-ALTPORTS=`(echo "$JMRI_SERIAL_PORTS"; ls -fm /dev/ttyUSB* /dev/ttyACM* 2>/dev/null ) | tr -d " \n" | tr "," ":"`
+ALTPORTS=`(echo "$JMRI_SERIAL_PORTS"; ls -fm /dev/ttyS* /dev/ttyUSB* /dev/ttyACM* 2>/dev/null ) | tr -d " \n" | tr "," ":"`
 if [ "${ALTPORTS}" ]
 then
   ALTPORTS=-Dgnu.io.rxtx.SerialPorts=${ALTPORTS}
 fi
-[ "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
+[ -n "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
 
 
 declare -a DOCK_OPTIONS
@@ -230,7 +230,7 @@ declare -a DOCK_OPTIONS
 if [ "$OS" = "macosx" ]
 then
   DOCK_OPTIONS=(-Xdock:name="${APPNAME}" -Xdock:icon="${APPICON}")
-  [ "${DEBUG}" ] && echo "DOCK_OPTIONS: '${DOCK_OPTIONS[@]}'"
+  [ -n "${DEBUG}" ] && echo "DOCK_OPTIONS: '${DOCK_OPTIONS[@]}'"
 fi
 
 
@@ -242,7 +242,7 @@ do
   java "${DOCK_OPTIONS[@]}" ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
 
   EXIT_STATUS=$?
-  [ "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}"
+  [ -n "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}"
 done
 
 exit $EXIT_STATUS
