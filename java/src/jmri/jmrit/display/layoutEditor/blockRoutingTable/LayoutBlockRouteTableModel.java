@@ -94,7 +94,8 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
     
     	protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
 		return (e.getPropertyName().indexOf("state")>=0 || e.getPropertyName().indexOf("hop")>=0 
-		        || e.getPropertyName().indexOf("metric")>=0) || e.getPropertyName().indexOf("valid")>=0;
+		        || e.getPropertyName().indexOf("metric")>=0 || e.getPropertyName().indexOf("valid")>=0
+                  || e.getPropertyName().indexOf("neighbourmetric")>=0 );
 	}
     
     /**
