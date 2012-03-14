@@ -105,8 +105,8 @@ public class ListedTableFrame extends BeanTableFrame {
                 tabbedTableItem itemModel = new tabbedTableItem(item.getClassAsString(), item.getItemString(), item.getStandardTableModel());
                 itemBeingAdded = itemModel;
                 detailpanel.add(itemModel.getPanel(), itemModel.getClassAsString());
-                itemBeingAdded.getAAClass().addToFrame(this);
                 tabbedTableArray.add(itemModel);
+                itemBeingAdded.getAAClass().addToFrame(this);
             } catch (Exception ex){
                 detailpanel.add(errorPanel(item.getItemString()), item.getClassAsString());
                 log.error("Error when adding " + item.getClassAsString() + " to display\n" + ex);
