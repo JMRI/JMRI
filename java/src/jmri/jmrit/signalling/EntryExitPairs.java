@@ -366,6 +366,13 @@ public class EntryExitPairs {
         }
     }
     
+    public boolean canBeBiDirectional(Object source, LayoutEditor panel, Object dest){
+        if(nxpair.containsKey(getPointDetails(source, panel))){
+            return nxpair.get(getPointDetails(source, panel)).canBeBiDirection(dest, panel);
+        }
+        return false;
+    }
+    
     public boolean isEnabled(Object source, LayoutEditor panel, Object dest){
         if(nxpair.containsKey(getPointDetails(source, panel))){
             return nxpair.get(getPointDetails(source, panel)).isEnabled(dest, panel);
@@ -424,7 +431,7 @@ public class EntryExitPairs {
     class Source {
     
         NamedBean sourceObject = null;
-        Object sourceSignal = null;
+        NamedBean sourceSignal = null;
         jmri.SignalMastLogic sml;
         String ref = "Empty";
         PointDetails pd = null;
@@ -473,6 +480,12 @@ public class EntryExitPairs {
             return pd.getProtecting();
         }
         
+        NamedBean getSourceSignal(){
+            if(sourceSignal==null){
+                getSignalFromPoint(pd);
+            }
+            return sourceSignal;
+        }
         
         void addDestination(PointDetails dest){
             if(pointToDest.containsKey(dest)){
@@ -527,6 +540,17 @@ public class EntryExitPairs {
             }
         }
         
+        boolean canBeBiDirection(Object dest, LayoutEditor panel){
+            if(getSourceSignal()==null){
+                return true;
+            }
+            //Work on the pinciple that if the source is uniDirection, then the destination has to be.
+            PointDetails lookingFor = getPointDetails(dest, panel);
+            if(pointToDest.containsKey(lookingFor)){
+                return pointToDest.get(lookingFor).getSignal()==null;
+            }
+            return false;
+        }
         boolean isRouteActive(PointDetails endpoint){
             if(pointToDest.containsKey(endpoint)){
                 return pointToDest.get(endpoint).activeEntryExit;
@@ -641,7 +665,7 @@ public class EntryExitPairs {
             
             void setEntryExitType(int type){
                 entryExitType = type;
-                if(type!=SETUPTURNOUTSONLY)
+                if((type!=SETUPTURNOUTSONLY) && (getSignal()!=null) && (getSignalFromPoint(point)!=null))
                     uniDirection = true;
             }
             
@@ -705,7 +729,7 @@ public class EntryExitPairs {
                                 sml.removeDestination(mast);
                         }
                     } else {
-                        log.info("Block that went Occupied was not in the routeDetails list");
+                        log.error("Block " + lBlock.getDisplayName() + " that went Occupied was not in the routeDetails list");
                     }
                     if (log.isDebugEnabled()){
                         log.debug("Route details contents " + routeDetails);
@@ -1558,6 +1582,15 @@ public class EntryExitPairs {
                     } else if (now==Sensor.INACTIVE && getNXState()==NXBUTTONACTIVE){
                         //Sensor gone inactive, while nxbutton was selected - potential start of user either clear route or setting another
                         setButtonState(NXBUTTONSELECTED);
+                        for(Entry<PointDetails, Source.DestinationPoints> en : sourceRoute.pointToDest.entrySet()){
+                            //Sensor sen = getSensorFromPoint(en.getKey().getPoint());
+                            //Set a time out on the source sensor, so that if its state hasn't been changed, then we will clear it out.
+                            if(!en.getValue().getUniDirection()){
+                                if(en.getKey().getNXState()==NXBUTTONSELECTED){
+                                    sourceRoute.activeBean(en.getValue(), false);
+                                }
+                            }
+                        }
                     }
                 } else if (destPoint!=null){
                     //Button set as a destination but has no source, it has had a change in state
@@ -1809,8 +1842,6 @@ public class EntryExitPairs {
         }
         protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
     }
-    
-    
     
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
