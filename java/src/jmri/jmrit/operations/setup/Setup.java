@@ -141,6 +141,10 @@ public class Setup {
 	public static final String NO_NUMBER = "NO_NUMBER";
 	public static final String NO_COLOR = "NO_COLOR";
 	
+	// truncated manifests
+	public static final String NO_DESTINATION = "NO_DESTINATION";
+	public static final String NO_DEST_TRACK = "NO_DEST_TRACK";
+	public static final String NO_LOCATION = "NO_LOCATION";
 	
 	public static final String BLACK = rb.getString("Black");	// the supported pick up and set out colors
 	public static final String BLUE = rb.getString("Blue");
@@ -206,8 +210,10 @@ public class Setup {
 	private static boolean tab = false;
 	private static boolean manifestEditorEnabled = false;	// when true use text editor to view build report
 	private static boolean switchListSameManifest = true;	// when true switch list format is the same as the manifest
+	private static boolean manifestTruncated = false;		// when true, manifest is truncated if switch list is available
 	private static boolean switchListRealTime = true;			// when true switch list only show work for built trains
 	private static boolean buildReportEditorEnabled = false;	// when true use text editor to view build report
+	
 	private static boolean enableTrainIconXY = true;
 	private static boolean appendTrainIcon = false;		//when true, append engine number to train name
 		
@@ -582,6 +588,14 @@ public class Setup {
 	
 	public static boolean isSwitchListRealTime(){
 		return switchListRealTime;
+	}
+
+	public static void setTruncateManifestEnabled(boolean b){
+		manifestTruncated = b;
+	}
+	
+	public static boolean isTruncateManifestEnabled(){
+		return manifestTruncated;
 	}
 
 	public static void setPrintLocationCommentsEnabled(boolean enable){
@@ -967,6 +981,27 @@ public class Setup {
 				format[i] = NO_NUMBER;
 			else if (format[i].equals(COLOR))
 				format[i] = NO_COLOR;
+		}
+		return format;
+	}
+	
+	public static String[] getTruncatedPickupManifestMessageFormat(){
+		return createTruncatedManifestMessageFormat(getPickupCarMessageFormat());
+	}
+	
+	public static String[] getTruncatedSetoutManifestMessageFormat(){
+		return createTruncatedManifestMessageFormat(getDropCarMessageFormat());
+	}
+	
+	private static String[] createTruncatedManifestMessageFormat(String[] format){
+		// remove car's destination and location
+		for (int i=0; i<format.length; i++){
+			if (format[i].equals(DESTINATION))
+				format[i] = NO_DESTINATION;
+			else if (format[i].equals(DEST_TRACK))
+				format[i] = NO_DEST_TRACK;
+			else if (format[i].equals(LOCATION))
+				format[i] = NO_LOCATION;
 		}
 		return format;
 	}
@@ -1419,6 +1454,7 @@ public class Setup {
     	values.setAttribute("enabled", isTabEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("manifest"));
+    	values.setAttribute("truncate", isTruncateManifestEnabled()?"true":"false");
     	values.setAttribute("useEditor", isManifestEditorEnabled()?"true":"false");
     	values.setAttribute("hazardousMsg", getHazardousMsg());
     	
@@ -1469,29 +1505,6 @@ public class Setup {
     	// Save CATS setting
     	e.addContent(values = new Element("CATS"));
     	values.setAttribute("exactLocationName", AbstractOperationsServer.isExactLoationNameEnabled()?"true":"false");
-  	
-    	
-    	/* all JMRI window position and size are now saved
-    	Element options;
-    	e.addContent(options = new Element("options"));
-    	options.addContent(values = new Element("setupFrameOptions"));
-        Dimension size = getOperationsSetupFrameSize();
-        Point posn = getOperationsSetupFramePosition();
-        if (_operationsSetupFrame != null){
-        	size = _operationsSetupFrame.getSize();
-        	posn = _operationsSetupFrame.getLocation();
-        	_operationsSetupFrameDimension = size;
-        	_operationsSetupFramePosition = posn;
-        }
-        if (posn != null){
-        	values.setAttribute("x", ""+posn.x);
-        	values.setAttribute("y", ""+posn.y);
-        }
-        if (size != null){
-        	values.setAttribute("height", ""+size.height);
-        	values.setAttribute("width", ""+size.width); 
-        }
-        */
     	return e;
     }
     
@@ -1811,6 +1824,11 @@ public class Setup {
         	}
         }
         if ((operations.getChild("manifest") != null)){ 
+        	if((a = operations.getChild("manifest").getAttribute("truncate"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("manifest truncate: "+enable);
+        		setTruncateManifestEnabled(enable.equals("true"));
+        	}
         	if((a = operations.getChild("manifest").getAttribute("useEditor"))!= null){
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("manifest useEditor: "+enable);
@@ -1951,24 +1969,6 @@ public class Setup {
         	}
         }
         
-        /* all JMRI window position and size are now saved
-        Element frameOptions;
-        if ((operations.getChild("options")!= null)
-        		&& (frameOptions = operations.getChild("options").getChild("setupFrameOptions"))!= null){
-        	try {
-        		int x = frameOptions.getAttribute("x").getIntValue();
-        		int y = frameOptions.getAttribute("y").getIntValue();
-        		int height = frameOptions.getAttribute("height").getIntValue();
-        		int width = frameOptions.getAttribute("width").getIntValue();
-        		_operationsSetupFrameDimension = new Dimension(width, height);
-        		_operationsSetupFramePosition = new Point(x,y);
-        	} catch ( org.jdom.DataConversionException ee) {
-        		if (log.isDebugEnabled()) log.debug("Did not find Setup frame attributes");
-        	} catch ( NullPointerException ne) {
-        		if (log.isDebugEnabled()) log.debug("Did not find Setup frame attributes");
-        	}
-        }
-        */
         // logging has to be last, causes cars and engines to load
         // fixed by only configuring the booleans
         if (operations.getChild("settings") != null){

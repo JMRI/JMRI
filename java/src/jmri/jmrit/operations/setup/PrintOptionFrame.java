@@ -82,6 +82,8 @@ public class PrintOptionFrame extends OperationsFrame{
 	JCheckBox printTimetableNameCheckBox = new JCheckBox(rb.getString("PrintTimetableName"));
 	JCheckBox use12hrFormatCheckBox = new JCheckBox(rb.getString("12hrFormat"));
 	JCheckBox printValidCheckBox = new JCheckBox(rb.getString("PrintValid"));
+	JCheckBox truncateCheckBox = new JCheckBox(rb.getString("Truncate"));
+	
 	
 	// text field
 	JTextField pickupEngPrefix = new JTextField(10);
@@ -152,6 +154,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		printTimetableNameCheckBox.setToolTipText(rb.getString("ShowTimetableTip"));
 		use12hrFormatCheckBox.setToolTipText(rb.getString("Use12hrFormatTip"));
 		printValidCheckBox.setToolTipText(rb.getString("PrintValidTip"));
+		truncateCheckBox.setToolTipText(rb.getString("TruncateTip"));
 		buildReportCheckBox.setToolTipText(rb.getString("CreatesTextFileTip"));
 		editManifestCheckBox.setToolTipText(rb.getString("UseTextEditorTip"));
 		
@@ -355,13 +358,14 @@ public class PrintOptionFrame extends OperationsFrame{
 		
 		// Manifest comments
 		JPanel pManifestComment = new JPanel();
-		pManifestComment.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutComments")));
+		pManifestComment.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifestOptions")));
 		pManifestComment.add(printValidCheckBox);
 		pManifestComment.add(printLocCommentsCheckBox);
 		pManifestComment.add(printRouteCommentsCheckBox);
 		pManifestComment.add(printLoadsEmptiesCheckBox);
 		pManifestComment.add(use12hrFormatCheckBox);
 		pManifestComment.add(printTimetableNameCheckBox);
+		pManifestComment.add(truncateCheckBox);
 				
 		// manifest logo
 		JPanel pLogo = new JPanel();
@@ -461,6 +465,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		printTimetableNameCheckBox.setSelected(Setup.isPrintTimetableNameEnabled());
 		use12hrFormatCheckBox.setSelected(Setup.is12hrFormatEnabled());
 		printValidCheckBox.setSelected(Setup.isPrintValidEnabled());
+		truncateCheckBox.setSelected(Setup.isTruncateManifestEnabled());
 		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
 		editManifestCheckBox.setSelected(Setup.isManifestEditorEnabled());
 		
@@ -673,6 +678,7 @@ public class PrintOptionFrame extends OperationsFrame{
 			Setup.set12hrFormatEnabled(use12hrFormatCheckBox.isSelected());
 			Setup.setPrintValidEnabled(printValidCheckBox.isSelected());
 			Setup.setPrintTimetableNameEnabled(printTimetableNameCheckBox.isSelected());
+			Setup.setTruncateManifestEnabled(truncateCheckBox.isSelected());
 			Setup.setManifestEditorEnabled(editManifestCheckBox.isSelected());
 			Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
 			OperationsSetupXml.instance().writeOperationsFile();
