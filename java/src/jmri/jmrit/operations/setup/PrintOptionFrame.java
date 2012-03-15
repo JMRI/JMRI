@@ -181,7 +181,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		pManifest.setLayout(new BoxLayout(pManifest, BoxLayout.Y_AXIS));
 		JScrollPane pManifestPane = new JScrollPane(pManifest);
-		pManifestPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifestOptions")));
+		pManifestPane.setBorder(BorderFactory.createTitledBorder(""));
 		
 		// row 1 font type and size
 		JPanel p1 = new JPanel();
