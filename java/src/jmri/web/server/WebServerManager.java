@@ -5,8 +5,12 @@
 package jmri.web.server;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 import org.apache.log4j.Logger;
 import org.jdom.Attribute;
 import org.jdom.Document;
@@ -22,6 +26,7 @@ public class WebServerManager {
     private WebServerPreferences preferences;
     private WebServer server;
     static Logger log = Logger.getLogger(WebServer.class.getName());
+    static ResourceBundle rb = ResourceBundle.getBundle("jmri.web.server.Html");
 
     private WebServerManager() {
         if (InstanceManager.getDefault(WebServerPreferences.class) == null) {
@@ -57,12 +62,37 @@ public class WebServerManager {
 
     public WebServer getServer() {
         if (server == null) {
+            try {
+                this.rebuildIndex();
+            } catch (Exception ex) {
+                log.warn("Error rebuilding index.", ex);
+            }
             server = new WebServer();
         }
         return server;
     }
+
     public static WebServer getWebServer() {
         return getInstance().getServer();
+    }
+
+    protected void rebuildIndex() throws IOException {
+        File indexFile = new File(FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + "index.html"));
+        if (WebServerManager.getWebServerPreferences().isRebuildIndex() || !indexFile.exists()) {
+            FileWriter writer = new FileWriter(indexFile);
+            writer.write(rb.getString("HTML5DocType"));
+            writer.write(String.format(rb.getString("HeadFormat"),
+                    rb.getString("HTML5DocType"),
+                    this.getPreferences().getRailRoadName(),
+                    "index",
+                    ""));
+            writer.write(rb.getString("Index"));
+            writer.close();
+            if (WebServerManager.getWebServerPreferences().isRebuildIndex()) {
+                WebServerManager.getWebServerPreferences().setRebuildIndex(false);
+                WebServerManager.getWebServerPreferences().setIsDirty(true);
+            }
+        }
     }
 
     private void preferencesFromMiniServerPreferences(File MSFile, File WSFile) {
