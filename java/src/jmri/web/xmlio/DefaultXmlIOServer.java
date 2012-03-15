@@ -298,6 +298,11 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     }
                     e.addContent(n);
                 }
+            } else if (type.equals("railroad")) {
+                // return the Web Server's Railroad name preference
+                Element n = new Element("railroad");
+                n.setAttribute("name", WebServerManager.getWebServerPreferences().getRailRoadName());
+                e.addContent(n);
             } else log.warn("Unexpected type in list element: " + type);
         }
         
@@ -340,6 +345,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
             } else if (type.equals("frame")) {
                 // nothing to process
             } else if (type.equals("panel")) {
+                // nothing to process
+            } else if (type.equals("railroad")) {
                 // nothing to process
             } else if (item.getName().equals("item")) {
                 log.warn("Unexpected type in item: " + type);
