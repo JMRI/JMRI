@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: DecoderPro3.shtml,v 1.1 2010/10/01 12:33:06 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-10-03-->
+<title>JMRI: DecoderPro3</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: DecoderPro3
+</h1>
+
+DecoderPro3 est une mise à jour de l'apparence
+du vénérable<a href="../../DecoderPro/DecoderPro.shtml">DecoderPro</a>.
+
+<p>
+Cette page est un lieu réservé pour d'éventuelle pages d'aide DecoderPro3.
+
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

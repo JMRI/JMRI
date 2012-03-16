@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: EditLevelXing.shtml,v 1.3 2008/11/01 17:33:00 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-12-10--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Edit Level Crossing Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Layout Editor Level Crossing">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> Éditer Croisement </H1>
+
+Un croisement est une pièce particulière de la voie qui représente deux voies traversantes
+au niveau du sol. Un croisement est communément appelé un diamant. Un croisement
+a quatre points de connexion, et deux voies, désigné 1 et 2. Quand un niveau de
+traversée est créée, la voie 1 est la voie horizontale, et la voie 2 est la 
+voie inclinée. L'angle entre les deux voies, l'inclinaison de chaque voie, et le
+longueur de chaque voie peut être modifiée en faisant glisser les points de connexion avec la touche méta
+enfoncée. Le centre du croisement peut être positionné en faisant glisser le centre du
+cercle avec la touche Meta enfoncé (voir la barre d'aide pour ce qui touche la méta
+pour votre système d'exploitation).</p>
+<p>En Option chaque voie sera soit <i>voie principale </i> ou la <i>voie de coté </i>
+en fonction de la désignation des segments de voie voie principale ou  voie de côté
+connectés à chaque voie. Aussi vous pouvez indépendamment en option assigner chaque voie
+a un bloc différent. Si un nom de bloc est entré dans le <b>Canton: Nom</b>
+de la barre d'outils avant de créer un croisement, ce bloc est attribué aux
+ deux voies. Chaque voie peut être attribuée un bloc différent dans le menu Édition
+Croisement. La boîte de Dialogue Modifier Croisement permet également un dialogue Créer/Modifier
+Canton qui doit être demandée pour chacun des deux cantons, afin que l'information pour ces
+cantons puissent être conclus ou modifiés. Les blocs sont discutés plus en détail sur la page d'aide
+ de la boîte de dialogue Créer/Modifier Cantons.</p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

@@ -1,0 +1,860 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Logix.shtml,v 1.7 2011/01/25 23:13:30 pete_cressman Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-09-29-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Logix Documentation
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="David Duchamp" name=Author>
+    <META name="keywords" content="java model railroad JMRI Logix">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <H2> 
+      JMRI: Documentation Logix 
+      </H2>
+    
+    <dd>
+<P> Les Logix&trade; fournissent une capacité puissante à JMRI pour surveiller une
+ou plusieurs conditions sur un réseau, et prendre des mesures lorsque ces
+conditions changent d'une manière spécifiée par l'utilisateur. Logix peut être utilisé pour
+contrôler les signaux , portails de croisement et d'autres types d'automatisation
+sur le réseau. L'interface utilisateur est conçue pour être conviviale pour
+tous les utilisateurs avec une familiarité de base avec JMRI. Un Logix fournit un moyen
+pour la mise en place d'une logique définie par l'utilisateur de manière intuitive, sans que 
+l'utilisateur ait à se familiariser avec la logique mathématique.
+	</p>  
+	</dd>
+
+	<dl>
+	<dt class=left><a name=contents><H3>Contenus</H3></a></dt>
+	<dd class=top>
+	
+<p> La documentation ci-dessous décrit Logix, et discute de sa configuration
+. La documentation est divisée en sections; cliquez ci-dessous pour
+un accès facile à une section cotée. Si vous préférez essayer avant de lire beaucoup,
+Lire Introduction à<a href="#intro"> Logix et Conditionels </a>,
+puis cliquez sur <a href="#start"> Mise en route </a>
+et suivez ces instructions. Revenez ici pour lire ce que vous avez fait.
+<ul>
+<li> <a href="#intro"> Introduction à Logix et Conditionels </a>
+<li> <a href="#logix"> Logix </a>
+<li> <a href="#conditional"> Conditionels </a>
+<li> <a href="#editconditional"> La fenêtre Modifier Conditionel  </a>
+<li> <a href="#logicalexpression"> L'Expression Logique </a>
+<li><a href="#thepolicy">Déclenchemet des Actions</a>
+<li> <a href="#theactions"> Les Actions </a>
+<li> <a href="#start"> Mise en route </a>
+<li> <a href="#variable"> Etat des variables Disponibles </a>
+<li> <a href="#action"> Actions Disponibles </a>
+<li> <a href="#notes"> Notes supplémentaires </a>	</ul>
+	</dd>
+
+
+<dt class = left><a  name=intro>  <H3>Introduction aux  Logix et Conditionels </H3> </a> </dt>
+<dd class=top>
+<p> Logix est un petit groupe de Conditionels concentrés sur une tâche unique
+sur le réseau. Chaque conditionel peut être considéré comme une déclaration de la forme:
+<ul> <p> si (expression logique) alors (action). </ul> </p>
+<p> "expression logique" fait partie d'un des tests conditionels de l'état d'un groupe
+des conditions spécifiées par l'utilisateur sur le réseau, par exemple, si certains
+aiguillages sont directs ou déviés, ou si un bloc est occupé. La partie "action"
+ de la condition spécifie quelle action doit être
+prises si l'état de l'expression logique évolue. </p>
+<p> Par exemple, un Logix avec plusieurs conditionels pourraient contrôler 
+l'apparence d'une tête de signal. Le premièr conditionel pourrait vérifier les conditions
+pour une apparence VERTE. Un second conditionel peut vérifier une autre
+apparence permise
+.Les autres Conditionels pourraient vérifier les autres apparences. Un Logix
+est suffisamment souple pour que les règles de signalisation de tout chemin de fer puissent être
+mises en place, à condition, bien sûr, que les information nécessaires pour tester les 
+conditions soient disponibles. Donc, avec un seul Logix, un utilisateur doit être en mesure
+de mettre en place la logique requise pour contrôler l'apparence d'une tête de signal.</p> 
+	<p> Pensez à un Logix comme un <b> petit </b>  groupe d'un ou plusieurs Conditionels
+qui répondent à un besoin unique. Etre capable de regrouper tous les conditionels qui
+répondent à ce besoin dans une seule Logix simplifie les choses. Seul un nom  système
+est nécessaire pour toute la logique pour aborder la tâche, et le regroupement de toute la logique
+pour la tâche à un seul endroit, rend beaucoup plus facile de voir comment les
+expressions logiques liées peuvent travailler ensembles et comment elles pourraient s'affecter l'une  l'autre.
+</P> </dd>
+
+    <dt class=left> <a name=logix> <H3> Logix </H3> </a> </dt>
+<dd class=top>
+<p> Sauf quand il est créé ou modifié,
+un Logix est "actif", ce qui signifie
+que les entités (aiguillages, détecteurs, lumières, etc) dans les expressions logiques
+ des Conditionels Logix sont surveillées. Chaque fois que l'
+état d'un des Conditionels surveillés change, le
+        Conditionel "recalcule" son expression logique. Si le résultat du
+        calcul change la valeur de l'expression logique, alors
+        les actions spécifiées du Conditionel sont prises. </p>
+        <p>Les entités surveillées spécifiées dans l'expression logique d'un conditionel
+        sont appelés "variables d'état" et
+        le résultat du calcul est l'<b>état </b> de la condition.
+        C'est le changement d'état de la condition qui l'amène à émettre des
+        commandes pour les actions à réaliser.
+        L'expression logique est aussi appelée l'«antécédent» du
+        Conditionel et le groupe de mesures à prendre est aussi appelé la «conséquence»
+        du conditionel. </p>
+        	
+<p> Logix n'a pas un état que beaucoup d'entités JMRI ont. Un Logix a cependant
+la capacité d'être «activé» ou «désactivé», . Quand un Logix est
+désactivé (non activé), les expressions logiques de ses conditionels sont encore
+évalués, mais les actions spécifiées dans le Conditionel ne sont pas prises.
+Chaque Logix activé ou désactivé est enregistré lorsque le Logix est enregistré sur
+le disque, donc un Logix qui était désactivé lors de son dernier enregistrement va démarrer
+ désactivé lors du prochain chargement à partir du fichier de configuration.
+Quand un Logix désactivé est activé, les états de tous ses
+Conditionels sont mis à INCONNU, et tous les conditionels sont calculés.
+</ p>
+<p> Logix est défini via le tableau Logix qui peut être consulté en
+sélectionnant <b>Tableau Logix  </b> dans le menu Outils. Le tableau Logix liste
+tous les logix actuellement définis par leur nom de système ou nom d'utilisateur. Le
+tableau indique également si un Logix est "activé". La dernière colonne du
+tableau fournit un moyen facile de modifier un Logix et ses conditionels.
+En cliquant sur la case de choix<b> Sélectionnez </b> pour un Logix, il affichera un un menu
+         avec trois choix; <b> Modifier</b>, <b> Copier</b>, et <b>  Supprimer </b>.
+Chaque choix fera apparaître une fenêtre pour l'opération correspondante.
+         </p>
+	<p> Pour créer une nouveau Logix, cliquez sur le <b> Ajouter </b> situé au bas du 
+Tableau Logix. Cela fera apparaître une fenêtre Créer Logix. Saisir un nom de système
+et un nom utilisateur, puis cliquez sur Créer <b> Logix </b>, va créer le Logix, et
+ouvrir la fenêtre Modifier Logix. Cette fenêtre permet de créer et d'éditer les Conditionels
+. Une fois que Logix est créé, son nom  système ne peut pas être changé.
+Son nom utilisateur, cependant, peut être changé soit dans la Table Logix ou la fenêtre 
+Modifier Logix. Un nouveau nom d'utilisateur peut être n'importe quel texte utile, à condition que le nouveau
+nom d'utilisateur n'ait pas déjà été attribué à un autre Logix. </p>
+<p> Logix est nommé selon la convention JMRI. Le nom système du 
+Logix doit toujours commencer par deux lettres IX et sont habituellement
+suivies par un numéro choisi par l'utilisateur. Par exemple, sont valables
+ les Noms de système Logix comprenant: IX1, IX34, et IX100. Le nom utilisateur
+est tout ce que l'utilisateur veut utiliser pour identifier les Logix particuliers,
+par exemple, "Contrôle Signal 5". Toutes les lettres dans un nom de système doivent être en
+majuscules. Si l'utilisateur entre les lettres minuscules, JMRI automatiquement
+les convertira en majuscules. Aussi, par souci de commodité pour l'utilisateur, si
+le nom du système entré ne commence pas par IX, le programme ajoutera IX
+devant ce qui est entré. Par exemple, pour entrer un nom de système de IX32,
+il suffit d'entrer 32 dans le champ Nom système, et le programme fera le reste.
+	
+<p>La fenêtre Modifier Logix  affiche le nom système et nom utilisateur du
+Logix au sommet. Le nom utilisateur peut être modifié en entrant/modifiant les
+textes dans le champ Nom Utilisateur. Suivant est un tableau de Conditionels appartenant
+à Logix. Pour ajouter une nouvelle condition, cliquez sur le bouton <b> Nouveau  Conditionel </b>
+en bas de la table Conditionel. Cela va créer une nouveau Conditionel
+et ouvrir la fenêtre Modifier le Conditionel permettant de définir l'expression logique et l'action
+ de la nouvelle condition. Un Conditionel existant peut être
+édité en cliquant sur le menu <b>Édition  </b> de ce Conditionel dans la
+table. Le nom d'utilisateur du conditionel peut être modifié dans le tableau. Le
+nom utilisateur d'une condition peut être n'importe quel texte utile, à condition qu'il ne soit pas le
+même que le nom d'utilisateur d'un autre conditionel dans le même Logix. Le
+nom utilisateur peut être le même que le nom d'utilisateur d'un conditionel dans un autre Logix.
+<i> Lorsque vous modifiez le nom utilisateur (ou de n'importe quel élément de n'importe quelle table JMRI) s'il vous plaît
+N'oubliez pas de passer à une autre cellule dans la table de sorte que le programme est
+averti que vous avez terminé votre inscription, sinon l'entrée ne peut pas
+prendre effet. </i> </p>
+<P> Cliquant <b> Calculer </b> sous la table Conditionels provoquera un recalcul des
+Conditionels du Logix. Les états résultant sont affichés dans
+la colonne État de la table. Cependant, depuis que le Logix est en cours d'édition, ils sont
+         inactifs et donc pas de mesures Conditionels ne seront prises. Lorsque l'édition du Logix
+         est fait, le Logix est activé et peut être activé pour permettre aux Conditionels
+         d'exécuter leurs actions.</p>
+	<p>L'ordre des conditionels dans la table conditionel peut être modifié
+en cliquant sur <b> Réorganiser </b> (en dessous du tableau Condition). Cliquer
+ <b>Réorganiser </b> toutes les modifications des boutons Édit dans la dernière colonne du tableau à la 
+<b> Première </b>. Sélectionnez la condition qui doit être la première, et elle
+est immédiatement déplacée vers le haut de la table. Tous les autres boutons changent pour
+<b> Suivante </b>. Sélectionnez les Conditionels restant dans l'ordre désiré, jusqu'à ce que
+tous les boutons reviennent à <B> Modifier </b>.
+Notez que l'ordre dans lequel les conditionels sont énumérés
+ dans le Logix ne détermine pas l'ordre dans lequel ils sont évalués, pas plus qu'il ne force l'évaluation
+d'un Conditionel lorsqu'il est évalué plus tôt ou plus tard.
+Vous devriez penser au conditionels comme des morceaux indépendants de logique booléenne
+qui recherchent constamment quelle combinaison d'entrée 
+est vrai, et quand cette combinaison se produit, le conditionel
+va prendre certaines mesures.
+
+<p>Lorsque  <b>Terminé </b> est cliqué au bas de la fenêtre Modifier Logix, toute
+changement dans le nom d'utilisateur Logix est vérifié et fait. Une vérification est faite pour les
+incohérences en précisant que l'entité (capteur, aiguillage, etc) référencée
+dans les variables d'état multiples n'est pas surveillée comme un déclencheur pour le calcul de
+Logix, et un message d'avertissement
+ apparaît si des incohérences sont constatées. Puis le Logix est activé,
+la fenêtre Modifier Logix est rejetée, et l'utilisateur est renvoyé au 
+Tableau Logix. Immédiatement avant le Logix est activé, l'état de tous ses
+Conditionels est mis à INCONNU. Immédiatement après l'activation, toutes les
+Conditionels sont calculés.</p>
+	<p>La fenêtre Modifier Logix  fournit aussi un moyen
+pour supprimer un Logix s'il n'est plus nécessaire. Cliquez sur <b> Supprimer Logix </b>
+supprime Logix et tous ses conditionels. Cette opération
+         peut également être faite en sélectionnant l'option <b>Supprimer </b> item dans le menu déroulant
+         <b> sélectionner </b> du menu sur le tableau Logix. </p>
+         <p> Sélection de l'item <b>copie </b> dans le menu déroulant
+         <b> sélectionner </b> le menu sur le tableau Logix affichera une série de fenêtres de dialogue qui
+         fourniront un moyen de copier le Logix et tout ou partie de sa condition à un nouveau
+         Logix ou à un existant. </p>
+</dd>	
+	<dt class=left><a name=conditional><H3>Conditionels</H3></a>
+	</dt>
+	<dd class=top>
+	<p>Un Nom  système de Conditionel a la forme IXnnnnCmm , et
+est réglé automatiquement lorsque le conditionel est créé par l'utilisateur en cliquant sur
+ <b>Nouveau Conditionel</b> dans la fenêtre Modifier Logix. Le nom système de la
+première tranche des conditionels pour Logix IXnnn sera toujours IXnnnC1, la seconde tranche de nom système des conditionels
+ aura IXnnnC2 , et ainsi de suite. Le nom d'utilisateur d'un
+Conditionel est ce que l'utilisateur veut assigner à identifier
+par  le conditionel. Un nom d'utilisateur entré ne doit pas être utilisé par plus
+d'un Conditionel dans un Logix donné, cependant.
+Le nom système et le nom utilisateur sont affichés
+au sommet de la fenêtre Éditer Conditionel. Le nom utilisateur peut être
+Entré/Édité là ou dans la table des Conditionels de la fenêtre Éditer Logix.
+Le nom d'utilisateur d'un Conditionel peut être n'importe quel texte utile, à condition qu'il ne soit pas le
+même que le nom utilisateur d'un autre Conditionel dans le même Logix. Le nom utilisateur
+peut être le même que le nom d'utilisateur d'un Conditionel dans un autre Logix.
+	</p>
+	<p> Comme mentionné plus haut,les des énoncés conditionels sont de la forme:
+<ul> <p> si (antécédent) puis (conséquente). </ul> </p>
+<p> Par conséquent, un Conditionel a deux parties distinctes: son "expression logique"
+et ses «actions». Elles sont examinées séparément ci-dessous.
+<p>Les expressions logiques  connectent les états (vrai ou faux) de"l'état
+variables ". Les état des conditions variables de test sur le réseau ou dans le programme,
+par exemple, si un capteur est actif ou inactif, si aiguillage est direct, si une
+tête de signal est rouge, si le temps d'horloge rapide se situe entre 10h00
+et de 11h00, les variables d'état etc sont liées ensemble dans une
+expression logique par les opérateurs logiques. Une liste des variables d'état courantes est fournie  <a href="#variable">ci-dessous </a>. </p>
+<p>Les opérateurs logiques actuellement disponibles sont NOT, AND et AND NOT. L'
+opérateur AND est configuré automatiquement par le programme. Pour chaque variable d'état,
+l'utilisateur sélectionne si l'opérateur NOT  précède la variable d'état.
+Si l'opérateur NOT précède la variable d'état, la valeur vrai/faux sur
+la variable d'état est inversée. Par exemple, si "Capteur Actif CS5» est vrai,
+"Capteur CS5 NOT Actif " sera faux, et vice versa. Notez que" Capteur
+Actif CS5" n'est parfois pas la même chose que" Capteur CS5 NOT inactif", parce que
+le Capteur CS5  peut être dans l'état INCONNU. </P>
+<p>Les expressions logiques sont lues comme des déclarations écrites. Il est facile
+de mettre en place une expression logique, d'évaluer de nombreuses situations sur
+le réseau. Par exemple, «si le canton 10 et le canton 11 sont
+occupés et l'aiguillage 20 est dévié »serait mis en place comme: </p>
+<p> <ul>Capteur LS1020  Actif et  Capteur LS1021 Actif et l'aiguillage LT20 dévié
+</Ul> </p>.
+	<p>Où LS1020 est un capteur qui est vrai lorsque le canton 10 est
+occupé (peut-être à partir d'un BDL168), capteur LS1021 est vrai lorsque
+le canton 11 est occupé, et l'aiguillage LT20 Dévié est vrai lorsque l'Aiguillage LT20
+est dévié. Cette expression logique serait calculer vrai si
+ les trois des variables d'état sont vraies, c'est à dire, si le canton 10
+est occupé et le canton 11 est occupé et l'Aiguillage 20 est
+dévié; sinon le résultat serait faux </p>
+<p>Les Actions peuvent être spécifiées pour chaque condition. Un certain nombre d'actions
+         types sont disponibles.Pour
+L'Aiguillage, par exemple, Définir Aiguillage, Définir Apparence Signal, Déclenchement d'Itinéraires, etc. 
+        Ces types d'action disponibles sont décrits
+<a href="#action"> ci-dessous </a> dans le détail. Chaque action a une
+option sélectionnable par l'utilisateur pour l'éxécution si: 1)changement de l'expression logique
+à vrai, 2) changement de l'expression logique à faux, ou 3) le
+changement de l'expression logique. Cela signifie qu'un conditionel peut effectivement
+         avoir trois états..
+        </p>	
+	<p><ul>Si (antécédent est vrai) puis (faire actions "changer le vrai" ). </p>
+<p> si (antécédent est faux), puis (faire actions "changer le faux" ). </p>
+<p> si (changements d'état antécédent) puis (faire "sur le changement" des actions). </ul> </p>
+</ Dd>
+
+<dt class=left> <a name=editconditional> <H3> La fenêtre Modifier Conditionel </H3> </a>
+</Dt>
+<dd class=top
+<p>La fenêtre Modifier Conditionel est où les expressions logiques sont mise en place et
+où les actions sont spécifiées. La fenêtre Modifier Conditionel 
+s'affiche quand un Conditionel est créé, ou lorsque le bouton <b> Modifier </b> d'un
+Conditionel est pressé dans la fenêtre Éditer Logix. La fenêtre Édition Conditionel
+affiche le nom du système et le nom utilisateur du Conditionel en haut. 
+Le nom utilisateur peut être édité en Entrer/Modifier le texte dans le Champ Nom Utilisateur
+ Tout texte peut être utilisé, à condition qu'il ne reproduit pas le nom utilisateur
+d'un autre Conditionel dans le même Logix. Viennent ensuite les deux sections - une
+pour l'installation d'une expression logique et une autre pour mettre en place des actions. </p>
+</Dd>
+
+<dt class=left> <a name=logicalexpression> <H3> L'Expression Logique </H3> </a>
+</Dt>
+<dd class=top>
+<p> La section expression logique contient une table de variables d'état, avec
+deux boutons et une boîte de menu déroulant ci-dessous. Le menu déroulant permet le
+        choix des opérateurs logiques à utiliser dans l'antécédent. Les choix sont:
+        tous les <b> AND </b> , tous les <b> OR </b> ou le <b> mixte </b>. Mixte permet à l'utilisateur de
+        spécifier toute combinaison de AND, OR et NOT . Lorsque ce choix est fait
+        l'expression logique requiert des parenthèses afin d'être sans ambigüité. Ainsi,
+        lorsque ce choix est fait, un champ texte est affiché afin que les parenthèses puissent être
+        insérées et l'expression modifiée. Les variables d'état sont représentées dans
+        l'expression par leur numéro de ligne.</p>   
+        <p>La première colonne dans la table des état des variable
+ est le numéro de ligne de la variable. La colonne suivante
+        affiche l'opération logique précédente de la variable dans l'expression.
+        Dans le cas des «mixtes» une boîte de choix permet à l'utilisateur
+        de choisir une opération. Cependant, ces choix peuvent être
+        changés dans le champ texte antécédent et il est l'expression de champ texte
+        que les Conditionels utilisent afin de déterminer son état. La troisième
+colonne contient une boîte de choix qui permet à l'utilisateur de sélectionner l'opérateur PAS 
+si nécessaire. </p>
+        <p> La quatrième colonne est une description des variables d'état
+        et la condition à surveiller pour que son état soit vrai. La prochaine
+        colonne indique l'état qui a été testé pour la dernière variable (vrai ou faux).
+        L'état affiché inclut les
+        effet de l'opérateur NOT si NOT est sélectionné. </p>
+        <p> La colonne «déclencheur»
+         définit si la variable d'état doit entraîner la condition pour
+        s'acquitter de ses actions lorsque cette variable change.
+        Notez que les états actuels de toutes les variable sont <b> toujours </b> utilisés dans le
+        calcul de la condition de l'état. Le réglage du "Déclencheur (Trigger)"  permet à une
+        variable d'état d'être "passive" et ne pas provoquer le Conditionel pour évaluer son état.
+        C'est, par exemple une variable d'état est une condition nécessaire, mais non suffisante
+        pour provoquer toutes les actions à prendre place. </p>
+       
+        <p><b> Remarque : </b>  La désactivation des déclencheurs variable d'état doit être faite avec prudence. Elles
+         sont efectuées seulement lorsque l'état de l'expression logique change. La désactivation d'un
+         déclencheur peut empêcher des actions d'être exécutées même si cet état a changé.
+         <p> Suit une colonne <b> Modifier </b> pour modifier une variable d'état existante.
+         La dernière colonne du tableau (boutons <b> Supprimer </b>) est utilisée pour supprimer un état de
+variable si vous décidez qu'il n'est plus nécessaire.
+         </p>
+         <p> Pressez <b> Ajouter variable d'état </b> pour ajouter une variable d'état
+ (une ligne dans l'état des variables de la table). Cela ouvre une
+         fenêtre avec une boîte de choix pour l'utilisateur pour sélectionner un type de variable d'état.
+        Les variables d'état disponibles sont documentés
+<a href="#variable"> ci-dessous </a>. Quand un type est choisi la fenêtre Édition variable 
+        affiche un champ de texte pour le nom de l'entité à être utilisée pour
+         la variable d'état.
+         Quand un nom (soit nom  système soit nom utilisateur) est entré,
+ il doit correspondre à une entité existante (capteur, aiguillage,
+la lumière, etc.) Il est utile d'ouvrir la table de capteur lors de l'entrée du noms capteur
+, ou la table des aiguillages pour montrer les aiguillages disponibles, etc </p>
+<b>Attention <p>: </b> Si vous utilisez des noms d'utilisateur pour spécifier des variables d'état soyez
+prudent lorsque vous éditez vos noms d'utilisateur ou vous pouvez casser vos définitions de variable d'état
+. Le nom d'utilisateur spécifié doit correspondre, caractère pour caractère,
+blancs, y compris, au nom d'utilisateur réel du capteur, aiguillage, etc, pour
+vos variables d'état pour travailler. Si vous voulez être en mesure d'éditer librement vos
+ noms utilisateur, utilisez les noms système pour définir vos variables d'état. </p>
+<p> A tout moment pendant l'entrée de l'état des données variables, le bouton <b> Vérifier les variables d'état </b> peut être
+cliqué pour vérifier les données saisies et d'évaluer les variables d'état. Lorsque
+ce bouton est enfoncé, la vérification et l'évaluation se poursuit jusqu'à ce qu'elle
+ se termine avec succès ou qu'une erreur soit détectée. Si une erreur est
+détectée; la vérification s'arrête pour que l'utilisateur puissent corriger l'erreur et cliquez sur
+<b> Vérifiez les variables d'état </b> à nouveau. <i>  S'il vous plaît rappelez vous après l'édition du
+nom  système et des données articles de cliquer sur une cellule différente dans la table avant
+ de cliquer <b>Vérifiez les variables d'état </b> (ou  <b>mise à jour conditionels </b> en bas
+ de la fenêtre) pour que le programme soit avertit que vous avez 
+terminé votre entrée. Sinon votre entrée ne peut prendre effet, et une erreur
+peut être signalée inutilement. </i> </p >
+</Dd>
+<dt class=left><a name=thepolicy><H3>Déclenchement des Actions</H3></a>
+	</dt>
+<dd><class=top>
+         <p>
+         Il ya deux politiques qui peuvent être prises après que l'état d'un Conditionel soit évalué:
+         <ul>
+         <li> Exécutez les actions conditionelles uniquement si l'état du Conditionel a changé </li>
+         <li> Exécutez les actions conditionelles indépendamment de savoir si l'état a changé </li>
+         </ul>
+         La politique d'utilisation est choisie par les boutons radio dans le milieu de la fenêtre Édition
+         Conditionel.</dt>
+         <p>
+         
+         Le bouton <b> Exécuter des actions sur le changement d'état uniquement </b> empêche un comportement indésirable
+         de se produire lorsque plusieurs instances d'actions «sur le vrai» ou «le faux» 
+         sont exécutées. C'est, si des déclencheurs successifs provoquent l'évaluation de l'expression logique dans le même état, seul le premier déclencheur pourra exécuter les actions.
+         Normalement, il est préférable qu'un Conditionel exécute ses actions
+         seulement lors de l'évolution du Conditionel. Toutefois, s'il est important
+         de maintenir les actions associées à
+         un état particulier de la condition, le bouton <b> Exécuter les actions à chaque fois </b> doit être utilisé
+          Si des événements extérieurs annulent certaines des actions du Conditionel, mais ne modifie pas l'état du Conditionel, cette politique va exécuter l'action sur tous les déclenchements. </p> 
+
+<dt class=left> <a name=theactions> <H3> Les Actions </H3> </a>
+</Dt>
+<dd class=top>
+<p> La section Actions de la fenêtre Édition Conditionel  contient un tableau
+        d'actions, avec deux boutons ci-dessous pour ajouter une nouvelle action et réorganiser la
+        liste d'actions. La section prévoit en spécifiant
+les actions à prendre lorsqu'un Conditionel est calculé et change son
+        état. La table d'actions
+       se compose d'une colonne pour la description de l'action à faire
+        et deux colonnes de boutons,  <b> Modifier </b>
+        et <b> Supprimer </b>, pour l'édition ou la suppression d'une action existante.
+	</dt>
+
+          Si des événements extérieurs annulent certaines des actions du Conditionel, mais ne modifie pas l'état du Conditionel, cette politique va exécuter l'action sur tous les déclenchements.
+Pour ajouter une nouvelle action, appuyez sur le bouton "Ajouter une action".
+        Une nouvelle fenêtre "Édition Action" va apparaître.
+        Sélectionnez un type d'action dans les
+        éléments de la zone Type, et les données nécessaires pour spécifier complètement l'action
+        apparaîssent à la droite de la boîte de type. Quand un nom doit être inscrit,
+        le nom doit correspondre au
+         nom  système ou  au nom utilisateur d'une entité existante (capteur, aiguillage,
+        tête de signal, etc) du type approprié. L'ouverture de la Table Capteur
+ en entrant les noms de capteur, ou  de voir la table des aiguillages disponibles
+, etc, peuvent être utiles. Les types d'action disponibles sont décrits
+dans le détail <a href="#action"> ci-dessous </a>. Si vous utilisez des noms utilisateur pour spécifier
+vos actions, la même prudence notée ci-dessus s'applique. Soyez très prudent lorsque vous modifiez les
+noms utilisateur qui sont utilisés pour spécifier des actions. </p>
+<p> Pour chaque action, trois options sont disponibles pour le moment pour réaliser l'
+d'action: 1) Le changement à Vraie (True), 2) sur le changement à Faux (False), et 3) sur le changement. Ces
+références à l'état calculé de la condition, qui est égale à
+la valeur de l'expression logique telle que spécifiée dans le tableau variable d'état.
+Une de ces options doit être sélectionnée. Quand vous avez terminé, cliquez sur
+        "Update" pour installer vos modifications,
+        "Annuler" pour fermer la fenêtre sans aucune modification
+        <p> Pour modifier l'ordre des conditions dans un Logix, ou l'ordre des
+         actions dans un Conditionel
+        cliquez sur le  bouton "Réorganiser". Le bouton le plus à droite
+        de la table  ensuite vous permetra de sélectionner le premier, le suivant, etc. 
+        Notez cependant, il s'agit simplement de l'ordre dans lequel les commandes sont émises
+        mais ne garantissent pas que leur effet final se fera dans le même ordre.
+        S'il est nécessaire d'avoir des actions qui se déroulent dans un ordre précis, utilisez des
+        Conditionels séparés pour chaque action et la chaîne Conditionel sera telle que
+       l'état action précédant terminé est la variable d'état pour l'action suivante. </p>
+</Dd>
+
+<dt class=left> <a name=updateconditional> <H3> Enregistrer le Conditionel </H3> </a>
+</Dt>
+<dd class=top>
+<p> Lorsque l'expression logique et les actions ont été spécifiées, cliquez sur
+<b>mise à jour Conditionels </b> au bas de la fenêtre. Cela déclenche une
+vérification de l'expression logique (la même que celle faite par l'état Vérifiez <b>
+Variables </b>) et une vérification de données entrées pour les actions. Si le nom utilisateur du Conditionel
+ a été édité, il est également vérifié. Si une erreur est trouvée, une
+fenêtre de message s'ouvre annonçant l'erreur, et la mise à jour est arrêtée pour permettre 
+à l'utilisateur de corriger l'erreur et cliquez sur  <b> mise à jour Conditionel </b> à nouveau.
+Si aucune erreur n'est trouvée, le Conditionel est mis à jour
+avec les données entrées, le fenêtre Éditer Conditionel est fermée, et l'utilisateur
+est renvoyé à la fenêtre Modifier Logix. </p>
+<p> Deux autres boutons sont disponibles au bas de la fenêtre Modifier Conditionel
+ En cliquant <b> Annuler </b> fermer la fenêtre Modifier Conditionel
+sans mettre à jour le Conditionel. En cliquant <b> Annuler </b> le résultats est la perte
+de toutes les données qui ont été saisies. L'autre bouton, <b> Supprimer
+Conditionel </b>, fournit un moyen facile de supprimer une condition inutile.
+Cliquez sur <b> Supprimer Conditionel </b> pour supprimer la condition en cours d'édition et
+revenir à la fenêtre Modifier Logix. </p>
+</Dd>
+     	<dt class=left> <a name=start> <H3> Mise en Route </H3> </a> 
+
+</Dt>
+<dd class=top>
+<p> Suivez les étapes suivantes pour créer un Logix et vous familiariser
+avec la façon dont l'interface utilisateur Logix fonctionne.
+<ol>
+<li> Sélectionnez <b> Tableau Logix </b> dans les  <b> Outils </b>.
+Cliquez sur  <li> <b> Ajouter </b> situé au bas de la Table Logix.
+<li> Dans la fenêtre Créer Logix qui apparaît, entrez 6 pour le nom système,
+et "test" comme nom utilisateur, puis cliquez sur<b>  Créer Logix </b>.
+<li> Dans la fenêtre Modifier Logix qui apparaît, cliquez sur <b>Nouveau Conditionel </b>.
+<li> Dans la fenêtre Modifier Conditionel qui apparaît, cliquez sur Ajouter <b> État
+Variable </b> pour commencer à définir une expression logique pour le Conditionel.
+<li> Dans la nouvelle fenêtre qui apparaît, cliquez sur la case de choix " Type Variable"
+ pour révéler une boîte de sélection déroulante. Sélectionnez "Capteur 
+Actif".
+<li> Remarquez qu'un champ texte apparaît, vous demandant d'entrer un nom de capteur. Entrez le nom
+(Nom système ou nom utilisateur) de l'un de vos capteurs existants. (Si
+vous n'avez pas un capteur existant, sélectionnez la <b>Table Capteur </b> dans le menu 
+<b> Outils </b> et en créer un.)
+               <li>  Cliquez sur le bouton <li> <b>mise à jour </b> et notez les ligne d'entrées qui apparaissent
+                dans la table variable d'état.
+<li>Cliquez  <b>Nouvelle Variable d'État </b> pour créer une autre ligne dans la table.
+Notez que AND apparaît dans la première colonne de la nouvelle ligne. Sélectionnez à nouveau
+«Capteur Actif», comme type de variable, et entrez le nom d'un capteur 
+différent (le créer si nécessaire).
+<li>Cliquez sur troisième colonne d'entrée  de la deuxième rangée pour révéler les
+boîte de sélection pour les NOT. Sélectionnez NOT, puis cliquez sur Vérifier l'état <b>
+Variables </b> à nouveau. Notez que l'état de la seconde variable d'état 
+s'est inversé.
+<li>Pour une autre Action cliquez sur  <b>Ajouter Action  </b>. Et          
+		                  sélectionnez "Définir Aiguillage". Entrez le
+nom de l'aiguillage même si entré avant. Sélectionnez "sur le changement à
+Faux "comme Option de Déclenchement, et" Dévié "pour la position Aiguillage.
+<li>Cliquez  <b> Mise à jour </b> pour fermer la fenêtre Modifier Conditionel
+et  revenir à la fenêtre Modifier Logix.
+Cliquez <li> <b> Terminer </b> pour fermer la fenêtre Modifier Logix et activer vos
+ nouveau Logix . Cliquez sur <b> OK </b> dans la case qui apparait pour enregistrer.
+     </ol>
+     <p> Vous avez créé un Logix pour contrôler la position d'un aiguillage
+     selon les états de deux capteurs. C'est aussi simple que cela. Il vous a fallu
+      plus de temps pour lire ce tutoriel que pour créer le Logix. </p>
+</dd>
+
+<dt class=left> <a name=variable> <H3> Variables d'État Disponible </H3> </ a> </ dt>
+<dd>
+<p> Les variables d'état qui sont actuellement disponibles pour une utilisation dans les Conditionels
+sont énumérées ci-dessous, avec des informations sur chacune d'elles. Les variables d'état
+doivent toujours évaluer soit vrai ou faux. L'état résultant en
+vrai est donné pour chacune d'elle. Si la condition n'est pas remplie, la variable d'état
+est évaluée à fausse. Quand un Logix est actif, les états des entités (capteur,
+participation, la lumière, etc) spécifiés dans les variables d'état dans son Conditionels sont
+surveillées, à moins que la case à cocher Calcul déclencheurs de la variable état soit
+cochée (voir <a href="#editconditional">ci-dessus </a>). Un calcul de tous les
+Conditionels dans le Logix est déclenché lorsqu'un état surveillé change comme
+noté ci-dessous (si elle n'est pas évidente).
+
+                    <ul>
+		<li><b>Capeur Actif</b>: Evalué à vrai si l'état du capteur spécifié est actif. 
+		<li><b>Capteur Inactif</b>: Evalué à vrai si l'état du capteur spécifié est inactif. 
+		<li><b>Aiguillage Dévié</b>: Evalué à vrai si l'état connu de l'aiguillage est dévié. 
+		<li><b>Aiguillage Direct</b>:  Evalué à vrai si l'état connu de l'aiguillage est direct.
+		<li><b>Conditionel Vrai</b>:  Evalué à vrai si l'état du Conditionel spécifié est vrai. Notez que parce que le nom utilisateur du Conditionel peut être dupliqué sur différents Logix, un nom système doit être
+utilisé pour spécifier une appartenance Conditionel à un Logix différent.  
+		<li><b>Conditionel Faux</b>:Evalué à vrai si l'état du Conditionel spécifié est faux. Notez que parce que le nom utilisateur du Conditionel peut être dupliqués sur différents Logix, un nom système doit être
+utilisé pour spécifier une appartenance Conditionel à un Logix différent.
+		<li><b>Light On</b>:  Evalué à vrai si la lumière spécifiée est allumée. 
+		<li><b>Light Off</b>:  Evalué à vrai si la lumière spécifiée est éteinte. 
+		<li><b> Comparaison de valeur mémoire</b>: Compare la valeur sauvée dans la mémoire spécifiée à la valeur de la variable d'état utilisant un opérateur de comparaison spécifié. Evalué à vrai (true)si la comparaison est vraie.
+                Il y à 5 opérateurs de comparaison qui peuvent être définis pour l'évaluation:
+                <ul>
+                <li>"moins que"</li>
+                <li>"moins que ou égal"</li>
+                <li>"égal" </li> 
+                <li>"plus grand que ou égal "</li>
+                <li>"plus grand que" </li> 
+                                </ul>
+                           Le calcul est déclenché lorsque l'une des valeurs de mémoire surveillées
+change ainsi que la valeur de comparaison.
+<li> <b> Gamme horloge rapide </b>: la valeur vraie (true)si l'horloge courante rapide
+ si le temps est entre l'heure de début et de fin spécifiés pour la plage.
+Les heures doivent être spécifiées dans le format hh: mm, où hh est heure et mm est
+minutes, par rapport à une horloge de 24 heures. Le calcul est déclenché lorsque 
+le temps d'horloge rapide entre dans la plage et lors de la sortie de l'horloge rapide de la
+gamme.
+<li> <b>Apparence Tête de Signal Égale </b>: Évaluée à vraie si l'apparence de la tête de signal spécifiée est égale l'apparence spécifiée dans l'état de la variable. Le calcul est
+déclenché lors du changement de l'apparence de la tête de signal.
+<li> <b> Tête de Signal Allumé</b>: Évaluée à vrai si la tête de signal spécifiée est allumée.
+<li> <b> Tête de Signal Tenue </b>: Évaluée à vrai si la tête de signal spécifiée est Tenue                
+<li> <b> Apparence Mât de Signal Égale </b>: Évaluée à vraie si l'apparence du mât de signal spécifiée est égale à l'apparence spécifiée dans l'état de la variable. Le calcul est
+déclenché lors du changement de l'apparence du mât de signal.
+<li> <b> Mât de Signal Allumé</b>: Évaluée à vraie si le mât de signal spécifié est allumé.
+<li> <b> Mât de Signal Porté </b>: Évaluée à vraie si le mât de signal spécifié est porté
+<li> <b> État OCanton </b>: Évalué à vrai si l'état spécifié est égal à l'état de OCanton Occupé.
+    	</ul>
+	</dd>    
+    
+	<dt class=left><a name=action><H3>Actions disponibles </H3> </a> </dt>
+<dd>
+ <P> Actions qui sont actuellement disponibles pour une utilisation dans les Conditionels et qui sont répertoriées
+ci-dessous avec des informations sur chacun:
+<ul>
+<li> <b> Commutation Aiguillage</b>: Définit l'aiguillage indiqué à l'
+état choisi. Spécifiez l'aiguillage devant être basculé en inscrivant le nom  système ou nom utilisateur
+ Précisez l'état dans lequel le mettre en choisissant direct ou dévié dans le
+menu contextuel.
+<li> <b> Réglez Apparence Signal </b>: Définit la tête de signal spécifiée avec
+l'apparence choisie. Précisez la tête de signal à commuter en saisissant son
+nom système ou nom utilisateur. Spécifier l'apparence à mettre en choisissant
+dans le menu contextuel.
+  <li> <b> Réglez Signal Tenu </b>: Définit la tête de signal spécifiée à tenir.
+Précisez la tête de signal à tenir en entrant son nom  système ou nom utilisateur.
+   <li> <b> Effacez Signal Tenu </b>: Efface la cale sur la tête de signal spécifiée
+  . Précisez la tête du signal en entrant son nom  système ou nom utilisateur.
+   <li> <b> Réglez Signal Éteint </b>: Définit la tête de signal spécifiée à ne pas allumée.
+Précisez la tête de signal en entrant son nom  système ou nom utilisateur.
+   <li> <b> Réglez Signal Allumé </b>: Définit la tête de signal spécifiée et reste allumée.
+Précisez la tête du signal en entrant son nom  système ou nom utilisateur.
+   <li> <b> Déclencheur Itinéraire </b>: Déclenche l'itinéraire spécifié.
+Précisez la voie en inscrivant le nom système ou nom utilisateur.
+<li> <b> Réglage Capteur </b>: Définit le capteur spécifié à l'
+état choisi. Spécifiez le capteur à mettre en inscrivant son nom  système ou nom utilisateur
+ Précisez l'état à mettre en choisissant actif ou inactif dans le
+menu contextuel.
+		
+	<li> <b>  Régler Capteur temporisé </b>: Définit le capteur spécifié à l'
+état choisi après avoir attendu un certain nombre de secondes spécifié. Spécifiez le
+Capteur à mettre en inscrivant son nom  système ou nom utilisateur. Spécifiez l'
+état à mettre en choisissant actif ou inactif dans le menu contextuel. Précisez
+le nombre de secondes à attendre avant de fixer le capteur en entrant un
+nombre dans le champ le plus à droite.
+<li> <b> Régler Lumière </b>: Définit la lumière spécifiée à l'état choisi.
+Précisez la lumière à régler en saisissant son nom  système ou nom utilisateur.
+Précisez l'état à mettre en choisissant On ou Off dans le menu contextuel.
+<li> <b> Régler Mémoire </b>: Définit la valeur à entrer dans la mémoire spécifiée.
+ Précisez la mémoire  en inscrivant son nom  système ou nom utilisateur.
+ Indiquez la valeur à définir dans la mémoire en l'inscrivant dans le champs le
+plus à droite.
+   <li> <b> Activer Logix </b>: Active le Logix spécifié. Spécifiez le Logix à activer
+    en entrant son nom  système ou nom utilisateur.
+   <li> <b> Désactiver Logix </b>: Désactive la Logix spécifié. Spécifiez le
+   Logix pour le désactiver en tapant son nom  système ou nom utilisateur.
+   <li> <b> Fichier Sound Play </b>: Joue le fichier son spécifié. Spécifiez le
+   fichier son à jouer en saisissant son nom dans le champ prévu. Cliquez
+   <b> Fixer </b> pour mettre en place un dialogue de sélection de fichier pour aider à trouver le
+fichier. Accédez à votre fichier son, puis cliquez sur le nom de votre fichier sonore 
+dans le dialogue pour la copie (y compris son chemin) dans le champs.
+    <li> <b> Exécuter  script </b> Démarre le script spécifié.
+Spécifiez le script pour démarrer en saisissant son nom dans le champ prévu.
+Cliquez <b> Fixer </b> pour mettre en place un dialogue de sélection de fichier pour trouver le
+fichier. Accédez à votre fichier de script, puis cliquez sur le nom de votre fichier de script
+dans le dialogue pour le copier (y compris son chemin) dans le champs.
+	<LI> <B>Régler Aiguillage Retardé </B>: Définit l'Aiguillage indiqué à l'état
+choisi après attente d'un nombre spécifié de secondes. Précisez
+l'aiguillage  en inscrivant son nom. Précisez l'état à fixer par le choix
+Direct ou Fermé dans le menu contextuel. Indiquez le nombre de
+secondes à attendre avant de basculer l'aiguillage en entrant un numéro dans le champs le
+plus à droite. Si cette condition est déjà en attente pour définir cet
+aiguillage, cette action est ignorée, et l'action précédente se poursuit comme
+initialement prévue. (voir aussi <b>Annuler l'aiguillage retardé </b> ci-dessous. </li>
+<LI> <B> Aiguillage Verrouillé</B>: Verrouille ou déverrouille un aiguillage. Entrez le
+nom pour l'aiguillage, et choisir l'opération à partir du menu contextuel.
+Remarque, pour contrôler le type d'aiguillage verrouillé aller à la page <a
+HREF=."/../../help/fr/package/jmri/jmrit/beantable/TurnoutTable.shtml"> table Aiguillages  </A> et sélectionnez le mode de verrouillage. </LI>
+<LI> <B> Réinitialisation du Capteur retardé </B>: Définit le capteur spécifié pour l'
+état choisi après attente d'un nombre spécifié de secondes. Précisez
+le capteur à initialiser en tapant son nom. Précisez l'état à fixer par
+choix, actif ou inactif dans le menu contextuel. Indiquez le nombre de
+secondes à attendre avant de fixer les capteurs en entrant un nombre dans le champs le 
+plus à droite. Cette action est la même que celle de l'<b> Initialisation du Capteur retardé </b>,
+sauf si cette condition est déjà activement en attente pour régler le capteur spécifié, 
+l'attente précédente est annulée et une nouvelle période d'attente est démarrée.
+En effet, le temps d'attente est redémarré. Le capteur n'est pas mis initialisé avant que la plupart des
+période récentes de temporaisation expirent . </LI>
+<LI> <B> Annuler Temporisation Capteur </B>: Annule toutes les minuteries en attente pour régler le
+capteur spécifié dans tous les Conditionels dans tous les Logixs. Spécifiez le capteur en
+entrant son nom. Le capteur n'est pas fixé; toutes les actions actives retardées pour le capteur spécifié sont annulées sans réglage du capteur. </LI>	
+		<LI> <B> Réinitialisation du Réglage de la Temporisation de l'Aiguillage </B>: Définit l'aiguillage indiqué à l'état choisi après attente d'un nombre spécifié de secondes. Précisez
+l'aiguillage en inscrivant son nom. Précisez l'état à fixer par le choix 
+Direct ou Fermé dans le menu contextuel. Indiquez le nombre de
+secondes à attendre avant de basculer l'aiguillage en entrant un nombre dans le champs
+le plus à droite. Cette action est la même que <b>Initialisé Aiguillage Retardé </b>:,
+sauf si ce Conditionel est déjà activé en attente de la direction de l'aiguillage spécifié. En effet l'attente précédente est annulée et une nouvelle période d'attente est démarrée.
+En effet, le temps d'attente est redémarré. L'aiguillage n'est pas orienté tant que la plupart des
+périodes d'attente récentes expirent. </LI>
+<LI> Timers <B> Annuler Temporisation Aiguillage </B>: Annule toutes les minuteries d'attente pour régler les
+aiguillages spécifiés dans tous les Conditionels dans tous les Logixs. Spécifiez l'aiguillage en
+entrant son nom. L'aiguillage n'est pas défini; toutes les actions actives retardées pour l'orientation
+ de l'aiguillage spécifié sont annulées sans réglage de l'aiguillage. </LI>
+<LI> <B> Régler l'Heure d'Horloge Rapide </B>: Définit le temps à entrer sur l'horloge rapide
+ L'heure est entrée comme suit <i> hh: mn </i> où <i> hh </i> est heure et <i> mn </i>
+ sur une horloge de 24 heures. Cette action règle l'horloge rapide à l'heure spécifiée
+ indépendamment du fait que l'horloge rapide tourne ou est arrêtée. </LI>
+		<LI> <B>Démarrage Horloge Rapide </B>: Démarre l'horloge rapide JMRI en cours d'exécution. Si l'
+horloge rapide est déjà en cours, cette action n'a aucun effet. </LI>
+<LI><B>Arrêtez Horloge Rapide </B>: Suspend l'horloge rapide JMRI. Si l'
+l'horloge rapide ne fonctionne pas, cette action n'a aucun effet. </LI>
+<LI> <B>Copiez Mémoire dans mémoire </B>: Copie la valeur d'une variable de mémoire
+ dans une autre variable en mémoire. Précisez la mémoire à copier en entrant son
+nom dans le champ le plus à gauche. Précisez la mémoire devant recevoir la valeur copiée en
+saisissant son nom dans le champ le plus à droite. </LI>
+<li><b>Réglage Apparence Mât de Signal</b>: Définit le mât de signal spécifié pour l'aspect choisi. Spécifiez le mât de signal à régler en saisissant son nom  système ou nom utilisateur. Spécifiez l'aspect à mettre en choisissant
+dans le menu contextuel.
+<li><b>Réglage Mât de Signal Porté</b>: Définit le mât de signal spécifié à tenir.
+Spécifiez le mât de signal à tenir en entrant son nom système ou nom utilisateur.</LI> 
+<li><b>Efface Mât de Signal Porté</b>: Efface l'emprise sur le mât de signal spécifié. Spécifiez le mât de signal en entrant son nom système ou nom utilisateur.</LI> 
+<li><b>Mettre le Mât de Signal Éteint</b>: Définit le mât de signal spécifié pourqu'il ne s'allume pas.
+Spécifiez le mât de signal en entrant son nom système ou nom utilisateur.</LI> 
+<li><b>Efface le Mât de Signal Éteint</b>: Définit le mât de signal spécifié pour s'allumer.
+Spécifiez le mât de signal en entrant son nom du système ou nom d'utilisateur.</LI> 
+<li><b> Attribut Mandat </b>: Attribut (réserves) les OBlocks comprenant l'itinéraire couvert par le mandat pour une utilisation par le mandataire.
+Spécifiez le mandat en entrant son nom système ou nom utilisateur.</LI>  
+<li><b>Désattribut Mandat</b>: Désattribut (réserves) les OBlocks comprenant l'itinéraire couvert par le mandat pour une utilisation par le mandataire.
+ Spécifiez le mandat en entrant son nom système ou nom utilisateur.</LI>
+<li><b>Règle les Aiguillages de l'Itinéraire Mandaté</b>: Définit tous les aiguillages comprenant le parcours du mandat.
+Spécifiez le mandat en entrant son nom système ou nom utilisateur.</LI> 
+<li><b>Départ Automatique du Train</b>: Démarre la lecture du script enregistré pour le train précisé dans le mandat.
+Spécifiez le mandat en entrant son nom du système ou nom d'utilisateur. </LI>  
+<li><b>Départ Manuel du Train</b>: Sert une «autorisation» à un opérateur qui exécute manuellement les droits de circulation du train pour l'itinéraire mandaté.
+Spécifiez le mandat en entrant son nom système ou nom utilisateur. </LI> 
+<li><b>Train Commandé Automatiquement </b>:Questions de la commande spécifiée pour un train automatique. Les commandes sont: ARRÊT, REPRISE, ABANDON.
+Spécifiez le mandat du train en entrant son nom système ou nom utilisateur. </LI> 
+<li><b>Régler le Coefficient du Régulateur</b>: Augmente ou diminue les réglages du régulateur d'un train en exécution automatique par le facteur indiqué.
+Spécifiez le mandat du train en entrant son nom du système ou nom d'utilisateur. </LI>
+<li><b>Attribuer des OCanton</b>: Attribue un Ocanton . 
+Spécifié le OCanton en entrant son nom du système ou nom d'utilisateur. </LI>
+<li><b>Fixer le Chemin du Canton</b>: Fixer l'aiguillage pour un chemin dans le Ocanton. 
+Spécifié le OCanton en entrant son nom du système ou nom d'utilisateur. </LI>
+<li><b>Désattribuer OCanton</b>:Désattribue un Ocanton 
+Spécifié le OCanton en entrant son nom du système ou nom d'utilisateur. </LI>
+<li><b>Fixer un Canton Hors-Service</b>: Fixe l'état d'un Ocanton à Hors-Service.
+Spécifié le OCanton en entrant son nom du système ou nom d'utilisateur. </LI>
+<li><b>Annuler un Canton Hors-Service</b>:  Fixe l'état d'un Ocanton à état normal.
+Spécifié le OCanton en entrant son nom du système ou nom d'utilisateur. </LI>
+
+		</ul>
+	</dd>    
+	<dt class=left><a name=notes><H3> Notes complémentaires </H3> </a> </dt>
+<dd>
+<p> Cette section contient des questions et réponses qui normalement ne sont pas
+nécessaires pour les utilisateurs Logix, mais dans certains cas ont été importantes ou ont de l'
+intérêt pour les versions précédentes de Logix.
+<ul>
+<p> <li> <b> Pourquoi avoir un «groupe» de Conditionels au lieu de simple
+Conditionels? </B>
+ <p> Un groupe de conditionels a été choisi pour plusieurs raisons, notamment:
+<ol>
+<li> <p> Un groupement de conditionels dans un Logix, et concentrer les Logix sur une tâche devrait finir par être beaucoup plus convivial. Pensez à un Logix avec plusieurs conditionels contrôlant une tête de signal de trois aiguillages. La première tranche de conditionel peut vérifier les conditions pour un aspect rouge, et de prendre les mesures appropriées. La seconde condition peut vérifier sur un autre aspect autorisé qui, selon les règles du chemin de fer pourrait être modélisé dépendant de l'état calculé à la condition première. Autres Conditionels serait de montrer d'autres apparences selon les règles du chemin de fer. Donc, avec un seul Logix, un utilisateur doit être capable de mettre en place la logique
+nécessaire pour fixer les apparences logiques pour une tête de signal. Ainsi une fois le capteurs, les aiguillages, signaux et les têtes sont mises en place, un seul nouveau nom système, le nom du système de Logix, doit être défini et en garder la trace.
+<li> <p> Une autre raison pour le groupement de Conditionels multiples est une opération plus simple
+. Moins d'auditeurs derrière les scène sont nécessaires pour accomplir la même tâche. Même si, suivant l'exemple ci-dessus, la logique de chaque aspect de la tête du signal (chaque condition) peut dépendre d'un capteur particulier (un canton d'occupation par exemple), si les Conditionels sont combinés en un seul Logix, seul  un interlocuteur est nécessaire pour ce capteur. C'est une mise en œuvre plus simple que d'avoir plusieurs écouteurs.
+</ol>
+<p> <li> <b> Comment est démarré un Logix ? </b>
+<p> Le démarrage de Logix est semblable au démarrage d'une lumière, un itinéraire, ou
+autre entité JMRI fonctionnant en permanence. En interne une Logix a une procédure
+«activer», qui est appelée lorsque le Logix est créé, après l'avoir
+ édité, ou lorsqu'il est chargé à partir d'un fichier de configuration. Cette
+méthode démarre les auditeurs d'éléments dans les variables d'état
+des conditionels du Logix. Lorsque l'un de ces feux auditeurs (en indiquant
+que la propriété regardé d'une variable d'état a changé), le Logix
+est calculé, il en résulte que des mesures appropriées soient prises, à condition que le
+Logix soit activé.
+<ol>
+
+
+
+<p> <li> <b> Comment un OU inclusif peut se faire sans l'opérateur OU? </b> 
+<p> Pour atteindre "l'expression logique A" ou "expression logique B " sans
+nécessiter un opérateur OR, utilisez deux conditionels - Le Conditionel 1 calculererait
+une expression logique A, déclenchant l'action souhaitée si elle calculée vraie
+(ou faux), la seconde condition commencerait avec une condition NOT du Conditionel vrai (ou faux)
+comme est son premier état variable , puis AND l'expression logique B. Dans
+ce cas, la seconde condition déclenchera l'action désirée si logique expression
+B calculée vraie, si l'action n'était pas déjà
+déclenchée par un conditionel 1 . Par simple prolongement de cette idée, vous pouvez
+atteindre un OR de trois ou plus d'expressions logiques.
+<p> Il y a aussi d'autres façons d'accomplir le OR en utilisant de multiples
+Conditionels. L'idée est que le OR inclusif simple peut être accompli
+sans compliquer l'interface utilisateur des Logix avec supplémentaires opérateurs 
+ou groupement de variables d'état.
+	.  
+.
+	 
+</ol>
+	<p> <li> <b> Comment un Logix est lancé? </b>
+<p> Démarrer le Logix est semblable à la manière de démarrer une lumière, un itinéraire, ou
+autre entité JMRI fonctionnant en permanence . En interne un Logix a une
+méthode «activer», qui est appelée lorsque le Logix est créé, après l'avoir
+édité, ou lorsqu'il est chargé à partir d'un fichier de configuration. Cette
+méthode commence avec les auditeurs des articles dans les variables d'état
+des Conditionels du Logix. Lorsque l'un de ces voyants d'auditeurs (en indiquant
+que la propriété regardé d'une variable d'état a changé), le Logix
+est calculé, résultant par la prise de mesures appropriée, à condition que le
+Logix soit activé.
+<p> <li> <b> Quel est l'état initial d'un Logix et ses conditionels? </b>
+<p>Quand un  Logix est créé ou modifié, l'état initial de chaque condition est vraie ou fausse, comme indiqué dans la fenêtre Editer Logix. Quand un Logix est chargé à partir d'un fichier de configuration, l'état initial de chaque condition est UNKNOWN.
+<p> Logix est activé automatiquement quand il est créé.
+Un Logix peut être activé/désactivé en décochant/cochant la case dans la colonne Activer dans le tableau Logix.
+Par exemple, vous pouvez désactiver un Logix tandis que vous le créez
+et le débogez, jusqu'à ce que vous soyez certain que vous avez défini.
+Un Logix peut être activé ou désactivé dynamiquement par un autre Logix (voir
+actions autorisée <a href="#action">-dessus </a>).
+<P>
+Lorsque JMRI stocke la configuration de TCO dans un fichier, par exemple un fichier du panneau, toutes les informations
+Logix, comprenant l'état activé/désactivé du Logix, sont stockées. Quand un Logix est chargé à partir d'un fichier de configuration, son état activé ou désactivé est fixé en fonction de ce qui a été enregistré dans le fichier de configuration.
+Ceci est fait afin que les gens puissent désactiver leur Logix tout en les débogaant, mais encore sauver et restaurer la configuration selon vos besoins.
+
+
+
+
+<p> <li> <b> Qu'advient-il lorsque un programme JMRI démarre ou quand une configuration
+fichier est chargé par un programme JMRI? </b>
+<p> Ceci est une question complexe qui dépend de beaucoup de choses,
+comme, comment l'utilisateur a mis en place les rétrosignalisations des aiguillages, la détection de canton, etc
+Quand un fichier de configuration  est lu, les différentes entités (capteurs, les aiguillages, les têtes de signal, etc)
+sont chargés dans un ordre presque aléatoire. Donc ce n'est pas raisonnable, par exemple,
+de calculer chaque Logix comme il est chargé, puisque les entités variable d'état nécessaires
+ pourraient ne pas être présentes lorsque  le Logix est chargé. Et,
+puisque la plupart des entités se charge dans l'état INCONNU, le calcul d'un Logix
+immédiatement après que le fichier de configuration ait été entièrement chargé ne produit pas
+un nettoyage de démarrage . Alors, quand un Logix est chargé, l'état de chaque
+Conditionel commence comme INCONNU. Immédiatement après la configuration complète, le
+fichier est chargé, tous les Logix sont activés, et ensuite tous les Logix sont
+calculés. L'état des Conditionels change de INCONNU à vrai ou faux.
+Mais est-ce que l'état calculé du conditionel est "correcte" si une ou plusieurs
+des variables d'état est évalué à partir d'une entité dans un état inconnu? 
+Par exemple, pensez à un aiguillage dans un état INCONNU . Aiguillage Devié et
+ Aiguillage Direct seront à la fois évaluer à la valeur fausse. Comme les auditeurs continuent de tirer
+pour les variables d'état, éventuellement chaque entité a son état actuel correct
+et le Logix fonctionnera bien. Vous pouvez suivre cette action en regardant les
+états dans la Table Capteur, la Table Aiguillage, etc. Les Conditions au démarrage
+sont certainement quelque chose à garder à l'esprit lorsque vous configurez un Logix. </p>
+	 	<p> <li> <b> > Quand faut-il Décocher les Calculs Déclencheurs dans une Variable d'État? </b>
+<p> Normalement le calcul déclencheur doit être vérifié dans toutes les variables d'état,
+donc un changement dans l'une de ses variables d'état va déclencher le calcul d'un Logix.
+Il en résulte dans le Logix une réaction rapide pour les changements sur le réseau  et
+maintenir l'état des signaux, des aiguillages, etc comme vous le souhaitez. Il y a
+des situations, cependant, où il est souhaitable de tester l'état d'une entité,
+mais ne pas l'utiliser comme un calcul déclencheur. Les paragraphes suivants
+décrivent un couple de ces situations, mais il y en a d'autres. </p>
+<p> Parfois une «boucle logique» peut en résulter si le déclenchement n'est pas
+supprimé. Par exemple, si l'état d'un aiguillage est testé dans un état
+variable, et le même aiguillage est situé dans une action du même ou un autre
+Conditionel du même Logix, un déclenchement en continu (une boucle logique) pourrait en
+résulter. La meilleure façon de sortir de ce dilemme est de tester l'aiguillage, sans
+l'utiliser comme une entité de déclenchement. Cela se fait en décochant Calculs Déclencheurs
+dans <b> toutes </b>les variables d'état où l'aiguillage est spécifié.
+Si l'aiguillage est utilisé dans les variables d'état de plus d'un Conditionel de
+Logix, il doit être décoché partout où il est utilisé pour supprimer l'utilisation
+comme déclencheur. </p>
+<p> Une autre situation se produit lorsque l'action de Réglage Temporisation Capteur est utilisée avec
+un capteur interne pour déclencher un second Logix après que le temps soit
+écoulé. Si le second Logix ne se déclenche pas avant que le temps de retard
+s'écoule, l'ensemble de ses variables d'état, sauf pour le retard du capteur interne,
+doit être décoché. Ce scénario pourrait se produire, par exemple, si un conditionel
+tourne sur quelque chose comme sa première action, et détermine la Temporisation Capteur comme seconde action pour éteindre cette chose après un temps spécifié si certaines conditions sont remplies. </p>
+<p><li> <p> <b> Qu'est-ce qu'un «boucle logique" et comment peut-elle être évitée? </b>
+
+<p> Une «boucle logique" se produit lorsque le programme semble ralentir de manière significative ou  verrouiller comme si les Logixs multiples sont continuellement déclenchés en changeant les références à chacun des autres. La meilleure façon d'éviter une "boucle de la logique" est d'être conscient des situations qui peuvent conduire à une boucle, et planifier votre logique pour éviter de telles situations.</P>
+<p> Une «boucle logique» peut se traduire dans un Logix unique quand une variable d'état (capteurs,
+aiguillage, etc) qui déclenche le Logix est également modifié par ce même Logix. L'éditeur de Logix permet de détecter certaines situations qui pourraient entraîner une boucle, et émettre un avertissement lorsque vous fermez la Logix. <b> tenir compte de ces avertissements! </b> Un avertissement
+ne signifie pas qu'il en résultera une boucle, si vous continuez. Le message d'avertissement
+est un "appel à la vigilance" et vous devriez étudier attentivement ce que vous faites
+pour vous assurer qu'une boucle ne devrait pas en résulter.</P>	 
+<p> Une situation plus compliquée impliquant deux ou plusieurs Logixs peut également entraîner
+une «boucle logique». Par exemple, si un Logix est déclenché par le capteur A, et a une
+d'action qui change l'aiguillage  B, et Logix 2 est déclenché par l'aiguillage B et des changements
+du capteur A, le potentiel existe pour une boucle que ces Logixs déclenchent les uns les autres.
+Vous pouvez facilement étendre cette idée à des chaînes de déclenchement (boucles) impliquant trois ou
+plus de Logixs, et même à des interactions entre Logixs et Itinéraires. Il n'y a pas de
+test dans le programme pour alerter sur les boucles impliquant des Logixs multiples. ( développer
+un tel test serait très difficile.) </p>
+
+<p><li><b> Que dois-je faire si je pense avoir une "boucle de la logique"? </b>
+
+<p> Quand elles se produisent, des «boucles logique» peuvent être un peu effrayantes à dépanner. Votre
+ordinateur  peut sembler être enfermé, ou a ralenti à une analyse que la boucle épuise jusqu'à rendre
+la plupart du temps l'ordinateur indisponible. Heureusement JMRI fournit des outils pour aider à la
+conception et au débogage. Décochez «Calcul déclencheurs» pour une variable d'état
+(discuté ci-dessus), peut vous aider à concevoir autour d'une boucle d'aiguillage quand vous avez identifié le
+Logix à l'origine du problème de bouclage. Pour contourner le verrou vers le haut ou ralentir le
+problème, démarrez avec tous vos Logixs désactivés (voir ci-dessous), puis leur permettre un
+par un jusqu'à ce que vous découvriez la boucle. </p>
+
+<p>Si le fichier panneau contenant des  Logixs charge automatiquement lorsque
+le programme démarre, appuyez et relâchez la touche Maj quelques fois plus rapidement
+Dès que vous voyez le petit écran de démarrage de JMRI (la première chose que vous voyez au cours du
+démarrage). Votre fichier panneau sera chargé avec tous les Logixs Inactifs. </P>
+<p> Si vous chargez votre fichier manuellement à l'aide du menu Panneaux, avant le chargement de
+votre dossier, aller à  <b> Debogage</b> et sélectionnez Charger <b> Logixs Inactifs </b>.
+Après avoir répondu OK pour le message, chargez votre fichier panneau comme vous le feriez normalement.
+Votre fichier panneau sera chargé avec toutes Logixs Inactifs . </P>
+<p> Après le chargement de votre fichier panneau, ouvrez le tableau Logix et vérifier que tous les
+Logixs sont désactivés. Si vous savez quel Logix est la cause du problème, vous
+pouvez alors réparer ou le supprimer, ré-activer les autres Logixs, et enregistrez votre panneau de fichier
+. Si vous ne savez pas quel Logix est la cause du problème, vous pouvez activer
+vos Logixs, un par un, jusqu'à ce que la boucle se produise. Quand la boucle démarre,
+vous savez que le dernier Logix que vous avez activé est au moins partiellement responsable du
+problème. A ce stade, vous devriez relancer le programme avec tous les Logixs
+inactifs, et de fixer ou supprimer les Logix que vous avez identifier. </p> <p>: <b>ATTENTION </b><b> Il est sage de sauvegarder votre fichier panneau fréquemment lors de l'entrée
+Logixs. </B> Si une boucle logique se produit, il peut être difficile, sinon
+impossible, d'enregistrer votre fichier panneau  avant d'arrêter le programme.
+Rappelez-vous qu'un Logix est activé dès que vous cliquez sur <b> Terminé </b> dans
+la fenêtre Modifier Logix. Aussi, n'oubliez pas que cliquer un bouton <b> Modifier </b>
+dans le tableau Logix désactive le Logix sélectionné avant de l'ouvrir pour l'édition,
+offrant un moyen possible de casser la logique dans une boucle sans redémarrer le
+programme. </p>
+     </ dd>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

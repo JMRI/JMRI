@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated by Blorec Hervé le 2012-01-25-->
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: PollTableFrame.shtml,v 1.8 2009/02/23 02:02:24 jacobsen Exp $ -->
+<title>JMRI: RPS Polling Control</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Typ
+        
+
+        
+        
+
+  Vérifiez la syntaxe du nom de fichier (dont le respect des minuscules/majuscules) ;
+  Vérifiez si le fichier n'a pas été déplacé, renommé ou supprimé.e" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Contrôle de Scrutation RPS
+</H1>
+
+<a href="../../../../../../html/hardware/rps/images/PollControl.gif"> 
+<Img src ="../../../../../../ html/hardware/RPS/images/PollControl.gif "height =" 80 "width =" 300 "alt ="S fenêtre Récepteur de Contrôle RPS "align =" right "> </a> <br>
+
+La fenêtre de Contrôle de Scrutation RPS est là où vous dites au
+<a href="../../../../../../html/hardware/rps/index.shtml"> système RPS </a>
+lesquelles  de vos locomotives ont un émetteurs RPS
+installé, et combien de fois de ils ont parler avec eux.
+
+<p>
+Lorsque vous ouvrez la fenêtre, vous devriez voir votre alignement entier
+<a href="../../../../../../manual/Comp_Setup_Roster.shtml">  de locomotives </a>
+affiché, un par ligne.
+
+<p>
+Si une locomotive a  un émetteur RPS installé  et vous aimeriez que le
+système permette de suivre sa position, cochez la case dans le "sondage" de la colonne.
+
+<p>
+Pour contrôler ou le système scrute dans son ensemble , cochez ou décochez
+le case "sondage" dans la section inférieure de la fenêtre.
+
+<p>
+Le tableau est composé de neuf colonnes:
+<ul>
+<li> "Nom Liste» - C'est le nom décodeur partir de la liste.
+<li> "ID" - Le nom que RPS utilise pour faire référence à cet émetteur. Par défaut,
+c'est la même chose que le nom de fichier, mais vous pouvez le changer si vous le souhaitez.
+<li> "Adresse Locomotive » et «Long» - L'adresse du décodeur DCC.
+Le "Long" case sera cochée si ce n'est une adresse «long» («étendue»).
+<li> "Scrute" - Si le système RPS mesure cette position?
+<li> " Dernièr X", " Dernièr Y", "Dernièr Z" - La position la plus récente mesurée pour cet émetteur.
+<li> "Last Time" - Le temps auquel la dernière mesure a été prise.
+</UL>
+
+Il ya trois boutons radio qui contrôlent la façon de vote se termine.
+<dl>
+<dt>Utilisez Sondage BSC 
+<dd> Quand elle est cochée, cela utilise un «État de Commande  Binaire" pour interroger le système RPS.
+Si votre RPS émetteurs le supporte, il est le réglage recommandé, sauf
+pour les systèmes Lenz.
+<dt> Usage de Sondage Direct
+<dd> Quand elle est cochée, JMRI envoie des commandes F2 directement sur la voie.
+Utilisez cette option si votre  émetteurs RPS nécessitent des sondages F2, et vous n'avez pas
+ un système DCC Lenz .
+<dt>Utilisez Sondage Régulateur
+<dd> Quand elle est cochée, JMRI simule un régulateur pour envoyer des sondages sur F2. 
+C'est actuellement exigé pour les systèmes de Lenz, et non recommandée pour les autres.
+</Dl>
+
+<p>
+La boîte intervalle  contrôle le nombre de millisecondes entre les sondages.
+Cela ne devrait pas être inférieure à environ 80. Si vous avez
+moins de 5 émetteurs, elle a mis à 300 ou plus.
+Cette option sera finalement retiré
+dans une version ultérieure JMRI, quand il devient automatique.
+<p>
+Pour sauvegarder les valeurs de sorte qu'ils seront utilisés automatiquement
+lorsque le programme est commencé , cliquez sur "Stocker maintenant les valeurs par défauts".
+<!--#include virtual="/Footer" -->
+</body>
+</html>

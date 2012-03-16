@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: NodeConfigFrame.shtml,v 1.2 2008/11/01 17:33:01 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-10-27-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Configure SECSI Nodes
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help configure grapevine node">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Configurer les Nœuds SECSI.
+</H1>
+    
+Ceci est la page d'aide: help/jmri/jmrix/secsi/nodeconfig/NodeConfigFrame
+<p>
+Les noeuds SECSI  doivent être configurés avant les travaux de saisie.
+
+<p>
+Ce qui suit est juste un espace réservé ...
+
+<p>
+Le logiciel de nœud se décline en trois variétés distinctes:
+<dl>
+<dt>? </dt>
+<dd> Généralement considéré comme le meilleur </dd>
+
+<dt> ???</dt>
+<dd> Si vous avez un de ceux-ci, vous devriez probablement mettre à jour le logiciel </dd>
+
+<dt> Nœud d'origine </dt>
+<dd>Bien que  JMRI ait le code pour soutenir ces derniers, il n'a pas été testé.
+Si vous rencontrez des problèmes, s'il vous plaît permettez-nous maintenant d'améliorer le support pour ces cartes. </dd>
+
+</dl>
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

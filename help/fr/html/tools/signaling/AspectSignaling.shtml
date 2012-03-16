@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: AspectSignaling.shtml,v 1.11 2011/07/01 06:14:41 kevin-dickerson Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-09-27-->
+<title>JMRI: Aspect Signaling</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+
+<H1>JMRI: Aspect de la Signalisation</H1>
+<p class=subtitle>
+La Signalisation contrôle de manière prototypique
+</ p>
+
+<a href="images/Rule282.png">      <img height="241" width="159" src="images/Rule282.png" align="right">
+</a>
+ Le Systèmes de signalisation Prototypical présente des «aspects» au conducteur 
+pour lui dire comment faire fonctionner son train.
+L'aspect "Stop" , par exemple, est assez simple: arrêter le train.
+L'aspect "Approche au ralenti"  indique quelque chose de plus compliqué:
+"Procéder à l'approche du signal suivant à vitesse moyenne».
+Chaque aspect est associé à un "indication", qui est habituellement
+codifié dans le livre de règle du chemin de fer.
+<p>
+Différents signaux peuvent
+montrent un aspect en utilisant différentes combinaisons de
+lumières, les positions du sémaphore, et/ou des pancartes; on les appelle
+«apparences». Par exemple, l'aspect  "stop" sera une lumière rouge simple
+sur un mât de signal avec une lampe, rouge au-dessus des lampes rouges pour un mât de signal
+avec deux lampes, etc.
+</p>
+
+  
+
+<h2>JMRI Support pour l'Aspect de Signalisation</h2>
+
+Le support original JMRI pour les signaux a été par l'intermédiaire
+"Têtes de signals», qui pourrait être réglé à des
+apparences (couleurs) particulières.
+<p>
+
+En commençant par JMRI 2.9.1 (début 2010),
+JMRI contient également
+"<a href="SignalMasts.shtml"> mât signal  </a>"qui sont 
+des objets qui représentent un
+ signal entier, pas seulement une tête individuelle. Un mât de signal
+peut fonctionner avec des têtes multiples, telles que requises pour faire une signalisation prototypique complète
+basée sur des aspects. Lorsque son "aspect" est réglé
+par exemple "Approche au ralenti», il gère les opérations de mise en page
+nécessaires pour faire que les signaux sur le réseau apparaissent correctement.
+
+<p>
+<a
+href="../../../package/jmri/jmrit/beantable/SignalMastTable.png">
+     <img src ="../../../package/JMRI/jmrit/beantable/SignalMastTable.png "
+         height = "86" width = "338" align = "right">
+</a>
+Les Mâts de signaux sont configurés via la
+<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml"> table mât de signal  </a>
+Vous pouvez en ajouter de nouveaux avec le bouton "Ajouter ..." 
+sur la table, qui vous emmène à la
+<a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml"> fenêtre "Ajouter mât de signal"  </a>.
+Pour ajouter un mât de signal, vous spécifirez
+quel genre de système de signalisation il utilisera
+( <a href="#systems">voir ci-dessous </a>),
+le type de signal spécifique tel que "projecteurs doubles" ou "nain à double tête"
+et le signal de tête qu'il va conduire.
+
+<p>
+De la table, vous pouvez définir des mâts de signaux individuels pour
+tous les aspects qu'ils sont capables 
+d'afficher en cliquant dans "l'aspect" colonne.
+
+<p>
+Les Mâts de signaux peuvent être testés de deux manières (dans les conditionnelles) et exploitation(Action) via Logix. Lorsque vous modifiez un Conditionnel Logix
+ou une action, vous devez taper le nom du mât des signaux et tapez Entrée/retour
+afin que le programme puissent rechercher les aspects possibles de ce signal de mât en particulier.
+
+<p>
+Vous pouvez également ajouter une icône de mât de signal dans l'Éditeur de Panneau de la manière habituelle
+. L'icône affichera les images de la définition de l'apparence
+pour ce mât de signal particulier.
+
+<h2>Logique mât de Signal</h2>
+Depuis JMRI 2.11.7 (mi 2011), JMRI contient un outil "<a href="SignalMastLogic.shtml"> Logique mât de signal </a>", qui
+permet à la logique de signalisation  d'être construite entre les mâts de signaux sur le réseau.
+La logique mât de signal va utiliser les états de cantons, des aiguillages, des capteurs et autres Mâts de
+Signal pour déterminer quelle apparence un mât de signalisation doit afficher.
+ 
+ <h2> Systèmes de Signalisation Disponibles</h2>
+
+Les utilisateurs JMRI ont fourni un certain nombre de systèmes de signalisation pré-définis:
+<dl>
+<dt> <a href="../../../../../xml/signals/basic/index.shtml"> base </a>
+     <dd> un ensemble non prototypiques des aspects et des apparences que la plupart des
+         modélistes comprendront facilement.
+<dt> <a href="../../../../../xml/signals/AAR-1946/index.shtml"> AAR-1946 </a>
+     <dd>livre règle de 1946 Association américaine des chemins de fer 
+<dt> <a href="../../../../../xml/signals/BR-2003/index.shtml"> BR-2003 </a>
+     <dd> livre de règles British Rail 2003 
+<dt><a href="../../../../../xml/signals/CSX-1998/index.shtml">CSX-1998</a>
+    <dd>CSX 1998 rule book
+<dt> <a href="../../../../../xml/signals/DB-HV-1969/index.shtml"> DB HV 1969 </a>
+     <dd> 1969 Deutsche Bundesbahn »Einheitsbauform» Accueil Signal/Distant signal (Hauptsignal / Vorsignal) la révision du système
+<dt><a href="../../../../../xml/signals/NYCS-1937/index.shtml">NYCS-1937</a>
+    <dd>New York Central System 1937 rule book
+<dt><a href="../../../../../xml/signals/SLSF-1973/index.shtml">SLSF-1973</a>
+    <dd>SLSF (Frisco) 1973 rule book
+<dt> <a href="../../../../../xml/signals/SPTCO-1960/index.shtml"> SPTCO-1960 </a>
+     <dd> Livre des règlements 1960 Southern Pacific Railway et la Compagnie de transport 
+</dl>
+
+Il y a des instructions pour la création de vos propres définitions de système signal
+sur
+<a href="DefineNewAspects.shtml"> une page séparée </a>.
+Si vous créez une nouvelle définition pour une autre voie ferrée prototype ou une époque,
+S'il vous plaît, faites contribuer le nouveau projet afin que nous JMRI
+puissions le distribuer avec les futures versions du projet aux
+autres d'utilisateur. Comme les définitions de décodeur dans DecoderPro, nous avons
+plusieurs définitions de système de signal, les plus utile du programme 
+que les gens passent du temps à améliorer. Nous avons tous à
+gagner de cette manière!
+
+ <h2> Accès à l'information Aspect du code </h2>
+
+Un programme (en Java ou Python) peut avoir accès à l'
+informations aspect de deux façons. Si elle a une référence
+à un SignalMast spécifiques "m", il peut utiliser
+<code> <pre>
+    m.getValidAspects ()
+</pre> </code>
+pour obtenir la liste des noms aspect que ce mât de signal peut afficher.
+Le programme peut alors accéder à la définition du système du signal avec
+<code> <pre>
+    SignalSystem sys = m.getSignalSystem ()
+     </pre> </code>
+et ensuite se renseigner sur les propriétés de l'aspect:
+<code> <pre>
+    sys.getProperty ("Effacer", "vitesse");
+</pre> </code>
+où le premier argument est le nom d'aspect (l'utilisation, par exemple,
+<code> m.getAspect () </code> pour obtenir l'aspect actuel sur le mât)
+et le second est une propriété spécifique.
+Les propriétés peuvent être définies par programmation, par exemple par
+<code> m.setProperty ("Effacer", "vitesse", "69");</code>
+ou les chargées automatiquement à partir des éléments dans le fichier
+<a href="DefineNewAspects.shtml"> aspect.xml </a>
+qui définit le système de signalisation spécifiques.
+
+<p>
+En plus des propriétés globales d'un aspect, il
+peut également y avoir des propriétés locales d'un type de mât de signal spécifique.
+Un exemple de ceci est l'image d'icône par défaut: L'image d'un
+mât de signal à deux têtes est différent de celui d'un mât de signal une tête,
+même si elles représentent tous les deux "Effacer".
+<p>
+Pour obtenir celles-ci:
+<code> <pre>
+    . m.getAppearanceMap () getProperty ("clear", "IMAGELINK»);
+</pre> </code>
+Autrement dit, c'est en disant "Obtenir l'info apparence pour ce mât,
+puis vérifiez la propriété imagelink de l'aspect Clair ".
+
+<p>
+Alternativement, si vous connaissez le nom du système du signal dans l'utilisation,
+vous pouvez aller directement à lui par l'InstanceManager:
+<code> <pre>
+    SignalSystem sys = InstanceManager.signalSystemManagerInstance () getSystem («basic»);
+</pre> </code>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

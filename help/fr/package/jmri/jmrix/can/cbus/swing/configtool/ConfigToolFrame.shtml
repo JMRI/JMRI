@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2008 -->
+<!-- $Id: ConfigToolFrame.shtml,v 1.3 2011/05/21 22:55:49 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-11-1--> 
+<title>JMRI: CBUS Event Capture Tool</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Outil de capture d'événement CBUS
+</h1>CBUS
+
+<a href="../../../../../../../html/hardware/can/images/ConfigTool.jpg"> 
+     <img src ="../../../../../../../html/hardware/can/images/ConfigTool.jpg "
+          width = "363" height = "336"
+         alt = "Ecran Config Tool" align = "right"></a>
+<br>
+
+L'outil de capture de l'événement CBUS peut simplifier
+la configuration de JMRI pour bien travailler avec votre installation
+<A Href="../../../../../../../html/hardware/can/cbus/index.html">CBUS</a>
+.
+
+<p>
+Pour
+<a href="../../../../../../../html/hardware/can/cbus/index.html"> configurer les capteurs et les aiguillages JMRI </a>,
+vous avez besoin d'identifier les événements associés CBUS. Il y a plusieurs façons de le faire.
+Le reste de cette page passe par des alternatives, en utilisant la configuration d'un capteur 
+comme un exemple. Des méthodes similaires travaillent pour les branchements.
+
+<h3> Fournir l'ID d'événement </h3>
+    
+Vous pouvez simplement taper une <A Href="../../../../../../../html/hardware/can/cbus/index.html">ID d'événement</a> dans le champ à côté de
+"Actif On", puis appuyez sur "Créer". Un capteur sera créé qui
+devient actif lorsque l'événement est On, et inactif lorsque l'événement opposé (ON opposé à OFF)
+est vu.
+
+<p>
+Si vous souhaitez associer actifs et inactifs à des événements complètements séparés,
+vous pouvez entrer les ID des événement dans les deux champs et cliquez sur "Créer".
+</p>
+
+<h3> Capturer l'événement Suivant </H3>
+    
+Si vous pouvez faire émettre par le réseau l'évènement désiré, par exemple en appuyant sur un interrupteur du TCO
+déviant un aiguillage, vous pouvez capturer cet événement
+et l'utiliser.
+<p>
+Si vous appuyez sur la "Capture Suivante" située près de l'un des
+champs d'événement, il va rester bas (activé) jusqu'à ce que le prochain évènement
+ CBUS (trame CAN)soit considéré par le programme.
+Cet événement est capturé dans le champ voisin pour une utilisation ultérieure.
+
+<p>
+Vous pouvez capturer séparément
+ les deux événements pour un capteur, si désiré.
+
+
+<h3> Examiner des événements multiples </h3>
+    
+La partie supérieure de l'écran peut capturer
+plusieurs événements CBUS, que vous pouvez ensuite utiliser pour
+créer des capteurs et des branchements.
+
+<p>
+Quand un nouveau message CBUS survient, il sera capturé
+dans la plus haute ligne qui a la case "Capture" cochée.
+La boîte sera alors désactivée afin que
+le message capturé  ne soit pas
+écrasé par la suite par des messages CBUS.
+Si vous cochez une série de boîtes, vous pouvez capturer
+une série de messages.
+
+<p>
+Une fois que vous avez capturé l'événement que vous souhaitez, vous pouvez
+le copier et coller dans les cases de la partie inférieure de la
+fenêtre. Si votre ordinateur le permet, vous pouvez
+aussi simplement faire glisser et déposer la valeur dans le champ inférieur.
+
+<h3>Autres Outils</h3>
+
+Une fois que vous avez créé un capteur ou un aiguillage, vous pouvez
+utiliser la
+ <a href="../../../../../jmrit/beantable/SensorTable.shtml">Table Capteur </a>
+ou
+<a href="../../../../../jmrit/beantable/TurnoutTable.shtml"> Table Aiguillage</a>
+ pour ajuster les détails.
+
+<p>
+l'
+<a href="../console/CbusConsoleFrame.shtml"> console CBUS </a>
+peut vous aider à comprendre quels événements sont survenus sur votre Réseau.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

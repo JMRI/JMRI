@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: SignalHeadTable.shtml,v 1.1 2010/01/09 22:25:56 jacobsen Exp $ -->
+<!-- Translated by Hervé Blorec le 2012/01/09-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Signal Head Table Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Signal Head Table">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> La Table Tête de Signal
+</H1>
+
+<a Href="../../../../html/tools/images/SigTable.gif">
+<IMG SRC ="../../../../ html/outils/images/SigTable.gif "ALIGN =  =" 375 height =" 166 "hspace =" 0 "vspace =" 0 " ALT = ></a>
+
+<p> Toutes les têtes de signal que JMRI connaît peuvent être référencéess
+en utilisant l'outil  "Table Tête de Signal" dans le menu Outils de la plupart des programmes JMRI.
+Il y a huit colonnes de la table:
+<UL><LI> Le nom système qui est affecté à la tête de signal lors de sa création,
+et ne peut pas être changé.
+<LI> Si vous êtes intéressé pour avoir un nom plus parlant pour votre tête de signal 
+, vous pouvez cliquer dans la colonne  "Nom Utilisateur" et modifier les informations
+comme vous voulez.
+<LI>Quand les têtes de signal changent, pour une raison quelconque, 
+l'apparence courante se montre dans  la colonne «État» de la Table. Vous pouvez également cliquer sur le
+bouton d'apparence pour faire défiler les apparences disponibles:
+rouge, jaune, vert, rouge clignotant, clignotant jaune, vert clignotant, et l'obscurité.
+Certaines têtes de signal peuvent aussi avoir l'apparence lunaire et clignotant lunaires disponibles.
+<LI> La colonne "Commentaire" est pour votre usage pour enregistrer tout commentaire que vous voudrez peut-être
+pour vous aider à garder une trace de vos têtes de signal. Il est pour information seulement.
+<LI> Cliquez sur le bouton "Supprimer" dans une ligne spécifique pour supprimer la tête de signal.
+Soyez sûr d'enlever d'abord l'icône tête de signal associé à cette tête de signal,
+toute logique signal simple associé, et toutes les références à cette tête de signal. Utilisez cette touche avec précaution!
+<LI> La case la colonne "Allumé" de vous permet de contrôler si la
+tête de signal sur le réseau est allumée(cochée) ou reste sombre (non cochée).
+<LI> La case à cocher dans la colonne  "Tenue" indique le "lieu" propriété de la tête de
+signal et vous permet de le changer. Cette propriété est par exemple utilisé par la logique du pupitre CTC* pour dire «Ne changez pas cette tête signal du rouge, même s'il
+serait prudent de le faire, parce que je veux retenir un train ici ».
+<LI> Cliquez sur le bouton "Éditer" dans une rangée pour afficher ou modifier les informations facultatives
+pour une tête de signal. Notes: Nom  système et le type ne peuvent pas être changés. Un seul
+tête de signal peut être édité à la fois.
+</UL>
+<P> Pour définir une nouvelle tête de signal , cliquez sur le bouton
+<A HREF="SignalAddEdit.shtml">  Ajouter .."</a>.
+Il vous sera
+demandera le type (sortie triple; Double sortie; SE8c; etc), et
+toutes les informations de configuration  nécessaire.
+
+<P> Utilisez l'option Conserver dans le menu Fichier pour enregistrer les informations de signal sur le disque.
+Ces informations sont enregistrées avec la configuration dans un fichier XML, 
+avec l'installation du panneau de commande et des trucs similaires. Pour stocker vos panneaux dans le même
+fichier (recommandé), sélectionnez <b> Fichier> Stocker> Stocker Configuration > et les panneaux dans le Fichier
+ ...</b> ou sélectionnez <b> Panneaux> Stocker panneaux ...</b> dans la fenêtre principale JMRI.
+<P> Pour plus d'informations sur la création et l'affichage des panneaux, y compris la manière de
+montrer des signaux sur vos panneaux, s'il vous plaît voir les
+<A HREF="../../../../html/apps/PanelPro/Panels.shtml"> pages Panneaux</a>.
+<p>
+*CTC commande centralisée manuelle
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

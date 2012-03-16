@@ -1,0 +1,278 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: Tour.shtml,v 1.4 2009/02/23 02:02:24 jacobsen Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-10-01-->
+<title>JMRI: DecoderPro Tour</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<H1>Une Visite Rapide de DecoderPro</H1>
+
+<div class="image100w">
+<table border=0>
+<TR>
+<TD VALIGN=top>
+<a href="./images/DPStart.gif" ALT="DecoderPro welcome screen">
+<IMG SRC="./images/DPStart.gif" WIDTH="100" HEIGHT="50" ALT="DecoderPro welcome screen"></a>
+</TD>
+<TD>
+<H2>Démarrage</H2>
+Lorsque vous ouvrez le programmateur, vous voyez cette fenêtre. Cliquez sur le
+«Program locomotive " pour commencer. (Cela suppose que vous êtes déjà
+<a href="../../hardware/index.shtml"> connecté </a> à votre ordinateur et qu'une locomotive
+ est sur votre voie de programmation)
+</TD>
+</TR>
+
+
+<TR>
+<TD VALIGN=top>
+<a href="./images/SelDecoder.gif" ALT="Decoder Identification">
+<IMG SRC="./images/SelDecoder.gif" WIDTH="100" HEIGHT="100" ALT="Decoder Identification"></a>
+</TD>
+<TD>
+<H2>Décodeur et sélection de Programmateur</H2>
+<p>
+Vous obtiendrez une nouvelle fenêtre pour configurer le programmateur avec l'information
+ d'un type particulier de décodeur, ou d'une locomotive existante. Cela va devenir votre
+ liste de locomotive quand vous programmerez vos décodeurs.</p>
+
+<p>
+Pour commencer à travailler avec un décodeur nouvellement installé, cliquez sur le bouton
+adjacent "Ident"pour voir le programmateur lire le décodeur
+et tenter de l'identifier. (Vous pouvez aussi indiquer explicitement
+au programmateur le type de décodeur.</p>
+
+<p>
+Pendantque le programmateur dialogue avec le décodeur, la situation sera
+affichée dans le bas de la fenêtre; «veille»ou «OK» indique que tout va bien
+. S'il réussit, il sélectionnera les modèle de décodeur dans la boîte de sélection. Habituellement,
+ il ne sera en mesure de limiter la sélection qu'à un choix restreint. Vérifiez que
+le bon modèle est sélectionné dans la boîte "décodeur installé" ;
+mettez à jour la sélection si vous le souhaitez.</p>
+
+<p>
+Certaines personnes préfèrent un programmateur très simple, et certains veulent
+avoir accès à toutes les fonctionnalités. Pour gérer cela, DecoderPro
+fournit plusieurs interfaces de programmation différents:
+<ul>
+<LI>Basique - Une simple, avec seulement les informations les plus populaires
+<LI>Complet - L'écran le plus complet, avec plusieurs volets d'informations détaillées.
+<LI>Registres - Configuration complète pour un des registres d'un décodeur seulement
+<LI>Exemple Club - Un aperçu de la façon dont un club peut définir ses propres
+formats programmateurs qui montre leur ensemble de variables nécessaires
+<LI>Tutoriel - Pas utile pour les décodeurs de programmation en fait,
+il contient des exemples de comment obtenir les différents effets spéciaux
+lorsque vous construisez votre propre programmateur.
+</ul>
+Vous pouvez même définir votre propre programmateur si vous préférez simplement voir
+ les variables que vous utilisez.
+Pour cet exemple, nous sélectionnons le programmateur "complet" de décodeur dans la boîte
+ de sélection plus bas, puis cliquez sur «Ouvrir programmateur" pour commencer à travailler avec le décodeur.  </p>
+</TD>
+</TR>
+
+
+<TR>
+<TD VALIGN=top>
+<a href="./images/BasicPaneY75.gif" ALT="Comprehensive Programmer">
+<IMG SRC="./images/BasicPaneY75.gif" WIDTH="100" HEIGHT="50" ALT="Comprehensive Programmer"></a>
+</TD>
+<TD>
+<H2>Détails Programmateur</H2>
+<p class="dl">
+Chacun des onglets sélectionne un écran, vous pouvez les utiliser pour configurer différents aspects 
+du décodeur. Le volet "Basique" gère les paramètres de l'adresse dont vous aurez généralement besoin. 
+En utilisant les boutons se trouvant sur le bas de chaque écran vous pourrez lire les valeurs
+ou écrire des valeurs dans le décodeur. Par exemple, pour faire une configuration de base, entrez des 
+valeurs dans les champs et cliquez sur <TT> Donnez votre fiche </TT>. Les champs variables sont codés 
+par couleur pour représenter leurs états:
+<DL>
+<DT STYLE="color:orange; background:#DDD;">Editée</DT><DD>Vous avez changé cette valeur, ou elle contient
+ des valeurs par défaut à partir du fichier décodeur. Ceci est montré en orange, puisque la valeur diffère
+ de ce qu'il y a dans le décodeur.
+<DT STYLE="color:yellow; background:#DDD;">Depuis le </DT> Fichier<DD> le champ contient des valeurs lues
+ dans
+ un fichier locomotive. Ceci est représenté en jaune, car nous ne sommes pas certains que le fichier 
+soit en  accord avec le contenu décodeur.
+<DT STYLE="color:white; background:#DDD;"</dt>lue<dd>la valeur indiquée a été lu par le décodeur.
+ceci est représenté en blanc pour indiquer que la valeur est digne de confiance.
+<dt style="color:white; background:#ddd;"></dt>stockée<dd>affichage de la valeur qui a été écrite pour
+ le décodeur. Cela est également montré en blanc.
+<dt style="color:red; background:#ddd;"></dt>inconnue<dd>si quelque chose ne va pas avec le processus
+ de lecture ou d'écriture,nous pourrions avoir un résultat tout à fait indigne de confiance. Il en
+ résulte un état de la variable marqué comme INCONNU et montré en rouge.
+</dl>
+</td>
+</tr>
+
+<tr>
+<td valign=top>
+<a href="./images/SpeedTableW75.gif" ALT="Speed table">
+<IMG SRC="./images/SpeedTableW75.gif" WIDTH="100" HEIGHT="100" ALT="Speed table"></a><br>
+<a href="./images/ModSpeedTable75.gif" ALT="Modified speed table">
+<IMG SRC="./images/ModSpeedTable75.gif" WIDTH="100" HEIGHT="100" ALT="Modified speed table"></a><br>
+</TD>
+<TD>
+<H2>Exemples</H2>
+<p>Par exemple, après un "Lire", les valeurs de la table de vitesse sont indiquées en blanc 
+sur la première image, Alors que dans la seconde image il montre que lorsque vous modifiez 
+une valeur, elles sont marquées en jaune. Faire une écriture les remet à blanc; faire une 
+lecture va réinitialiser la valeur à la valeur dans le décodeur, et les remettre à blanc.
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=top>
+<a href="./images/FnMap.gif"  ALT="FuoderPro/Tour.shtmlnction Mappings">
+<IMG SRC="./images/FnMap.gif" WIDTH="100" HEIGHT="100" ALT="Function Mappings"></a>
+</TD>
+<TD>
+<H2>Interactions Complexes - Fonction Cartographie</H2>
+<p>
+Bien qu'avoir un nom pour un CV complet est agréable, où ceci aide réellement, c'est avec 
+les options compliquées de cartographie binaire. L'option Digitrax éclairage FX, par exemple, 
+exiger la configuration de deux ensembles de bits en un seul CV.
+Un autre exemple est la configuration de la cartographie d'un décodeur de Soundtraxx entre 
+les fonctions et les sons. Il s'agit de bits et de valeurs réparties sur une douzaine de CV 
+différents, mais Decoder Pro transforme cet emploi en configuration simple par contrôle de boîtes.</p>
+<P>
+Chaque zone de sélection, case à cocher ou bouton radio est cartographié dans un bit(s) 
+spécifique (s) dans les CV du décodeur. Le programmateur gère la lecture et l'écriture 
+des CV lorsque les paramètres individuels sont modifiés. Au lieu de bits, vous travaillez 
+avec le nom ou la description du décodeur manuel.
+</p>
+</TD>
+</TR>
+
+
+<TR>
+<TD VALIGN=top>
+<a href="./images/Digitrax75.gif" ALT="Digitrax DH142">
+<IMG SRC="./images/Digitrax75.gif" WIDTH="100" HEIGHT="100" ALT="Digitrax DH142"></a>
+</TD>
+<TD>
+<H2>Panneaux Programmateur Décodeur Spécifique</H2>
+<p>
+DecoderPro est conçu pour être facilement configurable pour ajouter de nouveaux types de décodeurs. 
+Vous pouvez également ajouter des feuilles de programmateur, modifier leur disposition, et même 
+refaire l'apparence globale. Pour ce faire, DecoderPro est piloté par des fichiers lisibles par 
+l'homme en format XML. La documentation sur le contenu du fichier existe, et nous travaillons 
+continuellement pour la mettre à jour.</p>
+
+<P>Ces fichiers rendent commode la mise à jour de DecoderPro pour travailler avec un
+nouveau décodeur. Par exemple, les capacités uniques d'une DH142 Digitrax
+figurent sur une feuille "Digitrax" .</p>
+
+<p>
+
+D'autres variables décodeur spécifiques et des feuilles peuvent être ajoutées via des fichiers 
+de configuration. En choisissant un format industriel standard XML pour les informations du 
+décodeur, nous espérons rendre possible la création d'une bibliothèque complète. Peut-être que 
+nous puissions intéresser les fabricants, en les incitants à documenter leurs produits dans ce 
+format par exemple.
+</p>
+</TD>
+</TR>
+
+
+<TR>
+<TD VALIGN=top>
+<a href="./images/CVtable75.gif" ALT="CV Programmer">
+<IMG SRC="./images/CVtable75.gif" WIDTH="100" HEIGHT="100" ALT="CV Programmer"></a>
+</TD>
+<TD>
+<H2>Programmation Directe CV</H2>
+<p>
+Il est aussi possible de programmer les CV directement à l'aide du programmateur CV.
+Les boutons "Lire" et "Ecrire" vous permettent de travailler avec le contenu CV individuel. 
+Les changements effectués ici mettront également à jour les valeurs associées trouvées sur 
+les écrans d'autres programmateurs .</p>
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=top>
+<a href="./images/Roster75.gif" ALT="Rosters">
+<IMG SRC="./images/Roster75.gif" WIDTH="100" HEIGHT="100" ALT="Rosters"></a>
+<p>Pour plus d'informations, voir <a href="./Roster.shtml"> Liste Sujets </A></p>
+</TD>
+<TD>
+<H2>Listes Locomotive</H2>
+<p>
+DecoderPro tient une liste de vos locomotives. Vous pouvez enregistrer les
+configuration du décodeur, et ensuite travailler avec les valeurs stockées dans les CV
+au lieu d'avoir à les lire à partir du décodeur. Cela permet d'économiser le temps qu'il
+faut pour lire un décodeur complet, qui peut être assez long. La liste
+peut également stocker des informations de locomotive pour vous. La feuille «Liste d'entrée"  
+affiche cette information et vous permet de la modifier.</p>
+
+<P>
+Cliquez sur "Enregistrer" pour stocker les informations d'un fichier sur le disque local de 
+votre ordinateur, vous serez averti de le faire si vous fermez le programmateur avec des 
+informations non mémorisées.</p>
+
+<p>
+L"ID " dans la partie supérieure est le nom que vous utiliserez plus tard pour sélectionner cette locomotive.
+</p>
+</TD>
+</TR>
+
+<TR>
+<TD VALIGN=top>
+<a href="./images/SelLoco.gif" ALT="SeoderPro/Tour.shtmllecting a roster entry">
+<IMG SRC="./images/SelLoco.gif" WIDTH="100" HEIGHT="100" ALT="Selecting a roster entry"></a>
+</TD>
+<TD>
+<H2>Sélection d'une Entrée Fichier</H2>
+<p>
+Lors du démarrage de DecoderPro, vous pouvez sélectionner une locomotive spécifique 
+pour travailler avec en utilisant l'option "Utiliser les paramètres de locomotive 
+pour ..." du menu déroulant.
+</p>
+
+<P>
+Le bouton "Ident" utilise l'adresse DCC pour sélectionner une locomotive spécifique 
+dans le fichier. Lorsque vous cliquez sur "Ouvrir programmateur" avec une locomotive 
+spécifique sélectionnée, le programmateur ouvre chaque feuille avec les valeurs 
+actuelles déjà présentes. </p>
+
+<P> Vous pouvez imprimer les inoderPro/Tour.shtmlformations de la locomotive en cours 
+depuis les fenêtres de programmation. Dans le menu "Fichier ...", sélectionnez 
+"Imprimer ...", et remplir la boîte de dialogue qui est présentée.</p>
+
+<P>
+</TD>
+</TR>
+</TABLE>
+
+<h2>Plus d'Info</h2>
+
+Pour plus d'informations sur la configuration et l'utilisation de DecoderPro, s'il vous plaît voir
+<a href="../../../manual/index.shtml"> les pages de manuel </a>.
+
+Il y a également plus d'informations disponibles sur
+<a href="MoreInfo.shtml"> comment travaille DecoderPro </a>,
+y compris la façon d'<a href="CreateDecoder.shtml">ajouter de nouveaux types de décodeur </a>.
+
+
+</div>
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

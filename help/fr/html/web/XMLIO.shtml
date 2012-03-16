@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated by Blorec Hervé le 2012-01-23-->
+<html lang="fr">
+<head>
+<!-- Copyright 2008 -->
+<!-- $Id: XMLIO.shtml,v 1.8 2011/04/28 02:00:00 mstevetodd Exp $ -->
+<title>JMRI: XML IO Servlet</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1> 
+JMRI: XML IO Servlet
+</H1>
+
+Le servlet JMRI XML fournit un accès Web aux services JMRI.
+
+<p>
+La vie servlet dans le paquet 
+<A href="http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">jmri.web.servlet.xmlio</a>
+, et fournit un accès Web au
+<a href="http://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html"> JMRI XML IO paquet</a>.
+Par défaut, le mini serveur JMRI enverra tout URL qui commence par/xmlio à ce servlet.
+
+<p>
+Il y a plusieurs exemples de pages qui montrent comment cela peut être utilisé:
+<dl>
+<dt> <a href="http://localhost:12080/web/request.html"> web/request.html</a>
+<dd> Rend une seule requête XML pour tous les capteurs disponibles, et montre leur statut dans un tableau.
+<dt> <a href="http://localhost:12080/web/monitor.html"> web/monitor.html</a>
+<dd> utilise les requêtes retardées pour surveiller l'état de tous les capteurs,
+la mise à jour d'une table lors de tout changement.
+<dt> <a href="http://localhost:12080/web/throttle.html"> web/throttle.html</a>
+<dd> Envoie une commande de vitesse pour une locomotive DCC sur le réseau quand une touche est enfoncée.
+<dt> <a href="http://localhost:12080/web/turnoutPanel.html"> web/turnoutPanel.html</a>
+Exemple <dd> d'un panneau de contrôle sur une page web. Pour l'utiliser, configurer JMRI pour utiliser
+"Simulateur LocoNet" (si vous n'avez pas une connexion LocoNet déjà, en JMRI
+2.9.7 ou plus tard, la démonstration utilise  des dispositifs "interne" et ce n'est pas nécessaire)
+et de créer des aiguillages 1 à 4.
+<dt> <a href="http://localhost:12080/web/turnoutPanel.html"> web/turnoutMonitor.html</a>
+<dd> Table Aiguillage plus complexes, avec des boutons pour dévié et mettre direct un aiguillage.
+</Dl>
+
+<p>
+S'il vous plaît noter que ce servlet a seulement été utilisé avec
+le
+<a href="MiniServer.shtml"> mini-serveur JMRI</a>, et peut
+ne pas fonctionner avec d'autres conteneurs de servlets. Nous nous sommes engagés à
+le faire fonctionner, cependant, entrer en contact avec
+les développeurs JMRI si vous rencontrez des problèmes.
+
+<h2>Format Demande </h2>
+
+Le schéma XML est défini dans le
+<a href="http://jmri.org/xml/schema/xmlio.xsd"> document schéma xmlio.xsd </a>.
+
+<p> Voici quelques exemple des demandes et réponses.
+
+<h3> Obtenir le statut des objets individuels</h3>
+
+Demande:
+
+<code> <pre>
+<xmlio>
+  <item>
+    <type> aiguillage</type>
+    <name> IT12</name>
+ </Item>
+  <item>
+    Capteur <type></type>
+    <name> capteur Ouest</name>
+ </Item>
+  <item>
+    <type> puissance</type>
+    <name> puissance</name>
+ </Item>
+</Xmlio>
+</Pre></code>
+
+Réponse:
+<code> <pre>
+<xmlio>
+  <item>
+    <type> aiguillage</type>
+    <name> IT12</name>
+    <value> 2</value>
+ </Item>
+  <item>
+    Capteur <type></type>
+    <name> capteur Ouest</name>
+    <value> 4</value>
+ </Item>
+  <item>
+    <type> puissance</type>
+    <name> puissance</name>
+    <value> 2</value>
+ </Item>
+</Xmlio>
+</Pre></code>
+
+La "valeur" élément est insérée dans la demande, et puis est
+retournée comme réponse. Vous pouvez simplement tourner autour de la réponse et l'utiliser
+comme une autre demande. Si la "valeur" des éléments sont présents pour tous les articles,
+la réponse ne sera restituée que lorsque l'un ou plusieurs des 
+état de l'élément inclus a changé pour quelque chose de différent.
+
+<h3> Obtenez tous les objets d'un type</h3>
+
+<code> <pre>
+<xmlio>
+  <list>
+   <type>Capteur</type>
+ </List>
+</Xmlio>
+</Pre></code>
+
+Réponse:
+<code> <pre>
+<xmlio>
+  <item>
+   <type> Capteur </type>
+    <name> IS1</name>
+    <value> 2</value>
+ </Item>
+  <item>
+    Capteur <type></type>
+    <name> IS2</name>
+    <value> 4</value>
+ </Item>
+  <item>
+    <type>Capteur </type>
+    <name> capteur Ouest</name>
+    <value> 2</value>
+ </Item>
+</Xmlio>
+</Pre></code>
+
+La réponse peut être retournée et utilisée comme la prochaine requête.
+
+<h3> Régler le statut d'un objet</h3>
+
+Demande:
+
+<code> <pre>
+<xmlio>
+  <item>
+    <type> aiguillage</type>
+    <name> IT12</name>
+    <set> 2</set>
+ </Item>
+</Xmlio>
+</Pre></code>
+
+Réponse:
+<code> <pre>
+<xmlio>
+  <item>
+    <type>aiguillage</type>
+    <name> IT12</name>
+    <value> 2</value>
+ </Item>
+</Xmlio>
+</Pre></code>
+
+L'élément "set" de la demande résulte de l'état
+étant fixé à la valeur donnée, et puis 'est
+retournée dans la réponse comme un élément de valeur avec la
+valeur correcte à ce point.
+
+<p>
+Toutes les écritures sont faites avant que les valeurs soient recueillies pour tout lecture,
+mais il n'y a aucune garantie que les conséquences de l'écrit
+soientt propagées complètement.
+
+<h3>Contrôle un régulateur</h3>
+
+Un élément <throttle>
+peut être utilisé pour contrôler un régulateur via le
+ThrottleManager DCC par défaut. La première utilisation
+alloue l'accélérateur, et tous les postérieurs utilisent
+ les attributs présents:
+
+<code> <pre>
+<xmlio>
+    <throttle>
+        <adresse> 1234</address>
+        <vitesse> 0,75</vitesse>
+        <forward> true</forward>
+        <F3> False</F3>
+   </Gaz>
+</Xmlio>
+
+</Pre></code>
+
+Un élément régulateur est retourné inchangée.
+
+<h2> Documents associés</h2>
+
+C.F. K H Wolf, K Froitzheim, M Weber,
+Département des Systèmes Distribués, Université d'Ulm,
+«La vidéo interactive et contrôle à distance via le World Wide Web»,
+dans "Lecture Notes in Computer Science", Springer, Berlin, 1996.
+<br>
+Auparavant dans le volume 7, numéro 5 de "Märklin Digital Newsletter",
+Dr T Catherall Ed, Septembre/Octobre 1995,
+<a Page href="http://web.archive.org/web/*/http://rr-vs.informatik.uni-ulm.de/rr/">  référencé</a>
+<a href="http://rr.informatik.tu-freiberg.de/index.php?con=home&sel=&lang=eng&js=1&"> rehosted</a>.
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

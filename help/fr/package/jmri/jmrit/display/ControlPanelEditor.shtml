@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: ControlPanelEditor.shtml,v 1.6 2011/04/26 15:54:22 pete_cressman Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-11-29--> 
+<HTML LANG="fr">
+<HEAD>
+<TITLE>JMRI: Control Panel Editor Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; ccharset=utf-8">
+<META CONTENT="Pete Cressman" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Panel Editor">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>L'éditeur Panneau de Commande </H1>
+
+<b> Éditeur Panneau de Commande</b> est tout simplement une vue alternative et un contrôleur avec exactement le 
+même contenu de données que dans l'<b>Éditeur Panneau</b>. Vous pouvez modifier l'affichage et les commandes de votre
+panneau à chaque fois et aussi souvent que vous voulez. Le Stockage et le chargement peut être fait de l'un ou l'autre
+éditeur. L'éditeur utilisé pour stocker le panneau sera l'éditeur utilisé au prochain chargement.
+
+<p><b><i> Note:
+L'Éditeur de Panneau de Commande a été développé et testé sur Windows uniquement. Le développeur
+aimerait beaucoup avoir ce travail d'application sur les autres systèmes d'exploitation
+(Par exemple Mac et Linux),
+mais est incapable de tester sur ces milieux. Tout commentaire serait apprécié.
+</I> </b></P>
+
+<H2> Modification de la Vue entre les Éditeurs</H2>
+
+Dans  l'un ou l'autre des éditeur en mode édition le dernier élément dans le menu <b>Dossier</b> est <b>Modifier 
+vue de "..."</b>. ("..."
+étant l'autre éditeur). Sélectionner cette option de commutation de la vue d'un mode éditeur pour
+un autre mode éditeur.
+
+<H2>Différences dans la Vue entre les Éditeurs </H2>
+
+L'Éditeur de panneau a une fenêtre séparée pour ses fonctions d'édition.Pas l'Éditeur Panneau de Commande
+. A la place trois nouveaux menus sont introduits dans le panneau: <b>Modifier</b>, <b>Options</b>,
+<b>Zoom</b>, <b>AddItems</b>. Lorsque le mode de fonctionnement (non-edit) est sélectionné ces
+trois menus disparaissent.
+</P>
+
+<H3>Mode de Fonctionnement</H3>
+
+<H2> Menus Éditeur de Panneau de Commande</H2>
+<H3>Menu Fichier  </H3>
+Le <b>Fichier </b> menu change ces éléments entre le mode d'édition et le mode de fonctionnement. Dans le
+mode d'édition les articles sont les mêmes que les éléments dans le menu Fichier de la fenêtre d'édition de l'Éditeur de Panneaux
+avec quelques articles supplémentaires. Ils sont les suivants: </P>
+<ul>
+        <li><b>Nouveau Panneau</b>.</li>
+        <li> <b>Panneaux Stockés  ...</b>.</li>
+        <li> <b> Stockage Index Images</b>.</li>
+        <li> <b> Renommer Panneau</b>.</li>
+        <li> <b> Créer/Modifier Index des images</b>.</li>
+        <li><b> Changement Vue de l'Éditeur de Panneau</b>.</li>
+        <li> <b>Changer vue du Générateur de Circuit</b>.</li>
+        <li> <b> Supprimer Ce panneau ...</b>.</li>
+        <li> <b> Fermer Éditeur</b>.</li>
+</Ul>
+<p>
+ en mode Éditeur de Panneau de Commande, le menu Fichier n'a qu'un  seul élément, <b>Ouvrir Éditeur</b></p>
+
+<H3>Menu Édition</H3>
+Ce menu soutient Couper, Copier et Coller avec le système presse-papier. Couper et Copier 
+placera une copie d'un article de la sélection ou un groupe dans le presse-papiers. Cette fonctionnalité permet des
+copies de sélections d'un panneau à un autre panneau.
+<p> Il y a également un élément de menu pour sélectionner tous les éléments du panneau.
+
+</p>
+<H3> Options du Menu</H3>
+Les éléments de ce menu sont similaires aux cases à cocher dans la fenêtre d'édition de l'Éditeur de Panneau avec
+quelques éléments et caractéristiques supplémentaires.
+<p>L'option <b>Ignorer position individuelles et les paramètres de contrôle</b> active ou désactive,
+les deux prochaines éléments de menu
+(<b>Tous les éléments du panneau peuvent être repositionnée</b> et <b> Tous les éléments du panneau contrôle le tracé</b>).
+Lorsque la <b> position dérogation individuelle et de contrôle des paramètres</b> n'est pas cochée, le verrouillage ou déverrouillage de
+la position des icônes se fait comme dans l'Éditeur de Panneau - comme est activé ou  désactivé la commande d'un élément
+du réseau. Lorsque la <b> position dérogation individuelle et les paramètres de contrôle</b> est cochée, le
+deux prochains articles de menu fonctionnent comme ils le font dans l'Éditeur de Panneau . Toutefois, le verrouillage individuel et
+les paramètres de commande pour chaque élément sont mémorisés.
+<p> Décocher l'élément <b>position dérogation individuel et les paramètres de contrôle</b> l'élément sera
+rétablira les paramètres des élément individuel à leurs paramètres précédents.
+Dans l'Éditeur de Panneau, la vérification <b> Tous les articles du panneau peuvent être repositionnés</b> et <b> Tous les éléments du panneau  de commande du réseau</b> fixera définitivement tous les éléments du panneau.</p>
+<p> Les définition des préférences de la barre de défilement se trouvent également dans ce menu. </p>
+
+<H3> Menu Zoom</H3>
+L'élément<b> zoom (pourcentage )...</b> va agrandir ou réduire la taille du panneau.
+<p>l'élément <b>Zoom pleine Page </b> va agrandir ou réduire l'affichage de tous les éléments du panneau
+dans le panneau plein écran dans la fenêtre sans l'utilisation de barres de défilement. Cela peut être utile si votre panneau de conception se trouve être légèrement plus grand que ce que vous pouvez voir à l'écran. Plutôt que
+qu' utiliser les barres de défilement pour voir tous les éléments sur le panneau, "Zoom Plein Écran" permettra de réduire pour adapter l'affichage  à la fenêtre du panneau. Inversement, il élargira l'affichage pour s'adapter aux
+fenêtre du panneau. Si vous redimensionnez la fenêtre du panneau, alors vous devriez répéter "Zoom Plein Écran"
+pour redimensionner l'écran pour s'adapter aux nouvelles dimensions de la fenêtre du panneau. </p>
+
+<H3> Menu Ajt Articles </H3>
+Le menu <b>Article Palette</b> ouvre une fenêtre à onglets qui vous permet d'ajouter des éléments
+au panneau. Chaque type d'élément a un onglet dans la fenêtre. L'ajout d'éléments
+se fait par glisser-déposer.Des éléments iconiques peuvent avoir plusieurs ensembles d'icônes à choisir.
+Les jeux d'icônes peuvent être personnalisés et ajoutés ou supprimés en fonction de l'utilisateur.
+Les détails peuvent être trouvés au <a href="ItemPalette.shtml">La Palette article </a>. Notez que l'article de la palette 
+peut également être ouvert avec la touche accélérateur, ctrl P.</p>
+<p>
+La liste des éléments option de menu<b>Tableau</b>  ouvre la liste des tables appareil. L'élément de menu peut également
+être appelé avec la touche de raccourci, Ctrl T. </p>
+<H2>Utilisation de la souris dans l'Éditeur de  Panneau de Commande</H2>
+L'Éditeur Panneau de Commande n'implémente pas la mise en évidence de renversement trouvé dans l'Éditeur de Panneau.
+<p> Une autre différence est que la sélection se fait avec un simple clic. Faites un clic droit (méta-cliquez sur
+sur Mac? ou Linux?) fait apparaître le menu contextuel de l'élément. </p>
+<p>Glisser  peut être fait soit avec un simple clic ou une méta-cliquez dessus. </p>
+
+<H3> Sélection multiple </H3>
+Comme avec l'Éditeur de Panneau, un groupe de sélection peut être faite en utilisant la «zone de la sélection» -
+un rectangle en pointillés rouges qui va sélectionner tous les articles complètement au <b><i>sein</i></b> de sélection. Si la touche <b>Maj </b> est maintenue enfoncée tout en créant une zone de sélection, alors tous les éléments qui
+<b><i> croisent </i></b> le rectangle en pointillés rouges sont sélectionnés. Cela peut être une fonction très utile lorsque les éléments sont
+situé à la frontière en haut et à gauche du panneau.
+<p> Une autre caractéristique commune est l'ajout ou la suppression d'éléments dans un groupe de sélection par
+ l'appui sur la touche <b>Ctrl </b> quand vous sélectionnez l'article.</p>
+ 
+<H3>Glisser Sélections </H3>
+Glisser une sélection ou un groupe de sélection peut être faite soit avec bouton de la souris dans l'Éditeur de Panneau de Commande.
+Une icône de fond <p> (c'est à dire une icône au niveau 1) peut être déplacée en la faisant glisser avec la touche Ctrl 
+enfoncée. </p>
+
+<H2> Duplication Sélections Dans Éditeur Panneau de Commande </H2>
+La copie d'un élément ou un groupe de sélection est faite par l'utilisation du menu contextuel pour l'un des
+éléments sélectionnés. Lorsque l'élément<b>Copier</b> du menu contextuel est cliqué, une copie du
+groupe de sélection se fait sur le dessus de la sélection originale. Faites glisser cette copie à l'endroit où
+vous souhaitez placer la copie. La sélection initiale est maintenant désactivée et reste
+à sa position initiale. La procédure de copie peut être répétée sur la nouvelle position
+copie pour continuer à faire plus de copies.
+
+<H2>Menus contextuel d'Article dans l'Éditeur de Panneau de Commande </H2>
+Faites un clic droit (méta-cliquez sur
+sur Mac ou Linux) fait apparaître le menu contextuel de l'élément.
+
+<H3>Attributs du Texte Edité </H3>
+Les  <b> Attributs du Texte Edité</b> des éléments contextuel ouvre une boîte de dialogue pour définir l'un des
+attributs de texte de l'élément.
+
+<H3>Modification Sélection Multiple </H3>
+Lorsqu'un élément de menu contextuel est invoqué à partir d'un élément qui est un membre d'un groupe de sélection
+, toutes les valeurs modifiées qui ont été faites dans le menu contextuel sont appliqués à tous
+les membres du groupe de la sélection si cette valeur est pertinente pour les membres. 
+Par exemple, si la taille de la police est modifiée sur l'un des éléments du groupe dans la sélection, ensuite la taille de police est modifiée dans tous les éléments du groupe. Si par exemple, une horloge rapide
+a été incluse dans ce groupe, alors aucune modification ne serait apportée à l'horloge.
+<!--#include virtual="/Footer" -->
+</BODY>
+</HTML>

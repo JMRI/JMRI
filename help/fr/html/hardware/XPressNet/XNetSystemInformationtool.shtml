@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<html>
+<head>
+<!-- $Id: XNetSystemInformationtool.shtml,v 1.1 2008/01/13 06:47:34 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-20-06-->
+<title>The JMRI XPressNet System Information Tool</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H2>L'outil JMRI XPressNet Système d'information </H2>
+<img src = "images / XPressNetSystemInfo.jpg" alt = "Système XPressNet
+Image Information Tool ">
+<P>
+L'outil XPressNet Système d'information est utilisée pour déterminer quel matériel
+est connecté au système.
+<P>
+Les deux premières lignes indiquent le type de centrale de commande et les version des logiciels
+qui sont connecté à travers votre ordinateur.
+Cette information est lu dans le cadre du processus de configuration automatique lorsque
+JMRI débute la première fois, mais peut être relu à l'aide du bouton «Get System Info" (Obtenir Infos Système).
+<P>
+Après la lecture de l'interface de ligne, la version du matériel et des logiciels d'
+Interface ordinateur est affichée. Ces derniers sont obtenus par le "Get System
+Info" (Obtenir Infos Système).
+<P>
+L'image sur cette page montre les résultats obtenus en appuyant sur le bouton "Get
+System Info "avec une version du logiciel 2 LI101F connectée à un Atlas
+Commander avec le logiciel 3.2.
+<P>
+Le bouton "Fermer" va fermer l'écran.
+<hr>
+Paul Bender <BR>
+paul.bender @ acm.org
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

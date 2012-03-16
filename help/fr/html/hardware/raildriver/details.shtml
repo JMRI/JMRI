@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Me 2008 -->
+<!-- $Id: details.shtml,v 1.2 2008/06/30 18:13:40 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<title>JMRI: RailDriver Throttle Details</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+
+
+<h2> 
+JMRI: Détails Régulateurs RailDrive
+</h2>
+
+<img src="../../../images/bangdesk.gif" align="left">
+Cette page est en construction.
+Le support RailDriver JMRI a d'abord été disponible en
+<a href="http://jmri.sf.net/releasenotes/jmri2.1.7.shtml"> JMRI 2.1.7 </a>.
+Il évolue rapidement, alors revenez ici ou sur le
+<a href="http://groups.yahoo.com/group/jmriusers/">  jmriusers mailing liste </a>
+pour des changements.
+
+<br>
+<a
+href="RailDriver.gif"> 
+<img align="right" width="389" height="236" src="RailDriver.gif" alternate="RailDriver line drawing">
+</a>
+
+<p>
+
+Alors que nous développons le support RailDriver, il est principalement mis en œuvre
+via un script
+<a href="http://jmri.sf.net/jython/RailDriver.py"> RailDriverThrottle.py </a>.
+ Ceci permet aux utilisateurs de l'éditer facilement pour le personnaliser
+suivant leurs désirs tandis que nous trions ce qui est généralement nécessaire.
+<p>
+
+<h2> Structure </h2>
+
+Parce jinput et le RailDriver fournissent des noms pour les  différents composants
+sur Windows, MacOS X et Linux, le script est organisé autour du
+nombre (index) de la composante, et non pas de son nom. Les trois plates-formes
+fournissent les composants dans le même ordre.
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

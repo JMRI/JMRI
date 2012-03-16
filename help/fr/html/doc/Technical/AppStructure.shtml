@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: AppStructure.shtml,v 1.2 2009/04/26 18:53:55 jacobsen Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-03-06-->
+ <html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: Application Structure
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code ">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
+
+<H1>JMRI: Structure de l'Application</H1>
+
+Le programme JmriDemo est juste un exemple, mais il est censé être un bon.
+<P>
+La source de la classe principale est actuellement dans apps/JmriDemo/JMRIdemo.java,
+qui définit la classe principale apps.JmriDemo.JMRIdemo.
+<P>
+La démo principale crée juste la barre de menus, et la remplit avec les menus
+et les éléments  désirés. Chaque élément a comme une classe objet "Action" qui lui est associée qui fera l'
+initialisation nécessaire en cas de besoin.
+<P>
+Parce que nous nous attendons à avoir des interfaces différentes dans le paquet jmrix, les outils JMRI
+ne pas créent directement les objets d'interface dont ils ont besoin. Plutôt, ils demandent des exemples
+d'interfaces. Pour les interfaces dans le package jmri, qui pourraient être mises en œuvre par
+beaucoup de types de mise en page différentes, jmri.InstanceManager répond à ces demandes.
+
+<P>
+Plus d'informations sur la façon dont les choses (par exemple des objets représentant les éléments sur le schéma)
+sont nommés
+<A HREF="Names.shtml"> sont disponibles sur une page séparée </a>.
+
+<p>
+Voir aussi la page sur
+<a href="IntroStructure.shtml"> Structure de la bibliothèque JMRI</a>.
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: BlockTable.shtml,v 1.6 2011/04/12 16:18:00 kevin-dickerson Exp $ -->
+<!-- translated by Hervé Blorec le 2012/01/02-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Block Table Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Memory Table">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html;  charset=utf-8">  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> La Table Canton</H1>
+
+<H2>Cantons :</h2>
+<p>Les Cantons sont des tronçons de voie dont l'occupation peut être suivie individuellement. Diviser la
+voie en Cantons est facultatif. Les Cantons mis en place dans un schéma de voies correspondent normalement
+aux Cantons physiques sur un réseau. L'occupation du Canton est indiqué par l'état d'un
+détecteur de présence. Lorsque un circuit de voie est divisée en Cantons, toute  la voie doit
+pas appartenir à un Canton. Par exemple, les voies de triage ne peut pas être dans un Canton, alors que la Ligne Principale
+sera presque toujours  divisée en Cantons. La principale utilisation des Cantons est de faciliter
+la signalisation, mais les Cantons peuvent être utilisés pour contrôler d'autres fonctions d'animation sur le réseau.</p>
+<p> Les Cantons peuvent être configurés à l'aide d'un script, ou automatiquement dans un TCO. Quand un Canton est défini dans un TCO, un nouveau Canton est créé s'il n'existe pas déjà. Dans le TCO, Les Cantons sont identifiés par leur nom utilisateur, donc si un Canton représenté dans ce tableau est utilisé dans un TCO, son nom d'utilisateur ne doit pas être changé. Si
+vous voulez changer le nom d'utilisateur d'un Canton utilisé dans un TCO, faire le
+changement dans l'Éditeur de TCO, pas içi i.</p>
+<p> Pour compléter la définition d'un Canton, les Chemins et les Réglages doivent être jointe à
+chaque Canton. Les Chemins  décrivent les points d'entrée du Canton. Chaque Canton a un ou plusieurs chemins
+qui lui sont associés. Parfois, un aiguillage doit être réglé d'une certaine façon pour utiliser un chemin; Bean
+Réglages réalise cette information. Les Chemins et Le paramètres Bean sont mis en place automatiquement pour
+les Cantons définis dans un panneau TCO. Ils peuvent également être mis en place dans un script. Il y a
+actuellement aucun moyen d'entrer manuellement des chemins ou des paramètres Bean. Les Chemins et paramètres Bean sont non représenté sur la table Canton, et sont décrits ici  pour que ce soit complet.</p>
+<p> Pour une utilisation dans les trains circulants automatiquement , un attribut de la longueur et un attribut de courbure 
+peuvent éventuellement être affectés à un Canton. Ces attributs optionnels sont entrés manuellement
+dans ce tableau. Si les trains ne sont pas exécuté automatiquement pour
+un Canton, il n'est pas nécessaire d'ajouter ces attributs.</p>
+<H2>Colonnes  dans la Table Canton:</H2>
+<ul>
+<li> <p><b>Nom  système</b> - Le nom système du Canton. Il n'y a pas d'exigence fonctionnelle pour une lettre dans le Nom Système d'un Canton, mais par convention, nous utilisons
+'B' pour 'Canton'. L'implémentation par défaut n'est pas spécifique au système, donc une lettre du système
+du «I» est approprié. Cela conduit à des noms de système comme "IB201".</P></li>
+<li><p><b>Nom Utilisateur</b> - Le nom Utilisateur du Canton. Le nom Utilisateur d'un Canton créé
+ici peut être réglé à n'importe quel texte. Le nom d'utilisateur pour un Canton créé par l'Éditeur de TCO est
+fixé par l'Éditeur de TCO et ne doit pas être changé.</p></li>
+<li><p><b>Valeur</b> - C'est la valeur de chaîne de n'importe quel objet que le
+Canton porte. Habituellement, ce sera soit un message
+ou un objet régulateur. Si vous modifiez cela, elle est stockée dans le Canton
+comme une chaîne. Il n'y a actuellement aucun moyen d'ajouter manuellement un régulateur
+objet à un Canton de la table.</p></li>
+<li><p><b>Commentaire</b> - Vous pouvez entrer n'importe quels textes dans ce domaine qui vous aideront à
+distinguer ce Canton parmi d'autres Cantons, ou de fournir des notes utiles sur son utilisation.</p></li>
+<li><p><b>Supprimer</b> - Cliquez sur le  bouton <b>Supprimer</b> dans n'importe quelle rangée pour supprimer le Canton de cette ligne de la liste des Cantons dans l'ordinateur. Vous devez sauvegarder votre configuration (et
+les panneaux présents) sur le disque pour rendre la suppression permanente. La radiation peut pas être annulée.
+<b>Attention: Assurez-vous de supprimer toutes les références à un Canton avant de le supprimer</b>.
+Les Cantons sont référencés dans les chemins d'autres Cantons, dans certains scripts, et dans les panneaux de 'Éditeur de TCO <p></Li> 
+
+<li><p> <b>Courbure</b> (facultatif) - Affiche la courbure sélectionnée pour la voie du
+l Canton. La courbure est utilisée pour l'exploitation automatique des trains, et ne doivent pas être entrées
+si les trains ne seront pas exécutés automatiquement. La Courbure, si elle est présente, indique à l'ordinateur
+qu'il devrait ralentir le train car il fonctionne danse Canton. Si <b> Aucune</b> ou
+<b>Progressive</b> ne sont sélectionnées, un train automatique procédera à une vitesse normale. <b> Hight</b>
+doit être sélectionné si le train doit ralentir ; <b> Sévère</b> doit être sélectionné
+si le train doit ralentir d'un montant maximum. Si le Canton a une courbure variable, votre
+sélection devrait être faite en fonction de la partie la plus sévére du Canton.</p></li>
+<li> Vitesse Canton <p> <b> Vitesse Canton</b>
+La vitesse est utilisée avec certains outils d'automatisation  et de logique, pour aider à
+déterminer à quelle vitesse un train peut être réglé à travers le Canton.
+Elle est également utilisé par la logique du mât de signalisation pour déterminer quel aspect doit
+être affiché dans un chemin de tête de signal.
+<P> Dans la liste déroulante, vous sont présentés un ensemble de vitesses fixes qui 
+ont été prédéfinies dans le fichier signalSpeed.xml, en plus d'une option globale.
+<br> Il est également possible d'entrer une valeur numérique pour représenter une vitesse.
+<p> La valeur globale est définie via les <b>Vitesses</b> du menu option.</p></li>
+<li> <p> <b> Permission</b>
+L'option permission est utilisée pour identifier les Cantons qui peuvent être saisis alors que le
+Canton est occupé. Il est utilisé avec certains outils d'automatisation de et de logique, pour aider à
+déterminer si un train peut entrer dans un canton occupé et  quel aspect doit être affiché
+sur un mât de signalisation.</li</ul>
+
+<p>
+<a href="../../../../html/tools/tracker/index.shtml">Plus d'information sur les Cantons</a></p>
+<p>
+<a href="../display/LayoutEditor.shtml">Plus d'informations sur l'utilisation des Cantons avec l'Éditeur de TCO</a>
+<br>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

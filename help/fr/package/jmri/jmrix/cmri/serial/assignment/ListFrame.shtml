@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: ListFrame.shtml,v 1.1 2008/03/21 06:45:53 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-11-1--> 
+<title>JMRI: Connector Pin Assignments</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+
+
+<h2> 
+JMRI: Affectation des broches du connecteur
+</h2>
+
+Cet outil vous permet de vérifier l'affectation des broches
+pour votre nœud C/MRI.JMRI: Connector Pin Assignments
+</h2>
+
+
+<p>
+Ceci est la page d'aide help/en/package/jmri/jmrix/C/MRI cmri.serial.assignment.AssignmentFrame.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

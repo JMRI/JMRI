@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2008 -->
+<!-- $Id: MemoryFrameAction.shtml,v 1.1 2008/09/27 02:52:08 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-11-3--> 
+<title>JMRI: Outil Moniteur Mémoire</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">Memory Monitor Tool
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>Memory Monitor Tool
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Outil Moniteur de Mémoire</h1>
+
+<a href="MemoryFrameAction.jpg"><img src="MemoryFrameAction.jpg" width="194" height="56" align="right"></a>
+
+L'Outil Moniteur de Mémoire vous permet de voir combien de mémoire
+JMRI utilise dans votre ordinateur.
+
+<P>
+Il ya trois colonnes à l'écran en haut:
+<ul>
+<li> "Mise à Jour" - :
+met une nouvelle série de valeurs dans l'affichage
+<li> «Recueillir la mémoire» - réduire la quantité de mémoire utilisée au minimum possible
+en demandant à Java d'exécuter un nettoyage de cMemory Monitor Toolollection
+<li> "Test" - Exécuter un test de l'allocation de mémoire et processus de collecte (pas nécessaire
+pour les utilisateurs réguliers)
+</ ul>
+    
+<p>
+La partie supérieure affiche des informations sur la mémoire.
+Chaque fois que vous appuyez sur le bouton "Mise à Jour", la ligne de fond
+obtient de nouvelles valeurs et les valeurs anciennes sont déplacés vers le haut.
+<p>Memory Monitor Tool
+<ul>
+<li> La colonne de gauche est la quantité de mémoire actuellement en usage.
+<li> La colonne du milieu montre la quantité de mémoire
+actuellement affectées à JMRI, mais que vous n'utilisez pas. Celle-ci est libre pour une utilisation ultérieure.
+<li> La colonne de droite est la quantité totale de mémoire disponible pour JMRI.
+</ul>
+Au sommet de la colonne de gauche, la mémoire maximum qui peut être disponible
+pour JMRI est affichée.The Memory Monitor Tool lets you see how much memory 
+JMRI is using in your computer.
+
+<P>
+There are three columns in the display at the top:
+<ul>
+<li>"Update" - puts a new series of values in the display
+<li>"Collect Memory" - reduce the amount of used memory to the minimum possible
+by asking Java to run a garbage collection
+<li>"Test" - Run a test of the memory allocation and collection process (not needed
+by regular users)
+</ul>
+    
+<p>
+The upper part displays information about memory.
+Each time you press the "Update" button, the bottom line
+gets new values and the older values are moved up.
+<p>
+<ul>
+<li>The left column is the amount of memory currently in use.
+<li>The middle column shows the amount of memory 
+currently allocated to JMRI, but not in use.  This is free for later use.
+<li>The right column is the total memory available to JMRI.
+</ul>
+At the top of the left column, the maximum memory that can be available
+to JMRI is displayed.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

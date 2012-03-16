@@ -1,0 +1,302 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Lights.shtml,v 1.4 2010/01/24 02:04:03 ken_c Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-09-29-->
+<html lang="fr">
+<head>
+  <TITLE>
+ 	JMRI: Light Documentation
+  </TITLE>
+  <META http-equiv=Content-Type content="text/html; charset= utf-8">
+
+  <META content="Bob Jacobsen" name=Author>
+
+  <meta http-equiv="Content-Type" content="text/html;  charset= utf-8">
+  <meta name="keywords"
+        content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset= utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+        <H2>
+		JMRI:Documentation Lumière
+        </H2>
+
+<h3>Que sont les Lumières? </H3>
+
+<p>Les Lumières sont des bits de sortie numérique qui fonctionnent comme des interrupteurs marche/arrêt. Les Lumières
+ont été créées pour fournir un contrôle aisé des voyants du panneau de contrôle et l'éclairage des paysages
+. Les Lumières peuvent aussi être utilisées à des fins qui nécessitent une commutation marche/arrêt
+.Les Lumière peuvent être utilisées, par exemple, pour activer un dispositif découpleur électromagnétique
+ pour un temps pré-déterminé en réponse à un bouton du panneau de contrôle.
+Initialement développé pour une utilisation avec le C/MRI, les Lumières actuellement sont également
+mises en œuvre sur LocoNet (Digitrax) et les systèmes Oaktree. </p>
+<p>Les  Lumières partagent les bits de sortie numérique disponibles avec les Aiguillages. Soit une
+Lumière ou un Aiguillage, mais pas les deux, peut contrôler un bit de sortie numérique spécifique.
+Puisque les Lumières n'ont pas la structure de rétrosignalisation des Aiguillages, les Lumières ne doivent pas
+être utilisées pour contrôler les Aiguillages sur le réseau; seuls les Aiguillages devraient être utilisés pour commander les commutateurs de voies (Aiguillage) . Pour des raisons historiques, les apparences des SignalHeads sont définies en utilisant les aiguillages, même si elles peuvent être réellement
+ physiquement allumées par les Lumières. Alors les Aiguillages devraient être utilisés pour référencer les bits de sortie numérique
+ utilisés avec Tête de Signal JMRI. Lumière doit être utilisée si vous avez besoin
+d'un mécanisme simple pour contrôler l'éclairage ou des décors, les voyants du panneau, ou pour
+d'autres  tâches sous/hors tension où les mécanismes de contrôle des lumières sont adaptés aux besoins. </p>
+<p>En option, une Lumière peut être contrôlée de quatre façons: elle peut être
+contrôlée par un Capteur, par un Aiguillage, par l'Horloge rapide JMRI, ou commutée
+pendant une période déterminée par un Capteur. Quand une Lumière est créée, ou quand elle
+est lue à partir d'un fichier de configuration, la Lumière est «activée», il est mis en place
+une surveillance automatique des changements d'état de son Capteur de contrôle,
+de l'Aiguillage, ou une Horloge rapide. Lorsque le Capteur de contrôle, l'Aiguillage, ou de l'Horloge
+changent d'une manière spécifiée par l'utilisateur, la Lumière est allumée ou éteinte. Les Lumières
+peuvent également être contrôlées par <a href="Logix.shtml"> Logix </a>, si plus
+ de logique complexe de contrôle n'est nécessaire.</p>
+<p> La Table Lumières contient une colonne 'Activé'. Pour qu'une Lumière soit
+déclenchée par son Capteur de contrôle, l'Horloge rapide, l' Aiguillage ou de son contrôle,
+elle doit être «activée», ce qui revient à cocher la case dans la colonne 'Activée' 
+. Vous pouvez décocher cette case pour désactiver le déclenchement temporaire d'une
+Lumière , c'est à dire éviter qu'elle commute lors du contrôle des mécanismes des feux
+. </p>
+
+ <h3> Commutation d'une Lumière allumée ou éteinte </h3>
+
+<p>Les Lumières peuvent être activées ou désactivées en cliquant sur le bouton dans la
+colonne État de la Table Lumières. La Lumière peut être mise en place pour suivre l'état
+d'un aiguillage , lorsque l'Aiguillage est direct, et hors tension lorsqu'il n'est
+pas dévié, ou vice versa. La lumière peut être réglée pour suivre l'état d'un
+Détecteur d'occupation de canton, lorsque le capteur est actif, et désactivé quand il est inactif, ou
+vice-versa. La Lumière peut également être réglée par un bouton du panneau de contrôle, si un capteur pour
+ce bouton est défini comme le capteur de commande. La Lumière peut être configurée pour
+suivre les horloge rapide  JMRI , sur une période de temps spécifiée, puis s'éteindre.
+La Lumière peut également être contrôlée à partir d'un
+<a href="Logix.shtml"> Logix </a>,
+comme l'action d'une de ses
+conditions. Si vous avez besoin d'une logique plus puissante pour contrôler votre lumière, considérez
+l'aide d'un <a href="Logix.shtml"> Logix </a>. </p>
+
+<p> Notez que activée/désactivée s'applique uniquement à un mécanisme de commande automatisé de la Lumière.
+ Un Etat «désactivé» n'empêchera pas une Lumière
+d'être activée ou désactivée en utilisant le bouton dans la Table Lumière ou en 
+étant contrôlée par un automate Logix.</p>
+   
+<h3>Sauvegarde Lumières sur disque  </h3>
+
+<p>Les Lumières sont enregistrées dans votre fichier de configuration de réseau, avec les aiguillages,
+capteurs, les Têtes de signal, etc Pour stocker ces informations sur le disque, utilisez  <b>
+Enregistrer Configuration ...</b> dans le <b> fichier</b> de menu en haut de la Table Lumières
+(ou d'autres table à partir du menu Outils), ou sélectionnez  <b> Enregistrer Panneau...</b>
+dans le menu <b> Panneau </b>. Notez que l'état activé/désactivé de chaque Lumière
+n'est pas enregistré dans le fichier de configuration. Lorsque les Lumières sont chargées à partir d'un
+fichier de configuration, elles sont tous activées.
+
+<a name="addLight">  <H3> Ajout d'un Nouvelle Lumière </H3> </a>
+<p> Pour ajouter une nouvelle Lumière, suivez cette procédure: </p>
+<ol>
+<p><li>Cliquez <b>Table Lumières </b> dans le menu<b> Outils </b> pour faire apparaître
+la Table Lumières, et cliquez sur le bouton <b> Ajouter ...</b> au bas de la
+table pour faire apparaître la fenêtre Ajouter/Modifier Lumière. </p>
+	<p> <li> Entrez un nome système, selon la convention JMRI. La première
+lettre désigne le matériel de votre système ('L' pour loconet, «C» pour C/MRI,
+etc), et la deuxième lettre doit être 'L' pour la lumière. Elles sont suivies par
+un nombre qui donne l'adresse matérielle du bit de sortie numérique 
+référencé. Exemples d'adresses valides du système sont: CL1004, et LL401,
+en supposant que vous ayiez le matériel pour les bits sortie numérique adressés . </p>
+</li>
+<p> <li> Entrez un nom utilisateur. Toute chaîne de caractères qui est différente
+du nom utilisateur d'autres Lumières sera acceptée, mais il est
+sage d'utiliser une chaîne qui décrit l'utilisation prévue de la Lumière. </p>
+</li>
+<p> <li> Sélectionnez le type de commande à partir des options dans le menu contextuel.
+Lorsque vous changez le type de commande, différentes options apparaissent sur les deux lignes
+ci-dessous. Les options de contrôle sont examinées plus en détail
+<A HREF="#lightcontrol"> ci-dessous </a>. </P>
+</li>
+<p> <li> Entrez les informations requises pour compléter la définition du contrôle
+dans les champs qui apparaissent. Si vous avez besoin d'entrer un nom de capteur ou un nom d'aiguillage, vous devez entrer le nom (nom  système ou nom utilisateur) d'un capteur ou d'un aiguillage existant. <b> Attention </b>: si vous entrez un nom d'utilisateur, soyez prudent sur
+le changement du nom utilisateur de votre capteur ou de votre aiguillage.  Un simple changement
+du nom utilisateur pourrait casser votre définition de commande de Lumière. </p>
+	</li>
+	<p> <li> Ensuite se trouve la zone des notes de la fenêtre Ajouter/Modifier Lumière. C'est ici qu'apparaitront
+les instructions et les messages d'erreur lorsque vous créez ou modifiez
+une Lumière. Il faut toujours vérifier ce domaine pour voir si les choses se déroulent comme prévu. </P>
+</li>
+<p> <li> Cliquez sur le bouton <b> Créer </b> situé au bas de la fenêtre.
+Si tout va bien, un message indiquant "Nouvelle Lumière ajoutée ..." sera
+affiché dans la zone des notes. S'il y a des problèmes avec quoi que ce soit, une erreur ou un
+message d'avertissement sera affiché dans la zone des notes; vous devez alors
+corriger l'erreur et cliquez sur  <b>Créer</b> à nouveau. </p> </li>
+</ol>
+
+<h3> Modification d'une Lumière Existante </h3>
+<p> Pour modifier une Lumière existante, suivez cette procédure: </p>
+<ol>
+<li> Modifier une Lumière existante peut être démarré par une des deux méthodes:
+<li> Cliquez sur un bouton<b> Modifier </b>  Lumière dans la Table Lumière. </li>
+<li> Entrez le nom système de la Lumière à être éditée dans la fenêtre Lumière
+Ajouter/Modifier et cliquez sur le bouton <b>Modifier </b>Lumière au
+le bas de la fenêtre Ajouter/Modifier Lumière. Ce doit être le même
+que le nom système montré dans la Table lumineuse. </li>	</ul>
+
+	
+
+
+
+
+Les boutons <b>Créer</b> et <b>Modifier</b> au bas de la Fenêtre de Lumière Ajouter/Editer
+ vont changer pour <b>Mise à jour</b> et <b>Annuler</b>. </Li>
+<li> Effectuez les modifications ou les ajouts que vous avez besoin à l'information dans
+la boîte de dialogue. Notez que le nom système de la Lumière éditée ne peut pas être 
+changé, mais le nom utilisateur peut être changé. Les autres éléments sont décrits
+<A HREF="#addLight"> ci-dessus </a>. </Li>
+<li> Après avoir modifié les informations Lumière, cliquez sur <b>Mise à jours</b>
+pour changer la lumière sélectionnée. Si tout va bien, un
+message indiquant "Lumière mise à jour ..." sera affiché dans la zone des notes
+ S'il y un problème, un message d'avertissement ou d'erreur sera
+affiché dans la zone des notes, et la mise à jour sera arrêtée pour que vous
+corrigiez l'erreur et cliquez sur <b>Mise à jours</b> à nouveau. </li>
+Cliquez <li> <b> Annuler </b> pour quitter le mode édition sans changer la Lumière
+sélectionnée. Si la fenêtre ajouter/modifier Lumière est rejetée (fermée)
+alors que dans le mode édition, <b> Annuler </b> est automatiquement sélectionné, et aucune
+modification ne sera apportée à la Lumière sélectionnée. </li>
+	
+	<li> après avoir modifié les informations de Lumière, cliquez <b> mise à jour </b>
+pour changer la lumière sélectionnée. Si tout va bien, un
+message indiquant «lumière mise à jour ...» sera affiché dans la zone des notes
+. S'il y a un problème, une erreur ou un message d'avertissement sera
+affiché dans la zone des notes, et la mise à jour sera arrêté pour vous permettre de
+corriger l'erreur et cliquez sur <b>Mise à jours </b> à nouveau. </li>
+<li> Cliquez <b> Annuler </b> pour quitter le mode édition sans changer la
+Lumière sélectionnée. Si la fenêtre de lumière ajouter/modifier est rejetée (fermée)
+alors que dans le mode édition, <b> Annuler </b> est automatiquement sélectionné, et aucune
+modification n'est apportée à la Lumière sélectionnée. </li>
+</ ol>
+
+<a name="lightcontrol"> <H3>Options  de Commande Automatisée pour Lumières </h3> </a>
+
+
+Le fonctionnement d'une lumière peut être commandée par les moyens suivants:
+<ul>
+<p> <li><b>Par Capteur</b> - La Lumière sera allumée lorsque le capteur
+change d'actif ou d'inactif, selon le choix fait dans le
+"Sens pour ON" du menu contextuel, et il sera éteint, lorsque le capteur
+inverse l'état. Spécifiez le capteur en saisissant son nom
+(nom système ou nom utilisateur) dans le champ "Nom de Capteur". Cette option a
+un certain nombre d'utilisations, y compris l'établissement d'une lumière du tableau de commande pour suivre l'occupation des cantons
+d'occupation. C'est utile, par exemple, pour suivre la position du train dans la surveillance
+d'une coulisse. </p>
+</ li>
+<p> <li><b>Par l'Horloge Rapide</b> - La Lumière sera allumée quand l'horloge
+ atteint l'heure indiquée dans le «Time On» et sera désactivée lorsque
+l'horloge rapide atteint le temps entré dans «Time Off». Les temps sont
+entrés dans le format "hh: mm" , où «hh» est heures et "mm" est minutes d'une horloge
+24 heures. Une utilisation de cette option est d'activer et de désactiver l'éclairage des paysages
+, les lumières des rues, lumières des maison, etc pour simuler le temps de passage à la nuit sur le
+réseau.</p>
+	</li>
+ 	<li> <p> <b>Par État Aiguillage</b> - La Lumière sera allumée quand l'aiguillage passe de direct à dévié, selon le choix fait dans le
+"Etat pour ON" du menu contextuel, et il sera éteint, quand l'aiguillage
+inverse son état. Spécifiez l'aiguillage en saisissant son nom
+(nom système ou nom utilisateur) dans le champ «Nom de l'aiguillage». Cette option peut
+être utilisée pour allumer une lumière sur le tableau de commande pour suivre l'état d'un aiguillage.
+C'est utile, par exemple, pour surveiller l'état des aiguillages cachés.
+</p>
+</li>
+<p> <li> <b>Par Chronométrage ON </b> - La Lumière sera allumée lors du changement du capteur déclencheur actif
+, et il sera éteint, quand le temps précisé
+ s'est écoulé. Spécifiez le capteur déclencheur en saisissant son nom
+(nom du système ou nom d'utilisateur) dans le champ «Nom du capteur de déclenchement. Entrez 
+le temps d'allumage de la Lumière  (en millisecondes) dans la "durée ON"
+dans le champs . Cette option a un certain nombre d'utilisations, ell a été initialement conçue pour
+enclenchez un découpleur électromagnétique en réponse à un bouton poussoir du panneau de contrôle,
+mais il peut également être utilisé pour d'autres types d'animation sur le réseau, par exemple,
+pour contrôler la sonnerie d'une cloche de passage à niveau quand un train entre dans le canton. </p>
+</li>
+</ul>
+	
+<a name="variablelight"> <H3>Lumières Variables  </H3> </a>
+
+<p>
+Une lumière variable permet un niveau variable d'intensités entre On et Off.
+L'utilisation typique serait pour l'éclairage simulant les changements pour le
+moment de la journée et la nuit. Seules certaines formes de lumières ont la possibilité d'être variable.
+Des exemples comprennent des dispositifs internes et PowerLine.
+Un certain nombre d'options de configuration sont disponibles pour les lumières variables
+     <A HREF="#VariableLightSettings"> ci-dessous </a>.
+</p>
+<p>
+Une lumière variable est ajustée par un réglage d'intensité.
+La gamme de l'intensité est de 0,00 pour Off à 1,00 qui est On complet.
+ L'entrée utilisateur pour l'intensité sera soit l'utilisation de la valeur avec virgule
+ ou la valeur de pourcentage de 0% à 100%.
+</p>
+<p>
+Selon le matériel utilisé, certaines lumières variables feront un
+ajustement d'initialisation lors du passage du mode simple mode on/off
+pour l'utilisation des paramètres d'intensité.
+Sur ces appareils ce ne sera pas à nouveau nécessaire aussi longtemps que <b> uniquement </b>
+les commandes de réglage d'intensité sont utilisées.
+Un mélange sur les commande marche/arrêt peut exiger que l'initialisation se produise à nouveau.
+<p>
+Une lumière variable a trois types d'opérateurs:
+<dl>
+<dt> <b>On</b> </dt>
+<dd>
+Cette opération va enclencher une lumière variable.
+             Il va l'emporter sur tous les réglages d'intensité du courant et régler l'intensité à 1.
+             S'il y a des effets de transition permis, ils seront ignorés
+             et l'intensité ira au niveau maximale.
+</dd>
+<dt> <b>Off </b> </dt>
+<dd>
+Cette opération va mettre une lumière variable hors tension.
+             Il va l'emporter sur tous les réglages d'intensité du courant et régler l'intensité à 0.
+             S'il y a des effets de transition permis, ils seront ignorés
+             et l'intensité ira au niveau minimale.
+</dd>
+        <dt><b>Réglage Intensité </b></dt>
+<dd>
+Cette opération règlera la lumière à une intensité cible. Si l'interface prend en charge des effets de transition et s'ils sont
+configurés, la lumière va faire une transition contrôlée du courant de
+réglage pour le nouveau réglage.
+</dd>
+     </dl>
+</p>
+	
+    
+<a name="VariableLightSettings"> <H3> Réglages Variables de la lumière </H3> </a>
+<p>
+Ces paramètres ajustent la manière dont la commande "'intensité"est utilisée.
+<dl>
+<dt><b>Intensité  minimum  </b> </dt>
+<dd>
+Une valeur de 0 à 100 (pour cent) qui définit la plus faible intensité de lumière qui
+sera validée par une commande DIM.
+Une commande hors explicite va ignorer cette valeur.
+</dd>
+
+ <dt> <b>Intensité maximale: </b> </dt>
+<dd>
+Une valeur de 0 à 100 (pour cent) qui fixe l'intensité maximale de la lumière qui
+sera validée par une commande DIM.
+Une commande hors explicite  va ignorer cette valeur.
+</dd>
+
+<dt> <b>Temps de transition : </b> </dt>
+<dd>
+Nombre de minutes pour passer de 0% à 100% d'intensité.
+Une valeur de zéro provoquera le passage d'une valeur minimale à une valeur maximale
+ aussi rapidement que l'appareil est en mesure de le faire
+</dd>
+	</dl>
+</p>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

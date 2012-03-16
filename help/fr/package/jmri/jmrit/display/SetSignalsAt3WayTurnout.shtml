@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: SetSignalsAt3WayTurnout.shtml,v 1.2 2010/01/09 22:25:56 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-12-22-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Set Signals at 3-Way Turnout Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Dave Duchamp" name=Author>
+    <META name="keywords" content="JMRI help Layout Editor panel">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> Définir des signaux aux Aiguillages Triples</H1>
+<h2> Introduction</h2>
+<p>
+Dans l'Éditeur de TCO un aiguillage triple est modélisé en utilisant deux aiguillages, habituellement un
+droit et une gauche, orienté de sorte que la pointe du deuxième aiguillage soit
+reliée à la voie directe de l'aiguillage  par un segment d evoie très courte
+. Cet outil fournit une procédure automatisée pour l'affectation des signaux et la
+création automatique d'un signal logique pour un aiguillage triple modélisé dans cette voie. Cet 
+outil peut également être utilisé pour placer des signaux et mettre la logique pour deux aiguillages réels
+ orientés comme décrit ci-dessus, où l'utilisateur ne veut pas mettre de signaux
+entre les deux aiguillages - essentiellement deux vrais aiguillages gauches ou droits
+ qui simulent un véritable aiguillage triple.</p>
+<h2>Introduction</h2>
+<p>Six signaux peuvent être placés autour de l'aiguillage triple, comme indiqué ci-dessous:
+</P>
+<A Href="./images/DoubleXover8.gif"> <IMG SRC = "3_WayTurnout.jpg"
+ALIGN = CENTER WIDTH = "469" height = "180" hspace = "0" vspace = "0"></A>
+<p> L'aiguillage à la pointe, est désigné comme <b> aiguillage A</b> et l'autre
+est <b>l'aiguillage B</b>. Six  signaux sont possibles - trois à la pointe,
+indiquant l'état de la voie continue ( signal haut), voie déviée
+Un (au milieu), et B voie déviée (signal bas), et un signal
+à chacune des trois autres voies.
+<p>
+Si nécessaire, cet outil va placer des icônes de signal sur le panneau dans les six
+positions indiquées ci-dessus et mettre en place une logique de contrôle pour chacune des six signaux
+ spécifiés . Dans certaines situations, un utilisateur peut choisir de placer un seul
+signal à la pointe, entraînant seulement quatre signaux autour de l'aiguillage triple. Cet outil va placer les quatre signaux spécifiés, et mettre  en place une logique
+pour les signaux aux voies Divergentes A, Divergentes, B et la voie Directe, mais il
+ne peut pas mettre en place une logique pour le seul signal à la pointe. Les instructions sur
+comment le faire manuellement, avec l'aide de cet outil est indiqué ci-dessous.</p>
+<p>
+Avant de sélectionner cet outil, 
+les aiguillages doivent être à la fois sur le TCO, connectés comme indiqué par un segment de voie unique
+, et les signaux requis doivent être dans la Table Tête de Signal. L'outil ne place les signaux que lorsque la voie principale de chaque aiguillage est verticale ou horizontale
+(Ou presque verticale ou horizontale) sur le panneau, d'où la conception de votre panneau en conséquence. La logique de contrôle créée par cet outil ne fonctionne correctement que
+si chacun des trois segments de voies reliées à la voie directe et aux deux voies divergentes
+de l'aiguillage triple est affectée à un autre bloc, et ces blocs sont
+différents du bloc de segment de voie relié à la pointe de l'aiguillage triple
+. L'aiguillage triple (les deux aiguillages et leur segment de voie court les reliant
+) peut être dans un bloc séparé ou dans le même bloc que le segment voie
+ connecté à la pointe.</p>
+<p>
+Lorsque cet élément est sélectionné, une boîte de dialogue apparaît pour la saisie des noms (système ou
+utilisateur) des deux aiguillages, et les noms (système ou utilisateur) des six (ou quatre)
+ signaux à affecter à l'aiguillage triple. Vous pouvez entrer à la fois le nom de l'aiguillage
+, ou entrer un seul aiguillage et permettre au programme de trouver l'autre. Si
+vous entrez un aiguillage, assurez-vous de le mettre dans la position correcte. Pour
+vérifier que le second aiguillage a été trouvé correctement, cliquez sur le bouton Obtenir Sauvegarde
+</b>.</P>
+<p>
+Pour chaque signal, des cases à cocher sont disponibles pour  sélectionner
+si une icône doit être placée sur le panneau, et si la logique de contrôle
+doit être créée pour le signal. Peu importe si les icônes
+sont placées ou  la logique est créée, l'Éditeur de TCO va enregistrer que les entrées
+signals sont affectées à l'aiguillages spécifié. <b>L'affectation des signaux  
+aux aiguillages est important pour bien décrire votre réseau dans l'Éditeur de TCO
+.</B> Même si vous choisissez de placer vos icônes et configurer votre signal logique
+manuellement, vous devez utiliser cet outil pour assigner le signal à son 
+ aiguillage triple. </P>
+<p>
+Après qu'un aiguillage triple ait été configuré à l'aide de cet outil d'installation, l'Éditeur de TCO garde la trace
+du fait que les aiguillage A et B sont liés. Donc, si vous sélectionnez
+<b> Définir des Signaux ...</b> dans le menu contextuel de l'un ou l'autre aiguillage, vous revenez à
+cette boîte de dialogue avec les deux aiguillages remplis.Si vous dérire zplus tard «dissocier»
+les deux aiguillages et ajouter les signaux manquants, pour chacun des aiguillages, sélectionnez
+ <b>Définir des Signaux à l'aiguillage ...</b>, remplissez le nom de aiguillage manuellement, entrez les
+signaux, et cliquez sur <b>Terminé</b>. Après que ceci soit fait pour les deux aiguillages,
+les aiguillages ne seront plus liés.</p>
+
+<h3>Dialogue de Définition de signaux pour un Aiguillage triple</h3>
+<p>
+Dans <b>le Nom de l'aiguillage A</b> et <b>le Nom de l'aiguillage B</b>, entrez le nom
+(Système ou utilisateur) d'un ou deux des aiguillages. Si un seul est entré, l'
+outil va trouver l'autre lorsque les boutons<b> Terminé</b> ou <b> Obtenir Sauvegarde</b> sont
+cliqués. Si l'outil ne peut pas trouver le second aiguillage, ou si les deux entrées
+aiguillages ne sont pas sur le panneau ou non connectées comme décrit ci-dessus
+par un segment de voie unique, il en résulte un message d'erreur. L'aiguillage à la pointe
+de l'aiguillage triple doit être entré comme aiguillage A, et l'aiguillage le plus éloigné
+de la pointe doit être entré comme aiguillage B.</p>
+<p>
+Les noms des Têtes de Signaux (soit système ou utilisateur) sont entrés dans la section suivante. Si les
+ signaux de ces aiguillages ont été saisies précédemment, cliquez <b>Obtenir Sauvegarde 
+</b> pour récupérer les noms des signaux précédemment entrés.
+L'outil fournit pour l'entrée de trois signaux à la pointe et un dans chacune des 
+trois autres voies. Le signal de la pointe et le signal de la voie déviée A 
+sont placées avec l'aiguillage A.<p>
+Les noms des signaux (soit système ou utilisateur) sont entrés dans la section suivante. Si les
+signaux de ces aiguillages ont été saisis précédemment, <b>cliquez Obtenir
+Sauvegarde</b> pour récupérer les noms des signaux précédemment entrés.
+L'outil fournit pour l'entrée  trois signaux à la pointe et un dans chacune des
+trois autres voies. Les signaux de la pointe et de la voie Dévié A 
+ sont placées avec l'aiguillage A. Les signaaux de la voie déviée B et de la voie directe B 
+sont placées avec l'aiguillage B. Le signal pointe directe (vert dans le haut de la
+figure) reflète le trajet de la voie Directe avec la voie en Pointe . Les deux autres signaux
+ reflètent le trajet des pointes avec leurs voies déviées respectives. Si seulement
+un signal de pointe est entré, il doit être entré à la position Pointe Continue
+.</p>
+<p>
+S'il y avait un signal précédemment attribué à toute
+position, et vous entrez  un <i>autre </i> signal dans le même lieu,
+le signal remplacera e signal précédent, et l'icône de
+le signal précédent (s'il y en avait un) sera supprimé à partir du
+TCO. De même, si vous remplacez le signal précedemment affecté à la <b> Pointe Divergente</b>
+par des entrées vides (pas de signal), les entrées précédentes sont
+supprimées, et il n'y aura pas de signaux à ces postes. <b> Si un signal
+ est modifié, vous devrez refaire toute la logique qu'elle implique.</b></p>
+<p>
+Cochez <b>Ajouter Icône de Signal au TCO</b> pour demander que l'icône d'un signal
+ soit placé sur le TCO à la position indiquée par l'aiguillage. Cet outil
+ne peut placer une icône de signal sur les aiguillage qui sont presque à la verticale ou presque à l'
+horizontale. Si ce n'est pas le cas, un message est imprimé, et vous devez placer
+l'icône de signal manuellement en utilisant la barre d'outils de l'Éditeur de TCO. Peu importe, le
+Nom de signal qui est attribué à la position spécifiée de l'aiguillage. Cette affectation
+est importante pour la mise en place logique pour d'autres signaux sur la voie. L'affectation
+des signaux est également importante décrivant complètement votre réseau dans Éditeur de TCO.</P>
+<p>
+Cochez <b>Configurer Logique</b> pour demander que l'outil mette en place une logique de contrôle de signal
+pour un signal. Pour chacun de ces signaux, l'outil crée une
+Logique simple de signal pour le signal, et en plus le cas échéant, il crée un Logix
+qui assure que les branchements sont synchronisés pour le signal. L'outil fera des
+tentative de configuration de la logique et de remplir automatiquement les entrées avec les informations
+disponibles. Si l'outil n'a pas assez d'informations disponibles pour configurer la
+logique, un message en résultera, et vous aurez à revenir plus tard, après plusieurs que plusieurs blocs
+(Avec des capteurs d'occupation) et/ou des signaux aient été assignés à des aiguillages et des limites de cantons
+sur le TCO. <b>Remarque: Cet outil ne peut pas actuellement mettre en place  une logique pour un seul signal à la pointe d'une aiguillage à 3 voies. Voir ci-dessous pour savoir comment le faire manuellement</b>.</p>
+<h3> Notes</h3>
+<p>
+Cet outil va mettre en place la logique simple signal d'une manière normalisée qui
+devrait couvrir la plupart des cas. Si les signaux ne se comportent pas comme vous le voulez, 
+n'hésitez pas à modifier la logique simple signal manuellement pour obtenir le résultat recherché
+. Pour modifier la logique simple signal pour un signal, dans le mode Éditer,
+appeler le menu contextuel de l'icône du signal dont la logique doit être éditée,
+et sélectionnez <b>Éditer Logique ...</b>. Habituellement l'ajout ou le retrait d'un capteur, ou
+cocher ou décocher une option, est tout ce qui est nécessaire. Dans des cas plus compliqués
+, vous devrez peut-être créer un Logix pour définir l'état d'un capteur interne,
+qui est ensuite ajouté à la Logique Simple Signal.</p>
+<p>
+Lors de la configuration logique, cet outil va suivre la voie dans les 
+cantons jusqu'à ce qu'il trouve un signal à la fin du canton loin de l'aiguillage signalé
+. Si votre réseau contient des sections qui sont
+signalées et les sections qui ne le sont pas, pour obtenir cet outil pour mettre en place une logique
+correctement, vous pourriez avoir à créer et assigner un signal virtuel (un signal qui
+ne correspond pas à un signal réel sur le réseau) à la fin du canton non signalé
+ qui relie la voie qui est signalée avec une voie qui n'est pas signalée.
+(Vous n'avez pas besoin d'ajouter une icône pour le signal virtuel à votre panneau, mais elle
+doit exister dans votre table signal, et doit être affectée à un aiguillage ou à une limite de canton
+à l'aide d'un outil (Définir signalisation... .) Si un canton se termine par un
+Heurtoir, aucun signal virtuel n'est requis à la fin du heurtoir.</p>
+<p>
+Si un canton a un aiguillage interne (l'aiguillage, et les tronçons de voie de sa
+pointe et les branches continue sont au sein du canton), le programme va attendre les signaux
+à cet aiguillage, même si ce n'est pas à la fin du canton. Cependant, parfois
+où l'utilisateur peut ne pas vouloir signaler un aiguillage rarement utilisé dans un canton.
+En suivant la voie à travers un canton, le programme va sauter l'aiguillage interne non signalé
+ si <b> Passer Aiguillage Interne non Signalé</b> est coché dans le menu <b> Outils</b> de l'Éditeur de TCO>.
+Il sera pourtant toujours, avertit de ce qu'il fait. <b> Utilisez cette option avec
+prudence.</b> Il n'y a pas de signal de protection pour un aiguillage ignoré
+mal réglé, si un aiguillage non signalé interne n'est pas réglé correctement,
+un déraillement des trains pourraient en résulter.</p>
+<p>
+Lors du réglage du Logix utilisé dans la logique de contrôle, l'outil crée un
+capteur interne pour communiquer avec la logique simple signal. Le Logix 
+apparaîtra dans votre table Logix, et le capteur interne apparaîtra dans votre
+Table capteur. Les noms systèmes de Logix et de la sonde interne sera, IX ou
+IS suivis par TTT_X_HHH, où TTT est le nom du système d'aiguillage où les
+signaux sont situées, soit X est C ou T, selon que le signal
+ est située sur la voie fermée (DIRECTE) ou de la voie lancé(DÉVIÉE)
+, OÙ HHH est le nom  système du signal. Le but de cette Logix
+est de s'assurer que l'aspect du signal sera rouge si l'aiguillage n'est pas
+dans la logique simple signal de commutation contre la voie signalée par le signal .</p>
+<p>
+Cet outil met en place trois aspects de signalisation. Quand un signal est 
+l'état lors du passage à une voie déviée, l'outil sera mis en place pour limiter la
+vitesse (l'aspect le moins restrictive n'est pas vert, mais jaune), et le signal
+montrera jaune quand il serait contraire au vert. Vous pouvez changer cela avec
+une modification simple (voir ci-dessous).</p>
+<p>
+Si vous avez une situation particulière à un signal, vous pouvez avoir à modifier les
+informations saisies par cet outil dans la logique simple signal. Si vous
+aimeriez avoir quatre aspects de signalisation, vous pouvez facilement modifier manuellement la logique
+pour y parvenir. De même, les modifications manuelles simples de la logique, vous pouvez
+ajouter le balisage lumineux d'approche. Si vous ne voulez pas en jaune lors d'un basculement vers un itinéraire dévié, mais que vous préférez le vert, ouvrez la Logique Simple signal pour le signal que vous voulez
+changer et décochez <b> Vitesse Limitée</b>. La boîte de dialogue Logique Simple Signal peut
+être accessible depuis le menu contextuel de chaque icône de signal. Si votre situation spéciale
+ ne peut pas être manipulée par une Logique Simple signal, vous devez vous référer à
+Logix pour adapter le signal logique à vos besoins.</p>
+<h3>Logique pour une Seule Tête à la pointe</h3>
+<p>
+Il y a différentes façons de mettre en place la logique d'un signal unique à la
+la pointe d'un aiguillage triple. La procédure suivante fera le travail, et c'est assez
+simple.
+<ul>
+<li> <p> Définir trois signaux virtuelles dans la Table Signal, et entrez les
+comme signaux <b> Pointe -Directe</b>, <b> Pointe - Déviée A</b> et
+<b>Pointe  - Déviée B</b> , avec les signaux réels <b>Déviée A</b>,
+<b>Directe </b>, et <b> Déviée B</b> . Les Signaux virtuels sont
+les signaux qui ne sont pas sur le réseau- seulement dans l'ordinateur</p></li>
+<li> <p>Cochez <b> Mettre en place la Logique</b> pour chacune des signaux virtuelles, mais ne pas
+cochez <b> Ajouter Icône de Signal au TCO</b> pour aucune de ces trois signaux virtuels.
+Cliquez <b> Terminé</b>. Ceci mettra en place la logique pour les trois signaux virtuels.</Li>
+<p> <li> Réouvrir l'outil et effacer les noms des trois signaux virtuels. Placez
+le véritable signal dans la position <b>Pointe- Directe</b> . Cochez
+ <b>Ajouter Icône de Signal au TCO</b>, mais ne cochez pas <b> Configurer Logic</b> pour ce 
+signal. Cliquez <b>Terminé</b>. Les trois aiguillages virtuels ne sont plus
+affecté à l'aiguillage triple, mais ils sont encore dans l'ordinateur et leur
+ logique sera toujours fonctionelle.</p></li>
+<p> <li> Configurer un Logix pour définir l'apparence du signal de l'unique et véritable pointe,
+le signal repose sur les apparences des trois signaux virtuels. Fondamentalement, le signal réel devrait être fixé à la moins restrictive des apparences des
+trois signaux virtuels. Ceci peut être accompli par un Logix avec sept
+Conditionnels avec un nombre croissant de variables d'état simple, mis en place comme suit:
+<ul> <p>
+<li> conditionnel 1: Si le signal vert IHV1, alors réglez Apparence Signal IH1 au Vert</li>
+<li> conditionnel 2: si conditionnel C1 est Faux ET signal IHV2 Vert, alors Définir 
+Apparence Signal IH1 Vert</li>
+<li> conditionnel 3: si  conditionnel C1 Faux ET conditionnel C2 Faux ET
+Signal IHV3 Vert , alors réglez Apparence Signal IH1 vert</li>
+<li> conditionnel 4: si  conditionnel C1 Faux ET conditionnel C2 Faux ET
+Conditionnel C3 Faux et Signal IHV1 Jaune , alorss Définir Apparence Signal IH1
+Jaune</li>
+<li> conditionnel 5: si conditionnel C1 Faux ET conditionnel C2 Faux ET
+Conditionnel C3 Faux ET conditionnel C4 Faux et Signal IHV2 Jaune, alors
+ fixé Apparence signal IH1 Jaune</li>
+<li> Conditionel 6 : si conditionnel C1 Faux ET conditionnel C2 Faux ET
+Conditionnel C3 Faux  ET conditionnel C4 Faux ET conditionnel C5 Faux ET
+Signal IHV3 Jaune , alors réglez  Apparence Signal IH1 Jaune</li>
+<li> conditionnel 7: si conditionnel C1 Faux ET conditionnel C2 Faux ET
+Conditionnel C3 Faux ET conditionnel C4 Faux ET C5 conditionnel Faux ET
+Conditionnel C6 Faux, Alors définir Apparence Signal IH1 Rouge</li>
+</P></ul>
+Où <p> IHV1, IHV2 et IHV3 sont les signaux virtuels, IH1 est le véritable signal,
+et C1, C2, ... , C7 sont conditionnels 1 à 7. Remplacez les noms réels
+de ces éléments lorsque vous configurez votre Logix.</p>	
+</ul>
+<p>
+<b>S'il vous plaît n'oubliez pas d'enregistrer votre panneau après l'utilisation de cet outil.</b></p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

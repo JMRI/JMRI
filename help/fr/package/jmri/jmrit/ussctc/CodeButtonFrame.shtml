@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: CodeButtonFrame.shtml,v 1.2 2008/11/01 17:33:00 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-11-4--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Code Button Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help OS Indicator">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Bouton codé </H1>
+
+<b> Ce n'est pas encore complètement mis en oeuvre </b> <p>
+
+Un bouton de code sur un panneau USS CTC commence l'activité
+pour une section.
+
+<p>
+Entrées et sorties pour cet outil:
+<dl>
+<dt>Bouton  <dd>Capteur qui devient ACTIF lorsque le bouton est pressé.
+<dt>Lampe <dd> Aiguillage qui est mis DÉVIÉ tandis que le code est en cours.
+</dl>
+
+<p>  
+Ceci est la page d'aide help/en/package/jmri/jmrit/ussctc/CodeButtonFrame help page
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

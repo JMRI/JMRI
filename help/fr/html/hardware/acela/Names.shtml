@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- $Id: Names.shtml,v 1.6 2010/03/05 00:05:12 jacobsen Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-10-06-->
+<title>JMRI: CTI Acela System Names</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> JMRI: Noms système Acela CTI </h1>
+
+Les entrées individuelles (capteurs) et sorties (aiguillages et des feux)
+dans JMRI sont accessibles via des noms.
+Pour plus d'informations sur le schéma de désignation générale, s'il vous plaît voir
+les
+<a href="../../doc/Technical/Names.shtml">pages de désignation </a>
+dans la
+<a href="../../doc/Technical/index.shtml"> documentation technique </a>.
+
+<p>
+Pour les systèmes Acela CTI, tous les noms commencent par une lettre système  "A".
+Après cela, il y a une
+<a href="../../doc/Technical/Names.shtml#type"> lettre type </a>,
+puis une adresse absolue.
+
+<p>
+L'adresse absolue est à quatre chiffres ("10", "324", "4"). Voir les
+sections sur les entrées et les sorties ci-dessous pour les significations spécifiques
+de ces différents formats.
+
+<p>
+Par exemple, la première broche entrée du capteur Acela sur le deuxième module Watchman serait
+nommé AS8 ou AS08. Le cinquième aiguillage sur le troisième module Dash-8 serait AT17.
+
+
+<h3>Numérotation des Modules</h3>
+Parce que le système CTI Acela utilise des adresses absolues il n'est pas vraiment un concept de numéro de noeud (ou module).
+
+<p>
+Avant de pouvoir accéder à une entrée ou une sortie sur un module CTI Acela (nœud JMRI ) dans JMRI, vous avez à la définir pour
+le programmer.
+
+Si le matériel est connecté, les nœuds (modules CTI) se trouvent automatiquement au démarrage. Les nœuds peuvent également être
+définis manuellement avec l'outil
+<a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml"> configurer les nœuds </a>
+ Quoi qu'il en soit, n'oubliez pas de les enregistrer avec le
+bouton "Enregistrer" sur les
+<a href="../../../package/apps/TabbedPreferences.shtml"> Préférences fenêtre  </a>
+(sous Modifier dans le menu principal).
+
+<h2>Entrées</h2>
+
+Bien que le réseau CTI Acela utilise des adresses absolue, il a un espace d'adressage séparé pour toutes les entrées et un espace d'adressage séparé pour toutes le sorties.
+
+<p>
+
+En ce qui concerne les entrées  concernées, JMRI supporte les <a href="../../tools/Sensors.shtml"> Capteurs </a> CTI
+.
+<h3>Capteurs</h3>
+
+Comme décrit dans la documentation sur le <a href="http://www.cti-electronics.com/app_sw.htm">  site web CTI </a> Acela
+, les capteurs sont adressés à partir de 0.
+<p>
+Chaque module CTI peut contenir zéro (Dash-8, le signaleur, SwitchMan, chef de triage), quatre (Train-Brain), huit (gardien), ou seize (Sentry) capteurs en fonction du type du module.
+<p>
+Les adresses sont attribuées, à partir de zéro, du premier module sur le côté rouge du module CTI Acela.
+<p>
+A titre d'exemple, supposons que nous disposons d'un réseau CTI Acela comprenant: un module Acela, un module de gestion intelligent, un module de gardien, et un module de chef de triage.
+<p>
+Le module de gestion intelligent prend en charge quatre capteurs de façon à ce que les capteurs soit aux entrée absolue adresses de 0 à 3 inclus. Le module Watchman prend en charge huit capteurs de façon à ce que les capteurs soient à l'entrée absolue adresses 4 à 11 ans inclus. Le module Yardmaster prend en charger zéro capteurs afin qu'il n'utilise aucune des adresses d'entrée absolue. 
+<p>
+Les capteurs peuvent être configurés avec l'outil
+<a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml"> configurer les nœuds </a>
+. Si vous configurez vos capteurs, n'oubliez pas de les enregistrer avec le
+bouton "Enregistrer" sur la
+<a href="../../../package/apps/TabbedPreferences.shtml">  Préférences fenêtre </a>
+(sous Modifier dans le menu principal).
+ <h3>Sorties  </h3>
+
+Bien que le réseau CTI Acela utilise des adresses absolues, elle a un espace d'adressage séparé pour toutes les entrées et un espace d'adressage séparé pour toutes les sorties.
+
+<p>
+
+Dans la mesure où les sorties Acela CTI sont concernées,elle sont supportées par JMRI
+<a href="../../tools/Turnouts.shtml"> Aiguillages </a>,
+ou
+<a href="../../tools/Lights.shtml"> Lumières </a>.
+
+ <h3> Aiguillages </h3>
+
+Comme décrit dans la documentation sur le
+<a href="http://www.cti-electronics.com/app_sw.htm"> site web CTI </a> Acela
+,
+les aiguillages ou les feux sont abordées à partir de 0.
+<p>
+Chaque module CTI peut contenir zéro, quatre, huit ou seize sorties en fonction du type du module.
+<p>
+Les adresses sont attribuées, à partir de zéro, du premier module sur le côté rouge du module CTI Acela.
+<p>
+A titre d'exemple, supposons que nous disposons d'un réseau CTI Acela comprenant: un module Acela, un module de gestion intelligent, un module de gardien, et un module de chef de triage.
+<p> 
+Le module de formation prend en charge quatre sorties du gestionnaire de sorte que ses sorties sont aux adresses absolues de 0 à 3 inclus. Le module ne prend en charge aucune sortie sur le Watchman de sorte qu'il n'utilise aucune des adresses de sortie absolue. Le chef de triage supporte seize sorties ses résultats sont sur les  sortie d'adresses absolue de  4 à 19 inclusivement.
+<p>
+Chacune de ces sorties peuvent être un aiguillage ou une lumière. Mais une sortie donnée ne peut être qu'une lumière ou qu'un aiguillage - pas les deux.
+<p>
+L'aiguillage peut être configuré avec l'outil
+<a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml"> configurer les nœuds </a>
+. Si vous configurez votre aiguillage (sorties), n'oubliez pas de l'enregistrer avec le
+bouton "Enregistrer" sur les 
+<a href="../../../package/apps/TabbedPreferences.shtml"> Préférences Fenêtre </a>
+(sous Modifier dans le menu principal).
+
+
+<h3> Lumières</h3>
+
+Comme décrit dans la documentation sur le
+<a href="http://www.cti-electronics.com/app_sw.htm"> site web CTI  </a>, les
+aiguillages ou les feux sont abordées à partir de 0.
+<p>
+Chaque module CTI peut contenir zéro, quatre, huit ou seize sorties selon le type de module.
+<p>
+A titre d'exemple, supposons que nous disposons d'un réseau CTI Acela comprenant: un module Acela, un module de gestion intelligent, un module de gardien, et un module chef de triage module.
+<p>
+Le module de formation prend  en charge quatre sorties du gestionnaire de sorte que ses sorties sont aux adresses absolues de 0 à 3 inclus. Le module ne prend en charge aucune sortie sur le Watchman de sorte qu'il n'utilise aucune des adresses de sortie absolue. Le chef de triage supporte seize sorties ses résultats sont sur les  sortie d'adresses absolue de  4 à 19 inclusivement.
+<p>
+Chacune de ces sorties peut être un aiguillage ou une lumière. Mais une sortie donnée ne peut être qu'une lumière ou qu'un aiguillage - pas les deux.
+<p>
+Les feux peuvent être configurés avec l'outil
+<a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml"> configurer les nœuds </a>
+. Si vous configurez vos lumières (sorties), n'oubliez pas de les enregistrer avec le
+Bouton "Enregistrer" sur la
+<a fenêtre href="../../../package/apps/TabbedPreferences.shtml"> fenêtre  Préférences </a>
+(sous Modifier dans le menu principal).
+<H3>Limitations</h3>
+
+<UL>
+<LI> CTI prend en charge un grand espace d'adressage pour les entrées et les sorties. JMRI limite actuellement cela à 1024 entrées et 1024 sorties (équivalent à 64 modules Sentry et 64 modules chef de triage). JMRI a actuellement ceci codé en dur - mais c'est juste une question de priorités à désigner.
+</ UL>
+
+<h2> Plus d'informations </h2>
+
+Plus d'informations sur le matériel Acela peut être consultée sur le
+<a href="http://www.cti-electronics.com/app_sw.htm"> CTI site web </a>.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

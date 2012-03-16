@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: XmlSchemaExamples.shtml,v 1.3 2010/02/03 06:17:40 jacobsen Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-09-06--> 
+<html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: Xml Schema Examples
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code xml schema usage">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset= utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+<H1>JMRI: XML Exemples de Schéma </H1>
+
+Cette page contient des exemples de divers fragments Examples de Schema XML
+que vous pourriez trouver utiles.
+Pour une analyse de l'utilisation JMRI de Schema, XML, y compris des
+infos sur les modes de préférence et de l'organisation, voir
+<a href="XmlSchema.shtml"> une autre page </a>.
+
+<h2>Elément avec juste le contenu du texte, pas d'attributs</h2>
+
+<code><pre>
+&lt;xs:element name="someData" minOccurs="0" maxOccurs="1"&gt;
+</pre></code>
+
+Cela ne veut pas préciser les frappe. Si vous souhaitez par exemple faire respecter les entier:
+
+<code><pre>
+&lt;xs:element name="someIntThing" &gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:simpleContent&gt;
+      &lt;xs:extension base="xs:int" /&gt;
+    &lt;/xs:simpleContent&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre></code>
+
+<h2>Elément avec seulement des attributs, pas de contenu</h2>
+
+Forme privilégiées Store Venetien:
+
+<code><pre>
+&lt;xs:element name="sample" type="SampleType" 
+    minOccurs="0" maxOccurs="unbounded" /&gt;
+
+&lt;xs:complexType name="SampleType"&gt;
+  &lt;xs:attribute name="foo" /&gt;
+  &lt;xs:attribute name="bar" /&gt;
+&lt;/xs:complexType&gt;
+</pre></code>
+
+Peut aussi être combiné si vous pensez qu'il est peu probable qu'il soit
+utilisé ailleur:
+
+<code><pre>
+&lt;xs:element name="sample" 
+    minOccurs="0" maxOccurs="unbounded" /&gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:attribute name="foo" /&gt;
+    &lt;xs:attribute name="bar" /&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre></code>
+
+<h2>Elément avec du contenu  texte et les attributs</h2>
+
+<code><pre>
+&lt;xs:element name="someIntThing" &gt;
+  &lt;xs:complexType&gt;
+    &lt;xs:simpleContent&gt;
+      &lt;xs:extension base="xs:int"&gt;
+        &lt;xs:attribute name="someInt" type="xs:int"/&gt;
+        &lt;xs:attribute name="someText" type="xs:string"/&gt;
+      &lt;/xs:extension&gt;
+    &lt;/xs:simpleContent&gt;
+  &lt;/xs:complexType&gt;
+&lt;/xs:element&gt;
+</pre></code>
+
+<h2>Limiter un attribut pour certaines valeurs</h2>
+
+Si vous voulez faire cela, ça vaut la peine de définir un type général
+qui peux être réutilisé. Ceux-ci sont en xml/schema/types/general.xsd.
+
+<code><pre>
+&lt;xs:simpleType name="yesNoType"&gt;
+  &lt;xs:annotation&gt;
+    &lt;xs:documentation&gt;
+      General definition of string that's either "yes" or "no".
+    &lt;/xs:documentation&gt;
+  &lt;/xs:annotation&gt;
+  &lt;xs:restriction base="xs:token"&gt;
+    &lt;xs:enumeration value="yes"/&gt;
+    &lt;xs:enumeration value="no"/&gt;
+  &lt;/xs:restriction&gt;
+&lt;/xs:simpleType&gt;
+</pre></code>
+
+Puis le mettre sur un attribut est simple:
+
+<code><pre>
+&lt;xs:attribute name="opsOnly" type="yesNoType"/&gt;
+</pre></code>
+
+<h2>Elément avec le contenu du texte restreint</h2>
+
+Pas un attribut, un élément:
+
+<code><pre>
+&lt;xs:element name="relation"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:enumeration value="ge"/&gt;
+      &lt;xs:enumeration value="lt"/&gt;
+      &lt;xs:enumeration value="eq"/&gt;
+      &lt;xs:enumeration value="ne"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
+</pre></code>
+
+<h2>Groupes d'Attribut </h2>
+
+Des groupes d'attributs sont bons pour représenter un ensemble d'attributs
+lus et écrits ainsi que par une routine de service commune.
+Exemple de définition:
+
+<code><pre>
+&lt;xs:attributeGroup name="EditorCommonAttributesGroup"&gt;
+  &lt;xs:annotation&gt;
+    &lt;xs:documentation&gt;
+      Define the XML stucture for storing common PositionableLabel child attributes
+    &lt;/xs:documentation&gt;
+    &lt;xs:appinfo&gt;
+      jmri.jmrit.display.configurexml.PositionableLabelXml#storeCommonAttributes
+    &lt;/xs:appinfo&gt;
+  &lt;/xs:annotation&gt;
+  &lt;xs:attribute name="x" type="xs:int" use="required" /&gt;
+  &lt;xs:attribute name="y" type="xs:int" use="required" /&gt;
+  &lt;xs:attribute name="level" type="xs:int" /&gt;
+  &lt;xs:attribute name="forcecontroloff" type="trueFalseType" default="false" /&gt;
+&lt;/xs:attributeGroup&gt;
+</pre></code>
+
+par exemple l'utilisation, dans certains type plus tard:
+
+<code><pre>
+&lt;xs:attributeGroup ref="EditorCommonAttributesGroup" /&gt;
+</pre></code>
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

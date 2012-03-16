@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: DiagnosticFrame.shtml,v 1.1 2008/03/21 06:45:53 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-11-1--> 
+<title>JMRI: C/MRI Diagnostics</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+
+
+<h2> 
+JMRI: Diagnostiques C/MRI 
+</h2>
+
+
+Quand on vous demande votre numéro de carte de sortie, cela signifie l'adresse. Par exemple, si
+vous avez deux cartes d'entrée 0 et 1, puis des cartes de sortie avec les adresse 2, 3 et 4,
+vous pouvez spécifier 2, 3 et 4 ici. Ne pensez pas qu'il se réfère à la "1er" carte  de sortie, etc
+
+<p>
+Ceci est la page d'aide help/en/package/jmri/jmrix/cmri.serial.diagnostic.DiagnosticFrame
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

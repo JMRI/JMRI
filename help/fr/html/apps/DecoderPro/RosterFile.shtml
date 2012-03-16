@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: RosterFile.shtml,v 1.3 2009/03/12 22:59:03 matthewharris Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-10-01-->
+<title>JMRI: Roster File Details</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+
+<H1>Guide Utilisateur DecoderPro - Détails des Fichiers Liste</H1>
+
+<p>Les informations de liste présentées dans la boite de sélection, et utilisées pour la
+sélection automatique d'une locomotive, sont stockées dans le fichier roster.xml et
+dans le répertoire "prefs". Vous pouvez ouvrir ce fichier et le regarder pour voir
+le format. Vous devez utiliser le menu Fichier pour le manipuler afin de s'assurer
+qu'il reste auto-cohérent.</p>
+
+<P>
+Pour déplacer le fichier entier sur un autre ordinateur, d'abord trouver le répertoire des 
+préférences en utilisant les informations dans
+<A HREF="Files.shtml#location"> la page "fichiers de configuration » </a>. 
+
+<P>
+Dans le répertoire des préférences, il y aura un fichier nommé "roster.xml", et
+un répertoire appelé "fichier". Vous avez besoin de déplacer le fichier "roster.xml", le répertoire
+"fichier", et tous les contenus qui vont avec.
+
+    
+<!--#include virtual="/Footer" -->
+</div>
+</body>
+</html>

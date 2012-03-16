@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: NodeTableFrame.shtml,v 1.5 2008/11/01 17:33:00 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-11-1--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Configure Grapevine Nodes
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help configure grapevine node">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> Configurer les Nœuds Grapevine
+</H1>
+    
+Ceci est la page d'aide help/en/jmri/jmrix/grapevine/nodetable/NodeTableFrame
+
+<p>
+L'outil «Table Nœuds" vous permet de voir tous vos nœuds à la fois.
+Chaque ligne du tableau correspond à une adresse de nœud. Les colonnes
+sont les suivants:
+<dl>
+<dt>Adresse 
+<dd>Le numéro de nœud
+<dt>État 
+<dd>L'état actuel de ce nœud.
+     <dl>
+     <dt>Configuré<dd> Ce nœud a été configuré dans JMRI. vous pouvez
+    dialoguer avec ses Aiguillages, Têtes de Signal, Capteurs, etc
+     <dd>Présent<dt> Ce nœud a été détectée sur Grapevine, mais 
+     vous devez le configurer avant de pouvoir y accéder dans le programme.
+     <dt> (blanc) <dd> Le nœud n'est pas configuré, et n'a pas été vu sur
+     Grapevine.
+     </ dl>
+<dt> Ajouter/Éditer
+<dd> La troisième colonne fournit un bouton pour vous pourajouter un nœud manquant
+ ou modifier la configuration d'un nœud existant. Si vous Ajouter ou modifier un nœud, n'oubliez pas de sauvegarder vos préférences à nouveau!
+<dt> Init
+<dd> Si le nœud est configuré, il ya un bouton dans la 4e colonne
+qui vous permet d'envoyer les messages d'initialisation pour le nœud. Cet
+est utile si par exemple le nœud a été Off et On, il doit donc être
+réinitialisé. Ceci est uniquement disponible pour les nœuds configurés.
+</dl>
+<p>
+Au bas de la fenêtre est un bouton "Vérifier" et un
+champ état. Cliquez sur "Vérifier" pour balayer le Grapevine pour vérifier son
+état et  localiser les nœuds. Les champ d'état sont les suivant:
+<dl>
+<dt>Démarrer <dd> Un balayage commence, mais aucune réponse n'a été entendu de Grapevine encore.
+<dt> Vérification<dd> Balayage en cours, et le Grapevine semble fonctionner.
+<dt>OK <dd>  OK Analyse terminée.
+<dt>Grapevine échoué <dd> Analyse terminée sans rien entendre de Grapevine. Peut-être
+le câble n'est pas complètement connecté, ou quelques éléments ne sont pas alimentés.
+</dl>
+<p>
+Il y a aussi un bouton « Changement d'Adresse Nœud Carte", ce qui peut être utilisé pour
+changer l'adresse d'un noeud de Grapevine. Il ouvre une <a href="RenumberFrame.shtml">nouvelle fenêtre </a>.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated by Blorec Hervé le 2012-01-22-->
+<html lang="fr">
+<head>
+<!-- Copyright Me 2008 -->
+<!-- $Id: Memories.shtml,v 1.2 2008/05/18 06:12:17 jacobsen Exp $ -->
+<title>JMRI: Memories</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+ 
+
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+<h2> 
+JMRI: Mémoires
+</H2>
+Une variable de mémoire JMRI peut contenir n'importe quel type d'objet. C'est vraiment le
+code utilisateur  qu'il faut mettre dedans et comment le manipuler.
+
+<h3> La Table de Mémoire </h3>
+Le
+Tableau mémoire <a href="../../package/jmri/jmrit/beantable/MemoryTable.shtml"> </a>
+vous permet de voir quelles mémoires ont été définies, et quelle valeur
+elles contiennent actuellement. Le tableau demandera au contenu de la mémoire
+s'afficher, de sorte qu'une image ou une icône s'affiche comme une image dans le tableau; 
+la plupart des autres choses se montreront en que tant que chaîne. Vous pouvez taper une nouvelle valeur de chaîne
+dans une mémoire, ou
+<a href="../../package/jmri/jmrit/beantable/MemoryAddEdit.shtml">  créer une nouvelle variable mémoire </a>.
+
+
+<h3>Utiliser Mémoires avec Logix </h3>
+Un Logix peut tester une mémoire pour le contenu particulier, et  définir les contenus d'une
+ mémoire sous forme de chaine est nécessaire. Cela vous permet d'utiliser une mémoire comme un indicateur de l'état,
+compteurr ou n'importe quoi d'autre que vous pouvez imaginer. En raison de leur utilisateur
+interface, Logix généralement met seulement les valeurs de chaîne dans les variables de la mémoire.
+
+
+<h3> Affichage d'une Mémoire sur un Panneau </h3>
+Le contenu d'une mémoire peut être affichée sur un
+<a href="../../package/jmri/jmrit/display/PanelEditor.shtml"> Panneau </a>. Habituellement, la mémoire va essayer d'afficher son
+contenu directement. Si le contenu est une icône, une image ou une chaîne, le contenu
+sera affiché directement. Comme un cas particulier, si le contenu de la mémoire est
+"nulle" (la mémoire ne contient pas d'objet), une icône X rouge  est affichée.
+Cela vous permet de voir et de la position de la mémoire sur le panneau. Si
+la mémoire contient la chaîne de longueur nulle "", ceci est un objet, et il sera
+ affiché sous forme d'espace vide.
+<p>
+Vous pouvez personnaliser l'apparence du texte dans l'icône via son menu contextuel.
+<p>
+Vous pouvez également définir une série d'icônes à afficher à la place 
+du contenu propre de la mémoire, si vous le souhaitez. Pour un exemple savoir comment cela est
+fait, s'il vous plaît voir l'
+<a href="http://jmri.sourceforge.net/xml/samples/MemoryIconExample.xml"> échantillon fichier XML </a>.
+Utilisez la commande de votre navigateur pour "voir la source", ou télécharger ce fichier pour voir comment c'est fait.
+Fondamentalement, le navigateur de fichiers XML a un élément "memoryicon"  qui transporte des informations diverses
+pour savoir où placer l'icône, si elle peut être choisie, etc
+Dans cet élément, vous pouvez définir des éléments "memorystate" qui
+définissent ce que l'icône a à afficher lorsque la mémoire a une valeur spécifique:
+<code> <pre>
+    <memoryicon memory="IM20" defaulticon="resources/icons/misc/Question-black.gif">
+      <memorystate value="9" icon="resource:resources/icons/misc/Nixie/M9B.gif" />
+      <memorystate value="8" icon="resource:resources/icons/misc/Nixie/M8B.gif" />
+    </Memoryicon>
+</Pre> </code>
+(Cet exemple a été simplifié en omettant quelques trucs de l'élément memoryicon)
+Dans l'exemple, les deux éléments memorystate assurer que si la
+mémoire contient "9" ou "8", certaines images seront affichées, sinon
+ une question noire par défaut marquant l'icône sera affichée.
+<p>
+Malheureusement, JMRI n'a pas un bon outil graphique pour la définition des
+icônes affichées lors de l'utilisation d'une icône de la mémoire de cette façon. Vous devez éditer le fichier XML
+à la main, en suivant l'un des exemples.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

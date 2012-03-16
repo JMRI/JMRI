@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: ClockMonFrame.shtml,v 1.5 2008/11/01 17:33:01 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-10-28--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: NCE Clock Monitor
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Route Add Edit">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>NCE Clock Monitor
+</H1>
+    
+<p>
+Lors de l'exécution avec NCE comme mode maître d'horloge, la fréquence d'horloge interne est ajustée pour correspondre à l'heure
+de l'horloge de la centrale commande NCE.
+L'objectif est que les minute doivent tourner en même temps que l'horloge interne et
+l'affiche ProCab* devrait changer en même temps  que celle les  horloges sur PanelPro etc ...
+</p>
+<p>
+Lors de l'exécution avec l'horloge interne en tant que maître, l'horloge NCE est ajustée, en avant ou en arrière,
+d'un certain nombre de secondes juste avant que la minute change.
+Alors l'heure des NCE fait avancer légerement comme le temps est réglé, mais l'objectif est de cocher les minutes
+dans le même temps que l'horloge interne.
+</ p>
+<p>
+Ce service dépend de la capacité à faire lire et écrire la mémoire les commandes dans la centrale de commande.
+Ceci est actuellement pris en charge par la connexion en série sur les centrales de commande uniquement.
+Ces dispositifs qui s'appuient sur l'adaptateur USB-NCE, comme le PowerCab et SB3, ne sont pas actuellement
+soutenus en raison du manque d'accès de la mémoire de la centrale de commande .
+</p>
+
+<h2> Lignes d'État Horloge</h2>
+<p>
+Ces lignes affichent le statut actuel de chaque horloge et leurs réglages.
+Lors de l'exécution de mode de synchronisation, la ligne qui est le maître sera donc marquée.
+Aussi l'erreur courante entre le NCE et l'horloge interne sera affichée.
+</p>
+
+<h2>Réglages de l'Horloge</h2>
+<p>
+Ce sont ceux qui apportent des modifications du régulateur ProCab.
+Si le mode de synchronisation est «Maitre Interne« ils sont désactivée et
+vous avez à faire vos modifications via le panneau de contrôle de l'horloge interne.
+</p>
+<p>
+La modification des paramètres de l'horloge en mode synchro va provoquer le mode de synchronisation pour réinitialiser
+et effectuer l'initialisation pour ce mode de synchronisation.
+</ p>
+
+ <h2>Vitesse de Scrutation </h2>
+<p>
+Ceci définit combien de fois une horloge est lue juste dans le but de mettre à jour l'Heure affichée sur le moniteur
+La définition de celle-ci vers une petite valeur va augmenter le trafic série de la centrale de commande
+La fixation de celle-ci vers une grande valeur entraînera aussi l'affichage d'état d'horloge avec un retard considérable
+et l'indication «erreur» aura tendance à regarder le pire, mais c'est purement esthétique.
+</p>
+
+<h2>PID Constants</h2>
+<p>
+These values should generally be left alone.
+They adjust how the calculations are handled to keep the NCE and internal clock in sync.
+It was a very loose 'PID' type calculation.
+Generally the clock sync will improve as it is allowed to run.
+The first few minutes may hunt around while finding the best adjustments.
+</p>
+<h3>P Factor</h3>
+<p>
+This adjusts how much the current error is used to adjust the clocks.
+</p>
+<h3>I Factor</h3>
+<p>
+This adjusts how much the difference between the current error and prior error is used
+in the clock adjustments.
+</p>
+<h3>D Factor</h3>
+<p>
+This adjusts how much the rate of change between the current error and the prior error
+is used in adjusting the clock.
+
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

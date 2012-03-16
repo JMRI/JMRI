@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: AlignTableFrame.shtml,v 1.6 2008/10/11 16:18:05 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-10-27--> 
+<title>JMRI: RPS Receiver Control</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Récepteur de Contrôle RPS
+</h1>
+
+<a href="../../../../../html/hardware/rps/images/ReceiverControl.gif">
+<img src="../../../../../html/hardware/rps/images/ReceiverControl.gif" height="120" width="292" alt="RPS Receiver Control window" align="right"></a><br>
+
+La fenêtre de contrôle du récepteur RPS permet d'actualiser et d'examiner
+les informations du
+<a href="../../../../../html/hardware/rps/index.shtml">système RPS</a> sur l'endroit où ses récepteurs sont situés.
+
+<p>
+Habituellement, le système RPS va détecter le nombre de récepteurs, il a
+et met en place la table avec le bon nombre de lignes.
+Vous pouvez changer cela en changeant le nombre de récepteurs dans le
+bus de texte et cliquer sur "Valider".
+<p>
+Une fois que vous avez le bon nombre de récepteurs définis, entrez
+chacun des X, Y et Z dans le tableau.
+
+<p>
+Il y a aussi une case pour chaque récepteur qui contrôle si elle sera
+utilisée dans les calculs de position (si elle est cochée) ou ignorées (non vérifié).
+
+<p>
+Les valeurs des colonnes "Temps Min" et "Temps Max"  sont utilisées pour décider si les récepteurs de mesure du temps doivent être utilisé dans un calcul particulier. Ceux-ci peuvent généralement être
+laissés à leurs valeurs par défaut de -1 et 99999, respectivement, dans ce cas,
+le programme tentera toujours d'utiliser la mesure des récepteurs.
+Si vous éprouvez des difficultés, par exemple avec des échos qui font des mesures très longues (valeurs du temps élevé) inexactes, vous pouvez définir une limite haute, au-dessus duquel la mesure
+ne sera pas utilisée. Vous pouvez de la même fixer une limite basse si des mesures de temps très petites
+(courtes distances ou certaines formes d'ingérence) s'avèrent inexactes.
+
+<p>
+Pour aider à déterminer ces limites, la mesure du temps la plus récente
+pour chaque récepteur est indiquée dans la  colonne
+"Dernière Mesure" de la table.
+
+<p>
+Par défaut, le système RPS mesure les position en pouces et le
+de temps en microsecondes.
+Si vous préférez utiliser une unité de distance d'autres, comme les mètres ou les pieds,
+vous changez le nombre utilisé pour la vitesse du son.
+Les valeurs typiques sont:
+<dl>
+<dt> Pouces <dd> 0,01345
+<dt> Pieds <dd> 0,00112
+<dt> Mètres <dd> 0.000345
+<dt> cm <dd> 0,0345
+</ dl>
+Si vous changez cette valeur, veillez à cliquer sur la case "Valider" .
+
+
+<p>
+La valeur de "compensation" doit généralement être laissée inchangée.
+
+<p>
+Pour sauvegarder les valeurs comme les nouvelles valeurs par défaut, qui seront utilisées la prochaine fois que le programme est lancé, cliquez sur le bouton «Valider par Défaut» .
+<p>
+Pour sauvegarder les valeurs dans un fichier séparé, cliquez sur "Enregistrer ...", puis sélectionnez
+où vous souhaitez placer le fichier et comment  vous voulez l'appeler.
+<p>
+Pour charger les valeurs à partir d'un fichier préalablement stocké, cliquez sur "Charger ..." et
+sélectionnez le fichier.
+
+
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

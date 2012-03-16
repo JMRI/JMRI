@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- $Id: CreateXNetLogFile.shtml,v 1.1 2008/01/13 06:47:33 jacobsen Exp $ -->
+ <!--Translated by Hervé Blorec le 2011/9/23-->
+<Title>How to Create an XPressNet Log File</Title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H2>Comment Créer un Fichier de Connexion XPressNet </H2>
+<P>
+ Démarrer Decoder Pro (ou la démo JMRI)
+  Ouvrez le Moniteur XpressNet ( qui est dans le sous-menu du menu "Système" de XPressNet)
+<P>
+  Vous verrez une fenêtre comme la suivante:
+  <img src="images/XPressNetTrafficMonitor.jpg" alt="XPressNet Traffic Monitor Image">
+ <BR> 
+ Ensuite cliquez sur le bouton «Choisir le fichier journal" , et choisissez un fichier journal à utiliser
+  (vous pouvez utiliser le nom par défaut, la chose importante est de savoir où est le
+  fichier )
+  <Br>
+  Une fois que vous avez cliquez sur Enregistrer dans la boîte de dialogue, cliquez sur le bouton "Démarrer Connexion" 
+  sur le moniteur.
+  <Br>
+  Maintenant, vous pouvez effectuer toutes les actions que vous souhaitez effectuer.
+   <Br>
+  Enfin, retournez à la fenêtre Moniteur XPressNet , puis cliquez sur le bouton "Stop Connexion"
+  
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

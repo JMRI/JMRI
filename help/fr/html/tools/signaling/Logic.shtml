@@ -1,0 +1,296 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated by Blorec Hervé le 2012-01-20-->
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: Logic.shtml,v 1.3 2009/12/30 18:17:17 jacobsen Exp $ -->
+<title>JMRI: Simple Signal Logic</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+Signal Boar
+<H1>JMRI: Logique Simple Signal </H1>
+<p class=subtitle>
+Informations générales sur la logique utilisée pour la commande des signaux simples
+</P>
+
+<div class=para>
+<p> Cette page décrit la logique utilisée par le panneau JMRI
+ Simple Signal pour commandes les signaux . </P>
+ <p> Nous affichons le code réel, il n'y a donc aucune ambiguïté sur
+ce qu'il fait. C'est à partir des test de libération de JMRI  2.9.1. </P>
+</Div>
+
+<div name="single"><a class=section>
+<h2> Sur le bloc unique </h2>
+
+<div class=para>
+<p> Ce signal protège l'extrémité d'une droite passant par canton,
+sans aiguillages signalé. </p>
+</Div>
+
+<div class=para>
+<pre class=code>
+ulle doSingleBlock () {
+int = apparence SignalHead.GREEN;
+int oldAppearance = ((SignalHead) sorties [0]) getAppearance ().;
+/ / Vérifier pour le jaune, jaune clignotant vert primordiale
+if (protectWithFlashing & & fastestColor1 () == SignalHead.YELLOW)
+aspect = SignalHead.FLASHYELLOW;
+if (fastestColor1 () == SignalHead.RED | | fastestColor1 () == SignalHead.FLASHRED)
+aspect = SignalHead.YELLOW;
+
+/ / Si le signal éloigné, montrer exactement ce que le signal local fait
+if (distantSignal)
+aspect = fastestColor1 ();
+
+/ / Si la vitesse limitée et vert, d réduire au jaune
+if (limitSpeed1)
+aspect = slowerOf (apparence, SignalHead.YELLOW);
+
+/ / Vérifie rouge primordiale sur jaune ou vert
+if (watchSensor1! = null & & watchSensor1.getBean (). getKnownState ()! Sensor.INACTIVE =)
+aspect = SignalHead.RED;
+if (watchSensor2! = null & & watchSensor2.getBean (). getKnownState ()! Sensor.INACTIVE =)
+aspect = SignalHead.RED;
+if (watchSensor3! = null & & watchSensor3.getBean (). getKnownState ()! Sensor.INACTIVE =)
+aspect = SignalHead.RED,
+if (watchSensor4! = null & & watchSensor4.getBean (). getKnownState ()! Sensor.INACTIVE =)
+ aspect = SignalHead.RED;
+
+/ / Vérifier si le signal s'il est détenu, en forçant un aspect rouge par ce calcul
+if (((SignalHead) sorties [0]). getHeld ())
+aspect = SignalHead.RED;
+
+/ / Gestion des feux d'approche
+doApproach ();
+/ / montrer Résultat si changé
+if (apparence! oldAppearance =) {
+((SignalHead) sorties [0]) setAppearance (apparence).;
+if (log.isDebugEnabled ()) Log.DEBUG («Modifier l'apparence de" + nom + "à" + aspect)";
+}
+}
+</Pre></div>
+
+</Div>
+
+<div name="trailmain"><a class=section>
+<h2> Sur la Branche Principale d'un Aiguillage prit en Talon </h2>
+
+<div class=para>
+<p> Ce signal est le long de la route principale à travers un aiguillage, qui est
+définie comme la direction prise par les trains lorsque l' aiguillage  est direct.
+C'est la protection de la partie mobile de l'aiguillage de sorte que les trains s'arrêtent avant de
+courir à travers une série d'aiguillages. </p>
+</Div>
+
+<div class=para>
+<pre class=code>
+doTrailingMain void () {
+int = apparence SignalHead.GREEN;
+int oldAppearance = ((SignalHead) sorties [0]) getAppearance ().;
+/ / Vérifier pour le jaune, jaune clignotant primordiale sur vert
+if (protectWithFlashing & & fastestColor1 () == SignalHead.YELLOW)
+aspect = SignalHead.FLASHYELLOW;
+if (fastestColor1 () == SignalHead.RED | | fastestColor1 () == SignalHead.FLASHRED)
+aspect = SignalHead.YELLOW;
+
+/ / Si signal éloigné, montrer exactement ce que le signal avancée fait
+if (distantSignal)
+aspect = fastestColor1 ();
+
+/ / Si la vitesse limitée et  vert,  réduire au jaune
+if (limitSpeed1)
+aspect = slowerOf (apparence, SignalHead.YELLOW);
+
+/ / Vérifie rouge primordiale sur jaune ou vert
+if (watchSensor1! = null & & watchSensor1.getBean (). getKnownState ()! Sensor.INACTIVE =)
+aspect = SignalHead.RED;
+if (watchSensor2! = null & & watchSensor2.getBean (). getKnownState ()! Sensor.INACTIVE =)
+aspect = SignalHead.RED;
+if (watchSensor3! = null & & watchSensor3.getBean (). getKnownState ()! Sensor.INACTIVE =)
+aspect = SignalHead.RED;
+if (watchSensor4! = null & & watchSensor4.getBean (). getKnownState ()! Sensor.INACTIVE =)
+aspect = SignalHead.RED;
+
+if (watchTurnout! = null & & watchTurnout.getBean (). getKnownState ()! = Turnout.CLOSED)
+            aspect = SignalHead.RED;
+        if (watchTurnout! = null & & watchTurnout.getBean (). getCommandedState ()! = Turnout.CLOSED)
+            aspect = SignalHead.RED;
+
+        / / Vérifier si le signal s'il est détenu, en forçant un aspect rouge par ce calcul
+        if (((SignalHead) sorties [0]). getHeld ())
+            aspect = SignalHead.RED;
+            
+        / / Gestion des feux d'approche
+        doApproach ();
+        
+        / / montrer  Résultat si changé
+        if (apparence! oldAppearance =) {
+            ((SignalHead) sorties [0]) setAppearance (apparence).;
+            if (log.isDebugEnabled ()) Log.DEBUG («Modifier l'apparence de" + nom + "à" + aspect");
+        }
+    }
+</Pre></div>
+
+</Div>
+
+
+<div name="traildiv"><a class=section>
+<h2> Sur Branche Déviée d'un Aiguillage en Talon </h2>
+
+<div class=para>
+<p> Ce signal est le long de la voie déviée d' un 
+aiguillage, qui est définie comme la direction
+prise par les trains lorsque l'aiguillage est fixé à «dévié».
+C'est la protection de la partie mobile de l'aiguillage afin que les trains
+s'arrêtent avant de  traverser  une série d'aiguillages . </p>
+</Div>
+
+<div class=para>
+<pre class=code>
+nulle doTrailingDiverging () {
+int = apparence SignalHead.GREEN;
+int oldAppearance = ((SignalHead) sorties [0]) getAppearance ().;
+ / Vérifier pour le jaune, jaune clignotant vert primordiale
+if (protectWithFlashing & & fastestColor1 () == SignalHead.YELLOW)
+aspect = SignalHead.FLASHYELLOW;
+if (fastestColor1 () == SignalHead.RED | | fastestColor1 () == SignalHead.FLASHRED)
+aspect = SignalHead.YELLOW;
+
+/ / Si le signal est distant, montrer exactement ce que le signal avancée fait
+if (distantSignal)
+aspect = fastestColor1 ();
+
+/ / Si la vitesse limitée et vert, réduire au jaune
+if (limitSpeed2)
+aspect = slowerOf (apparence, SignalHead.YELLOW);
+
+/ / Vérifie rouge primordiale sur jaune ou vert
+if (watchSensor1! = null & & watchSensor1.getBean (). getKnownState ()! Sensor.INACTIVE =)
+aspect = SignalHead.RED;
+if (watchSensor2! = null & & watchSensor2.getBean (). getKnownState ()! Sensor.INACTIVE =)
+aspect = SignalHead.RED;
+if (watchSensor3! = null & & watchSensor3.getBean (). getKnownState ()! Sensor.INACTIVE =)
+aspect = SignalHead.RED;
+if (watchSensor4! = null & & watchSensor4.getBean (). getKnownState ()! Sensor.INACTIVE =)
+aspect = SignalHead.RED;
+
+if (watchTurnout! = null & & watchTurnout.getBean (). getKnownState ()! = Turnout.THROWN)
+aspect = SignalHead.RED;
+if (watchTurnout! = null & & watchTurnout.getBean (). getCommandedState ()! = Turnout.THROWN)
+aspect = SignalHead.RED;
+
+/ / Vérifier si le signal est détenu, en forçant un aspect rouge par ce calcul
+if (((SignalHead) sorties [0]). getHeld ())
+aspect = SignalHead.RED;
+
+/ / Gestion des feux d'approche
+doApproach ();
+
+/ / montrer RésulSignal Boartat si changé
+if (apparence! oldAppearance =) {
+((SignalHead) sorties [0]) setAppearance (apparence).;
+if (log.isDebugEnabled ()) Log.DEBUG («Modifier l'apparence de" + nom + "à" + aspect);
+}
+</pre></div>
+
+		    </div}
+}
+
+<div name="face"><a class=section>
+<h2> Aiguillage en Pointe </h2>
+
+<div class=para>
+<p> Ce signal est pour protéger les sorties du talon d'un aiguillage.
+Selon que l'aiguillage est dévié ou direct, le
+train prend deux voies différentes, et le
+signal doit protéger les différents cantons  suivants.  </div>
+		    <div class=para>
+<pre class=code>
+    void doFacing() {
+        int appearance = SignalHead.GREEN;
+        int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
+        Signal Boar
+        // find downstream appearance, being pessimistic if we're not sure of the state
+        int s = SignalHead.GREEN;
+        if (watchTurnout!=null && watchTurnout.getBean().getKnownState() != Turnout.THROWN)
+            s = slowerOf(s, fastestColor1());
+        if (watchTurnout!=null && watchTurnout.getBean().getKnownStSignal Boarate() != Turnout.CLOSED)
+            s = slowerOf(s, fastestColor2());
+
+        // check for yellow, flashing yellow overriding green
+        if (protectWithFlashing && s==SignalHead.YELLOW)
+            appearance = SignalHead.FLASHYELLOW;
+        if (s==SignalHead.RED  || s==SignalHead.FLASHRED)
+            appearance = SignalHead.YELLOW;
+        // if distant signal, show exactly what the home signal does
+        if (distantSignal)
+            appearance = s;
+
+        // if limited speed and green or flashing yellow, reduce to yellow
+        if (watchTurnout!=null && limitSpeed1 && watchTurnout.getBeSignal Boaran().getKnownState()!=Turnout.THROWN)
+            appearance = slowerOf(appearance, SignalHead.YELLOW);
+
+        if (watchTurnout!=null && limitSpeed2 && watchTurnout.getBean().getKnownState()!=Turnout.CLOSED)
+            appearance = slowerOf(appearance, SignalHead.YELLOW);
+           
+Signal Boar
+        // check for red overriding yellow or green
+        if (watchSensor1!=null && watchSensor1.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor2!=null && watchSensor2.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor3!=null && watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor4!=null && watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;Signal Boar
+
+        if ((watchTurnout!=null && watchTurnout.getBean().getKnownState() == Turnout.CLOSED) 
+                && ((watchedSensor1!=null && watchedSensor1.getBean().getKnownState() != Sensor.INACTIVE)))
+            appearance = SignalHead.RED;
+        if ((watchTurnout!=null && watchTurnout.getBean().getKnownState() == Turnout.CLOSED) && ((watchedSensor1Alt!=null && watchedSensor1Alt.getBean().getKnownState() != Sensor.INACTIVE)))
+            appearance = SignalHead.RED;
+        if ((watchTurnout!=null && watchTurnout.getBean().getKnownState() == Turnout.THROWN) && ((watchedSensor2!=null && watchedSensor2.getBean().getKnownState() != Sensor.INACTIVE)))
+            appearance = SignalHead.RED;
+        if ((watchTurnout!=null && watchTurnout.getBean().getKnownState() == Turnout.THROWN) && ((watchedSensor2Alt!=null && watchedSensor2Alt.getBean().getKnownState() != Sensor.INACTIVE)))
+            appearance = SignalHead.RED;
+        
+        // check if turnout in motion, if so force redSignal Boar
+        if (watchTurnout!=null && (watchTurnout.getBean().getKnownState() != watchTurnout.getBean().getCommandedState()) )
+            appearance = SignalHead.RED;
+        if (watchTurnout!=null && (watchTurnout.getBean().getKnownState() != Turnout.THROWN) && (watchTurnout.getBean().getKnownState() != Turnout.CLOSED) )  // checking for other states
+            appearance = SignalHead.RED;
+
+        // check if signal if held, forcing a red aspect by this calculation
+        if (((SignalHead)outputs[0]).getHeld())
+            appearance = SignalHead.RED;
+            
+        // handle approach lighting
+        doApproach();
+        
+        // show result if changed
+        if (appearance != oldAppearance)Signal Boar
+            ((SignalHead)outputs[0]).setAppearance(appearance);
+</pre></div>
+
+</div>
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

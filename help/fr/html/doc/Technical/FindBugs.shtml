@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: FindBugs.shtml,v 1.7 2011/04/17 00:25:21 zoo Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-09-17-->  
+<html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: Static Analysis with FindBugs
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code ">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: FindBugs.shtml,v 1.1 2009/06/03 15:07:30 jacobsen Exp $ -->
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: FindBugs.shtml,v 1.1 2009/06/03 15:07:30 jacobsen Exp $ -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
+
+<H1>JMRI: Analyse statique avec FindBugs</H1>
+
+FindBugs est un outil qui peut examiner le code pour trouver d'éventuels problèmes. Il fait un "analyse statique", en regardant à travers le
+code pour trouver certaines "mauvaises idées connues ":
+Les choses qui sont susceptibles de causer des problèmes occasionnels/intermittents,
+mauvaise performance, etc
+Parce que ce genre de problèmes est difficile à trouver avec les tests,
+les trouver par l'inspection est souvent la seule approche réaliste.
+Disposer d'un outil qui peut faire les inspections automatiquement,
+afin qu'elles puissent se faire à chaque fois que quelque chose est changé,
+protège le code d'une dégradation lente sans que quelqu'un le
+remarque jusqu'à ce qu'il soit trop tard.
+<P>
+Pour plus d'informations sur FindBugs, voir
+<A HREF="http://findbugs.sourceforge.net/"> la page d'accueil FindBugs  </A>.
+<p>
+Nous exécutons sous forme d'une routine FindBugs comme une partie de notre
+<a href="ContinuousIntegration.shtml">processus continue d'intégration</a>.
+Vous pouvez voir les résultats des plus récentes constructions en ligne
+<a href="http://builds.jmri.org/jenkins/job/FindBugs/lastBuild/">ici</a>.
+ 
+<p>
+Si findBugs trouve une erreur positive, un bug qui n'est pas réellemnt un bug, vous pouvez l'éteindre avec une annotation tels que:
+<pre><code>
+@edu.umd.cs.findbugs.annotations.SuppressWarnings("FE_FLOATING_POINT_EQUALITY","OK to compare floats, as even tiny differences should trigger update")
+</code></pre>
+Le second argument "justification" est optionnel, mais hautement recommandé.
+Expliquer pourquoi vous avez ajouté cette annotation pour supprimer un message aidera
+Celui qui viendra après vous et tentera de comprendre le code.
+Il aidera également à vous assurer que vous comprenez correctement la cause du rapport
+du bugg sous-jacent: Parfois ce qui semble un faux positif ne l'est pas vraiment.
+
+<p>
+si vous avez besoin de mettre plus d'un type de message dans une annotation, utilisez la syntaxe en tableau:
+<pre><code>
+@edu.umd.cs.findbugs.annotations.SuppressWarnings("{type1},{type2}","Pourquoi deux sont nécessaire")
+</code></pre>
+
+Les annotations de bug  peuvent l'aider à mieux comprendre votre code. Parfois, ils vont lui donner suffisamment de compréhension
+exemple: quand une variable peut être nulle, que ça ne va plus faire de fausses erreurs positives.
+Pour plus d'information sur ceci, voir la
+<a href="http://findbugs.sourceforge.net/manual/annotations.html">page des annotations Findbugs </a>.
+
+Elle peut être utile pour marquer les classes avec une des annotations suivantes de telle sorte que FindBugs fasse un bon travail de raisonnement à ce sujet:
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckForNull</a> -
+   une variable ou un paramètre peut avoir une valeur nulle ,donc toutes les utilisations devraient convenablement gérer cela.
+<li><a href="http://findbugs.sourceforge.net/manual/annotations.html">edu.umd.cs.findbugs.annotations.CheckReturnValue</a> -
+    cette méthode n'a aucun effet secondaire, il n'y a donc pas lieu de l'appeler sans vérifier de c'est la valeur de retour 
+<li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/Immutable.html">net.jcip.annotations.Immutable</a> -
+    Un objet de cette classe ne peut pas être modifié après sa création. Cela permet à la fois la une meilleure vérification de la logique, et de simplifier également l'utilisation par vos collègues, il est donc bon de marquer les classes avec cette propriété.
+<li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/NotThreadSafe.html">net.jcip.annotations.NotThreadSafe</a> - 
+   une classe qui n'est pas un lien de sécurité,ne devrait donc pas être vérifiée pour les problèmes de simultanéité. Souvent utilisé pour les classes Swing , mais il faut noter que certains composants Swing (par exemple, surveiller les fenêtres, les classes avec les auditeurs) ne sont pas pour accepter l'entrée d'autres liens.
+   <li><a href="http://jcip.net/annotations/doc/net/jcip/annotations/ThreadSafe.html">net.jcip.annotations.ThreadSafe</a> -
+Les classes qui ne doivent être utilisables pour de multiples liens. FindBugs le suppose généralement, mais il est bon de le mettre sur une classe qui est destinée à être un lien de sécurité comme un rappel pour les développeurs futurs.</ul>
+Pour de plus ample informations au sujet de ces annotations, svp voir la 
+<a href="http://jcip.net/annotations/doc/index.html">page dans l'API Concurrence</a>.
+
+<p>
+Simon White a ajouté le support FindBugs à notre Chaine de construction basée sur Antb pendant le développement du JMRI 2.5.5. Sa note sur ceci suit...
+
+<p>
+Comme demande de fonctionnalité par 1716873, j'ai ajouté une tâche Ant pour exécuter FindBugs. Ceci va produire un rapport en HTML dans le même emplacement que le  JMRI jar (c'est à dire le plus haut niveau du répertoire projet ). Notez  la nouvelle tâche exécute en premier ant dist parce FindBugs examine le dossier jmri.jar.
+
+Pour exécuter la tâche:
+<ul>
+<li> Installer Findbugs (pour moi j'ai mis cela dans C: /FindBugs-1.3.8)
+<li> copie FindBugs-ant.jar à partir du répertoire lib FindBugs dans le répertoire
+java/lib
+
+<li> soit exécuter
+ 
+</code><pre>
+ant-Dfindbugs.home = C: / FindBugs-1.3.8 FindBugs (remplaçant le paramètre de votre emplacement d'installation)
+</pre> </code>
+
+<p>
+ou modifier le build.xml et modification du paramètre commenté
+de findbugs.home à votre emplacement d'installation, puis exécutez
+
+</code> <pre>
+ant FindBugs
+</pre> </code>
+</ul>
+
+Sur mon ancienne machine il faut environ 20 minutes, mais votre durée peut varier.
+<p>
+Notez que dans le build.xml j'ai mis le réglage maximal de mémoire-Xmx pour le
+tâche FindBugs pour 1024m.
+Si votre système a plus de mémoire, la stimuler peut accélérer les choses.
+
+<p>
+L'exécution de ceci sur JMRI 2.5.4 donné les résultats suivants:
+<p>
+<table border="1">
+<tr> <td> Avertissements Mauvaise pratique  </td> <td> 164 </td> </tr>
+<tr> <td> Avertissements Correction  < td> <td> 77 </td> </tr>
+<tr> <td> Avertissements expérimentaux  </td> <td> 7 </td> </tr>
+<tr> <td> Avertissements vulnérabilité code malveillant </td> <td> 221 </td> </tr>
+<tr> <td> Avertissements multithread exactitude  < td> <td> 90 </td> </tr>
+<tr> <td> Avertissements Performance  </td> <td> 459 </td> </tr>
+<tr> <td> Avertissements Louche </td> <td> 304 </td> </tr>
+<tr> <th> Total </th> <th> 1322 </th> </tr>
+
+</table>
+
+
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

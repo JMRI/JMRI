@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: SensorAddEdit.shtml,v 1.8 2010/03/26 15:31:18 kevin-dickerson Exp $ -->
+<!-- Translated by Hervé Blorec le 2012/01/07-->
+<HTML LANG="fr">
+<HEAD>
+<TITLE>JMRI: Adding/Editing Sensors</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META CONTENT="Bob Jacobsen" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Sensor Add Edit">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> Ajout/Modification de capteurs</H1>
+<p> Lorsque vous ajoutez un capteur, vous sélectionnez dans la liste déroulante le systeme charset = iso-8859-1 auquel le
+capteur est fixé à.</p>
+src="AddSensor.png" <img>
+<p> Entrez une adresse valide pour ce capteur et si vous le souhaitez saisissez un nom utilisateur qui peut être tout ce que vous voulez pour décrire le capteur.</p>
+
+<H2> Créer un nombre de capteurs</H2>
+<p> Il est également possible de créer un certain nombre de capteurs dans aller. <br>
+Où est affiché «Ajouter une plage" cochez la case pour l'activée.</P>
+<img src="AddTurnoutNumber.png">
+<p> Lors de la validation de la case "Plage Ajouter",  sera ensuite activer le champ "nombre à ajouter" .
+Ici entrez le nombre de capteurs que vous souhaitez ajouter, ce qui créera ensuite un numéro
+ de capteurs séquentiels.</p>
+Si un nom utilisateur n'a pas été entré, un numéro sera ajouté à la fin du nom pour garder
+chaque nom utilisateur unique. <p>
+sont
+<H2>Informations  matérielles spécifiques</H2>
+
+<H3> Nombre RCE  AIU à la cartographie du capteur JMRI</H3>
+L'Unité Auxilliaire d'Entrée ou  l'AIU de RCE permet à la station de commande des RCE de vérifier l'état des
+entrées depuis le réseau. Ils sont référencés dans JMRI comme capteurs avec
+des noms comme «NS785». "NS" signifie "capteur RCE», et 785 est le numéro d'un
+Entrée capteur spécifique.
+<p> L'adresse matérielle peut être saisi de deux façons différentes</p>
+<dl><dd><p> Entrez l'Adresse AIU de la cabine suivie par le numéro Pin séparés par un ":" <br>
+Donc, pour un capteur sur Adresse Pupitre AIU 50, la broche 2, vous voulez entrer dans le champ Adresse matérielle: <br>
+50:2</p>
+<P> Le nombre de capteurs peut aussi être trouvé et saisi dans le champ adresse matérielle en utilisant la formule suivante:</P>
+<P>ID = Capteur  (Adresse Cabine AIU - 1) * 16 + (NIP sur AIU) -1</P>
+<P> Par exemple: L'adresse de la cabine AIU est fixé à 50 et l'un des
+BD20s est relié à la broche 2. Par conséquent, l'ID du capteur serait:</P>
+<P>ID = Capteur (50 - 1) * 16 + (2) -1</P>
+<P></dd>Capteur ID = 785</dl>
+
+<H3>Capteur  LocoNet  pour Cartographie Capteur de JMRI</H3>
+ur
+<p>Les adresses des capteurs LocoNet sont constitués de deux parties différentes du numéro de carte et le numéro de canal. <br>
+Les capteurs peuvent également être configurés à partir des adresses Aiguillages pour l'entrée Aux et interrupteur.</P>
+<p> L'adresse matérielle peut être entrée suiant un certain nombre de façons différentes</p>
+<dl><dd> Entrez le numéro de la carte , suivi par le numéro de canal séparé par un ":" <br>
+Donc, pour un capteur de la carte 11, le canal 1 vous pouvez entrer dans le champ Adresse matérielle: <br>
+11:01</p>
+<p>Pour les capteurs fixés sur les aiguillages, vous entrez dans le champ adresse matérielle "T:" suivie du numéro de l'veux aiguillage.
+Cela va ajouter l'entrée auxiliaire associée à l'aiguillage,  ajouter les entrées auxiliaires et  du commutateur, cliquez sur  ajouter la gamme et  définir le nombre à ajouter à 2. <br>
+Donc pour le capteur fixé à  l'aiguillage 81 vous saisissez les informations suivantes: <br>
+T: 81</p>
+<p> L'autre méthode consiste à calculer l'adresse du Capteur et l'ajouter manuellement dans le champ adresse matérielle en utilisant la méthode suivante</p>
+<p> Si vous voulez calculer l'adresse d'une entrée BDL168, vous pouvez utiliser <br>
+= nombre 16 * (numéro de la carte) + (numéro de canal) - 16</p>
+
+<p> où "le numéro de canal" va de 1 à 16. Par exemple, le premier circuit (numéro 1) de la carte 11 a le numéro: <br>
+numéro = 16 * (11) + (1) - 16 = 161</p>
+
+comme nous l'avons vu dans l'exemple ci-dessus.
+
+
+
+<p> Si vous voulez calculer l'adresse d'une entrée auxiliaire DS54, utilisez: <br>
+numéro = 2 * (numéro d'aiguillage - 1) + 1</p>
+
+<p> Par exemple, l'entrée auxiliaire associée à l'aiguillage81 a le numéro: <br>
+nombre = 2 * (81 - 1) + 1 = 161</p>
+
+<p> Si c'est l'entrée du commutateur, vous ajouter un plus à ce que: <br>
+numéro= 2 * (numéro d'aiguillage - 1) + 2</p>
+
+<p> Par exemple, l'entrée du commutateur associés à l'aiguillage 12 a : <br>
+  numéro = 2 * (12 - 1) + 2 = 24</p>
+</l>
+
+<H3> Les Capteur Lenz XpressNet pour la Cartographie Capteur JMRI</H3>
+<p> Les adresses capteurs XpressNet sont constituées de deux parties différentesl'adresse de l'encodeur de rétrosignalisation et l' adresse du contact.</p>
+<p> L'adresse matérielle peut être entrée dans un certain nombre de façons différentes</p>
+<dl> <dd> Entrezl'adresse de l'encodeur, suivie par le contact séparés par un ":" <br>
+Donc, pour un capteur sur l'adresse retour codeur 99, contact 3 que vous saisissez dans le champ Adresse matérielle: <br>
+99:3</p>
+<p> Si vous souhaitez calculer l'adresse du capteur, il faut soustraire 1 de l'adresse du retour codeur, multipliez ce résultat par 8, puis ajouter le numéro de l'entrée que vous utilisez. <br>
+Par exemple, si vous utilisez le contact 3 sur un encodeur avec l'adresse 99, 99 - 1 = 98. 98 * 8 = 784. 784 3 = 787. <br>
+L'adresse des rétrosignalisations que vous allez utiliser est 787.</P>
+</Dl></dd>
+
+<H3> Capteur  Maple et C/MRI pour Cartographie Capteur JMRI</H3>
+<p> Les  adresses capteur Maple et C/MRI sont constituées de deux parties différentes un ID de nœud et une ID broche/Capteur.</p>
+<p> L'adresse matérielle peut être entrée dans un certain nombre de façons différentes</p>
+<dl> <dd> Entrez l'ID de nœud, suivi par l'ID du capteur, séparés par un «:». Cette méthode peut également être utilisé pour l'adressage alternatif/étendu. <br>
+Donc, pour un capteur sur le nœud 2, broche 3 vous pouvez entrer la ligne suivante dans le champ adresse matérielle: <br>
+02:03</p>
+
+<p> Une autre méthode d'ajout de l'adresse du capteur, est d'utiliser la formule suivante</p>
+Node Id x 1000 + broche. <br>
+Donc, pour un capteur sur le nœud 2, broche 3<br>
+(2x1000) 3 = 2003</p>
+<p> Pour utiliser le schéma adressage alternatif/étendu, se référer au guide de connexion du matériel.</p>
+</Dd></dl>
+<H3> Capteur Grapevine pour la Cartographie Capteur JMRI</H3>
+
+Il ya trois types distincts de capteurs Grapevine:
+<dl>
+<dt>  Détecteurs Série Avancés</dt>
+<dd>
+Jusqu'à trois cartes Détecteur Série Avancée peuvent être attachées  à
+un nœud Grapevine. Chaqu'une offre huit détecteurs d'occupation, et
+associe un détecteur de mouvement avec chacun de ceux-ci.
+<table>
+<tr> Carte l <th></th> <th> Occupation</th> <th> Mouvement</th></tr>
+<td> Maitre</td> <td> 1-8</td> <td> 9-16</td></tr>
+<td> Esclave 1</td> <td> 17-24</td> <td> 25-32</td></tr>
+<td> Esclave 2</td> <td> 33-40</td> <td> 41-48</td></tr>
+</Table>
+</Dd>
+<dt> Capteurs de Série Originaux </dt>
+<dd>
+Les capteurs d'Occupation sur les cartes originales de série remplacent les
+capteurs fixés par les Cartes avancées aux adresses 1 à 8.
+Il n'y a pas de détecteurs de mouvement dans ce cas.
+
+<dt>Capteurs  Parallèles </ dt>
+<dd>Pour les capteurs  parallèles, les connecteurs sur le nœud de Grapevine
+lui-même, apparaissent comme des capteurs JMRI 101 à 108 sur le nœud.
+Si la seconde banque optionnelle de capteurs de série est présente,
+ils apparaissent comme des capteurs de 109 à 116 sur le nœud.</dd>
+
+</dd>
+</dl>
+<!--#include virtual="/Footer" -->
+
+
+
+</BODY>
+</HTML>
+

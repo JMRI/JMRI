@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: CbusConsoleFrame.shtml,v 1.4 2008/11/01 17:33:00 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-11-2--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: CBUS Console Window
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help monitor">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html;  charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Fenêtre Console CBUS
+</H1>
+    
+ <a href="../../../../../../../html/hardware/can/images/console.jpg">
+     <img src ="../../../../../../../html/hardware/can/images/console.jpg "
+          width = "443" height = "265"
+          alt = "écran de l'outil Console" align = "right"></a>
+<br>
+
+JMRI offre une fenêtre moniteur de communication pour que vous puissiez voir ce qui se passe
+sur le lien de communication entre le programme et le réseau CBUS.
+
+<p>
+Une fois que vous ouvrez une fenêtre  moniteur, elle affichera automatiquement
+ tout le trafic sur le lien dans les deux sections
+dans le haut de la fenêtre. La partie gauche contient les
+premières trames CAN. La partie droite interprète leurs significations CBUS
+
+
+<h2> Journalisation Dans Un Fichier </h2>
+
+Parfois, il est utile de capturer ce qui se passe. Par exemple,
+vous pouvez rencontrer un bug (!!), et que vous vouliez envoyer une copie de ce qui
+arrive aux gens qui tentent d'y remédier.
+<p>
+De petites quantités de données peuvent être copiées à partir de la fenêtre journal avec
+la commande "Copier" de vos ordinateurs  (par exemple Ctrl-C ou cmd-C), puis
+collé dans un email.
+<p>
+Si vous voulez en capturer davantage, vous pouvez avoir la fenêtre qui écrit un
+fichier Journal sur le disque de votre ordinateur. Pour ce faire:
+<ol>
+<li> Cliquez sur "Choisir le fichier Journal". Une fenêtre de sélection de fichier
+va s'ouvrir. Naviguez à l'endroit où vous souhaitez stocker le fichier,
+entrez un nom pour le nouveau fichier journal, puis cliquez sur "Enregistrer". Notez que
+si vous choisissez un fichier qui existe déjà, il sera écrasé.
+<li> Lorsque vous êtes prêt à capturer les données que vous souhaitez, cliquez sur
+"Démarrer l'enregistrement" sur la fenêtre du moniteur.
+<li> Lorsque vous avez terminé, cliquez sur "Arrêter l'enregistrement" pour stocker les données
+et fermez le fichier.
+</ol>
+
+<h3> Controles </h3>
+
+<dl>
+<dt> Effacer Écran </dt>
+   <dd>Efface la zone journal au haut de l'écran.
+   </dd>
+<dt>Gel Écran</dt>
+   <dd> Arrête l'acquisition de nouvelles informations, de sorte que l'information saisie cesse de défiler .
+  </dd>
+<dt>Montrer Horodatage </dt>
+   <dd>Normalement, le programme affiche simplement les données de la liaison de communication.
+   Si vous souhaitez que chaque message soit précédé par l'heure à laquelle il a été envoyé ou
+   a été reçu, cochez cette case.
+   </dd>
+<dt>Montrer les priorités</dt>
+   <dd>Si vous souhaitez que chaque message soit précédé par les priorités CBUS utilisés dans
+l'envoi du message, cochez cette case.
+   </dd>
+<dt> message Ajouter</dt>
+   <dd>Si vous souhaitez annoter le journal des messages avec vos propres commentaires, Entrer un
+commentaire et cliquez sur le bouton Ajouter un message.
+   </dd>
+</dl>
+
+<h2>Statistiques Paquet </h2>
+
+Cette partie de la fenêtre affiche le nombre de paquets CBUS reçus et transmis 
+et contrôle le format de l'affichage.
+
+<h3>Controles</h3>
+
+<dl>
+<dt>Effacer</dt>
+  <dd>  Remet le compteur de paquet à zéro.
+</d>
+<dt>Affichage/Entrée des Données décimales </dt>
+   <dd> Normalement, la Fenêtre de Console affiche les données en hexadécimal et traite les données
+entrées en hexadécimal. Pour changer la valeur par défaut en décimal, cochez cette case.
+</dd>
+</dl>
+
+<h2> Les Paquets les Plus Récents Reçus </h2>
+
+Cela affiche les paquets les plus récents reçus du réseayu. les éléments individuels affichés sont la priorité dynamique et mineure, le premier octet de données qui est
+l'opcode CBUS et les octets restants de données, jusqu'à sept
+
+<h3>Controles</h3>
+
+<dl>
+<dt>Copier</dt>
+   <dd> Copie le paquet le plus récent reçus dans les champs envoyer des données par paquets.
+</dd>
+</dl>
+
+<h2>envoyer Paquet</h2>
+
+Ici vous pouvez construire un paquet pour l'envoyé au réseau. Pour un fonctionnement normal,
+Ne modifiez pas les valeurs préchargées dans les champs prioritaires et dynamique normaux..
+Entrez le code opération et le nombre correct d'octets de données (selon le
+opcode).
+<p>
+Si la  case affichage/saisie décimale n'est pas cochée, alors l'entrée des données sera,
+par défaut, traitée comme des hexadécimales Si la case affichage/données saisies décimales 
+est sélectionnée, la saisie de données, sera traitée comme des décimales.
+<p>
+A tout moment, vous pouvez forcer les données saisies pour être traités comme des hexadécimales, décimales
+ou binaire en ajoutant un préfixe "0x", "0d" ou "0b" . Par exemple "0x20", "0d32"
+et "0b00100000« tous donnent une valeur décimale de 32.
+<p>
+En outre, lors de la saisie si la case affichage/données décimales n'est pas cochée
+(mode hexadécimal), toute valeur à trois chiffres ou plus sera
+traités comme binaires. Lors de la saisie si la  case affichage/données décimales est cochée
+(mode décimal), toute valeur de quatre chiffres ou plus seront traités comme binaires.
+
+<h3>Controles</h3>
+
+<dl>
+<dt>Envoyer</dt>
+   <dd> Vérifie le paquet saisi et l'envoie au réseau ou signale une erreur de
+condition détectée (par exemple le nombre d'octets de données ne correspond pas à l'opcode).
+</dd>
+<dt>Effacer</dt>
+   <dd> Efface les champs de saisie de données et précharge les valeurs de priorité.
+</dd>
+</dl>
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

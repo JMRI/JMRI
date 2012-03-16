@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: Files.shtml,v 1.5 2010/01/13 20:21:34 jacobsen Exp $ -->
+ <!--Translated by Hervé Blorec le 2011/10/01 -->
+<title>JMRI: DecoderPro User Guide - Configuration Files</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+
+<H1>Guide Utilisateur DecoderPro - Fichiers de Configuration</H1>
+
+<p>Cette section tente de répondre à la question de savoir ce que contiennent les fichiers de configuration et où sont-ils localisés?
+</p>
+
+<dl>
+<A name="location">
+<dt class=left>Localisation des fichiers de configuration</dt></a>
+<dd class=first>
+Il y a deux endroits où les fichiers de configuration peuvent être trouvés:
+<ol>
+<li>Le répertoire utilisateur preferences JMRI et ses sous-répertoires. A chercher en premier pour n'importe quels fichiers nécessaires.Vous devez mette ici toutes les versions de fichiers localement modifiées pour qu'elles ne soient pas écrasées par une nouvelle version de programme. Tous les fichiers que le programme écrit pour contenir des informations locales, exemple le liste de Fiches, sont aussi écrites ici. 
+<p>
+La localisation varie suivant le type d'ordinateur.  
+La manière la plus aisée pour la trouver est de démarrer un programme JMRI, exemple DecoderPro ou PanelPro et sélectionner "Localisation....." depuis le menu "Aide.
+
+<p>
+Un petit cadeau pour les utilisateurs Windows, si vous allez dans le Menu de Démarrage Windows, dans la section JMRI, vous pouvez sélectionner "Preferences" pour qu'il ouvre le répertoire pour vous.
+
+<p>
+Normalement, il est localisé.
+<ul>
+<li>Sur une machine Linux, regarder pour avoir un répertoire .jmri dans votre répertoire home.
+
+<li>Sur MacOS X, les preferences sont stockées dans un répertoire "JMRI" dans le dossier Library/Preferences dans votre répertoire utilisateur.
+
+<li>Sur Windows, ce peut être un nombre de places dépendant de la version de Windows que vous utilisez et si vous avez plusieurs utilisateurs de configurés. Démarrer en regardant sous "Documents"
+ou "User Documents" ou "Users and Documents".  Vous devez chercher un dossier appelé "JMRI".
+
+</ul>
+Si vous l'avez chercher vous-même, en opposition de la recherche par le programme, Assurez vous de trouver le répertoire préférence , <em>and not</em> le package de l'application originale. Ils sont garder séparés pour simplifier la mise à jour des versions du programme.
+
+Vous saurez si vous avez trouvé le bon emplacement si vous voyez les fichiers preference qui stockent les réglages de vos applications:
+<tt>DecoderProConfig2.xml</tt>, <tt>JmriDemoConfig2.xml</tt> et/ou
+<tt>LocoToolsConfig2.xml</tt>.  Vous pouvez aussi chercher un de ces fichiers pour trouver ce répertoire
+
+<li>Les versions originales distribuées de ces fichiers sont contenues dans un répertoire 'xml' dans le package application et ses sous-répertoires.
+Tout ce que vous modifierez ici sera perdu lors d'une mise à jour du programme vers une nouvelle version.
+</ol>
+</dd>
+
+<dt class=left>Types de fichiers de configuration.</dt>
+<dd>
+Au sein de ces deux emplacements, il y a un nombre de types de fichiers de configuration:
+<ul>
+<li>Decoder definitions - Stockés dans le sous-répertoire 'decoders',ils définissent comment est configuré une famille de décodeurs.
+<li>Programmer definitions - Stockés dans le sous-répertoire 'programmers', ils définissent le format pour les feuilles variées de programmations qui sont disponibles dans Decoder Pro.
+<li>Locomotive configurations - Stockés dans le sous-répertoire 'roster', ils enregistrent les configurations spécifiques de chaque locomotive dans votre liste.
+</ul>
+</dd>
+
+<dt class=left>Fichier Géneral Config </dt>
+<dd>
+il ya aussi quelques fichiers de configuration générale, qui se trouvent dans le .XML de niveau supérieur ou le répertoire prefs:
+<ul>
+<li><tt>roster.xml</tt> - un index de vos locomotives
+<li><tt>decoderIndex.xml</tt> - un index des fichiers de définitions de décodeurs disponibles. Il contient aussi les informations sur le modèle de décodeur spécifique qui utilise ce fichier, comment les identifier, et quelles options ils mettent en œuvre.
+<li><tt>names.xml</tt> - non utilisé durant les opérations normales, c'est une liste de noms standards de variables pour être utilisés dans un programmateur de définitions .
+</ul>
+</dd>
+</dl>
+
+    
+<!--#include virtual="/Footer" -->
+</div>
+</body>
+</html>

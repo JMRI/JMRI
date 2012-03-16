@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: LocoBufferII.shtml,v 1.1 2008/01/13 04:24:44 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-06-16-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI Hardware Guide: Connecting a LocoBuffer II to LocoNet
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">Guide Matériel
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <h1> 
+     Guide Matériel JMRI: Connecter un LocoBuffer II à LocoNet
+      </h1>
+
+
+<p>
+Le  LocoBuffer II offre un moyen très fiable pour
+connecter un port série de l'ordinateur à un LocoNet.
+Il a été produit par la société,de Dick Bronson
+<A HREF="http://www.rr-cirkits.com"> RR-CirKits </a>
+, basé en partie sur la conception LocoBuffer originale, mais est
+actuellement en rupture de production. Vous pourriez être en mesure d'en trouver un
+dans un magasin de modélisme local. Il a été remplacé
+par le
+<A HREF="LocoBufferUSB.shtml"> LocoBuffer-USB </a>,
+qui utilise une connexion USB.
+</p>
+
+<h2>Démarrage conseillé</h2>
+<p>
+la configuration recommandée pour le LocoBuffer II est:
+</ p>
+
+<UL>
+<LI> Réglez les commutateurs sur Off(vers le côté de l'étiquette avant).
+<LI> Branchez le LocoBuffer II  à une alimentation autonome, par exemple
+un bloc alimentation à la tension correcte.
+<LI>
+Démarrer DecoderPro ou tout autre programme et le configurer pour:
+<UL>
+<LI> LocoNet LocoBuffer-II
+<LI> Sélectionnez votre port
+<LI> 19200 bauds
+<LI> Le contrôle de flux matériel
+</UL>
+</UL>
+<h2>Boucle de test</h2>
+<p>
+Le circuit d'entrée LocoBuffer-II et le code lut effectivement depuis le jack de sortie LocoNet
+, donc si vous installez le terminateur LocoNet
+(le petit circuit qui a été livré avec le II LocoBuffer II )
+et mettre SW7-8 à ON (en bas) afin que le circuit d'entrée tire son alimentation du bloc alimentation,
+ alors vous avez créé un test de bouclage. La seule chose qui n'est pas
+testée est la prise LocoNet elle-même.
+</p>
+
+<p>
+Étapes:
+<OL>
+<LI> Débranchez le câble LocoNet
+<LI> Boîtier ouvert (utiliser un petit tournevis pour travailler les loquets dans les petites fentes sur les côtés)
+<LI> Installez le terminateur
+<LI> Mettre sw 7-8 sur On, tous les autres commutateurs sur OFF
+<LI> Définissez les options JMRI LocoBuffer à 19200 bauds et le matériel
+handshake autorisé
+<LI> Ouvrez la fenêtre Moniteur JMRI LocoNet .
+<LI> En utilisant JMRI envoyer certaines commandes (commandes de commutation, par exemple)
+<LI> Les commandes doivent apparaître dans la fenêtre du moniteur et le LocoNet
+La LED d'activité LocoBuffer-II doit clignoter
+<li> Retirer le terminateur (à moins que votre application l'exige)
+<LI> Restaurer les commutateurs LocoBuffer-II à leurs réglages normaux pour votre application
+</OL>
+<p/ >
+
+<h2>Alimentation LocoBuffer II</h2>
+
+Lorsqu'il est alimenté par une alimentation externe, le LocoBuffer II isole complètement
+votre ordinateur du LocoNet, supprimant la possibilité
+des courants de terre qui circulent à travers le câble LocoNet.
+<P>
+Si vous utilisez un ordinateur isolé, par exemple un ordinateur portable qui n'est
+pas connecté à tous les périphériques, vous pouvez configurer les LocoBuffer II
+de sorte qu'il n'a pas besoin d'une alimentation externe. Il recevra alors son
+alimentation du câble RailSynch dans le LocoNet.
+<P>
+Il est fortement conseillé que vous obteniez votre connexion à un ordinateur de travail
+correctement avec une source d'alimentation externe avant de faire cela. De cette façon,
+si des problèmes surviennent lorsque vous essayez d'utiliser l'énergie interne, vous saurez
+ce qui les provoquent et ils seront beaucoup plus facile à diagnostiquer
+<P>
+Pour ce faire, retirez le raccordement d'alimentation et
+régler les commutateurs 7 et 8 sur ON (vers le bas, vers l'illustration interrupteur
+)..
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

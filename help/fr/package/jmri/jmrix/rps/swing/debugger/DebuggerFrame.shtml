@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: DebuggerFrame.shtml,v 1.5 2008/07/28 05:52:54 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-10-27--> 
+<title>JMRI: RPS Debugger</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+<h1> 
+JMRI: Déboggeur RPS 
+</h1>
+
+<a href="../../../../../../html/hardware/rps/images/Debugger.jpg">
+<img src="../../../../../../html/hardware/rps/images/Debugger.jpg" height="262" width="168" alt="RPS Receiver Control window" align="right"></a><br>
+
+La fenêtre du débogueur vous permet de chercher de l'information pendant qu'elle se déplace
+à travers le
+<a href="../../../../../../html/hardware/rps/index.shtml">système RPS</a>.
+
+<p>
+La partie supérieure gauche affiche la valeur du temps de chaque récepteur actif
+chaque fois qu'une lecture est prise.
+
+<p>
+Si une position a été calculée avec succès
+à plusieurs reprises, la valeur "résultante" est affichée pour chaque récepteur.
+Ceci est la différence entre le temps mesuré et le temps que
+le système RPS a attendu pour mesurer si la locomotive était vraiment dans cette position.
+Les Valeur typique sont d'environ plus ou moins 100, correspondant à environ un pouce de précision.
+Si un ou deux récepteurs ont des valeurs résiduelles beaucoup plus grandes, il y a peut être un problème avec les lectures de ces récepteur avec l'émetteur à son emplacement actuel.
+
+<p>
+La section inférieure de la fenêtre affiche la position calculée à partir de chaque lecture.
+Ci-dessous les positions calculées est le code de retour du calcul. Une valeur positive
+ est considérée comme un résultat OK, et une valeur nulle ou négative indique un certain type d'erreur.
+
+<p>
+Il est également possible de taper des valeurs dans les champs et demander au système de les traiter comme
+si elles étaient entrées. La boîte de sélection et bouton en bas sont comment vous faites cela.
+
+<p>
+Le menu "Fichier" comprend un élément "Démarrer Export CSV  ..."  qui peut être utilisé pour copier
+l'entrée brutes du système RPS dans un fichier.
+Une fois que vous avez sélectionnez cette option, il vous est  présenté un dialogue  pour sélectionner le Nom de fichier de sortie. Si vous sélectionnez le nom d'un fichier qui existe déjà, il
+sera retiré avant le début de l'export. Chaque entrée RPS lorsque vous sélectionnez
+un nom de fichier sera écrit dans ce fichier, et le choix du menu va changer pour
+«Arrêter l'exportation CSV ...". Sélectionnez ce choix de menu pour arrêter l'enregistrement et assurer
+que les dernières lignes ont été écrites.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

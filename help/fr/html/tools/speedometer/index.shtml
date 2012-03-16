@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated by Blorec Hervé le 2012-01-21-->
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: index.shtml,v 1.1 2008/02/17 04:07:54 jacobsen Exp $ -->
+<title>JMRI: Speedometer</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h2>Tachymètre</h2>
+
+<p> (Voir aussi la page
+sur la vitesse des NCE <a href="NCE-Speedometer.shtml"></A>)</p>
+
+Les bibliothèques JMRI
+contiennent un outil compteur que vous pouvez utiliser directement depuis l'écran,
+ou le construire dans vos propres applications
+<P>
+Avant vous devrez configurer la mesure de la vitesse .
+<P>
+Pour ce faire, entrez le nombre de capteurs dans les trois champs. C'est un
+nombre (comme 23) pour l'adresse du BDL16, DS54, le canal qui
+présentera un rapport lors du changement d'occupation. La façon la plus simple pour obtenir le bon numéro
+ est d'ouvrir une fenêtre "Moniteur", et déposer une
+locomotive sur le canton qui vous êtes intéresse. Vous verrez 
+le message du capteur, avec le numéro, dans la fenêtre qui ressemble à 
+quelque chose comme ceci:
+<PRE>
+    General sensor input report: contact 161 (DS54 20 ch1 Sw  input)
+        (BDL16 10 A2) is Lo
+</PRE>
+Le numéro de contact, 161 dans ce cas, est ce que vous voulez.
+<P>
+Il y a trois capteurs afin que vous puissiez avoir un intervalle plus court pour les
+vitesses lentes et un intervalle plus long pour des vitesses rapides.
+L'intervalle est à partir du capteur 1 à capteur 2, et à partir du capteur de 1 à
+capteur 3.
+<P>
+Vous devez également choisir "à l'entrée" ou "à la sortie» pour chacun des
+capteurs. Ceci dit si le démarrage/arrêt de l'horloge  lorsque le capteur
+montre que le canton est d'abord occupé, ou quand il montre que le canton est
+ inoccupé.
+<P>
+Vous pouvez également entrer la distance en echelle en pieds entre les différents
+points. Si vous utilisez "sur l'entrée", la mesure utilise l'entrée
+fin du bloc.
+<P>
+Enfin, cliquez sur le bouton "Démarrer". Les trois petits points rouges le long
+le côté droit commenceront à changer de couleur pour indiquer l'état des 
+capteurs sélectionnés: rouge pour "inconnu", aucun message encore vu; Blanc
+pour les «inoccupé»; vert ou jaune pour «occupé».
+<P>
+Une fois que vous cliquez sur le bouton Démarrer, vous ne pouvez pas modifier la configuration.
+Il suffit de fermer cette fenêtre et ouvrir un autre. Vous pouvez avoir plusieurs
+fenêtres d'outils tachymètre ouverte si vous le souhaitez.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

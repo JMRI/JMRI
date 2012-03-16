@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: SoundSetFrame.shtml,v 1.2 2008/07/06 03:59:32 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-10-27--> 
+
+<title>JMRI: RPS Sound Speed Control</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+<h1> 
+JMRI: Contrôle de la Vitesse du Son RPS </h1>
+
+<a href="../../../../../../html/hardware/rps/images/SoundControl.gif">
+<img src="../../../../../../html/hardware/rps/images/SoundControl.gif" height="100" width="278" alt="RPS Receiver Control window" align="right"></a><br>
+
+Cette fenêtre vous permet de surveiller et de contrôler la vitesse du son utilisé par le
+<a href="../../../../../../html/hardware/rps/index.shtml">système RPS</a>.
+<p>
+RPS mesures les temps, et utilise une valeur pour la vitesse du son pour calculer les
+distances correspondantes qu'il utilise pour calculer les positions. Il est important que
+la vitesse du son soit très précise. Si vous voulez mesurer une distance de huit pieds
+au 1/4 de pouce, vous devez mesurer la vitesse du son à environ
+1/1000, obtenant trois chiffres significatifs après la virgule.
+Comme la vitesse du son change légèrement avec les conditions de température, de pression et d'humidité,
+la mesurer automatiquement est très utile.
+<p>
+Cette fenêtre affiche la valeur la vitesse actuelle sur la ligne du haut.
+Selon la façon dont le système fonctionne, cela pourrait changer à l'occasion.
+<p>
+Ci-dessous qui sont deux sections pour contrôler la vitesse.
+<p>
+Dans la section du milieu, vous pouvez directement entrer une nouvelle valeur. Cliquez sur "Valider" pour
+avoir prennent effet immédiatement.
+<p>
+Le RPS peut également calculer la vitesse du son à partir d'une mesure.
+Pour ce faire, vous devez avoir un émetteur RPS fixe dont la distance au récepteur est connue. Entrez la distance connue, la
+Numéro d'identification de l'émetteur, et le numéro du
+récepteur pour lequel vous avez mesuré la distance.
+<p>
+Lorsque le système RPS prend une lecture de cet émetteur, il
+utilisera la distance connue et la mesure de temps pour calculer une mesure de vitesse du son. Cette valeur est affichée dans la ligne de fond.
+<p>
+Si vous cochez la case "Réglage Auto", RPS va lentement mettre à jour la valeur de la vitesse 
+utilisée à chaque fois qu'une lecture est obtenue. La case "Amortissement" 
+détermine combien de moyenne ont été faites: Agrandir les valeurs d'usage à un plus grand nombre de
+moyenne des échantillons lors de la mise à jour. La valeur par défaut de 10 est un bon compromis
+entre le maintien de la stabilité de la valeur, et répondre aux changements.
+
+<p>
+Actuellement, la mise à jour automatique ne fonctionne que lorsque cette fenêtre est ouverte.
+Dès que nous aurons plus d'expérience avec cet outil, nous allons probablement faire que cette
+fonction fonctionne automatiquement, sans avoir besoin de la fenêtre.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

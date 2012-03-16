@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: NodeConfigFrame.shtml,v 1.2 2009/10/11 20:22:54 djduchamp Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-10-28--> 
+<title>JMRI: Maple Node Configuration</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+
+
+<h2> 
+JMRI: Maple configuration des Nœuds
+</H2>
+
+<h3>
+Renseignements généraux:
+</H3>
+<p> Le Systèmes Maple fait que les panneaux  HMI (Human Machine Interface)d'écran tactile 
+peuvent avoir une application dans le modélisme ferroviaire. En particulier, ces écran tactiles
+Panneaux HMI peuvent servir de substituts de  haute Technologie pour les tableaux de bord sur un réseau de chemin de fer miniature
+. Cette mise en œuvre de Maple vers JMRI supporte plusieurs panneaux HMI identiques
+qui peuvent être branchés à divers endroits autour du réseau et utilisés pour contrôler
+et afficher les éléments liés à cet emplacement. Chaque panneau HMI  a un
+micro-ordinateur intégré qui peut être programmé (en utilisant un logiciel de programmation fournis par
+Systèmes Maple) pour afficher un nombre illimité d'écrans sélectionnables par l'utilisateur. Il est
+prévu qu'après le branchement de son panneau, le modéliste sélectionne celui qui est approprié à sa localisation actuelle, permettant au Panneau de servir de dispositif de communication directement dans JMRI. Après avoir terminé les
+tâches à un endroit, l'exploitant débranche le panneau et se déplacent avec lui à un autre endroit, etc. De multiples panneaux HMI fonctionnant simultanément sont pris en charge. </p>
+
+<p> Les "bits bobine" dans les panneaux HMI Maple sont utilisés pour communiquer avec JMRI.
+Dans cette mise en œuvre de Maple vers JMRI, tous les panneaux utilisent le même espace d'adressage et 
+ont exactement les mêmes affectations pour les bits d'entrée et les bits de sortie. Les 1000 premiers "bits bobinage"
+sont réservés pour la configuration de Capteurs. Les Capteurs sont appelés "Bits d'Entrée"
+et sont utilisées pour définir Capteurs JMRI selon les bits d'état (bits bobine) dans votre panneau Maple HMI. Par conséquent, les Capteurs transmettent des informations à partir de panneaux HMI configuré
+pour JMRI. Les 8000 bits suivants sont réservés pour l'affectation comme «Bits de sortie» et sont
+utilisé pour envoyer les paramètres actuels d'appareils de voie et de lumières pour les panneaux Maple. </p>
+
+<h3>
+La communication entre JMRI et Panneaux Maple HMI
+</H3>
+
+<p>La communication Maple travaille par sondages. Chaque panneau est interrogé séparément, et les
+résultats des sondages sont lus ensembles pour paramétrer les capteurs. Par conséquent, si un capteur est
+ACTIF (Maple "1") dans n'importe quel panneau, il est mis ACTIF dans JMRI. Si un capteur est inactif
+(Maple «0») dans tous les panneaux configurés, alors il est INACTIF dans JMRI. Les panneaux sont
+interrogés dans l'ordre où ils sont configurés. <b>Remarque:</b> La commande sondage Maple
+ permet une interrogation  maximum de 99 bits à chaque commande sondage,
+si plus de 99 bits d'entrée sont configurés, les commandes de sondages multiples seront
+nécessaires pour chaque panneau. </p>
+
+<p> Après que tous les panneaux aient été interrogés, le statut des bits de sortie est envoyé aux
+panneaux. Les bits de sortie sont envoyés en mode «diffusion» de sorte que tous les panneaux peuvent recevoir le
+bits à la fois. Le Mode de diffusion est indiqué par une Adresse Station HMI de
+"0". Les bits de sortie commencent par une adresse HMI bits bobine de "1001". Tous les bits de sortie configurés sont envoyés, indépendamment de si le bit est affecté ou non. <b> Remarque: </b>
+La commande d'écriture Maple permet une écriture maximum de 99 bits avec chaque
+transmission des commandes, donc si plus de 99 bits de sortie sont configurés, plusieurs
+transmissions de commandes seront nécessaires. Maintenir le nombre de 
+bits de sortie configurés aussi bas que possible permettra de réduire le nombre de transmission des commandes
+qui doivent être envoyées. </p>
+
+<h3>
+Configuration d'un nouveau Panneau Maple
+</H3>
+
+<p>Un nouveau Panneau Maple (un «Nœud Maple») est configuré en spécifiant son Adresse Station HMI
+, en précisant les temps de temporisation pour les sondages et les envoie, entrants le
+nombre de bits d'entrées et de bits de sortie, et en cliquant sur le bouton <b>Ajouter Panneau</b>. 
+L'Adresse de la Station HMI est propre à chaque panneau HMI, les autres éléments sont les mêmes pour
+tous les panneaux. Chaque élément est décrit ci-dessous: </p>
+<ul>
+<li> <b>Adresse Station HMI</b> - Ceci est l'adresse utilisée par JMRI pour le sondage
+du panneau. Chaque panneau doit avoir une Adresse Station HMI différente. Les Adresses
+de 1 à 99 sont autorisées. Les adresses n'ont pas besoin d'être dans l'ordre
+ numérique. </li>
+<li> <b>Temps d'Attente de la Réponse au Sondage</b> - C'est le temps (millisecondes) à
+attendre une réponse après l'envoi d'une commande de sondage avant de passer à la prochaine
+commande dans le processus de communication. La valeur affichée est la temporisation actuelle, ou, si c'est le premier panneau a être configuré, valeur par défaut de la temporisation.
+.La changer va changer la temporisation pour tous les panneaux. Ce
+ temps devrait être fixé au plus petit nombre qui donne des communications fiables
+entre l'ordinateur et JMRI. <b>Remarque:</b> Quand un panneau est configuré, mais pas
+branché (ne  communique pas ), il expire. C'est le comportement qu'il devrait avoir
+ quand un utilisateur déplace un panneau entre deux emplacements. </li>
+<li> <b> Délai Envoyer</b> - C'est le temps (millisecondes) à
+attendre après l'émission diffusée d'une commande d'écriture avant de passer à la prochaine
+commande dans le processus de communication. La valeur affichée est le
+temps de retard pour l'envoi, ou, si c'est le premier panneau à être configuré, valeur par défaut
+de la temporisation  de l'envoi. La changer va changer les temporisations d'envoi pour tous les panneaux. </Li>
+<li> <b>Nombre de Bits d'Entrée</b> - C'est le nombre de bits d'entrée qui
+seront interrogés lors de l'interrogation de chaque écran HMI. Les valeurs de 1 à 1000 sont
+autorisées. Le nombre de bits d'entrée est
+obligatoirement le même pour chaque panneau, donc si ce nombre est modifié lors de l'ajout
+ ou de modification de panneau, il est changé pour tous les panneaux. Du fait de la limitation
+à 99 bits dans les demandes de scrutation Maple, les commandes de sondages multiples seront
+ nécessaires si ce nombre est supérieur à 99. Alors garder ce nombre à
+la valeur la plus raisonnable, donnera lieu à des communications plus rapides. </li>
+<li> <b>Nombre de Bits de Sortie </b> - C'est le nombre de bits de sortie qui
+seront envoyés en mode de diffusion à la fin de chaque cycle d'interrogation. Les valeurs de
+1 à 8000 sont autorisées. Le nombre de bits de sortie est obligatoirement le même pour chaque panneau, donc si ce nombre est changé lors de l'ajout ou de la
+modification d'un panneau, il est changé pour tous les panneaux. Du fait de la limitation
+à 99 bits dans les demandes  d'écriture Maple, des commandes d'écriture multiples seront
+ nécessaires si ce nombre est supérieur à 99. Alors garder ce nombre à
+une valeur raisonnable, donnera lieu à des communications plus rapides. </li>
+</Ul>
+
+<p><b> Important:</b> Il faut toujours vérifier les messages contenus dans les boites <b>Notes</b> après
+chaque opération! C'est là que les succès ou erreurs seront signalées. </P>
+
+<p> <b>Très Important: </b> N'oubliez pas de sauvegarder vos informations de configuration des Nœud de Panneaux Maple
+ sur le disque après avoir fait les changements. Utilisez le bouton <b>Enregistrer</b> au
+bas de la fenêtre Préférences
+
+<h3>
+Autres opérations
+</H3>
+<p> Pour changer l'un des quatre paramètres communs ( temporisation réponse scrutation, 
+temporisation envoi commande, nombre de bits d'entrée, et/ou le nombre de bits de sortie), entrez l'Adresse de la Station HMI de tout panneau configuré, cliquez sur Modifier Panneau, faire les changements de paramètres désirés, et cliquez sur <b>Panneau mis à Jour</b>. Cela change le paramètre (s)
+dans tous les panneaux configurés. </p>
+<p> Pour voir une liste les Adresses de Station HMI  de tous les panneaux configurés, sélectionnez
+<b>Liste Affectation</b> dans le menu <b>Maple</b>, et déroulez le menu contextuel des <b>Noeuds</b>
+
+<p> Pour changer l'Adresse Station HMI d'un panneau préalablement configuré, entrez l'
+Adresse Station HMI du panneau, cliquez sur <b>Supprimer Panneau</b>, confirmer la suppression,
+entrez la nouvelle Adresse Station HMI, et cliquez sur <b>Ajouter un panneau</b>.Les Adresses Station HMI ne peuvent pas être modifiées via Edition.
+<p> Si vous ajoutez un Capteur avec un nom de système qui adresse une bobine bit au delà du nombre de bits d'entrée configuré, le capteur sera ajouté, et un message <b>Attention Configuration</b> sera délivré. Il n'existe aucun moyen d'accéder à un Capteur qui correspond à un bit d'entrée HMI en dehors de la plage de bits configurée. Donc, si vous
+reçevez un message <b>Attention Configuration </b>, vous devez soit modifier votre <b>Nombres de bits d'entrée</b> configuré ou supprimer le capteur. </p>
+<p> Si vous ajoutez un aiguillage avec un nom de système qui adresse une bobine bit
+en dehors de la plage configurée de bits de sortie, l'aiguillage sera ajouté,
+et un message d'avertissement <b>Attention Configuration </b> sera délivré. La gamme configurée
+des adresses de bits HMI est de 1001 à 1000 + le nombre de bits de sortie,
+correspondant aux adresses JMRI de 1 à travers le nombre de bits de sortie. Il ya
+aucun moyen d'écrire à un aiguillage qui correspond à un bit HMI en dehors de 
+la gamme de bits configurée. Donc, si vous recevez un avertissement de configuration <b>Attention Configuration</b>
+, vous devez soit modifier  votre configuration du <b>Nombre de Bits de Sortie</b> ou  supprimer l'aiguillage. </P>
+<p> JMRI refusera de créer une lumière si elle ne correspond pas à la
+plage d'adresses configurée pour les bits de sortie (voir ci-dessus).</p>
+
+
+<p>Maple= Écran Tactile</p>
+<p>HMI = Interface Homme Machine</p>
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: DS54.shtml,v 1.4 2009/11/04 19:10:04 plocher Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-06-15-->
+<html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: DS54 Examples
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI LocoNet DS54">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+<H1>JMRI: DS54 Examples</H1>
+<p class=subtitle> Exemples d'utilisations de Digitrax DS54 avec JMRI. </p>
+<p>
+Le décodeur d'accessoires DS54  peut être configuré dans un grand nombre de
+cas.
+(<a href="../../../manual/index.shtml"> DecoderPro </a> peut vous aider )
+
+<P>
+Walter Thompson à parcouru les détails de celle-ci:
+
+<P>
+Avec le DS54 par défaut ce sont les msgs LocoNet quand un l'interrupteur
+ou Aux A va au(+) mettant l'aiguillage en état de basculer dans les deux états: 
+<BR>
+Quand Switch A (fil bleu) va au (+), message loconet [b2 8 70 35].
+<BR>
+Lorsque Aux A (fil orange) va au (+), message loconet [b2 8 50 15]
+
+<P>
+Je mets alors «Quand l'entrée du Switch A change, envoyez" = "msg de rétro-signalisation de l' aiguillage"
+<BR>
+Lorsque Switch A (fil bleu) va au (+), message loconet [b2 8 70 36]
+<BR>
+Lorsque Aux A (fil orange) va au (+), message loconet [b2 8 50 15]
+
+<P>
+Je mets alors «Quand l'entrée  Aux A entrée change,  envoyer"="message de rétro-signalisation de l'aiguillage"
+<BR>
+Lorsque Switch A (fil bleu) va au (+,) message loconet [b2 8 70 36]
+<BR>
+Lorsque Aux A (fil orange) va  au (+), message loconet [b2 8 50 16]
+
+<P>
+Par conséquent, lorsque l'interrupteur et les entrées Aux sont réglés pour envoyer un 
+message de rétro-signalisation, les mécanismes de rétro-signalisation intégrés dans les versions récentes
+de JMRI peuvent être utilisés pour suivre l'état de l'aiguillage lorsque 
+les entrées locales sont utilisées pour modifier l'aiguillage.
+
+<h2> Rétro-Signalisation  exacte </h2>
+
+Pour utiliser les informations exactes, vous avez besoin de connecter deux micros-contacts à
+ l'aiguillage et de raccorder le Switch  aux entrées Aux sur la DS54.
+(Vous pouvez utiliser les contacts des Tortoise pour cela)
+<P>
+Configurer le canal DS54 avec:
+<PRE>
+  Aux A, entrée "=" Active ON, déclenchement sur le changement,niveau (+) "
+  Aux A, tâche "=" Pas de changement de sortie " d'	
+  Lorsque  l'entrée Aux A change, envoyer "=" message de rétro-signalisation de l'aiguillage exact "
+  Switch A, entrée "=" Active ON, déclencher sur le changement, niveau (+)"
+  Switch A, tâche, tâche "=" Pas de changement de sortie "
+  Switch A, changement entrée, envoyez "="  message de rétro-signalisation de l'aiguillage exact "
+</PRE>
+Configurer l'aiguillage LT9  (via le tableau aiguillage) pour utiliser la rétro-signalisation action "EXACT".
+<P>
+<table border="1">
+     <tr> <th> Commentaire </th> <th>messages LocoNet </th> </tr>
+     <td>
+             Commencez par l'aiguillage 9 direct <br>
+             commutateur A sera fermé et Aux A ouvert.
+     </td>
+    <td>terminé</td> </tr>
+         <tr> <th colspan="2">&nbsp;</th> </tr>
+    <tr><td>
+            Envoyer une commande "Aiguillage 9  Dévié" à partir depuis <br>
+             le régulateur ou le tableau d'aiguillage
+         </td>
+         <td> <code> [b0 8 10 57] </code> Demande Switch 9 vers Dévié (sortie On) <br>
+             <code> [b0 8 0 47] </code> Demande Switch 9 vers Dévié (sortie Off) </td> </tr>
+     <tr><td>
+             L'aiguillage a  commence à bouger et ouvre l'interrupteur A
+      </td> <td> <code> [b1 8 60 26] </code> L' entrée du commutateur de l'aiguillage 9 est déviée (entrée sur On) </td> </tr>
+     <tr><td>
+	L'aiguillage bouge et ferme l'auxilliaire A et atteint la fin de son mouvement.
+  </td>
+   </td><td>
+	<code>[b1 8 50 16]</code>Aiguillage 9 Entrée Auxilliaire est Déviéet (entrée Off)
+	</td> </tr>
+        <tr><th colspan="2">&nbsp;</th></tr>
+    <tr><td>
+           Maintenant envoyez une commande "Aiguillage 9 Dévié" 
+        </td><td> 
+       <code> [b0 8 30 77] </code> Switch Demande à 9 de Direct (sortie On) <br>
+       <code>  [b0 8 20 67] </code> Switch Demande a 9 de Direct (sortie off)
+ </td> </tr>
+     <tr><td>
+             L'aiguillage commence à bouger, ouvre Aux A
+         </td>
+         <td>
+             <code> [b1 8 40 &nbsp; 6] </code>Entrée Aux de l'aiguillage 9 est Dévié (entrée sur On)
+         </td> </tr>
+    <tr><tr><tr><td>
+            Le Déplacement de l'aiguillage ferme l'interrupteur A et arrive à la fin de sa course.
+         </td> <td>
+             <code> [b1 8 70 36] </code> Entrée de commutateur de l'aiguillage 9 est Direct (Entrée Off)
+        
+        </td></tr>
+</table>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+
