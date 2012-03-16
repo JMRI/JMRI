@@ -1138,19 +1138,20 @@ various trains.</P>
     train depart from one and terminate into the other. For example, say your trains run east and
     west. It is best if you create "East Staging" and "West Staging" and have your trains travel
     from say west staging, on to your layout, do some work, and then terminate into east staging,
-    and visa versa. It is also better to name your staging after real locations. So for example,
-    you might want to model the cities of Springfield and Worcester and have trains come from New
-    York and Boston to service your layout. In this case, New York and Boston are west and east
-    staging respectively. Note that the staging tracks for New York and Boston can be the same
-    physical location on your layout, we just need the two staging names so our train manifests look
-    more prototypical. Also, the program does not allow "cars to go for a ride" from staging. In
-    this case if you only had one staging location and your train returned to it, all cars departing
+    and visa versa. It is also better to name your staging after real locations. So for example, you
+    might want to model the cities of Springfield and Worcester and have trains come from New York
+    and Boston to service your layout. In this case, New York and Boston are west and east staging
+    respectively. Note that the staging tracks for New York and Boston can be the same physical
+    location on your layout, we just need the two staging names so our train manifests look more
+    prototypical. Also, the program does not allow "cars to go for a ride" from staging. In this
+    case if you only had one staging location and your train returned to it, all cars departing
     staging must be set out on to the layout, and new cars picked up and returned to staging. For
     example, say you only used Boston as your staging location. A train departing Boston could
     service Worcester, Springfield, maybe Worcester again before returning to Boston. The program
-    will not allow cars that departed Boston to return to Boston. All of the cars that departed
-    Boston must be set out in Worcester or Springfield. Now if the train terminated in New York, The
-    program could send the cars that Worcester or Springfield didn't want to service to New York.</P>
+    will not allow cars that departed Boston to return to Boston. Therefore, all of the cars that
+    departed Boston must be set out in Worcester or Springfield. Now if the train terminated in
+    New York instead of Boston, the program could send the cars that Worcester or Springfield didn't
+    want to service to New York.</P>
 
    <P>
     <img src="images/EditStaging.png">
