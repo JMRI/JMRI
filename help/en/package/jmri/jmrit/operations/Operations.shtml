@@ -1112,29 +1112,46 @@ are physical tracks in your classification yard. The cars can share the
 same "slough" track until its time to finally sort them into their
 various trains.</P>
 
-<A NAME="Staging"></A>
-<H3>Staging Tracks</H3>
+   <A NAME="Staging"></A>
+   <H3>Staging Tracks</H3>
 
-Staging tracks are normally used to represent locations that generate traffic to and from your
-layout. Many times physical access to staging tracks is limited, therefore the program places
-significant restrictions on how staging tracks are used.
+   Staging tracks are normally used to represent locations that generate traffic to and from your
+   layout. Many times physical access to staging tracks is limited, therefore the program places
+   significant restrictions on how staging tracks are used.
 
-<P>
-<img src="images/EditStaging.png">
-</P>
+   <P>If this is your first time using a computer program to create car movements, it is
+    recommended that you enter a minimum of two staging locations for your operations, and have your
+    train depart from one and terminate into the other. For example, say your trains run east and
+    west. It is best if you create "East Staging" and "West Staging" and have your trains travel
+    from say west staging, on to your layout, do some work, and then terminate into east staging,
+    and visa versa. It is also better to name your staging after real locations. So for example,
+    you might want to model the cities of Springfield and Worcester and have trains come from New
+    York and Boston to service your layout. In this case, New York and Boston are west and east
+    staging respectively. Note that the staging tracks for New York and Boston can be the same
+    physical location on your layout, we just need the two staging names so our train manifests look
+    more prototypical. Also, the program does not allow "cars to go for a ride" from staging. In
+    this case if you only had one staging location and your train returned to it, all cars departing
+    staging must be set out on to the layout, and new cars picked up and returned to staging. For
+    example, say you only used Boston as your staging location. A train departing Boston could
+    service Worcester, Springfield, maybe Worcester again before returning to Boston. The program
+    will not allow cars that departed Boston to return to Boston. All of the cars that departed
+    Boston must be set out in Worcester or Springfield. Now if the train terminated in New York, The
+    program could send the cars that Worcester or Springfield didn't want to service to New York.</P>
 
-A staging track allows you to have all cars and locomotives in a train
-delivered to one track. When terminating a train into staging, the
-program will search for a completely empty track, one with no locomotives or
-cars. The staging track by <A HREF="#TypeRoadLoadRestrictionsStaging">default</A> must
-also service all of the train's car and locomotive types and roads. Trains
-can not share staging tracks; the program will only place one train per
-track. When departing a location with a staging track, all cars and
-locomotives on one track will be assigned to the train. A location can have
-multiple staging tracks, but can't have any other types of tracks,
-spurs, yards, etc. Staging tracks can be at the start of a route, the
-end of the route, or both. Staging tracks in the middle of a route are
-ignored by the program.
+   <P>
+    <img src="images/EditStaging.png">
+   </P>
+
+   A staging track allows you to have all cars and locomotives in a train delivered to one track.
+   When terminating a train into staging, the program will search for a completely empty track, one
+   with no locomotives or cars. The staging track by
+   <A HREF="#TypeRoadLoadRestrictionsStaging">default</A> must also service all of the train's car
+   and locomotive types and roads. Trains can not share staging tracks; the program will only place
+   one train per track. When departing a location with a staging track, all cars and locomotives on
+   one track will be assigned to the train. A location can have multiple staging tracks, but can't
+   have any other types of tracks, spurs, yards, etc. Staging tracks can be at the start of a route,
+   the end of the route, or both. Staging tracks in the middle of a route are ignored by the
+   program.
 
    <p>
     Note if you are running a train to and from the same staging location using the <A
@@ -1142,21 +1159,20 @@ ignored by the program.
     one to depart on and one to return on. Physically the two staging tracks can be the same one. If
     you want to use the same name for your staging tracks, the program allows you to name the
     staging tracks using a hyphen and a number as a suffix. The hyphen and number are not printed on
-    the switch lists or manifests.
-    If you're using <A HREF="#BuildOptions">aggressive</A> mode for building trains, you can <A
-     HREF="#MakeDepartureTrackAvailable">configure</A> the program to allow the train to return to
-    the same staging track that the train departed on.
+    the switch lists or manifests. If you're using <A HREF="#BuildOptions">aggressive</A> mode for
+    building trains, you can <A HREF="#MakeDepartureTrackAvailable">configure</A> the program to
+    allow the train to return to the same staging track that the train departed on.
    </p>
 
-<P>If you require a train leaving staging to have a certain number
-of locomotives, locomotive model, or road name; the program will search all
-staging tracks at the departure location for a train meeting those
-requirements. If you set the locomotive requirements to 0, the program will
-select the next available train from staging; and will ignore the number
-of locomotives leaving that staging track. See <A HREF="#TrainRequires">Optional Train
-Requirements</A> for more info.</P>
+   <P>
+    If you require a train leaving staging to have a certain number of locomotives, locomotive
+    model, or road name; the program will search all staging tracks at the departure location for a
+    train meeting those requirements. If you set the locomotive requirements to 0, the program will
+    select the next available train from staging; and will ignore the number of locomotives leaving
+    that staging track. See <A HREF="#TrainRequires">Optional Train Requirements</A> for more info.
+   </P>
 
-<P>You can if you wish, optionally control which staging tracks a
+   <P>You can if you wish, optionally control which staging tracks a
 train will arrive on and depart. Note that the default "Any" allows any
 train to arrive or depart on the staging track, so if you want to
 restrict a train to a specific track or tracks, you must configure all
