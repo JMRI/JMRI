@@ -645,18 +645,32 @@ To remove an attribute select blank. You can also edit the "[ ] Set out",
 options, the set out, pick up, and move prefixes must be unique.
 
 <A NAME="ManifestComments"></A>
-<H3>Manifests Comments</H3>
+<H3>Manifests Options</H3>
 
-Each location and train route can have an optional comment. You can
-print these comments on your manifest if the "Location" and "Route"
-check boxes are selected respectively. If you want the manifest to show
-how many car loads and empties are in the train, select the "Loads and
-Empties" checkbox. You can also use a 12 hour rather than a 24
-hour clock format on your manifests and switch lists. And finally, you
-can show which train <A HREF="#Timetable">timetable</A> you are using
-when building your trains.
+   The program allows you to customize your train manifest to your liking. There are seven optional
+   checkboxes and their functions in the following paragraphs. 
+   <P>
+   The "Print Valid" checkbox causes the program to print date and time the train was
+   built, which isn't the same as when the manifest was printed.  The print time is always shown at the top
+   right of the manifest.
+   </P>
+   <P>
+    Each location and train route can have an optional comment. You can print these comments on your
+    manifest if the "Location" and "Route" checkboxes are selected respectively. If you want the
+    manifest to show how many car loads and empties are in the train, select the "Loads and Empties"
+    checkbox. You can also use a 12 hour rather than a 24 hour clock format on your manifests and
+    switch lists. Selecting the "Show Timetable" prints which train <A HREF="#Timetable">timetable</A> you are
+    using when building your trains.
+   </P>
+   <P>The last option is "Truncate" and when selected will cause the program to reduce the
+    amount of information printed when setting out or picking up a car at a location that also has a
+    switch list. The idea here is that you have a location that is staffed by an operator with a
+    switch list and he or she will be doing the actual car pick up and set out for the train. Since
+    the switch list contains all of the needed information with regards to where the cars are and
+    eventually where they need to be, the train manifest only shows which cars are being removed and
+    added to the train.</P>
 
-<H3>Add Logo</H3>
+   <H3>Add Logo</H3>
 
 If you want a logo in the top right hand corner of your manifests and
 switch lists, press the "Add Logo" button and select a file with the
