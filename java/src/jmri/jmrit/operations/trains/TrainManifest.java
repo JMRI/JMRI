@@ -110,8 +110,11 @@ public class TrainManifest extends TrainCommon {
 					// no work at this location
 					String s = MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName});
 					// if a route comment, then only use location name and route comment, useful for passenger trains
-					if (!rl.getComment().equals(""))
-						s = routeLocationName+", "+rl.getComment();
+					if (!rl.getComment().equals("")){
+						s = routeLocationName;
+						if (rl.getComment().trim().length()>0)
+							s = s +", "+rl.getComment();
+					}
 					if (r == 0)
 						s = s +", "+rb.getString("departureTime")+" "+train.getDepartureTime();
 					else if (!rl.getDepartureTime().equals(""))
