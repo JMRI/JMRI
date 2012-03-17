@@ -6,7 +6,7 @@
 <jhelpdev version="1.2"> 
 
  <config>
-   <project>JmriHelp_en</project>
+   <project>JmriHelp_fr</project>
    <projectdir>.</projectdir>
    <startpage>index.html</startpage>
    <popupicon>images/popup.gif</popupicon>

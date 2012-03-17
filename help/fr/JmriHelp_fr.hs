@@ -14,14 +14,14 @@
   <name>TOC</name>
   <label>TOC</label>
   <type>javax.help.TOCView</type>
-  <data>JmriHelp_enTOC.xml</data>
+  <data>JmriHelp_frTOC.xml</data>
 </view>
 
 <view>
   <name>Index</name>
   <label>Index</label>
   <type>javax.help.IndexView</type>
-  <data>JmriHelp_enIndex.xml</data>
+  <data>JmriHelp_frIndex.xml</data>
 </view>
 
 <view>
