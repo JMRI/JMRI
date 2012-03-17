@@ -123,6 +123,10 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		// test delete button
 		//f.deleteLocationButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteLocationButton ) );
+		Assert.assertEquals("should be 6 locations", 6, lManager.getLocationsByNameList().size());
+		// confirm delete dialog window should appear
+		pressDialogButton(f, "Yes");
+		// location now deleted
 		Assert.assertEquals("should be 5 locations", 5, lManager.getLocationsByNameList().size());
 		
 		f.dispose();
