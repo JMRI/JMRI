@@ -28,7 +28,8 @@ public class EchoServlet extends HttpServlet {
         response.getWriter().println(String.format(htmlStrings.getString("HeadFormat"),
                 htmlStrings.getString("HTML5DocType"),
                 "JMRI Echo: Request Returned",
-                EchoServlet.class.getSimpleName()));
+                EchoServlet.class.getSimpleName(),
+                ""));
         response.getWriter().println("<h1>Request Returned</h1>");
         response.getWriter().println("<table class=\"data\">\n<tr><th>Header</th><th>Value</th></tr>\n");
         List<String> headers = Collections.list(request.getHeaderNames());
