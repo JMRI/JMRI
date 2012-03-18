@@ -285,7 +285,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     public void sendCimPerformed(java.awt.event.ActionEvent e) {
         String data = "[10700"+srcAliasField.getText()+"]";
-        System.out.println("|"+data+"|");
+        log.debug("|"+data+"|");
         CanMessage m = createPacket(data);
         log.debug("sendCimPerformed");
         tc.sendCanMessage(m, this);
@@ -293,7 +293,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     public void sendVerifyNode(java.awt.event.ActionEvent e) {
         String data = "[180A7"+srcAliasField.getText()+"] "+verifyNodeField.getText();
-        System.out.println("|"+data+"|");
+        log.debug("|"+data+"|");
         CanMessage m = createPacket(data);
         log.debug("sendVerifyNode: "+m);
         tc.sendCanMessage(m, this);
@@ -301,7 +301,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     public void sendRequestEvents(java.awt.event.ActionEvent e) {
         String data = "[182B7"+srcAliasField.getText()+"] "+verifyNodeField.getText();
-        System.out.println("|"+data+"|");
+        log.debug("|"+data+"|");
         CanMessage m = createPacket(data);
         log.debug("sendVerifyNode: "+m);
         tc.sendCanMessage(m, this);
@@ -309,7 +309,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     public void sendEventPerformed(java.awt.event.ActionEvent e) {
         String data = "[182DF"+srcAliasField.getText()+"] "+sendEventField.getText();
-        System.out.println("|"+data+"|");
+        log.debug("|"+data+"|");
         CanMessage m = createPacket(data);
         log.debug("sendEventPerformed: "+m);
         tc.sendCanMessage(m, this);
@@ -317,14 +317,14 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     public void sendReqConsumers(java.awt.event.ActionEvent e) {
         String data = "[1824F"+srcAliasField.getText()+"] "+sendEventField.getText();
-        System.out.println("|"+data+"|");
+        log.debug("|"+data+"|");
         CanMessage m = createPacket(data);
         log.debug("sendEventPerformed: "+m);
         tc.sendCanMessage(m, this);
     }
     public void sendReqProducers(java.awt.event.ActionEvent e) {
         String data = "[1828F"+srcAliasField.getText()+"] "+sendEventField.getText();
-        System.out.println("|"+data+"|");
+        log.debug("|"+data+"|");
         CanMessage m = createPacket(data);
         log.debug("sendEventPerformed: "+m);
         tc.sendCanMessage(m, this);
@@ -333,7 +333,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     public void sendDatagramPerformed(java.awt.event.ActionEvent e) {
         // for now, no more than 8 bytes
         String data = "[1d"+dstAliasField.getText()+srcAliasField.getText()+"] "+datagramContentsField.getText();
-        System.out.println("|"+data+"|");
+        log.debug("|"+data+"|");
         CanMessage m = createPacket(data);
         log.debug("sendDatagramPerformed: "+m);
         tc.sendCanMessage(m, this);
@@ -341,7 +341,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     public void sendDatagramReply(java.awt.event.ActionEvent e) {
         String data = "[1e"+dstAliasField.getText()+srcAliasField.getText()+"] 4C";
-        System.out.println("|"+data+"|");
+        log.debug("|"+data+"|");
         CanMessage m = createPacket(data);
         log.debug("sendDatagramPerformed: "+m);
         tc.sendCanMessage(m, this);
@@ -349,7 +349,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     public void readPerformed(java.awt.event.ActionEvent e) {
         String data = "[1d"+dstAliasField.getText()+srcAliasField.getText()+"] 20 6"+addrSpace.getSelectedIndex()+" "+configAddressField.getText()+" "+configNumberField.getText();
-        System.out.println("|"+data+"|");
+        log.debug("|"+data+"|");
         CanMessage m = createPacket(data);
         log.debug("readPerformed: "+m);
         tc.sendCanMessage(m, this);
@@ -359,7 +359,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         // for now, no more than 8 bytes
         String data = "[1d"+dstAliasField.getText()+srcAliasField.getText()+"] 20 2"+addrSpace.getSelectedIndex()
                         +" "+configAddressField.getText()+" "+writeDataField.getText();
-        System.out.println("|"+data+"|");
+        log.debug("|"+data+"|");
         CanMessage m = createPacket(data);
         log.debug("writePerformed: "+m);
         tc.sendCanMessage(m, this);

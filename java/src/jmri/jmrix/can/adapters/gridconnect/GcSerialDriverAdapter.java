@@ -24,7 +24,7 @@ import gnu.io.SerialPort;
  */
 public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmrix.SerialPortAdapter {
 
-    SerialPort activeSerialPort = null;
+    protected SerialPort activeSerialPort = null;
     
     public GcSerialDriverAdapter() {
         super();
@@ -115,7 +115,7 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
     public void configure() {
         // Register the CAN traffic controller being used for this connection
         //GcTrafficController.instance();
-        TrafficController tc = new GcTrafficController();
+        TrafficController tc = makeGcTrafficController();
         adaptermemo.setTrafficController(tc);
         
         // Now connect to the traffic controller
@@ -128,6 +128,10 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
         //jmri.jmrix.can.ConfigurationManager.configure(mOpt1);
         adaptermemo.configureManagers();
 
+    }
+    
+    protected GcTrafficController makeGcTrafficController() {
+        return new GcTrafficController();
     }
     
     // base class methods for the PortController interface
