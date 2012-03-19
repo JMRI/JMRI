@@ -327,12 +327,6 @@ public class JmriJFrameServlet extends HttpServlet {
 
         response.getWriter().append(rb.getString("FrameDocType"));
         response.getWriter().append(rb.getString("ListFront"));
-        doListMarkup(request, response);
-        response.getWriter().append(rb.getString("ListFooter"));
-
-    }
-
-    public static void doListMarkup(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.getWriter().write(rb.getString("TableHeader"));
         // list frames, (open JMRI windows)
         for (JmriJFrame frame : JmriJFrame.getFrameList()) {
@@ -352,6 +346,7 @@ public class JmriJFrameServlet extends HttpServlet {
             }
         }
         response.getWriter().append("</table>");
+        response.getWriter().append(rb.getString("ListFooter"));
     }
 
     // Requests for frames are always /frame/<name>.html or /frame/<name>.png
