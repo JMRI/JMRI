@@ -53,16 +53,15 @@ public class XMLIOServlet extends HttpServlet implements XmlIORequestor {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         SAXBuilder builder = XmlFile.getBuilder(false);
-        Document doc = null;
         try {
-            doc = builder.build(request.getInputStream());
+            Document doc = builder.build(request.getInputStream());
             this.doXMLIO(response, doc);
         } catch (JDOMException e1) {
             log.error("JDOMException on input: " + e1, e1);
         }
     }
 
-    protected void doXMLIO(HttpServletResponse response, Document doc) throws IOException {
+    protected void doXMLIO(HttpServletResponse response, Document doc) throws ServletException, IOException {
         XMLOutputter fmt = null;
         Element root = null;
 
@@ -115,13 +114,10 @@ public class XMLIOServlet extends HttpServlet implements XmlIORequestor {
             fmt.setFormat(org.jdom.output.Format.getPrettyFormat());
         }
 
-        String docString = fmt.outputString(doc);  //format xml doc to a string
-
         response.setContentType("text/xml");
         response.setStatus(HttpServletResponse.SC_OK);
         response.setHeader("Cache-Control", "no-cache");
-        response.setContentLength(docString.length());
-        response.getWriter().print(docString);
+        response.getWriter().write(fmt.outputString(doc));
     }
 
     @Override
