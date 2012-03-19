@@ -2374,10 +2374,22 @@ public class TrainBuilder extends TrainCommon{
 				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildRouteNoDropLocation"),new Object[]{train.getRoute().getName(), rld.getName()}));
 				continue;
 			}
+			// get the destination
+			Location testDestination = locationManager.getLocationByName(rld.getName());
+			if (testDestination == null){
+				// The following code should not be executed, all locations in the route have been already checked
+				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorRouteLoc"),
+						new Object[]{train.getRoute().getName(), rld.getName()}));
+			}
 			// don't move car to same location unless the route only has one location (local moves) or is passenger, caboose or car with FRED
 			if (rl.getName().equals(rld.getName()) && routeList.size() != 1 && !car.isPassenger() && !car.isCaboose() && !car.hasFred()){
-				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCarLocEqualDestination"),new Object[]{car.toString(), rld.getName()}));
-				continue;
+				// allow cars to return to the same staging location if no other options (tracks) are available
+				if (Setup.isAllowReturnToStagingEnabled() && testDestination.getLocationOps() == Location.STAGING && trackSave == null){
+					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildReturnCarToStaging"),new Object[]{car.toString(), rld.getName()}));
+				} else {			
+					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCarLocEqualDestination"),new Object[]{car.toString(), rld.getName()}));
+					continue;
+				}
 			}
 			// any moves left at this location?
 			if (rld.getCarMoves() >= rld.getMaxCarMoves()){
@@ -2385,17 +2397,10 @@ public class TrainBuilder extends TrainCommon{
 				continue;
 			}
 
-			noMoreMoves = false;
-			
-			// get a "test" destination and a list of the track locations available			
+			noMoreMoves = false;				
 			Location destinationTemp = null;
 			Track trackTemp = null;
-			Location testDestination = locationManager.getLocationByName(rld.getName());
-			if (testDestination == null){
-				// The following code should not be executed, all locations in the route have been already checked
-				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorRouteLoc"),
-						new Object[]{train.getRoute().getName(), rld.getName()}));
-			}
+
 			if (!testDestination.acceptsTypeName(car.getType())){
 				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropLocation"),new Object[]{car.toString(), car.getType(), testDestination.getName()}));
 				continue;
