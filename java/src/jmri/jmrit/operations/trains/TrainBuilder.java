@@ -2610,19 +2610,22 @@ public class TrainBuilder extends TrainCommon{
 				new Object[]{car.toString(), car.getType(), car.getLoad(), car.getTrackName()}));
 		// figure out which loads the car can use
 		List<String> loads = CarLoads.instance().getNames(car.getType());
-		// start from the end of the list so we generate interesting loads
-		// TODO use random loads rather that the first one that works
 		for (int i=loads.size()-1; i>=0; i--){
 			String load = loads.get(i);
-			if (terminateStageTrack.acceptsLoadName(load) && train.acceptsLoadName(load)){
-				car.setLoad(load);
-				car.setLoadGeneratedFromStaging(true);
-				// is car part of kernel?
-				car.updateKernel();
-				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCreateNewLoadForCar"),
-						new Object[]{car.toString(), car.getLoad(), terminateStageTrack.getLocation().getName(), terminateStageTrack.getName()}));
-				return true;
-			}				
+			if (!terminateStageTrack.acceptsLoadName(load) || !train.acceptsLoadName(load))
+			loads.remove(i);
+		}
+		// Use random loads rather that the first one that works to create interesting loads
+		if (loads.size()>0){
+			int rnd = (int)(Math.random()*loads.size());
+			String load = loads.get(rnd);
+			car.setLoad(load);
+			car.setLoadGeneratedFromStaging(true);
+			// is car part of kernel?
+			car.updateKernel();
+			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCreateNewLoadForCar"),
+					new Object[]{car.toString(), car.getLoad(), terminateStageTrack.getLocation().getName(), terminateStageTrack.getName()}));
+			return true;
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildUnableNewLoad"), new Object[]{car.toString()}));
 		return false;
