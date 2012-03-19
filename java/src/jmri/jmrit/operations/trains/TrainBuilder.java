@@ -2610,7 +2610,9 @@ public class TrainBuilder extends TrainCommon{
 				new Object[]{car.toString(), car.getType(), car.getLoad(), car.getTrackName()}));
 		// figure out which loads the car can use
 		List<String> loads = CarLoads.instance().getNames(car.getType());
-		for (int i=0; i<loads.size(); i++){
+		// start from the end of the list so we generate interesting loads
+		// TODO use random loads rather that the first one that works
+		for (int i=loads.size()-1; i>=0; i--){
 			String load = loads.get(i);
 			if (terminateStageTrack.acceptsLoadName(load) && train.acceptsLoadName(load)){
 				car.setLoad(load);
