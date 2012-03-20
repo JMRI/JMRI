@@ -469,11 +469,12 @@ the departure train is built. For trains that return to same staging location, t
 the train to return to the same track it departed on. This option is only available when using
 the <A HREF="#BuildOptions">aggressive</A> mode for building trains.
 
+<A NAME="AllowCarsToReturnToStaging"></A>
    <H3>Allow cars to return to staging if needed</H3>
 
    When a train departs and returns to the same staging location, it is regarded as a turn by the
    program. A turn normally takes cars from staging, sets them out on the layout, picks up new cars
-   and returns to staging with those cars. The program normally doesn't allow the same cars to depart and
+   and returns to staging with those cars. Normally the program doesn't allow the same cars to depart and
    return to staging. However, it may be desirable to allow the train carry the cars
    rather than having the program report that cars in staging couldn't be delivered to destinations
    on the layout. Selecting this option allows a turn to transport cars to and from the same
@@ -1144,25 +1145,22 @@ various trains.</P>
    layout. Many times physical access to staging tracks is limited, therefore the program places
    significant restrictions on how staging tracks are used.
 
-   <P>If this is your first time using a computer program to create car movements, it is
-    recommended that you enter a minimum of two staging locations for your operations, and have your
-    train depart from one and terminate into the other. For example, say your trains run east and
-    west. It is best if you create "East Staging" and "West Staging" and have your trains travel
-    from say west staging, on to your layout, do some work, and then terminate into east staging,
-    and visa versa. It is also better to name your staging after real locations. So for example, you
-    might want to model the cities of Springfield and Worcester and have trains come from New York
-    and Boston to service your layout. In this case, New York and Boston are west and east staging
+   <P>
+    If this is your first time using a computer program to create car movements, it is recommended
+    that you enter a minimum of two staging locations for your operations, and have your train
+    depart from one and terminate into the other. For example, say your trains run east and west. It
+    is best if you create "East Staging" and "West Staging" and have your trains travel from say
+    west staging, on to your layout, do some work, and then terminate into east staging, and visa
+    versa. It is also better to name your staging after real locations. So for example, you might
+    want to model the cities of Springfield and Worcester and have trains come from New York and
+    Boston to service your layout. In this case, New York and Boston are west and east staging
     respectively. Note that the staging tracks for New York and Boston can be the same physical
     location on your layout, we just need the two staging names so our train manifests look more
-    prototypical. Also, the program does not allow "cars to go for a ride" from staging. In this
-    case if you only had one staging location and your train returned to it, all cars departing
-    staging must be set out on to the layout, and new cars picked up and returned to staging. For
-    example, say you only used Boston as your staging location. A train departing Boston could
-    service Worcester, Springfield, maybe Worcester again before returning to Boston. The program
-    will not allow cars that departed Boston to return to Boston. Therefore, all of the cars that
-    departed Boston must be set out in Worcester or Springfield. Now if the train terminated in
-    New York instead of Boston, the program could send the cars that Worcester or Springfield didn't
-    want to service to New York.</P>
+    prototypical. Note that if you use only one staging location that the program doesn't normally
+    allow cars to travel from staging and return to the same staging location. If you want the
+    program to allow this type of operation, see Settings-&gt;Tools-&gt;<A
+     HREF="#AllowCarsToReturnToStaging">Options</A>
+   </P>
 
    <P>
     <img src="images/EditStaging.png">
@@ -2133,13 +2131,13 @@ train.
     caboose if one was assigned to the train, and then add a new one to the train. Use this option
     to also add a caboose to the train if the train departed without a caboose.
    
-<P>You can also request helper locomotives for those long up hill
-battles that your train might experience. The current code only adds a
-comment to the manifest requesting helper service starting at the
-location you select and removes the helper service at the location you
-select.</P>
 
-<A NAME="TrainScripts"></A>
+   <P>You can also request helper locomotives for those long up hill battles that your train
+    might experience. The current code only adds a comment to the manifest requesting helper service
+    starting at the location you select and removes the helper service at the second location
+    specified by you.</P>
+
+   <A NAME="TrainScripts"></A>
 <H3>Scripts</H3>
 
 If you want to run a <a HREF="../../../../html/tools/scripting/index.shtml">script</a> when a train is built, moves or terminates, select
