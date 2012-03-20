@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2008 -->
+<!-- $Id: scripting.shtml,v 1.3 2008/07/16 10:46:09 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-11-06-->
+<title>JMRI: CAN Network Support</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset= utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1>
+JMRI: Scripts CAN </h1>
+
+JMRI script peut être utilisé pour
+envoyer et recevoir des trames CAN.
+Vous pouvez l'utiliser pour créer des routines de test pour
+des cartes en cours de développement, etc
+
+<p>
+Cette page décrit les extensions CAN pour les scripts JMRI.
+Pour plus d'informations sur le script JMRI lui-même,
+voir les
+<a href="../../tools/scripting/index.shtml"> pages d'aide </a>.
+
+<p>
+Il y a une base
+<a href="../../../../../jython/CanExample.py"> CanExample.py </a>
+exemple de script dans le répertoire jython.
+
+<h2>Eenvoi des Trames </h2>
+
+Les Trames CAN sont créés comme des objets, puis mis en file d'attente pour
+transmission. L'en-tête (ID) et les données sont traitées
+séparément.
+
+<code><pre>
+frame = jmri.jmrix.can.CanMessage(2)  # charge 2 bytes
+frame.setId(0x123)
+frame.setElement(0, 0x45)
+frame.setElement(1, 0x67)
+jmri.jmrix.can.TrafficController.instance().sendCanMessage(frame, None)
+</pre></code>
+
+<h2>Réception de Trames CAN</h2> Un script peut écouter les trames CAN comme elles sont reçues
+du bus, et séparément pour les trames CAN qui sont
+transmises sur le bus par JMRI.
+L'interface fournit ces CanListener séparément
+via des procédures "réponse"et "message", respectivement.
+
+<code><pre>
+class MyCanListener (jmri.jmrix.can.CanListener) :
+    def message(self, msg) :
+        # gère la transmission des trames CAN en ignorant leurs retours
+    def reply(self, msg) :
+        # gère la réception des trames CAN en imprimant leur contenu
+        print "received Frame"
+        print "ID: 0x"+java.lang.Integer.toHexString(msg.getId())
+        print "content: ", msg.toString()
+        return
+    
+jmri.jmrix.can.TrafficController.instance().addCanListener(MyCanListener())
+</pre></code>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

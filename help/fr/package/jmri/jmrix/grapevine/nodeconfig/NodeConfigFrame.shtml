@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: NodeConfigFrame.shtml,v 1.3 2008/11/01 17:33:00 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-11-1--> 
+
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Configure Grapevine Nodes
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help configure grapevine node">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> Configurer les nœuds Grapevine
+</H1>
+    
+
+<p>
+Les nœud Grapevine doivent être configurés avant les travaux de saisie.
+
+<p>
+Le logiciel se décline en trois versions distinctes:
+<dl>
+<dt> 2002 nœud, version 6 ou ultérieure </dt>
+<dd> Généralement considéré comme la meilleure </dd>
+
+<dt> 2002 nœud, version précedent la version 6 </dt>
+<dd> Si vous avez un de celles-ci, vous devriez probablement mettre à jour le logiciel </dd>
+
+<dt> 2000 (original) noeud </dt>
+<dd> Bien que JMRI a le code pour soutenir ces derniers, ils n'ont pas été testés.
+Si vous rencontrez des problèmes, s'il vous plaît laissez-nous désormais  améliorer le soutien
+pour ces cartes. </dd>
+
+</dl>
+
+Bien qu'a l'heure actuelle il n'y ait pas de propriétés supplémentaires, nous nous attendons à
+ éventuellement ajouter plus d'informations ici dès nous apprendront du nouveau au sujet
+des capacités des nœuds Grapevine.
+<H1>Configure Grapevine Nodes
+</H1>
+    
+This is the help/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame help page
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

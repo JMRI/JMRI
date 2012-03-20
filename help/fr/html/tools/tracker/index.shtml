@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: index.shtml,v 1.3 2008/02/17 19:32:58 jacobsen Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-09-28-->
+<html lang="fr">
+<head>
+  <TITLE>
+ 	JMRI: Block Tracking
+  </TITLE>
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+
+  <META content="Bob Jacobsen" name=Author>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="keywords"
+        content="java model railroad JMRI block tracking">
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<H2>
+JMRI: Suivi en Cantons
+</H2>
+
+<h3>
+Renseignements généraux
+</h3>
+
+Les Systèmes de contrôle de modèle ferroviaire ne peut généralement pas vous dire quel
+train occupe un morceau particulier de voie à un moment donné.
+<P>
+Cela est regrettable, car il y a beaucoup de raisons pour vouloir le 
+ savoir. Par exemple, vous voudrez peut-être commander tous les trains
+qui atteignent un signal rouge particulier  pour s'arrêter. Mais vous ne pouvez pas faire ça
+sauf si vous savez  <i>quel </i>est le train  qui a atteint le signal.
+<P>
+JMRI fournit des outils expérimentaux
+de suivi pour les trains qui se déplacent sur le réseau.
+
+<h2>
+Concepts de base
+</h2>
+
+Imaginez une simple boucle de voie qui a été câblée avec des capteurs d'occupation
+sur les différents segments de la voie, que nous appellerons «Cantons».
+Imaginez le train est dans le canton A, et va bientôt passer au
+canton B, puis C.
+<P>
+Au début, le capteur pour le canton A est montré actif. Comme le train se déplace dans
+le canton B, le capteur pour B deviendra actif. Lorsque le train a complètement quitté A
+, son de capteur deviendra inactif. Etc 
+<P>
+Même si nous ne savons pas d'un canton particulier  s'il est actif ou
+pas (occupé ou non), en se penchant également sur l'occupation des
+cantons adjacents on peut en savoir plus. Dans l'exemple ci-dessus, si le code
+savait que le train 321 était dans le canton A, lorsque le canton B devient actif, le programme
+peut déduire que 321 est désormais également dans le canton B.<P>
+
+.
+<P>
+Cela ne fonctionne pas toujours, malheureusement. Imaginons le cas ci-dessus, où il 
+y a à la fois un train en A et aussi un train en C. Lorsque B va d'inactif à
+actif (inoccupé au occupé), quel train a pénétré dans B? Celui de
+A, ou celui de C?
+<P>
+Une partie de cette ambiguïté peut être enlevé par un arrangement soigneux de la détection des cantons qui doivent être courts
+, et en utilisant une logique plus intelligente qui 
+pense à la direction et la priorité des trains. Mais il est clair que
+même la voie droite pose quelques problèmes.
+
+<P>
+Les aiguillages ajoutent une couche supplémentaire de complexité.
+Imaginez un train
+présent dans le canton à côté de la voie directe (fermée) , et un autre
+ présent dans la voie déviée (jetée) .
+Lorsque le capteur d'occupation pour l'aiguillage devient actif, quel train 
+est entré dans l'aiguillage de la voie? Cela dépend de quelle manière
+l'aiguillage est positionné, de sorte que le programme doit être en mesure de
+considérer cette information.
+
+<h2>Outils Canton JMRI </h2>
+
+JMRI fournit une classe "Canton" pour gérer le suivi.
+
+<P>
+Notez que ceci est le code de test, et que
+toutes les fonctions ne sont pas complètement présentes. Par exemple, vous ne pouvez pas
+stocker des objets de cantons dans un fichier de configuration, ils doivent être manuellement
+créé dans vos scripts. Cette limitation sera supprimée avec le temps.
+
+<h3> Tableau de Canton </h3>
+
+Le <a href="../../../package/jmri/jmrit/beantable/BlockTable.shtml">Tableau Canton </a>
+vous permet de voir l'état de vos cantons.
+
+<h3> Questions </h3>
+
+Il n'existe aucune exigence fonctionnelle pour une lettre type dans le nom système, mais
+par convention, nous utilisons 'B' pour 'bloc'(canton). L'implémentation par défaut n'est pas
+spécifiques au système, donc un système de lettre «I» est approprié. Cela conduit à
+noms de système comme "IB201".
+
+<p> La direction d'un canton est fixée par la direction de l'arrivée du train
+. Quand un train se trouve à venir par un chemin particulier, que
+GetFromBlockDirection chemin devient la direction du train dans ce canton.
+
+Questions <P>:
+<UL>
+<LI> Ne gère pas un train tirant derrière lui un autre :
+      <UL>
+      <LI> Lorsque le deuxième train arrive, le capteur est déjà actif, la valeur est inchangée (mais la valeur ne peut
+          être un simple objet de toute façon)
+     <LI> Quand le 1er train quitte le canton, le capteur reste actif, donc la valeur demeure celle du 1er train
+      </ UL>
+<LI> L'hypothèse est que le train va seulement passer par un aiguillage défini. Par exemple, un train peut
+      venir dans le canton de l'aiguillage de la voie principale, même si l'aiguillage est dirigé vers l'évitement.
+<LI> Ne gère pas les trains se suivant étroitement où il n'y a qu'un seul
+     canton électrique par signal. Pour ce faire, il a probablement besoin d'un certain type de
+     logique pour «assumer qu'un train ne recule pas . Une meilleure solution est d'avoir de multiples
+      capteurs et des objets cantons entre chaque tête de signal.
+<li> Si un train change de sens dans un canton et le remonte  (par exemple B1 à B2 à B1),
+      le canton qui est rentré obtiendra une direction à jour, mais la direction de ce canton (B2 dans l'exemple)
+      n'est pas mis à jour. En d'autres termes, nous n'avons pas remarqué que le train avait fait marche arrière.
+</UL
+<P>
+Ne pensez pas que seulement un objet canton unique représente un morceau de voie.
+Pour permettre un développement indépendant, il doit être possible pour des objets canton multiples 
+de prendre soin d'une section particulière de la voie.
+
+<h3>  Information Technique</h3>
+Pour plus d'informations techniques, consultez les pages JavaDoc pour
+<ul>
+<li> <a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/Block.html">Canton </a> - représente chaque canton et ses connexions
+<li> <a href="http://jmri.sourceforge.net/JavaDoc/doc/jmri/Path.html"> chemin </a> - représente les connexions depuis et vers un autre canton, y compris
+Les  paramètres des aiguillages, etc, qui sont nécessaires.</ul>
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

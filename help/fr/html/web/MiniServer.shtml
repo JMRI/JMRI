@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated by Blorec Hervé le 2012-01-23-->
+<html lang="fr">
+<head>
+<!-- Copyright 2008 -->
+<!-- $Id: MiniServer.shtml,v 1.2 2010/01/29 03:05:59 jacobsen Exp $ -->
+<title>JMRI: Mini Web Server</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1> 
+JMRI: Mini Serveur Web
+</H1>
+
+Le mini serveur web JMRI est censé être un moyen rapide et facile
+ pour les modélistes ferroviaires, pas de maîtrise du Web,
+pour obtenir une connexion Internet pour JMRI et fonctionner. Si vous voulez vraiment
+ avoir un serveur web puissant, vous feriez mieux
+de télécharger une copie de
+<a href="http://httpd.apache.org/"> Apache</a>
+et
+<a href="http://tomcat.apache.org/"> Tomcat</a>
+et d'apprendre à configurer ceux-ci, plutôt que d'essayer d'obtenir 
+beaucoup plus de performances hors du serveur mini web JMRI. Mais si vous
+devez le reconfigurer, cette page fournit des informations supplémentaires.
+
+<h2> Configuration</h2>
+
+Plusieurs fichiers de propriétés configurent le mini serveur web JMRI et ses
+fonctionnalités par défaut.
+
+<dl>
+<dt> JMRI/web/miniserver/Services.properties
+<dd> Ce fichier fournit une cartographie à partir d'URL aux servlets qui
+les manipulent. C'est très utile pour contrôler l'accès aux
+FileServlet (qui sert le contenu de fichiers locaux), et
+cartographie de l'URL qui correspond aux panneaux JMRI via le
+<a href="FrameServlet.shtml"> FrameServlet</a>.
+
+<dt> JMRI/web/miniserver/Html.properties
+<dd> fournit le texte "boiler plate" pour les réponses HTTP et certaines
+Réponses HTML.
+
+<dt> JMRI/web/miniserver/servlet/fileservlet/FileServletPaths.properties
+<dd> Cartes URL présentée à la FileServlet pour localisation dans le système de fichiers.
+Ce servlet est un peu spécifiques-JMRI, en ce qu'il connait l'emplacement
+du répertoire courant préférences JMRI, voir le commentaire à l'avant du dossier.
+
+<dt> JMRI/web/miniserver/servlet/fileservlet/FileServletTypes.properties
+<dd> Indique le type MIME à retourner pour un fichier basé sur le
+suffixe du fichier.
+
+
+</Dl>
+
+<h2> Sécurité</h2>
+
+Par défaut, JMRI permet seulement un accès limité à votre ordinateur.
+Seuls les fichiers qui sont situés dans le répertoire de distribution JMRI
+ou le répertoire préférences JMRI seront fournis en réponse à une
+demandes. Ce n'est pas une sécurité étanche , cependant, et vous devriez faire
+attention à ne pas mettre du contenu important dans ces répertoires ou de lien
+vers d'autres parties de votre ordinateur.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

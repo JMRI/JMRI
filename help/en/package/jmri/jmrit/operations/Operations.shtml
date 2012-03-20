@@ -467,9 +467,21 @@ but not delivered to staging, deselect this feature.
 When selected the departure track in staging becomes available for other trains immediately after
 the departure train is built. For trains that return to same staging location, this option allows
 the train to return to the same track it departed on. This option is only available when using
-the <A HREF="#BuildOptions">aggressive</A> mode for building trains. 
+the <A HREF="#BuildOptions">aggressive</A> mode for building trains.
 
-<A NAME="PromptDepartureTrack"></A>
+<A NAME="AllowCarsToReturnToStaging"></A>
+   <H3>Allow cars to return to staging if needed</H3>
+
+   When a train departs and returns to the same staging location, it is regarded as a turn by the
+   program. A turn normally takes cars from staging, sets them out on the layout, picks up new cars
+   and returns to staging with those cars. Normally the program doesn't allow the same cars to depart and
+   return to staging. However, it may be desirable to allow the train carry the cars
+   rather than having the program report that cars in staging couldn't be delivered to destinations
+   on the layout. Selecting this option allows a turn to transport cars to and from the same
+   staging location. Note that when this options is selected, that the program will only return cars
+   to staging when destinations are not available on the layout.
+   
+    <A NAME="PromptDepartureTrack"></A>
 <H3>Prompt for Departure Track from Staging</H3>
 
 If you would like the program to ask you which track a train should
@@ -645,18 +657,32 @@ To remove an attribute select blank. You can also edit the "[ ] Set out",
 options, the set out, pick up, and move prefixes must be unique.
 
 <A NAME="ManifestComments"></A>
-<H3>Manifests Comments</H3>
+<H3>Manifests Options</H3>
 
-Each location and train route can have an optional comment. You can
-print these comments on your manifest if the "Location" and "Route"
-check boxes are selected respectively. If you want the manifest to show
-how many car loads and empties are in the train, select the "Loads and
-Empties" checkbox. You can also use a 12 hour rather than a 24
-hour clock format on your manifests and switch lists. And finally, you
-can show which train <A HREF="#Timetable">timetable</A> you are using
-when building your trains.
+   The program allows you to customize your train manifest to your liking. There are seven optional
+   checkboxes and their functions in the following paragraphs. 
+   <P>
+   The "Print Valid" checkbox causes the program to print date and time the train was
+   built, which isn't the same as when the manifest was printed.  The print time is always shown at the top
+   right of the manifest.
+   </P>
+   <P>
+    Each location and train route can have an optional comment. You can print these comments on your
+    manifest if the "Location" and "Route" checkboxes are selected respectively. If you want the
+    manifest to show how many car loads and empties are in the train, select the "Loads and Empties"
+    checkbox. You can also use a 12 hour rather than a 24 hour clock format on your manifests and
+    switch lists. Selecting the "Show Timetable" prints which train <A HREF="#Timetable">timetable</A> you are
+    using when building your trains.
+   </P>
+   <P>The last option is "Truncate" and when selected will cause the program to reduce the
+    amount of information printed when setting out or picking up a car at a location that also has a
+    switch list. The idea here is that you have a location that is staffed by an operator with a
+    switch list and he or she will be doing the actual car pick up and set out for the train. Since
+    the switch list contains all of the needed information with regards to where the cars are and
+    eventually where they need to be, the train manifest only shows which cars are being removed and
+    added to the train.</P>
 
-<H3>Add Logo</H3>
+   <H3>Add Logo</H3>
 
 If you want a logo in the top right hand corner of your manifests and
 switch lists, press the "Add Logo" button and select a file with the
@@ -1112,29 +1138,44 @@ are physical tracks in your classification yard. The cars can share the
 same "slough" track until its time to finally sort them into their
 various trains.</P>
 
-<A NAME="Staging"></A>
-<H3>Staging Tracks</H3>
+   <A NAME="Staging"></A>
+   <H3>Staging Tracks</H3>
 
-Staging tracks are normally used to represent locations that generate traffic to and from your
-layout. Many times physical access to staging tracks is limited, therefore the program places
-significant restrictions on how staging tracks are used.
+   Staging tracks are normally used to represent locations that generate traffic to and from your
+   layout. Many times physical access to staging tracks is limited, therefore the program places
+   significant restrictions on how staging tracks are used.
 
-<P>
-<img src="images/EditStaging.png">
-</P>
+   <P>
+    If this is your first time using a computer program to create car movements, it is recommended
+    that you enter a minimum of two staging locations for your operations, and have your train
+    depart from one and terminate into the other. For example, say your trains run east and west. It
+    is best if you create "East Staging" and "West Staging" and have your trains travel from say
+    west staging, on to your layout, do some work, and then terminate into east staging, and visa
+    versa. It is also better to name your staging after real locations. So for example, you might
+    want to model the cities of Springfield and Worcester and have trains come from New York and
+    Boston to service your layout. In this case, New York and Boston are west and east staging
+    respectively. Note that the staging tracks for New York and Boston can be the same physical
+    location on your layout, we just need the two staging names so our train manifests look more
+    prototypical. Note that if you use only one staging location that the program doesn't normally
+    allow cars to travel from staging and return to the same staging location. If you want the
+    program to allow this type of operation, see Settings-&gt;Tools-&gt;<A
+     HREF="#AllowCarsToReturnToStaging">Options</A>
+   </P>
 
-A staging track allows you to have all cars and locomotives in a train
-delivered to one track. When terminating a train into staging, the
-program will search for a completely empty track, one with no locomotives or
-cars. The staging track by <A HREF="#TypeRoadLoadRestrictionsStaging">default</A> must
-also service all of the train's car and locomotive types and roads. Trains
-can not share staging tracks; the program will only place one train per
-track. When departing a location with a staging track, all cars and
-locomotives on one track will be assigned to the train. A location can have
-multiple staging tracks, but can't have any other types of tracks,
-spurs, yards, etc. Staging tracks can be at the start of a route, the
-end of the route, or both. Staging tracks in the middle of a route are
-ignored by the program.
+   <P>
+    <img src="images/EditStaging.png">
+   </P>
+
+   A staging track allows you to have all cars and locomotives in a train delivered to one track.
+   When terminating a train into staging, the program will search for a completely empty track, one
+   with no locomotives or cars. The staging track by
+   <A HREF="#TypeRoadLoadRestrictionsStaging">default</A> must also service all of the train's car
+   and locomotive types and roads. Trains can not share staging tracks; the program will only place
+   one train per track. When departing a location with a staging track, all cars and locomotives on
+   one track will be assigned to the train. A location can have multiple staging tracks, but can't
+   have any other types of tracks, spurs, yards, etc. Staging tracks can be at the start of a route,
+   the end of the route, or both. Staging tracks in the middle of a route are ignored by the
+   program.
 
    <p>
     Note if you are running a train to and from the same staging location using the <A
@@ -1142,21 +1183,20 @@ ignored by the program.
     one to depart on and one to return on. Physically the two staging tracks can be the same one. If
     you want to use the same name for your staging tracks, the program allows you to name the
     staging tracks using a hyphen and a number as a suffix. The hyphen and number are not printed on
-    the switch lists or manifests.
-    If you're using <A HREF="#BuildOptions">aggressive</A> mode for building trains, you can <A
-     HREF="#MakeDepartureTrackAvailable">configure</A> the program to allow the train to return to
-    the same staging track that the train departed on.
+    the switch lists or manifests. If you're using <A HREF="#BuildOptions">aggressive</A> mode for
+    building trains, you can <A HREF="#MakeDepartureTrackAvailable">configure</A> the program to
+    allow the train to return to the same staging track that the train departed on.
    </p>
 
-<P>If you require a train leaving staging to have a certain number
-of locomotives, locomotive model, or road name; the program will search all
-staging tracks at the departure location for a train meeting those
-requirements. If you set the locomotive requirements to 0, the program will
-select the next available train from staging; and will ignore the number
-of locomotives leaving that staging track. See <A HREF="#TrainRequires">Optional Train
-Requirements</A> for more info.</P>
+   <P>
+    If you require a train leaving staging to have a certain number of locomotives, locomotive
+    model, or road name; the program will search all staging tracks at the departure location for a
+    train meeting those requirements. If you set the locomotive requirements to 0, the program will
+    select the next available train from staging; and will ignore the number of locomotives leaving
+    that staging track. See <A HREF="#TrainRequires">Optional Train Requirements</A> for more info.
+   </P>
 
-<P>You can if you wish, optionally control which staging tracks a
+   <P>You can if you wish, optionally control which staging tracks a
 train will arrive on and depart. Note that the default "Any" allows any
 train to arrive or depart on the staging track, so if you want to
 restrict a train to a specific track or tracks, you must configure all
@@ -1666,7 +1706,13 @@ print features use the same "Sort by" radio buttons as the cars window.
 One of the more useful sorts is by "Location", this allows you to
 quickly verify your car locations before or after an operations session.
 
-<A NAME="Locomotives"></A>
+   <P>You can if you wish only preview or print cars for a specific location or track. In the
+    "Edit Location" and "Edit Track" windows the "Tools" menu provides a "Show Cars" selection which
+    will bring up the "Cars" window but only listing the cars for that location or track. Use the
+    roster print or preview features of the "Cars" window to print out a list of the cars for that
+    location or track.</P>
+
+   <A NAME="Locomotives"></A>
 <H2>Locomotives</H2>
 
 The locomotives window allows you to edit your locomotive roster. You can enter
@@ -2085,13 +2131,13 @@ train.
     caboose if one was assigned to the train, and then add a new one to the train. Use this option
     to also add a caboose to the train if the train departed without a caboose.
    
-<P>You can also request helper locomotives for those long up hill
-battles that your train might experience. The current code only adds a
-comment to the manifest requesting helper service starting at the
-location you select and removes the helper service at the location you
-select.</P>
 
-<A NAME="TrainScripts"></A>
+   <P>You can also request helper locomotives for those long up hill battles that your train
+    might experience. The current code only adds a comment to the manifest requesting helper service
+    starting at the location you select and removes the helper service at the second location
+    specified by you.</P>
+
+   <A NAME="TrainScripts"></A>
 <H3>Scripts</H3>
 
 If you want to run a <a HREF="../../../../html/tools/scripting/index.shtml">script</a> when a train is built, moves or terminates, select

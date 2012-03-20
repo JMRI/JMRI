@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: LocoBufferUSB.shtml,v 1.2 2008/05/31 05:00:29 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI Hardware Guide: Connecting a LocoBuffer-USB to LocoNet
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="Digitrax Chief DCS Command Station LocoBuffer USB java model railroad JMRI install windows">
+
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <h1> 
+     Guide Matériel JMRI: Connecter un LocoBuffer-USB à LocoNet
+      </h1>
+
+<img src="http://www.rr-cirkits.com/description/LocoBuffer-USB-t.gif" height="83" width="140" align="right"/>
+<p>
+la LocoBuffer-USB offre un moyen très fiable pour
+connecter un ordinateur à un LocoNet. Elle est produite par la société, de Dick Bronson
+<A HREF="http://www.rr-cirkits.com">  RR-CirKits </a>
+ basée en partie sur la conception LocoBuffer originale.
+</p>
+<h2>Démarrage conseillé</h2>
+<p>
+La configuration recommandée pour la LocoBuffer-USB est la suivante:
+</p>
+
+<UL>
+<LI> Démarrer DecoderPro ou tout autre programme et la configurer pour:
+<UL>
+<LI> LocoNet LocoBuffer-USB
+<LI> Sélectionnez votre port
+</UL>
+</UL>
+
+
+<h2>Alimentation LocoBuffer-USB </h2>
+
+Le LocoBuffer-USB isole complètement votre ordinateur à partir du LocoNet,
+supprimant la possibilité de courants de terre qui circule à travers le câble LocoNet.
+Il reçoit son alimentation en partie par les lignes RailSync LocoNet et le reste de votre
+ordinateur via le câble USB.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

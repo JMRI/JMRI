@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: NceShowCabFrame.shtml,v 1.3 2010/11/12 15:56:00 ken_c Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-10-28--> 
+<HTML LANG="fr">
+<HEAD>
+<TITLE>JMRI: Edit NCE Macro</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META CONTENT="Dan Boudreau" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI Help NCE Show Cabs ">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Montrer Cabines NCE </H1>
+<P>
+Cet outil fournit une liste des  Cabs* NCE connectées à votre centrale de commande NCE.
+Jusqu'à 63 commandes Cabs peuvent être connectées, les types de  Cabs sont ProCab, Cab04, USB, et l'AIU.
+L'outil fournit également l'adresse de chaque Cab de locomotive active, la vitesse, Numéro de couplage,
+et quelles fonctions de la locomotive sont actives.
+</P>
+<P>
+Le moniteur va lire les informations de la Cab actuelle lorsque l'outil est d'abord sélectionné.
+la liste sera mise à jour  lorsque le bouton "Rafraichir" est pressé ou si une adresse de Cab
+est purgée.
+<P>
+Pour aider à gérer les Cabs sur les réseaux très grand, l'écran affiche la dernière fois qu'une Cab
+a été considérée comme active et que des paramètres ont changés.
+L'utilisation de ceci vous permet d'entrer l'ID de la  Cab et utiliser le bouton "Purger"  pour marquer l'adresse de Cab en-activité.
+Cela devrait améliorer le temps de réponse de la frappe sur les commande Cabs restantes
+que les centrales de commande n'auront pas à temporiser en attendant une réponse de
+l'adresse de la Cab purgée.
+*commande manuelle
+</P>
+</BODY>
+</HTML>
+

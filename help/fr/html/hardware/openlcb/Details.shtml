@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2008 -->
+<!-- $Id: Details.shtml,v 1.1 2010/09/19 03:25:25 jacobsen Exp $ -->
+<!--Translated by Hervé Blorec le 2011/9/22-->
+<title>JMRI: OpenLCB Details</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Support des Détails Techniques  OpenLCB Support
+</h1>
+
+<em>Le support sur cette page est en évolution rapide, le
+code réel pourrait être en avance ou retard sur la documentation
+sur un jour donné
+.</em><p>
+
+Cette page décrit les détails techniques de la JMRI
+<a href="index.shtml"> OpenLCB </a>
+soutien. Voir aussi les pages sur ce que  JMRI
+<A Href="../index.shtml"> peut généralement supporter </a>.T
+<p>
+
+<h2>Adaptateurs CAN </h2>
+
+L'approche générale de JMRI est de soutenir le plus grand nombre de
+combinaisons de matériel possible. En soutenant les désirs d'un plus grand nombre de
+personnes et leur matériel, nous pouvons  créer une communauté croissante de développeurs, donc plus de
+code.
+
+<P>
+Dans ce cadre, le support JMRI CAN  est conçu pour
+utiliser autant de types d'adaptateur CAN que possible.
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

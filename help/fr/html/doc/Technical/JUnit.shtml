@@ -1,0 +1,284 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated by Blorec Hervé le 2011-05-06--> 
+ <html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI:tUnit testing with JUnit
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code ">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or c Les tests unitaires avec JUnihange them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8
+">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
+
+<H1>JMRI: Les tests unitaires avec JUnit</H1>
+
+JJUnit est un système de construction «tests unitaires» du logiciel.
+Les tests unitaires sont de petits tests qui vous assurent que les parties individuelles du logiciel font ce qu'elles sont censées faire.
+Dans un projet distribué comme JMRI, où il y a beaucoup de développeurs qui communiquent avec les autres, les tests unitaires sont une 
+bonne façon pour s'assurer que le code n'a pas été brisé par un changement.
+<P>
+Pour plus d'informations sur JUnit, voir <A HREF="http://www.junit.org"> la page d'accueil JUnit  </A>.
+Un exemple très intéressant du développement basée sur les tests est disponible à partir du livre de
+<A HREF="http://www.objectmentor.com/publications/xpepisode.htm"> Robert Martin </a> .
+<P>
+Certaines classes ont des tests JUnit disponibles. C'est une bonne chose d'ajouter des tests JUnit quand vous apportez des modifications 
+(tester vos nouvelles fonctionnalités pour s'assurer qu'il est au travail, et continue à travailler), lorsque vous devez comprendre le 
+code que quelqu'un a fait (les tests documentent exactement ce qui doit arriver!), et quand vous traquer un bug (assurez-vous qu'il ne revient pas).
+
+.
+
+<a name="run">
+<h2>Exécutez les Tests</h2></a>
+
+Pour exécuter les tests existants, par exemple
+<CODE>
+<PRE>
+ ant  ant antalltest
+</PRE>
+</Code>
+Cela va compiler le code de test, qui est dans le sous-répertoire "test"  du répertoire "java" dans nos distributions code habituel,
+et puis exécutez les tests sous une interface graphique. (Pour vous assurer que vous avez tout recompilé , vous voudrez peut-être faire 
+ant <code> clean </code> en premier). Si vous connaissez le nom de votre classe de test, ou la  classe de test pour votre paquet, vous
+pouvez exécuter directement avec le script "runTest" :
+<CODE>
+<PRE>
+ant tests
+./runtest.cshjmri.jmrit.powerpanel.PowerPanelTest 
+</PRE>
+</Code>
+Le première ligne compile tout le code de test, et la seconde effectue un test spécifique ou une suite de test.
+
+<name="nightly"> <a>
+<h2> Constructions Nocturnes </h2> </a>
+
+Chaque soir, environ à 01h45, heure du Pacifique (et parfois plus souvent),le script  «nightlybuild.csh" de vérification est exécuté. Ceci
+
+<OL>
+<LI> Met à jour à partir du développeur CVS 
+<LI> Nettoie toutes les compilations existantes, etc
+<LI> Reconstruit à partir de zéro avec la cible de débogage
+<LI> exécutecourt le jmri.HeadLessTest app, qui à son tour exécute les tests JUnit.
+</ ol>
+<P>
+Si aucune de ces étapes n'échoue, y compris  les messages d'avertissement ou d'erreur de la connexion, le journal est envoyé à la 
+liste "jmri-build" sur SourceForge. Vous pouvez vous
+<A HREF="https://lists.sourceforge.net/lists/listinfo/jmri-builds"> inscrire à cette liste </a>
+pour obtenir les mauvaises nouvelles aussi rapidement que possible, ou
+<A HREF="http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-builds"> consulter les archives </a>
+pour voir les journaux anciens.
+<P>
+(Lorsque la génération réussit, rien n'est posté , pour réduire le trafic)
+
+
+<a name="write">
+<h2>Ecrire des Tests</h2></a>
+
+Par convention, nous avons une  classe de "test" ombrant (presque) toutes les classes réelles.
+Le répertoire "test" contient une arborescence du paquet répertoire parallèle à l'arbre "src".
+Chaque classe de test a le même nom que la classe à tester, à l'exception de "Test" annexé, et qui apparaîtra dans l'arborescence de 
+"test" source. Par exemple, le code source de la classe "jmri.Version"  est dans "src/jmri/Version.java", et la classe de test est 
+"jmri.VersionTest" trouvé dans "test/jmri/VersionTest.java".
+
+<P>
+Il ya des classes supplémentaires qui sont utilisées pour le groupe des classes d'essai pour un paquet particulier dans des suites de test JUnit.
+
+<h3>Ecrire des Tests Additionnels pour une Classe Existante</h3>
+
+Pour écrire des tests supplémentaires pour une classe avec les tests existants, d'abord localiser la classe de test. (Si elle n'existe pas, 
+voir la section ci-dessous sur l'écriture de tests pour une nouvelle classe)
+<P>
+Pour cette catégorie d'essai, ajouter une ou plusieurs méthodes d'essai en utilisant la Conventions JUnit. Fondamentalement, chaque méthode 
+a besoin d'un nom qui commence par "test", par exemple, "testFirst", et doit avoir une signature "public void"
+<P>
+En général, les méthodes d'essai doivent être réduites, les tests sont juste un morceau de l'opération classes.
+ C'est pourquoi on les appelle «unit» tests.
+
+<h3>Ecrire des Tests pour une Nouvelle Classe</h3>
+
+(Besoins d'infos ici: essentiellement, copie d'un autre paquet, et ne pas oublier de mettre une note dans la suite de tests du paquet englobant)
+
+<h3>Ecrire des Tests pour une Nouveau Paquet</h3>
+
+(Besoins d'infos ici: essentiellement, copie d'un autre paquet, et ne pas oublier de mettre une note dans la suite de tests du paquet englobant)
+
+<h3>Key Metaphors</h3>
+
+<h4>Manipulation des sortie De Tests Log4J </h4>
+
+JMRI utilise
+<A HREF="http://logging.apache.org/log4j/docs/index.html"> Log4j </a>
+pour
+<A HREF="Logging.shtml"> gérer la journalisation des conditions différentes </a>,
+y compris les messages d'erreur et les informations de débogage. Les tests sont destinés à fonctionner sans erreur ou avertissement
+de sortie, de sorte qu'ils sont immédiatement apparents à partir d'un journal vide standard qu'ils ont couru proprement.
+<P>
+L'utilisation de Log4j dans les classes de test se présente sous deux aspects:
+<OL>
+<LI> Il est parfaitement correct d'utiliser les déclarations log.debug  (...) pour lui faire  déboguer facilement des problèmes 
+dans les états d'essai. (...) log.info peut être utilisé avec parcimonie pour indiquer la progression normale, car il est 
+normalement désactivé lors de l'exécution des tests.
+<LI> En général, log.warn ou log.error ne doit être utilisé lorsque le test sert à ensuite déclencher une affirmation ou exception 
+de JUnit, car le fait qu'une erreur est en train d'être connectée n'apparaît pas directement dans le résumé des résultats de JUnit.
+
+<p>
+D'un autre côté, vous voudrez peut-être provoquer volontairement des erreurs dans le Code mis à l'essai pour s'assurer que les conditions 
+soient manipulées correctement.
+Ceci produira souvent des messages (...) log.error ou log.warn (...) qui doivent être interceptés et contrôlés.
+<P>
+Pour permettre cela, JMRI fonctionne en utilisant des tests avec un spécial appender log4j , qui stocke les messages pour que les 
+tests JUnit puissent les regarder avant de les transmettre dans le journal. Il y a deux aspects pour faire de ce travail:
+<OL>
+<LI> Toutes les classes d'essai doivent inclure le code commun dans leur code de configuration () et le code de démontage () pour 
+faire en sorte que log4j soit bien initialisé, et que l'appender personnalisé dialogue quand un test commence et se termine.
+<CODE> <PRE>
+     // La configuration minimale pour log4j
+    protected void  setUp() throws Exception {
+         apps.tests.Log4JFixture.setUp ();
+         super.setUp ();
+     }
+      protected void tearDown () throws Exception {
+         super.tearDown ();
+         apps.tests.Log4JFixture.tearDown ();
+     }
+</PRE> </code>
+<LI> Lorsqu'un test invoque délibérément un message, il doit alors utiliser le contrôle pour voir si le message a été créé.
+Par exemple, si la classe sous test est censé faire
+<BR> <CODE> <PRE>
+     log.warn ("message provoquée");
+</PRE> </CODE>
+la case du test invoqué devrait suivre avec la ligne:
+<BR> <CODE> <PRE>
+     JUnitAppender.assertWarnMessage ("message provoquée");
+</PRE> </CODE>
+<P>
+Ce sera une erreur JUnit si un  message(...) log.warn ou(...)  log.error est produit qui ne correspond pas à un appel JUnitAppender.assertWarnMessage (...)   
+
+
+</OL>
+
+<h4>Réinitialisation de l'InstanceManager</h4>
+
+Si vous testez le code qui va faire référence à l' InstanceManager,
+vous devez l'effacer et le réinitialiser pour vous assurer d'obtenir des résultats reproductibles.
+<p>
+Votre <code>configuration () </code> de  mise en œuvre doit commencer par:
+<code> <pre>
+super.setUp ();
+jmri.util.JUnitUtil.resetInstanceManager ();
+jmri.util.JUnitUtil.initInternalTurnoutManager ();
+jmri.util.JUnitUtil.initInternalLightManager ();
+jmri.util.JUnitUtil.initInternalSensorManager ();
+</pre> </code>
+(Vous pouvez omettre les gestionnaires d'initialisation vous n'en n'avez pas besoin)
+<p>
+Votre tearDown <code> () </code> doit se terminer par:
+<code> <pre>
+jmri.util.JUnitUtil.resetInstanceManager ();
+super.tearDown ()</pre></code>
+
+<h4>Éxecution des Auditeurs</h4>
+
+JMRI est une application multi-liens. Les auditeurs pour les objets JMRI sont notifiés sur différents liens. Parfois, il faut attendre 
+que l'évènememnt se produise. Pour ce faire, vous invoquez après quelque chose qui va informer les auditeurs, mais vérifiez les résultats, 
+faire
+<code> <pre>
+     JUnitUtil.releaseThread (this);
+</pre> </code>
+Celui-ci utilise un retard nominal, qui convient à presque toutes les utilisations.
+Si vous faites beaucoup de notifications, ou des calculs complexes pour les  auditeurs, vous pouvez faire  à la place 
+<code> <pre>
+     JUnitUtil.releaseThread (this, 200);
+</pre> </code>
+où l'argument est le nombre de millisecondes supplémentaires pour permettre d'autres travaux de dialogue.
+Cette valeur, n'est  vraiment pas nécessaire, cependant, parce que vos collègues auront à attendre aussi longtemps à chaque fois 
+qu'ils exécuteront les tests.
+<p>
+Notez que cela ne devrait  <b> pas </b> être utilisé pour synchroniser avec les liens Swing. Voir la section suivante pour cela.
+
+.
+
+<h4>Tester le Code Swing</h4>
+
+Le code AWT et Swing s'exécute sur un lien séparé de tests JUnit.
+Une fois qu'un objet Swing ou AWT a été affiché (via <code> montrer () </code> ou <code> setVisible (true) </code>), il ne peut être 
+fiablement accessible à partir du lien JUnit. Même en utilisant la technique de retard auditeur décrit ci-dessus, ils ne sont pas fiables.
+
+<p>
+Pour le test le plus simple possible, l'affichage d'une fenêtre pour une interaction manuelle, il est OK pour créer et invoquer un objet Swing à partir d'un test JUnit. Il suffit de ne pas essayer d'interagir avec lui une fois qu'il a été affiché!
+<p>Parce que nous exécutons les tests en mode "sans tête" durant la <a href="ContinousIntegration.shtml">construction intégrée continue</a>
+il est important que les accès Swing ( et AWT) dans les tests soient enfermés dans un mode contrôlé:
+<pre><code>
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+            suite.addTest(myTest.suite());
+        }
+</code></pre>
+Ceci exécute la suite myTst de test seulement quand un affichage et disponible
+<p>
+Pour de nombreux tests, vous ferez tester les deux  fiables et améliorer la structure de votre code en séparant l'interface graphique 
+(Swing) du code de la logique JMRI et des communications. Cela vous permet de vérifier le code de la logique séparément, mais l'invocation 
+de ces méthodes et la vérification de leur état les met à jours  .
+
+<p>
+Pour tester l'interface graphique plus complexe, nous commençons à utiliser
+<a href="http://jfcunit.sourceforge.net/"> JFCUnit </a>.
+
+<p>Pour un exemple très simple de l'utilisation de JFCUnit, voir le
+test<a  href="http://jmri.cvs.sourceforge.net/viewvc/jmri/test/jmri/util/SwingTestCaseTest.java?view=markup"> /jmri/util/SwingTestCaseTest.java </a>.
+
+<p>
+Pour utiliser JFCUnit, vous devez d'abord hériter de votre classe à partir de <code> SwingTestCase </code> au lieu de <code> TestCase </code>.
+Cela est suffisant pour obtenir un fonctionnement de base du tests Swing , la classe de base arrête le lien d'essai jusqu'à ce que Swing 
+(en fait, le mécanisme d'événement AWT) ait terminé tous les traitements après chaque appel Swing dans le test.
+(Pour cette raison, le tests sera beaucoup plus lent si vous êtes par exemple en train de  déplacer le curseur de la souris pendant 
+qu'il est en cours d'exécution)
+
+<p>
+Pour des tests plus complexes de l'interface graphique, vous pouvez appeler les différents aspects de l'interface et vérifiez l'état 
+interne en utilisant le code d'essai.
+<h3>Questions</h3>
+
+JUnit utilise un chargeur de classes personnalisé, ce qui peut causer des problèmes pour trouver des singletons et de départ Swing. 
+Si vous obtenez l'erreur de ne pas être en mesure de trouver ou de charger une classe, il faut suspecter l'ajout de la classe manquante,
+le test/junit/runner/excluded.properties file serait-il fixer.
+<p>
+Comme test, vous pouvez essayer de configurer l'option "-noloading"dans le test
+<code>main principale principale </code>  selon la classe avec laquelle vous avez des problèmes:
+<code> <pre>
+public static void main (String [] args) {
+String []  testCaseName = {"noloading", LogixTableActionTest.class.getName ()};
+junit.swingui.TestRunner.main (testCaseName);}
+}
+</pre> </code>
+
+<p>
+Le correctif droit à long terme est d'avoir toutes les classes avec le chargeur inclut dans le fichier
+<code>test/junit/ruunner/ excluded.properties</code>. JUnit utilise ces propriétés pour décider comment gérer le chargement et le rechargement des classe.
+
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

@@ -1,0 +1,2098 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Operations.shtml,v 1.116 2011/07/02 23:34:03 dan_boudreau Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-11-24--> 
+<HTML LANG="fr">
+<HEAD>
+<TITLE>Operations</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META CONTENT="Dan Boudreau" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI Help Operations Setup Settings Cars Engines Locomotives Trains Routes Locations Schedules">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+<DIV CLASS="nomenu" ID="mBody">
+<DIV ID="mainContent">
+
+ <H2> Opérations JMRI </H2>
+
+Le programme des opérations vous permet de créer des manifestes de train générés par ordinateur
+ pour vos chemins de fer. Un manifeste du train détaille le travail qu'un train doit réaliser durant un session d'exploitation. Le manifeste propose une liste des wagons à collecter et leurs destinations  et montre où se trouvent le wagon
+et où il devraient être éventuellement placé sur la voie ferrée. Le programme vous permet de construire une liste de wagons, de définir des emplacements sur réseau, et des itinéraires pour la circulation des trains. La liste inclut des wagon, des informations sur le wagon, y compris le nom de ligne, le numéro, le type de wagon, couleur, longueur, poids, date de construction, et le propriétaire. Les trains sont affectés à des itinéraires qui définissent les lieux où les wagons peuvent être ramassés ou exposés. Caractéristiques incluant de la possibilité de contrôler quels type de wagons, le nom de la ligne et les wagons chargés qu'un emplacement peut entretenir, la longueur de voie disponible pour un lieu, et la longueur maximale du train entre deux emplacements sur la ligne du train.
+ <P>Les Emplacements peuvent avoir des voies d'embranchements courts ,de triage,de coulisse et d'interéchange. Les raccordements courts  sont utilisés pour les industries de services, et peuvent éventuellement avoir des plannings personnalisés qui leur sont assignés. Les trains peuvent être configurés pour exiger un fourgon de queue ou un wagon avec un dispositif clignotant d'extrémité arrière (FRED). Le programme génère un manifeste pour chaque train et des listes de manoeuvres pour tout emplacement. Une liste de manoeuvrer pour un emplacement montre le travail de tous les trains qui se rendront à cet endroit. Le programme peut également placer des icônes représentant des trains sur un panneau JMRI. L'icône peut être renseignée pour se déplacer dans le panneau avec le train d'un endroit à un autre. </P>
+<P>
+Le programme des opérations est inclus dans la suite d'outils DecoderPro/JMRI  
+et peut être trouvé sous la rubrique du menu principal «Outils-> Opérations". </P>
+
+<P>
+<img src="images/MainMenuDecoderPro.png">
+</P>
+
+<A NAME="demo"> </A>
+<H3>Fichiers Démo opérations </H3>
+
+Le programme des opérations fournit un ensemble de fichiers de démonstration pour aider à vous introduire dans l'une des caractéristiques et des capacités de ce programme. Pour
+charger les fichiers de démonstration, d'abord ouvrir la fenêtre des paramètres des opérations
+"Outils-> Opérations> Paramètres", et dans le coin supérieur gauche de la fenêtre de Réglages
+ dans le menu Outils, sélectionnez "Charger Fichiers Démo". Le programme
+créera une sauvegarde <A HREF="#BackupRestore"> </A> de votre configuration à la position actuelle
+ si vous en avez une, puis charge les fichiers de démonstration. Redémarrez
+JMRI pour compléter le processus de chargement démo.
+
+<P> Le programme fournit également un simple panneau pour montrer comment les icônes de train
+  travaillent. Chargez le panneau avant de construire les trains en sélectionnant dans
+le menu principal JMRI, "Panneaux-> Charger Panneaux .." une fenêtre devrait apparaître et
+ouvrir le répertoire «opérations»  puis ouvrez le fichier xml "Démo Opérations
+Panneau ".
+<H2>JMRI Operations</H2>
+</P>
+<H3>Aide démarrage rapide </H3>
+
+Dans le menu de niveau supérieur pour JMRI trouver le menu "Outils-> Opérations". Il
+existe six éléments dans ce menu. Nous vous recommandons de commencer avec <A
+HREF= "Paramètres #"> Paramètres </A> et de suivre votre chemin jusqu'à <a HREf= "# Trains"> Trains </A>. Nous recommandons également que lorsque vous définissez votre
+emplacements que vous utilisez d'abord le triage et des embranchements industriels, et essayer les Coulisse et les voies d'interéchange quand vous êtes plus à l'aise avec la façon dont le programme
+opère.
+
+<P> Si ceci est votre première expérience de l'utilisation d'un programme de transfert de wagons générées par ordinateure, il est préférable de commencer par un petit travail et progressivement de cheminer à travers les différentes options et fonctionnalités disponibles. Commencez par entrer
+seulement trois ou quatre lieux <A HREF="#Locations"> </A> avec chaque emplacement
+ayant seulement deux ou trois voies. Gardez les choses simples et ne modifiez pas les
+lieux et les voies par défaut en les rendant contraignantes en ce qui concerne
+le type de wagons ou locomotives qui  assureront la desserte  de ce lieu et voies par des trains venant de n'importe qu'elle direction.  Ne changez pas les paramètres par défaut jusqu'à ce
+vous puissiez réussir à construire des trains à votre goût. </P>
+
+<P> Maintenant, entrez quelques wagons <A HREF="#CarsEdit"></A> dans la base de données opérations
+, ne vous embêtez pas à entrer les locomotives pour l'instant. Soyez sûr de placer les
+wagons sur une voie en utilisant  <A HREF="#CarsSet">les réglages du wagon pour cet emplacement</A>. Le
+programme fonctionne mieux si vous gardez au moins 50% de vos pistes vides, alors
+ placez pas trop de wagons sur les voies jusqu'à ce que vous compreniez comment le programme construit les trains. </P>
+
+<P> Maintenant, créez un simple trajet <A HREF="#Routes"></A> que votre premier
+ train va suivre. Entrez chacun de vos lieux sur l'itinéraire, et les garder
+simples en entrant seulement une fois chacun de vos lieux dans l'itinéraire. Pour l'instant
+ne pas modifier l'itinéraire en aucune façon, utiliser juste le bouton "Ajouter Lieu ". </P>
+
+<P> Maintenant vous êtes prêt à créer votre premier <a HREF="#Trains"> train </A>.
+Soyez sûr de choisir l'itinéraire que vous avez créé pour votre premier train. Laissez toutes
+les cases de train ce qui signifie que le train peut  fournir  tous les wagons et
+types de locomotives. Laissez les "Options" pour les locomotives et la zone caboose pour
+le moment. Enregistrer le train, fermez la fenêtre et revenir à la fenêtre Trains.
+Appuyez sur le  bouton <A HREF="#BuildingTrains"> Construire </A> pour le train. Il devrait se construire. Maintenant presser la touche "Imprimer" ou bouton "Aperçu" va produire un
+manifeste pour votre train.A l'examen du manifeste vous devriez voir que le
+le train fournit tous les types de wagons. Si vous examinez la fenêtre <A HREF="#Cars"> Wagons </A>, vous pouvez voir quels wagons sont désormais assignés à votre train. </P>
+
+<P> Maintenant, essayez de limiter les types de wagon que le train va fournir en
+modifiant certaines cases de types de wagons dans la fenêtre<A HREF="#Trains"> Edition 
+</A>  train. Utilisez le bouton <A HREF="#TrainReset">réinit</A> train pour libérer
+les wagons qui ont été affectés à la formation afin que vous puissiez le construire à nouveau
+sans bouger le train. Avec les nouveaux types restreints de wagons en place, vous pouvez voir que le train
+ne prendra et déposera que les types de wagons qui ont été sélectionnés dans la fenêtre Édition Train</P>
+
+<P>Maintenant, essayez de restreindre vos <a HREF="#Yards"> voies </A> pour seulement
+certains types de wagons en modifiant les types de wagons fournis par une voie.
+Maintenant, quand vous construisez le train, le train liste seulement les wagons pour les voies
+qui sont prêtes à les accepter. </P>
+
+<P>Appuyez sur le bouton <A HREF="#TrainMove">Déplacer </A>  situé dans la fenêtre <A
+HREF= "# Trains"> Trains </A>  et vous verrez que le train
+va passer d'un emplacement à l'autre dans l'itinéraire. Vous verrez aussi que la fenêtre
+<a HREF="#Cars">Wagons </A>  sera mise à jour pour montrer les wagons
+fournis par le train en marche vers leur nouvel emplacement quand les trains se déplacent
+d'un endroit à un autre. </P>
+
+<P>Maintenant, entrez  certaines <A HREF="#Locomotives">locomotives </A> dans la
+base de données des opérations, et  modifier les exigences du train pour nécessiter une
+locomotive. Placer une partie de vos locomotives sur une voie située au
+départ de l'itinéraire. Notez que si vous voulez que deux ou plusieurs locomotives
+tractent votre train, les locomotives doivent être dans un <A
+Href= "# LocomotivesAdd"> Couplage </A>. Le dernier emplacement de votre itinéraire
+doit avoir une piste qui assurera la réception  du <A
+HREF= "# LocomotiveModels">Type</A> de la locomotive ou la construction échouera. </P>
+
+<P> Si vous voulez un fourgon de queue ou une wagon avec Fred pour votre train, tout d'abord
+configurer certaines de vos wagons en fourgon de queue en sélectionnant le fourgon de queue ou la
+<A HREF="#CabooseFredHazardous"> case FRED </A> dans la fenêtre Edition Wagon
+. Maintenant changer le bouton radio Requête Optionnelle pour le train d'un Caboose ou Fred.
+Soyez sûr que le dernier emplacement sur votre itinéraire des trains a une piste qui
+acceptera la wagon fourgon de queue ou le train ne seconstruira pas correctement. </P>
+
+<P> Si vous continuez à construire votre premier train et en le déplaçant, éventuellement
+tous vos wagons finissent à la dernière position dans votre itinéraire! Créer
+une autre voie qui est l'inverse du premier train. Allez à <A
+HREF= "Routes #"> Itinéraires </A> et sous le menu "Outils" sélectionner "Copier Itinéraire".
+Choisissez votre itinéraire initial, cochez la case "Inverser",
+entrez un nom pour cet itinéraire, puis le bouton "Copier". Maintenant, créez un
+deuxième train qui utilise cette voie pour envoyer les wagons dans la direction opposée
+de votre premier train. </P>
+
+<P> Vous devriez maintenant être sur la bonne voie en ce qui concerne les opérations JMRI
+. L'aide est également disponible sur <a HREF= "http://groups.yahoo.com/group/jmriusers/"> la liste jmriusers </A> </P>
+
+
+
+
+<H3> Chemin de Fer Britannique </H3>
+
+Le programme supporte un autre jeu de la terminologie ferroviaire pour nos
+Modélistes Britanniques. Pour utiliser la terminologie britannique, modifier l'affichage JMRI avec la 
+Locale  anglaise (Royaume-Uni). Avec la terminologie britannique, les trains
+voyages Up / Down et Est / Ouest, et certains noms de chemins de fer britanniques et wagons
+types sont fournis pour vous aider à démarrer. Le programme permettra également de convertir
+de quelques centimètres à mètres en entrant la longueur des wagons, locomotives, ou l'emplacement
+, juste ajouter "cm" à n'importe quelle longueur.
+<A NAME="Settings"></A>
+<H2>Réglages</H2>
+
+La fenêtre Paramètres contient les paramètres généraux pour les opérations
+programme. Sélectionnez dans la fenêtre principale JMRI "Outils-> Opérations> Paramètres"
+pour ouvrir la fenêtre Paramètres. La fenêtre de réglage a des champs et des boutons pour
+vous permettre d'entrer votre nom de chemins de fer, les directions de votre train
+les voyages, l'échelle que vous utilisez, les contrôles de l'imprimante et l'icône, et le
+capacité à créer des sauvegardes et restaurer les fichiers pour les opérations.
+<P>
+<img src="images/Settings.png">
+</P>
+<H3>Nom de la Compagnie </H3>
+
+Entrez votre nom dans le domaine ferroviaire en face du "Nom de la Compagnie". Ce
+nom apparaîtra sur votre manifeste. Vous pouvez aussi avoir un autre
+Nom de Compagnie pour tous les trains dans votre liste, voir
+Options de <A HREF="#TrainOptions"> Train </a> pour plus de détails.
+
+<H3> Itinéraire du Train </H3>
+
+Si votre chemin de fer représente les trains voyageant vers le nord et le sud sélectionner la boite
+«Nord/Sud" , si vos train voyagent de l'est et l'ouest  sélectionner la boite
+"Est / Ouest" . Vous devez sélectionner au moins une direction, et pouvez, si
+souhaité sélectionner les deux.
+
+<A NAME="Scale"> </A>
+<H3> Échelle </H3>
+
+Ensuite, sélectionnez l'échelle que vous êtes modélisée. Ceci est utile lorsque vous entrez
+la longueur des wagons et des voies. Vous pouvez entrer le nombre de pouces réels
+et le programme va le convertir à l'échelle en pieds. Ajouter un guillemet à la
+Longueur en entrant pouces réels. Le programme saura aussi automatiquement
+attribuer le poids NMRA approprié pour un wagon basé sur l'échelle et la longueur.
+
+<H3>Longueur maximale des trains </H3>
+
+Maintenant, entrez la valeur par défaut "Longueur maximale des trains" que vous désirez pour vos trains.
+Ce champ indique la longueur maximale par défaut du train entre les villes.
+Plus tard, vous pouvez remplacer cette longueur si vous souhaitez par une plus courte entre
+deux emplacements. Un train de 1000 pieds peut transporter environ 20 wagons,
+et est bien sûr dépendant de la longueur des wagons affectés au train.
+
+<H3>Nombre maximal des locomotives </H3>
+
+Maintenant définir le nombre maximal de locomotives que vous voulez que le programme
+assigne à un train. Si vous ne voulez pas que le programme attribut de locomotive, mettre cette
+ valeur à 0.
+
+ <H3>Manoeuvre et Temps de Voyage  </H3>
+
+Le programme lors de la génération des listes pour les manoeuvres à divers endroits sur
+votre chemin de fer, permettra d'estimer l'heure d'arrivée des trains basée sur votre
+heure de départ du train et le temps de manoeuvre et de voyage. Entrez le
+nombre moyen de minutes qu'il faut pour déposer ou collecter un wagon sur votre
+réseau. Ensuite, entrez la quantité moyenne de temps en minutes qu'il faut pour
+voyager d'un endroit à l'autre. Plus tard, lorsque vous créez un itinéraire <A HREF="#EditRoute"> </A>
+vous serez en mesure d'augmenter ou de diminuer le temps de déplacement du train entre les
+deux emplacements.
+
+<H3>Types de Wagons</H3>
+
+Le programme comporte deux ensembles de types de wagons à utiliser pour vous . Descriptif:
+fournit des noms de type comme "Boxcar" et "Tankcar», et AAR :fournit des typex 
+des noms comme «XM» et «T» pour wagons couverts et wagons-citernes, respectivement. Sélectionnez
+celui que vous préférez.
+
+<H3> Année Optionnelle de la modélisation</H3>
+
+Vous pouvez éventuellement entrer l'année que vous voulez imprimer sur votre manifeste train.
+
+<H3> Ajouter Menu Opérations au Menu Principal </H3>
+
+Lorsqu'elle est sélectionnée, ajoute le menu des opérations à la barre de menu principal. Le
+ menu des opérations apparaîtra la prochaine fois que vous redémarrez JMRI.
+
+ <H3>Fermer sur Enregistrer </H3>
+
+Lorsqu'elle est sélectionnée, les fenêtres se ferment lorsque le bouton "enregistrer" est enfoncé.
+
+<H3>Options du Panneau  (Icônes Train) </H3>
+
+Si vous voulez que le programme des opérations place une icône représentant le
+train sur un panneau, saisissez le nom du panneau (PAS le chemin du nom de fichier panneau
+!), sinon laissez le nom en blanc pour désactiver.
+Chargez le panneau en utilisant le menu principal «Panneau de configuration->Charger Panneaux  ..." ou utiliser d'autres options
+de chargement du panneau disponible en JMRI.
+
+<P>La case "Activer Icône Train en X & Y" lorsqu'elle est sélectionnée vous permet de
+renseigner le programme des opérations où placer l'icône du train sur votre panneau et de
+ transférer votre train de lieu en lieu. Décocher cette fonction
+après avoir renseigné le programme vise à prévenir la modification accidentelle de
+l'icône de position du train sur votre panneau. Si vous souhaitez également que le numéro de la locomotive de tête apparaisse dans le cadre de votre texte de l'icône train, choisissez la boite "Ajouter Numéro de Locomotive ". Vous pouvez sélectionner la couleur de fond de votre icône du Train selon la direction du train. Sélectionnez la couleur souhaitée
+pour chaque direction en utilisant les menus déroulants. Un <A
+Href= "# SwitcherService"> Switcher </A> est un train avec un seul emplacement
+dans son itinéraire
+<P>
+<img src="images/PanelWithMarkers.png">
+</P>
+
+<H3>Enregistrer</H3>
+
+Lorsque vous avez terminé avec la fenêtre des paramètres, appuyez sur le bouton Enregistrer pour
+enregistrer le réglage dans un fichier appelé "Operations.xml". Vous pouvez trouver ce
+fichier dans votre répertoire JMRI dans un dossier appelé «opérations». Le programme
+va également créer un fichier de sauvegarde chaque fois que vous appuyez sur le bouton Enregistrer.
+
+<H3><A NAME="BackupRestore"></A>Sauvegarde et restauration  </H3>
+
+Le bouton "Sauvegarde" va stocker une copie des fichiers de fonctionnement. Le
+Bouton "Restaurer" vous invite à sélectionner l'ensemble des fichiers de sauvegarde que vous
+souhaitez utiliser pour récupérer vos fichiers opération. Vous devez quitter et redémarrer
+JMRI pour terminer la restauration des fichiers de fonctionnement.
+
+<P> Lorsque vous appuyez sur le bouton "Sauvegarde", le programme crée un nouveau
+répertoire dans les opérations appelées "sauvegardes", puis stocke les
+fichiers opération dans un répertoire qui est basé sur la date du jour où vous appuyé sur le bouton «Sauvegarde»
+. Par exemple, si aujourd'hui était Novembre 21, 2008, le programme aura
+créer un répertoire de sauvegarde nommé "2008_11_21». Vous pouvez également renommer le
+répertoire à n'importe quel nom que vous voulez. Ce serait utile si vous avez eu
+plus d'une compagnie de chemin de fer que vous vouliez gérer. </P>
+
+<H3>Réinitialiser Bases de données</H3>
+
+Pour réinitialiser les bases de données à leurs valeurs valeurs d'origine, utilisez le chemin
+Opérations-> Paramètres-> menu Outils et sélectionnez "Réinit. Bases de données ". L'option «Réinit. Base de données"
+fera une copie de sauvegarde des fichiers en cours avant de
+les supprimer. Les résultats seront que les bases de données réglages, wagons, locomotives,
+lieux, et trains seront purgées.
+
+<<H2><A NAME="SettingsOptions"> </A> Options </H2>
+Le programme des opérations a plusieurs options qui peuvent être modifiées en
+sélectionnant Opérations-> Paramètres-> Outils-> Options.
+
+<P><img Src="images/SettingsOptions.png"></P>
+
+<H3> Options de Construction </H3>
+
+Il y a deux options de construction du train, normale et agressive. Il est
+recommandé que vous sélectionnez l'option normale lorsque vous commencez à utiliser le
+programme. La Construction normale garantie que quand un wagon est livrée 
+par un train qu'il y aura une longueur de voie disponible pour ce wagon.
+
+<P>
+La Construction agressive rend la longueur de voie du wagon disponible dès qu'un
+wagon est prévu pour être collecté. Donc il peut y avoir des cas où un
+train collecte un wagon pour quitter la voie, mais un autre train prévu plus tard arrive plus tôt avec un wagon à livrer sur cette voie et l'autre wagon n'a pas encore été collecté . Cependant, le plus souvent ce ne sera pas le même train qui effectuera la
+collecte et la livraison  minimisant ainsi le nombre de conflits. La construction Agressive aussi
+effectue une détermination de deux passes de mouvements pour les wagon. L'effet net est
+que les wagons sont plus déplacés dans un train donné. Agressif tend également à
+livrer des wagons aux embranchements  disponibles. Le plus petit embranchement, triage, ou interéchange
+tel qu'il est probable que le programme attribuera les wagons à cette voie.</P>
+<P>
+Notez qu'une fois que vous avez construit un train, l'option de construction ne peut être changée jusqu'à ce que
+tous les trains soient terminés ou réinitialisés.
+</P>
+
+<H3> Permettre les Mouvements Locaux de Wagons </H3>
+
+Le prochain jeu d'options contrôle les mouvements locaux de wagon. Normalement, il est
+préférable de ne pas permettre à un wagon de se déplacer d'un embranchement directement à un autre
+ dans le même lieu. Ce type de mouvement peut être très irréaliste,
+image animée d'un wagon couvert d'une fabrique de chaussures directement à une fabrique automobile.
+Aussi le déplacement d'une wagon d'un voie de triage à l'autre peuvent voir vos opérateurs
+demander quel genre de travail est généré! Mais si vous avez besoin
+de ces types de mouvements, cochez la case appropriée.
+
+<A NAME="TypeRoadLoadRestrictionsStaging"> </A>
+<H3> Activer les Restrictions de Type, de Ligne et de Charge dans la coulisse </H3>
+
+L'option suivante est la restriction des trains aux voies de coulisse qui n'
+acceptent que le type, la ligne et lescharges des trains du stock de matériel roulant. Lorsque le bouton «Activer Restriction du Type,
+de la Ligne et de la Charge dans la coulisse "est sélectionné, le programme ne
+délivrera un train qu'à une voie de coulisse qui a les mêmes restrictions. Ceci est utile lorsque vous voulez livrer des trains  à une coulisse et que ce soit basés sur les restrictions du train roulant. Toutefois,
+si vous voulez que certains types de wagons, de charge de wagon, ou noms de ligne soient transportés par un train,
+mais non livrés à la coulisse, décochez cette option.
+
+<H3><A NAME="PromptDepartureTrack"> </A>
+Invite pour voie de Départ de Coulisse </H3> 
+
+Si vous souhaitez que le programme vous demandera de quelle voie un train doit
+partir de la coulisse lors de la construction du train, sélectionnez cette option. Normalement
+pendant que la construction du train le programme  sélectionnera au moins la voie la plus récente utilisée comme voie de Départ
+. Notez que le
+programme ne vous le demandera que s'il y a deux ou plusieurs trains disponibles
+dans la coulisse qui répondent aux exigences du train.
+
+<A NAME="CarRouting"> </A>
+<H3>Routage Wagon</H3>
+
+<P> Quand le routage du wagon est activé, le programme va utiliser plusieurs trains
+pour amener ce wagon à sa destination finale. Il est recommandé que vous
+laissiez cette option activée. Avec le routage du wagon activé, vous pouvez utiliser un <A
+HREF= "# Horaires"> Horaire </A> pour livrer un wagon à un endroit précis.
+L'algorithme de routage de wagon va rechercher l'itinéraire le plus efficace pour
+le voyage du wagon . L'algorithme va tenter d'utiliser des interéchanges et
+puis des triages pour passer les wagons. Le Routage via la coulisse est désactivé par défaut.
+L'algorithme va essayer de trouver un itinéraire en utilisant un maximum de cinq trains
+pour terminer le déplacement du wagon. Notez que le programme ne donne jamais à essayer de
+router un wagon. Si un wagon a été attribué à une "Destination Finale", le programme
+vais essayer et route le wagon après chaque mouvement.</P> 
+<A NAME="LoggingOptions"></A>
+
+<H3> Options de journalisation </H3>
+
+Si vous voulez que le programme des opérations enregistre les mouvements de  votre locomotive, wagon ou train dans 
+un fichier, sélectionnez les cases appropriées. Le programme va créer une nouveau
+répertoire appelé "logger" dans le répertoire des opérations. Pour la session de chaque jour
+le programme va créer un nouveau fichier (. csv) en utilisant la date du jour.
+
+<A NAME="ManifestOptions"> </A>
+<H3> Options </H3>
+
+Si vous voulez créer votre manifeste personnalisé en utilisant une valeur séparées par une virgule (. Csv), sélectionnez
+cette option. Vous pouvez utiliser un programme comme Excel pour créer un manifeste à votre goût.
+Vous pouvez trouver les fichiers manifeste dans le répertoire des opérations dans un répertoire appelé "csvManifests".
+Chaque ligne du fichier commence par un code à deux ou trois lettres, suivie de la description du code,
+et ensuite tous les paramètres associés avec le code.
+Voici une liste des codes actuels et leurs descriptions:
+<P> </P >
+<table>
+<tr><td> Code </td> <td> Description </td> <td> Paramètres </td> </tr>
+<tr><td> AH </td> <td> Ajouter Assistances </td> </tr>
+<tr><td> AT </td> <td>Heure d'arrivée  </td> <td> Temps </td> </tr>
+<tr><td> CC </td> <td> Changer Locos et Caboose </td> </tr>
+<tr><td> CL </td> <td> Changer Locos </td> </tr>
+<tr><td> DT </td> <td>Heure de départ  </td> <td> Temps </td> </tr>
+<tr><td> DTR </td> <td> Heure de départ Itinéraire </td> <td> Temps </td> </tr>
+<tr><td> LC </td> <td>Commentaire Lieu  </td> <td> Commentaire </td> </tr>
+<tr><td> LN </td><td> Nom Lieu  </td> <td> Nom </td> </tr>
+<tr><td> NO </td> <td> Pas de travail </td> </tr>
+<tr><td> PC </td> <td> Wagon ramassé</td> <td> Voir ci-dessous </td> </tr>
+<tr><td> PL </td> <td> Loco ramassée</td> <td> Voir ci-dessous </td> </tr>
+<tr><td> RC </td> <td>Commentaire Itinéraire  </td> <td> Commentaire </td> </tr>
+<tr><td> HR </td> <td> Retirer Assistances </td> </tr>
+<tr><td> RN </td> <td>Nom de la Compagnie </td> <td> Nom </td> </tr>
+<tr><td> SC </td> <td> Dépose wagon </td> <td> Voir ci-dessous </td> </tr>
+<tr><td> SL </td> <td> Dépose loco </td> <td> Voir ci-dessous </td> </tr>
+<tr><td> TC </td> <td>Commentaire train  </td> <td> Commentaire </td> </tr>
+<tr><td> TD </td> <td> train part </td> <td> Nom </td> </tr>
+<tr><td> TL </td> <td>Longueur train </td> <td> Longueur </td> </tr>
+<tr><td> MC </td> <td>Description du Manifeste  Train </td> <td> Description </td> </tr>
+<tr><td> TN </td> <td>Nom train  </td> <td> Nom </td> </tr>
+<tr><td> TW </td> <td>Poids train  </td> <td> Poids </td> </tr>
+<tr><td> TT </td> <td>Train Termine </td> <td> Nom </td> </tr>
+<tr><td> VT </td> <td> valide </td> <td> Mois /Jour, Heure Année </td> </tr>
+</Table>
+
+<P>Temps utilise le format Heure: Minute </P>
+<P> Les paramètres de wagon pour ramasser wagon (PC) et Livrer wagon (SC) sont: la ligne,
+le numéro, le type, la longueur, charge, couleur, nom du lieu, nom de la voie,
+nom de la destination, le nom de la voie de destination, le nom du propriétaire, nom du noyau, 
+commentaires wagon, commentaires ramassage, observations livraison, C, F, H, RFID. Où C =
+Caboose, F = FRED, et H = dangereux </P>
+<P>Les paramètres loco  pour ramasser Loco (PL) et livrer loco (SL) sont: la route,
+numéro, modèle, longueur, type, Puissance, nom du lieu, nom de la voie, nom de la destination
+, nom de la voie de destination, le nom du propriétaire, nom du couplage, le commentaire de wagon,
+RFID. </P>
+
+<P> Vous pouvez trouver quelques exemples de manifestes personnalisés à <A
+HREF=http://groups.yahoo.com/group/jmriusers/files/Operations>http://groups.yahoo.com/group/jmriusers/files/Operations.</A></P>
+<P> Il ya deux autres options, "Activer les champs de valeur" et "Activer Radio Frequency Identification (RFID) des champs".
+Vous pouvez utiliser ces champs pour entrer la valeur ou le coût de votre matériel roulant et la RFID, si vous utilisez à
+le suivi radio de votre matériel roulant. </P>
+
+<A NAME="PrintOptions"> </A>
+<h2>Options d'impression  </h2>
+
+Vous pouvez modifier la façon dont le programme imprime le manifeste du train et la quantité de détails 
+que le rapport de construction fournit . Depuisle menu «Opérations-> Paramètres-> Outils" sélectionnez «Options d'impression" pour ouvrir la fenêtre d'options d'impression.
+<P>
+<img src="images/PrintOptions.png">
+</P>
+<H3>Police Imprimante Manifeste </H3>
+
+Le programme supporte plusieurs types de polices pour l'impression. Sélectionnez la police désirée
+et la taille en utilisant les menus déroulants.
+
+<H3>Couleur du texte pour les livraisons </H3>
+
+Vous pouvez sélectionner la couleur du texte de votre manifeste lorsque l'opération est de
+livrer un wagon ou une locomotive. Sélectionnez la couleur souhaitée dans le menu déroulant
+.
+
+<H3>  Couleur du texte Ramassage</H3>
+
+Vous pouvez sélectionner la couleur du texte de votre manifeste lorsque l'opération est de
+ramasser une wagon ou locomotive. Sélectionnez la couleur souhaitée dans le menu déroulant
+.
+
+<H3> Local Couleur du texte pour mouvement local </H3>
+
+Vous pouvez sélectionner la couleur du texte de votre manifeste lorsque l'opération est de
+déplacer une wagon d'une voie à une autre au même endroit. Le wagon dans
+dans ce cas n'est pas ajouté au train. Sélectionnez la couleur souhaitée à partir du
+menu déroulant.
+
+<H3>Format manifeste  </H3>
+
+Si vous souhaitez que votre manifeste imprimé dans un format tabulaire sélectionner la
+case tableau. Cette option fonctionne mieux avec des noms de police qui ont
+caractères équidistants comme "Courier ou Monospaced".
+
+ <H3> Formats de Message</H3>
+
+Vous pouvez personnaliser les manifestes pour les ramassages, les livraisons, et  pour votre mouvement local
+ et les listes de de manoeuvre en sélectionnant le menu approprié des menus déroulants.
+Pour supprimer un attribut sélectionner vide. Vous pouvez également modifier les préfixes "[] livraisons»,
+«[] Collectes» et «[] Déplacer" . Si vous souhaitez utiliser les option de la couleur du texte, les préfixes de
+, livraison, collecte et déplacement  doivent être uniques.
+
+ <H3>Afficher les Commentaires sur les Manifestes </H3>
+
+Chaque emplacement peut avoir un commentaire facultatif. Vous pouvez imprimer ces commentaires sur votre manifeste si
+la case "Lieu" est cochée. Si vous voulez que le manifeste montre combien de wagons sont chargés ou vides  sont dans le train, sélectionnez l'option case "Charges et vides".
+
+<H3> Ajouter le Logo </H3>
+
+Si vous voulez un logo dans le coin supérieur droit de votre manifeste et
+listes de manoeuvre, appuyez sur le "Logo Ajouter" et sélectionnez un fichier avec 
+l'image que vous souhaitez afficher. Vous pouvez également avoir un logo différent pour chaque
+train dans votre liste, voir Options <A HREF="#TrainOptions"> Train </A> pour
+plus de détails.
+
+<A NAME="MisplacedCarsComment"> </A>
+<H3> Commentaire Wagons Mal Placés </H3>
+
+Le programme fournit un commentaire pour vos opérateurs pour rechercher<A HREF="#CarsSet"> les wagons égarés </A>. Vous pouvez modifier le commentaire à votre goût.
+
+<A NAME="BuildReportDetails"> </A>
+<H3>Construire Rapport Détaillés </H3>
+
+Vous pouvez ajuster la quantité d'informations que le rapport construit montrera. Sélectionnez l'un des quatre niveaux en utilisant les boutons radio. Le programme
+lors de la génération des rapports enregistre des informations  «Très détaillées" 
+sur le disque. Les boutons radio contrôlent la quantité de ces données qui sont réellement
+imprimées. Le bouton radio "Minimal"  donne le moins d''information et le «très détaillé» fournit le plus. Si vous êtes seulement
+intéressés de savoir pourquoi un train ne sera pas construit, le réglage "Minimal" peut vous offrir
+ cette information. Le réglage "normal", qui montre les locomotives et les
+wagons qui sont exclues du train, et les locomotives et les wagons sont
+ collectés et livrés. Le "Détail" va en générer
+quelques pages en fonction de la taille de votre Compagnie. Il va montrer tous les
+wagons et les locomotives disponibles, et un peu la façon dont le programme trouve les destinations
+pour les wagons et locomotives. Le bouton  «Très détaillé" en produit le plus de
+pages, et montrera pourquoi les wagons ne sont pas pris en charge ou déposé. Soyez sûr et
+appuyez sur "Enregistrer" après avoir changé la sélection du rapport à construire.
+
+<A NAME="Locations"> </ A>
+<H2> Emplacements </H2>
+Les emplacements sont des endroits sur votre réseau que les trains visitent pour ramasser ou déposer
+les wagons et locomotives. Les emplacements peuvent être des cités, villes, ou tout simplement
+ des endroits où les trains ont besoin de travailler les wagons. Sélectionnez
+"Outils-> Opérations> Locations" pour ajouter ou modifier les emplacements sur votre
+chemin de fer.
+
+<P>
+<img src="images/Locations.png">
+</P>
+<P>
+Pour ajouter un emplacement, appuyez sur le bouton "Ajouter" situé sur la
+bas de la fenêtre "Lieux" . Une nouvelle fenêtre devrait apparaître.
+</P>
+<P>
+<img src="images/EditLocation.png">
+</P>
+
+<P> Dans la fenêtre "Ajouter un emplacement" , entrez le nom de l'emplacement dans la
+case en face du "Nom". Le nom de l'emplacement doit être unique, le programme
+ne permettra pas deux endroits avec des noms identiques. Toutefois, si vous voulez
+plus d'un endroit à avoir le même nom pour votre manifeste et
+listes de manoeuvres, ajouter un tiret et un numéro au nom de lieux. Pour
+Par exemple, "Boston-1" et "Boston-2" sera imprimé comme «Boston». Le programme
+va supprimer le trait d'union et le numéro lors de l'impression du manifeste et de la liste de manoeuvre . </P>
+
+<P> Appuyez maintenant sur le bouton "Ajouter Situation " au
+le bas de la fenêtre. Les différents champs  qui étaient désactivés doivent
+apparaitre maintenant.
+</P>
+<P> Chaque emplacement peut avoir plusieurs triages, interéchange,  ou coulisse.
+ les voies de triages sont des voies où les locomotives et les wagons sont garés provisoirement. Un embranchement peut être une voie industrielle ou tout endroit où un wagon
+est chargé ou déchargé. Pour qu'un train desserve un emplacement, il doit y avoir
+au moins une voie à cet endroit. Voir ci-dessous comment ajouter des voies à
+votre emplacement. </P>
+<P> Les tableaux montrent la longueur des voies, la longueur de la voie
+qui est occupée (utilisée) par les wagons et les locomotives, le nombre total de wagons
+et de locomotives (matériel roulant) à chaque emplacement, le nombre de wagons et de
+locomotives qui seront collectés par les trains, et le nombre de
+wagons et locomotives qui seront livrés par les trains. </P>
+
+<H3>Direction Desservie par ce Lieu </H3>
+
+Vous pouvez décider  quelle direction sera desservie par le train desservant cet emplacement.
+Par exemple, si seul les trains à destination de l'est peuvent accéder à l'emplacement, sélectionner
+"Est" et décochez les autres directions. Cela peut être utile si vous
+voulez que ce point soit un lieu de convergence pour un lieu donné. Si un
+emplacement peut soutenir de multiples directions, sélectionner alors celles qui sont
+appropriées
+
+<H3>Emplacement et materiel roulant </H3>
+
+Vous pouvez contrôler le matériel roulant qu'un emplacement peut accepter. Poussez les boutons
+"Tout Effacer" pour désélectionner tous les types, ou «Sélectionner tout» pour sélectionner tous les
+types, puis cochez ou décochez le matériel roulant que vous souhaitez que l'emplacement accepte.
+ Après la configuration des voies pour un emplacement, vous pouvez utiliser la
+"Sélection automatique" pour avoir la localisation reflète le matériel roulant
+desservi par les voies diverses.
+
+<A NAME="Yards"> </A>
+<H3> Triages </H3>
+
+Pour ajouter un chantier (triage), sélectionnez le bouton radio "Triages" et puis appuyez sur le bouton "Ajouter une Voie Triage" .
+
+<P>
+<img src="images/AddYard.png">
+</P>
+
+Maintenant, entrez le nom de triage
+ avec la longueur de la voie en pieds ou dans l'échelle réelle en
+pouces. Ajouter un guillemet (") à la longueur lors de la saisie réelle en
+pouces et le programme permet de convertir la longueur en pieds à l'échelle. Ajouter
+cm si vous voulez convertir des centimètres en mètres. Appuyez sur le bouton  "Ajouter Voie de triage " au bas de la fenêtre et les champs désactivé
+devraient maintenant apparaître.
+
+<H3> Matériel Roulant Fourni </H3>
+
+Vous pouvez contrôler ce type de matériel roulant que le triage peut fournir. Remarquez
+que le matériel roulant du triage est limité à celui que l'emplacement
+peut fournir. Si le matériel roulant que vous souhaitez n'apparaît pas pour un
+triage, confirmez que les types de  matériel roulant pour l'emplacement soient correctement
+sélectionnés. Si le type de matériel roulant que vous voulez n'existe pas pour un
+emplacement, vous devrez créer le type en utilisant la fenêtre "Wagons" , voir
+<A  HREF="#Cars"> wagons </A> ci-dessous.
+
+<H3>Noms de Ligne Desservies </H3>
+
+Vous pouvez également restreindre les lignes qu'une cour peut desservir. Sélectionnez «Accepter
+Seul "si vous voulez construire une liste de noms de lignes que le triage
+accepte. Sélectionnez "Exclure" si vous voulez construire une liste de noms de ligne que
+vous voulez exclure du triage.
+
+<H3> Chargement Accepté  </H3>
+
+Vous pouvez également restreindre les wagons chargés qu'un triage peut accepter . Sélectionnez «Accepter
+Seul "si vous voulez construire une liste de noms de chargement de wagon que le chantier
+accepte. Sélectionnez "Exclure" si vous voulez construire une liste de noms de chargement de wagon que
+vous voulez exclure du triage.
+
+<H3> Ordre de Ramassage de Wagons </H3>
+
+Il y a trois options pourcollecter les wagons du triage. «Normal» utilise
+le compteur de mouvement des wagons pour déterminer l'ordre dans lequel les wagons sont retirés du triage, «FIFO» (Premier Entré, Premier Sorti), et "LIFO" (Dernier Entré, Premier Sorti). LIFO est
+utile si vous avez un simple triage fermé que vous utilisez pour les wagons de service. Pour
+par exemple le stockage de wagons de charbon vides, il serait plus judicieux de tirer un wagon à charbon vide
+ de l'avant de la ligne au lieu du milieu du Triage.
+
+
+<H3> Commentaire </H3>
+
+Vous pouvez entrer un commentaire facultatif pour le triage.
+
+<H3> Enregistrer Voie de Triage </H3>
+
+Appuyez sur la "Enregistrer Voie de Triage » pour enregistrer votre travail. Le programme va créer un
+fichier (OperationsLocationRoster.xml) dans votre répertoire JMRI dans un dossier
+appelé «opérations». Le programme permettra également de créer un fichier de sauvegarde
+contenant les derniers réglages pour l'ensemble de vos emplacements.
+
+<A NAME="ChangeTrackType"> </A>
+<H3>Changer Type de Voie </H3>
+
+Si vous voulez changer le type de voie ou d'embranchement, l'interéchange ou triage, dans la fenêtre édition de voie
+, sélectionnez Outils-> Changement du Type de Voie . Sélectionnez le type de voie désirée et appuyez sur "Enregistrer".
+
+<A NAME="Pools"> </ A>
+<H3>Association</H3>
+
+Le programme vous permet d'associer un ensemble de voies à un endroit. Les voies
+dans une association partagent leurs longueurs de voie avec d'autres. Ceci est utile si
+vous avez divisé en segments un emplacement que vous voulez suivre et chaque segment 
+ajuste sa longueur en fonction des demandes du programme. Pour créer et placer un
+voie dans une association, sélectionnez Outils-> Association dans l'une des fenêtres édition voie. Entrez un nom pour votre  association et appuyez sur le bouton "Ajouter". Vous pouvez
+également spécifier la longueur minimale pour la voie. Une longueur de voie minimum
+empêche les autres voies dans l'association d'acquérir toutes les longueurs de voies. Ensuite, sélectionnez un nom d'association pour la voie et appuyez sur "Enregistrer". Le
+bas de la fenêtre association montrera les autres voies qui sont dans la
+voie de l'association
+
+<A NAME="Sidings"> </ A>
+<H3> Embranchements </H3>
+
+Un Embranchement est utilisé au service d'une industrie. Pour ajouter un embranchement, appuyez sur le bouton Ajouter "
+Embranchement". Les branchements sont très similaires aux <a HREF="#Yards">Triages</A>,
+donc voir ci-dessus pour plus d'informations. Vous pouvez si vous le souhaitez planifier l'ordre dans lequelles les wagons seront livrées à un embranchementn, ou demander des wagons  avec
+certaines charges. Voir les  <a HREF="#Schedules">Annexes </A> ci-dessous pour plus d'informations. 
+<P> Quand une wagon est placé à un embranchement l'état de charge du wagon est modifié. Le programme
+fournit deux noms de charge pour toutes les wagons, le vide par défaut ou «E», et le chargement par défaut
+ou "L". Si une wagon a un de ces charges quand il arrive à un embranchement, le nom de charge
+va changer à l'autre, c'est à dire "E" devient "L" et "L" devient "E". </P>
+
+<A NAME="Schedules"> </ A>
+<H3> Annexes </H3>
+
+Si vous souhaitez voir les wagons livrés dans un ordre particulier, ou
+avec une charge spécifique pour la livraison ou l'expédition, le programme vous permet d'
+appliquer une annexe à un embranchement. Ceci est une fonctionnalité optionnelle et ne doit pas
+être utilisé jusqu'à ce que vous devenez très familier avec la façon dont le programme génère les
+manifestes et les listes de manoeuvre. Une annexe permet un contrôle très fin sur l'ordre ddans lequel les types  wagons seront livrés à un embranchement. Vous pouvez également spécifier
+le nom de ligne pour le type de wagon livré. Par exemple, si vous vouliez
+deux wagons SP pour être livrés suivie d'un wagon-citerne chargé de «pétrole»,
+vous pouvez créer une annexe qui va faire exactement cela. Pour créer une annexe
+presser le bouton "Editer" à côté de «l'annexe optionnelle" tirer vers le bas le
+menu sur la fenêtre "Modifier Voie Embranchement" . En appuyant sur la
+bouton "Editer" devrait créer la fenêtre«Ajouter Annexe" .
+<P>
+<img src="images/EditSchedule.png">
+</P>
+<P> Entrez un nom pour votre annexe et appuyez sur le bouton "Ajouter Annexe"
+ sur le bas de la fenêtre.Des embranchements multiples peuvent utiliser la même
+annexe aussi longtemps que les embranchements utilisent les même types de  wagon et les mêmes lignes. Maintenant
+ajouter votre première livraison pour cet embranchement en choisissant un type de wagon dans la
+boîte de menu dans le coin inférieur gauche de la fenêtre et en appuyant sur le bouton
+«Ajouter un type de wagon" . Un nouveau point devrait figurer dans votre annexe
+contenant le type de wagon, un menu déroulant pour les noms de ligne, et une numérotation à partir
+de 1. Vous pouvez si vous le souhaitez spécifier une ligne particulière pour le type de wagon que
+vous avez entré, ou laisser vide si vous ne vous souciez pas du nom de la ligne.
+Vous pouvez également spécifier la charge des wagon reçues et expédiées. Vous pouvez également
+contrôler si le wagon sera livré au cours de la session. Choisissez parmi les
+"Horaires" du menu déroulant les horaires des trains que vous voulez. Lorsqu'un horaire de train
+est sélectionné, un wagon ne sera livré que lorsque l'horaire du trains est actif.
+Voir Trains-> Outils-> <A HREF="#Timetable"> Horaire </A> pour sélectionner
+les horaires des trains pour votre session. </P>
+
+<P> Si vous vouliez plus d'un type de wagon à livrer consécutivement,
+augmenter le compteur du nombre que vous souhaitez. Le nombre maximal est de 10
+et le minimum est 1. Le champ attendre vous permet de déterminer combien de trains
+se rendront à l'emplacement avant de collecter le wagon. Utile si vous voulez
+qu'un wagon  reste immobile pour plusieurs sessions de fonctionnement . </P>
+
+<P>Répétez  en sélectionnant le type de wagon et en appuyant
+«Ajouter un type de wagon" jusqu'à ce que votre ayez l'annexe de livraison que vous voulez. Appuyez sur "Enregistrer
+Annexe "et fermez la fenêtre de programmation lorsque vous avez terminé.
+Notez que seuls les types de wagon  et les lignes qui sont acceptées par cet embranchement
+sont disponibles. Si un type de wagon ou de ligne n'est pas disponible, vérifiez le type de wagon
+ et les lignes pour cet embranchement et l'emplacement.
+</P>
+<P> L'annexe contrôle quand et quels wagons seront livrés et dans quel
+ordre. Il rend l'embranchement plus restrictif, seuls les wagons exigés par l'annexe
+ seront remis à l'embranchement. En regardant l'annexe vous
+verrez un pointeur dans la table sous la rubrique «Actuel», le pointeur
+montre le prochain 
+Type de wagon que le programme veut remettre à l'embranchement. Lorsque
+le programme trouve ce wagon et  la destination du wagon à cet
+embranchement, le pointeur se déplace à l'élément suivant dans l'annexe. Après avoir desservi
+le dernier élément dans l'annexe, le pointeur sera de retour au premier élément
+dans l'annexe. </P>
+
+<P> Si vous voulez personnalisée les <A HREF="#CarLoad"> Charges </A> pour vos wagons,
+vous pouvez les créer en utilisant les<A HREF="#EditCarLoads">  Modifier Attributs wagon
+ </A> pour la "Charge" du wagon . Chaque nouvelle charge est associée à un type de wagon
+. Par exemple vous pouvez avoir "Vis" pour un wagon, et «pétrole» pour un
+wagon-citerne. Le programme délivrera des wagons avec une charge personnalisé à un
+embranchement qui a une annexe qui demande également cette charge particulière.
+Toutefois, les wagons avec une charge personnalisée peut toujours être placés dans les triages,
+les coulisses, et les Interéchanges. </P>
+
+<P> Vous pouvez si vous le souhaitez, spécifiez la destination finale d'un wagon une fois
+qu'il a été utilisé par l'embranchement. Seuls les voies de destination qui peuvent
+accepter ce type de wagon sont représentées dans le menu déroulant des voies. </P>
+
+<P> Vous pouvez éventuellement utiliser vos <A HREF="#StagingAndCarLoads"> 
+voies de coulisse </A> pour des wagons vides avec une charge personnalisée, et vous pouvez aussi optionnellement
+avoir le programmes qui place des charges personnalisées dans les wagons en utilisant des voies de coulisse. Si
+vous voulez spécifier la coulisse en tant que destination du wagon, ne pas choisir une
+voie, laisser le programme déterminer quelle est la voie appropriée de la coulisse à utiliser. Sinon, si vous sélectionnez une voie, cette voie deviendra indisponible pour les autres wagons. Pour éviter de surcharger un embranchement avec des
+wagons avec des charges personnalisées de coulisse, le programme va normalement limiter le
+nombre de wagons sur l'itinéraire vers une voie avec une annexe de l'espace de voie disponibles. Alors
+si vous avez de l'espace pour trois wagons, la plupart du programme génèrera normalement
+ pour vous  depuis la coulisse  trois wagons. Cependant, si vous avez besoin pour
+ajuster le nombre de wagons en route vers un embranchement avec une annexe, sélectionnez
+dans la fenêtre Modifier la planification "Outils-> Options". Une nouvelle fenêtre devrait
+apparaitre, et ajuster le pourcentage "de charges personnalisées générées par la
+coulisse ». La valeur par défaut est 100% ce qui signifie que générer suffisamment de
+wagonspour remplir à 100% l'espace de voie disponible. Si vous voulez seulement la moitié de
+vos charges de wagon pour venir dans la coulisse, définissez la valeur à 50%, et si vous
+ne voulez pas générer en coulisse un wagon de charge personnalisé pour l'embranchement,
+définir la valeur à 0%. Parfois, il est approprié de surcharger un embranchement
+avec des wagons, si vous voulez cela, augmentez la valeur jusqu'à 1000%. BTW 1000%
+signifie envoyer 10 fois l'espace disponible en wagons pour cet embranchement. Si vous
+entrer cette valeur, vous avez je l'espère 10 fois l'équivalent de la longueur de l'embranchement disponible dans un triage de stockage à proximité!  </P>
+
+<P>Annexes peut fonctionner en deux modes, séquentiel comme
+décrit ci-dessus, ou en mode correspondance. Le mode corresponance élimine les aspects séquentiels
+ d'une annexe. En mode correspondance, le programme va rechercher dans l'ensemble
+de l'annexe pour trouver un type de wagon et de  charge qui corresponde à un wagon que le
+programme tente de placer. En mode correspondance le pointeur indique le dernier wagon
+que le programme a trouvé acceptable pour l'embranchement. Pour modifier le planning
+pour le mode correspondance , choisissez "Correspondre" dans la fenêtre Modifier la planification
+et appuyez sur "Enregistrer". Le Mode Correspondance est utile lorsque l'ordre des
+wagons qui arrivent n'est pas important, mais vous voulez continuer à expédier des wagons avec une
+charge spécifique, fournir la destination finale du véhicule, ou avoir le wagon attendre
+pour un nombre précis de trains à l'embranchement. En mode correspondance l'élément compteur de l'annexe
+ est ignoré car il n'est pas utilisé. Tous les autres champs
+sont disponibles, et vous pouvez avoir le même type de wagons plusieurs fois, avec
+chaque élément dans l'annexe à la recherche d'une charge particulière reçu . Également en
+ mode correspondance, le  boîte de sélection de type de wagon avance automatiquement au prochain
+type de wagon lors de l'ajout d'un type de wagon. Ceci rend facile l'ajout rapide de type de wagon
+dans la table. </P>
+
+<P> Vous pouvez également accéder à vos annexes depuis le menu Emplacements Outils.
+La table Annexes fournit l'état pour chaque annexe. Puisque vous pouvez
+attribuer une annexe à de multiples embranchements, la table fournit également l'état supplémentaire pour chacun des embranchements qui utilisent cette annexe particulière. La table vous permet également de modifier l'annexe une fois qu'elle a été attribuée à un embranchement. </P>
+
+<A NAME="SchedulesAndLoads"> </A>
+<H3>Annexes et charges </H3>
+
+Vous avez entré tous vos wagons, voies et  trains et avez
+jouer avec le programme pendant un certain temps. Vous êtes heureux avec là où les wagons
+finissent, mais en regardant les mouvements de wagon générés par le programme au cours de
+plusieurs séances vous avez penser que ce serait bien si les mouvements du wagon
+ avaient une «fin». Qu'est-ce que vous aimeriez voir une série de wagons se
+déplacer qui imitent le chemin de fer prototype que vous modélisez, ou peut-être vous
+voulez juste que les wagons se déplacent dans un certain ordre. Annexes et 
+charges personnalisées de wagon sont les astuces pour obtenir du programme ce que vous voulez.
+
+<P> Le programme offre tous les wagons avec deux charges, un «L» et «E».
+On les appelle les chargés et vides par défaut respectivement. Vous ne pouvez pas
+les supprimer, mais vous pouvez les renommer si vous le souhaitez. Pour chaque type de wagon,
+vous pouvez créer des charges supplémentaires. Par exemple, disons que vous avez une
+industrie qui a besoin de papier chargé dans des wagons couverts. Vous pouvez créer cette <a
+HREF= "# EditCarLoads"> Charge </A> pour vos wagons et nommez-L (papier).
+Or, pour l'embranchement qui sert  votre industrie du papier, vous devez créer une
+annexe. Dans cette annexe, le premier élément que vous entrez est un wagon couvert, et
+puis sélectionnez la charge à recevoir, L (papier). Si le train qui dessert 
+cette industrie est au départ de la coulisse, vous avez pratiquementt terminé. Le programme
+quand on construit un train en coulisse, va chercher une wagon vide, et
+s'il est trouvé, permettra de créer la charge L (papier) pour vous. Une fois que la charge du wagon est
+créée pour cette industrie, le programme mettra le wagon à destination de cette industrie. Lorsque le wagon est livré, le programme va retirer la charge papier, et l'état de charge du wagon va devenir vide ou «E». </P>
+
+<P> C'était facile, nous allons donc faire des choses plus intéressantes et avons une
+industrie d"'expéditions de certains matériaux imprimés. Nous allons créer et appeler cette charge
+L (impression). Or, dans le premier élément de l'annexe, au lieu de laisser le menu
+sous la rubrique «Expédition» vierge, sélectionnez L ('impression). Suivant dans le menu d'expédition il y a
+la destination et les menus voie. Nous pourrions choisir une destination qui est
+une coulisse. Pas besoin de sélectionner la voie, juste l'emplacement de transit. Maintenant
+quand un train retourne pour collecter le wagon, sa charge sera L (impression)
+et quand le wagon arrive à la coulisse, la charge sera supprimée et l'état de charge du wagon sera de retour à «E» vide. </P>
+
+<P> Nous aurions pu au lieu d'envoyer le wagon avec impression à la coulisse,l'envoyer à un embranchement
+. Il suffit de sélectionner la destination et l'embranchement où  vous voulez que le
+wagon aille. Même si cela prend plusieurs trains pour sortir le wagon de là, le
+programme saura  déterminer le meilleur itinéraire. Maintenant, si vous créez une autre
+annexe à cet embranchement, vous pouvez rediriger le wagon à nouveau. En enfilant une
+série d'annexes et de charges, ensemble, vous pouvez créer une séquence des wagons
+que vous voulez. </P>
+
+<P> Une autre façon intéressante de déplacer les wagons est d'expédier une charge personnalisée,
+mais de ne pas  spécifier de destination. Le programme quand il trouve un wagon avec une
+charge personnalisée, mais aucune destination, va vérifier toutes les embranchements pour voir si une annexe demande ce type de wagon avec cette charge personnalisée. Et s'il ya un embranchement qui répond aux exigences, le programme routera
+le wagon vers cette industrie. Mais une fois qu'un wagon a une charge personnalisée, ce wagon peut
+seulement se déplacer à des triages, des interéchanges, et coulisses. Pas d'embranchement à moins que que l'embranchement
+ ait également une annexe demandant ce wagon et cette charge. </P>
+
+<P> une attention particulière pour les wagons vides. Le programme ne route pas
+les wagons avec des charges par défaut "E" ou "L". Donc, si votre annexe demande
+ un wagon avec l'option par défaut "E" vide, il peut se passer un certain temps avant
+que le wagon se montre. Une alternative est de gérer les wagons vides comme des wagons
+avec des charges personnalisés. Vous pourriez créer la charge personnalisée "E (mpty)" et 'utiliser
+cette charge pour signifier une wagon vide. Maintenant les wagons avec cette charge seront
+routés et auront les mêmes caractéristiques que les wagons avec les "autres"
+charges personnalisées. </P>
+
+<A NAME="Interchange"> </A>
+<H3>Voies Interchange  </H3>
+
+Si vous voulez que le programme force l'échange de wagons entre les trains, vous avez
+besoin de définir une voie d'échange. Les wagons déposés à une voie d'interéchange
+par un train sur un itinéraire donné ne seront pas ramassés par n'importe quel train
+en utilisant cette voie. Un autre train avec un itinéraire différent est nécessaire pour
+ramasser les wagons. Par exemple, vous pourriez avoir un embranchement qui ramasse
+et livre les wagons d'un terminal. Pour une voie comme un
+interéchange, une fois que le train de l'embranchement fournit les wagons, ils resteront
+là jusqu'à ce que le train de la voie principale s'arrête pour desservir la voie d'interéchange du terminus.
+
+<P> Si vous voulez plus de contrôle sur la façon dont votre voie interéchange
+fonctionne, vous pouvez éventuellement spécifier un train ou un itinéraire pour collecter ou livrer des
+wagons sur une piste d'échange. </P>
+
+<H3> Comment Créer une Gare de Triage </H3>
+
+Une gare de triage est utilisé pour trier les wagons dans des trains différents. Normalement
+une voie de triage est attribué à un train spécifique et les wagons sont livrées sur
+cette voie jusqu'à ce qu'il y ait assez de wagons pour remplir un train. Pour créer une
+gare de triage, vous devez attribuer une <A HREF="#Interchange"> 
+ voie d'interéchange</a>, pour chaque train qui partira de ce triage.
+ Pour chaque voie permettre à tout les train de déposer les wagons, mais attribuer un seul train pour
+les collecter. Vous devez configurer la voie d'échange pour servir le même
+types wagon et de lignes que le train dessert, sinon vous risquez de
+finir avec des wagons orphelin
+
+<P>Remarquez qu'il est acceptable de créer plus de voies d'interéchanges alors qu'il n'y a des voies physiques dans votre gare de triage. Les wagons peuvent partager le même faisceau de voie jusqu'au moment de les classer dans leurs différents trains </P>
+
+<A NAME="Staging"> </A>
+<H3> Voies de Coulisse </H3>
+
+Une voie de coulisse vous permet d'avoir tous les wagons et les locomotives d'un train
+livrés sur une voie. Quand un train se termine dans une coulisse, le
+programme recherche une voie complètement vide,  sans locomotives ou
+ wagon. La voie de coulisse par<A HREF="#TypeRoadLoadRestrictionsStaging"> défaut </A> doit
+également desservir l'ensemble des wagons du train et types de locomotives et de lignes. Les trains
+ne peuvent pas partager les voies de coulisse; le programme va placer un seul train par
+voie. Au départ d'un emplacement avec une voie de coulissee, tous les wagons et
+locomotives sur une voie seront affectés à la formation d'un train. Un emplacement peut avoir
+plusieurs voies de coulisse, mais ne peut pas avoir d'autres types de voies,
+embranchements, triages,etc...  Les voies de coulisses peuvent être au début d'un itinéraire, à la
+fin de l'itinéraire, ou les deux. Les voies de coulisses au milieu d'un itinéraire sont
+ignorées par le programme.
+
+<p> Remarque si vous faites circuler un train pour et en provenance du même emplacement de coulisse
+, vous devez définir deux voies de coulisse pour le programme, l'une pour le départ
+ et l'autre pour le retour. Physiquement les deux voies peuvent être la 
+même. Si vous souhaitez utiliser le même nom pour vos voies de coulisse, le
+programme vous permet de nommer les voies de coulisse à l'aide d'un tiret et un
+nombre comme un suffixe. Le trait d'union et le numéro ne sont pas imprimés sur le manifeste et la liste de manoeuvre.
+</p>
+
+<P> Si vous avez besoin d'un train en partance de l'emplacement pour avoir un certain nombre
+de locomotives, modèle de locomotive, ou le nom de la ligne, le programme va rechercher tous les
+voies en coulisse à l'endroit de départ pour un train qui réponde à ces
+exigences. Si vous définissez les exigences de locomotive à 0, le programme
+sélectionnera le prochain train disponible depuis la coulisse; et ignore le nombre
+de locomotives en laissant cette voie de coulisse. Voir <A HREF="#TrainRequires">Train Conditions Optionnelles 
+ </a> pour plus d'info. </P>
+
+
+<P> Vous pouvez si vous le souhaitez, éventuellement contrôler la voie de coulisse sur laquelle un
+train arrivera et partira. Notez que "Tous" par défaut permet à tous
+les trains d'arriver ou de partir sur la voie de coulisse, donc si vous voulez
+restreindre les trains pour une voie spécifique ou des voies, vous devez configurer toutes les voies de coulisses de cet endroit. </P>
+
+<P> Vous pouvez en  <A HREF="#PromptDepartureTrack">option </A>, avoir
+le programme qui vous demandera quelle voie vous souhaitez utiliser lors du départ de la coulisse. </P>
+
+<H3> Déplacer des Trains dans une Coulisse </H3>
+
+Parfois, pour les opérations un train sur une coulisse est à un  endroit (appelé
+A), puis quitte plus tard pour un autre endroit (appelons-le B). pour une opération en projet sur ces emplacements,
+ A et B sont des emplacements qui ne sont pas directement reliés par des trains. Nous avons donc besoin de déplacer les locomotives et les wagons de
+l'emplacement A à B si le manifeste du train peut donner un sens. Une façon de faire
+cela est de terminer le train en coulisse à l'emplacement A. Ensuite, créez un train
+«Virtuel» qui déplace simplement les wagons de l'emplacement de coulisse A à l'emplacement de coulisse B
+. Cela force le programme à «déplacer» le train
+et ses wagons de A à B qui est vraiment la même piste physique. Plus tard
+vous pouvez construire un train qui part de l'emplacement B, et le manifeste
+montre que le train, en provenance de B et non A.
+
+<p> Vous pouvez automatiser la réaffectation d'un train par la création d'un <A
+HREF= "# TrainScripts"> script> </A> qui est activé lorsque le train est
+terminé en coulisse. </P>
+
+<A NAME="StagingAndCarLoads"> </A>
+<H3>Coulisse et charges de Wagon </H3>
+
+Sur les voies de coulisse vous pouvez éventuellement permuter les charges par défaut de wagon de vide à
+chargé, et chargé à vide. Sélectionnez l'"Echange par défaut Chargé et Vide"
+si vous voulez que vos wagons chargés changent en arrivant sur la voie de coulisse. Vous pouvez si vous le souhaitez, demander au programme de vider les wagons car ils
+sont entrés sur la coulisse. Sélectionnez le "Vider wagons  avec des charges par défaut" pour changer un
+état de wagon de chargée à vide. Si vous utilisez des charges personnalisé, vous pouvez supprimer
+la charge personnalisée lorsque les wagons arrivent à la piste de coulisse. Sélectionnez le
+"vider Wagons avec des charges personnalisée" si vous voulez remplacer votre charge pesonnalisée avec la valeur vide par défaut .
+
+<P> Le programme offre deux options pour la mise en place de charges personnalisées dans
+les wagons quand ils partent d'une coulisse. La première option est appelée "Générer
+charges personnalisé pour embranchement desservis par ce train ». Si la première option est
+sélectionnée, le programme va seulement vérifier les embranchements avec des annexes le long de l'itinéraire du train au départ
+. Le programme ne fera que générer assez de charges de wagons 
+pour remplir la voie  de l'embranchement. Lorsque seule la première option est sélectionnée, le programme
+ignore l'annexe de «Pourcentage des charges personnalisé généré par la coulisse»
+et la fonctionnalité optionnelle "Voie Alternative". </P>
+
+<P> Si la deuxième option est choisie, "Générer des charges personnalisées pour tous les
+embranchements (plusieurs trains) ", le programme va vérifier toutes les embranchements avec une
+annexe pour une demande. Maintenant le programme lors de la détermination de beaucoup de wagon chargés
+à générer, se penchera sur la valeur du pourcentage "des charges personnalisées
+générés par la coulisse ». Aussi, si l'embranchement est plein ou va devenir plein, le
+programme enverra les wagons à la "Piste Alternative", puis à toutes voies de triage
+à l'emplacement de l'embranchement. </P>
+
+<P> Deux options fonctionnent de la même manière en ce qui concerne le placement de charges personnalisées dans les wagons, seul le nombre de wagons chargés et le nombre d'embranchements est considéré par les changements de programme. Si une annexe exige un
+certains type de wagon, et ce type de wagon est au départ de la coulisse, et le wagon
+chargé est vide par défaut, le programme va placer la charge personnalisée dans ce
+wagon si l'option appropriée est sélectionnée. </P>
+
+<P> Si un embranchement demande une charge personnalisée, l'embranchement doit avoir une <A HREF= "Horaires #"> Annexe </A>. </P>
+
+<P>Pour restreindre la charge que le programme placera dans votre wagon,
+vous pouvez utiliser les voies de chargement en coulisse pour servir de fonction de contrôle. Voir «Sélectionner
+charges desservis par cette voie "lors de l'édition la voie de coulisse. Vous pouvez
+également restreindre les types de charge  que le programme placera en limitant
+les types de charges dans le train au départ que la coulisse est autorisé à
+livrer. Voir "Sélectionner des charges desservies par ce train" sous Édition-> Train,
+puis Outils-> <A HREF="#TrainBuildOptions"> Train Options de Construction </A>. </P>
+
+<A NAME="ModifyLocationsByCarType"> </A>
+<H3> Modifier des Lieux par Type de Wagon </H3>
+
+Cet outil peut être trouvé sous Emplacements-> Outils. Utilisez cet outil pour modifier rapidement
+ le type de wagons que vos emplacements et les voies utiliseront. Très
+utiles lors de l'ajout d'un nouveau type de wagon dans votre liste.
+
+<P> <img  Src="images/ModifyLocationsByCarType.png"> </P>
+
+<P> D'abord sélectionner le type de wagon que vous désirez modifier. La fenêtre
+ montrera alors les emplacements et les voies qui peuvent servir ce type de wagon. Sélectionnez
+ou désélectionner les lieux et les voies que vous voulez voir utilisées, et appuyez sur le
+bouton "Enregistrer" pour modifier vos sites et les voies. Vous pouvez également recopier la manière dont
+un wagon existant est utilisé par vos emplacements et appliquer ces règles à
+un autre wagon. Pour faire qu'un type de wagon se comporte comme un autre, sélectionnez d'abord
+le wagon de votre souhaitez copier, puis sélectionnez la case option "Copier", le Type wagon
+ apparaîtra maintenant à  droite de la case, puis sélectionnez le type
+de wagon que vous souhaitez modifier et appuyez sur "Enregistrer" pour avoir les deux types de wagon
+utilisés par les mêmes endroits et les voies. </P>
+</P>
+<A NAME="Cars"> </A>
+<H2> Wagons </h2>
+La fenêtre de wagons vous permet d'éditer votre liste de wagons. Vous pouvez entrer un numéro de wagon, la ligne, type, longueur. Le programme calcule automatiquement le
+poids des wagons qui est basé sur la longueur et l'échelle de votre modélisation. Vous pouvez
+facultativement ajouter la couleur du wagon, la date de construction, le chargement et le propriétaire. Si vous voulez
+un groupe de wagons pour être manoeuvrés comme une unité, vous pouvez créer un "noyau". Vous
+pouvez attribuer n'importe quel nombre de wagons à un noyau, mais le type du premier wagon
+affecté sera utilisé par le programme afin de déterminer si le noyau est
+permis à un endroit. La longueur totale du noyau est utilisé pour
+déterminer si les wagons dans le noyau vont s'insérer. Notez que le programme
+comprend également un espace pour les coupleurs du wagon lors du calcul de la longueur d'un
+noyau.
+
+<P>
+<img src="images/Cars.png">
+</P>
+<H3> Ajouter, Enregistrer, trouver des boutons </H3>
+
+Il y a trois boutons situés au bas de la fenêtre de Wagons. Le
+bouton «Ajouter» vous permet d'ajouter un wagon à votre liste. Le bouton "Sauvegarder" enregistre
+la liste des wagons sur le disque. Il sauve également la position de la Fenêtre wagons
+et sa taille, et toutes les modifications apportées aux largeurs de table. Le bouton "Rechercher"
+et la fenêtre de texte adjacents peuvent être utilisés pour trouver un wagon par son numéro de route. Vous
+pouvez utiliser le joker "*" en entrant un numéro de wagon. Par exemple si vous
+vous voulez trouver toutes les wagons avec des numéro qui se termine par 345, entrez * 345, et appuyez sur
+trouver. Chaque fois que vous appuyez sur trouver, le prochain wagon avec un numéro se terminant par la ligne
+«345» sera mis en surbrillance.
+
+<P>
+<A NAME="ImportingCars"> </A>
+</P>
+<H3> L'Importation de Wagons à partir d'un Fichier </H3>
+
+Si vous avez déjà une liste de wagons dans une base de données, vous pouvez importer les
+wagons dans le programme. La fonction d'importation nécessite un fichier texte ASCII,
+avec une ligne pour chaque wagon. L'importation de wagons nécessite quatre attributs et
+l'ordre est le numéro de wagon, nom de la ligne, le type et la longueur. Les quatre
+attributs de wagon sont tous nécessaires pour que l'importation travaille correctement. Les lignes
+suivantes montrent deux exemples de format correct:
+
+<P> 336 GCR plat 40
+ <BR> 655578 UP Boxcar 40 </P>
+
+<P> Chaque ligne peut commencer par un espace et des espaces multiples entre chaque
+champs est correct. En option, vous pouvez inclure des attributs supplémentaires dans l'
+ordre suivant, poids, couleur, nom du propriétaire, date de construction, et l'emplacement. L'emplacement peut avoir
+deux domaines, le nom du lieu suivi de l'embranchement ou du triage
+séparés par un tiret. Le tableau suivant montre deux exemples de
+format correct: </P>
+
+<P> 336 GCR Plat 40 3.8 Noire AT 1930 Home Town États-Unis - Oil Terminal George
+<BR> 655578 UP Boxcar 40 3.8 jaune DB 1934 York - Fret York </P>
+
+<P> Si vous préférez utiliser des délimiteurs virgules au lieu des espaces, utilisez un fichier avec
+une extension .csv ou placer
+le mot "comma" au début de votre fichier d'importation et utiliser des virgules au lieu
+des espaces. Voici deux exemples d'importation de wagons avec des virgules comme
+délimiteurs. </P>
+<P>comma <BR>
+336,GCR,Flat Car,40,3.8,Black,AT,1930,Home Town USA,-,George's Oil
+Terminal <BR>
+655578,UP,Tank Car,40,3.8,Yellow,DB,1934,York,-,York Freight</P>
+<P> Vous devez être très prudent avec les espaces lors de l'importation d'un fichier par délimité par virgule
+ . s'ils existent entre les virgules. </P>
+
+<P> Si vous entrez 0 pour le poids de la wagon, le programme va automatiquement calculer le
+poids des wagons pour vous en fonction de la longueur du wagon et de <A HREF="#Scale">l'échelle</A> que vous avez sélectionnée. </P>
+
+<P> Pour importer un fichier, utilisez le menu "Outils" dans le coin supérieur gauche
+ du menu Outils-> Opérations> wagons. Ensuite, sélectionnez
+"Outils-> Liste-> Importer à partir du fichier". Notez que le programme n'
+ajoutera que les wagons qui n'existent pas dans liste de wagon du programme.Si le wagon
+existe déjà, l'importation sera ignorée par le programme. </P>
+
+<P> Pendant l'importation, si l'emplacement d'un wagon ou d'une voie n'existe pas dans la
+base de données du programme, le programme vous invite à les créer. Cet
+ainsi, que non seulement vous importez vos wagons, mais aussi les endroits où se trouve le wagon
+et les voies. Le programme mettra une nouvelle voie d'une longueur de 1000 », et
+va définir le type de voie comme un garage. Après l'importation, vous pouvez éditer la voie
+et définir sa longueur correcte et <A HREF="#ChangeTrackType">type</A>. </P>
+
+<P> Pour améliorer la vitesse de l'importation de wagons, vous pouvez fermer la fenêtre des wagons
+. Il faut beaucoup plus de cycles de processeur pour mettre à jour la fenêtre des wagons
+ que pour importer effectivement les wagons. </P>
+
+<P> Après avoir importé vos wagons, vous devez les enregistrer si vous souhaitez les conserver
+ comme une partie de votre liste. Utilisez le bouton "Sauvegarder" Wagons ou sélectionnez un
+wagon en appuyant sur le bouton Modifier, puis appuyez sur le bouton "Sauvegarder" qui
+peut être trouvé au bas à droite de la fenêtre "Edition Wagon" . </P>
+
+<A NAME="CarsEdit"></A>
+<H3> Ajout wagons à votre liste </H3>
+
+Pour ajouter manuellement une wagon à votre liste, appuyez sur le bouton "Ajouter" situé en
+ bas de la fenêtre "Outils-> Opérations> wagons" .
+
+<P>
+<img src="images/EditCar.png">
+</P>
+<P>
+
+Sélectionnez ensuite l'itinéraire
+pour le wagon. Si l'itinéraire désiré n'existe pas, appuyez sur le bouton "Éditer"
+en face de la boîte de menu sélectionner itinéraire. Cela vous permettra d'ajouter un nouvel 
+itinéraire ou de supprimer tout ce dont vous n'avez pas besoin. </P>
+
+<H3>Numéro de Ligne</h3>
+Maintenant, entrez le numéro du wagon dans la zone de texte. Le programme exige un
+nom de ligne unique et un numéro de ligne pour chaque wagon. Si vous avez des wagons avec
+des lignes et des numéros identiques, il suffit d'ajouter un -1, -2, etc à chacun des
+numéros de wagons. Le programme lors de l'impression du manifeste ou de la liste de manœuvre.
+
+<H3>Type de wagon, longueur, couleur, poids </H3>
+
+Sélectionnez le type de wagon, sa longueur et sa couleur dans les boîtes de menu. Utilisez le
+Bouton «Modifier» pour ajouter ou supprimer des types de wagons, des longueurs, ou les couleurs que vous
+souhaitez ajouter ou supprimer. Le poids des wagons est calculé automatiquement, mais
+vous pouvez entrer un poids différent, si nécessaire. Lorsque vous entrez la longueur
+d'un wagon, entrer dans la longueur de la caisse et non pas la longueur totale.
+Par exemple, un wagon de quarante pieds a une longueur de 40 pieds. Le programme lorsqu'il 
+ calcule la longueur, va ajouter deux pieds à chaque extrémité du wagon pour les
+coupleurs. Par conséquent, lorsque vous placez un wagon de quarante pieds sur un embranchement, il utilisera
+ 44 pieds de voie.
+
+ <H3>Sous-Type de wagon </H3>
+
+<P> Le programme offre la possibilité d'ajouter un sous-type de
+ de wagon. L'ajout d'un "sous-type" à votre type de wagon va créer une nouveau
+type de wagon. Le "sous-type" n'est pas imprimé sur les listes manifeste ou de manœuvres . Par exemple vous pourriez avoir des wagons à charbon avec des chargement et des wagons de charbon
+qui sont vides. Si vous entrez le type de wagon HopCoal-C pour vos wagon avec du charbon, et HopCoal-E pour le vide, le programme peut utiliser cette information pour attribuer et livrer des wagons à leurs trains appropriés et
+emplacements respectivement. </P>
+
+<A NAME="CabooseFredHazardous"> </A>
+ <H3>Passagers, Caboose, FRED, case dangereux </H3>
+
+Si le wagon est utilisé dans le service passagers, cochez la case  passagers. Le
+programme placera wagons en particuliers vers l'arrière d'un train de service mixte
+(combinaison de passagers et wagons de marchandises). Si le wagon est un
+fourgon de queue, ou a un FRED (clignotant dispositif d'extrémité arrière), ou est dangereux, sélectionnez
+la case appropriée. Le programme utilise les fonctions de fourgon de queue et Fred
+pour placer le wagon à la fin d'un train quand le train a besoin d'un fourgon de queue ou de
+wagon avec Fred. La case à cocher dangereux fera que le programme ajoutera une
+note à la liste de manœuvres pour le wagon qui transporte des matériaux dangereux
+. Votre politique de chemins de fer au sujet des matières dangereuses peut 
+être appliquée à ce wagon!
+
+<H3>Emplacement wagon </H3>
+
+Maintenant définir l'emplacement du wagon sur le réseau. Si le wagon est hors du réseau,
+laisser l'emplacement blanc (espace vide).
+
+<A NAME="CarLoad"> </A>
+<H3> Charge de wagon </H3>
+
+Vous pouvez éventuellement définir l'état de charge du wagon. Sélectionnez E pour des vides ou L pour des chargés. Vous pouvez également créer vos propres <A HREF="#EditCarLoads"> charges wagon </A>,
+mais il y a des restrictions. Normalement les embranchements avec <A HREF="#Schedules">Annexes </A> sont utilisés pour
+charger ou décharger des wagons avec des charges personnalisées que vous avez créées. Vous pouvez également utiliser les
+<A HREF="#StagingAndCarLoads">Coulisses </A> pour charger ou décharger votre wagon avec des charges personnalisées.
+Il est également suggéré
+que vous utilisiez un format similaire à L(matières premières) pour décrire vos charges.
+Par exemple une charge d'outils peut être entré comme L(Outils).
+
+<A NAME="Kernel"> </A>
+<H3> Noyau, ou groupe de wagons </H3>
+
+Si ce wagon souhaite faire partie d'un noyau qui est un groupe de wagons que
+vous voulez passer comme une seule unité, appuyez sur "Modifier" en face du "Noyau" et
+entrez un nom de noyau. Sélectionnez ensuite le noyau de la boîte de menu.
+
+<H3> Champs facultatifs </H3>
+
+Enfin vous pouvez éventuellement entrer la date de la construction, le propriétaire et un commentaire pour
+ce wagon. La date de construction peut être saisie comme une année à quatre chiffres, ou dans le format de
+mois-année.
+
+<H3> Enregistrer </H3>
+
+Appuyez sur "Sauvegarder" pour stocker les paramètres du wagon. Le programme va créer un fichier
+(OperationsCarRoster.xml) dans votre répertoire JMRI dans un dossier appelé
+«opérations». Un fichier de sauvegarde avec les derniers réglages pour l'ensemble de vos wagons
+est également créé à chaque fois que le bouton "Sauvegarder" est pressé.
+
+<A NAME="EditCarAttributes"> </A>
+<H3> Modifier Attributs Wagon</h3>
+
+À la droite de chacun des attributs de wagon (ligne, le type, longueur, couleur,
+Noyau, de charge, le propriétaire) il y a un bouton "Éditer". Utilisez cette fonction pour ajouter, supprimer ou remplacer
+les attributs disponibles pour une wagon.
+
+<P>
+<img src="images/EditCarAttribute.png">
+</P>
+
+<H3> Ajouter Bouton </H3>
+
+Pour ajouter un attribut à un nouveau wagon, saisissez le texte souhaité dans la zone de texte et
+appuyez sur le bouton "Ajouter". Lorsque vous entrez un attribut pour un nouveau wagon il 
+apparaitra au début de la liste. Plus tard, lorsque votre redémarrer le programme, il
+seront triées dans l'ordre correct.
+
+<H3> Bouton Supprimer </H3>
+
+Pour supprimer un attribut de wagon, sélectionnez l'attribut que vous souhaitez supprimer dans la
+la boîte du menu et appuyez sur le bouton "Supprimer".
+
+<H3> Remplacer le bouton </H3>
+
+Si vous avez besoin de changer un attribut spécifique du wagon  (ligne, type, couleur, etc)
+dans votre liste de wagon en entier, vous pouvez utiliser le bouton "Remplacer" qui se trouve en
+bas à droite de la fenêtre d'édition d'attributs wagon. Par exemple, si vous  souhaitez
+ changer l'attribut nom de ligne du wagon  "UP" à "UPS" pour tous vos
+ wagons. Appuyez sur le bouton "Éditer" pour chacun de vos wagons dans la fenêtre de wagons,
+puis appuyez sur le bouton "Éditer" en face de la ligne dans la fenêtre "Modifier wagon"
+. Entrez la nouvelle ligne "UPS" dans la boîte de texte, sélectionnez "UP" dans la boîte de menu
+, et appuyez sur "Remplacer". Tous les wagons avec "UP" comme route auront désormais
+«UPS» comme nom de ligne.
+
+<A NAME="EditCarLoads"> </A>
+<H3>Modifier Charge Wagon  </H3>
+
+Pour modifier la charge d'un wagon, appuyez sur le bouton "Éditer" charge dans la fenêtre Modifier Wagon .
+
+<P>
+<img src="images/EditCarLoads.png">
+</P>
+<P>Modifier
+En plus de d'ajouter, supprimer et remplacer les boutons et les champs décrits ci-dessus dans
+<A  HREF="#EditCarAttributes"> Modifier Attributs Wagon</A>, la fenêtre modifier 
+charges Wagon vous permet de définir la priorité de la charge. La valeur par défaut de
+la priorité est faible et vous pouvez changer la priorité à élevée pour un type et une charge pour un wagon donné
+. Des charges élevées de wagons prioritaires sont normalement desservies avant la faible priorité.
+Utile si vous avez besoin  d'obtenir que votre frigorifique chargé de fruits soit au marché dès que possible!
+</P>
+Modifier
+<P> Vous pouvez également fournir des messages en option pour vos opérateurs basés sur
+le type et la charge du wagon. Les messages peuvent être utiles si vous avez des charges de wagon visibles
+ qui doivent être ajoutés ou supprimés par vos opérateurs. </P>
+
+<A NAME="CarsSet"> </A>
+<H3> Paramétrage Wagon </H3>
+
+Après la création d'un wagon, vous pouvez définir l'emplacement du wagon, et éventuellement la
+destination du wagon et le train en utilisant le bouton "Paramétrage" trouvé pour chaque wagon
+dans la fenêtre<A HREF="#Cars"> Wagon </A> . Normalement la destination du wagon et et le train affecté
+ sont générés par le programme, mais vous pouvez utiliser ces champs pour
+forcer un wagon à un endroit précis en utilisant un train spécifié.
+
+<P> Vous pouvez également supprimer un wagon qui a été attribué à un train en
+appuyant simplement sur le bouton "Sauvegarder". </P>
+<P>
+<img src="images/SetCarLocation.png">
+</P>
+
+<P> Dans le coin supérieur droit de la fenêtre Situation Wagon il y a une case
+«Localisation inconnue». Cocher la case lieu inconnu fait plusieurs 
+choses. D'abord le programme ignorera le wagon lors de la construction de nouveaux trains.
+Deuxièmement, sur les manifestes et les listes de manoeuvre, le programme donnera la liste de tous les
+wagons égarés . Maintenant, vos opérateurs peuvent vous aider à trouver les wagons qui sont
+<A HREF="#MisplacedCarsComment"> égarés </A>. Et enfin, lorsque cette case est cochée, les autres champs de
+la fenêtre emplacement défini du wagon sont désactivés. </P>
+<P>La case "Hors service"  quand elle est sélectionnée indique au programme d'ignorer
+le wagon lors de la construction de nouveaux trains. De nombreux opérateurs ont une voie RIP (réparation sur Place)
+et utilisent cette fonction pour maintenir le wagon là jusqu'à ce que les réparations aient été faites. </P>
+
+<P> Utilisez l'ensemble de champs "Lieu" pour placer le wagon sur le tracé.
+Vous pouvez également entrer l'emplacement et la voie où vous voulez que le
+wagon revienne lorsque l'état du wagon devient vide. Utilisez la
+case "Auto" pour montrer les pistes valides pour un endroit donné. </P>
+
+<P> Vous pouvez également modifier la charge du wagon. </P>
+
+
+
+<P> Les trois prochains ensemble de champs sont normalement fixés par le programme lors de
+la construction des trains. Nous allons vous expliquer comment ils travaillent 
+si vous êtes intéressés par le fonctionnement du programme ou si vous voulez réécrire
+manuellement le programme. Le premier est l'ensemble "Destination" du menu déroulant
+. La "Destination" est le prochain endroit où le wagon
+sera livré . La destination doit être joignable par un seul
+train ou le wagon ne sera pas desservi. </P>
+
+<P> Le champ suivant est l'ensemble "Destination Finale " du menu déroulant.
+Vous pouvez choisir n'importe quelle destination ou voie, le programme va calculer le
+meilleur itinéraire pour expédier le wagon pour cette destination. L' «itinéraire» peut être constistuer
+de plusieurs trains, des interéchanges et des triages. Quand une wagon est livré à un
+embranchement avec une annexe, et que l'annexe a une destination d'expédition  qui
+nécessite plus d'un train, le programme utilise cet ensemble de champs pour
+expédier le wagon. Si la voie spécifiée comme destination est
+ complète, le programme va rechercher un triage pour placer le wagon.
+Lorsque la voie est disponible, le programme va déplacer le wagon du
+triage pour la voie spécifiée. </P>
+
+<P> Le dernier champ est la mission du train. Si vous souhaitez spécifier une
+destination pour le wagon ou le train, il les placera avant que vous construisiez vos trains. </P>
+
+<P>Lorsque du réglage manuel de la destination, vous n'avez pas à spécifier une
+voie. Et quand vous choisissez manuellement une destination qui est une coulisse, vous
+ne devez jamais choisir une voie de destination, laisser le programme le faire pour vous. </P>
+
+<A NAME="SetCars"> </A>
+<H3>Définition des wagons </H3>
+
+Si vous voulez changer l'emplacement, les destinations, le statut, ou le train
+affecté pour un groupe de wagons, utilisez l'outil "Définir Wagons" qui trouve sous
+"Outils" dans la  fenêtre <a HREF="#Cars">Wagons </A>. L'outil fonctionne de la même
+manière que l'emplacement <A HREF="#CarsSet"> Definir Wagon </A> comme décrit ci-dessus,
+sauf que plusieurs wagons sont modifiées. Sélectionnez les wagons que vous souhaitez
+ changer dans le tableau, puis sélectionnez "Définition Auto». Le premier wagon sélectionné
+devient la valeur par défaut, et si vous appuyez sur le bouton "Modifier", tous les
+autres wagons sélectionnés auront les mêmes paramètres que le
+wagon par défaut. Veillez à appuyer sur "Sauvegarder" dans la fenêtre de wagons si vous voulez
+conserver vos modifications.
+
+<H3> Outils </H3>
+
+Le menu "Outils" wagons vous permet d'effectuer quelques fonctions utiles pour
+votre liste de wagons. En plus de "Importer depuis un fichier" fonctionnalité décrite
+précédemment, vous pouvez également exporter vos wagons dans un fichier de valeurs séparées par une virgule.
+La fonction «Exporter vers un fichier"  crée un fichier nommé
+"ExportOperationsCarRoster.csv" dans le répertoire JMRI-> opérations. Vous
+pouvez supprimer tous les wagons dans votre liste en utilisant le bouton option "Supprimer toutes les wagons"
+. Vous pouvez également prévisualiser et imprimer votre liste de wagons. La prévisualisation et
+les fonctions d'impression utilisent les mêmes boutons radio "Trier par" de la fenêtre des wagons.
+Un des tris le plus utile est "Lieu", cela vous permet de
+vérifier rapidement vos emplacements de wagon avant ou après une séance d'exploitation.
+
+<A NAME="Locomotives"></A>
+<H2> Locomotives </H2>
+
+La fenêtre de locomotives vous permet d'éditer votre liste de locomotive. Vous pouvez entrer
+un numéro de locomotive, sa route, son modèle, son type et sa longueur. Vous pouvez éventuellement
+ajouter la date de la construction et le propriétaire. Si vous voulez qu'un groupe de locomotives
+soit assigné comme une unité, vous pouvez créer un "couplage". Le type de locomotive est
+utilisé par le programme afin de déterminer où les locomotives sont ramassés et/ou
+stockées à divers endroits sur votre réseau. Certaines locomotives sont par défaut
+de types soit électriques, diesel, turbine à gaz ou à vapeur.
+
+<P>
+<img src="images/Locomotives.png">
+</P>
+
+<A NAME="ImportLocomotives"> </A>
+<H3>Importer Locomotives </H3>
+
+Si vous avez déjà une liste de locomotives dans votre liste JMRI ou dans un
+base de données, vous pouvez importer les locomotives dans le programme. Pour obtenir votre
+locomotive à partir de votre liste JMRI, sélectionnez «Importer à partir de Liste JMRI" du menu Outils
+Outils-> Opérations> Locomotives-> . Seules les locomotives qui n'existent pas
+seront ajoutées à la liste de locomotive du programme. De cette façon, vous pouvez utiliser cet
+outil tout moment vous ajoutez à votre liste de locomotives  des locomotives JMRI. La liste de locomotive JMRI
+ n'a pas le champ de longueur, donc une longueur par défaut est entrée pour
+vous. Vous devrez corriger la longueur de la telocomotive si vous voulez que le programme
+calculer correctement vos longueurs de train.
+
+<H3>Importer Locomotives partir d'un Fichier </H3>
+
+L'importation depuis la fonction fichier nécessite un fichier texte ASCII, avec une ligne
+pour chaque locomotive. L'importation de locomotive nécessite quatre attributs et
+l'ordre est le numéro de la locomotive, le nom de ligne, le modèle, et la longueur. Ces quatre attributs
+sont requis pour que l'importation  se fasse  correctement. Ce qui suit
+montre deux exemples de bon format:
+
+<P> 236 UP RS4 40 <BR>
+5578 SP SW1200 42 </P>
+<P> Chaque ligne peut commencer par un espace et des espaces multiples entre
+champs est correct. En option, vous pouvez inclure des attributs supplémentaires dans l'
+ordre suivant, le nom du propriétaire, date de construction, et l'emplacement. L'emplacement peut avoir
+deux domaines, le nom du lieu suivi par un embranchement ou
+triage à l'emplacement séparés par un tiret. Le tableau suivant montre deux exemples de 
+format correct: </P>
+
+<BR>
+236 UP RS4 40 à 1930 Home Town États-Unis - Terminal Machines <BR>
+5578 SP SW1200 42 DB 1934 York - York Garage Machine
+
+<P> Si vous préférez utiliser des virgules comme délimiteurs au lieu des espaces, utilisez un fichier avec
+une extension .csv ou placer
+le mot "comma" au début de votre fichier d'importation et utiliser des virgules au lieu
+des espaces. Voici deux exemples d'importation de locomotives avec des virgules
+comme délimiteurs . </P>
+<BR> comma <P>
+236, UP, RS 4,40, AT, 1930, Home Town Etats-Unis, -, Terminal Machines <BR>
+5578, SP, SW 1200,42, DB, 1934, ville de York, -, York Garage Machine </P>
+<P> Vous devez être très prudent avec les espaces lors de l'importation d'un fichier délimité par des virgules
+ . Le programme comprendra les espaces avant et arrière entre les virgules
+si ils existent . </p >
+<P> Pour importer un fichier, utilisez le menu "Outils" dans le coin supérieur gauche 
+du menu Outils-> Opérations> Locomotives. Sélectionnez
+"Outils-> Liste-> Importer. Notez que le programme ne fera qu'ajouter des locomotives qui
+n'existent pas dans liste de locomotive du programme. Si la locomotive 
+existe déjà , elle sera ignorée par le programme. </P>
+
+<P> Après avoir importé vos locomotives, vous devez les enregistrer si vous voulez
+les garder comme partie de votre liste. Appuyez sur le bouton "Sauvegarder" situé au
+bas de la fenêtre Locomotives, ou sélectionnez une locomotive en appuyant sur le bouton Édition
+ et appuyez sur le bouton "Sauvegarder" qui peut être trouvé en bas à
+droite de la fenêtre "Édition Locomotive ".</P>
+
+<A NAME="LocomotivesAdd"> </A>
+<H3> Ajouter Locomotives à votre liste </H3>
+
+Pour ajouter manuellement une locomotive à votre liste, appuyez sur le bouton "Ajouter" situé
+au bas de la fenêtre "Locomotive". Sélectionnez ensuite la ligne pour la
+locomotive. Si la ligne désirée n'existe pas, appuyez sur le bouton "Éditer"
+en face de la boîte de menu  sélectionner ligne. Cela vous permettra d'ajouter une nouvelle
+ligne ou de supprimer toutes celles dont vous n'avez pas besoin. Maintenant, entrez le numéro de la locomotive,
+le modèle, le type, la longueur et la puissance. La puissance de la locomotive, le poids de la locomotive, et la pente de la voie qui sera utilisée par le programme pour calculer combien de
+locomotives sERont nécessaires lorsque vous utilisez l'option «automatique» lors de la construction des trains.
+
+<p> Définir l'emplacement de la locomotive sur le réseau. Si la locomotive n'est pas sur le réseau
+, laisser l'emplacement vide. Si voulez que cette locomotive
+fasse partie d'un couplage, appuyez sur "Modifier" en face de "couplage" et entrez le nom d'un couplage
+. Ensuite, sélectionnez le nom du couplage dans la zone de menu. Enfin
+vous pouvez éventuellement entrer la date de la construction, le propriétaire et commentaires pour cette
+locomotive. </P>
+
+<A NAME="LocomotiveModels"> </A>
+<H3>Modèles de locomotive  </H3>
+
+Le programme vous permet d'organiser vos locomotives par modèle. Chaque modèle peut
+n'avoir qu'un seul type de locomotive, longueur, poids et puissance nominale
+qui lui sont associés. Par exemple, si vous attribuez le nom de modèle "RS11" à
+un ensemble de locomotives, lorsque vous modifiez la longueur de l'un des "RS11", la
+longueur sera également changer pour les autres.
+
+<H3> Enregistrer </H3>
+
+Appuyez sur "Enregistrer" pour stocker les paramètres de la locomotive. Le programme va créer un
+fichier (OperationsEngineRoster.xml) dans votre répertoire JMRI dans un dossier
+appelé «opérations». Un fichier de sauvegarde avec les derniers réglages pour toutes
+vos locomotives est également créé chaque fois que le bouton "Sauvegarder" est pressé. 
+
+<A NAME="LocomotivesSet"></A>
+
+<A NAME="Routes"> </A>
+<H2>Itinéraires </H2>
+
+Un itinéraire est une liste des endroits où le train va passer. Plus tard, vous pouvez
+décider si le train s'arrête à un endroit pour manœuvrer. Les itinéraires peuvent être de point à
+point ou aller et retour. Pour construire un itinéraire, sélectionnez
+"Outils-> Opérations> Itinéraires". La fenêtre Itinéraires fournit également le statut de l'itinéraire,
+par exemple, «Orphelin» désigne un itinéraire qui n'a pas été affecté à un train.
+
+
+<P><img  Src="images/Routes.png"> </P>
+
+<P> Puis appuyez sur la bouton "Ajouter" situé au bas de la fenêtre. </P>
+
+<P><img  Src="images/EditRoute.png"> </P>
+
+<P> Entrez le nom de l'itinéraire et un commentaire facultatif. Chaque itinéraire doit
+avoir un nom unique. Puis appuyez sur le bouton "Ajouter Itinéraire " situé au
+bas de la fenêtre. Maintenant, sélectionnez l'emplacement d'où le train partira en
+sélectionnant l'emplacement dans la boîte de menu située sur le côté inférieur gauche
+de la fenêtre. Appuyez sur "Ajouter un emplacement". Maintenant construisez votre itinéraire en sélectionnant
+l'emplacement suivant où le train va passer, sélectionnez tous les endroits où 
+le train passera, même si le train ne manœuvre pas à l'emplacement.
+De cette façon, le conducteur de votre train va savoir à la lecture de son manifeste dans quelles villes il se rendra
+. Chaque fois que vous ajoutez un emplacement pour l'
+itinéraire, le tableau montre l'ordre dans lequel le train va les visiter. Vous pouvez
+déplacer un emplacement, le monter ou le descendre dans la séquence si nécessaire.</P>
+
+<A NAME="EditRoute"></A>
+<H3> Modifier l'itinéraire </H3>
+
+Chaque emplacement a une direction pour le train au départ, le nombre de wagon qui
+se déplacent, et si lescollectes ou les livraisons de wagons sont autorisés à cet
+emplacement. Un mouvement de wagon peut être un wagon collecté ou un wagon livré à cet endroit.
+Par exemple, 5 mouvements peuvent être 5 collectes, ou 5 livraisons, ou toute combinaison de
+5 collectes ou de livraisons ensemble. Prendre ou déposer un groupe de wagons ou un
+<A HREF="#Kernel">noyau</A> représente un mouvement.
+
+<P> Si vous voulez retarder le départ du train à partir d'un emplacement
+ou augmenter le temps de trajet du train,
+entrez le nombre de minutes souhaitées dans la cellule "Attente". Un autre choix
+est de spécifier l'heure de départ du train à partir d'un emplacement. </P>
+
+<P> Vous pouvez également ajuster la longueur maximale des trains qui partent de chaque 
+lieu. La pente est utilisée pour déterminer le nombre de locomotives dont le train a
+besoin pour ce tronçon. </P>
+
+<P>Les X et Y sont les coordonnées sur le panneau de votre répartiteur pour
+l'icône du Train en option. Vous pouvez définir les coordonnées ici, en utilisant le bouton outil <A HREF= "# SetTrainIconCoordinates"> Ensemble de Coordonnées de l'Icône du train</A> , ou en
+utilisant la fonction "définir X & Y" de l'icône du train  du menu contextuel pour renseigner le programme où vous
+voulez que l'icône du train soit placée lorsque le train est à l'emplacement spécifié.
+Laissez les coordonnées X et Y à zéro si vous voulez déplacer manuellement l'icône ou que vous n'utilisez pas la fonction de l'icône. </P>
+
+
+<p> Chaque lieu de l'itinéraire peut aussi avoir un commentaire optionnel qui
+apparaîtra sur le manifeste du train . </p>
+
+<H3> Sauvegarde de l'Itinéraire </H3>
+
+Appuyez sur "Sauvegarder l'itinéraire" pour sauvegarder votre itinéraire. Le programme va créer un fichier
+(OperationsitinéraireRoster.xml) dans votre répertoire JMRI dans un dossier appelé
+«Opérations». Un fichier de sauvegarde avec les derniers paramètres de tous vos
+itinéraires est également créé à chaque fois que l'option "Enregistrer l'itinéraire" est enfoncée.
+<A NAME="Copyitinéraire"> </A>
+
+<H3>Copiez Itinéraire </H3>
+
+Dans la fenêtre Itinéraire sélectionnez «Outils-> Copier Itinéraire" pour faire une copie de votre
+itinéraire. Entrez le nom du nouvel itinéraire et sélectionner l'itinéraire que vous voulez
+copier. Si vous souhaitiez que l'itinéraire soit inversé cocher la case "Inverser" .
+
+<A NAME="itinéraireFeatures"></A>
+<H3>Fonctionnalités Itinéraire </H3>
+
+Une fonctionnalité très puissante de itinéraires est la possibilité de spécifier les mêmes
+endroits plus d'une fois. Lorsque le même nom de lieu  est utilisé au
+retour, le manifeste du train sera imprimé comme si seul le train est arrivé
+et reparti. Notez que les noms «Danville», «Danville-1", et
+«Danville-2" sont tous les mêmes en ce qui concerne l'impression des listes de manifeste et de manœuvre
+ mais le programme les traite comme s'ils étaient
+des endroits différents
+
+<P> Par exemple, vous pouvez contrôler s'il y a des livraisons ou des ramassages à tous les
+emplacements dans l'itinéraire. Par conséquent, si vous vouliez seulement livrer 3 wagons,
+vous pouvez spécifier une livraison et 3 mouvements. Mais que faire si vous vouliez
+livrés 3 wagons et ramasser 7 wagons. Si vous spécifiez 10 mouvements pour un
+emplacement, ce peut être n'importe quelle combinaison de 10 ramassages et et de livraisons ensemble. En utilisant
+«Danville» comme notre emplacement, nous pouvons dans notre route préciser deux «Danville»
+, dos à dos. Dans le premier «Danville», nous pouvons indiquer trois livraisons
+uniquement. Dans le second «Danville» nous pouvons spécifier 7 ramassages uniquement. Maintenant, le
+programme va "essayer" et répondre à votre demande en ramassant jusqu'à 7 wagons et
+déposant jusqu'à 3 wagons. </P>
+
+<P> Autre exemple, le programme ne vous permettra pas d'avoir des voies de coulisse
+ et d'autres types de voies (embranchements, chantiers, échanges) au
+même endroit. Mais en utilisant les noms ci-dessus, on pourrait attribuer le chantier et
+ l'embranchement à «Danville», et puisque «Danville-1" est le
+dernier emplacement ou le premier d'un itinéraire, attribuer la coulisse à "Danville-1".
+Maintenant, quand le train s'arrête à Danville, la cour et embranchements sont
+desservies, et puis le train se termine en coulisse à "Daville-1". </P>
+
+<P> Autre exemple. Disons que nous avons un train grande ligne qui dessert
+ Danville. À Danville, nous avons un garage et plusieurs embranchements. Nous
+voulons que le train grande ligne desserve le garage de Danville, mais pas les embranchements.
+Nous ne voulons pas utiliser de manœuvre pour desservir les embranchements de
+Danville. Cependant, nous voulons qu'un service local les desserve! Nous devons dire au 
+programme quelles voies sont desservies et par quels trains à Danville . Nous pourrions
+être capable de faire cela en utilisant des interéchanges, mais nous pouvons aussi utiliser des annexes sur nos embranchements! Ainsi les règles régissant les voies d'interéchanges.</P>
+<P>Solution, nous créons un garage à «Danville», et créons les embranchements dans
+«Danville-1". Le train de grande ligne a «Danville» dans son itinéraire. La
+section locale dessert  «Danville» et «Danville-1". Maintenant, le dilemme, faire la
+desserte locale "Danville-1» ou «Danville» en premier? Pas de problème, nous créons
+un itinéraire pour le service locale «Danville-1», puis «Danville», et
+puis "Danville-1". Lors de la première «Danville-1», nous demande seulement des ramassages dans les embranchements, à «Danville», nous spécifions à la fois ramassages et livraisons dans le garage
+, et lors de la deuxième «Danville-1», nous précisons les livraisons seules. </P>
+
+<P> Maintenant le train grandes lignes que dessert Danville garage. La desserte locale dessert le garage et les embranchements de Danville. </P>
+
+<A NAME="SetTrainIconCoordinates"></A>
+<H3> Ensemble de Coordonnées d'Icône de Train </H3>
+
+Utilisez cet outil pour définir les coordonnées X et Y par défaut de vos icônes de train
+pour chaque emplacement. L'outil vous permet de spécifier les coordonnées de l'icône
+basée sur l'orientation du train. Vous pouvez également mettre à jour tous vos itinéraires existants
+et lieux avec ces nouvelles coordonnées. Comme alternative, vous
+pouvez utiliser un  "Outils-> Jeu de Coordonnées des Icônes du train pour cet itinéraire» pour
+créer des coordonnées uniques pour un trajet précis.
+
+<A NAME="Trains"></A>
+<H2>Trains</H2>
+
+Maintenant que nous avons créé notre itinéraire nous avons besoin que les trains bougent les wagons! Créer un
+train en sélectionnant "Outils-> Opérations> Trains" dans le menu de premier niveau.
+ <P><img Src="images/Trains.png"> </P>
+<P> Appuyez sur le bouton "Ajouter" pour créer un train. </P>
+<P><img src="images/EditTrain.png"></P>
+<P> Entrez le nom du train et une description facultative, puis appuyez sur
+le bouton "Ajouter Train ". Les deux seront affichés sur le manifeste du train. Le
+nom du train sera également visible sur l'icône train, aussi les noms courts sont
+ mieux. Sélectionnez ensuite l'itinéraire que ce train va suivre. Il y a un bouton Édition
+ à droite de l'itinéraire qui vous permet de modifier directement l'itinéraire
+sélectionné . Une fois qu'un itinéraire est sélectionné une liste de lieux que 
+le train visitera devrait apparaître. Vous pouvez désélectionner n'importe quel endroit où  vous
+ne voulez pas que le train manœuvre </P>
+
+<H3>Heure de Départ du Train </H3>
+
+Sélectionnez l'heure à laquelle ce train partira du premier emplacement de son
+itinéraire. Vous pouvez utiliser l'heure de départ pour trier vos trains dans l'ordre
+où vous voulez qu'ils soient construits lorsque vous utilisez le bouton <A HREF="#BuildingTrains">Construire Trains Sélectionnés</A>. Notez que si l'itinéraire du train a une heure départ
+ pour le premier emplacement, l'heure de départ de l'itinéraire est utilisé et la
+Sélection du temps départ du train est désactivée.
+
+ <H3>Matériel Roulant Utilisable </H3>
+
+Vous pouvez déterminer quel type de wagons et de locomotives, le train va utiliser.
+Sélectionnez le matériel roulant que le train utilisera en cliquant sur les
+cases appropriées. Une case cochée signifie que le train va utiliser ce
+type de matériel roulant.
+
+<A NAME="TrainRequires"> </A>
+ <H3>Requêtes Optionnelles du Train</H3>
+
+Vous pouvez contrôler le nombre de locomotives qui seront assignées à ce
+train, et éventuellement, le modèle et le nom  de ligne de la locomotive. Si vous voulez que deux
+ou plusieurs locomotives soient affectées à un train, les locomotives doivent faire partie d'un <A
+Href= "# LocomotivesAdd">couplage</A>. Si vous sélectionnez «Auto», le programme
+calculera le nombre de locomotives requises pour ce train sur la base des
+poids du train, de la pente de la voil, et la puissance des locomotives.
+
+<P> Vous pouvez aussi exiger un fourgon de queue <A HREF="#CabooseFredHazardous">
+ou un wagon avec Fred (dispositif clignotant d'extrémité arrière) </A> comme dernier wagon dans le
+train, et vous pouvez éventuellement spécifier le nom de ligne pour le fourgon de queue ou le
+wagon avec Fred. Si vous laissez vide le nom de la ligne, le programme va essayer
+de trouver un fourgon de queue qui a le même nom de ligne que la locomotive. </P>
+
+ <A NAME="TrainReset"></A>
+<H3>Réinitialiser le Train</H3>
+
+Le bouton "Réinit Train" vous permet de supprimer les locomotives et les wagons qui ont
+été attribués à un train. Utile quand vous voulez essayer de construire diverses
+options et de ne pas  déplacer physiquement les locomotives et les wagons sur le
+réseau.
+
+<H3> Enregistrer le Train </H3>
+
+Appuyez sur "Enregistrer" Train pour sauver votre train. Le programme va créer un fichier
+(OperationsTrainRoster.xml) dans votre répertoire JMRI dans un dossier appelé
+«Opérations». Un fichier de sauvegarde avec les derniers paramètres de tous vos
+trains est également créé à chaque fois que le bouton "Enregistrer Train" est pressé. 
+
+<A NAME="TrainOptions"></A>
+<H3>Options du Train</H3>
+
+Vous pouvez éventuellement avoir un nom unique de compagnie et un logo pour chaque train
+dans votre liste. Utilisez la fonction "Éditer Train-> Outils-> Options" pour saisir votre
+Nom de Compagnie et son logo.
+
+<A NAME="TrainBuildOptions"> </A>
+<H3> Train Options de Construction </H3>
+
+Dans la fenêtre de menu édition du train sous la rubrique "Outils-> Options de construction du train"
+se trouvent des options supplémentaires pour la construction d'un train. Vous pouvez contrôler les lignes des
+wagon, les charge, les propriétaires, et les dates de construction que le train utilisera.
+
+<P> Vous pouvez également spécifier un changement de locomotive en route ou d'ajouter des locomotives d'assistance. </P>
+
+<P><img  Src="images/TrainBuildOptions.png"> </P>
+
+<A NAME="TrainRoadNames"></A>
+<H3>Noms de Ligne du Train </H3>
+
+Vous pouvez contrôler les noms de ligne que le train utilisera. Sélectionnez sous le menu
+"Édition Train-> Outils"  "Options Construction du Train  ". Cela ouvrira
+une nouvelle fenêtre avec plusieurs options.
+
+<P> Si le train va utiliser n'importe quel nom de ligne, sélectionnez le bouton radio "Accepter Tout"
+. Si vous voulez n'accepter que certains noms de ligne, sélectionnez le bouton radio «Accepter
+seulement ". Utilisez ensuite le menu des noms de ligne et appuyer sur le bouton " Ajouter Ligne "
+ pour faire une liste de noms de ligne que le train va desservir. Pour
+supprimer un nom de ligne de votre liste, sélectionnez le nom de la ligne à partir du menu
+et utiliser le bouton "Supprimer Ligne". </P>
+
+<P> Pour construire une liste de noms de ligne que le train ne desservira pas,
+sélectionnez le bouton radio "Exclure". Utilisez le menu des noms de ligne et le bouton
+"Ajouter Ligne" pour construire une liste de ligne que ce train ne desservira pas </P>
+
+<P>Appuyer le bouton  "Enregistre Train" pour mettre à jour les options de construction du train
+et fermer la fenêtre lorsque vous avez terminé. </P>
+
+<H3>Train Chargement Wagon </H3>
+
+Vous pouvez décider quel wagon chargé le train utilisera. Il y a deux
+menus déroulants, le premier est le type de wagon, et le second le
+type de charge utilisée par le type de wagon choisi. Utilisez le bouton "Ajouter Charge"
+ pour établir une liste des charges que le train doit utiliser ou
+exclure. Le bouton "Supprimer Toutes" va supprimer toutes les charges de la liste.
+
+<H3>Train et Propriétaires</H3>
+
+Vous pouvez décider quel matériel roulant par nom du propriétaire le train utilisera .
+Le contrôle est semblable à <A HREF="#TrainRoadNames"> Noms de Ligne du Train</A>,
+voir ci-dessus.
+
+<H3>Train par Dates de Construction</H3>
+
+Vous pouvez contrôler le matériel roulant qui sera utiliser par le train par leurs dates de 
+construction. Si vous voulez seulement les locomotives et les wagons construits après une certaine
+année, sélectionnez le bouton radio "Après" et entrez une année à quatre chiffres dans la
+zone de texte. Si vous voulez seulement les locomotives et les wagons construits avant une certaine année,
+sélectionnez le bouton radio "Avant" et entrez une année à quatre chiffres dans la zone de texte
+. Et si vous voulez spécifier une période, sélectionnez le bouton radio «Range»
+et entrez les années avant et après que vous voulez voir utiliser par le train.
+
+<H3>Requêtes Optionnelles pour le Train</H3>
+
+Vous pouvez avoir jusqu'à deux changements de locomotive pendant que le train est en route.
+Sélectionnez "changer de locomotive", où vous voulez que le changement se produise dans votre
+itinéraire, et combien de nouvelles locomotives doivent être affectées à la formation. Vous pouvez
+sélectionnez éventuellement le nouveau modèle de locomotive et la ligne. A l'emplacement prévu, les locomotives précédemment attribuées au train seront retirées.
+
+<P> Vous pouvez également demander des locomotives d'appoint pour de fortes rampes auxquelles votre convoi pourrait être confronté. Le code actuel ne fait qu'ajouter un commentaire au manifeste demandant l'aide à partir de là où
+vous sélectionnez l'emplacement et supprime le service d'aide à l'endroit que vous avez
+sélectionner. </P>
+
+<A NAME="TrainScripts"> </A>
+<H3> Scripts </H3>
+
+Si vous voulez exécuter un script <a HREF="../../../../html/tools/scripting/index.shtml"> </a> quand un train est construit, se déplace ou se termine, sélectionnez
+sous la rubrique «Modifier train-> Outils-> Scripts". Cela fera apparaître une nouvelle
+fenêtre avec plusieurs options de script.
+<p> Inclus dans le <a HREF="http://jmri.org/jython/operations">répertoire jython </a> il y a quelques exemples de
+scripts orientés opération. </P>
+<A NAME= "TrainShowCarTypesServiced"></A>
+<H3>Montrer Types de Wagons en Service</H3>
+<P> Cet outil de diagnostic peut vous aider à déterminer pourquoi un train n'utilisera pas
+un type de wagon particulier. Vous pouvez sélectionner un type de wagon et voir comment le
+trains utilise ce type de wagon. Vous pouvez également sélectionner un wagon spécifique pour
+voir comment ce wagon sera utilisé. </P>
+
+<P> <img Src="images/ShowCarTypesServicedTrain.png"></P>
+<P> La fenêtre affiche l'itinéraire du train, avec chaque lieu et
+voie qui peut être desservi par le train. A la droite de chaque voie est
+l'état actuel du type de wagon actuellement sélectionné dans la liste déroulante
+. Si l'état de la voie est "OK" alors ce train peut collecter et livrer
+ce type de wagon pour la voie courante. Si l'état de voie est "Collecter"
+ou "Livrer", alors le train ne peut que ramasser ou laisser des wagons sur cette
+voie particulière. Un état qui commence par un «X» signifie que le
+train n'utilisera pas cette voie. Le tableau suivant donne un résumé
+des différents états de voie.</P>
+<table>
+	<tr>
+		<th> Statut </th>
+<th> Description </th>
+</tr>
+<tr>
+<td width="20%"> OK </td>
+<td>Type de véhicule sélectionné pouvant être collectés et livrés </td>
+</tr>
+<tr>
+<td> Collecter </td>
+<td>Type wagon choisi qui peut seulement être collecté sur cette voie </td>
+</tr>
+<tr>
+<td> Livrer </td>
+<td>Type de wagon choisi qui peut seulement être livré sur cette voie </td>
+</tr>
+<tr>
+<td> X (Train et Construction) </td>
+<td>Date de construction du wagon sélectionné n'est pas utilisé par ce train </td>
+</tr>
+<tr>
+<td> X (Chargement et Trains) </td>
+<td>Le wagon chargé sélectionné n'est pas utilisé par ce train </td>
+</tr>
+<tr>
+<td> X (Propriétaire et Ttrain) </td>
+<td>Le wagon du propriétaire sélectionné n'est pas utilisé par ce train </td>
+</tr>
+<tr>
+<td> X (Ligne et  du Train ) </td>
+<td> Le wagon de la ligne choisie n'est pas utilisé par ce train </td>
+</tr>
+<tr>
+<td> X (Type et Train) </td>
+<td>Le Type de wagon choisi n'est pas utilisé par ce train </td>
+</tr>
+<tr>
+<td> X (Train Direct ) </td>
+<td> Le train ne dessert pas cet endroit </td>
+</tr>
+<tr>
+<td> X (Train de Collecte) </td>
+<td> Le train ne peut que collecter les wagons sur cette voie </td>
+</tr>
+<tr>
+<td> X (Train de Livraison) </td>
+<td> Le train ne peut que livrer des wagons sur cette voie </td>
+</tr>
+<tr>
+<td> X (Itinéraire) </td>
+<td> L'itinéraire ne permet ne permet pas de collecte ou de livraison pour cet endroit </td>
+</tr>
+<tr>
+<td> X (Mouvements sur l'itinéraire) </td>
+<td> Le nombre de mouvements de wagon demandé pour cet endroit est nul </td>
+</tr>
+<tr>
+<td> X (Type par Lieu) </td>
+<td> L'emplacement n'utilise pas le type de wagon sélectionnée </td>
+</tr>
+<tr>
+<td> X (Voie et Ligne) </td>
+<td> La voie n'utilise pas le wagon de la ligne sélectionnée </td>
+</tr>
+<tr>
+<td> X (Voie et Type) </td>
+<td> La voie n 'utilise pas le type de wagon sélectionnée </td>
+</tr>
+<tr>
+<td> X (Dir et Lieu) </td>
+<td>Basé sur la direction de départ du train, l'emplacement
+ne permet pas de livraison et de collecte </td>
+</tr>
+<tr>
+
+</tr>
+</table>
+
+<A NAME="ModifyTrainsByCarType"> </A>
+<H3> Modifier les trains par type de wagon </H3>
+
+Cet outil peut être trouvé sous Trains-> Outils. Utilisez cet outil pour 
+modifier rapidement le type de wagons que votre trains utilisera. Très utile quand on veut
+ajouter un type nouveau de véhicule à votre liste. 
+
+<P><img src="images/ModifyTrainsByCarType.png"></P>
+
+
+<P> D'abord sélectionner le type de wagon que vous désirez modifier. La fenêtre
+ montre alors où les trains peuvent utiliser ce type de wagon. Cochez ou décochez 
+les trains que vous voulez utiliser, et appuyez sur le bouton "Sauvegarder" pour modifier vos
+ trains. Vous pouvez également copier la façon dont un wagon existant est utilisé par vos trains 
+et appliquer ces règles à un autre wagon. Pour faire qu'un type de wagon se comporte comme un 
+autre, d'abord sélectionner le wagon que votre souhaitez copier, puis cochez la case
+"Copie" , le type de wagon apparaît maintenant à droite de la 
+case à cocher, puis sélectionnez le type de wagon que vous souhaitez modifier, puis appuyez sur
+«Enregistrer» pour avoir les deux types de wagon utilisés par les mêmes trains. </P>
+
+<A NAME="SwitcherService"> </a>
+<H3> Service de Manœuvre</H3>
+
+De nombreux opérateurs attribuent une locomotive à un emplacement pour faire les manœuvres locales.
+Utiliser la liste de manœuvres de l'emplacement permet à la personne affectée à ce lieu 
+d'utiliser tous les trains qui s'arrêtent à cet endroit. Toutefois,
+il peut y avoir des endroits qui ne reçoivent pas assez de travail supplémentaire ou de trains
+trains locaux et il serait bon de créer un travail supplémentaire pour l'
+opérateur affecté à cet endroit. Pour créer un emploi de "chargé de manœuvres",créer un
+itinéraire avec un seul emplacement, l'emplacement que le chargé de manœuvres utilisera,
+et attribuer cet itinéraire à un train. Le «train» devient maintenant un train de manœuvres
+qui n'utilisera que cet emplacement. Réglez le compteur "Mouvement" dans l'itinéraire 
+pour contrôler le nombre de wagons que le chargé de manœuvres utilisera.
+
+<P> Des opérateurs peuvent produire un manifeste de train qui ne montre que les livraisons ou les collectes
+ d'un garage ou d'un interéchange, et ensuite avoir une liste de manœuvres
+qui montre les mouvements entre le garage et des embranchement. Pour éliminer les voies qui
+apparaissent sur le manifeste du train, décochez toutes les cases de direction
+pour cette voie. Seul une "manœuvre" desservira une voie qui n'a pas
+toutes les boîtes de direction sélectionnées. </P>
+
+<H3>Restrictions de Manœuvres </H3>
+
+Le programme lors de la génération d'un manifeste pour un chargé de manœuvres (un train avec un seul
+emplacement dans son parcours) sera par défaut de ne jamais déplacez un wagon à partir d'un embranchement
+vers un embranchement ou d'un garage vers un autre garage, seulement d'un garage vers un embranchement ou d'un embranchement vers un garage .
+Cette règle s'applique également aux interéchangeurs. Cette restriction permet d'éviter des
+mouvements de wagon non réaliste entre les embranchements (industries). Si vous voulez un mouvement d'un embranchement vers un embranchement, utilisez une annexe <A HREF="#Schedules"> </a> pour
+forcer le mouvement du wagon. Vous pouvez également désactiver cette restriction voir
+Options de <A HREF="#SettingsOptions">.</a>
+
+<A NAME="BuildingTrains"> </a>
+<h2>Construction de Trains</h2>
+
+Pour construire un train, appuyez sur le bouton "Construction"  dans la rangée pour le 
+le train désiré dans la fenêtre trains<A HREF="#Trains"></a>. Le bouton deviendra
+"Imprimer" ou "Prévisualiser" après que le train ait été construit. Si vous voulez revoir la manière dont
+le train a été construit, sélectionnez l'option "Créer des rapports«  avant d'appuyer sur le bouton
+«Imprimer» ou  "Aperçu" pour le train désiré. Si l'aperçu "
+Manifeste "est coché, le programme va générer le rapport de construction
+ et le manifeste et les présenter dans des fenêtres de prévisualisation. Si vous voulez
+construire plusieurs trains sans avoir à appuyer sur les boutons pour chaque
+train, sélectionner les trains que vous voulez construire et appuyez sur le bouton "Construction"
+ situé au bas de la fenêtre des trains. Le programme va alors
+construire des manifestes pour tous les trains choisis.
+
+<P> Si la construction d'un train échoue , le bouton "Déplacer" va changer son texte
+en «Rapport». Appuyer sur "Rapport" permet d'imprimer ou de prévisualiser le rapport de construction
+pour ce train. Chaque fois qu'un train ne peut pas être construit, un message d'échec Construction
+apparaîtra. Si vous souhaitez désactiver cette fonctionnalité désélectionner la case
+«Messages de Construction".</p>
+<P> Vous pouvez également contrôler quels trains sont affichés dans la fenêtre Trains.
+Lorsque la case "Tout Montrer" est décochée, seuls trains qui ont la case
+"Construction" sélectionnée sont affichés.</p>
+
+<A NAME="Timetable"></a>
+<H3> Horaires</h3>
+
+L'outil Horaire vous permet de définir quels trains circuleront un
+jour donné, et peut être trouvé sous Trains-> Outils. Pour chaque jour de
+la semaine, sélectionnez les trains que vous voulez construire. Sélectionnez ensuite le jour
+vous souhaitez en sélectionnant le bouton radio approprié. Puis appuyez sur le
+Bouton «Appliquer» pour mettre à jour les trains dont la cases "Construction" est cochée. Utilisez le bouton "Enregistrer"
+ pour enregistrer toutes les modifications apportées à l'horaire.
+
+<A NAME="TroubleShootingBuildingTrains"></a>
+<H2>Problèmes de Construction de Trains</h2>
+
+Si vous avez un problème de construction d'un train, vous pouvez sélectionner la case "Rapports de Construction
+ " au bas de la fenêtre du train. Quand une génération échoue
+pour une raison quelconque et que la case «Rapports de Construction" est cochée, le programme
+enverra un rapport à votre imprimante, si la case "Prévisualisation Manifeste» n'est pas
+sélectionnée, ou à une fenêtre de prévisualisation si la case «Prévisualisation Manifeste" est sélectionnée.
+ Vous pouvez imprimer Le rapport de construction à différents niveaux de détails, de minimes
+à très détaillés. Voir la section<A HREF="#BuildReportDetails"> 
+Détails du Rapport de Construction</a> pour plus d'informations sur la façon de changer le niveau de détail du rapport de construction
+
+<P><img src="images/BuildReport.png"></P>
+
+<H3> Lecture du rapport de Construction</h3>
+
+Le programme lors de la construction d'un train crée un rapport de Construction et l'enregistre sur
+le disque. Les fichiers texte peuvent être trouvés dans le
+JMRI-> opérations-> répertoire buildstatus. Le rapport de construction montre
+les étapes du programme pendant les opérations de construction d'un train.
+La première page donne l'itinéraire du train  et le nombre
+de mouvements de wagons demandé pour chaque emplacement. Le rapport montre ensuite les types de wagon
+et de locomotives  et quel train sera utilisé. En lisant les
+divers commentaires figurant dans le rapport vous pouvez avoir une idée des étapes du
+programme d'opérations utilisés pour construire un train. Quand il y a un problème
+que l'opération de construction ne peut pas résoudre, la construction échouera. Pour
+comprendre pourquoi une construction a échoué, passez à la dernière page du rapport de construction
+et en remontant le rapport à partir de la dernière ligne, vous devriez être en mesure de
+comprendre pourquoi la construction d'un train a échoué .
+
+<H3>Plus de Détails du Rapport de Construction </h3>
+
+Pour ceux qui veulent comprendre comment le programme construit les trains voici
+les détails. Si le train nécessite une locomotive ou plusieurs locomotives,
+le programme va chercher des locomotives au début de l'itinéraire et ensuite
+détermine si l'emplacement de destination les accepte. Notez que si
+deux ou plusieurs locomotives sont nécessaires pour le train les locomotives
+doivent être dans un <A HREF="#LocomotivesAdd">couplage</a>. Le programme attribue
+au matériel roulant (locomotives et wagons), le nombre de mouvements qui
+qu'ils subissent lors de chaque session. Le compteur de mouvement est incrémenté à chaque
+fois qu'un matériel roulant est livré sur une voie d'un nouvel emplacement à suivre un nouvel emplacement, ou si
+le matériel roulant a été affecté à un train et le train a été réinitialisé.
+ Le programme trie le matériel roulant, par le nombre de mouvement , puis tente d'
+attribuer les locomotives et les wagons avec le moins de mouvements pour le train.
+Lorsque de la construction d'un seul train roulant à des endroits qui font partie de
+l'itinéraire du train sont utilisés. En ce qui concerne les wagons, en plus du
+nombre de mouvements connu d'un wagon, la priorité de chargement du wagon est également
+considérée. Le programme va essayer de trouver les destinations pour les wagons avec
+charges haute priorité, avant les charges de faible priorité.
+
+<P> L'étape suivante consiste à attribuer une option fourgon de queue ou un wagon avec Fred au
+train. Si le programme trouve le fourgon de queue nécessaire ou en wagon avec Fred au
+départ de l'itinéraire, le programme tente de trouver une voie au lieu de destination qui l'accepte
+. En cas de succès, tous les autres wagons de queue et les wagons
+avec FRED sont retirés de la liste des wagons disponibles.</P>
+
+<P>Ensuite le programme attribuera les wagons pour le train partant du
+lieu de départ. Chaque wagon passe par le processus de trouver une voie le
+long de l'itinéraire qui va accepter le wagon. Un autre compteur affecté à une
+voie est utilisée pour déterminer si la voie a été utilisée récemment.
+Les voies avec l'utilisation la plus faible sont prioritaires. Un wagon peut avoir
+plusieurs choix de voies et celle avec la plus haute priorité sera
+affectée en tant que destination du wagon. Le processus se poursuit jusqu'à ce que le
+nombre de déplacements de wagon demandé par un emplacement soit atteint, ou que les  
+wagons disponibles  traitées par le programme soient utilisés. Une fois que le wagon qui se déplace
+atteint l'emplacement requis , le prochain emplacement de l'itinéraire est
+traité. Cela continue jusqu'à ce tous les lieux dans l'itinéraire d'un train aient
+été traités.</p>
+
+<P>En mode<A HREF="#SettingsOptions">agressif</a>, le programme au
+moment de déterminer la destinations des wagons, va faire deux passes pour
+déterminer où placer les wagons. La première passe fait 50% des 
+mouvements disponibles pour chaque emplacement, et la seconde passe le
+restant. En faisant deux passes, le programme peut rendre «libre» quelques embranchements
+qui ont déjà les wagons , augmentant ainsi le nombre de wagons que
+le train peut utiliser. Une fois qu'un wagon a été affecté à une destination en
+mode agressif, l'espace du wagon sur la voie en cours est disponible pour d'autres
+trains.</p>
+
+<P> Si un wagon a une destination finale qui a été fixée par un horaire, le
+programme va essayer de déplacer le wagon vers cette destination, ou si ce n'est pas
+possible, il va essayer de déplacer le wagon le plus proche de celui de la destination finale.</p>
+
+<P> Si un wagon a une charge personnalisé sans destination, le programme
+recherche un embranchement avec un horaire exigeant ce type de wagon et de charge.
+le programme «routera» alors le wagon pour cette destination. Le programme
+va utiliser jusqu'à cinq trains pour sortir le wagon vers une destination.
+</p>
+
+<P> Parfois la lecture du rapport de construction peut être fastidieuse. Si vous voulez, vous pouvez
+utiliser un éditeur de texte pour rechercher le rapport, les rapports de génération peuvent être
+trouvés dans le répertoire JMRI-> opérations-> buildstatus.</p>
+
+<H3>Impression Manifestes</H3>
+
+Après la construction d'un train, le bouton "Constructruire"  deviendra «Imprimer» ou
+"Aperçu" en fonction de l'état de la case à cocher appelée "Aperçu
+Manifestes "située dans le coin inférieur droit de la fenêtre de trains.
+En appuyant sur la touche "Imprimer" permet d'imprimer le manifeste pour ce train.
+En appuyant sur la bouton "Aperçu" va produire une fenêtre dans laquelle vous pouvez
+examiner le manifeste. Si vous souhaitez imprimer des manifestes pour plusieurs trains,
+sélectionner les trains que vous voulez dans la colonne de construction et puis appuyez sur le bouton
+«Imprimer» ou "Aperçu" qui se trouve au bas de la fenêtre des trains.
+Le programme va alors imprimer ou prévisualiser les manifestes pour tous les trains sélectionnés
+.
+
+<P><img Src="images/Manifest.png"></p>
+
+<A NAME="SwitchList"></a>
+<H3>Listes de Manœuvres</H3>
+
+Une liste de manœuvres montre les travaux nécessaires à effectuer pour tous les trains
+passant à cet endroit. Normalement, une liste de manœuvres est donnée à la personne
+responsable d'un chantier ou dans un endroit avec des embranchement nombreux ou des raccordements industriels.
+
+<P> Appuyez sur le bouton "Imprimer la liste de Manœuvres"  si vous voulez une liste
+pour un lieu donné. Un menu apparaîtra qui vous permet de sélectionner les
+lieux à prévisualiser ou à imprimer. Une fois que vous avez déterminé quels endroits
+vous souhaitez imprimer ou prévisualiser, appuyez sur le bouton "Sauvegarder" pour garder votre
+sélections.</p>
+
+<P><img Src="images/SwitchList.png"></p>
+
+<A NAME="TrainMove"></a>
+<H3>Mouvement de Trains</H3>
+
+Après avoir fourni à vos opérateurs  un manifeste imprimé ou l'emplacement
+Listes de Manœuvres de l'emplacement, vous devez garder la base de données synchronisée avec le programme de
+mouvement réel des trains sur votre réseau. Cela se fait par le boutons 
+"Déplacer" train situé sur le côté droit de la fenêtre <A HREF="#Trains">Trains</a>
+. Appuyer sur la bouton "Déplacer" va provoquer le départ du train de son
+ l'emplacement actuel vers l'emplacement suivant dans l'itinéraire. Les locomotives et les
+wagons affectés au train se rendront à l'emplacement suivant sur la
+ligne. À chaque endroit, les wagons peuvent être ramassés ou livrés. Vous
+pouvez également déplacer un train en sélectionnant l'icône du train et en sélectionnant «Déplacer»
+à partir du menu contextuel de l'icône. Chaque pression sur le bouton "Déplacer" déplace le
+le train vers l'emplacement suivant en direction de la destination finale. Lorsque le train arrive au
+dernier emplacement de l'itinéraire, la dernière pression du bouton "Déplacer" 
+résilie le train. Une fois qu'un train est terminée, vous pouvez le construire à nouveau.
+
+<P> Chaque fois qu'une locomotive ou qu'un wagon est déplacé un décompte qui leur sont associés
+est incrémenté. Le programme l'utilise pour déterminer quels wagons n'ont pas
+bougé récemment et essaie de sélectionner les wagons avec le moins de mouvements
+lors de la construction de nouveaux trains. Chaque fois qu'un emplacement a un wagon
+livré, le programme incrémente un compteur associé à cet endroit.
+Le programme tente de déplacer les wagons à des endroits qui ont connu le moins
+d'opérations de wagon.</p>.
+
+<P><img src="images/Manifest.png"></P>
+
+
+<H3> Terminer Trains </H3>
+
+Lorsque vous terminez un train, vous demandez au programme pour déplacer le train
+à partir de son emplacement actuel vers sa destination finale. Les wagons et les locomotives
+associés avec le train seront collectés et remis au
+emplacements indiqués dans le manifeste de train. Après la fin d'un train, les
+locomotives et les wagons associés à ce train deviennent disponibles pour d'autres
+ trains. C'est pourquoi vous devez mettre fin à un train uniquement après l'avoir fait
+arriver à la destination finale dans l'itinéraire du train. Pour mettre fin à
+plusieurs trains, sélectionnez les trains auxquels vous souhaitez mettre fin dans la colonne construction
+et appuyez sur le bouton "Terminer" au fond de la fenêtre Trains
+.
+
+<H3> Enregistrer Constructions </H3>
+
+Appuyer sur le bouton "Enregistrer Constructions" provoque la mise à jour du
+train, wagon, locomotive, et l'emplacement des fichiers XML par le programme de. Chaque fois que vous "Déplacer" un train
+le programme des opérations apportera des modifications aux bases de données train, wagon, locomotive, et
+ emplacement. Ces bases de données doivent être sauvegardées avant d'arrêter
+JMRI, sinon vous allez perdre toutes les modifications que le programme  opérations
+aura fait pour déplacer un train à l'emplacement suivant. En appuyant sur le bouton "Enregistrer Constructions"
+ avant de quitter JMRI permet au programme d'opérations de reprendre exactement au point où vous étiez quand vous avez appuyé sur le  bouton «Enregistrer Constructions".
+
+<H2>Constructions de Multiple Trains pour une Session</H2>
+
+La plupart des séances d'exploitation nécessitent plus d'un train pour garder votre
+opérateurs occupé. La manière correcte de le faire est de construire et d'imprimer l'ensemble des
+ trains nécessaires avant de les terminer. Donc, si vous avez besoin d'une douzaine de trains
+pour une session, vous devez construire douze trains avant de  mettre fin à un
+train.La fin d'une formation indique au programme que les locomotives et les wagons
+dans ce train particulier, ont été livrés à leur emplacement final
+et peuvent être utilisés à nouveau lors de la construction de nouveaux trains. Il faut donc toujours tout construire ,
+tout imprimer, PUIS résilier chaque train après avoir terminé sa course! Il est
+ok pour construire tous les trains, d'imprimer tous les trains, puis utilisez la fonction "Enregistrer Construction"
+"et arrêter le programme. Plus tard, vous pouvez redémarrer le
+programme et résilier les trains qui ont terminé leurs courses.
+
+<p> Le bon moment pour mettre fin à un train est quand le train 
+arrive à sa destination. Terminer un train avant qu'il complète son parcours
+ signifie que la base de données estime que les locomotives et les wagons
+ont été livrés. Il est préférable de construire et d'imprimer douze trains et
+puis plus tard apprendre que seulement neuf trains ont terminé leur exécution. Vous
+aurez alors à résilier neuf trains, et laisser les trois autres pour la prochaine session
+. Ou si vous le souhaitez vous pouvez réinitialiser tous les trains qui ne s'écarte pas de
+leur terminal. La réinitialisation des trains n'est pas vraiment nécessaire, les trains qui
+ne pas circulent pas durant cette session pourraientt circuler au cours de la prochaine session. </P>
+<p> Une autre méthode consiste à construire, imprimer et utiliser le bouton "Déplacer"
+pour chaque train pour suivre le mouvement réel des trains au cours de votre
+session. Aussi longtemps que les trains sur le réseau correspondent à l'emplacement dans le
+programme vous pouvez construire un nouveau train. </P>
+
+<H2> Fonctionnement des Fenêtres </H2>
+
+Toutes les fenêtres opérations peuvent être redimensionnées et placées à votre convenance.
+Lorsque vous fermez la fenêtre, la taille et l'emplacement des fenêtres sur votre écran
+sont enregistrés.
+
+<P> Le programme vous permet également de redimensionner les wagons, locomotives, trains
+et le calendrier, les largeurs de colonne de la table. Ajuster la largeur des colonnes à votre
+goût et appuyez ensuite sur la fenêtre "Enregistrer" ou "Enregistrer Constructions» pour enregistrer vos
+préférences. </P>
+
+<P> La fin de l'aide des opérations. </P> </DIV>
+<!-- closes #mainContent--></DIV>
+<!-- closes #mBody-->
+</BODY>
+</HTML>
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Operations.shtml,v 1.116 2011/07/02 23:34:03 dan_boudreau Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-11-24--> 
+<HTML LANG="fr">
+<HEAD>
+<TITLE>Operations</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META CONTENT="Dan Boudreau" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI Help Operations Setup Settings Cars Engines Locomotives Trains Routes Locations Schedules">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">

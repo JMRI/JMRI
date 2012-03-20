@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Me 2008 -->
+<!-- $Id: AdvIcons.shtml,v 1.3 2008/03/09 20:27:27 jacobsen Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-10-01-->
+
+<title>JMRI: Advanced Icons in PanelPro</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>JMRI: Icônes Avancées dans PanelPro</h1>
+
+<a name="memoryicon"><h3>Icônes de mémoire</h3></a>
+
+Les Objets Mémoire sont conçus pour les scripts de
+contrôle; la première application est un MemoryIcon qui vous permet de placer une icône 
+multi-état sur l'écran.
+<P>
+Objets MemoryIcon travaille de deux façons: Si une série d'icônes est définie dans le fichier, 
+le contenu de la mémoire sera traduit par l'intermédiaire de cette table (ce fut le comportement 
+d'origine). S'il n'y a pas toutes les icônes définies, le contenu de la mémoire est affichée
+directement, sous forme de chaîne si c'est une chaîne et en tant que NamedIcon si c'est un NamedIcon.
+<P>
+Voir xml/samples/MemoryIconExample.xml pour tout savoir
+sur la façon de le mettre en place.
+
+<a name="reportericon"><h3>Icônes Reporter</h3></a>
+
+La première implémentation de Reporter est le transpondeur Digitrax.
+En ajoutant les éléments appropriés à vos fichiers panneau, vous pouvez afficher des informations sur 
+l'ID de votre décodeur sur votre panneau.  
+<P>
+Voir xml/samples/ReporterIconExample.xml  pour tout savoir
+sur la façon de le mettre en place.
+
+<UL>
+<LI>Vérifiez d'abord que JMRI voit bien les messages LocoNet. Parmi le menu outils, ouvrez le "Tableau 
+Reporter". Faites rouler une locomotive à travers vos sections équipées transpondeur, et vous devriez voir l'arrivée 
+et le départ. Afficher l'état sur une des lignes dans la table.
+
+<LI>
+Ensuite, vous devez ajouter la "ReporterIcon" qui affiche directement ceci dans le fichier du panneau.
+<P>
+Rechercher dans le "xml/samples" dans le répertoire JMRI un fichier appelé "ReporterIconExample.xml.
+<P>
+(Il est également disponible <a href="http://jmri.sf.net/xml/samples/ReporterIconExample.xml"> sur le Web </a>
+mais de nombreux navigateurs vont essayer de l'interpréter au lieu de vous montrer le texte, (votre option 
+navigateur "Afficher la source" tableau pourrait vous aider à cet égard)
+<P>
+Vous verrez cette ligne:
+<P>
+&lt;reporter reportericon = "LR12" x = "10" y = "10" class = "jmri.jmrit.display.configurexml.ReporterIconXml"&gt;
+<P>C'est en réalité pas aussi difficile qu'il y paraît. Le "x"et "y" définissent l'endroit où vous le voulez sur 
+votre panneau. Le "LR12" est le nom de l'objet reporter, par exemple, le nom de celui que vous avez vu changer 
+quand vous étiez à la recherche de la table.
+<LI>
+Ouvrez votre fichier de panneau avec votre éditeur favori (WordPad, si vous n'avez rien de mieux), et insérer 
+une ligne comme celle ci juste au-dessus _après_ avoir la ligne qui commence par
+<P>
+  &lt;classe paneleditor = "jmri.jmrit.display.configxml.PanelEditorXml"&gt;
+<P>
+(La ligne "paneleditor" commence sur un nouveau panneau. Si vous avez plus d'un panneau dans le fichier, vous devrez chercher le titre du panneau pour voir
+où insérer la nouvelle ligne)
+</UL>
+C'est en réalité pas aussi difficile qu'il y paraîtC'est en réalité pas aussi difficile qu'il y paraît
+
+	    </div> <!-- closes .list -->
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

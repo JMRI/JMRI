@@ -97,7 +97,7 @@ class textmanager:
     def isNonTrans(self, corename):
         #print ('Calling function isNonTrans...')
         if not self.NonTrans is []:
-            #print ('Searching...')
+            print ('Searching: ' + corename)
             if self.NonTrans.isitem(corename):
                 #print ('Found...')
                 return 1

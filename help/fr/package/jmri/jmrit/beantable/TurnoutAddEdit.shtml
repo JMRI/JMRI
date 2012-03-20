@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: TurnoutAddEdit.shtml,v 1.6 2010/03/07 08:15:37 kevin-dickerson Exp $ -->
+<!-- Translated by Hervé Blorec le 2012/01/11-->
+<HTML LANG="fr">
+<HEAD>
+<TITLE>JMRI: Adding/Editing Turnouts</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META CONTENT="Bob Jacobsen" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Turnout Add Edit">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> Ajouter/Éditer Branchements</H1>
+
+<p> Lorsque vous ajoutez un Aiguillage, vous sélectionnez dans la liste déroulante le système auquel l'
+aiguillage est rattaché.</p>
+src="AddTurnout.png" <img>
+<p> Entrez  une adresse valide pour l'Aiguillage et, si désiré entrer dans un nom utilisateur.</p>
+
+<H2> Création d'un  Nombre d'Aiguillage</H2>
+<p> Il est également possible de créer un certain nombre d' Aiguillage . <br>
+Où la case «Ajouter une plage"  sera activé.</P>
+<img src="AddTurnoutNumber.png">
+<p> Après l'activation de  la boite"Ajouter  Plage", il faudra ensuite activer le champ "numéro à ajouter".
+Ici entrez e nombre d' Aiguillages que vous suhaitez ajouter, ce qui créera ensuite
+ un nombre d'aiguillages séquentiel.</p>
+Si un nom utilisateur a été entré un numéro sera ajouté à la fin du nom pour garder
+chaque nom utilisateur unique. <br>
+Voir aide générale d'aide pour plus d'informations" <A HREF="../../../../html/doc/Technical/Names.shtml"> Noms</A>".
+
+<!--#include virtual="/Footer" -->
+</BODY>
+</HTML>
+

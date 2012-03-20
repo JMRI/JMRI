@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: TriggerConditions.shtml,v 1.3 2008/11/01 17:33:01 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-10-31--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: SDF Trigger Conditions
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Digitrax SDF Sound File Editor">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Conditions de déclenchement SDF</H1>
+    
+Cette page documente la signification des conditions de déclenchement qui
+peuvent être définies dans une instruction de Digitrax SDF.
+
+<dl>
+<dt> TRIG_NEVER <dd> Jamais déclenché. Ceci peut être utilisé
+pour désactiver une partie d'un fichier SDF.
+<dt> TRIG_MODE_CHNG <dd>
+<dt> TRIG_MATH <dd>
+TRIG_DISTANCE <dt> <dd>
+<dt> TRIG_SPD_INC <dd> se déclenche lorsque la vitesse du moteur est augmentée.
+<dt> TRIG_SPD_DEC <dd> se déclenche lorsque la vitesse du moteur est réduite.
+<dt> TRIG_CAM <dd> déclencheurs soit sur la came actuelle saisie, ou le
+mécanisme de autochuff.
+<dt> TRIG_NOT_TRIG <dd>
+
+<dt>Fonction  0 On <dd> se déclenche lorsque la fonction DCC 0 est On.
+<dt>Fonction 28 On <dd>
+
+<dt> TRIG_DIRNOW_CHNG <dd> se déclenche lorsque la direction du moteur est changée.
+<dt> TRIG_MOVING <dd> Si le moteur est en cours d'exécution à une vitesse non nulle.
+Fonction <dt> <dd> TRIG_SND_ACTV11 11
+
+<dt> TRIG_BSC0 <dd> se déclenche quand un «changement de l'état binaire" du paquet DCC est reçu pour BSC 0.
+<dt> TRIG_BSC7 <dd>
+
+Trigger <dt> <dd> TRIG_IN_0 lorsque la connexion d'entrée devient active, habituellement utilisé
+pour une entrée chuff.
+<dt> TRIG_IN_7 <dd>
+
+<dt> TRIG_NOTCH_CHNG <dd>
+<dt> TRIG_TIME_16PPS <dd> déclencheurs 16 fois par seconde.
+<dt> TRIG_FACTORY_CVRESET <dd>
+<dt> TRIG_OPSPROGWR_CV <dd> se déclenche quand un CV est écrit en mode ops (sur la voie principale).
+
+<dt>TRIG_SCAT0<dd>
+<dt>TRIG_SCAT7<dd>
+
+<dt>T_SPD_MUTE<dd>
+<dt>T_SPD_TURNON<dd>
+<dt>T_SPD_IDLE<dd>
+<dt>T_SPD_ACCEL1<dd>
+<dt>T_SPD_ACC_CHNG<dd>
+<dt>T_SPD_ACCEL2<dd>
+<dt>T_SPD_IDLEXIT<dd>
+<dt>T_SPD_RUN<dd>
+<dt>T_SPD_DECEL1<dd>
+<dt>T_SPD_DEC_CHNG<dd>
+<dt>T_SPD_DECEL2<dd>
+<dt>T_SPD_DEC_IDLE<dd>
+<dt>T_SPD_TURNOFF<dd>
+<dt>T_SPD_DEC_SP1<dd>
+<dt>T_SPD_DEC_SP2<dd>
+<dt>T_SPD_DIR_CHNG<dd>
+
+</dl>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

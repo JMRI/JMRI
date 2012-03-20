@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: IdTags.shtml,v 1.1 2011/04/10 18:29:38 matthewharris Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-09-29-->
+<html lang="fr">
+<head>
+  <title>
+ 	JMRI: Id Tag Documentation
+  </title>
+  <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+
+  <meta content="Matthew Harris" name=Author>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="keywords"
+        content="rfid tag id tag model railroad JMRI decoderpro panelpro">
+
+<!-- Style -->
+  <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+  <div id="container">
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+      <div id="mainContent">
+      <!-- Page Body -->
+        <h2>
+		JMRI: Documentation Balise d'Identification 
+        </h2>
+
+<h1>Id Tag</h1>
+
+<p>
+Une balise d'identification est le moyen pour JMRI de représenter des informations sur les étiquettes d'identification qui peuvent
+être attachés à, par exemple, divers éléments de matériel roulant.
+<p>
+Quand un balise d'identification est lue par un lecteur approprié, cela est notifié par le biais à la fois d'un
+<a href="Sensors.shtml"> Capteur </a> qui devient actif et un
+<a href="Reporters.shtml"> Journal</a> où est fixé la valeur de la balise d'identification.
+La balise ID sera également enregistrer à la fois par le Journal qui l'a vue la dernière fois, ainsi que 
+ l'heure à laquelle elle a été vue la dernière fois
+<p>
+Si une étiquette d'identification inconnue est détectée par un lecteur, les détails de cette étiquette seront automatiquement inscrits dans la <a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml"> table étiquette d'identification </a>.
+<p>
+À l'arrêt du système, les détails de tous les ID Tags connus du système sont écrits dans un fichier stocké dans le sous-répertoire "idtags" des préférences des utilisateurs. Le stockage des détails quand et où une étiquette d'identification donnée a été vu la dernière fois est configurable en mettant l'option au bas de la table étiquette d'identification.
+<p>
+La mise en œuvre initiale est pour <a href="http://www.merg.org.uk/"> MERG </a>
+Les lecteurs RFID, à la fois autonome et via un concentrateur.
+
+<h2>Table Étiquette d'Identification</h2>
+la
+<a href="../../package/jmri/jmrit/beantable/IdTagTable.shtml"> table étiquette d'identification</a>
+fournit un accès facile au contenu de tous les étiquettes ID que JMRI connaît.
+Il y a aussi un bouton
+<a href="../../package/jmri/jmrit/beantable/IdTagAddEdit.shtml"> «Ajouter ...»  </a>
+pour créer votre propre étiquette ID, JMRI crée automatiquement les
+Objets d'étiquette d'identification pour les balises détectées sur le réseau.
+<h2>Afficher les étiquettes d'identification sur les panneaux </h2>
+Une étiquette d'identification peut être affichée sur un panneau via l'utilisation de l'icône Journal
+associé à un lecteur donné.
+Pour ce faire:
+<ul>
+<li> Sur la fenêtre Éditeur de panneau pour votre panneau, trouver le bouton " Ajouter Rapport".
+<li> Dans la boîte de texte à côté de ce bouton, tapez le nom utilisateur ou  système du Rapport désiré. <li> Cliquez sur le bouton. L'icône Rapport sera placé sur le panneau. Si elle n'est pas visible, ce pourrait être parce que la valeur est actuellement vide;
+utiliser le tableau Reporter pour changer la valeur à quelque chose qui sera visible.
+<li> Vous pouvez faire glisser l'icône à l'endroit où vous voulez avec la manière habituelle.
+<li> Le menu pop-up sur l'icône vous permet de changer le formatage.
+</ul>
+<p>
+Plus d'informations sur les Journaux peuvent être trouvés dans la <a href="Reporters.shtml"> page d'aide Journaux</a>.
+
+<!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+  </div> <!-- closes #container -->
+</body>
+</html>
+
+

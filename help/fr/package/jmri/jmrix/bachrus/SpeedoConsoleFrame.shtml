@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: SpeedoConsoleFrame.shtml,v 1.1 2010/07/29 19:07:20 crosland Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-11-2--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: SpeedoConsole
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Andrew Crosland" name=Author>
+    <META name="keywords" content="JMRI help Route Add Edit">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> Tachymètre Bachrus </H1>
+
+- L'image en attente - <br>
+<p>
+Mettre en place la locomotive à mesurer sur une zone fonctionnant avec l'unité de lecture appropriée
+à l'échelle de la voie, reliée à la MTS-DCC qui est connectée, à son tour, vers le PC.
+</ p>
+<p>
+Connectez la voie sur laquelle la zone de mesure est installée à votre système DCC.
+</ p>
+<p>
+Ajouter la fois le système DCC et l'interface lecteur comme  connexions au réseau dans les
+Preferences JMRI. Ouvrez la console à partir du menu Speedo Bachrus.
+</p>
+<a href="../../../../html/hardware/bachrus/images/dial.jpg"> 
+     <img src ="../../../../html/hardware/bachrus/images/dial.jpg "
+          width = "306" height = "238"
+          alt = "Envoyer outil Cadre"> </a>
+<p>
+Le type de lecteur sera détecté quand la locomotive sera entraînée et les données de vitesse sont reçues
+du lecteur.
+<p>
+Les boutons d'option à droite du cadran permettent les chiffres primaires de vitesse (noir)
+pour afficher la vitesse à l'échelle soit en milles par heure (MPH) ou en kilomètres par heure
+(KPH) unités. Le second (vert) chiffre sur l'écran affichera l'autre unité. La vitesse est affichée numériquement dans les unités primaires dans la petite fenêtre en
+bas du cadran.
+</p>
+<p>
+A ce stade, vous pouvez utiliser un régulateur (soit une partie de votre matériel DCC ou un régulateur JMRI
+) pour conduire la locomotive et observer la vitesse de l'échelle.
+</ >
+<p>
+Pour mesurer le profil de vitesse loco sélectionner l'onglet "profil".
+</p>
+<a href="../../../../html/hardware/bachrus/images/profile.jpg"> 
+     <img src ="../../../../html/hardware/bachrus/images/profile.jpg "
+          width = "306" height = "238"
+          alt = "Envoyer outil Cadre"></a>
+
+<p>
+Vous pouvez entrer manuellement l'adresse des locos DCC, si le matériel DCC supporte la programmation en mode service
+, la lire à partir de la loco.
+</p>
+Pour de meilleurs résultats les CV dynamique devrait être mis à zéro afin que les commandes de vitesse
+prennent effet immédiatement..
+</p>				 
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

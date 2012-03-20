@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: getcode.shtml,v 1.8 2010/02/12 17:29:09 jacobsen Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-04-06--> 
+<html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: Getting the Code 
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code CVS download">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset= utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+	    <!-- ------------- -->
+	    <!-- Page Contents --> <!-- Required -->
+	    <!-- ------------- -->
+
+	    <H1>JMRI: Obtention du Code</H1>
+
+
+<h2> Mise en route </h2>
+
+Vous pouvez télécharger le code source le plus récent via CVS en utilisant:
+<code> <PRE>
+cvs-d: pserver: anonymous@jmri.cvs.sourceforge.net: / cvsroot / login jmri
+cvs-d: pserver: anonymous@jmri.cvs.sourceforge.net: / cvsroot / co jmri all
+</PRE> </code>
+(Si on vous demande un mot de passe, appuyez simplement sur le retour)
+
+
+<h2>Détails</h2>
+Notre code source est distribué via CVS.
+(Nous gardons aussi le
+<A href="WebSite.shtml"> site web </a>
+dans le CVS, si vous souhaitez travailler directement avec lui.)
+Si vous voulez travailler avec les
+code, cela vaut la peine de prendre quelques minutes pour installer CVS  . Nous sommes désolés, mais
+nous ne pouvons pas appuyer d'autres méthodes (envoi des fichiers. zip, etc), car ils sont
+tout simplement sources de trop d'erreurs.
+
+<P>
+De nombreux ordinateurs sont livrés avec CVS installé, y compris Linux et MacOS X.
+Si vous utilisez Windows, vous aurez besoin d'installer un programme "client" CVS comme
+<A HREF="http://sourceforge.net/project/showfiles.php?group_id=10072&release_id=24467"> WinCVS </a>.
+Une version récente peut être téléchargée à partir de:
+<a  href="http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip"> http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip </a>
+
+<P>
+Pour obtenir une copie de la source pour votre propre usage, vous pouvez utiliser "checkout anonyme".
+Pour un client en ligne de commande cvs, créez un nouveau répertoire pour le projet, changer de répertoire actif, et dire que vous existez à CVS
+<PRE>
+cvs-d: pserver: anonymous@jmri.cvs.sourceforge.net: / cvsroot / login jmri
+</PRE>
+Ce "login " en ligne
+n'est nécessaire qu'une seule fois, après quoi, il est rappelé sur votre machine locale. Vous pouvez
+être sollicité pour un mot de passe. Si oui, appuyez simplement sur le retour, sinon le mot de passe vide ne sera acceptée.
+Vous pouvez alors obtenir une copie du code de
+<PRE>
+cvs-d: pserver: anonymous@jmri.cvs.sourceforge.net: / cvsroot / co jmri all
+</PRE>
+<P>
+Si vous utilisez un client graphique de base comme WinCVS, déroulez le menu "admin"
+ et sélectionnez "ligne de commande" pour obtenir une place pour taper ces commandes.
+Sur d'autres ordinateurs, vous pouvez taper directement sur la ligne de commande.
+<p>
+Si vous avez une copie existante du code et que vous souhaitez mettre à jour
+pour le contenu le plus récent de CVS, la deuxième commande est la suivante:
+<PRE>
+cvs-d: pserver: anonymous@jmri.cvs.sourceforge.net: / cvsroot / jmri-q update-dA
+</PRE>
+<P>
+Voir aussi la
+<A HREF="CVSFAQ.shtml"> page FAQ CVS  </a>.
+<P>
+Après que l'extraction soit terminée, vous trouverez des répertoires appelés
+"xml", "ressources", "jython", "help ", "lib", "java" et d'autres.
+Modification du répertoire "java". Là, vous trouverez un répertoire "src"
+ qui contient le code source de JMRI lui-même, et un répertoire "tests"
+ qui contient les routines de test différentes.
+<P>
+Vous pouvez regarder le code avec votre éditeur de texte favori. Pour compiler et
+l'exécuter, vous avez besoin de l'un des outils de compilation qui est décrit sur la barre à
+à gauche: Ant, JBuilder, etc (Ant peut être plus facile à installer et à utiliser)
+<P>
+Une fois que vous travaillez avec le code, vous aurez probablement créer des améliorations et 
+vous souhaitez contribuer à la vie du projet. C'est là que CVS a énormément
+d'avantages, avec les autorisations appropriées et les commandes, vous pouvez fusionner vos
+modifications dans la source commune automagiquement. Contactez-nous si vous êtes prêt à le
+faire ou voir les infos <A HREF="index.shtml#contributing"> sur la contribution </a>.
+
+<h2> Détails Windows</h2>
+
+<p>
+Obtenir et mettre à jour le code avec TortoiseCVS
+</ p>
+<p>
+Pour obtenir une vérification initiale de CVS pour votre propre usage, après l'installation
+http://www.tortoisecvs.org/. Créez un nouveau répertoire pour le projet, par exemple
+créer un dossier nommé "JMRISourceCode". Clic droit (control-clic) sur
+ce dossier et sélectionnez CVS CVS Checkout ".
+Dans le volet qui s'ouvre pour le CVSROOT entrez <: pserver: jmri.cvs.sourceforge.net: / cvsroot / jmri>
+Pour le serveur, entrez <jmri.cvs.sourceforge.net>.
+En bas à droite de l'écran est un "Récupérer la liste" Cliquez dessus et une liste s'affiche, cliquez sur le «all».
+Cliquez ensuite sur le bouton OK au bas du volet.
+Un nouveau volet s'ouvre et les fichiers seront téléchargés, sur le bas de ce volet est une case à cocher appelée "Close on Completion", la cocher.
+Quand il se ferme, le dossier que vous aurez mis dans le conteneur dossiers aura tous les éléments JMRI.
+</ p>
+<p>
+Une fois que vous avez effectué l'extraction initiale de CVS dans le dossier, pour
+les mettre à jour les sélectionner tous , puis clic droit et
+sélectionnez «cvs update ». Vous pouvez aussi simplement mettre à jour un seul dossier en le sélectionnant.
+</p>
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

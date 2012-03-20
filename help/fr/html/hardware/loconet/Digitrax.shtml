@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Digitrax.shtml,v 1.10 2010/04/12 12:07:29 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<html lang="fr">
+<head>
+  <title>JMRI Hardware Guide: Digitrax DCC </title>
+  <!-- Style -->
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<div class="nomenu" id="mBody">
+
+<div id="mainContent"> à
+<h1>Guide Matériel JMRI: Digitrax DCC </h1>
+
+<div class="toc">
+<ul>
+  <li><a href="#LocoNet">Connexions LocoNet</a></li>
+  <li><a href="#Programmer">Programmateurs PR2 et PR3 </a></li>
+  <li><a href="#Setup">Démarrage</a></li>
+  <li><a href="#Using">Utilisation de JMRI avec LocoNet</a></li>
+  <li><a href="#Network">Connexions réseau informatique</a></li>
+  <li><a href="#Limitation">Limites</a></li>
+  <li><a href="#Debugging">Débogage</a></li>
+</ul>
+</div>
+
+<h2><a name="LocoNet">Connexions LocoNet</h2>
+
+<p>JMRI, y compris DecoderPro et PanelPro, fonctionne avec votre centrale de commande Digitrax
+ pour programmer les décodeurs. Pour ce faire, il communique avec la centrale de commande à travers le LocoNet en utilisant l'une des cartes type de LocoNet. </p>
+
+<p> DecoderPro collaborera avec toutes les stations de commande suivantes: </p>
+<ul>
+   <li> Zephyr Starter Set </li>
+   <li> Empire Builder Super Set </li>
+   <li> Super Set Chief </ li> 
+   <li>  Centrale de Commande/Booster/Régulateur DCS50  </li>
+   <li>  Centrale de Commande/Booster DB150 </li>
+   <li>  Centrale de Commande/Booster DCS100 </li>
+   <li>  Centrale de Commande/Booster DCS200 </li>
+   <li> <a href="Uhlenbrock.shtml"> Intellibox: L'Unité Centrale Uhlenbrock
+    </a> </li>
+   <li> DCC-Mux:multiplexeur de données DCC avec le LocoNet intégré dans la centrale de commande </li>
+  </ul>
+
+<p>Pour connecter votre ordinateur à LocoNet, et donc à la centrale de commande,
+vous avez besoin d'une des cartes suivantes: </ p>
+<ul>
+   <li> <a title="RR-CirKits USB interface" href="LocoBufferUSB.shtml"> LocoBuffer-USB </a> </li>
+   <li> <a title="Digitrax USB interface" href="PR3.shtml"> PR3 </a> </li>
+   <li> <a title="RR-CirKits série interface" href="LocoBufferII.shtml"> LocoBuffer II </a> </li>
+   <li> <a title="Original Kit Version" href="LocoBuffer.shtml"> LocoBuffer </a> </li>
+   <li> <a title="Digitrax série interface" href="MS100.shtml"> MS-100 </a> </li>
+
+<p> En règle générale, toutes ces cartes peuvent être utilisées avec tout type d'ordinateurs pour communiquer
+avec tout type de centrale de commande. Actuellement, le LocoBuffer-USB et PR3 sont les
+solutions recommandées. La LocoBuffer II  et la LocoBuffer originale ne sont plus
+actuellement produites, leur seul avantage est qu'elles utilisent un
+port série traditionnels  plutôt que l'USB. Le MS100 n'est pas recommandé, il
+oublie parfois d'établir des communications fiables, et ne peut pas être utilisé avec
+JMRI si vous utilisez Mac OS X ou sur la plupart des machines Windows Vista.</p>
+
+</ul>
+
+<p> L'Intellibox Uhlenbrock peut également être commandée directement par ce
+port série: il ya une <a href="Uhlenbrock.shtml">page séparée </a> sur la manière de
+le faire. </p>
+
+<a name="Programmer"><h2> programmation PR2 et PR3 </h2>
+Avec JMRI vous pouvez également utiliser un des décodeurs de programmes et d'essai<a title="Digitrax programmer" href="PR2.shtml"> Digitrax PR2  </a> ou <a
+ href= "Digitrax Programmeur/interface USB"href= "PR3.shtml"> PR3 </a> . Le PR2 est une
+unité autonome qui ne se connecte pas au reste de la configuration, ni à la centrale de commande, ni
+à un LocoNet. Pour plus d'informations sur l'aide d'un PR2 avec DecoderPro, s'il vous plaît voir
+<a href="PR2.shtml"> mise en page PR2 </a>. La PR3 peut soit servir comme un
+interface (voir ci-dessus) ou en tant que programmateur autonome. Il y a plus d'informations
+sur la page de configuration<a  href="PR3.shtml"> PR3 </a>.
+
+<h2><a name="Setup"> installation </h2>
+<p>Pour connecter votre ordinateur à un système DCC Digitrax, vous avez besoin d'une
+<a title= "RR-CirKits interface USB" href= "LocoBuff <h2> erUSB.shtml"> LocoBuffer-USB </a>,
+<a title="Digitrax USB interface"href="PR3.shtml"> PR3 </a>, 
+<a title= "interface RR-CirKits série"
+href= "LocoBufferII.shtml"> LocoBuffer-II </a>, <a  title= "Original Version Kit"
+href= "LocoBuffer.shtml"> LocoBuffer </a>, ou  <a title= "interface Serial Digitrax"
+href= "MS100.shtml"> MS100 </a> pour agir comme un adaptateur. Voir ci-dessous pour de plus amples
+ informations sur celles-ci. La LocoBuffer-USB est fortement recommandée. </ p>
+
+<p> Notez qu'à l'exception de la PR3, ce ne sont que des interfaces LocoNet, ne sont pas des
+programmateurs autonome comme le PR2 Digitrax et PR3. Aucun de ceux-ci sauf le PR3 ne
+vous permettra de lire les CV si vous avez un Empire Builder! Pour cela vous avez besoin d'une Chief
+ou d'une centrale de commande Zephyr. </p>
+<ol>
+  <li> Connectez l'adaptateur au LocoNet, et connectez votre ordinateur, avec
+     le port série ou USB. </li>
+   <li>Les utilisateurs Mac et Windows devraient en installer les pilotes appropriés USB s'ils
+     utilisent des dispositifs USB. </li>
+   <li> utilisateurs de Linux et Mac devraient être sûr que les communications avec les
+     packages Java  ont été installés. </li>
+   <li> Ouvrez un programme JMRI et aller à la "Préférences" du panneau. Celui-ci ouvre normalement
+    automatiquement la première fois chaque programme et l'exécute, ou vous pouvez le sélectionner
+    à partir du menu "Édition". </li>
+   <li> Sélectionnez "LocoNet LocoBuffer-USB", "LocoNet MS100", ou votre appareil à partir de la fenêtre de sélection supérieure. Vous pouvez alors sélectionner le port série approprié dans la seconde
+     case de sélection. Vérifiez dans votre système d'informations sur le matériel si vous n'êtes pas sûr 
+     du port choisi. </ li>
+   <li> La boîte de sélection de la vitesse de transmission sera fixée et en grisée si vous avez sélectionné
+     LocoBuffer-USB, PR3, ou MS100. Il y a deux choix de vitesse pour la
+     LocoBuffer et LocoBuffer-II; sélectionnez celui qui correspond au paramètres du cavalier
+     sur votre appareil LocoBuffer. Nous vous recommandons de commencer avec la vitesse
+     19.200 pour le LocoBuffer ou LocoBuffer-II; voir les pages
+  . <a href="LocoBufferII.shtml">LocoBuffer-II</a> et <a
+    href="LocoBuffer.shtml">LocoBuffer</a> pour plus d'informations. </li>
+  <li> La quatrième case doit être laissée sur le "contrôle de flux matériel" à moins que plus tard
+ vous receviez systématiquement un message sur le contrôle de la connexion LocoBuffer comme étant
+     mal mise en place, dans ce cas, vous voudrez peut-être pour essayer de contourner en
+     sélectionnant "aucun contrôle de flux". Cette case sera vide si vous avez sélectionné
+     LocoBuffer-USB, PR3 ou MS100. </li> 
+   <li> Dans la cinquième boîte, sélectionnez le type de centrale de commande que vous avez. Notez que
+     ce programme ne peut pas lire les CVs décodeur si vous avez un Empire Builder (DB150);
+     cela est dû au matériel Empire Builder, et il n'y a rien que nous puissions faire
+     pour lui. Pour lire les CV en conjonction avec un DB150, utiliser la PR3 dans le
+     mode de programmation voie. <br>
+   </ li>
+   <li> La série de boutons radio libellé "style graphique" vous permet de choisir l'apparence du 
+     programme. "Metal" est l'apparence Java native disponible sur tous les
+     types. D'autres choix varie en fonction de votre type d'ordinateur. "Motif", "Windows",
+     "MacOS"et "MacOS Adaptive" apparence native sur Linux, Windows, MacOS "Classic"
+     et MacOS X, respectivement. </li>
+   <li> Dans la boîte de sélection en bas, vous pouvez choisir le format de programmation par défaut.
+Vous pouvez le remplacer chaque fois que vous ouvrez le programmateur, ce n'est donc ici
+seulement pour la commodité. Si vous êtes le principal utilisateur de ce système nous vous suggérons
+de le mettre sur "complet". <br>
+</li>
+<li> Cliquez sur "Enregistrer". Il vous sera demandé si c'est OK pour que le programme quitte, cliquez sur
+"Oui". </li>
+<li style="text-align:left;"> Redémarrez le programme. Vous devriez être en place et
+en cours d'exécution. <br> 
+  </li>
+</ol>
+
+<p>Si vous voulez contrôler les aiguillages, signaux ou d'autres dispositifs sur votre
+réseau  JMRI ou un autre programme, nous vous recommandons de définir le commutateur de sortie "route Meter" de la centrale de commande
+autrement que sur l'option "Trois États" . (T) Lorsque le commutateur est sur Trois États(T)
+ cette option réduit considérablement le nombre de commandes que la LocoNet peut gérer
+à chaque seconde, ce qui peut entraîner d'importants retards lorsque vous contrôlez les
+signaux, etc .Pour le désactiver, vous pouvez utiliser la fonction  outil "Configurer la centrale de commande" 
+dans le menu LocoNet et mettre l'option du commutateur 31 de "T" (Dévié), ou le placer directement
+dans la centrale de commande en utilisant un régulateur Digitrax.</p>
+
+
+<a name="Using">  <h2> Utiliser JMRI avec LocoNet </h2>
+Il ya un certain nombre de pages qui expliquent comment utiliser JMRI avec LocoNet:
+<ul>
+   <li> Pour plus d'informations sur les outils JMRI LocoNet spécifiques, s'il vous plaît voir la <a href="../../apps/LocoTools/index.shtml ">  page outils LocoNet   </a>. </li>
+   <li>De nombreux appareils LocoNet peuvent être directement adressés par JMRI. Pour de plus amples
+     informations sur la façon de trouver les adresses, voir <a href= "Addressing.shtml"> cette page </a>. </li>
+</ ul>
+
+<p> Bien sûr, les applications JMRI <a href="../../apps/DecoderPro/index.shtml"> DecoderPro </a>
+et <a href="../../apps/PanelPro/PanelPro.shtml"> PanelPro </a> 
+fonctionnent très bien avec LocoNet. </ p>
+
+<h2> <a name="Network"> Connexions réseau </h2>
+Il existe plusieurs méthodes pour connecter plusieurs ordinateurs à un seul
+LocoNet. Ceux-ci communiquent via le protocole standard TCP/IP, et peuvent même travailler
+à distance. <a href="LocoNetworking.shtml">  Pour plus d'informations ...</a>
+
+<h2><a name="Limitation">Limites</h2>
+
+<p> <strong>PR-1 n'est pas pris en charge </strong> - Notez que DecoderPro ne peut pas directement
+programmer les décodeurs par un programmateur PR1. Vous devez utiliser l'une des centrales de commandes
+ci-dessus. </p>
+
+<p><b> MacOS X et le MS100 </b> - Parce que MacOS X ne peut pas communiquer à la
+vitesse de transmission utilisée par le MS100, le MS100 ne fonctionne pas avec MacOS X. Vous
+devrez à la place prendre un LocoBuffer-USB à la place. </p>
+
+<p><b> Microsoft Vista et le MS100 </b> - Il a été rapporté que Vista ne
+prend pas en charge la vitesse spéciale de transmission utilisée par le MS100. Si vous trouvez que votre
+MS-100 ne fonctionne pas sur votre machine Vista vous devrez utiliser à la place un LocoBuffer-USB ou
+PR3.
+</p>
+
+<p><b>Uhlenbrock Intellibox <p> </b> - L'Intellibox a deux connexions LocoNet,
+appelé LocoNet-T et LocoNet-B. La connexion LocoNet-T peut gérer plus de
+dispositifs, mais ne fournit pas les signaux de Rail-Synch que certains dispositifs LocoNet
+(en particulier la BDL-16, -162 et -168) exigent. Un LocoBuffer devrait être
+relié à la connexion LocoNet-T. </p>
+
+
+<h2><a name="Debugging">Débogage</h2>
+
+<p><a href="http://www.digitrax.com/manuals.php">Digitrax Manuals</a></p>
+<!--#include virtual="/Footer" -->
+</div>
+</div>
+</body>
+</html>

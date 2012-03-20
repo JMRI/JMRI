@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: SetSignalsAtXoverTurnout.shtml,v 1.6 2010/01/09 22:25:56 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-12-24--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Set Signals at Crossover Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Dave Duchamp" name=Author>
+    <META name="keywords" content="JMRI help Layout Editor panel">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Définir Signaux à une Bretelle
+</H1>
+<h2> Introduction</h2>
+<p>
+Cet outil fournit une procédure automatisée pour l'attribution des signaux à une bretelle, 
+qu'elle soit double,  seulement à droite, ou seulement à gauche.
+ Si nécessaire, cet outil va placer des icônes de signaux sur
+le TCO à l'emplacement spécifié, et mettra en place une logique de signal pour spécifier
+les signaux. Avant de sélectionner cet outil, l'aiguillage doit être sur le TCO,
+et les signaux requis doivent être dans la Table Signal. Cet outil place uniquement le signal
+ lorsque la voie principale de l'aiguillage est verticale ou horizontale
+(Ou presque verticale ou horizontale) sur le TCO, donc la conception de votre TCO devra en tenir compte
+. La Simple Logique Signal créée par cet outil ne fonctionne correctement que
+si chacun des segments de voies reliés aux quatre points de connexion des bretelles
+sont affectés à des cantons différents.</p>
+<p>
+Lorsque cet élément est sélectionné dans le menu <b> Outils</b>, une petite boîte de dialogue est affichée pour
+l'inscription du nom d'aiguillage (système ou utilisateur) de la bretelle. Si cet outil
+est entré en sélectionnant <b>Définir Signaux ...</b> dans le menu contextuel de la bretelle, le nom de l'aiguillage est automatiquement inscrit. Après que le nom de la bretelle
+ait été saisi et vérifié,une boite de dialogue est montrée pour la saisie des noms (système
+ou utilisateur) de quatre à huit signaux à affecter à la bretelle.</p>
+<p>
+La bretelle diffère des autres aiguillages de plusieurs
+façons importantes. Comme d'autres aiguillages, les bretelles ont deux états - croisé(Déviée)
+ et droite (Directe). Modifier l'état d'une bretelle, cependant,
+nécessite que deux ou quatre aiguillages changent à l'unisson. Cela peut être accompli
+en utilisant un composant à quatre commutateurs. Normalement, à une bretelle est attribuée à une
+entrée d'aiguillage unique dans la table aiguillage, mais il peu ty en avoir plusieurs si ses
+ commutateurs sont contrôlés par différents décodeurs stationnaires. Vous pouvez utiliser
+deux voies JMRI contrôlées par le même aiguillage interne pour que plusieurs commutateurs travaillent ensemble. Dans ce cas, entrez  l'aiguillage interne comme un aiguillage
+lié au dessin de la bretelle.</p>
+<p>
+Pour chaque signal, des cases à cocher sont disponibles pour sélectionner
+si une icône doit être placée sur le TCO, et si une Simple Logique Signal 
+doit être créée pour le signal. Peu importe si les icônes
+sont placées ou la logique est créée, l'Éditeur de TCO va enregistrer que les entrées 
+signaux sont affectés à la bretelle spécifiée.</p>
+<p>
+<b>L'affectation des signaux
+aux aiguillages est importante pour bien décrire votre réseau dans l'Éditeur de TCO.</B> Même si vous choisissez de placer vos icônes et de configurer votre logique signal 
+manuellement, vous devez utiliser cet outil pour assigner les signaux à leur bretelle.</p>
+
+<h2>Boite de Dialogue installation des Signaux de la Bretelle</h2>
+<p>
+Si vous êtes invité à entrer le nom de <b>l'Aiguillage</b>, entrez le nom (système ou utilisateur) de
+la bretelle à laquelle les  signaux seront affectés. Si l'outil
+ne peut pas trouver l'aiguillage entré sur le TCO, un message d'erreur en résultera. Aussi, si
+l'aiguillage entré n'est pas une bretelle, une message d'erreur en résultera. Si un aiguillage
+interne est utilisé pour contrôler la bretelle (voir ci-dessus), entrez son nom
+ <b>Nom de l'Aiguillage</b>.</p>
+<p>
+ Des noms de signaux (soit système ou utilisateur) sont entrés dans la boîte de dialogue.
+L'entrée de deux signaux à chaque angle de la bretelle est
+prévue. Pour les bretelles droites ou bretelles gauches, l'outil
+prévoit deux signaux à chaque angle de la pointe, et un signal à
+chaque angle de la voie directe. Au moins un signal<b> direct</b> doit
+être entré à chaque coin, mais les mentions <b> divergentes</b> sont facultatives. L'
+étiquettes coin, A, B, C et D sont comme ci-dessous pour le cas de bretelle double
+dans le cas des huit signaux et la bretelle droite
+continue (Directe). (Dans le diagramme ci-dessous, la bretelle double n'a pas 
+été tournée.)</p>
+<p>  
+<A Href="./images/DoubleXover8.gif"> <IMG SRC = "./images/DoubleXover8.gif"
+ALIGN = CENTER WIDTH = "207" height = "109" hspace = "0" vspace = "0"></A>
+</ P>
+<p>
+De même, le diagramme ci-dessous montre le cas de quatre signaux  avec une bretelle double
+ en position divergente (Déviée). Si vous faites pivoter l'aiguillage,
+les étiquettes d'angle tournent aussi. Les Bretelles simples sont les mêmes, sauf avec
+une voie de croisement au lieu de deux.</p>
+<p>
+<A Href="./images/DoubleXover4.gif"> <IMG SRC = "./images  /DoubleXover4.gif"
+ALIGN = CENTER WIDTH = "221" height = "113" hspace = "0" vspace = "0"></A>
+</ P>
+<p>
+Si les signaux de cette bretelle ont été saisis précédemment, cliquez <b>Obtenir Sauvegarde</b> pour
+récupérer les noms de signaux  saisis précédemment.</p>
+<p>
+N'importe lequel des angles qui peuvent avoir deux signaux, peuvent effectivement avoir un ou deux
+signaux, de sorte que tous les cas entre les deux illustrés ci-dessus sont possibles. La bretelle simple peut
+peut avoir 4, 5 ou 6 signaux, et les bretelles doubles peuvent avoir 4,
+5, 6, 7 ou 8  signaux. Si un signal est entré pour <b>Dévié</b>, les signaux pour <b>Directe</b> la voie continue
+ et les signaux <b>Divergents</b> la voie vers la voie croisée. Si aucun signal n'est entrée pour <b>Divergent</b>, le
+ signal <b>Continu</b> reflète l'état de voie selon que l'aiguillage
+est commuté ou non. Dans ce cas, le type simple logique signal  pour le signal
+<b>Continu</b> est <b> En Pointe</b>.</p>
+<p>
+S'il y avait une  signal précédemment attribué pour toute
+position, et vous entrez un <i>autre</i> signal dans le même lieu,
+le signal remplacera le signal précédent, et l'icône du signal précédent (s'il y en avait un) sera supprimée à partir du
+TCO. De même, si vous remplacez un signal précédemment affecté <b>Divergent</b> 
+ avec une entrée vide (pas de  de signal), l'entrée précédente est supprimée et
+la bretelle naura pas de signal à cette position. <b> Si un signal
+ est modifié, vous devez refaire toute logique qu'il implique.</b></p>
+<p>
+Cochez <b> Ajouter Icône de Signal au TCO </b> pour demander que l'icône d'un signal
+ soit placée sur le TCO à la position indiquée de l'aiguillage. Cet outil
+ne peut placer une icône de signal que sur un aiguillag  e qui est presque à la verticale ou presque à l'
+horizontale. Si ce n'est pas le cas, un message est imprimé, et vous devez placer
+l'icône de signal manuellement en utilisant la barre d'outils de l'Editeur de TCO. Malgré tout, le
+Nom du signal est attribué à la position spécifiée de l'aiguillage.</p>
+<p>
+Cochez <b> Configurer Logique</b> pour demander que l'outil mette en place une Simple
+Logique Signal pour un signal. L'outil permettra de créer la logique et
+remplira automatiquement les entrées avec les information disponibles. Si
+l'outil ne possède pas assez d'informations disponibles pour configurer la
+logique, un message en résultera, et vous aurez à revenir plus tard après que
+plusieurs signaux aient été assignés aux aiguillages et aux limites de canton sur le
+TCO.</p>
+<h2> Notes</h2>
+<p>
+Lors de la configuration logique, cet outil va suivre la voie dans le 
+canton jusqu'à ce qu'il trouve un signal avant l'aiguillage signalé. Si votre modèle contient des sections qui sont
+signalées et les sections qui ne le sont pas, pour obtenir que cet outil mette en place une logique
+correcte, vous pourriez avoir à placer un signal virtuel (un signal qui ne
+correspond pas à  un signal réel sur le réseau) à la fin du canton
+non signalé  qui relie un tronçon de voie qui est
+signalé avec une voie qui n'est pas signalé. Si un canton se termine par un
+Heurtoir, aucun signal n'est requis à la fin.</p>      
+<p>
+Si un canton a un aiguillage interne (l'aiguillage, et les tronçons de voie à sa
+pointe et ses jambes font parties du canton), le programme va attendre les signaux
+à cet aiguillage, même si ce n'est pas à la fin du canton. Cependant, parfois l'utilisateur peut ne pas vouloir signaler un aiguillage rarement utilisé dans un canton.
+En suivant la voie à travers un canton, le programme va sauter l'aiguillage interne non signalé
+ si <b> Passer Aiguillage Interne Non Signalé </b> est cochée dans
+le menu <b> Outils</b> de l'Editeur de TCO.
+Il avertira de ce qu'il fait. <b> Utilisez cette option avec
+prudence.</b> Il n'y a pas de signal de protection contre un aiguillage qui, étant ignoré,
+est mal réglé, si un aiguillage interne non signalé  n'est pas réglé correctement, un déraillement
+ des trains pourraient en résulter.</p>
+<p>
+Cet outil met en place trois aspects de signalisation. Avec les bretelle, les
+voies de croisement sont toujours considérées comme voie d'évitement, et de toute voie principale
+entrant dans l'aiguillage, le quitte sur la ligne directe. Donc, si
+la bretelle est dans l'état croisé, la vitesse limitée (le feu le moins
+restrictive n'est pas vert, mais jaune) est mise en place (voir le schéma quatre - aiguillages
+ ci-dessus). Si vous préférez ne pas avoir de limitation de vitesse lorsque le
+l'aiguillage est orienté vers le croisement, modifier le signal logique simple en sélectionnant
+<b> Modifier Logique ...</b> dans le menu contextuel de l'aiguillage, <b>Décocher Vitesse limitée </b>,
+et cliquez sur  <b>Appliquer </b>.</p>
+
+<p>
+Si vous avez une situation particulière à un signal, vous pouvez avoir à faire plus d'édition 
+d'informations saisies par cet outil que dans la Simple Logique  Signal. Si vous
+aimeriez avoir quatre aspects de signalisation, vous pouvez facilement modifier manuellement la logique
+pour y parvenir. De même, par une simple modification manuelle de la logique, vous pouvez
+ajouter un balisage lumineux d'approche. La boîte de dialogue Simple Logique Signal  peut
+est accessible depuis le menu contextuel de chaque icône de signal. Si votre situation spéciale
+ ne peut pas être manipulé par un simple logique signal, vous devez vous référer à
+Logix pour adapter la logique signal  à vos besoins. </p>
+<p>
+S'il vous plaît rappelez <b> pour sauver votre TCO après l'utilisation de cet outil.</b></p
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

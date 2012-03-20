@@ -352,6 +352,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 						JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION){
 					return;
 				}
+			} else {
+				if (JOptionPane.showConfirmDialog(this,
+						MessageFormat.format(rb.getString("DoYouWantToDeleteLocation"),new Object[]{locationNameTextField.getText()}), rb.getString("deletelocation?"),
+						JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION){
+					return;
+				}
 			}
 			
 			yardModel.dispose();
@@ -477,6 +483,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		westCheckBox.setEnabled(enabled);
 		clearButton.setEnabled(enabled);
 		setButton.setEnabled(enabled);
+		autoSelectButton.setEnabled(enabled);
 		addYardButton.setEnabled(enabled);
 		addSidingButton.setEnabled(enabled);
 		addInterchangeButton.setEnabled(enabled);

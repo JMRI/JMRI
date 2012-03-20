@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: CmdStnConfigFrame.shtml,v 1.3 2010/03/20 19:35:33 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-10-30--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Configure Digitax Command Station
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help configure Digitrax command station">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Configurer la station de commande Digitax</H1>
+
+<p>
+Cet outil Configure le Digitax MASTER DCS OPSW . Vous n'avez pas
+besoin de définir l'un des interrupteurs sur le DCS pour utiliser cet outil.
+<p>
+Pour configurer DBs et DCS défini comme des Boosters  vous avez besoin de suivre les instructions Digitrax.<p>
+
+OpSw2 étant mis à On permet à cet outil d'accéder au slot 127 qui contient les paramètres OPSW.
+DB n'a pas OPSW et ne peut pas être réglé avec cet outil, la DCS qui ont mis OpSw2 à fermé
+ne sont pas programmé par cet outil.
+<p>
+Pour configurer DB et mettre DCS comme Boosters  vous avez besoin de suivre les instructions Digitax.
+
+<p>
+Ceci est l'aide Help/en/package/JMRI/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+
+
+ 	  	 

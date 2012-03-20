@@ -138,8 +138,8 @@ public class CarLoads {
      * @return list of load names
      */
     public List<String> getNames(String type){
-    	if (type == null){
-    		List<String> names = new ArrayList<String>();
+   		List<String> names = new ArrayList<String>();
+    	if (type == null){ 
     		names.add(getDefaultEmptyName());
     		names.add(getDefaultLoadName());
     		return names;
@@ -153,7 +153,6 @@ public class CarLoads {
     		loads.add(new CarLoad(getDefaultEmptyName()));
     		loads.add(new CarLoad(getDefaultLoadName()));
     	}
-    	List<String> names = new ArrayList<String>();
     	for (int i=0; i<loads.size(); i++){
     		names.add(loads.get(i).getName());
     	}

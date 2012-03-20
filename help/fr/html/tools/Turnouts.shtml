@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated by Blorec Hervé le 2012-01-23-->
+<!-- $Id: Turnouts.shtml,v 1.4 2011/04/12 16:18:00 kevin-dickerson Exp $ -->
+<html lang="fr">
+<head>
+  <TITLE>
+ 	JMRI: Turnout Documentation
+  </TITLE>
+  <META http-equiv=Content-Type content="text/html;charset=utf-8">
+
+  <META content="Bob Jacobsen" name=Author>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="keywords"
+        content="turnout model railroad JMRI decoderpro panelpro">
+
+<!-- Style --> de documentation
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+  <div id="container">
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+      <div id="mainContent">
+      <!-- Page Body -->
+        <H2>
+	JMRI: Documentation  Aiguillage
+        </H2>
+
+<h3>Que sont les aiguillages? </h3>
+
+<p> JMRI appelle peu près n'importe quelle sortie d'un réseau un " Aiguillage".
+A l'origine, JMRI contrôlait simplement les aiguillages via les décodeurs d'accessoires DCC.
+Comme le temps passait, davantage de capacité ont été ajoutées à JMRI, mais elle a gardé ce nom.
+Maintenant, par exemple, les broches de sortie individuelle sur un système C/MRI
+sont également référencées via le nom «aiguillage».
+</P>
+
+<h3> Contrôler un Aiguillage </h3>
+
+<p>
+Dans la plupart des cas, vous pouvez simplement utiliser un aiguillage et JMRI
+comprendra ce que vous voulez dire.
+Par exemple, vous pouvez ouvrir le "Contrôle Aiguillage"
+du menu «Outils», entrez un numéro d'aiguillage (numéro de l'adresse DCC ou C/MRI),
+et cliquez sur Dévié ou Direct. JMRI agira à partir de là.
+</P>
+<P>
+Les deux états de la sortie sont appelés "Direct" et "Dévié".
+«Direct» est l'arrêt, inactif, état non commandé.
+«Dévié» est la suite, actif, l'état ordonné.
+   
+<h3> Sauvegarde de configuration d'Aiguillage sur le disque </h3>
+
+<p> Les définitions d'aiguillage sont enregistrées dans votre fichier de configuration de réseau, avec les
+capteurs, les têtes signal, etc Pour stocker ces informations sur le disque, utilisez <b>Stocker 
+Configuration ...</b> dans le menu <b>Fichier </b> en haut du Tableau Lumière
+ (ou d'autres tableaux à partir du menu Outils), ou sélectionnez <b> Stocker Panneau...</b>
+dans le menu <b>Panneau </b>.
+
+<a name="add"> <H3> Ajout d'un nouvel Aiguillage </H3> </a>
+<p> Pour configurer entièrement un nouvel Aiguillage, suivez cette procédure: </p>
+<ol>
+<li> <p> Cliquez  <b> Tableau Aiguillage</b> dans le menu<b> Outils </b> pour faire apparaître
+Le Tableau Aiguillage, puis cliquez sur le bouton <b> Ajouter...</b>  au bas du tableau 
+pour ouvrir la fenêtre Ajouter/modifier Aiguillage. </p>
+<p> <li> Depuis la liste déroulante <b>Système </b> , sélectionnez le système auquel l'Adresse de l'aiguillage est connectée. Dans la zone  <b>Adresse matérielle </b> entrez dedans l'Adresse accessoires DCC de l'aiguillage </p>
+</Li>
+<p> <li> Entrez un nom utilisateur. Toute chaîne de caractères qui est différent
+du nom utilisateur d'appareils de voie sera acceptée, mais il est
+sage d'utiliser une chaîne qui décrit l'utilisation prévue de l'Aiguillage.
+Vous pouvez laisser ce champ vide si vous le souhaitez. </P>
+</Li>
+    <p> <li> Si vous souhaitez ajouter un certain nombre d'appareils de voie à la fois, cliquez sur la case à cocher
+    <b>Ajouter une Plage </b> et puis dans le champs <b> Nombre à ajouter </b> entrez
+le nombre d'appareils de voie que vous souhaitez ajouter. Si vous avez entré un nom utilisateur
+    , puis il sera ajouté avec un certain numéro pour s'assurer que chaque nom utilisateur
+    est unique. Si une adresse matérielle qui existe est déjà dans le plage qui est en cours d'ajout
+    , alors le système va sauter cette adresse et poursuivra.
+    </Li>
+<p> <li> Cliquez sur le bouton <b>OK </b> situé au bas de la fenêtre.
+Si tout va bien, un message indiquant " Nouvel Aiguillage ajouté ..." sera
+affiché dans la zone des notes. S'il y a des problèmes avec quoi que ce soit, une erreur ou
+un message d'avertissement sera affiché dans la zone des notes; vous devrez alors
+corriger l'erreur et cliquez sur <b>OK  </b> à nouveau. </p>
+    </Li> 
+    <P> <LI> Retour au Tableau Aiguillage principal, vous pouvez ensuite sélectionner
+des options pour l'aiguillage et le contrôler en cliquant sur le bouton d'état.
+</Ol>
+<!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+  </div> <!-- closes #container -->
+</body>
+</html>
+
+

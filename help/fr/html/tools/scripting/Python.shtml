@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: Python.shtml,v 1.2 2008/06/12 15:04:15 jacobsen Exp $ -->
+ <!-- Translated  by Blorec Hervé le 2011-09-27-->
+<title>JMRI: The Python/Jython language</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<!-- Page Body -->
+<H2>
+JMRI: Le langage Python/Jython</H2>
+
+<A HREF="http://www.python.org">Python</a> est un langage de script couramment utilisé qui est
+disponible sur de nombreux types d'ordinateurs. Une variante basée sur Java, appelé
+<A HREF="http://www.jython.org"> Jython </a>,
+a été intégré avec JMRI pour rendre facile le contrôle d'un chemin de fer miniature
+à partir de la ligne de commande d'un ordinateur. Pour nos besoins, les deux
+langages sont entièrement identiques.
+
+<P>
+Si comme moi vous préférez lire le papier,
+il ya beaucoup de livres disponibles sur Python.
+Peut-être l'un des meilleurs pour les débutants est
+<A HREF="http://www.oreilly.com/catalog/lpython2/"> "Learning Python" </a>
+publié par O'Reilly. Il contient plus que ce que que vous devez vraiment savoir, cependant.
+
+
+<p>Le
+<A HREF="http://www.jython.org"> site jython.org  </a>
+a quelques informations d'introduction, même si leur
+<A HREF="http://www.python.org/doc/tut/tut.html"> tutoriel </A> (lien cassé le 19/01/2012)
+passe trop de temps sur les détails d'ingénierie
+au début. Vous pouvez sauter à la
+partie<a  href="http://www.python.org/doc/tut/node5.html"> sur la langue elle-même </a>.(lien cassé le 19/01/2012)
+
+<P>
+Les non-programmeurs pourraient vouloir commencer avec quelques-unes des
+ ressources répertoriées  <A HREF="http://www.python.org/moin/BeginnersGuide"> pour eux </a>
+sur le site de python.
+
+<p> Si vous êtes intéressés par les
+techniques sous-jacentes du langage,
+IBM developerWorks a deux bons articles
+<A HREF="http://www-106.ibm.com/developerworks/java/library/j-jython.html"> ici </a>
+et
+<A HREF="http://www-106.ibm.com/developerworks/java/library/j-alj07064/"> ici </a>.
+Ils ont aussi un tutoriel intéressant
+<A HREF="http://www-106.ibm.com/developerworks/java/edu/j-dw-java-jython1-i.html?S_TACT=104AHW02"> ici </a>, même si vous avez besoin de vous
+enregistrer avec votre adresse email pour y accéder.
+</p>
+
+<P>
+Regarder les exemples du répertoire "jython« de la distribution JMRI
+pourrait aussi vous aider.
+
+
+<h3> Les choses que quelqu'un devrait vous indiquer </h3>
+
+La seule chose la plus bizarre sur Python est l'indentation des questions.
+
+Au lieu d'utiliser les caractères {et} pour indiquer le début et la
+fin d'un bloc ou une fonction, c'est fait avec l'indentation en Python.
+Bien sûr, dans un C-comme le langage populaire en général l'indentation est faite n'importe où,
+mais il faut un peu d'habitude que vous <em> arriviez </em> à le faire
+en Python.
+  
+
+
+<P>
+Par exemple, cela est une erreur de syntaxe:
+<PRE>
+    A = 15
+        print a
+    b = 21
+   
+</pre>
+parce que ces déclarations, bien que logiquement regroupés au même niveau dans le programme,
+ne sont pas indentées de la même manière. Cela sonne comme une douleur au début,
+ mais vous vous habituerez rapidement à elle. Ensuite, il rend les choses comme suit
+assez facile à lire, sans avoir à s'inquiéter de savoir où l'{et
+} Aller:
+
+<pre>
+         if now == -1):
+                 done = 1
+         else:
+                 done = 0
+         print done
+  </PRE>
+Si vous obtenez un message à propos de "Syntax error", regardez le numéro de la ligne indiquée
+ pour voir si votre indentation n'est pas alignée.
+<!--#include virtual="/Footer" -->
+</body>
+</html>

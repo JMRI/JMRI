@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: WebSite.shtml,v 1.7 2010/01/13 06:06:14 jacobsen Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-08-06-->  
+<html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: Web Site
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code web site">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8
+">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+	    <H1>JMRI: Site Web</H1>
+
+Cette page présente les aspects techniques du site web JMRI.
+<p>
+Si vous voulez juste savoir comment faire un petit changement dans un site Web ou
+la page d'aide, s'il vous plaît voir la page séparée
+<a  href="webupdate/UpdatingDocs.shtml"> des instructions </a>.
+
+ <h2>Structure de l'Information </h2>
+
+Nous distinguons trois types d'informations sur le site Web principal:
+<ol>
+<li> Les informations pour l'usager qui sont utile au moment de l'exécution.
+Ceci est rendu disponible à la fois via notre <A HREF="Help.shtml"> JavaHelp </a>,
+et aussi directement en plaçant les fichiers sur le Web.
+<li> Les  Informations pour l'usager qui sont soit inutile au moment de l'exécution, tels que
+instructions pour l'installation du logiciel, ou sont trop grande pour l'inclusion
+dans les version, par exemple, tutoriels vidéo.
+<li> Les informations de référence à partir de versions, telles que les définitions décodeur, des copies de scripts,
+JavaDocs, etc
+
+Nous fournissons ces informations  séparément:
+<ol>
+<li> L'utilisateur Run-time est disponible en plaçant le système d'aide
+sur le site web.
+<li> Les informations d'autres utilisateurs sont stockées dans le module CVS du site.new , et
+placées directement sur le site web.
+<li> Les informations de références sont mises sur le site web de leurs propres modules CVS,
+ou créés par des scripts Ant automatisés au cours de la constructions des versions.
+</ol></ol>
+
+
+<h2> Technologie</h2>
+La mise en page se fait en utilisant CSS, initialement créé par John Plocher.
+Toutes les pages doivent référencer les fichiers CSS pour l'écran et l'impression
+du répertoire "/css" . Cela signifie également que vous devez quitter le formatage
+des feuilles de style, et de minimiser le formatage explicite
+que vous faites directement dans HTML.
+
+<p>
+Parce que nous utilisons nos pages Web dans JavaHelp, il y a des restrictions
+sur l'utilisation des étiquettes. Voir nos
+<a href="Help.shtml"> pages web JavaHelp </a> pour plus de détails.
+<P>
+Nous nous dirigeons vers l'aide
+<A HREF="http://httpd.apache.org/docs/1.3/howto/ssi.html">serveur -Side Includes </a>
+pour fournir une information en-têtes, des encadrés et des pieds de page.
+Cela permettra également de nous faire part du contenu HTML
+entre le web et le système JavaHelp
+utilisé par le programme lui-même. Chaque page ne contiendra que le contenu,
+ en plus comprend les fichiers nommés "tête", "Sidebar" et "footer"
+qsi ui contiennent les informations de navigation.
+Finalement, toutes les pages d'index, mais 
+ peu ont l'extension
+". shtml". (Les autres pages index.html gardent ce nom
+afin que les gens qui demandent juste une URL répertoire leur sera servi quelque chose d'utile)
+
+<h2>Organisation des Répertoires </h2>
+
+Le site web contient plusieurs zones séparées, qui se traduisent par différents
+Modules CVS:
+<UL>si 
+<LI> Jython, les ressources, xml - elles sont prises directement à partir des modules  
+CVS du même nom. Ils ne sont que rarement mentionnés directement.
+<LI> aider - à partir du module CVS et système JavaHelp, ce qui a la structure interne
+ décrite ci-dessous et sur notre page
+<A HREF="Help.shtml"> JavaHelp </a>.
+</ul>
+Le reste sont des site .new  module CVS, et sont extraits à
+la racine du serveur web.
+<ul>
+<LI> Communiqués - Des informations spécifiques sur chaque test et mise en production
+<LI> installer - Renseignements sur la façon d'installer le logiciel JMRI sur différents types des ordinateurs
+<LI> Communautsi é - Tutoriels, pages web, et d'autres communautés qui ont fourni des informations
+<li> images - (Les images utilisées par les pages web)
+<li> contact -
+</ul>
+Les répertoires suivants contiennent encore du contenu dans site.new, mais sont
+dans le processus d'être déplacé dans les pages JavaHelp pour une utilisation
+à la fois sur le web et dans le programme:
+<ul>
+<LI> Applications  -
+<li> doc  -
+<li>matériel  -
+<LI> outils -
+</ul>
+
+<H2> Site Web Local: MacOS X</H2>
+
+Si vous voulez héberger une copie du site web JMRI sur votre ordinateur local
+MacOS X , suivez ces instructions d'abord configurer
+le serveur Apache pour faire à côté un serveur inclut, puis faire
+une copie fichiers disponible du site web sur le serveur.
+
+<OL>
+<LI> Vous devez modifier le fichier de configuration du serveur web Apache.
+<ul>
+<li> Sur MacOS X 10.4 (Tiger), c'est le fichier/etc/httpd/httpd.conf
+<li> Sur MacOS X 10.5 (Leopard), c'est le fichier etc/apache2/httpd.con /
+</UL>
+Une fois que vous avez localisé le fichier, ouvrez le avec votre éditeur favori
+(Vous devez vous authentifier avec le mot de passe administrateur pour
+modifier ce fichier).
+<ul>
+<LI>
+Pour activer les inclusions sur le serveur, trouver la section qui
+ressemble à
+<PRE>
+# Ceci peut également être «Aucun», «Tous», ou toute combinaison de «indices»,
+# "Includes", "FollowSymLinks", "ExecCGI", ou "MultiViews".
+#
+# Notez que "MultiViews" doit être nommé explicitement * * --- "Options Tous"
+# si si si si ne vous la donne pas.
+#
+Options Indexes FollowSymLinks MultiViews
+</PRE>
+Ajouter le mot «Includes» à la dernière ligne de sorte qu'il ressemble
+<PRE>
+    Options Includes FollowSymLinks Indexes MultiViews
+</PRE>
+    
+     <li> Maintenant, configurez le serveur pour gérer les fichiers avec les extensions ". shtml"
+     . Trouvez le section qui ressemble à:
+<PRE>
+     #
+     # Pour utiliser les fichiers du serveur analysé HTML 
+     #
+     # AddType text / html. shtml
+     Shtml # AddHandler server-parsed.
+</PRE>
+     et décommenter les deux dernières lignes de sorte qu'il ressemble à
+<PRE>
+     #
+     # Pour utiliser  les fichiers du serveur analysé HTML
+     #
+     AddType text / html. shtml
+     Shtml AddHandler server-parsed.
+</PRE>
+     </ul>
+
+<LI> Pour consulter une copie des fichiers:
+     <UL>
+     <LI> Changer le répertoire du serveur web
+<PRE>
+cd /Library/WebServer/Documents
+</PRE>
+     <LI> Consultez les fiches correspondantes<PRE>
+cvs co site.new
+mv site.new/* .
+mv site.new/.cvsignore .
+rmdir site.new
+cvs co help
+cvs co jython
+cvs co resources
+cvs co xml
+</PRE>
+La commande "mv"  déplacer les fichiers à partir des modules  CVS "site.new"
+au niveau de la racine de l'espace fichier serveurs web, de sorte qu'
+ils sont accessibles comme de simples URL .
+     </UL>
+<LI> Redémarrez votre ordinateur pour réinitialiser le serveur web.
+<LI> Testez en essayant d'afficher l'URL
+<A HREF="http://localhost/"> http://localhost/ </a>,
+qui devrait vous une page d'index JMRI.
+</OL>
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

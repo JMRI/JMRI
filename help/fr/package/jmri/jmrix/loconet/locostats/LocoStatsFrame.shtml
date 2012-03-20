@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: LocoStatsFrame.shtml,v 1.3 2008/11/01 17:33:01 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-10-30--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: LocoNet Statistics
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help digitrax downloader">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> Statistiques LocoNet
+</H1>
+    
+Les Interfaces avancées LocoNet comme la série des LocoBuffer RR-CirKits ou la série de PRn Digitrax
+collectent des statistiques sur le fonctionnement de LocoNet qui lui est reliée. Cette fenêtre les affiche.
+
+<p>
+Le bouton "Update" demande des informations à l'interface pour l'affichage.
+
+<h2> Valeurs LocoBuffer </h2>
+
+<dl>jmri/jmrix/loconet/locostats/LocoStatsFrame
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+jmri/jmrix/loconet/locostats/LocoStatsFrame
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+
+<dt>Version <dd> Le numéro de version de l'appareil.
+<dt>Breaks<dd> Le nombre de ruptures de LocoNet vu depuis la dernière fois que l'interface a été allumée.
+<dt>Erreurs<dd> Le nombre d'erreurs LocoNet vu depuis la dernière fois l'interface a été allumée.
+</dl>
+
+<h2> Digitrax PRn </h2>
+
+<dl>
+<dt>Numéro de Série<dd> Le numéro de série de l'appareil.
+<dd>Statut PR2<dt> Les bits d'état à partir d'une interface dans PR2 (programmateur) mode.
+<dt>Courant <dd> Le courant actuellement consommé par la voie, dans certaines unités arbitraires.
+<dt>Version Matériel<dd> Le numéro de version du matériel de l'interface.
+<dt>Version du logiciel<dd> Le numéro de version du logiciel de l'interface.
+<dt>Compteur Message Bon <dd> Le nombre de messages LocoNet bon vu depuis la dernière fois que l'interface a été allumée.
+<dt>Compteur Message Mauvais<dd> Le nombre de messages LocoNet mauvais vu depuis la dernière fois que l'interface a été allumée.
+<dd>Statut MS100<dt>Les bits d'état à partir d'une interface dans le mode MS100 (adaptateur LocoNet ) .
+</dl>
+
+Certains d'entre eux sont affichées lorsque l'interface agit comme un programmateur
+(PR2 mode), et d'autres où il agit comme une interface (MS100 mode).
+
+<p>
+Ceci est la page d'aide help/en/jmri/jmrix/loconet/locostats/LocoStatsFrame
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

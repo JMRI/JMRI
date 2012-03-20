@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: LRouteTable.shtml,v 1.3 2009/04/25 01:49:04 pete_cressman Exp $ -->
+<!-- Translated by Hervé Blorec le 2012/01/06-->
+<HTML LANG="fr">
+<HEAD>
+<TITLE>JMRI: LRoute Table Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META CONTENT="Bob Jacobsen" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help LRoute Table">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> La Table L-Itinéraire</H1>
+
+<P> Un L-Itinéraire est une version plus généralisée d'un itinéraire mis en œuvre en tant que Logix.
+Il est destiné à être utilisé dans des situations où des déclenchements supplémentaires ou actions sont
+souhaités au-delà des capacités des Itinéraires. Il peut être utilisé comme point de départ pour
+créer de nouveaux Logix. Le tableau L-Itinéraire fournit les listes de sélection des Capteurs, des Aiguillages,
+Lumières et Têtes de signal à partir de desquels les actions de sortie et les conditions de déclenchement peuvent être
+choisies.</p>
+
+<P> Une fois que vous avez quelques aiguillages, capteurs, têtes de signal et/ou les lumières de gérer, utiliser le bouton
+<b> Ajouter</b>  dans le coin inférieur gauche de la table L-Itinéraire  pour
+créer un nouvel itinéraire Logix. Une fois que vous avez créé un itinéraire Logix, vous pouvez ajouter d'autres
+capacités en l'éditant depuis la Table Logix.</p>
+
+<p> Logix qui implémente le L-Itinéraire  a son nom système préfixé par «RTX».
+Tous les Logix avec ce préfixe sont affichés dans le tableau L-Itinéraire. S'il vous plaît noter qu'une
+«RTX» Logix qui a eu ces capacités ajoutées avec
+Logix édition ne peut pas être capable d'afficher
+ces capacités additionnelles pour l'édition de L-Itinéraire. Une fois l'édition Logix est faite pour un
+L-Itinéraire il est recommandé que les autre éditions soient faites à partir du tableau Logix.</p>
+
+<H2>Colonnes  Tableau L-Itinéraire</H2>
+
+<DL>
+<DT>Nom du système </DT>
+<DD> Le Nom Système ne peut pas être changé une fois entré dans la table.
+Le bouton <b>Ajouter</b> situé dans le coin inférieur gauche de la table 
+vous permet d'ajouter un nouvel L- Itinéraire à la table.</dd>
+
+<DT>Nom Utilisateur </DT>
+<DD> Vous pouvez directement saisir ou modifier le champ "Nom Utilisateur" pour un
+titinéraire Logix existan</.dd>
+
+<DT> Activé</DT>
+<DD> Pour désactiver un L-Itinéraire à partir de déclenchement, décochez la case "Activé" 
+pour l'itinéraire . Ceci définit son Logix à un état désactivé. Le L-Itinéraire  peut
+être activé ou désactivé soit  à partir de la table ou du tableau L-Itinéraire Logix.</dd>
+ 
+<DT> Modifier</DT>
+<DD> Appuyez sur ce bouton pour modifier la L-Itinéraire . Pour plus d'informations, voir: <a
+HREF = "LItinéraireAddEdit.shtml"> Ajout/Edition  Litinéraires</A>.</Dd>
+</DL>
+
+<H3>Contrôles de la Table L-Itinéraire</H3>
+
+Il y a un bouton au bas de la Table L-Itinéraire
+
+<DL>
+<DT> Ajouter</DT>
+<DD> Appuyez sur ce bouton pour ajouter un nouvel itinéraire Logix. Pour plus d'informations, voir
+<A  HREF="LItinéraireAddEdit.shtml"> Ajouter/Editer L-Itinéraires</A>.</Dd>
+
+
+
+<!--#include virtual="/Footer" -->
+</BODY>
+</HTML>
+

@@ -118,7 +118,10 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		emptyCustomCheckBox.setEnabled(enabled);
 		loadCheckBox.setEnabled(enabled);
 		loadAnyCheckBox.setEnabled(enabled);
-		blockCarsCheckBox.setEnabled(enabled);
+		if (!loadCheckBox.isSelected() && !loadAnyCheckBox.isSelected() && enabled)
+			blockCarsCheckBox.setEnabled(true);
+		else
+			blockCarsCheckBox.setEnabled(false);
 		super.enableButtons(enabled);
 	}
 	

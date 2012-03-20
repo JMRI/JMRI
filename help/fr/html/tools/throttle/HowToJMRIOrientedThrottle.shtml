@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Translated by Blorec Hervé le 2011-09-28-->
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+
+
+
+
+
+<meta content="text/html; charset=utf-8" http-equiv="content-type" /><title>How to build a throttle oriented JMRI interface</title>
+
+
+<meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" />
+<meta name="Description" content="Throttle documentation for JMRI project" />
+<meta name="Keywords" content="JMRI" />
+<meta name="Author" content="Lionel Jeanson" />
+<meta name="Language" content="fr" />
+<meta name="Robots" content="Index, Follow" />
+<meta name="Revisit-After" content="7 Days" /><!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
+
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" />
+<link rel="icon" href="/images/jmri.ico" type="image/png" />
+<link rel="home" title="Home" href="/" /><!-- /Style --></head><body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+<h1>Comment Construire une Interface Régulateur Orientée JMRI </h1> Fort de son historique nous supposons que vous êtes un utilisateur déjà expérimenté des JMRI. <br/>
+<br/>
+Particulièrement, nous supposons que votre connexion est déjà active avec JMRI
+f et que vous êtes déjà en mesure d'ouvrir une fenêtre Régulateur et
+contrôler une locomotive. <br/>
+<br/>
+De plus nous supposons que votre base de données Liste (Roster) existe déjà, 
+la plupart de ces fonctionnalités Régulateur sont hermétiquement liées à la Liste DB et en ont besoin
+ pour travailler correctement. <br/>
+
+<h2> 1) Préparez votre Entrée listes </h2>
+La première étape est de<a href="RostersMediaPane.shtml">  remplir les médias et les étiquettes volets Fonctions dans
+DecoderPro </a>. <br/>
+<br/>
+Une fois cela fait et toutes les étiquettes fonctions sont définies pour votre configuration,
+<a href="ThrottlesPreferencesPane.shtml"> vous voulez vous assurer que les
+options pour masquer les boutons de fonction non définie et ceux pour utiliser
+l'image comme un illustration de fond pour une
+fenêtre de Régulateur </a> sont activés. <br />
+<br/>
+<h2> 2) Concevez vos volets Régulateurs </h2>
+À cette étape, lorsque vous ouvrez un Régulateur et sélectionnez un fichier (ou entrez une
+adresse qui corresponde à une liste (il y a un réglage préférence <a href="ThrottlesPreferencesPane.shtml"> pour permettre de regarder en arrière </a>)), l'image de fond devrait être là, et les boutons fonction devrait refléter ce que vous avez entré dans DecoderPro. <br/>
+<br/>
+Maintenant ce que vous pouvez faire, c'est mettre en place la fenêtre du Régulateur comme vous  voulez la
+positioner sur le Panneau de configuration et la taille que vous voulez (j'ai personnellement choisi de
+fermer l'AdressPanel, vous pouvez toujours le rouvrir par le menu Affichage,
+et je n'en ai pas besoin la plupart du temps, l'entrée de menu Enregistrer Régulateur enregistrerera également la fermeture (ou iconifié) de l'état des fenêtres intérieures). <br/>
+<h2> 3) Personnalisez-le avec Jynstruments </h2>
+Vous pouvez également ajouter quelques <a  href="../scripting/Jynstruments.shtml"> Jynstruments spécifiques </a>
+sur vos Fenêtres Régulateur, en fait, vous pouvez mélanger les étiquettes dans les fonctions du Volet Fonction
+  pour les fonctions qui ne sont pas utilisés souvent, et
+Jynstruments pour les plus utilisés, ou pour des Fonctionnalités un peu plus complexes
+ où seul un script Jython peut le faire. <br />
+<br/>
+Lorsque vous êtes satisifait avec l'étape 3) et 4) pour une liste spécifique, vous voulez atteindre l'entrée du menu Enregistrer dans le menu Fichier <a href="ThrottleWindowMenus.shtml">  fenêtre Régulateur </a>
+Afin de sauvegarder la configuration actuelle du Régulateur, <br/>
+<br/>
+la prochaine fois le régulateur est requis pour cette entrée Liste, ce fichier de sauvegarde sera
+chargé automatiquement et la fenêtre régulateur sera à jour. <br/>
+<br/>
+<h2> 4) Conception de votre Disposition  Régulateur </h2>
+La prochaine étape est de mettre en place la disposition d'écran globale, avec peut-être plusieurs fenêtres Régulateur, la <a href="ThrottlesListWindow.shtml"> Liste des fenêtres Régulateurs  </a> (accessible à partir des <a href="ThrottleToolBar.shtml"> outils de la fenêtre Régulateur </a>) et, enfin, a frappé la disposition régulateur Enregistrer (ou Enregistrer en tant que mise en page de régulateur par défaut) dans l'entrée des menu Outils <a href="ToolsMenuThrottleEntry.shtml"> Limite JMRI  </a>. <br/>
+<br/>
+<h2> 5) Obtenez plus de contrôle avec Jynstruments </h2> <a href="AdvancedThrottleControl.shtml"> utilisant Jysntruments il est également possible de mettre en place un contrôleur externe pour une fenêtre de régulateurr. </a> (pour le moment USB Joypad ou Wiimote de Nintendo, mais les scripts Jython plus classiques existent pour les appareils  USB Raildriver  et ...)<br/>
+<br />
+<h2> 6) Enfin l'ajout d'un bouton de démarrage rapide à la fenêtre principale JMRI </h2>
+
+Et enfin, en utilisant les <a  href="../scripting/Jynstruments.shtml"> Lanceurs Jynstruments </a>
+qui peuvent être déposés au fond de la fenêtre principale JMRI vous pouvez ajouter
+certains lanceurs rapides pour les applications JMRI spécifiques, en particulier <a  href="http://jmri.org/jython/Jynstruments/Launchers/Throttles.jyn/"> de chargement des boutons de configuration par défaut du Régulateur</a>. <br/>
+<br/>
+<span style="font-style: italic;">Remarque: Il n'est pas possible d'enregistrer les personnalisations des étapes 5) et 6) pour le moment.. </span><br/>
+<br />
+</div>
+<!--#include virtual="/Footer" -->
+</body></html>

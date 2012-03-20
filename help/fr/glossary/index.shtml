@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated by Blorec Hervé le 2011-05-21-->
+<html lang="fr">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2008 -->
+<!-- $Id: index.shtml,v 1.1 2008/11/18 03:13:27 jacobsen Exp $ -->
+<title>JMRI: Glossary</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Glossaire
+</h1>
+
+Cette page est le glossaire JMRI, fournissant de brèves définitions de termes spécifiques JMRI, et dans de nombreux cas, des liens vers des renseignements supplémentaires.
+
+<dl>
+
+<dt>Logique signal simple  (SSL)
+<dd> Un outil JMRI qui fournit la logique de type ABS pour piloter les signaux de votre réseau.
+(<a href="../html/tools/signaling/SimpleSignalExample.shtml">Plus</a>)
+
+<dt>Nom système
+<dd> Une façon unique de se référer à un dispositif sur le réseau.
+(<a href="../html/doc/Technical/Names.shtml">Plus</a>)
+
+</dl>
+
+
+
+
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

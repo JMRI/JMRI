@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: NewSystem.shtml,v 1.5 2010/03/06 19:28:05 jacobsen Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-06-06--> 
+<p>
+
+<html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: Adding A New System
+    </TITLE>
+    <META content="Bob Jacoben" name=Author>
+    <meta name="keywords" content="JMRI technical system add">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset= utf-8
+">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+	    <!-- ------------- -->
+	    <!-- Page Contents --> <!-- Required -->
+	    <!-- ------------- -->
+
+	    <H1>JMRI: Ajouter un Nouveau Système</H1>
+
+		<div class=para>
+		<p> Cette page décrit les étapes pour ajouter un nouveau type de données,
+par exemple, Appareils Powerline (Coupleur Courant Porteur CPL), à JMRI. </P>
+
+<p> Elle utilise comme exemple l'ajout du type 
+du «courant porteur en ligne"  en Janvier 2008. </p>
+</div>
+
+ <divclass=list> <div
+<p> Nous listons les fichiers qui sont modifiés et créés dans l'
+ordre où ils ont été fait dans ce cas, les autres ordres peuvent aussi travailler,
+et vous ne pourriez pas devoir à faire tout cela. </p>
+<P>
+Dans ce cas particulier, nous avons commencé par la copie d'une
+implémentation d'un système existant (SECSI).  Comment
+nous avons ordonné Ces effets, et fait progresser le processus de base assez
+rapidement.
+
+		
+		<dl>
+
+		<h3>Dupliquer un système existant</h3>
+
+		    <dt> Créer un double arborescence de fichiers </dt>
+<dd>
+<p>En utilisant tous les outils qui vous aident,
+dupliquer les src/jmri/jmrix sous - arbre correspondants
+au système existant que vous souhaitez copier. </p>
+</dd>
+
+<dt> Nettoyer les répertoires CVS </dt>
+<dd>
+<p> Il est absolument <u> essentiel</u> que vous retiriez le sous-répertoire CVS
+ de l'arborescence des répertoires en double que vous venez de créer.
+Si vous ne le faites pas, vous aurez des problèmes difficiles à diagnostiquer
+lorsque vous essayez de commettre ce  CVS. <p> pour vérifier que vous avez fait cela, utilisez une commande comme: <br/>
+<code> find. -name CVS-print </code> <br/>
+</dd>
+
+<dt> Modifiez les informations du nom du paquet </dt>
+<dd>
+<p>A l'aide de votre éditeur favori, changer tout le noms des paquets
+ dans les nouveaux fichiers à leur nouveaux emplacements. Dans cet exemple,
+qui était un gros, remplacer des "jmri.jmrix.secsi" par "jmri.jmrix.powerline"</dd>			
+		    <P> À ce stade, assurez-vous que vous pouvez compiler. Ce code
+n'est pas encore conforme, mais il faut compiler. </P>
+
+<dt>Vérifiez les dates de copyright </dt>
+<dd>
+<p> Parce que vous avez copié un système qui pourrait ne pas
+avoir été touché pendant un moment, passer et ajouter
+l'année en cours (et si besoin est, votre nom) à la
+notices de copyright dans tous les fichiers. </p>
+</ Dd>
+
+<dt> CVS Création d'une structure </dt>
+<dd>
+<p> Dans cette étape, nous avons la structure de base CVS en place. </p>
+<ul>
+<li> Ajouter tous les répertoires que vous avez créé à CVS. Dans l'exemple,
+c'était: <br/>
+<code>cvs ajouter powerline powerline serialdriver/serialmon/<br/> 
+cvs add powerline/configurexml powerline/serialdriver/ configurexml </code>
+<li> Add all the COPYING files: <br/>
+<code>cvs add  powerline/COPYING powerline/*/COPYING powerline/*/*/COPYING</code>
+<li>Add all the .cvsignore files:. <br/>
+<code> cvs add powerline/.cvsignore powerline/*/.cvsignore powerline/*/*/.cvsignor</code>
+            <li> Enfin, remettre dans ces fichiers (mais seulement les fichiers): <br/>
+<code>cvs  commit-m "usual file" powerlined </code>
+</Ul>
+</Dd>
+
+<P> À ce stade, assurez-vous que vous pouvez compiler. </P>
+					
+		<h3>Faire  une Migration Basique</h3>
+
+            <dt> Migrer les noms </dt>
+<dd>
+<p>A l'aide de votre éditeur favori, changer toutes les
+les occurrences de l'ancien nom système vers le nouveau. 
+<p> Puis rechercher et remplacer, peut-être pas littéralement, toutes les
+occurrences. </p>
+
+            </dd>
+            
+		    <P>À ce stade, assurez - vous que vous pouvez compiler..</P>
+
+		<h3>Créer des Tests Basiques</h3>
+
+            <dt> Dupliquer répertoire </ dt>
+<dd>
+<p> En suivant les étapes ci-dessus, Dupliquer
+le répertoire pour les tests des systèmes précédents, la création
+d'un nouveau répertoire dans le test/jmri/jmrix pour contenir les
+tests. <u> Supprimer tous les répertoires CVS </u>,
+changer le nom du paquet,
+vérifier les dates de copyright,
+créer la structure de CVS,
+et de migrer les noms. </p>
+            </dd>
+            
+		    <P> À ce stade, assurez - vous que vous pouvez compiler
+à la fois le code principal (qui n'a pas été modifié dans cette étape)
+et les tests. </P>
+
+<p> Vous devez également être en mesure d'exécuter avec succès le
+tests dans votre nouveau système (même si elles ont été créées
+pour la fonctionnalité de l'ancien système):
+tests ant <code> &amp;&amp;./runtest.csh jmri.jmrix.powerline.SerialTest </code>
+            </dd>
+
+
+		<h3>Connectez les Bases vers le reste du système</h3>
+
+            <dt>Connectez - vous à la configuration des menus </dt>
+             <dd>
+             <p> Modifier les fichiers jmri/jmrix fichier /ActiveSystemsMenu.java (deux places),
+             src/jmri/jmrix/JmrixConfigPane.java (une place) et
+             src/jmri/jmrix/SystemsMenu.java (une place) les fichiers pour ajouter le nouveau
+             système. </p>
+             <p> N'engagez pas ce CVS encore! </p>
+             </dd>
+
+<P> À ce stade, assurez - vous que vous pouvez compiler et exécuter DecoderPro, et
+que votre nouveau système apparaît dans le panneau des préférences. </P>
+            
+             <dt> Connectez - vous à test arbre </dt>
+             <dd>
+             <p> Modifier le test/jmri/jmrix fichier/JmrixTest.java
+              pour invoquer vos tests du nouveau système. </p>
+             <p> N'engagez pas ce CVS encore! </p>
+             </dd>
+
+<P> A ce point, lorsque vous faites "ant alltest", votre nouveau système de test
+doit être exécuté. </p> 
+            
+
+		<h3>Migrer vers des fonctionnalités de base</h3>
+
+            <dt> mise à jour d'options de connexion </dt>
+             <dd>
+             Vitesses, etc, en courant porteur en ligne /serialdriver/SerialDriverAdapter.java.
+             </dd>
+
+             <dt>Obtenez  envoyer/recevoir des communications de travail </dt>
+             <dd>
+             La première étape est d'obtenir des communications de travail afin que
+             vous puissiez envoyer un message de la fenêtre "Envoyer la commande",
+             et la voir et voir la réponse dans la fenêtre "Moniteur". </dd>
+                         
+		<h3> Le Rendre facile à utiliser</h3>
+
+		    <dt> Ajouter de possibles éléments de démarrage </dt>
+<dd>
+<p> Modifier src/apps/ActionListBundle.properties pour ajouter des éléments appropriés. </p>
+</dd>
+
+		<h3>Compléter la documentation</h3>
+
+		    <dt> Créer L'arbre d'Aide </dt>
+<dd>
+<p> Commencez par dupliquer, puis modifiez, n'oubliez pas de
+mettre à jour l'index. </p>
+<p> Vous aurez également à modifier les emplacements sur
+les différents cadres </p>
+</dd>
+
+<dt>ant javadoc </dt>
+<dd>
+<p> Créer des JavaDocs, et résoudre les éventuels nouveaux (ou anciens) problèmes. </p>
+</dd>
+
+<dt> Ajouter le système de la «quincaillerie» des pages Web </dt>
+<dd>
+<p> Modifier help/fr/html/hardware/index.shtml </p>
+<dd>
+
+
+    
+		</dl>
+		</div>
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

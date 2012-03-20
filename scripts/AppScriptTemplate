@@ -120,7 +120,7 @@ then
             # Now deal with ARM architecture
             if [ "$ARCH" = "armv5tel" ]
             then
-              ARCH="armel"
+              ARCH="armv5"
             fi
 
 	    if [ -d "${SYSLIBPATH}/$ARCH" ]

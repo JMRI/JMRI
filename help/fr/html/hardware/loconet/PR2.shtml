@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: PR2.shtml,v 1.3 2008/05/30 14:47:46 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-16-06-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI Hardware Guide: Connecting to a Digitrax PR2
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI Guide Matériel: Connexion à un Digitrax PR2
+</h1>
+
+
+<a href="http://digitrax.com/prd_compint_pr2.php">
+<img src="images/PR2.jpg" align="right" width="200" height="179" alt="PR2 picture"/>
+</a><br>
+Le PR2 est un programmateur autonome qui peut être utilisé
+pour régler les CV dans tous les décodeurs que DecoderPro supporte.
+Il peut également être utilisé pour télécharger des informations sonores dans les
+Décodeurs sonores Digitrax et, dans ses limite de courant, pouvoir 
+faire rouler une locomotive pour la tester
+
+
+<p>
+Pour l'utiliser, vous le connectez à son alimentation et à un
+morceau de voie dédiée que vous allez utiliser comme voie de programmation.
+Aussi, branchez le connecteur à 25 broches RS232 à un port série sur votre
+ordinateur. Vous pourriez avoir à utiliser un adaptateur USB série et/ou un adaptateur connecteur DB25/DB9
+. (Le PR2 a un connecteur RS232 standard broche 25, la plupart des ordinateurs
+ont désormais un connecteur 9 broches RS232, et il existe des adaptateurs simples
+disponible pour convertir le câblage.)
+
+<p>
+Le PR2 n'est pas une interface LocoNet, et
+ne pas le connecter au LocoNet sur votre réseau miniature en aucune façon.
+Il ne peut pas se rattacher à une centrale de commande comme le fait
+LocoBuffer. Le câble livré avec, n'est pas un câble LocoNet
+, et vous ne devriez pas brancher un câble LocoNet dans le PR2.
+
+<p>
+Pour plus d'informations sur le PR2 lui-même, s'il vous plaît voir la
+<a href="http://digitrax.com/prd_compint_pr2.php"> page Digitrax PR2 </a>
+et la
+<a href="http://www.digitrax.com/kb/index.php?c=272"> page PR2 </a>
+dans la
+<a href="http://www.digitrax.com/kb/index.php"> Base de connaissances Digitrax </a>.
+
+<h2>Configuration Recommandée  </h2>
+<p>
+ Configurer DecoderPro pour utiliser PR2:
+</p>
+
+<UL>
+<LI>
+Démarrer DecoderPro.
+<li>
+Ouvrez la fenêtre Préférences du menu Édition et configurer la connexion par:
+<UL>
+<LI> Sélectionnez LocoNet PR2
+<LI> Sélectionnez le port série qui est connecté au PR2
+<li> La vitesse sera fixée à 57 600 bauds, ne pas essayer de changer celle-ci
+dans les paramètres de votre ordinateur
+<li> Le "Flow Control" par défaut l'option "Utiliser le contrôle de flux matériel», qui
+utilise le statut des fils de la connexion série pour déterminer quand le PR2
+est prêt à envoyer et à recevoir. Vous devriez l'essayer d'abord, comme c'est le 
+mode le plus fiable.
+Seulement si vous ne pouvez pas  programmer un décodeur en utilisant ce choix,
+et seulement après avoir vérifié que vous utilisez le bon port,  vous sélectionnez "Aucun" pour
+cette préférence et essayez à nouveau.
+
+<li> Cliquez sur Enregistrer au bas de la fenêtre des préférences, quittez le programme et redémarrer.
+</UL>
+
+<h2>Suggestions d'Utilisation</h2><p>
+<P>
+Vous pouvez utiliser un régulateur JMRI pour contrôler la locomotive connectée
+au PR2. Utilisez la commande d'alimentation JMRI ou de l'élément  "Alimentation" du menu
+sur la barre de menu du régulateur pour mettre l'alimentation sur On, et puis vous
+pouvez faire fonctionner normalement la locomotive.
+
+<p> Le PR2 peut seulement
+fournir un courant très limitée, alors Digitrax a construit un «mode neutre»
+dans leurs décodeurs sonores. Lorsque JMRI et le PR2 est en marche avec
+un décodeur de son Digitrax, le moteur est déconnecté pour réduire la charge .
+Vous pouvez toujours avoir la rampe de la vitesse accélération et décélération et écouter
+comment le son réagit, mais le moteur ne fera pas déplacer la locomotive.<P> 
+
+<p>
+D'autres décodeurs , incluant les décodeurs d'autres fabricants, peuvent
+tirer pour le moteur suffisamment de courant pour déclencher les disjoncteurs internes du PR2.
+Cela entraînera un manque de puissance sur la voie comme un "Off". Attendre juste  quelques secondes et tourner la traction vers 0 .<P> 
+
+	  
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Translated by Blorec Hervé le 2011-09-28-->
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta content="text/html; charset=utf-8" http-equiv="content-type" ><title>Throttles Preferences Pane</title>
+
+<meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" >
+<meta name="Description" content="Throttle documentation for JMRI project" >
+<meta name="Keywords" content="JMRI" >
+<meta name="Author" content="Lionel Jeanson" >
+<meta name="Language" content="fr" >
+<meta name="Robots" content="Index, Follow" >
+<meta name="Revisit-After" content="7 Days" ><!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" >
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print" >
+<link rel="icon" href="/images/jmri.ico" type="image/png" >
+<link rel="home" title="Home" href="/" ><!-- /Style --></head><body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+
+<h1>Volet des préférences Régulateurs</h1>
+
+
+
+<img src="images/ThrottlesPreferencesPane.png" alt="" ><br >
+
+<br >
+
+Pour une meilleure expérience, le choix recommandé est cellui illustrée ici. <br>
+<br>
+Ce panneau de préférences est accessible à partir des sous-menus Régulateurs <a href="ToolsMenuThrottleEntry.shtml"> dans les sous-menus Régulateur dans l'entrée du menu Outils </a>. <br>
+
+<br>
+
+Il est recommandé de fermer toutes les fenêtres Régulateurs avant d'appliquer une nouvel
+ensemble de préférences, puis rouvrez les une fois les nouveaux paramètres 
+appliquée ou sauvés. <br>d'entrée 
+<ul>
+   <li>
+
+Le bouton Annuler ferme la fenêtre et laisse les paramètres actuels des régulateurs comme ils sont. </Li>
+   <li>d'entrée 
+
+Le bouton Appliquer appliquera l'ensemble actuel des préférences et la
+fenêtre des préférences  d'entrée restera ouverte. </li>
+   <li>
+d'entrée 
+Le bouton Enregistrer enregistrera vos préférences actuelles, et fermerera les fenêtres Préférences, les réglages seront
+chargés automatiquement au prochain démarrage du JMRI. </li>
+</ ul>
+
+
+ <h2>Utilisez  Régulateur étendu </h2>
+
+Ce réglage active/désactive toutes les fonctionnalités étendues des régulateurs. <br>
+
+<br>
+
+<h2>Réglez Contrôles transparents </h2>
+
+Mettra le fond de la fenêtre interne du régulateur transparente ou semi-
+transparente. <br>
+
+<br >
+
+<span style="font-style: italic;"> Cette fonctionnalité est appelée à bien travailler
+ sur OS X, Lin d'entrée ux et Windows, mais pour être travaillé, varie totalement
+selon l'interface actuelle Java  (modifiable dans préférences principales JMRI 
+) </span> <br
+
+<br>
+
+ <h2> Utiliser l'image du fichier comme fond </h2>
+
+Quand une liste est sélectionnée, l'image définie dans son <a href="RostersMediaPane.shtml"> Panneau des médias </a> sera
+chargée comme un fond pour la fenêtre de commande du régulateur. <br>
+<br>
+Lorsque cette option est activée et l'adresse sélectionnée est 0 ou 3, une image par défaut sera chargée. <br>
+<br> 
+ <h2>Redimensionnez la fenêtre à la taille de l'image </h2>
+
+Quand une image de fond est chargée pour les régulateurd'entrée s actuels, va forcer la taille de Fenêtre du Régulateur à celle de cette image. <br>
+
+<br>
+  
+<h2>Recherche liste infos quand adresse indiquée </h2>
+Quand une adresse est inscrite  dans<a href="BasicThrottleWindow.shtml"> l'AdressPanel </a>, la base de données JMRI 
+recherchera  une entrée de registre correspondante (et sera donc des options de déclenchements
+décrits ci-dessus et ci-dessous s'ils sont activés). <br>
+
+<br>
+
+<h2> Chargement automatique de la fenêtre de préférences régulateurs lorsqu'un lien est trouvé avec la Liste </h2>
+
+Quand une liste est sélectionnée, si un fichier de définition régulateur correspondant existe,
+JMRI le chargera automatiquement. <br>
+<br>
+Ces fichiers sont stockés dans &lt;JMRI
+Preference Folder&gt;/Throttle/XYZ.xml où XYZ dans l'ID de la Liste. <br>
+Utiliser
+le<a href="ThrottleWindowMenus.shtml"> entrée  menu Enregistrer du
+Menu Fichier </a> dans une fenêtre régulateur va créer ou mettre à jour ces fichiers. <br>
+
+<br>
+<h2> Ignorer position du cadre Régulateur </h2>
+Pour les vieux fichiers régulateurs qui contiennent des position de Fenêtre Régulateur en eux. Faites comme
+décrit. <br>
+<br>
+<span style="font-style: italic;"> Remarque: les positions des Fenêtre Régulateurs sont maintenant sauvegardées dans le <span style="font-weight: bold;"> mise en page Régulateur</span>Fichiers de sauvegarde (pas dans n'importe quels fichiers de sauvegardes Régulateurs ) </span> <br
+
+<br> 
+
+<h2> Masquage indéfini de la Liste Boutons  </h2>
+
+Quand une liste est sélectionnée, les boutons des panneaux d'adresse sont initialisés comme
+définis dans le panneau de Fonctions dans DecoderPro, si cette option est activée,
+les boutons ne sont pas définis (sans texte) au PanelPro seront automatiquement cachés dans le
+Panneau Fonction <a href="BasicThrottleWindow.shtml">Panneau Fonction </a>. <br>
+
+<br>  
+<span style="font-style: italic;"> Remarque: vous pouvez réinitialiser la visibilité des Fonctions Boutons dans une fenêtre régulateur en allant dans Menu Afficher <a href="ThrottleWindowMenus.shtml"> et cliquer sur "afficher tous les boutons de fonction" </a>. </span> <br>
+
+<h2>Activer la barre d'outils papillon </h2>
+ d'entrée  
+Cette option activera une<a  href="ThrottleToolBar.shtml">  barre d'outils qui
+apparaîtra dans toutes les Fenêtres Régulateurs </a>.
+
+
+
+
+
+<!--#include virtual="/Footer" --></div>
+</body></html>

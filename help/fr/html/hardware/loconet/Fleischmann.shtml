@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Fleischmann.shtml,v 1.1 2008/01/13 04:24:44 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-06-15-->
+<html lang="fr">
+<head>
+ <TITLE>
+ JMRI Install Guide: Fleischmann Twin Centre via Serial Port
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Michael Beck" name=Author>
+    <META content="John Plocher" name=Author>
+    <META name="keywords" content="Uhlenbrock Intellibox java model railroad JMRI install">
+
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <H1> 
+     Guide d'Installation JMRI: Centrale Twin  Fleischmann via Port Série
+      </H1>
+
+<P>DecoderPro peut communiquer avec une Centrale Twin  Fleischmann via le port série 
+intégré et le protocole LocoNet.
+<p>
+Notez que cette fonctionnalité a été ajoutée à JMRI en test sur la version 1.5.2,
+et n'est pas présente dans la Version précédente 1.4 de production.
+Si vous utilisez une version avant la version 1.5.2 JMRI,
+S'il vous plaît aller à la
+<A HREF="../download/"> page de téléchargement </a>
+pour télécharger la dernière version.
+
+<P>
+La Centrale Twin a besoin d'avoir ce logiciel mis à jour
+à la version 1.1 ou ultérieure.
+<P>
+Configurer les options de votre Centrale Twin à:
+<UL>
+<LI> SO 2 valeur 4
+<LI> SO 5 valeur 1
+<LI> SO 6 valeur 255
+
+<LI>Baudrate 19200
+</UL>
+
+Ensuite, démarrez le programme JMRI et le configurer pour:
+
+<UL>
+<LI> "LocoNet Intellibox Serial Port" protocole
+<LI> 19200 bauds
+<LI> Sélectionnez matériel Handshake
+<LI>Sélectionnez la centrale de commande DCS100
+</UL>
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

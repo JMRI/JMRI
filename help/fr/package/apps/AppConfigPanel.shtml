@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: AppConfigPanel.shtml,v 1.18 2010/03/05 06:33:41 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-10-03--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Preferences Window
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help preferences">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>JMRI: Fenêtre Préférences </H1>
+
+La fenêtre des préférences est l'endroit où vous configurez le fonctionnement de base de votre application JMRI.
+Il y a une partie supérieure qui contient les bases, et une section séparée pour les préférences avancées.
+
+<p>
+Cette page décrit un vieux panneau de préférences qui a été remplacé par 
+<a href="TabbedPreferences.shtml">un autre</a> dans 
+<a href="http://jmri.org/releasenotes/jmri2.9.4.shtml">JMRI 2.9.4</a>. Les informations sur la nouvelle sont sur
+<a href="TabbedPreferences.shtml">un autre page</a>.
+
+<p>
+<a name="basic">
+<h2> Préférences Basiques</h2></a>
+<p>
+Lorsque la fenêtre s'ouvre d'abord, elle affiche les préférences de bases.
+<p>
+<a href="../../manual/images/Preferences.png">
+<img src="../../manual/images/Preferences.png" height="156" width="256" align="right"></a>
+<dl>
+<dt>Connexion Réseau
+<dd>Vous pouvez sélectionner l'une des diverses connexions réseau JMRI ici.
+Pour plus d'informations sur comment configurer cela pour votre matériel particulier,
+voir la <a href="../../html/hardware/index.shtml">page matériel</a>.
+<dt>Style Interface Graphique Utilisateur( GUI) Style
+<dd>Ces boîtes radio vous permettent de sélectionner la façon dont le programme s'affiche.
+Les choix disponibles dépendent du type d'ordinateur que vous avez, et
+tous les éléments suivants peuvent être disponibles:
+    <ul>
+    <li>Métal - le style par défaut de Java, utilisable sur tous les ordinateurs
+     <li> CDE/Motif - Une forme Linux/Unix qui fonctionne bien avec les gestionnaires écran X Windows. Il est également disponible sur (presque) tous les types d'ordinateurs.
+     <li> Windows - uniquement disponible sur les systèmes Microsoft Windows, ce qui rend le
+         programme aussi ressemblant que possible qu'une application normale de Windows.
+     <li> Mac OS X - uniquement disponible sur MacOS, ce qui rend l'apparence du programme ressemblant à
+         une application Macintosh
+
+    </ul>
+<dt>Programmateur par Défauts
+<dd>Le programmateur  DecoderPro vous permet de choisir  l'affichage de beaucoup ou peu de contenu du décodeur en utilisant un «programmateur» configurable . Vous pouvez en sélectionner un dans le même temps, vous sélectionnez votre <a href="../../manual/Basic_Programming.shtml"> décodeur de locomotive </a>, mais cela fournit un endroit commode pour définir un décodeur par défaut ainsi vous n'avez pas à le sélectionner à chaque fois que vous ouvrez un décodeur..
+</dl>
+
+Sans aucun doute la commande la plus importante se trouve au bas de cette section:
+Le bouton "Enregistrer"!
+          
+<p>
+Soyez sûr de cliquer sur "Enregistrer" lorsque vous quittez cette fenêtre. Vos modifications des préférences
+ne prendront effet qu'après redémarrage du programme, de sorte que le
+programme vous invite à le faire après avoir sauvé les préférences.
+
+<a name="advanced">
+<h2> Préférences avancées  </h2>
+
+La case "Montrer Préférences avancées "  vous permet de
+personnaliser votre connexion à la mise en page. Vous n'avez pas besoin d'utiliser les
+préférences avancées pour obtenir votre première connexion au réseau et et d'exécuter l'application, et nous
+vous recommandons de les laisser seuls jusqu'à ce que la connexion à votre
+centrale de commande soit opérationnelle. Pour paramétrer vos préférences avancées, vérifier la boite"Montrer Préférences Avancées"T.<br><p>
+<a href="../../manual/images/Preferences2.png">
+<img src="../../manual/images/Preferences2.png" height="150" width="256" align="right"></a>
+
+<dl>
+	<dt>Connexions auxilliaires au réseau
+	
+	<dd>Les connexions auxiliaires vous permettent d'avoir plus d'une connexion réseau active à un moment. La plupart des utilisateurs n'ont besoin que d'une connexion, donc sélectionner une connexion auxiliaire seulement si vous avez besoin de plus d'un raccordement au réseau. Utilisez la "Connexion Réseau:" en haut du menu Préférences de votre connexion principale.	
+	<dt>Programmateur par défaut 
+<dd> Cette section a une case à cocher qui vous permet de décider si le programmateur DecoderPro va afficher des volets vide (onglets). Certaines personnes aiment les voir, même si elles sont vides, d'autres préfèrent ne pas les voir. Nous fournissons cette préférence afin que vous puissiez choisir.
+
+<a name="locale">
+<dt>Locale
+<dd> <a href="../../Acknowledgements.shtml"> Beaucoup de gens </a> ont contribué à l' «Internationalisation» de JMRI. Nous les remercions d'avoir convertit (beaucoup) de texte à l'écran pour une autre langue que l'anglaiss. Si vous sélectionnez votre pays ou votre région et votre langue ici, puis enregistrez et redémarrez les préférences, JMRI va utiliser une internationalisation de ce pays et la langue si elle est disponible. Les éléments qui n'ont pas été traduits continuera à apparaître en anglais, de sorte que vous ne manquerez rien. Pour plus d'informations sur la façon de le mettre en place, et en particulier la façon de contribuer à de traductions nouvelles et améliorées, s'il vous plaît voir notre
+ <a href="../../html/doc/Technical/I8N.shtml">Page d'internationalisation </a>.
+
+<a name="actions">
+<dt> Actions à faire au démarrage </a>
+<dd>
+Cette section vous permet d'avoir le programme qui exécute automatiquement les sélections de menu différents au démarrage. Par exemple, vous pouvez avoir la Table Aiguillage ouvrir automatiquement, ou d'ouvrir automatiquement une fenêtre pour la programmation principal.
+<P>
+Par exemple, pour ouvrir automatiquement la Table Aiguillage, cliquez sur le bouton "Ajouter une action" dans cette section des préférences avancées.
+Dans la liste qui est présentée, sélectionnez "Ouvrir Table Aiguillage ".
+N'oubliez pas de sauvegarder vos préférences avec le bouton Enregistrer au bas de l'écran!
+
+<dt> Créez des boutons sur l'écran principal
+<dd>
+Cela vous permet d'ajouter des boutons supplémentaires à la fenêtre principale JMRI qui sont connectés à des choix de menu spécifique.
+<P>
+Par exemple, pour ajouter un bouton qui va ouvrir la commande d'alimentation lorsque vous cliquez dessus,
+cliquez sur le "Ajouter une action" dans cette section des préférences avancées.
+Dans la liste qui est présentée, sélectionnez "Ouvrir Table Aiguillage ". N'oubliez pas de mettre à jour vos préférences avec le bouton au bas de l'écran!
+Dans la liste qui est présentée, sélectionnez "Ouvrir Commande Alimentation ".
+N'oubliez pas de mettre à jours vos préférences avec le bouton au bas de l'écran!
+Le bouton apparaîtra au prochain démarrage du programme.
+
+<dt>Chargement des fichiers de panneau au démarrage
+<dd>
+Cette section vous permet de charger automatiquement les fichiers de panneaux lorsque le programme
+démarre. Les sections précédentes ont déjà été exécutées, de sorte que toute  action configurée aura eu lieu
+. Vous pouvez charger autant de fichiers de panneau que vous le souhaitez, chacun sera complètement chargé avant le prochain démarrage.
+<p>
+Cliquez sur "Ajouter un fichier", qui va ouvrir une fenêtre de la section du fichier dans lequel vous pouvez sélectionner le fichier désiré. Si vous souhaitez plus tard arrêter le chargement du fichier au démarrage, cliquez sur le bouton "Supprimer" à côté de son nom.
+
+
+<dt>Exécuter des scripts au démarrage
+<dd>
+Cette section vous permet d'exécuter automatiquement un fichier de script lorsque le programme démarre. Les sections précédentes sont déjà exécutées, de sorte que toutes les actions configurées auront eu lieut et tous les fichiers panneaux ont été chargés.
+Vous pouvez exécuter les fichiers script que vous  souhaitez, chacun sera éxecuté à la fin du fichier avant le prochain démarre
+<p>
+Cliquez sur "Ajouter un fichier", qui va ouvrir une fenêtre de la section du fichier dans lequel vous pouvez sélectionner le fichier désiré. Si vous souhaitez plus tard arrêter l'exécution d'un script particulier au démarrage, cliquez sur le bouton "Supprimer" à côté de nom de fichier.
+
+<a id="roster">
+<dt>Définissez l'emplacement de la Liste
+<dd>
+Normalement, la liste est stockée dans un emplacement standard dans le cadre du <a href="../../html/apps/DecoderPro/Files.shtml">répertoire preferences </a>.
+Cette option vous permet de le déplacer autre part.
+<p>
+Pour le configurer, cliquez sur le bouton "Paramétrer ..."  et suivez les instructions.
+<p>
+Le bouton "Réinit" restaure l'emplacement par défaut. Notez que cela modifie juste où le programme regarde. Si vous avez stocké des informations Liste ailleurs et  voulez le faire revenir à l'emplacement par défaut, vous devez déplacer les fichiers vous-même.
+<p>
+Vous pouvez également entrer une valeur par défaut pour le champ "propriétaire" dans les entrées de registre DecoderPro ici. Ceci remplit avec la valeur les nouvelles entrées, ce qui peut vous faire économiser un peu de frappe. Il n'a aucun effet sur les entrées existantes, même s'il a changé.
+</dl>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

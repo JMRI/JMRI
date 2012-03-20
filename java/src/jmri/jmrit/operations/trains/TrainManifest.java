@@ -87,6 +87,7 @@ public class TrainManifest extends TrainCommon {
 				newLine(fileOut);		
 			
 			// print info only if new location
+			Location location = locationManager.getLocationByName(rl.getName());
 			String routeLocationName = splitString(rl.getName());
 			if (!routeLocationName.equals(previousRouteLocationName) ||
 					(routeLocationName.equals(previousRouteLocationName) && oldWork == false && work == true && newWork == false)){
@@ -109,8 +110,11 @@ public class TrainManifest extends TrainCommon {
 					// no work at this location
 					String s = MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName});
 					// if a route comment, then only use location name and route comment, useful for passenger trains
-					if (!rl.getComment().equals(""))
-						s = routeLocationName+", "+rl.getComment();
+					if (!rl.getComment().equals("")){
+						s = routeLocationName;
+						if (rl.getComment().trim().length()>0)
+							s = s +", "+rl.getComment();
+					}
 					if (r == 0)
 						s = s +", "+rb.getString("departureTime")+" "+train.getDepartureTime();
 					else if (!rl.getDepartureTime().equals(""))
@@ -118,11 +122,8 @@ public class TrainManifest extends TrainCommon {
 					addLine(fileOut, s);
 				}
 				// add location comment
-				if (Setup.isPrintLocationCommentsEnabled()){
-					Location l = locationManager.getLocationByName(rl.getName());
-					if (!l.getComment().equals(""))
-						addLine(fileOut, l.getComment());				
-				}
+				if (Setup.isPrintLocationCommentsEnabled() && !location.getComment().equals(""))
+					addLine(fileOut, location.getComment());				
 			}
 			
 			// engine change or helper service?
@@ -155,7 +156,10 @@ public class TrainManifest extends TrainCommon {
 							&& car.getRouteDestination() == rld) {
 						if (car.isUtility())
 							pickupCars(fileOut, carList, car, rl, rld);
-						else
+						// use truncated format if there's a switch list
+						else if (Setup.isTruncateManifestEnabled() && location.isSwitchListEnabled())
+							pickUpCar(fileOut, car, new StringBuffer(Setup.getPickupCarPrefix()), Setup.getTruncatedPickupManifestMessageFormat(), Setup.getManifestOrientation());
+						else 
 							pickUpCar(fileOut, car);
 						cars++;
 						newWork = true;
@@ -170,6 +174,9 @@ public class TrainManifest extends TrainCommon {
 				if (car.getRouteDestination() == rl) {
 					if (car.isUtility())
 						setoutCars(fileOut, carList, car, rl, car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null);
+					// use truncated format if there's a switch list
+					else if (Setup.isTruncateManifestEnabled() && location.isSwitchListEnabled())
+						truncatedDropCar(fileOut, car);
 					else
 						dropCar(fileOut, car);
 					cars--;

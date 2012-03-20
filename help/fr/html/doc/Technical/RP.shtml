@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: RP.shtml,v 1.4 2010/03/11 03:28:39 jacobsen Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-07-06-->
+<html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: Recommended Practices
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code standards recommendation Swing">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+	    <H1>JMRI: Pratiques Recommandées </H1>
+
+Voici la page d'infos diverses et des pointeurs pour les développeurs JMRI.
+
+ <h2>Préférences Class Library </h2>
+
+<ul>
+
+<LI>
+Nous utilisons Java Swing pour notre développement Interface Graphique Utilisateur (GUI). Il est beaucoup plus puissant
+que l'AWT d'origine, et le prix est juste. Nous avons recommandé un
+modèle d'organisation et d'utilisation qui est documenté sur
+<a href="Swing.shtml"> une autre page </a>.
+
+<LI> JMRI utilise les bibliothèques RXTX pour soutenir les communications série sur Macintosh,
+Linux et Windows. Sous Windows uniquement, le paquet de Serialio
+<A HREF="http://Serialio.com"> Serialio.com </a> est également utilisé
+pour être en mesure d'utiliser la vitesse de transmission  MS100. Pour ce faire, la
+classe jmri.jmrix.loconet.ms100.MS100Adapter a été converti pour utiliser la
+ réflexion de Java pour décider si le paquet Serialio est 
+disponible; sur d'autres systèmes, il utilise RXTX.
+Notez que notre licence de Serialio est limitée à ce seul usage;
+nous ne sommes pas autorisés à distribuer la bibliothèques à d'autres fins.
+
+<LI>Prenez quelques instants pour en apprendre davantage sur les types différents de
+<a href="http://java.sun.com/j2se/1.5.0/docs/guide/collections/overview.html"> collections Java </a>
+qui sont disponibles
+(<a  href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/List.html">Liste </a>,
+<a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/HashMap.html"> HashMap </a>,
+etc)
+dans les
+<a href=""> paquets java.util </a>.
+Tout ne doit pas être un vecteur ou un tableau.
+
+<LI>
+JMRI utilise largement les
+<a href="http://java.sun.com/docs/books/tutorial/java/generics/index.html"> génériques Java </a>
+pour
+<href="http://java.sun.com/docs/books/tutorial/java/generics/generics.html"> réduire les erreurs et améliorer la compréhension </a>.
+Avec beaucoup de gens qui écrivent et le partage de code, à l'aide de
+génériques au lieu de 'casts', il est beaucoup plus facile de comprendre le code, et permettre au compilateur de corriger de nombreux malentendus sur la façon dont les choses devraient être utilisées. La plupart des informations importantes à leur sujet peuvent être trouvées sur
+<a href="http://java.sun.com/docs/books/tutorial/java/generics/gentypes.html"> cette page </a>
+du Tutoriel Java.
+
+<LI>
+Si vous avez besoin d'utiliser les variables séparées par des virgules (CSV),
+s'il vous plaît utiliser les
+<A HREF="http://javacsv.sourceforge.net/"> API javacsv </a>
+si possible. Nous utilisons déjà , dans un certain nombre de lieux,
+et probablement l'utiliser plus. Si cela ne donne pas
+suffisamment de fonctionnalités, nous pourrions éventuellement passer à l'
+<A HREF="http://opencsv.sourceforge.net/api/au/com/bytecode/opencsv/"> API opencsv </a>, mais comme nous voulons n'en utiliser qu'un
+la conversion demandera beaucoup de travail.
+</UL>
+
+<h2>Format du Code</h2>
+Les
+<A HREF="http://java.sun.com/docs/codeconv/"> recommandations Java  </A>
+pour les noms, mise en forme, etc sont vraiment utiles.
+Si vous trouvez que vous ne pouvez pas lire un morceau de code, ceux-ci vous aideront à mieux faire.
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

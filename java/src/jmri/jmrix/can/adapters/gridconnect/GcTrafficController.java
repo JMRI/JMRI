@@ -138,19 +138,6 @@ public class GcTrafficController extends TrafficController {
         }
         return false;
     }
-
-//    boolean endBootReply(CanReply msg) {
-//        // Detect that the reply buffer ends with ETX with no preceding DLE
-//        // This is the end of a CAN-RS bootloader reply
-//        int num = msg.getNumDataElements();
-//        if ( num >= 2) {
-//            // ptr is offset of last element in CanrsReply
-//            int ptr = num-1;
-//            if ((int)(msg.getElement(ptr) & 0xff)   != CanrsMessage.ETX) return false;
-//            if ((int)(msg.getElement(ptr-1) & 0xff) == CanrsMessage.DLE) return false;
-//            return true;
-//        } else return false;
-//    }
     
     /**
      * Get characters from the input source, and file a message.

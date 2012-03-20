@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: TreeFrame.shtml,v 1.4 2008/05/20 16:43:41 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-11-1-->
+<title>JMRI: USB Input Control</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+
+
+<h2>
+JMRI: contrôle d'entrée USB
+</H2>
+
+<a href="TreeFrame.jpg"> 
+<img align="right" height="132" src="TreeFrame.jpg" width="325"/> </a>
+
+La fenêtre de contrôle d'entrée USB vous permet de connecter des capteurs et des mémoires JMRI à l'entrée USB sur votre ordinateur. Par exemple, vous pourriez avoir un capteur JMRI qui devient ACTIF
+ lorsque vous tapez une clé ou appuyer sur un bouton du joystick.
+Vous pouvez ensuite utiliser
+<a href="../../../../../html/tools/Routes.shtml">Itinéraire</a>
+et
+<a href="../../../../../html/tools/Logix.shtml">Logix</a>
+pour utiliser cette entrée USB pour contrôler votre réseau.
+
+<p>
+Sur le côté gauche de la fenêtre est un arbre montrant les Contrôleurs USB disponibles
+ et les composants en leur sein.
+Selon les détails de votre ordinateur, cet arbre peut être complètement
+peuplés lorsque la fenêtre s'ouvre, ou vous pourriez avoir à changer les
+entrées (par exemple cliquer sur un bouton) pour qu'il se manifeste.
+Les appareils qui sont branchés après le démarrage du programme peuvent ou pas apparaitres, selon les spécificités de configuration de votre ordinateur.
+<p>
+Lorsque vous sélectionnez un seul composant dans l'arbre affiché à gauche
+, le panneau de droite vous montre les détails de
+ce composant et sa valeur actuelle.
+
+<p>
+En dessous se trouve une zone permettant de configurer le programme pour
+piloter un 
+<a href="../../../../../html/tools/Sensors.shtml">Capteur</a>
+et/ou une <a href="../../../../../html/tools/Memories.shtml">Mémoire</a> JMRI
+à partir de l'entrée USB.
+Vous pouvez entrer un nom de capteur dans le champ texte en haut, puis
+cochez la case "Copier capteur JMRI" . Lorsque l'entrée devient
+On(pour une entrée numérique), ou a une valeur supérieure à zéro (pour
+une entrée analogique), le capteur sera fixé à ACTIF, et il sera
+autrement, réglé sur INACTIF. Vous pouvez regarder ce travail
+dans la
+Table capteur <a href="../../../jmrit/beantable/SensorTable.shtml"></a>.
+<p>
+Notez que vous ne pouvez pas éditer le nom du capteur tant que la case est cochée;
+vous devez décocher la case de sorte que le Capteur arrête de suivre l"entrée USB
+ avant de changer pour un  nouveau Nom Capteur.
+
+<p>
+Cette fonctionnalité a été ajoutée sur une base expérimentale dans JMRI 2.1.5. Dans cette
+version, vos informations de configuration ne sont pas rétablie après
+vous ayez quitté et redémarréez le programme. Ce sera ajouté dans la prochaine
+Version JMRI.
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

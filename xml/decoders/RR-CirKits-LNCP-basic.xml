@@ -13,12 +13,14 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-  <version author="dick@rr-cirkits.com" version="0.07" lastUpdated="20110928"/>
+  <version author="dick@rr-cirkits.com" version="0.08" lastUpdated="20120312"/>
   <!-- Version 0.01  Working version modified from TC-64 -->
   <!-- Version 0.04  Added presets for input lines -->
   <!-- Version 0.05  Added logic table entries -->
   <!-- Version 0.06  Corrected output port for signal mode -->
   <!-- Version 0.07  Switched to xi:include for many items to control file size. -->
+  <!-- Version 0.08  Limits address writes to Service Mode only to reduce accidental errors. (done in firmware) -->
+
   <decoder>
     <family name="Control Point" mfg="RR-CirKits" type="stationary" comment="The Control Point is normally programmed in OPs mode">
       <model model="LNCP" comment="LocoNet Control Point" lowVersionID="01"/>
@@ -93,15 +95,12 @@
       <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer ID" default="87">
         <decVal/>
       </variable>
-      <variable label="Address Format" CV="29" mask="XXVXXXXX" default="1">
+      <variable label="Address Format" CV="29" mask="XXVXXXXX" readOnly="yes" item="Address Format">
         <enumVal>
-          <enumChoice choice="1 Byte (short) address"/>
+          <enumChoice choice="1 Byte (not supported)"/>
           <enumChoice choice="2 Byte (long) address"/>
         </enumVal>
       </variable>
-      <!--      <variable label="Addressing Mode" CV="29" default="224" item="Address Format">
-			<decVal/>
-		</variable> -->
       <!-- Light Table Control -->
       <variable label="MA1 Address Mode" CV="33" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -16116,9 +16115,12 @@
     <column>
       <row>
         <column>
-          <display item="Long Address" tooltip="Use 5 digit address from 0-16383" label="Long Address">
+          <display item="Long Address" tooltip="Only change the unit address in Service Mode. Use a 5 digit address from 12000-16383" label="Long Address">
             <label>Long Address</label>
           </display>
+        </column>
+        <column>
+            <label label="  You may only change the unit address in Service Mode."/>
         </column>
       </row>
       <row>
@@ -16175,7 +16177,7 @@
         <column>
           <label label="* Note: Firmware Version 1 or later is required."/>
           <label label="Use DecoderPro Version 2.3.2 or later to upgrade."/>
-          <label label="Decoder File Version: 0.05."/>
+          <label label="Decoder File Version: 0.08."/>
         </column>
       </row>
     </column>

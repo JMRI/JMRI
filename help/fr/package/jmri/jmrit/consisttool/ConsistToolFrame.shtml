@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: ConsistToolFrame.shtml,v 1.6 2010/04/03 19:27:28 jacobsen Exp $ -->
+<!-- translated by Hervé Blorec le 2011/12/31-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Consist Tool
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Consist Tool">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+<H2> Outil de Couplage</H2>
+
+<h2> Utilisation de l'Outil de Couplage</h2>
+<p>
+Lorsque vous ouvrez l'outil de couplage, vous verrez un écran semblable au suivant:
+        </P>
+<image src=images/ConsistTool.jpg alt="Blank Consist Tool">
+        <p>
+Les boutons de la rangée supérieure sont utilisés pour choisir entre un Couplage Avancée (ou
+Décodeur Assisté) se composent et une Centrale de Commande
+à Couplage Assisté. Si les Stations de Commande à Couplages Assistés ne sont pas
+pris en charge par l'outil de votre système, ces sélections seront
+grisées.
+</P>
+<p>
+La case à côté de l'étiquette de <b> Couplage:</b> est utilisé pour spécifier l' ID du
+couplage. Pour les Décodeur à Couplage Assisté, cela devrait être l'
+adresse courte utilisée pour identifier le couplage. Pour  une Centrale de Commande à Couplage Assisté, cette valeur peut être automatiquement
+rempli avec l'adresse de la locomotive de tête quand vous essayez de l'ajouter
+au couplage.
+</P>
+<p>
+L'ajout d'un ID typique pour un Décodeur à Couplage Assisté  devrait ressembler
+à ce qui suit:
+</P>
+<image src=images/ConsistTool-IDAdded.jpg alt="Consist Tool-ID Added">
+<p>
+La deuxième ligne de l'outil couplage est utilisé pour ajouter des locomotives.
+Une locomotive peut être ajoutée soit en entrant son numéro dans la
+case à côté de la <b>Nouvelle Locomotive </b> ou en sélectionnant son numéro
+partir de la liste déroulante.
+</P>
+<image src=images/ConsistTool-LeadLoco.jpg alt=" Lead Locomotive Selected">
+<p>
+Cliquer sur le bouton <b> Ajouter</b> va ajouter une locomotive au couplage
+et elle apparaîtra dans la liste sous la deuxième ligne.
+</P>
+<image src=images/ConsistTool-LeadLocoAdded.jpg alt="Lead Locomotive Added to Consist">
+<p>
+n cliquant sur le bouton <b>Réinitialiser</b> effacera l'information pour
+cette locomotive.
+</P>
+<p>
+La case Direction <b> Normal</b> est utilisée pour déterminer si
+la locomotive roule en marche avant ou arrière lorsque le
+couplage se déplace vers l'avant.
+</P>
+<p>
+Vous remarquerez peut-être à partir des captures d'écran précédente que cette case est
+grisé jusqu'à ce qu'une locomotive de tête soit sélectionnée. Avec les
+locomotives ultérieures, vous pouvez cocher cette case pour indiquer la
+direction de la locomotive par rapport à la locomotive de tête
+
+</p>
+<image src=images/ConsistTool-SecondLoco.jpg alt="Second LocoMotive Selected - Direction Reversed">
+<p>
+Après l'ajout de la seconde locomotive au couplage, avec le
+sens inverse, vous devriez voir quelque chose comme ce qui suit:
+</p>
+<image src=images/ConsistTool-SecondLocoAdded.jpg alt= "Second Locomotive added">
+<p>
+
+Si vous faites une erreur, et d'ajouter une seconde locomotive au
+couplage  avec la mauvaise direction, vous pouvez changer sa direction
+simplement en cliquant sur la case dans la colonne de direction normale.
+</p>  
+<image src=images/ConsistTool-SecondLocoDirChange.jpg alt="Second Locomotive-Direction Change">
+<p>
+La direction de la locomotive de tête ne peut pas être changé une fois
+ajoutée.
+</p>
+<p>
+our supprimer une locomotive individuel du couplage, vous pouvez
+sélectionner le bouton <b>Del</b> dans la colonne la plus à droite de la
+igne appropriée de la table d'adresses.
+</p>
+<p>
+Pour sup  primer un couplage entier, vous pouvez utiliser le bouton <b>Supprimer </b> au bas de l'écran.
+</p>
+<p>
+
+Le bouton régulateur au bas de l'écran peut être utilisé pour
+mettre en place un régulateur JMRI pour cette adresse.
+</p>
+<p>
+Pour ajouter un nouveau couplage, vous pouvez sélectionner l'entrée vide dans le menu déroulant
+à côté   de l'actuel ID du couplage.
+</p>
+<image src=images/ConsistTool-NewConsist.jpg alt="Select Nouveau Consist">
+<p>
+Pour rappeler un couplage existant, vous pouvez sélectionner l'entrée appropriée
+de la boîte déroulante à côté de l'ID du couplage actuel.
+</p>
+<image src=images/ConsistTool-SelectConsist.jpg alt="Select une Consist">
+
+      <p>
+    
+Pour plus d'informations le couplage et sur l'outil de couplage JMRI  s'il vous plaît
+voir la 
+<a href="../../../../html/tools/consisttool/ConsistTool.shtml#tool"> page couplage </a> principale.
+<p>
+Location package\JMRI\jmrit\consisttool
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

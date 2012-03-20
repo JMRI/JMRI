@@ -23,7 +23,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 /**
  * Frame for user edit of setup options
  * 
- * @author Dan Boudreau Copyright (C) 2010, 2011
+ * @author Dan Boudreau Copyright (C) 2010, 2011, 2012
  * @version $Revision$
  */
 
@@ -54,6 +54,7 @@ public class OptionFrame extends OperationsFrame{
 	
 	JCheckBox trainIntoStagingCheckBox = new JCheckBox(rb.getString("TrainIntoStaging"));
 	JCheckBox stagingAvailCheckBox = new JCheckBox(rb.getString("StagingAvailable"));
+	JCheckBox stagingTurnCheckBox = new JCheckBox(rb.getString("AllowCarsToReturn"));
 	JCheckBox promptFromTrackStagingCheckBox = new JCheckBox(rb.getString("PromptFromStaging"));
 	JCheckBox promptToTrackStagingCheckBox = new JCheckBox(rb.getString("PromptToStaging"));
 	
@@ -88,6 +89,7 @@ public class OptionFrame extends OperationsFrame{
 		localYardCheckBox.setSelected(Setup.isLocalYardMovesEnabled());
 		trainIntoStagingCheckBox.setSelected(Setup.isTrainIntoStagingCheckEnabled());
 		stagingAvailCheckBox.setSelected(Setup.isStagingTrackImmediatelyAvail());
+		stagingTurnCheckBox.setSelected(Setup.isAllowReturnToStagingEnabled());
 		promptToTrackStagingCheckBox.setSelected(Setup.isPromptToStagingEnabled());
 		promptFromTrackStagingCheckBox.setSelected(Setup.isPromptFromStagingEnabled());
 		generateCvsManifestCheckBox.setSelected(Setup.isGenerateCsvManifestEnabled());
@@ -138,8 +140,9 @@ public class OptionFrame extends OperationsFrame{
 		
 		addItemLeft(pStaging, trainIntoStagingCheckBox, 1,4);
 		addItemLeft(pStaging, stagingAvailCheckBox, 1,5);
-		addItemLeft(pStaging, promptFromTrackStagingCheckBox, 1,6);
-		addItemLeft(pStaging, promptToTrackStagingCheckBox, 1,7);
+		addItemLeft(pStaging, stagingTurnCheckBox, 1,6);
+		addItemLeft(pStaging, promptFromTrackStagingCheckBox, 1,7);
+		addItemLeft(pStaging, promptToTrackStagingCheckBox, 1,8);
 		addItemLeft(pBuild, pStaging, 1, 2);
 		
 		// Router panel
@@ -236,6 +239,7 @@ public class OptionFrame extends OperationsFrame{
 			// Staging options
 			Setup.setTrainIntoStagingCheckEnabled(trainIntoStagingCheckBox.isSelected());
 			Setup.setStagingTrackImmediatelyAvail(stagingAvailCheckBox.isSelected());
+			Setup.setAllowReturnToStagingEnabled(stagingTurnCheckBox.isSelected());
 			Setup.setPromptFromStagingEnabled(promptFromTrackStagingCheckBox.isSelected());
 			Setup.setPromptToStagingEnabled(promptToTrackStagingCheckBox.isSelected());
 			// Car routing enabled?

@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: LightTable.shtml,v 1.7 2010/05/08 22:49:58 djduchamp Exp $ -->
+<!-- Translated by Hervé Blorec le 2012/01/04-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Light Table Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Light Table">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+<H1> La Table Lumière</H1>
+
+ <p>Les Lumières sont des bits de sortie numérique qui fonctionnent comme des interrupteurs marche/arrêt. Les Lumières
+ont été créées pour fournir un contrôle facile pour des lumières des décors et 'éclairage du TCO. Les lampes peuvent aussi être utilisés à des usage qui nécessite un commutateur marche/arrêt. La lumière peut être utilisée, par exemple, pour activer un dispositif électromagnétique découpleur pour un temps pré-déterminé en réponse à un bouton du TCO ou de jouer un son via un décodeur stationnaire.</p>
+
+<p> Les Lumières  partagent les bits de sortie numériques disponibles avec les Aiguillages. Soit une
+Lumière ou un Aiguillage, mais pas les deux, peut contrôler un bit de sortie numérique spécifique.
+Puisque les Lumières n'ont pas la structure des commentaires des aiguillages, les Lumières  ne devraient pas
+être utilisé pour contrôler les appareils de voie (aiguillages) sur le réseau; les Aiguillages seuls
+devraient être utilisés pour contrôler les aiguillages . Pour des raisons historiques, les apparences de la tête de signal sont définies en utilisant les aiguillages, même si elles peuvent être réellement des luminaires physique. Alors les Aiguillages devraient être utilisé pour faire référence aux bits de sortie numériques
+ utilisé avec les Têtes de signal JMRI. L'éclairage doit être utilisé si vous avez besoin
+d'un mécanisme simple pour contrôler l'éclairage des décors  ou des voyants du TCO, ou pour
+d'autres tâches on/ff  où les mécanismes de contrôle des lumières sont adaptés aux besoins.</p>
+
+<p>En option, un  lumière peut être contrôlée de cinq façons: elle peut être
+contrôlée par un seul capteur, par deux capteurs, par une participation, par l'horloge rapide JMRI
+, ou allumés pendant un certain temps par un capteur. Un ou plusieurs des
+ces contrôles peuvent être spécifiés quand la lumière est créée, ou quand elle est
+éditée via la table lumière.</p>
+<p> Quand une lumière est créée, ou quand elle
+est lu à partir d'un fichier de configuration, la lumière est «activée», elle est mise en place
+pour surveiller automatiquement les changements de l'état de son capteur de contrôle (s),
+l'aiguillage ou une horloge rapide. Lorsque le capteur de contrôle, l'aiguillage, ou horloge rapide
+changent d'une manière spécifiée par l'utilisateur, la lumière est allumée ou éteinte. Les Lumières
+peuvent également être contrôlées par <a href="Logix.shtml"> logix</a>, si plus de
+logique de contrôle complexe est nécessaire.</p>
+
+<p> La 
+Table Lumière contient une colonne 'Activé' . Pour une lumière pour être
+déclenchée par son capteur de contrôle, l'horloge rapide, l'aiguillage ou par son contrôle,
+elle doit être "activé", c'est à dire que sa case dans la colonne 'Activé'
+doit être cochée. Vous pouvez décocher cette case pour désactiver temporairement une
+Lumière , c'est à dire éviter qu'elle commute lorsque son mécanisme de contrôle prend feux !
+ .</p>
+
+<p>
+Une lumière peut aussi être une variable  lumière.
+Cela dépendra de l'interface et du matériel de pilotage de la lumière.
+</P>
+
+<h2> Commutation d'une Lumière Allumée(On) ou Éteinte(Off)</h2>
+
+<p> Les Lumières  peuvent être activées ou désactivées en cliquant sur le bouton dans la colonne État
+de la Table Lumière. Une Lumière peut être mise en place pour suivre l'état d'un aiguillage , lorsque l' aiguillage est direct,  et lorsqu'il  est dé- - vié ou vice-versa. Une lumière peut être réglée pour suivre l'état d'un capteur d'occupation de canton
+, lorsque le capteur est actif, et désactivé quand il est inactif, ou
+vice-versa. Une l lumière peut également être réglée par un bouton du TCO, si un capteur pour
+ce bouton est défini comme le capteur de contrôle. Une lumière peut être configuré pour
+suivre les horloges rapides JMRI, sur une période de temps spécifiée, puis s'éteint. Une lumière
+peut être contrôlée par deux capteurs, sur le moment ou l'un ou l'autre des deux capteurs est
+actif (ou inactif). Deux capteur  de contrôle sont utiles pour contrôler les sons  des aménagement
+ou  pour traverser les portes. Une lumière peut également être contrôlé eà partir d'un Logix, comme 
+l'action d'un de ses conditionnels. Si vous besoin d'une logique plus puissante pour contrôler votre lumière, pensez à utiliser un <a href="Logix.shtml"> Logix</a>.</p>
+
+<p> Notez que activé/désactivé s'applique uniquement à un mécanisme de contrôle  automatisé Lumière
+. Un état «désactivé» 'n'empêchera pas une Lumière
+d'être activée ou désactivée en utilisant le bouton dans la Table Lumière ou à partir
+ d'un Logix.</p>
+
+<p>
+Une lumière variable  peut également être ajusté en entrant une valeur de 0,00 à 1,00
+dans la colonne <b>intensité</b> pour la lumière.
+Une lumière qui ne supporte pas les intensités variables aura comme valeur significative zéro.
+Si une lumière a des effets de transition activé et configuré, la lumière répondra
+en fonction de ces options.
+</p>
+<p>
+Le bouton d'état pour une lumière variable sera aussi une indication de l'état de la lumière variable.
+Quand elle n'est pas sous ou hors tension, il affichera si la dernière modification plus ou moins élevés.
+L'intensité affichée sera l'intensité du courant, et non pas l'intensité cible, quand
+des effets de transition sont activés.
+</p>
+   
+<h2> Créer Nouvelles Lumières</h2>
+
+Pour définir une nouvelle lumière, cliquez sur le  bouton
+<a href="LightAddEdit.shtml"> Ajouter ...</a> table lumière
+Cela vous mènera à une
+<a href="LightAddEdit.shtml"> nouvelle fenêtre</a>
+pour l'ajout ou la modification Lumières.
+
+<h2> Sauvegarde de Lumières sur Disque </h2>
+
+<p> Les Lumières sont enregistrés dans votre fichier de configuration TCO, avec les aiguillages, les
+capteurs, les  têtes de signal, etc .Pour stocker ces informations sur le disque, utilisez  <b>
+>Stocker</b> dans le menu <b>Fichier</b>e en haut de la Table Lumière
+ (ou d'autres tableaux à partir du menu Outils), ou sélectionnez Panneau  <b>Stocker ...</b>
+dans le <b>Panneau</b>. Notez que l'état activé/désactivé de chaque lumière
+n'est pas enregistré dans le fichier de configuration. Lorsque les Lumières sont chargées à partir d'un
+fichier de configuration, elles sont tous activées.
+
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

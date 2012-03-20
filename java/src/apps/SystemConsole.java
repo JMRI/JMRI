@@ -16,9 +16,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -29,6 +32,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import jmri.UserPreferencesManager;
 import jmri.util.JmriJFrame;
 
 /**
@@ -48,7 +54,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2010, 2011
+ * @author Matthew Harris  copyright (c) 2010, 2011, 2012
  * @version $Revision$
  */
 public final class SystemConsole extends JTextArea {
@@ -92,6 +98,14 @@ public final class SystemConsole extends JTextArea {
 
     private static SystemConsole instance;
     
+    private UserPreferencesManager pref;
+    
+    private JCheckBox autoScroll;
+    private JCheckBox alwaysOnTop;
+    
+    private String alwaysScrollCheck = this.getClass().getName()+".alwaysScroll";
+    private String alwaysOnTopCheck = this.getClass().getName()+".alwaysOnTop";
+
     /**
      * Initialise the system console ensuring both System.out and System.err
      * streams are re-directed to the consoles JTextArea
@@ -179,6 +193,8 @@ public final class SystemConsole extends JTextArea {
         // Use a JmriJFrame to ensure that we fit on the screen
         frame = new JmriJFrame(rb.getString("TitleConsole"));
 
+        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        
         // Grab a reference to the system clipboard
         final Clipboard clipboard = frame.getToolkit().getSystemClipboard();
 
@@ -209,7 +225,43 @@ public final class SystemConsole extends JTextArea {
         });
         p.add(close);
         
-        // Define the pop-up menu
+        JButton stackTrace = new JButton(rb.getString("ButtonStackTrace"));
+        stackTrace.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                performStackTrace();
+            }
+        });
+        p.add(stackTrace);
+        
+        // Add checkbox to enable/disable auto-scrolling
+        // Use the inverted SimplePreferenceState to default as enabled
+        p.add(autoScroll = new JCheckBox(rb.getString("CheckBoxAutoScroll"),
+                !pref.getSimplePreferenceState(alwaysScrollCheck)));
+        autoScroll.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doAutoScroll(console, autoScroll.isSelected());
+                pref.setSimplePreferenceState(alwaysScrollCheck, !autoScroll.isSelected());
+            }
+        });
+        
+        // Add checkbox to enable/disable always on top
+        p.add(alwaysOnTop = new JCheckBox(rb.getString("CheckBoxOnTop"),
+                pref.getSimplePreferenceState(alwaysOnTopCheck)));
+        alwaysOnTop.setVisible(true);
+        alwaysOnTop.setToolTipText(rb.getString("ToolTipOnTop"));
+        alwaysOnTop.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setAlwaysOnTop(alwaysOnTop.isSelected());
+                pref.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTop.isSelected());
+            }
+        });
+        
+        frame.setAlwaysOnTop(alwaysOnTop.isSelected());
+
+         // Define the pop-up menu
         JMenuItem menuItem = new JMenuItem(rb.getString("ButtonCopyClip"));
         menuItem.addActionListener(new ActionListener() {
             @Override
@@ -284,6 +336,30 @@ public final class SystemConsole extends JTextArea {
         console.addMouseListener(popupListener);
         frame.addMouseListener(popupListener);
 
+        // Add document listener to scroll to end when modified if required
+        console.getDocument().addDocumentListener(new DocumentListener() {
+
+            // References to the JTextArea and JCheckBox
+            // of this instantiation
+            JTextArea ta = console;
+            JCheckBox chk = autoScroll;
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                doAutoScroll(ta, chk.isSelected());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                doAutoScroll(ta, chk.isSelected());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                doAutoScroll(ta, chk.isSelected());
+            }
+        });
+
         // Add the button panel to the frame & then arrange everything
         frame.add(p, BorderLayout.SOUTH);
         frame.pack();
@@ -307,6 +383,26 @@ public final class SystemConsole extends JTextArea {
         // As append method is thread safe, we don't need to run this on
         // the Swing dispatch thread
         console.append(text);
+    }
+
+    /**
+     * Method to position caret at end of JTextArea ta when
+     * scroll true.
+     * @param ta Reference to JTextArea
+     * @param scroll True to move to end
+     */
+    private void doAutoScroll(final JTextArea ta, final boolean scroll) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                int len = ta.getText().length();
+                if (scroll) {
+                    ta.setCaretPosition(len);
+                } else if (ta.getCaretPosition()==len && len>0) {
+                    ta.setCaretPosition(len-1);
+                }        
+            }
+        });
     }
 
     /**
@@ -448,6 +544,18 @@ public final class SystemConsole extends JTextArea {
         schemes.add(new Scheme(rbc.getString("ConsoleSchemeOrangeOnDarkGray"), Color.ORANGE, Color.DARK_GRAY));
     }
     
+    private Map<Thread, StackTraceElement[]> traces;
+    
+    private void performStackTrace() {
+        traces = new HashMap<Thread, StackTraceElement[]>(Thread.getAllStackTraces());
+        for(Thread thread: traces.keySet()) {
+            System.out.println("["+thread.getId()+"] "+thread.getName());
+            for(StackTraceElement el: thread.getStackTrace()) {
+                System.out.println(el);
+            }
+        }
+    }
+
     /**
      * Set the console colour scheme
      * @param which the scheme to use
@@ -491,7 +599,7 @@ public final class SystemConsole extends JTextArea {
     /**
      * Class holding details of each scheme
      */
-    public final class Scheme {
+    public static final class Scheme {
         public Color foreground;
         public Color background;
         public String description;

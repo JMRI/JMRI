@@ -1,0 +1,52 @@
+<!-- Sidebar -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- Translated by Blorec Hervé le 2012-01-19-->
+<html lang="fr"> 
+	  <hr class="hide">
+	  <div id="mBody">
+	  <div id="side"> <!-- Block of text on left side of page -->
+	    <div style="text-align: center">JMRI est...</div>
+	    <dl>
+
+		<dt><h3><a href="index.shtml">Script</a></h3></dt>
+		<dd>Information sur l'écriture des scripts pour contrôler JMRI plus en détail:
+		    <UL>
+		    <LI><dfn><a href="Start.shtml">Introduction</a></dfn>
+		    <LI><dfn><A HREF="Python.shtml">Le langage </a></dfn>
+		    <LI><dfn><a href="Examples.shtml">Exemples</a></dfn>
+		    <LI><dfn><a href="FAQ.shtml">Questions Fréquemment Posées(FAQs)</a></dfn>
+		    <LI><dfn><a href="ex_set_turnouts.shtml">Exemple: Réglage Aiguillages</a></dfn>
+		    <LI><dfn><a href="Jynstruments.shtml">Jynstruments pour modifier l'Interface Graphique Utilisateur</a></dfn>
+		    </UL>
+		</dd>
+
+		<dt><h3><a href="http://www.python.org">Python</a></h3></dt>
+		<dd>Les Scripts JMRI sont dans Python, un langage informatique multi-sujet <UL>
+		    <LI><dfn><a href="Python.shtml">Python & JMRI</a></dfn>
+		    <LI><dfn><a href="http://www.python.org">Page d'accueil Python</a></dfn>
+		    <LI><dfn><a href="http://wiki.python.org/moin/BeginnersGuide/NonProgrammers">Tutoriels Python pour non-programmeurs </a></dfn>
+		    <LI><dfn><a href="http://wiki.python.org/moin/BeginnersGuide/Programmers">Tutoriel Python pour programmeur</a></dfn>
+		    </UL>
+		</dd>
+
+		<dt><h3><a href="../index.shtml">Outils Généraux</a></h3></dt>
+		<dd>Les Objets généraux disponibles pour commander votre réseau.
+		    <UL>
+		    <LI><dfn><a href="../Sensors.shtml">Capteurs</a></dfn>
+		    <LI><dfn><a href="../Turnouts.shtml"</a>Aiguillage</dfn>
+		    <LI><dfn><a href="../throttle/ThrottleMain.shtml">Régulateurs</a></dfn>
+		    <LI><dfn><a href="../consisttool/ConsistTool.shtml">couplage</a></dfn>
+		    <LI><dfn><a href="../Signals.shtml">Signaux</a></dfn>
+		    <LI><dfn><a href="../Lights.shtml">Lumières</a></dfn>
+		    <LI><dfn><a href="../Routes.shtml">Itinéraires</a></dfn>
+		    <LI><dfn><a href="../Logix.shtml">Logix</a></dfn>
+		    <LI><dfn><a href="../fastclock/index.shtml">Horloges Rapides</a></dfn>
+		    <LI><dfn><a href="../speedometer/index.shtml">Tachymètre</a></dfn>
+		    </UL>
+		</dd>
+
+	    </dl>
+
+	</div> <!-- closes #side -->
+
+<!-- /Sidebar -->

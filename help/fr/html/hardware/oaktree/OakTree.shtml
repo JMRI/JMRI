@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: OakTree.shtml,v 1.2 2008/05/31 05:02:14 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI Hardware Guide: Oak Tree Systems Railroad Control Interface (RCI)
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="Oak Tree Systems Railroad Control Interface RCI java model railroad JMRI install windows">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <H1> 
+      Guide Matériel JMRI: Oak Tree Systems Railroad Control Interface (RCI)
+      </H1>
+      
+	<H3> Matériel Supporté</H3>
+
+	<UL>
+	<li>IO-24
+	<li>IO-48
+	<li>O-48
+	</UL>
+
+	<H3>Limites</H3>
+
+	<p>Les bibliothèques JMRI ont un support intégré pour les systèmes matériels série 'Oak Tree 
+utilisant le protocole "RSC" bus.
+Les entrées peuvent être utilisées comme capteurs, et les sorties peuvent être conduites comme des
+aiguillages. <p>
+
+<p> A cette époque (2008), le protocole de bus série RSI pour le régulateur HH-2 n'est pas
+encore pris en charge</p>
+
+	<dl>
+	<dt class=left>Configuration</dt>
+	<dd class=top>
+	    <ol>
+		<li> Démarrez le programme JMRIdemo
+<li> Dans le menu Edition, sélectionnez Préférences et configurer:
+<ul>
+<li>Protocole comme «Systèmes Oak Tree"
+<li> pour le port série, sélectionnez celui où votre matériel est connecté.
+<li> Sélectionnez la vitesse de transmission configurée dans vos cartes
+<li> Cliquez sur le bouton "Configurer les nœuds" . Sur le
+nouveau panneau qui s'ouvre:
+<UL>
+<LI> Entrez une adresse de nœud (0 est généralement utilisé pour la première carte)
+     <li> Sélectionnez le type de cartes à partir de la boîte d'initialisation
+     <li> Cliquez sur "Ajouter Nœud"
+     <LI> Cliquez sur "Terminé"
+     </ul>
+<li> Retour sur le panneau "Préférences ...", cliquez sur "Enregistrer", et dire oui quand il vous demande si vous voulez Quitter.
+	        </ul>
+		<li>Redémarrez le programme. Vos
+LEDs sur la carte devrait maintenant clignoter, indiquant que l'ordinateur et la carte
+dialogue.
+<li> Pour vérifier que tout fonctionne, sélectionnez "
+Configuration Aiguillage "dans le menu Outils. Cela va ouvrir une petite fenêtre dans
+laquelle vous pouvez sélectionner un numéro d'aiguillage (voir <a href="#numbers">voir 
+ci-dessous </a>), puis cliquez direct/dévié pour changer l'état de
+cette sortie.
+</ol>
+</dd>
+
+<dt class=left> Utiliser avec plusieurs cartes </dt>
+<dd>
+<p> Si vous avez plusieurs cartes reliées au bus série du systèmes d'Oak Tree
+, simplement revenir à la fenêtre "configurer les nœuds"
+et de les saisir individuellement. Ne pas oublier d'enregistrer les préférences
+et redémarrer le programme.
+</dd>
+ 
+<dt class=left> <a name=numbers> Numérotation </a> </dt>
+
+	<dd>
+<p>Les noms système Oak Tree  démarrent avec "O". Par exemple, "OS24" est un
+"S" Ensor (Capteur), la ligne d'entrée 24ème sur la carte du système Oak Tree  avec adresse zéro . </P>
+
+ <p>Les entrées et sorties sont numérotées séquentiellement à partir de 1, sans
+se soucier des types de cartes, etc </p>
+
+<p> Chaque carte est appelée un «nœud».les Capteurs et aiguillages
+sur le premier nœud sont numérotés de 1 à 999; les capteurs et les aiguillages sur le
+le second nœud sont numérotés de 1001 à 1999; etc </p>
+
+<P> Par exemple:
+<UL>
+<LI> Disons que vous avez une IO-48 avec son adresse interrupteurs réglé sur "2". Tous les
+entrées et sorties sur ce nœud seront numérotées à partir de 2001.
+<UL>
+<LI> CT2001 est la  première broche de sortie
+<LI> CT2048 est la dernière broche de sortie
+<LI> CS2001 est la  première broche d'entrée
+<LI> CS2012 est la dernière broche d'entrée 
+</UL>
+
+
+  <P> Pour résumer, les entrées et sorties sont étiquetées de manière séquentielle
+     au sein de chaque nœud. Les chiffres montent par 1000 de noeud à
+     noeud. Les Numéros de nœuds peuvent aller aussi haut que le matériel le permet.
+</dd>
+		   
+
+      	</dl>
+
+	<H3> Plus d'infos </H3>
+    	<p>Pour plus d'informations sur le matériel Oak Tree Systems, voir leur	<a HREF="http://www.oaktreesystems.com"> site web </a>.
+	</p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

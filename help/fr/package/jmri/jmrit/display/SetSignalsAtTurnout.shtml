@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: SetSignalsAtTurnout.shtml,v 1.5 2010/01/09 22:25:56 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-12-24--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Set Signals at Turnout Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Dave Duchamp" name=Author>
+    <META name="keywords" content="JMRI help Layout Editor Tool">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Définir Signaux aux aiguillages
+</H1>
+<h2> Introduction</h2>
+<p>
+Cet outil fournit une procédure automatisée pour l'attribution des signaux à un aiguillage.
+Les aiguillages Droits, Gauches, et Symétrique sont pris en charge.
+Si nécessaire, cet outil va placer des icônes de signal sur le TCO à la position spécifiée de l'aiguillage,
+ et une Simple Logique Signal sera mise en place  pour les signaux spécifiés.
+Avant de sélectionner cet outil, l'aiguillage doit être sur le TCO, et au besoin
+les signaux doivent être dans le Tableau Signal. Cet outil met seulement les signaux
+correctement lorsque la voie principale de l'aiguillage est verticale ou horizontale (ou principalement
+verticale ou horizontale) sur le TCO, donc la conception de votre TCO doit en tenir compte.</p>
+<p>
+Lorsque cet élément est sélectionné, une boîte de dialogue est affichée pour l'inscription du nom de l'aiguillage
+(Système ou utilisateur), et les noms des trois ou quatre signaux doivent être affectés
+à l'aiguillage. Pour chaque signal, des cases à cocher sont disponibles pour la sélection
+si une icône doit être placée sur le TCO, et si une Simple Logique Signal 
+doit être créée pour le signal. Peu importe si les icônes
+sont placées ou si la logique est créée, l'Éditeur de TCO va enregistrer que les entrées
+Signaux sont affectées à l'aiguillage déterminé.</p>
+<p>  <b>L'affectation des signaux 
+aux aiguillages est importante pour bien décrire votre réseau dans l'Éditeur de TCO.</B> Même si vous choisissez de placer vos icônes et configurer votre logique signal 
+manuellement, vous devez utiliser cet outil pour assigner le signal à l'aiguillage.</p>
+
+<h2>Boite de Dialogue Définir les signaux à l'aiguillage</h2>
+<p>
+Dans le champ <b>Nom Aiguillage</b>, entrez le nom (système ou utilisateur) de l'
+aiguillage auquel les signaux seront affectés. Si l'outil ne peut pas trouver
+l'aiguillage entré sur le TCO, un message d'erreur en résultera.</p>
+Les noms de signaux (soit système ou utilisateur) sont entrés dans la section suivante.
+L'entrée <b>Pointe - Divergente</b> est facultative, mais les trois autres doivent
+être entrées. Si les signaux à cet aiguillage ont été saisis précédemment,
+cliquez <b>Obtenir Sauvegarde</b> pour récupérer les noms de signaux précédemment saisis.
+Les titres utilisés pour les quatre signaux doivent suivre le modèle illustré ci-dessous.</P>
+<p>
+<A href="./images/TurnoutSignalModel.gif"><IMG SRC="./images/TurnoutSignalModel.gif" 
+ALIGN=CENTER WIDTH="225" HEIGHT="75" HSPACE="0" VSPACE="0"></A>
+
+<p>
+Si un signal est entré pour la <b>Pointe - Divergente</b>, puis <b>Pointe - 
+Directe</b> signale  la voie continue et  <b>Pointe - Divergente</b>
+signale la voie déviée. Si aucun signal n'est entrée pour
+ <b>Pointe - Divergente</b>, le signal <b>Pointe - Continue</b> reflète
+l'état de la voie selon la commutation de l'aiguillage . Dans ce cas, le
+Type de logique pour le signal <b>Pointe - Continue</b>  est
+<b> Aiguillage en Pointe</b>.</p>
+<p>
+Remarque: Si il y avait un signal précédemment attribué à l'une des deux
+positions, et vous entrez dans un <i>autre</i> signal dans le même lieu,
+le signal remplacera le  signal précédent, et l'icône
+du signal précédent (s'il y en a une) sera supprimée du
+TCO. De même, si vous remplacez un signal précédemment affecté à <b>Pointe -
+Divergente</b> avec une entrée vide (pas de  de signal), la précédente
+entrée est supprimée et l'aiguillage n'aura pas de signal à cette position
+. <b> Si un signal est changé, vous devez refaire toute logique qu'il implique.</b></p>
+<p>
+Cochez <b> Ajouter Icône de Signal au TCO</b> pour demander que l'icône d'un signal
+ soit placée sur le TCO à la position indiquée de l'aiguillage. Cet outil
+ peut seulement placer une icône de signal sur un des aiguillages qui est presque à la verticale ou presque
+horizontale. Si ce n'est pas le cas, un message est imprimé, et vous devez placer
+l'icône de signal manuellement en utilisant la barre d'outils de l'Éditeur de TCO. Peu importe, le
+Nom du signal qui est attribué à la position spécifiée de l'aiguillage.</p>
+<p>
+Cochez <b> Configurer Logique</b> pour demander que l'outil mette en place un Simple Logique
+Signal pour un signal. L'outil permettra de créer la logique et 
+remplira automatiquement les entrées avec l'information disponible. Si
+l'outil ne possède pas assez d'informations disponibles pour configurer la
+logique, un message en résultera, et vous aurez à revenir plus tard après que
+plusieurs signaux aient été assignés à des aiguillages et des limites de canton sur le
+TCO.</p>
+<h2> Notes</h2>
+<p>
+Lors de la configuration de la logique, cet outil va suivre la voie dans le
+ canton jusqu'à ce qu'il trouve un signal à la fin du canton avant l'aiguillage signalé.
+ Si votre réseau contient des sections qui sont
+signalée et des sections qui ne le sont pas, pour obtenir que cet outil mettre en place une logique
+correctement, vous pourriez avoir à placer un signal virtuel (un signal qui ne
+correspond pas à un signal réel sur le réseau) 
+non signalé à la fin du canton qui relie un tronçon de voie qui est
+signalée avec une voie qui n'est pas signalée. Si un canton se termine par un
+Heurtoir, aucun signal n'est requis .</p>
+<p>
+Si un canton a un aiguillage interne (l'aiguillage, et ses tronçons de voie à sa
+la pointe et les jambes font partie du canton), le programme va attendre les signaux
+à cet aiguillage, même si ce n'est pas à la fin du canton. Cependant, parfois 
+l'utilisateur peut ne pas vouloir signaler un aiguillage rarement utilisé dans un canton.
+En suivant la voie à travers un canton, le programme va sauter 
+l'aiguillage interne non signalé si <b> Passer Aiguillage Interne Non Signalé</b> est coché dans
+le menu <b> Outils</b> de l'Éditeur de TCO.
+Il avertira toujours de ce qu'il fait. <b> Utilisez cette option avec
+prudence.</b> Il n'y a pas de signal de protection contre un aiguillage ignoré
+mal réglé, si un aiguillage non signalé interne n'est pas réglée correctement,
+un déraillement des trains pourrait en résulter.</p> 
+<p>
+Cet outil met en place trois aspects de signalisation. Si la voie déviée par le biais
+ de l'aiguillage n'est pas en voie principale, la vitesse limitée (la moins restrictive
+n'est pas vert, mais jaune) est mise en place. Si vous avez une situation particulière à un
+signal, vous pouvez avoir à modifier les informations entrées par l'outil. Si vous
+aimeriez avoir quatre aspects de signalisation, vous pouvez facilement modifier manuellement la logique
+pour y parvenir. De même, par une modification manuelle simple de la logique, vous pouvez
+ajouter un balisage lumineux d'approche. La boîte de dialogue Simple Logique Signal peut
+est accessible depuis le menu contextuel de l'icône de signal. Si votre 
+situation spéciale ne peut pas être manipulée par une Simple Logique Signal, vous devez vous référer à
+Logix pour adapter le signal logique à vos besoins.</p>
+<p>
+Si vous utilisez deux aiguillages pour représenter une Traversée Jonction Double, ou si
+vous utilisez deux aiguillages pour représenter un aiguillage triple, la logique
+mise en place par cet outil ne fonctionnera pas correctement. Pour ces deux cas, vous devriez
+utiliser les  outils pour <b>Définir les Signaux des Aiguillages Pointe-à-Pointe </b> ou  pour <b>Définir le Signal d'un Aiguillage Triple</b> qui sont disponibles dans le menu <b>Outils</b> de l'Éditeur de TCO .
+</p>
+<p>
+<b>S'il vous plaît rappelez vous de sauver votre TCO après l'utilisation de cet outil.</b></p> 
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

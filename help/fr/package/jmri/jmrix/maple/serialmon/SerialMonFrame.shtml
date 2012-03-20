@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: SerialMonFrame.shtml,v 1.3 2009/10/11 20:24:32 djduchamp Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-10-30--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Monitor Maple Traffic
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help monitor cmri traffic message packet">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+ <H2> Moniteur Trafic Maple</H2>
+
+<p> Cette fenêtre vous permet de surveiller les communications entre vos panneaux Maple et
+votre ordinateur, vous pouvez donc voir ce qui se passe quand JMRI envoie des informations
+et reçoit des informations de votre système Maple. Vous pouvez enregistrer ces informations
+dans un fichier journal à des fins de dépannage. </p>
+    
+<p><b>Renseignements Généraux: </b> sur Maple, les bits bobine dans le HMI Maple sont
+utilisées pour communiquer avec JMRI. Dans cette mise en œuvre de Maple vers JMRI, tous les panneaux
+utilisent le même espace d'adressage et ont exactement la même nombre de bits d'affectations d'entrée et de sortie. Les 1000 premiers bits bobine sont réservés pour la configuration de Capteurs.
+Les Capteurs sont appelés «bits d'entrée» et sont utilisés pour définir les Capteurs JMRI
+selon les bits d'état dans vos panneaux HMI Maple. Par conséquent, les capteurs passent les
+informations à partir des panneaux HMI configurés pour JMRI. Le 8000 bits suivants sont réservés
+pour l'affectation en tant que "Bits de sortie» et sont utilisés pour envoyer les paramètres actuels d'aiguillages et de lumières pour les panneaux Maple. </P>
+
+Maple communique par sondages. Chaque panneau est interrogé séparément, et le
+résultats des sondages sont lus ensemble pour paramètrer les capteurs. Par conséquent, si un capteur est
+ACTIF (Maple "1") dans n'importe quel panneau, il est mis ACTIf. Si un capteur est INACTIf
+(Maple «0») dans tous les panneaux configuré, puis il est mis INACTIf. Les panneaux sont
+interrogés dans l'ordre où ils sont configurés. <b>Remarque:</b> La commande de sondage Maple
+ permet uniquement de lire un maximum de 99 bits à chaque commande sondage, de sorte
+si plus de 99 bits d'entrée sont configurés, vous verrez des commandes sondage multiples
+pour chaque panneau. </P>
+
+<p> Après que tous les panneaux aient été interrogés, le statut des bits de sortie est envoyé au
+panneaux. Les bits de sortie sont envoyés en mode «diffusion» de sorte que tous les panneaux peuvent recevoir le
+bits à la fois. Le Mode de diffusion est indiqué par une Adresse Station HMI de
+"0". Les bits de sortie commence par l'adresse HMI de bit bobine de "1001". Tous les bits de sorties configurés
+ sont envoyés, indépendamment de si le bit est affecté ou non.  <b>Remarque:</b> La commande
+Maple d'écriture ne permet qu'une écriture maximum de 99 bits avec chaque
+transmission de commandes, donc si plus de 99 bits de sortie sont configurés, vous verrez des
+commandes de transmission multiples, avec les  adresses incrémentées de 99 après chaque transmission.
+</P>
+
+<p>
+Pour plus d'informations sur les différentes commandes et les options en bas de
+cette fenêtre, s'il vous plaît voir la
+<a href="../../AbstractMonFrame.shtml"> page Fenêtre Moniteur de Communications</a>.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

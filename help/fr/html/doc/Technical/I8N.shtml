@@ -1,0 +1,379 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: I8N.shtml,v 1.9 2010/03/05 00:05:12 jacobsen Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-04-06--> <html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: Internationalization
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code I8N internationalization">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+	    <H1>JMRI: Internationalisation</H1>
+	    	    
+Cette page explique comment les bibliothèques JMRI gérent l'internationalisation.
+
+<P>
+Les bibliothèques JMRI sont destinées à être utilisables dans le monde entier.
+Pour ce faire, ils font usage de "l'internationalisation"
+fonctionnalités intégrées dans le langage Java et les bibliothèques.
+
+<P>
+Vous pouvez également utiliser cette fonction pour personnaliser votre copie de JMRI. Pour plus d'infos
+sur ceci, s'il vous plaît voir la
+<a Href="#custom"> section personnalisation </a>
+
+<h2>Utilisation des Locales</h2>
+
+JMRI utilise les paramètres régionaux par défaut pour localiser l'information d'internationalisation
+. Cela signifie que JMRI présentera son interface utilisateur
+dans le langage Java  défini comme la valeur par défaut pour cet ordinateur.
+
+<P>
+Les sections locales sont spécifiées par une langue, et éventuellement un pays. 
+La langue est un code à deux lettres minuscules; le pays est une code de deux
+lettre majuscules. "en" est l'anglais, "fr" est le français , "de" est l'allemand,
+et "de_CH" est l'allemand parlé en Suisse.
+
+<P>
+Lorsque Java cherche des ressources (voir ci-dessous), il recherche d'abord
+un fichier avec les paramètres régionaux complets en cours à la fin de son nom
+(foo_de_CH.properties, par exemple). Si cela échoue, il tente un fichier
+se terminant seulement par la localisation de la langue en cours : foo_de.properties.
+Et si cela échoue, il va à la valeur par défaut sans suffixe: foo.properties.
+<P>
+En installant les fichiers appropriés et en permettant à l'utilisateur de sélectionner
+la locale par défaut (dans le cadre des 
+<a href="../../../package/apps/TabbedPreferences.shtml#locale"> préférences avancées </a>),
+nous pouvons adapter le programme aux différents pays et langues.
+
+<h2> des regroupements de ressources </h2>
+Le texte pour les menus, boutons et les commandes similaires est contenue dans les
+fichier properties , qui sont accessibles via le mécanisme de regroupement de ressources
+de java.util.
+<P>
+Par exemple, le fichier de propriétés qui est utilisé pour configurer le fichier
+panneau contient des lignes telles que:
+<PRE>
+FieldRoadName       = Nom de Route:
+</PRE>
+A la gauche du signe égal est le nom de la ressource que le programme utilise
+pour se référer à la chaîne, à droite du signe égal est la
+chaîne qui sera affichée.
+<p>
+Par convention, les noms des éléments de ressource de l'interface graphique commence par l'un des termes
+<OL>
+<LI>Field - pour un champ visible, par exemple, libellé, sur l'interface
+<LI>Button - pour un bouton de l'interface
+<LI>Menu - le nom en haut du menu 
+<LI>MenuItem - un élément du menu(peut être un élément imbriqué)
+<LI>ToolTip - contenu d'une info-bulle
+<LI>Error - pour un message d'erreur affiché dans le cadre de l'interface graphique
+</ol>
+D'autres ressources sont nommées afin de ne pas entrer en conflit avec celles-ci.
+<H2>S'adapter à un nouvelle langue</h2>
+(
+Les principales étapes pour adapter JMRI à une nouvelle langue sont les suivantes:
+<UL>
+<LI> Créer de nouvelles versions des fichier properties . Pour changer la langue
+des contrôles d'interface graphique.
+<LI> Eventuellement, créer de nouvelles versions des images GIF utilisé pour les logos
+et les icônes.
+</UL>
+<P>
+Pour obtenir une copie propre des fichier properties  à partir de CVS, faites:
+<PRE>
+cvs checkout properties
+
+</PRE>
+(Pour plus d'informations sur l'utilisation de CVS, s'il vous plaît voir la
+<A HREF="getcode.shtml"> page sur l'obtention d'une copie du code </a>.)
+<P>
+Ensuite, faire des copies des fichiers avec le suffixe de vos
+nouveaux paramètres régionaux. Sur une machine Unix, ce serait:
+<PRE>
+applications cd
+AppsBundle.properties cp AppsBundle_xy.properties
+AppsConfigBundle.properties cp AppsConfigBundle_xy.properties
+</PRE>
+et ainsi de suite.
+La meilleure façon d'obtenir le suffixe approprié consiste à définir le
+programme dans votre langue notamment via les
+<a href="../../../package/apps/AppConfigPanel#locale"> préférences avancées </a>,
+quittez et redémarrez la programme,
+et puis regardez le suffixe qu'il affiche sur la fenêtre principale.
+Vous pouvez également consulter la liste<a  href="http://ftp.ics.uci.edu/pub/ietf/http/related/iso639.txt"> des langues </a>
+(première partie du suffixe) et
+liste <a href="http://www.iso.org/iso/country_codes/iso_3166_code_lists/english_country_names_and_code_elements.htm">  des pays/régions </a>
+(deuxième partie du suffixe optionnelle ).
+<p>
+Vous pouvez ensuite modifier ces fichiers pour saisir du texte dans
+dans votre propre langue. S'il vous plaît ne pas modifier la lignes dans la
+fichier qui contiennent des choses comme $ de sortie: $; elles sont utilisées
+par
+<A HREF="CVSFAQ.shtml"> CVS </a>
+pour garder une trace de l'historique des changements.
+<P>
+Les langues qui comportent des lettres non-romaine ont besoin de soins supplémentaires, s'il vous plaît voir les
+<A HREF="http://java.sun.com/j2se/1.3/docs/guide/intl/faq.html"> dim. internationalisation FAQ </a>
+pour plus d'informations sur la façon d'inclure ces caractères dans vos fichiers de propriété.
+<P>
+Tout ce qui adapte les programme eux-mêmes, au moins autant que nous avons pu les
+"internationalisés" . (C'est un effort continu, avec
+des éléments de plus en plus nombreux du programme pouvant être personnalisés
+dans chaque version).
+<P>
+Pour vérifier votre travail:
+<OL>
+<LI> Drop l'ensemble de «classes» dans le répertoire "JMRI", répertoire contenant vos
+copie de la demande. C'est le même répertoire qui contient le fichier jmri.jar.
+<LI> Démarrez le programme et sélectionner "Preferences "dans le menu Edition
+<LI> Cliquez sur la boîte "show preferences advanced " 
+<LI> Sélectionnez votre langue dans les "local" dans la zone de liste déroulante,
+<LI> Cliquez sur "Save", quittez et redémarrez
+<li> Vous devez immédiatement voir les articles que vous avez traduit.
+</OL>
+<P>
+S'il y a un problème à ce stade, vérifiez quelle est la langue
+figurant sur l'écran de démarrage que l'application a affiché.
+Montre -t- il les même suffixe (par exemple _fr ou _cs_CZ) que vous
+donné à vos fichiers? Le suffixe utilisé par le programme est déterminé
+par les paramètres régionaux que vous avez sélectionné dans les préférences ci-dessus.
+<P>
+Pour mettre votre travail à la disposition d'autres utilisateurs de JMRI, s'il vous plaît
+utiliser un TAR ou utilitaire ZIP pour créer une archive des
+<B> ensemble </b>
+répertoire "propriétés", y compris tous les fichiers que vous n'avez pas modifié,
+et de les transférer pour les "Patches" tracker sur sourceforge: <br>
+<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388315"> http://sourceforge.net/tracker/?group_id=26788&atid=388315 </a>.
+Sur cette page:
+<ul>
+<LI> Cliquez "Submit new"
+<LI> Remplissez le titre et le résumé sur les
+nouvelle page qui s'affiche,
+<LI> Cliquez sur le "check to upload and attach a file"
+case en bas,
+<LI> puis sélectionnez votre fichier avec le bouton "using the choose file ".
+
+<LI>Cliquez sur "Submit" pour télécharger les fichier et en avertir les gens que vous l'avez fait.
+</ ul>
+En utilisant cet outil de suivi et en fournissant les "propriétés" <b> complètes </b>
+ des arbres, il est facile pour nous de fusionner vos fichiers nouveaux et/ou modifié dans les code du référentiel.
+
+<P>
+Vous pouvez également fournir d'autres fonctionnalités spécifiques à la langue pour
+ les utilisateurs:
+<UL>
+<LI> Créer un nouveau fichier XML de décodeur  dans la nouvelle langue. (Bien que nous travaillons actuellement sur une méthode pour réduire considérablement les effort que cela prendrait )
+<LI> Créez une copie du site Web et des manuels.
+<LI> Créer des nouveaux fichiers d'aide .
+</UL>
+
+<h2>Les ressources en anglais seulement</h2>
+Certaines parties de JMRI restent en anglais seulement en raison de notre population de développeurs.
+En particulier, des commentaires et des noms de variables dans le code doivent rester en
+Anglais, de même que les messages envoyés au système de journalisation.
+<P>
+Comme JMRI est open source, il serait OK pour prendre une copie des sources
+et de le traduire. En plus d'être beaucoup de travail, ce serait effectivement
+isoler cette copie par rapport au rythme rapide des améliorations dans le code principal.
+
+<A name="custom">
+<h2>Personnalisation de JMRI pour votre propre usage</h2></a>
+
+Vous pouvez utiliser la fonction d'internationalisation pour personnaliser le programme
+pour vos propres besoins. Cette section décrit comment le faire, en supposant
+que votre langue maternelle soit l'anglais.
+<P>
+Fondamentalement, vous allez créer une version «anglaise» du programme
+texte qui est utilisé en face de la version par"défault". Nous faisons cela afin
+que les nouvelles versions du programme, ce qui pourrait changer la valeur par défaut de la
+version, n'écrasent pas vos modifications.
+<P>
+<OL>
+<LI>
+Obtenir une copie de l'ensemble approprié des fichiers de «propriétés ».
+Notez que vous avez vraiment besoin de l'ensemble des fichiers qui est compatible
+avec la version de JMRI que vous utilisez.
+Il existe plusieurs façons de le faire:
+<UL>
+<LI>
+Recherchez un "fichier properties " en téléchargement sur la page
+<A HREF="http://sourceforge.net/project/showfiles.php?group_id=26788"> téléchargements JMRI  </a>
+ Par exemple, les fichiers pour la version 2.3.6 de JMRI peuvent
+être téléchargé via
+<A HREF="http://prdownloads.sourceforge.net/jmri/properties.2.3.6.zip?download"> http://prdownloads.sourceforge.net/jmri/properties.2.3.6.zip?download </a>.
+<P> Cela vous donnera un répertoire "classes", qui devrait être placé
+dans le même répertoire que les fichier jmri.jar.
+<LI>
+Vous pouvez obtenir ceci en consultant les «propriétés» du module
+cvs avec "cvs checkout properties" (voir les
+<A HREF="index.shtml#cvs"> informations CVS </a> sur les
+page technique pour le fond sur la façon d'utiliser CVS si vous n'êtes pas
+familiariser avec lui. Les étapes sont:
+<ol>
+<LI> Créer un répertoire nommé "classes" dans le même répertoire
+que votre fichier «jmri.jar" . Par exemple, sur MacOS X ou Linux:
+<PRE>
+mkdir classes 
+</ PRE>
+<LI> dans ce répertoire:
+<PRE>
+ cd classes 
+</ PRE>
+
+<LI> Consultez les module de propriétés pour la version qui vous intéresse:
+<PRE>
+cvs co-r Release-1-2-5 properties</PRE>
+
+</ol>
+
+</ul>
+
+<LI>
+Maintenant, vous devez trouver les bon fichier à modifier, et les bonnes
+chaîne à l'intérieur.
+Certains des fichiers les plus utiles sont:
+<ul>
+<LI> Classes/jmri/jmrit/roster/JmritRosterBundle.properties pour les
+étiquettes sur les  panneaux "Roster" et similaires.
+<LI> Classes /jmri/jmrit/JmritToolsBundle.properties pour de nombreux 
+noms de menu Outils
+<LI> Classes/jmri/jmrix/JmrixSystemsBundle.properties pour les noms
+des systèmes de DCC qui apparaissent dans le menu Système
+</ ul>
+<br>
+Vous recherchez une ligne qui contient la chaîne que vous
+modifier. Par exemple, le fichier
+classes/jmri/jmrit/roster/JmritRosterBundle.properties contient la ligne.
+</ul>
+<br>
+<PRE>
+FieldRoadName       = Road Name:
+</PRE>
+A gauche du signe égal est le nom que le programme utilise
+pour se référer aux chaîne, à droite du signe égal est la
+chaîne qui sera affichée.
+<LI>
+Une fois que vous avez trouvé les bon fichier, faire une copie de ceux-ci avec un «_en»
+ajouté au nom. Par exemple, faire un fichier
+classes/jmri/jmrit/roster/JmritRosterBundle_en.properties
+qui est une copie des classes/jmri/jmrit/roster/JmritRosterBundle.properties
+fichier. En raison des façon dont Java recherche ces fichiers, ce
+nouveau fichier sera trouvé avant l'original.
+<LI>
+modifier les chaînes que vous souhaitez modifier, et (cette partie est importante)
+<i> enlever le reste des lignes </i>! Cela contribuera grandement à réduire
+les modifications qui vous poseraient des problèmes avec une version ultérieure de JMRI
+en conflit avec vos modifications.
+<LI>
+Redémarrer un programme JMRI, et voir si vos modifications apparaissent dans l'interface utilisateur.
+</ OL>
+
+Si cela ne fonctionne pas, s'il vous plaît nous contacter afin que nous puissions vous aider à trouver les
+problème et d'améliorer les instructions.
+
+<A name="code"> <h2> Codification pour l'internationalisation </h2> </a>
+Quelques références Web sur la façon de procéder:
+<UL>
+<li><A HREF="http://java.sun.com/docs/books/tutorial/i18n/index.html">tutoriel internationalisation Sun</a>(hautement recommandé)
+<LI><A HREF="http://java.sun.com/j2se/1.3/docs/guide/intl/faq.html">FAQ internationalisation Sun</a>
+</UL>
+
+<P>
+En bref, vous créez un objet statique dans votre classe qui gère les recherche de
+chaînes:
+
+<pre><code>
+  static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+</code></pre>
+
+<P>
+L'argument  getBundle est le nom complet du package  (pas de nom de fichier)
+pour les fichier properties que cette classe utilisera. Vous pouvez avoir
+plus d'un de ces objets si vous souhaitez consulter des
+chaînes dans plus d'un fichier properties.
+
+<P>
+Vous pouvez ensuite récupérer des chaînes particulières comme ceci:
+<pre> <code>
+Msg: String = rbx.getString ("ButtonNew");
+</code></pre>
+<P>
+Certains messages ont besoin d'informations spécifiques insérées à l'intérieur :
+<pre> <code>
+   Nom du système LT1 est déjà en cours d'utilisation
+</code> </pre>
+<P>
+Voici «LT1» ne peut pas être dans le fichier properties, car son nom n'est connu que
+ pour s'afficher lorsque le programme est en cours d'exécution. Différentes langues
+peuvent mettre cette partie du message à différents endroits, et en soutenant que
+c'est important. Pour ce faire, utilisez les outils de mise en forme des message que propose Java.
+D'abord, mettez un espace réservé dans la définition message:
+<pre> <code>
+Error123 = système de nom de {0} est déjà utilisé
+</code> </pre>
+(Vous pouvez avoir plus d'une insertion, appelé {1}, {2}, etc)
+<P>
+Ensuite, formatez le message final par l'insertion, le contenu en est le suivant:
+<pre><code>
+  String msg = java.text.MessageFormat.format(
+				    rbx.getString("Error123"),
+				    new String[]{badName});</code></pre
+</code></pre>
+<P>
+Le premier argument du "format" appelé est le message lui-même;
+le second est un tableau de chaînes à être inséré dans les messages.
+
+<P>
+Différentes langues peuvent avoir besoin d'un certain nombre de lignes pour exprimer un message, ou peut-être besoin de le casser 
+avant ou après qu'une valeur particulière ait été insérée. Il est donc préférable d'utiliser "\n" 
+dans un seul message à partir des fichier de properties pour créer des sauts de ligne,
+ plutôt que de fournir plusieurs lignes dans le code lui-même..
+
+<a id="testing">
+<h3>Test</h3>
+
+Vous devez vérifier que vous avez correctement internationalisé
+votre code. Nous fournissons un outil pour ce faire qui crée
+et traduit automatiquement la version de vos fichier properties ,
+suivant les idées de Harry Robinson et Arne Thormodsen.
+(Leur papier<a href="http://www.geocities.com/harry_robinson_testing/klingon.htm">  sur ce </a> est une lecture recommandée!)
+Pour l'utiliser:
+<ul>
+<li> Assurez - vous que votre code compilé et construit est sur OK. Nous allons modifier la version compilée.
+<li> Exécutez le "translate.sh" script dans votre java/build directory. Cela crée de nouveaux fichiers properties temporaires
+ dans les répertoires arborescent des classes /.
+<li> Exécutez le programme via "locale de ant ", qui démarre le programme JmriDemo
+en utilisant les fichiers de nouvelles propriétés.
+</ul>
+Si tout va bien, tout le texte du message aura été traduit en majuscules.
+Tout ce que vous avez écrit et qui reste en minuscules n'a pas été complètement internationalisée.
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

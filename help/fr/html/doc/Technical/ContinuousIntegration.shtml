@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: ContinuousIntegration.shtml,v 1.4 2011/04/17 00:25:21 zoo Exp $ -->
+<!--Translated by Hervé Blorec le 2011/9/16 -->
+<html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: Continuous Integration
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code Continuous Integration jenkins CVS">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+	    <!-- -------- -->
+	    <!--  Teaser  --> <!-- Optional -->
+	    <!-- -------- -->
+
+<H1>JMRI: Intégration Continue</H1>
+
+"Intégration Continue" est le procédé de reconstruction d'un système à chaque fois qu'il change, de sorte que vous découvrez rapidement les nouveaux problèmes et êtes motivés pour supprimer ceux existants
+<p>
+JMRI Utilise la machine intégration continue 
+<a href="http://jenkins-ci.org/">Jenkins</a>
+pour ceci.
+<p>
+
+Les résultats spécifiques intéressants:
+<ul><li><a href="http://builds.jmri.org/jenkins/job/Development/">Développement</a> page, page qui donne une ligne de statut
+ montrant l'état des constructions fait après chaque série de validations.
+Il y aussi les pages des 
+<a href="http://builds.jmri.org/jenkins/job/Development/changes">plus récents changements</a>, 
+la<a href="http://builds.jmri.org/jenkins/job/Development/lastBuild/">la plupart des résultats</a>
+<li> La page <a href="http://builds.jmri.org/jenkins/job/FindBugs/">FindBugs</a>, 
+état montrant les tests les plus extensifs faits périodiquement.
+<p>
+Apparemment liens cassés au 14/01/2012</p><p>
+Pour plus d'information sur l'usage de FindBugs par JMRI, voir la <a href="FindBugs.shtml">page séparée FindBugs</a>.
+</ul>
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

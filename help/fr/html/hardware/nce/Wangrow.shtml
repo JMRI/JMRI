@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Wangrow.shtml,v 1.1 2008/01/13 05:05:41 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI Hardware Guide: Wangrow System One
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="Wangrow System One java model railroad JMRI install">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <H2> 
+     Guide Matériel JMRI: Système Wangrow  One
+      </H2>
+
+	<H3>Matériel Supporté </H3>
+
+	<UL>
+	<li>Wangrow System One
+	</UL>
+
+	<H3>Limitations</H3>
+
+	<p>Certaines centrales de commande Wangrow  ont un« circuit de contrôle analogique en option
+. Dans ces dernieres, les broches 5, 6 et 9 sont utilisées avec un convertisseur de tension analogique,
+tension comme un régulateur. Si vous avez un de ces centrales de commandes
+ un câble normal série à 9 broches ne fonctionnera pas! Vous aurez besoin de
+faire un câble personnalisé qui relie simplement les broches " Envoyer données(Dtx)", "Recevoir
+données(Rtx) »et« masse ». Consultez votre manuel Wangrow pour les détails.</p>
+
+	<H3>Congiguration</H3>
+
+	  <ol>
+	  <li>Pour connecter votre ordinateur à un système Wangrow, vous pouvez habituellement
+connecter la centrale de commande au port série de l'ordinateur
+en utilisant un câble série à 9 broches. </p>
+
+<li> Puis allez dans le panneau des préférences d'un programme basé sur JMRI.
+Cela s'ouvre automatiquement la première fois qu'un programme est exécuté, ou vous
+pouvez le sélectionner dans le menu "Édition"</p>
+
+	  <li>Sélectionnez "Wangrow" dans la boîte de sélection en haut. Vous pouvez alors sélectionner
+le port série approprié dans la seconde boîte de sélection. </p>
+
+<li> La boîte de sélection des vitesse de transmission sera fixée à 9600 bauds. </p>
+
+<li> La série de boutons radio étiquetés «style graphique" vous permet
+de sélectionner la façon dont le programme va apparaitre. "Metal" est l'apparence native Java
+chercher disponible sur tous les types. D'autres choix peuvent varier avec votre
+type d'ordinateur. "Motif", "Windows", "MacOS" et "MacOS adaptative»
+apparence native sous Linux, Windows, MacOS "Classic" et MacOS X
+respectivement.</p>
+
+	  <li>Dans la boîte de sélection en bas, vous pouvez choisir l'option par défaut
+du format de programmateur. Vous pouvez le remplacer à chaque fois que vous ouvrez le
+programmateur, ce n'est donc ici juste que par commodité. </p>
+
+<li> Cliquez sur "Enregistrer". Il vous sera demandé si vous voulez quitter le programme, cliquez sur "Oui". </p>
+
+<li> Redémarrez le programme. Vous devriez être opérationne.</p>
+	  </ol>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

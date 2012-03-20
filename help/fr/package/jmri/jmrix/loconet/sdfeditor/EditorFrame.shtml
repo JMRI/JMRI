@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: EditorFrame.shtml,v 1.10 2008/11/01 17:33:01 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-10-30--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: SDF Sound File Editor
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Digitrax SDF Sound File Editor">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> SDF éditeur de fichiers audio </H1>
+    
+Les décodeurs sonores Digitrax sont chargés avec des "projets sons", stockés dans des fichiers
+"Sound Project" (. spj) . Ceux-ci contiennent un certain nombre de "fragments sonores"
+au format. wav, plus un petit programme qui raconte au décodeur quand
+jouer les sons différents, et contrôle l'utilisation des fonctions et des CVs. ce
+programme est stocké dans un format "Définition du Son" (SDF).
+
+<p>
+Le fichier Sound Editor SDF  vous permet de faire certains types de changements
+de l'information du SDF dans un projet son. Il est utilisé avec l'
+<a href="../soundloader/EditorFrame.shtml">éditeur SPJ</a>
+parce que l'information SDF est stockée dans un fichier Sound Project Digitrax SPJ.
+Après avoir modifié les informations SDF, vous pouvez l'enregistrer dans un fichier
+de l'
+<a href="../soundloader/EditorFrame.shtml">éditeur SPJ</a>,
+et le télécharger dans un décodeur de son Digitrax avec un PR2 ou PR3 Digitrax et l'
+<a href="../soundloader/LoaderFrame.shtml">outils de Téléchargement sons JMRI </a>
+ou le programme SoundLoader Digitrax
+
+<p>
+Digitrax fournit des exemples de fichiers projet sons à leur site web de Depot sonore
+<a href="http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php) </a>
+. Vous pouvez également trouver des liens vers la documentation et des outils supplémentaires là-bas.
+
+<p>
+Lorsque vous ouvrez l'éditeur de SDF en cliquant sur le bouton "Editer"
+dans l'
+<a href="../soundloader/EditorFrame.shtml">éditeur SPJ</a>,
+Une nouvelle fenêtre s'ouvre qui comporte deux parties: <br>
+<a href="SdfInitSound.gif"> 
+<img width="415" height="235" src="SdfInitSound.gif" alt="SDF Editor"> </a> <br>
+Sur la gauche, il y a un
+Compte rendu des informations entières SDF comme un arbre d'éléments imbriqués. Sur la droite li y a une fenêtre
+qui affiche des informations supplémentaires sur l'élément qui est sélectionné sur la gauche.
+
+<p>
+La fenêtre de droite a le format"assemblé" de l'élément sélectionné dans la partie supérieure, puis une explication de ce
+l'élément  fait dans le milieu. Si un éditeur pour les
+type particulier de l'élément a été défini, la section du
+en bas aura des cases à cocher et les boîtes de sélection pour modifier les
+contenu de l'élément.
+
+<h2>Structure SDF</h2>
+
+ Les Définitions sonores définissent une série de couches qui contrôlent ensemble le décodeur.
+En ouvrant et fermant les icônes sur le côté gauche de la fenêtre de l'éditeur,
+vous pouvez explorer la structure d'une définition sonore. N'hésitez pas à explorer! Jusqu'à ce que
+vous enregistriez le fichier, vous ne dérangez pas réellement rien.
+
+<h3>Schéma</h3>
+
+Au niveau supérieur il y a les "schémas", qui sont comme des programmes pour le décodeur.
+Un décodeur ne peut  utiliser qu'un schéma à un moment, mais il peut
+être présent dans la mémoire de plusieurs à la fois. Les schémas sont numérotés, en commençant par 0,
+et le régime actif est sélectionnée via le contenu des CV. Le schéma 31 marque la fin
+du fichier.
+
+<p>
+Il n'existe aucune option pour le schéma en soi pour vous permettre de le modifier, mais vous pouvez
+ouvrir le schéma pour travailler avec son contenu.
+
+<p>
+Le premier élément d'un régime est une balise de numéro de version. Celle-ci définit le format
+utilisé pour stocker le contenu du schéma. Actuellement, seule la version 1 est un format défini.
+<p>
+Après la balise de version, un ou plusieurs «canaux» sont définis.
+
+<h3>Canal</h3>
+
+Le décodeur matériel est capable de gérer plusieurs choses à la fois.
+Elles sont appelées «canaux», et un ou plusieurs d'entre eux font chaque schéma.
+Combien il peut y en avoir dépend du  décodeur matériel spécifique, mais il est assez
+courant de voir quatre canaux au sein d'un schéma.
+
+<p>
+Bien que tous les canaux puissent jouer des sons simultanément, chaque canal
+ne peut jouer qu'un son (un fragment de .wav) à un moment donné. Le but de la
+commandes au sein du canal est de définir quels sons il doit jouer, et quand
+ils doivent commencer et finir.
+
+<p>
+L'élément canal lui-même n'a pas d'options pour vous permettre de le modifier, mais vous pouvez
+l'ouvrir et travailler avec son contenu.
+
+<h3>Séquence</h3>
+<p>
+Dans chaque canal, il peut y avoir une ou plusieurs séquences.
+Chacune a une condition en vertu de laquelle elle commence, puis une série d'
+opérations à prendre alors il a commencé.
+
+<p>
+Les opérations peuvent être des choses comme de commencer à jouer un son particulier,
+ou en modifiant la façon dont un son est joué, ou de changer des informations diverses internes au
+décodeur. Lorsque la séquence est lancée, elle passe jusquà la fin, laissant derrière
+les choses que le décodeur pourra refaire à l'avenir.
+Par exemple, il peut définir les fragments de sons
+à jouer la prochaine quand l'actuel est terminé,
+ou arrêter le son qui est actuellement en cours de lecture
+par le canal et commencer un nouveau.
+
+<p>
+La séquence commence quand une condition de déclenchement devient vrai. Vous pouvez examiner et modifier
+la condition de déclenchement en utilisant la partie inférieure droite du cadre de l'éditeur.
+Voici quelques exemples:
+<ul>
+<li>Déclenchement  quand une fonction devient vrai, par exemple lorsque l'utilisateur définit F1.
+<li>Déclenchement sur la façon dont le décodeur contrôle la locomotive, par exemple:
+     <ul>
+     <li> lorsque la vitesse dua moteur augmente
+     <li> lorsque la direction du moteur change
+     <li> lorsque le moteur commence à se déplacer
+     </ul>
+<li>Déclenchement sur d'autres événements extérieur, tels que:
+     <ul>
+     <li> lorsque la came chuff devient active
+     <li> quand un CV est écrit dans le mode ops
+     <li> lorsqu'une connexion d'entrée devient active    </ul>
+</ul>
+il y a beaucoup de possibilités, qui sont énumérées dans la boîte de sélection
+et (partiellement) documentées sur une
+ <a href="TriggerConditions.shtml"> Page séparée </a>.
+
+<p>
+Il ya également quatre options qui peuvent être sélectionnées pour changer lorsque la
+séquence est lancée:
+<dl>
+<dt>Zap<dd>
+<dt>Exécuter tout déclenché <dd>
+<dt>Pas de déclenchement préventif<dd>
+<dt>Non déclenchée <dd> La séquence commence lorsque la condition inverse se produit.
+     Par exemple, si le déclenchement est "Quand F1 devient active", et que cette option
+     est sélectionnée, la séquence démarre lorsque F1 devient inactive.
+</dl>
+
+<p>
+Chaque séquence contient une ou plusieurs instructions, la
+derniere doit être une instruction "séquence de fin" .
+
+<h3>Instructions</h3>
+
+Dans chaque séquence il y a des instructions qui indiquent au décodeur ce qu'il faut faire
+comme traiter la séquence. Nous décrivons les plus importantes ici.
+
+<h4>Jouer Fragment</h4>
+
+
+<h4>Modificateur</h4>
+
+<h2>Exemples</h2>
+
+
+(Prévoir quelques fragments de code ici comme exemples)
+
+
+<h2>Statut et travaux futurs </h2>
+<img src images ="../../../../../ / bangdesk.gif "align =" right "height =" 45 "width =" 45 "alt =" image mignon de travail"/>
+Cet outil éditeur a toujours  un travail en cours.
+C'est bon de naviguer sur le contenu du fichier, mais il a besoin
+d'un texte ajouté beaucoup plus explicatif .
+Aussi, il ne prévoit actuellement qu'un moyen de faire de petits changements sur la
+contenu d'un fichier SDF, mais ne peut pas (encore)
+vous permettre de faire des changements plus importants dans la structure du fichier.
+Par exemple, si vous
+sélectionné un élément "Initiate Sound" , qui dit au décodeur
+de commencer à jouer un son sous certaines conditions, vous
+pouvez changer ces conditions. Mais l'éditeur (à présent)
+ne fournit pas un moyen d'ajouter de nouveaux éléments "Initiate Sound".
+
+<p>
+L'éditeur est censé être l'outil pour débutant, et il nous faut un
+ texte beaucoup plus explicatif sur chaque fenêtre afin que les gens sachent ce que font les
+options.
+
+<!--#include virtual="/Footer" --></body>
+</html>
+

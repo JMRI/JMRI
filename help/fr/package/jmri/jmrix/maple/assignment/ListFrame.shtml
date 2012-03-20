@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: ListFrame.shtml,v 1.2 2009/10/11 20:21:36 djduchamp Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-10-28--> 
+<title>JMRI: Maple Input and Output Assignments</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+
+
+<h2> 
+JMRI: Entrée Maple et les Affectation des Sorties
+</h2>
+
+<p> Cet outil vous permet d'afficher les affectations Capteur, Aiguillages et Lumières
+pour vos Panneaux Maple* et les faire correspondre à des adresses d'écran Panneau d'adresses HMI** Maple . </p>
+<p> Sur Maple, les bits bobine dans le HMI Maple sont utilisés pour communiquer avec JMRI.
+Les 1000 premiers bits bobines sont réservés pour les capteurs - ceux-ci sont appelés
+"Bits d'entrée» et sont utilisés pour définir les Capteurs JMRI. Les Capteurs transmettent des informations à partir du
+panneaux HMI pour JMRI. Le 8000 bits suivants sont réservés aux "Bits de sortie» et sont
+utilisé pour envoyer les paramètres actuels d'appareils de voie et de lumières pour les panneaux Maple. </p>
+
+<p> Le menu déroulant <b>Nœud</b> en haut de l'écran permet à l'utilisateur de voir les
+Adresse HMI de la Station de tous les panneaux Maple qui sont actuellement configurés.
+Comme tous les panneaux utilisent les mêmes adresses, sélectionner un
+panneau ne change pas les informations affichées. Le nombre d'entrées configurées
+et les bits de sortie sont également affichés. </p>
+
+<p> Choisissez entre afficher les bits d'entrée ou  de sortie en sélectionnant
+<b>Montrer Bits d'Entrée</b> ou <b>Voir Bits de Sortie </b> en haut de l'écran.
+Le numéro du bits JMRI et l'adresse bits bobine de l'HMi Maple correspondante sont affichés
+pour chaque bit configuré. Le Nom du système JMRI et le nom d'utilisateur JMRI
+sont affichés si le bit a une affectation JMRI. Les bits qui n'ad=ffichent pas
+un nom Système JMRI sont configurés et sont disponibles pour une affectation. </p>
+
+<p> <b>Renseignements généraux : </b> Dans cette mise en œuvreé Maple vers JMRI, tous les panneaux ont exactement
+les même affectations des bits d'entrée et des  de bits de sortie. Les bits de sortie sont envoyés dans un
+« mode Diffusion " afin que tous les panneaux puissent voir les paramètres. Chaque panneau est interrogé
+séparément, et les résultats des sondages sont lus ensemble pour établir les capteurs.
+Par conséquent, si un capteur est actif (Maple "1") dans n'importe quel panneau, il est ACTIF. Si un
+Capteur est inactif (Maple «0») dans tous les panneaux configurés, puis il est rendu INACTIF.
+</p>
+<p>
+* Maple = Écran Tactile
+** HMI = Interface Homme Machine
+</p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

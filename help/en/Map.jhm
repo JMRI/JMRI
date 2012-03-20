@@ -40,6 +40,8 @@
 
 <mapID target="manual.JMRI_2-12_Manual.Main_Panels_Top" url="manual/JMRI_2-12_Manual/Main_Panels.shtml#Top"/>
 
+<mapID target="html.tools.signaling.interlock.index" url="html/tools/signaling/interlock/index.shtml"/>
+
 <mapID target="manual.DP3_2-14_manual.Main_RPS_Receiver" url="manual/DP3_2-14_manual/Main_RPS.shtml#Receiver"/>
 
 <mapID target="package.jmri.jmrit.display.SetSignalsAtBoundary" url="package/jmri/jmrit/display/SetSignalsAtBoundary.shtml"/>
@@ -94,9 +96,9 @@
 
 <mapID target="html.tools.throttle.AdvancedThrottleControl" url="html/tools/throttle/AdvancedThrottleControl.shtml"/>
 
-<mapID target="package.jmri.jmrit.operations.Operations_BlockingCarsFromStaging" url="package/jmri/jmrit/operations/Operations.shtml#BlockingCarsFromStaging"/>
-
 <mapID target="package.jmri.jmrix.sprog.packetgen.SprogPacketGenFrame" url="package/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_BlockingCarsFromStaging" url="package/jmri/jmrit/operations/Operations.shtml#BlockingCarsFromStaging"/>
 
 <mapID target="package.jmri.jmrix.loconet.locostats.LocoStatsFrame" url="package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml"/>
 

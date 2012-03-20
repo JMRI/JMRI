@@ -145,6 +145,17 @@ public class TrainCommon {
 	}
 	
 	/*
+	 * Adds the car's set out string to the output file using the truncated manifest format.
+	 * Does not print out local moves
+	 */	
+	protected void truncatedDropCar(PrintWriter file, Car car){
+		// local move?
+		if (car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null)
+			return; 	// yes
+		dropCar(file, car, new StringBuffer(Setup.getDropCarPrefix()), Setup.getTruncatedSetoutManifestMessageFormat(), false, Setup.getManifestOrientation());
+	}
+	
+	/*
 	 * Adds the car's set out string to the output file using the switch list format
 	 */	
 	protected void switchListDropCar(PrintWriter file, Car car){
@@ -321,6 +332,9 @@ public class TrainCommon {
 			return " "+tabString("", CarRoads.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.NO_COLOR))
 			return " "+tabString("", CarColors.instance().getCurMaxNameLength());
+		// the three truncated manifest attributes
+		else if (attribute.equals(Setup.NO_DESTINATION) || attribute.equals(Setup.NO_DEST_TRACK) || attribute.equals(Setup.NO_LOCATION))
+			return "";
 		return " ("+rb.getString("ErrorPrintOptions")+") ";	// maybe user changed locale
 	}
 	

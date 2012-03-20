@@ -1,0 +1,740 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: ThrottleChapter2.shtml,v 1.4 2009/12/08 19:42:17 hebbos Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-09-28-->
+<html lang="fr">
+<head>
+  <title>Throttle: Open/Configure a Throttle Window </title>
+  <meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
+  <meta name="Description" content="Throttle documentation for JMRI project">
+  <meta name="Keywords" content="JMRI">
+  <meta name="Author" content="Paul Fraker (paul@frakers.com)">
+  <meta name="Language" content="fr">
+  <meta name="Robots" content="Index, Follow">
+  <meta name="Revisit-After" content="7 Days">
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the ceur ommon header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->eur 
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
+<h1><span style="color:#ff0000">Mise à jour Version documentation du Régulateur
+</span></h1>
+
+<p>S'il vous plaît noter que cette documentation a été mise à jour, reportez-vous aux liens ci-dessous:</p>
+<ul>
+  <li>Le <a href="ToolsMenuThrottleEntry.shtml">menu Régulateur dans JMRI</a></li>
+  <li>La <a href="BasicThrottleWindow.shtml">Fenêtre Régulateur elle-même</a></li>
+  <li>Les <a href="ThrottleWindowMenus.shtml">menus Fenêtre Régulateur</a></li>
+  <li>La <a href="ThrottleToolBar.shtml">barre d'outils Fenêtre Régulateur</a></li>
+  <li>La <a href="AdvancedThrottleControl.shtml">Fenêtre contrôles Régulateur</a></li>
+  <li>La <a href="ThrottlesListWindow.shtml">Liste des Fenêtres Régulateurs</a></li>
+  <li>Le<a href="ThrottlesListWindow.shtml"></a><a
+    href="ThrottlesPreferencesPane.shtml">volet préférences Régulateurs</a></li>
+</ul>
+
+<h1>Ouvrez une fenêtre Nouveau Régulateur </h1>
+
+<p> Ce chapitre vous guidera à travers le processus d'ouverture d'une nouvelles
+fenêtre de configuration de Régulateur puis l'exécuter avec une locomotive sur votre réseau.Pour 
+ce guide, nous allons utiliser une locomotive qui a été
+équipée d'un décodeur sonore. L'adresse du décodeur dans nos exemples est ici
+<b> 8251 </b>. Si vous suivez le processus avec une locomotive de votre propre parc alors que vous
+lisez ceci, il suffit de remplacer «8251» par votre adresse décodeur Loco partout où «8251» est
+écrit. </p>
+
+<p> Donc nous allons commencer.</p>
+
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td valign="top" align="center"><p
+        style="text-align: center; font-size: xx-small"><img width="163"
+        height="82" src="images/jmri004.jpg" title="New Throttle"><br>
+        Figure 2-1: Menu Option Nouveau Régulateur </p>
+      </td>
+      <td><img width="10" height="20" src="images/spacer.gif"> </td>
+      <td valign="top" align="left"><p>La première chose que nous voulons faire est d'
+         ouvrir une fenêtre Régulateur. Comme indiqué dans le <a
+         href= "ThrottleChapter1.shtml"
+         title= "Retour à revoir le chapitre 1"> chapitre précédent </a>, c'est  fait
+          en sélectionnant les options suivantes dans la
+         fenêtre principale primaire: </p>
+         <ul type="square">
+           <li><strong> Outils </strong> </li>
+           <li> <strong>Régulateurs  </strong> </li>
+           <li> <strong>Nouveau Régulateurs </strong> </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+<a name="StructWin"></a> 
+
+<h2>Structure d'une fenêtre Régulateurs </h2>
+<dir>
+   <p> Il y a <i> trois panneaux </i> (ou sous-fenêtres) associés à chaque
+   Fenêtre de régulateur. Ils sont identifiés comme suit: </p>
+</dir>
+<ul>
+  <li> <b> Panneau de contrôle  </b>contient un curseur d'accélérateur pour contrôler la vitesse des
+      locomotiv d'un sélecteur de marche avant et arrière, un bouton d'action d'arrêt d'urgence,
+     et un bouton d'action Inactif (Idle) (principalement utilisé pour le son des décodeurs équipés). <br>
+     <br>
+   </li>
+   <li>  <b>Panneau Fonction </b> est utilisé pour associer les touches de fonction avec
+     les fonctions de sortie active du décodeur.<br>
+     <br>
+   </li>
+  <li>   <b>Panneau Adresse </b>est utilisé pour identifier l'adresse du décodeur, et d'
+     expédition ou libérer l'adresse identifiée. <br>
+     <br>
+   </li>
+</ul>
+
+<p class="important"> <b> Important! </b> Ces trois panneaux sont en réalité des
+fenêtres définies dans une fenêtre de l'ensemble. S'il vous plaît noter que chacun de ces panneaux
+contient ses propres boutons «minimiser» et «fermer» ainsi le panneau peut également être
+redimensionné. Vous pouvez effectivement réduire un ou plusieurs de ces panneaux dans le
+Fenêtre Régulateur. Ceci avait besoin d'être souligné car si vous cliquez accidentellement
+sur l'un des boutons et, le panneau disparaît. </p>
+
+<p style="text-align: center; font-size: xx-small"><img width="323"
+height="464" src="images/jmri011.jpg"
+title="JMRI Throttle New Default Window"><br>
+Figure 2-2: Nouvelle Fenêtre Régulateur </p>
+<br>
+<br>
+<a name="WinConfig"></a> 
+
+<h1>Configurer le Nouveau Régulateur </h1>
+
+<p> Maintenant que nous avons réussi à ouvrir la fenêtre du Régulateur, la prochaine chose
+nous devons faire est de configurer le régulateur pour qu'il soit opérationel. Nous allons faire cela en deux
+étapes. La première sera d'assigner l'adresse du décodeur de la locomotive. S'il vous plaît noter
+Figure 2-2 ci-dessus que tous les panneaux sont  bien désactivés. C'est ainsi
+car il n'y a pas d'adresse encore affectées. Après l'établissement d'une adresse, les
+autres options sur les panneaux seront activées. </p>
+<a name="AddressPanel"> </a>
+
+<h2> Attribution d'une adresse  Décodeur dans une Fenêtre Régulateur </h2>
+<dir>
+
+   <table border="0" width="100%" cellpadding="0" cellspacing="0">
+     <tbody>
+       <tr>
+         <td valign="top"><p>  La première chose à faire avant tout, est d'attribuer une
+           adresse de décodeur dans le Panneau <b> "Adresse" </b>". Il y a deux façons
+           pour le faire. </p>
+           <ol>
+             <li> Saisissez manuellement l'adresse du décodeur dans la grande zone de texte,
+               puis cliquez sur le bouton <big>«Valider"</big>(Set). <br>
+               <br>
+
+               <dir>
+                 <p class="important"> <b> Important! </b> lors de la saisie manuelle
+                d'une adresse, n'oubliez pas de cliquer sur le bouton <big>Valider</big> .
+                 Sans cette étape, toutes les actions du régulateur restent désactivées.</p>
+               </dir>
+               <br>
+               <br>
+             </li>
+             <li> Ou, utilisez la liste déroulante pour choisir parmi la Liste (comme
+               indiqué dans la figure à droite).<br>
+              <br>
+              S'il vous plaît noter que lorsque vous sélectionnez une locomotive de cette liste, il suffit
+              de lire l'adresse des décodeurs à partir de la Liste des fichiers , Couramment, il ne renvoie 
+               <u> pas </u> à n'importe quel fichier de configuration de Régulateur sauvegardé.</li>
+           </ol>
+         </td>
+         <td> <img width="20" height="40" src="images/spacer.gif"> </td>
+         <td valign="top" align="center"> <p
+           style = "text-align: center; font-size: xx-small"> <img width = "207"
+           height = "228" src = "images/jmri015.jpg" title = "Sélection de l'adresse"> <br>
+           Figure 2-3: Sélection d'adresse </p>
+         </td>
+       </tr>
+       <tr colspan="3">
+         <td> <img width="40" height="40" src="images/spacer.gif"> </td>
+         <td> </td>
+         <td> </td>
+       </tr>
+       <tr>
+        <td valign="top"><dir> 
+          <p> Après qu'une adresse ait été sélectionnée, toutes les autres commandes et options de
+             la fenêtre du régulateur deviennent actives. Deux autres boutons d'option sont
+             aussi devenu actifs dans le "<b>Panneau Adresse</b>". Ils sont
+             décrit comme  ...</p>
+           </dir>
+           <ul>
+             <li> <strong> Répartiteur </strong> Communiqués de l'adresse du décodeur de retour
+               à la centrale de commande dans un mode "expédition" . Habituellement, une seul
+               adresse peut être en état d'expédition à la centrale de commande. Toutes les
+               autres sont soit «utilisées» ou «inactives» (publié). Les commandes et les
+               options dans la fenêtre régulateur seront désactivées jusqu'à ce qu'une autre
+              adresse soit <big>"Validée" </big>.(Set) <br>
+               <br>
+             </li>
+             <li> <strong> version </strong>? renvoi l'adresse du décodeur  à
+               la centrale de commande comme "n'étant plus nécessaire". Les commandes et les
+               options dans la fenêtre  régulateur seront désactivées jusqu'à ce qu'une autre
+              adresse soit <big> "Validée" </big>.<br>
+	    <br>   
+          </li>
+          </ul>
+        </td>
+        <td> </td>
+        <td> </td>
+        </tr>
+    </tbody>
+  </table>
+</dir>
+
+<table>
+  <tbody>
+    <tr>
+      <td><img width="20" height="40" src="images/spacer.gif"> </td>
+      <td valign="top" align="center"><p
+        style="text-align: center; font-size: xx-small"><img width="199"
+        height="129" src="images/jmri032.jpg"
+        title="Example of Address Panel option buttons"><br>
+        Figure 2-4: Panneau Adresse<br>
+        (avec une adresse active) </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+<a name="ControlPanel"></a> 
+
+<h2>Panneau de configuration - Faisons circuler un train </h2>
+<dir>
+
+  <table border="0" width="100%" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td align="left"> <valign="top"<p> Maintenant que vous avez établi une
+          Adresse pour le Régulateur, vous devriez être en mesure de faire rouler un train sur votre
+          réseau (si votre réseau est actif et que l'adresse que vous avez entrée est valide
+          pour la locomotive sur la voie). Pour cela, utilisez le "<b>Panneau de Contrôles
+          </b>" (voir figure 2-5). Mais voici où les choses deviennent un peu plus
+          délicates. </p>
+
+          <p> Il y a de multiples combinaisons de systèmes DCC et de plates-formes
+          informatiques qui donnent de légères différences dans les fonctionnalités des
+          régulateurs. Les programmeurs travaillent dur pour essayer d'obtenir
+          que ces régulateurs fonctionnent à l'identique. Mais en raison de ces
+          différences, vous pouvez découvrir que tout ce qui est noté dans le
+          le texte suivant ne fonctionnera pas tel que défini pour votre système. </p>
+
+          <p class="important"> <b> Important! </b> Le "Panneau de Contrôle" doit
+          avoir le "focus" pour qu'il devienne actif (et utilisables). En d'autres
+         termes, la barre de fenêtre doit être active. Si vous suivez ce que dit ce
+          texte avec votre propre locomotive et juste entrer une adresse
+          dans le Panneau d'Adresses, vous découvrirez que le  Panneau d'Adresse est la
+          fenêtre avec le focus actuel. Aucune des actions clavier ou souris
+          décrites ci-dessous ne déplacera le train jusqu'à la mise au point du Panneau de Contrôle
+. Pour faire du Panneau de contrôle la fenêtre active, utilisez le pointeur de votre souris
+           pour cliquer quelque part dans le Panneau de Contrôle. </P>
+        </Td>
+        <td> <img width="20" height="40" src="images/spacer.gif"></td>
+        <td valign="top" align="center"><p
+          style = "text-align: center; font-size: xx-small"><img width = "99"
+          height = "330" src ="images/jmri033.jpg" 
+          title= "Exemple du Panneau de configuration"> <br>
+          Figure 2-5: Panneau de configuration </p>  
+      </td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <br>
+
+
+  <table width="100%" border="2" cellpadding="2" cellspacing="2">
+     <tbody>
+       <tr>
+         <td> <p
+           style = "color: # FF0000; font-size: medium; font-weight: bold"> Attention
+           où vous cliquez avec le pointeur de votre souris dans le Panneau de configuration. </p> 
+           <ul>
+             <li> <b> Si vous cliquez n'importe où à proximité du curseur, votre loco peut avoir
+               des réactions improvisée (voir plus bas). </b><br>
+               <br>
+             </li>
+             <li> <b> Si vous cliquez n'importe où sur les mots "Avant" ou "Arrière",
+               vous activez cette action ce qui n'est pas trop mauvais sauf si
+               La locomotive est en marche dans la direction opposée . </b> <br>
+               <br>
+             </li>
+             <b> <li> Selon la taille de votre résolution d'écran, si vous essayez de
+               cliquez sur la barre de fenêtre elle-même, vous risquez de fermer 
+               la fenêtre de Panneau de Configuration ou le minimiser. Ce qui pourrait bien sûr
+               immédiatement perturber tout nouvel utilisateur. </b> <br>              
+            <br>
+	 </li>
+          </ul>
+
+         <p>  Alors, en cliquant d'abord dans le Panneau de Contrôle pour en faire la
+          fenêtre "active" avec le focus, et sachant  que votre loco est
+           arrêtée, il est suggéré de cliquer sur le bouton  "Inactif" (si vous savez
+           pourquoi votre loco est arrêtée), ou dans la zone avant ou arrière
+           (en fonction bien sûr de l'orientation actuelle de la loco). En d'autres
+           termes vous voulez cliquer quelque part dans l'intérieur des frontières de la
+           Fenêtre du Panneau de Contrôle sans que la loco ne fasse quelque chose que
+           vous ne voulez pas qu'elle fasse. </p>
+
+           <p> Après un peu d'expérimentation, vous découvrirez ce qui est
+           confortable pour votre utilisation. Le seul point que nous essayons de faire ici
+           est que de nombreux nouveaux utilisateurs seront frustrés de ne pas obtenir immédiatement 
+           avec leur régulateur de déplacer  leur loco . Ne réalisant pas que le
+           Panneau de Contrôle n'est pas sélectionné. Ou ils ont cliqué sur un
+           bouton de fonction  lus sur ceux ci-dessous), ce qui change alors la
+          fenêtre  "active" sur le panneau de Fonction. </p>
+         </td>
+       </tr>
+     </tbody>
+   </table>
+</dir>
+<br>
+<br>
+<br> 
+<a name="StandardActions"> </a>
+
+<h3> clavier de contrôle </h3>
+<dir>
+   <dir>
+     <p> Il ya un groupe de touches d'action sur le clavier qui ont été définies comme
+     "<b> standard</b>" sur tous les systèmes DCC et plates-formes informatiques. Ils sont
+     identifiés dans le tableau suivant: </p>
+
+      <table width="100%" border="2" cellpadding="2" cellspacing="2">
+       <tbody>
+         <tr>
+           <td align="center"><p
+             style = "color: # 000080; font: bolder; font-size: large"> TOUCHE * </p>
+           </td>
+           <td align="center"> <p
+             style = "color: # 000080; font: bolder; font-size: large"> ACTION </p>
+           </td>
+         </tr>
+         <tr>
+           <td align="center"> <p
+             style = "color: # 0000CD; font: bolder; font-size: large p ">+</>
+           </td>
+          <td> Augmenter la vitesse de 1 cran à chaque pression sur la touche </td>
+         </tr>
+         <tr>
+           <td align="center"> <p
+             style = "color: # 0000CD; font: bolder; font-size: large p ">-</P>
+           </td>
+           <td> Diminuer la vitesse de 1 cran à chaque pression sur la touche </td>
+         </tr>
+         <tr>
+           <td align="center"> <p
+             style = "color: # 0000CD; font: bolder; font-size: large p ">*</p>
+           </td>
+           <td> Inactif (vitesse réglée à 0, tout élan de vitesse est activé) </td>
+         </tr>
+         <tr>
+           <td align="center"> <p
+             style = "color: # 0000CD; font: bolder; font-size: large p ">/</p>
+           </td>
+           <td>Stop Urgence! (stoppe instantanément la locomotive) </td>
+         </tr>
+         <tr>
+           <td align="center"> <p
+             style = "color: # 0000CD; font: bolder; font-size: large"> flèche haut </p>
+           </td>
+           <td> Vers l'avant 
+             </tr>
+              <tr>
+           <td align="center"> <p
+             style = "color: # 0000CD; font: bolder; font-size: large"> flèche bas </p>
+           </td>
+           vers l'arrière  <td> </td>
+         </tr>
+           <td align="center"> <p
+             style = "color: # 0000CD; font: bolder; font-size: large">flèche Gauche
+             flèche </p>
+           </td>
+           <td> Augmente la vitesse de d'un cran pour chaque pression sur la touche </td>
+         </tr>         <tr>
+           <td  align="center"> <p
+             style = "color: # 0000CD; font: bolder; font-size: large">flèche  Droit
+            </p>
+           </td> stoppe
+           <td> Diminue la vitesse d'un cran pour chaque pression sur la touche </td>
+         </tr>
+         <tr> 
+           <td align="center"> <p
+             style = "color: # 0000CD; font: bolder; font-size: large"> Page Haut </p>
+           </td>
+           <td> Augmente la vitesse d'environ 10% pour chaque pression sur la touche
+         <tr>
+          <td align="center"><p
+            style="color: #0000CD; font: bolder; font-size: large">Page Bas</p>
+          </td>
+          <td>Diminue la vitesse d'environ 10 % pour chaque pression sur la touche
+          </td>
+        </tr>
+ </tbody>
+    </table>    <br>
+    <br>
+
+
+    <div>
+    <p class="important"><b> Remarque: </b> * Les touches implicites notées ci-dessus (avec l'
+     exception des touches fléchées) sont celles qu'on trouve sur le pavé numérique du
+     clavier. Pour les ordinateurs portables et autres claviers qui n'ont pas 
+     pavé numérique séparé, l'expérimentation de votre part peut être nécessaire pour trouver la
+     combinaison correcte de touches. Les touches fléchées sont habituellement trouvées groupées dans leur
+     propre zone séparée. </p>
+     </div>
+
+     <p> Utilisant les touches standards les actions sont assez faciles. Après avoir rendu le
+     Panneau de Contrôle actif, à chaque clic sur la touche <big> + </big> sur le clavier numérique
+     la vitesse de votre locomotive doit augmenter . Chaque clic sur la touche 
+     <big> - </big> du pavé numérique devrait diminuer la vitesse de votre
+     locomotive. Pour amener la locomotive à l'arrêt, un simple clic de
+     <b>/</b> sur le clavier numérique va régler la vitesse de la locomotive pour
+     zéro. </p>
+
+     <p> Bien sûr, en plus des actions de clavier standard, ce n'est pas la peine d'avoir une souris
+ si vous ne pouvez pas l'utiliser pour contrôler vos trains.
+     Alors maintenant, nous allons discuter comment déplacer votre locomotive en utilisant la souris sur votre
+     ordinateur. </p> 
+ </dir>
+</dir>
+<br>
+<br>
+<br>
+<a name="MouseControl"></a> 
+
+<h3>Contrôle de la souris </h3>
+<dir>
+   <dir>
+     <p> Vous pouvez effectuer toutes les actions du clavier noté ci-dessus en utilisant votre
+     pointeur de la souris dans la fenêtre Panneau de Contrôle. Nous allons commencer par définir les  marche
+     Avant, marche arrière, arrêt et inactif. Ils sont assez simples à utiliser. </P>
+
+     <table width="100%" border="2" cellpadding="2" cellspacing="2">
+       <tbody>
+         <tr>           <td align="center"><p
+             style = "color: # 000080; font: bolder; font-size: large"> BOUTON </p>
+           </td>
+           <td align="center"> <p
+             style = "color: # 000080; font: bolder; font-size: large">ACTION </p>
+           </td>
+         </tr>
+         <tr>
+           <td align="center"> <p
+             style = "color: # 0000CD; font: bolder; font-size: large"> <b> Avant </b> </p>
+           </td>
+           <td> Change la direction de la locomotive vers l'avant. </td>
+         </tr>
+         <tr>
+           <td align="center"> <p
+             style = "color: # 0000CD; font: bolder; font-size: large">  <b> Inverser</b> </p>
+           </td>
+           <td> Change la direction de la locomotive vers l'arrière. </td>
+         </tr>
+         <tr>
+           <td align="center"><p
+             style = "color: # 0000CD; font: bolder; font-size: large"> <b> ARRET URGENCE </b> </p>
+           </td>
+           <td> cliquer sur ce bouton effectue un arrêt physique immédiat 
+             de la locomotive. Si une fonction de freinage dynamique est activée pour
+             le décodeur, elle sera ignorée, arrêtant la locomotive immédiatement.  Lorsque vous utilisez un décodeur de son (comme un Soundtraxx
+             DSD-150), le décodeur a une "action d'arrêt du son" (comme dans
+             les décodeurs diesel), le bruit du moteur associé chutera en l'occurence  </td>
+       </tr>
+	<tr>
+          <td align="center"><p
+            style="color: #0000CD; font: bolder; font-size: large"><b>Inactif </b> </p>
+</td>
+<td> cliquer sur ce bouton, régle la vitesse de la locomotive à
+0. Si une fonction de freinage dynamique est activée pour le décodeur, elle
+sera toujours active ralentissant la locomotive jusqu'à l'arrêt. Lorsque
+un décodeur de son (comme un Soundtraxx DSD-150)est utilisé, le moteur
+son basculera sur son état "inactif". </td> 
+       </tr>
+      </tbody>
+    </table>  </dir>
+</dir>
+<br>
+<br>
+<br>
+<br>
+<a name="SliderBar"></a> 
+
+<h4>LA BARRE CURSEUR </h4>
+<dir>
+  <dir>
+    <dir>
+      <p> Le curseur peut fonctionner différemment pour chaque utilisateur en fonction de
+      plusieurs facteurs. Ce guide de l'utilisateur ne va pas  essayer d'identifier l'ensemble des
+      différentes possibilités. Au lieu de cela, il va identifier plusieurs
+      principaux moyens principaux que le curseur peut utiliser. Au moins une de ces
+      méthodes de travail doit vous convenir. Vous pourriez découvrir que votre configuration peut utiliser
+      plus d'une de ces dernières. Un peu d'expérimentation de votre part sera peut-être
+      nécessaire. </p>
+      <ol>
+        <li> <strong> Méthode Curseur 1 </strong>
+          <ul>
+            <li> cliquer n'importe où au-dessus de la position actuelle du curseur
+              AUGMENTE la vitesse de la loco de la valeur d'un cran. Par exemple, si la
+               vitesse actuelle de la locomotive est de 23, puis un seul clic
+              fera progresser la vitesse à 24. Un autre clic va augmenter la
+              la vitesse à 25. Un autre clic ... pour accélérer à 26. Une autre ... à la vitesse
+              27. Et ainsi de suite ... jusqu'à ce qu'il atteigne l'étapes vitesse maximale pour
+              votre système. Cette action a le même effet que l'utilisation des
+              <big>+</big> sur le clavier numérique. <br>
+              <br>
+            </Li>
+            <li> cliquer n'importe où en dessous de la position actuelle du  curseur 
+              DIMINUE la vitesse de la loco de la valeur d'un cran. Par exemple, si la
+              vitesse actuelle de la locomotive  est de 21, puis un seul clic
+              va diminuer la vitesse à 20. Un autre clic va diminuer la
+              la vitesse à 20. Un autre clic ... pour ralentir au cran 19. Et ainsi de suite ... jusqu'à ce que
+              qu'il atteigne le palier de vitesse  0. Cette action a le même effet que l'action sur le
+              <big>-</big> sur le clavier numérique <br>
+              <br>
+             </li>
+           </ul>
+           <p class="important"> <b> Remarque: </b> cliquer trop loin en dessous du curseur
+           (surtout quand près du fond de la barre de curseur) peut ne pas avoir
+          d'effet parce que vous êtes réellement en cliquant sur option "Avant".
+           Par conséquent, il est suggéré que lorsque la vitesse diminue avec cette
+           méthode, que vous cliquez sur le mot «Inactif»  pas sur le bouton d'arrêt d'urgence
+           (STOP!)  mais le mot «Inactif» situé à l'extrémité inférieure de la
+           rampe du curseur. </p>
+           <br>
+           <br>
+
+           <p class="important"> <b>:Remarque  </b> Si le décodeur a ses courbes d'accélération
+           ou de freinage activées, la locomotive va accélérer ou ralentir
+          en conséquence. Si aucune valeur dynamique n'est activée, la loco va accélérer
+            ou ralentir brutalement. </p>
+           <br>
+           <br>
+           <br>
+         </li>
+       <li> <strong>Curseur Méthode  2 </strong>   
+      
+          <ul>
+            <li>Cliquez et maintenez le bouton gauche de la souris sur le pointeur de curseur
+               puis faites-la glisser à une vitesse que vous souhaitez, puis relâchez le bouton de la souris
+                Ceci enverra une commande «vitesse réglé sur" au
+               décodeur. <br>
+               <br>
+             </li>
+           </ul>
+           <p class="important"> <b> Remarque: </b> Si le décodeur a ses courbes d'accélération
+           ou de freinage activée, la locomotive va accélérer ou ralentir
+           en conséquence. Si aucune valeur dynamique n'est activée, la loco va accélérer
+            ou ralentir brusquement à la vitesse réglée lorsque le bouton de la souris a été
+           libéré. </p>
+           <br>
+           <br>
+           <br>
+         </li>
+         <li> <strong> Curseur Méthode 3</strong>
+           <ul>
+             <li> cliquer n'importe où au-dessus de la position actuelle du curseur
+               va augmenter le curseur à l'endroit où le souris
+               pointeur de la souris a été cliqué. Par exemple, si 
+               réglage de la vitesse était d'environ 25% de la barre du curseur et le
+               pointeur de la  souris est placé à proximité du point d'environ 75% du
+               curseur lorsque vous cliquez dessus, la vitesse de la locomotive va passer 
+               à environ 75%. <br>
+               <br>
+             </li>
+             <li>Cliquer n'importe où en dessous de la position  actuelle du curseur
+               va diminuer le curseur à l'endroit où le pointeur de la souris
+               a été cliqué. Par exemple, si le
+               réglage de la vitesse était d'environ 50% de la barre du curseur et le
+               pointeur de la souris est positionné à environ autour du point 25% sur le
+               curseur lorsque vous cliquez dessus, puis la vitesse de la locomotive va passer
+               à environ 25%. </li>
+          </ul>
+          <br>
+          <br>
+
+          <p class = "important"> <b>Remarque : </b>Si le décodeur a ses courbes d'accélération
+           ou de freinage activées, la locomotive va accélérer ou ralentir
+           en conséquence. Si aucune valeur dynamique n'est activée, la loco va accélérer
+          ou ralentir brutalement. </p>
+           <br>
+           <br>
+
+           <p class="important"> <b> Remarque: </b> Cliquer trop loin en dessous du curseur
+           (surtout quand près du fond de la barre de curseur) peut ne pas avoir
+          d'effet parce que vous cliquez sur l'option "Avant".
+           Par conséquent, il est suggéré que lorsque la vitesse doit diminue avec cette
+           méthode, que vous cliquez sur le mot «Inactif» extrémité inférieure de la
+           la coursedu curseur. </p>
+	   <br>
+          <br>         
+       </li>
+      </ol>
+      <br>
+      <br>
+      <br>
+
+
+      <table border="2" width="90%" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>            <td><p
+              style="font: bold; color: #FF0000; font-size: large">IMPORTANT! </P>
+
+               <p> La meilleure façon d'arrêter une locomotive pour l'une des méthodes
+               décrites ci-dessus est tout simplement de cliquer sur le bouton <b>"Inactif" </b>
+               situé au bas de la fenêtre du Panneau de Contrôle. </p>
+
+               <p> Ou plus brutalement, vous pouvez également cliquer sur le bouton d'arrêt d'urgence
+               <b
+               style = "font; gras; color: # FF0000; font-size: large">ARRÊT URGENCE!</b>
+               </p>
+             </td>
+           </tr>
+         </tbody>
+       </table>
+       <br>
+       <br>
+
+
+       <p> Si vous avez découvert que votre système fonctionne d'une manière différente
+       parmi tous ceux indiqués ci-dessus, alors vous avez simplement trouvé un autre
+       méthode.</p>
+    </dir>
+  </dir>
+</dir>
+<br>
+<br>
+<br>
+<br>
+<a name="Acquiring"></a> 
+
+<h2> L'acquisition d'une Locomotive Expédiée </h2>
+<dir>
+   <p> Lorsque l'adresse du décodeur est d'abord "<big> Définie </big>", le logiciel requière
+   l'état actuel du décodeur. Cela inclut la direction actuelle de la
+   locomotive, sa vitesse actuelle, et les boutons de fonction qu'ils soient On ou Off. Le
+   logiciel sera mis à  la direction actuelle et identfiera toutes les fonctions
+   qui sont "actives" (dans l'état "On" ). Mais, si la locomotive est en mouvement, la 
+   la vitesse de la loco n'est pas établi sur le curseur de Contrôle de Vitesse. </p>
+
+   <p class="important"> <b> Remarque: </b> A ce moment, le curseur ne correspond
+   <u> pas </u> automatiquement à la vitesse réelle. Ceci est important pour
+   comprendrequelles mesures vous allez voir quand vous cliquez d'abord
+   sur la barre de curseur de vitesse. Lors de la première <big> "Validation" </big> d'une adresse de décodeur,
+   le curseur est réglé sur la position zéro (0). Donc, si vous avez acquis une
+   locomotive qui est en fait en déplacement et que vous cliquez sur la barre du curseur, il 
+   va régler la vitesse à zéro (ou là où vous cliquez et réglez le curseur
+  ). <br>
+   <br>
+   Une amélioration future de la fonction régulateur sera de synchroniser les
+   pointeur de la barre curseur en conséquence. Jusque-là, méfiez-vous de cette petite
+   réaction. </p>
+</dir>
+<br>
+<br>
+<br>
+<br>
+
+<a name="FunctionPanel"></a> 
+
+<h2>Le Panneau Fonction </h2>
+<dir>
+
+   <table border="0" width="100%" cellpadding="0" cellspacing="0">
+     <tbody>
+      <tr> 
+          <td valign="top"><p> Le Panneau dispose de 28  boutons de Fonction
+           disponibles pour chaque fenêtre de régulateur. La plupart des décodeurs ne sont actuellement pas
+           équipés de 28 fonctions. Le panneau affiche les boutons de fonction de deux
+           groupes, appuyez sur la touche "*" dans le coin inférieur gauche pour voir les
+           deuxième série de boutons de fonction. </p>
+
+           <p> Cliquer sur les boutons de fonctions en corrélation avec l'appui sur les mêmes
+           bouton de fonction sur un régulateur à main. La fonction F0 est normalement
+           utilisé pour les feux. </p>
+
+           <p> Ceci est la fonctionnalité de base du Panneau de fonction. Tous les boutons
+           fonctionnent comme une bascule marche/arrêt Cliquez une fois pour activer "On" et cliquez de nouveau
+           à tourner "Off". </p>
+
+           <p> Le chapitre suivant fournit des fonctionnalités plus avancées pour la personnalisation
+          des boutons du Panneau de Fonction. </p>
+         </td>
+         <td> <img width="20" height="40" src="images/spacer.gif"> </td>
+         <td valign="top" align="center"> <p
+           style = "text-align: center; font-size: xx-small"> <img  width= "208"
+           height = "250" src = "images/jmri034.jpg"
+           title= "Example of the Function Panel"> <br>
+           Figure 2-6: Le Panneau Fonction </p>
+                  </td>
+      </tr>
+    </tbody>
+  </table>
+</dir>
+<br>
+<br>
+<br>
+<br>
+
+<p>Si vous lisez cette page de haut en bas comme un manuel de formation, à sa
+conclusion, vous devriez être en mesure de ...</p>
+<ul>
+   <li> ouvrir une fenêtre de nouveau régulateurs </li>
+   <li> établir un décodeur avec une adresse active </li>
+   <li> faire fonctionner une locomotive à son rythmel'épreuve </li>
+   <li> et activer les lumières (et toute autre fonction activée pour votre
+     décodeur) </li>
+</ul>
+
+<p> Le prochain chapitre sera d'identifier les caractéristiques des régulateurs qui peuvent être personnalisées 
+afin de rendre l'expérience de votre modèle numérique ferroviaire encore plus agréable. </p>
+
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td align="right"><dl>
+          <dt><a href="ThrottleChapter1.shtml"
+          title="Return to the previous chapter"><img width="18" height="18"
+          src="images/LeftArrow2.jpg"></a></dt>
+        </dl>
+      </td>
+      <td><img src="images/spacer.gif" width="30" height="10"> </td>
+      <td align="center"><b><a href="ThrottleTOC.shtml"
+        title="Jump to the Table Of Contents page">TOC</a></b> </td>
+      <td><img src="images/spacer.gif" width="30" height="10"> </td>
+      <td align="left"><b><a href="ThrottleChapter3.shtml"
+        title="Advance to the next chapter"><img width="18" height="18"
+        src="images/RightArrow2.jpg"></a></b> </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+<br>
+<br>
+<!--#include virtual="/Footer" --> </div>
+</body>
+</html>

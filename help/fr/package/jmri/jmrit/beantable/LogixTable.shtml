@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: LogixTable.shtml,v 1.5 2009/04/15 01:26:05 pete_cressman Exp $ -->
+<!-- Translated by Hervé Blorec le 2012/01/05-->
+<html lang=fr">
+<head>
+ <TITLE>
+      JMRI: Logix Table Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Logix Table">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>
+Le tableau Logix</H1>
+<p> Logix est un petit groupe de Conditionnels concentré sur une tâche unique
+sur le réseau. Chaque Conditionel peut être considéré comme une déclaration de la forme:
+<ul> si (expression logique) alors (action).</ul>
+L 'expression logique" partie d'un conditionnels teste  l'état d'un groupe
+de conditions spécifiées par l'utilisateur sur le réseau, par exemple, si certains
+aiguillages sont directs ou déviés, ou si un canton est occupé. La 
+partie "action" de la condition spécifie quelle action doit être prise si l'état de
+l'expression logique change.</p>
+<p> Le tableau Logix  répertorie tous les Logixs actuellement définis par leur nom  système
+et nom utilisateur. La dernière colonne du tableau fournit trois choses que vous pouvez faire
+avec un Logix; l'éditer, le dupliquer ou le supprimer. Il suffit de cliquer <b>Sélectionner</b>
+et il fera tomber un menu avec les choix: <b>Modifier</b>, <b>Copier</b>, <b>Supprimer</b>
+La sélection <b>Modifier</b> fera apparaître la fenêtre Éditer Logix qui fournit 
+d'éditer un Logix et ses conditionnels. Voir<a href="LogixAddEdit.shtml"> l'
+la page d'aide sur l'ajout de Logix</a> pour plus d'informations
+sur la création et l'édition de Conditionnels Logix. La sélection <b>Copier</b>
+fera apparaître des fenêtres qui vous permettent de faire une nouvelle copie de Logix et de ses
+Conditionnels ou de copier ses conditionnels dans un Logix existants. La sélection
+<b>Supprimer</b> permet de supprimer le Logix et ses conditionnels.</p>
+<p>La colonne <b>Activé</b> vous permet d'activer (case cochée) ou désactiver
+(Non cochée) un Logix. Un Logix n'a pas un état comme beaucoup d'entités JMRI ont.
+Un Logix doit avoir la capacité d'être "activé" ou "désactivé". Quand un Logix
+n'est pas activé, les expressions logiques de ses conditionnels sont encore évaluées,
+mais les mesures spécifiées dans les conditionnels ne sont pas prises. Quand un Logix est
+activé après avoir été désactivé, ses conditionnels sont recalculés et
+ les mesures appropriées sont prises.</p>
+<p> Pour créer un nouveau Logix, cliquez sur <b>Ajouter</b> situé au bas du tableau Logix
+. Cela fera apparaître une fenêtre Créer Logix. Saisir un nom  système
+et un nom utilisateur, puis cliquez sur Créer <b>Logix</b>, va créer le Logix, et
+ouvrir la fenêtre Modifier Logix. Une fois que Logix est créé, son nom  système ne peut pas
+être changé. Son nom utilisateur, cependant, peut être modifié soit dans le tableau Logix ou
+la fenêtre Modifier Logix. Un nouveau nom utilisateur peut être n'importe quel texte utile, à condition que le nouveau
+nom d'utilisateur ne soit pas déjà été attribué à un autre Logix.
+(Voir aussi la
+<a  href="LogixAddEdit.shtml"> page d'aide sur l'ajout séparé de Logix</a>)</p>
+<p>Le menu <b>Fichier</b> en haut de la Table Logix fournit pour l'impression de cette
+table et pour le stockage des Logixs et leurs conditions dans un fichier de configuration de réseau
+. Sélectionner l'option stocker fera apparaître une boîte de dialogue pour
+nommer un fichier de configuration pour l'écriture d'informations Logix et tous les autres
+informations de configuration (par exemple, les capteurs, les lumières, les aiguillages, les têtes de signal,
+les itinéraires, etc.) Si vous mettez à jour un fichier existant, cliquez simplement sur son nom, et
+il sera copié dans l'entrée du nom.</p>
+<p> Pour plus d'informations, consulter la
+<a href="../../../../html/tools/Logix.shtml"> documentation  principale Logix</a>.</p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+
