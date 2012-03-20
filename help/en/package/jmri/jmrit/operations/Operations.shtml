@@ -467,9 +467,20 @@ but not delivered to staging, deselect this feature.
 When selected the departure track in staging becomes available for other trains immediately after
 the departure train is built. For trains that return to same staging location, this option allows
 the train to return to the same track it departed on. This option is only available when using
-the <A HREF="#BuildOptions">aggressive</A> mode for building trains. 
+the <A HREF="#BuildOptions">aggressive</A> mode for building trains.
 
-<A NAME="PromptDepartureTrack"></A>
+   <H3>Allow cars to return to staging if needed</H3>
+
+   When a train departs and returns to the same staging location, it is regarded as a turn by the
+   program. A turn normally takes cars from staging, sets them out on the layout, picks up new cars
+   and returns to staging with those cars. The program normally doesn't allow the same cars to depart and
+   return to staging. However, it may be desirable to allow the train carry the cars
+   rather than having the program report that cars in staging couldn't be delivered to destinations
+   on the layout. Selecting this option allows a turn to transport cars to and from the same
+   staging location. Note that when this options is selected, that the program will only return cars
+   to staging when destinations are not available on the layout.
+   
+    <A NAME="PromptDepartureTrack"></A>
 <H3>Prompt for Departure Track from Staging</H3>
 
 If you would like the program to ask you which track a train should
