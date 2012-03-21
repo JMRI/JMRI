@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- $Id: LZV100Configurationtool.shtml,v 1.1 2008/01/13 06:47:33 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-20-06-->
+<title>The JMRI LZV100 Configuration Utility</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+<H2>'utilitaire de configuration JMRI LZV100 </H2>
+<img src = "images/LZV100ConfigurationUtility.jpg" alt = "Configuration LZV100
+Image Tool ">
+<P>
+L'outil de configuration LZV100 est utilisé pour configurer la LZV100 travers une interface informatique
+LI100 ou LI101 .
+<P>
+Commençant par le haut, nous avons des informations de configuration pour la
+partie alimentation de la centrale de la LZV100.
+<P>
+Le menu déroulant sélectionne la tension piste.
+<P>
+La seconde liste déroulante de boites indique si le «E-Line" doit être active ou
+inactive. Quand elle est active l'alimentation des centrales utilise cette interface pour couper le réseau
+quand il y a un court-circuit, ou comme un arrêt d'urgence
+.
+<P>
+A partir du côté gauche de l'écran dans la première rangée de boutons, le
+bouton "Write to LZV100"(Ecrire à LZV100), écrira les réglages dessus de cette ligne
+dans la LZV100.  
+<P>
+Le bouton "Reset to Factory Defaults"(Reset aux paramètres par défaut)" réinitialise l'<b>écran </b>
+d'usine par défaut. Ceci ne va pas envoyer une instruction de réinitialisation à la LZV100
+.
+<P>
+Le dernier bouton, étiqueté "Fermer" va fermer l'écran, sans envoyer
+aucune information à la LI101F.
+<P>
+La deuxième rangée de boutons est des options pour la station de commande. ces
+options  travaille aussi avec la LV100.
+<P>
+Le bouton "Reset Command Station"(Reset station de commande) envoie à l'adresse de locomotive
+0 des instructions fonction indiquée dans le manuel LZV100 pour une commande
+de réinitialisation de centrale. Ceci permet de réinitialiser la centrale de commande aux parmàtres d'usine
+. Voir le manuel LZV100 pour plus d'informations pour savoir exactement ce que
+cela fait.
+<P>
+Le bouton «Auto/Manuel mode toggle" envoie à la locomotive à l'adresse 0 des instructions fonction  indiqué dans le Manuel LZV100
+ pour basculer entre le mode de démarrage manuel et automatique. Dans le mode manuel
+, la LZV100 fonctionnera sur toutes les fonctions des locomotives qui étaient en service la
+dernière fois que la LZV100 a été allumée. En mode automatique, les locomotives
+reprendront également la vitesse et les réglages de direction précédents .
+<hr>
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

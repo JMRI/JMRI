@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: XmlUsage.shtml,v 1.9 2010/02/15 07:52:46 jacobsen Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-09-06-->
+
+<html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: XML Usage
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code xml usage">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset= utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+<H1>JMRI: Utilisation XML </H1>
+
+JMRI utilise XML pour un certain nombre d'objectifs:
+de maintenir les définitions de décodeur , pour son
+<a href="XmlPersistance.shtml"> système de persistance </a>
+pour la configuration et panneau d'information,
+et pour créer des parties du site web à partir d'autres fichiers.
+Cette page décrit certains aspects de ceux-ci.
+
+<h2>Définitions des Format de Fichier</h2>
+
+
+À partir de JMRI 2.9.4 les
+formats de fichiers sont spécifiés par Schema XML.
+Les schémas XML sont décrits sur une
+<a href="XmlSchema.shtml"> page séparée </a>.
+ 
+<p>
+Avant cela, les DTD ont été utilisés.
+
+<P>
+Ces schéma et  DTDs ont besoin  d'être disponibles pour le programme quand il
+lit les fichiers, car ils définissent les valeurs par défaut des 
+attributs manquants et d'autres informations nécessaires..
+
+<P>
+Dans les distributions JMRI, ceux-ci sont stockés dans les répertoires.
+<a href="/xml/schema"> xml/schema </a>
+et
+<a href="/xml/DTD"> xml/DTD </a>
+.
+
+<p> JMRI écrit tous les fichiers de schéma de référence en utilisant des
+URL comme "http://jmri.org/xml/schema/layout.xsd".
+Lors de la lecture par le programme
+ce sera automatiquement géré correctement par un résolveur personnalisé.
+Lors de la lecture par exemple par un navigateur web, le navigateur  peut obtenir le schéma des
+principaux serveurs web JMRI en cas de besoin.
+
+<p>
+Le DTDs sont été localisés à partir des déclarations de définition
+ DOCTYPE 
+dans les fichiers XML. Pour des raisons historiques, ceux-ci peuvent
+être sous plusieurs formats. L'ensemble complexe des règles pour
+la cartographie de ceux-ci vers un emplacement répertoire est décrit sur une
+<a href="XmlDtdUsage.shtml"> page séparée </a>.
+
+<h2> Autres Informations </h2>
+
+JMRI fichiers XML peuvent généralement être en forme et
+vu dans les navigateurs web. Nous contrôlons la mise en forme
+en utilisant les transformations XSLT. Le processus est décrit sur une
+<a href="XmlView.shtml"> page séparée </a>.
+ 
+<p>
+Les fichiers XML peuvent être édités avec un éditeur de texte, mais
+un éditeur dédié peut aider beaucoup. Nous avons un
+liste<a  href="XmlEditors.shtml"> des éditeurs </a>, ainsi que quelques commentaires sur chacun d'eux
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

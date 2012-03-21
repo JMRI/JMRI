@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: LocoNetworking.shtml,v 1.1 2008/01/13 04:24:44 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI Hardware Guide: Methods to Connect Multiple Computers to a LocoNet Layout
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="Digitrax Chief DCS Command Station LocoNet Server LocoBuffer java model railroad JMRI install windows">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <h1> 
+      Guide Matériel JMRI: Méthodes pour connecter plusieurs ordinateurs à un réseau miniature LocoNet
+      </h1>
+
+JMRI supporte actuellement deux manières différentes qui vous permettent de connecter plusieurs
+ordinateurs à votre réseau miniature équipé en LocoNet et utilisant un LocoBuffer unique. 
+Dans les deux méthodes, les ordinateurs communiquent en utilisant la norme
+Protocoles TCP/IP, mais il y a des différences dans les détails.
+<P>
+Une méthode utilise les
+<A HREF="LocoNetServer.shtml"> capacités intégré du  Client/Serveur intégré LocoNet </a>
+de JMRI et l'autre
+permet à plusieurs nœuds JMRI pour la connexion de clients de se connecter à un seul
+<a href="http://loconetovertcp.sourceforge.net/Interface/index.html"> LocoNetOverTCP LbServer </a>,
+qui est extérieur à JMRI.
+<P>
+La différence entre ces deux méthodes est que JMRI LocoNet Client/Serveur utilise le protocole Remote Method Invocation (RMI) 
+natif de Java, alors que le LocoNetOverTCP utilise processus serveur non-Java séparé,
+LbServer, qui communique avec des messages, simples chaines ASCII sur sockets TCP/IP,
+permettant à des nœuds non-Java de partager aussi le LocoBufer un.
+<P>
+Pour la plupart des gens qui veulent simplement avoir plusieurs ordinateurs à partager une
+connexion LocoBuffer unique,
+l'
+<A HREF="LocoNetServer.shtml"> option Client/Serveur JMRI LocoNet</a>
+est probablement le meilleur choix qui
+ est facile à configurer.
+Pour d'autres qui veulent fournir un accès à distance au réseau miniature sur Internet, le
+<A HREF="LbServer.shtml"> LocoNetOverTCP LbServer option </a>
+peut être plus appropriée en changeant les règles de pare-feu
+pour permettre l'accès externe sera plus simple 
+<P>
+<UL>
+<LI> <A HREF="LocoNetServer.shtml"> Comment configurer le client LocoNet / Serveur </a>
+<LI> <A HREF="LbServer.shtml"> Comment mettre en place LocoNetOverTCP LbServer <// / / a>
+</UL>
+
+
+      <hr class="hide">
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

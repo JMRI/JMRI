@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: index.shtml,v 1.9 2010/02/10 19:33:27 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-09-22--> 
+<title>JMRI: QSI Programmer</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Programmateur Quantum
+</h1>
+
+JMRI peut maintenant utiliser un module programmateur Quantum
+pour lire et écrire des CV dans des décodeurs DCC.
+
+<p>
+JMRI ne peut pas (encore) télécharger des sons dans des décodeurs QSI.
+
+<p>
+Notez que lorsque vous utilisez JMRI avec le programmateur Quantum,
+le programme Quantum CV Manager <em> ne doit pas </em>
+être exécuté. Si c'est le cas, vous aurez des erreurs obscures et JMRI ne sera pas capable d'accéder au décodeur.
+
+<p>
+JMRI et le programme Quantum fonctionne généralement bien avec les
+décodeurs QSI. Certaines personnes ont eu des difficulté en utilisant JMRI et le
+programmateur Quantum avec des décodeurs non-QSI , en particulier les autres
+types de décodeurs sonores. Dans ce cas, la solution a
+généralement été d'utiliser un booster en voie de programmation
+telles que le
+<a href="http://www.tonystrains.com/technews/powerpax.htm"> PowerPax </a>
+ou
+<a href="http://www.soundtraxx.com/access/ptb100.php"> PTB-100 </a>.
+
+
+<h2>Installation de Pilote</h2>
+
+Pour accéder au programmateur Quantum , vous devez installer un pilote sur votre
+ordinateur. Cette section décrit comment le faire pour plusieurs 
+types d'ordinateurs populaires.
+
+<aid="driverWin">
+<h3> Windows </h3>
+
+Pour que JMRI puisse  parler au Programmateur Quantum, un pilote doit être installé
+de sorte que le programmateur Quantum semble être un port série (port COM virtuel, ou
+VCP). Ces pilotes sont compatibles avec la version la plus récente du logiciel programmateur QSI Quantum
+, ainsi vous pouvez alterner entre
+l'utilisation de JMRI et le programmateur Quantum (mais pas dans le même temps, bien sûr)<p>
+Max Ettinger a fourni
+des <a href="http://jmri.sourceforge.net/install/qsidriver/"> instructions détaillées </a>
+pour savoir comment installer ces derniers.
+
+<a id="driverMac">
+ <h3> Mac OS X </h3>
+
+<ol>
+<li>Téléchargez le <a href="http://downloads.sourceforge.net/jmri/corby-osx-V1_04_1-release.dmg">fichier d'installation </a>
+pour le pilote Mac OS X.
+Ceci est une image disque (. Dmg) qui doit ouvrir
+comme une nouvelle fenêtre du Finder. Sinon, double-cliquez dessus.
+<li>
+Double-cliquez sur l'installeur et suivez les instructions.
+<li>
+Redémarrez votre ordinateur.
+</ol>
+Vous devriez maintenant être en mesure de démarrer une application JMRI
+et accéder au programmateur Quantum. Il apparaîtra comme
+"Programmateur Quantum" dans les fenêtres de préférences.
+
+<a id="driverLinux">
+<h3>Linux</h3>
+
+<em>Ceci est encore à travailler. </Em>
+
+<ol>
+<li>Téléchargez le 
+ <a href="http://downloads.sourceforge.net/jmri/cornwall-redhat9-V0_84.tar">fichier d'installation </a>
+pour le pilote Linux.
+Ceci est un fichier. Archive tar.
+<li>
+Décompressez l'archive à l'endroit commode, et changer de répertoire .
+<li>
+Essayez de lancer l'installateur soit via
+<code> <pre>
+./load_qsi_prog
+</pre> </code>
+ou
+<code> <pre>
+sudo./load_qsi_prog
+</pre> </code>
+</ol>
+
+<h2>Configurez le support programmateur Quantum </h2>
+
+Vous configurez JMRI pour utiliser un programmateur Quantum similaire à la manière dont tous les autres types de connexions sont configurés
+
+<ol>
+<li>
+Démarrez le programme
+<li>
+Sélectionnez «Préférences ...» élément du menu "Édition" sur la fenêtre principale.
+<li>
+Sélectionnez "Programmateur Quantum" comme type de connexion.
+<li>
+Sélectionnez "QSIProgrammateur" comme le port à utiliser.
+<li>
+Le reste des options sont fixes et ne peuvent pas être modifiées.
+<li>
+Cliquez sur le bouton "Sauvegarder". Lorsque vous êtes invité, quitter le programme.
+</ ol>
+
+Le programme est maintenant configuré. Il redémarrer, et il devrait être prêt à être utiliser..
+
+<h2>Caractéristiques et limites </h2>
+
+Le matériel de programmation Quantum est capable de piloter un (courant faible) de locomotive
+dans le "Mode Ops". Ceci permet à l'utilisateur de commander le moteur, de tester les lumières, etc
+JMRI n'a pas encore de code pour faire cela, mais si il y a suffisamment d'intérêt, nous pouvons certainement les
+ajoutez.
+
+<p>
+Nous n'avons actuellement pas assez d'informations pour télécharger des sons dans le décodeur à travers le
+Programmateur Quantum. Si nous obtenons l'information, nous allons certainement écrire ce code.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

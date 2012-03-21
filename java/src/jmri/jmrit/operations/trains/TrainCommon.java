@@ -145,6 +145,17 @@ public class TrainCommon {
 	}
 	
 	/*
+	 * Adds the car's set out string to the output file using the truncated manifest format.
+	 * Does not print out local moves
+	 */	
+	protected void truncatedDropCar(PrintWriter file, Car car){
+		// local move?
+		if (car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null)
+			return; 	// yes
+		dropCar(file, car, new StringBuffer(Setup.getDropCarPrefix()), Setup.getTruncatedSetoutManifestMessageFormat(), false, Setup.getManifestOrientation());
+	}
+	
+	/*
 	 * Adds the car's set out string to the output file using the switch list format
 	 */	
 	protected void switchListDropCar(PrintWriter file, Car car){
@@ -321,10 +332,13 @@ public class TrainCommon {
 			return " "+tabString("", CarRoads.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.NO_COLOR))
 			return " "+tabString("", CarColors.instance().getCurMaxNameLength());
+		// the three truncated manifest attributes
+		else if (attribute.equals(Setup.NO_DESTINATION) || attribute.equals(Setup.NO_DEST_TRACK) || attribute.equals(Setup.NO_LOCATION))
+			return "";
 		return " ("+rb.getString("ErrorPrintOptions")+") ";	// maybe user changed locale
 	}
 	
-	protected String getDate(){
+	protected static String getDate(){
 		Calendar calendar = Calendar.getInstance();
 		
 		String year = Setup.getYearModeled();
@@ -360,7 +374,7 @@ public class TrainCommon {
 		// Java 1.6 methods calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault())
 		String date = calendar.get(Calendar.MONTH)+1
 				+ "/"
-				+ calendar.get(Calendar.DAY_OF_MONTH) + ", " + year + " "
+				+ calendar.get(Calendar.DAY_OF_MONTH) + "/" + year + " "
 				+ h + ":" + m + " " 
 				+ AM_PM;
 		return date;

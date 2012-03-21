@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: FAQ.shtml,v 1.6 2009/06/30 22:51:47 plocher Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-10-01-->
+<title>JMRI: PanelPro Frequently Asked Questions</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+
+<h1>JMRI: PanelPro Questions Fréquemment Posées (FAQ)</h1>
+
+<a  name="context"> <h3> Comment JMRI fait un lien avec le reste de mon réseau? </h3> </a>
+<p> Jim Betz a répondu à ces questions sur la liste des utilisateur de JMRI </p>
+
+
+<ol>
+	<li> JMRI fonctionne comme un régulateur - il envoie et et écoute les messages sur les "bus de commande". 
+Rien de plus, rien de moins. Et ce qui est en fait - beaucoup - et sont la vraie beauté de JMRI.
+Dans le cas de DecoderPro les commandes qui sont utilisées et surveillées sont celles liées à la programmation 
+d'une locomotive. Dans le cas de PanelPro les messages/commandes qui sont utilisées sont celles qui sont pertinentes 
+pour l'occupation des cantons, les aiguillage, etc
+
+    <li> Chaque système a ses "bus de commande" propres ou «interface de l'ordinateur" - à savoir son propre jeu de 
+commandes (penser «format de la commande») qu'il utilise. C'est pourquoi vous ne pouvez pas utiliser un régulateur 
+Digitrax sur un système NCE. Beaucoup de gens se réfèrent au bus de commande comme un «régulateur" - pour le 
+distinguer des bus de voie. Et il est important de noter que les messages sur les deux ne sont pas identiques dans 
+tous les cas. Certains systèmes sont assez semblables les uns aux autres pour permettre d'utiliser un régulateur de 
+l'un sur l'autre ...mais cela est relativement rare (très peu de réseau en font l'usage. Une autre solution est 
+C/MRI - qui a son propre jeu de commandes. Celles de JMRI sont aussi assez intelligentes pour "parler C/MRI" (ainsi que 
+les capacité à «parler» Digitrax, NCE et Lenz ...etc) La différence sont que les C/MRI sont un jeu de commandes et 
+du matériel qui se concentre uniquement sur les systèmes de soutien RR (signaux, aiguillages, etc) et n'a pas la 
+capacité de contrôler ou de programmer les trains. Et, en effet,C/MRI ne  «sait» pas si l'alimentation est  DC ou 
+DCC. La plupart des réseaux ont été mis en place récemment ont utilisé le matériel C/MRI et JMRI (PanelPro) pour 
+l'interface de l'homme/machine.
+
+    <li> Sur les réseaux DCC la centrale de commande est l'interface entre la voie et le régulateur/bus de commande. 
+Vous utilisez les bus régulateur pour prendre une locomotive ...et envoyer des messages de contrôle à la centrale 
+de commande - ce qui met «en avant» vos modifications de régulateur pour les locomotives ...et pour les décodeurs 
+stationnaires ...soit par la voie ou le bus de commande (ou les deux).
+
+     <li> Il est possible - certains diront même souhaitable - de séparer votre support train( bus de voie) à partir 
+de votre support de commande du réseau. Bien que ce ne soit pas intuitif - vous n'avez pas à utiliser les même système 
+que vous utilisez pour la commande des trains et pour la commande des aiguillages et signaux - tout simplement parce 
+que les messages n'ont pas besoin de traverser cette frontière. C'est pourquoi certains ont recommandé que vous considériez 
+un environnement tel que des NCE pour les trains et C/MRI ou Digitrax pour le matériel réseau (PanelPro).
+.
+
+    <li> Parce que Digitrax et C/MRI ont publié leurs interfaces il y a plus de produits disponibles pour le contrôle de 
+réseau pour les deux systèmes que pour les NCE. Les deux RR-Cirkits et Team numériques ont sorti d'excellents produits qui 
+travaillent pour Digitrax (par exemple). Pour autant que je sache il n'y a pas de produits pour les NCE. Je ne sais pas ce 
+qui est/n'est pas disponibles pour Lenz.
+
+    <li> PanelPro est encore en développement à un rythme rapide. Plusieurs configurations sont déjà opérationnelles à l'aide 
+de PanelPro - mais les développements les plus récents qui ont  été mis à disposition dans PanelPro rendent son utilisation 
+un peu plus facile que par le passé. En fait, si vous parlez juste des aiguillages et d'occupation de cantons  alors PanelPro 
+sera utilisable pendant un certain temps.
+.
+
+    <li> Lorsque vous commencez à faire de la signalisation alors "tout change". Parce que la signalisation exige que les 
+occupation de cantons et de l'état des aiguillages soient utilisés dans le processus de prise de décision :"quel aspect doit 
+être affiché sur lequel des signaux à ce stade? ». Cela nécessite  une disposition de code spécifique/logique. Je suppose que 
+vous voulez un ordinateur pour prendre ces décisions. Il est possible de mettre en œuvre un système où un être humain, 
+généralement les dispatcheurs, prend l'ensemble des décisions ...les plus complexe le réseau/système de signalisation plus 
+les erreurs que les répartiteur feront. Et il y a aussi la question (s) de la "charge de travail" ...mais un ordinateur utilisant 
+PanelPro est habituellement de repos et a plus qu'assez de puissance pour devancer les besoins du réseau.
+<p>
+La mise en œuvre de commande de réseau (aiguillages, occupation de cantons, signaux, etc) n'est pas un "accord facile". Et, à mon 
+avis, c'est quelque chose que vous ne devriez pas essayer d'apprendre tout seul  - ou de le faire seul avec les aides/des conseils 
+sur les listes en ligne comme celle-ci. Je ne dis pas "ne pas utiliser en ligne" ... Je dis que si vous voulez le faire aussi 
+facilement que possible, vous devriez chercher ceux qui nous ont précédés et obtenir leur appui .
+Oui, vous pouvez le faire vous-même - non, ce n'est pas les meilleure façon de le faire et vous verrez que vous ferez plusieurs
+ erreurs qui entraîneront des retards considérables et des recâblages. De nombreux projets d'automatisation de réseaux sont au point 
+mort justement pour cette même raison .
+<p>
+Et juste pour cela soit mentionnés ...Ajouter des capacités telles que la détection d'occupation de cantons, aiguillages contrôlés 
+par ordinateur, et les signaux ne sont pas bon marchés et doivent être budgétisés. Et vous pouvez constater que vous aurez besoin 
+de recâbler même des parties importantes de votre réseau afin de les aider à fonctionner correctement.
+</ol>
+
+
+<a name="store"><h3>Comment faire pour Sauver mon Travail?</h3></a>
+
+Il y a plusieurs façons de sauvegarder  votre panneau. C'est parce que les programmes ont à stocker à la fois de la configuration 
+(aiguillages, capteurs, etc) et de la mise en page (les détails de votre panneau spécifique) de l'information.
+<P>
+Habituellement, le plus simple est d'utiliser un seul fichier pour tout contenir.
+Par exemple, vous pouvez stocker votre panneau(x) dans un fichier(s) appelé "MainPanel.xml" (ou quelque chose comme ça), et définir 
+les préférences pour charger ce fichier. Ensuite, tout ce que vous avez à faire est de sauvegarder ce fichier à chaque fois que 
+vous changer quelque chose. Une mise en garde: Assurez - vous que vous avez toujours le panneau ouvert lorsque vous enregistrez le 
+fichier! Si vous le fermez, puis enregistrez le fichier, il sera bien sûr écrit une version du fichier qui ne montre pas les panneaux.
+Et enregistrer ce fichier à partir du menu "Panneaux", en utilisant les élément "Panneaux sauvegarde ...".
+<P>
+Cela fonctionne parce que les panneaux sont conservés avec toutes les informations de configuration au même moment (ce qui garantit 
+qu'ils vont travailler quand ils seront rechargés)
+
+<a name="multifile"><h3>Puis - Je Enregistrer Uniquement les Informations de Configuration?</h3></a>
+
+Vous pouvez enregistrer seulement la "configuration" des informations dans un fichier, que vous pouvez enregistrer sans vous soucier 
+de savoir si votre panneau est ouvert, etc
+Si vous faites cela, vous pouvez également enregistrer vos panneaux dans leurs propres fichiers séparés.
+
+<P>
+Pour ce faire:
+
+<UL>
+<LI><LI> Aller à l'un des outils de Tableau (par exemple Tableau Itinéraire ) et choisissez "configuration enregistrement du menu "Fichier".
+<LI> Cela vous permettra de sélectionner un nom de fichier; assurez-vous qu'il n'a _PAS_ le même que le nom de fichier du panneau
+. (par exemple l'utilisation "MyConfig.xml"au lieu de "MyPanel.xml")
+<LI> Rappelez-vous le nom et l'emplacement, puis enregistrer.
+</UL> Cela met une information de configuration, mais pas les panneaux, dans les fichier.
+<P>
+Maintenant, assurez vous que ces informations de configuration se chargent automatiquement au démarrage du programme:
+<UL>
+<LI> Ouvrez le panneau de préférences,
+<LI> Cochez la case "Afficher les préférences avancées", et attendre une seconde pour les voir apparaître.
+<LI> Descendez jusqu'à "fichier du panneau de chargement au démarrage", cliquez sur "Ajouter",
+<LI> Et sélectionnez le fichier dans lequel vous avez enregistré la configuration.
+<LI> Cliquez sur "Enregistrer" sur les fenêtre de préférences pour s'assurer que cela est stocké.
+<LI> Quittez le programme et le redémarrer pour tester.
+</UL>
+
+
+<a name="location">
+<h3>Où dois - je mettre mes Icônes Personnalisées et Autres Fichiers?</h3></a>
+
+Le meilleur endroit pour mettre vos propres fichiers est dans le répertoire préférences du programme. (DecoderPro utilise
+<A HREF="../DecoderPro/Files.shtml#location"> le même répertoire </a>)
+Vous devez mettre toutes les versions locales des fichiers modifiés ici afin qu'elles ne soient pas écrasées par une nouvelle 
+version du programme. Tous les fichiers que le programme écrit pour contenir des informations locales, par exemple entrées liste, sont aussi écrits ici..
+<p>L'emplacement de celui-ci varie selon le type d'ordinateur.
+<ul>
+<li> Sur une machine Linux, vous trouverez un répertoire. jmri dans votre répertoire personnel.
+
+<li> Sur un Macintosh, regardez dans le dossier Préférences du Dossier Système en cours si vous utilisez Mac OS 8 ou 9, ou les dossier 
+Bibliothèque/Préférences dans votre répertoire utilisateur sur MacOS X.
+
+<li> Sur Windows, cela peut être dans un certain nombre de places selon la version Windows que vous utilisez et si vous avez configuré
+ plusieurs utilisateurs; Recherche d'un répertoire "JMRI" .
+</ul>
+Assurez-vous de trouver les préférences, et <em> pas </em> le dossier de demande d'origine. Ils sont séparés pour simplifier la mise à 
+jour de la version du programme.
+
+Vous saurez que vous avez trouvé les bon endroit si vous voyez les fichiers de préférences qui stockent vos paramètres d'applications:
+<tt> PanelProConfig2.xml </tt>. Vous pouvez également rechercher ce fichier pour  trouver ce répertoire
+
+<P>
+<IMG SRC ="../../../images /IconFileTree.gif "ALT =" Capture d'écran de l'arborescence de fichiers "align = "right "WIDTH ="288 "HEIGHT =" 327 "hspace =" 5 "vspace = "0" />
+
+Si vous avez créé des icônes et que vous voulez  qu'elles soient utilisable depuis l'éditeur de panneaux, les mettre dans un répertoire
+ appelé «ressources» dans le répertoire des préférences. Elles vont alors apparaître dans les boîte de sélection "fichiers" lorsque vous 
+appuyez sur un bouton "Changer icône... " sur le panneau de l'éditeur.
+<P>
+<IMG SRC ="../../../images/IconFileTree.gif" ALT =" Screen shot of file tree" ALIGN ="RIGHT" WIDTH ="288" HEIGHT ="327" HSPACE ="5" VSPACE ="0" />
+
+.
+
+<P>Par exemple, si le répertoire contient les fichiers préférences ci-dessous,
+vous obtiendrez l'affichage du fichier affiché à droite.
+<CODE>
+<PRE>
+> ls Ressources/icons green.gif decoderpro.gif red.gif tester.gif
+> ls ressources/tester/icônes/quelque chose à tester.gif/
+> ls ressources/icons/quelque chose/tester.gif
+</PRE>
+</Code>
+
+<P>
+Il est également possible de mettre vos fichiers dans le répertoire <code>ressources</code>
+ de la distribution JMRI que vous obtenez lorsque vous installez le programme.
+Ce n'est <em> n'est pas </em> a recommandé, car les fichiers qu'il y a seront probablement remplacés lorsque vous installerez une version future. (Une version plus récente d'un fichier, peut-être 
+écrasera votre copie, le remplacement est basé sur la date du fichier)
+
+
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: TurnoutFeedback.shtml,v 1.5 2010/04/15 14:10:43 pbender Exp $ -->
+<!--Translated by Hervé Blorec le 2011/9/20-->
+<html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: Turnout Feedback
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI Turnout feedback">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+ur
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>JMRI: RétroSignalisation Aiguillage</H1>
+
+Les Modèlistes de Chemin de Fer veulent des choses différentes quand il s'agit de connaître l'état des aiguillages sur leur réseau. Certains sont très heureux de pouvoir dire «je lui ai dit de se déplacer, c'est assez bon pour moi".
+Ces personnes ne s'inquiètent pas de savoir si un aiguillage de leur réseau s'est déplacé quand ils le lui ont dit. Ces gens peuvent simplement ignorer cette page, et laisser les paramètres de JMRI par défaut.
+<P>
+Mais certains modélistes veulent avoir une meilleure information sur l'état des aiguillages sur leur réseau, et ainsi utiliser
+une certaine forme de «rétro signalisation» pour indiquer la position des aiguillages. Cela pourrait être
+aussi compliqué que deux micro contacts, ajustés afin de ne se fermer lorsque l'aiguillage
+ est correctement installé dans n'importe laquelle des position. Ou ce pourrait être quelque chose de
+plus simple.
+
+<P>
+Dans le code, les objets Aiguillages font connaître deux états différents 
+l'État «commandé» et l'État «connus». L'état commandé est "Ceci est
+ce qui était demandé au final ». L'état connu est« C'est ce qui est
+fait correctement sur le réseau autant que je le sache ". 
+
+<P>
+Construit dans les deux LocoNet et XPressNet ont des capacités limitées pour contrôler ce
+qui se passe sur leurs réseaux et s'adapter aux messages de changements d'état des Aiguillage
+. Tous les autres protocoles utilisent habituellement un "vous lui dites de changer, ainsi il le fait" . En d'autres termes,
+quand quelque chose dans le code
+(l'outil aiguillage ou un script)commande un changement d'état direct à dévié, par défaut c'est à la fois pour
+ l'état commandé et l'état connu pour changer
+en "dévié".
+
+<P>
+Mais il est également possible de contrôler cela plus en détail si vous avez
+câblé votre réseau pour le permettre.
+
+<P>
+Toute la question de la rétro signalisation de l'aiguillage: «Comment pouvons nous configurer
+le programme pour comprendre l'état connu, donnée par le
+matériel du réseau? "
+
+
+<P>
+Si vous allez à l'outil «Tableau Aiguillage" , vous verrez qu'il a quatre colonnes
+associées à des Rétro Signalisations:
+<DL>
+<DT> "Rétro Signalisation" </DT> <DD> C'est «l'état connu". Vous ne pouvez pas le changer, mais cette
+colonne vous montre ce que le programme pense qu'il est. </DD>
+
+<DT> "Mode" </DT> <DD> C'est la méthode utilisée par cette rétro signalisation d'aiguillage. (Vous pouvez
+le changer pour chaque aiguillage individuellement , mais il faut noter que le changement ne
+prendra effet après que vous ayez cliqué ailleurs, et vous pourriez avoir besoin d'ajouter
+certains noms de capteur dans la colonne suivante (s)) </DD>
+
+<DT> "Capteur 1", "Capteur 2" </DT> <DD> Ceux-ci définissent les capteurs nécessaires à certains
+types de réactions. Vous pouvez taper un numéro de capteur, le nom système ou le nom utilisateur
+ici, le programme va le changer pour le nom système dont il a
+besoins.</DD>
+</DL>
+
+<P>
+Les modes de rétro signalisation disponibles sont:
+<DL>
+<DT> DIRECT </DT> <DD> La valeur par défaut dans de nombreux cas, et aussi le comportement d'origine
+du programme. Quand quelque chose
+demande l'aiguillage de changer , c'est juste qu'il a immédiatement assumé
+qu'il l'a vraiment fait. </DD>A
+
+<DT>UN CAPTEUR </DT><DD> L'aiguillage montre le capteur défini par la colonne "Capteur 1"
+, qui est probablement relié à un micro contact sur l'aiguillage ou similaire.
+ Lorsque le capteur est actif, l'aiguillage est connu pour être dans
+la position "déviée"  . Quand il est inactif, l'aiguillage est connu pour
+être dans la position «direct».</DD>
+
+<DT>DEUX CAPTEURS</DT><DD> L'aiguillage montre deux capteurs définis par les colonnes "Capteur 1"
+et "Capteur 2", qui sont probablement reliés à des micro contacts à 
+chaque extrémité de la barre de commande de l'aiguillage. Lorsque le capteur 1 est actif, le
+l'aiguillage est connu pour être "dévié". Lorsque le capteur 2 est actif, l'aiguillage est connu pour être direct (normal)
+</DD>
+
+<DT>SUIVI </DT><DD> Par défaut pour les aiguillages LocoNet et XPressNet,
+cela signifie que le réseau est surveillé par des messages au sujet de l'
+état de l'aiguillage. Ce mode est disponible uniquement pour certains
+protocoles, à savoir certains protocoles ne peuvent pas faire le suivi correctement,
+et n'ont pas ce choix</DD>
+
+<DT>INDIRECT</DT><DD>Actuellement disponible uniquement pour les aiguillages LocoNet
+, il informe le programme que l'aiguillage est
+ entraîné par une DS54 Digitrax avec un micro contact fixé
+sur le fil du commutateur. Pour plus d'informations, consultez la
+<A HREF="../../hardware/loconet/DS54.shtml"> page DS54</a>.</DD>
+
+<DT>EXACT</DT><DD>Actuellement uniquement disponible pour les aiguillages LocoNet et XPressNet. Pour les aiguillages LocoNet, ceci informe le programme que l'aiguillage est piloté par un Digitrax DS54 avec deux micro contacts attachés à l'interrupteur et aux commandes. Pour plus d'informations, consultez la:
+<A HREF="../../hardware/loconet/DS54.shtml"> page DS54</a>. Pour les aiguillages XPressNet ceci informe le programme que l'aiguillage est piloté par un LS100 et que les entrées rétro signalisations ont été connectées comme décrit dans le  <a href="http://www.lenz.com/manuals/accessorydecoders/ls100110.pdf">manuel LS100  (lien externe, PDF)</a>.</DD>
+
+</DL>
+
+<P>La plupart des gens (devrait probablement!) accepter la valeur de type de rétro signalisation par défaut
+que le logiciel sélectionne pour eux.
+
+<h2>Opération</h2>
+
+Lorsque la rétro signalisation est utilisée, les branchements peuvent commencer à se comporter de façon compliquée.
+
+<H3>cas le plus simple  </H3>
+Le cas le plus commun est JMRI  commandant les aiguillages pour les déplacer, et ils se déplacent correctement.
+La séquence est alors:
+<OL>
+<LI>JMRI commandes à l'aiguillage de passer par la mise en l'état commandé par exemple DÉVIÉ
+<LI> Les objet Aiguillage ont le droit d'envoyer des commandes pour le matériel du réseau,
+et travaille avec le reste du programme pour le faire.
+<LI> Les position changent sur le réseau..
+</OL>
+
+Si aucune rétro signalisation (vraiment, la rétro signalisation directe) n'est en cours d'utilisation, l'
+état connu de l'aiguillage va aussi changer à l'étape 1. À ce point,les
+icônes sur les panneaux, signaux logiques, etc seront tous informés du changement et réagirons.
+
+ <H3>Simple Rétroaction Réseau </H3>
+
+Le cas le plus simple pour l'utilisation de la rétro signalisation d'un micro contactsur le réseau est similaire:
+
+<ol>
+<li>JMRI commande l'aiguillage pour passer à la mise en l'état commandé par exemple DÉVIÉ.
+<li> Les données  objet aiguillage ont le droit d'envoyer des commandes pour le matériel du réseau,
+et travaille avec le reste du programme pour le faire.
+<li> Les position changent sur le réseau .
+<li> Un micro contact détecte le changement de position, et informe l'électronique du réseau,
+qui à leur tour modifie une entrée de JMRI.
+<li> l'entrée est connectée à un objet Capteur JMRI, qui change d'état
+par exemple d'INACTIF à ACTIF.
+<li> Parce que l'aiguillage regarde le capteur de rétro signalisation ONESENSOR, lorsque 
+le changement se produit, il définit l'état connu de l'aiguillage pour DÉVIÉ.
+</ol>
+
+Cette séquence prend un peu de temps, mais l'état connu de l'aiguillage n'est pas changé jusqu'à ce que les points soit effectivement déplacés sur le reseau.ensuite, les icônes sur les panneaux, signaux logiques, etc seront tous informés du changement
+dans un état connu et réagiront.
+
+<h3>Changement Intempestif sur le Réseau</h3>
+
+La rétro signalisation permet à JMRI de détecter que quelque chose a changé
+due à une action sur le réseau au lieu d'une commande à partir du programme.
+Par exemple, si vous utilisez les rétroaction d'un aiguillage, vous pourriez voir
+quelque chose comme cette séquence:
+<ol>
+<li>Le programme définit l'état de commande pour DEVIÉ, et les
+instructions de sortie pour l'aiguillage lui disant de se déplacer vers cette position.
+<li> Plus tard, le retour d'information revient pour indiquer que le
+mouvement a eu lieu. Ceci définit l'état connu dans JMRI
+de DEVIÈ'.
+<li>Plus tard, et indépendamment, vous déplacez l'aiguillage sur le réseau à la position DIRECT, peut-être avec bouton-poussoir local.
+<li> Cela provoque un retour d'information envoyer à JMRI pour changer.
+<li> Pour cette raison, l'état connu est changé pour DIRECT .
+<li> À ce stade, JMRI fait l'hypothèse que vous avez voulu que cela se produise, en effet, une commande a été donnée par le réseau (et non dans le programme) pour déplacer l'aiguillage. Alors JMRI change la commande d'état pour DIRECT aussi
+</ul>
+
+Notez que cette dernière transition de l'état n'a pas ordonné d'envoyer des commandes aux
+au réseau, c'est juste un changement au sein du programme.
+
+<h3>Rétro Signalisation  DEUXCAPTEURS et l'état incohérent </h3>
+
+
+<h3>Bus Système et Messages d'Entrée</h3>
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

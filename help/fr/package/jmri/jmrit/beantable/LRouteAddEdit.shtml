@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: LRouteAddEdit.shtml,v 1.4 2009/04/22 06:47:07 pete_cressman Exp $ -->
+<!-- Translated by Hervé Blorec le 2012/01/06-->
+<HTML LANG="fr">
+<HEAD>
+<TITLE>JMRI: Adding/Editing LRoutes</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META CONTENT="Bob Jacobsen" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help LRoute Add Edit">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+ <H1><A  NAME="Adding/Editing LItinéraires"></A> Ajout/Edition LItinéraire</H1>
+<p> Il y a quatre onglets pour ajouter et éditer LItinéraires:
+
+Onglet <H3> 1. LItinéraire Basique</H3>
+
+<P> La première chose que vous devez faire lors de la création d'un itinéraire est de le nommer.Dans
+la case "Nom système», entrez un nom unique pour votre LItinéraire.
+Le préfixe «RTX» sera ajouté au nom système,
+Vous pouvez éventuellement entrer un nom plus descriptif dans la case ''Nom Uilisateur ".</P>
+
+<dl>
+Type d'Itinéraire <dt> Logix</dt>
+<dd> Les boutons radio ci-dessous les descriptions d'onglet règlent le mode de déclenchement
+pour les variables «véto» de contrôle (voir ci-dessous pour une explication de véto).
+Pour émuler le comportement des itinéraires (par opposition à LItinéraires) sélectionner les
+<b>Anciennes</b> options. (Les Itinéraires standard ne se déclenchent pas lorsque la condition de véto est
+retirée.) Si vous voulez que le L-Itinéraire se déclenche lorsque la condition de véto est
+supprimé, sélectionnez les <b>Nouvelles</b> options.</dd>
+</Dl>
+
+Les boutons situés au bas de la Table LItinéraire
+
+<DL>
+<DT> Ajouter Itinéraire</DT>
+<DD> Appuyez sur ce bouton pour ajouter un nouvel Itinéraire Logix.</Dd>
+
+<DT> Annuler</DT>
+<DD> Appuyez sur ce bouton pour annuler l'édition.</Dd>
+</DL>
+
+Onglet <H3> 2. Actions (sortie)</h3>
+
+<p> Cet onglet contient une liste de sélection de tous les capteurs, les aiguillages, les lumières et signaux
+qui ont été créés. Cochez la case dans la  colonne <b>Inclure</b> pour sélectionner le
+périphérique que vous souhaitez inclure dans le L-Itinéraire. Ensuite choisissez l'action que vous voulez que l'appareil doit réaliser lorsque le L-Itinéraire est déclenché à partir du menu déroulant dans la colonne  <b>Obtenir
+Action</b>.</P>
+
+<p> Les boutons radio vous permettent de limiter l'affichage des périphériques à seulement ceux que vous
+avez sélectionnés.</p>
+
+Onglet <H3> 3. Déclencheurs /Commandes (entrée)</h3>
+
+<p> Cet onglet contient une liste de sélection de tous les capteurs, aiguillages, lumières et signaux
+qui ont été créés. Cochez la case dans la colonne <b>Inclure</b> pour sélectionner l'appareil que vous souhaitez utiliser pour le contrôle du L-Itinéraire. Ensuite, choisissez l'état que vous voulez que le
+périphérique à utiliser prenne pour déclencher le L-Itinéraire dans  le menu déroulant dans la colonne <b>
+Etat Déclencheur</b>.</P>
+
+ <p>Les Périphériques sélectionnés avec des états «non- véto" sont regroupés comme une clause "OR". Les Déclencheurs
+sélectionnés avec un Etat "véto" sont regroupés comme une clause "ET". Autrement dit, lorsque tout état de
+«Non- veto" devient vrai, le L-Itinéraire est capable de se déclencher. Toutefois, si l'un des états «Veto»,est vrai,le L-Itinéraire ne déclenchera pas.</P>
+
+
+<p> sur l'onglet 1, le <b>Nouveau</b> type d'itinéraire Logix  sera mis à la logique ci-dessus en un seul
+Logix conditionnel. Si le <b>l'Ancienne</b> option est sélectionnée, chaque déclenchement d'un état 
+«non- veto" est mis dans une condition séparée. Le comportement de cette
+option est que le
+L- itinéraire sera déclenché à chaque fois qu'un de ces états d'appareil devient vrai - même si
+l'expression logique dans son ensemble est déjà vrai. Une autre différence quand
+<b>l'Ancienne</b> option est spécifiée, c'est que les variables de «véto»  ne sont pas activées pour le déclenchement.
+Cela signifie que les actions ne sont pas déclenchées lorsque les vétos sont supprimés. Utilisez la  <b>Nouvelle</b>
+option si vous voulez que les actions se déclenchent lorsque les vétos sont supprimés.
+En résumé, le <b>l'Ancienne</b> option émule un itinéraire standard et la <b>Nouvelle</b>
+option a le comportement d'un Conditionnel Standart Logix . Les variations sur ces comportements
+peuvent être réglés avec des modifications supplémentaires dans le tableau Logix.
+
+<p> Notez que certaines variables de contrôle avec "sur le changement», déclare avoir besoin d'un Conditionnel Logix séparé  pour les actions  pour déclencher L-Itinéraire à chaque changement d'état
+de ces variables.
+
+<p> Les boutons radio vous permettent de limiter l'affichage des périphériques à seulement ceux que vous
+avez sélectionnés.</p>
+
+Onglet <H3> 4. Alignement/Verrous/ Etc.</H3>
+
+<p> Cet onglet contient une liste de sélection des capteurs
+qui ont été créés. Cochez la case dans la colonne <b>Inclure</b>  pour sélectionner un
+capteur que vous souhaitez utiliser pour indiquer l'achèvement des actions L-Itinéraire. Ensuite, choisissez
+le type d'action que vous voulez que le capteur contrôle à partir du menu déroulant dans la colonne
+<b>Alignement</b>. Vous pouvez choisir d'avoir le capteur indiqué dans type particulier
+(capteur,aiguillage, de la lumière, le tête de signal, ou tous)</p>
+
+<p> Les boutons radio vous permettent de limiter l'affichage des périphériques à seulement ceux que vous
+avez sélectionné.</p>
+
+<p> Un fichier son peut être inscrit pour jouer lorsque le L-Itinéraire est déclenché. De même un fichier  script
+peut être exécuté lorsque le L-Itinéraire est déclenché.
+ 
+
+<!--#include virtual="/Footer" -->
+</BODY>
+</HTML>
+

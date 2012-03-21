@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: Panels.shtml,v 1.5 2008/11/01 19:30:08 jacobsen Exp $ -->
+<!--Translated by Hervé Blorec le 2011/9/16 -->
+<title>JMRI: Creating Control Panels </title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+
+<H1>JMRI:Création Panneaux de Commandes</H1>
+Les librairies JMRI contiennent un système de création de panneaux de commandes. Il est grandement personnalisable, et vous permet ce commander votre réseau directement depuis le panneau.
+<h3>Contents of a panel</h3>
+<IMG SRC="../../../images/PiecedPanel.gif" ALT="Screen shot of panel" ALIGN=RIGHT WIDTH="292" HEIGHT="107" HSPACE="0" VSPACE="0">
+
+<P>
+Cliquer sur un symbole d'aiguillage le basculer de direct à dévié et vice-versa.
+Un aiguillage peut avoir aussi les états "inconnu" ou "incohérent", représenté par un ? ou un X respectivement. Ceux-ci représentes un état où aucune information n'a été reçue, et où l'information est intérieurement incohérente ( par exemple direct et dévié en même temps).
+<P>
+"Capteurs" peut être utilisé pour représenter des capteurs d'occupation ou autres entrées. L'icône par défaut est un petit cercle, avec la couleur utilisée pour représenter l'état du capteur. Dans l'exemple ci-dessus il y a sept capteurs pilotés par des indicateurs d'occupation.
+Cliquer sur un capteur bascule le capteur entre l'état "actif" et "inactif".
+Avec les icônes par défaut, actif est un cercle vert et inactif est un cercle vide.
+Ils sont destinés à représenter un indicateur de panneau allumé/éteint.  Un cercle rouge représente l'état "inconnu", utilisé quand aucune information n'a été reçue depuis le réseau.
+
+<h3>Création d'un Panneau</h3>
+(Nick Kulp présente un bon tutoriel sur ce sujet durant Mars 2004; ses diapositives sont 
+<A href="http://jmri.sourceforge.net/community/clinics/NickKulpMarch2004/index.html">disponibles sur le site web principal JMRI</a>.
+Dick Bronson a fourni plusieurs introductions animées à PanelPro sur
+<A HREF="http://www.rr-cirkits.com/Clinics/Clinics.html">ses propres pages web</a>.
+
+<P>
+Les panneaux sont réalisés avec un "Éditeur de Panneau" qui vous permet de placer des images représentant les aiguillages, les capteurs ((sur certains systèmes) et les voies.
+
+<P>
+Vous démarrez l'éditeur en sélectionnant  "Nouveau Panneau...", puis "Éditeur de Panneau depuis le menu "Panneau" sur la fenêtre principale.  
+Vous obtiendrez un panneau de contrôle vierge, plus la fenêtre de l'éditeur:
+:
+<A HREF="../../../images/paneleditor.gif">
+<IMG SRC="../../../images/paneleditor.gif" 
+ALT="Screen shot of panel editor" ALIGN=RIGHT WIDTH="208" HEIGHT="364" HSPACE="0" VSPACE="0"></A>
+<P>
+<A NAME="editor">
+Depuis le haut, celle-ci contient :</a>
+<UL>
+<LI>Deux champs textes spécifiants où(en pixels) doivent être insérer le nouveau composant sur le panneau.
+Vous pouvez généralement ignorer ceci, car une fois que les composants ont été insérés, vous pouvez les faire glisser 
+En tenant enfoncé la méta Touche.
+<LI>Un bouton pour choisir une image de fond.  Les capacités de l'éditeur de dessin sont rudimentaires et susceptibles de le rester pendant une longue période.  Pour créer un panneau CTC, des diagrammes de voie complexes, etc, il est plus facile des les créer dans d'autres programmes et de les insérer comme une image de fond pour un panneau de contrôle JMRI. 
+
+<LI>Un bouton bouton pour ajouter du texte. Mettez le texte désiré dans le champ et cliquez le bouton. Vous pouvez déplacer le texte après l'avoir insérer, mais, mais vous ne pouvez pas couramment éditer le texte plus tard.
+
+<LI>Un bouton pour ajouter une icône comme un label. C'est une possibilité pour ajouter des symboles de voies, etc. Pour voir ou sélectionner l'icône, cliquer sur le bouton "Éditer icône...".
+
+<LI>Deux sections pour ajouter des aiguillages liés à gauche ou à droite. Ceux-ci travaillent actuellement de la même manière, avec seulement différentes icônes pour représenter les états des aiguillages. Entrez le numéro de l'aiguillage (exemple: 23) et cliquer "Ajouter aiguillage:". Si vous préférez un graphisme différent pour les états directs ou déviés, vous pouvez changer leurs icônes avec le bouton "Éditer icônes".
+
+<LI>Une section pour ajouter un capteur.  
+Taper le numéro du capteur ( exemple: 74 ou LS74) dans le champs et cliquer "Ajouter capteur".
+
+<LI>Une section pour ajouter une tête de signal. Taper le numéro de la tête de signal dans le champs et cliquez "Ajoutez capteur" .
+</UL>
+
+<P>
+Chacun d'eux a également unun bouton "Éditer icônes..." qui vous permet de sélectionner quelle icône doit être montrée pour l'aiguillage, le capteur, etc, que vous êtes en train d'ajouter. 
+<P>
+Après avoir obtenu le panneau de la manière que vous voulez, vous pouvez utiliser l'entrée "Enregistrer panneau..." dans le menu "Panneaux" pour l'écrire dans un fichier XML.
+
+<h3>Icônes</h3>
+L'éditeur de panneau est à base d'icône. La librairie JMRI contient beaucoup d'icônes de contribution pour représenter les panneaux CTC, LED, etc. Vous pouvez naviguerà travers elles avec l'arbre dans le bas de l'éditeur de cadre. Peut-être que le meilleur moyen de voir ce que à quoi chacune ressemble est de la sélectionner dans l'arbre,puis cliquez sur l'icône à côté de l'icône "Ajouter". Ce qui la chargera. .
+<P>
+Pour des petits bouts de voie, exemple pour connecter des aiguillages, vous pourriez vouloir 
+<pre>
+ resources -> icons -> small schematics ->tracksegments
+</PRE>
+Puis block.gif, etc.
+
+<P>
+Nous devons faire un meilleur travail d'organisation de ces...
+
+<h3>Autres types de panneaux</h3>
+
+Parce que c'est à base d'icônes, vous pouvez créer des panneaux qui ont l'air de ce que vous
+voulez.  Par exemple, au lieu d'utiliser des icônes de voie schématiques pour les aiguillages, vous pouvez utiliser des petites images des niveaux et des plaques sur la machine CTC. Ceci vous donnera des leviers "mécaniques" que vous pourrez basculer avec un clic.
+  
+<P>
+Pour rendre ceci réellement aisé, nous avons besoin d'avoir un meilleur éditeur. Et faire une vrai panneau CTC demandera de meilleurs signaux logiques pour manipuler les boutons codés, etc.  
+Si vous avez des avis sur la manière dont cela devrait fonctionner, s'il vous plaît envoyez vos commentaires!
+
+<h2>Utilisation du panneau</h2>
+
+Pour commander le changement d'état d'un aiguillage ( exemple direct vers dévié), cliquez sur lui.
+<P>
+Pour le déplacer  vous le "meta-drag". Sur un Mac c'est d'appuyer sur la touche Cmd et de glisser avec le curseur de la souris; sur Windows, ce pourrait être la touche Windows ou la touche de Ctrl.  
+Ou ce pourrait être un glisser  -droit.  Désolé, je n'ai pas de machine Windows ici pour le tester. Pour Linux Glisser+clic droit.
+<P>
+Il y a aussi un menu déroulant(ctrl - clic sur un Mac) qui vous permet de pivoter l'icône ainsi que ces points dans la direction que vous voulez.
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

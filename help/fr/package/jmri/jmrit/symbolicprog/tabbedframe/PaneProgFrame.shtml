@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="">
+<head>
+<!-- Copyright Bob Jacobsen 2009 -->
+<!-- Copyright Walt Thompson 2010 -->
+<!-- $Id: PaneProgFrame.shtml,v 1.3 2010/04/03 19:22:31 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-11-5--> 
+<!-- Translated  by Blorec Hervé le 2011-11-5--> 
+
+<title>JMRI: DecoderPro Service Mode Programmer</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"<p>
+
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<body>
+<!--#include virtual="/Header" --><p>
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>JMRI:  Opérations Programmateur DecoderPro en Mode Service </H1>
+
+<a  name="contents"> </a> <h2> Contenus </h2>
+
+<p> Ce document explique certains <b> onglets basique du programmateur</b>, et des idées sur la manière de les utiliser < p>
+<ul>
+<li>  <a href="#Roster"> onglet Liste </a> </li>
+<li> <a href="#Basic"> Onglet Basique </a> </li>
+<li> <a href="#Other Tabs"> Autres Onglets </a> </li>
+<li> <a href="#Speed able"> Onglet Table de Vitesse  </a> </li>
+</ul>
+<p>
+<a name="Roster"> </a> <H3> onglet Liste  </H3>
+
+<p>
+Une liste est une base de données de toutes les locomotives que votre installation
+de Decoder Pro a programmées.Elle inclut les informations vu dans l'écran
+ci-dessous:
+
+<p>
+<a href=""> <img src="RosterTab.png"> </a>
+
+
+
+<p>
+Le premier champ "ID" devient le nom de fichier dans la Liste pour la locomotive que vous programmez.
+<p> Le champ Adresse est l'adresse DCC active pour cet loco, voir le  <a href="#Basic"> Volet Basique </a>.
+<p> La Vitesse Limite Régulateur définit le pourcentage du régulateur Maximum autorisé.
+
+<p>
+Vous pouvez mettre tout ce que vous voulez dans les autres domaines.
+
+<p>
+Le bouton Enregistrer stocke les informations actuelles du décodeur dans votre dossier Liste. Le stockage par défaut est dans le
+même répertoire que celui des préférences.
+
+<p>
+Le bouton "Réinitialiser par défaut" pas un "reset usine", retourne le CV décodeur à la valeur par défaut qui a été programmée
+dans le fichier xml décodeur. Elle ne modifie PAS les valeurs dans le fichier liste sur votre disque dur, à moins que vous y
+ Enregistriez les valeurs qui ne sont pas écrites dans le décodeur jusqu'à ce que vous sélectionniez de les écrire.
+
+<p>
+La plupart des décodeurs vont activer le menu Réinit (à côté du menu Fichier en haut de la page).
+Il s'agit de la "Réinit d'Usine", certaines construCeci est la page d'aide help/en/package/jmri/jmrit/cteur ont plusieurs routines de réinitialisation. Elle le fait en écrivant directement dans
+un CV dans le décodeur, CV8 dans le cas de Digitrax. Tous les décodeurs peuvent ne pas supporter la Réinit d'Usine et comment ils fonctionnent dépendent du fabricant et du décodeur. 
+ 
+
+<p>
+<a NAME="Basic"></a><H3>Onglet Basique </H3> </a>
+<p>
+
+<a href=""> <img src="BasicTab.png"> </a>
+
+<p> Le volet Basique est l'endroit où vous définissez l'adresse du Décodeur, vous pouvez définir une adresse courte et longue , puis sélectionnez celui qui est Actif.
+<p> Les éléments qui s'affichent peuvent être différents pour chaque décodeur. Cela dépend de la façon dont le fichier de définition de décodeur a été écrit et quelles sont les options de fabrication incluses dans le décodeur.
+
+<p> Vous pouvez sélectionner la Direction de la Locomotive. Si vous voulez que la loco aille dans l'autre direction sélectionner Inverse.
+<p> Les Crans de Vitesse de la Loco peuvent être sélectionnés, généralement  28 crans.
+<p> Vous pouvez sélectionner ralentir si la locomotive répond à la tension DV ou non.
+<p> Vous pouvez entrer n'importe quel numéro que vous voulez dans le "ID Utilisateur"
+<p> L'ID Fabricant et l'ID de version Fabricant sont définies dans le décodeur par le fabricant. JMRI utilise
+ceux-ci pour identifier le décodeur.
+<p>
+<a NAME="Other Tabs"> </a>
+<p>
+<h3> Autres Onglets </h3>
+Les autres onglets dépendent de ce que le fabricant a installé dans le décodeur, si les options n'ont pas été installées
+les volets sont soit grisés ou pas activés.
+  
+<p>
+<a name="SpeedTable"> </a>
+<H3>Onglet Table de Vitesse </H3>
+<p>
+<a href=""> <img src="SpeedTab.png"> </a>
+<p>
+<p>
+Ce panneau peut être différent selon la façon dont le décodeur xml a été construit. Pour utiliser les CVs de la table de vitesse habituellement l'option de vitesse basique doit être éteinte. Les petites cases sous chaque curseur sont très utiles. Pour voir comment ils travaillent cocher une dans le milieu de la table, puis faites glisser le dernier curseur vers le bas . Notez que les valeurs ne changent pas dessous celle que vous avez cochée. Ils ne changent pas pour les crans au-dessus, si un cran inférieur est modifié.
+<p>
+
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

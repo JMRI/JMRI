@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: RpsTrackingFrame.shtml,v 1.5 2008/06/10 06:40:49 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-10-28-->
+<title>JMRI: RPS Tracking Frame</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: RPS Écran de Poursuite
+</h1>
+
+<a href="../../../../../html/hardware/rps/images/RpsTracker.jpg">
+<img src="../../../../../html/hardware/rps/images/RpsTracker.jpg"
+    height="248" width="209" ALIGN="RIGHT" alt="screenshot"></a><br>
+
+Ce cadre affiche une carte de la vue du réseau
+<a href="../../../../../html/hardware/rps/index.shtml"> système  RPS</a>.
+
+
+<h2> Affichage </h2>
+Il existe deux types de choses dessinées:
+<ul>
+<li> les positions mesurées et les chemins d'émetteurs RPS
+<li> Les "régions de détection" utilisée pour les cantons RPS et les <a href="../../../../../html/hardware/rps/sensors.shtml"> Capteurs</a>.
+</ul>
+
+<h3>Positions Emetteur</h3>
+
+Quand une bonne position de lecture est faite, elle est dessinée à l'écran comme un petit cercle
+ représentatif de la  précision de la mesure.
+Une ligne est tracée à cette nouvelle position depuis la dernière position.
+
+<p>
+Différentes couleurs sont attribuées à différents émetteurs afin
+que vous puissiez les distinguer. Si vous "survolez" le curseur sur un point, une info-bulle apparaît qui vous montre où l'émetteur a été vu là-bas et quelle position a été mesurée.
+
+<p>
+Normalement,les mauvaises mesures sont simplement dessinées comme des points, sans
+les relier à la prochaine mesure via une ligne. Ils sont souvent porteurs de valeurs de position très importantes, et se traduira par des lignes sortant du panneau.
+Si vous ne voulez les voir connecté, cocher la case  &rlquo;Montrer les Points Erronés &rdquo;
+
+<h3> Régions </h3>
+
+JMRI peut suivre n'importe quelle région sur le réseau contenant
+des émetteurs RPS actifs. Ceci est utilisé par exemple pour les
+<a href="../../../../../html/hardware/rps/sensors.shtml">capteurs RPS</a> qui sont utilisés pour contrôler les signaux.
+
+<p>
+Ces régions sont affichées comme des blocs de couleur, qui peuvent se chevaucher.
+
+<p>
+Pour obtenir les coordonnées exactes d'une région, placez le curseur dessus.
+Après un court moment, une infobulle affiche les coordonnées des coins.
+
+
+<h2> Contrôles </h2>
+Dans la partie supérieure de la fenêtre il y a quelques commandes simples.
+<ul>
+<li> Le bouton «Effacer» efface l'écran du transmetteur, laissant les régions visibles.
+<li> La case à cocher &rlquo;Montrer erreur de points&rdquo; c, mentionnés ci-dessus, inclura
+les lignes de moindre qualité des mesures.
+<li> La case &rlquo;Montrer récepteurs&rdquo;, lorsqu'elle est cochée, affiche des emplacements des récepteur comme des points noirs légèrement plus grands.
+<li> &rlquo;Afficher régions&rdquo; contrôle si les régions sont dessinées ou non.
+</ul>
+
+Les quatre zones de texte et le bouton "Valider" vous permettent de définir les coordonnées de la cartographie pour la fenêtre. Les deux du haut définissent la position RPS qui correspond à l'angle de la partie supérieure droite
+ du cadre d'affichage, tandis que les deux inférieurs définissent la position RPS qui correspond à l'angle de la partie inférieure gauche. Le coin inférieur gauche est souvent fixé à 0,0, et le coin supérieur gauche
+mis à de grandes valeurs pour montrer votre réseau en entier, mais vous n'avez pas à le faire comme ça.
+
+
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

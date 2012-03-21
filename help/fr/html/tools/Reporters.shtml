@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Translated by Blorec Hervé le 2012-01-22-->
+<!-- $Id: Reporters.shtml,v 1.5 2008/05/31 05:03:28 jacobsen Exp $ -->
+<html lang="fr">
+<head>
+  <TITLE>
+ 	JMRI: Reporter Documentation
+  </TITLE>
+  <META http-equiv=Content-Type content="text/html;charset=utf-8"> 
+
+  <META content="Bob Jacobsen" name=Author>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="keywords"
+        content="sensor model railroad JMRI decoderpro panelpro">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+  <div id="container">
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+      <div id="mainContent">
+      <!-- Page Body -->
+        <H2>
+	JMRI: Documentation Rapport
+        </H2>
+
+
+
+<h1> Rapport </h1>
+
+<p>
+Un rapport est le moyen JMRI de représenter l'information en retournée par le réseau.
+<P>
+Un rapport peut contenir des informations arbitraires, contrairement à un capteur qui n'est qu'ACTIFf 
+ou INACTIF. Chaque rapport est associé à une source d'informations spécifiques
+sur le réseau, et fait que les informations périphériques sont disponibles pour le reste de JMRI.
+<P>
+La mise en œuvre initiale est pour le transpondage LocoNet (Digitrax) ,
+où le rapport donne accès à l'information
+à partir de cartes Digitrax
+<a href="http://www.digitrax.com/prd_statdec_bdl168.php"> BDL168 </a>  avec
+RX4 href="http://www.digitrax.com/prd_statdec_rx4.php"><a transpondage capteurs </a>.
+Lorsque le BDL168 rapporte qu'un décodeur a été vu
+dans un canton transpondeur ou n'est pas plus visible
+dans le canton, le rapport correspondant affichera des messages
+comme "1234 entrer" et "1234 sortie". Il ya aussi un rapport LocoNet
+mis en œuvre pour l'affichage des messages de
+détecteurs <a href="http://www.rjftrains.com/intellibox/uhlenbrock.htm"> Lissy </a>.
+
+<h2>Tableau Rapport ></h2>
+Le
+Tableau Rapport <a href="../../package/jmri/jmrit/beantable/ReporterTable.shtml"></a>
+fournit un accès facile au contenu de tous les rapports que JMRI connaît.
+Il ya aussi un bouton
+<a href="../../package/jmri/jmrit/beantable/ReporterAddEdit.shtml"> "Ajouter ..."  </a>
+pour créer vos propres Rapports internes; JMRI crée automatiquement
+Objets Reporter pour les appareils sur le réseau.
+
+<h2>Affichage des Valeurs Rapport sur les Panneaux </h2>
+La valeur d'un rapport peut être affichée sur un panneau via une icône.
+Pour ce faire:
+<ul>
+<li> Sur la fenêtre Éditeur Panneau de votre panneau, trouver le "Ajouter Rapport"
+bouton.
+<li> Dans la boîte de texte à côté de ce bouton, tapez le nom utilisateur ou système du
+Rapportr désiré.
+<li> Cliquez sur le bouton. L'icône Rapport sera placée sur le panneau.
+Si elle n'est pas visible, ce pourrait être parce que la valeur est actuellement vide;
+utiliser le tableau Rapport pour changer la valeur à quelque chose qui sera visible.
+<li> Vous pouvez faire glisser l'icône à l'endroit où vous voulez dans la manière habituelle.
+<li> Le menu pop-up sur l'icône vous permettra de modifier le formatage.
+</Ul>
+<h2>Affichage des Valeurs Rapport sur les Panneaux </h2>
+La valeur d'un rapport peut être affichée sur un panneau via une icône.
+Pour ce faire:
+<ul>
+<li> Sur la fenêtre Éditeur Panneau de votre panneau, trouver le "Ajouter Rapport"
+bouton.
+<li> Dans la boîte de texte à côté de ce bouton, tapez le nom utilisateur ou système du
+Rapportr désiré.
+<li> Cliquez sur le bouton. L'icône Rapport sera placée sur le panneau.
+Si elle n'est pas visible, ce pourrait être parce que la valeur est actuellement vide;
+utiliser le tableau Rapport pour changer la valeur à quelque chose qui sera visible.
+<li> Vous pouvez faire glisser l'icône à l'endroit où vous voulez dans la manière habituelle.
+<li> Le menu pop-up sur l'icône vous permettra de modifier le formatage.
+</Ul>	JMRI: Reporter Documentation
+        </H2>
+
+
+<!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+  </div> <!-- closes #container -->
+</body>
+</html>
+
+

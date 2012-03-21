@@ -1,0 +1,39 @@
+<!-- Sidebar -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- Translated by Blorec Hervé le 2012-01-23-->
+<html lang="fr">
+
+	  <hr class="hide">
+	  <div id="mBody">
+	  <div id="side"> <!-- Block of text on left side of page -->
+	    <div style="text-align: center">JMRI accès web</div>
+	    <dl>
+
+		<dt><h3><a href="index.shtml">Utilisation de Basee</a></h3></dt>
+		<dd>JMRI a un support incorporé pour voir votre réseau depuis un navigateur web r.
+		    <UL>
+		    <LI><dfn><a href="index.shtml#Start">Démarraged</a></dfn>
+		    <LI><dfn><a href="index.shtml#Configure">Configuration</a></dfn>
+		    <LI><dfn><a href="index.shtml#URLs">URLs</a></dfn>
+		    </UL>
+		</dd>
+
+		<dt><h3><a href="MiniServer.shtml" Configuration Avancée</a></h3></dt>
+		<dd>Le suppotr incorporé de JMRI doit être reconfiguré pour plusieurs extensionst.
+		    <UL>
+		    <LI><dfn><a href="MiniServer.shtml">Miniserver</a></dfn>
+		    </UL>
+		</dd>
+
+		<dt><h3>Advanced Uses</h3></dt>
+		<dd> Lescomposants web JMRI peuvent être utilisés sur votre propre serveur web .
+		    <UL>
+		    <LI><dfn><a href="FrameServlet.shtml">Frame servlet</a></dfn>
+		    </UL>
+		</dd>
+
+	    </dl>
+
+	</div> <!-- closes #side -->
+
+<!-- /Sidebar -->

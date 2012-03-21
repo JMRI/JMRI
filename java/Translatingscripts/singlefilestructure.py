@@ -66,7 +66,7 @@ class singlefilestructure:
                 else:
                     errorflag = 0
                     if tempstr == []:
-                        temp = lines.split("=")
+                        temp = lines.split("=",1)
                         if len(temp) is 1:
                             raise Property_File_Error(self.fullfilename, str(lineidx),  temp[0])
                             #print (str("File " +  self.fullfilename + ":"))

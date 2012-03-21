@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Help.shtml,v 1.9 2010/01/07 22:38:27 jacobsen Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-04-06-->  
+<html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: Use of JavaHelp
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code Java Help JavaHelp ">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+		    <H1>JMRI:  Utiliser une AideJava</H1>
+
+Cette page parle des aspects techniques de la façon dont JMRI fournit des informations d'aide
+à partir de JavaHelp et JHelpDev.
+
+
+<h2>Organisation des fichiers aide</h2>
+
+Les fichiers d'aide sont situés dans le répertoire "help" 
+dans le répertoire de distribution JMRI.
+
+<p>
+La copie originale de ce CVS est stockée dans le module. "help"
+. Cela signifie que pour obtenir votre propre copie locale, il suffit de faire:
+<code> <PRE>
+cvs-d: pserver: anonymous@jmri.cvs.sourceforge.net:/cvsroot/login jmri
+cvs-d: pserver: anonymous@jmri.cvs.sourceforge.net:/cvsroot/co jmri all
+</PRE> </code>
+(Si on vous demande un mot de passe, appuyez simplement sur le retour;
+voir notre page
+"<a href="getcode.shtml"> l'obtention du code </a>" pour plus d'informations
+sur l'obtention du contenu JMRI avec CVS)
+
+<P>
+Dans ce cadre, tous les fichiers de langue Anglaise sont situées
+dans le sous-répertoire "en". Finalement, ce sera à nous
+ d'internationaliser les pages d'aide.
+<P>
+Dans ce cadre, il y a des arbres de plusieurs fichiers:
+<UL>
+<LI> Package  - organisé comme l'arbre paquet source,
+il contient les fichiers d'aide spécifiques au code pour par exemple une 
+fenêtre particulière ou d'un composant. Par exemple, une fenêtre qui a créé
+par le jmri.jmrit.speedometer.SpeedometerFrame <code>de la classe
+(de la src </code> <code>/jmri/jmrit/speed/SpeedometerFrame.java </code>)
+devrait disposer de sa fenêtre d'aide spécifique dans un fichier de
+package <code>/jmri/jmrit/speed/SpeedometerFrame.shtml </code>.
+<LI> html - une description générale, des tutoriels, etc
+C'est organisés tour à tour dans des répertoires qui représentent des domaines généraux.
+<LI> Manuel - une version du manuel DecoderPro reformartée pour une
+utilisation dans le système d'aide.
+</UL>
+
+À long terme, nous voulons seulement deux branches dans cette structure: le "paquet"
+partie de l'arbre pour aider à l'information qui est spécifique à
+un morceau de code particulier,
+et une autre partie de l'arbre pour plus d'informations générales.
+(C'est une question de religion si cette 2ème partie devrait être appelé
+"html" ou "manuel "; l'essentiel est qu'on se retrouve avec un seul).
+Le web est censé être un  <em>web </em>, avec de nombreux chemins à suivre pour 
+atteindre le contenu. La deuxième partie de l'arbre devrait également être organisé
+comme "une page, un thème", avec des liens pour les connecter au besoin
+
+<a name="limitations">
+<h3>Limitations de JavaHelp HTML</h3></a>
+
+JavaHelp affiche " un bon vieux HTML 4.0", sans fournir certains des
+sucre syntaxique fourni par de nombreux navigateurs pour permettre de pauvres rendus HTML.
+En particulier, il ya quelques choses à surveiller.
+<ul>
+<li>Les balises d'ancrage ne sont pas XML. Plus précisément,
+<code><pre>
+&lt;a id="foo"/&gt;Foo!
+</pre></code>
+demande d'être remplacé par
+<code><pre>
+&lt;a id="foo"&gt;Foo!
+</pre></code>
+or
+<code><pre>
+&lt;a name="foo"&gt;Foo!&lt;/a&gt;
+</pre></code>
+L'indicateur que vous avez à faire c'est un
+caractère <juste par lui-même figurant sur la page rendue>.
+
+<li> Ancres a  aussi besoin d'utiliser l'attribut "name" plutôt que l'attribut "id". Voir l'article ci-dessus pour un exemple.
+
+<li> Vous ne pouvez pas compter sur un endroit particulier pour vos fichiers
+sur la machine locale, afin que tous les liens vers les pages d'aide d'autres doivent être relatifs.
+
+<li> les liens vers des pages Web en dehors du système d'aide de travail,
+mais JavaHelp ne peut pas afficher les fichiers PDF. Liens vers ceux-ci
+doivent être représentées de façon explicite comme des liens, afin qu'ils puissent être copiés sur
+un navigateur Web extérieur..
+
+</ul>
+
+<h2>L'accès Web à l'aide </h2>
+
+Il est commode d'avoir à maintenir deux pages Web distinctes pour les
+site web principaux et le système d'aide. Pour réduire le besoin pour cela, nous
+utilisons un formulaire particulier pour les pages web dans le système d'aide.
+<UL>
+<LI> utilisation extensions de fichiers ". shtml"  de telle sorte que
+les serveurs Web principaux  recherchent les fichiers pour
+<A HREF="http://httpd.apache.org/docs/1.3/howto/ssi.html">Serveur -Side Includes </a>.
+<li> Lorsque vous créez une nouvelle page, commencez par une copie
+soit du fichier modèle Aide/fr/TemplateBar.shtml ou de l'aide/fr/TemplatePlain.shtml
+, selon que vous souhaitez ou non inclure une "Sidebar"
+via un fichier du même nom. Cela mettra en haut et en bas la
+matière en place pour obtenir que la page s'affiche correctement.
+</UL>
+
+<h2> Accès au code</h2>
+
+Dans le code JMRI, l'accès au système d'aide est
+via la classe jmri.util.HelpUtil.
+(Pour des raisons historiques, il y a un peu de code
+dans apps.Apps, mais vous devriez l'ignorer).
+<P>
+La façon la plus simple d'ajouter un menu d'aide à un
+cadre est d'avoir soit un JmriJFrame (que vous
+devrez faire de toute façon), soit (...) addHelpMenu appel
+après que vous ayez construit des autres menus.
+
+<P>
+Par convention, nous utilisons une arborescence de fichiers similaire pour
+les fichiers de code source et de l'aide. Par exemple,
+l'jmri.jmrit.simpleclock.SimpleClockFrame <code> </code>
+classe hérite de JmriJFrame, et ajoute un menu d'aide avec la ligne
+<PRE>
+<CODE>
+   addHelpMenu ("package.jmri.jmrit.simpleclock.SimpleClockFrame", true);
+</Code>
+</PRE>
+Le fichier d'aide est alors située à
+Aide <code>/fr/package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml </code>.
+<P>
+Un certain nombre de fichiers d'aide ont été mis en place sans contenu;
+j'espère que certains utilisateurs les modifierons et renverrons l'ascenseur.
+
+
+<h2> Création des fichiers de contrôle avec JHelpDev </h2>
+
+ Diverses utilisations des fichiers JavaHelp  XML pour
+contrôler la façon dont la table des matières et l'index sont affichés.
+Nous créons les <A HREF="http://jhelpdev.sourceforge.net/"> JHelpDev  </a>.
+S'il vous plaît ne pas les modifier manuellement.
+
+<P>
+Pour ce faire:
+<OL>
+<LI> Vous devez mettre des fichiers dans votre répertoire help/fr, Télécharger
+<A  HREF="http://downloads.sourceforge.net/jmri/JHelpDevTool.3.zip?download"> cette archive zip </a>
+et de mettre dans l'aide de votre répertoire projet/fr , puis développez-le.
+Il faut créer un fichier jhelpdev.jar, et un répertoire lib
+contenant d'autres fichiers.jar.
+Ces fichiers ne s'affichent pas dans le CVS, pour diverses raisons.
+
+<li> Il est important que vous mettiez à jour les fichiers de configuration
+à partir de CVS avant d'exécuter l'outil. Les informations de configuration sont
+compliquées, et une fusion CVS ne peut pas aller bien plus tard.
+
+<br/>
+<code>cvs -q update Map.jhm *.xml</code>
+
+<LI>démarrez l'outil en cliquant sur le fichier jhelpdev.jar.
+
+<LI> Une fois que la fenêtre apparaît, sélectionnez «Ouvrir un projet" dans le cadre du menu "Fichier".
+
+<LI> Accédez au répertoire de l'"aide" dans votre copie extraite du code,
+puis le répertoire "fr" dans ce cadre, puis sélectionnez l'option "JHelpDev.xml" fichier
+et cliquez sur «Ouvrir».
+
+<LI> Cliquez sur "Créer tout " de recréer les cartes, index, etc
+
+<li> Puis, de retour sur la ligne de commande et dans le répertoire help/fr , invoquer
+«ant» pour créer l'index web et la table des pages de contenu.
+</OL>
+
+<p>
+Les fichiers de contrôle différents qui utilise JavaHelp sont stockés dans le CVS,
+Donc, une fois que vous avez fait ceci,  CVS va les montrer comme modifiés.
+S'il vous plaît vérifiez-les lors de votre enregistrement dans les nouveaux fichiers d'aide ainsi d'autres
+personnes n'auront pas besoin de recréer les fichiers de contrôle eux-mêmes.
+
+<P>
+Vous pouvez également utiliser l'outil pour les ajouter à la table des matières, etc, si vous le souhaitez.
+Il y a plus d'informations sur la façon de le faire sur le
+<a href="http://jhelpdev.sourceforge.net/"> site web JHelpDev </a>.
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>

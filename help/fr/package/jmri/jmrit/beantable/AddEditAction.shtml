@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: AddEditAction.shtml,v 1.2 2010/03/30 15:47:52 djduchamp Exp $ -->
+<!-- translated by Hervé Blorec le 2012/01/02-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Add/Edit Actions
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Transit Special Actions">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Ajouter/Éditer Action</H1>
+<H2>La fenêtre Ajouter/Modifier Action</H2>
+
+<p>Les  <b> <a href="ViewSpecialActions.shtml">Actions</a></b>sont des tâches qui
+peuvent être lancées automatiquement comme un train qui traverse en mode automatique
+le réseau. La fenêtre Ajouter/Modifier action (voir ci-dessous pour la version"Ajouter") prévoit
+la création d'actions nouvelles et pour l'édition des actions en cours. La version  «Modifier»
+ de cette fenêtre est la même que celle montrée ci-dessous, à l'exception du bouton <b> Créer
+Nouvelle action</b>qui est est remplacé par un bouton <b> Mise à Jour Action</b>et les
+sélections et données sont remplies par les valeurs actuelles de l'action en cours
+d'édition.</p>
+<img src="AddEditAction.jpg" height="236" width="307"></li>
+<p>Une action est définie en spécifiant  <b> Quelle</b>action est demandée et
+ <b> Quand </b>l'action doit être engagée.</p>
+<p>Pour spécifier la partie <b> Quand</b>, sélectionnez une option dans le menu contextuel
+ <b> Quand</b>, et  remplir toutes les données qui pourraient être nécessaires. Les Champs d'élément de données ou de menus apparaîtront lorsque l'élément qui en a besoin est sélectionné. Chaque élément de données est fourni
+avec une description textuelle (bulle d'aide) qui peut être appelée en pointant le curseur sur
+l'élément. Chaque option <b> Quand</b>est décrite plus en détail dans
+ <b> <a href="ViewSpecialActions.shtml">Actions</a></b>.</p>
+<p>Un retard optionnel, spécifié en millisecondes, est disponible pour chaque option  <b> Quand</b>
+. Aucun retard par défaut d. Si un délai optionnel n'est pas entré (ou un
+temporisation  zéro est entrée), l'action sera lancée immédiatement après
+<i>que</i>l'événement se soit produit. Si un délai est spécifié, le programme attendra
+pendant le temps spécifié après <i>que</i>l'événement se soit produit avant d'initier l'action.</p>
+ <p>Pour spécifier <b> Quelle</b> action est demandée, sélectionner une option dans le menu contextuel <b> Quelle</b>
+, et  remplir toutes les données qui pourraient être nécessaires. Les Champs d'élément de données
+apparaîtront lorsque l'élément qui en a besoin est sélectionné. Chaque élément de données est fourni
+avec une description textuelle (bulle d'aide) qui peut être appelée en pointant le curseur sur
+l'élément. Chaque  <b> Quelle</b> action est décrite plus en détail dans
+ <b> <a href="ViewSpecialActions.shtml">Actions</a></b>.</p>
+
+<p>Quand l'action est complètement définie cliquez sur le bouton <b> Créer une Nouvelle
+Action</b>(ou le bouton <b> Mise à Jour Action</b>si édition en cours). Toutes les données nécessaires
+seront validées. Si un problème est détecté, un message apparaîtra, et
+la fenêtre d'action Ajouter/Éditer restera pour permettre la correction du problème. Si
+tout  est vérifié, la fenêtre Ajouter/Éditer action va disparaître et les actions(nouvelles ou
+éditées) apparaîtront dans la fenêtre <b> Voir Actions</b>.</p>
+
+<p> Cliquez sur le bouton <b> Annuler</b>pour refermer la fenêtre Ajouter/Modifier l'Action, sans
+créer une nouvelle action ou sans achever le montage d'une action existante
+. La fermeture de la fenêtre Ajouter/Modifier l'Action équivaut à cliquer sur le bouton 
+ <b> Annuler</b>.</p>
+
+
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

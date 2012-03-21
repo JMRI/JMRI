@@ -172,7 +172,12 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                 if (inPackage != null){
                     heartbeat = true;   //  Any contact will keep alive
                     consecutiveErrors = 0;  //reset error counter
-                    if (log.isDebugEnabled()) log.debug("Received: " + inPackage);
+                    if (log.isDebugEnabled()) {
+                    	String s = inPackage + "                    "; //pad output so messages form columns
+                    	s = s.substring(0, Math.max(inPackage.length(), 20));
+                    	log.debug("Rcvd: " + s + " from "+getName()+device.getRemoteSocketAddress());
+                    }
+                    
                     switch (inPackage.charAt(0)){
                         case 'T':{
                             if (throttleController == null) {
@@ -352,7 +357,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                 Thread.sleep(20);
             }catch (java.lang.InterruptedException ex){}
         }while (keepReading);	//	'til we tell it to stop
-        log.debug("Ending thread run loop for device");
+        log.debug("Ending thread run loop for device: "+getName());
         closeThrottles();
 
     }
@@ -371,7 +376,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         }
         if (multiThrottles != null){
             for (char key : multiThrottles.keySet()){
-                if (log.isDebugEnabled()) log.debug("Closing throttles for key: "+key);
+                if (log.isDebugEnabled()) log.debug("Closing throttles for key: "+key+" for device: "+getName());
                 multiThrottles.get(key).dispose();
             }
             multiThrottles.clear();
@@ -407,13 +412,13 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         keepReading = false;
         try{
             if (device.isClosed()) {
-                if (log.isDebugEnabled()) log.debug("device socket " + device.getRemoteSocketAddress() + " already closed.");
+                if (log.isDebugEnabled()) log.debug("device socket " + getName()+device.getRemoteSocketAddress() + " already closed.");
             } else {
             	device.close();
-            	if (log.isDebugEnabled()) log.debug("device socket " + device.getRemoteSocketAddress() + " closed.");
+            	if (log.isDebugEnabled()) log.debug("device socket " + getName()+device.getRemoteSocketAddress() + " closed.");
             }
         }catch (IOException e){
-        	if (log.isDebugEnabled()) log.error("device socket " + device.getRemoteSocketAddress() + " close failed with IOException.");
+        	if (log.isDebugEnabled()) log.error("device socket " + getName()+device.getRemoteSocketAddress() + " close failed with IOException.");
         }
     }
     
@@ -550,7 +555,11 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     public void sendPacketToDevice(String message){
         if (message == null) return; //  Do not send a null.
         out.println(message + newLine);
-        if (log.isDebugEnabled()) log.debug("Sent: "+message);
+        if (log.isDebugEnabled()) {
+        	String s = message + "                    "; //pad output so messages form columns
+        	s = s.substring(0, Math.max(message.length(), 20));
+        	log.debug("Sent: " + s + "  to  "+getName()+device.getRemoteSocketAddress());
+        }
     }
 
     /**

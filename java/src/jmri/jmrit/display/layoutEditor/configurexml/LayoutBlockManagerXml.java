@@ -68,6 +68,9 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
                 if (b.getMemoryName() != "") {
                     elem.setAttribute("memory", b.getMemoryName());
                 }
+                if(!b.useDefaultMetric()){
+                    elem.addContent(new Element("metric").addContent(""+b.getBlockMetric()));
+                }
             }
 		}
 		return (layoutblocks);	
@@ -175,7 +178,15 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
 					log.error("failed to convert occupiedsense attribute");
 				}
 				b.setOccupiedSense(sense);
-			}	
+                if (((layoutblockList.get(i))).getChild("metric")!=null){
+                    String stMetric = ((layoutblockList.get(i))).getChild("metric").getText();
+                    try {
+                        b.setBlockMetric(Integer.valueOf(stMetric));
+                    } catch (java.lang.NumberFormatException e) {
+                        log.error("failed to convert metric attribute for block " + b.getDisplayName());
+                    }
+                }
+            }
 	    }
 	}
 

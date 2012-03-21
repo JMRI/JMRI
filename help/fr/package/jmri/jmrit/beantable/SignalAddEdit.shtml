@@ -1,0 +1,255 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: SignalAddEdit.shtml,v 1.20 2010/03/06 20:41:38 jacobsen Exp $ -->
+<!-- Translated by Hervé Blorec le 2012/01/08-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Adding/Editing Signal Heads
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Signal Heads Add Edit">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> Ajouter/Editer les Têtes de signal</H1>
+
+<A Href="../../../../images/SigAdd.gif"> <IMG SRC images ="../../../..//SigAdd.gif "align = right WIDTH = "181" height = "218" hspace = "0" vspace = "0" alt = "chiffre simple panneau de signaux logiques"></a>
+
+<p>
+JMRI a besoin de savoir comment une tête de signal sur le réseau
+est connectée au matériel électrique. Une fois qu'il le sait ,
+il peut envoyer les bonnes commandes pour contrôler l'apparence de la tête de signal.
+<p>
+Le dialogue "Ajouter Tête de signal" vous donne un certain nombre de
+choix différents pour savoir comment la tête de signal est connectée:
+<dl>
+<dt> Sortie triple</dt>
+<dd>
+Ce type de contrôle d'une tête de signal via trois connexions électriques.
+On va à une lampe/LED,verte à une jaune,
+et le troisième à une rouge.
+<p>
+Ces connexions sont contrôlées via le l'aiguillage logique JMRI
+ et donc apparaître dans la table Aiguillage.
+Elles ne sont pas vraiment liées à la commutation des moteurs, même si,
+elles sont simplement des sorties électriques.
+<p>
+Pour chaque connexion, saisissez l'aiguillage JMRI
+ pour le raccordement électrique sur le réseau,
+soit comme un nombre (1,2,3) ou comme un Nom JMRI
+(nom système, comme LT1, CT2 ou un nom utilisateur déjà défini).
+Ils ne doivent pas être consécutifs ou dans un ordre particulier.
+<p>
+Si vous avez besoin de déboguer une de ces Têtes de signal, commencez par
+vérifier si les connexions Aiguillage travaillent. Vous pouvez
+le faire en allant à la
+<a href="TurnoutTable.shtml"> Table Aiguillage</a> et changer le réglage de la sortie .
+Réglage par exemple
+l'aiguillage sur la connexion "vert" Dévié devrait allumer la
+lampe verte.
+</Dd>
+
+<dt> Double sortie</dt>
+<dd>
+Ce type commande d'une tête de signal via deux connexions électriques.
+On va à une lampe/LED verte, et l'autre à un rouge.
+le jaune est créé en les transformant à la fois en même temps.
+<p>
+Ces connexions sont contrôlées via l'aiguillage logique JMRI
+, et donc apparaître dans la table Aiguillage.  Elles ne sont pas vraiment liées à la commutation des moteurs, même si,
+elles sont simplement des sorties électriques.
+<p>
+Pour chaque connexion, saisissez l'aiguillage JMRI
+ pour le raccordement électrique sur le réseau,
+soit comme un nombre (1,2) ou comme un Nom JMRI
+ (nom  système, comme LT1, CT2 ou un nom utilisateur déjà défini).
+Ils ne doivent pas être consécutifs ou dans un ordre particulier.
+.
+  <p>
+   
+<dt> sortie Quadruple</dt>
+  <dd>
+  Ce type commande d'une tête de signal via quatre connexions électriques.
+  On va à une lampe /LED verte ,  à un jaune,
+ à un rouge, et le quatrième à un "lunaire" (blanc) .
+  <p>
+  Ces connexions sont contrôlées via l'aiguillage logique JMRI
+ , et donc apparaître dans la Table Aiguillage.
+  Elles ne sont pas vraiment liées à la commutation des moteurs, même si,
+ elles sont simplement des sorties électriques.
+  <p>
+  Pour chaque connexion, saisissez l'aiguillage JMRI
+pour le raccordement électrique sur le réseau
+  soit comme un nombre (1,2,3) ou comme un Nom JMRI
+  (nom  système, comme LT1, CT2 ou un nom utilisateur déjà défini).
+  Ils ne doivent pas être consécutifs ou dans un ordre particulier.
+  <p>
+
+<dt> Sortie unique</dt>
+<dd>
+Ce type commande d'une tête de signal avec une seule connexion électrique.
+La connexion peut être à une seule lampe/LED pour afficher une apparence unique.
+Une méthode alternative consiste à connecter une paire de diodes à la sortie unique du câbles
+adaptés de sorte que lorsque la sortie du décodeur est ON vous obtenez une
+couleur et alors que la sortie est désactivée, vous obtenez l'autre.
+
+Ce type pourrait aussi être utilisé pour contrôler les Têtes de signal à commande mécanique qui n'ont que deux apparences et donc toujours avoir une apparence.
+Il est possible de gagner une troisième apparence "clignotant".
+Si vous avez foncé et une couleur sélectionnée, alors le résultat final est une option clignotant supplémentaire
+S'il y a deux couleurs choisies, alors vous donnez un clignotement pour les deux couleurs , mais Cependant ceci fera 
+ l'option flash entraînant les couleurs clignotante alternativement.
+<p>
+Ces connexions sont contrôlées via l'aiguillage logique JMRI
+, et donc apparaître dans la Table Aigillage.
+Elles ne sont pas vraiment liées à la commutation des moteurs, même si,
+Elles sont simplement  des sorties électriques.
+<p>
+Pour chaque connexion, saisissez l'aiguillage JMRI
+ pour le raccordement électrique sur le réseau
+soit comme un nombre (1,2,3) ou comme un Nom JMRI
+(nom  système, comme LT1, CT2 ou un nom utilisateur déjà défini).
+Ils ne doivent pas être consécutifs ou dans un ordre particulier.
+<p>
+  <dt> sortie Quadruple</dt>
+<dd>
+Ce type commande d'une tête de signal via quatre connexions électriques.
+On va à une lampe/LED verte ,  à une jaune,
+à une rouge, et le quatrième à un "lunaire" (blanc) 
+<p>
+
+Si vous avez besoin de déboguer une de ces têtes de signal, commencez par
+vérifier si les connexions Aiguillage travaillent. Vous pouvez
+le faire en allant à la
+<a href="TurnoutTable.shtml"> Table Aiguillage</a> et changer le réglage de la sortie
+.
+<p>
+Apparence direct- L'apparence donnée lorsque la connexion est à l'état direct.
+Apparence dévié - L'apparence donnée lorsque la connexion est dans l'État dévié.
+</Dd>
+<dt> Virtuel</dt>
+<dd>
+Ce type ne se connecte pas du tout à la disposition.
+Utilisez  -le quand vous voulez par exemple afficher une tête de signal sur un panneau,
+mais ne pas en avoir un vrai sur le réseau.
+</Dd>
+
+<dt> Aspect SE8c 4</dt>
+<dd>
+Ce type commande des têtes de signal attachés à un
+<a href="http://www.digitrax.com/prd_statdec_se8c.php"> SE8c carte de pilotage de tête de signal</a>
+<a href="http://www.digitrax.com"> Digitrax</a>.
+<p>
+Parce que chaque tête de signal Aspect SE8c 4  travaille avec une adresse  DCC spécifique
+, son nom  système est déterminée automatiquement à partir de cette adresse. Vous
+n'avez pas à l'entrer. Par exemple, la tête de signal  Aspect SE8c 4 des
+257 adresses matérielles sera donné un nom système sur cette base.
+<p>
+Vous pouvez éventuellement entrer un nom utilisateur si vous le souhaitez.
+<p>
+Dans le champ "numéro d'Aiguillage», entrez l'adresse DCC appropriée 
+de la sortie SE8c comme un nombre. Par exemple,
+la 1ère  tête de signal  du 1er  SE8c tel qu'il est configuré en usine par Digitrax
+ est adressée en mettant un "257" ici. Voir par exemple les page
+5 et 7 du manuel Digitrax SE8c
+(<a Href="http://www.digitrax.com/ftp/se8c.pdf"> http://www.digitrax.com/ftp/se8c.pdf</a>).
+Dans ce cas, ne rien entrer dans le champ "Second Aiguillage".
+<p>
+Alternativement, si vous utilisez plus d'un type de matériel, vous pourriez avoir besoin
+de spécifier un nom complet utilisateur ou système. Dans ce cas, mettre le nom de l'
+Adresse la plus basse de l'aiguillage, par exemple NT257, dans le champ «numéro de aiguillage«.
+et l'adresse de aiguillage supérieur, par exemple NT258, dans le champ "Deuxième Aiguillage".
+</Dd>
+
+<dt> LDT LS-DEC</dt>
+<dd>
+Ce type est particulièrement utile pour la signalisation européenne.
+Il contrôle les signaaux attaché à un
+<A Href="http://www.ldt-infocenter.com/english/lsdec_sb_e.htm"> décodeur de Têtes de signal LS-DEC</a><a href="http://www.ldt-infocenter.com/english/home_frame_e.htm"> Littfinski Datentechnik (LDT)</a>,
+ou d'un décodeur DP2N .
+<A HREF="http://www.marathonmodel.cz/"> modèle Marathon</a>.
+<p>
+Ces contrôleurs utilisent sept adresses  DCC d'aiguillage (accessoire décodeur) pour spécifier les adresses
+des sept apparitions possibles de la  tête de signal. Entrez ceux-ci, soit en tant que
+chiffres (1,2,3 ,...) ou comme  nom d'aiguillage JMRI
+noms (noms de système comme LT1, CT2 et/ou les noms déjà définis par l'utilisateur),
+dans les champs texte appropriés.
+
+  <p>
+Ces contrôleurs utiliser sept adresses DCC d'aiguillage (accessoire décodeur) pour spécifier les adresses
+des sept apparitions possibles de la tête de signal. Entrez ceux-ci, soit en tant que
+chiffres (1,2,3 ,...) ou comme noms d'aiguillage JMRI (noms  système comme LT1, CT2 et/ou les noms déjà définis par l'utilisateur), dans les champs texte appropriés.
+<p>
+Pour plus d'informations sur la configuration de ces têtes de signal, voir
+la <a href="../../../../html/tools/tête de signaling/ldt/output.shtml"> page  exemples</a>.
+
+<dt> Décodeur de tête de signal DCC</ dt>
+<dd>
+Ce type commande les têtes de signal attachées à un décodeur
+qui utilise les paquets de têtes de signal définies par le
+<a href="http://www.nmra.org/standards/DCC/DCCHome.html"> groupe de travail  NMRA DCC</a> pour la commande.
+Ceci est un protocole spécial défini pour la conduite des têtes de signal, et est différent de la façon dont sont contrôlés les «Décodeurs d'accessoires" (sorties d'aiguillage, par exemple).
+<p>
+Entrez l'adresse de DCC comme un nombre.
+</Dd>
+
+<dt> Grapevine</dt>
+<dd>
+Ce type de contrôle des têtes de signal attachées à un
+<A href="http://www.protrak.cc/tête de signals.htm">Noeud Grapevine</a>
+<a href="http://www.protrak.cc/"> Protrak</a>.
+
+<p>
+Dans le champ texte, entrez un nom système pour une tête de signal Grapevine
+, par exemple GH1204 pour le 4ème connecteur sur la 2e banque du 1er nœud.
+Pour plus d'informations sur la façon dont ces noms sont générés, consultez la
+Page <a href="../../../../html/hardware/grapevine/Names.shtml">  sur les noms de Grapevine</a>.
+</ Dd>
+<dt>Pilote de tête de signal MERG 2</dt>
+<dd>
+Ce type commande une tête de signal qui utilise un pilote de têtes de signal MERG 2 pour contrôler ses aspects affichés.
+Le SD2 est entraîné à l'aide d'un décodeur d' accessoires à état stable. Le nombre d'aspects
+qui sont affichées sur la tête de signal, va déterminer le nombre de sorties d'aiguillage  obligatoires.
+Par exemple. <br>
+2 Aspects nécessitent une aiguillage <br>
+3 Aspects nécessitent deux aiguillages <br>
+4 Aspects nécessitent 3 aiguillages
+<p>
+Le pilote tête de signal sur JMRI a été configuré pour contrôler la sortie du seul aspect de la SD2,
+il ne contrôle pas les autres caractéristiques de la SD2 comme les «Règles de vapeur» ou «Plume».
+Cependant ceux-ci peuvent facilement être configurés à l'aide de Logixs normaux ou d'itinéraires.
+<p>
+<b> Notes</b> - Le pilote MERG SD2 ne supporte pas le clignotement aspect jaune,
+pour flasher les aspects jaune un circuit supplémentaire est nécessaire tel que documenté
+dans les Bulletins  Techniques MERG. <br>
+Comme le pilote MERG SD2 va au-delà des aspects Vert/Jaune/Rouge pris en charge dans
+JMRI avec un double aspect jaune, l'état double jaune est représentée dans le
+statut de "lunaire".
+
+  <p>
+  De plus amples informations sur le Pilote de Têtes de signal peuvent être trouvées à <a href="www.merg.info"> MERG</a>
+</dd>
+
+</dl>
+La fenêtre de Dialogue "Modifier tête de signal" fournit pour la visualisation et la modification optionnelle
+d'information pour les Têtes de signal existant. Utilisez le bouton"Éditer" de la
+Table Tête de signal pour sélectionner une tête de signal. Le type de tête de signal et le nom système peut ne pas être
+changé. Après avoir effectué des modifications dans la boîte de dialogue, cliquez sur "Mise à Jour" pour le changement des informations tête de signal. Cliquez sur "Annuler" pour quitter sans
+apporter des modifications. La Fermeture de la fenêtre Modifier la tête de signal est équivalent à cliquer
+"Annuler". Une seule tête de signal peut être édité à la fois
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

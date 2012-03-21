@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: Pr3Select.shtml,v 1.2 2008/06/15 14:15:59 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-10-30--> 
+
+<title>JMRI: Select PR3 Mode</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+
+
+<h2>
+JMRI: Sélectionnez le mode PR3
+</h2>
+
+Une
+<a href="../../../../../../html/hardware/loconet/PR3.shtml"> PR3 Digitrax</a>
+peut agir soit en tant que programmateur autonome,
+ou comme une interface à un LocoNet, mais il ne peut pas faire les deux en même temps.
+
+Normalement, vous choisissez le mode PR3 dans le cadre
+<a href="../../../../../../html/hardware/loconet/PR3.shtml"> fixant les préférences JMRI </a>.
+
+<p>
+Dans certains cas, vous pourriez vouloir changer rapidement le mode pendant le débogage.
+Cet outil offre deux boutons pour
+vous permettent de changer le mode de la PR3 immédiatement.
+<em> Remarque que cela peut entraîner un comportement inhabituel(et généralement mauvais)
+du programme! </em>
+Il est généralement préférable de basculer le mode en changeant les préférences JMRI
+et en redémarrant le programme.
+
+<p>
+Pour plus d'informations sur la PR3, s'il vous plaît voir ses
+<a href="../../../../../../html/hardware/loconet/PR3.shtml"> page de référence JMRI</a>.
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

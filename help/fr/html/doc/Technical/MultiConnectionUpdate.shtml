@@ -1,0 +1,223 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: MultiConnectionUpdate.shtml,v 1.2 2010/12/06 08:18:27 jacobsen Exp $ -->
+
+<!-- Translated by Blorec Hervé le 2011-05-06-->
+<title>JMRI: Multi-connection Update</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset= utf-8">
+<title>JMRI: Multi-connection Update</title>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: MultiConnectionUpdate.shtml,v 1.2 2010/12/06 08:18:27 jacobsen Exp $ -->
+
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1> 
+JMRI: Mise à jour de Multi-connexions
+</h1>
+
+Cette page est une liste de conseils pour adapter les systèmes
+(sous-répertoires jmri.jmrix) vers le nouveau format multi-système.
+C'est clairement un travail en cours!
+
+<p>
+Fondamentalement, vous devez obtenir toutes les variables statiques
+et de l'exemple des procédures hors du code. A leur place,
+vous mettrez des références à des procédures spécifiques d'un objet 
+SystemConnectionMemo  qui porte les références qui ont
+l'habitude d'être statiques.
+
+<p>
+Dans le même temps, nous faisons la mise à jour du modèle Swing, et
+un couple d'autres nettoyages mineurs sur le code.
+
+
+<h2>Dans le répertoire du système principal </h2>
+
+Créer une sous-classe spécifique de SystemConnectionMemo.
+Ce qui finira par faire tout l'initialisation gestionnaire, et
+transporter des références d'objet qui sert à se faire par exemple
+variables.
+
+<p>
+Ajouter toute ces choses
+
+<h3>Pour chaque méthode de connexion (par exemple chaque sous-répertoire)</h3>.
+     
+<p>
+Modifier la classe ConnectionConfig pour prendre et enregistrer un référé et sa mise en œuvre.
+<code><pre>
+    protected void setIntrucsstance() { 
+        if (adapter == null) {
+            adapter = new PR3Adapter();
+        }
+    }
+</pre></code>
+
+<p>
+Modifier la classe d'adaptateur (par exemple PR3Adapter) pour éliminer
+l'exemple () et sa mise en œuvre.
+
+<p>
+La classe configurexml/ConnectionConfigXml
+doit avoir une procédure ajoutée:
+<code><pre>
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
+    }
+</pre></code>
+
+Nous devrions sans doute le remanier plus tard, mais ceci
+est la forme actuelle pour veiller que la bonne classe 
+ConnectionConfig soit utilisée.
+Nous le laissons inchangé pour le moment pour
+éviter la concurrence avec les serial/network refactoring
+<p>
+Aussi, changez ceci
+<pre><code>nce à un objet SerialPortAdapter,
+et le retourner au getAdapter ()procédere.
+En outre, supprimer l'exemple() procédure et sa
+mise en œuvre.
+<code><pre>
+    protected void getInstance() {
+      si (adapter == nul){    
+	 adapter= new PR3Adapter();
+	}
+}
+ 
+
+</pre></code>
+
+<p>
+Modifier la classe d'adaptateur (par exemple PR3Adapter) pour enlever
+l'exemple() de procédure et son application.
+<p>
+La classe configurexml / ConnectionConfigXml
+a besoin d'avoir une procédure ajoutée:
+<code><pre>
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
+    }
+</pre></code>
+Nous devrions probablement remanier ceci plus tard, mais c'est 
+la forme actuelle pour s'assurer que la connexion Classe ConnectionConfig est utilisée.
+Nous le laissons inchangé pour l'instant pour
+éviter la concurrence avec les
+série/refactoring réseau.
+
+<p>
+Aussi changer ceci
+<code><pre>
+ = new PR3Adapter();
+        }
+    }
+</pre></code>
+<p> 
+Modifier la classe d'adaptatetrucsur (par exemple PR3Adapter) pour enlever
+l'exemple() de procédure et sa mise en œuvre
+
+<p>
+La classe configurexml/ConnectionConfigXml
+a besoin d'avoir une procédure ajoutée:
+<code><pre>
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
+    }</pre></code>
+Nous devrions probablement remanier plus tard, mais c'est la forme actuelle pour s'assurer que la classe correcte est ConnectionConfig .
+Nous la laissons inchangée pour l'instant pour éviter la concurrence avec le refactoring série/réseau.
+  }
+</pre></code>
+
+<p>Modifier la classe d'adaptateur (par exemple PR3Adapter) pour enlever
+l'exemple () la procédure et son application.
+<p>
+La classe configurexml/ConnectionConfigXml a besoin d'avoir une procédure ajoutée:
+<code><pre>
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
+    }
+</pre></code>
+Nous devrions probablement le remanier plus tard, mais c'est la forme actuelle pour s'assurer que la classe correcte est ConnectionConfig.
+Nous la laissons inchangée pour l'instant pour éviter la concurrence avec le refactoring série/réseau.
+<p>
+Aussi changer ceci 
+<code><pre>
+    protected void getInstance() {
+        adapter = LnHexFilePort.instance();
+    }
+</pre></code>
+pour ceci
+<code><pre>
+    protected void getInstance() {
+        adapter = new LnHexFilePort();
+    }
+</pre></code>
+<h3>Gestionnaire et Bean</h3>
+Pour chaque gestionnaire et  combinaison de Bean, vous avez à
+les mettre à jour pour ne plus utiliser un exemple () de méthode
+pour accéder au TrafficController. Passer le
+SystemConnectionMemo au gestionnaire pour la durée de construction est l'approche recommandée, puis, si besoin est
+ en passant par les Beans nouvellement créés.
+Cela passe par la chaîne de préfixe nom d'utilisateur, pour la connexion, etc
+
+<p>
+Le gestionnaire doit également utiliser le préfixe du système au lieu d'un
+fixe, une  seule lettre système. En utilisant par exemple ». startsWith (getSystemPrefix () +" T ") '
+C'est une bonne approche. Ne pas juste vérifier que le nom commence par le préfixe parce
+par exemple "L" et "L2" ne sont pas univoques.
+
+<h3>Menu</h3>
+
+Créer un sous-répertoire swing, s'il n'existe pas déjà.
+
+<p>
+Placez là le code pour faire le menu , en cas de besoin
+quitter une sous-classe derrière la migration. (c.f.
+jmri.jmrix.loconet.LocoNetMenu et jmri.jmrix.loconet.swing.LocoNetMenu
+pour un modèle)
+<p>
+Créer une classe de fabrique ComponentFactory dans le
+subpackage swing qui peut par exemple créer le menu,
+et, éventuellement, les arbres, etc
+
+<p>
+Modifier jmri.jmrix.ActiveSystemsMenu pour éliminer
+la classe, la création de menu est automatique à partir de maintenant.
+
+((Chaque fois que vous créer et enregistrer un * SystemConnectionMemo,
+vous aussi enregistrez le ComponentFactory)
+
+<h3>Pour garder les actions de démarrage actives</h3>
+
+Pour garder les choses en fonctionactions, il est préférable de convertir
+les  sous-classes JmriPane. Temporairement, la
+connexion du système est alors crééz
+via l'utilisation de classes internes, comme
+jmri.jmrix.loconet.locomon.LocoMonPane$Default
+
+<p>
+Cela demande aux gens de réinitialiser leurs préférences pour les actions de démarrage
+, boutons, etc Nous n'allons pas les faire migrer pour
+pour eux.
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -523,11 +523,11 @@
             </and>
         </condition>
 
-        <condition property="baseArch" value="armel">
+        <condition property="baseArch" value="armv5">
             <and>
                 <os family="unix" />
             <or>
-                <equals arg1="${os.arch}" arg2='armel' />
+                <equals arg1="${os.arch}" arg2='armv5' />
                 <equals arg1="${os.arch}" arg2='armv5tel' />
             </or>
             </and>

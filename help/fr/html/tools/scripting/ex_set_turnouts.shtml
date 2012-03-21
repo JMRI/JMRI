@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: ex_set_turnouts.shtml,v 1.1 2008/02/17 04:52:52 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-09-26-->
+<title>JMRI: Scripting Example - Setting Turnouts</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+
+      <!-- Page Body -->
+        <H2>
+		JMRI: Scripts aller ... <br>Réglage de l'État par Défaut des Aiguillages
+        </H2>
+de la
+		<div class=section>
+
+
+		    <P>((Exemple contribué par Jerry Britton)
+
+<p> Mon réseau, le <a href="http://jbritton.pennsyrr.com/" target=new> Pennsylvania Railroad Région de l'Est </a>, présente déjà plus d'une centaine d'aiguillages, avec davantage à l'avenir. A ce jour et pour un avenir proche, les ade laiguillages ne fournissent pas de rétroaction, c'est une dépense que je ne suis pas prêt à assumer.
+<p> J'ai développé des <a href="http://jbritton.pennsyrr.com/control_pan href jels.ws4d" target=new> panneaux PanelPro  </a> pour une paire de dispatcheurs à utiliser pour le contrôle du réseau. PanelPro interroge les commandes aiguillages via LocoNet (Digitrax système). Les Aiguillages sont actionnés par des moteurs d'aiguilles Tortoise qui sont contrôlés par des décodeurs stationnaires SwitchIt NCE qui surveillent LocoNet pour les commandes.
+<p> Le problème est, que sans détection sur les aiguillages eux-mêmes, chaque fois que PanelPro est ouvert pour la première fois, tous les aiguillages montrent un état "?", ce qui signifie que PanelPro ne connait pas leur état actuel.</p>
+<p> Jusqu'à maintenant, j'ai investi une somme considérable de temps à cliquer manuellement sur le réglage de tous et pour définir pour l'état de chaque aiguillage,et le mettre dans l'état désiré. J'ai suggéré que le champ état par défaut soit ajouté à la table Aiguillage - et peut-être que nous le verrons que dans le futur - mais pour l'instant mon besoin peut être satisfait par l'intermédiaire d'un script. Peut-être vous en avez besoin d'un, il peut répondre aussi à vos besoins. </P>
+<p> La raison de cette page web est que je suis un cheminot modéliste qui utilise JMRI. Notre équipe de programmation très talentueuse est composée de programmeurs qui sont aussi des modélistes ferroviaires. Quand j'ai demandé: «Comment Je peux faire...", j'ai reçu des informations beaucoup plus que nécessaires ou souhaitées. Je n'ai aucun intérêt à devenir un programmeur ou d'apprendre exactement comment il «fonctionne». J'ai juste un besoin que je voudrais voir remplit avec un minimum d'effort. Il a été un exemple classique de demander l'heure et d'être instruit comment construire une montre! </P>		</div>
+
+		<div class=section>
+		    <h2> Le script </h2>
+
+<pre>
+class setStartup(jmri.jmrit.automat.AbstractAutomaton):
+   def init(self):
+     return
+    def handle(self):
+     self.waitMsec (10000) # temps est en millisecondes
+     turnouts.provideTurnout ("1"). setState (DIRECT)
+     self.waitMsec (1000)
+     turnouts.provideTurnout ("17"). setState (DIRECT) 
+     self.waitMsec (1000)
+     turnouts.provideTurnout («9»). setState (DIRECT) à l'utiliser
+     self.waitMsec (1000)
+     Fausse déclaration # tout est fait, ne pas répéter
+setStartup (). start () # création d'une d'elles, et de lancer son exécution </pre>
+
+</Div>
+
+<div class=section>
+<h2> Faire usage de l'écriture </h2>
+
+		<p> Vous devriez «copier» et «coller» l'exemple de ce script dans un nouveau document texte. Soyez sûr que le fichier est effectivement enregistré comme un document texte générique, et non quelque chose comme un fichier Microsoft Word. Le suffixe du fichier doit être ".Py" pour Python, le langage de commande utilisé par JMRI.
+		<p> Enregistrer le fichier où JMRI peut accéder. J'ai sauver le  mien dans le même répertoire que mes fichiers PanelPro.
+		<p> Il est TRÈS IMPORTANT que vous conserviez le formatage du script de la manière dont il est fait - avec des onglets principaux. Le langage Python utilise des onglets dans le cadre de sa structure de commande.de la
+		<p> Cette première partie du script que vous devriez inclure «telle quelle». Aucune modification n'est nécessaire: </p>
+
+<pre>
+
+  Class setStartup(jmri.jmrit.automat.AbstractAutomaton):
+  def init (self): 
+     return
+   def handle(self):
+     self.waitMsec (10000) # temps est en millisecondes
+  </pre>
+ 		<p> La partie suivante du script est ce que vous devez modifier pour votre propre usage. Voici les commandes pour définir l'état de trois aiguillages, chacun constitué de deux lignes.
+		<p> La première ligne comprend un certain nombre de citations qui est le nombre de d'aiguillage (décodeur ID) auquel  vous souhaitez envoyer la commande. L'état entre parenthèses à la fin de la ligne (DIRECTS ou DÉVIÉS) est la position que vous voulez pour l'aiguillage.
+<p> La deuxième ligne ajoute un délai entre les commandes, en millisecondes. Si vous avez beaucoup d'aiguillages à définir, votre alimentation ne serait probablement pas capable de gérer toutes les commandes déviés  à la fois. Ce délai permet aux activations d'être étalées dans le temps. Des dizaines d'appareils de voie peut être réglés sur une période de une minute ou deux. </P>
+<p> "coller" plusieurs instances de ces deux commandes en ligne dans votre script comme désiré. Vous pouvez également ajouter des lignes de commentaires (commençant par un "#") afin de documenter des sections de votre mise en page. </P>
+<pre>
+      turnouts.provideTurnout ("1"). setState (DIRECT)
+     self.waitMsec (1000)
+     turnouts.provideTurnout ("17"). setState (DIRECT)
+     self.waitMsec (1000)turnouts.provideTurnout ("1"). setState (DIRECT)
+     self.waitMsec (1000)
+     turnouts.provideTurnout ("17"). setState (DIRECT)
+     self.waitMsec (1000)</pre>
+
+		    
+		    <p> La partie la fermeture du script devrait aussi être laissé "en l'état»:
+<pre>
+      return False # tout est fait, ne pas répéter
+setStartup (). start () # création de l'une d'elles, et  lancer son exécution <pre>
+
+</div>
+		<div class=section>
+		    <h2> mise en œuvre du script </h2>
+
+
+		<p> Avec une alimentation sur la voie, vous pouvez exécuter le script en sélectionnant Exécuter le script à partir du menu du PanelPro JMRI. Il y aura un délai avant l'exécution du script, mais alors vous verrez vos aiguillage dévier un par un.
+		<p> Vous pouvez également sélectionner le script à exécuter automatiquement lorsque PanelPro est lancé en sélectionnant le fichier de script dans les préférences avancées. Soyez sûr de l'alimentation disponible avant de lancer PanelPro dans ce cas.
+
+
+</div>
+
+<div class=section>
+Crédit <h2> A Qui est Dû le Crédit </h2>
+    
+<p> Ma louange sans fin va à tous les développeurs qui fournissent la communauté JMRI des modélisme ferroviaire. Toutefois, dans le cas rencontré avec mon besoin de mise en état par défaut d'aiguillages, je tiens à exprimer ma gratitude à "breezlys» de la communauté JMRI Forum; il a fourni l'exemple de script que, je pense qu'il a interprété et modifié à partir des exemples de scripts JMRI.
+<p> - Page rédigée par Jerry Britton, Mars 2006.	</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

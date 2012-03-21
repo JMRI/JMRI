@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: Serialsensor.shtml,v 1.1 2008/02/17 04:07:54 jacobsen Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-13-07-->
+<title>JMRI: Using the serial port for block sensors</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h2>Utiliser le port série pour les capteurs de bloc </h2>
+
+Jim Scorse a fourni un schéma pour le raccordement d'un détecteur de bloc NCE
+au port série. <BR>
+<IMG SRC="images/speed0.jpg" width="400" HEIGHT="300">
+<h3> DB9 et DB25 connexions </h3>
+
+<PRE>
+       DB9 pin      DB25 pin
+       -------      --------
+
+DCD      1             8
+RxD      2             3
+TxD      3             2
+DTR      4            20
+ground   5             7
+DSR      6             6
+RTS      7             4
+CTS      8             5
+RI       9            22
+
+</PRE>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

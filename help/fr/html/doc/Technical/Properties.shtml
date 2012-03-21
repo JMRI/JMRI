@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: Properties.shtml,v 1.2 2010/01/31 20:54:11 zoo Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-07-06-->
+<title>JMRI: System Properties</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=  utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h2> JMRI: Propriétés du Système</h2>
+
+Cette page liste les propriétés du système que JMRI utilise.
+
+<h3>Propriétés Système d'Exploitation</h3>
+<dl>
+
+<dt>
+os.name
+<dd>
+La plupart de JMRI est indépendant du système, mais dans quelques
+d'endroits nous fournissons le code spécifique au système pour personnaliser l'expérience de l'utilisateur.
+C'est la propriété que nous utilisons pour dire quel type de système d 'exploitation
+est en cours d'utilisation.
+<p>
+Par exemple, on localise le<a href="../../apps/DecoderPro/Files.shtml#location"> répertoire préférences </a>
+ par défaut dans des lieux différents selon le type de système.
+
+<dt>
+user.dir
+<dd>
+Java définit celui-ci pour être le répertoire dans lequel JMRI est exécuté.
+JMRI l'utilise pour trouver bon nombre de ses dossiers; cette propriété ne devrait pas
+être changé par l'utilisateur!
+
+<dt>
+user.home
+<dd>
+Java définit celui-ci comme le répertoire "home" de l'utilisateur actuel.
+JMRI l'utilise, sur certains systèmes, pour localiser les
+emplacements par défaut pour le répertoire des préférences.
+
+<dt>
+gnu.io.rxtx.SerialPorts
+<dd>
+La bibliothèque RXTX communications utilise cette option pour spécifier les
+ports supplémentaires à utiliser. Si vous avez par exemple un adaptateur USB vers un adaptateur série
+ qui ne s'affiche pas dans les boîtes du sélecteur de préférences,
+attribuer son nom à cette propriété.
+<p>
+-Dgnu.io.rxtx.SerialPorts=/dev/ttyUSB0
+<p>
+Les scripts de démarrage Linux le fera si vous avez défini la variable d'environnement JMRI_SERIAL_PORT.
+
+</dl>
+
+<h3>JMRI propriétés</h3>
+<dl>
+
+<dt>
+jmri.prefsdir
+<dd>
+En définissant cette propriété, vous pouvez définir explicitement où JMRI doit
+chercher le répertoire de préférence.
+
+<dt>
+jmri.inset.height
+<dd>
+Si elle est définie, fournit une valeur minimum d'encart pour la hauteur de la fenêtres JMRI.
+L'encart est l'espace alloué pour les décorations en haut et en bas de l'écran.
+Mettez lui un nombre entier positif N pour s'assurer que les fenêtres JMRI
+seront ouvertes avec N pixels disponibles en haut et/ou en bas.
+<p>
+-Djmri.inset.height=45
+
+<dt>
+jmri.inset.width
+<dd>
+Si elle est définie, fournit une valeur minimum d'encart la largeur de fenêtres JMRI.
+L'encart est l'espace alloué pour les décorations sur les côtés de l'écran.
+Mettez lui un nombre entier positif N pour s'assurer que les fenêtres JMRI 
+seront ouvertes avec N pixels disponibles sur les côtés
+</dl>
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

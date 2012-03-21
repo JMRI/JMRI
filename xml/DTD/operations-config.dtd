@@ -113,12 +113,13 @@
 <!ATTLIST manifestColors localColor	CDATA #IMPLIED>  
 <!ATTLIST manifestLogo name			CDATA #IMPLIED>  
 
-<!ATTLIST buildOptions aggressive					(true | false ) "false">  
+<!ATTLIST buildOptions aggressive					(true | false ) "false">
 <!ATTLIST buildOptions allowLocalInterchange		(true | false ) "false">
 <!ATTLIST buildOptions allowLocalSiding				(true | false ) "false">
 <!ATTLIST buildOptions allowLocalYard				(true | false ) "false">   
 <!ATTLIST buildOptions stagingRestrictionEnabled	(true | false ) "true"> 
 <!ATTLIST buildOptions stagingTrackAvail			(true | false ) "false">
+<!ATTLIST buildOptions allowReturnStaging			(true | false ) "false">
 <!ATTLIST buildOptions promptStagingEnabled			(true | false ) "false">   
 <!ATTLIST buildOptions promptToStagingEnabled		(true | false ) "false">
 <!ATTLIST buildOptions generateCsvManifest			(true | false ) "false">  
@@ -140,7 +141,8 @@
 <!ATTLIST setupFrameOptions height		CDATA #IMPLIED> 
 <!ATTLIST setupFrameOptions width		CDATA #IMPLIED> 
 
-<!ATTLIST tab enabled					(true | false ) "false">  
+<!ATTLIST tab enabled					(true | false ) "false"> 
+<!ATTLIST manifest truncate				(true | false ) "false"> 
 <!ATTLIST manifest useEditor			(true | false ) "false"> 
 <!ATTLIST manifest hazardousMsg			CDATA #IMPLIED> 
 

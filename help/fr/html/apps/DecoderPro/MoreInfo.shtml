@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: MoreInfo.shtml,v 1.3 2009/03/12 22:59:03 matthewharris Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-10-01-->
+<title>JMRI: DecoderPro In Depth</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+
+<H1>DecoderPro - Détails</H1>
+
+<p>Cette page fournit des renseignements sur la façon dont le programmateur DecoderPro symbolique fonctionne. Pour plus de détails internes sur JMRI, s'il vous plaît voir les pages techniques, qui sont encore en cours d'élaboration.</p>
+
+<dl>
+<dt class=left>Fichiers de Configuration</dt>
+<dd class=first>
+<p>
+Il existe deux types de fichiers de configuration:
+<ul>
+<li> Fichiers de Configuration Décodeur - Ceux-ci portent la description d'un type particulier de décodeur, et contrôlent le programmateur qui affiche les informations des variables.
+<li> Fichiers de Configuration Locomotive - Ceux-ci portent les informations spécifiques sur une seule locomotive.
+</ul>
+</p>
+
+<p>
+Le programmeur peut lire n'importe quel type de fichier. Si vous sélectionnez un fichier décodeur après avoir cliqué sur Lire le fichier, le programmateur sera mis en place avec les variables, options, etc pour ce type. Les valeurs seront vides, parce que que le programmateur ne sait rien sur ce qui a été programmé dans un décodeur spécifique.</p>
+
+<p>Si vous sélectionnez un fichier locomotive après avoir cliqué sur Lire le fichier, des informations sur la configuration à la fois du décodeur et des paramètres spécifiques à cette locomotive seront affichées. Cela vous montre comment la locomotive est déjà configurée, vous permettant de faire de petits changements avec moins de chance de confusion.</p>
+
+<p>Vous pouvez également écrire des fichiers locomotive avec le bouton Écrire dans un fichier. Ceci va archiver le contenu connu du décodeur, vous permettant d'y revenir à plus tard. </p>
+
+<p> Les fichiers de configuration sont stockés au format XML. Il s'agit d'un formulaire standard pour les données structurées. XML est largement utilisé pour standardiser l'échange de données entre les différents fabricants dans de nombreux domaines, peut-être un jour les fabricants de décodeurs DCC fourniront une description XML de chaque décodeur qu'ils font. Dans l'intervalle, les fichiers de configuration sont créés par des bénévoles. S'il n'existe pas pour un décodeur spécifique, vous pouvez
+ <a href="CreateDecoder.shtml"> créer vos propres </a> fichiers.
+Vous pouvez également modifier un fichier si vous préférez des noms différents, un regroupement de différentes options, ou si vous ne voulez voir que certaines options que vous n'utilisez pas. Un simple éditeur de texte peut créer ces fichiers facilement, comme le format n'a pas de champs de longueur fixe, de caractères spéciaux, etc Il y a aussi de puissants outils de XML dans le domaine public qui font qu'il est très facile de gérer un grand nombre de fichiers décodeur.</p>
+</dd>
+
+<dt class=left>Variables</dt>
+<dd>
+<p>Une "variable" définit la valeur qui sera chargée dans tout ou partie d'un
+CV. Par exemple, une variable peut être définie qui définit la valeur des trois
+bits les plus significatifs de la CV 47. Si il y a plusieurs options configurées dans
+un seul CV, ces informations sont assurées par des variables distinctes.
+Actuellement, il existe plusieurs types de variables:
+<ul>
+<LI> Decimal - nombres entrés dans la notation habituelle décimale. Ce sont les adresses courtes, les tensions de démarrage, etc.
+<LI> Enum (énuméré) - choisir parmi un ensemble d'options. Elles peuvent être utilisées
+pour un simple choix on/off, oui/non, ou plusieurs ensembles complexes comme les FX
+par exemple l'éclairage ci-dessus. La configuration contient un nom pour chaque
+possibilité.
+<LI> Long adresse - comme une valeur décimale, sauf que les contraintes sur une adresse 
+longue valide qui sont prise en compte.
+<LI> Hex - Ce n'est pas tellement nécessaire, car les options multiples dans un
+seul CV peuvent être manipulées par des variables multiples. Mais si elle est nécessaire pour certaines
+raisons, la possibilité est présente.
+<LI> Speed table - pas encore vraiment au point, ce type de variable est
+destinée à fournir un tableau des tables graphiques des vitesses, que vous pouvez faire glisser autour pour
+configurer comme vous le souhaitez.
+</ul></p>
+</dd>
+
+<dt class=left> Communication, Programmateur: états</dt>
+<dd>
+<p>La communication avec la station de commande/programmeur, permettant la lecture et
+écriture du décodeur, n'est effectuée que lorsque les boutons "Lecture" ou "Écriture" sont pressés.
+ Le programme assure le suivi de savoir si une valeur a été envoyée au
+ décodeur en utilisant quatre états de variables ou de CVs::
+<ul>
+<li> Read - La valeur indiquée a été lue par le décodeur.
+<LI> Stored - La valeur indiquée a été écrite dans le décodeur.
+<LI> Editted - La valeur indiquée a été changée dans l'ordinateur, mais
+pas encore écrite dans le décodeur. Appuyez sur le bouton d'écriture quand vous êtes d'accord 
+avec la valeur. 
+<LI> Unknown - Une valeur par défaut, ou une lecture a échoué, ou pour d'autres raisons
+le programme n'a pas confiance dans la valeur, est ce vraiment celle que vous voulez?. Modifiez la valeur ou appuyez sur le bouton d'écriture.
+</ul></p>
+</dd>
+
+<dt class=left>Impression</dt>
+<dd>
+<p>Vous pouvez imprimer les informations de la locomotive courante depuis la fenêtre du programmateur
+. Dans le menu "Fichier ...", sélectionnez "Imprimer ...", et de remplir le
+boîte de dialogue qui se présente.</p>
+
+<p>L'impression est formatée par le format de programmation actuellement sélectionnée, afin que l'information de tous les onglets soit imprimée. Vous obtenez une impression plus courte  des valeurs les plus importantes lorsque vous imprimez à partir du format «de base», et une liste de tout lorsque vous utilisez le format "complet".. </p>
+</dd>
+</dl>
+    
+<!--#include virtual="/Footer" -->
+</div>
+</body>
+</html>

@@ -1659,6 +1659,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             active=false;
             turnoutThrown=false;
             permissiveBlock=false;
+            boolean routeclear = true;
             if((useLayoutEditor) && (autoTurnouts.size()==0) && (autoBlocks.size()==0) && (autoMasts.size()==0)){
                 return;
             }
@@ -1794,8 +1795,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             }
             destMastInit = true;
         }
-        
-        boolean routeclear = true;
         
         void useLayoutEditor(boolean boo) throws jmri.JmriException {
             if(log.isDebugEnabled())
@@ -2166,9 +2165,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                             log.debug(destination.getDisplayName() + " turnout " + key.getDisplayName() + " set speed to " + minimumBlockSpeed);
                     }
                 }
-
-               if (key.getKnownState()!=turnouts.get(namedTurnout))
-                   routeclear = false;
             }
             
             Enumeration<Block> blockKeys = autoBlocks.keys();

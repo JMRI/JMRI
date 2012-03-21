@@ -1,0 +1,88 @@
+<!-- an ANT build.xml file for JMRI XSLT -->
+<!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005, 2008, 2010 -->
+<!-- Revision $Revision: 17977 $ -->
+
+<!-- This file is part of JMRI.                                             -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<project name="JMRI" default="all" basedir=".">
+<!-- basedir="." means all paths are relative to the "java" subdir -->
+<!-- in the project.  We expect that lib et al will be present in -->
+<!-- .. from there -->
+
+  <description>
+  Provides build services for JMRI web pages from help metadata
+  </description>
+
+  <!-- set global properties for this build -->
+  <property name="target" value="."/>
+
+  <target name="init" description="create needed directories">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${target}"/>
+  </target>
+
+  
+  <target name="index" depends="init" 
+  			description="create an index page">
+    <xslt  basedir="${basedir}"
+    		destdir="${target}"
+    		extension=".html"
+    		style="format.xsl"
+    		includes="JmriHelp_enIndex.xml"
+    	>
+        <xmlcatalog>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
+                location="map_2_0.dtd"/>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN"
+                location="toc_2_0.dtd"/>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
+                location="index_2_0.dtd"/>
+        </xmlcatalog>
+    </xslt>
+    <move file="JmriHelp_enIndex.html" tofile="webindex.shtml"/> 
+  </target>
+
+  <target name="TOC" depends="init" 
+  			description="create a TOC page">
+    <xslt  basedir="${basedir}"
+    		destdir="${target}"
+    		extension=".html"
+    		style="format.xsl"
+    		includes="JmriHelp_enTOC.xml"
+    	>
+        <xmlcatalog>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
+                location="map_2_0.dtd"/>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN"
+                location="toc_2_0.dtd"/>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
+                location="index_2_0.dtd"/>
+        </xmlcatalog>
+	</xslt>
+    <move file="JmriHelp_enTOC.html" tofile="webtoc.shtml"/> 
+  </target>
+
+  <target name="all" depends="init, index, TOC" 
+  			description="create all" />
+ 
+</project>
+
+

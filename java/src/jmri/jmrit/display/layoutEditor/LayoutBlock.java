@@ -1155,7 +1155,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     /**
     * Returns the layout block metric cost
     */
-    int getBlockMetric() { return metric; }
+    public int getBlockMetric() { return metric; }
     
     //re work this so that is makes beter us of existing code.
     //This is no longer required currently, but might be used at a later date.
@@ -2068,6 +2068,10 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 if(x!=y){
                     if(enableAddRouteLogging)
                         log.info(block.getDisplayName() + " not on setting equal will quit " + x + ", " + y);
+                    return;
+                } else if(x==Turnout.UNKNOWN){
+                    if(enableAddRouteLogging)
+                        log.info(block.getDisplayName() + " turnout state returned as UNKNOWN");
                     return;
                 }
             }

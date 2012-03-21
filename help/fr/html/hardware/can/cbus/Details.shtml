@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2008 -->
+<!-- $Id: Details.shtml,v 1.2 2010/07/03 03:32:12 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-11-06-->
+<title>JMRI: CBUS Support Details</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Détails Support Technique CBUS
+</h1>
+
+<em>Le support sur cette page est en évolution rapide, le
+code réel pourrait être en avance ou en retard sur la documentation
+un jour donné.</em><p>
+
+Cette page décrit les détails techniques du soutien de JMRI pour
+<a href="index.shtml"> CBUS </a>
+ Voir aussi les pages sur les JMRI
+<A href="../index.shtml"> soutien général CAN </a>.
+<p>
+
+<h2> CAN adaptateurs </h2>
+
+L'approche générale JMRI est de soutenir le plus grand nombre de
+combinaisons de matériel possible. En soutenant le plus grand nombre possible de
+personnes et leurs matériels, nous
+pouvons créer une communauté grandissante de développeurs, donc plus de
+code.
+
+<P>
+Dans le cadre de la présente, le soutien JMRI CAN est conçu pour
+utiliser autant de types d'adaptateur CAN que possible..
+
+<P>
+Le MERG CAN-RS peut faire "l'énumération " pour CBUS, mais
+de nombreux autres adaptateurs ne peuvent pas être utilisés
+en raison de leur latence intrinsèque.
+Leurs réponses ralentit efficacement et les rend invisibles.
+
+<P>
+Par conséquent, Mike Bolton, l'un des développeurs du CBUS
+a suggéré que JMRI utilise un ID CBUS de 126. Actuellement, c'est une valeur fixe.
+
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

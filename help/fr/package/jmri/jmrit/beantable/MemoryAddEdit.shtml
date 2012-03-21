@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: MemoryAddEdit.shtml,v 1.4 2008/11/01 16:40:03 jacobsen Exp $ -->
+<!-- Translated by Hervé Blorec le 2012/01/06-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Adding/Editing Memories
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Memory Add Edit">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> Ajout/Modification de Mémoires </H1>
+    
+Pour créer une variable  mémoire, cliquez sur le bouton 
+"Ajouter ..." sur la
+<a href="MemoryTable.shtml"> Table mémoire</a>.
+Cela ouvrira une petite fenêtre avec un espace pour y entrer 
+un nom système et un nom 'utilisateur pour la nouvelle mémoire, plus
+et bouton "Ajouter".
+<p>
+Vous devez entrer un nom système unique. Les noms système de mémoires n'ont
+pas un jeu de modèle. Vous pouvez tous mettre tout ce que vous voulez. Il y a une faible
+convention pour les commencer  par "IM" pour "mémoire interne", mais ce n'est pas
+nécessaire.
+
+<p>
+Le nom utilisateur est facultatif, mais si on le donne, il doit être unique.
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

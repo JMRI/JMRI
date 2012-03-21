@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-gW3CgDTD HTML 4.01gEN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: RouteAddEdit.shtml,v 1.7 2008/11/01 16:40:03 jacobsen Exp $ -->
+<!-- Translated by Hervé Blorec le 2012/01/06-->
+<HTML LANG="fr">
+<HEAD>
+<TITLE>JMRI: Adding/Editing Routes</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META CONTENT="Bob Jacobsen" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Route Add Edit">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1><A NAME="Adding/Editing Routes"> </A> Ajout/modification d'Itinéraires </H1>
+
+<P> La première chose que vous devez faire lors de la création d'un Itinéraire c'est son nom. Dans
+la case "Nom  système Itinéraire" entrez un nom unique pour votre itinéraire.
+Vous pouvez éventuellement entrer un nom plus descriptif de dans la boite ''Nom Utilisateur Itinéraire "
+. </P>
+<P> Le bouton radio en dessous du "Nom Utilisateur de l'Itinéraire" vous permet d'afficher
+seuls les aiguillages ou les capteurs qui font partie de cet Itinéraire. Il y a deux
+tableaux dessous le bouton ''Montrer'' le premier contient les aiguillages et
+seconde contient les capteurs. Cliquez sur la boite "Inclure" pour ajouter dans les tables soit
+les aiguillages souhaités soit un capteur à votre itinéraire. A côté de la boite "Inclure" 
+est l'action que l'aiguillage ou le capteur peut effectuer lorsque l'Itinéraire est
+déclenché. Par exemple, si vous souhaitez que l'aiguillage soit dévié lorsque l'itinéraire
+est déclenché sélectionnez "Définir Dévié" dans le menu déroulant. </P>
+<P> Dessous les tables aiguillage et capteurs ont trois caractéristiques en option.
+Lecture d'un fichier son, exécution d'un script, et  spécifier à un capteur d'être
+actif quand tous les aiguillages spécifiés pour l'Itinéraire sont correctement
+alignés. Les fichiers Audio et  Scripts sont configurés en appuyant sur le
+bouton "ConfigurationSet" approprié et en sélectionnant le fichier sonore à
+joué, ou le fichier de script à exécuter lorsque l'Itinéraire est déclenché. Pour ajouter
+un capteur qui va devenir actif lorsque les aiguillages sont alignés, entrez
+le nom système du capteur dans la boîte. Le capteur va devenir Actif lorsque les
+aiguillages sont correctement alignés pour l'Itinéraire. </P>
+<P> Un itinéraire peut éventuellement être déclenché par l'unra des trois capteurs
+indiqué dans le tableau. Entrez leurs noms (nom  système ou nom utilisateur) et
+sélectionner l'action qui va déclencher l'Itinéraire. Les choix logique sont
+décrits en détail <a HREF= "..\..\..\..\html\tools\Itinéraires.shtml # SensorLogic"> Contrôle
+d'Itinéraires à partir de Capteurs </A>. </P>
+<P> Une Itinéraire peut aussi être déclenché par un aiguillage. Entrez le nom de l'aiguillage (nom  système ou nom d'utilisateur) et sélectionnez l'action de l'aiguillage qui
+va déclencher l'Itinéraire. Les choix logique sont expliquées en détail dan s<a
+HREF= "..\..\..\..\html\tools\Itinéraires.shtml # turnoutlogic"> Contrôle
+Itinéraires à partir d'un Aiguillage</A>. </P>
+
+<P> Dans certains cas, il pourrait être nécessaire rararararade retarder ou de ralentir l'ordre
+que JMRI envoie pour changer les aiguillages sur le réseau. En
+entrant une valeur dans la case "retard à ajouter:" , vous pouvez augmenter la quantité
+de temps (en millisecondes) entre l'envoi de la commande et le moment où l'aiguillage est déclenché. Par défaut JMRI insère un délai minimum de 250 millisecondes
+(1/4 de seconde) entre les commandes des aiguillages. </P>
+<P> La zone de texte suivante vous permet d'entrer un aiguillage qui verrouille
+cette voie. Lorsqu'un Itinéraire est verrouillé tous les aiguillages définis pour
+l'itinéraire deviennent verrouillés. Voir <a HREF="#Turnout lock feature"> ci-dessous </A> pour plus d'info. </P>
+<P> Une fois que vous êtes satisfait de votre itinéraire, utilisez le bouton " Ajouter Itinéraire"
+ pour créer l'itinéraire. Pour enregistrer votre Itinéraire, vous devez utiliser la 
+commande ''Stocker Panneau "qui se trouve sous le" Panneaux "du menu principal. Si vous
+décider que vous devez changer votre itinéraire, utiliser la fonction "Editer" et "Mise à jour Itinéraire "pour modifier votre itinéraire. </P>
+
+<P> La fonction de verrouillage de l'aiguillage vous permet de désactiver de manière sélective les
+accessoire (aiguillages) commandes à partir de commandes manuelles et/ou boutons-poussoirs locaux câblés. JMRI
+désactive les boutons poussoirs en envoyant une commande de désactivation de boutons poussoirs au décodeur d'aiguillage lorsque la route est bloquée, et autorise les boutons poussoirs
+lorsque la route est déverrouillée. Lors du verrouillage d'un aiguillage à partir d'un pupitre de commande manuelle ,
+le programme JMRI surveillera suivra l'adresse accessoire de l'aiguillage et si elle
+détecte une commande de changement en provenance d'un pupitre, va annuler la commande immédiatement
+en envoyant la commande opposée à l'aiguillage. Tous les aiguillages qui
+sont surveillés par le programme JMRI et  qui sont inclus dans l'itinéraire
+seront verrouillés.</P>
+<P> Pour vous aider à sélectionner un ensemble d'appareils de voie à verrouiller ou à déverrouiller, un itinéraire
+peut être verrouillé ou déverrouillé. Dans la fenêtre Éditer l'itinéraire, un verrou de contrôle de l' aiguillage en option est disponible. Vous pouvez utiliser la commande de verrouillage de l'aiguillage pour
+activer ou désactiver la fonction de verrouillage d'itinéraire depuis un du panneau d'icône d'aiguillage, un
+aiguillage du TCO ou un aiguillage fantôme. Une aiguillage fantôme est un aiguillage qui
+peut être consulté par votre cabine, mais n'existe pas réellement sur votre réseau. </P>
+<P> Pour plus d'informations sur comment configurer le verrouillage d'aiguillage
+S'il vous plaît voir la <a HREF="TurnoutTable.shtml#Turnout%20lock%20feature">
+Page Table Aiguillage</A>. </P>
+
+<!--#include virtual="/Footer" -->
+</BODY>
+</HTML>
+

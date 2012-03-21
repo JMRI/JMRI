@@ -691,6 +691,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         e.setAttribute("buildReport", isBuildReportEnabled()?"true":"false");
         e.setAttribute("printPreview", isPrintPreviewEnabled()?"true":"false");
         e.setAttribute("trainAction", getTrainsFrameTrainAction());
+        values.addContent(e);
         // now save train schedule options
         e = new Element("trainScheduleOptions");
         e.setAttribute("activeId", getTrainScheduleActiveId());

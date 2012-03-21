@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: SystemStructure.shtml,v 1.2 2010/12/09 01:34:58 jacobsen Exp $ -->
+
+<!-- Translated by Blorec Hervé le 2011-09-20-->  
+<html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: System Structure
+    </TITLE>
+    <META content="Bob Jacoben" name=Author>
+    <meta name="keywords" content="JMRI technical system add">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=  utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+	    <!-- ------------- -->
+	    <!-- Page Contents --> <!-- Required -->
+	    <!-- ------------- -->
+
+<H1>JMRI: Structure du Système </H1>
+
+Historiquement, les systèmes ne sont pas disposés de cette façon, de sorte que le
+code existant peut ne pas être un bon exemple.
+<p>
+Voulez-vous exposer très peu au-dessus le paquet jmrix.
+<p>
+Le Noyau de base est le code de communication, souvent un "trafficmanager"
+<p>
+Les outils doivent aller dans un sous-ensemble Swing
+<p>
+Les types de connexion spécifiques pour un seul protocole peuvent aller dans des
+sous-répertoires.
+<p>
+Rôle de ConnectionConfig, SystemConnectionMemo
+<p>
+ActiveFlag obsolète
+<p>
+Voir aussi la page 
+<a href="MultiConnectionUpdate.shtml">Mise à jour ces Connexions Multiples</a>
+.
+
+
+<h2> Séquence d'Initialisation </h2>
+
+Cette section décrit la mise en œuvre de la nouvelle configuration du système LocoNet (2010)
+. "NN" se réfère à par exemple le locobuffer, ou pr3 ou
+similaires à la classe de connexion spécifique .
+
+<ol>
+<li>jmri.jmrix.loconet.NN.configurexml.ConnectionConfigXml  est invoqué
+par le mécanisme de configurexml lorsque la classe spécifique n'est pas nommée dans un fichier d'entrée XML
+.
+
+<li> L'objet ConnectionConfigXml
+est un descendant de la classe jmri.jmrix.configurexml.AbstractConnectionConfigXml,
+qui invoque la méthode getInstance () de celui-ci (et non la méthode statique
+) dans sa méthode load ()de charger la variable "adaptateur" avec un membre
+* Adaptateur spécifique de classe, par exemple, MS100Adapter.
+
+<li> ultérieurement, après que le port soit (espérons le) en place,
+AbstractConnectionConfigXml invoque la méthode de configuration() de l'adaptateur.
+
+.
+    
+<li> Que la méthode de configuration () de l'adaptateur fait, dans l'ordre
+     (ce qui a été remaniée avec la LocoNetSystemConnectionMemo
+        lui-même, si cette liste doit être réorganisés)
+     <ol>
+     <li> mettre en place Paketiseur/port/etc en fonction des besoins
+     <li>configureCommandStation() à partir LnPortController
+     <li>configureManagers() à partir LnPortController,
+         mais par exemple de substitution dans PR3Adapter.
+     <li> faire toute autre initialisation de son propre chef, par exemple StartThreads()
+ </li>    <p>
+<p>À ce stade, le système est fondamentalement prêt à fonctionner.
+<p> Enfin,un objet est jmri.jmrix.loconet.LocoNetSystemConnectionMemo
+        créé et enregistré avec le InstanceManager.
+        
+    <ol>
+ 
+<li>Plus tard, jmri.jmrix.ActiveSystemsMenu et/ou jmri.jmrix.SystemsMenu
+veulent créer des menus utilisateur, et trouve l'objet LocoNetSystemConnectionMemo
+ dans l'InstanceManager
+
+<li>Le code de menu demande l'objet spécifique SystemConnectionMemo
+pour créer et retourner au menu. Il le fait, dans le processus
+reliant chaque action à elle-même de telle sorte que les différents outils
+seront en mesure de se connecter au bon ?? Par exemple TrafficController,
+SlotMonitor, etc
+
+<li> Quand une action est déclenchée par la suite, la classe invoquée (es) se renseigne auprès
+de LocoNetSystemConnectionMemo quand elle a besoin d'une ressource,
+au lieu de se référer à un exemple () dans la classe de
+ressource.
+   
+    
+</ol>
+Pour adapter un type, par exemple, Aiguillage:
+<ol>
+<li> Le gestionnaire Basique doit avoir getSystemPrefix en plus de la lettre
+<li> ProxyManager doit vérifier pour le préfixe du système, pas la lettre
+</ol>
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: RpsIcon.shtml,v 1.11 2008/10/19 18:36:25 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-12-19--> 
+
+<title>JMRI: RPS Icon</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Icône RPS 
+</h1>
+
+RPS est un système permettant de mesurer les positions du matériel roulant sur votre
+réseau.
+Plus d'informations sur RPS est disponible sur la
+<a href="../../../../html/hardware/rps/index.shtml"> page principale d'aide sur RPS</a>.
+Les icônes Reporter RPS se déplace sur le TCO pour montrer
+où l'équipement correspondant se trouve sur le réseau.
+
+<p>
+<img align="right" height="45" width="45" src="../../../../images/bangdesk.gif" alt="Cute image de work">
+<em> Cette page est encore en construction, mais le support de l'icône RPS
+ lui-même est déjà présent dans JMRI. Allez-y et essayez-le!</Em>
+<p>
+
+Les icônes RPS sont un moyen de mettre des icônes sur un
+<a href="PanelEditor.shtml">TCO</a>
+qui vont se déplacer quand le système RPS trouve l'emplacement d'
+un émetteur associé.
+
+<h2> Ajouter une Icône RPS sur un TCO</h2>
+
+Habituellement, chaque icône représente un émetteur RPS, donc une
+locomotive. Actuellement, vous devez ajouter une Icône pour chaque équipement équipé RPS que vous souhaitez suivre. Bien que ce soit couteux,
+il vous donne un contrôle très fin sur les positions des émetteur qui sont
+sont affichées et comment elles sont présentées.
+
+<em> Cette Section demande encore beaucoup de travail</em> <p>
+
+Cliquez sur "Ajouter journal RPS " sur  <a href="PanelEditor.shtml">l'Éditeur de TCO</a>.
+Une icône  RPS apparaîtra sur le TCO à son
+emplacement par défaut, mais ça ne marchera pas encore jusqu'à ce qu'elle soit calibrée.
+<p>
+Faites un clic droit ou option-clic sur l'icône pour voir le menu contextuel, où
+vous pouvez calibrer l'icône.
+
+<h3> Calibration d'une Icône RPS</h3>
+Lorsque vous étalonnez une icône RPS, vous spécifiez
+comment des lieux RPS mesurés  correspondent à des positions sur le TCO.
+<p>
+Les étapes sont les suivantes:
+<ul>
+<li> Arrêter le système de scrutation RPS, alors les choses ne vont plus se déplacer
+.
+<li> Ajouter l'icône au panneau.
+<li> Faites glisser l'icône jusqu'à ce qu'elle soit sur la position qui
+correspond à l'origine de votre installation 0,0 RPS.
+<li> Faites un clic droit ou option-clic sur l'icône pour
+obtenir le menu contextuel, et sélectionnez "Définir Origine».<li> Déplacer la locomotive réelle à un autre point sur le réseau
+, et commencer l'interrogation du système RPS à nouveau. Obtenez une
+bonne mesure de la position. Arrêter le système RPS.
+<li> Faites glisser l'icône à l'endroit où vous voulez qu'elle soit sur le TCO
+lorsque l'émetteur est à cet endroit.
+<li> Depuis le menu contextuel de l'icône, sélectionnez "Définir emplacement actuel».
+<li> Obtenir à nouveau le menu contextuel. Il ne devrait plus dire
+"Non calibré", et devrait plutôt vous montrer la position actuelle.
+</UL>
+<p>
+Ne pas oublier de sauvegarder votre TCO!
+
+ <a id="popup"> <h2> Menu Contextuel</h2>
+
+Le menu contextuel de l'icône RPS contient:
+<dl>
+<dt>Lecture  position RPS
+<dd> Ceci est juste un titre, la sélectionner ne fait rien
+
+<dt>Rotation 
+<dd> Tourne l'icône affichée, en incréments de 90 degrés. Notez que
+ce n'est pas une rotation dù au système de coordonnées RPS, mais simplement de la
+présentation de l'icône.
+
+<dt> Afficher ID
+<dd> Quand elle est cochée, la chaîne d'identification sera affiché en plus de l'icône.
+
+<dt>Définir l'origine 
+<dd> Définit la position d'affichage actuelle de l'icône comme la position 0,0
+du système RPS. Cela doit être fait en tant que première étape de l'étalonnage.
+
+<dt> Définir la Situation actuelle
+<dd> Modifications de l'étalonnage de telle sorte que sa position sur le TCO
+et la mesure RPS soit en accord. Pour l'utiliser, vérifiez d'abord que le système 
+RPS  a fait une bonne mesure de la position des émetteurs, alors
+faites glisser l'icône à l'endroit où elle devrait apparaître sur l'écran, et enfin
+choisissez "Situation actuelle" dans le menu contextuel. Dans l'avenir,
+lorsque le système RPS mesures au même endroit, l'icône apparaîtra
+dans cette position.
+
+<dt> Pas étalonné
+<dd> Un message d'état, pas un contrôle, cela apparait quand l'icône n'a pas été étalonnée.
+Le calibrage assure correctement la position de l'icône sur l'écran 
+reflétant  l'emplacement que RPS a mesuré .
+
+<dt> A (x), (y)
+<dd>Une fois l'icône calibrée, le menu contextuel affiche
+la mesure RPS du positionnement le plus récent 
+
+<dt> Afficher ID
+<dd> Si elle est cochée, l'icône aura des informations ID affichées à coté d'elle .
+
+<dt> Définir le filtre
+<dd> Ouvre une fenêtre qui vous permet d'entrer une valeur de filtre pour cette
+icône.
+
+<dt>Désactiver 
+<dd>Contrôles  si oui ou non l'icône peut être déplacée autour manuellement.
+
+<dt>Retirer 
+<dd> supprime l'icône RPS du TCO. Il s'agit d'une suppression définitive.
+
+<dt>Aide 
+<dd> Affiche cette page
+
+</dl>
+
+ <a id="filter"> <a
+<h2> Filtrage et Plusieurs Locomotives</h2>
+
+Nous essayons toujours de trouver la meilleure façon de configurer plusieurs icônes
+sur un TCO. Une icône unique, sans réglages spéciaux, sera sautillante sur le TCO
+quand les lectures entrent en jeu. Elle ira à la position d'une lecture, puis
+passera directement à la position de la prochaine lecture, qui pourrait provenir
+d'un autre émetteur de locomotive.
+
+<p>
+Si vous voulez avoir plusieurs icônes, chacune montrant la position d'une seul
+locomotive, vous pouvez configurer des filtres sur chaque icône.
+<ul>
+<li> Ajouter une icône au panneau de RPS
+<li> Ouvrez le menu contextuel sur l'icône et sélectionnez "Définir le filtre".
+<li> Cela ouvrira une petite fenêtre dans laquelle vous pouvez saisir la valeur de l'ID de la
+locomotive que vous voulez que cette icône suive. Une fois que vous avez fait cela,
+l'icône ne se déplacera qu'à la position mesurée de cette locomotive.
+</ul>
+
+<p>
+Cette méthode est un peu fastidieuse, surtout si vous avez une liste importante,
+puisque vous aurez à le faire manuellement pour chaque locomotive. Et vous les aurez toutes à 
+calibrer. (Une bonne façon de faire est de copier les lignes définissant
+une icône dans le fichier de TCO, en effet faites un tas de duplicata des icônes calibrées,
+puis définissez les filtres, voir ci-dessous).
+Mais il a l'avantage que vous pouvez contrôler exactement quelles locomotives sera afficher et celles qui ne le seront pas.
+Cette méthode permet également de joindre des images <a href="#custicon"> personnalisées</a> (par exemple une image
+d'une locomotive spécifique) à l'icône spécifique qui représente chaque ID.
+
+<a id="custom">
+<h2> Personnalisation</h2>
+<h3>Position de Départ </h3>
+Lorsque vous ouvrez le TCO, les icônes sont remise à la même
+position sur l'écran qu'elles occupaient lorsque le TCO a été sauvegardé dans le fichier.
+<p>
+Vous pouvez l'utiliser pour par exemple mettre les icônes hors de la voie .
+Elles restent dans cette position jusqu'à ce qu'une lecture valide les déplace, donc
+Vous pouvez l'utiliser pour "parquer" les locomotives qui ne sont pas sur la bonne voie
+hors de la partie active du TCO.
+
+<a id="custicon"><h3> Afficher une Icône Personnalisée</h3>
+Bien qu'il n'y ait pas encore d'interface graphique pour ça  (ça vient!),
+vous pouvez modifier l'icône d'un émetteur qui est suivi par
+le système RPS afin qu'il affiche par exemple une petite image de la locomotive.
+Pour ce faire, vous allez éditer le fichier de définition de panneau directement.
+(Il ya plus d'informations sur le
+Format XML, nous utilisons
+<a href="../../../../html/apps/DecoderPro/IntroXML.shtml"> ici</a>) Les étapes sont les suivantes:
+<ul>
+<li> Créer une icône sur l'éditeur de TCO, et sauver le TCO dans un fichier.
+<li> Faites une copie de sauvegarde du fichier, au cas où quelque chose tourne mal.
+<li> A l'aide d'un éditeur de texte, ouvrez le fichier pour le modifier.
+<li> Trouvez la ligne qui définit l'icône. Il contiendra la chaîne "RpsPositionIconXml»,
+ainsi une approche est de rechercher cela. Il va ressembler à (il sera probablement sur une seule ligne):
+<code> <pre>
+    &lt;Sensoricon x = "95" y = "150" level = "10"
+            actif = "resources/icons/smallschematics/tracksegments/circuit occupied.gif"
+            error = "resources/icons/smallschematics/tracksegments/circuit error.gif"
+            rotate = "0" forcecontroloff = "false" momentary = "false"
+            sxscale = "11.849106591612951" syscale = "-11,889381744148094"
+            sxorigin = "41" syorigin = "768"
+            class = "jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
+</Pre></code>
+<li> Pour que l'icône suive d'un émetteur spécifique, entrez l'ID de l'émetteur en tant qu'attribut "filtre" . Par exemple, pour
+suivre l'émetteur 5510, modifiez la ligne:
+<code> <pre>
+    &lt;Sensoricon filter = "5510" x = "95" y = "150" level = "10"
+            actif = "resources/icons/smallschematics/tracksegments/circuit occupied.gif"
+            error = "resources/icons/smallschematics/tracksegments/circuit error.gif"
+            rotate = "0" forcecontroloff = "false" momentary = "false" s
+            xscale = "11.849106591612951" syscale = "-11,889381744148094"
+            sxorigin = "41" syorigin = "768"
+            class = "jmri.jmrit.display.configurexml.RpsPositionIconXml" /&gt;
+</Pre></code>
+<li> Les attributs "actif" et "erreur" sont les icônes à afficher lorsque le système 
+obtiennent des résultats fiables et n'obtiennent pas de bonnes lectures, respectivement.
+Vous pouvez modifier celle ci à l'emplacement de n'importe quel fichier d'icône que vous souhaitez.
+Par exemple, vous pouvez les changer pour une photo (petite) de la
+ locomotive, ou pour une image avec le numéro du train.
+</UL>
+
+Une belle interface graphique pour faire cela est à venir, mais elle n'est pas encore là.
+<!--#include virtual="/Footer" -->
+</body>
+</html>

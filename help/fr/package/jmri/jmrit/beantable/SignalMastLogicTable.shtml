@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: SignalMastLogicTable.shtml,v 1.3 2011/06/15 17:53:18 kevin-dickerson Exp $ -->
+<!-- Translated by Hervé Blorec le 2012/01/09-->
+<HTML LANG="fr">
+<HEAD>
+<TITLE>JMRI: SignalMast Logic Table Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META CONTENT="Kevin Dickerson" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Signal Mast Logic Table">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> La Table Logique Mât de Signalisation</H1>
+
+<P>Une logique  Mât de Signalisation, se compose d'un Mât de destination, un ou plusieurs aiguillages,
+canton, de capteurs ou d'autres Mâts de Signalisations qui doivent être dans un état précis avant la
+Mât de Signalisation source, peut être réglé à partir d'un aspect «danger».
+<P> Si vous avez dessiné correctement  votre réseau sur le TCO avec toutes les
+informations de cantons , il est possible pour le système de construire automatiquement toutes les paires de Mât de Signalisation source et destination, avec les cantons, les aiguillages et leurs
+paramètres.
+<H2> Colonnes de La Table Logique Mât de Signalisation</H2>
+
+<DL>
+<DT> Source</DT>
+<DD> C'est le mât de signal que vous souhaitez mettre en place à début de la logique. Il
+peut y avoir plusieurs instances du mât source dans la table, selon
+le nombre de mâts de destination différents qui sont accessibles depuis ce mât.
+ <br>
+Considérez cela comme le mât de signal auquel le conducteur est actuellement confronté.</Dd>
+
+<DT> Apparence</DT>
+ <DD> L'aspect actuel du mât source</dd>
+
+<DT> Destination</DT>
+<DD> C'est le mât de signalisation de destination qui est le prochain sur la ligne du
+mât source. Il peut y avoir plusieurs instances du mât de destination, tous les
+ avec des mâts source différente.
+</Dd>
+
+ <DT> Apparence</DT>
+ <DD> L'aspect actuel du mât de destination</dd>
+
+ <DT> Commentaire</DT>
+<DD> Un champ libre pour l'utilisateur sous forme modifiable par l'utilisateur pour 'attribuer des commentaires sur la
+     la logique</DT>
+
+<DT> Supprimer</DT>
+<DD>Appuyer le bouton «Supprimer» supprimera la logique du mât de signalisationde la
+table.
+<p>
+Notez que cela ne supprime pas la logique mât de signalisationde tous les fichiers que vous avez
+sauvegardé qui la contiennent. Si vous chargez un de ces fichiers, peut-être
+lorsque vous redémarrez le programme, l'itinéraire va réapparaître.
+Vous devez utiliser l'une des options «Stocker dans Fichier dr" dans les menu "Fichier"
+ pour enregistrer de nouvelles versions de tous les fichiers qui contiennent cette voie.
+</Dd>
+
+
+<DT> Activé</DT>
+<DD> Pour désactiver une Logique de Mât de Signalisation depuis un déclenchement, décochez la case "Activé"
+pour l'itinéraire.</dd>
+
+
+	<DT> Modifier </DT>
+<DD> Appuyez sur ce bouton pour modifier la Logique duMât de Signalisation. Pour plus d'informations, voir: <a
+HREF= "SignalMastLogicAddEdit.shtml"> Ajout/Édition Logique Mât de Signalisation</A>. </Dd>
+</DL>
+
+<H3> Ajouter Logique Mât de Signalisation </H3>
+
+<DD> Cela se fait via le bouton Ajouter au bas de l'écran, pour plus d'informations
+sur le montage et l'ajout de  Logique Mât de Signalisation voir
+	<A HREF="../signalling/AddEditSignallingLogic.shtml">Ajout/Édition Logique Mât de Signalisation</A>.</DD>
+</DL>
+<!--#include virtual="/Footer" -->
+</BODY>
+</HTML>
+

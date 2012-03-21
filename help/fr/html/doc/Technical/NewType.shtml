@@ -1,0 +1,249 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: NewType.shtml,v 1.2 2008/01/22 06:17:20 jacobsen Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-06-06--> 
+<html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: Adding A New Data Type
+    </TITLE>
+    <META content="Bob Jacoben" name=Author>
+    <meta name="keywords" content="JMRI technical type add">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset= utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+	    <!-- ------------- -->
+	    <!-- Page Contents --> <!-- Required -->
+	    <!-- ------------- -->
+
+	    <H1>JMRI: Ajouter un Nouveau Type de Données</H1>
+
+		<div class=para>
+		<p>Cette page décrit les étapes pour ajouter un nouveau type de données,
+par exemple, Aiguillage, à JMRI. </P>
+
+<p> Elle utilise comme exemple l'ajout
+du type Journal en Juillet 2004. Journal est un nouveau
+type de NamedBean utilisé pour apporter des informations complexes
+en retour du réseau ferré . </p>
+</div>
+		<div class=list>
+		<p>Nous listons les fichiers qui sont modifiés et créés dans l'
+ordre dans lequel ils ont été fait dans ce cas, des ordres différents peuvent aussi travailler,
+et vous ne pourriez pas avoir besoin de faire tout cela. </p>
+<P>
+Dans ce cas particulier, notre première mise en œuvre est
+un seul système matériel (LocoNet). Comment
+nous avons ordonné cela, et réduit la nécessité d'avoir des tests unitaires
+en place au début. En travaillant à travers la première implémentation de LocoNet
+, nous pourrions avoir une meilleure idée de savoir si
+l'interface  Reporter proposée  a fait ce qui est nécessaire.
+Si vous créez un nouveau type que plusieurs système auront besoin
+ dans un premier temps, vous devez également créer des tests unitaires au début du
+processus pour encoder ce que vous pensez être le comportement commun.
+		
+		<P>.
+En général, les nouvelles classes et interfaces définies ci-dessous
+peuvent plus facilement être faites en copiant un modèle existant. Dans ce
+cas, on copie le fichier "* Turnout*" pour correspondre à un fichier
+"*Reporter*".
+		<dl>
+
+		<h3>Definir le Nouveau Type et son Gestionnaire </h3>
+
+		    <dt>Reporter (Journal)</dt>
+		    <dd>
+			<p>Cette interface définit les propriétés nécessaires.
+Il doit hériter de NamedBean, vous pouvez
+ajouter des accessoires nouveaux comme vous le souhaitez. </p>
+</dd>
+
+<dt>ReporterManager</dt>
+<dd>
+<p> Cette interface fournit des méthodes pour obtenir un objet Journal
+ soit seulement à partir du nom du système (de préférence)
+ou avec des paramètres supplémentaires </p>
+</dd>
+
+<P> À ce stade, assurez - vous que vous pouvez compiler. </P>
+
+<dt> doc/technical/Names.shtml </dt>
+<dd>
+<p> mise à jour de la discussion de la dénomination pour inclure la lettre - type
+ dans votre nouveau type. Pendant que vous y êtes
+ mettez à jour les pages spécifiques au système de dénomination en fonction des besoins.
+.</p>
+< dd>
+
+		    <dt>AbstractReporter </dt>
+<dd>
+<p> Il s'agit d'une application de base. </p>
+</dd>
+
+ <dt>AbstractReporterManager </dt>
+<dd>
+<p> Application de base; choses qui est utile à
+toutes les applications spécifiques au système </p>
+</dd>
+
+<P> À ce stade, assurez - vous que vous pouvez compiler. </P>
+
+ <dt>managers.ProxyReporterManager </dt>
+<dd>
+<p> poignées ayant plus d'un système fournissant des
+objets Journal . Il prend zéro ou plusieurs 
+application ReporterManager , et route les demande d'accès Journal
+à celle de droite. </p>
+</dd>
+
+<dt>InstanceManager  </dt>
+<dd>
+<p> Il existe plusieurs façons historiques d'installer des
+choses dans l' InstanceManager. La procédure actuelle est
+d'utiliser des "proxies" pour permettre l'utilisation de  multiples
+systèmes de réseaux ferrés, donc s'il vous plaît copier l'Aiguillage en tant que  modèle. </p>
+</dd>
+
+
+		    <P>À ce stade, assurez-vous que vous pouvez compiler.</P>
+
+		<h3>Fournir la Première Mise en œuvre Spécifiques au Système</h3>
+
+		    <dt>jmrix.loconet.LnReporterManager</dt>
+		    <dd>
+			<p>Cette classe écoute l'activité indiquant un
+nouveau Journal LocoNet spécifique, et appelle à en
+ créer un si nécessaire. Autre que cela, et fournissant
+la lettre spécifique au système à droite ('L' par exemple), ce n'est
+juste qu'une une copie directe. </p>
+</dd>
+
+ <dt> jmrix.loconet/LnReporter </dt>
+<dd>
+<p> Convertit le message spécifique en actions Journal et en rapport.
+Tout le reste de la substance est juste pour avoir cela en place. </p>
+</dd>
+
+<P> À ce stade, assurez - vous que vous pouvez compiler.
+Rien ne se passera lorsque vous exécutez jusqu'à la prochaine étape. </P>
+<dd>
+
+<dt>jmrix.loconet.LnPortController </dt>
+<dd>
+<p> ici (ou peut-être ailleurs dans un autre système), vous
+créer une instance de la classe ReporterManager correcte au démarrage du système
+et l'installer dans l' InstanceManager. </p>
+		 		    </dd>
+
+		<h3>Ajouter à la Charge des Scripts</h3>
+
+		    <dt>jython/jmri_defaults.py</dt>
+		    <dd>
+			<p> Ajouter une nouvelle variable pour donner un accès facile au nouveau gestionnaire. </p>
+</dd>
+
+<dt> doc/technical/Jython.shtml </dt>
+<dd>
+<p>Mise à jour de celle-ci pour se référer à la nouvelle variable Jython
+(Il peut y avoir d'autres pages web aussi!) </p>
+</dd>
+
+<P> À ce stade, vous devriez être en mesure de compiler et
+d'exécuter à droite à droite les essais du nouveau code de la ligne de commande jython</P>
+
+		<h3>Ajouter un Nouveau Tableau d'Outils d'Accès (en option</h3>
+		
+			<dt>jmrit.beantable.ReporterTableAction</dt>
+		    <dd>
+			<p>Créez un nouveau "tableau" pour regarder ceux-ci en action. </P>
+<p> Dans ce cas particulier, le code a dû être  un peu modifié
+(au lieu d'être simplement copiés) parce qu'un Journal n'a pas vraiment
+eu un moyen de supporter les "cliquer pour changer"</p>
+		    </dd>
+
+		    <dt>jmrit/beantable/BeanTableBundle.properties</dt>
+		    <dd>
+			<p>Ajouter des chaînes pour les propriétés nouvelles que vous avez défini
+à l'étape précédente. Vous pouvez également traduire celles-ci
+dans les autres propriétés des fichiers lorsque cela est possible.</p>
+		    </dd>
+
+		    <dt>jmrit.ToolsMenu</dt>
+		    <dd>
+			<p>Ajoutez la nouvelle classe ReporterTableAction au menu.</p>
+		    </dd>
+
+		    <dt>jmrit/JmritToolsBundle.properties</dt>
+		    <dd>
+			<p>Ajouter des chaînes pour la nouvelle propriété que vous avez défini
+à l'étape précédente. Vous pouvez également traduire celle à droite dans les autres propriétés des fichiers lorsque cela est possible.</p>
+		    </dd>
+
+		    <P>À ce stade, vous devriez être en mesure de compiler et
+d'exécuter le test du nouveau tableau.</P>
+
+		<h3>Donner de la Persistance aux Types Objets et au Gestionnaire</h3>
+
+		    <dt>configxml.AbstractReporterManagerConfigXML</dt>
+		    <dd>
+			<p>Charger et enregistrer la date de configuration des applications ReporterManager </p>
+		    </dd>
+
+		    <dt>jmrix.loconet.configurexml.LnReporterManagerXml</dt>
+		    <dd>
+			<p>Charger et stocker le système spécifique d'info LocoNet Gestionnaire Journal </p>
+		    </dd>
+		    
+		    <dt>xml/DTD/layout-config.dtd</dt>
+		    <dd>
+			<p>Ajouter de nouveaux éléments et attributs XML à la DTD</p>
+		    </dd>
+
+		<h3>Donner une Classe d'Affichage IcôneAappropriée (facultatif)</h3>
+
+		    <dt>jmrit.display.ReporterIcon</dt>
+		    <dd>
+			<p>discussion</p>
+		    </dd>
+
+		    <dt>jmrit.display.configxml.ReporterIconXml</dt>
+		    <dd>
+			<p>discussion</p>
+		    </dd>
+
+		    <dt>xml/DTD/layout-config.dtd</dt>
+		    <dd>
+			<p>discussion</p>
+		    </dd>
+
+		<h3>Complèter la Documentation</h3>
+
+		    <dt>ant javadoc</dt>
+		    <dd>
+			<p>Créer des JavaDocs, et résoudre les éventuels problèmes nouveaux (ou anciens).</p>
+		    </dd>
+
+		</dl>
+		</div>
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

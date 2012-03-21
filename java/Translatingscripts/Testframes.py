@@ -237,12 +237,13 @@ class Mainframe_Translation(Tkinter.Frame):
         else:
             self.statustext.set("Starting...")
             self.update()
-            if self.currlist.strip() == "All":
-                for actlang in self.filestruct.kinds:
-                    if not actlang.strip() == '':
-                        self.filestruct.getstat(actlang.strip())
-            else:
-                self.filestruct.getstat(self.currlist)
+            #if self.currlist.strip() == "All":
+            #    for actlang in self.filestruct.kinds:
+            #        if not actlang.strip() == '':
+            #            self.filestruct.getstat(actlang.strip())
+            #else:
+            #    self.filestruct.getstat(self.currlist)
+            self.filestruct.getstat(self.currlist)
             self.statustext.set("Done!")
             self.update()
             

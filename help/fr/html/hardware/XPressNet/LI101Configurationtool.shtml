@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- $Id: LI101Configurationtool.shtml,v 1.1 2008/01/13 06:47:33 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-09-26-->  
+
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H2> L'utilitaire de configuration JMRI LI101F </H2>
+<img src="images/LI101ConfigurationUtility.jpg"  alt="LI101 Configuration Tool">
+<P>
+L'outil de configuration LI101 est utilisé pour configurer l'LI101F.
+<P>
+En partant du haut:
+<P>
+La première liste déroulante permet de sélectionner l'adresse de l'appareil à
+utiliser sur le XPressNet. Cette adresse doit être différente de celle de tous les autres
+périphériques sur votre XpressNet.
+<P>
+La seconde liste déroulante affiche les boites fixant la vitesse du port LI101F. Cette vitesse devrait
+correspondre à ce que vous avez utilisé pour le "Port Speed" paramètre dans le volet préférences
+
+<P>
+A partir du côté gauche de l'écran, le bouton "Read from 
+LI101" (Lire depuis
+LI101), va lire les paramètres actuels de l'LI101F.
+<P>
+Le bouton "Write to LI101"(Écrire dans LI101), écrira les paramètres sur l'écran
+de l'LI101F. Si vous avez changé le réglage de la vitesse LI101, vous aurez également besoin
+de changer le réglage de la vitesse dans vos préférences.
+<P>
+Le bouton "Reset to Factory Defaults" (Remettre aux paramètres par défaut) réinitialise  <b>l'écran</b>
+d'usine par défaut. Ceci ne veut pas envoyer une instruction de réinitialisation à l'LI101F à ce
+moment.
+<P>
+Le dernier bouton, étiqueté "Fermer" va fermer l'écran, sans envoyer
+aucune information à la LI101F.
+
+
+<hr>
+Paul Bender<BR>
+paul.bender@acm.org
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

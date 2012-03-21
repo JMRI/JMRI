@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: LoaderFrame.shtml,v 1.7 2008/11/01 17:33:01 jacobsen Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-11-1--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Sound Loader
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help loconet sound loader">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Chargeur de Son 
+</H1>
+Les décodeurs sonores Digitrax sont chargés avec des "projets sons", stockés dans des fichiers
+"Sound Project" (.spj) . Ceux-ci contiennent un certain nombre de "fragments sonores"
+au format .wav, ainsi que quelques informations de contrôle supplémentaires.
+<p>
+L'outil décodeur Téléchargeur Son vous permet de charger un nouveau fichier .spj en
+un décodeur de son Digitrax via une interface PR2 ou PR3 Digitrax. Si vous utilisez un PR3, il doit être mis en mode "Programmateur", avant d'essayer de télécharger, consultez la 
+<a href="../../../../../html/hardware/loconet/PR3.shtml">page principale PR3</a>.
+
+<p>
+Digitrax fournit des exemples de fichiers projets sonores  dans son site Web de Dépot sonore
+<a href="http://www.digitrax.com/sounddepot.php"> (http://www.digitrax.com/sounddepot.php) </a>
+ Vous pouvez également trouver là des liens vers la documentation et des outils supplémentaires.
+
+<p>
+JMRI fournit également des outils pour
+<a href="EditorFrame.shtml"> édition de fichiers de projet sonores </a>
+pour inclure de nouveaux sons et même à
+<a href="/../../sdfeditor/EditorFrame.shtml">changer la logique son</a>
+
+<h2> Utiliser le téléchargeur </h2>
+
+Lorsque vous sélectionnez d'abord l'outil Téléchargeur des Sons, il ouvre une fenêtre
+avec la plupart des contrôles désactivés: <br/>
+ <a href="LoaderPane.gif">
+<img width="236" height="118" src="LoaderPane.gif" alt="Initial éditeur Image"/></a> <br/>
+(Cliquez sur une image sur cette page pour voir une version agrandie)
+<p>
+La ligne d'état au bas vous guidera à travers les étapes nécessaires.
+<ol>
+<li> D'abord, cliquez sur «Sélect» et choisissez le fichier .spj que vous souhaitez télécharger.
+<li>Ensuite, cliquez sur "Lire" pour lire le fichier (ce qui est une étape distincte
+de sorte que vous pouvez simplement cliquer sur "Lire" plusieurs fois si vous êtes en édition et sauvegarder
+les nouvelles versions du fichier).
+<p>
+Si tout est OK, le fichier sera lu dans le programme et vérifié,
+une chaîne de version du fichier sera affiché et le bouton "Télécharger"
+sera activé. <p>
+ <a href="LoaderPaneReady.gif">
+<img width="236" height="118" src="LoaderPaneReady.gif" alt=" éditeur Image  Initiale"/></a><br/>
+
+<li> Cliquez sur "Télécharger" pour commencer le processus de téléchargement. Il va prendre un peu
+tout. Les progrès sont décrits dans la ligne de statut:
+    <dl>
+    <dt> "téléchargement de départ; Effacement Flash" <dd> La première étape consiste à effacer
+        la mémoire des décodeurs afin qu'il puisse prendre de nouvelles données. Cela va prendre
+        jusqu'à environ 30 secondes, selon le décodeur spécifique.
+    <dt> "Envoi message d'initialisation" <dd> Mettre en place le décodeur pour accepter les données
+        après avoir été effacé. Cela ne devrait prendre qu'une fraction de seconde. 
+   <dt> "Envoyer des données SDF» <dd> Chargez les données de définition sonore dans le décodeur, ce qui
+         ne devrait prendre que quelques secondes
+     <dt> «Envoyer des données WAV" <dd> Les données audio sont en cours de téléchargement. Quand chaque bloc est envoyé, vous recevrez un avis de  mise à jour: "Envoyez bloc de données WAV 1", puis
+         2, puis 3, etc
+     <dt> "Terminé" <dd> Le téléchargement est complet OK.
+     </dl>
+     Si quelque chose se déroule mal, le statut final sera "Téléchargement avorté».
+     La raison la plus commune est que le PR2 ne pouvait pas traiter les données qui lui ont été
+      envoyées, ce qui est répertorié comme «PR2 pas prêt". Si cela se produit à plusieurs reprises,
+     assurez-vous que le port série et que le câble  utilisé par PR2 pour le contrôle du lien est correctement connecté. Un contact intermittent peut causer des problèmes .
+</ol>
+<p>
+Si vous avez plusieurs décodeurs à charger avec le même dossier, vous pouvez simplement
+les connectez chacun à leur tour à l'interface PR2/PR3 et cliquez sur "Télécharger", il n'y a
+pas besoin de recharger le fichier à chaque fois.
+
+<p>
+En outre, vous pouvez utiliser un <a href="../../../../../html/tools/throttle/ThrottleMain.shtml">Régulateur</a> JMRI pour essayer vos nouveaux sons via le PR2. JMRI prend soin de convertir les interfaces PR2/PR3 en programmateur/chargeur avec une centrale de commande de faible puissance pour faire rouler une locomotive .
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

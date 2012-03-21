@@ -2374,10 +2374,22 @@ public class TrainBuilder extends TrainCommon{
 				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildRouteNoDropLocation"),new Object[]{train.getRoute().getName(), rld.getName()}));
 				continue;
 			}
+			// get the destination
+			Location testDestination = locationManager.getLocationByName(rld.getName());
+			if (testDestination == null){
+				// The following code should not be executed, all locations in the route have been already checked
+				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorRouteLoc"),
+						new Object[]{train.getRoute().getName(), rld.getName()}));
+			}
 			// don't move car to same location unless the route only has one location (local moves) or is passenger, caboose or car with FRED
 			if (rl.getName().equals(rld.getName()) && routeList.size() != 1 && !car.isPassenger() && !car.isCaboose() && !car.hasFred()){
-				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCarLocEqualDestination"),new Object[]{car.toString(), rld.getName()}));
-				continue;
+				// allow cars to return to the same staging location if no other options (tracks) are available
+				if (Setup.isAllowReturnToStagingEnabled() && testDestination.getLocationOps() == Location.STAGING && trackSave == null){
+					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildReturnCarToStaging"),new Object[]{car.toString(), rld.getName()}));
+				} else {			
+					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCarLocEqualDestination"),new Object[]{car.toString(), rld.getName()}));
+					continue;
+				}
 			}
 			// any moves left at this location?
 			if (rld.getCarMoves() >= rld.getMaxCarMoves()){
@@ -2385,17 +2397,10 @@ public class TrainBuilder extends TrainCommon{
 				continue;
 			}
 
-			noMoreMoves = false;
-			
-			// get a "test" destination and a list of the track locations available			
+			noMoreMoves = false;				
 			Location destinationTemp = null;
 			Track trackTemp = null;
-			Location testDestination = locationManager.getLocationByName(rld.getName());
-			if (testDestination == null){
-				// The following code should not be executed, all locations in the route have been already checked
-				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorRouteLoc"),
-						new Object[]{train.getRoute().getName(), rld.getName()}));
-			}
+
 			if (!testDestination.acceptsTypeName(car.getType())){
 				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropLocation"),new Object[]{car.toString(), car.getType(), testDestination.getName()}));
 				continue;
@@ -2605,17 +2610,22 @@ public class TrainBuilder extends TrainCommon{
 				new Object[]{car.toString(), car.getType(), car.getLoad(), car.getTrackName()}));
 		// figure out which loads the car can use
 		List<String> loads = CarLoads.instance().getNames(car.getType());
-		for (int i=0; i<loads.size(); i++){
+		for (int i=loads.size()-1; i>=0; i--){
 			String load = loads.get(i);
-			if (terminateStageTrack.acceptsLoadName(load) && train.acceptsLoadName(load)){
-				car.setLoad(load);
-				car.setLoadGeneratedFromStaging(true);
-				// is car part of kernel?
-				car.updateKernel();
-				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCreateNewLoadForCar"),
-						new Object[]{car.toString(), car.getLoad(), terminateStageTrack.getLocation().getName(), terminateStageTrack.getName()}));
-				return true;
-			}				
+			if (!terminateStageTrack.acceptsLoadName(load) || !train.acceptsLoadName(load))
+			loads.remove(i);
+		}
+		// Use random loads rather that the first one that works to create interesting loads
+		if (loads.size()>0){
+			int rnd = (int)(Math.random()*loads.size());
+			String load = loads.get(rnd);
+			car.setLoad(load);
+			car.setLoadGeneratedFromStaging(true);
+			// is car part of kernel?
+			car.updateKernel();
+			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCreateNewLoadForCar"),
+					new Object[]{car.toString(), car.getLoad(), terminateStageTrack.getLocation().getName(), terminateStageTrack.getName()}));
+			return true;
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildUnableNewLoad"), new Object[]{car.toString()}));
 		return false;

@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: index.shtml,v 1.9 2009/07/12 03:40:14 dan_boudreau Exp $ -->
+ <!-- Translated  by Blorec Hervé le 2011-09-29-->
+<html lang="fr">
+<head>
+  <TITLE>
+ 	JMRI: Tools
+  </TITLE>
+  <META http-equiv=Content-Type content="text/html; charset= utf-8">
+
+  <META content="Bob Jacobsen" name=Author>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <meta name="keywords"
+        content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset= utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+  <div id="container">
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+      <div id="mainContent">
+      <!-- Page Body -->
+        <H2>
+		JMRI: Outils Généraux
+        </H2>
+
+	<P>
+	JMRI fournit plusieurs outils qui sont optimisés pour
+des fins spécifiques. Outils généraux:
+	    <dl>
+
+		<dt><h3><a href="Sensors.shtml">Capteurs </a></h3></dt>
+		<dd>
+		    Un capteur est une façon pour JMRI de représenter une information venant du réseau.
+</dd>
+
+
+<dt> <h3> <a href="Turnouts.shtml"> Aiguillages </a> </h3> </dt>
+<dd>
+JMRI appelle  aiguillage à peu près n'importe quelle commande vers le réseau.
+</dd>
+
+<dt> <h3> <a href="throttle/ThrottleMain.shtml"> Régulateurs</a> </h3> </dt>
+<dd>
+Vous pouvez ouvrir plusieurs régulateurs logiciels pour piloter
+vos locomotives DCC.
+</dd>
+
+<dt> <h3> <a href="ConsistTool/ConsistTool.shtml"> Couplage (UM) </a> </h3> </dt>
+<dd>
+JMRI fournit des outils pour la gestion de locomotive couplées.
+		</dd>
+
+		<dt><h3><a href="Signals.shtml">Signaux </a> </h3> </dt>
+<dd>
+Signaux (ou plus formellement SignalHeads) sont comment JMRI représente et contrôle les têtes de signal sur un réseau.
+Ils ont un type spécifique de périphérique de sortie qui peut être défini pour différentes
+couleurs: Rouge, Jaune, Vert, Jaune clignotant, etc
+</dd>
+
+<dt> <h3> <a href="Lights.shtml">Lumières</a></h3> </dt>
+<dd>
+Les lumières sont les bits de sortie numériques qui fonctionnent comme des interrupteurs marche/arrêt.
+Les lumières ont été créés pour fournir un contrôle facile pour les lumières d'un panneau de contrôle et l'éclairage des paysages.
+Les sorties lumières peuvent aussi être utilisées à des fins qui nécessite une
+interrupteur marche/arrêt. La sortie lumière peut être utilisée, par exemple, pour activer
+une découpleur électromagnétiques pour un temps pré-déterminé en
+réponse à un bouton du TCO		</dd>
+
+		<dt><h3><a href="Routes.shtml">Itinéraires (Routes) </a> </h3> </dt>
+<dd>
+Les itinéraires sont un outil pour le pilotage de multiples aiguillages lorsque
+quelque chose se passe sur le réseau. Vous pouvez avoir un
+panneau d'interrupteur pour tous les aiguillages de vos accès au triage ,
+etc. Ils peuvent également changer l'état des capteurs,
+lire des fichiers audio, et invoquer des scripts. Ils
+ont certaines capacités logiques simples pour décider quand
+ régler les sorties de l'itinéraire.
+</dd>
+
+<dt> <h3> <a href="Logix.shtml"> Logix </a> </h3> </dt>
+<dd>
+Un Logix est un outil puissant pour entrer des expressions logiques
+qui peuvent contrôler les éléments d'un réseau. 
+Chacun peut suivre de multiples entrées et des opérations logiques
+contenant un certain nombre d'expressions conditionnelles
+, dont chacune peut prendre des mesures simples.
+Pour un contrôle plus puissants, combiner les raisonnements logiques
+ d'un Logix avec la puissante sortie de commande d'Itinéraires.</a></h3></dt>
+	
+		<dt><h3><a href="LRoutes.shtml">LItinéraires </a> </h3> </dt>
+<dd>
+LItinéraires étend les capacités des Itinéraires par 
+                     leur mise en œuvre en tant que Logix. LItinéraires peut être défini
+                     avec un nombre illimité de capteurs, d'aiguillages, de Lumières,
+                     et/ou SignalHeads pour des actions ou des contrôles. LItinéraire peut
+                     fournir un point de départ facile pour la création de nouveaux Logix
+                     car ils peuvent être étendus pour inclure toute les
+                     Capacités de Logix.
+</dd>
+
+         <dt> <h3> <a href="fastclock/index.shtml"> Horloges Rapides </a> </h3> </dt>
+         <DD>
+             JMRI peut à la fois fournir différents types d'horloges rapides
+             sur l'écran d'ordinateur, et aussi travailler avec les
+             horloges rapides déjà installées sur votre réseau.
+         </dd>
+
+    <dt> <h3> <a href="speedometer/index.shtml"> Tachymètre  </a> </h3> </dt>
+<dd>
+Un outil pour déterminer la vitesse à l'échelle de vos locomotives 
+. Vous pouvez l'utiliser pendant leurs réglages,
+pour éviter les excès de vitesse, ou pour tout ce que vous voulez.        </dd>
+<dt> <h3> <a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher </a> </h3> </dt>
+<dd> L'outil offre des fonctions de répartition et organise l'information
+relative à l'expédition des trains sur un réseau en modélisme ferroviaire. Sa principale
+fonction est l'allocation des sections de voie pour que des trains différents puissent circuler
+sur le réseau.
+</dd>
+
+
+<dt> <h3> <a href="../../package/jmri/jmrit/operations/Operations.shtml"> Opérations </a> </h3> </dt>
+<dd>
+L'outil des opérations vous permet de produire par ordinateur les
+manifestes et les listes de manœuvre de votre chemin de fer.	
+		
+	<h2><a href="../apps/LocoTools/index.shtml">Outils spécifiques LocoNet</a></h2>
+	Un jeu d'outils spécifiques Digitrax LocoNet :
+		    <UL>
+		    <LI><dfn>Moniteur LocoNet</dfn>
+		    <LI><dfn>Moniteur Slot </dfn>
+		    <LI><dfn>Source de paquet</dfn>
+		    <LI><dfn>programmateur PM4 </dfn>
+		    <LI><dfn>programmateur BDL16 </dfn>
+		    <LI><dfn>programmateur SE8C</dfn>
+		    <LI><dfn>programmateur LocoIO</dfn>
+		    </UL>
+
+   	<h2><a href="scripting/index.shtml">écriture de scripts</a></h2>
+    S'il n'y a pas un outil de pré-programmés pour faire ce que vous voulez,
+     vous pouvez presque certainement écrire un script qui fera exactement ce qu'il faut.
+     <P>
+     Au lieu de définir notre propre langue, les
+     <A HREF="scripting/index.shtml"> scripts JMRI </a>
+     utilisent le language "Python" qui est couramment utilisée dans le développement web. Bien qu'il
+     vous prendra un peu de temps pour vous y habituer, à la fin il fournit
+     beaucoup de puissance pour contrôler votre réseau de la façon que vous souhaitez..
+    <P>
+  
+
+<!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
+  </div> <!-- closes #container -->
+</body>
+</html>
+

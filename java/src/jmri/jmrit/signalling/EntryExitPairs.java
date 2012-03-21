@@ -366,6 +366,13 @@ public class EntryExitPairs {
         }
     }
     
+    public boolean canBeBiDirectional(Object source, LayoutEditor panel, Object dest){
+        if(nxpair.containsKey(getPointDetails(source, panel))){
+            return nxpair.get(getPointDetails(source, panel)).canBeBiDirection(dest, panel);
+        }
+        return false;
+    }
+    
     public boolean isEnabled(Object source, LayoutEditor panel, Object dest){
         if(nxpair.containsKey(getPointDetails(source, panel))){
             return nxpair.get(getPointDetails(source, panel)).isEnabled(dest, panel);
@@ -424,7 +431,7 @@ public class EntryExitPairs {
     class Source {
     
         NamedBean sourceObject = null;
-        Object sourceSignal = null;
+        NamedBean sourceSignal = null;
         jmri.SignalMastLogic sml;
         String ref = "Empty";
         PointDetails pd = null;
@@ -473,6 +480,12 @@ public class EntryExitPairs {
             return pd.getProtecting();
         }
         
+        NamedBean getSourceSignal(){
+            if(sourceSignal==null){
+                getSignalFromPoint(pd);
+            }
+            return sourceSignal;
+        }
         
         void addDestination(PointDetails dest){
             if(pointToDest.containsKey(dest)){
@@ -527,6 +540,17 @@ public class EntryExitPairs {
             }
         }
         
+        boolean canBeBiDirection(Object dest, LayoutEditor panel){
+            if(getSourceSignal()==null){
+                return true;
+            }
+            //Work on the pinciple that if the source is uniDirection, then the destination has to be.
+            PointDetails lookingFor = getPointDetails(dest, panel);
+            if(pointToDest.containsKey(lookingFor)){
+                return pointToDest.get(lookingFor).getSignal()==null;
+            }
+            return false;
+        }
         boolean isRouteActive(PointDetails endpoint){
             if(pointToDest.containsKey(endpoint)){
                 return pointToDest.get(endpoint).activeEntryExit;
@@ -641,7 +665,7 @@ public class EntryExitPairs {
             
             void setEntryExitType(int type){
                 entryExitType = type;
-                if(type!=SETUPTURNOUTSONLY)
+                if((type!=SETUPTURNOUTSONLY) && (getSignal()!=null) && (getSignalFromPoint(point)!=null))
                     uniDirection = true;
             }
             
@@ -705,7 +729,7 @@ public class EntryExitPairs {
                                 sml.removeDestination(mast);
                         }
                     } else {
-                        log.info("Block that went Occupied was not in the routeDetails list");
+                        log.error("Block " + lBlock.getDisplayName() + " that went Occupied was not in the routeDetails list");
                     }
                     if (log.isDebugEnabled()){
                         log.debug("Route details contents " + routeDetails);
@@ -736,7 +760,7 @@ public class EntryExitPairs {
                     log.error("Set route called even though interlock has been disposed of");
                     return;
                 }
-                Hashtable<Turnout, Integer> turnoutSettings = new Hashtable<Turnout, Integer>();
+                
                 if(routeDetails==null){
                     log.error ("No route to set or clear down");
                     setActiveEntryExit(false);
@@ -753,112 +777,129 @@ public class EntryExitPairs {
                     cancelClearOptionBox();
                     return;
                 }
-
-                ConnectivityUtil connection = new ConnectivityUtil(point.getLayoutEditor());
-                
-                //This for loop was after the if statement
-                //Last block in the route is the one that we are protecting at the last sensor/signalmast
-                for (int i = 0; i<routeDetails.size(); i++){
-                    if (i>0) {
-                        ArrayList<LayoutTurnout> turnoutlist;
-                        int nxtBlk = i+1;
-                        int preBlk = i-1;
-                        if (i==routeDetails.size()-1){
-                            nxtBlk = i;
-                        } else if (i==0){
-                            preBlk=i;
-                        }
-                        turnoutlist=connection.getTurnoutList(routeDetails.get(i).getBlock(), routeDetails.get(preBlk).getBlock(), routeDetails.get(nxtBlk).getBlock());
-                        ArrayList<Integer> throwlist=connection.getTurnoutSettingList();
-                        for (int x=0; x<turnoutlist.size(); x++){
-                            String t = turnoutlist.get(x).getTurnoutName();
-                            Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
-                            turnout.setCommandedState(throwlist.get(x));
-                            turnoutSettings.put(turnout, throwlist.get(x));
+                /*We put the setting of the route into a seperate thread and put a glass pane infront of the layout editor,
+                the swing thread for flash the icons to carry on as without interuption */
+                Runnable setRouteRun = new Runnable() {
+                    public void run() {
+                        getPoint().getPanel().getGlassPane().setVisible(true);
+                        try {
+                            Hashtable<Turnout, Integer> turnoutSettings = new Hashtable<Turnout, Integer>();
                             
-                            Runnable r = new Runnable() {
-                              public void run() {
-                                try {
-                                    Thread.sleep(250 + turnoutSetDelay);
-                                } catch (InterruptedException ex) {
-                                    Thread.currentThread().interrupt();
+                            ConnectivityUtil connection = new ConnectivityUtil(point.getLayoutEditor());
+                            
+                            //This for loop was after the if statement
+                            //Last block in the route is the one that we are protecting at the last sensor/signalmast
+                            for (int i = 0; i<routeDetails.size(); i++){
+                                if (i>0) {
+                                    ArrayList<LayoutTurnout> turnoutlist;
+                                    int nxtBlk = i+1;
+                                    int preBlk = i-1;
+                                    if (i==routeDetails.size()-1){
+                                        nxtBlk = i;
+                                    } else if (i==0){
+                                        preBlk=i;
+                                    }
+                                    turnoutlist=connection.getTurnoutList(routeDetails.get(i).getBlock(), routeDetails.get(preBlk).getBlock(), routeDetails.get(nxtBlk).getBlock());
+                                    ArrayList<Integer> throwlist=connection.getTurnoutSettingList();
+                                    for (int x=0; x<turnoutlist.size(); x++){
+                                        String t = turnoutlist.get(x).getTurnoutName();
+                                        Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
+                                        turnout.setCommandedState(throwlist.get(x));
+                                        turnoutSettings.put(turnout, throwlist.get(x));
+                                        
+                                        Runnable r = new Runnable() {
+                                          public void run() {
+                                            try {
+                                                Thread.sleep(250 + turnoutSetDelay);
+                                            } catch (InterruptedException ex) {
+                                                Thread.currentThread().interrupt();
+                                            }
+                                          }
+                                        };
+                                        Thread thr = new Thread(r, "Entry Exit Route, turnout setting");
+                                        thr.start();
+                                        try{
+                                            thr.join();
+                                        } catch (InterruptedException ex) {
+                                //            log.info("interrupted at join " + ex);
+                                        }
+                                    }
+                                    if(getEntryExitType()==FULLINTERLOCK){
+                                        routeDetails.get(i).setUseExtraColor(true);
+                                    }
                                 }
-                              }
-                            };
-                            Thread thr = new Thread(r, "Entry Exit Route, turnout setting");
-                            thr.start();
-                            try{
-                                thr.join();
-                            } catch (InterruptedException ex) {
-                    //            log.info("interrupted at join " + ex);
+                                if ((getEntryExitType()==FULLINTERLOCK)){
+                                        routeDetails.get(i).getBlock().addPropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
+                                } else {
+                                    routeDetails.get(i).getBlock().removePropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
+                                }
                             }
-                        }
-                        if(getEntryExitType()==FULLINTERLOCK){
-                            routeDetails.get(i).setUseExtraColor(true);
-                        }
-                    }
-                    if ((getEntryExitType()==FULLINTERLOCK)){
-                            routeDetails.get(i).getBlock().addPropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
-                    } else {
-                        routeDetails.get(i).getBlock().removePropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
-                    }
-                }
+                            //Force a redraw
+                            getPoint().getPanel().redrawPanel();
+                            if (getEntryExitType()!=SETUPTURNOUTSONLY){
+                                if(getEntryExitType()==FULLINTERLOCK){
+                                    //If our start block is already active we will set it as our lastSeenActiveBlock.
+                                    if(getStart().getState()==Block.OCCUPIED){
+                                        getStart().removePropertyChangeListener(propertyBlockListener);
+                                        lastSeenActiveBlockObject = getStart().getBlock().getValue();
+                                        log.debug("Last seen value " + lastSeenActiveBlockObject);
+                                    }
+                                }
+                                if((sourceSignal instanceof SignalMast) && (getSignal() instanceof SignalMast)){
+                                    SignalMast smSource = (SignalMast) sourceSignal;
+                                    SignalMast smDest = (SignalMast) getSignal();
+                                    sml = smlm.newSignalMastLogic(smSource);
+                                    if(!sml.isDestinationValid(smDest)){
+                                        //if no signalmastlogic existed then created it, but set it not to be stored.
+                                        sml.setDestinationMast(smDest);
+                                        sml.setStore(jmri.SignalMastLogic.STORENONE, smDest);
+                                    }
+                                    Hashtable<Block, Integer> blks = new Hashtable<Block, Integer>();
+                                    //Remove the first block as it is our start block
+                                    routeDetails.remove(0);
+                                    for(int i = 0; i<routeDetails.size(); i++){
+                                        if (routeDetails.get(i).getBlock().getState()==Block.UNKNOWN)
+                                            routeDetails.get(i).getBlock().setState(Block.UNOCCUPIED);
+                                        blks.put(routeDetails.get(i).getBlock(), Block.UNOCCUPIED);
+                                    }
+                                    smSource.setHeld(false);
+                                    sml.setAutoBlocks(blks, smDest);
+                                    sml.setAutoTurnouts(turnoutSettings, smDest);
+                                    sml.initialise(smDest);
+                                    smSource.addPropertyChangeListener( new PropertyChangeListener() {
+                                        public void propertyChange(PropertyChangeEvent e) {
+                                            SignalMast source = (SignalMast)e.getSource();
+                                            source.removePropertyChangeListener(this);
+                                            setRouteFrom(true);
+                                            setRouteTo(true);
+                                        }
+                                    });
+                                    pd.extendedtime=true;
+                                    point.extendedtime=true;
+                                } else {
+                                    if (sourceSignal instanceof SignalMast){
+                                        SignalMast mast = (SignalMast) sourceSignal;
+                                        mast.setHeld(false);
+                                    } else if (sourceSignal instanceof SignalHead){
+                                        SignalHead head = (SignalHead) sourceSignal;
+                                        head.setHeld(false);
+                                    }
+                                    setRouteFrom(true);
+                                    setRouteTo(true);
+                                }
+                            } else {
+                                setNXButtonState(pd, NXBUTTONINACTIVE);
+                                setNXButtonState(point, NXBUTTONINACTIVE);
+                            }
 
-                if (getEntryExitType()!=SETUPTURNOUTSONLY){
-                    if(getEntryExitType()==FULLINTERLOCK){
-                        //If our start block is already active we will set it as our lastSeenActiveBlock.
-                        if(getStart().getState()==Block.OCCUPIED){
-                            getStart().removePropertyChangeListener(propertyBlockListener);
-                            lastSeenActiveBlockObject = getStart().getBlock().getValue();
-                            log.debug("Last seen value " + lastSeenActiveBlockObject);
+                        } catch (Exception ex) {
+                            log.error("An error occured while setting the route");
                         }
+                        getPoint().getPanel().getGlassPane().setVisible(false);
                     }
-                    if((sourceSignal instanceof SignalMast) && (getSignal() instanceof SignalMast)){
-                        SignalMast smSource = (SignalMast) sourceSignal;
-                        SignalMast smDest = (SignalMast) getSignal();
-                        sml = smlm.newSignalMastLogic(smSource);
-                        if(!sml.isDestinationValid(smDest)){
-                            //if no signalmastlogic existed then created it, but set it not to be stored.
-                            sml.setDestinationMast(smDest);
-                            sml.setStore(jmri.SignalMastLogic.STORENONE, smDest);
-                        }
-                        Hashtable<Block, Integer> blks = new Hashtable<Block, Integer>();
-                        //Remove the first block as it is our start block
-                        routeDetails.remove(0);
-                        for(int i = 0; i<routeDetails.size(); i++){
-                            if (routeDetails.get(i).getBlock().getState()==Block.UNKNOWN)
-                                routeDetails.get(i).getBlock().setState(Block.UNOCCUPIED);
-                            blks.put(routeDetails.get(i).getBlock(), Block.UNOCCUPIED);
-                        }
-                        smSource.setHeld(false);
-                        sml.setAutoBlocks(blks, smDest);
-                        sml.setAutoTurnouts(turnoutSettings, smDest);
-                        sml.initialise(smDest);
-                        smSource.addPropertyChangeListener( new PropertyChangeListener() {
-                            public void propertyChange(PropertyChangeEvent e) {
-                                SignalMast source = (SignalMast)e.getSource();
-                                source.removePropertyChangeListener(this);
-                                setRouteFrom(true);
-                                setRouteTo(true);
-                            }
-                        });
-                        pd.extendedtime=true;
-                        point.extendedtime=true;
-                    } else {
-                        if (sourceSignal instanceof SignalMast){
-                            SignalMast mast = (SignalMast) sourceSignal;
-                            mast.setHeld(false);
-                        } else if (sourceSignal instanceof SignalHead){
-                            SignalHead head = (SignalHead) sourceSignal;
-                            head.setHeld(false);
-                        }
-                        setRouteFrom(true);
-                        setRouteTo(true);
-                    }
-                } else {
-                    setNXButtonState(pd, NXBUTTONINACTIVE);
-                    setNXButtonState(point, NXBUTTONINACTIVE);
-                }
+                };
+                Thread thrMain = new Thread(setRouteRun, "Entry Exit Set Route");
+                thrMain.start();
             }
             
             private JFrame cancelClearFrame;
@@ -956,7 +997,7 @@ public class EntryExitPairs {
                     SignalHead head = (SignalHead) sourceSignal;
                     head.setHeld(true);
                 } else {
-                    log.error("No signal found");
+                    log.debug("No signal found");
                 }
                 
                 //Get rid of the signal mast logic to the destination mast.
@@ -1077,21 +1118,35 @@ public class EntryExitPairs {
                             //check some how that a route hasn't been set to it.
                             destinationLBlock = getFacing();
                         } else {
-                            protectLBlock = getProtecting();
-                            startlBlock = getFacing();
+                            
+                            protectLBlock = getFacing();
+                            startlBlock = getProtecting();
                             destinationLBlock = getStart();
+                            if(log.isDebugEnabled())
+                                log.debug("reverse set destination is set going for " + startlBlock.getDisplayName() + " " + destinationLBlock.getDisplayName() + " " + protectLBlock.getDisplayName());
                             try{
-                            if(!InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(startlBlock, protectLBlock, getSourceProtecting(), getStart())){
-                                startlBlock = getProtecting();
-                                protectLBlock = getFacing();
                                 if(!InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(startlBlock, protectLBlock, getSourceProtecting(), getStart())){
-                                    log.error("No route found");
-                                    JOptionPane.showMessageDialog(null, "No Valid path found");
-                                    setNXButtonState(pd, NXBUTTONINACTIVE);
-                                    setNXButtonState(point, NXBUTTONINACTIVE);
-                                    return;
+                                    startlBlock = getFacing();
+                                    protectLBlock = getProtecting();
+                                    if(log.isDebugEnabled())
+                                        log.debug("That didn't work so try  " + startlBlock.getDisplayName() + " " + destinationLBlock.getDisplayName() + " " + protectLBlock.getDisplayName());
+                                    if(!InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(startlBlock, protectLBlock, getSourceProtecting(), getStart())){
+                                        log.error("No route found");
+                                        JOptionPane.showMessageDialog(null, "No Valid path found");
+                                        setNXButtonState(pd, NXBUTTONINACTIVE);
+                                        setNXButtonState(point, NXBUTTONINACTIVE);
+                                        return;
+                                    }
+                                } else if(InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(getFacing(), getProtecting(), getSourceProtecting(), getStart())){
+                                    //Both paths are valid, so will go for setting the shortest
+                                    int distance = startlBlock.getBlockHopCount(destinationLBlock.getBlock(), protectLBlock.getBlock());
+                                    int distance2 = getFacing().getBlockHopCount(destinationLBlock.getBlock(), getProtecting().getBlock());
+                                    if(distance > distance2){
+                                        //The alternative route is shorter we shall use that
+                                        startlBlock = getFacing();
+                                        protectLBlock = getProtecting();
+                                    }
                                 }
-                            }
                             } catch (jmri.JmriException ex){
                                 JOptionPane.showMessageDialog(null, ex.getMessage());
                                 log.error("Exception " + ex.getMessage());
@@ -1099,6 +1154,9 @@ public class EntryExitPairs {
                                 setNXButtonState(point, NXBUTTONINACTIVE);
                                 return;
                             }
+                        }
+                        if(log.isDebugEnabled()){
+                            log.debug("Path chossen " + startlBlock.getDisplayName() + " " + destinationLBlock.getDisplayName() + " " +  protectLBlock.getDisplayName());
                         }
                         destination = destinationLBlock;
                         try{
@@ -1533,7 +1591,7 @@ public class EntryExitPairs {
                 
                 for(Entry<Source.DestinationPoints, Source> dp: destinations.entrySet()){
                     destPoint = dp.getKey();
-                    if(dp.getValue().getPoint().getNXState()==NXBUTTONSELECTED){
+                    if(destPoint.isEnabled() && dp.getValue().getPoint().getNXState()==NXBUTTONSELECTED){
                         setButtonState(NXBUTTONSELECTED);
                         destPoint.activeBean(false);
                         return;
@@ -1546,7 +1604,7 @@ public class EntryExitPairs {
                         for(Entry<PointDetails, Source.DestinationPoints> en : sourceRoute.pointToDest.entrySet()){
                             //Sensor sen = getSensorFromPoint(en.getKey().getPoint());
                             //Set a time out on the source sensor, so that if its state hasn't been changed, then we will clear it out.
-                            if(!en.getValue().getUniDirection()){
+                            if(en.getValue().isEnabled() && !en.getValue().getUniDirection()){
                                 if(en.getKey().getNXState()==NXBUTTONSELECTED){
                                     sourceRoute.activeBean(en.getValue(), true);
                                 }
@@ -1558,6 +1616,15 @@ public class EntryExitPairs {
                     } else if (now==Sensor.INACTIVE && getNXState()==NXBUTTONACTIVE){
                         //Sensor gone inactive, while nxbutton was selected - potential start of user either clear route or setting another
                         setButtonState(NXBUTTONSELECTED);
+                        for(Entry<PointDetails, Source.DestinationPoints> en : sourceRoute.pointToDest.entrySet()){
+                            //Sensor sen = getSensorFromPoint(en.getKey().getPoint());
+                            //Set a time out on the source sensor, so that if its state hasn't been changed, then we will clear it out.
+                            if(en.getValue().isEnabled() && !en.getValue().getUniDirection()){
+                                if(en.getKey().getNXState()==NXBUTTONSELECTED){
+                                    sourceRoute.activeBean(en.getValue(), false);
+                                }
+                            }
+                        }
                     }
                 } else if (destPoint!=null){
                     //Button set as a destination but has no source, it has had a change in state
@@ -1809,8 +1876,6 @@ public class EntryExitPairs {
         }
         protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
     }
-    
-    
     
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {

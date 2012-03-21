@@ -40,8 +40,6 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
         // add GUI component
         treePane = new TreePane();
         
-        System.out.println(memo.get(org.openlcb.can.AliasMap.class));
-        
         treePane.initComponents((MimicNodeStore)memo.get(MimicNodeStore.class));
         add(treePane);
     }

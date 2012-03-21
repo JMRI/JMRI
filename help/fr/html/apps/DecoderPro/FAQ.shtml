@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: FAQ.shtml,v 1.4 2009/03/12 22:59:03 matthewharris Exp $ -->
+ <!--Translated by Hervé Blorec le 2011/10/01 -->
+<title>JMRI: DecoderPro Frequently Asked Questions</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+
+<H1>JMRI: DecoderPro Questions Fréquemment Posées</H1>
+
+<p>Cette page est la FAQ de DecoderPro de JMRI. Les éléments obtenus listés ici ont souvent été posés, ils sont également disponibles ailleurs..
+</p>
+
+<dl>
+
+<dt class=left><a name="newdecoder"/>Comment puis je obtenire un type de décodeur défini?</dt></a>
+<dd class=first>
+<p>
+Un nouveau décodeur complet nécessite un nouveau ou un fichier de configuration mis à jour. Vous pouvez 
+<a href="CreateDecoder.shtml">créer votre propre fichier</a>
+ou demander sur la 
+<a href="http://groups.yahoo.com/group/jmriusers/"> mailing list JmriUsers </a>
+Pour demander à quelqu'un d'en créer un pour vous.
+</P>
+<p>
+Dans beaucoup de cas, vous pouvez utiliser un décodeur existant qui est "suffisamment proche". Par exemple, un décodeur du même fabricant qui a une taille différente ou Notation actuelle pourrait avoir la même configuration de CVs, ainsi la définition de ce décodeur va très bien fonctionner. 
+</dd>
+
+<dt class=left><a name="newfile"/>Que dois-je faire avec ce nouveau fichier décodeur?</dt></a>
+<dd class=first>
+<p>
+Pour que DecoderPro utilise la définition d'un type de décodeur dans un nouveau fichier décodeur, le nouveau fichier doit être inclut dans l'index DecoderPro des types de décodeur. Pour faire ceci:
+<UL>
+<LI>Dans votre Répertoire d'installation, vous devez trouver un répertoire nommé "xml".
+Sous ce répertoire, il doit y en avoir un nommé  "decoders". Vous devez mettre ce fichier ici.
+
+<LI>Maintenant démarrer DecoderPro, et ouvrez le menu "Debogage".  Sélectionnez l'option
+"Reconstruire Index Décodeur" .
+
+<LI>L'ordinateur va fonctionner une minute ou deux avec la sélection en surbrillance.  
+Aussitôt qu'elle disparait, la nouvelle définition est disponible pour vous.
+
+</UL>
+
+<P>
+SVP Soyez sûr que le nouveau fichier de configuration a bien contribué au projet ainsi il sera inclut dans les versions futures et vous n'aurez pas à refaire l'index à chaque fois que vous ferez une mise à jour.
+</dd>
+
+<dt class=left><a name="update"/>Comment Puis je obtenir les dernières définitions du décodeur?</dt></a>
+<dd class=first>
+<p>
+La façon la plus aisée pour mettre à jour est de télécharger une nouvelle version du programme.
+Il est peu probable de causer des problèmes et installe automatiquement les dernières versions des contributions à décoderPro.
+<P>
+Les mises à jour se produisent en permanence entre les versions du programme.
+Comme les fichiers sont des contributions, nous les rendons disponibles sur notre page web
+<A HREF="http://jmri.sourceforge.net/xml/decoders">Définitions de décodeur collectées</a>
+ Vous pouvez les télécharger depuis là, mais notez que la plupart des navigateurs web ne vous permettrons pas de les voir directement; vous devez les télécharger.
+<p>
+Bien des gens travaillent sur des définitions décodeur, ils mettent souvent
+leurs définitions dans la zône  "Fichiers" du 
+<A HREF="http://groups.yahoo.com/group/jmriusers">jmriusers Yahoo group</a>.
+Vous pouvez 
+<A HREF="http://groups.yahoo.com/group/jmriusers/files/Decoder%20files">Les télécharger depuis là</a>.
+Notez que comme mesure anti-spam vous devrez probablement 
+<A HREF="http://groups.yahoo.com/group/jmriusers/join">joindre le groupe </a>
+pour pouvoir télécharger les fichiers; cela necessite que vous ayez un compte Yahoo (gratuit).
+
+<dt class=left><a name="lb-xp"/>Pourquoi mon LocoBuffer-II ne travaille pas avec Windows XP?</dt></a>
+<dd class=first>
+<p>
+Avec Windows XP, les paramètres de votre port série peuvent ne pas être réglés pour un contrôle matériel du flux.Pour corriger ceci, Clic-droit sur My computer et sélectionnez les Propriétés. Allez à l'onglet Matériel et cliquer sur Device Manager.Ouvrez la section qui dit Ports (COM &amp; LPT). 
+Clic-droit sur le port série attribué à LocoBuffer et sélectionnez Propriétés. Allez à l'onglet Réglage du Port et paramétrer les options à 19200, 8, None,1, Hardware. Cliquer sur OK. Fermer tout. 
+Redémarrer JMRI et vérifiez vos paramètres de connection. 
+
+</dd>
+
+</dl>
+    
+<!--#include virtual="/Footer" -->
+</div>
+</body>
+</html>

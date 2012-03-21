@@ -432,10 +432,14 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
                             return false;
                         }
                     }
-                    if(nxPairs.getEntryExitType(source.get(row), panel, dest.get(row))!=0x00){
+                    if(!nxPairs.canBeBiDirectional(source.get(row), panel, dest.get(row))){
                         JOptionPane.showMessageDialog(null, rb.getString("BothWayTurnoutOnly"));
                         return false;
                     }
+                    /*if(nxPairs.getEntryExitType(source.get(row), panel, dest.get(row))!=0x00){
+                        JOptionPane.showMessageDialog(null, rb.getString("BothWayTurnoutOnly"));
+                        return false;
+                    }*/
                     return true;
                 case DELETECOL:
                 case CLEARCOL:

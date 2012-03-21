@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Logging.shtml,v 1.4 2010/08/26 18:31:20 jacobsen Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-05-06-->
+  <html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: How to Use the Logging Facilities
+    </TITLE>
+   <meta name="Author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI log4j logging log">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+	    <!-- ------------- -->
+	    <!-- Page Contents --> <!-- Required -->
+	    <!-- ------------- -->
+
+	    <H1>JMRI: Comment faire pour utiliser les équipements de Connexion</H1>
+
+
+Cette page fournit un peu d'information sur la façon dont
+JMRI enregistre l'erreur, l'état et les informations de débogage.
+
+<P>
+Pour d'autres détails internes sur JMRI , s'il vous plaît voir les
+<A HREF="../Technical/index.shtml" NAME="technical pages"> pages techniques  </A>.
+
+<P>
+JMRI utilise le Jakarta
+<A HREF="http://jakarta.apache.org/log4j/docs/index.html"> Log4J </a>
+ensemble de mesures pour connexion en cours de fonctionnement du programme.
+<P>
+Log4J offre plusieurs niveaux de messages:
+<UL>
+<LI>Erreur
+<LI>Attention
+<LI> Info - Information sommaire en fonctionnement normal
+<LI> Debug - informations sur le fonctionnement interne du programme.
+Il y en a beaucoup , et en tournant sur tous peut ralentir le
+programme de façon significative.
+</UL>
+<P>
+Par convention, les applications JMRI vont tenter d'initialiser
+Log4J à l'aide d'un fichier "default.lcf" . Les distributions JMRI
+contiennent une version de ce fichier avec
+de nombreux commentaires. (Ce fichier doit être dans le «Répertoire des programmes»,
+qui peut être trouvé en sélectionnant le bouton "Recherche" dans le menu d'aide principale))
+
+<P>
+Si vous changez la ligne:
+<PRE>
+ log4j.rootCategory=DEBUG, A1
+</PRE>
+par
+<PRE>
+ log4j.rootCategory=DEBUG, A1, R
+</PRE>
+les entrées du journal seront rédigé à la fois vers la "console"
+par "A 1 ", et un fichier par "R". 
+<P>
+Le fichier "default.lcf" détermine la destination et le format des messages enregistrés. Par défaut, vous obtenez des lignes qui ressemblent à:
+
+<CODE><PRE>
+514668 [AWT-EventQueue-0] WARN jmri.jmrit.powerpanel.PowerPane  -Aucune instance du gestionnaire de puissance trouvés, panneau pas actif 
+</PRE></CODE>
+Les colonnes sont:
+<ul>
+<li><CODE>514668 - temps en millisecondes depuis le démarrage du programme</CODE>
+<li><CODE>[AWT-EventQueue-0] - Le lien qui a émis le message, utile si vous avez créé votre propre dans un script</CODE>
+<li><CODE>WARN - la gravité du message</CODE>
+<li><CODE>jmri.jmrit.powerpanel.PowerPane - l'endroit dans le code (nom de classe) qui a émis le message</CODE>
+<li><CODE>Aucune instance du gestionnaire de puissance trouvés, panneau non actif - le message lui-même</CODE>
+</UL>
+
+Pour enregistrer des messages
+à partir d'une classe nommée MyClass, ajoutez ceci à la fin du fichier de class:
+<code>
+<PRE>
+	static org.apache.log4j.Category log 
+	        = org.apache.log4j.Category.getInstance(MyClass.class.getName());
+</PRE>
+</code>
+Ensuite, pour chaque message pour vous connecter insérer une ligne comme:
+
+<code>
+<PRE>
+	log.debug("message");
+</PRE>
+</code>
+
+<P>
+Si le message n'est pas seulement une chaîne explicite, vous devez utiliser
+cette forme à la place:
+<code>
+<PRE>
+	if (log.isDebugEnabled()) log.debug("Found "+numberEntrie());
+</PRE>
+<code>
+de sorte que le programme ne perde pas de temps en formant la chaîne de message (dans ce cas, appelert numberEntries () et la concaténation des chaînes) si
+l'appel de Log.debug ne va pas le stocker.
+
+<h3>Niveaux de Connexion</h3>
+<table border="1">
+<tr><th>Niveau</th><th>Fragment de Code</th><th>Utilisation</th></tr>
+<tr><td>DEBUG</td><td>if (log.isDebugEnabled()) log.debug(..)</td><td>Messages détaillés, utilisé dans le débogage</td></tr>
+<tr><td>INFO</td><td>if (log.isInfoEnabled())log.info(..)</td><td>Messages de routine que vous voulez voir en fonctionnement normal</td></tr>
+<tr><td>AVERT</td><td>log.warn(..)</td><td>Le programme est encore en exploitation, en quelque sorte, mais quelque chose doit être examiné</td></tr>
+<tr><td>ERR</td><td>log.error(..)</td><td>Indique que l'opération souhaitée ne va pas se produire, et explique pourquoi</td></tr>
+<tr><td>FATAL</td><td>log.fatal(..)</td><td>Rarement utilisé, ce sont les dernières choses que le programme dit avant d'arrêter de façon inattendue</td></tr>
+</table>
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

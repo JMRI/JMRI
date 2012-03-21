@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright ($Author: kevin-dickerson $) 2009 -->
+<!-- $Id: SignalGroupTable.shtml,v 1.2 2010/03/23 18:29:25 kevin-dickerson Exp $ -->
+<!-- Translated by Hervé Blorec le 2012/01/08-->
+<title>JMRI: Signal Group Table</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1> <H1>JMRI: Table Groupe Signal
+</H1>
+Groupes de Signaux.
+
+Les Groupes de signaux sont utilisés pour définir un certain nombre de têtes de signal, où une seule tête de signal peut être éclairée à un moment donné, en fonction de l'état du mât de signal associé et un ensemble de conditions. <br>
+
+Les Groupes de signaux seront utilisés lorsque des indicateurs supplémentaires sont utilisés pour compléter le mât du signal principal, tels que les écrans de Direction, Itinéraire ou la Vitesse. Ces indicateurs fournissent des informations supplémentaires pour le conducteur qui ne sont pas données par le mât du signal principal. Ces indicateurs sont fréquemment observés en Europe et au Royaume-Uni . <br>
+
+ <h2>Indicateurs de Directions</h2>
+Un indicateur de Direction peut être configuré pour afficher n'importe quelle voie divergente entre 1 à 6 . Un seul indicateur sera souvent trouvé où un aiguillage. diverge hors d'une ligne principale. Plusieurs indicateurs se trouvent dans des domaines plus complexes tels que l'approche des gares et les triages, où plusieurs routes peuvent être prises. L'indicateur de direction informe le conducteur qu'il est en train de prendre un itinéraire différent et doit donc adapter sa vitesse en fonction de la signalisation. <br>
+
+Les indicateurs de direction eux mêmes  seront en accord avec un ensemble donné d'aiguillage pour cette jonction. <br>
+
+<h2>Indicateurs d'Itinéraires</h2>
+Un indicateur d'Itinéraire tel qu'il  est utilisé au Royaume-Uni, affiche un chiffre ou une lettre, ils sont majoritairement  trouvés liés aux signaux à l'approche d'une gare. Ils affichent le quai sur lequel le train va être  acheminé, étant donné la complexité de certains accès en gare , il peut y avoir un certain nombre d'itinéraires physiques  différents qui pourraient être pris à partir du signal de destination. Ainsi un indicateur de jonction ne pouvait pas être utilisée lorsque tided avec des positions de d'aiguillage. De plus l'indicateur de jonction ne peut traiter que 6 itinéraires différents, et certaines stations ont plus de 6 quais. <br>
+
+Par conséquent, l'indicateur d'itinéraire ne peut afficher qu'une destination à la fois. L'affichage d'un itinéraire ne signifie pas nécessairement que le pilote prendra le même chemin pour se rendre au quai de destination. <br>
+
+<a href="SignalGroup.png">
+<Img src = "SignalGroup.png"
+height = "274" width = "306">
+</A>
+
+<h2> Chaque groupe de signal comprend les éléments suivants </h2>
+
+Un mât de signal -. Auquel ce groupe est attaché <br>
+Une liste des apparences qui peuvent être valables pour le groupe de signaux  devenienne actif. <br>
+Par exemple :  le mât de signal, doit être fixé pour Continuer ou Prudence, mais pas Arrêt. <br>
+
+ <p> Les Têtes de signal qui composent chacune des indications du groupe.
+Têtes de signaux au sein du groupe sont constitués à partir d'une tête de signal créée en utilisant le type de sortie unique, à partir de la table têtes de signal. <br>
+<a href="SingleSignalHead.png">
+<Img src = "SingleSignalHead.png"
+height = "159" width = "121">
+</A>
+<p> Alors chaque tête de signal a un ensemble de critères qui doivent être remplis avant que la tête de signal soit allumée. Il est constitué d'aiguillages et/ou des États du capteur. <br>
+
+<h2> Exemple - Indicateur de Direction </h2>
+Considérons le schéma de voies suivants, vous avez ici six directions de sortie possibles  de la voie principale . <br>
+
+<a href="SignalGroupTrackDiagram.png">
+<Img src = "SignalGroupTrackDiagram.png"
+ height = "90" width = "233">
+</A>
+
+<p>Le signal  face à  cette jonction aura un indicateur de jonction fixé, chaque voie possible aura sa propre indication. Lorsque l'itinéraire est fixé pour tout droit, alors aucun indicateur n'est indiqué. Si l'itinéraire est fixé pour la position 1, alors l'indicateur position 1 sera affiché. <br>
+
+<a href="SignalGroupTrackDiagram1.png">
+   <img src="SignalGroupTrackDiagram1.png" 
+        height="90" width="262">
+</a>
+
+<p> Avec cette configuration, vous devez créer une seule tête de signal d'aiguillage pour chaque position, configurée avec une apparence sombre et lunaire. Vous pouvez utiliser deux combinaisons de couleurs que vous aimez, mais sombre et lunaire sont plus adaptés à cette situation.
+
+<p> Dans le Groupe Signal, vous sélectionnez chacune des Têtes de Signal qui sont utilisées pour créer l'indicateur de direction. La logique pour chaque tête de signal est alors configurée comme suit.
+<table>
+ <td width=200 valign=top>
+<p>  Position 1 - Réglages Aiguillages</p>
+<p>  IT1 <p> mis Dévié</p>
+ <p> IT2 mis Dévié.</p>
+</td>
+<td width=200>
+<p>  Position 2  - Réglages Aiguillages</p>
+<p>  IT1 <p> mis Dévié,</p>
+<p> IT2 ensemble Direct,</p>
+<p> IT3 mis Dévié .</p>
+</td>
+<td width=200>
+<p>  Position 3  - Réglages Aiguillages</p>
+<p>  IT1 <p> mis Dévié,</p>
+<p> IT2 ensemble Direct</p>
+<p> IT3 ensemble Direct.</p>
+</td>
+<td width=200>
+<p>  Position 4  - Réglages Aiguillages</p>
+ <p> IT1 ensemble Direct</p>
+ <p> IT4 mis Dévié</p>
+<p> IT5 mis Dévié </p>
+</td>
+<td width=200>
+<p>  Position 5  - Réglages Aiguillages </p>
+<p> IT1 ensemble Direct </p>
+<p> IT4 mis Dévié</p>
+<p> IT5 ensemble Direct</p>
+<p> IT6 mis Dévié</p>
+</td>
+<td width=200>
+<p>  Position 6  - Réglages Aiguillages</p>
+ <p> IT1 ensemble Direct</p>
+<p> IT4 mis Dévié</p>
+<p> IT5 ensemble Direct</p>
+<p> IT6 ensemble Direct</p>
+  </td>
+ </tr>
+</table>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: SignalMastAddEdit.shtml,v 1.2 2009/12/29 05:25:24 jacobsen Exp $ -->
+<!-- Translated by Hervé Blorec le 2012/01/09-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Adding Signal Masts
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Signal Mast Add">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Ajout Mâts de signaux
+</H1>
+
+<A Href="SignalMastAdd.png"> <IMG SRC = "SignalMastAdd.png" ALIGN = RIGHT WIDTH = "208" height = "85" hspace = "0" vspace = "0" alt = "Simple Signal Logic panel figure "> </a>
+
+<p>
+JMRI a besoin de savoir comment un Mât de signalisation sur le réseau
+est connecté au matériel électrique. Une fois qu'il le sait ,
+il peut envoyer les bonnes commandes pour contrôler l'apparence du
+ Mât de signal.
+<p>
+Le dialogue «Ajouter Mât de signal" vous donne un certain nombre de choix différents pour savoir comment le mât de signal est connecté:
+
+<p>
+(Rien à modifier, donc pas de dialogue d'édition)
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

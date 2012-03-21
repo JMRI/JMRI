@@ -13,6 +13,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.util.Locale;
 
 import java.net.URL;
 
@@ -120,7 +122,17 @@ public class HelpUtil {
         if (!init) {
             init = true;
             try {
-                String helpsetName = "help/en/JmriHelp_en.hs";
+                Locale locale = Locale.getDefault();
+                String language = locale.getLanguage();
+                String helpsetName = "help/"+language+"/JmriHelp_"+language+".hs";
+                File file = new File(helpsetName);
+                if (file.isFile()) {
+                    log.debug("JavaHelp using "+helpsetName);
+                } else {
+                    System.out.println("JavaHelp: File "+helpsetName+" not found, dropping to default");
+                    language = "en";
+                    helpsetName = "help/"+language+"/JmriHelp_"+language+".hs";
+                }
                 URL hsURL;
                 try {
                     hsURL = new URL("file:"+helpsetName);

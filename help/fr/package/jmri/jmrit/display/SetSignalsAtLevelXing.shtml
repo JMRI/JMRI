@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: SetSignalsAtLevelXing.shtml,v 1.4 2009/03/07 20:09:27 djduchamp Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-12-22--> 
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Set Signals at Level Crossing Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">
+    <META content="Dave Duchamp" name=Author>
+    <META name="keywords" content="JMRI help Layout Editor panel">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Configurer Signaux aux Croisement</h1>
+<h2> Introduction</h2>
+<p>
+Un croisement est une pièce particulière de la voie qui modélise deux voies se croisant
+au niveau du sol. Un croisement est communément appelé un "diamant". Un croisement
+a quatre points de connexion, nommés A, B, C et D, et deux voies, désigné 1, pour
+la voie reliant les points A et C, et 2 pour la voie reliant les points B et D.
+Quand un croisement est créé, la voie 1 (AC) est la voie horizontale, et la voie 2
+est la voie inclinée. La convention de nommage est indiqué dans le schéma ci-dessous.
+<p>
+<A Href="./images/XingDiagram.gif"> <IMG SRC= "./Images/XingDiagram.gif"
+ALIGN = CENTER WIDTH = "173" height = "125" hspace = "0" vspace = "0"></A>
+</P>
+<p>
+Cet outil place le croisement si la voie 1 (AC) est horizontale ou verticale (ou
+essentiellement horizontales ou verticales principalement). Parce que les icônes du signal ont seulement des capacités limitées
+ de rotation, les icônes signaux  regardent si les deux voies du croisement
+ sont presque perpendiculaires les unes aux autres.</p>
+<p>
+Soit une ou deux voies peuvent être signalées. Pour que la Logique Signal Simple 
+générée par cet outil fonctionne correctement, le croisement devrait servir de
+limite de canton pour chaque voie signalée. Par exemple, si la voie 1 (AC) est
+signalée, le segment de voie connectée au point A doit être attribué à un autre
+canton que celui en C. La voie AC dans le croisement peut être affectée à n'importe quel
+canton. En outre, la voie traversante devrait être confiée à un ou plusieurs cantons
+avec détection d'occupation, Logique Simple Signal qui peuvent être mises en place pour protéger
+contre un train traversant.</p>
+<p>
+Pour chaque signal, des cases à cocher sont disponibles pour la sélection
+si une icône doit être placée sur le TCO, et si la logique de contrôle 
+doit être créée pour le signal. Peu importe si les icônes
+sont placées ou la logique créée, l'Éditeur de TCO va enregistrer que les entrées
+ signaux sont affectés au croisement spécifié. <b>L'affectation des signaux 
+ pour les croisements est importante pour bien décrire votre réseau dans l'Éditeur de TCO.</B>
+ Même si vous choisissez de placer vos icônes et de configurer votre logique signal 
+manuellement, vous devez utiliser cet outil pour assigner les signaux à leur 
+croisement.</p>
+<h2>Boite de Dialogue Configuration des Signaux Situé au Croisement </h2>
+<p>
+Lorsque cet outil est sélectionné, une boîte de dialogue apparaît pour la saisie d'informations qui
+identifieront de manière unique le croisement, et pour l'entrée des noms (système ou
+utilisateur) de deux ou quatre signaux pour être affectés au croisement. Si l'entrée
+de l'outil a été via le menu contextuel du croisement, le croisement est
+identifié à partir du menu contextuel, et l'information canton est automatiquement inscrite.
+Si l'entrée de l'outil a été via le menu Outils, un ou deux noms de cantons qui identifient précisément le croisement doivent être entrés. Ce pourrait être les deux cantons
+affectés à la voie 1 et la voie 2. Ou il pourrait être juste un de ces cantons, à condition
+que d'a</b>utre croisement n'utilisent pas le même canton ou combinaison de canton. Ce pourrait également être
+les cantons affectés aux segments de voies connectés au croisement - toute
+combinaison qui permette à l'outil d'identifier uniquement le croisement. Si l'outil ne peut pas identifier le croisement un message d'erreur en
+résultera.</p><p>
+<p>
+Si les signaux à ce croisement ont été attribuées précédemment, cliquez sur
+Obtenir Sauvegarde</b> pour récupérer les noms des signaux actuellement assignés 
+au croisement.</p>
+<p></b>
+Les signaux doivent être saisis par paires. Si le signal A est entré, ensuite le signal C doit
+également être saisi. De même, si le signal B est entré, puis le signal  D doit être entré.
+Notez que si deux entrées sont vides, l'outil suppose qu'il n'y a pas de  signal
+pour cette voie, et toute affectation antérieure de signaux à cette voie
+sera automatiquement supprimée, ainsi que des icônes de signaux sur le TCO à ces positions
+s'il y a lieu. De même, s'il y avait un signal précédemment affecté à n'importe quelle
+position, et que vous entriez un <i>autre</i> signal dans le même lieu,
+le signal remplacera le signal précédent, et l'icône du
+ signal précédent (s'il y en avait un) sera supprimé à partir du
+TCO. <b> Si un signal est changé, vous devez refaire toute la logique qui le concerne.</b></p>
+<p>
+Pour chaque signal, des cases à cocher sont disponibles pour sélectionner
+si une icône doit être placée sur le TCO, et si une Logique Signal Simple 
+doit être créée pour le signal. Peu importe si les icônes
+sont placées ou si la logique est créée, l'Éditeur de TCO va enregistrer que les entrées
+signaux sont affectés au croisement spécifié.</p>
+<p>
+Cochez <b> Ajouter Icône de Signal au TCO</b> pour demander que l'icône d'un signal
+ soit placée sur le TCO à la position du croisement. Cet
+outil peut seulement placer une icône de signal sur un croisement où la voie 1 (AC) est
+presque à la verticale ou pres</b>que horizontale. Si ce n'est pas le cas, un message est imprimé,
+et vous devez placer l'icône de signal manuellement en utilisant la barre d'outils de l'Éditeur de TCO.
+Peu importe, le nom du signal est attribué à la valeur spécifiée de la
+position du croisement.</p><p>
+Cochez <b> Configurer Logique</b> pour demander que l'outil mette en place une Simple Logique
+Signalpour un signal. L'outil permettra de créer la logique et 
+remplira automatiquement les entrées avec les information disponibles. Si
+l'outil ne possède pas assez d'informations disponibles pour configurer la
+logique, un message en résultera, et vous aurez à revenir plus tard après que
+plus de signaux et/ou de cantons aient été attribués sur la
+TCO. Si l'outil n'a pas suffisamment d'informations pour  protéger contre
+un train qui traverse, un </b>message d'avertissement en résultera, mais la logique est encore
+créée.</p>
+<h2> Notes</h2>
+<p>
+Lors de la configuration de la logique, cet outil va suivre la voie dans les
+cantons jusqu'à ce qu'il trouve un signal à la fin du canton avant le
+croisement signalé. Si votre réseau contient des sections qui sont
+signalées et des sections qui ne le sont pas, pour obtenir que cet outil mette en place une logique
+correctement, vous pourriez avoir à placer un signal virtuel (un signal qui ne
+correspond pas à un signal réel sur le réseau) à la fin
+du canton non signalé qui relie un tronçon de voie qui est
+signalé avec une voie qui n'est pas signalée. Si un canton se termine par un
+heurtoir, aucun signal n'est requis à la fin du heurtoir.</p>
+<p>
+Si un canton a un aigu</b>illage interne (l'aiguillage, et les tronçons de voie à sa
+pointe et Directe et Déviée font partie du canton ), le programme va attendre les signaux
+de cet aiguillage même si ce n'est pas à la fin du canton. Cependant, parfois
+ l'utilisateur peut ne pas vouloir signaler un aiguillage rarement utilisé dans un canton.. Si les signaux à ce croisement ont été attribués précédemment, cliquez sur
+Obtenir Sauvegarde</b> pour récupérer les noms des signaux actuellement assignés 
+au croisement.</p></b>
+<p>
+Les signaux doivent être saisis par paires. Si le signal A est entré, Ainsi le signal C doit
+également être saisie. De même, si le signal B est entré, ensuite le signal D doit être entré.
+Notez que si deux entrées sont vides, l'outil suppose qu'il n'y a pas de signal
+ pour cette voie, et toute affectation antérieure de signaux à cette voie
+sera automatiquement supprimée, ainsi que les icônes de signal sur le TCO à ces positions
+s'il y a lieu. De même, si il y avait un signal précédemment attribué à toute
+position, et vous entrez  un <i>autre</i> signal dans le même lieu,
+le signal remplacera le signal précédente, et l'icône du
+ signal précédent (s'il y en avait un) sera supprimée à partir du
+TCO. <b> Si un signal est changé, vous devez refaire toute la logique qui lui est liée.</b></p>
+<p>
+Pour chaque signal, des cases à cocher sont disponibles pour sélectionner
+si une icône doit être placé sur le TCO, et si Logique Signal Simple 
+doit être créé pour le signal. Peu importe si les icônes
+sont placées ou si la logique est créée, l'Éditeur de TCO va enregistrer que les entrées
+signaux sont affectées au croisement spécifié.</p>
+<p>
+Cochez <b> Ajouter Icône de Signal au TCO</b> pour demander que l'icône d'un signal
+ soit placée sur le TCO à la position du croisement indiqué. Cet
+outil ne peut placer une icône de signal sur un croisement que si la voie 1 (AC) est
+presque à la verticale ou presque horizontale. Si ce n'est pas le cas, un message est imprimé,
+et vous devez placer l'icône de signal manuellement en utilisant la barre d'outils de l'Éditeur de TCO.
+Peu importe</b>, le nom du signal qui est attribué à la position du croisement .</p>
+<p>
+Cochez <b> Configurer Logique</b> pour demander que l'outil mette en place une 
+Logique Signal Simple pour un signal. L'outil permettra de créer la logique et 
+remplira automatiquement les entrées avec les informations disponibles. Si
+l'outil ne possède pas assez d'informations disponibles pour configurer la
+logique, un message en résultera et vous aurez à revenir plus tard après que
+plus de signaux et/ou de cantons aient été attribués sur la
+TCO. Si l'outil n'a pas suffisamment d'informations pour protéger contre
+un train qui travers, un message d'avertissement en résultera, mais la logique est quand même
+créée.</p>
+<h2> Notes</h2>
+<p>
+Lors de la configuration de la logique , cet outil va suivre la voie dans 
+un canton jusqu'à ce qu'il trouve un signal à la fin du canton avant le
+croisement signalé. Si votre réseau contient des sections qui sont signalées et des sections qui ne le sont pas, pour obtenir cet outil pour mettre en place une logique
+correctement, vous pourriez avoir à placer un signal virtuel (un signal qui ne
+correspond pas à un signal réel sur le réseau) à
+ la fin du canton non signalé qui relie un tronçon de voie qui est
+signalé avec une voie qui n'est pas signalée. Si un canton se termine par un
+Heurtoir, aucun signal n'est requis à la fin heurtoir.</p>
+<p>
+Si un canton a un aiguillage interne (l'aiguillage, et ses tronçons de voie de sa
+la pointe et les voies directe et déviée sont au sein du canton), le programme va attendre les signaux
+à cet aiguillage, même si ce n'est pas à la fin du canton. Cependant, parfois
+ l'utilisateur peut ne pas vouloir signaler un aiguillage rarement utilisé dans un canton.
+En suivant la voie à travers un canton, le programme va sauter 
+aiguill</b>age interne non signalé si <b> Passer Aiguillage Interne Non Signalé  </b> est cochée dans
+le menu <b> Outils</b> de l'Éditeur de TCO.
+Il avertira toujours de ce qu'il fait. <b> Utilisez cette option avec
+prudence. </b> Il n'y a pas de signal de protection contre un  aiguillage ignoré
+mal réglé, si une aiguillage interne non signalé n'est pas réglée correctement, un
+déraillement des trains pourraient en résulter. </p>
+<p></b>
+Cet outil met en place trois aspects de signalisation. Si vous avez une situation spéciale
+ à un signal, vous pouvez avoir à modifier les
+informations saisies par cet outil dans la Logique Signal Simple. Si vous
+aimeriez avoir quatre aspects de signalisation, vous pouvez facilement modifier manuellement la logique
+pour y parvenir. De même, avec des modifications manuelles de logiques , vous pouvez
+Ajouter un éclairage d'approche. La boîte de dialogue simple signal peut
+est accessible depuis le menu contextuel de chaque icône de signal. Si votre situation spéciale
+ ne peut pas être résolue par une Logique Signal Simple, vous devez vous référer à
+Logix pour adapter la logique signal à vos besoins. </p>
+<p>
+<b>S'il vous plaît rappelez  pour sauver votre TCO après l'utilisation de cet outil. </b> </p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

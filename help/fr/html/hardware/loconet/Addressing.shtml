@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: Addressing.shtml,v 1.2 2011/04/12 16:18:00 kevin-dickerson Exp $ -->
+<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: LocoNet Addressing
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI LocoNet Address Addressing Sensors Turnout">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+<h1>Adressage LocoNet</h1>
+
+Le Systèmes LocoNet adresse des capteurs en entrée et des aiguillages en  sortie en utilisant des numéros.
+Cette page explique comment ces chiffres sont définis dans JMRI, et comment ils se rapportent
+pour les numéros dans d'autres systèmes..
+
+<h2>Adressage Aiguillage LocoNet dans JMRI</h2>
+
+A l'intérieur des paquets sur la LocoNet, les sorties aiguillages sont traitées avec des nombres de 0 à 4095.
+Les régulateurs cependant, répondent aux numéros 1 à 4096. Pour éviter la confusion pour l'utilisateur
+, JMRI utilise la même numérotation que les régulateurs: LT1 à LT4096.<P>
+Notez que lorsque le panneau moniteur LocoNet affiche le contenu des paquets LocoNet
+dans le texte, il utilise le même adressage, donc
+1 à 4096. Il est ensuite
+différent des octets bruts qui sont affichés, mais
+au moins c'est compatible avec ce que les utilisateurs s'attendent à voir.
+Nous convenons de  la confusion, mais il doit y avoir une certaine confusion, quelque part, étant donné
+la façon dont cela a été mis en place
+
+<h2>Adressage des capteurs LocoNet dans JMRI </h2>
+
+A l'intérieur des paquets sur le LocoNet, les capteurs sont traitées avec des nombres de 0 à 4095.
+La documentation Digitrax  fait référence à des nombres de 1 à 4096, cependant. Tout comme pour les 
+aiguillages, nous utilisons la documentation de numérotation pour définir les noms de capteur: LS1 à LS4096.
+<P>
+La façon la plus simple de trouver les
+bon numéros pour un canton donné est d'ouvrir une fenêtre, "LocoNet moniteur", et déposer une
+locomotive sur le canton qui vous êtes intéresse Vous verrez les
+Message LocoNet, avec les nombre, dans la fenêtre qui ressemble à
+quelque chose comme ceci:
+<PRE>
+    "General sensor input report: contact 161 (DS54 switch 81 Aux input) (BDL16 11,1) is Hi"
+</PRE></CODE>
+
+Le numéro de contact, 161 dans ce cas, est l'adresse du capteur.
+Préfixe qui est LS  pour obtenir le nom du capteur, par exemple LS161 dans ce cas.
+<P>
+Si vous voulez entrer manuellement les adresses du matériel dans le système, vous pouvez le faire en entrant le numéro de la carte, 
+suivi par le numéro de canal séparé par un":"<br>
+Ainsi pour un capteur sur la carte 11, canal 1, vous devrez entre dans le champs Adresse Matériel:<b>11:1</b>
+<P> 
+Si vous voulez calculer l'adresse d'une entrée BDL168, vous pouvez utiliser
+<CODE>
+<PRE>
+    nombre = 16 * (numéro de carte) + (numéro de canal) - 16
+</PRE> </code>
+où "numéro de canal" va de 1 à 16. Par exemple, le premier circuit
+(numéro 1) sur la carte 11 a le numéro:
+<CODE>
+<PRE>
+    nombre = 16 * (11) + (1) - 16 = 161
+</PRE> </code>
+comme nous l'avons vu dans l'exemple ci-dessus.
+<P>
+Si vous voulez calculer l'adresse d'une entrée auxiliaire DS54, utilisez:
+<CODE> <PRE>
+    nombre = 2 * (numéro de l'aiguillage - 1) + 1
+</PRE> </code>
+Par exemple, l'entrée auxiliaire associée à l'aiguillage 81 a le numéro:
+<CODE> <PRE>
+    nombre = 2 * (81 - 1) + 1 = 161
+</pre> </code>
+Si c'est l'entrée du commutateur, vous ajouter un plus à ce que:
+<CODE> <PRE>
+    nombre = 2 * (numéro d'aiguillage  - 1) + 2
+</PRE> </code>
+Par exemple, l'entrée du commutateur associés à l'aiguillage 12 a le numéro:
+<CODE> <PRE>
+    nombre = 2 * (12 - 1) + 2 = 24.
+  
+<h2>Addressage Transpondeur dans JMRI</h2>
+
+Le transpondeur Digitrax est géré via le mécanisme de Reporter
+dans JMRI. Reporters recueille l'information depuis le réseau et la rend
+disponibles quand elle change.
+<P>
+Les zones de transpondeur sont numérotées séquentiellement depuis 1, de sorte que
+1 à 4 sont sur la première BDL16, etc .
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

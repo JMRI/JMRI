@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: XmlView.shtml,v 1.3 2010/02/15 07:52:47 jacobsen Exp $ -->
+<!-- Translated by Blorec Hervé le 2011-09-06-->
+<html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: Viewing JMRI XML Files
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code xml usage">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+
+<H1>JMRI: Visualisation des fichiers XML</H1>
+
+JMRI enregistre diverses informations dans des fichiers XML.
+Bien qu'ils soient en format texte qui est fondamentalement lisible par l'homme,
+c'est un format compliqué.
+
+<P>
+Pour les rendre plus faciles à lire, à imprimer et à comprendre, les fichiers XML de JMRI
+ peuvent être affichés dans un navigateur Web. Une technique appelée
+«feuilles de style XSLT"
+est utilisé pour les formater dans le navigateur web.
+Pour un exemple de la façon dont cela ressemble, s'il vous plaît voir le
+panneau échantillon <a href="http://jmri.sourceforge.net/xml/samples/NicksClinic.xml"> fichier XML </a> sur les principaux JMRI
+Web site JMRI. (Peut prendre quelques secondes à charger)
+
+<p>
+Pour afficher un fichier XML que JMRI a créé, il suffit d'ouvrir le fichier avec votre
+navigateur web favori. Dans de nombreux cas, vous devriez être en mesure de simplement double-cliquez sur
+sur elle, ou faites le glisser sur l'icône du navigateur Web. Sur certains types d'ordinateurs, vous aurez
+besoin de l'ouvrir à partir du menu "Fichier".
+
+<p>
+Malheureusement, cette approche simple ne fonctionne pas toujours, parce que tous les navigateurs
+ne mettent pas correctement en œuvre les algorithmes pour trouver les fichiers de mise en forme
+nécessaires à cet affichage.
+Si le premier navigateur que vous essayez n'affiche pas le fichier XML (habituellement
+montrant une page blanche, bien que parfois ils vont afficher un message d'erreur),
+S'il vous plaît essayez les autres que vous avez installés. Internet Explorer est particulièrement
+problématique. Mozilla, Safari et Opera semblent pour obtenir ce droit, tandis que Firefox
+semble fonctionner correctement sur certaines plateformes et pas sur d'autres. (Il peut aussi y avoir des
+options qui l'affectent s'il fonctionne)
+<p>
+Si aucun des navigateurs qui s'offrent à vous ne peut afficher le fichier,
+vous pouvez contourner ce problème en utilisant le
+<a href="../../web/index.shtml"> mini serveur Web JMRI  </a>
+dans la version 2.9.4 et JMRI plus tard.
+<p>
+Pour ce faire:
+<UL>
+<li> d'abord, démarrer JMRI. 
+    <ul>
+    <li><ul>
+    <li>  Soit DecoderPro ou PanelPro peut
+         être utilisés, et aucune connexion réseau n'est nécessaire.
+     <li> Vous ne devez utiliser JMRI 2.9.4 ou version ultérieure.
+     <li> Le fichier que vous souhaitez afficher doit avoir été entreposé
+         dans JMRI 2.9.4 ou version ultérieure. S'il est plus vieux que cela,
+         il suffit de charger dans JMIR 2.9.4 ou version ultérieure et de le stocker à nouveau.
+     </ ul>
+<li> Démarrez le serveur web JMRI mini. Dans le cadre du menu débogage
+     , sélectionnez "Démarrer Mini Web Server".
+<li> Ouvrez votre navigateur Web et saisissez l'URL
+     "<a href="http://localhost:12080/index.html"> http://localhost:12080/index.html </a>"
+<li> Vous devriez maintenant voir le logo sur JMRI une page d'index.
+     Si votre fichier XML se trouve dans le répertoire de distribution JMRI,
+     cliquez sur le lien "dist" . Si c'est dans le
+     répertoire des préférences, cliquez sur le lien "prefs" .
+<li> Enfin, cliquez sur un des noms de répertoires nécessaires pour accéder à votre
+     fichier, puis cliquez sur votre fichier.
+</ ul>
+
+Vous pouvez ensuite utiliser votre navigateur pour visualiser, imprimer, enregistrer, etc comme vous le souhaitez.
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+
