@@ -1920,7 +1920,7 @@ public class OperationsTrainsTest extends TestCase {
 		train1.move();
 		Assert.assertEquals("Train 1 After 3rd Move Current Name", "", train1.getCurrentLocationName());
 		Assert.assertEquals("Train 1 After 3rd Move Next Location Name", "", train1.getNextLocationName());
-		Assert.assertEquals("Train 1 After 3rd Move Status", Train.TERMINATED, train1.getStatus());
+		Assert.assertEquals("Train 1 After 3rd Move Status", Train.TERMINATED, getTrainStatus(train1));
 		// Is the train in route?
 		Assert.assertEquals("Train 1 in route after 3rd", false, train1.isTrainInRoute());
 
@@ -1976,7 +1976,7 @@ public class OperationsTrainsTest extends TestCase {
 		train1.move();
 		Assert.assertEquals("Train 1 After 4th Move Current Name", "", train1.getCurrentLocationName());
 		Assert.assertEquals("Train 1 After 4th Move Next Location Name", "", train1.getNextLocationName());
-		Assert.assertEquals("Train 1 After 4th Move Status", Train.TERMINATED, train1.getStatus());		
+		Assert.assertEquals("Train 1 After 4th Move Status", Train.TERMINATED, getTrainStatus(train1));		
 		// Is the train in route?
 		Assert.assertEquals("Train 1 sould not be in route", false, train1.isTrainInRoute());
 		
@@ -3001,7 +3001,7 @@ public class OperationsTrainsTest extends TestCase {
 
 		// This move should terminate the train.
 		train1.move();
-		Assert.assertEquals("Train 1 After 2nd Move Status", Train.TERMINATED, train1.getStatus());
+		Assert.assertEquals("Train 1 After 2nd Move Status", Train.TERMINATED, getTrainStatus(train1));
 
 		// build the train again, now there are cars on all tracks
 		rl1.setMaxCarMoves(10);	// try and use all 9/10 of the cars
@@ -3025,7 +3025,7 @@ public class OperationsTrainsTest extends TestCase {
 		// move and terminate
 		train1.move();
 		train1.move();
-		Assert.assertEquals("Train 1 After 2nd build Status", Train.TERMINATED, train1.getStatus());
+		Assert.assertEquals("Train 1 After 2nd build Status", Train.TERMINATED, getTrainStatus(train1));
 		
 		// are cars at the right location?
 		Assert.assertEquals("Car c2 After Move 2 location", "Westford Yard 1", c2.getTrackName());
@@ -3076,7 +3076,7 @@ public class OperationsTrainsTest extends TestCase {
 		// move and terminate
 		train1.move();
 		train1.move();
-		Assert.assertEquals("Train 1 After 2nd build Status", Train.TERMINATED, train1.getStatus());
+		Assert.assertEquals("Train 1 After 2nd build Status", Train.TERMINATED, getTrainStatus(train1));
 		
 		// Final check to see if cars were delivered. 
 		Assert.assertEquals("Car c1 After Move 3 location", "Westford Yard 1", c1.getTrackName());
@@ -3176,7 +3176,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Car c9 Move count", 21, c9.getMoves());
 		
 		train1.move();
-		Assert.assertEquals("Train 1 After 4th build Status", Train.TERMINATED, train1.getStatus());
+		Assert.assertEquals("Train 1 After 4th build Status", Train.TERMINATED, getTrainStatus(train1));
 		
 		// test siding to siding
 		train1.setRoute(rte1);
@@ -3221,7 +3221,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("car CP 2 at siding, destination", "Westford Siding 3", c2.getDestinationTrackName());
 		
 		train1.move();
-		Assert.assertEquals("Train 1 terminated", Train.TERMINATED, train1.getStatus());
+		Assert.assertEquals("Train 1 terminated", Train.TERMINATED, getTrainStatus(train1));
 
 	}
 	
@@ -6140,4 +6140,9 @@ public class OperationsTrainsTest extends TestCase {
 	// The minimal setup for log4J
 	@Override
 	protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+	
+	private String getTrainStatus(Train train) {
+		String[] status = train.getStatus().split(" ");
+		return status[0];
+	}
 }
