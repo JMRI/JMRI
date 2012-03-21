@@ -6,9 +6,16 @@
 body {
   max-width: 480px;	
 }
-.ui-mobile .ui-page {
+.ui-footer .ui-btn {
+	  margin: 0 !important;
+}
+.ui-footer.ui-bar {
+	  padding-right: 0 !important;
+	  padding-left: 0 !important;
+}
+.ui-mobile .ui-page, .ui-header, .ui-footer {
 	  max-width: 480px;
-	}
+}
 .ui-content .ui-listview {
   margin-bottom: 15px !important;
 }
@@ -26,7 +33,7 @@ a.ui-link-inherit.two-line-item {
   margin-bottom: auto;	
 }
 
-/* reported to improve speed, but I don't see it on my devices */
+/* reported to improve speed, but I didn't see it on my devices 
 .ui-shadow,
 .ui-btn-up-a,
 .ui-btn-hover-a,
@@ -60,4 +67,4 @@ a.ui-link-inherit.two-line-item {
  box-shadow: none !important;
  -webkit-box-shadow: none !important;
 }
-
+*/
