@@ -31,7 +31,7 @@ var $gValues = new Array();  //persistent variable to keep track of current valu
 
 //handle button press, send request for immediate change 
 var $sendChange = function($type, $name, $nextValue){
-	$.mobile.showPageLoadingMsg();  //show pageloading message
+	$.mobile.showPageLoadingMsg("b","sending change to JMRI....");  //show pageloading message
 	var $commandstr = '<xmlio><item><type>' + $type + '</type><name>' + $name + '</name><set>' + $nextValue +'</set></item>' 
 	    + '</xmlio>';
 	$sendXMLIOChg($commandstr);
@@ -76,7 +76,7 @@ var $sendXMLIOChg = function($commandstr){
 //process the response returned for the "list" command
 var $processResponse = function($returnedData, $success, $xhr) {
 
-	$.mobile.showPageLoadingMsg();  //show pageloading message
+	$.mobile.showPageLoadingMsg("b","processing response from JMRI....");  //show pageloading message
 
 	$('div.errorMessage').html("");  //clear out the error message onscreen
 
@@ -135,13 +135,11 @@ var $processResponse = function($returnedData, $success, $xhr) {
 
 					//if a "page" of this type doesn't exist yet, create it, and add menu buttons to all
 					if (!$("#type-" + $type).length) {
-						//add the new page, following the settings page  TODO: support specific page templates
+						//add the new page, following the settings page
 						var $templateID = $getTemplate('Page', $type);
 						$("#settings").after($($templateID).tmpl({type: $type}));
 						//add the menu item _inside_ footer on each page
-						$("#footer").append("<a data-role='button' href='#type-" + $type + "' data-theme='b'>" + $type +"</a>");
-						//make sure the buttons have correct mobile formatting
-						$("#settings #footer").find('[data-role="button"]').not('.ui-btn').buttonMarkup();
+						$("#footer").append("<a data-role='button' href='#type-" + $type + "' data-mini='true' data-inline='true' data-theme='b'>" + $type +"</a>");
 
 						//render the changes to settings page, and then the new page
 //						$("#settings").page();
@@ -298,18 +296,36 @@ function $logMsg(msg) {
 	}
 }
 
+// checks for existence of requested page, and if exists, changes to it.  If not exists, delays and checks again
+ function $changeToPageWhenAvailable($toPage, $retries) {
+	 if ($($toPage).length > 0) {
+		$.mobile.changePage($toPage);
+	} else {
+		if ($retries > 0) {
+			$retries--;
+			setTimeout(function() {
+					$changeToPageWhenAvailable($toPage, $retries)
+					},
+					100);
+		} else {
+			$.mobile.changePage("#settings");  //if retries exhausted, show settings page
+		}
+	}
+//	$.mobile.changePage(location.href.substr(0, $hashLoc));
+}
+
+
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 $(document).ready(function() {
 
-	//if trying to load a page with a hash (#), remove it and reload
-	//  needed because hash is used by jQueryMobile
-	//TODO: improve or remove this as jqm advances
+	//if trying to load a page with a hash (#), delay to give page a chance to build
 	var $hashLoc = location.href.indexOf("#"); 
 	if ( $hashLoc > -1) {
-	    location.assign(location.href.substr(0, $hashLoc));
+		$newPage = location.href.substr($hashLoc);
+		$changeToPageWhenAvailable($newPage, 10)  //try requested page 10 times
 	}
 	
-	$.mobile.showPageLoadingMsg();  //show pageloading message
+	$.mobile.showPageLoadingMsg("b", "retrieving saved settings");  //show pageloading message
 
 	//retrieve checked values from localstorage and set checkboxes to match
 	var $savedInputs = ["turnout","frame"];  //default selections
@@ -326,8 +342,6 @@ $(document).ready(function() {
 		localStorage['savedInputs']=JSON.stringify($getSettingsArray());
 	    location.assign(location.href);  //jump to this page
 	});
-
-	$.mobile.hidePageLoadingMsg();  //hide pageloading message
 
 	//setup pages based on selected items
 	$sendXMLIOList('<xmlio>' + $getXMLListCommands(true) + '</xmlio>');
@@ -357,5 +371,10 @@ $(document).ready(function() {
 			});
 		}
 	});
+	
+	$("#settings").page();
+
+	$.mobile.hidePageLoadingMsg();  //hide pageloading message
+
 
 });
