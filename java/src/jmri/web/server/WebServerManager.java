@@ -4,10 +4,12 @@
  */
 package jmri.web.server;
 
+import java.awt.HeadlessException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ResourceBundle;
+import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
@@ -38,6 +40,8 @@ public class WebServerManager {
             } else {
                 InstanceManager.store(new WebServerPreferences(XmlFile.prefsDir() + "networkServices" + File.separator + "WebServerPreferences.xml"), WebServerPreferences.class);
             }
+            // disable during testing
+            // this.removeV2Index();
         }
         preferences = InstanceManager.getDefault(WebServerPreferences.class);
     }
@@ -99,6 +103,19 @@ public class WebServerManager {
                 this.getPreferences().setRebuildIndex(false);
                 this.getPreferences().setIsDirty(true);
             }
+        }
+    }
+
+    private void removeV2Index() {
+        File indexFile = new File(FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + "index.html"));
+        File backup = new File(FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + "index.v2.html"));
+        try {
+            if (indexFile.exists()) {
+                indexFile.renameTo(backup);
+                log.info("Renamed existing index.html in Preferences to index.v2.html.");
+            }
+        } catch (Exception ex) {
+            log.error("Failed to move index.html.", ex);
         }
     }
 
