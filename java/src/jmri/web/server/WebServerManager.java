@@ -77,20 +77,27 @@ public class WebServerManager {
     }
 
     protected void rebuildIndex() throws IOException {
-        File indexFile = new File(FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + "index.html"));
-        if (WebServerManager.getWebServerPreferences().isRebuildIndex() || !indexFile.exists()) {
+        this.rebuildIndex(false);
+    }
+
+    protected void rebuildIndex(boolean force) throws IOException {
+        File indexFile = new File(FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + "networkServices/index.html"));
+        if (force || this.getPreferences().isRebuildIndex() || !indexFile.exists()) {
             FileWriter writer = new FileWriter(indexFile);
             writer.write(rb.getString("HTML5DocType"));
             writer.write(String.format(rb.getString("HeadFormat"),
                     rb.getString("HTML5DocType"),
                     this.getPreferences().getRailRoadName(),
                     "index",
-                    ""));
+                    rb.getString("IndexHeadExtras")));
             writer.write(rb.getString("Index"));
+            writer.write(String.format(rb.getString("TailFormat"),
+                    "html/web/index.shtml",
+                    rb.getString("GeneralMenuItems")));
             writer.close();
-            if (WebServerManager.getWebServerPreferences().isRebuildIndex()) {
-                WebServerManager.getWebServerPreferences().setRebuildIndex(false);
-                WebServerManager.getWebServerPreferences().setIsDirty(true);
+            if (this.getPreferences().isRebuildIndex()) {
+                this.getPreferences().setRebuildIndex(false);
+                this.getPreferences().setIsDirty(true);
             }
         }
     }
