@@ -309,6 +309,8 @@ public interface SignalMastLogic {
      * @return true if we are using the turnout information from the layout editor.
      */
     public boolean useLayoutEditorTurnouts(SignalMast destination);
+    
+    public void disableLayoutEditorUse();
 
     public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
 

@@ -17,6 +17,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LevelXing;
+import jmri.jmrit.display.layoutEditor.LayoutSlip;
 
 /**
  *
@@ -225,6 +226,16 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         if (destList.isEmpty())
             return true;
         return false;
+    }
+    
+    public void disableLayoutEditorUse(){
+        for(DestinationMast dest : destList.values()){
+            try {
+                dest.useLayoutEditor(false);
+            } catch (jmri.JmriException e){
+                log.error(e);
+            }
+        }
     }
 
     /**
@@ -1918,19 +1929,30 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                             turnoutlist=connection.getTurnoutList(lblks.get(i).getBlock(), lblks.get(preBlk).getBlock(), lblks.get(nxtBlk).getBlock());
                             throwlist=connection.getTurnoutSettingList();
                             for (int x=0; x<turnoutlist.size(); x++){
-                                String t = turnoutlist.get(x).getTurnoutName();
-                                Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
+                                if(turnoutlist.get(x) instanceof LayoutSlip){
+                                    int slipState = throwlist.get(x);
+                                    LayoutSlip ls = (LayoutSlip)turnoutlist.get(x);
+                                    int taState = ls.getTurnoutState(slipState);
+                                    turnoutSettings.put(ls.getTurnout(), taState);
 
-                                if ((turnoutlist.get(x).getTurnoutType()<=3) && (!turnoutlist.get(x).getBlockName().equals(""))){
-                                    log.debug("turnout in list is straight left/right wye");
-                                    log.debug("turnout block Name " + turnoutlist.get(x).getBlockName());
-                                    log.debug("current " + lblks.get(i).getBlock().getDisplayName() + " - pre " + lblks.get(preBlk).getBlock().getDisplayName());
-                                    log.debug("A " + turnoutlist.get(x).getConnectA());
-                                    log.debug("B " + turnoutlist.get(x).getConnectB());
-                                    log.debug("C " + turnoutlist.get(x).getConnectC());
-                                    log.debug("D " + turnoutlist.get(x).getConnectD());
+                                    int tbState = ls.getTurnoutBState(slipState);
+                                    turnoutSettings.put(ls.getTurnoutB(), tbState);
+                                } else {
+                                    String t = turnoutlist.get(x).getTurnoutName();
+                                    Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
+                                    if(log.isDebugEnabled()){
+                                        if ((turnoutlist.get(x).getTurnoutType()<=3) && (!turnoutlist.get(x).getBlockName().equals(""))){
+                                            log.debug("turnout in list is straight left/right wye");
+                                            log.debug("turnout block Name " + turnoutlist.get(x).getBlockName());
+                                            log.debug("current " + lblks.get(i).getBlock().getDisplayName() + " - pre " + lblks.get(preBlk).getBlock().getDisplayName());
+                                            log.debug("A " + turnoutlist.get(x).getConnectA());
+                                            log.debug("B " + turnoutlist.get(x).getConnectB());
+                                            log.debug("C " + turnoutlist.get(x).getConnectC());
+                                            log.debug("D " + turnoutlist.get(x).getConnectD());
+                                        }
+                                    }
+                                    turnoutSettings.put(turnout, throwlist.get(x));
                                 }
-                                turnoutSettings.put(turnout, throwlist.get(x));
                             }
                         }
                     }

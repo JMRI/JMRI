@@ -102,6 +102,8 @@ public interface SignalMastLogicManager extends Manager {
      */
     public void removeSignalMast(SignalMast mast);
     
+    public void disableLayoutEditorUse(SignalMast mast);
+    
     public void swapSignalMasts(SignalMast mastA, SignalMast mastB);
     
     public boolean isSignalMastUsed(SignalMast mast);
