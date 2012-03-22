@@ -9,6 +9,7 @@ import jmri.Transit;
 import jmri.Turnout;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 
 import java.util.ArrayList;
@@ -168,6 +169,9 @@ public class AutoTurnouts {
 			for (int i = 0; i<turnoutList.size(); i++) {
 				Turnout to = turnoutList.get(i).getTurnout();
 				int setting = settingsList.get(i).intValue();
+                if(turnoutList.get(i) instanceof LayoutSlip){
+                    setting = ((LayoutSlip)turnoutList.get(i)).getTurnoutState(settingsList.get(i));
+                }
 				// test current setting
 				if (alwaysSet) {
 					to.setCommandedState(setting);
@@ -188,6 +192,30 @@ public class AutoTurnouts {
 						turnoutsOK = false;
 					}
 				}
+                if(turnoutList.get(i) instanceof LayoutSlip){
+                    //Look at the state of the second turnout in the slip
+                    setting = ((LayoutSlip)turnoutList.get(i)).getTurnoutBState(settingsList.get(i));
+                    to = ((LayoutSlip)turnoutList.get(i)).getTurnoutB();
+                    if (alwaysSet) {
+                        to.setCommandedState(setting);
+                    }
+                    else if (to.getKnownState()!=setting) {
+                        // turnout is not set correctly
+                        if (set) {
+                            // setting has been requested, is Section free and Block unoccupied
+                            if ( (s.getState()==Section.FREE) && (curBlock.getState()!=Block.OCCUPIED) ) {
+                                // send setting command
+                                to.setCommandedState(setting);
+                            }
+                            else {
+                                turnoutsOK = false;
+                            }
+                        }
+                        else {
+                            turnoutsOK = false;
+                        }
+                    }
+                }
 			}
 			if (turnoutsOK) {
 				// move to next Block if any

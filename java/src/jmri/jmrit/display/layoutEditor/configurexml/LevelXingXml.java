@@ -103,7 +103,7 @@ public class LevelXingXml extends AbstractXmlAdapter {
             element.addContent(new Element("sensorD").addContent(p.getSensorDName()));
         }
         
-        element.setAttribute("class", "jmri.jmrit.display.configurexml.LevelXingXml");
+        element.setAttribute("class", "jmri.jmrit.display.layouteditor.configurexml.LevelXingXml");
         return element;
     }
 

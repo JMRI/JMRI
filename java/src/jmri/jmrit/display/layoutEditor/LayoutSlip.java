@@ -995,21 +995,6 @@ public class LayoutSlip extends LayoutTurnout
         return active;
     }
     
-    /*ArrayList<SignalMast> sml = new ArrayList<SignalMast>();
-    
-    public void removeSignalMastLogic(SignalMast sm){
-        log.info("Remove called");
-        if(!sml.contains(sm))
-            return;
-        sml.remove(sm);
-        if(sml.isEmpty()){
-            return;
-        }
-        for(int i = 0; i<sml.size(); i++){
-            SignalMastLogic s = jmri.InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sm);
-        }
-    }*/
-    
     Hashtable <Integer, TurnoutState> turnoutStates = new Hashtable<Integer, TurnoutState>(4);
     
     public int getTurnoutState(Turnout turn, int state){
@@ -1024,10 +1009,14 @@ public class LayoutSlip extends LayoutTurnout
     }
     
     public int getTurnoutBState(int state){
-        return turnoutStates.get(state).getTurnoutBState();
+        return turnoutStates.get(Integer.valueOf(state)).getTurnoutBState();
     }
     
     public void setTurnoutStates(int state, String turnStateA, String turnStateB){
+        if(!turnoutStates.containsKey(state)){
+            log.error("Trying to set invalid state for slip " + getDisplayName());
+            return;
+        }
         turnoutStates.get(state).setTurnoutAState(Integer.valueOf(turnStateA));
         turnoutStates.get(state).setTurnoutBState(Integer.valueOf(turnStateB));
     }

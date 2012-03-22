@@ -54,6 +54,7 @@ public class LayoutBlockConnectivityTools{
         
     public final static int HOPCOUNT = 0x00;
     public final static int METRIC = 0x01;
+    public final static int DISTANCE = 0x02;
     private static int ttlSize = 50;
 
     /**
