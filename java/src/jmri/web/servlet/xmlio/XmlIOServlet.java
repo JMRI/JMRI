@@ -25,12 +25,12 @@ import org.jdom.output.XMLOutputter;
  *
  * @author rhwood
  */
-public class XMLIOServlet extends HttpServlet implements XmlIORequestor {
+public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
 
     static XmlIOFactory factory = null;
     Thread thread = null;
     static ResourceBundle htmlStrings = ResourceBundle.getBundle("jmri.web.server.Html");
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XMLIOServlet.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XmlIOServlet.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,7 +43,7 @@ public class XMLIOServlet extends HttpServlet implements XmlIORequestor {
                 e.setAttribute(parameter, request.getParameter(parameter));
             }
             doc.getRootElement().addContent(e);
-            this.doXMLIO(response, doc);
+            this.doXmlIO(response, doc);
         } else {
             response.sendRedirect("/help/en/html/web/XMLIO.shtml");
         }
@@ -55,13 +55,13 @@ public class XMLIOServlet extends HttpServlet implements XmlIORequestor {
         SAXBuilder builder = XmlFile.getBuilder(false);
         try {
             Document doc = builder.build(request.getInputStream());
-            this.doXMLIO(response, doc);
+            this.doXmlIO(response, doc);
         } catch (JDOMException e1) {
             log.error("JDOMException on input: " + e1, e1);
         }
     }
 
-    protected void doXMLIO(HttpServletResponse response, Document doc) throws ServletException, IOException {
+    protected void doXmlIO(HttpServletResponse response, Document doc) throws ServletException, IOException {
         XMLOutputter fmt = null;
         Element root = null;
 
