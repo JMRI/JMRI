@@ -24,6 +24,8 @@
 
 <mapID target="package.apps.InstallTest.InstallTest" url="package/apps/InstallTest/InstallTest.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_AllowCarsToReturnToStaging" url="package/jmri/jmrit/operations/Operations.shtml#AllowCarsToReturnToStaging"/>
+
 <mapID target="manual.JMRI_2-14_manual.Ops_ImportCarsFile_Top" url="manual/JMRI_2-14_manual/Ops_ImportCarsFile.shtml#Top"/>
 
 <mapID target="manual.JMRI_2-14_manual.Start_Preferences_StartUp" url="manual/JMRI_2-14_manual/Start_Preferences.shtml#StartUp"/>
@@ -477,6 +479,8 @@
 <mapID target="manual.JMRI_2-14_manual.Comp_Speed_Talble_Top" url="manual/JMRI_2-14_manual/Comp_Speed_Talble.shtml#Top"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter4_SaveMultiple" url="html/tools/throttle/ThrottleChapter4.shtml#SaveMultiple"/>
+
+<mapID target="package.jmri.jmrit.display.EditLayoutSlip" url="package/jmri/jmrit/display/EditLayoutSlip.shtml"/>
 
 <mapID target="manual.JMRI_2-12_Manual.Main_LocoNet_SE8CProgrammer" url="manual/JMRI_2-12_Manual/Main_LocoNet.shtml#SE8CProgrammer"/>
 

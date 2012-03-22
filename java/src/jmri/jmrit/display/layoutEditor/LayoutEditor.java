@@ -464,9 +464,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         top1.add (lhXoverBox);
 		lhXoverBox.setToolTipText(rb.getString("LHCrossOverToolTip"));
         top1.add (layoutSingleSlipBox);
-		layoutSingleSlipBox.setToolTipText(rb.getString("LevelCrossingToolTip"));
+		layoutSingleSlipBox.setToolTipText(rb.getString("SingleSlipToolTip"));
         top1.add (layoutDoubleSlipBox);
-		layoutDoubleSlipBox.setToolTipText(rb.getString("LevelCrossingToolTip"));
+		layoutDoubleSlipBox.setToolTipText(rb.getString("DoubleSlipToolTip"));
 		rotationPanel.add (new JLabel("    "+rb.getString("Rotation")));
 		rotationPanel.add (rotationField);
         top1.add(rotationPanel);
