@@ -47,7 +47,8 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		super.initComponents(location, track);
 		
 		_toolMenu.add(new AlternateTrackAction (this));
-		_toolMenu.add(new ChangeTrackTypeAction (this));	
+		_toolMenu.add(new ChangeTrackTypeAction (this));
+		_toolMenu.add(new IgnoreUsedTrackAction (this));
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Sidings", true);
 		
 		// override text strings for tracks

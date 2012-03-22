@@ -41,8 +41,10 @@ public class Track {
 	protected int _dropRS = 0;						// number of set outs by trains
 	protected int _length = 0;						// length of track
 	protected int _reserved = 0;					// length of track reserved by trains
+	protected int _reservedDrops = 0;				// length of track reserved for drops
 	protected int _numberCarsInRoute = 0;			// number of cars in route to this track
 	protected int _usedLength = 0;					// length of track filled by cars and engines 
+	protected int _ignoreUsedLengthPercentage = 0;	// value between 0 and 100, 100 = ignore 100% 
 	protected int _moves = 0;						// count of the drops since creation
 	protected String _comment = "";
 	
@@ -325,6 +327,22 @@ public class Track {
 	}
 	
 	/**
+	 * The amount of consumed track space to be ignored when sending
+	 * new rolling stock to the track.
+	 * @param percentage a number between 0 and 100
+	 */
+	public void setIgnoreUsedLengthPercentage(int percentage){
+		int old = _ignoreUsedLengthPercentage;
+		_ignoreUsedLengthPercentage = percentage;
+		if (old != percentage)
+			firePropertyChange("ignoreUsedLengthPercentage", Integer.toString(old), Integer.toString(percentage));
+	}
+	
+	public int getIgnoreUsedLengthPercentage(){
+		return _ignoreUsedLengthPercentage;
+	}
+	
+	/**
 	 * Sets the number of rolling stock (cars and or engines) on this track
 	 * @param number
 	 */
@@ -441,6 +459,7 @@ public class Track {
 		_dropRS++;
 		setMoves(getMoves()+1);
 		setReserved(getReserved() + Integer.parseInt(rs.getLength()) + RollingStock.COUPLER);
+		_reservedDrops = _reservedDrops + Integer.parseInt(rs.getLength()) + RollingStock.COUPLER;
 		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
 	}
 	
@@ -448,6 +467,7 @@ public class Track {
 		int old = _dropRS;
 		_dropRS--;
 		setReserved(getReserved() - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER));
+		_reservedDrops = _reservedDrops - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER);
 		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
 	}
 
@@ -885,6 +905,17 @@ public class Track {
     		// not enough track length check to see if track is in a pool
     		if (getPool() != null && getPool().requestTrackLength(this, length))
     			return OKAY;
+    		// ignore used length option?
+    		if (getIgnoreUsedLengthPercentage() > 0) {
+    			int consumed = getUsedLength()*(100-getIgnoreUsedLengthPercentage());
+    			if (consumed > 0)
+    				consumed = consumed/100;	// as a percentage
+    			//log.debug("Ignore used length, reservedDrops = "+_reservedDrops + " rs length= "+length+" track length= "+getLength());
+    			// two checks, can not drop more than one track length, and second, can not exceed 100% of track length
+    			if (consumed + _reservedDrops + length <= getLength() 
+    					&& getUsedLength() + _reservedDrops + length < (getLength() + getLength()*getIgnoreUsedLengthPercentage()/100))
+    				return OKAY;
+    		}
     		log.debug("Rolling stock ("+rs.toString()+") not accepted at location ("+getLocation().getName()+", "+getName()+") no room!");
     		return LENGTH + " ("+length+")";	
     	}
@@ -1313,6 +1344,7 @@ public class Track {
         	setPool(_location.addPool(a.getValue()));
         	if ((a = e.getAttribute("minLength")) != null )  _minimumLength = Integer.parseInt(a.getValue());
         }
+        if ((a = e.getAttribute("ignoreUsedPercentage")) != null ) _ignoreUsedLengthPercentage = Integer.parseInt(a.getValue());
     }
 
     /**
@@ -1392,6 +1424,8 @@ public class Track {
     		e.setAttribute("pool", getPool().getName());
     		e.setAttribute("minLength", Integer.toString(getMinimumLength()));
     	}
+    	if (getIgnoreUsedLengthPercentage() > 0)
+    		e.setAttribute("ignoreUsedPercentage", Integer.toString(getIgnoreUsedLengthPercentage()));
 
     	return e;
     }
