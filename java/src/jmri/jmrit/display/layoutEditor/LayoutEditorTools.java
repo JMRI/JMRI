@@ -12034,10 +12034,9 @@ public class LayoutEditorTools
         }
     }
     
-    		// operational variables for Set Signals at Double Crossover Turnout tool
+    // operational variables for Set Signals at Double Crossover Turnout tool
 	private JmriJFrame setSignalsAtSlipFrame = null;
 	private boolean setSignalsAtSlipOpen = false;
-	private JTextField slip1NameField = new JTextField(16);
 	private JComboBox slipNameCombo = new JComboBox();
 	private JTextField a1SlipField = new JTextField(16);
 	private JTextField a2SlipField = new JTextField(16);
@@ -12063,7 +12062,6 @@ public class LayoutEditorTools
 	private JCheckBox setupD1SlipLogic = new JCheckBox(rb.getString("SetLogic"));
 	private JCheckBox setD2SlipHead = new JCheckBox(rb.getString("PlaceHead"));
 	private JCheckBox setupD2SlipLogic = new JCheckBox(rb.getString("SetLogic"));
-	private JButton getSavedSlipSignalHeads = null;
 
 	private JButton setSlipSignalsDone = null;
 	private JButton setSlipSignalsCancel = null;
@@ -12083,9 +12081,7 @@ public class LayoutEditorTools
     
     public void setSlipFromMenu( LayoutSlip ls, 
             MultiIconEditor theEditor, JFrame theFrame ) {
-		slip1NameField.setText(ls.getName());
         layoutSlip = ls;
-        //getSlipTurnoutSignalsGetSaved(null);
 		a1SlipField.setText("");
 		a2SlipField.setText("");
 		b1SlipField.setText("");
@@ -12094,7 +12090,6 @@ public class LayoutEditorTools
 		c2SlipField.setText("");
 		d1SlipField.setText("");
 		d2SlipField.setText("");
-        getSlipTurnoutSignalsGetSaved(null);
 		setSignalsAtSlip(theEditor,theFrame);
 	}	
 	public void setSignalsAtSlip( MultiIconEditor theEditor, JFrame theFrame ) {
@@ -12107,66 +12102,50 @@ public class LayoutEditorTools
 		// Initialize if needed
 		if (setSignalsAtSlipFrame == null) {
             setSignalsAtSlipFrame = new JmriJFrame( rb.getString("SignalsAtSlip"), false, true );
-            setSignalsAtSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtTToTTurnout", true);
+            setSignalsAtSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtSlip", true);
             setSignalsAtSlipFrame.setLocation(70,30);
             Container theContentPane = setSignalsAtSlipFrame.getContentPane();        
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 			JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-			JLabel turnout1NameLabel = new JLabel( rb.getString("Turnout")+" 1 "+
+			JLabel turnout1NameLabel = new JLabel( rb.getString("Slip")+" "+
 																rb.getString("Name") );
 			panel1.add(turnout1NameLabel);
-            panel1.add(slip1NameField);
             panel1.add(slipNameCombo);
-            //Need a think on this might need to go sooner
-            if(layoutSlip==null){
-                slip1NameField.setVisible(false);
-                for(LayoutSlip slip: layoutEditor.slipList){
-                    slipNameCombo.addItem(slip.getDisplayName());
-                }
-                slipNameCombo.insertItemAt("", 0);
+            for(LayoutSlip slip: layoutEditor.slipList){
+                slipNameCombo.addItem(slip.getDisplayName());
+            }
+
+            slipNameCombo.insertItemAt("", 0);
+            
+            if(layoutSlip!=null){
+                slipNameCombo.setSelectedItem(layoutSlip.getDisplayName());
+                getSlipTurnoutSignalsGetSaved(null);
+            } else {
                 slipNameCombo.setSelectedIndex(0);
-                slipNameCombo.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        for(LayoutSlip slip: layoutEditor.slipList){
-                            if(slip.getDisplayName().equals(slipNameCombo.getSelectedItem())){
-                                slip1NameField.setText(slip.getName());
-                                getSlipTurnoutSignalsGetSaved(e);
-                                dblSlipC2SigPanel.setVisible(false);
-                                dblSlipB2SigPanel.setVisible(false);
-                                if(slip.getSlipType()==LayoutSlip.DOUBLE_SLIP){
-                                    dblSlipB2SigPanel.setVisible(true);
-                                    dblSlipC2SigPanel.setVisible(true);
-                                }
-                                setSignalsAtSlipFrame.pack();
-                                return;
+            }
+            slipNameCombo.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    for(LayoutSlip slip: layoutEditor.slipList){
+                        if(slip.getDisplayName().equals(slipNameCombo.getSelectedItem())){
+                            //slip1NameField.setText(slip.getDisplayName());
+                            getSlipTurnoutSignalsGetSaved(e);
+                            dblSlipC2SigPanel.setVisible(false);
+                            dblSlipB2SigPanel.setVisible(false);
+                            if(slip.getSlipType()==LayoutSlip.DOUBLE_SLIP){
+                                dblSlipB2SigPanel.setVisible(true);
+                                dblSlipC2SigPanel.setVisible(true);
                             }
+                            setSignalsAtSlipFrame.pack();
+                            return;
                         }
                     }
-                });
-            } else {
-                slipNameCombo.setVisible(false);
-            }
-			
-			slip1NameField.setToolTipText(rb.getString("SignalsTurnoutNameHint"));
+                }
+            });
             theContentPane.add(panel1);
 			JPanel panel11 = new JPanel();
             panel11.setLayout(new FlowLayout());
 
-			theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
-			// Provide for retrieval of names of previously saved signal heads
-            JPanel panel2 = new JPanel();
-			JLabel shTitle = new JLabel(rb.getString("SignalHeads"));
-			panel2.add(shTitle);			
-			panel2.add(new JLabel("     "));
-            panel2.add(getSavedSlipSignalHeads = new JButton(rb.getString("GetSaved")));
-            getSavedSlipSignalHeads.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						getSlipTurnoutSignalsGetSaved(e);
-					}
-				});
-            getSavedSlipSignalHeads.setToolTipText( rb.getString("GetSavedHint") );
-			theContentPane.add(panel2);
 			theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 			// Signal heads located at turnout 1			
 			JPanel panel21x = new JPanel();
@@ -12383,7 +12362,7 @@ public class LayoutEditorTools
 		turnout2 = null;
 		layoutSlip = null;
         for(LayoutSlip ls: layoutEditor.slipList){
-            if(ls.getName().equals(slip1NameField.getText().trim())){
+            if(ls.getDisplayName().equals(slipNameCombo.getSelectedItem())){
                 turnout1 = ls.getTurnout();
                 turnout2 = ls.getTurnoutB();
                 layoutSlip=ls;

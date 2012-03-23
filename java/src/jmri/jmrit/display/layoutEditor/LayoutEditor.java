@@ -445,10 +445,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         top1.add (nextTurnout);
 		nextTurnout.setToolTipText(rb.getString("TurnoutNameToolTip"));
         JLabel extraTurnLabel = new JLabel(rb.getString("SecondName"));
+        extraTurnLabel.setEnabled(false);
+        extraTurnout.setEnabled(false);
         extraTurnoutPanel.add (extraTurnLabel);
         extraTurnoutPanel.add (extraTurnout);
         extraTurnout.setToolTipText(rb.getString("TurnoutNameToolTip"));
-        extraTurnoutPanel.setEnabled(false);
         top1.add(extraTurnoutPanel);
 		top1.add (new JLabel(rb.getString("Type")));
         top1.add (turnoutRHBox);
