@@ -650,13 +650,13 @@ different format for your switch lists.
 
 <H3>Message Formats</H3>
 
-You can customize the pick up, set out, and local move messages for your
-manifests and switch lists by selecting the appropriate drop down menus.
-To remove an attribute select blank. You can also edit the "[ ] Set out",
-"[ ] Pick up" and "[ ] Move" prefixes. If you want to use the text color
-options, the set out, pick up, and move prefixes must be unique.
-
-<A NAME="ManifestComments"></A>
+   You can customize the pick up, set out, and local move messages for your manifests and switch
+   lists by selecting the appropriate drop down menus. To remove an attribute select blank. You can
+   also edit and or replace the "[ ] Set out", "[ ] Pick up" and "[ ] Move" prefixes. Two popular
+   prefixes are "Spot" and "Pull" for set outs and pick ups respectively. If you want to use
+   the text color options, the set out, pick up, and move prefixes must be unique. 
+   
+   <A NAME="ManifestComments"></A>
 <H3>Manifests Options</H3>
 
    The program allows you to customize your train manifest to your liking. There are seven optional
@@ -1334,7 +1334,7 @@ track's pool.
 <A NAME="PlannedPickUps"></A>
 <H3>Planned Pick Ups</H3>
 
-   The program when searching for tracks to set out cars, checks to see if there space available for
+   The program when searching for tracks to set out cars, checks to see if there's space available for
    new cars. Sometimes due to the order that you're building your trains, you know better than the
    program that certain cars will be picked up during your session, say by a train that will be
    built later. This feature can be useful for interchange tracks, especially if you want the
@@ -1969,9 +1969,9 @@ dropping off up to 3 cars.</P>
 tracks and other types of tracks (spurs, yards, interchanges) at the
 same location. But using the names above, we could assign yard and
 spur tracks to "Danville", and then as long as "Danville-1" was the
-last or first location in a route, assign staging tracks to "Daville-1".
+last or first location in a route, assign staging tracks to "Danville-1".
 Now when the train terminates at Danville, the yard and spur tracks are
-serviced, and then the train terminates into staging at "Daville-1".</P>
+serviced, and then the train terminates into staging at "Danville-1".</P>
 
 <P>Another example. Let's say we have a mainline train that will
 service Danville. At Danville we have a yard and several spurs. We
