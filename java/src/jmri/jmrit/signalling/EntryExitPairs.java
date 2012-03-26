@@ -948,7 +948,8 @@ public class EntryExitPairs {
                                 setNXButtonState(point, NXBUTTONINACTIVE);
                             }
                         } catch (RuntimeException ex) {
-                            log.error("An error occured while setting the route " + ex.printStackTrace());
+                            log.error("An error occured while setting the route");
+                            ex.printStackTrace();
                         }
                         getPoint().getPanel().getGlassPane().setVisible(false);
                     }

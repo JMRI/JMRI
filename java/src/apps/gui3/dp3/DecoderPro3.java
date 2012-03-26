@@ -26,7 +26,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
     private static File menuFile = null;
     private static File toolbarFile = null;
 
-    public static File getMenuFile() {
+    public synchronized static File getMenuFile() {
         if (menuFile == null) {
             menuFile = new File("dp3/Gui3Menus.xml");
             // decide whether name is absolute or relative
@@ -44,7 +44,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         return menuFile;
     }
 
-    public static File getToolbarFile() {
+    public synchronized static File getToolbarFile() {
         if (toolbarFile == null) {
             toolbarFile = new File("dp3/Gui3MainToolBar.xml");
             // decide whether name is absolute or relative
