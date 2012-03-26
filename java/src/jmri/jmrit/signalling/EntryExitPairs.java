@@ -798,7 +798,9 @@ public class EntryExitPairs {
                         SignalMast mast = (SignalMast) getSignal();
                         mast.setHeld(false);
                     }
-                    destination=null;
+                    synchronized(this){
+                        destination=null;
+                    }
                     return;
                 }
                 if(!state){
@@ -945,9 +947,8 @@ public class EntryExitPairs {
                                 setNXButtonState(pd, NXBUTTONINACTIVE);
                                 setNXButtonState(point, NXBUTTONINACTIVE);
                             }
-
-                        } catch (Exception ex) {
-                            log.error("An error occured while setting the route");
+                        } catch (RuntimeException ex) {
+                            log.error("An error occured while setting the route " + ex.printStackTrace());
                         }
                         getPoint().getPanel().getGlassPane().setVisible(false);
                     }
@@ -1132,7 +1133,9 @@ public class EntryExitPairs {
                 setRouteFrom(false);
                 setRouteTo(false);
                 routeDetails=null;
-                lastSeenActiveBlockObject = null;
+                synchronized(this){
+                    lastSeenActiveBlockObject = null;
+                }
                 pd.cancelNXButtonTimeOut();
                 point.cancelNXButtonTimeOut();
                 getPoint().getPanel().getGlassPane().setVisible(false);
@@ -1212,7 +1215,9 @@ public class EntryExitPairs {
                         if(log.isDebugEnabled()){
                             log.debug("Path chossen " + startlBlock.getDisplayName() + " " + destinationLBlock.getDisplayName() + " " +  protectLBlock.getDisplayName());
                         }
-                        destination = destinationLBlock;
+                        synchronized(this){
+                            destination = destinationLBlock;
+                        }
                         try{
                             routeDetails = InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, 0x00/*jmri.jmrit.display.layoutEditor.LayoutBlockManager.MASTTOMAST*/);
                         } catch (jmri.JmriException e){
@@ -1243,7 +1248,9 @@ public class EntryExitPairs {
                 setRouteFrom(false);
                 setRouteTo(false);
                 point.removeDestination(this);
-                lastSeenActiveBlockObject = null;
+                synchronized(this){
+                    lastSeenActiveBlockObject = null;
+                }
                 disposed=true;
             }
             
