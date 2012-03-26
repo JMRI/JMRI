@@ -307,6 +307,7 @@ public class PositionablePoint
 				}
                 endBumper = true;
 				break;
+            default : break;
 		}
 		popup.add(new JSeparator(JSeparator.HORIZONTAL));
 		popup.add(new AbstractAction(rb.getString("Remove")) {

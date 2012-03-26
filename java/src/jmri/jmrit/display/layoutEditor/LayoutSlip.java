@@ -55,8 +55,8 @@ public class LayoutSlip extends LayoutTurnout
 	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
 	// defined constants 
-    public static int SINGLE_SLIP = 7;
-    public static int DOUBLE_SLIP = 8;
+    public final static int SINGLE_SLIP = 7;
+    public final static int DOUBLE_SLIP = 8;
     
 	// operational instance variables (not saved between sessions)
     

@@ -518,7 +518,7 @@ public class LayoutBlockConnectivityTools{
                     switch(pathMethod){
                         case MASTTOMAST : signal = InstanceManager.layoutBlockManagerInstance().getFacingSignalMast(currentBlock, blocktoCheck); break;
                         case HEADTOHEAD : signal = InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(currentBlock, blocktoCheck); break;
-                        case ANY : signal = (jmri.NamedBean) InstanceManager.layoutBlockManagerInstance().getFacingSignalObject(currentBlock, blocktoCheck); break;
+                        default : signal = (jmri.NamedBean) InstanceManager.layoutBlockManagerInstance().getFacingSignalObject(currentBlock, blocktoCheck); break;
                     }
                     lBlockManLog.setLevel(currentLevel);
                     if (signal==null){

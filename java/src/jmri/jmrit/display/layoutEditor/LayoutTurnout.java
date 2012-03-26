@@ -1179,6 +1179,7 @@ public class LayoutTurnout
 			case LH_XOVER:
 				popup.add(rb.getString("LHXOverTurnout"));
 				break;
+            default : break;
 		}
 		if (getTurnout()==null) popup.add(rb.getString("NoTurnout"));
 		else popup.add(rb.getString("Turnout")+": "+turnoutName);

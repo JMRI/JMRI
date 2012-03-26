@@ -354,6 +354,7 @@ public class TrackSegment
                         setAngle(90.0D);
                         setCircle(false);
                         break;
+            default : break;
         }
         layoutEditor.redrawPanel();
 		layoutEditor.setDirty();

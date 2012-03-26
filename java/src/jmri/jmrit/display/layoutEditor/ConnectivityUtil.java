@@ -383,6 +383,7 @@ public class ConnectivityUtil
 							prevConnectType = LayoutEditor.TURNOUT_D;
 						}
 						break;
+                    default:  break;
 				}
 				companion.add(Integer.valueOf(setting));
 				notFound = false;
@@ -1738,6 +1739,7 @@ public class ConnectivityUtil
 							(tBlock!=excludedBlock) ) block = tBlock;
 				}
                 break;
+            default : break;
 		}
 		return block;
 	}
@@ -1948,6 +1950,7 @@ public class ConnectivityUtil
                                                 }
                                             }
                                             break;
+                default : break;
             }
             if ( (tr!=null) && (tr.getLayoutBlock() != lb) ) {
                 // continuing track segment is not in this block
@@ -2375,6 +2378,7 @@ public class ConnectivityUtil
 								else curTS = null;
 								curObj = conObj;
 								break;
+                            default : break;
 						}
 					}
 					else if ( (tType==LayoutTurnout.RH_TURNOUT) || (tType==LayoutTurnout.LH_TURNOUT) ||
@@ -2554,6 +2558,7 @@ public class ConnectivityUtil
 				tr = (TrackSegment)x.getConnectB();
 				prevConnectType = LayoutEditor.LEVEL_XING_B;
 				break;
+            default : break;
 		}
 		if (tr.getLayoutBlock() != lb) {
 			// track segment is not in this block
