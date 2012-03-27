@@ -6,6 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.ResourceBundle;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
 
 
@@ -115,7 +116,7 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
 			if (_track != null)
 				_track.setIgnoreUsedLengthPercentage(percentage);			
 			// save location file
-			LocationManagerXml.instance().writeOperationsFile();
+			OperationsXml.save();
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
 		}		

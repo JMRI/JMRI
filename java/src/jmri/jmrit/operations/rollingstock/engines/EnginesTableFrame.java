@@ -26,7 +26,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.table.TableColumnModel;
 
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -270,12 +270,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 			f.setVisible(true);
 		}
 		if (ae.getSource() == saveButton){
-			/* all JMRI window position and size are now saved
-			engineManager.setEnginesFrame(this);
-			engineManager.setEnginesFrameTableColumnWidths(getCurrentTableColumnWidths());
-			*/
-			LocationManagerXml.instance().writeFileIfDirty();	// could have created locations or tracks during import
-			EngineManagerXml.instance().writeOperationsFile();
+			OperationsXml.save();
 			saveTableDetails(enginesTable);
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();

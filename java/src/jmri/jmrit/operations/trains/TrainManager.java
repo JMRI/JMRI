@@ -11,15 +11,7 @@ import javax.swing.JComboBox;
 
 import org.jdom.Element;
 
-import jmri.jmrit.operations.locations.LocationManagerXml;
-import jmri.jmrit.operations.rollingstock.cars.CarOwners;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.util.com.sun.TableSorter;
@@ -56,12 +48,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String TRAIN_ACTION_CHANGED_PROPERTY = "TrainsAction";
 	public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId";
 	
-	public TrainManager() {
-		CarTypes.instance().addPropertyChangeListener(this);
-		CarRoads.instance().addPropertyChangeListener(this);
-		CarOwners.instance().addPropertyChangeListener(this);
-		EngineTypes.instance().addPropertyChangeListener(this);
-    }
+	public TrainManager() {}
     
 	/** record the single instance **/
 	private static TrainManager _instance = null;
@@ -296,8 +283,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
     
     public void replaceLoad(String oldLoadName, String newLoadName){
-    	// set file dirty
-    	TrainManagerXml.instance().setDirty(true);
 		List<String> trains = getTrainsByIdList();
 		for (int i=0; i<trains.size(); i++){
 			Train train = getTrainById(trains.get(i));
@@ -517,28 +502,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 				box.addItem(train);
 		}
     }
-    
-    /**
-     * Report that the train, car and engine databases are dirty.
-     */
-    public void setFilesDirty(){
-    	log.debug("operation files dirty");
-    	CarManagerXml.instance().setDirty(true);
-    	EngineManagerXml.instance().setDirty(true);
-    	LocationManagerXml.instance().setDirty(true);
-    	TrainManagerXml.instance().setDirty(true);
-    }
-    
-    /**
-     * Save all xml files that a train can modify.
-     */
-    public void save(){
-		LocationManagerXml.instance().writeFileIfDirty();		//Need to save "moves" for track location 
-		RouteManagerXml.instance().writeFileIfDirty(); 			//Only if user used setX&Y
-		CarManagerXml.instance().writeFileIfDirty();			//save train assignments		
-		EngineManagerXml.instance().writeFileIfDirty();			//save train assignments
-		TrainManagerXml.instance().writeOperationsFile();		//save train changes
-    }
   
     /**
      * @return Number of trains
@@ -723,12 +686,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 */
     public void propertyChange(java.beans.PropertyChangeEvent e) {
     	log.debug("TrainManager sees property change: " + e.getPropertyName() + " old: " + e.getOldValue() + " new " + e.getNewValue());
-    	if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY) ||
-    			e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY) ||
-    			e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY) ||
-    			e.getPropertyName().equals(CarOwners.CAROWNERS_NAME_CHANGED_PROPERTY)){
-    		setFilesDirty();
-    	}
     	// TODO use listener to determine if load name has changed
        	//if (e.getPropertyName().equals(CarLoads.LOAD_NAME_CHANGED_PROPERTY)){
     	//	replaceLoad((String)e.getOldValue(), (String)e.getNewValue());

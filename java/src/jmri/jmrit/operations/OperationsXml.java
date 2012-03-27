@@ -5,6 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
+import jmri.jmrit.operations.routes.RouteManagerXml;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.trains.TrainManagerXml;
 
 /**
  * Loads and stores the operation setup using xml files. 
@@ -147,6 +153,30 @@ public class OperationsXml extends XmlFile {
     		}
     	}
     	return buf.toString();
+    }
+    
+    public static void save(){
+    	OperationsSetupXml.instance().writeFileIfDirty();
+		LocationManagerXml.instance().writeFileIfDirty();		//Need to save "moves" for track location 
+		RouteManagerXml.instance().writeFileIfDirty(); 			//Only if user used setX&Y
+		CarManagerXml.instance().writeFileIfDirty();			//save train assignments		
+		EngineManagerXml.instance().writeFileIfDirty();			//save train assignments
+		TrainManagerXml.instance().writeFileIfDirty();			//save train changes
+    }
+    
+    /**
+     * Checks to see if any operations files are dirty
+     * @return
+     */
+    public static boolean areFilesDirty(){
+		if (OperationsSetupXml.instance().isDirty()
+				|| LocationManagerXml.instance().isDirty()
+				|| RouteManagerXml.instance().isDirty()
+				|| CarManagerXml.instance().isDirty() 
+				|| EngineManagerXml.instance().isDirty() 
+				|| TrainManagerXml.instance().isDirty())
+			return true;
+		return false;
     }
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OperationsXml.class.getName());

@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -243,7 +244,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 			
 			enableButtons(false);
 			// save schedule file
-			managerXml.writeOperationsFile();
+			OperationsXml.save();
 		}
 		if (ae.getSource() == addScheduleButton){
 			Schedule schedule = manager.getScheduleByName(scheduleNameTextField.getText());
@@ -301,7 +302,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		
 		saveTableDetails(scheduleTable);
 		// save schedule file
-		managerXml.writeOperationsFile();
+		OperationsXml.save();
 	}
 	
 	private void loadTypeComboBox(){

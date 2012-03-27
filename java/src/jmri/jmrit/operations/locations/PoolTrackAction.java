@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -228,7 +229,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
 			}
 
 			// save location file
-			LocationManagerXml.instance().writeOperationsFile();
+			OperationsXml.save();
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
 		}		

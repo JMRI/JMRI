@@ -163,7 +163,7 @@ public class Track {
 		String old = _name;
 		_name = name;
 		if (!old.equals(name)){
-			firePropertyChange(NAME_CHANGED_PROPERTY, old, name);
+			setDirtyAndFirePropertyChange(NAME_CHANGED_PROPERTY, old, name);
 		}
 	}
 
@@ -179,14 +179,14 @@ public class Track {
 		String old = _locType;
 		_locType = type;
 		if (!old.equals(type))
-			firePropertyChange(TRACK_TYPE_CHANGED_PROPERTY, old, type);
+			setDirtyAndFirePropertyChange(TRACK_TYPE_CHANGED_PROPERTY, old, type);
 	}
 
 	public void setLength(int length){
 		int old = _length;
 		_length = length;
 		if (old != length)
-			firePropertyChange(LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
+			setDirtyAndFirePropertyChange(LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
     	// set dirty, length can change if track is part of a pool
     	// LocationManagerXml.instance().setDirty(true);
 	}
@@ -199,7 +199,7 @@ public class Track {
 		int old = _minimumLength;
 		_minimumLength = length;
 		if (old != length)
-			firePropertyChange(MIN_LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
+			setDirtyAndFirePropertyChange(MIN_LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
 	}
 
 	public int getMinimumLength(){
@@ -210,7 +210,7 @@ public class Track {
 		int old = _reserved;
 		_reserved = reserved;
 		if (old != reserved)
-			firePropertyChange("reserved", Integer.toString(old), Integer.toString(reserved));
+			setDirtyAndFirePropertyChange("reserved", Integer.toString(old), Integer.toString(reserved));
 	}
 
 	public int getReserved(){
@@ -222,7 +222,7 @@ public class Track {
 		_numberCarsInRoute++;
 		_reservedInRoute = old + Integer.parseInt(car.getLength())+ RollingStock.COUPLER;
 		if (old != _reservedInRoute)
-			firePropertyChange("reservedInRoute", Integer.toString(old), Integer.toString(_reservedInRoute));
+			setDirtyAndFirePropertyChange("reservedInRoute", Integer.toString(old), Integer.toString(_reservedInRoute));
 	}
 	
 	public void deleteReservedInRoute(Car car){
@@ -230,7 +230,7 @@ public class Track {
 		_numberCarsInRoute--;
 		_reservedInRoute = old - (Integer.parseInt(car.getLength())+ RollingStock.COUPLER);
 		if (old != _reservedInRoute)
-			firePropertyChange("reservedInRoute", Integer.toString(old), Integer.toString(_reservedInRoute));
+			setDirtyAndFirePropertyChange("reservedInRoute", Integer.toString(old), Integer.toString(_reservedInRoute));
 	}
 
 	/**
@@ -256,7 +256,7 @@ public class Track {
 	public void setReservationFactor(int factor){
 		int old = _reservationFactor;
 		_reservationFactor = factor;
-		firePropertyChange("reservationFactor", old, factor);
+		setDirtyAndFirePropertyChange("reservationFactor", old, factor);
 	}
 	
 	public int getReservationFactor(){
@@ -271,7 +271,7 @@ public class Track {
 	public void setScheduleMode(int mode){
 		int old = _mode;
 		_mode = mode;
-		firePropertyChange("scheduleMode", old, mode);
+		setDirtyAndFirePropertyChange("scheduleMode", old, mode);
 	}
 	
 	/**
@@ -289,7 +289,7 @@ public class Track {
 			_alternativeTrackId = track.getId();
 		else
 			_alternativeTrackId = "";
-		firePropertyChange("alternativeTrack", old, track);
+		setDirtyAndFirePropertyChange("alternativeTrack", old, track);
 	}
 	
 	public Track getAlternativeTrack(){
@@ -319,7 +319,7 @@ public class Track {
 		int old = _usedLength;
 		_usedLength = length;
 		if (old != length)
-			firePropertyChange("usedLength", Integer.toString(old), Integer.toString(length));
+			setDirtyAndFirePropertyChange("usedLength", Integer.toString(old), Integer.toString(length));
 	}
 	
 	public int getUsedLength(){
@@ -335,7 +335,7 @@ public class Track {
 		int old = _ignoreUsedLengthPercentage;
 		_ignoreUsedLengthPercentage = percentage;
 		if (old != percentage)
-			firePropertyChange("ignoreUsedLengthPercentage", Integer.toString(old), Integer.toString(percentage));
+			setDirtyAndFirePropertyChange("ignoreUsedLengthPercentage", Integer.toString(old), Integer.toString(percentage));
 	}
 	
 	public int getIgnoreUsedLengthPercentage(){
@@ -350,7 +350,7 @@ public class Track {
 		int old = _numberRS;
 		_numberRS = number;
 		if (old != number)
-			firePropertyChange("numberRS", Integer.toString(old), Integer.toString(number));
+			setDirtyAndFirePropertyChange("numberRS", Integer.toString(old), Integer.toString(number));
 	}
 	
 	/**
@@ -361,7 +361,7 @@ public class Track {
 		int old = _numberCars;
 		_numberCars = number;
 		if (old != number)
-			firePropertyChange("numberCars", Integer.toString(old), Integer.toString(number));
+			setDirtyAndFirePropertyChange("numberCars", Integer.toString(old), Integer.toString(number));
 	}
 	
 	/**
@@ -372,7 +372,7 @@ public class Track {
 		int old = _numberEngines;
 		_numberEngines = number;
 		if (old != number)
-			firePropertyChange("numberEngines", Integer.toString(old), Integer.toString(number));
+			setDirtyAndFirePropertyChange("numberEngines", Integer.toString(old), Integer.toString(number));
 	}
 	
 	/**
@@ -430,7 +430,7 @@ public class Track {
 		_pickupRS++;
 		if (Setup.isBuildAggressive())
 			setReserved(getReserved() - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER));
-		firePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
+		setDirtyAndFirePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
 	}
 	
 	public void deletePickupRS(RollingStock rs){
@@ -438,7 +438,7 @@ public class Track {
 		if (Setup.isBuildAggressive())
 			setReserved(getReserved() + (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER));
 		_pickupRS--;
-		firePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
+		setDirtyAndFirePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
 	}
 	
 	/**
@@ -460,7 +460,7 @@ public class Track {
 		setMoves(getMoves()+1);
 		setReserved(getReserved() + Integer.parseInt(rs.getLength()) + RollingStock.COUPLER);
 		_reservedDrops = _reservedDrops + Integer.parseInt(rs.getLength()) + RollingStock.COUPLER;
-		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
+		setDirtyAndFirePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
 	}
 	
 	public void deleteDropRS(RollingStock rs){
@@ -468,13 +468,13 @@ public class Track {
 		_dropRS--;
 		setReserved(getReserved() - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER));
 		_reservedDrops = _reservedDrops - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER);
-		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
+		setDirtyAndFirePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
 	}
 
 	public void setComment(String comment){
 		String old = _comment;
 		_comment = comment;
-		firePropertyChange("trackComment", old, comment);
+		setDirtyAndFirePropertyChange("trackComment", old, comment);
 	}
 
 	public String getComment(){
@@ -503,7 +503,7 @@ public class Track {
     		return;
     	_typeList.add(0,type);
     	log.debug("track (" +getName()+ ") add rolling stock type "+type);
-    	firePropertyChange (TYPES_CHANGED_PROPERTY, _typeList.size()-1, _typeList.size());
+    	setDirtyAndFirePropertyChange (TYPES_CHANGED_PROPERTY, _typeList.size()-1, _typeList.size());
     }
     
     public void deleteTypeName(String type){
@@ -511,7 +511,7 @@ public class Track {
     		return;
     	_typeList.remove(type);
     	log.debug("track (" +getName()+ ") delete rolling stock type "+type);
-    	firePropertyChange (TYPES_CHANGED_PROPERTY, _typeList.size()+1, _typeList.size());
+    	setDirtyAndFirePropertyChange (TYPES_CHANGED_PROPERTY, _typeList.size()+1, _typeList.size());
     }
     
     public boolean acceptsTypeName(String type){
@@ -533,7 +533,7 @@ public class Track {
     public void setRoadOption(String option){
     	String old = _roadOption;
     	_roadOption = option;
-    	firePropertyChange (ROADS_CHANGED_PROPERTY, old, option);
+    	setDirtyAndFirePropertyChange (ROADS_CHANGED_PROPERTY, old, option);
     }
     
     /**
@@ -544,7 +544,7 @@ public class Track {
 		int old = _trainDir;
 		_trainDir = direction;
 		if (old != direction)
-			firePropertyChange(TRAINDIRECTION_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(direction));
+			setDirtyAndFirePropertyChange(TRAINDIRECTION_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(direction));
 	}
 	
 	public int getTrainDirections(){
@@ -577,13 +577,13 @@ public class Track {
     		return;
     	_roadList.add(road);
     	log.debug("track " +getName()+ " add car road "+road);
-    	firePropertyChange (ROADS_CHANGED_PROPERTY, _roadList.size()-1, _roadList.size());
+    	setDirtyAndFirePropertyChange (ROADS_CHANGED_PROPERTY, _roadList.size()-1, _roadList.size());
     }
     
     public void deleteRoadName(String road){
     	_roadList.remove(road);
     	log.debug("track " +getName()+ " delete car road "+road);
-    	firePropertyChange (ROADS_CHANGED_PROPERTY, _roadList.size()+1, _roadList.size());
+    	setDirtyAndFirePropertyChange (ROADS_CHANGED_PROPERTY, _roadList.size()+1, _roadList.size());
      }
     
     public boolean acceptsRoadName(String road){
@@ -616,7 +616,7 @@ public class Track {
     public void setLoadOption(String option){
     	String old = _loadOption;
     	_loadOption = option;
-    	firePropertyChange (LOADS_CHANGED_PROPERTY, old, option);
+    	setDirtyAndFirePropertyChange (LOADS_CHANGED_PROPERTY, old, option);
     }
 
     List<String> _loadList = new ArrayList<String>();
@@ -655,7 +655,7 @@ public class Track {
     		return false;
     	_loadList.add(load);
     	log.debug("track (" +getName()+ ") add car load "+load);
-    	firePropertyChange (LOADS_CHANGED_PROPERTY, _loadList.size()-1, _loadList.size());
+    	setDirtyAndFirePropertyChange (LOADS_CHANGED_PROPERTY, _loadList.size()-1, _loadList.size());
     	return true;
     }
     
@@ -670,7 +670,7 @@ public class Track {
     		return false;
     	_loadList.remove(load);
     	log.debug("track (" +getName()+ ") delete car load "+load);
-    	firePropertyChange (LOADS_CHANGED_PROPERTY, _loadList.size()+1, _loadList.size());
+    	setDirtyAndFirePropertyChange (LOADS_CHANGED_PROPERTY, _loadList.size()+1, _loadList.size());
        	return true;
     }
     
@@ -703,7 +703,7 @@ public class Track {
     	_dropOption = option;
     	if (!old.equals(option))
     		_dropList.clear();
-    	firePropertyChange (DROP_CHANGED_PROPERTY, old, option);
+    	setDirtyAndFirePropertyChange (DROP_CHANGED_PROPERTY, old, option);
     }
     
     public String getPickupOption(){
@@ -719,7 +719,7 @@ public class Track {
        	_pickupOption = option;
     	if (!old.equals(option))
     		_pickupList.clear();
-    	firePropertyChange (PICKUP_CHANGED_PROPERTY, old, option);
+    	setDirtyAndFirePropertyChange (PICKUP_CHANGED_PROPERTY, old, option);
      }
     
     List<String> _dropList = new ArrayList<String>();
@@ -742,13 +742,13 @@ public class Track {
     		return;
     	_dropList.add(id);
     	log.debug("track " +getName()+ " add drop id "+id);
-    	firePropertyChange (DROP_CHANGED_PROPERTY, null, id);
+    	setDirtyAndFirePropertyChange (DROP_CHANGED_PROPERTY, null, id);
     }
     
     public void deleteDropId(String id){
     	_dropList.remove(id);
     	log.debug("track " +getName()+ " delete drop id "+id);
-    	firePropertyChange (DROP_CHANGED_PROPERTY, id, null);
+    	setDirtyAndFirePropertyChange (DROP_CHANGED_PROPERTY, id, null);
      }
     
     /**
@@ -806,13 +806,13 @@ public class Track {
     		return;
     	_pickupList.add(id);
     	log.debug("track " +getName()+ " add pick up id "+id);
-    	firePropertyChange (PICKUP_CHANGED_PROPERTY, null, id);
+    	setDirtyAndFirePropertyChange (PICKUP_CHANGED_PROPERTY, null, id);
     }
     
     public void deletePickupId(String id){
     	_pickupList.remove(id);
     	log.debug("track " +getName()+ " delete pick up id "+id);
-    	firePropertyChange (PICKUP_CHANGED_PROPERTY, id, null);
+    	setDirtyAndFirePropertyChange (PICKUP_CHANGED_PROPERTY, id, null);
      }
     
     /**
@@ -929,7 +929,7 @@ public class Track {
     public void setMoves(int moves){
     	int old = _moves;
     	_moves = moves;
-    	firePropertyChange("trackMoves", old, moves);
+    	setDirtyAndFirePropertyChange("trackMoves", old, moves);
     	// set dirty
     	//LocationManagerXml.instance().setDirty(true);
     }
@@ -948,7 +948,7 @@ public class Track {
     public void setServiceOrder(String order){
     	String old = _order;
     	_order = order;
-    	firePropertyChange("trackServiceOrder", old, order);
+    	setDirtyAndFirePropertyChange("trackServiceOrder", old, order);
     }
     
     /**
@@ -1007,7 +1007,7 @@ public class Track {
     		if (schedule.getItemsBySequenceList().size()>0)
     			setScheduleItemId(schedule.getItemsBySequenceList().get(0));
     		setScheduleCount(0);
-    		firePropertyChange (SCHEDULE_CHANGED_PROPERTY, old, id);
+    		setDirtyAndFirePropertyChange (SCHEDULE_CHANGED_PROPERTY, old, id);
     	}
     }
     
@@ -1026,7 +1026,7 @@ public class Track {
     	log.debug("set schedule item id "+id+" for track "+getName());
     	String old = _scheduleItemId;
     	_scheduleItemId = id;
-    	firePropertyChange (SCHEDULE_CHANGED_PROPERTY, old, id);
+    	setDirtyAndFirePropertyChange (SCHEDULE_CHANGED_PROPERTY, old, id);
     }
     
     /**
@@ -1096,7 +1096,7 @@ public class Track {
     public void setScheduleCount(int count){
     	int old = _scheduleCount;
     	_scheduleCount = count;
-    	firePropertyChange (SCHEDULE_CHANGED_PROPERTY, old, count);
+    	setDirtyAndFirePropertyChange (SCHEDULE_CHANGED_PROPERTY, old, count);
     }
     
     /**
@@ -1257,7 +1257,7 @@ public class Track {
 			if (_pool != null){
 				_pool.add(this);
 			}
-			firePropertyChange(POOL_CHANGED_PROPERTY, old, pool);
+			setDirtyAndFirePropertyChange(POOL_CHANGED_PROPERTY, old, pool);
 		}
 	}
 	
@@ -1272,7 +1272,7 @@ public class Track {
 	}
     
     public void dispose(){
-    	firePropertyChange(DISPOSE_CHANGED_PROPERTY, null, "Dispose");
+    	setDirtyAndFirePropertyChange(DISPOSE_CHANGED_PROPERTY, null, "Dispose");
     }
     
 	
@@ -1443,7 +1443,7 @@ public class Track {
 		pcs.removePropertyChangeListener(l);
 	}
 
-	protected void firePropertyChange(String p, Object old, Object n) {
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
     	LocationManagerXml.instance().setDirty(true);
 		pcs.firePropertyChange(p, old, n);
 	}

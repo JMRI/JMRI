@@ -10,11 +10,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainManagerXml;
-
+import jmri.jmrit.operations.OperationsXml;
 
 /**
  * Swing action to backup operation files to a
@@ -37,11 +33,10 @@ public class BackupFilesAction extends AbstractAction {
     
     private void backUp(){
 		// check to see if files are dirty
-		if (CarManagerXml.instance().isDirty() || EngineManagerXml.instance().isDirty() 
-				|| TrainManagerXml.instance().isDirty()){
+		if (OperationsXml.areFilesDirty()){
 			if(JOptionPane.showConfirmDialog(null, rb.getString("OperationsFilesModified"),
 					rb.getString("SaveOperationFiles"), JOptionPane.YES_NO_OPTION)== JOptionPane.YES_OPTION) {
-				TrainManager.instance().save();
+				OperationsXml.save();
 			}
 		}	
         Backup backup = new Backup();

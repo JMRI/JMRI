@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.locations;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -374,7 +375,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				_track = null;
 				enableButtons(false);
 				// save location file
-				managerXml.writeOperationsFile();
+				OperationsXml.save();
 			}
 		}
 		if (ae.getSource() == addTrackButton){
@@ -539,7 +540,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// enable 
 		enableButtons(true);
 		// save location file
-		managerXml.writeOperationsFile();
+		OperationsXml.save();
 	}
 	
 	// check to see if the route services this location
@@ -575,7 +576,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// enable 
 		enableButtons(true);
 		// save location file
-		managerXml.writeOperationsFile();
+		OperationsXml.save();
 	}
 
 	private boolean checkUserInputs(Track track){

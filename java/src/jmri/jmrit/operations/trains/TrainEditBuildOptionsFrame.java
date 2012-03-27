@@ -27,6 +27,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -977,7 +978,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		_train.setThirdLegEngineRoad((String)roadEngine2Box.getSelectedItem());
 		_train.setThirdLegCabooseRoad((String)roadCaboose2Box.getSelectedItem());
 		
-		manager.save();
+		OperationsXml.save();
 		if (Setup.isCloseWindowOnSaveEnabled())
 			dispose();
 	}

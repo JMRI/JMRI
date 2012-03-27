@@ -21,9 +21,9 @@ import javax.swing.border.Border;
 import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -182,7 +182,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			}
 		}
 		// save location file
-		LocationManagerXml.instance().writeOperationsFile();
+		OperationsXml.save();
 	}
 	
 	private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv, boolean isUpdate){

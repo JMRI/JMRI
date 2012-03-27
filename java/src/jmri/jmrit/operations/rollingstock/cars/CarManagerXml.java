@@ -222,6 +222,8 @@ public class CarManagerXml extends OperationsXml {
         }
 		log.debug("Cars have been loaded!");
 		RollingStockLogger.instance().enableCarLogging(Setup.isCarLoggerEnabled());
+		// clear dirty bit
+		setDirty(false);
     }
 
     public void setOperationsFileName(String name) { operationsFileName = name; }

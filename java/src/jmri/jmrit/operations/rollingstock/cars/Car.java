@@ -75,7 +75,7 @@ public class Car extends RollingStock {
 		boolean old = _hazardous;
 		_hazardous = hazardous;
 		if (!old == hazardous)
-			firePropertyChange("car hazardous", old?"true":"false", hazardous?"true":"false");
+			setDirtyAndFirePropertyChange("car hazardous", old?"true":"false", hazardous?"true":"false");
 	}
 	
 	public boolean isHazardous(){
@@ -86,7 +86,7 @@ public class Car extends RollingStock {
 		boolean old = _passenger;
 		_passenger = passenger;
 		if (!old == passenger)
-			firePropertyChange("car passenger", old?"true":"false", passenger?"true":"false");
+			setDirtyAndFirePropertyChange("car passenger", old?"true":"false", passenger?"true":"false");
 	}
 	
 	public boolean isPassenger(){
@@ -97,7 +97,7 @@ public class Car extends RollingStock {
 		boolean old = _fred;
 		_fred = fred;
 		if (!old == fred)
-			firePropertyChange("car fred", old?"true":"false", fred?"true":"false");
+			setDirtyAndFirePropertyChange("car fred", old?"true":"false", fred?"true":"false");
 	}
 	
 	public boolean hasFred(){
@@ -108,7 +108,7 @@ public class Car extends RollingStock {
 		String old = _load;
 		_load = load;
 		if (!old.equals(load))
-			firePropertyChange(LOAD_CHANGED_PROPERTY, old, load);
+			setDirtyAndFirePropertyChange(LOAD_CHANGED_PROPERTY, old, load);
 	}
 	
 	public String getLoad(){
@@ -143,7 +143,7 @@ public class Car extends RollingStock {
 		String old = _scheduleId;
 		_scheduleId = id;
 		if (!old.equals(id))
-			firePropertyChange("carScheduleId", old, id);
+			setDirtyAndFirePropertyChange("carScheduleId", old, id);
 	}
 	
 	public String getScheduleId(){
@@ -154,7 +154,7 @@ public class Car extends RollingStock {
 		String old = _nextLoad;
 		_nextLoad = load;
 		if (!old.equals(load))
-			firePropertyChange(LOAD_CHANGED_PROPERTY, old, load);
+			setDirtyAndFirePropertyChange(LOAD_CHANGED_PROPERTY, old, load);
 	}
 	
 	public String getNextLoad(){
@@ -193,7 +193,7 @@ public class Car extends RollingStock {
 		int old = _wait;
 		_wait = count;
 		if (old != count)
-			firePropertyChange(NEXTWAIT_CHANGED_PROPERTY, old, count);
+			setDirtyAndFirePropertyChange(NEXTWAIT_CHANGED_PROPERTY, old, count);
 	}
 	
 	public int getWait(){
@@ -211,7 +211,7 @@ public class Car extends RollingStock {
 		int old = _order;
 		_order = number;
 		if (old != number)
-			firePropertyChange("carOrder", old, number);
+			setDirtyAndFirePropertyChange("carOrder", old, number);
 	}
 	
 	public int getOrder(){
@@ -222,7 +222,7 @@ public class Car extends RollingStock {
 		int old = _nextWait;
 		_nextWait = count;
 		if (old != count)
-			firePropertyChange(NEXTWAIT_CHANGED_PROPERTY, old, count);
+			setDirtyAndFirePropertyChange(NEXTWAIT_CHANGED_PROPERTY, old, count);
 	}
 	
 	public int getNextWait(){
@@ -243,7 +243,7 @@ public class Car extends RollingStock {
 			_nextDestination.addPropertyChangeListener(this);
 		//log.debug("Next destination for car ("+toString()+") old: "+old+" new: "+destination);
 		if ((old != null && !old.equals(destination)) || (destination != null && !destination.equals(old)))
-			firePropertyChange(NEXT_DESTINATION_CHANGED_PROPERTY, old, destination);
+			setDirtyAndFirePropertyChange(NEXT_DESTINATION_CHANGED_PROPERTY, old, destination);
 	}
 	
 	public Location getNextDestination(){
@@ -269,7 +269,7 @@ public class Car extends RollingStock {
 			_nextDestTrack.addPropertyChangeListener(this);
 		}
 		if ((old!= null && !old.equals(track)) || (track != null && !track.equals(old)))
-			firePropertyChange(NEXT_DESTINATION_TRACK_CHANGED_PROPERTY, old, track);
+			setDirtyAndFirePropertyChange(NEXT_DESTINATION_TRACK_CHANGED_PROPERTY, old, track);
 	}
 	
 	public Track getNextDestTrack(){
@@ -318,7 +318,7 @@ public class Car extends RollingStock {
 		Location old = _rweDestination;
 		_rweDestination = destination;
 		if ((old != null && !old.equals(destination)) || (destination != null && !destination.equals(old)))
-			firePropertyChange(RETURN_WHEN_EMPTY_CHANGED_PROPERTY, null, null);
+			setDirtyAndFirePropertyChange(RETURN_WHEN_EMPTY_CHANGED_PROPERTY, null, null);
 	}
 	
 	public Location getReturnWhenEmptyDestination(){
@@ -337,7 +337,7 @@ public class Car extends RollingStock {
 		Track old = _rweDestTrack;
 		_rweDestTrack = track;
 		if ((old != null && !old.equals(track)) || (track != null && !track.equals(old)))
-			firePropertyChange(RETURN_WHEN_EMPTY_CHANGED_PROPERTY, null, null);
+			setDirtyAndFirePropertyChange(RETURN_WHEN_EMPTY_CHANGED_PROPERTY, null, null);
 
 	}
 	
@@ -363,7 +363,7 @@ public class Car extends RollingStock {
 		boolean old = _caboose;
 		_caboose = caboose;
 		if (!old == caboose)
-			firePropertyChange("car caboose", old?"true":"false", caboose?"true":"false");
+			setDirtyAndFirePropertyChange("car caboose", old?"true":"false", caboose?"true":"false");
 	}
 	
 	public boolean isCaboose(){
@@ -374,7 +374,7 @@ public class Car extends RollingStock {
 		boolean old = _utility;
 		_utility = utility;
 		if (!old == utility)
-			firePropertyChange("car caol", old?"true":"false", utility?"true":"false");
+			setDirtyAndFirePropertyChange("car caol", old?"true":"false", utility?"true":"false");
 	}
 	
 	public boolean isUtility(){
@@ -401,7 +401,7 @@ public class Car extends RollingStock {
 			newName = _kernel.getName();
 		}
 		if (!old.equals(newName))
-			firePropertyChange("kernel", old, newName);
+			setDirtyAndFirePropertyChange("kernel", old, newName);
 	}
 
 	public Kernel getKernel() {
@@ -909,6 +909,12 @@ public class Car extends RollingStock {
 		return e;
 	}
 	
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
+		// Set dirty
+		CarManagerXml.instance().setDirty(true);
+		firePropertyChange(p, old, n);
+	}
+	
 	private void addPropertyChangeListeners(){
 		CarTypes.instance().addPropertyChangeListener(this);
 		CarLengths.instance().addPropertyChangeListener(this);
@@ -942,7 +948,6 @@ public class Car extends RollingStock {
     	}
     }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(Car.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Car.class.getName());
 
 }

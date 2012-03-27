@@ -26,6 +26,7 @@ import javax.swing.ScrollPaneConstants;
 
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
@@ -473,13 +474,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	}
 	
 	protected void storeValues(){
-		/* all JMRI window position and size are now saved
-		trainManager.setTrainsFrame(this);					//save frame size and location
-		trainManager.setTrainsFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
-		trainManager.setTrainsFrameSortBy(getSortBy());		//save how the table is sorted
-		trainManager.setTrainsFrameSortStatus(_status);
-		*/
-		trainManager.save();
+		OperationsXml.save();
 		saveTableDetails(trainsTable);
 		setModifiedFlag(false);
 	}

@@ -37,7 +37,6 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	protected int _carMoves = 0;			// number of moves at this location 
 	protected int _trainWeight = 0;			// total car weight departing this location
 	protected int _trainLength = 0;			// train length departing this location
-	//protected Track _stagingTrack = null;  	// staging track if not null
 	
 	public static final int EAST = 1;		// train direction 
 	public static final int WEST = 2;
@@ -103,7 +102,10 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	}
 	
 	public void setComment(String comment) {
+		String old = _comment;
 		_comment = comment;
+		if (!old.equals(_comment))
+			setDirtyAndFirePropertyChange("RouteLocationComment", old, comment);
 	}
 
 	public String getComment() {
@@ -114,7 +116,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		int old = _trainDir;
 		_trainDir = direction;
 		if (old != direction)
-			firePropertyChange(TRAIN_DIRECTION_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(direction));
+			setDirtyAndFirePropertyChange(TRAIN_DIRECTION_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(direction));
 	}
 	
 	/**
@@ -139,7 +141,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		int old = _maxTrainLength;
 		_maxTrainLength = length;
 		if (old != length)
-			firePropertyChange("maxTrainLength", Integer.toString(old), Integer.toString(length));
+			setDirtyAndFirePropertyChange("maxTrainLength", Integer.toString(old), Integer.toString(length));
 	}
 	
 	public int getMaxTrainLength(){
@@ -180,7 +182,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		int old = _maxCarMoves;
 		_maxCarMoves = moves;
 		if (old != moves)
-			firePropertyChange(MAXMOVES_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(moves));
+			setDirtyAndFirePropertyChange(MAXMOVES_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(moves));
 	}
 	
 	/**
@@ -199,7 +201,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		boolean old = _drops;
 		_drops = drops;
 		if (old != drops)
-			firePropertyChange(DROP_CHANGED_PROPERTY, old?"true":"false", drops?"true":"false");
+			setDirtyAndFirePropertyChange(DROP_CHANGED_PROPERTY, old?"true":"false", drops?"true":"false");
 	}
 	
 	public boolean canDrop(){
@@ -214,7 +216,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		boolean old = _pickups;
 		_pickups = pickups;
 		if (old != pickups)
-			firePropertyChange(PICKUP_CHANGED_PROPERTY, old?"true":"false", pickups?"true":"false");
+			setDirtyAndFirePropertyChange(PICKUP_CHANGED_PROPERTY, old?"true":"false", pickups?"true":"false");
 
 	}
 	
@@ -241,7 +243,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		int old = _wait;
 		_wait = time;
 		if (old != time)
-			firePropertyChange("waitTime", Integer.toString(old), Integer.toString(time));
+			setDirtyAndFirePropertyChange("waitTime", Integer.toString(old), Integer.toString(time));
 	}
 	
 	public int getWait(){
@@ -252,7 +254,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		String old = _departureTime;
 		_departureTime = time;
 		if (!old.equals(time))
-			firePropertyChange(DEPARTURE_TIME_CHANGED_PROPERTY, old, time);
+			setDirtyAndFirePropertyChange(DEPARTURE_TIME_CHANGED_PROPERTY, old, time);
 	}
 	
 	public String getDepartureTime(){
@@ -279,7 +281,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		double old = _grade;
 		_grade = grade;
 		if (old != grade)
-			firePropertyChange("grade", Double.toString(old), Double.toString(grade));
+			setDirtyAndFirePropertyChange("grade", Double.toString(old), Double.toString(grade));
 	}
 	
 	public double getGrade(){
@@ -290,7 +292,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		int old = _trainIconX;
 		_trainIconX = x;
 		if (old != x)
-			firePropertyChange("trainIconX", Integer.toString(old), Integer.toString(x));
+			setDirtyAndFirePropertyChange("trainIconX", Integer.toString(old), Integer.toString(x));
 	}
 	
 	public int getTrainIconX(){
@@ -301,26 +303,12 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		int old = _trainIconY;
 		_trainIconY = y;
 		if (old != y)
-			firePropertyChange("trainIconY", Integer.toString(old), Integer.toString(y));
+			setDirtyAndFirePropertyChange("trainIconY", Integer.toString(old), Integer.toString(y));
 	}
 	
 	public int getTrainIconY(){
 		return _trainIconY;
 	}
-	
-	/**
-	 * Set that this location has a staging track when building a train
-	 * @param track
-	 */
-	/*
-	public void setStagingTrack(Track track){
-		_stagingTrack = track;
-	}
-	
-	public Track getStagingTrack(){
-		return _stagingTrack;
-	}
-	*/
 	
 	/**
 	 * Set the train icon panel coordinates to the location defaults.  Coordinates
@@ -461,8 +449,12 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	protected void firePropertyChange(String p, Object old, Object n) {
 		pcs.firePropertyChange(p, old, n);
 	}
+	
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
+		RouteManagerXml.instance().setDirty(true);
+		firePropertyChange(p, old, n);
+	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(RouteLocation.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteLocation.class.getName());
 
 }

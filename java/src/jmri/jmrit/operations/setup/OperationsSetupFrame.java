@@ -24,13 +24,13 @@ import javax.swing.JTextField;
 
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.trains.TrainManager;
 
 
 /**
@@ -471,7 +471,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 				Setup.setCarTypes(Setup.AAR);
 			}
 			// save all the modified files
-			TrainManager.instance().save();
+			OperationsXml.save();
 		}
 		// main menu enabled?
 		Setup.setMainMenuEnabled(mainMenuCheckBox.isSelected());
@@ -536,10 +536,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		if (meterUnit.isSelected())
 			Setup.setLengthUnit(Setup.METER);
 		Setup.setYearModeled(yearTextField.getText());
-		/*
-		 * all JMRI window position and size are now saved // save panel size
-		 * and position Setup.setOperationsSetupFrame(this);
-		 */
 		OperationsSetupXml.instance().writeOperationsFile();
 		if (Setup.isCloseWindowOnSaveEnabled())
 			dispose();

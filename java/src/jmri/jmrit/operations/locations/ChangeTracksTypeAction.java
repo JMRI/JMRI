@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 
 
 /**
@@ -122,7 +123,7 @@ class ChangeTracksFrame extends OperationsFrame{
 			_location.setLocationOps(Location.STAGING);
 		else
 			_location.setLocationOps(Location.NORMAL);
-		LocationManagerXml.instance().writeOperationsFile();
+		OperationsXml.save();
 		_lef.dispose();
 		dispose();
 	}
