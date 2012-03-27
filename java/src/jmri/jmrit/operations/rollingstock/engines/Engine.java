@@ -36,7 +36,7 @@ public class Engine extends RollingStock {
 		String old = _model;
 		_model = model;
 		if (!old.equals(model))
-			setDirtyAndFirePropertyChange("engine model", old, model);
+			firePropertyChange("engine model", old, model);
 	}
 	
 	public String getModel(){
@@ -53,7 +53,7 @@ public class Engine extends RollingStock {
 		String old = getType();
 		engineModels.setModelType(getModel(), type);
 		if (!old.equals(type))
-			setDirtyAndFirePropertyChange(TYPE_CHANGED_PROPERTY, old, type);	
+			firePropertyChange(TYPE_CHANGED_PROPERTY, old, type);	
 	}
 	
 	public String getType(){
@@ -73,7 +73,7 @@ public class Engine extends RollingStock {
 		String old = getHp();
 		engineModels.setModelHorsepower(getModel(), hp);
 		if (!old.equals(hp))
-			setDirtyAndFirePropertyChange("hp", old, hp);
+			firePropertyChange("hp", old, hp);
 	}
 	
 	public String getHp(){
@@ -93,7 +93,7 @@ public class Engine extends RollingStock {
 		String old = getLength();
 		engineModels.setModelLength(getModel(), length);
 		if (!old.equals(length))
-			setDirtyAndFirePropertyChange(LENGTH_CHANGED_PROPERTY, old, length);
+			firePropertyChange(LENGTH_CHANGED_PROPERTY, old, length);
 	}
 	
 	public String getLength(){
@@ -113,7 +113,7 @@ public class Engine extends RollingStock {
 		String old = getWeight();
 		engineModels.setModelWeight(getModel(), weight);
 		if (!old.equals(weight))
-			setDirtyAndFirePropertyChange("Engine Weight Tons", old, weight);
+			firePropertyChange("Engine Weight Tons", old, weight);
 	}
 	
 	public String getWeightTons(){
@@ -143,7 +143,7 @@ public class Engine extends RollingStock {
 		}
 		
 		if (!old.equals(newName))
-			setDirtyAndFirePropertyChange("consist", old, newName);
+			firePropertyChange("consist", old, newName);
 	}
 
 	/**
@@ -248,10 +248,6 @@ public class Engine extends RollingStock {
 			}
 		}
 		return e;
-	}
-	
-	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
-		firePropertyChange(p, old, n);
 	}
 	
 	protected void firePropertyChange(String p, Object old, Object n) {
