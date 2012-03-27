@@ -110,7 +110,7 @@ public class Engine extends RollingStock {
 	public void setWeightTons(String weight){
 		if(getModel().equals(""))
 			return;
-		String old = getWeight();
+		String old = getWeightTons();
 		engineModels.setModelWeight(getModel(), weight);
 		if (!old.equals(weight))
 			firePropertyChange("Engine Weight Tons", old, weight);
