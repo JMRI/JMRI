@@ -53,7 +53,8 @@
 
 <!ATTLIST railRoad name				CDATA #IMPLIED>  
 <!ATTLIST settings mainMenu			(true | false ) "false">
-<!ATTLIST settings closeOnSave		(true | false ) "false">        
+<!ATTLIST settings closeOnSave		(true | false ) "false">     
+<!ATTLIST settings autoSave			(true | false ) "true">      
 <!ATTLIST settings trainDirection	CDATA #IMPLIED>
 <!ATTLIST settings trainLength		CDATA #IMPLIED>       
 <!ATTLIST settings maxEngines		CDATA #IMPLIED> 

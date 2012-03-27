@@ -83,6 +83,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	JCheckBox northCheckBox = new JCheckBox(rb.getString("northsouth"));
 	JCheckBox mainMenuCheckBox = new JCheckBox(rb.getString("MainMenu"));
 	JCheckBox closeOnSaveCheckBox = new JCheckBox(rb.getString("CloseOnSave"));
+	JCheckBox autoSaveCheckBox = new JCheckBox(rb.getString("AutoSave"));
 	JCheckBox iconCheckBox = new JCheckBox(rb.getString("trainIcon"));
 	JCheckBox appendCheckBox = new JCheckBox(rb.getString("trainIconAppend"));
 	//JCheckBox rfidCheckBox = new JCheckBox(rb.getString("EnableRfid"));
@@ -132,7 +133,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		// load checkboxes
 		mainMenuCheckBox.setSelected(Setup.isMainMenuEnabled());
 		closeOnSaveCheckBox.setSelected(Setup.isCloseWindowOnSaveEnabled());
-		//rfidCheckBox.setSelected(Setup.isRfidEnabled());
+		autoSaveCheckBox.setSelected(Setup.isAutoSaveEnabled());
 		iconCheckBox.setSelected(Setup.isTrainIconCordEnabled());
 		appendCheckBox.setSelected(Setup.isTrainIconAppendEnabled());		
 
@@ -266,8 +267,9 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		JPanel options = new JPanel();
 		options.setLayout(new GridBagLayout());
 		options.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptions")));
-		addItem (options, mainMenuCheckBox, 1,7);
-		addItem (options, closeOnSaveCheckBox, 1,8);
+		addItem (options, mainMenuCheckBox, 0,0);
+		addItem (options, closeOnSaveCheckBox, 1,0);
+		addItem (options, autoSaveCheckBox, 2,0);
 		
 		//p9.add(options);
 		
@@ -476,6 +478,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		// main menu enabled?
 		Setup.setMainMenuEnabled(mainMenuCheckBox.isSelected());
 		Setup.setCloseWindowOnSaveEnabled(closeOnSaveCheckBox.isSelected());
+		Setup.setAutoSaveEnabled(autoSaveCheckBox.isSelected());
 		// RFID enabled?
 		// Setup.setRfidEnabled(rfidCheckBox.isSelected());
 		// add panel name to setup

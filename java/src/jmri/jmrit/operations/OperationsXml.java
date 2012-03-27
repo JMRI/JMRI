@@ -102,7 +102,7 @@ public class OperationsXml extends XmlFile {
 	}
 	
 	private String operationsFileName = "DefaultOperations.xml";	// should be overridden
-
+	
     /**
      * Absolute path to location of Operations files.
      * <P>
@@ -155,6 +155,9 @@ public class OperationsXml extends XmlFile {
     	return buf.toString();
     }
     
+    /**
+     * Saves operation files that have been modified.
+     */
     public static void save(){
     	OperationsSetupXml.instance().writeFileIfDirty();
 		LocationManagerXml.instance().writeFileIfDirty();		//Need to save "moves" for track location 
