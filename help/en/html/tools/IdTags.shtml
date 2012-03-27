@@ -55,8 +55,15 @@ to a file stored in the "idtags" sub-directory of user preferences.  The storage
 details when and where a given Id Tag was last seen is configurable by setting
 the option at the bottom of the Id Tag table.
 <p>
-The initial implementation is for <a href="http://www.merg.org.uk/">MERG</a>
-Rfid readers, both stand-alone and via a concentrator.
+Current implementations are for CORE-ID based readers. These are supported in
+stand-alone mode via the 'Generic Stand-alone' protocol and as an up-to 8-way
+concentrator using <a href="http://www.merg.org.uk/">MERG</a> hardware via the
+'MERG Concentrator' protocol.
+<br>
+Note: The <a href="http://www.merg.org.uk/">MERG</a> starter kit as supplied
+should be configured using the 'Generic Stand-alone' protocol - only when
+extending the kit with the additional concentrator components should the
+'MERG Concentrator' protocol be used.
 
 <h2>Id Tag Table</h2>
 The 
