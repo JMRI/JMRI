@@ -9,6 +9,7 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
 
+import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -224,6 +225,8 @@ public class CarManagerXml extends OperationsXml {
 		RollingStockLogger.instance().enableCarLogging(Setup.isCarLoggerEnabled());
 		// clear dirty bit
 		setDirty(false);
+		// clear location dirty flag, locations get modified during the loading of cars and locos
+		LocationManagerXml.instance().setDirty(false);
     }
 
     public void setOperationsFileName(String name) { operationsFileName = name; }

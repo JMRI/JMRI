@@ -120,7 +120,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public void setTrainsFrameTrainAction(String action){
     	String old = _trainAction;
     	_trainAction = action;
-    	firePropertyChange(TRAIN_ACTION_CHANGED_PROPERTY, old, action);
+    	if (!old.equals(action))
+    		firePropertyChange(TRAIN_ACTION_CHANGED_PROPERTY, old, action);
     }
     
     /**
