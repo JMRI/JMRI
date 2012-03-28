@@ -909,6 +909,12 @@ public class Car extends RollingStock {
 		return e;
 	}
 	
+	protected void firePropertyChange(String p, Object old, Object n) {
+		// Set dirty
+		CarManagerXml.instance().setDirty(true);
+		super.firePropertyChange(p, old, n);
+	}
+	
 	private void addPropertyChangeListeners(){
 		CarTypes.instance().addPropertyChangeListener(this);
 		CarLengths.instance().addPropertyChangeListener(this);
@@ -942,7 +948,6 @@ public class Car extends RollingStock {
     	}
     }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(Car.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Car.class.getName());
 
 }

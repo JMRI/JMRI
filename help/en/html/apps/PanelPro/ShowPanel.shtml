@@ -34,9 +34,9 @@ read it, print it, copy and paste into a file of another form, etc.
 
 <p>
 A large example of this is available as a 
-<a href="http://jmri.sourceforge.net/apps/PanelPro/SPShastaConfigFile.pdf">PDF file</a>.  This is the configuration information, including
+<a href="http://jmri.sourceforge.net/community/examples/SPShastaConfigFile.pdf">PDF file</a>.  This is the configuration information, including
 routes, Logix, etc, for the 
-<a href="http://jmri.sourceforge.net/apps/PanelPro/SPShasta.shtml">SP Shasta Route</a>
+<a href="http://jmri.sourceforge.net/community/examples/SPShasta.shtml">SP Shasta Route</a>
 layout.
 <p>
 To view your own panel file, just open it with a web browser.

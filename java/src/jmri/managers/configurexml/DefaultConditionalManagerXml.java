@@ -194,7 +194,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
 												getChildren("conditionalStateVariable");
 
 				if (conditionalVarList.size() == 0) {
-                    log.error("No state variables found for conditional "+sysName);
+                    log.warn("No state variables found for conditional "+sysName);
                 }
                 ArrayList <ConditionalVariable> variableList = new ArrayList <ConditionalVariable> ();
                 for (int n=0; n<conditionalVarList.size(); n++)
@@ -252,9 +252,12 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 List<Element> conditionalActionList = conditionalList.get(i).
 												getChildren("conditionalAction");
 
-				if (conditionalActionList.size() == 0) {
-                    log.warn("No actions found for conditional "+sysName);
-                }
+                // Really OK, since a user may use such conditionals to define a reusable
+                // expression of state variables.  These conditions are then used as a 
+                // state variable in other conditionals.  (pwc)
+				//if (conditionalActionList.size() == 0) {
+                //    log.warn("No actions found for conditional "+sysName);
+                //}
                 ArrayList <ConditionalAction> actionList = new ArrayList <ConditionalAction> ();
                 org.jdom.Attribute attr = null;
                 for (int n=0; n<conditionalActionList.size(); n++)

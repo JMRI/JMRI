@@ -219,6 +219,7 @@ public class Setup {
 		
 	private static boolean mainMenuEnabled = false;		//when true add operations menu to main menu bar
 	private static boolean closeWindowOnSave = false;	//when true, close window when save button is activated
+	private static boolean autoSave = true;				//when true, automatically save files if modified
 	private static boolean enableValue = false;			//when true show value fields for rolling stock
 	private static String labelValue = rb.getString("Value");
 	private static boolean enableRfid = false;			//when true show RFID fields for rolling stock
@@ -244,7 +245,6 @@ public class Setup {
 	private static boolean generateCsvManifest = false;		// when true generate csv manifest
 	private static boolean generateCsvSwitchList = false;	// when true generate csv switch list
 	private static boolean enableVsdPhysicalLocations = false;
-	//private static boolean enableReporters = false;			// when true create a reporter for each train
 	
 	private static boolean printLocationComments = false;	// when true print location comments on the manifest
 	private static boolean printRouteComments = false;		// when true print route comments on the manifest
@@ -252,28 +252,6 @@ public class Setup {
 	private static boolean printTimetableName	= false;	// when true print timetable name on manifests and switch lists
 	private static boolean use12hrFormat		= false;	// when true use 12hr rather than 24hr format
 	private static boolean printValid			= true;		// when true print out the valid time and date
-
-	/* all JMRI window position and size are now saved
-	// Setup frame attributes
-	private static OperationsSetupFrame _operationsSetupFrame = null;
-	private static Dimension _operationsSetupFrameDimension = null;
-	private static Point _operationsSetupFramePosition = null;
-	
-	@Deprecated
-	public static void setOperationsSetupFrame(OperationsSetupFrame frame){
-		_operationsSetupFrame = frame;
-	}
-
-	@Deprecated
-	public static Dimension getOperationsSetupFrameSize(){
-		return _operationsSetupFrameDimension;
-	}
-
-	@Deprecated
-	public static Point getOperationsSetupFramePosition(){
-		return _operationsSetupFramePosition;
-	}
-	*/
 
 	public static boolean isMainMenuEnabled(){
 		OperationsSetupXml.instance(); // load file
@@ -290,6 +268,17 @@ public class Setup {
 	
 	public static void setCloseWindowOnSaveEnabled(boolean enabled){
 		closeWindowOnSave = enabled;
+	}
+	
+	public static boolean isAutoSaveEnabled(){
+		return autoSave;
+	}
+	
+	public static void setAutoSaveEnabled(boolean enabled){
+		boolean old = autoSave;
+		autoSave = enabled;
+		if (!old && enabled)
+			new AutoSave();
 	}
 	
 	public static boolean isValueEnabled(){
@@ -1339,6 +1328,7 @@ public class Setup {
     	e.addContent(values = new Element("settings"));
     	values.setAttribute("mainMenu", isMainMenuEnabled()?"true":"false");
     	values.setAttribute("closeOnSave", isCloseWindowOnSaveEnabled()?"true":"false");
+    	values.setAttribute("autoSave", isAutoSaveEnabled()?"true":"false");
     	values.setAttribute("trainDirection", Integer.toString(getTrainDirection()));
     	values.setAttribute("trainLength", Integer.toString(getTrainLength()));
     	values.setAttribute("maxEngines", Integer.toString(getEngineSize()));
@@ -1545,6 +1535,11 @@ public class Setup {
         		String enabled = a.getValue();
         		if (log.isDebugEnabled()) log.debug("closeOnSave: "+enabled);
         		setCloseWindowOnSaveEnabled(enabled.equals("true"));
+        	}
+          	if ((a = operations.getChild("settings").getAttribute("autoSave"))!= null){
+        		String enabled = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("autoSave: "+enabled);
+        		setAutoSaveEnabled(enabled.equals("true"));
         	}
         	if ((a = operations.getChild("settings").getAttribute("trainDirection"))!= null){
         		String dir = a.getValue();

@@ -5,6 +5,7 @@ package jmri.jmrit.operations.locations;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 
 import java.awt.*;
 
@@ -187,7 +188,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 				loc.deleteTypeName((String)typeComboBox.getSelectedItem());
 			}
 		}
-		LocationManagerXml.instance().writeOperationsFile();
+		OperationsXml.save();
 		updateLocations();
 		if (Setup.isCloseWindowOnSaveEnabled())
 			dispose();

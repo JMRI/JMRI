@@ -7,6 +7,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 
 import java.awt.*;
 
@@ -380,7 +381,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			enableCheckboxes(false);
 			enableButtons(false);
 			// save location file
-			managerXml.writeOperationsFile();
+			OperationsXml.save();
 		}
 		if (ae.getSource() == addLocationButton){
 			Location l = manager.getLocationByName(locationNameTextField.getText());
@@ -441,7 +442,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		manager.setLocationEditFrame(this);
 		*/
 		// save location file
-		managerXml.writeOperationsFile();
+		OperationsXml.save();
 	}
 	
 

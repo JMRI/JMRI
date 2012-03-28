@@ -12,6 +12,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -222,7 +223,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     			rb.getString("DeleteSchedule?"),
     			JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
     		manager.deregister(s);
-    		LocationManagerXml.instance().writeOperationsFile();
+    		OperationsXml.save();
     	}
     }
 

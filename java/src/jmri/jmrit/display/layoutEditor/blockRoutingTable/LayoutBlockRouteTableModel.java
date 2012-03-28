@@ -28,10 +28,11 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
     static final int HOPCOUNTCOL = 2;
     static final int DIRECTIONCOL = 3;
     static final int METRICCOL = 4;
-    static final int STATECOL = 5;
-    static final int VALIDCOL = 6;
+    static final int LENGTHCOL = 5;
+    static final int STATECOL = 6;
+    static final int VALIDCOL = 7;
 
-    static final int NUMCOL = 6+1;
+    static final int NUMCOL = 7+1;
     
     boolean editable = false;
     
@@ -56,6 +57,7 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
         case HOPCOUNTCOL:    return rb.getString("HopCount");
         case DIRECTIONCOL:   return rb.getString("Direction");
         case METRICCOL:     return rb.getString("Metric");
+        case LENGTHCOL:     return rb.getString("Length");
         case STATECOL:        return rb.getString("State");
         case VALIDCOL:       return rb.getString("Valid");
         
@@ -67,6 +69,7 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
     public Class<?> getColumnClass(int col) {
         if (col == HOPCOUNTCOL) return Integer.class;
         else if (col == METRICCOL) return Integer.class;
+        else if (col == LENGTHCOL) return Float.class;
         else return String.class;
     }
     
@@ -116,6 +119,7 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
         case HOPCOUNTCOL:   return Integer.valueOf(lBlock.getRouteHopCountAtIndex(row));
         case DIRECTIONCOL:  return jmri.Path.decodeDirection(Integer.valueOf(lBlock.getRouteDirectionAtIndex(row)));
         case METRICCOL:     return Integer.valueOf(lBlock.getRouteMetric(row));
+        case LENGTHCOL:     return Float.valueOf(lBlock.getRouteLengthAtIndex(row));
         case STATECOL:      return lBlock.getRouteStateAsString(row);
         case VALIDCOL:      String value ="";
                             if(lBlock.getRouteValid(row))

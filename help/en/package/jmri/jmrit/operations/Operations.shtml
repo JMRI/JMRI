@@ -650,13 +650,13 @@ different format for your switch lists.
 
 <H3>Message Formats</H3>
 
-You can customize the pick up, set out, and local move messages for your
-manifests and switch lists by selecting the appropriate drop down menus.
-To remove an attribute select blank. You can also edit the "[ ] Set out",
-"[ ] Pick up" and "[ ] Move" prefixes. If you want to use the text color
-options, the set out, pick up, and move prefixes must be unique.
-
-<A NAME="ManifestComments"></A>
+   You can customize the pick up, set out, and local move messages for your manifests and switch
+   lists by selecting the appropriate drop down menus. To remove an attribute select blank. You can
+   also edit and or replace the "[ ] Set out", "[ ] Pick up" and "[ ] Move" prefixes. Two popular
+   prefixes are "Spot" and "Pull" for set outs and pick ups respectively. If you want to use
+   the text color options, the set out, pick up, and move prefixes must be unique. 
+   
+   <A NAME="ManifestComments"></A>
 <H3>Manifests Options</H3>
 
    The program allows you to customize your train manifest to your liking. There are seven optional
@@ -1150,7 +1150,7 @@ various trains.</P>
     that you enter a minimum of two staging locations for your operations, and have your train
     depart from one and terminate into the other. For example, say your trains run east and west. It
     is best if you create "East Staging" and "West Staging" and have your trains travel from say
-    west staging, on to your layout, do some work, and then terminate into east staging, and visa
+    west staging, on to your layout, do some work, and then terminate into east staging, and vice
     versa. It is also better to name your staging after real locations. So for example, you might
     want to model the cities of Springfield and Worcester and have trains come from New York and
     Boston to service your layout. In this case, New York and Boston are west and east staging
@@ -1331,7 +1331,34 @@ length. Next select a pool name for the track and press "Save". The
 bottom of the pool window will show the other tracks that are in the
 track's pool. 
 
-<A NAME="ModifyLocationsByCarType"></A>
+<A NAME="PlannedPickUps"></A>
+<H3>Planned Pick Ups</H3>
+
+   The program when searching for tracks to set out cars, checks to see if there's space available for
+   new cars. Sometimes due to the order that you're building your trains, you know better than the
+   program that certain cars will be picked up during your session, say by a train that will be
+   built later. This feature can be useful for interchange tracks, especially if you want the
+   interchange tracks to be more to the full side rather than empty side. Also if you are switching
+   cars to and from tracks that are basically full, using this option on one or more of the tracks
+   in question can increase car movement.
+
+   <P>If you want the program to ignore some number of cars currently sitting on the track, you
+    can use this feature to specify how many cars to ignore. The choices are 25%, 50%, 75% and 100%,
+    which means you can tell the program to ignore 25 to 100 percent of the cars sitting on the
+    track. For example, if you chose 100%, the program will ignore all of the cars sitting on the
+    track, and will set out new cars up to the length of the track. This also means that the program
+    can overload the track up to 100%. So if the track could hold 10 cars, the program could send
+    another 10 cars to the track. Now the track could be overloaded until this train or a later
+    train arrives and picks up the original 10 cars. Therefore you need to have some temporary track
+    space available to hold the new cars. So if you don't have "extra" space for cars, don't use
+    this feature! Note that it is your responsibility and not the programs to build and terminate a
+    train that picks up the original cars.</P>
+
+   <P>Guaranteeing that cars will be picked up from a track can be a bit tricky, so it is
+    recommended that you not use this feature until you become an expert with regards to using this
+    program, otherwise you will most likely overload your tracks when using this feature.</P>
+
+   <A NAME="ModifyLocationsByCarType"></A>
 <H3>Modify Locations by Car Type</H3>
 
 This tool can be found under Locations-&gt;Tools. Use this tool to quickly
@@ -1942,9 +1969,9 @@ dropping off up to 3 cars.</P>
 tracks and other types of tracks (spurs, yards, interchanges) at the
 same location. But using the names above, we could assign yard and
 spur tracks to "Danville", and then as long as "Danville-1" was the
-last or first location in a route, assign staging tracks to "Daville-1".
+last or first location in a route, assign staging tracks to "Danville-1".
 Now when the train terminates at Danville, the yard and spur tracks are
-serviced, and then the train terminates into staging at "Daville-1".</P>
+serviced, and then the train terminates into staging at "Danville-1".</P>
 
 <P>Another example. Let's say we have a mainline train that will
 service Danville. At Danville we have a yard and several spurs. We

@@ -54,6 +54,7 @@ public class LayoutBlockConnectivityTools{
         
     public final static int HOPCOUNT = 0x00;
     public final static int METRIC = 0x01;
+    public final static int DISTANCE = 0x02;
     private static int ttlSize = 50;
 
     /**
@@ -517,7 +518,7 @@ public class LayoutBlockConnectivityTools{
                     switch(pathMethod){
                         case MASTTOMAST : signal = InstanceManager.layoutBlockManagerInstance().getFacingSignalMast(currentBlock, blocktoCheck); break;
                         case HEADTOHEAD : signal = InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(currentBlock, blocktoCheck); break;
-                        case ANY : signal = (jmri.NamedBean) InstanceManager.layoutBlockManagerInstance().getFacingSignalObject(currentBlock, blocktoCheck); break;
+                        default : signal = (jmri.NamedBean) InstanceManager.layoutBlockManagerInstance().getFacingSignalObject(currentBlock, blocktoCheck); break;
                     }
                     lBlockManLog.setLevel(currentLevel);
                     if (signal==null){

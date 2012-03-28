@@ -4,6 +4,7 @@ package jmri.jmrit.operations.trains;
 
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 
 import java.awt.*;
 
@@ -158,7 +159,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 				train.deleteTypeName((String)typeComboBox.getSelectedItem());
 			}
 		}
-		manager.save();	// save files
+		OperationsXml.save();	// save files
 		updateTrains();
 	}
 	

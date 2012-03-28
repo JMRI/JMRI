@@ -172,6 +172,8 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      * This is called when a connection is initially lost.  It closes the client side
      * socket connection, resets the open flag and attempts a reconnection.
      */
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DE_MIGHT_IGNORE",
+                                                justification="we are trying to close a failed connection, it doesn't matter if it generates an error")
     public void recover(){
         if (!allowConnectionRecovery) return;
         opened = false;
@@ -189,6 +191,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         // If the connection is already open, then we shouldn't try a re-connect.
         if (opened && !allowConnectionRecovery) return;
         reconnectwait thread = new reconnectwait();
+        thread.setName("Connection Recovery " + getHostName());
         thread.start();
         try{
             thread.join();
@@ -210,29 +213,19 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      */
     protected void resetupConnection() {}
 
-    /*public static void safeSleep(long milliseconds, String s) {
-      try {
-         Thread.sleep(milliseconds);
-      }
-      catch (InterruptedException e) {
-         log.error("Sleep Exception raised during reconnection attempt" +s);
-      }
-    }*/
-
-    int reconnectinterval = 1000;
-    int retryAttempts = 10;
-
     class reconnectwait extends Thread{
         public final static int THREADPASS     = 0;
         public final static int THREADFAIL     = 1;
         int         _status;
-
+        
         public int status() {
             return _status;
         }
         public reconnectwait() {
             _status = THREADFAIL;
         }
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DE_MIGHT_IGNORE",
+                                                justification="we are testing for a the ability to re-connect and this is likely to generate an error which can be ignored")
         public void run() {
             boolean reply = true;
             int count = 0;
@@ -242,7 +235,8 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
                 count++;
                 try {
                     connect();
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                }
                 reply=!opened;
                 if (count >=retryAttempts){
                     log.error("Unable to reconnect after " + count + " Attempts, increasing duration of retries");

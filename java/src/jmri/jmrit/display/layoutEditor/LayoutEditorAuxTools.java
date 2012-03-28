@@ -138,6 +138,7 @@ public class LayoutEditorAuxTools
 			LayoutTurnout lt = null;
 			int type = 0;
 			LevelXing lx = null;
+            LayoutSlip ls = null;
 			TrackSegment ts = null;
 			for (int i = 0; i<layoutEditor.trackList.size(); i++) {
 				ts = layoutEditor.trackList.get(i);
@@ -192,7 +193,23 @@ public class LayoutEditorAuxTools
 								cList.add(c);
 							}
 						}
-					}
+					} 
+                    
+                    else if ((ts.getType1()>=LayoutEditor.SLIP_A) && (ts.getType1()<=LayoutEditor.SLIP_D)){
+                        // have connection to a slip crossing
+                        ls = (LayoutSlip)ts.getConnect1();
+                        type = ts.getType1();
+                        blk2= ls.getLayoutBlock();
+                        if ((blk2!=null) && (blk1!=blk2)) {
+                            // have a block boundary, create a LayoutConnectivity
+                            c = new LayoutConnectivity(blk1,blk2);
+                            c.setConnections(ts,ls,type,null);
+                            c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
+                                    ts.getType2()),layoutEditor.getCoords(ts.getConnect1(),type)));
+                            // add to list
+                            cList.add(c);
+                        }
+                    }
 					// check second connection for turnout or level crossing
 					if ( (ts.getType2()>=LayoutEditor.TURNOUT_A) &&
 												(ts.getType2()<=LayoutEditor.LEVEL_XING_D) ) {
@@ -241,7 +258,23 @@ public class LayoutEditorAuxTools
 								cList.add(c);
 							}
 						}
-					}
+					} 
+                    
+                    else if ((ts.getType2()>=LayoutEditor.SLIP_A) && (ts.getType2()<=LayoutEditor.SLIP_D)){
+                        // have connection to a slip crossing
+                        ls = (LayoutSlip)ts.getConnect2();
+                        type = ts.getType2();
+                        blk2= ls.getLayoutBlock();
+                        if ((blk2!=null) && (blk1!=blk2)) {
+                            // have a block boundary, create a LayoutConnectivity
+                            c = new LayoutConnectivity(blk1,blk2);
+                            c.setConnections(ts,ls,type,null);
+                            c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
+                                    ts.getType1()),layoutEditor.getCoords(ts.getConnect2(),type)));
+                            // add to list
+                            cList.add(c);
+                        }
+                    }
 				}
 			}
 		}
@@ -346,6 +379,7 @@ public class LayoutEditorAuxTools
 			LayoutTurnout lt = null;
 			int type = 0;
 			LevelXing lx = null;
+			LayoutSlip ls = null;
 			TrackSegment ts = null;
 			for (int i = 0; i<layoutEditor.trackList.size(); i++) {
 				ts = layoutEditor.trackList.get(i);
@@ -400,7 +434,21 @@ public class LayoutEditorAuxTools
 								checkConnectivity(c,found);
 							}
 						}
-					}
+					} else if ((ts.getType1()>=LayoutEditor.SLIP_A) && (ts.getType1()<=LayoutEditor.SLIP_D)){
+                        // have connection to a slip crossing
+                        ls = (LayoutSlip)ts.getConnect1();
+                        type = ts.getType1();
+                        blk2= ls.getLayoutBlock();
+                        if ((blk2!=null) && (blk1!=blk2)) {
+                            // have a block boundary, create a LayoutConnectivity
+                            c = new LayoutConnectivity(blk1,blk2);
+                            c.setConnections(ts,ls,type,null);
+                            c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect2(),
+                                    ts.getType2()),layoutEditor.getCoords(ts.getConnect1(),type)));
+                            // add to list
+                            checkConnectivity(c,found);
+                        }
+                    }
 					// check second connection for turnout or level crossing
 					if ( (ts.getType2()>=LayoutEditor.TURNOUT_A) &&
 												(ts.getType2()<=LayoutEditor.LEVEL_XING_D) ) {
@@ -449,7 +497,21 @@ public class LayoutEditorAuxTools
 								checkConnectivity(c,found);
 							}
 						}
-					}
+					} else if ((ts.getType2()>=LayoutEditor.SLIP_A) && (ts.getType2()<=LayoutEditor.SLIP_D)){
+                        // have connection to a slip crossing
+                        ls = (LayoutSlip)ts.getConnect2();
+                        type = ts.getType2();
+                        blk2= ls.getLayoutBlock();
+                        if ((blk2!=null) && (blk1!=blk2)) {
+                            // have a block boundary, create a LayoutConnectivity
+                            c = new LayoutConnectivity(blk1,blk2);
+                            c.setConnections(ts,ls,type,null);
+                            c.setDirection(computeDirection(layoutEditor.getCoords(ts.getConnect1(),
+                                    ts.getType1()),layoutEditor.getCoords(ts.getConnect2(),type)));
+                            // add to list
+                            checkConnectivity(c,found);
+                        }
+                    }
 				}
 			}
 		}
@@ -672,7 +734,53 @@ public class LayoutEditorAuxTools
 							log.error("BadBeanError: " + ltz.getName() + " " + ltz.getLayoutBlock().getDisplayName());
 						}
 					}
-				}		
+				} 
+                //This track section is connected to a slip
+                else if( lc.getConnectedType()>=LayoutEditor.SLIP_A &&
+                        lc.getConnectedType()<=LayoutEditor.SLIP_D){
+                    
+                    LayoutSlip lsz = (LayoutSlip)prevConnection;
+                    if(lsz.getSlipType()==LayoutSlip.SINGLE_SLIP){
+                        if(lc.getConnectedType()==LayoutEditor.SLIP_C){
+                            bs = new BeanSetting(lsz.getTurnout(), lsz.getTurnoutName(), lsz.getTurnoutState(LayoutSlip.STATE_AC));
+                            if (bs.getBean() != null) 
+                                p.addSetting(bs);
+                            else {
+                                InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                                log.error("BadBeanError: " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
+                            }
+                            bs = new BeanSetting(lsz.getTurnoutB(), lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutSlip.STATE_AC));
+                            if (bs.getBean() != null) 
+                                p.addSetting(bs);
+                            else {
+                                InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                                log.error("BadBeanError: " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
+                            }
+                        } else if (lc.getConnectedType()==LayoutEditor.SLIP_B){
+                            bs = new BeanSetting(lsz.getTurnout(), lsz.getTurnoutName(), lsz.getTurnoutState(LayoutSlip.STATE_BD));
+                            if (bs.getBean() != null) 
+                                p.addSetting(bs);
+                            else {
+                                InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                                log.error("BadBeanError: " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
+                            }
+                            
+                            bs = new BeanSetting(lsz.getTurnoutB(), lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutSlip.STATE_BD));
+                            if (bs.getBean() != null) 
+                                p.addSetting(bs);
+                            else {
+                                InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                                log.error("BadBeanError: " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
+                            }
+                        } else if (lc.getConnectedType()==LayoutEditor.SLIP_A){
+                            //As connection A of a single slip which could go in two different directions
+                        } else if (lc.getConnectedType()==LayoutEditor.SLIP_D){
+                            //As connection D of a single slip which could go in two different directions
+                        }
+                    } else {
+                        //At a double slip we could go in two different directions
+                    }
+                }
 			}
 			else {
 				// block boundary is internal to a crossover turnout
@@ -840,7 +948,57 @@ public class LayoutEditorAuxTools
 					prevConnection = curConnection;
 					curConnection = ((LevelXing)curConnection).getConnectB();
 					typeCurConnection = LayoutEditor.TRACK;
-				}
+				} else if (typeCurConnection>=LayoutEditor.SLIP_A && typeCurConnection==LayoutEditor.SLIP_D){
+                   LayoutSlip lsz = (LayoutSlip)curConnection;
+                   if(lsz.getSlipType()==LayoutSlip.SINGLE_SLIP){
+                        if(typeCurConnection==LayoutEditor.SLIP_C){
+                            prevConnection = curConnection;
+                            curConnection = ((LayoutSlip)curConnection).getConnectC();
+                            typeCurConnection = LayoutEditor.TRACK;
+                            bs = new BeanSetting(lsz.getTurnout(), lsz.getTurnoutName(), lsz.getTurnoutState(LayoutSlip.STATE_AC));
+                            if (bs.getBean() != null) 
+                                p.addSetting(bs);
+                            else {
+                                InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                                log.error("BadBeanError: " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
+                            }
+                            bs = new BeanSetting(lsz.getTurnoutB(), lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutSlip.STATE_AC));
+                            if (bs.getBean() != null) 
+                                p.addSetting(bs);
+                            else {
+                                InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                                log.error("BadBeanError: " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
+                            }
+                        } else if (typeCurConnection==LayoutEditor.SLIP_B){
+                            
+                            prevConnection = curConnection;
+                            curConnection = ((LayoutSlip)curConnection).getConnectB();
+                            typeCurConnection = LayoutEditor.TRACK;
+                            bs = new BeanSetting(lsz.getTurnout(), lsz.getTurnoutName(), lsz.getTurnoutState(LayoutSlip.STATE_BD));
+                            if (bs.getBean() != null) 
+                                p.addSetting(bs);
+                            else {
+                                InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                                log.error("BadBeanError: " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
+                            }
+                            
+                            bs = new BeanSetting(lsz.getTurnoutB(), lsz.getTurnoutBName(), lsz.getTurnoutBState(LayoutSlip.STATE_BD));
+                            if (bs.getBean() != null) 
+                                p.addSetting(bs);
+                            else {
+                                InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                                log.error("BadBeanError: " + lsz.getName() + " " + lsz.getLayoutBlock().getDisplayName());
+                            }
+                        } else {
+                            //Else could be going in the slip direction
+                            curConnection = null;
+                        }
+                        
+                   } else {
+                        //A double slip has effectively two seperate directions that it could take, therefore can not follow path any further.
+                        curConnection=null;
+                   }
+                }
 			}
 			else {
 				// block boundary is internal to a crossover turnout
@@ -1128,7 +1286,58 @@ public class LayoutEditorAuxTools
 					curConnection = ((LevelXing)curConnection).getConnectB();
 					typeCurConnection = LayoutEditor.TRACK;
 				}
-			}
+			} else if(typeCurConnection >= LayoutEditor.SLIP_A && typeCurConnection <=LayoutEditor.SLIP_D){
+                LayoutSlip ls = (LayoutSlip)curConnection;
+                if (ls.getLayoutBlock()!=layoutBlock) {						
+                    curConnection = null;
+                } else if(ls.getSlipType()==LayoutSlip.SINGLE_SLIP) {
+                    if(typeCurConnection==LayoutEditor.SLIP_C){
+                        bs = new BeanSetting(ls.getTurnout(), ls.getTurnoutName(), ls.getTurnoutState(LayoutSlip.STATE_AC));
+                        if (bs.getBean() != null) 
+                            p.addSetting(bs);
+                        else {
+                            InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                            log.error("BadBeanError: " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
+                        }
+                        bs = new BeanSetting(ls.getTurnoutB(), ls.getTurnoutBName(), ls.getTurnoutBState(LayoutSlip.STATE_AC));
+                        if (bs.getBean() != null) 
+                            p.addSetting(bs);
+                        else {
+                            InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                            log.error("BadBeanError: " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
+                        }
+                        prevConnection = curConnection;
+                        curConnection = ((LayoutSlip)curConnection).getConnectC();
+                        typeCurConnection = LayoutEditor.TRACK;
+                    } else if (typeCurConnection==LayoutEditor.SLIP_B){
+                        bs = new BeanSetting(ls.getTurnout(), ls.getTurnoutName(), ls.getTurnoutState(LayoutSlip.STATE_BD));
+                        if (bs.getBean() != null) 
+                            p.addSetting(bs);
+                        else {
+                            InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                            log.error("BadBeanError: " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
+                        }
+                        
+                        bs = new BeanSetting(ls.getTurnoutB(), ls.getTurnoutBName(), ls.getTurnoutBState(LayoutSlip.STATE_BD));
+                        if (bs.getBean() != null) 
+                            p.addSetting(bs);
+                        else {
+                            InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+                            log.error("BadBeanError: " + ls.getName() + " " + ls.getLayoutBlock().getDisplayName());
+                        }
+                        prevConnection = curConnection;
+                        curConnection = ((LayoutSlip)curConnection).getConnectB();
+                        typeCurConnection = LayoutEditor.TRACK;
+                    } else {
+                        //Else could be going in the slip direction
+                        curConnection = null;
+                    }
+                
+                } else {
+                    //At double slip, can not follow any further
+                    curConnection = null;
+                }
+            }
 			else {
 				// catch when some new type got added
 				log.error("Layout Block: " + layoutBlock.getDisplayName() + " found unknown track type: " + typeCurConnection + " to Block: " + p.getBlock().getDisplayName());

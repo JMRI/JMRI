@@ -159,7 +159,21 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 					log.error("Error storing panel levelxing element: "+e); 
 				}
 			}
-        }		
+        }
+		// include LayoutSlips
+		num = p.slipList.size();
+        if (log.isDebugEnabled()) log.debug("N layoutSlip elements: "+num);
+		if (num>0) {
+			for (int i=0; i<num; i++) {
+				Object sub = p.slipList.get(i);
+				try {
+					Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+					if (e!=null) panel.addContent(e);
+				} catch (Exception e) {
+					log.error("Error storing panel layoutSlip element: "+e); 
+				}
+			}
+        }
 		// include LayoutTurntables
 		num = p.turntableList.size();
         if (log.isDebugEnabled()) log.debug("N turntable elements: "+num);

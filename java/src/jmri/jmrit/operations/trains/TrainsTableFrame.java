@@ -26,10 +26,12 @@ import javax.swing.ScrollPaneConstants;
 
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
+import jmri.jmrit.operations.setup.AutoSave;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OptionAction;
 import jmri.jmrit.operations.setup.PrintOptionAction;
@@ -104,6 +106,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         
         // create ShutDownTasks
         createShutDownTask();
+        // always check for dirty operations files
+		setModifiedFlag(true);
 
         // general GUI configuration
         getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
@@ -245,10 +249,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
     		
     	pack();
-    	/* all JMRI window position and size are now saved
-    	setSize(trainManager.getTrainsFrameSize());
-    	setLocation(trainManager.getTrainsFramePosition());
-    	*/
     	setSortBy();
     	
     	// listen for timetable changes
@@ -256,11 +256,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     	// listen for location switch list changes
     	addPropertyChangeLocations();
     	
+    	// auto save
+    	new AutoSave();   	
     }
     
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button actived");
-
+		trainManagerXml.setDirty(true);
 		if (ae.getSource() == showId){
 			trainsModel.setSort(trainsModel.SORTBYID);
 		}
@@ -365,14 +367,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			showId.setSelected(true);
 			trainsModel.setSort(trainsModel.SORTBYID);
 		}
-		/*
-		for (int i=0; i<sorter.getColumnCount(); i++){
-			if (sorter.getColumnName(i).equals(sortBy)){
-				log.debug("Set sort column ("+sortBy+")");
-				sorter.setSortingStatus(i, _status);
-			}
-		}
-		*/
 	}
 	
 	int _status = TableSorter.ASCENDING;
@@ -435,7 +429,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		setModifiedFlag(true);
 		trainManagerXml.setDirty(true);
 		if (ae.getSource() == buildMsgBox){
 			trainManager.setBuildMessagesEnabled(buildMsgBox.isSelected());
@@ -452,8 +445,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		}
 	}
 	
+	protected void storeValues(){
+		OperationsXml.save();
+		saveTableDetails(trainsTable);
+	}
+	
 	protected void handleModified() {
-		if (getModifiedFlag()) {
+		if (OperationsXml.areFilesDirty()) {
 			ResourceBundle rbu = ResourceBundle.getBundle("jmri.util.UtilBundle");
 			int result = javax.swing.JOptionPane.showOptionDialog(this,
 					rb.getString("PromptQuitWindowNotWritten"),
@@ -472,35 +470,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		}
 	}
 	
-	protected void storeValues(){
-		/* all JMRI window position and size are now saved
-		trainManager.setTrainsFrame(this);					//save frame size and location
-		trainManager.setTrainsFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
-		trainManager.setTrainsFrameSortBy(getSortBy());		//save how the table is sorted
-		trainManager.setTrainsFrameSortStatus(_status);
-		*/
-		trainManager.save();
-		saveTableDetails(trainsTable);
-		setModifiedFlag(false);
-	}
-	
-	/* column widths now saved in user preference file 2012
-	protected int[] getCurrentTableColumnWidths(){	
-		TableColumnModel tcm = trainsTable.getColumnModel();
-		int[] widths = new int[tcm.getColumnCount()];
-		for (int i=0; i<tcm.getColumnCount(); i++)
-			widths[i] = tcm.getColumn(i).getWidth();
-		return widths;
-	}
-	*/
-	
 	private synchronized void createShutDownTask(){
 		if (jmri.InstanceManager.shutDownManagerInstance() != null && trainDirtyTask == null) {
 			trainDirtyTask = new SwingShutDownTask(
 					"Operations Train Window Check", rb.getString("PromptQuitWindowNotWritten"),
 					rb.getString("PromptSaveQuit"), this) {
 				public boolean checkPromptNeeded() {
-					return !trainManagerXml.isDirty();
+					return !OperationsXml.areFilesDirty();
 				}
 
 				public boolean doPrompt() {
@@ -579,6 +555,5 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     		updateSwitchListButton();
     }
       
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(TrainsTableFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainsTableFrame.class.getName());
 }

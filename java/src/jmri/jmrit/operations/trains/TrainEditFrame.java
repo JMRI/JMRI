@@ -30,6 +30,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -458,7 +459,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			enableButtons(false);
 			
 			// save train file
-			manager.save();
+			OperationsXml.save();
 		}
 		if (ae.getSource() == addTrainButton){
 			Train train = manager.getTrainByName(trainNameTextField.getText());
@@ -613,13 +614,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		_train.setName(trainNameTextField.getText().trim());
 		_train.setDescription(trainDescriptionTextField.getText());
 		_train.setComment(commentTextArea.getText());
-		/* all JMRI window position and size are now saved
-		// save frame size and location
-		manager.setTrainEditFrame(this);
-		*/
-
 		// save train file
-		manager.save();
+		OperationsXml.save();
 	}
 	
 

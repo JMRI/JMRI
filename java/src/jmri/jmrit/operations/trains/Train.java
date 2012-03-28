@@ -187,7 +187,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _name;
 		_name = name;
 		if (!old.equals(name)){
-			firePropertyChange(NAME_CHANGED_PROPERTY, old, name);
+			setDirtyAndFirePropertyChange(NAME_CHANGED_PROPERTY, old, name);
 		}
 	}
 	
@@ -281,7 +281,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			return;
 		_departureTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
 		_departureTime.set(Calendar.MINUTE, Integer.parseInt(minute));
-		firePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, oldHour+":"+oldMinute, hour+":"+minute);
+		setDirtyAndFirePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, oldHour+":"+oldMinute, hour+":"+minute);
 	}
 	
 	public String getDepartureTimeHour(){
@@ -438,7 +438,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		int old = _requires;
 		_requires = requires;
 		if (old != requires)
-			firePropertyChange(TRAIN_REQUIREMENTS_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(requires));
+			setDirtyAndFirePropertyChange(TRAIN_REQUIREMENTS_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(requires));
 	}
 	
 	/**
@@ -464,7 +464,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		_route = route;
 		_skipLocationsList.clear();
 		if (old == null || !old.equals(route)){
-			firePropertyChange(TRAIN_ROUTE_CHANGED_PROPERTY, oldRoute, newRoute);
+			setDirtyAndFirePropertyChange(TRAIN_ROUTE_CHANGED_PROPERTY, oldRoute, newRoute);
 		}
 	}
 	
@@ -533,7 +533,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		RouteLocation old = _current;
 		_current = location;
 		if ((old != null && !old.equals(location)) || (old == null && location != null)){
-			firePropertyChange("current", old, location);
+			setDirtyAndFirePropertyChange("current", old, location);
 		}
 	}
 
@@ -610,7 +610,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _status;
 		_status = status;
 		if (!old.equals(status)){
-			firePropertyChange(STATUS_CHANGED_PROPERTY, old, status);
+			setDirtyAndFirePropertyChange(STATUS_CHANGED_PROPERTY, old, status);
 		}
 	}
 	
@@ -656,13 +656,13 @@ public class Train implements java.beans.PropertyChangeListener {
 			return;
 		_skipLocationsList.add(0,locationId);
 		log.debug("train does not stop at "+locationId);
-		firePropertyChange (STOPS_CHANGED_PROPERTY, _skipLocationsList.size()-1, _skipLocationsList.size());
+		setDirtyAndFirePropertyChange (STOPS_CHANGED_PROPERTY, _skipLocationsList.size()-1, _skipLocationsList.size());
 	}
 
 	public void deleteTrainSkipsLocation(String locationId){
 		_skipLocationsList.remove(locationId);
 		log.debug("train will stop at "+locationId);
-		firePropertyChange (STOPS_CHANGED_PROPERTY, _skipLocationsList.size()+1, _skipLocationsList.size());
+		setDirtyAndFirePropertyChange (STOPS_CHANGED_PROPERTY, _skipLocationsList.size()+1, _skipLocationsList.size());
 	}
 
 	/**
@@ -709,7 +709,7 @@ public class Train implements java.beans.PropertyChangeListener {
     		return;
     	_typeList.add(0,type);
     	log.debug("train "+getName()+" add car type "+type);
-    	firePropertyChange (TYPES_CHANGED_PROPERTY, _typeList.size()-1, _typeList.size());
+    	setDirtyAndFirePropertyChange (TYPES_CHANGED_PROPERTY, _typeList.size()-1, _typeList.size());
     }
     
     public void deleteTypeName(String type){
@@ -717,7 +717,7 @@ public class Train implements java.beans.PropertyChangeListener {
     		return;
     	_typeList.remove(type);
     	log.debug("train "+getName()+" delete car type "+type);
-     	firePropertyChange (TYPES_CHANGED_PROPERTY, _typeList.size()+1, _typeList.size());
+     	setDirtyAndFirePropertyChange (TYPES_CHANGED_PROPERTY, _typeList.size()+1, _typeList.size());
      }
     
     /**
@@ -751,7 +751,7 @@ public class Train implements java.beans.PropertyChangeListener {
     public void setRoadOption (String option){
     	String old = _roadOption;
     	_roadOption = option;
-    	firePropertyChange (ROADS_CHANGED_PROPERTY, old, option);
+    	setDirtyAndFirePropertyChange (ROADS_CHANGED_PROPERTY, old, option);
     }
 
     List<String> _roadList = new ArrayList<String>();
@@ -790,7 +790,7 @@ public class Train implements java.beans.PropertyChangeListener {
     		return false;
     	_roadList.add(road);
     	log.debug("train (" +getName()+ ") add car road "+road);
-    	firePropertyChange (ROADS_CHANGED_PROPERTY, _roadList.size()-1, _roadList.size());
+    	setDirtyAndFirePropertyChange (ROADS_CHANGED_PROPERTY, _roadList.size()-1, _roadList.size());
     	return true;
     }
     
@@ -805,7 +805,7 @@ public class Train implements java.beans.PropertyChangeListener {
     		return false;
     	_roadList.remove(road);
     	log.debug("train (" +getName()+ ") delete car road "+road);
-    	firePropertyChange (ROADS_CHANGED_PROPERTY, _roadList.size()+1, _roadList.size());
+    	setDirtyAndFirePropertyChange (ROADS_CHANGED_PROPERTY, _roadList.size()+1, _roadList.size());
        	return true;
     }
     
@@ -861,7 +861,7 @@ public class Train implements java.beans.PropertyChangeListener {
     public void setLoadOption (String option){
     	String old = _loadOption;
     	_loadOption = option;
-    	firePropertyChange (LOADS_CHANGED_PROPERTY, old, option);
+    	setDirtyAndFirePropertyChange (LOADS_CHANGED_PROPERTY, old, option);
     }
 
     List<String> _loadList = new ArrayList<String>();
@@ -900,7 +900,7 @@ public class Train implements java.beans.PropertyChangeListener {
     		return false;
     	_loadList.add(load);
     	log.debug("train (" +getName()+ ") add car load "+load);
-    	firePropertyChange (LOADS_CHANGED_PROPERTY, _loadList.size()-1, _loadList.size());
+    	setDirtyAndFirePropertyChange (LOADS_CHANGED_PROPERTY, _loadList.size()-1, _loadList.size());
     	return true;
     }
     
@@ -915,7 +915,7 @@ public class Train implements java.beans.PropertyChangeListener {
     		return false;
     	_loadList.remove(load);
     	log.debug("train (" +getName()+ ") delete car load "+load);
-    	firePropertyChange (LOADS_CHANGED_PROPERTY, _loadList.size()+1, _loadList.size());
+    	setDirtyAndFirePropertyChange (LOADS_CHANGED_PROPERTY, _loadList.size()+1, _loadList.size());
        	return true;
     }
     
@@ -946,7 +946,7 @@ public class Train implements java.beans.PropertyChangeListener {
     public void setOwnerOption (String option){
     	String old = _ownerOption;
     	_ownerOption = option;
-    	firePropertyChange (OWNERS_CHANGED_PROPERTY, old, option);
+    	setDirtyAndFirePropertyChange (OWNERS_CHANGED_PROPERTY, old, option);
     }
 
     List<String> _ownerList = new ArrayList<String>();
@@ -985,7 +985,7 @@ public class Train implements java.beans.PropertyChangeListener {
     		return false;
     	_ownerList.add(owner);
     	log.debug("train (" +getName()+ ") add car owner "+owner);
-    	firePropertyChange (OWNERS_CHANGED_PROPERTY, _ownerList.size()-1, _ownerList.size());
+    	setDirtyAndFirePropertyChange (OWNERS_CHANGED_PROPERTY, _ownerList.size()-1, _ownerList.size());
     	return true;
     }
     
@@ -1000,7 +1000,7 @@ public class Train implements java.beans.PropertyChangeListener {
     		return false;
     	_ownerList.remove(owner);
     	log.debug("train (" +getName()+ ") delete car owner "+owner);
-    	firePropertyChange (OWNERS_CHANGED_PROPERTY, _ownerList.size()+1, _ownerList.size());
+    	setDirtyAndFirePropertyChange (OWNERS_CHANGED_PROPERTY, _ownerList.size()+1, _ownerList.size());
        	return true;
     }
     
@@ -1021,10 +1021,8 @@ public class Train implements java.beans.PropertyChangeListener {
     }
     
     public void replaceOwner(String oldName, String newName){
-    	if (acceptsOwnerName(oldName)){
-    		deleteOwnerName(oldName);
+    	if (deleteOwnerName(oldName))
     		addOwnerName(newName);
-    	}
     }
     
     /**
@@ -1034,7 +1032,8 @@ public class Train implements java.beans.PropertyChangeListener {
     public void setBuiltStartYear(String year){
     	String old = _builtStartYear;
     	_builtStartYear = year;
-    	firePropertyChange (BUILT_YEAR_CHANGED_PROPERTY, old, year);
+    	if (!old.equals(year))
+    		setDirtyAndFirePropertyChange (BUILT_YEAR_CHANGED_PROPERTY, old, year);
     }
     
     public String getBuiltStartYear(){
@@ -1048,7 +1047,8 @@ public class Train implements java.beans.PropertyChangeListener {
     public void setBuiltEndYear(String year){
     	String old = _builtEndYear;
     	_builtEndYear = year;
-    	firePropertyChange (BUILT_YEAR_CHANGED_PROPERTY, old, year);
+    	if (!old.equals(year))
+    		setDirtyAndFirePropertyChange (BUILT_YEAR_CHANGED_PROPERTY, old, year);
     }
     
     public String getBuiltEndYear(){
@@ -1294,7 +1294,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _description;
 		_description = description;
 		if (!old.equals(description)){
-			firePropertyChange(DESCRIPTION_CHANGED_PROPERTY, old, description);
+			setDirtyAndFirePropertyChange(DESCRIPTION_CHANGED_PROPERTY, old, description);
 		}
 	}
 	
@@ -1306,7 +1306,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _numberEngines;
 		_numberEngines = number;
 		if (!old.equals(number))
-			firePropertyChange("trainNmberEngines", old, number);
+			setDirtyAndFirePropertyChange("trainNmberEngines", old, number);
 	}
 	
 	/**
@@ -1329,7 +1329,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _leg2Engines;
 		_leg2Engines = number;
 		if (!old.equals(number))
-			firePropertyChange("trainNmberEngines", old, number);
+			setDirtyAndFirePropertyChange("trainNmberEngines", old, number);
 	}
 
 	/**
@@ -1344,7 +1344,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _leg3Engines;
 		_leg3Engines = number;
 		if (!old.equals(number))
-			firePropertyChange("trainNmberEngines", old, number);
+			setDirtyAndFirePropertyChange("trainNmberEngines", old, number);
 	}
 
 	/**
@@ -1355,7 +1355,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _engineRoad;
 		_engineRoad = road;
 		if (!old.equals(road))
-			firePropertyChange("trainEngineRoad", old, road);
+			setDirtyAndFirePropertyChange("trainEngineRoad", old, road);
 	}
 
 	/**
@@ -1374,7 +1374,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _leg2Road;
 		_leg2Road = road;
 		if (!old.equals(road))
-			firePropertyChange("trainEngineRoad", old, road);
+			setDirtyAndFirePropertyChange("trainEngineRoad", old, road);
 	}
 
 	/**
@@ -1393,7 +1393,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _leg3Road;
 		_leg3Road = road;
 		if (!old.equals(road))
-			firePropertyChange("trainEngineRoad", old, road);
+			setDirtyAndFirePropertyChange("trainEngineRoad", old, road);
 	}
 
 	/**
@@ -1413,7 +1413,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _engineModel;
 		_engineModel = model;
 		if (!old.equals(model))
-			firePropertyChange("trainEngineModel", old, model);
+			setDirtyAndFirePropertyChange("trainEngineModel", old, model);
 	}
 
 	public String getEngineModel() {
@@ -1428,7 +1428,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _leg2Model;
 		_leg2Model = model;
 		if (!old.equals(model))
-			firePropertyChange("trainEngineModel", old, model);
+			setDirtyAndFirePropertyChange("trainEngineModel", old, model);
 	}
 
 	public String getSecondLegEngineModel() {
@@ -1443,7 +1443,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _leg3Model;
 		_leg3Model = model;
 		if (!old.equals(model))
-			firePropertyChange("trainEngineModel", old, model);
+			setDirtyAndFirePropertyChange("trainEngineModel", old, model);
 	}
 
 	public String getThirdLegEngineModel() {
@@ -1467,7 +1467,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _cabooseRoad;
 		_cabooseRoad = road;
 		if (!old.equals(road))
-			firePropertyChange("trainCabooseRoad", old, road);
+			setDirtyAndFirePropertyChange("trainCabooseRoad", old, road);
 	}
 
 	public String getCabooseRoad() {
@@ -1482,7 +1482,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _leg2CabooseRoad;
 		_leg2CabooseRoad = road;
 		if (!old.equals(road))
-			firePropertyChange("trainCabooseRoad", old, road);
+			setDirtyAndFirePropertyChange("trainCabooseRoad", old, road);
 	}
 
 	public String getSecondLegCabooseRoad() {
@@ -1497,7 +1497,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _leg3CabooseRoad;
 		_leg3CabooseRoad = road;
 		if (!old.equals(road))
-			firePropertyChange("trainCabooseRoad", old, road);
+			setDirtyAndFirePropertyChange("trainCabooseRoad", old, road);
 	}
 
 	public String getThirdLegCabooseRoad() {
@@ -1568,7 +1568,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		int old = _leg2Options;
 		_leg2Options = options;
 		if (old != options)
-			firePropertyChange("trainLegOptions", old, options);
+			setDirtyAndFirePropertyChange("trainLegOptions", old, options);
 	}
 	
 	public int getSecondLegOptions(){
@@ -1583,7 +1583,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		int old = _leg3Options;
 		_leg3Options = options;
 		if (old != options)
-			firePropertyChange("trainLegOptions", old, options);
+			setDirtyAndFirePropertyChange("trainLegOptions", old, options);
 	}
 	
 	public int getThirdLegOptions(){
@@ -1594,7 +1594,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _comment;
 		_comment = comment;
 		if (!old.equals(comment))
-			firePropertyChange("trainComment", old, comment);
+			setDirtyAndFirePropertyChange("trainComment", old, comment);
 	}
 
 	public String getComment() {
@@ -1697,7 +1697,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _railroadName;
 		_railroadName = name;
 		if (!old.equals(name))
-			firePropertyChange("trainRailroadName", old, name);
+			setDirtyAndFirePropertyChange("trainRailroadName", old, name);
 	}
 	
 	public String getManifestLogoURL(){
@@ -1720,7 +1720,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		boolean old = _sendToTerminal;
 		_sendToTerminal = enable;
 		if (old != enable){
-			firePropertyChange("send cars to terminal", old?"true":"false", enable?"true":"false");
+			setDirtyAndFirePropertyChange("send cars to terminal", old?"true":"false", enable?"true":"false");
 		}
 	}
 	
@@ -1732,7 +1732,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		boolean old = _buildNormal;
 		_buildNormal = enable;
 		if (old != enable){
-			firePropertyChange("build train normal", old?"true":"false", enable?"true":"false");
+			setDirtyAndFirePropertyChange("build train normal", old?"true":"false", enable?"true":"false");
 		}
 	}
 
@@ -1740,7 +1740,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		boolean old = _built;
 		_built = built;
 		if (old != built){
-			firePropertyChange(BUILT_CHANGED_PROPERTY, old?"true":"false", built?"true":"false");
+			setDirtyAndFirePropertyChange(BUILT_CHANGED_PROPERTY, old?"true":"false", built?"true":"false");
 		}
 	}
 	
@@ -1770,7 +1770,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		boolean old = _build;
 		_build = build;
 		if (old != build){
-			firePropertyChange(BUILD_CHANGED_PROPERTY, old?"true":"false", build?"true":"false");
+			setDirtyAndFirePropertyChange(BUILD_CHANGED_PROPERTY, old?"true":"false", build?"true":"false");
 		}
 	}
 	
@@ -1879,7 +1879,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		boolean old = _buildFailed;
 		_buildFailed = status;
 		if (old != status){
-			firePropertyChange("buildFailed", old?"true":"false", status?"true":"false");
+			setDirtyAndFirePropertyChange("buildFailed", old?"true":"false", status?"true":"false");
 		}
 	}
 	
@@ -1939,7 +1939,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		boolean old = _printed;
 		_printed = printed;
 		if (old != printed)
-			firePropertyChange("trainPrinted", old?"true":"false", printed?"true":"false");
+			setDirtyAndFirePropertyChange("trainPrinted", old?"true":"false", printed?"true":"false");
 	}
 	
 	public boolean getPrinted(){
@@ -1992,7 +1992,7 @@ public class Train implements java.beans.PropertyChangeListener {
 				setCurrentLocation(rlNew);				
 				moveTrainIcon(rlNew);
 				// cars and engines will move via property change
-				firePropertyChange(TRAIN_LOCATION_CHANGED_PROPERTY, rl, rlNew);
+				setDirtyAndFirePropertyChange(TRAIN_LOCATION_CHANGED_PROPERTY, rl, rlNew);
 				updateStatus(rl, rlNew);
 				break;
 			}
@@ -2213,7 +2213,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _switchListStatus;
 		_switchListStatus = status;
 		if (!old.equals(status))
-			firePropertyChange("switch list train status", old, status);
+			setDirtyAndFirePropertyChange("switch list train status", old, status);
 	}
 	
 	public String getSwitchListStatus(){
@@ -2253,7 +2253,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		CarOwners.instance().removePropertyChangeListener(this);
 		EngineModels.instance().removePropertyChangeListener(this);
 			
-    	firePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
+    	setDirtyAndFirePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
     }
     
    /**
@@ -2611,11 +2611,11 @@ public class Train implements java.beans.PropertyChangeListener {
        	}
        	// forward route departure time property changes
        	if (e.getPropertyName().equals(RouteLocation.DEPARTURE_TIME_CHANGED_PROPERTY)){
-       		firePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, e.getOldValue(), e.getNewValue());
+       		setDirtyAndFirePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, e.getOldValue(), e.getNewValue());
        	}
     	// forward any property changes in this train's route
        	if (e.getSource().getClass().equals(Route.class))
-       		firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
+       		setDirtyAndFirePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
     }
 
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(
@@ -2631,12 +2631,11 @@ public class Train implements java.beans.PropertyChangeListener {
 		pcs.removePropertyChangeListener(l);
 	}
 
-	protected void firePropertyChange(String p, Object old, Object n) {
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
 		TrainManagerXml.instance().setDirty(true);
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(Train.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Train.class.getName());
 
 }

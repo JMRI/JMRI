@@ -8,6 +8,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 
 import java.awt.*;
 
@@ -236,7 +237,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 			enableButtons(false);
 			routeModel.dispose();
 			// save route file
-			managerXml.writeOperationsFile();
+			OperationsXml.save();
 		}
 		if (ae.getSource() == addRouteButton){
 			Route route = manager.getRouteByName(routeNameTextField.getText());
@@ -291,7 +292,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		saveTableDetails(routeTable);
 
 		// save route file
-		managerXml.writeOperationsFile();
+		OperationsXml.save();
 	}
 	
 

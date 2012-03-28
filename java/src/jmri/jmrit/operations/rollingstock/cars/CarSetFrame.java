@@ -14,10 +14,10 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
@@ -143,8 +143,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	
 	protected boolean save(){
 		if (change(_car)){
-			managerXml.writeOperationsFile();
-			LocationManagerXml.instance().writeFileIfDirty();	// write location file if track is part of pool
+			OperationsXml.save();
 			return true;
 		}
 		return false;

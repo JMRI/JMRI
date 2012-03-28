@@ -880,7 +880,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         flashTimer.start();
     }
     
-    public void stopFlash(){
+    synchronized public void stopFlash(){
         if(flashTimer!=null)
             flashTimer.stop();
         displayState(sensorState());

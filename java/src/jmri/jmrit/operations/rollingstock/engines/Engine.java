@@ -110,10 +110,10 @@ public class Engine extends RollingStock {
 	public void setWeightTons(String weight){
 		if(getModel().equals(""))
 			return;
-		String old = getWeight();
+		String old = getWeightTons();
 		engineModels.setModelWeight(getModel(), weight);
 		if (!old.equals(weight))
-			firePropertyChange(LENGTH_CHANGED_PROPERTY, old, weight);
+			firePropertyChange("Engine Weight Tons", old, weight);
 	}
 	
 	public String getWeightTons(){
@@ -248,6 +248,12 @@ public class Engine extends RollingStock {
 			}
 		}
 		return e;
+	}
+	
+	protected void firePropertyChange(String p, Object old, Object n) {
+		// Set dirty
+		EngineManagerXml.instance().setDirty(true);
+		super.firePropertyChange(p, old, n);
 	}
 	
 	private void addPropertyChangeListeners(){

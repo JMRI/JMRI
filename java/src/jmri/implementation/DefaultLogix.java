@@ -458,8 +458,17 @@ public class DefaultLogix extends AbstractNamedBean
                         positionOfListener = getPositionOfListener(varListenerType, varType,
                                                                        variable.getDataString());
                         if (positionOfListener == -1) {
+                        	String name = variable.getDataString();
+                            Memory my = InstanceManager.memoryManagerInstance().provideMemory(name);
+                            if (my == null) {
+                                log.error("invalid memory name= \""+name+"\" in state variable");
+                                break;
+                            }
+                            NamedBeanHandle<?> nb = jmri.InstanceManager.getDefault(
+                            		jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, my);
+
                             listener = new JmriTwoStatePropertyListener("value", LISTENER_TYPE_MEMORY, 
-                                                                      variable.getDataString(), varType,
+                                                                      nb, varType,
                                                                       conditional);
                             _listeners.add(listener);
                         } else {

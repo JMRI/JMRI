@@ -182,6 +182,10 @@ public class TrackSegment
 				(type == LayoutEditor.LEVEL_XING_C) || (type == LayoutEditor.LEVEL_XING_D) ) {
 			return ((LevelXing)o).getID();
 		}
+		if ( (type == LayoutEditor.SLIP_A) || (type == LayoutEditor.SLIP_B) ||
+				(type == LayoutEditor.SLIP_C) || (type == LayoutEditor.SLIP_D) ) {
+			return ((LayoutSlip)o).getName();
+		}
 		if (type>=LayoutEditor.TURNTABLE_RAY_OFFSET) {
 			return ((LayoutTurntable)o).getID();
 		}
@@ -237,6 +241,8 @@ public class TrackSegment
             ((LayoutTurnout)getConnect1()).reCheckBlockBoundary();
         else if(getConnect1() instanceof LevelXing)
             ((LevelXing)getConnect1()).reCheckBlockBoundary();
+        else if(getConnect1() instanceof LayoutSlip)
+            ((LayoutSlip)getConnect1()).reCheckBlockBoundary();
             
         if(getConnect2() instanceof PositionablePoint)
             ((PositionablePoint)getConnect2()).reCheckBlockBoundary();
@@ -244,6 +250,8 @@ public class TrackSegment
             ((LayoutTurnout)getConnect2()).reCheckBlockBoundary();
         else if(getConnect2() instanceof LevelXing)
             ((LevelXing)getConnect2()).reCheckBlockBoundary();
+        else if(getConnect2() instanceof LayoutSlip)
+            ((LayoutSlip)getConnect2()).reCheckBlockBoundary();
 	}
 	private LayoutBlock getBlock (Object connect, int type) {
 		if (connect==null) return null;
@@ -346,6 +354,7 @@ public class TrackSegment
                         setAngle(90.0D);
                         setCircle(false);
                         break;
+            default : break;
         }
         layoutEditor.redrawPanel();
 		layoutEditor.setDirty();

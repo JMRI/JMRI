@@ -23,6 +23,7 @@ import java.beans.PropertyChangeListener;
 
 import jmri.NamedBean;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
@@ -219,6 +220,12 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             addPointToCombo(xing.getSignalBMastName(), xing.getSensorBName());
             addPointToCombo(xing.getSignalCMastName(), xing.getSensorCName());
             addPointToCombo(xing.getSignalDMastName(), xing.getSensorDName());
+        }
+        for(LayoutSlip slip: panel.slipList){
+            addPointToCombo(slip.getSignalAMast(), slip.getSensorA());
+            addPointToCombo(slip.getSignalBMast(), slip.getSensorB());
+            addPointToCombo(slip.getSignalCMast(), slip.getSensorC());
+            addPointToCombo(slip.getSignalDMast(), slip.getSensorD());
         }
     }
     

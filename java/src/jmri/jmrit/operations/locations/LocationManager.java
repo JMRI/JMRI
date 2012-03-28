@@ -298,8 +298,6 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     }
     
     public void replaceType(String oldType, String newType){
-   	   	// set dirty
-    	LocationManagerXml.instance().setDirty(true);
 		List<String> locs = getLocationsByIdList();
 		for (int i=0; i<locs.size(); i++){
 			Location loc = getLocationById(locs.get(i));
@@ -320,8 +318,6 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     }
     
 	public void replaceRoad(String oldRoad, String newRoad){
-   	   	// set dirty
-    	LocationManagerXml.instance().setDirty(true);
 		List<String> locs = getLocationsByIdList();
 		for (int i=0; i<locs.size(); i++){
 			Location loc = getLocationById(locs.get(i));
@@ -339,8 +335,6 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	}
 	
     public void replaceLoad(String oldLoadName, String newLoadName){
-   	   	// set dirty
-    	LocationManagerXml.instance().setDirty(true);
 		List<String> locs = getLocationsByIdList();
 		for (int i=0; i<locs.size(); i++){
 			Location loc = getLocationById(locs.get(i));
@@ -359,60 +353,6 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			}
 		}
     }
-
-    /* all JMRI window position and size are now saved
-	public void options (org.jdom.Element values) {
-		if (log.isDebugEnabled()) log.debug("ctor from element "+values);
-		// get Location Edit attributes
-		Element e = values.getChild("locationEditOptions");
-		if (e != null){
-			try {
-				int x = e.getAttribute("x").getIntValue();
-				int y = e.getAttribute("y").getIntValue();
-				int height = e.getAttribute("height").getIntValue();
-				int width = e.getAttribute("width").getIntValue();
-				_editFrameDimension = new Dimension(width, height);
-				_editFramePosition = new Point(x,y);
-			} catch ( org.jdom.DataConversionException ee) {
-				log.debug("Did not find location edit frame attributes");
-			} catch ( NullPointerException ne) {
-				log.debug("Did not find location edit frame attributes");
-			}
-		}
-	}
-	*/
-
-	/* all JMRI window position and size are now saved
-	   /**
-     * Create an XML element to represent this Entry. This member has to remain synchronized with the
-     * detailed DTD in operations-locations.dtd.
-     * @return Contents in a JDOM Element
-     */
-	/* all JMRI window position and size are now saved
-    public org.jdom.Element store() {
-    	Element values = new Element("options");
-        // now save Location Edit frame size and position
-        Element e = new org.jdom.Element("locationEditOptions");
-        Dimension size = getLocationEditFrameSize();
-        Point posn = getLocationEditFramePosition();
-        if (_locationEditFrame != null){
-        	size = _locationEditFrame.getSize();
-        	posn = _locationEditFrame.getLocation();
-        	_editFrameDimension = size;
-        	_editFramePosition = posn;
-        }
-        if (posn != null){
-        	e.setAttribute("x", ""+posn.x);
-        	e.setAttribute("y", ""+posn.y);
-        }
-        if (size != null){
-        	e.setAttribute("height", ""+size.height);
-        	e.setAttribute("width", ""+size.width); 
-        }
-        values.addContent(e);
-        return values;
-    }
-    */
     
 	/**
 	 * Check for car type and road name replacements. Also check for engine type

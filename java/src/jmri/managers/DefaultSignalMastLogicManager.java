@@ -184,6 +184,18 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         removeSignalMastLogic(getSignalMastLogic(mast));
     }
 
+    public void disableLayoutEditorUse(SignalMast mast){
+        SignalMastLogic source = getSignalMastLogic(mast);
+        if(source!=null)
+            source.disableLayoutEditorUse();
+        for(SignalMastLogic sml : getLogicsByDestination(mast)){
+            try {
+                sml.useLayoutEditor(false, mast);
+            } catch (jmri.JmriException e){
+                log.error("Error occured while trying to disable layout editor use " + e);
+            }
+        }
+    }
     /**
      * By default, register this manager to store as configuration
      * information.  Override to change that.
