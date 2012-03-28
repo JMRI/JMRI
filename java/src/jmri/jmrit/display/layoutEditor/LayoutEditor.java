@@ -2180,7 +2180,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     
     public void setScroll(int state) {
         if (isEditable()) { 
+            //In edit mode the scroll bars are always displayed, however we will want to set the scroll for when we exit edit mode
             super.setScroll(SCROLL_BOTH);
+            _scrollState = state;
         } else {
             super.setScroll(state);
         }
