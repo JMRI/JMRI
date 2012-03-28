@@ -663,6 +663,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             case SCROLL_VERTICAL:
                 scrollVertical.setSelected(true);
                 break;
+            default: break;
         }
     }
 
@@ -3187,6 +3188,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				case TURNTABLE_CENTER:
 					((LayoutTurntable)foundObject).showPopUp(event);
 					break;
+                default: break;
 			}
 		}
 		else {
@@ -3255,50 +3257,60 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         JPopupMenu popup = new JPopupMenu();
 
         if (p.isEditable()) {
-            if (p.doViemMenu()) {
-                popup.add(p.getNameString());
-                if (p.isPositionable()) {
-                    setShowCoordinatesMenu(p, popup);
+            if(showAlignPopup()){
+                setShowAlignmentMenu(popup);
+                popup.add(new AbstractAction(rb.getString("Remove")) {
+                    public void actionPerformed(ActionEvent e) {
+                        deleteSelectedItems();
+					}
                 }
-                setDisplayLevelMenu(p, popup);
-                setPositionableMenu(p, popup);
-            }
+                );
+            } else {
+                if (p.doViemMenu()) {
+                    popup.add(p.getNameString());
+                    if (p.isPositionable()) {
+                        setShowCoordinatesMenu(p, popup);
+                    }
+                    setDisplayLevelMenu(p, popup);
+                    setPositionableMenu(p, popup);
+                }
 
-            boolean popupSet =false;
-            popupSet = p.setRotateOrthogonalMenu(popup);
-            popupSet = p.setRotateMenu(popup);
-            if (popupSet) { 
-                popup.addSeparator();
-                popupSet = false;
-            }
-            popupSet = p.setEditIconMenu(popup);
-            popupSet = p.setTextEditMenu(popup);
+                boolean popupSet =false;
+                popupSet = p.setRotateOrthogonalMenu(popup);
+                popupSet = p.setRotateMenu(popup);
+                if (popupSet) { 
+                    popup.addSeparator();
+                    popupSet = false;
+                }
+                popupSet = p.setEditIconMenu(popup);
+                popupSet = p.setTextEditMenu(popup);
 
-            PositionablePopupUtil util = p.getPopupUtility();
-            if (util!=null) {
-                util.setFixedTextMenu(popup);        
-                util.setTextMarginMenu(popup);        
-                util.setTextBorderMenu(popup);        
-                util.setTextFontMenu(popup);
-                util.setBackgroundMenu(popup);
-                util.setTextJustificationMenu(popup);
-                popup.addSeparator();
-                util.propertyUtil(popup);
-                popupSet = true;
-            }
-            if (popupSet) { 
-                popup.addSeparator();
-                popupSet = false;
-            }
-            p.setDisableControlMenu(popup);
-            setShowAlignmentMenu(popup);
-            // for Positionables with unique settings
-            p.showPopUp(popup);
-            setShowTooltipMenu(p, popup);
+                PositionablePopupUtil util = p.getPopupUtility();
+                if (util!=null) {
+                    util.setFixedTextMenu(popup);        
+                    util.setTextMarginMenu(popup);        
+                    util.setTextBorderMenu(popup);        
+                    util.setTextFontMenu(popup);
+                    util.setBackgroundMenu(popup);
+                    util.setTextJustificationMenu(popup);
+                    popup.addSeparator();
+                    util.propertyUtil(popup);
+                    popupSet = true;
+                }
+                if (popupSet) { 
+                    popup.addSeparator();
+                    popupSet = false;
+                }
+                p.setDisableControlMenu(popup);
+                setShowAlignmentMenu(popup);
+                // for Positionables with unique settings
+                p.showPopUp(popup);
+                setShowTooltipMenu(p, popup);
 
-            setRemoveMenu(p, popup);
-            if (p.doViemMenu()) {
-                setHiddenMenu(p, popup);
+                setRemoveMenu(p, popup);
+                if (p.doViemMenu()) {
+                    setHiddenMenu(p, popup);
+                }
             }
         } else {
             p.showPopUp(popup);
@@ -3351,6 +3363,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                     case TURNTABLE_CENTER:
                         amendSelectionGroup((LayoutTurntable)foundObject);
                         break;
+                    default: break;
                 }
             } else {
             
@@ -3483,8 +3496,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         g.setColor(color);
         g.setStroke(stroke);
     }
-
- 
+    
     private void createSelectionGroups(){
         List <Positionable> contents = getContents();
         Rectangle2D selectRect = new Rectangle2D.Double (selectionX, selectionY, 
@@ -3494,7 +3506,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             Point2D upperLeft = c.getLocation();
             if (selectRect.contains(upperLeft)) {
                 if (_positionableSelection==null) _positionableSelection = new ArrayList<Positionable>();
-                _positionableSelection.add(c);
+                if(!_positionableSelection.contains(c))
+                    _positionableSelection.add(c);
             }
         }
         // loop over all defined turnouts
@@ -3503,7 +3516,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             Point2D center = t.getCoordsCenter();
             if (selectRect.contains(center)) {
                 if (_turnoutSelection==null) _turnoutSelection = new ArrayList<LayoutTurnout>();
-                _turnoutSelection.add(t);
+                if(!_turnoutSelection.contains(t))
+                    _turnoutSelection.add(t);
             }
         }
         // loop over all defined level crossings
@@ -3512,7 +3526,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             Point2D center = x.getCoordsCenter();
             if (selectRect.contains(center)) {
                 if (_xingSelection==null) _xingSelection = new ArrayList<LevelXing>();
-                _xingSelection.add(x);
+                if(!_xingSelection.contains(x))
+                    _xingSelection.add(x);
             }
         }
         // loop over all defined level crossings
@@ -3521,7 +3536,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             Point2D center = x.getCoordsCenter();
             if (selectRect.contains(center)) {
                 if (_slipSelection==null) _slipSelection = new ArrayList<LayoutSlip>();
-                _slipSelection.add(x);
+                if(!_slipSelection.contains(x))
+                    _slipSelection.add(x);
             }
         }
         // loop over all defined turntables
@@ -3530,7 +3546,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             Point2D center = x.getCoordsCenter();
             if (selectRect.contains(center)) {
                 if (_turntableSelection==null) _turntableSelection = new ArrayList<LayoutTurntable>();
-                _turntableSelection.add(x);
+                if(!_turntableSelection.contains(x))
+                    _turntableSelection.add(x);
             }
         }
         // loop over all defined Anchor Points and End Bumpers
@@ -3539,7 +3556,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             Point2D coord = p.getCoords();
             if (selectRect.contains(coord)) {
                 if (_pointSelection==null) _pointSelection = new ArrayList<PositionablePoint>();
-                _pointSelection.add(p);
+                if(!_pointSelection.contains(p))
+                    _pointSelection.add(p);
             }
         }
         repaint();
@@ -3554,6 +3572,72 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         _positionableSelection=null;
     }
     
+    boolean noWarnGlobalDelete = false;
+    
+    private void deleteSelectedItems() {
+        if(!noWarnGlobalDelete){
+            int selectedValue = JOptionPane.showOptionDialog(this,
+                rb.getString("Question6"),rb.getString("WarningTitle"),
+                JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
+                new Object[]{rb.getString("ButtonYes"),rb.getString("ButtonNo"),
+                rb.getString("ButtonYesPlus")},rb.getString("ButtonNo"));
+            if (selectedValue == 1) return;   // return without creating if "No" response
+            if (selectedValue == 2) {
+                // Suppress future warnings, and continue
+                noWarnGlobalDelete = true;
+            }
+        }
+        if(_positionableSelection!=null){
+            for(Positionable comp: _positionableSelection){
+                remove(comp);
+            }
+        }
+        if(_pointSelection!=null){
+            boolean oldPosPoint = noWarnPositionablePoint;
+            noWarnPositionablePoint = true;
+            for(PositionablePoint point: _pointSelection){
+                removePositionablePoint(point);
+            }
+            noWarnPositionablePoint = oldPosPoint;
+        }
+        
+        if(_xingSelection!=null){
+            boolean oldLevelXing = noWarnLevelXing;
+            noWarnLevelXing = true;
+            for(LevelXing point: _xingSelection){
+                removeLevelXing(point);
+            }
+            noWarnLevelXing = oldLevelXing;
+        }
+        if(_slipSelection!=null){
+            boolean oldSlip = noWarnSlip;
+            noWarnSlip = true;
+            for(LayoutSlip point: _slipSelection){
+                removeLayoutSlip(point);
+            }
+            noWarnSlip = oldSlip;
+        }
+        if(_turntableSelection!=null){
+            boolean oldTurntable = noWarnTurntable;
+            noWarnTurntable = true;
+            for(LayoutTurntable point: _turntableSelection){
+                removeTurntable(point);
+            }
+            noWarnTurntable = oldTurntable;
+        }
+        if(_turnoutSelection!=null){
+            boolean oldTurnout = noWarnLayoutTurnout;
+            noWarnLayoutTurnout = true;
+            for(LayoutTurnout point: _turnoutSelection){
+                removeLayoutTurnout(point);
+            }
+            noWarnLayoutTurnout = oldTurnout;
+        }
+        selectionActive = false;
+        clearSelectionGroups();
+        repaint();
+    
+    }
     private void amendSelectionGroup(Positionable p){
         if (_positionableSelection==null){
             _positionableSelection = new ArrayList <Positionable>();
@@ -3837,13 +3921,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     */
     public boolean setShowAlignmentMenu(JPopupMenu popup) {
         if (showAlignPopup()) {
-            JMenu edit = new JMenu("EditAlignment");  //rb.getString()
-            edit.add(new AbstractAction("AlignX") { //rb.getString()
+            JMenu edit = new JMenu(rb.getString("EditAlignment"));
+            edit.add(new AbstractAction(rb.getString("AlignX")) {
                 public void actionPerformed(ActionEvent e) {
                     alignSelection(true);
                 }
             });
-            edit.add(new AbstractAction("AlignY") { //rb.getString(
+            edit.add(new AbstractAction(rb.getString("AlignY")) {
                 public void actionPerformed(ActionEvent e) {
                     alignSelection(false);
                 }
@@ -3855,6 +3939,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     }
     
     public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode()==KeyEvent.VK_DELETE){
+            deleteSelectedItems();
+            return;
+        }
         if (_positionableSelection!=null){
             for (int i = 0; i<_positionableSelection.size(); i++) {
                 Positionable c = _positionableSelection.get(i);
@@ -3927,6 +4015,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                                     break;
                 case KeyEvent.VK_RIGHT: val=val+1;
                                         break;
+                default: break;
             }
         } else {
             switch (e.getKeyCode()){
@@ -3934,6 +4023,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                                     break;
                 case KeyEvent.VK_RIGHT: val=val+5;
                                         break;
+                default: break;
             }
         }
         if (val<0) val = 0;
