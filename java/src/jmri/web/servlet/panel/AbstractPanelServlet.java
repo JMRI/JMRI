@@ -5,7 +5,6 @@
 package jmri.web.servlet.panel;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -77,7 +76,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
     protected void parsePortableURIs(Element element) {
         if (element != null) {
             for (Object child : element.getChildren()) {
-                parsePortableURIs((Element)child);
+                parsePortableURIs((Element) child);
                 for (Object attr : ((Element) child).getAttributes()) {
                     if (((Attribute) attr).getName().equals("url")) {
                         String url = WebServer.URIforPortablePath(((Attribute) attr).getValue());

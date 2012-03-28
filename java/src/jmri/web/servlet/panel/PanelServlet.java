@@ -7,12 +7,12 @@ package jmri.web.servlet.panel;
 import java.awt.Dimension;
 import java.util.List;
 import javax.swing.JFrame;
+import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.panelEditor.PanelEditor;
-import jmri.web.server.WebServer;
-import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 /**
@@ -62,7 +62,7 @@ public class PanelServlet extends AbstractPanelServlet {
             for (Positionable sub : contents) {
                 if (sub != null) {
                     try {
-                        Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                        Element e = ConfigXmlManager.elementFromObject(sub);
                         if (e != null) {
                             parsePortableURIs(e);
                             panel.addContent(e);
@@ -74,10 +74,11 @@ public class PanelServlet extends AbstractPanelServlet {
             }
 
             Document doc = new Document(panel);
-            XMLOutputter out = new XMLOutputter();
+            XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
 
             return out.outputString(doc);
         } catch (NullPointerException ex) {
+            log.warn("Requested panel [" + name + "] does not exist.", ex);
             return "ERROR Requested panel [" + name + "] does not exist.";
         }
     }
