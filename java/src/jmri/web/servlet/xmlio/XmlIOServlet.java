@@ -62,10 +62,9 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
     }
 
     protected void doXmlIO(HttpServletResponse response, Document doc) throws ServletException, IOException {
-        XMLOutputter fmt = null;
-        Element root = null;
+        XMLOutputter fmt = new XMLOutputter(org.jdom.output.Format.getPrettyFormat());
 
-        root = doc.getRootElement();
+        Element root = doc.getRootElement();
 
         // start processing reply
         if (factory == null) {
@@ -108,10 +107,6 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
             }
         } catch (jmri.JmriException e1) {
             log.error("JmriException while creating reply: " + e1, e1);
-        }
-        if (fmt == null) {
-            fmt = new XMLOutputter();
-            fmt.setFormat(org.jdom.output.Format.getPrettyFormat());
         }
 
         response.setContentType("text/xml");

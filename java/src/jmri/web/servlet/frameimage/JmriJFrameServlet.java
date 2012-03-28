@@ -7,9 +7,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +50,6 @@ public class JmriJFrameServlet extends HttpServlet {
     protected int maxRequestLines = 50;
     protected String serverName = "JMRI-JFrameServer";
     static java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.web.servlet.frameimage.JmriJFrameServlet");
-    private DateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss z");
     // store parameters here because the image clicks are not key=value mapped parameters
     private Map<String, String[]> parameters = new HashMap<String, String[]>();
 
