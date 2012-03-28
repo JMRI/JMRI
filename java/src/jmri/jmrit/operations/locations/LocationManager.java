@@ -224,7 +224,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     	Location l;
     	for (int i=0; i<sortList.size(); i++){
     		l = getLocationById (sortList.get(i));
-    		List<String> tracks = l.getTracksByNameList(type);
+    		List<String> tracks = l.getTrackIdsByNameList(type);
     		for (int j=0; j<tracks.size(); j++){
     			Track track = l.getTrackById(tracks.get(j));
     			trackList.add(track);
@@ -283,7 +283,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			if (loc.acceptsTypeName(oldType)){
 				loc.addTypeName(newType);
 				// now adjust tracks
-				List<String> tracks = loc.getTracksByNameList(null);
+				List<String> tracks = loc.getTrackIdsByNameList(null);
 				for (int j=0; j<tracks.size(); j++){
 					Track track = loc.getTrackById(tracks.get(j));
 					if (track.acceptsTypeName(oldType)){
@@ -301,7 +301,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		for (int i=0; i<locs.size(); i++){
 			Location loc = getLocationById(locs.get(i));
 			// now adjust any track locations
-			List<String> tracks = loc.getTracksByNameList(null);
+			List<String> tracks = loc.getTrackIdsByNameList(null);
 			for (int j=0; j<tracks.size(); j++){
 				Track track = loc.getTrackById(tracks.get(j));
 				if(track.containsRoadName(oldRoad)){
@@ -318,7 +318,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		for (int i=0; i<locs.size(); i++){
 			Location loc = getLocationById(locs.get(i));
 			// now adjust tracks
-			List<String> tracks = loc.getTracksByNameList(null);
+			List<String> tracks = loc.getTrackIdsByNameList(null);
 			for (int j=0; j<tracks.size(); j++){
 				Track track = loc.getTrackById(tracks.get(j));
 				String[] loadNames = track.getLoadNames();

@@ -155,7 +155,7 @@ public class TrainBuilder extends TrainCommon{
 				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorLocMissing"),new Object[]{train.getRoute().getName()}));
 			}				
 			// train doesn't drop or pick up cars from staging locations found in middle of a route
-			List<String> slStage = l.getTracksByMovesList(Track.STAGING);
+			List<String> slStage = l.getTrackIdsByMovesList(Track.STAGING);
 			if (slStage.size() > 0 && i!=0 && i!=routeList.size()-1){
 				addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildLocStaging"),new Object[]{rl.getName()}));
 				rl.setCarMoves(rl.getMaxCarMoves());	// don't allow car moves for this location
@@ -302,7 +302,7 @@ public class TrainBuilder extends TrainCommon{
 				
 		// does train terminate into staging?
 		terminateStageTrack = null;
-		List<String> stagingTracksTerminate = terminateLocation.getTracksByMovesList(Track.STAGING);
+		List<String> stagingTracksTerminate = terminateLocation.getTrackIdsByMovesList(Track.STAGING);
 		if (stagingTracksTerminate.size() > 0){
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildTerminateStaging"),new Object[]{terminateLocation.getName(), Integer.toString(stagingTracksTerminate.size())}));
 			if (stagingTracksTerminate.size() > 1 && Setup.isPromptToStagingEnabled()){
@@ -332,7 +332,7 @@ public class TrainBuilder extends TrainCommon{
 		
 		// determine if train is departing staging
 		departStageTrack = null;
-		List<String> stagingTracks = departLocation.getTracksByMovesList(Track.STAGING);
+		List<String> stagingTracks = departLocation.getTrackIdsByMovesList(Track.STAGING);
 		if (stagingTracks.size()>0){
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildDepartStaging"),new Object[]{departLocation.getName(), Integer.toString(stagingTracks.size())}));
 			if (stagingTracks.size()>1 && Setup.isPromptFromStagingEnabled()){
@@ -478,7 +478,7 @@ public class TrainBuilder extends TrainCommon{
 	
 	// ask which staging track the train is to depart on
 	private Track PromptFromStagingDialog() {		
-		List<String> trackIds = departLocation.getTracksByNameList(null);
+		List<String> trackIds = departLocation.getTrackIdsByNameList(null);
 		List<String> validTrackIds = new ArrayList<String>();
 		// only show valid tracks
 		for (int i=0; i<trackIds.size(); i++){
@@ -500,7 +500,7 @@ public class TrainBuilder extends TrainCommon{
 	
 	// ask which staging track the train is to terminate on
 	private Track PromptToStagingDialog() {		
-		List<String> trackIds = terminateLocation.getTracksByNameList(null);
+		List<String> trackIds = terminateLocation.getTrackIdsByNameList(null);
 		List<String> validTrackIds = new ArrayList<String>();
 		// only show valid tracks
 		for (int i=0; i<trackIds.size(); i++){
@@ -678,7 +678,7 @@ public class TrainBuilder extends TrainCommon{
 			// find a destination track for this engine
 			} else {
 				Location location = locationManager.getLocationByName(rld.getName());
-				List<String> destTracks = location.getTracksByMovesList(null);
+				List<String> destTracks = location.getTrackIdsByMovesList(null);
 				for (int s = 0; s < destTracks.size(); s++){
 					Track track = location.getTrackById(destTracks.get(s));
 					if (!checkDropTrainDirection(engine, rld, track))
@@ -2230,7 +2230,7 @@ public class TrainBuilder extends TrainCommon{
 							}
 							// no, find a destination track this this car
 						} else {
-							List<String> tracks = car.getDestination().getTracksByMovesList(null);
+							List<String> tracks = car.getDestination().getTrackIdsByMovesList(null);
 							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchForTrack"),new Object[]{car.toString(), car.getDestinationName()}));
 							for (int s = 0; s < tracks.size(); s++){
 								Track testTrack = car.getDestination().getTrackById(tracks.get(s));
@@ -2433,7 +2433,7 @@ public class TrainBuilder extends TrainCommon{
 				} 
 			// no staging track assigned, start track search
 			} else {								
-				List<String> tracks = testDestination.getTracksByMovesList(null);
+				List<String> tracks = testDestination.getTrackIdsByMovesList(null);
 				for (int s = 0; s < tracks.size(); s++){
 					Track testTrack = testDestination.getTrackById(tracks.get(s));
 					// log.debug("track (" +testTrack.getName()+ ") has "+ testTrack.getMoves() + " moves");

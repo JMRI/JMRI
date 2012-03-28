@@ -137,7 +137,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 			loc.setText(locationName);
 			addItemLeft(pLocations, loc, 0, x++);
 			Location location = locationManager.getLocationByName(locationName);
-			List<String> tracks = location.getTracksByNameList(null);
+			List<String> tracks = location.getTrackIdsByNameList(null);
 			for (int j=0; j<tracks.size(); j++){
 				Track track = location.getTrackById(tracks.get(j));
 				JLabel trk = new JLabel();
@@ -283,7 +283,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 		for (int i=0; i<locations.size(); i++){
 			Location loc = locationManager.getLocationById(locations.get(i));
 			loc.addPropertyChangeListener(this);
-			List<String> tracks = loc.getTracksByNameList(null);
+			List<String> tracks = loc.getTrackIdsByNameList(null);
 			for (int j=0; j<tracks.size(); j++){
 				Track track = loc.getTrackById(tracks.get(j));
 				track.addPropertyChangeListener(this);
@@ -303,7 +303,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 			Location loc = locationManager.getLocationById(locations.get(i));
 			if (loc != null){
 				loc.removePropertyChangeListener(this);
-				List<String> tracks = loc.getTracksByNameList(null);
+				List<String> tracks = loc.getTrackIdsByNameList(null);
 				for (int j=0; j<tracks.size(); j++){
 					Track track = loc.getTrackById(tracks.get(j));
 					if (track != null){
