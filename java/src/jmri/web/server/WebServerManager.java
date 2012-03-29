@@ -4,12 +4,10 @@
  */
 package jmri.web.server;
 
-import java.awt.HeadlessException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ResourceBundle;
-import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
@@ -85,7 +83,7 @@ public class WebServerManager {
     }
 
     protected void rebuildIndex(boolean force) throws IOException {
-        File indexFile = new File(FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + "networkServices/index.html"));
+        File indexFile = new File(FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + "networkServices" + File.separator + "index.html"));
         if (force || this.getPreferences().isRebuildIndex() || !indexFile.exists()) {
             FileWriter writer = new FileWriter(indexFile);
             writer.write(rb.getString("HTML5DocType"));
