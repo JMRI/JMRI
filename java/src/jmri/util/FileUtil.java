@@ -130,9 +130,7 @@ public class FileUtil {
         if (path == null || path.length() == 0) {
             return null;
         }
-        if (path.startsWith(RESOURCE)) {
-            return getAbsoluteFilename(getPortableFilename(getExternalFilename(path)));
-        } else if (path.startsWith(PROGRAM)) {
+        if (path.startsWith(PROGRAM)) {
             if (new File(path.substring(PROGRAM.length())).isAbsolute()) {
                 path = path.substring(PROGRAM.length());
             } else {
@@ -151,14 +149,14 @@ public class FileUtil {
             } else {
                 path = path.replaceFirst(HOME, System.getProperty("user.home") + File.separator);
             }
-        } else if (path.startsWith(FILE)) {
+        } else if (path.startsWith(RESOURCE) || path.startsWith(FILE)) {
             return getAbsoluteFilename(getPortableFilename(getExternalFilename(path)));
         } else if (!new File(path).isAbsolute()) {
             return null;
         }
         try {
             // if path cannot be converted into a canonical path, return null
-            return new File(path).getCanonicalPath();
+            return new File(path.replace(SEPARATOR, File.separatorChar)).getCanonicalPath();
         } catch (IOException ex) {
             log.warn("Can not convert " + path + " into a usable filename.", ex);
             return null;
