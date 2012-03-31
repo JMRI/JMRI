@@ -166,8 +166,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
 				if (!routeLocationName.equals(nextRouteLocationName)){
 					if (newWork){
 						addLine(fileOut, TD+locationName+del+rl.getTrainDirectionString());
-						addLine(fileOut, TL+rl.getTrainLength()+del+emptyCars+del+cars);
-						addLine(fileOut, TW+rl.getTrainWeight());
+						addLine(fileOut, TL+train.getTrainLength(rl)+del+emptyCars+del+cars);
+						addLine(fileOut, TW+train.getTrainWeight(rl));
 						newWork = false;
 					} else {
 						addLine(fileOut, NW);

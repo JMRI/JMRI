@@ -360,6 +360,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			else {
 				rs.setTrain((Train)trainBox.getSelectedItem());
 				Train train = rs.getTrain();
+				if (train != null)
+					train.setModified(true);
 				// determine if train services this rs's type
 				if (train != null && !train.acceptsTypeName(rs.getType())){
 					JOptionPane.showMessageDialog(this,

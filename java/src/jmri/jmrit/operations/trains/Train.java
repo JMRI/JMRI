@@ -60,6 +60,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected RouteLocation _current = null;// where the train is located in its route
 	protected String _status = "";
 	protected boolean _built = false;		// when true, a train manifest has been built
+	protected boolean _modified = false;	// when true, user has modified train after being built
 	protected boolean _build = true;		// when true, build this train
 	protected boolean _buildFailed = false;	// when true, build for this train failed
 	protected boolean _printed = false;		// when true, manifest has been printed
@@ -1231,7 +1232,7 @@ public class Train implements java.beans.PropertyChangeListener {
      * @return The train length at this location
      */
     public int getTrainLength(){
-    	RouteLocation rl = getCurrentLocation();
+       	RouteLocation rl = getCurrentLocation();
     	int length = 0;
     	List<String> engines = EngineManager.instance().getByTrainList(this);
     	for (int i=0; i<engines.size(); i++){
@@ -1245,6 +1246,45 @@ public class Train implements java.beans.PropertyChangeListener {
        		Car car = CarManager.instance().getById(cars.get(i));
     		if (car.getRouteLocation() == rl && car.getRouteDestination() != rl){
     			length = length + Integer.parseInt(car.getLength()) + Car.COUPLER;
+    		}
+    	}
+    	return length;
+    }
+    
+    /**
+     * Gets the train's length at the route location specified
+     * @param rl The route location
+     * @return The train length at the route location
+     */
+    public int getTrainLength(RouteLocation routeLocation){
+    	int length = 0;
+    	Route route = getRoute();
+    	if (route != null){
+    		List<String> engines = EngineManager.instance().getByTrainList(this);
+    		List<String> cars = CarManager.instance().getByTrainList(this);
+    		List<String> ids = route.getLocationsBySequenceList();
+    		for (int i=0; i<ids.size(); i++){
+    			RouteLocation rl = route.getLocationById(ids.get(i));
+    			for (int j=0; j<engines.size(); j++){
+    				Engine eng = EngineManager.instance().getById(engines.get(j));
+    				if (eng.getRouteLocation() == rl){
+    					length += Integer.parseInt(eng.getLength()) + Engine.COUPLER;
+    				}
+    				if (eng.getRouteDestination() == rl){
+    					length += - (Integer.parseInt(eng.getLength()) + Engine.COUPLER);
+    				}
+    			}		
+    			for (int j=0; j<cars.size(); j++){
+    				Car car = CarManager.instance().getById(cars.get(j));
+    				if (car.getRouteLocation() == rl){
+    					length += Integer.parseInt(car.getLength()) + Car.COUPLER;
+    				}
+       				if (car.getRouteDestination() == rl){
+    					length += - (Integer.parseInt(car.getLength()) + Car.COUPLER);
+    				}
+    			}
+    			if (rl == routeLocation)
+    				break;
     		}
     	}
     	return length;
@@ -1269,6 +1309,40 @@ public class Train implements java.beans.PropertyChangeListener {
        		Car car = CarManager.instance().getById(cars.get(i));
     		if (car.getRouteLocation() == rl && car.getRouteDestination() != rl){
     			weight = weight + car.getAdjustedWeightTons();
+    		}
+    	}
+    	return weight;
+    }
+    
+    public int getTrainWeight(RouteLocation routeLocation){
+    	int weight = 0;
+    	Route route = getRoute();
+    	if (route != null){
+    		List<String> engines = EngineManager.instance().getByTrainList(this);
+    		List<String> cars = CarManager.instance().getByTrainList(this);
+    		List<String> ids = route.getLocationsBySequenceList();
+    		for (int i=0; i<ids.size(); i++){
+    			RouteLocation rl = route.getLocationById(ids.get(i));
+    			for (int j=0; j<engines.size(); j++){
+    				Engine eng = EngineManager.instance().getById(engines.get(j));
+    				if (eng.getRouteLocation() == rl){
+    					weight += eng.getAdjustedWeightTons();
+    				}
+    				if (eng.getRouteDestination() == rl){
+    					weight += - eng.getAdjustedWeightTons();
+    				}
+    			}		
+    			for (int j=0; j<cars.size(); j++){
+    				Car car = CarManager.instance().getById(cars.get(j));
+    				if (car.getRouteLocation() == rl){
+    					weight += car.getAdjustedWeightTons();
+    				}
+       				if (car.getRouteDestination() == rl){
+       					weight += - car.getAdjustedWeightTons();
+    				}
+    			}
+    			if (rl == routeLocation)
+    				break;
     		}
     	}
     	return weight;
@@ -1752,6 +1826,18 @@ public class Train implements java.beans.PropertyChangeListener {
 		return _built;
 	}
 	
+	public void setModified(boolean modified) {
+		boolean old = _modified;
+		_modified = modified;
+		if (old != modified){
+			setDirtyAndFirePropertyChange("TrainModified", old?"true":"false", modified?"true":"false");
+		}
+	}
+	
+	public boolean isModified() {
+		return _modified;
+	}
+	
 	/**
 	 * Deprecated, kept for user scripts.  Use isBuilt()
 	 * @return true if the train was successfully built.
@@ -1913,6 +1999,11 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return true if print successful.
 	 */
 	public boolean printManifest(boolean isPreview){
+		if (isModified()){
+			new TrainManifest(this);
+			if (Setup.isGenerateCsvManifestEnabled())
+				new TrainCsvManifest(this);
+		}		
 		File file = TrainManagerXml.instance().getTrainManifestFile(getName());
 		if (!file.exists()){
 			log.warn("Manifest file missing for train "+getName());
@@ -2361,6 +2452,8 @@ public class Train implements java.beans.PropertyChangeListener {
     		_buildFailed = a.getValue().equals("true");
     	if ((a = e.getAttribute("printed")) != null)
     		_printed = a.getValue().equals("true");
+    	if ((a = e.getAttribute("modified")) != null)
+    		_modified = a.getValue().equals("true");    	
     	if ((a = e.getAttribute("switchListStatus")) != null)
     		_switchListStatus = a.getValue();
     	if ((a = e.getAttribute("leadEngine")) != null)
@@ -2478,6 +2571,7 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("build", isBuildEnabled()?"true":"false");
         e.setAttribute("buildFailed", getBuildFailed()?"true":"false");
         e.setAttribute("printed", getPrinted()?"true":"false");
+        e.setAttribute("modified", isModified()?"true":"false");
         e.setAttribute("switchListStatus", getSwitchListStatus());
         if(getLeadEngine()!= null)
         	e.setAttribute("leadEngine", getLeadEngine().getId());

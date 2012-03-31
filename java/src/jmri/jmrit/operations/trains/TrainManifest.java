@@ -197,7 +197,7 @@ public class TrainManifest extends TrainCommon {
 							buf.append((cars-emptyCars)+" "+rb.getString("Loads")+", "+emptyCars+" "+rb.getString("Empties")+", ");
 						else
 							buf.append(cars +" "+rb.getString("cars")+", ");
-						String s = rl.getTrainLength()+" "+Setup.getLengthUnit().toLowerCase()+", "+rl.getTrainWeight()+" "+rb.getString("tons");
+						String s = train.getTrainLength(rl)+" "+Setup.getLengthUnit().toLowerCase()+", "+train.getTrainWeight(rl)+" "+rb.getString("tons");
 						if (buf.length()+s.length()>lineLength(Setup.getManifestOrientation())){
 							addLine(fileOut, buf.toString());
 							buf = new StringBuffer();
@@ -218,7 +218,9 @@ public class TrainManifest extends TrainCommon {
 		getCarsLocationUnknown(fileOut);
 		
 		fileOut.flush();
-		fileOut.close();	
+		fileOut.close();
+		
+		train.setModified(false);
 	}
 	
 	// returns true if there's work at location
