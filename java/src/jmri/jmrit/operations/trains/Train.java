@@ -1829,7 +1829,9 @@ public class Train implements java.beans.PropertyChangeListener {
 	public void setModified(boolean modified) {
 		boolean old = _modified;
 		_modified = modified;
-		if (old != modified){
+		if (modified)
+			setPrinted(false);
+		if (old != modified) {
 			setDirtyAndFirePropertyChange("TrainModified", old?"true":"false", modified?"true":"false");
 		}
 	}
@@ -2033,6 +2035,22 @@ public class Train implements java.beans.PropertyChangeListener {
 			setDirtyAndFirePropertyChange("trainPrinted", old?"true":"false", printed?"true":"false");
 	}
 	
+	/**
+	 * Used to determine if train manifest was printed.
+	 * @return true if the train manifest was printed.
+	 * 
+	 */
+	public boolean isPrinted(){
+		return _printed;
+	}
+	
+	
+	/**
+	 * Deprecated, kept for user scripts.  Use isPrinted()
+	 * @return true if the train manifest was printed.
+	 * 
+	 */
+	@Deprecated
 	public boolean getPrinted(){
 		return _printed;
 	}
@@ -2570,7 +2588,7 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("built", isBuilt()?"true":"false");
         e.setAttribute("build", isBuildEnabled()?"true":"false");
         e.setAttribute("buildFailed", getBuildFailed()?"true":"false");
-        e.setAttribute("printed", getPrinted()?"true":"false");
+        e.setAttribute("printed", isPrinted()?"true":"false");
         e.setAttribute("modified", isModified()?"true":"false");
         e.setAttribute("switchListStatus", getSwitchListStatus());
         if(getLeadEngine()!= null)
