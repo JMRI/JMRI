@@ -1534,6 +1534,96 @@ public class LayoutEditorTools
 				if (track.getLayoutBlock()!=t.getLayoutBlock()) return null;
 				obj = x;				
 			}
+            else if (type==LayoutEditor.SLIP_A) {
+                LayoutSlip sl = (LayoutSlip)connect;
+				String signalName = sl.getSignalA2Name();
+				if ((!(signalName==null))&&(!(signalName.equals("")))) 
+					auxSignal = jmri.InstanceManager.signalHeadManagerInstance().
+									getSignalHead(signalName);
+                signalName = sl.getSignalA1Name();
+				if ((signalName==null)||(signalName.equals(""))) {
+					if (!layoutEditor.skipIncludedTurnout) 
+						return null;
+					t = getContinuingTrack(sl,type);
+					if ( (t==null) || (track.getLayoutBlock()!=t.getLayoutBlock()) ) 
+						return null;
+					warnOfSkippedTurnout(frame, sl.getTurnoutName(), headName);
+					obj = sl;					
+				}
+				else {
+					return jmri.InstanceManager.signalHeadManagerInstance().
+									getSignalHead(signalName);
+				}
+            }
+            else if (type==LayoutEditor.SLIP_B) {
+                LayoutSlip sl = (LayoutSlip)connect;
+                String signalName;
+                if(sl.getTurnoutType()==LayoutSlip.DOUBLE_SLIP){
+                    signalName = sl.getSignalB2Name();
+                    if ((!(signalName==null))&&(!(signalName.equals("")))) 
+                        auxSignal = jmri.InstanceManager.signalHeadManagerInstance().
+                                        getSignalHead(signalName);
+                }
+                signalName = sl.getSignalB1Name();
+                if ((signalName==null)||(signalName.equals(""))) {
+                    if (!layoutEditor.skipIncludedTurnout) 
+                        return null;
+                    t = getContinuingTrack(sl,type);
+                    if ( (t==null) || (track.getLayoutBlock()!=t.getLayoutBlock()) ) 
+                        return null;
+                    warnOfSkippedTurnout(frame, sl.getTurnoutName(), headName);
+                    obj = sl;
+                }
+                else {
+                    return jmri.InstanceManager.signalHeadManagerInstance().
+                                    getSignalHead(signalName);
+                }
+            }
+            else if (type==LayoutEditor.SLIP_C) {
+                LayoutSlip sl = (LayoutSlip)connect;
+                String signalName;
+                if(sl.getTurnoutType()==LayoutSlip.DOUBLE_SLIP){
+                    signalName = sl.getSignalC2Name();
+                    if ((!(signalName==null))&&(!(signalName.equals("")))) 
+                        auxSignal = jmri.InstanceManager.signalHeadManagerInstance().
+                                        getSignalHead(signalName);
+                }
+                signalName = sl.getSignalC1Name();
+                if ((signalName==null)||(signalName.equals(""))) {
+                    if (!layoutEditor.skipIncludedTurnout) 
+                        return null;
+                    t = getContinuingTrack(sl,type);
+                    if ( (t==null) || (track.getLayoutBlock()!=t.getLayoutBlock()) ) 
+                        return null;
+                    warnOfSkippedTurnout(frame, sl.getTurnoutName(), headName);
+                    obj = sl;
+                }
+                else {
+                    return jmri.InstanceManager.signalHeadManagerInstance().
+                                    getSignalHead(signalName);
+                }
+            }
+            else if (type==LayoutEditor.SLIP_D) {
+                LayoutSlip sl = (LayoutSlip)connect;
+				String signalName = sl.getSignalD2Name();
+				if ((!(signalName==null))&&(!(signalName.equals("")))) 
+					auxSignal = jmri.InstanceManager.signalHeadManagerInstance().
+									getSignalHead(signalName);
+                signalName = sl.getSignalD1Name();
+				if ((signalName==null)||(signalName.equals(""))) {
+					if (!layoutEditor.skipIncludedTurnout) 
+						return null;
+					t = getContinuingTrack(sl,type);
+					if ( (t==null) || (track.getLayoutBlock()!=t.getLayoutBlock()) ) 
+						return null;
+					warnOfSkippedTurnout(frame, sl.getTurnoutName(), headName);
+					obj = sl;					
+				}
+				else {
+					return jmri.InstanceManager.signalHeadManagerInstance().
+									getSignalHead(signalName);
+				}
+            }
 			else if (type>=LayoutEditor.TURNTABLE_RAY_OFFSET) {
 				hitEndBumper = true;
 				return null;
@@ -7895,7 +7985,6 @@ public class LayoutEditorTools
         if(!needRedraw){
             if(block1BoundSignalMast!=null){
                 if (eastSignalMast.addToPanel()) {
-                    System.out.println(block1BoundSignalMast.getDisplayName() + " v " + boundary.getEastBoundSignalMast());
                     if (isSignalMastAssignedAnywhere(block1BoundSignalMast) && 
                             (block1BoundSignalMast!=oldBlock1SignalMast)) { 
                         JOptionPane.showMessageDialog(setSignalMastsAtBoundaryFrame,
@@ -8597,21 +8686,17 @@ public class LayoutEditorTools
             }
 		}
         
-        for (int i=0;i<layoutEditor.turnoutList.size();i++) {
-			LayoutTurnout to = layoutEditor.turnoutList.get(i);
-            //if(to!=layoutTurnout){
-                if (to.getSignalAMast()!=null && !to.getSignalAMast().equals(""))
-                    usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(to.getSignalAMast()));
-                if (to.getSignalBMast()!=null && !to.getSignalBMast().equals(""))
-                    usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(to.getSignalBMast()));
-                if (to.getSignalCMast()!=null && !to.getSignalCMast().equals(""))
-                    usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(to.getSignalCMast()));
-                if (to.getSignalDMast()!=null && !to.getSignalDMast().equals("") )
-                    usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(to.getSignalDMast()));
-            //}
+        for (LayoutTurnout to : layoutEditor.turnoutList) {
+            if (to.getSignalAMast()!=null && !to.getSignalAMast().equals(""))
+                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(to.getSignalAMast()));
+            if (to.getSignalBMast()!=null && !to.getSignalBMast().equals(""))
+                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(to.getSignalBMast()));
+            if (to.getSignalCMast()!=null && !to.getSignalCMast().equals(""))
+                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(to.getSignalCMast()));
+            if (to.getSignalDMast()!=null && !to.getSignalDMast().equals("") )
+                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(to.getSignalDMast()));
 		}
-		for (int i=0;i<layoutEditor.xingList.size();i++) {
-			LevelXing x = layoutEditor.xingList.get(i);
+		for (LevelXing x :layoutEditor.xingList) {
 			if (x.getSignalAMastName()!=null && !x.getSignalAMastName().equals(""))
                 usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(x.getSignalAMastName()));
 			if (x.getSignalBMastName()!=null && !x.getSignalBMastName().equals(""))
@@ -8620,6 +8705,16 @@ public class LayoutEditorTools
                 usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(x.getSignalCMastName()));
 			if (x.getSignalDMastName()!=null && !x.getSignalDMastName().equals(""))
                 usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(x.getSignalDMastName()));
+		}
+        for (LayoutSlip sl :layoutEditor.slipList) {
+			if (sl.getSignalAMast()!=null && !sl.getSignalAMast().equals(""))
+                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(sl.getSignalAMast()));
+			if (sl.getSignalBMast()!=null && !sl.getSignalBMast().equals(""))
+                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(sl.getSignalBMast()));
+			if (sl.getSignalCMast()!=null && !sl.getSignalCMast().equals(""))
+                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(sl.getSignalCMast()));
+			if (sl.getSignalDMast()!=null && !sl.getSignalDMast().equals(""))
+                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(sl.getSignalDMast()));
 		}
     }
     
@@ -9163,7 +9258,7 @@ public class LayoutEditorTools
 	private void placingBlockD(PositionableIcon icon, boolean right, double fromPoint) {
         if(layoutTurnout.getConnectD() instanceof TrackSegment){
             TrackSegment t = (TrackSegment) layoutTurnout.getConnectD();
-            Point2D p = layoutTurnout.getCoordsA();
+            Point2D p = layoutTurnout.getCoordsD();
             
             Point2D end;
             if(t.getConnect1()==layoutTurnout){
@@ -9187,6 +9282,500 @@ public class LayoutEditorTools
 		turnoutFromMenu = false;
 		signalMastsJmriFrame.setVisible(false);
 	}
+    
+     	// operational variables for Set SignalMast at Slip tool
+	private JmriJFrame signalMastsAtSlipFrame = null;
+	private boolean setSignalMastsAtSlipOpen = false;
+    
+	private JButton getSavedSlipSignalMasts = null;
+	private JButton setSlipSignalMastsDone = null;
+	private JButton setSlipSignalMastsCancel = null;
+
+    private boolean slipMastFromMenu = false;
+    private String[] slipBlocks = new String[4];
+
+    BeanDetails slipSignalMastA;
+    BeanDetails slipSignalMastB;
+    BeanDetails slipSignalMastC;
+    BeanDetails slipSignalMastD;
+    
+    JPanel signalMastLayoutSlipPanel = new JPanel();
+    
+    public void setSignalMastsAtSlipFromMenu (LayoutSlip slip, String[] blocks,
+			JFrame theFrame ) {
+		slipMastFromMenu = true;
+		layoutSlip = slip;
+		layoutTurnout = slip;
+		blockANameMastField.setText(layoutSlip.getBlockName());
+		slipBlocks=new String[4];
+        for(int i = 0; i<blocks.length; i++){
+            slipBlocks[i]=blocks[i];
+        }
+        setSignalMastsAtLayoutSlip(theFrame);
+		return;
+	}
+	public void setSignalMastsAtLayoutSlip(JFrame theFrame) {
+		signalFrame = theFrame;
+		if (setSignalMastsAtSlipOpen) {
+            slipSignalMastsGetSaved(null);
+			signalMastsAtSlipFrame.setVisible(true);
+			return;
+		}
+		// Initialize if needed
+		if (signalMastsAtSlipFrame == null) {
+            slipSignalMastA = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
+            slipSignalMastB = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
+            slipSignalMastC = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
+            slipSignalMastD = new BeanDetails("SignalMast", jmri.InstanceManager.signalMastManagerInstance());
+            
+            signalMastsAtSlipFrame = new JmriJFrame( rb.getString("SignalMastsAtLayoutSlip"), false, true );
+            signalMastsAtSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtLayoutSlip", true);
+            signalMastsAtSlipFrame.setLocation(70,30);
+            Container theContentPane = signalMastsAtSlipFrame.getContentPane();
+            theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
+			JPanel panel11 = new JPanel(); 
+            panel11.setLayout(new FlowLayout());
+			if (slipMastFromMenu) {
+				JLabel blockANameLabel = new JLabel( rb.getString("BlockAtA")+" "+
+							rb.getString("Name")+" : "+layoutSlip.getBlockName());
+			
+				panel11.add(blockANameLabel);
+                slipSignalMastA.setTextField(layoutSlip.getSignalAMast());
+                slipSignalMastB.setTextField(layoutSlip.getSignalBMast());
+                slipSignalMastC.setTextField(layoutSlip.getSignalCMast());
+                slipSignalMastD.setTextField(layoutSlip.getSignalDMast());
+			}
+			else {
+				JLabel blockANameLabel = new JLabel( rb.getString("BlockAtA")+" "+
+																rb.getString("Name")+" : ");
+				panel11.add(blockANameLabel);
+				panel11.add(blockANameMastField);
+				blockANameMastField.setToolTipText(rb.getString("SignalsBlockNameHint"));
+			}
+            theContentPane.add(panel11);
+			JPanel panel12 = new JPanel(); 
+            panel12.setLayout(new FlowLayout());
+			if (slipMastFromMenu) {
+				JLabel blockCNameLabel = new JLabel( rb.getString("BlockAtC")+" "+
+							rb.getString("Name")+" : "+layoutSlip.getBlockName());
+			
+				panel12.add(blockCNameLabel);
+			}
+
+            theContentPane.add(panel12);
+			theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+            JPanel panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+			JLabel shTitle = new JLabel(rb.getString("SignalMast"));
+			panel2.add(shTitle);
+			panel2.add(new JLabel("   "));
+            panel2.add(getSavedSlipSignalMasts = new JButton(rb.getString("GetSaved")));
+            getSavedSlipSignalMasts.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						slipSignalMastsGetSaved(e);
+					}
+				});
+            getSavedSlipSignalMasts.setToolTipText( rb.getString("GetSavedHint") );			
+			theContentPane.add(panel2);
+
+            slipSignalMastA.getDetailsPanel().setBackground(new Color(255,255,200));
+
+            slipSignalMastB.getDetailsPanel().setBackground(new Color(200,255,255));
+
+            slipSignalMastC.getDetailsPanel().setBackground(new Color(200,200,255));
+            
+            slipSignalMastD.getDetailsPanel().setBackground(new Color(255,200,200));
+
+            signalMastLayoutSlipPanel.setLayout(new GridLayout(0,2));
+            
+            slipSignalMastA.setBoundaryLabel(slipBlocks[0]);
+            slipSignalMastB.setBoundaryLabel(slipBlocks[1]);
+            slipSignalMastC.setBoundaryLabel(slipBlocks[2]);
+            slipSignalMastD.setBoundaryLabel(slipBlocks[3]);
+            
+            if(slipBlocks[0]!=null)
+                signalMastLayoutSlipPanel.add(slipSignalMastA.getDetailsPanel());
+            if(slipBlocks[1]!=null)
+                signalMastLayoutSlipPanel.add(slipSignalMastB.getDetailsPanel());
+            if(slipBlocks[2]!=null)
+                signalMastLayoutSlipPanel.add(slipSignalMastC.getDetailsPanel());
+            if(slipBlocks[3]!=null)
+                signalMastLayoutSlipPanel.add(slipSignalMastD.getDetailsPanel());
+            
+            theContentPane.add(signalMastLayoutSlipPanel);
+			theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+
+			panel6.add(new JLabel("  "));
+            panel6.add(setSlipSignalMastsDone = new JButton(rb.getString("Done")));
+            setSlipSignalMastsDone.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setSlipSignalMastsDonePressed(e);
+                }
+            });
+            setSlipSignalMastsDone.setToolTipText( rb.getString("SignalDoneHint") );
+            panel6.add(setSlipSignalMastsCancel = new JButton(rb.getString("Cancel")));
+            setSlipSignalMastsCancel.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setSlipSignalMastsCancelPressed(e);
+                }
+            });
+            setSlipSignalMastsCancel.setToolTipText( rb.getString("CancelHint") );
+            theContentPane.add(panel6);
+			signalMastsAtSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+				public void windowClosing(java.awt.event.WindowEvent e) {
+					setSlipSignalMastsCancelPressed(null);
+				}
+			});
+			if (slipMastFromMenu) slipSignalMastsGetSaved(null);
+		}
+        refreshSignalMastAtSlipComboBox();
+        signalMastsAtSlipFrame.setPreferredSize(null);
+        signalMastsAtSlipFrame.pack();
+        signalMastsAtSlipFrame.setVisible(true);
+		setSignalMastsAtSlipOpen = true;
+	}
+
+    void refreshSignalMastAtSlipComboBox(){
+        slipSignalMastsGetSaved(null);
+        createListUsedSignalMasts();
+        usedMasts.remove(slipSignalMastA.getBean());
+        usedMasts.remove(slipSignalMastB.getBean());
+        usedMasts.remove(slipSignalMastC.getBean());
+        usedMasts.remove(slipSignalMastD.getBean());
+        slipSignalMastA.getCombo().excludeItems(usedMasts);
+        slipSignalMastB.getCombo().excludeItems(usedMasts);
+        slipSignalMastC.getCombo().excludeItems(usedMasts);
+        slipSignalMastD.getCombo().excludeItems(usedMasts);
+    }
+    
+	private void slipSignalMastsGetSaved (ActionEvent a) {
+		if ( !getSlipMastInformation() ) return;
+        slipBlocks = layoutSlip.getBlockBoundaries();
+		slipSignalMastA.setTextField(layoutSlip.getSignalAMast());
+		slipSignalMastB.setTextField(layoutSlip.getSignalBMast());
+		slipSignalMastC.setTextField(layoutSlip.getSignalCMast());
+		slipSignalMastD.setTextField(layoutSlip.getSignalDMast());
+        
+        slipSignalMastA.setBoundaryLabel(slipBlocks[0]);
+        slipSignalMastB.setBoundaryLabel(slipBlocks[1]);
+        slipSignalMastC.setBoundaryLabel(slipBlocks[2]);
+        slipSignalMastD.setBoundaryLabel(slipBlocks[3]);
+        
+        boolean boundary = false;
+        signalMastLayoutSlipPanel.remove(slipSignalMastA.getDetailsPanel());
+        signalMastLayoutSlipPanel.remove(slipSignalMastB.getDetailsPanel());
+        signalMastLayoutSlipPanel.remove(slipSignalMastC.getDetailsPanel());
+        signalMastLayoutSlipPanel.remove(slipSignalMastD.getDetailsPanel());
+        if(slipBlocks[0]!=null){
+            signalMastLayoutSlipPanel.add(slipSignalMastA.getDetailsPanel());
+            boundary = true;
+        }
+        if(slipBlocks[1]!=null){
+            signalMastLayoutSlipPanel.add(slipSignalMastB.getDetailsPanel());
+            boundary = true;
+        }
+        if(slipBlocks[2]!=null){
+            signalMastLayoutSlipPanel.add(slipSignalMastC.getDetailsPanel());
+            boundary = true;
+        }
+        if(slipBlocks[3]!=null){
+            signalMastLayoutSlipPanel.add(slipSignalMastD.getDetailsPanel());
+            boundary = true;
+        }
+        if (!boundary){
+            JOptionPane.showMessageDialog(signalMastsAtSlipFrame, "There are no block boundaries on this level crossing\nIt is therefore not possible to add Signal Masts to it");
+        }
+        signalMastsAtSlipFrame.setPreferredSize(null);
+        signalMastsAtSlipFrame.pack();
+	}
+    
+    private boolean getSlipMastInformation() {
+		if (!slipMastFromMenu) {
+			layoutSlip = null;
+			if (layoutEditor.slipList.size()<=0) {
+				JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+					rb.getString("SignalsError15"),
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			else if (layoutEditor.slipList.size()==1) {
+				layoutSlip = layoutEditor.slipList.get(0);
+			}
+			else {
+				LayoutBlock slipBlockA = null;
+				//LayoutBlock slipBlockC = null;
+				slipBlockA = getBlockFromEntry(blockANameMastField);
+				if (slipBlockA==null) return false;
+
+				LayoutSlip x = null;
+				int foundCount = 0;
+				// make two block tests first
+                for (int i = 0;(i<layoutEditor.slipList.size());i++) {
+                    x = layoutEditor.slipList.get(i);
+                    LayoutBlock xA = null;
+                    LayoutBlock xB = null;
+                    LayoutBlock xC = null;
+                    LayoutBlock xD = null;
+                    LayoutBlock xAC = x.getLayoutBlock();
+                    if (x.getConnectA()!=null) xA = ((TrackSegment)x.getConnectA()).getLayoutBlock();
+                    if (x.getConnectB()!=null) xB = ((TrackSegment)x.getConnectB()).getLayoutBlock();
+                    if (x.getConnectC()!=null) xC = ((TrackSegment)x.getConnectC()).getLayoutBlock();
+                    if (x.getConnectD()!=null) xD = ((TrackSegment)x.getConnectD()).getLayoutBlock();
+                    if ( ( (xA!=null) && (xC!=null) && ( (xA==slipBlockA) ||
+                            (xC==slipBlockA) ) ) ||
+                            ( (xB!=null) && (xD!=null) && ( (xB==slipBlockA) ||
+                            (xD==slipBlockA) ) ) ) {
+                        layoutSlip = x;
+                        foundCount ++;
+                    }
+                    else if ( (xAC!=null) && ( xAC==slipBlockA
+                                 )) {
+                        layoutSlip = x;
+                        foundCount ++;
+                    }				
+                }
+				if (foundCount==0) {
+					// try one block test
+					for (int i = 0;(i<layoutEditor.slipList.size());i++) {
+						x = layoutEditor.slipList.get(i);
+						if (slipBlockA == x.getLayoutBlock()) {
+							layoutSlip = x;
+							foundCount ++;
+						}				
+					}
+				}
+				if (foundCount>1) {
+					JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+							java.text.MessageFormat.format(rb.getString("SignalsError16"),
+								new Object[]{" "+foundCount+" "}), 
+									rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				if (layoutSlip==null) {
+					JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+								rb.getString("SignalsError17"),
+										rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+			}
+		}
+        return true;
+    }
+    
+	private void setSlipSignalMastsCancelPressed (ActionEvent a) {
+		setSignalMastsAtSlipOpen = false;
+		signalMastsAtSlipFrame.setVisible(false);
+		slipMastFromMenu = false;
+	}
+	private void setSlipSignalMastsDonePressed (ActionEvent a) {
+		if ( !getSlipMastInformation() ) return;
+        SignalMast aMast = getSignalMastFromEntry(slipSignalMastA.getText(),false,signalMastsAtSlipFrame);
+		SignalMast bMast = getSignalMastFromEntry(slipSignalMastB.getText(),false,signalMastsAtSlipFrame);
+		SignalMast cMast = getSignalMastFromEntry(slipSignalMastC.getText(),false,signalMastsAtSlipFrame);
+		SignalMast dMast = getSignalMastFromEntry(slipSignalMastD.getText(),false,signalMastsAtSlipFrame);
+		// place or update signals as requested
+		if ( (aMast!=null) && slipSignalMastA.addToPanel() ) {
+			if (isSignalMastOnPanel(aMast) && 
+					(aMast!=getSignalMastFromName(layoutSlip.getSignalAMast())) ) { 
+				JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
+						new Object[]{slipSignalMastA.getText()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else {
+				removeSignalMastFromPanel(layoutSlip.getSignalAMast());
+                SignalMastIcon l = new SignalMastIcon(layoutEditor);
+                l.setSignalMast(slipSignalMastA.getText());
+				placingBlock(l, slipSignalMastA.isRightSelected(), 0.0);
+				removeAssignment(aMast);
+				layoutSlip.setSignalAMast(slipSignalMastA.getText());
+				needRedraw = true;
+			}		
+		}
+		else if ( (aMast!=null) && 
+				(aMast!=getSignalMastFromName(layoutSlip.getSignalAMast())) &&
+				(aMast!=getSignalMastFromName(layoutSlip.getSignalBMast())) &&
+				(aMast!=getSignalMastFromName(layoutSlip.getSignalCMast())) &&
+				(aMast!=getSignalMastFromName(layoutSlip.getSignalDMast())) ) {
+			if (isSignalMastOnPanel(aMast)) {
+				JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
+						new Object[]{slipSignalMastA.getText()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}		
+			else {
+				removeSignalMastFromPanel(layoutSlip.getSignalAMast());
+				removeAssignment(aMast);
+				layoutSlip.setSignalAMast(slipSignalMastA.getText());
+			}
+		}
+		else if ( (aMast!=null) &&  
+				( (aMast==getSignalMastFromName(layoutSlip.getSignalBMast())) ||
+					(aMast==getSignalMastFromName(layoutSlip.getSignalCMast())) ||
+					(aMast==getSignalMastFromName(layoutSlip.getSignalDMast())) ) ) {
+// need to figure out what to do in this case.			
+		}
+		else if (aMast==null) {
+			removeSignalMastFromPanel(layoutSlip.getSignalAMast());
+			layoutSlip.setSignalAMast("");		
+		}
+		if ( (bMast!=null) && slipSignalMastB.addToPanel()) {
+			if (isSignalMastOnPanel(bMast) && 
+					(bMast!=getSignalMastFromName(layoutSlip.getSignalBMast()))) { 
+				JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
+						new Object[]{slipSignalMastB.getText()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else {
+				removeSignalMastFromPanel(layoutSlip.getSignalBMast());
+                SignalMastIcon l = new SignalMastIcon(layoutEditor);
+                l.setSignalMast(slipSignalMastB.getText());
+				placingBlockB(l, slipSignalMastB.isRightSelected(), 0.0);
+				removeAssignment(bMast);
+				layoutSlip.setSignalBMast(slipSignalMastB.getText());
+				needRedraw = true;
+			}		
+		}
+		else if ( (bMast!=null) && 
+				(bMast!=getSignalMastFromName(layoutSlip.getSignalAMast())) &&
+				(bMast!=getSignalMastFromName(layoutSlip.getSignalBMast())) &&
+				(bMast!=getSignalMastFromName(layoutSlip.getSignalCMast())) &&
+				(bMast!=getSignalMastFromName(layoutSlip.getSignalDMast())) ) {
+			if (isSignalMastOnPanel(bMast)) {
+				JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
+						new Object[]{slipSignalMastB.getText()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}		
+			else {
+				removeSignalMastFromPanel(layoutSlip.getSignalBMast());
+				removeAssignment(bMast);
+				layoutSlip.setSignalBMast(slipSignalMastB.getText());
+			}
+		}
+		else if ( (bMast!=null) &&  
+				( (bMast==getSignalMastFromName(layoutSlip.getSignalAMast())) ||
+					(bMast==getSignalMastFromName(layoutSlip.getSignalCMast())) ||
+					(bMast==getSignalMastFromName(layoutSlip.getSignalDMast())) ) ) {
+// need to figure out what to do in this case.			
+		}
+		else if (bMast==null) {
+			removeSignalMastFromPanel(layoutSlip.getSignalBMast());
+			layoutSlip.setSignalBMast("");		
+		}
+		if ( (cMast!=null) && slipSignalMastC.addToPanel() ) {
+			if (isSignalMastOnPanel(cMast) && 
+					(cMast!=getSignalMastFromName(layoutSlip.getSignalCMast())) ) { 
+				JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
+						new Object[]{slipSignalMastC.getText()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else {
+				removeSignalMastFromPanel(layoutSlip.getSignalCMast());
+                SignalMastIcon l = new SignalMastIcon(layoutEditor);
+                l.setSignalMast(slipSignalMastC.getText());
+				placingBlockC(l, slipSignalMastA.isRightSelected(), 0.0);
+				removeAssignment(cMast);
+				layoutSlip.setSignalCMast(slipSignalMastC.getText());
+				needRedraw = true;
+			}		
+		}
+		else if ( (cMast!=null) && 
+				(cMast!=getSignalMastFromName(layoutSlip.getSignalAMast())) &&
+				(cMast!=getSignalMastFromName(layoutSlip.getSignalBMast())) &&
+				(cMast!=getSignalMastFromName(layoutSlip.getSignalCMast())) &&
+				(cMast!=getSignalMastFromName(layoutSlip.getSignalDMast())) ) {
+			if (isSignalMastOnPanel(cMast)) {
+				JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
+						new Object[]{slipSignalMastC.getText()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}		
+			else {
+				removeSignalMastFromPanel(layoutSlip.getSignalCMast());
+				removeAssignment(cMast);
+				layoutSlip.setSignalCMast(slipSignalMastC.getText());
+			}
+		}
+		else if ( (cMast!=null) &&  
+				( (cMast==getSignalMastFromName(layoutSlip.getSignalBMast())) ||
+					(cMast==getSignalMastFromName(layoutSlip.getSignalAMast())) ||
+					(cMast==getSignalMastFromName(layoutSlip.getSignalDMast())) ) ) {
+// need to figure out what to do in this case.			
+		}
+		else if (cMast==null) {
+			removeSignalMastFromPanel(layoutSlip.getSignalCMast());
+			layoutSlip.setSignalCMast("");		
+		}
+		if ( (dMast!=null) && slipSignalMastD.addToPanel() ) {
+			if (isSignalMastOnPanel(dMast) && 
+					(dMast!=getSignalMastFromName(layoutSlip.getSignalDMast())) ) { 
+				JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
+						new Object[]{slipSignalMastD.getText()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else {
+				removeSignalMastFromPanel(layoutSlip.getSignalDMast());
+                SignalMastIcon l = new SignalMastIcon(layoutEditor);
+                l.setSignalMast(slipSignalMastD.getText());
+				placingBlockD(l, slipSignalMastD.isRightSelected(), 0.0);
+				removeAssignment(dMast);
+				layoutSlip.setSignalDMast(slipSignalMastD.getText());
+				needRedraw = true;
+			}		
+		}
+		else if ( (dMast!=null) && 
+				(dMast!=getSignalMastFromName(layoutSlip.getSignalAMast())) &&
+				(dMast!=getSignalMastFromName(layoutSlip.getSignalBMast())) &&
+				(dMast!=getSignalMastFromName(layoutSlip.getSignalCMast())) &&
+				(dMast!=getSignalMastFromName(layoutSlip.getSignalDMast())) ) {
+			if (isSignalMastOnPanel(dMast)) {
+				JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
+						new Object[]{slipSignalMastD.getText()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}		
+			else {
+				removeSignalMastFromPanel(layoutSlip.getSignalDMast());
+				removeAssignment(dMast);
+				layoutSlip.setSignalDMast(slipSignalMastD.getText());
+			}
+		}
+		else if ( (dMast!=null) &&  
+				( (dMast==getSignalMastFromName(layoutSlip.getSignalBMast())) ||
+					(dMast==getSignalMastFromName(layoutSlip.getSignalCMast())) ||
+					(dMast==getSignalMastFromName(layoutSlip.getSignalAMast())) ) ) {
+// need to figure out what to do in this case.			
+		}
+		else if (dMast==null) {
+			removeSignalMastFromPanel(layoutSlip.getSignalDMast());
+			layoutSlip.setSignalDMast("");		
+		}
+		// setup logic if requested
+		// finish up
+		setSignalMastsAtSlipOpen = false;
+		signalMastsAtSlipFrame.setVisible(false);
+		slipMastFromMenu = false;	
+		if (needRedraw) {
+			layoutEditor.redrawPanel();
+			needRedraw = false;
+			layoutEditor.setDirty();
+		}		
+	}
+
     
  	// operational variables for Set SignalMast at Level Crossing tool
 	private JmriJFrame signalMastsAtXingFrame = null;
@@ -10738,7 +11327,7 @@ public class LayoutEditorTools
 		}
 		else if (cSensor==null) {
 			removeSensorFromPanel(levelXing.getSensorCName());
-			levelXing.setSignalCName("");		
+			levelXing.setSensorCName("");		
 		}
 		if ( (dSensor!=null) && xingSensorD.addToPanel() ) {
 			if (isSensorOnPanel(dSensor) && 
@@ -10840,6 +11429,485 @@ public class LayoutEditorTools
 		}
         return true;
     }
+    
+         	// operational variables for Set Sensors at Level Crossing tool
+	private JmriJFrame sensorsAtSlipFrame = null;
+	private boolean setSensorsAtSlipOpen = false;
+
+	private JButton getSavedSlipSensors = null;
+	private JButton setSlipSensorsDone = null;
+	private JButton setSlipSensorsCancel = null;
+    private JButton changeSensorSlipIcon = null;
+    JFrame sensorSlipFrame = null;
+
+    private boolean slipSensorFromMenu = false;
+    private String[] slipSensorBlocks = new String[4];
+    
+    BeanDetails slipSensorA;
+    BeanDetails slipSensorB;
+    BeanDetails slipSensorC;
+    BeanDetails slipSensorD;
+    
+    JPanel sensorSlipPanel = new JPanel();
+    
+	// display dialog for Set Signals at Level Crossing tool
+	public void setSensorsAtSlipFromMenu (LayoutSlip slip, String[] blocks, MultiIconEditor theEditor,
+			JFrame theFrame ) {
+		slipSensorFromMenu = true;
+		layoutSlip = slip;
+        layoutTurnout = slip;
+		blockANameSensorField.setText(layoutSlip.getBlockName());
+        for(int i = 0; i<blocks.length; i++){
+            slipSensorBlocks[i]=blocks[i];
+        }
+        setSensorsAtSlip(theEditor, theFrame);
+		return;
+	}
+       
+    public void setSensorsAtSlip(MultiIconEditor theEditor, JFrame theFrame) {
+        sensorIconEditor = theEditor;
+		sensorSlipFrame = theFrame;
+		if (setSensorsAtSlipOpen) {
+            slipSensorsGetSaved(null);
+			sensorsAtSlipFrame.setVisible(true);
+			return;
+		}
+		// Initialize if needed
+		if (sensorsAtSlipFrame == null) {
+            sensorsAtSlipFrame = new JmriJFrame( rb.getString("SensorsAtSlip"), false, true );
+            sensorsAtSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSensorsAtLevelSlip", true);
+            sensorsAtSlipFrame.setLocation(70,30);
+            Container theContentPane = sensorsAtSlipFrame.getContentPane();
+            theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
+			JPanel panel11 = new JPanel(); 
+            panel11.setLayout(new FlowLayout());
+            slipSensorA = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
+            slipSensorB = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
+            slipSensorC = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
+            slipSensorD = new BeanDetails("Sensor", jmri.InstanceManager.sensorManagerInstance());
+			if (slipSensorFromMenu) {
+				JLabel blockANameLabel = new JLabel( rb.getString("BlockAtA")+" "+
+							rb.getString("Name")+" : "+layoutSlip.getBlockName());
+			
+				panel11.add(blockANameLabel);
+                slipSensorA.setTextField(layoutSlip.getSensorA());
+                slipSensorB.setTextField(layoutSlip.getSensorB());
+                slipSensorC.setTextField(layoutSlip.getSensorC());
+                slipSensorD.setTextField(layoutSlip.getSensorD());
+			}
+			else {
+				JLabel blockANameLabel = new JLabel( rb.getString("BlockAtA")+" "+
+																rb.getString("Name")+" : ");
+				panel11.add(blockANameLabel);
+				panel11.add(blockANameSensorField);
+				blockANameSensorField.setToolTipText(rb.getString("SensorsBlockNameHint"));
+			}
+            theContentPane.add(panel11);
+			theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+            JPanel panel2 = new JPanel();
+            panel2.setLayout(new FlowLayout());
+			JLabel shTitle = new JLabel(rb.getString("Sensor"));
+			panel2.add(shTitle);
+			panel2.add(new JLabel("   "));
+            panel2.add(getSavedSlipSensors = new JButton(rb.getString("GetSaved")));
+            getSavedSlipSensors.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						slipSensorsGetSaved(e);
+					}
+				});
+            getSavedSlipSensors.setToolTipText( rb.getString("GetSavedHint") );			
+			theContentPane.add(panel2);
+
+            slipSensorA.getDetailsPanel().setBackground(new Color(255,255,200));
+
+            slipSensorB.getDetailsPanel().setBackground(new Color(200,255,255));
+
+            slipSensorC.getDetailsPanel().setBackground(new Color(200,200,255));
+
+            slipSensorD.getDetailsPanel().setBackground(new Color(255,200,200));
+            
+            sensorSlipPanel.setLayout(new GridLayout(2,2));
+            
+            slipSensorA.setBoundaryLabel(slipSensorBlocks[0]);
+            slipSensorB.setBoundaryLabel(slipSensorBlocks[1]);
+            slipSensorC.setBoundaryLabel(slipSensorBlocks[2]);
+            slipSensorD.setBoundaryLabel(slipSensorBlocks[3]);
+            
+            if(slipSensorBlocks[0]!=null)
+                sensorSlipPanel.add(slipSensorA.getDetailsPanel());
+            else
+                sensorSlipPanel.add(new JPanel());
+            if(slipSensorBlocks[3]!=null)
+                sensorSlipPanel.add(slipSensorD.getDetailsPanel());
+            else
+                sensorSlipPanel.add(new JPanel());
+            if(slipSensorBlocks[1]!=null)
+                sensorSlipPanel.add(slipSensorB.getDetailsPanel());
+            else
+                sensorSlipPanel.add(new JPanel());
+            if(slipSensorBlocks[2]!=null)
+                sensorSlipPanel.add(slipSensorC.getDetailsPanel());
+            else
+                sensorSlipPanel.add(new JPanel());
+
+            theContentPane.add(sensorSlipPanel);
+            
+			theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+            panel6.add(changeSensorSlipIcon = new JButton(rb.getString("ChangeSensorIcon")));
+            changeSensorSlipIcon.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						sensorSlipFrame.setVisible(true);
+					}
+				});
+            changeSensorSlipIcon.setToolTipText( rb.getString("ChangeSensorIconHint") );
+            
+			panel6.add(new JLabel("  "));
+            panel6.add(setSlipSensorsDone = new JButton(rb.getString("Done")));
+            setSlipSensorsDone.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setSlipSensorsDonePressed(e);
+                }
+            });
+            setSlipSensorsDone.setToolTipText( rb.getString("SensorDoneHint") );
+            panel6.add(setSlipSensorsCancel = new JButton(rb.getString("Cancel")));
+            setSlipSensorsCancel.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setSlipSensorsCancelPressed(e);
+                }
+            });
+            setSlipSensorsCancel.setToolTipText( rb.getString("CancelHint") );
+            theContentPane.add(panel6);
+			sensorsAtSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+				public void windowClosing(java.awt.event.WindowEvent e) {
+					setSlipSensorsCancelPressed(null);
+				}
+			});
+		}
+        if (slipSensorFromMenu) slipSensorsGetSaved(null);
+        sensorsAtSlipFrame.setPreferredSize(null);
+        sensorsAtSlipFrame.pack();
+        sensorsAtSlipFrame.setVisible(true);
+		setSensorsAtSlipOpen = true;
+	}
+    
+	private void slipSensorsGetSaved (ActionEvent a) {
+		if ( !getSlipSensorInformation() ) return;
+        
+        slipSensorBlocks = layoutSlip.getBlockBoundaries();
+        slipSensorA.setTextField(layoutSlip.getSensorA());
+        slipSensorB.setTextField(layoutSlip.getSensorB());
+        slipSensorC.setTextField(layoutSlip.getSensorC());
+        slipSensorD.setTextField(layoutSlip.getSensorD());
+        
+        sensorSlipPanel.remove(slipSensorA.getDetailsPanel());
+        sensorSlipPanel.remove(slipSensorB.getDetailsPanel());
+        sensorSlipPanel.remove(slipSensorC.getDetailsPanel());
+        sensorSlipPanel.remove(slipSensorD.getDetailsPanel());
+
+        slipSensorA.setBoundaryLabel(slipSensorBlocks[0]);
+        slipSensorB.setBoundaryLabel(slipSensorBlocks[1]);
+        slipSensorC.setBoundaryLabel(slipSensorBlocks[2]);
+        slipSensorD.setBoundaryLabel(slipSensorBlocks[3]);
+
+        boolean boundary = false;
+        if(slipSensorBlocks[0]!=null){
+            sensorSlipPanel.add(slipSensorA.getDetailsPanel());
+            boundary = true;
+        }
+        if(slipSensorBlocks[1]!=null){
+            sensorSlipPanel.add(slipSensorB.getDetailsPanel());
+            boundary = true;
+        }
+        if(slipSensorBlocks[2]!=null){
+            sensorSlipPanel.add(slipSensorC.getDetailsPanel());
+            boundary = true;
+        }
+        if(slipSensorBlocks[3]!=null){
+            sensorSlipPanel.add(slipSensorD.getDetailsPanel());
+            boundary = true;
+        }
+        if (!boundary){
+            JOptionPane.showMessageDialog(sensorsAtSlipFrame, rb.getString("NoBoundarySlipSensor"));
+        }
+        sensorsAtSlipFrame.setPreferredSize(null);
+        sensorsAtSlipFrame.pack();
+	}
+    
+    private boolean getSlipSensorInformation() {
+		if (!slipSensorFromMenu) {
+			layoutSlip = null;
+			if (layoutEditor.slipList.size()<=0) {
+				JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+					rb.getString("SignalsError15"),
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			else if (layoutEditor.slipList.size()==1) {
+				layoutSlip = layoutEditor.slipList.get(0);
+			}
+			else {
+				LayoutBlock slipSensorBlockA = null;
+				slipSensorBlockA = getBlockFromEntry(blockANameSensorField);
+				if (slipSensorBlockA==null) return false;
+				LayoutSlip x = null;
+				int foundCount = 0;
+
+                for (int i = 0;(i<layoutEditor.slipList.size());i++) {
+                    x = layoutEditor.slipList.get(i);
+                    LayoutBlock xA = null;
+                    LayoutBlock xB = null;
+                    LayoutBlock xC = null;
+                    LayoutBlock xD = null;
+                    LayoutBlock xAC = x.getLayoutBlock();
+                    if (x.getConnectA()!=null) xA = ((TrackSegment)x.getConnectA()).getLayoutBlock();
+                    if (x.getConnectB()!=null) xB = ((TrackSegment)x.getConnectB()).getLayoutBlock();
+                    if (x.getConnectC()!=null) xC = ((TrackSegment)x.getConnectC()).getLayoutBlock();
+                    if (x.getConnectD()!=null) xD = ((TrackSegment)x.getConnectD()).getLayoutBlock();
+                    if ( ( (xA!=null) && (xC!=null) && ( (xA==slipSensorBlockA) ||
+                            (xC==slipSensorBlockA) ) ) ||
+                            ( (xB!=null) && (xD!=null) && ( ((xB==slipSensorBlockA)) ||
+                            ((xD==slipSensorBlockA)) ) ) ) {
+                        layoutSlip = x;
+                        foundCount ++;
+                    }
+                    else if ( (xAC!=null) && (xAC==slipSensorBlockA) ) {
+                        layoutSlip = x;
+                        foundCount ++;
+                    }				
+                }
+				if (foundCount==0) {
+					// try one block test
+					for (int i = 0;(i<layoutEditor.slipList.size());i++) {
+						x = layoutEditor.slipList.get(i);
+						if (slipSensorBlockA == x.getLayoutBlock()) {
+							layoutSlip = x;
+							foundCount ++;
+						}				
+					}
+				}
+				if (foundCount>1) {
+					JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+							java.text.MessageFormat.format(rb.getString("SignalsError16"),
+								new Object[]{" "+foundCount+" "}), 
+									rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				if (layoutSlip==null) {
+					JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+								rb.getString("SignalsError17"),
+										rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+			}
+		}
+        return true;
+    }
+    
+	private void setSlipSensorsCancelPressed (ActionEvent a) {
+		setSensorsAtSlipOpen = false;
+		sensorsAtSlipFrame.setVisible(false);
+		slipSensorFromMenu = false;
+	}
+	private void setSlipSensorsDonePressed (ActionEvent a) {
+		if ( !getSlipSensorInformation() ) return;
+        Sensor aSensor = getSensorFromEntry(slipSensorA.getText(),false,sensorsAtSlipFrame);
+		Sensor bSensor = getSensorFromEntry(slipSensorB.getText(),false,sensorsAtSlipFrame);
+		Sensor cSensor = getSensorFromEntry(slipSensorC.getText(),false,sensorsAtSlipFrame);
+		Sensor dSensor = getSensorFromEntry(slipSensorD.getText(),false,sensorsAtSlipFrame);
+		// place or update signals as requested
+		if ( (aSensor!=null) && slipSensorA.addToPanel() ) {
+			if (isSensorOnPanel(aSensor) && 
+					(aSensor!=getSensorFromName(layoutSlip.getSensorA())) ) { 
+				JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SensorsError6"),
+						new Object[]{slipSensorA.getText()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else {
+				removeSensorFromPanel(layoutSlip.getSensorA());
+				placingBlock(getSensorIcon(slipSensorA.getText()), slipSensorA.isRightSelected(), 0.0);
+				removeAssignment(aSensor);
+				layoutSlip.setSensorA(slipSensorA.getText());
+				needRedraw = true;
+			}		
+		}
+		else if ( (aSensor!=null) && 
+				(aSensor!=getSensorFromName(layoutSlip.getSensorA())) &&
+				(aSensor!=getSensorFromName(layoutSlip.getSensorB())) &&
+				(aSensor!=getSensorFromName(layoutSlip.getSensorC())) &&
+				(aSensor!=getSensorFromName(layoutSlip.getSensorD())) ) {
+			if (isSensorOnPanel(aSensor)) {
+				JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SensorsError13"),
+						new Object[]{slipSensorA.getText()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}		
+			else {
+				removeSensorFromPanel(layoutSlip.getSensorA());
+				removeAssignment(aSensor);
+				layoutSlip.setSensorA(slipSensorA.getText());
+			}
+		}
+		else if ( (aSensor!=null) &&  
+				( (aSensor==getSensorFromName(layoutSlip.getSensorB())) ||
+					(aSensor==getSensorFromName(layoutSlip.getSensorC())) ||
+					(aSensor==getSensorFromName(layoutSlip.getSensorD())) ) ) {
+// need to figure out what to do in this case.			
+		}
+		else if (aSensor==null) {
+			removeSensorFromPanel(layoutSlip.getSensorA());
+			layoutSlip.setSensorA("");		
+		}
+		if ( (bSensor!=null) && slipSensorB.addToPanel() ) {
+			if (isSensorOnPanel(bSensor) && 
+					(bSensor!=getSensorFromName(layoutSlip.getSensorB()))) { 
+				JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SensorsError6"),
+						new Object[]{slipSensorB.getText()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else {
+				removeSensorFromPanel(layoutSlip.getSensorB());
+				placingBlockB(getSensorIcon(slipSensorB.getText()), slipSensorB.isRightSelected(), 0.0);
+				removeAssignment(bSensor);
+				layoutSlip.setSensorB(slipSensorB.getText());
+				needRedraw = true;
+			}		
+		}
+		else if ( (bSensor!=null) && 
+				(bSensor!=getSensorFromName(layoutSlip.getSensorA())) &&
+				(bSensor!=getSensorFromName(layoutSlip.getSensorB())) &&
+				(bSensor!=getSensorFromName(layoutSlip.getSensorC())) &&
+				(bSensor!=getSensorFromName(layoutSlip.getSensorD())) ) {
+			if (isSensorOnPanel(bSensor)) {
+				JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SensorsError13"),
+						new Object[]{slipSensorB.getText()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}		
+			else {
+				removeSensorFromPanel(layoutSlip.getSensorB());
+				removeAssignment(bSensor);
+				layoutSlip.setSensorB(slipSensorB.getText());
+			}
+		}
+		else if ( (bSensor!=null) &&  
+				( (bSensor==getSensorFromName(layoutSlip.getSensorA())) ||
+					(bSensor==getSensorFromName(layoutSlip.getSensorC())) ||
+					(bSensor==getSensorFromName(layoutSlip.getSensorD())) ) ) {
+// need to figure out what to do in this case.			
+		}
+		else if (bSensor==null) {
+			removeSensorFromPanel(layoutSlip.getSensorB());
+			layoutSlip.setSensorB("");		
+		}
+		if ( (cSensor!=null) && slipSensorC.addToPanel() ) {
+			if (isSensorOnPanel(cSensor) && 
+					(cSensor!=getSensorFromName(layoutSlip.getSensorC())) ) { 
+				JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SensorsError6"),
+						new Object[]{slipSensorC.getText()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else {
+				removeSensorFromPanel(layoutSlip.getSensorC());
+				placingBlockC(getSensorIcon(slipSensorC.getText()), slipSensorC.isRightSelected(), 0.0);
+				removeAssignment(cSensor);
+				layoutSlip.setSensorC(slipSensorC.getText());
+				needRedraw = true;
+			}		
+		}
+		else if ( (cSensor!=null) && 
+				(cSensor!=getSensorFromName(layoutSlip.getSensorA())) &&
+				(cSensor!=getSensorFromName(layoutSlip.getSensorB())) &&
+				(cSensor!=getSensorFromName(layoutSlip.getSensorC())) &&
+				(cSensor!=getSensorFromName(layoutSlip.getSensorD())) ) {
+			if (isSensorOnPanel(cSensor)) {
+				JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SensorsError13"),
+						new Object[]{slipSensorC.getText()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}		
+			else {
+				removeSensorFromPanel(layoutSlip.getSensorC());
+				removeAssignment(cSensor);
+				layoutSlip.setSensorC(slipSensorC.getText());
+			}
+		}
+		else if ( (cSensor!=null) &&  
+				( (cSensor==getSensorFromName(layoutSlip.getSensorB())) ||
+					(cSensor==getSensorFromName(layoutSlip.getSensorA())) ||
+					(cSensor==getSensorFromName(layoutSlip.getSensorD())) ) ) {
+// need to figure out what to do in this case.			
+		}
+		else if (cSensor==null) {
+			removeSensorFromPanel(layoutSlip.getSensorC());
+			layoutSlip.setSensorC("");		
+		}
+		if ( (dSensor!=null) && slipSensorD.addToPanel() ) {
+			if (isSensorOnPanel(dSensor) && 
+					(dSensor!=getSensorFromName(layoutSlip.getSensorD())) ) { 
+				JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SensorsError6"),
+						new Object[]{slipSensorD.getText()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else {
+				removeSensorFromPanel(layoutSlip.getSensorD());
+				placingBlockD(getSensorIcon(slipSensorD.getText()), slipSensorD.isRightSelected(), 0.0);
+				removeAssignment(dSensor);
+				layoutSlip.setSensorD(slipSensorD.getText());
+				needRedraw = true;
+			}		
+		}
+		else if ( (dSensor!=null) && 
+				(dSensor!=getSensorFromName(layoutSlip.getSensorA())) &&
+				(dSensor!=getSensorFromName(layoutSlip.getSensorB())) &&
+				(dSensor!=getSensorFromName(layoutSlip.getSensorC())) &&
+				(dSensor!=getSensorFromName(layoutSlip.getSensorD())) ) {
+			if (isSensorOnPanel(dSensor)) {
+				JOptionPane.showMessageDialog(sensorsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SensorsError13"),
+						new Object[]{slipSensorD.getText()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}		
+			else {
+				removeSensorFromPanel(layoutSlip.getSensorD());
+				removeAssignment(dSensor);
+				layoutSlip.setSensorD(slipSensorD.getText());
+			}
+		}
+		else if ( (dSensor!=null) &&  
+				( (dSensor==getSensorFromName(layoutSlip.getSensorB())) ||
+					(dSensor==getSensorFromName(layoutSlip.getSensorC())) ||
+					(dSensor==getSensorFromName(layoutSlip.getSensorA())) ) ) {
+// need to figure out what to do in this case.			
+		}
+		else if (dSensor==null) {
+			removeSensorFromPanel(layoutSlip.getSensorD());
+			layoutSlip.setSensorD("");		
+		}
+		// setup logic if requested
+		// finish up
+		setSensorsAtSlipOpen = false;
+		sensorsAtSlipFrame.setVisible(false);
+		slipSensorFromMenu = false;	
+		if (needRedraw) {
+			layoutEditor.redrawPanel();
+			needRedraw = false;
+			layoutEditor.setDirty();
+		}		
+	}
     
     static class BeanDetails {
         String beanString;
@@ -10966,5 +12034,1059 @@ public class LayoutEditorTools
         }
     }
     
+    // operational variables for Set Signals at Double Crossover Turnout tool
+	private JmriJFrame setSignalsAtSlipFrame = null;
+	private boolean setSignalsAtSlipOpen = false;
+	private JComboBox slipNameCombo = new JComboBox();
+	private JTextField a1SlipField = new JTextField(16);
+	private JTextField a2SlipField = new JTextField(16);
+	private JTextField b1SlipField = new JTextField(16);
+	private JTextField b2SlipField = new JTextField(16);
+	private JTextField c1SlipField = new JTextField(16);
+	private JTextField c2SlipField = new JTextField(16);
+	private JTextField d1SlipField = new JTextField(16);
+	private JTextField d2SlipField = new JTextField(16);
+	private JCheckBox setA1SlipHead = new JCheckBox(rb.getString("PlaceHead"));
+	private JCheckBox setupA1SlipLogic = new JCheckBox(rb.getString("SetLogic"));
+	private JCheckBox setA2SlipHead = new JCheckBox(rb.getString("PlaceHead"));
+	private JCheckBox setupA2SlipLogic = new JCheckBox(rb.getString("SetLogic"));
+	private JCheckBox setB1SlipHead = new JCheckBox(rb.getString("PlaceHead"));
+	private JCheckBox setupB1SlipLogic = new JCheckBox(rb.getString("SetLogic"));
+	private JCheckBox setB2SlipHead = new JCheckBox(rb.getString("PlaceHead"));
+	private JCheckBox setupB2SlipLogic = new JCheckBox(rb.getString("SetLogic"));
+	private JCheckBox setC1SlipHead = new JCheckBox(rb.getString("PlaceHead"));
+	private JCheckBox setupC1SlipLogic = new JCheckBox(rb.getString("SetLogic"));
+	private JCheckBox setC2SlipHead = new JCheckBox(rb.getString("PlaceHead"));
+	private JCheckBox setupC2SlipLogic = new JCheckBox(rb.getString("SetLogic"));
+	private JCheckBox setD1SlipHead = new JCheckBox(rb.getString("PlaceHead"));
+	private JCheckBox setupD1SlipLogic = new JCheckBox(rb.getString("SetLogic"));
+	private JCheckBox setD2SlipHead = new JCheckBox(rb.getString("PlaceHead"));
+	private JCheckBox setupD2SlipLogic = new JCheckBox(rb.getString("SetLogic"));
+
+	private JButton setSlipSignalsDone = null;
+	private JButton setSlipSignalsCancel = null;
+	private LayoutSlip layoutSlip = null;
+
+	private SignalHead a1SlipHead = null;
+	private SignalHead a2SlipHead = null;
+	private SignalHead b1SlipHead = null;
+	private SignalHead b2SlipHead = null;
+	private SignalHead c1SlipHead = null;
+	private SignalHead c2SlipHead = null;
+	private SignalHead d1SlipHead = null;
+	private SignalHead d2SlipHead = null;
+    
+    private JPanel dblSlipC2SigPanel;
+    private JPanel dblSlipB2SigPanel;
+    
+    public void setSlipFromMenu( LayoutSlip ls, 
+            MultiIconEditor theEditor, JFrame theFrame ) {
+        layoutSlip = ls;
+		a1SlipField.setText("");
+		a2SlipField.setText("");
+		b1SlipField.setText("");
+		b2SlipField.setText("");
+		c1SlipField.setText("");
+		c2SlipField.setText("");
+		d1SlipField.setText("");
+		d2SlipField.setText("");
+		setSignalsAtSlip(theEditor,theFrame);
+	}	
+	public void setSignalsAtSlip( MultiIconEditor theEditor, JFrame theFrame ) {
+		signalIconEditor = theEditor;
+		signalFrame = theFrame;
+		if (setSignalsAtSlipOpen) {
+			setSignalsAtSlipFrame.setVisible(true);
+			return;
+		}
+		// Initialize if needed
+		if (setSignalsAtSlipFrame == null) {
+            setSignalsAtSlipFrame = new JmriJFrame( rb.getString("SignalsAtSlip"), false, true );
+            setSignalsAtSlipFrame.addHelpMenu("package.jmri.jmrit.display.SetSignalsAtSlip", true);
+            setSignalsAtSlipFrame.setLocation(70,30);
+            Container theContentPane = setSignalsAtSlipFrame.getContentPane();        
+            theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
+			JPanel panel1 = new JPanel();
+            panel1.setLayout(new FlowLayout());
+			JLabel turnout1NameLabel = new JLabel( rb.getString("Slip")+" "+
+																rb.getString("Name") );
+			panel1.add(turnout1NameLabel);
+            panel1.add(slipNameCombo);
+            for(LayoutSlip slip: layoutEditor.slipList){
+                slipNameCombo.addItem(slip.getDisplayName());
+            }
+
+            slipNameCombo.insertItemAt("", 0);
+            
+            if(layoutSlip!=null){
+                slipNameCombo.setSelectedItem(layoutSlip.getDisplayName());
+                getSlipTurnoutSignalsGetSaved(null);
+            } else {
+                slipNameCombo.setSelectedIndex(0);
+            }
+            slipNameCombo.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    for(LayoutSlip slip: layoutEditor.slipList){
+                        if(slip.getDisplayName().equals(slipNameCombo.getSelectedItem())){
+                            //slip1NameField.setText(slip.getDisplayName());
+                            getSlipTurnoutSignalsGetSaved(e);
+                            dblSlipC2SigPanel.setVisible(false);
+                            dblSlipB2SigPanel.setVisible(false);
+                            if(slip.getSlipType()==LayoutSlip.DOUBLE_SLIP){
+                                dblSlipB2SigPanel.setVisible(true);
+                                dblSlipC2SigPanel.setVisible(true);
+                            }
+                            setSignalsAtSlipFrame.pack();
+                            return;
+                        }
+                    }
+                }
+            });
+            theContentPane.add(panel1);
+			JPanel panel11 = new JPanel();
+            panel11.setLayout(new FlowLayout());
+
+			theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+			// Signal heads located at turnout 1			
+			JPanel panel21x = new JPanel();
+            panel21x.setLayout(new FlowLayout());
+			panel21x.add(new JLabel(rb.getString("SignalLocated")+" "+rb.getString("Turnout")+" 1 - "+
+											rb.getString("ContinuingTrack")));
+			theContentPane.add(panel21x);
+			JPanel panel21 = new JPanel();
+            panel21.setLayout(new FlowLayout());
+			panel21.add(new JLabel(rb.getString("ProtectsTurnout")+" 2 - "+rb.getString("ContinuingTrack")+" : "));
+			panel21.add(a1SlipField);
+			theContentPane.add(panel21);
+			a1SlipField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            JPanel panel22 = new JPanel();
+            panel22.setLayout(new FlowLayout());
+			panel22.add(new JLabel(rb.getString("OrBoth")+" 2 "+rb.getString("Tracks)")+"   "));
+			panel22.add(setA1SlipHead);
+			setA1SlipHead.setToolTipText(rb.getString("PlaceHeadHint"));
+			panel22.add(new JLabel("  "));
+			panel22.add(setupA1SlipLogic);
+			setupA1SlipLogic.setToolTipText(rb.getString("SetLogicHint"));
+			theContentPane.add(panel22);
+            JPanel panel23 = new JPanel();
+            panel23.setLayout(new FlowLayout());
+			panel23.add(new JLabel(rb.getString("ProtectsTurnout")+" 2 - "+rb.getString("DivergingTrack")+" : "));
+			panel23.add(a2SlipField);
+			theContentPane.add(panel23);
+			a2SlipField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            JPanel panel24 = new JPanel();
+            panel24.setLayout(new FlowLayout());
+			panel24.add(new JLabel("                "));
+			panel24.add(setA2SlipHead);
+			setA2SlipHead.setToolTipText(rb.getString("PlaceHeadHint"));
+			panel24.add(new JLabel("  "));
+			panel24.add(setupA2SlipLogic);
+			setupA2SlipLogic.setToolTipText(rb.getString("SetLogicHint"));
+			theContentPane.add(panel24);
+			JPanel panel31x = new JPanel();
+            panel31x.setLayout(new FlowLayout());
+			panel31x.add(new JLabel(rb.getString("SignalLocated")+" "+rb.getString("Turnout")+" 1 - "+
+											rb.getString("DivergingTrack")));
+			theContentPane.add(panel31x);
+            JPanel panel31 = new JPanel();
+            panel31.setLayout(new FlowLayout());
+			panel31.add(new JLabel(rb.getString("ProtectsTurnout")+" 2 - "+rb.getString("ContinuingTrack")+" : "));
+			panel31.add(b1SlipField);
+			theContentPane.add(panel31);
+			b1SlipField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            JPanel panel32 = new JPanel();
+            panel32.setLayout(new FlowLayout());
+			panel32.add(new JLabel(rb.getString("OrBoth")+" 2 "+rb.getString("Tracks)")+"   "));
+			panel32.add(setB1SlipHead);
+			setB1SlipHead.setToolTipText(rb.getString("PlaceHeadHint"));
+			panel32.add(new JLabel("  "));
+			panel32.add(setupB1SlipLogic);
+			setupB1SlipLogic.setToolTipText(rb.getString("SetLogicHint"));
+			theContentPane.add(panel32);
+
+            dblSlipB2SigPanel = new JPanel();
+            dblSlipB2SigPanel.setLayout(new BoxLayout(dblSlipB2SigPanel, BoxLayout.Y_AXIS));
+            JPanel panel33 = new JPanel();
+            panel33.setLayout(new FlowLayout());
+            panel33.add(new JLabel(rb.getString("ProtectsTurnout")+" 2 - "+rb.getString("DivergingTrack")+" : "));
+            panel33.add(b2SlipField);
+            dblSlipB2SigPanel.add(panel33);
+            b2SlipField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            JPanel panel34 = new JPanel();
+            panel34.setLayout(new FlowLayout());
+            panel34.add(new JLabel("                "));
+            panel34.add(setB2SlipHead);
+            setB2SlipHead.setToolTipText(rb.getString("PlaceHeadHint"));
+            panel34.add(new JLabel("  "));
+            panel34.add(setupB2SlipLogic);
+            setupB2SlipLogic.setToolTipText(rb.getString("SetLogicHint"));
+            dblSlipB2SigPanel.add(panel34);
+            
+            theContentPane.add(dblSlipB2SigPanel);
+            dblSlipB2SigPanel.setVisible(false);
+			theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+			// Signal heads located at turnout 2			
+			JPanel panel41x = new JPanel();
+            panel41x.setLayout(new FlowLayout());
+			panel41x.add(new JLabel(rb.getString("SignalLocated")+" "+rb.getString("Turnout")+" 2 - "+
+											rb.getString("ContinuingTrack")));
+			theContentPane.add(panel41x);
+			JPanel panel41 = new JPanel();
+            panel41.setLayout(new FlowLayout());
+			panel41.add(new JLabel(rb.getString("ProtectsTurnout")+" 1 - "+rb.getString("ContinuingTrack")+" : "));
+			panel41.add(c1SlipField);
+			theContentPane.add(panel41);
+			c1SlipField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            JPanel panel42 = new JPanel();
+            panel42.setLayout(new FlowLayout());
+			panel42.add(new JLabel(rb.getString("OrBoth")+" 1 "+rb.getString("Tracks)")+"   "));
+			panel42.add(setC1SlipHead);
+			setC1SlipHead.setToolTipText(rb.getString("PlaceHeadHint"));
+			panel42.add(new JLabel("  "));
+			panel42.add(setupC1SlipLogic);
+			setupC1SlipLogic.setToolTipText(rb.getString("SetLogicHint"));
+			theContentPane.add(panel42);
+            dblSlipC2SigPanel = new JPanel();
+            dblSlipC2SigPanel.setLayout(new BoxLayout(dblSlipC2SigPanel, BoxLayout.Y_AXIS));
+            JPanel panel43 = new JPanel();
+            panel43.setLayout(new FlowLayout());
+            panel43.add(new JLabel(rb.getString("ProtectsTurnout")+" 1 - "+rb.getString("DivergingTrack")+" : "));
+            panel43.add(c2SlipField);
+            dblSlipC2SigPanel.add(panel43);
+            c2SlipField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            JPanel panel44 = new JPanel();
+            panel44.setLayout(new FlowLayout());
+            panel44.add(new JLabel("                "));
+            panel44.add(setC2SlipHead);
+            setC2SlipHead.setToolTipText(rb.getString("PlaceHeadHint"));
+            panel44.add(new JLabel("  "));
+            panel44.add(setupC2SlipLogic);
+            setupC2SlipLogic.setToolTipText(rb.getString("SetLogicHint"));
+            dblSlipC2SigPanel.add(panel44);
+            theContentPane.add(dblSlipC2SigPanel);
+			JPanel panel51x = new JPanel();
+            panel51x.setLayout(new FlowLayout());
+			panel51x.add(new JLabel(rb.getString("SignalLocated")+" "+rb.getString("Turnout")+" 2 - "+
+											rb.getString("DivergingTrack")));
+			theContentPane.add(panel51x);
+            JPanel panel51 = new JPanel();
+            panel51.setLayout(new FlowLayout());
+			panel51.add(new JLabel(rb.getString("ProtectsTurnout")+" 1 - "+rb.getString("ContinuingTrack")+" : "));
+			panel51.add(d1SlipField);
+			theContentPane.add(panel51);
+			d1SlipField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            JPanel panel52 = new JPanel();
+            panel52.setLayout(new FlowLayout());
+			panel52.add(new JLabel(rb.getString("OrBoth")+" 1 "+rb.getString("Tracks)")+"   "));
+			panel52.add(setD1SlipHead);
+			setD1SlipHead.setToolTipText(rb.getString("PlaceHeadHint"));
+			panel52.add(new JLabel("  "));
+			panel52.add(setupD1SlipLogic);
+			setupD1SlipLogic.setToolTipText(rb.getString("SetLogicHint"));
+			theContentPane.add(panel52);
+            JPanel panel53 = new JPanel();
+            panel53.setLayout(new FlowLayout());
+			panel53.add(new JLabel(rb.getString("ProtectsTurnout")+" 1 - "+rb.getString("DivergingTrack")+" : "));
+			panel53.add(d2SlipField);
+			theContentPane.add(panel53);
+			d2SlipField.setToolTipText(rb.getString("SignalHeadNameHint"));
+            JPanel panel54 = new JPanel();
+            panel54.setLayout(new FlowLayout());
+			panel54.add(new JLabel("                "));
+			panel54.add(setD2SlipHead);
+			setD2SlipHead.setToolTipText(rb.getString("PlaceHeadHint"));
+			panel54.add(new JLabel("  "));
+			panel54.add(setupD2SlipLogic);
+			setupD2SlipLogic.setToolTipText(rb.getString("SetLogicHint"));
+			theContentPane.add(panel54);
+			theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
+            JPanel panel6 = new JPanel();
+            panel6.setLayout(new FlowLayout());
+            panel6.add(changeTToTSignalIcon = new JButton(rb.getString("ChangeSignalIcon")));
+            changeTToTSignalIcon.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						signalFrame.setVisible(true);
+					}
+				});
+            changeTToTSignalIcon.setToolTipText( rb.getString("ChangeSignalIconHint") );
+			panel6.add(new JLabel("  "));
+            panel6.add(setSlipSignalsDone = new JButton(rb.getString("Done")));
+            setSlipSignalsDone.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setSlipSignalsDonePressed(e);
+                }
+            });
+            setSlipSignalsDone.setToolTipText( rb.getString("SignalDoneHint") );
+            panel6.add(setSlipSignalsCancel = new JButton(rb.getString("Cancel")));
+            setSlipSignalsCancel.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setSlipSignalsCancelPressed(e);
+                }
+            });
+            setSlipSignalsCancel.setToolTipText( rb.getString("CancelHint") );
+            theContentPane.add(panel6);
+			setSignalsAtSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+				public void windowClosing(java.awt.event.WindowEvent e) {
+					setSlipSignalsCancelPressed(null);
+				}
+			});
+		}
+        dblSlipC2SigPanel.setVisible(false);
+        dblSlipB2SigPanel.setVisible(false);
+        if(layoutSlip!=null && layoutSlip.getSlipType()==LayoutSlip.DOUBLE_SLIP){
+            dblSlipB2SigPanel.setVisible(true);
+            dblSlipC2SigPanel.setVisible(true);
+        }
+        setSignalsAtSlipFrame.pack();
+        setSignalsAtSlipFrame.setVisible(true);		
+		setSignalsAtSlipOpen = true;
+	}	
+	private void getSlipTurnoutSignalsGetSaved (ActionEvent a) {
+		if ( !getSlipTurnoutInformation() ) return;
+		a1SlipField.setText(layoutSlip.getSignalA1Name());	
+		a2SlipField.setText(layoutSlip.getSignalA2Name());
+		b1SlipField.setText(layoutSlip.getSignalB1Name());
+		b2SlipField.setText(layoutSlip.getSignalB2Name());
+		c1SlipField.setText(layoutSlip.getSignalC1Name());	
+		c2SlipField.setText(layoutSlip.getSignalC2Name());	
+		d1SlipField.setText(layoutSlip.getSignalD1Name());	
+		d2SlipField.setText(layoutSlip.getSignalD2Name());	
+	}
+	private void setSlipSignalsCancelPressed (ActionEvent a) {
+		setSignalsAtSlipOpen = false;
+		setSignalsAtSlipFrame.setVisible(false);
+	}
+	private boolean getSlipTurnoutInformation() {
+		String str = "";
+		turnout1 = null;
+		turnout2 = null;
+		layoutSlip = null;
+        for(LayoutSlip ls: layoutEditor.slipList){
+            if(ls.getDisplayName().equals(slipNameCombo.getSelectedItem())){
+                turnout1 = ls.getTurnout();
+                turnout2 = ls.getTurnoutB();
+                layoutSlip=ls;
+                layoutTurnout = layoutSlip;
+                break;
+            }
+        }
+        if(layoutSlip==null){
+            return false;
+        }
+        if (turnout1==null) {
+            JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+                java.text.MessageFormat.format(rb.getString("SignalsError2"),
+                    new Object[]{str}), rb.getString("Error"),
+                        JOptionPane.ERROR_MESSAGE);
+            return false ;
+        }
+        if (turnout2==null) {
+            JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+                java.text.MessageFormat.format(rb.getString("SignalsError2"),
+                        new Object[]{str}), rb.getString("Error"),
+                            JOptionPane.ERROR_MESSAGE);
+            return false ;
+        }
+
+
+		return true;
+	}
+	private void setSlipSignalsDonePressed (ActionEvent a) {
+		if ( !getSlipTurnoutInformation() ) return;
+		if ( !getSlipSignalHeadInformation() ) return;
+		// place signal icons if requested, and assign signal heads to this turnout
+		if (setA1SlipHead.isSelected()) {
+			if (isHeadOnPanel(a1SlipHead) &&
+				(a1SlipHead!=getHeadFromName(layoutSlip.getSignalB1Name()))) {
+				JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SignalsError6"),
+						new Object[]{a1Field.getText().trim()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else {
+				removeSignalHeadFromPanel(layoutSlip.getSignalA1Name());
+				if (layoutSlip.getContinuingSense()==Turnout.CLOSED)
+					placeA1Slip(a1SlipField.getText().trim());
+				else 
+					placeB1Slip(a1SlipField.getText().trim());
+				removeAssignment(a1SlipHead);
+				layoutSlip.setSignalA1Name(a1SlipField.getText().trim());
+				needRedraw = true;
+			}		
+		}
+		else {
+			int assigned = isHeadAssignedHere(a1SlipHead,layoutSlip);
+			if (assigned == NONE) {
+				if ( isHeadOnPanel(a1SlipHead) && 
+									isHeadAssignedAnywhere(a1SlipHead) ) {
+					JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+						java.text.MessageFormat.format(rb.getString("SignalsError8"),
+							new Object[]{a1SlipField.getText().trim()}), 
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return;
+				}		
+				else {
+					removeSignalHeadFromPanel(layoutSlip.getSignalB1Name());
+					removeAssignment(a1SlipHead);
+					layoutSlip.setSignalA1Name(a1SlipField.getText().trim());
+				}
+			}
+			else if (assigned!=B1) {
+// need to figure out what to do in this case - assigned to a different position on the same turnout.			
+			}
+		}
+		if ( (a2SlipHead!=null) && setA2SlipHead.isSelected() ) {
+			if (isHeadOnPanel(a2SlipHead) &&
+				(a2SlipHead!=getHeadFromName(layoutSlip.getSignalB2Name()))) {
+				JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SignalsError6"),
+						new Object[]{a2Field.getText().trim()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else {
+				removeSignalHeadFromPanel(layoutSlip.getSignalB2Name());
+				if (layoutSlip.getContinuingSense()==Turnout.CLOSED)
+					placeA2Slip(a2SlipField.getText().trim());
+				else 
+					placeB2Slip(a2SlipField.getText().trim());
+				removeAssignment(a2SlipHead);
+				layoutSlip.setSignalA2Name(a2SlipField.getText().trim());
+				needRedraw = true;
+			}		
+		}
+		else if (a2SlipHead!=null) {
+			int assigned = isHeadAssignedHere(a2SlipHead,layoutSlip);
+			if (assigned == NONE) {
+				if ( isHeadOnPanel(a2SlipHead) && 
+									isHeadAssignedAnywhere(a2SlipHead) ) {
+					JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+						java.text.MessageFormat.format(rb.getString("SignalsError8"),
+							new Object[]{a2SlipField.getText().trim()}), 
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return;
+				}		
+				else {
+					removeSignalHeadFromPanel(layoutSlip.getSignalA2Name());
+					removeAssignment(a2SlipHead);
+					layoutSlip.setSignalA2Name(a2SlipField.getText().trim());
+				}
+			}
+			else if (assigned!=B2) {
+// need to figure out what to do in this case.			
+			}
+		}
+		else if (a2SlipHead==null) {
+			removeSignalHeadFromPanel(layoutSlip.getSignalA2Name());
+			layoutSlip.setSignalB2Name("");
+		}
+		if (setB1SlipHead.isSelected()) {
+            log.info(b1SlipHead);
+            log.info(b1SlipField.getText().trim());
+			if (isHeadOnPanel(b1SlipHead) &&
+				(b1SlipHead!=getHeadFromName(layoutSlip.getSignalC1Name()))) {
+				JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SignalsError6"),
+						new Object[]{b1SlipField.getText().trim()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else {
+				removeSignalHeadFromPanel(layoutSlip.getSignalB1Name());
+				if (layoutSlip.getContinuingSense()==Turnout.CLOSED)
+					placeB1Slip(b1SlipField.getText().trim());
+				else 
+					placeA1Slip(b1SlipField.getText().trim());
+				removeAssignment(b1SlipHead);
+				layoutSlip.setSignalB1Name(b1SlipField.getText().trim());
+				needRedraw = true;
+			}		
+		}
+		else {
+			int assigned = isHeadAssignedHere(b1SlipHead,layoutSlip);
+			if (assigned == NONE) {
+				if ( isHeadOnPanel(b1SlipHead) && 
+									isHeadAssignedAnywhere(b1SlipHead) ) {
+					JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+						java.text.MessageFormat.format(rb.getString("SignalsError8"),
+							new Object[]{b1SlipField.getText().trim()}), 
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return;
+				}		
+				else {
+					removeSignalHeadFromPanel(layoutSlip.getSignalB1Name());
+					removeAssignment(b1SlipHead);
+					layoutSlip.setSignalB1Name(b1SlipField.getText().trim());
+				}
+			}
+			else if (assigned!=C1) {
+// need to figure out what to do in this case.			
+			}
+		}
+        if(layoutSlip.getTurnoutType()==LayoutSlip.DOUBLE_SLIP){
+            if ( (b2SlipHead!=null) && setB2SlipHead.isSelected() ) {
+                if (isHeadOnPanel(b2SlipHead) &&
+                    (b2SlipHead!=getHeadFromName(layoutSlip.getSignalC2Name()))) {
+                    JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+                        java.text.MessageFormat.format(rb.getString("SignalsError6"),
+                            new Object[]{b2SlipField.getText().trim()}), 
+                                rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                else {
+                    removeSignalHeadFromPanel(layoutSlip.getSignalB2Name());
+                    if (layoutSlip.getContinuingSense()==Turnout.CLOSED)
+                        placeB2Slip(b2SlipField.getText().trim());
+                    else 
+                        placeA2Slip(b2SlipField.getText().trim());
+                    removeAssignment(b2SlipHead);
+                    layoutSlip.setSignalB2Name(b2SlipField.getText().trim());
+                    needRedraw = true;
+                }		
+            }
+            else if (b2SlipHead!=null) {
+                int assigned = isHeadAssignedHere(b2SlipHead,layoutSlip);
+                if (assigned == NONE) {
+                    if ( isHeadOnPanel(b2SlipHead) && 
+                                        isHeadAssignedAnywhere(b2SlipHead) ) {
+                        JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+                            java.text.MessageFormat.format(rb.getString("SignalsError8"),
+                                new Object[]{b2SlipField.getText().trim()}), 
+                                    rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }		
+                    else {
+                        removeSignalHeadFromPanel(layoutSlip.getSignalB2Name());
+                        removeAssignment(b2SlipHead);
+                        layoutSlip.setSignalB2Name(b2SlipField.getText().trim());
+                    }
+                }
+                else if (assigned!=C2) {
+    // need to figure out what to do in this case.			
+                }
+            }
+            else if (b2SlipHead==null) {
+                removeSignalHeadFromPanel(layoutSlip.getSignalB2Name());
+                layoutSlip.setSignalB2Name("");
+            }
+        } else {
+            if(b2SlipHead!=null){
+                BlockBossLogic.getStoppedObject(layoutSlip.getSignalB2Name());
+                removeSignalHeadFromPanel(layoutSlip.getSignalB2Name());
+                layoutSlip.setSignalB2Name("");
+                b2SlipHead=null;
+            }
+        
+        }
+		// signal heads on turnout 2
+		if (setC1SlipHead.isSelected()) {
+			if (isHeadOnPanel(c1SlipHead) &&
+				(c1SlipHead!=getHeadFromName(layoutSlip.getSignalB1Name()))) {
+				JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SignalsError6"),
+						new Object[]{c1SlipField.getText().trim()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else {
+				removeSignalHeadFromPanel(layoutSlip.getSignalC1Name());
+				if (layoutSlip.getContinuingSense()==Turnout.CLOSED)
+					placeC1Slip(c1SlipField.getText().trim());
+				else 
+					placeD1Slip(c1SlipField.getText().trim());
+				removeAssignment(c1SlipHead);
+				layoutSlip.setSignalC1Name(c1SlipField.getText().trim());
+				needRedraw = true;
+			}		
+		}
+		else {
+			int assigned = isHeadAssignedHere(c1SlipHead,layoutSlip);
+			if (assigned == NONE) {
+				if ( isHeadOnPanel(c1SlipHead) && 
+									isHeadAssignedAnywhere(c1SlipHead) ) {
+					JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+						java.text.MessageFormat.format(rb.getString("SignalsError8"),
+							new Object[]{c1SlipField.getText().trim()}), 
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return;
+				}		
+				else {
+					removeSignalHeadFromPanel(layoutSlip.getSignalC1Name());
+					removeAssignment(c1SlipHead);
+					layoutSlip.setSignalC1Name(c1SlipField.getText().trim());
+				}
+			}
+			else if (assigned!=B1) {
+// need to figure out what to do in this case.			
+			}
+		}
+        if(layoutSlip.getTurnoutType()==LayoutSlip.DOUBLE_SLIP){
+            if ( (c2SlipHead!=null) && setC2SlipHead.isSelected() ) {
+                if (isHeadOnPanel(c2SlipHead) &&
+                    (c2SlipHead!=getHeadFromName(layoutSlip.getSignalB2Name()))) {
+                    JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+                        java.text.MessageFormat.format(rb.getString("SignalsError6"),
+                            new Object[]{c2SlipField.getText().trim()}), 
+                                rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                else {
+                    removeSignalHeadFromPanel(layoutSlip.getSignalC2Name());
+                    if (layoutSlip.getContinuingSense()==Turnout.CLOSED)
+                        placeC2Slip(c2SlipField.getText().trim());
+                    else 
+                        placeD2Slip(c2SlipField.getText().trim());
+                    removeAssignment(c2SlipHead);
+                    layoutSlip.setSignalC2Name(c2SlipField.getText().trim());
+                    needRedraw = true;
+                }		
+            }
+            else if (c2SlipHead!=null) {
+                int assigned = isHeadAssignedHere(c2SlipHead,layoutSlip);
+                if (assigned == NONE) {
+                    if ( isHeadOnPanel(c2SlipHead) && 
+                                        isHeadAssignedAnywhere(c2SlipHead) ) {
+                        JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+                            java.text.MessageFormat.format(rb.getString("SignalsError8"),
+                                new Object[]{c2SlipField.getText().trim()}), 
+                                    rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }		
+                    else {
+                        removeSignalHeadFromPanel(layoutSlip.getSignalC2Name());
+                        removeAssignment(c2SlipHead);
+                        layoutSlip.setSignalC2Name(c2SlipField.getText().trim());
+                    }
+                }
+                else if (assigned!=B2) {
+    // need to figure out what to do in this case.			
+                }
+            }
+            else if (c2SlipHead==null) {
+                removeSignalHeadFromPanel(layoutSlip.getSignalC2Name());
+                layoutSlip.setSignalC2Name("");
+            }
+        } else {
+            if(c2SlipHead!=null){
+                BlockBossLogic.getStoppedObject(layoutSlip.getSignalC2Name());
+                removeSignalHeadFromPanel(layoutSlip.getSignalC2Name());
+                layoutSlip.setSignalC2Name("");
+                c2SlipHead=null;
+            }
+        }
+		if (setD1SlipHead.isSelected()) {
+			if (isHeadOnPanel(d1SlipHead) &&
+				(d1SlipHead!=getHeadFromName(layoutSlip.getSignalC1Name()))) {
+					JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SignalsError6"),
+						new Object[]{d1SlipField.getText().trim()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else {
+				removeSignalHeadFromPanel(layoutSlip.getSignalD1Name());
+				if (layoutSlip.getContinuingSense()==Turnout.CLOSED)
+					placeD1Slip(d1SlipField.getText().trim());
+				else 
+					placeC1Slip(d1SlipField.getText().trim());
+				removeAssignment(d1SlipHead);
+				layoutSlip.setSignalD1Name(d1SlipField.getText().trim());
+				needRedraw = true;
+			}		
+		}
+		else {
+			int assigned = isHeadAssignedHere(d1SlipHead,layoutSlip);
+			if (assigned == NONE) {
+				if ( isHeadOnPanel(d1SlipHead) && 
+									isHeadAssignedAnywhere(d1SlipHead) ) {
+					JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+						java.text.MessageFormat.format(rb.getString("SignalsError8"),
+							new Object[]{d1SlipField.getText().trim()}), 
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return;
+				}		
+				else {
+					removeSignalHeadFromPanel(layoutSlip.getSignalD1Name());
+					removeAssignment(d1SlipHead);
+					layoutSlip.setSignalD1Name(d1SlipField.getText().trim());
+				}
+			}
+			else if (assigned!=C1) {
+// need to figure out what to do in this case.			
+			}
+		}
+		if ( (d2SlipHead!=null) && setD2SlipHead.isSelected() ) {
+			if (isHeadOnPanel(d2SlipHead) &&
+				(d2SlipHead!=getHeadFromName(layoutSlip.getSignalC2Name()))) {
+				JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("SignalsError6"),
+						new Object[]{d2SlipField.getText().trim()}), 
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			else {
+				removeSignalHeadFromPanel(layoutSlip.getSignalD2Name());
+				if (layoutSlip.getContinuingSense()==Turnout.CLOSED)
+					placeD2Slip(d2SlipField.getText().trim());
+				else 
+					placeC2Slip(d2SlipField.getText().trim());
+				removeAssignment(d2SlipHead);
+				layoutSlip.setSignalD2Name(d2SlipField.getText().trim());
+				needRedraw = true;
+			}		
+		}
+		else if (d2SlipHead!=null) {
+			int assigned = isHeadAssignedHere(d2SlipHead,layoutSlip);
+			if (assigned == NONE) {
+				if ( isHeadOnPanel(d2SlipHead) && 
+									isHeadAssignedAnywhere(d2SlipHead) ) {
+					JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+						java.text.MessageFormat.format(rb.getString("SignalsError8"),
+							new Object[]{d2SlipField.getText().trim()}), 
+								rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return;
+				}		
+				else {
+					removeSignalHeadFromPanel(layoutSlip.getSignalD2Name());
+					removeAssignment(d2SlipHead);
+					layoutSlip.setSignalD2Name(d2SlipField.getText().trim());
+				}
+			}
+			else if (assigned!=C2) {
+// need to figure out what to do in this case.			
+			}
+		}
+		else if (d2SlipHead==null) {
+			removeSignalHeadFromPanel(layoutSlip.getSignalD2Name());
+			layoutSlip.setSignalD2Name("");
+		}		
+		// setup logic if requested
+		if (setupA1SlipLogic.isSelected() || setupA2SlipLogic.isSelected()) {
+			setLogicSlip(a1SlipHead,(TrackSegment)layoutSlip.getConnectC(),a2SlipHead,
+					(TrackSegment)layoutSlip.getConnectD(),setupA1SlipLogic.isSelected(),
+					setupA2SlipLogic.isSelected(),layoutSlip, layoutSlip.getTurnout(), 
+                       layoutSlip.getTurnoutB(), LayoutSlip.STATE_AC, LayoutSlip.STATE_AD);
+		}
+		if (setupB1SlipLogic.isSelected() || setupB2SlipLogic.isSelected()) {
+			setLogicSlip(b1SlipHead,(TrackSegment)layoutSlip.getConnectD(),b2SlipHead,
+					(TrackSegment)layoutSlip.getConnectC(),setupB1SlipLogic.isSelected(),
+					setupB2SlipLogic.isSelected(),layoutSlip, layoutSlip.getTurnout(),
+                      layoutSlip.getTurnoutB(), LayoutSlip.STATE_BD, LayoutSlip.STATE_BC);
+		}
+		if (setupC1SlipLogic.isSelected() || setupC2SlipLogic.isSelected()) {
+			setLogicSlip(c1SlipHead,(TrackSegment)layoutSlip.getConnectA(),c2SlipHead,
+					(TrackSegment)layoutSlip.getConnectB(),setupC1SlipLogic.isSelected(),
+					setupC2SlipLogic.isSelected(),layoutSlip, layoutSlip.getTurnoutB(), 
+                     layoutSlip.getTurnout(),LayoutSlip.STATE_AC, LayoutSlip.STATE_BC);
+		}
+		if (setupD1SlipLogic.isSelected() || setupD2SlipLogic.isSelected()) {
+			setLogicSlip(d1SlipHead,(TrackSegment)layoutSlip.getConnectB(),d2SlipHead,
+					(TrackSegment)layoutSlip.getConnectA(),setupD1SlipLogic.isSelected(),
+					setupD2SlipLogic.isSelected(),layoutSlip, layoutSlip.getTurnoutB(), 
+                     layoutSlip.getTurnout(),LayoutSlip.STATE_BD, LayoutSlip.STATE_AD);
+		}
+		// finish up
+		setSignalsAtSlipOpen = false;
+		setSignalsAtSlipFrame.setVisible(false);
+		if (needRedraw) {
+			layoutEditor.redrawPanel();
+			needRedraw = false;
+			layoutEditor.setDirty();
+		}		
+	}
+	private boolean getSlipSignalHeadInformation() {
+		a1SlipHead = getSignalHeadFromEntry(a1SlipField,true,setSignalsAtSlipFrame);
+		if (a1SlipHead==null) return false;
+		a2SlipHead = getSignalHeadFromEntry(a2SlipField,false,setSignalsAtSlipFrame);
+		b1SlipHead = getSignalHeadFromEntry(b1SlipField,true,setSignalsAtSlipFrame);
+		if (b1SlipHead==null) return false;
+		b2SlipHead = getSignalHeadFromEntry(b2SlipField,false,setSignalsAtSlipFrame);
+		c1SlipHead = getSignalHeadFromEntry(c1SlipField,true,setSignalsAtSlipFrame);
+		if (c1SlipHead==null) return false;
+		c2SlipHead = getSignalHeadFromEntry(c2SlipField,false,setSignalsAtSlipFrame);
+		d1SlipHead = getSignalHeadFromEntry(d1SlipField,true,setSignalsAtSlipFrame);
+		if (d1SlipHead==null) return false;
+		d2SlipHead = getSignalHeadFromEntry(d2SlipField,false,setSignalsAtSlipFrame);
+		return true;
+	}
+	private void placeA1Slip(String headName) {
+		// place head near the continuing track of turnout 1
+        placingBlock(getSignalHeadIcon(headName), false, 0.0);
+	}
+	private void placeA2Slip(String headName) {
+        SignalHeadIcon l = getSignalHeadIcon(headName);
+        placingBlock(l, false, (4+l.getHeight()));
+	}
+	private void placeB1Slip(String headName) {
+        placingBlockB(getSignalHeadIcon(headName), true, 0.0);
+	}
+	private void placeB2Slip(String headName) {
+        SignalHeadIcon l = getSignalHeadIcon(headName);
+        placingBlockB(l, true, (4+l.getHeight()));
+	}
+	private void placeC1Slip(String headName) {
+        placingBlockC(getSignalHeadIcon(headName), false, 0.0);
+	}
+	private void placeC2Slip(String headName) {
+        SignalHeadIcon l = getSignalHeadIcon(headName);
+        placingBlockC(l, false, (4+l.getHeight()));
+	}
+	private void placeD1Slip(String headName) {
+        placingBlockD(getSignalHeadIcon(headName), true, 0.0);
+
+	}
+	private void placeD2Slip(String headName) {
+        SignalHeadIcon l = getSignalHeadIcon(headName);
+        placingBlockD(l, true, (4+l.getHeight()));
+	}
+	@SuppressWarnings("null")
+	private void setLogicSlip(SignalHead head,TrackSegment track1,SignalHead secondHead,TrackSegment track2,
+					boolean setup1, boolean setup2, 
+						LayoutSlip slip, Turnout nearTurnout, Turnout farTurnout,
+                            int continueState, int divergeState) {
+		// initialize common components and ensure all is defined
+		LayoutBlock connectorBlock = slip.getLayoutBlock();
+		Sensor connectorOccupancy = null;
+		if (connectorBlock==null){
+			JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+					rb.getString("InfoMessage6"),"",JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		connectorOccupancy = connectorBlock.getOccupancySensor();
+		if (connectorOccupancy==null) {
+			JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("InfoMessage4"),
+						new Object[]{connectorBlock.getUserName()}), 
+							null,JOptionPane.INFORMATION_MESSAGE);						
+			return;
+		}
+        
+        int nearState = layoutSlip.getTurnoutState(nearTurnout, continueState);
+        int farState = layoutSlip.getTurnoutState(farTurnout, continueState);
+
+		// setup signal head for continuing track of far turnout (or both tracks of far turnout)
+		if ( (track1==null) && setup1 ) {
+			JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+					rb.getString("InfoMessage7"),"",JOptionPane.INFORMATION_MESSAGE);			
+			return;
+		}			
+		Sensor occupancy = null;
+		SignalHead nextHead = null;
+		if ( (track1!=null) && setup1) {
+			LayoutBlock block = track1.getLayoutBlock();
+			if (block==null) {
+				JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+					rb.getString("InfoMessage6"),"",JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+			occupancy = block.getOccupancySensor();
+			if (occupancy==null) {
+				JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("InfoMessage4"),
+						new Object[]{block.getUserName()}), 
+							null,JOptionPane.INFORMATION_MESSAGE);						
+				return;
+			}
+            //need to sort this out???
+			nextHead = getNextSignalFromObject(track1,slip,
+										head.getSystemName(), setSignalsAtSlipFrame);
+			if ( (nextHead==null) && (!reachedEndBumper()) ) {
+				JOptionPane.showMessageDialog(setSignalsFrame,
+					java.text.MessageFormat.format(rb.getString("InfoMessage5"),
+						new Object[]{block.getUserName()}), 
+							null,JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+			if (secondHead!=null) {
+				// this head signals only the continuing track of the far turnout
+                //Need to work out how to add the state of both turnouts
+				if (!initializeBlockBossLogic(head.getSystemName())) return;
+				logic.setMode(BlockBossLogic.TRAILINGMAIN);
+                if(farState==Turnout.THROWN)
+                    logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
+				logic.setTurnout(farTurnout.getSystemName());
+				logic.setSensor1(occupancy.getSystemName());
+				if (occupancy!=connectorOccupancy)
+					logic.setSensor2(connectorOccupancy.getSystemName());
+				if (nextHead!=null) {
+					logic.setWatchedSignal1(nextHead.getSystemName(),false);
+				}
+				if (auxSignal!=null) {
+					logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+				}
+				String nearSensorName = setupNearLogixSlip(nearTurnout, nearState, head, farTurnout, farState);
+				addNearSensorToSlipLogic(nearSensorName);
+				finalizeBlockBossLogic();
+			}
+		}
+		if ( (secondHead!=null) && !setup2 ) return;
+		SignalHead savedAuxSignal = auxSignal;
+		if (track2==null) {
+			JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+					rb.getString("InfoMessage7"),"",JOptionPane.INFORMATION_MESSAGE);			
+			return;
+		}
+		LayoutBlock block2 = track2.getLayoutBlock();
+		if (block2==null) {
+			JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+					rb.getString("InfoMessage6"),"",JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		Sensor occupancy2 = block2.getOccupancySensor();
+		if (occupancy2==null) {
+			JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+				java.text.MessageFormat.format(rb.getString("InfoMessage4"),
+					new Object[]{block2.getUserName()}), 
+						null,JOptionPane.INFORMATION_MESSAGE);						
+			return;
+		}
+		SignalHead nextHead2 = null;
+		if (secondHead!=null) {
+			nextHead2 = getNextSignalFromObject(track2,
+					slip, secondHead.getSystemName(), setSignalsAtSlipFrame);
+			if ( (nextHead2==null) && (!reachedEndBumper()) ) {
+				JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
+					java.text.MessageFormat.format(rb.getString("InfoMessage5"),
+						new Object[]{block2.getUserName()}), 
+							null,JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+		}
+		if ( (secondHead==null) && (track1!=null) && setup1 ) {
+			if (!initializeBlockBossLogic(head.getSystemName())) return;
+			logic.setMode(BlockBossLogic.FACING);
+			logic.setTurnout(farTurnout.getSystemName());
+			logic.setWatchedSensor1(occupancy.getSystemName());
+			logic.setWatchedSensor2(occupancy2.getSystemName());
+			logic.setSensor2(connectorOccupancy.getSystemName());
+			if (nextHead!=null) {
+				logic.setWatchedSignal1(nextHead.getSystemName(),false);
+			}
+			if (savedAuxSignal!=null) {
+				logic.setWatchedSignal1Alt(savedAuxSignal.getSystemName());
+			}
+			if (nextHead2!=null) {
+				logic.setWatchedSignal2(nextHead2.getSystemName());
+			}
+			if (auxSignal!=null) {
+				logic.setWatchedSignal2Alt(auxSignal.getSystemName());
+			}		
+			String nearSensorName = setupNearLogixSlip(nearTurnout, nearState,head, farTurnout, farState);
+			addNearSensorToSlipLogic(nearSensorName);
+			logic.setLimitSpeed2(true);
+			finalizeBlockBossLogic();
+		}
+		else if ( (secondHead!=null) && setup2) {
+			if (!initializeBlockBossLogic(secondHead.getSystemName())) return;
+            nearState = layoutSlip.getTurnoutState(nearTurnout, divergeState);
+            farState = layoutSlip.getTurnoutState(farTurnout, divergeState);
+			
+            logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
+            if(farState==Turnout.CLOSED)
+                logic.setMode(BlockBossLogic.TRAILINGMAIN);
+			logic.setTurnout(farTurnout.getSystemName());
+			logic.setSensor1(occupancy2.getSystemName());
+			if (occupancy2!=connectorOccupancy)
+				logic.setSensor2(connectorOccupancy.getSystemName());
+			if (nextHead2!=null) {
+				logic.setWatchedSignal1(nextHead2.getSystemName(),false);
+			}
+			if (auxSignal!=null) {
+				logic.setWatchedSignal1Alt(auxSignal.getSystemName());
+			}
+			String nearSensorName = setupNearLogixSlip(nearTurnout, nearState, secondHead, farTurnout, farState);
+			addNearSensorToSlipLogic(nearSensorName);
+			logic.setLimitSpeed2(true);
+			finalizeBlockBossLogic();			
+		}
+	}
+    private String setupNearLogixSlip(Turnout turn, int nearState, 
+					SignalHead head, Turnout farTurn, int farState) {
+		String turnoutName = turn.getDisplayName();
+        String farTurnoutName = farTurn.getDisplayName();
+        String namer = turnoutName+head.getDisplayName();
+		String sensorName = "IS"+namer;
+		String logixName = "IX"+namer;
+		Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+		if (sensor==null) {
+			log.error("Trouble creating sensor "+sensorName+" while setting up Logix.");
+			return "";
+		}
+		if (InstanceManager.logixManagerInstance().getBySystemName(logixName)==null) {
+			// Logix does not exist, create it
+			Logix x = InstanceManager.logixManagerInstance().createNewLogix(logixName,"");
+			if (x==null) {
+				log.error("Trouble creating logix "+logixName+" while setting up signal logic.");
+				return "";
+			}
+			String cName = x.getSystemName()+"C1";
+			Conditional c = InstanceManager.conditionalManagerInstance().
+												createNewConditional(cName,"");
+			if (c==null) {
+				log.error("Trouble creating conditional "+cName+" while setting up Logix.");
+				return "";
+			}
+			int type = Conditional.TYPE_TURNOUT_THROWN;
+            if(nearState==Turnout.CLOSED) type = Conditional.TYPE_TURNOUT_CLOSED;
+            ArrayList <ConditionalVariable> variableList = c.getCopyOfStateVariables();
+            variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND, 
+                                                 type, turnoutName, true));
+            
+            type = Conditional.TYPE_TURNOUT_THROWN;
+            if (farState==Turnout.CLOSED) type = Conditional.TYPE_TURNOUT_CLOSED;
+            variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND, 
+                                                 type, farTurnoutName, true));
+            c.setStateVariables(variableList);
+            ArrayList <ConditionalAction> actionList = c.getCopyOfActions();
+            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
+                                                 Conditional.ACTION_SET_SENSOR, sensorName,
+                                                 Sensor.INACTIVE, ""));
+            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
+                                                 Conditional.ACTION_SET_SENSOR, sensorName,
+                                                 Sensor.ACTIVE, ""));
+			c.setAction(actionList);										// string data
+			x.addConditional(cName,-1);
+			x.activateLogix();
+		}
+		return sensorName;
+	}
+	/*
+	 * Adds the sensor specified to the open BlockBossLogic, provided it is not already there and 
+	 *		provided there is an open slot. If 'name' is null or empty, returns without doing anything.
+	 */
+	private void addNearSensorToSlipLogic(String name) {
+		if ( (name==null) || name.equals("") ) return;
+		// return if a sensor by this name is already present
+		if ( (logic.getSensor1()!=null) && (logic.getSensor1()).equals(name) ) return;
+		if ( (logic.getSensor2()!=null) && (logic.getSensor2()).equals(name) ) return;
+		if ( (logic.getSensor3()!=null) && (logic.getSensor3()).equals(name) ) return;
+		if ( (logic.getSensor4()!=null) && (logic.getSensor4()).equals(name) ) return;
+		if ( (logic.getSensor5()!=null) && (logic.getSensor5()).equals(name) ) return;
+		// add in the first available slot
+		if (logic.getSensor1()==null) logic.setSensor1(name);
+		else if (logic.getSensor2()==null) logic.setSensor2(name);
+		else if (logic.getSensor3()==null) logic.setSensor3(name);
+		else if (logic.getSensor4()==null) logic.setSensor4(name);
+		else if (logic.getSensor5()==null) logic.setSensor5(name);
+		else log.error("Error - could not add sensor to SSL for signal head "+logic.getDrivenSignal());
+	}
+    
+    public SignalHeadIcon getSignalHeadIcon(String signalName) {
+        SignalHeadIcon l = new SignalHeadIcon(layoutEditor);
+		l.setSignalHead(signalName);
+        l.setIcon(rbean.getString("SignalHeadStateRed"), signalIconEditor.getIcon(0));
+        l.setIcon(rbean.getString("SignalHeadStateFlashingRed"), signalIconEditor.getIcon(1));
+        l.setIcon(rbean.getString("SignalHeadStateYellow"), signalIconEditor.getIcon(2));
+        l.setIcon(rbean.getString("SignalHeadStateFlashingYellow"), signalIconEditor.getIcon(3));
+        l.setIcon(rbean.getString("SignalHeadStateGreen"), signalIconEditor.getIcon(4));
+        l.setIcon(rbean.getString("SignalHeadStateFlashingGreen"), signalIconEditor.getIcon(5));
+        l.setIcon(rbean.getString("SignalHeadStateDark"), signalIconEditor.getIcon(6));
+        l.setIcon(rbean.getString("SignalHeadStateHeld"), signalIconEditor.getIcon(7));
+        l.setIcon(rbean.getString("SignalHeadStateLunar"), signalIconEditor.getIcon(8));
+        l.setIcon(rbean.getString("SignalHeadStateFlashingLunar"), signalIconEditor.getIcon(9));
+        l.rotate(90);
+        return l;
+	}
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutEditorTools.class.getName());
 }

@@ -24,6 +24,7 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 		super.initComponents(location, track);
 		
 		_toolMenu.add(new ChangeTrackTypeAction (this));
+		_toolMenu.add(new IgnoreUsedTrackAction (this));
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Interchange", true);
 		
 		// override text strings for tracks

@@ -108,15 +108,15 @@ public class LayoutTurnout
 
 	// operational instance variables (not saved between sessions)
 	//private Turnout turnout = null;
-    private NamedBeanHandle<Turnout> namedTurnout = null;
+    protected NamedBeanHandle<Turnout> namedTurnout = null;
     //Second turnout is used to either throw a second turnout in a cross over or if one turnout address is used to throw two physical ones
-    private NamedBeanHandle<Turnout> secondNamedTurnout = null;
-	private LayoutBlock block = null;
+    protected NamedBeanHandle<Turnout> secondNamedTurnout = null;
+	protected LayoutBlock block = null;
 	private LayoutBlock blockB = null;  // Xover - second block, if there is one
 	private LayoutBlock blockC = null;  // Xover - third block, if there is one
 	private LayoutBlock blockD = null;  // Xover - fourth block, if there is one
-	private LayoutTurnout instance = null;
-	private LayoutEditor layoutEditor = null;
+	protected LayoutTurnout instance = null;
+	protected LayoutEditor layoutEditor = null;
 	private java.beans.PropertyChangeListener mTurnoutListener = null;
 	
 	// persistent instances variables (saved between sessions)
@@ -132,6 +132,7 @@ public class LayoutTurnout
 	public String blockBName = "";  // Xover - name for second block, if there is one
 	public String blockCName = "";  // Xover - name for third block, if there is one
 	public String blockDName = "";  // Xover - name for fourth block, if there is one
+    
 	public String signalA1Name = ""; // signal 1 (continuing) (throat for RH, LH, WYE)
 	public String signalA2Name = ""; // signal 2 (diverging) (throat for RH, LH, WYE)
 	public String signalA3Name = ""; // signal 3 (second diverging) (3-way turnouts only)
@@ -141,15 +142,16 @@ public class LayoutTurnout
 	public String signalC2Name = ""; // RH_Xover and double crossover only
 	public String signalD1Name = ""; // single or double crossover only
 	public String signalD2Name = ""; // LH_Xover and double crossover only
+    
 	public String signalAMast = ""; // Throat
 	public String signalBMast = ""; // Continuing 
 	public String signalCMast = ""; // diverging
 	public String signalDMast = ""; // single or double crossover only
     
-    private NamedBeanHandle<Sensor> sensorANamed = null; // Throat
-    private NamedBeanHandle<Sensor> sensorBNamed = null; // Continuing 
-    private NamedBeanHandle<Sensor> sensorCNamed = null; // diverging
-    private NamedBeanHandle<Sensor> sensorDNamed = null; // single or double crossover only
+    protected NamedBeanHandle<Sensor> sensorANamed = null; // Throat
+    protected NamedBeanHandle<Sensor> sensorBNamed = null; // Continuing 
+    protected NamedBeanHandle<Sensor> sensorCNamed = null; // diverging
+    protected NamedBeanHandle<Sensor> sensorDNamed = null; // single or double crossover only
     
 	public int type = RH_TURNOUT;
 	public Object connectA = null;		// throat of LH, RH, RH Xover, LH Xover, and WYE turnouts
@@ -166,7 +168,9 @@ public class LayoutTurnout
 	public int linkType = NO_LINK;
     
     private boolean useBlockSpeed = false;
-
+    
+    protected LayoutTurnout() {}
+    
 	/** 
 	 * constructor method
 	 */  
@@ -290,6 +294,7 @@ public class LayoutTurnout
 	public void setSignalD1Name(String signalName) {signalD1Name = signalName;}
 	public String getSignalD2Name() {return signalD2Name;}
 	public void setSignalD2Name(String signalName) {signalD2Name = signalName;}
+    
     public String getSignalAMast() {return signalAMast;}
 	public void setSignalAMast(String signalMast) {signalAMast = signalMast;}
 	public String getSignalBMast() {return signalBMast;}
@@ -1174,6 +1179,7 @@ public class LayoutTurnout
 			case LH_XOVER:
 				popup.add(rb.getString("LHXOverTurnout"));
 				break;
+            default : break;
 		}
 		if (getTurnout()==null) popup.add(rb.getString("NoTurnout"));
 		else popup.add(rb.getString("Turnout")+": "+turnoutName);
@@ -1484,11 +1490,11 @@ public class LayoutTurnout
     }
     
 	// variables for Edit Layout Turnout pane
-	private JmriJFrame editLayoutTurnoutFrame = null;
+	protected JmriJFrame editLayoutTurnoutFrame = null;
 	private JTextField turnoutNameField = new JTextField(16);
     private JmriBeanComboBox secondTurnoutComboBox;
     private JLabel secondTurnoutLabel;
-	private JTextField blockNameField = new JTextField(16);
+	protected JTextField blockNameField = new JTextField(16);
 	private JTextField blockBNameField = new JTextField(16);
 	private JTextField blockCNameField = new JTextField(16);
 	private JTextField blockDNameField = new JTextField(16);
@@ -1502,8 +1508,8 @@ public class LayoutTurnout
 	private JButton turnoutEditBlockC;
 	private JButton turnoutEditBlockD;
 	private boolean editOpen = false;
-	private boolean needRedraw = false;
-	private boolean needsBlockUpdate = false;
+	protected boolean needRedraw = false;
+	protected boolean needsBlockUpdate = false;
     private JCheckBox additionalTurnout = new JCheckBox(rb.getString("SupportingTurnout"));
 
     /**
@@ -2063,7 +2069,7 @@ public class LayoutTurnout
     }
     
     void removeSML(String signalMast){
-        if(signalMast==null || !signalMast.equals(""))
+        if(signalMast==null || signalMast.equals(""))
             return;
         jmri.SignalMast mast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
         if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(mast)){

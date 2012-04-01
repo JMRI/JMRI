@@ -24,6 +24,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.ScheduleManager;
 
@@ -252,7 +253,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 			carLoads.setPickupComment(_type, (String)comboBox.getSelectedItem(), pickupCommentTextField.getText());
 			carLoads.setDropComment(_type, (String)comboBox.getSelectedItem(), dropCommentTextField.getText());
 			CarManagerXml.instance().setDirty(true);	// save car files
-			TrainManager.instance().save();	// save all files that have been modified;
+			OperationsXml.save();	// save all files that have been modified;
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
 		}

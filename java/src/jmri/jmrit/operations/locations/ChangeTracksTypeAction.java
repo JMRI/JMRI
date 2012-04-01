@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 
 
 /**
@@ -113,7 +114,7 @@ class ChangeTracksFrame extends OperationsFrame{
 	
 	private void changeTracks(String type){
 		log.debug("change tracks to "+type);
-		List<String> ids = _location.getTracksByNameList(null);
+		List<String> ids = _location.getTrackIdsByNameList(null);
 		for (int i=0; i<ids.size(); i++){
 			Track track = _location.getTrackById(ids.get(i));
 			track.setLocType(type);
@@ -122,7 +123,7 @@ class ChangeTracksFrame extends OperationsFrame{
 			_location.setLocationOps(Location.STAGING);
 		else
 			_location.setLocationOps(Location.NORMAL);
-		LocationManagerXml.instance().writeOperationsFile();
+		OperationsXml.save();
 		_lef.dispose();
 		dispose();
 	}

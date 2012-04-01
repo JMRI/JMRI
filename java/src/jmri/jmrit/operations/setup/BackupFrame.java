@@ -11,10 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.jmrit.operations.OperationsXml;
 
 
 /**
@@ -79,11 +76,10 @@ public class BackupFrame extends OperationsFrame {
 		if (ae.getSource() == backupButton){
 			log.debug("backup button activated");
 			// check to see if files are dirty
-			if (CarManagerXml.instance().isDirty() || EngineManagerXml.instance().isDirty() 
-					|| TrainManagerXml.instance().isDirty()){
+			if (OperationsXml.areFilesDirty()){
 				if(JOptionPane.showConfirmDialog(this, rb.getString("OperationsFilesModified"),
 						rb.getString("SaveOperationFiles"), JOptionPane.YES_NO_OPTION)== JOptionPane.YES_OPTION) {
-					TrainManager.instance().save();
+					OperationsXml.save();
 				}
 			}				
 			// check to see if directory already exists

@@ -22,7 +22,7 @@ import org.jdom.Element;
 /**
  * Represents a location on the layout
  * 
- * @author Daniel Boudreau Copyright (C) 2008
+ * @author Daniel Boudreau Copyright (C) 2008, 2012
  * @version $Revision$
  */
 public class Location implements java.beans.PropertyChangeListener {
@@ -50,6 +50,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	protected Point _trainIconSouth = new Point();
 	protected Hashtable<String, Track> _trackHashTable = new Hashtable<String, Track>();
 	protected PhysicalLocation _physicalLocation = new PhysicalLocation();
+    protected List<String> _listTypes  = new ArrayList<String>();
 	
 	// Pool
 	protected int _idPoolNumber = 0;
@@ -104,7 +105,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		String old = _name;
 		_name = name;
 		if (!old.equals(name)){
-			firePropertyChange(NAME_CHANGED_PROPERTY, old, name);
+			setDirtyAndFirePropertyChange(NAME_CHANGED_PROPERTY, old, name);
 		}
 	}
 	
@@ -133,7 +134,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		int old = _length;
 		_length = length;
 		if (old != length)
-			firePropertyChange(LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
+			setDirtyAndFirePropertyChange(LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
 	}
 
 	/**
@@ -148,7 +149,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		int old = _usedLength;
 		_usedLength = length;
 		if (old != length)
-			firePropertyChange(USEDLENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
+			setDirtyAndFirePropertyChange(USEDLENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
 	}
 	
 	/**
@@ -167,7 +168,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		int old = _locationOps;
 		_locationOps = ops;
 		if (old != ops)
-			firePropertyChange("locationOps", Integer.toString(old), Integer.toString(ops));
+			setDirtyAndFirePropertyChange("locationOps", Integer.toString(old), Integer.toString(ops));
 	}
 	
 	public int getLocationOps() {
@@ -183,7 +184,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		int old = _trainDir;
 		_trainDir = direction;
 		if (old != direction)
-			firePropertyChange(TRAINDIRECTION_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(direction));
+			setDirtyAndFirePropertyChange(TRAINDIRECTION_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(direction));
 	}
 	
 	public int getTrainDirections(){
@@ -198,7 +199,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		int old = _numberRS;
 		_numberRS = number;
 		if (old != number)
-			firePropertyChange("numberRS", Integer.toString(old), Integer.toString(number));
+			setDirtyAndFirePropertyChange("numberRS", Integer.toString(old), Integer.toString(number));
 	}
 	
 	/**
@@ -218,7 +219,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		boolean old = _switchList;
 		_switchList = switchList;
 		if (old != switchList)
-			firePropertyChange(SWITCHLIST_CHANGED_PROPERTY, old?"true":"false", switchList?"true":"false");
+			setDirtyAndFirePropertyChange(SWITCHLIST_CHANGED_PROPERTY, old?"true":"false", switchList?"true":"false");
 	}
 	
 	/**
@@ -233,7 +234,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		String old = _defaultPrinter;
 		_defaultPrinter = name;
 		if (!old.equals(name))
-			firePropertyChange("defaultPrinter", old, name);
+			setDirtyAndFirePropertyChange("defaultPrinter", old, name);
 	}
 	
 	public String getDefaultPrinterName(){
@@ -257,7 +258,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		String old = _status;
 		_status = status;
 		if (!old.equals(status))
-			firePropertyChange(STATUS_CHANGED_PROPERTY, old, status);
+			setDirtyAndFirePropertyChange(STATUS_CHANGED_PROPERTY, old, status);
 	}
 	
 	public String getStatus(){
@@ -268,7 +269,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		int old = _switchListState;
 		_switchListState = state;
 		if (old != state)
-			firePropertyChange("SwitchListState", old, state);
+			setDirtyAndFirePropertyChange("SwitchListState", old, state);
 	}
 	
 	public int getSwitchListState(){
@@ -281,7 +282,9 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * @param point The XY coordinates on the panel.
 	 */
 	public void setTrainIconEast(Point point){
+		Point old = _trainIconEast;
 		_trainIconEast = point;
+		setDirtyAndFirePropertyChange("TrainIconEast", old.toString(), point.toString());
 	}
 	
 	public Point getTrainIconEast(){
@@ -289,7 +292,9 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
 	
 	public void setTrainIconWest(Point point){
+		Point old = _trainIconWest;
 		_trainIconWest = point;
+		setDirtyAndFirePropertyChange("TrainIconWest", old.toString(), point.toString());
 	}
 	
 	public Point getTrainIconWest(){
@@ -297,7 +302,9 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
 	
 	public void setTrainIconNorth(Point point){
+		Point old = _trainIconNorth;
 		_trainIconNorth = point;
+		setDirtyAndFirePropertyChange("TrainIconNorth", old.toString(), point.toString());
 	}
 	
 	public Point getTrainIconNorth(){
@@ -305,7 +312,9 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
 	
 	public void setTrainIconSouth(Point point){
+		Point old = _trainIconSouth;
 		_trainIconSouth = point;
+		setDirtyAndFirePropertyChange("TrainIconSouth", old.toString(), point.toString());
 	}
 	
 	public Point getTrainIconSouth(){
@@ -334,7 +343,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	public void addPickupRS() {
 		int old = _pickupRS;
 		_pickupRS++;
-		firePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
+		setDirtyAndFirePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
 	}
 	
 	/**
@@ -344,7 +353,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	public void deletePickupRS() {
 		int old = _pickupRS;
 		_pickupRS--;
-		firePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
+		setDirtyAndFirePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
 	}
 	
 	/**
@@ -354,7 +363,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	public void addDropRS() {
 		int old = _dropRS;
 		_dropRS++;
-		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
+		setDirtyAndFirePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
 	}
 	
 	/**
@@ -364,9 +373,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	public void deleteDropRS() {
 		int old = _dropRS;
 		_dropRS--;
-			// set dirty
-    	LocationManagerXml.instance().setDirty(true);
-		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
+		setDirtyAndFirePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
 	}
 	
 	/**
@@ -388,19 +395,23 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
 
 	public void setComment(String comment) {
+		String old = _comment;
 		_comment = comment;
+		if (!old.equals(comment))
+			setDirtyAndFirePropertyChange ("LocationComment", old, comment);
+		
 	}
 
 	public String getComment() {
 		return _comment;
 	}
 	
-    List<String> list  = new ArrayList<String>();
+
     
     private String[] getTypeNames(){
-      	String[] types = new String[list.size()];
-     	for (int i=0; i<list.size(); i++)
-     		types[i] = list.get(i);
+      	String[] types = new String[_listTypes.size()];
+     	for (int i=0; i<_listTypes.size(); i++)
+     		types[i] = _listTypes.get(i);
    		return types;
     }
     
@@ -408,7 +419,7 @@ public class Location implements java.beans.PropertyChangeListener {
     	if (types.length == 0) return;
     	jmri.util.StringUtil.sort(types);
  		for (int i=0; i<types.length; i++)
- 			list.add(types[i]);
+ 			_listTypes.add(types[i]);
     }
     
     /**
@@ -417,25 +428,25 @@ public class Location implements java.beans.PropertyChangeListener {
      */
     public void addTypeName(String type){
     	// insert at start of list, sort later
-    	if (list.contains(type))
+    	if (_listTypes.contains(type))
     		return;
-    	list.add(0,type);
+    	_listTypes.add(0,type);
     	log.debug("location ("+getName()+") add rolling stock type "+type);
-    	firePropertyChange (TYPES_CHANGED_PROPERTY, list.size()-1, list.size());
+    	setDirtyAndFirePropertyChange (TYPES_CHANGED_PROPERTY, _listTypes.size()-1, _listTypes.size());
     }
     
     public void deleteTypeName(String type){
-    	if (!list.contains(type))
+    	if (!_listTypes.contains(type))
     		return;
-    	list.remove(type);
+    	_listTypes.remove(type);
     	log.debug("location ("+getName()+") delete rolling stock type "+type);
-     	firePropertyChange (TYPES_CHANGED_PROPERTY, list.size()+1, list.size());
+     	setDirtyAndFirePropertyChange (TYPES_CHANGED_PROPERTY, _listTypes.size()+1, _listTypes.size());
      }
     
     public boolean acceptsTypeName(String type){
     	if (!CarTypes.instance().containsName(type) && !EngineTypes.instance().containsName(type))
     		return false;
-    	return list.contains(type);
+    	return _listTypes.contains(type);
     }
   
 	/** 
@@ -472,7 +483,7 @@ public class Location implements java.beans.PropertyChangeListener {
         int id = Integer.parseInt(getId[1]);
         if (id > _IdNumber)
         	_IdNumber = id;
-        firePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_trackHashTable.size()));
+        setDirtyAndFirePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_trackHashTable.size()));
          // listen for name and state changes to forward
         track.addPropertyChangeListener(this);
     }
@@ -485,7 +496,7 @@ public class Location implements java.beans.PropertyChangeListener {
     		track.dispose();
     		Integer old = Integer.valueOf(_trackHashTable.size());
     		_trackHashTable.remove(track.getId());
-    		firePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_trackHashTable.size()));
+    		setDirtyAndFirePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_trackHashTable.size()));
     	}
     }
     
@@ -514,7 +525,11 @@ public class Location implements java.beans.PropertyChangeListener {
     	return _trackHashTable.get(id);
     }
     
-    private List<String> getTracksByIdList() {
+    /**
+     * Gets a list of track ids ordered by id for this location.
+     * @return list of track ids for this location
+     */
+    public List<String> getTrackIdsByIdList() {
 		String[] arr = new String[_trackHashTable.size()];
 		List<String> out = new ArrayList<String>();
 		Enumeration<String> en = _trackHashTable.keys();
@@ -535,9 +550,9 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * @param type track type: Track.YARD, Track.SIDING, Track.INTERCHANGE, Track.STAGING
 	 * @return list of track ids ordered by name
 	 */
-    public List<String> getTracksByNameList(String type) {
+    public List<String> getTrackIdsByNameList(String type) {
 		// first get id list
-		List<String> sortList = getTracksByIdList();
+		List<String> sortList = getTrackIdsByIdList();
 		// now re-sort
 		List<String> out = new ArrayList<String>();
 		String locName = "";
@@ -570,12 +585,13 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * Sort ids by track moves.  Returns a list of ids of a given track type.
      * If type is null returns all track ids for the location are returned.  
+     * Tracks with schedules are placed at the start of the list.
      * @param type track type: Track.YARD, Track.SIDING, Track.INTERCHANGE, Track.STAGING
      * @return list of track ids ordered by moves
      */
-    public List<String> getTracksByMovesList(String type) {
+    public List<String> getTrackIdsByMovesList(String type) {
 		// first get id list
-		List<String> sortList = getTracksByIdList();
+		List<String> sortList = getTrackIdsByIdList();
 		// now re-sort
 		List<String> moveList = new ArrayList<String>();
 		boolean locAdded = false;
@@ -627,7 +643,7 @@ public class Location implements java.beans.PropertyChangeListener {
      * Reset the move count for all tracks at this location
      */
     public void resetMoves(){
-    	List<String> tracks = getTracksByIdList();
+    	List<String> tracks = getTrackIdsByIdList();
     	for (int i=0; i<tracks.size(); i++) {
     		Track track = getTrackById(tracks.get(i));
     		track.setMoves(0);
@@ -642,7 +658,7 @@ public class Location implements java.beans.PropertyChangeListener {
     public void updateComboBox(JComboBox box) {
     	box.removeAllItems();
     	box.addItem("");
-    	List<String> tracks = getTracksByNameList(null);
+    	List<String> tracks = getTrackIdsByNameList(null);
 		for (int i = 0; i < tracks.size(); i++){
 			box.addItem(getTrackById(tracks.get(i)));
 		}
@@ -659,7 +675,7 @@ public class Location implements java.beans.PropertyChangeListener {
     	updateComboBox(box);
     	if (!filter || rs == null)
     		return;
-       	List<String> tracks = getTracksByNameList(null);
+       	List<String> tracks = getTrackIdsByNameList(null);
 		for (int i = 0; i < tracks.size(); i++){
 			Track track = getTrackById(tracks.get(i));
 			String status = "";
@@ -677,6 +693,12 @@ public class Location implements java.beans.PropertyChangeListener {
 		}   	
     }
     
+    /**
+     * Adds a track pool for this location.  A track pool is a set of tracks
+     * where the length of the tracks is shared between all of them.
+     * @param name the name of the Pool to create
+     * @return Pool
+     */
     public Pool addPool(String name){
 		Pool pool = getPoolByName(name);
 		if (pool == null){
@@ -692,7 +714,7 @@ public class Location implements java.beans.PropertyChangeListener {
     public void removePool(Pool pool){
     	if (pool != null){
     		_poolHashTable.remove(pool.getId());
-    		firePropertyChange(POOL_LENGTH_CHANGED_PROPERTY, Integer.valueOf(_poolHashTable.size()+1), Integer.valueOf(_poolHashTable.size()));
+    		setDirtyAndFirePropertyChange(POOL_LENGTH_CHANGED_PROPERTY, Integer.valueOf(_poolHashTable.size()+1), Integer.valueOf(_poolHashTable.size()));
     	} 	
     }
     
@@ -715,7 +737,7 @@ public class Location implements java.beans.PropertyChangeListener {
          int id = Integer.parseInt(getId[1]);
          if (id > _idPoolNumber)
          	_idPoolNumber = id;
-    	firePropertyChange(POOL_LENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_poolHashTable.size()));
+    	setDirtyAndFirePropertyChange(POOL_LENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_poolHashTable.size()));
     }
 
     public void updatePoolComboBox(JComboBox box) {
@@ -727,6 +749,10 @@ public class Location implements java.beans.PropertyChangeListener {
 		}
     }
     
+    /**
+     * Gets a list of Pools for this location.
+     * @return A list of Pools
+     */
     public List<Pool> getPoolsByNameList(){
     	List<Pool> pools = new ArrayList<Pool>();
     	Enumeration<Pool> en =_poolHashTable.elements();
@@ -736,17 +762,21 @@ public class Location implements java.beans.PropertyChangeListener {
     	return pools;
     }
     
+    /**
+     * Used to determine if there are Pools at this location.
+     * @return True if there are Pools at this location
+     */
     public boolean hasPools(){
     	return _poolHashTable.size()>0;
     }
   	    
     public void dispose(){
-    	List<String> tracks = getTracksByIdList();
+    	List<String> tracks = getTrackIdsByIdList();
     	for (int i=0; i<tracks.size(); i++){
     		Track track = getTrackById(tracks.get(i));
     		deleteTrack(track);
     	}
-    	firePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
+    	setDirtyAndFirePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
     }
  	
    /**
@@ -862,7 +892,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
         e.setAttribute("comment", getComment());
         
-        List<String> tracks = getTracksByIdList();
+        List<String> tracks = getTrackIdsByIdList();
         for (int i=0; i<tracks.size(); i++) {
         	String id = tracks.get(i);
         	Track track = getTrackById(id);
@@ -883,7 +913,7 @@ public class Location implements java.beans.PropertyChangeListener {
     	}
     	// if a track type change, must update all tables
     	if(e.getPropertyName().equals(Track.TRACK_TYPE_CHANGED_PROPERTY)){
-    		firePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, null, null);
+    		setDirtyAndFirePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, null, null);
     	}
     }
 
@@ -900,7 +930,8 @@ public class Location implements java.beans.PropertyChangeListener {
 		pcs.removePropertyChangeListener(l);
 	}
 
-	protected void firePropertyChange(String p, Object old, Object n) {
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
+		LocationManagerXml.instance().setDirty(true);
 		pcs.firePropertyChange(p, old, n);
 	}
 

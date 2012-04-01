@@ -5,6 +5,7 @@ package jmri.jmrit.operations.locations;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 
 import java.awt.*;
 
@@ -187,7 +188,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 				loc.deleteTypeName((String)typeComboBox.getSelectedItem());
 			}
 		}
-		LocationManagerXml.instance().writeOperationsFile();
+		OperationsXml.save();
 		updateLocations();
 		if (Setup.isCloseWindowOnSaveEnabled())
 			dispose();
@@ -218,7 +219,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 			boolean locAcceptsType = loc.acceptsTypeName(carType);
 			cb.setSelected(locAcceptsType);
 			addItemLeft(pLocations, cb, 0, x++);
-			List<String> tracks = loc.getTracksByNameList(null);
+			List<String> tracks = loc.getTrackIdsByNameList(null);
 			for (int j=0; j<tracks.size(); j++){
 				Track track = loc.getTrackById(tracks.get(j));
 				track.addPropertyChangeListener(this);
@@ -303,7 +304,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 				Location loc = manager.getLocationById(locationList.get(i).getName());
 				if (loc != null){
 					loc.removePropertyChangeListener(this);
-					List<String> tracks = loc.getTracksByNameList(null);
+					List<String> tracks = loc.getTrackIdsByNameList(null);
 					for (int j=0; j<tracks.size(); j++){
 						Track track = loc.getTrackById(tracks.get(j));
 						track.removePropertyChangeListener(this);

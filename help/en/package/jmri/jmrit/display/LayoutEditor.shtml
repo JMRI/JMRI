@@ -595,6 +595,26 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	selecting <b>Set Signals...</b> in the popup menu of either turnout will bring 
 	up this tool with both turnouts identified.  (For more information, see the 
 	help page for the Set Signals at Throat-to-Throat Turnouts dialog.)</li>
+    <li><b>Set Signals at a Slip</b> - This item provides an 
+	automated procedure for assigning signals at a single or double slip 
+    It also provides for placing signal heads around the level crossing and 
+    for setting up logic for those signals.
+    Prior to accessing this item, blocks must be defined for 
+	signaled regions of track on the panel, and the required signal heads must be 
+	in the Signal Head Table. When this item is selected, a drop down box is shown that lists 
+    the slips that have been defined on the panel to be signaled, and dialog boxes for entry of
+	names (system or user) of four to eight signal heads to be assigned. For 
+	each signal head, check boxes are available for selecting whether a signal  
+	head icon is to be placed on the panel, and whether signal logic 
+	is to be created for the signal head. Regardless of whether icons 
+	are placed or logic is created, Layout Editor will record that the entered 
+	signal heads are assigned to the specified turnouts. If create logic 
+	is requested and the tool does not have enough information available to 
+	set up the logic, you may have to return later after more signals have 
+	been assigned. After blocks have been assigned to the a slip, 
+    this tool can be reached by selecting <b>Set Signals...</b> in the slips popup menu.
+    (For more information, see the help page for the Set Signals at a Slip dialog.)</li>
+    </li>
 	<li><b>Set Signals at 3-Way Turnout...</b> - This item provides an 
 	automated procedure for assigning signals to two turnouts used to model a 
 	3-way turnout in Layout Editor. A 3-way turnout is modeled by using two 

@@ -969,6 +969,44 @@ public class LayoutBlockManager extends AbstractManager {
 				}
 			}
 		}
+        if((cType>=LayoutEditor.SLIP_A) || (cType<=LayoutEditor.SLIP_D)){
+            if(!facingIsBlock1)
+                return null;
+        
+            LayoutSlip ls = (LayoutSlip)connected;
+            if(cType==LayoutEditor.SLIP_A){
+                if(ls.getSlipState()==LayoutSlip.STATE_AD)
+                    return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalA2Name()));
+                else
+                    return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalA1Name()));
+            }
+            if(cType==LayoutEditor.SLIP_B){
+                if(ls.getTurnoutType()==LayoutSlip.DOUBLE_SLIP){
+                    if(ls.getSlipState()==LayoutSlip.STATE_BC)
+                        return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalB2Name()));
+                    else
+                        return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalB1Name()));
+                }
+                else
+                    return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalB1Name()));
+            }
+            if(cType==LayoutEditor.SLIP_C){
+                if(ls.getTurnoutType()==LayoutSlip.DOUBLE_SLIP){
+                    if(ls.getSlipState()==LayoutSlip.STATE_BC)
+                        return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalC2Name()));
+                    else
+                        return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalC1Name()));
+                }
+                else
+                    return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalC1Name()));
+            }
+            if(cType==LayoutEditor.SLIP_D){
+                if(ls.getSlipState()==LayoutSlip.STATE_AD)
+                    return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalD2Name()));
+                else
+                    return (InstanceManager.signalHeadManagerInstance().getSignalHead(ls.getSignalD1Name()));
+            }
+        }
 		// block boundary must be at a level crossing
 		if ( (cType<LayoutEditor.LEVEL_XING_A) || (cType>LayoutEditor.LEVEL_XING_D) ) {
 			log.error(cType +  " " + connected +" Block Boundary not identified correctly - Blocks "+facingBlock.getSystemName()+
@@ -1281,6 +1319,35 @@ public class LayoutBlockManager extends AbstractManager {
                 }
             return null;
         }
+        
+        if((cType>=LayoutEditor.SLIP_A) || (cType<=LayoutEditor.SLIP_D)){
+            LayoutSlip ls = (LayoutSlip)connected;
+            if(cType==LayoutEditor.SLIP_A){
+                if((ls.getSignalAMast()!=null) || (!ls.getSignalAMast().equals(""))){
+                    return (InstanceManager.signalMastManagerInstance().getSignalMast(ls.getSignalAMast()));
+                }
+                return null;
+            }
+            if(cType==LayoutEditor.SLIP_B){
+                if((ls.getSignalBMast()!=null) || (!ls.getSignalBMast().equals(""))){
+                    return (InstanceManager.signalMastManagerInstance().getSignalMast(ls.getSignalBMast()));
+                }
+                return null;
+            }
+            if(cType==LayoutEditor.SLIP_C){
+                if((ls.getSignalCMast()!=null) || (!ls.getSignalCMast().equals(""))){
+                    return (InstanceManager.signalMastManagerInstance().getSignalMast(ls.getSignalCMast()));
+                }
+                return null;
+            }
+            if(cType==LayoutEditor.SLIP_D){
+                if((ls.getSignalDMast()!=null) || (!ls.getSignalDMast().equals(""))){
+                    return (InstanceManager.signalMastManagerInstance().getSignalMast(ls.getSignalDMast()));
+                }
+                return null;
+            }
+        }
+        
         if ( (cType<LayoutEditor.LEVEL_XING_A) || (cType>LayoutEditor.LEVEL_XING_D) ) {
 			log.error("Block Boundary not identified correctly - Blocks "+facingBlock.getSystemName()+
 										", "+protectedBlock.getSystemName());
@@ -1412,6 +1479,33 @@ public class LayoutBlockManager extends AbstractManager {
                     return (InstanceManager.sensorManagerInstance().getSensor(lt.getSensorD()));
                 }
             return null;
+        }
+        if((cType>=LayoutEditor.SLIP_A) || (cType<=LayoutEditor.SLIP_D)){
+            LayoutSlip ls = (LayoutSlip)connected;
+            if(cType==LayoutEditor.SLIP_A){
+                if((ls.getSensorA()!=null) || (!ls.getSensorA().equals(""))){
+                    return (InstanceManager.sensorManagerInstance().getSensor(ls.getSensorA()));
+                }
+                return null;
+            }
+            if(cType==LayoutEditor.SLIP_B){
+                if((ls.getSensorB()!=null) || (!ls.getSensorB().equals(""))){
+                    return (InstanceManager.sensorManagerInstance().getSensor(ls.getSensorB()));
+                }
+                return null;
+            }
+            if(cType==LayoutEditor.SLIP_C){
+                if((ls.getSensorC()!=null) || (!ls.getSensorC().equals(""))){
+                    return (InstanceManager.sensorManagerInstance().getSensor(ls.getSensorC()));
+                }
+                return null;
+            }
+            if(cType==LayoutEditor.SLIP_D){
+                if((ls.getSensorD()!=null) || (!ls.getSensorD().equals(""))){
+                    return (InstanceManager.sensorManagerInstance().getSensor(ls.getSensorD()));
+                }
+                return null;
+            }
         }
         if ( (cType<LayoutEditor.LEVEL_XING_A) || (cType>LayoutEditor.LEVEL_XING_D) ) {
 			log.error(cType +  " " + connected +" Block Boundary not identified correctly - Blocks "+facingBlock.getSystemName()+
@@ -1566,6 +1660,10 @@ public class LayoutBlockManager extends AbstractManager {
             }
             
         }
+        LayoutSlip ls = panel.findLayoutSlipBySignalMast(signalMastName);
+        if(ls!=null){
+            return ls.getLayoutBlock();
+        }
         return null;
     }
      
@@ -1656,6 +1754,26 @@ public class LayoutBlockManager extends AbstractManager {
             }
             
         }
+        
+        LayoutSlip ls = panel.findLayoutSlipBySignalMast(signalMastName);
+        if(ls!=null){
+            Object connect;
+            if(ls.getSignalAMast().equals(signalMastName)){
+                connect = ls.getConnectA();
+            } else if (ls.getSignalBMast().equals(signalMastName)) {
+                connect = ls.getConnectB();
+            } else if (ls.getSignalCMast().equals(signalMastName)) {
+                connect = ls.getConnectC();
+            } else {
+                connect = ls.getConnectD();
+            }
+            
+            if (connect instanceof TrackSegment){
+                tr = (TrackSegment) connect;
+                log.debug("return block " + tr.getLayoutBlock().getDisplayName());
+                return tr.getLayoutBlock();
+            }
+        }
         return null;
     }
      
@@ -1727,6 +1845,10 @@ public class LayoutBlockManager extends AbstractManager {
                 return l.getLayoutBlockBD();
             }
             
+        }
+        LayoutSlip ls = panel.findLayoutSlipBySensor(sensorName);
+        if(ls!=null){
+            return ls.getLayoutBlock();
         }
         return null;
     }
@@ -1817,6 +1939,25 @@ public class LayoutBlockManager extends AbstractManager {
             
             }
             
+        }
+        LayoutSlip ls = panel.findLayoutSlipBySensor(sensorName);
+        if(ls!=null){
+            Object connect;
+            if(ls.getSensorA().equals(sensorName)){
+                connect = ls.getConnectA();
+            } else if (ls.getSensorB().equals(sensorName)) {
+                connect = ls.getConnectB();
+            } else if (ls.getSensorC().equals(sensorName)) {
+                connect = ls.getConnectC();
+            } else {
+                connect = ls.getConnectD();
+            }
+            
+            if (connect instanceof TrackSegment){
+                tr = (TrackSegment) connect;
+                log.debug("return block " + tr.getLayoutBlock().getDisplayName());
+                return tr.getLayoutBlock();
+            }
         }
         return null;
     }

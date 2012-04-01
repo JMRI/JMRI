@@ -11,6 +11,7 @@ import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 
 
 /**
@@ -115,7 +116,7 @@ class ChangeTrackFrame extends OperationsFrame{
 	private void changeTrack(String type){
 		log.debug("change track to "+type);
 		_tef._track.setLocType(type);
-		LocationManagerXml.instance().writeOperationsFile();
+		OperationsXml.save();
 		_tef.dispose();
 		dispose();
 	}

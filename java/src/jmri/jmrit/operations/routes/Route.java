@@ -61,7 +61,7 @@ public class Route implements java.beans.PropertyChangeListener {
 		String old = _name;
 		_name = name;
 		if (!old.equals(name)){
-			firePropertyChange("name", old, name);
+			setDirtyAndFirePropertyChange("name", old, name);
 		}
 	}
 	
@@ -78,7 +78,7 @@ public class Route implements java.beans.PropertyChangeListener {
 		String old = _comment;
 		_comment = comment;
 		if (!old.equals(comment)){
-			firePropertyChange("comment", old, comment);
+			setDirtyAndFirePropertyChange("comment", old, comment);
 		}
 	}
 
@@ -87,7 +87,7 @@ public class Route implements java.beans.PropertyChangeListener {
 	}
 
     public void dispose(){
-    	firePropertyChange (DISPOSE, null, DISPOSE);
+    	setDirtyAndFirePropertyChange (DISPOSE, null, DISPOSE);
     }
  
     /**
@@ -105,7 +105,7 @@ public class Route implements java.beans.PropertyChangeListener {
     	Integer old = Integer.valueOf(_routeHashTable.size());
     	_routeHashTable.put(rl.getId(), rl);
 
-    	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_routeHashTable.size()));
+    	setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_routeHashTable.size()));
     	// listen for drop and pick up changes to forward
     	rl.addPropertyChangeListener(this);
     	return rl;
@@ -142,7 +142,7 @@ public class Route implements java.beans.PropertyChangeListener {
         // find highest sequence number
         if (rl.getSequenceId() > _sequenceNum)
         	_sequenceNum = rl.getSequenceId();
-       	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_routeHashTable.size()));
+       	setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_routeHashTable.size()));
         // listen for drop and pick up changes to forward
         rl.addPropertyChangeListener(this);
     }
@@ -160,7 +160,7 @@ public class Route implements java.beans.PropertyChangeListener {
     		Integer old = Integer.valueOf(_routeHashTable.size());
     		_routeHashTable.remove(id);
     		resequenceIds();
-           	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_routeHashTable.size()));
+           	setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_routeHashTable.size()));
      	}
     }
     
@@ -294,7 +294,7 @@ public class Route implements java.beans.PropertyChangeListener {
     		if (searchId < 1)
     			found = true;
     	}
-    	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
+    	setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
     }
     
     /**
@@ -327,7 +327,7 @@ public class Route implements java.beans.PropertyChangeListener {
     		if (searchId > _sequenceNum)
     			found = true;
     	}
-    	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
+    	setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
     }
     
     /**
@@ -427,7 +427,7 @@ public class Route implements java.beans.PropertyChangeListener {
 				|| e.getPropertyName().equals(RouteLocation.PICKUP_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(RouteLocation.TRAIN_DIRECTION_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(RouteLocation.MAXMOVES_CHANGED_PROPERTY)) {
-			firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null,
+			setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null,
 					"RouteLocation");
 		}   	
     }
@@ -445,7 +445,8 @@ public class Route implements java.beans.PropertyChangeListener {
 		pcs.removePropertyChangeListener(l);
 	}
 
-	protected void firePropertyChange(String p, Object old, Object n) {
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
+		RouteManagerXml.instance().setDirty(true);
 		pcs.firePropertyChange(p, old, n);
 	}
 

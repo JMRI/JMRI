@@ -2,8 +2,6 @@
 
 package jmri.jmrit.operations.locations;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.util.Enumeration;
 
 import java.util.ArrayList;
@@ -29,11 +27,6 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength";
 	
-	// Edit Location frame attributes
-	protected LocationEditFrame _locationEditFrame = null;
-	protected Dimension _editFrameDimension = null;
-	protected Point _editFramePosition = null;
-    
 	public LocationManager() {
 		CarTypes.instance().addPropertyChangeListener(this);
 		CarRoads.instance().addPropertyChangeListener(this);
@@ -57,20 +50,6 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		if (Control.showInstance && log.isDebugEnabled()) log.debug("LocationManager returns instance "+_instance);
 		return _instance;
 	}
-
-	/* all JMRI window position and size are now saved
-	public void setLocationEditFrame(LocationEditFrame frame){
-		_locationEditFrame = frame;
-	}
-
-	public Dimension getLocationEditFrameSize(){
-		return _editFrameDimension;
-	}
-
-	public Point getLocationEditFramePosition(){
-		return _editFramePosition;
-	}
-	*/
 
     public void dispose() {
         _locationHashTable.clear();
@@ -236,7 +215,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     
     /**
      * Returns all tracks of type
-     * @param type Siding, Yard, Interchange, or Staging
+     * @param type Siding, Yard, Interchange, Staging, or null (returns all track types)
      * @return List of tracks ordered by use
      */
     public List<Track> getTracks(String type){
@@ -245,7 +224,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     	Location l;
     	for (int i=0; i<sortList.size(); i++){
     		l = getLocationById (sortList.get(i));
-    		List<String> tracks = l.getTracksByNameList(type);
+    		List<String> tracks = l.getTrackIdsByNameList(type);
     		for (int j=0; j<tracks.size(); j++){
     			Track track = l.getTrackById(tracks.get(j));
     			trackList.add(track);
@@ -298,15 +277,13 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     }
     
     public void replaceType(String oldType, String newType){
-   	   	// set dirty
-    	LocationManagerXml.instance().setDirty(true);
 		List<String> locs = getLocationsByIdList();
 		for (int i=0; i<locs.size(); i++){
 			Location loc = getLocationById(locs.get(i));
 			if (loc.acceptsTypeName(oldType)){
 				loc.addTypeName(newType);
 				// now adjust tracks
-				List<String> tracks = loc.getTracksByNameList(null);
+				List<String> tracks = loc.getTrackIdsByNameList(null);
 				for (int j=0; j<tracks.size(); j++){
 					Track track = loc.getTrackById(tracks.get(j));
 					if (track.acceptsTypeName(oldType)){
@@ -320,13 +297,11 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     }
     
 	public void replaceRoad(String oldRoad, String newRoad){
-   	   	// set dirty
-    	LocationManagerXml.instance().setDirty(true);
 		List<String> locs = getLocationsByIdList();
 		for (int i=0; i<locs.size(); i++){
 			Location loc = getLocationById(locs.get(i));
 			// now adjust any track locations
-			List<String> tracks = loc.getTracksByNameList(null);
+			List<String> tracks = loc.getTrackIdsByNameList(null);
 			for (int j=0; j<tracks.size(); j++){
 				Track track = loc.getTrackById(tracks.get(j));
 				if(track.containsRoadName(oldRoad)){
@@ -339,13 +314,11 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	}
 	
     public void replaceLoad(String oldLoadName, String newLoadName){
-   	   	// set dirty
-    	LocationManagerXml.instance().setDirty(true);
 		List<String> locs = getLocationsByIdList();
 		for (int i=0; i<locs.size(); i++){
 			Location loc = getLocationById(locs.get(i));
 			// now adjust tracks
-			List<String> tracks = loc.getTracksByNameList(null);
+			List<String> tracks = loc.getTrackIdsByNameList(null);
 			for (int j=0; j<tracks.size(); j++){
 				Track track = loc.getTrackById(tracks.get(j));
 				String[] loadNames = track.getLoadNames();
@@ -359,60 +332,6 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			}
 		}
     }
-
-    /* all JMRI window position and size are now saved
-	public void options (org.jdom.Element values) {
-		if (log.isDebugEnabled()) log.debug("ctor from element "+values);
-		// get Location Edit attributes
-		Element e = values.getChild("locationEditOptions");
-		if (e != null){
-			try {
-				int x = e.getAttribute("x").getIntValue();
-				int y = e.getAttribute("y").getIntValue();
-				int height = e.getAttribute("height").getIntValue();
-				int width = e.getAttribute("width").getIntValue();
-				_editFrameDimension = new Dimension(width, height);
-				_editFramePosition = new Point(x,y);
-			} catch ( org.jdom.DataConversionException ee) {
-				log.debug("Did not find location edit frame attributes");
-			} catch ( NullPointerException ne) {
-				log.debug("Did not find location edit frame attributes");
-			}
-		}
-	}
-	*/
-
-	/* all JMRI window position and size are now saved
-	   /**
-     * Create an XML element to represent this Entry. This member has to remain synchronized with the
-     * detailed DTD in operations-locations.dtd.
-     * @return Contents in a JDOM Element
-     */
-	/* all JMRI window position and size are now saved
-    public org.jdom.Element store() {
-    	Element values = new Element("options");
-        // now save Location Edit frame size and position
-        Element e = new org.jdom.Element("locationEditOptions");
-        Dimension size = getLocationEditFrameSize();
-        Point posn = getLocationEditFramePosition();
-        if (_locationEditFrame != null){
-        	size = _locationEditFrame.getSize();
-        	posn = _locationEditFrame.getLocation();
-        	_editFrameDimension = size;
-        	_editFramePosition = posn;
-        }
-        if (posn != null){
-        	e.setAttribute("x", ""+posn.x);
-        	e.setAttribute("y", ""+posn.y);
-        }
-        if (size != null){
-        	e.setAttribute("height", ""+size.height);
-        	e.setAttribute("width", ""+size.width); 
-        }
-        values.addContent(e);
-        return values;
-    }
-    */
     
 	/**
 	 * Check for car type and road name replacements. Also check for engine type

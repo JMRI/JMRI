@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -73,26 +74,25 @@ public class TrainSwitchLists extends TrainCommon {
 		}
 		addLine(fileOut, valid);
 		
-		// get a list of trains
-		List<String> trains = manager.getTrainsByTimeList();
+		// get a list of trains sorted by arrival time
+		List<Train> trains = getTrainsArrivingThisLocationList(location);
 		CarManager carManager = CarManager.instance();
 		EngineManager engineManager = EngineManager.instance();
 		for (int i=0; i<trains.size(); i++){
-			int pickupCars = 0;
-			int dropCars = 0;
-			int stops = 1;
-			boolean trainDone = false;
-			Train train = manager.getTrainById(trains.get(i));
+			Train train = trains.get(i);
 			if (!train.isBuilt())
 				continue;	// train wasn't built so skip
 			if (newTrainsOnly && train.getSwitchListStatus().equals(Train.PRINTED))
 				continue;	// already printed this train
-			List<String> carList = carManager.getByTrainDestinationList(train);
-			List<String> enginesList = engineManager.getByTrainList(train);
-			// does the train stop once or more at this location?
 			Route route = train.getRoute();
 			if (route == null)
 				continue;	// no route for this train
+			// some cars counts and the number of times this location get's serviced
+			int pickupCars = 0;
+			int dropCars = 0;
+			int stops = 1;
+			boolean trainDone = false;
+			// does the train stop once or more at this location?
 			List<String> routeList = route.getLocationsBySequenceList();
 			for (int r=0; r<routeList.size(); r++){
 				RouteLocation rl = route.getLocationById(routeList.get(r));
@@ -100,7 +100,7 @@ public class TrainSwitchLists extends TrainCommon {
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
 					if (expectedArrivalTime.equals("-1")){
 						trainDone = true;
-						expectedArrivalTime = "0";
+						//expectedArrivalTime = "0";
 					}
 					if (stops > 1){
 						// Print visit number only if previous location wasn't the same
@@ -108,7 +108,9 @@ public class TrainSwitchLists extends TrainCommon {
 						if (!splitString(rl.getName()).equals(splitString(rlPrevious.getName()))){
 							newLine(fileOut);
 							if (train.isTrainInRoute()){
-								if (r != routeList.size()-1)
+								if (expectedArrivalTime.equals("-1"))
+									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberDone"), new Object[]{stops, train.getName()}));
+								else if (r != routeList.size()-1)
 									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberDeparted"), new Object[]{stops, train.getName(), expectedArrivalTime, rl.getTrainDirectionString()}));
 								else
 									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberTerminatesDeparted"), new Object[]{stops, train.getName(), expectedArrivalTime, splitString(rl.getName())}));
@@ -139,10 +141,11 @@ public class TrainSwitchLists extends TrainCommon {
 						}
 					}
 					// go through the list of engines and determine if the engine departs here
-					
+					List<String> enginesList = engineManager.getByTrainList(train);
 					pickupEngines(fileOut, enginesList, rl);
 
 					// get a list of cars and determine if this location is serviced
+					List<String> carList = carManager.getByTrainDestinationList(train);
 					// block cars by destination
 					for (int j = 0; j < routeList.size(); j++) {						
 						RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
@@ -182,7 +185,6 @@ public class TrainSwitchLists extends TrainCommon {
 				if (stops > 1 && pickupCars == 0){
 					addLine(fileOut, rb.getString("NoCarPickUps"));
 				}
-
 				if (stops > 1 && dropCars == 0){
 					addLine(fileOut, rb.getString("NoCarDrops"));
 				}
@@ -203,7 +205,73 @@ public class TrainSwitchLists extends TrainCommon {
 					+ " " + location.getName(), isPreview, Setup.getFontName(),
 					false, Setup.getManifestLogoURL(), location.getDefaultPrinterName(), Setup.getSwitchListOrientation());
 	}
+	
+	/**
+	 * Provides a list of trains ordered by arrival time to this location
+	 * @param location The location
+	 * @return A list of trains ordered by arrival time.
+	 */
+	private List<Train> getTrainsArrivingThisLocationList(Location location){
+		// get a list of trains
+		List<String> trainIds = manager.getTrainsByTimeList();
+		List<Train> trains = new ArrayList<Train>();
+		List<Integer>arrivalTimes = new ArrayList<Integer>();
+		for (int i=0; i<trainIds.size(); i++){
+			Train train = manager.getTrainById(trainIds.get(i));
+			if (!train.isBuilt())
+				continue;	// train wasn't built so skip
+			Route route = train.getRoute();
+			if (route == null)
+				continue;	// no route for this train
+			List<String> routeList = route.getLocationsBySequenceList();
+			for (int r=0; r<routeList.size(); r++){
+				RouteLocation rl = route.getLocationById(routeList.get(r));
+				if (splitString(rl.getName()).equals(splitString(location.getName()))){
+					int expectedArrivalTime = train.getExpectedTravelTimeInMinutes(rl);
+					// is already serviced then "-1"
+					if (expectedArrivalTime == -1){
+						trains.add(0, train);	// place all trains that have already been serviced at the start
+						arrivalTimes.add(0, expectedArrivalTime);
+					}
+					// if the train is in route, then expected arrival time is in minutes
+					else if (train.isTrainInRoute()){
+						for (int j=0; j<trains.size(); j++){
+							Train t = trains.get(j);
+							int time = arrivalTimes.get(j);
+							if (t.isTrainInRoute() && expectedArrivalTime < time){
+								trains.add(j, train);
+								arrivalTimes.add(j, expectedArrivalTime);
+								break;
+							} 
+							if (!t.isTrainInRoute()) {
+								trains.add(j, train);
+								arrivalTimes.add(j, expectedArrivalTime);
+								break;
+							}
+						}
+					// Train has not departed
+					} else {
+						for (int j=0; j<trains.size(); j++){
+							Train t = trains.get(j);
+							int time = arrivalTimes.get(j);
+							if (!t.isTrainInRoute() && expectedArrivalTime < time){
+								trains.add(j, train);
+								arrivalTimes.add(j, expectedArrivalTime);
+								break;
+							}
+						}
+					}
+					if (!trains.contains(train)){
+						trains.add(train);
+						arrivalTimes.add(expectedArrivalTime);
+					}
+					break;	// done
+				}
+			}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(TrainSwitchLists.class.getName());
+		}
+		return trains;
+	}
+
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainSwitchLists.class.getName());
 }

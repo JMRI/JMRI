@@ -121,12 +121,6 @@ public class LocationManagerXml extends OperationsXml {
     	}
 
     	LocationManager manager = LocationManager.instance();
-    	/* all JMRI window position and size are now saved
-    	if (root.getChild("options") != null) {
-    		Element e = root.getChild("options");
-    		manager.options(e);
-    	}
-    	*/
     	
     	// decode type, invoke proper processing routine if a decoder file
     	if (root.getChild("locations") != null) {

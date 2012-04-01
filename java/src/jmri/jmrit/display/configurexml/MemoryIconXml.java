@@ -90,7 +90,6 @@ public class MemoryIconXml extends PositionableLabelXml {
 		if (o instanceof LayoutEditor) {
 			ed = (LayoutEditor) o;
             l = new jmri.jmrit.display.layoutEditor.MemoryIcon("   ", (LayoutEditor)ed);
-            ((LayoutEditor)ed).memoryLabelList.add((jmri.jmrit.display.layoutEditor.MemoryIcon)l);
 		}
 		else if (o instanceof jmri.jmrit.display.Editor) {
 			ed = (Editor) o;

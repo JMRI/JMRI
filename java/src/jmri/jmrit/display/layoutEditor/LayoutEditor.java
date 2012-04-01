@@ -87,6 +87,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	final public static  int MARKER = 17;
     final public static  int TRACK_CIRCLE_CENTRE = 18;
 	final public static  int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
+	final public static  int SLIP_CENTER = 70; // 
+	final public static  int SLIP_A = 71; // offset for slip connection points
+	final public static  int SLIP_B = 72; // offset for slip connection points
+	final public static  int SLIP_C = 73; // offset for slip connection points
+	final public static  int SLIP_D = 74; // offset for slip connection points
+    
 	// dashed line parameters
 	//private static int minNumDashes = 3;
 	//private static double maxDashLength = 10;
@@ -119,10 +125,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     private JCheckBox doubleXoverBox = new JCheckBox(rb.getString("DoubleCrossOver"));
     private JCheckBox rhXoverBox = new JCheckBox(rb.getString("RHCrossOver"));
     private JCheckBox lhXoverBox = new JCheckBox(rb.getString("LHCrossOver"));
-	private JTextField rotationField = new JTextField(3);
+	private JPanel rotationPanel = new JPanel();
+    private JTextField rotationField = new JTextField(3);
     private JTextField nextTurnout = new JTextField(5);
+    private JPanel extraTurnoutPanel = new JPanel();
+    private JTextField extraTurnout = new JTextField(5);
     
     private JCheckBox levelXingBox = new JCheckBox(rb.getString("LevelCrossing"));
+    private JCheckBox layoutSingleSlipBox = new JCheckBox(rb.getString("LayoutSingleSlip"));
+    private JCheckBox layoutDoubleSlipBox = new JCheckBox(rb.getString("LayoutDoubleSlip"));
     private JCheckBox endBumperBox = new JCheckBox(rb.getString("EndBumper"));
     private JCheckBox anchorBox = new JCheckBox(rb.getString("Anchor"));
     private JCheckBox trackBox = new JCheckBox(rb.getString("TrackSegment"));
@@ -252,12 +263,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	public ArrayList<TrackSegment> trackList = new ArrayList<TrackSegment>();  // TrackSegment list
 	public ArrayList<PositionablePoint> pointList = new ArrayList<PositionablePoint>();  // PositionablePoint list
 	public ArrayList<LevelXing> xingList = new ArrayList<LevelXing>();  // LevelXing list
+	public ArrayList<LayoutSlip> slipList = new ArrayList<LayoutSlip>();  // Layout slip list
 	public ArrayList<LayoutTurntable> turntableList = new ArrayList<LayoutTurntable>(); // Turntable list
 	// counts used to determine unique internal names
 	private int numAnchors = 0;
 	private int numEndBumpers = 0;
 	private int numTrackSegments = 0;
 	private int numLevelXings = 0;
+	private int numLayoutSlips = 0;
 	private int numLayoutTurnouts = 0;
 	private int numLayoutTurntables = 0;
 	// Lists of items that facilitate tools and drawings
@@ -354,6 +367,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         itemGroup.add(rhXoverBox);
         itemGroup.add(lhXoverBox);
         itemGroup.add(levelXingBox);
+        itemGroup.add(layoutSingleSlipBox);
+        itemGroup.add(layoutDoubleSlipBox);
         itemGroup.add(endBumperBox);
         itemGroup.add(anchorBox);
         itemGroup.add(trackBox);
@@ -364,6 +379,50 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         itemGroup.add(textLabelBox);
         itemGroup.add(memoryBox);
         itemGroup.add(iconLabelBox);
+        
+        ActionListener selectionListAction = new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                Component[] extra = extraTurnoutPanel.getComponents();
+                Component[] rotate = rotationPanel.getComponents();
+                if (layoutSingleSlipBox.isSelected() || layoutDoubleSlipBox.isSelected()){
+                    for (Component item: extra) {
+                         item.setEnabled(true);
+                    }
+                    for (Component item: rotate) {
+                         item.setEnabled(false);
+                    }
+                }
+                else {
+                    for (Component item: extra) {
+                         item.setEnabled(false);
+                    }
+                    for (Component item: rotate) {
+                         item.setEnabled(true);
+                    }
+                }
+            }
+        };
+            
+        turnoutRHBox.addActionListener(selectionListAction);
+        turnoutLHBox.addActionListener(selectionListAction);
+        turnoutWYEBox.addActionListener(selectionListAction);
+        doubleXoverBox.addActionListener(selectionListAction);
+        rhXoverBox.addActionListener(selectionListAction);
+        lhXoverBox.addActionListener(selectionListAction);
+        levelXingBox.addActionListener(selectionListAction);
+        layoutSingleSlipBox.addActionListener(selectionListAction);
+        layoutDoubleSlipBox.addActionListener(selectionListAction);
+        endBumperBox.addActionListener(selectionListAction);
+        anchorBox.addActionListener(selectionListAction);
+        trackBox.addActionListener(selectionListAction);
+		multiSensorBox.addActionListener(selectionListAction);
+        sensorBox.addActionListener(selectionListAction);
+        signalBox.addActionListener(selectionListAction);
+        signalMastBox.addActionListener(selectionListAction);
+        textLabelBox.addActionListener(selectionListAction);
+        memoryBox.addActionListener(selectionListAction);
+        iconLabelBox.addActionListener(selectionListAction);
+        
 		turnoutRHBox.setSelected(true);
 		dashedLine.setSelected(false);
 		mainlineTrack.setSelected(false);
@@ -385,6 +444,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         top1.add (new JLabel(rb.getString("Name")));
         top1.add (nextTurnout);
 		nextTurnout.setToolTipText(rb.getString("TurnoutNameToolTip"));
+        JLabel extraTurnLabel = new JLabel(rb.getString("SecondName"));
+        extraTurnLabel.setEnabled(false);
+        extraTurnout.setEnabled(false);
+        extraTurnoutPanel.add (extraTurnLabel);
+        extraTurnoutPanel.add (extraTurnout);
+        extraTurnout.setToolTipText(rb.getString("TurnoutNameToolTip"));
+        top1.add(extraTurnoutPanel);
 		top1.add (new JLabel(rb.getString("Type")));
         top1.add (turnoutRHBox);
 		turnoutRHBox.setToolTipText(rb.getString("RHToolTip"));
@@ -398,8 +464,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		rhXoverBox.setToolTipText(rb.getString("RHCrossOverToolTip"));
         top1.add (lhXoverBox);
 		lhXoverBox.setToolTipText(rb.getString("LHCrossOverToolTip"));
-		top1.add (new JLabel("    "+rb.getString("Rotation")));
-		top1.add (rotationField);
+        top1.add (layoutSingleSlipBox);
+		layoutSingleSlipBox.setToolTipText(rb.getString("SingleSlipToolTip"));
+        top1.add (layoutDoubleSlipBox);
+		layoutDoubleSlipBox.setToolTipText(rb.getString("DoubleSlipToolTip"));
+		rotationPanel.add (new JLabel("    "+rb.getString("Rotation")));
+		rotationPanel.add (rotationField);
+        top1.add(rotationPanel);
 		rotationField.setToolTipText(rb.getString("RotationToolTip"));
         topEditBar.add(top1);
 		// add second row of edit tool bar items
@@ -592,6 +663,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             case SCROLL_VERTICAL:
                 scrollVertical.setSelected(true);
                 break;
+            default: break;
         }
     }
 
@@ -730,6 +802,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 					}
 					// bring up signals at 3-way turnout tool dialog
 					tools.setSignalsAt3WayTurnout(signalIconEditor,signalFrame);
+                }
+            });
+		JMenuItem slipItem = new JMenuItem(rb.getString("SignalsAtSlip")+"...");
+        toolsMenu.add(slipItem);
+        slipItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(thisPanel);
+					}
+					// bring up signals at throat-to-throat turnouts tool dialog
+					tools.setSignalsAtSlip(signalIconEditor,signalFrame);
                 }
             });
 
@@ -1682,6 +1765,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			Point2D center = x.getCoordsCenter();
 			x.setCoordsCenter(new Point2D.Double(center.getX()+xDel,center.getY()+yDel));
 		}
+		// loop over all defined level crossings
+		for (int i = 0; i<slipList.size();i++) {
+			LayoutSlip x = slipList.get(i);
+			Point2D center = x.getCoordsCenter();
+			x.setCoordsCenter(new Point2D.Double(center.getX()+xDel,center.getY()+yDel));
+		}
 		// loop over all defined turntables
 		for (int i = 0; i<turntableList.size();i++) {
 			LayoutTurntable x = turntableList.get(i);
@@ -1705,6 +1794,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		// loop over all defined level crossings
 		for (int i = 0; i<xingList.size();i++) {
 			LevelXing x = xingList.get(i);
+			x.scaleCoords(xFactor,yFactor);
+		}
+		// loop over all defined level crossings
+		for (int i = 0; i<slipList.size();i++) {
+			LayoutSlip x = slipList.get(i);
 			x.scaleCoords(xFactor,yFactor);
 		}
 		// loop over all defined turntables
@@ -1879,6 +1973,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 																center.getY()+yTranslation));
 				}
 			}
+			// loop over all defined level crossings
+			for (int i = 0; i<slipList.size();i++) {
+				LayoutSlip x = slipList.get(i);
+				Point2D center = x.getCoordsCenter();
+				if (selectRect.contains(center)) {
+					x.setCoordsCenter(new Point2D.Double(center.getX()+xTranslation,
+																center.getY()+yTranslation));
+				}
+			}
 			// loop over all defined turntables
 			for (int i = 0; i<turntableList.size();i++) {
 				LayoutTurntable x = turntableList.get(i);
@@ -1934,6 +2037,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			}
 			for (int i = 0; i<xingList.size();i++) {
 				LevelXing x = xingList.get(i);
+				Point2D center = x.getCoordsCenter();
+				if (undoRect.contains(center)) {
+					x.setCoordsCenter(new Point2D.Double(center.getX()+undoDeltaX,
+																center.getY()+undoDeltaY));
+				}
+			}
+			for (int i = 0; i<slipList.size();i++) {
+				LayoutSlip x = slipList.get(i);
 				Point2D center = x.getCoordsCenter();
 				if (undoRect.contains(center)) {
 					x.setCoordsCenter(new Point2D.Double(center.getX()+undoDeltaX,
@@ -2069,7 +2180,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     
     public void setScroll(int state) {
         if (isEditable()) { 
+            //In edit mode the scroll bars are always displayed, however we will want to set the scroll for when we exit edit mode
             super.setScroll(SCROLL_BOTH);
+            _scrollState = state;
         } else {
             super.setScroll(state);
         }
@@ -2281,6 +2394,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 							break;
 						}
 					}
+                    for(LayoutSlip sl : slipList){
+                        // check the center point
+                        Point2D pt = sl.getCoordsCenter();
+                        Rectangle2D r = new Rectangle2D.Double(
+                                pt.getX()-(SIZE2*2.0),pt.getY()-(SIZE2*2.0),4.0*SIZE2,4.0*SIZE2);
+                        if (r.contains(dLoc)) {
+                            // mouse was pressed on this turnout
+                            selectedObject = sl;
+                            selectedPointType = SLIP_CENTER;
+                            break;
+                        }
+                    }
 				}
 				// initialize starting selection - cancel any previous selection rectangle
 				selectionActive = true;
@@ -2306,6 +2431,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 					// mouse was pressed on this turnout
 					selectedObject = t;
 					selectedPointType = TURNOUT_CENTER;
+					break;
+				}
+			}
+            for(LayoutSlip sl : slipList){
+				// check the center point
+				Point2D pt = sl.getCoordsCenter();
+				Rectangle2D r = new Rectangle2D.Double(
+						pt.getX()-(SIZE2*2.0),pt.getY()-(SIZE2*2.0),4.0*SIZE2,4.0*SIZE2);
+				if (r.contains(dLoc)) {
+					// mouse was pressed on this turnout
+					selectedObject = sl;
+					selectedPointType = SLIP_CENTER;
 					break;
 				}
 			}
@@ -2509,6 +2646,82 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 						foundLocation = pt;
 						foundObject = x;
 						foundPointType = LEVEL_XING_D;
+						foundNeedsConnect = (x.getConnectD()==null);
+						return true;
+					}
+				}
+			}
+		}
+        
+		// check level Xings, if any
+        for(LayoutSlip x: slipList){
+			if (x!=selectedObject) {
+				if (!requireUnconnected) {
+					// check the center point
+					Point2D pt = x.getCoordsCenter();
+					Rectangle2D r = new Rectangle2D.Double(
+							pt.getX() - SIZE2,pt.getY() - SIZE2,SIZE2+SIZE2,SIZE2+SIZE2);
+					if (r.contains(loc)) {
+						// mouse was pressed on this connection point
+						foundLocation = pt;
+						foundObject = x;
+						foundPointType = SLIP_CENTER;
+						foundNeedsConnect = false;
+						return true;
+					}
+				}
+				if (!requireUnconnected || (x.getConnectA()==null)) {
+					// check the A connection point
+					Point2D pt = x.getCoordsA();
+					Rectangle2D r = new Rectangle2D.Double(
+							pt.getX() - SIZE,pt.getY() - SIZE,SIZE2,SIZE2);
+					if (r.contains(loc)) {
+						// mouse was pressed on this connection point
+						foundLocation = pt;
+						foundObject = x;
+						foundPointType = SLIP_A;
+						foundNeedsConnect = (x.getConnectA()==null);
+						return true;
+					}
+				}
+				if (!requireUnconnected || (x.getConnectB()==null)) {
+					// check the B connection point
+					Point2D pt = x.getCoordsB();
+					Rectangle2D r = new Rectangle2D.Double(
+							pt.getX() - SIZE,pt.getY() - SIZE,SIZE2,SIZE2);
+					if (r.contains(loc)) {
+						// mouse was pressed on this connection point
+						foundLocation = pt;
+						foundObject = x;
+						foundPointType = SLIP_B;
+						foundNeedsConnect = (x.getConnectB()==null);
+						return true;
+					}
+				}
+				if (!requireUnconnected || (x.getConnectC()==null)) {
+					// check the C connection point
+					Point2D pt = x.getCoordsC();
+					Rectangle2D r = new Rectangle2D.Double(
+							pt.getX() - SIZE,pt.getY() - SIZE,SIZE2,SIZE2);
+					if (r.contains(loc)) {
+						// mouse was pressed on this connection point
+						foundLocation = pt;
+						foundObject = x;
+						foundPointType = SLIP_C;
+						foundNeedsConnect = (x.getConnectC()==null);
+						return true;
+					}
+				}
+				if (!requireUnconnected || (x.getConnectD()==null)) {
+					// check the D connection point
+					Point2D pt = x.getCoordsD();
+					Rectangle2D r = new Rectangle2D.Double(
+							pt.getX() - SIZE,pt.getY() - SIZE,SIZE2,SIZE2);
+					if (r.contains(loc)) {
+						// mouse was pressed on this connection point
+						foundLocation = pt;
+						foundObject = x;
+						foundPointType = SLIP_D;
 						foundNeedsConnect = (x.getConnectD()==null);
 						return true;
 					}
@@ -2777,6 +2990,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				return ((LevelXing)o).getCoordsC();
 			case LEVEL_XING_D:
 				return ((LevelXing)o).getCoordsD();
+			case SLIP_A:
+				return ((LayoutSlip)o).getCoordsA();
+			case SLIP_B:
+				return ((LayoutSlip)o).getCoordsB();
+			case SLIP_C:
+				return ((LayoutSlip)o).getCoordsC();
+			case SLIP_D:
+				return ((LayoutSlip)o).getCoordsD();
 			default: 
 				if (type>=TURNTABLE_RAY_OFFSET) {
 					return ((LayoutTurntable)o).getRayCoordsIndexed(type-TURNTABLE_RAY_OFFSET);
@@ -2821,6 +3042,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 }
                 else if (levelXingBox.isSelected()) {
 					addLevelXing();
+                }
+                else if (layoutSingleSlipBox.isSelected()) {
+					addLayoutSlip(LayoutSlip.SINGLE_SLIP);
+                }
+                else if (layoutDoubleSlipBox.isSelected()) {
+					addLayoutSlip(LayoutSlip.DOUBLE_SLIP);
                 }
                 else if (endBumperBox.isSelected()) {
 					addEndBumper();
@@ -2878,6 +3105,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				LayoutTurnout t = (LayoutTurnout)selectedObject;
 				t.toggleTurnout();
 			}
+            else if ( ( selectedObject!=null) && (selectedPointType==SLIP_CENTER) && 
+					allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger()) && 
+						(!event.isShiftDown()) && (!event.isControlDown()) ) {
+				// controlling layout, in edit mode
+                LayoutSlip t = (LayoutSlip)selectedObject;
+                t.toggleState();
+			}
 			if ( (trackBox.isSelected()) && (beginObject!=null) && (foundObject!=null) ) {
 				// user let up shift key before releasing the mouse when creating a track segment
 				setCursor(Cursor.getDefaultCursor());
@@ -2894,6 +3128,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			// controlling layout, not in edit mode
 			LayoutTurnout t = (LayoutTurnout)selectedObject;
 			t.toggleTurnout();
+		}
+        // check if controlling turnouts out of edit mode
+        else if ( ( selectedObject!=null) && (selectedPointType==SLIP_CENTER) && 
+				allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger()) && 
+					(!event.isShiftDown()) && (!delayedPopupTrigger) ) {
+			// controlling layout, not in edit mode
+			LayoutSlip t = (LayoutSlip)selectedObject;
+			t.toggleState();
 		}
 		// check if requesting marker popup out of edit mode
 		else if ( (event.isPopupTrigger() || delayedPopupTrigger) && (!isDragging) ) {
@@ -2942,9 +3184,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				case LEVEL_XING_CENTER:
 					((LevelXing)foundObject).showPopUp(event);
 					break;
+				case SLIP_CENTER:
+					((LayoutSlip)foundObject).showPopUp(event);
+					break;
 				case TURNTABLE_CENTER:
 					((LayoutTurntable)foundObject).showPopUp(event);
 					break;
+                default: break;
 			}
 		}
 		else {
@@ -3013,50 +3259,60 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         JPopupMenu popup = new JPopupMenu();
 
         if (p.isEditable()) {
-            if (p.doViemMenu()) {
-                popup.add(p.getNameString());
-                if (p.isPositionable()) {
-                    setShowCoordinatesMenu(p, popup);
+            if(showAlignPopup()){
+                setShowAlignmentMenu(popup);
+                popup.add(new AbstractAction(rb.getString("Remove")) {
+                    public void actionPerformed(ActionEvent e) {
+                        deleteSelectedItems();
+					}
                 }
-                setDisplayLevelMenu(p, popup);
-                setPositionableMenu(p, popup);
-            }
+                );
+            } else {
+                if (p.doViemMenu()) {
+                    popup.add(p.getNameString());
+                    if (p.isPositionable()) {
+                        setShowCoordinatesMenu(p, popup);
+                    }
+                    setDisplayLevelMenu(p, popup);
+                    setPositionableMenu(p, popup);
+                }
 
-            boolean popupSet =false;
-            popupSet = p.setRotateOrthogonalMenu(popup);
-            popupSet = p.setRotateMenu(popup);
-            if (popupSet) { 
-                popup.addSeparator();
-                popupSet = false;
-            }
-            popupSet = p.setEditIconMenu(popup);
-            popupSet = p.setTextEditMenu(popup);
+                boolean popupSet =false;
+                popupSet = p.setRotateOrthogonalMenu(popup);
+                popupSet = p.setRotateMenu(popup);
+                if (popupSet) { 
+                    popup.addSeparator();
+                    popupSet = false;
+                }
+                popupSet = p.setEditIconMenu(popup);
+                popupSet = p.setTextEditMenu(popup);
 
-            PositionablePopupUtil util = p.getPopupUtility();
-            if (util!=null) {
-                util.setFixedTextMenu(popup);        
-                util.setTextMarginMenu(popup);        
-                util.setTextBorderMenu(popup);        
-                util.setTextFontMenu(popup);
-                util.setBackgroundMenu(popup);
-                util.setTextJustificationMenu(popup);
-                popup.addSeparator();
-                util.propertyUtil(popup);
-                popupSet = true;
-            }
-            if (popupSet) { 
-                popup.addSeparator();
-                popupSet = false;
-            }
-            p.setDisableControlMenu(popup);
-            setShowAlignmentMenu(popup);
-            // for Positionables with unique settings
-            p.showPopUp(popup);
-            setShowTooltipMenu(p, popup);
+                PositionablePopupUtil util = p.getPopupUtility();
+                if (util!=null) {
+                    util.setFixedTextMenu(popup);        
+                    util.setTextMarginMenu(popup);        
+                    util.setTextBorderMenu(popup);        
+                    util.setTextFontMenu(popup);
+                    util.setBackgroundMenu(popup);
+                    util.setTextJustificationMenu(popup);
+                    popup.addSeparator();
+                    util.propertyUtil(popup);
+                    popupSet = true;
+                }
+                if (popupSet) { 
+                    popup.addSeparator();
+                    popupSet = false;
+                }
+                p.setDisableControlMenu(popup);
+                setShowAlignmentMenu(popup);
+                // for Positionables with unique settings
+                p.showPopUp(popup);
+                setShowTooltipMenu(p, popup);
 
-            setRemoveMenu(p, popup);
-            if (p.doViemMenu()) {
-                setHiddenMenu(p, popup);
+                setRemoveMenu(p, popup);
+                if (p.doViemMenu()) {
+                    setHiddenMenu(p, popup);
+                }
             }
         } else {
             p.showPopUp(popup);
@@ -3103,9 +3359,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                     case LEVEL_XING_CENTER:
                         amendSelectionGroup((LevelXing)foundObject);
                         break;
+                    case SLIP_CENTER:
+                        amendSelectionGroup((LayoutSlip)foundObject);
+                        break;
                     case TURNTABLE_CENTER:
                         amendSelectionGroup((LayoutTurntable)foundObject);
                         break;
+                    default: break;
                 }
             } else {
             
@@ -3157,6 +3417,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     private ArrayList<LayoutTurnout> _turnoutSelection = null; //new ArrayList<LayoutTurnout>();  // LayoutTurnouts
 	private ArrayList<PositionablePoint> _pointSelection = null; //new ArrayList<PositionablePoint>();  // PositionablePoint list
 	private ArrayList<LevelXing> _xingSelection = null; //new ArrayList<LevelXing>();  // LevelXing list
+	private ArrayList<LayoutSlip> _slipSelection = null; //new ArrayList<LevelXing>();  // LayoutSlip list
 	private ArrayList<LayoutTurntable> _turntableSelection = null; //new ArrayList<LayoutTurntable>(); // Turntable list
     private ArrayList<Positionable> _positionableSelection = null;
     
@@ -3201,6 +3462,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 g.drawRect(x, y, width, height);
                 }
         }
+        if (_slipSelection!=null){
+        // loop over all defined level crossings
+            for (int i = 0; i<_slipSelection.size();i++) {
+                LayoutSlip xing = _slipSelection.get(i);
+                int minx = (int) Math.min(Math.min(xing.getCoordsA().getX(), xing.getCoordsB().getX()),Math.min(xing.getCoordsC().getX(), xing.getCoordsD().getX()));
+                int miny = (int) Math.min(Math.min(xing.getCoordsA().getY(), xing.getCoordsB().getY()),Math.min(xing.getCoordsC().getY(), xing.getCoordsD().getY()));
+                int maxx = (int) Math.max(Math.max(xing.getCoordsA().getX(), xing.getCoordsB().getX()),Math.max(xing.getCoordsC().getX(), xing.getCoordsD().getX()));
+                int maxy = (int) Math.max(Math.max(xing.getCoordsA().getY(), xing.getCoordsB().getY()),Math.max(xing.getCoordsC().getY(), xing.getCoordsD().getY()));
+                int width = maxx-minx;
+                int height = maxy-miny;
+                int x = (int) xing.getCoordsCenter().getX()-(width/2);
+                int y = (int) xing.getCoordsCenter().getY()-(height/2);
+                g.drawRect(x, y, width, height);
+            }
+        }
         // loop over all defined turntables
         if (_turntableSelection!=null){
             for (int i = 0; i<_turntableSelection.size();i++) {
@@ -3222,8 +3498,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         g.setColor(color);
         g.setStroke(stroke);
     }
-
- 
+    
     private void createSelectionGroups(){
         List <Positionable> contents = getContents();
         Rectangle2D selectRect = new Rectangle2D.Double (selectionX, selectionY, 
@@ -3233,7 +3508,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             Point2D upperLeft = c.getLocation();
             if (selectRect.contains(upperLeft)) {
                 if (_positionableSelection==null) _positionableSelection = new ArrayList<Positionable>();
-                _positionableSelection.add(c);
+                if(!_positionableSelection.contains(c))
+                    _positionableSelection.add(c);
             }
         }
         // loop over all defined turnouts
@@ -3242,7 +3518,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             Point2D center = t.getCoordsCenter();
             if (selectRect.contains(center)) {
                 if (_turnoutSelection==null) _turnoutSelection = new ArrayList<LayoutTurnout>();
-                _turnoutSelection.add(t);
+                if(!_turnoutSelection.contains(t))
+                    _turnoutSelection.add(t);
             }
         }
         // loop over all defined level crossings
@@ -3251,7 +3528,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             Point2D center = x.getCoordsCenter();
             if (selectRect.contains(center)) {
                 if (_xingSelection==null) _xingSelection = new ArrayList<LevelXing>();
-                _xingSelection.add(x);
+                if(!_xingSelection.contains(x))
+                    _xingSelection.add(x);
+            }
+        }
+        // loop over all defined level crossings
+        for (int i = 0; i<slipList.size();i++) {
+            LayoutSlip x = slipList.get(i);
+            Point2D center = x.getCoordsCenter();
+            if (selectRect.contains(center)) {
+                if (_slipSelection==null) _slipSelection = new ArrayList<LayoutSlip>();
+                if(!_slipSelection.contains(x))
+                    _slipSelection.add(x);
             }
         }
         // loop over all defined turntables
@@ -3260,7 +3548,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             Point2D center = x.getCoordsCenter();
             if (selectRect.contains(center)) {
                 if (_turntableSelection==null) _turntableSelection = new ArrayList<LayoutTurntable>();
-                _turntableSelection.add(x);
+                if(!_turntableSelection.contains(x))
+                    _turntableSelection.add(x);
             }
         }
         // loop over all defined Anchor Points and End Bumpers
@@ -3269,7 +3558,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             Point2D coord = p.getCoords();
             if (selectRect.contains(coord)) {
                 if (_pointSelection==null) _pointSelection = new ArrayList<PositionablePoint>();
-                _pointSelection.add(p);
+                if(!_pointSelection.contains(p))
+                    _pointSelection.add(p);
             }
         }
         repaint();
@@ -3279,10 +3569,77 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         _pointSelection=null;
         _turntableSelection=null;
         _xingSelection=null;
+        _slipSelection=null;
         _turnoutSelection=null;
         _positionableSelection=null;
     }
     
+    boolean noWarnGlobalDelete = false;
+    
+    private void deleteSelectedItems() {
+        if(!noWarnGlobalDelete){
+            int selectedValue = JOptionPane.showOptionDialog(this,
+                rb.getString("Question6"),rb.getString("WarningTitle"),
+                JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
+                new Object[]{rb.getString("ButtonYes"),rb.getString("ButtonNo"),
+                rb.getString("ButtonYesPlus")},rb.getString("ButtonNo"));
+            if (selectedValue == 1) return;   // return without creating if "No" response
+            if (selectedValue == 2) {
+                // Suppress future warnings, and continue
+                noWarnGlobalDelete = true;
+            }
+        }
+        if(_positionableSelection!=null){
+            for(Positionable comp: _positionableSelection){
+                remove(comp);
+            }
+        }
+        if(_pointSelection!=null){
+            boolean oldPosPoint = noWarnPositionablePoint;
+            noWarnPositionablePoint = true;
+            for(PositionablePoint point: _pointSelection){
+                removePositionablePoint(point);
+            }
+            noWarnPositionablePoint = oldPosPoint;
+        }
+        
+        if(_xingSelection!=null){
+            boolean oldLevelXing = noWarnLevelXing;
+            noWarnLevelXing = true;
+            for(LevelXing point: _xingSelection){
+                removeLevelXing(point);
+            }
+            noWarnLevelXing = oldLevelXing;
+        }
+        if(_slipSelection!=null){
+            boolean oldSlip = noWarnSlip;
+            noWarnSlip = true;
+            for(LayoutSlip point: _slipSelection){
+                removeLayoutSlip(point);
+            }
+            noWarnSlip = oldSlip;
+        }
+        if(_turntableSelection!=null){
+            boolean oldTurntable = noWarnTurntable;
+            noWarnTurntable = true;
+            for(LayoutTurntable point: _turntableSelection){
+                removeTurntable(point);
+            }
+            noWarnTurntable = oldTurntable;
+        }
+        if(_turnoutSelection!=null){
+            boolean oldTurnout = noWarnLayoutTurnout;
+            noWarnLayoutTurnout = true;
+            for(LayoutTurnout point: _turnoutSelection){
+                removeLayoutTurnout(point);
+            }
+            noWarnLayoutTurnout = oldTurnout;
+        }
+        selectionActive = false;
+        clearSelectionGroups();
+        repaint();
+    
+    }
     private void amendSelectionGroup(Positionable p){
         if (_positionableSelection==null){
             _positionableSelection = new ArrayList <Positionable>();
@@ -3363,6 +3720,26 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         repaint();
     }
     
+    private void amendSelectionGroup(LayoutSlip p){
+        if (_slipSelection==null){
+            _slipSelection = new ArrayList <LayoutSlip>();
+        }
+        boolean removed = false;
+        for(int i=0; i<_slipSelection.size();i++){
+            if (_slipSelection.get(i)==p){
+                _slipSelection.remove(i);
+                removed = true;
+                break;
+            }
+        }
+        if(!removed)
+            _slipSelection.add(p);
+        if (_slipSelection.size()==0){
+            _slipSelection=null;
+        }
+        repaint();
+    }
+    
     private void amendSelectionGroup(LayoutTurntable p){
         if (_turntableSelection==null){
             _turntableSelection = new ArrayList <LayoutTurntable>();
@@ -3435,6 +3812,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 cnt++;
             }
         }
+        if(_slipSelection!=null){
+            for (int i = 0; i<_slipSelection.size(); i++){
+                LayoutSlip comp = _slipSelection.get(i);
+                if (alignX) {
+                    sum += comp.getCoordsCenter().getX();
+                } else {
+                    sum += comp.getCoordsCenter().getY();
+                }
+                cnt++;
+            }
+        }
         if(_turntableSelection!=null){
             for (int i = 0; i<_turntableSelection.size(); i++){
                 LayoutTurntable comp = _turntableSelection.get(i);
@@ -3489,6 +3877,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 }
             }
         }
+        if(_slipSelection!=null){
+            for (int i=0; i<_slipSelection.size(); i++) {
+                LayoutSlip comp = _slipSelection.get(i);
+                if (alignX) {
+                    comp.setCoordsCenter(new Point2D.Double(ave, comp.getCoordsCenter().getY()));
+                } else {
+                    comp.setCoordsCenter(new Point2D.Double(comp.getCoordsCenter().getX(), ave));
+                }
+            }
+        }
         if(_turntableSelection!=null){
             for (int i=0; i<_turntableSelection.size(); i++) {
                 LayoutTurntable comp = _turntableSelection.get(i);
@@ -3513,6 +3911,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             return true;
         } else if (_xingSelection!=null){
             return true;
+        } else if (_slipSelection!=null){
+            return true;
         }
         return false;
     }
@@ -3523,13 +3923,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     */
     public boolean setShowAlignmentMenu(JPopupMenu popup) {
         if (showAlignPopup()) {
-            JMenu edit = new JMenu("EditAlignment");  //rb.getString()
-            edit.add(new AbstractAction("AlignX") { //rb.getString()
+            JMenu edit = new JMenu(rb.getString("EditAlignment"));
+            edit.add(new AbstractAction(rb.getString("AlignX")) {
                 public void actionPerformed(ActionEvent e) {
                     alignSelection(true);
                 }
             });
-            edit.add(new AbstractAction("AlignY") { //rb.getString(
+            edit.add(new AbstractAction(rb.getString("AlignY")) {
                 public void actionPerformed(ActionEvent e) {
                     alignSelection(false);
                 }
@@ -3541,6 +3941,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     }
     
     public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode()==KeyEvent.VK_DELETE){
+            deleteSelectedItems();
+            return;
+        }
         if (_positionableSelection!=null){
             for (int i = 0; i<_positionableSelection.size(); i++) {
                 Positionable c = _positionableSelection.get(i);
@@ -3576,6 +3980,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                                                                 returnNewYPostition(e, center.getY())));
                 }
         }
+        if (_slipSelection!=null){
+        // loop over all defined level crossings
+            for (int i = 0; i<_slipSelection.size();i++) {
+                LayoutSlip x = _slipSelection.get(i);
+                Point2D center = x.getCoordsCenter();
+                x.setCoordsCenter(new Point2D.Double(returnNewXPostition(e, center.getX()),
+                                                                returnNewYPostition(e, center.getY())));
+                }
+        }
         // loop over all defined turntables
         if (_turntableSelection!=null){
             for (int i = 0; i<_turntableSelection.size();i++) {
@@ -3604,6 +4017,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                                     break;
                 case KeyEvent.VK_RIGHT: val=val+1;
                                         break;
+                default: break;
             }
         } else {
             switch (e.getKeyCode()){
@@ -3611,6 +4025,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                                     break;
                 case KeyEvent.VK_RIGHT: val=val+5;
                                         break;
+                default: break;
             }
         }
         if (val<0) val = 0;
@@ -3747,6 +4162,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                             x.setCoordsCenter(new Point2D.Double(xNew, yNew));
                         }
                     }
+                    if (_slipSelection!=null){
+                    // loop over all defined level crossings
+                        for (int i = 0; i<_slipSelection.size();i++) {
+                            LayoutSlip x = _slipSelection.get(i);
+                            Point2D center = x.getCoordsCenter();
+                            xNew = (int) center.getX()+offsetx;
+                            yNew = (int) center.getY()+offsety;
+                            if (xNew<0) xNew=0;
+                            if (yNew<0) yNew=0;
+                            x.setCoordsCenter(new Point2D.Double(xNew, yNew));
+                        }
+                    }
                     // loop over all defined turntables
                     if (_turntableSelection!=null){
                         for (int i = 0; i<_turntableSelection.size();i++) {
@@ -3818,6 +4245,26 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                         case LEVEL_XING_D:
                             x = (LevelXing)selectedObject;
                             x.setCoordsD(newPos);
+                            break;
+                        case SLIP_CENTER:
+                            ((LayoutSlip)selectedObject).setCoordsCenter(newPos);
+                            isDragging = true;
+                            break;
+                        case SLIP_A:
+                            LayoutSlip sl = (LayoutSlip)selectedObject;
+                            sl.setCoordsA(newPos);
+                            break;
+                        case SLIP_B:
+                            sl = (LayoutSlip)selectedObject;
+                            sl.setCoordsB(newPos);
+                            break;
+                        case SLIP_C:
+                            sl = (LayoutSlip)selectedObject;
+                            sl.setCoordsC(newPos);
+                            break;
+                        case SLIP_D:
+                            sl = (LayoutSlip)selectedObject;
+                            sl.setCoordsD(newPos);
                             break;
                         case TURNTABLE_CENTER:
                             ((LayoutTurntable)selectedObject).setCoordsCenter(newPos);
@@ -3924,6 +4371,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				break;
 			case LEVEL_XING_D:
 				((LevelXing)o).setCoordsD(newPos);
+				break;
+			case SLIP_A:
+				((LayoutSlip)o).setCoordsA(newPos);
+				break;
+			case SLIP_B:
+				((LayoutSlip)o).setCoordsB(newPos);
+				break;
+			case SLIP_C:
+				((LayoutSlip)o).setCoordsC(newPos);
+				break;
+			case SLIP_D:
+				((LayoutSlip)o).setCoordsD(newPos);
 				break;
 			default:
 				if (pointType>=TURNTABLE_RAY_OFFSET) {
@@ -4070,6 +4529,65 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		}
 		//}
     }
+    
+    /**
+     * Add a LayoutSlip
+     */
+    public void addLayoutSlip(int type) {
+		numLayoutSlips ++;
+		// get unique name
+		String name = "";
+		boolean duplicate = true;
+		while (duplicate) {
+			name = "SL"+numLayoutSlips;
+			if (findLayoutSlipByName(name)==null) duplicate = false;
+			if (duplicate) numLayoutSlips ++;
+		}
+		// create object
+		LayoutSlip o = new LayoutSlip(name,currentPoint,this, type);
+        slipList.add(o);
+        setDirty(true);
+        
+        // check on layout block
+        LayoutBlock b = provideLayoutBlock(blockIDField.getText().trim());
+        if (b!=null) {
+            o.setLayoutBlock(b);
+            // check on occupancy sensor
+            String sensorName = (blockSensor.getText().trim());
+            if (sensorName.length()>0) {
+                if (!validateSensor(sensorName,b,this)) {
+                    b.setOccupancySensorName("");
+                }
+                else {
+                    blockSensor.setText( b.getOccupancySensorName() );
+                }
+            }
+        }
+        String turnoutName = nextTurnout.getText().trim();
+        if ( validatePhysicalTurnout(turnoutName, this) ) {
+            // turnout is valid and unique.
+            o.setTurnout(turnoutName);
+            if (o.getTurnout().getSystemName().equals(turnoutName.toUpperCase())) {
+                nextTurnout.setText(turnoutName.toUpperCase());
+            }
+        }
+        else {
+            o.setTurnout("");
+            nextTurnout.setText("");
+        }
+        turnoutName = extraTurnout.getText().trim();
+        if ( validatePhysicalTurnout(turnoutName, this) ) {
+            // turnout is valid and unique.
+            o.setTurnoutB(turnoutName);
+            if (o.getTurnoutB().getSystemName().equals(turnoutName.toUpperCase())) {
+                extraTurnout.setText(turnoutName.toUpperCase());
+            }
+        }
+        else {
+            o.setTurnoutB("");
+            extraTurnout.setText("");
+        }
+    }
 
     /**
      * Add a Layout Turnout 
@@ -4183,6 +4701,28 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				}
             }
 		}
+        for(LayoutSlip slip: slipList){
+            Turnout to = slip.getTurnout();
+            if(to!=null){
+                if(to.getSystemName().equals(turnoutName) || (to.getUserName()!=null && to.getUserName().equals(turnoutName))){
+                    JOptionPane.showMessageDialog(openPane,
+							java.text.MessageFormat.format(rb.getString("Error4"),
+							new Object[]{turnoutName}),
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return false;
+                }
+            }
+            to=slip.getTurnoutB();
+            if(to!=null){
+                if(to.getSystemName().equals(turnoutName) || (to.getUserName()!=null && to.getUserName().equals(turnoutName))){
+                    JOptionPane.showMessageDialog(openPane,
+							java.text.MessageFormat.format(rb.getString("Error4"),
+							new Object[]{turnoutName}),
+							rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+					return false;
+                }
+            }
+        }
 		// check that the unique turnout name corresponds to a defined physical turnout
 		Turnout to = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
 		if (to == null) {
@@ -4235,6 +4775,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			case LEVEL_XING_D:
 				((LevelXing)toObject).setConnectD(fromObject,fromPointType);
 				break;
+			case SLIP_A:
+				((LayoutSlip)toObject).setConnectA(fromObject,fromPointType);
+				break;
+			case SLIP_B:
+				((LayoutSlip)toObject).setConnectB(fromObject,fromPointType);
+				break;
+			case SLIP_C:
+				((LayoutSlip)toObject).setConnectC(fromObject,fromPointType);
+				break;
+			case SLIP_D:
+				((LayoutSlip)toObject).setConnectD(fromObject,fromPointType);
+                break;
 			case TRACK:
 				// should never happen, Track Segment links are set in ctor
 				log.error("Illegal request to set a Track Segment link");
@@ -4567,6 +5119,56 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		}
 		return(false);	
 	}
+    
+    boolean noWarnSlip = false;
+    
+    protected boolean removeLayoutSlip (LayoutTurnout o) {
+        if(!(o instanceof LayoutSlip)){
+            return false;
+        } 
+		// First verify with the user that this is really wanted
+		if (!noWarnSlip) {
+			int selectedValue = JOptionPane.showOptionDialog(this,
+					rb.getString("Question5"),rb.getString("WarningTitle"),
+					JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
+					new Object[]{rb.getString("ButtonYes"),rb.getString("ButtonNo"),
+					rb.getString("ButtonYesPlus")},rb.getString("ButtonNo"));
+			if (selectedValue == 1) return(false);   // return without creating if "No" response
+			if (selectedValue == 2) {
+				// Suppress future warnings, and continue
+				noWarnSlip = true;
+			}
+		}
+		// remove from selection information
+		if (selectedObject==o) selectedObject = null;
+		if (prevSelectedObject==o) prevSelectedObject = null;
+		// remove connections if any
+		TrackSegment t = (TrackSegment)o.getConnectA();
+		if (t!=null) removeTrackSegment(t);
+		t = (TrackSegment)o.getConnectB();
+		if (t!=null) removeTrackSegment(t);
+		t = (TrackSegment)o.getConnectC();
+		if (t!=null) removeTrackSegment(t);
+		t = (TrackSegment)o.getConnectD();
+		if (t!=null) removeTrackSegment(t);
+		// decrement block use count if any blocks in use
+		LayoutBlock lb = o.getLayoutBlock();
+		if (lb != null) lb.decrementUse();
+
+		// delete from array
+		for (int i = 0; i<slipList.size();i++) {
+			LayoutSlip lx = slipList.get(i);
+			if (lx==o) {
+				// found object
+				slipList.remove(i);
+				o.remove();
+				setDirty(true);
+				repaint();
+				return(true);
+			}
+		}
+		return(false);	
+	}
 	
 	boolean noWarnTurntable = false;
 	
@@ -4698,6 +5300,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			case LEVEL_XING_D:
 				((LevelXing)o).setConnectD(null,NONE);
 				break;
+			case SLIP_A:
+				((LayoutSlip)o).setConnectA(null,NONE);
+				break;
+			case SLIP_B:
+				((LayoutSlip)o).setConnectB(null,NONE);
+				break;
+			case SLIP_C:
+				((LayoutSlip)o).setConnectC(null,NONE);
+				break;
+			case SLIP_D:
+				((LayoutSlip)o).setConnectD(null,NONE);
+				break;
 			default:
 				if (type>=TURNTABLE_RAY_OFFSET) {
 					((LayoutTurntable)o).setRayConnect(null,type-TURNTABLE_RAY_OFFSET);
@@ -4724,6 +5338,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				return ((LevelXing)o).getLayoutBlockAC();
 			case LEVEL_XING_D:
 				return ((LevelXing)o).getLayoutBlockBD();
+			case SLIP_A:
+				return ((LayoutSlip)o).getLayoutBlock();
+			case SLIP_B:
+				return ((LayoutSlip)o).getLayoutBlock();
+			case SLIP_C:
+				return ((LayoutSlip)o).getLayoutBlock();
+			case SLIP_D:
+				return ((LayoutSlip)o).getLayoutBlock();
 			case TRACK:
 				return ((TrackSegment)o).getLayoutBlock();
 		}
@@ -5066,6 +5688,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		trackList.clear();
 		pointList.clear();
 		xingList.clear();
+        slipList.clear();
 		turntableList.clear();
         return true;
     }
@@ -5220,6 +5843,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			turnoutCirclesOnItem.setSelected(turnoutCirclesWithoutEditMode);
 		}
 	}
+    
 	public void setTooltipsNotEdit(boolean state) {
 		if (tooltipsWithoutEditMode != state) {
 			tooltipsWithoutEditMode = state;
@@ -5298,6 +5922,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		if (xingList.size()>0) {
 			for (int i = 0; i<xingList.size(); i++) {
 				(xingList.get(i)).setObjects(this);
+			}
+		}
+		// initialize LevelXings if any
+		if (slipList.size()>0) {
+			for (LayoutSlip l : slipList) {
+				l.setObjects(this);
 			}
 		}
 		// initialize LayoutTurntables if any
@@ -5413,7 +6043,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             PositionablePoint p = pointList.get(i);
             if (p.getWestBoundSignal().equals(signalName))
                 return p;
-
         }
         return null;
     }
@@ -5485,6 +6114,28 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         return null;
     }
 
+    public LayoutSlip findLayoutSlipBySignalMast(String signalMastName){
+        for(LayoutSlip l: slipList){
+            if((l.getSignalAMast().equals(signalMastName)) ||
+                (l.getSignalBMast().equals(signalMastName)) ||
+                (l.getSignalCMast().equals(signalMastName)) ||
+                (l.getSignalDMast().equals(signalMastName)))
+                return l;
+        }
+        return null;
+    }
+    
+    public LayoutSlip findLayoutSlipBySensor(String sensorName){
+        for(LayoutSlip l: slipList){
+            if((l.getSensorA().equals(sensorName)) ||
+                (l.getSensorB().equals(sensorName)) ||
+                (l.getSensorC().equals(sensorName)) ||
+                (l.getSensorD().equals(sensorName)))
+                return l;
+        }
+        return null;
+    }
+    
     public PositionablePoint findPositionablePointByEastBoundSensor(String sensorName){
         for (int i = 0; i<pointList.size(); i++) {
             PositionablePoint p = pointList.get(i);
@@ -5535,6 +6186,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		}
 		return null;
 	}
+    
+    public LayoutSlip findLayoutSlipByName(String name) {
+		if (name.length()<=0) return null;
+		for (int i = 0; i<slipList.size(); i++) {
+			LayoutSlip x = slipList.get(i);
+			if (x.getName().equals(name)) {
+				return x;
+			}
+		}
+		return null;
+	}
+    
 	public LayoutTurntable findLayoutTurntableByName(String name) {
 		if (name.length()<=0) return null;
 		for (int i = 0; i<turntableList.size(); i++) {
@@ -5562,6 +6225,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			case LEVEL_XING_C:
 			case LEVEL_XING_D:
 				return findLevelXingByName(name);
+			case SLIP_A:
+			case SLIP_B:
+			case SLIP_C:
+			case SLIP_D:
+				return findLayoutSlipByName(name);
 			case TRACK:
 				return findTrackSegmentByName(name);
 			default:
@@ -5592,6 +6260,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         drawSolidTrack(g2,true);
         drawTurnouts(g2);
         drawXings(g2);
+        drawSlips(g2);
         drawTurntables(g2);
         drawTrackInProgress(g2);
         g2.setStroke(new BasicStroke(1.0F,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
@@ -5600,6 +6269,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         if (isEditable()) {
             drawTurnoutRects(g2);
             drawXingRects(g2);
+            drawSlipRects(g2);
             drawTrackOvals(g2);
             drawSelectionRect(g2);
             drawTurntableRects(g2);
@@ -6118,7 +6788,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		return new Point2D.Double((p1.getX()+p2.getX())/2.0,(p1.getY()+p2.getY())/2.0);
 	}
 	
-	private Point2D third (Point2D p1,Point2D p2) {
+	protected Point2D third (Point2D p1,Point2D p2) {
 		return new Point2D.Double( p1.getX()+((p2.getX()-p1.getX())/3.0),
 						p1.getY()+((p2.getY()-p1.getY())/3.0) );
 	}
@@ -6170,6 +6840,133 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		setTrackStrokeWidth(g2,x.isMainlineBD());
 		// draw BD segment	
 		g2.draw(new Line2D.Double(x.getCoordsB(),x.getCoordsD()));
+	}
+    
+    //Will need to sort out state of the turnout
+    private void drawSlips(Graphics2D g2) {
+        for (int i = 0; i<slipList.size();i++) {
+            LayoutSlip x = slipList.get(i);
+            // set color - check for an AC block
+            LayoutBlock b = x.getLayoutBlock();
+            // set track width for AC block
+            setTrackStrokeWidth(g2,x.isMainline());
+            Color mainColour;
+            Color subColour;
+            if (b!=null) {
+                mainColour = b.getBlockColor();
+                subColour = b.getBlockTrackColor();
+            }
+            else {
+                mainColour = defaultTrackColor;
+                subColour = defaultTrackColor;
+            }
+            
+            g2.setColor(subColour);
+            
+            g2.draw(new Line2D.Double(x.getCoordsA(),
+                third(x.getCoordsA(),x.getCoordsC())));
+            g2.draw(new Line2D.Double(x.getCoordsC(),
+                third(x.getCoordsC(),x.getCoordsA())));
+                
+            g2.draw(new Line2D.Double(x.getCoordsB(),
+                third(x.getCoordsB(),x.getCoordsD())));
+            g2.draw(new Line2D.Double(x.getCoordsD(),
+                third(x.getCoordsD(),x.getCoordsB())));
+                    
+            if(x.getSlipType()==LayoutSlip.DOUBLE_SLIP){
+                if (x.getSlipState()==LayoutSlip.STATE_AC){
+                    g2.draw(new Line2D.Double(x.getCoordsA(),
+                    third(x.getCoordsA(),x.getCoordsD())));
+                    
+                    g2.draw(new Line2D.Double(x.getCoordsD(),
+                        third(x.getCoordsD(),x.getCoordsA())));
+                    
+                    g2.draw(new Line2D.Double(x.getCoordsB(),
+                        third(x.getCoordsB(),x.getCoordsC())));
+                        
+                    g2.draw(new Line2D.Double(x.getCoordsC(),
+                        third(x.getCoordsC(),x.getCoordsB())));
+                    
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(x.getCoordsA(),x.getCoordsC()));
+
+                } else if (x.getSlipState()==LayoutSlip.STATE_BD){
+                    g2.draw(new Line2D.Double(x.getCoordsB(),
+                        third(x.getCoordsB(),x.getCoordsC())));
+                    
+                    g2.draw(new Line2D.Double(x.getCoordsC(),
+                        third(x.getCoordsC(),x.getCoordsB())));
+                    
+                    g2.draw(new Line2D.Double(x.getCoordsA(),
+                    third(x.getCoordsA(),x.getCoordsD())));
+                    g2.draw(new Line2D.Double(x.getCoordsD(),
+                        third(x.getCoordsD(),x.getCoordsA())));
+                        
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(x.getCoordsB(),x.getCoordsD()));
+                
+                } else if (x.getSlipState()==LayoutSlip.STATE_AD){
+                    g2.draw(new Line2D.Double(x.getCoordsB(),
+                        third(x.getCoordsB(),x.getCoordsC())));
+                    
+                    g2.draw(new Line2D.Double(x.getCoordsC(),
+                        third(x.getCoordsC(),x.getCoordsB())));
+                        
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(x.getCoordsA(),x.getCoordsD()));
+                
+                } else if (x.getSlipState()==LayoutSlip.STATE_BC){
+                
+                    g2.draw(new Line2D.Double(x.getCoordsA(),
+                    third(x.getCoordsA(),x.getCoordsD())));
+                    
+                    g2.draw(new Line2D.Double(x.getCoordsD(),
+                        third(x.getCoordsD(),x.getCoordsA())));
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(x.getCoordsB(),x.getCoordsC()));
+                }
+                else {
+                    g2.draw(new Line2D.Double(x.getCoordsB(),
+                        third(x.getCoordsB(),x.getCoordsC())));
+                    
+                    g2.draw(new Line2D.Double(x.getCoordsC(),
+                        third(x.getCoordsC(),x.getCoordsB())));
+                    
+                    g2.draw(new Line2D.Double(x.getCoordsA(),
+                    third(x.getCoordsA(),x.getCoordsD())));
+                    
+                    g2.draw(new Line2D.Double(x.getCoordsD(),
+                        third(x.getCoordsD(),x.getCoordsA())));
+                }
+            } else {
+                if (x.getSlipState()==LayoutSlip.STATE_AD){
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(x.getCoordsA(),x.getCoordsD()));
+                
+                } else if (x.getSlipState()!=LayoutSlip.UNKNOWN) {
+                
+                    g2.draw(new Line2D.Double(x.getCoordsA(),
+                        third(x.getCoordsA(),x.getCoordsD())));
+                        
+                    g2.draw(new Line2D.Double(x.getCoordsD(),
+                        third(x.getCoordsD(),x.getCoordsA())));
+                    g2.setColor(mainColour);
+                    // draw AC segment
+                    g2.draw(new Line2D.Double(x.getCoordsA(),x.getCoordsC()));
+                    //Might want to do something neat here depending upon the state/type of the blocks connected
+                    // draw BD segment	
+                    g2.draw(new Line2D.Double(x.getCoordsB(),x.getCoordsD()));
+                } else {
+                    g2.draw(new Line2D.Double(x.getCoordsA(),
+                        third(x.getCoordsA(),x.getCoordsD())));
+                        
+                    g2.draw(new Line2D.Double(x.getCoordsD(),
+                        third(x.getCoordsD(),x.getCoordsA())));
+                }
+            }
+
+
+        }
 	}
 	
 	private void drawTurnoutCircles(Graphics2D g2)
@@ -6275,6 +7072,54 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		// loop over all defined level crossings
 		for (int i = 0; i<xingList.size();i++) {
 			LevelXing x = xingList.get(i);
+			Point2D pt = x.getCoordsCenter();
+			g2.setColor(defaultTrackColor);
+			g2.draw(new Ellipse2D.Double (
+							pt.getX()-SIZE2, pt.getY()-SIZE2, SIZE2+SIZE2, SIZE2+SIZE2));
+			pt = x.getCoordsA();
+ 			if (x.getConnectA()==null) {
+				g2.setColor(Color.red);
+			}
+			else {
+				g2.setColor(Color.green);
+			}
+			g2.draw(new Rectangle2D.Double (
+							pt.getX()-SIZE, pt.getY()-SIZE, SIZE2, SIZE2));
+			pt = x.getCoordsB();
+ 			if (x.getConnectB()==null) {
+				g2.setColor(Color.red);
+			}
+			else {
+				g2.setColor(Color.green);
+			}
+			g2.draw(new Rectangle2D.Double (
+							pt.getX()-SIZE, pt.getY()-SIZE, SIZE2, SIZE2));
+			pt = x.getCoordsC();
+ 			if (x.getConnectC()==null) {
+				g2.setColor(Color.red);
+			}
+			else {
+				g2.setColor(Color.green);
+			}
+			g2.draw(new Rectangle2D.Double (
+							pt.getX()-SIZE, pt.getY()-SIZE, SIZE2, SIZE2));
+			pt = x.getCoordsD();
+ 			if (x.getConnectD()==null) {
+				g2.setColor(Color.red);
+			}
+			else {
+				g2.setColor(Color.green);
+			}
+			g2.draw(new Rectangle2D.Double (
+							pt.getX()-SIZE, pt.getY()-SIZE, SIZE2, SIZE2));
+		}
+	}
+    
+    private void drawSlipRects(Graphics2D g2)
+	{
+		// loop over all defined level crossings
+		for (int i = 0; i<slipList.size();i++) {
+			LayoutSlip x = slipList.get(i);
 			Point2D pt = x.getCoordsCenter();
 			g2.setColor(defaultTrackColor);
 			g2.draw(new Ellipse2D.Double (
@@ -6708,6 +7553,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 					return ((LevelXing)o).getCoordsC();
 				case LEVEL_XING_D:
 					return ((LevelXing)o).getCoordsD();
+				case SLIP_A:
+					return ((LayoutSlip)o).getCoordsA();
+				case SLIP_B:
+					return ((LayoutSlip)o).getCoordsB();
+				case SLIP_C:
+					return ((LayoutSlip)o).getCoordsC();
+                case SLIP_D:
+					return ((LayoutSlip)o).getCoordsD();
 				default: 
 					if (type>=TURNTABLE_RAY_OFFSET)
 						return ((LayoutTurntable)o).getRayCoordsIndexed(type-TURNTABLE_RAY_OFFSET);

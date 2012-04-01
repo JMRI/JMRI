@@ -338,7 +338,7 @@ public class TrainCommon {
 		return " ("+rb.getString("ErrorPrintOptions")+") ";	// maybe user changed locale
 	}
 	
-	protected String getDate(){
+	protected static String getDate(){
 		Calendar calendar = Calendar.getInstance();
 		
 		String year = Setup.getYearModeled();
@@ -374,7 +374,7 @@ public class TrainCommon {
 		// Java 1.6 methods calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault())
 		String date = calendar.get(Calendar.MONTH)+1
 				+ "/"
-				+ calendar.get(Calendar.DAY_OF_MONTH) + ", " + year + " "
+				+ calendar.get(Calendar.DAY_OF_MONTH) + "/" + year + " "
 				+ h + ":" + m + " " 
 				+ AM_PM;
 		return date;

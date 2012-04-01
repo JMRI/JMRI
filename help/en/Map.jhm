@@ -24,6 +24,8 @@
 
 <mapID target="package.apps.InstallTest.InstallTest" url="package/apps/InstallTest/InstallTest.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_AllowCarsToReturnToStaging" url="package/jmri/jmrit/operations/Operations.shtml#AllowCarsToReturnToStaging"/>
+
 <mapID target="manual.JMRI_2-14_manual.Ops_ImportCarsFile_Top" url="manual/JMRI_2-14_manual/Ops_ImportCarsFile.shtml#Top"/>
 
 <mapID target="manual.JMRI_2-14_manual.Start_Preferences_StartUp" url="manual/JMRI_2-14_manual/Start_Preferences.shtml#StartUp"/>
@@ -71,6 +73,8 @@
 <mapID target="manual.JMRI_2-14_manual.Ops_Trains_BuildOptions" url="manual/JMRI_2-14_manual/Ops_Trains_BuildOptions.shtml"/>
 
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_GroupIdTab" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#GroupIdTab"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_PlannedPickUps" url="package/jmri/jmrit/operations/Operations.shtml#PlannedPickUps"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter4_Merging" url="html/tools/throttle/ThrottleChapter4.shtml#Merging"/>
 
@@ -478,6 +482,8 @@
 
 <mapID target="html.tools.throttle.ThrottleChapter4_SaveMultiple" url="html/tools/throttle/ThrottleChapter4.shtml#SaveMultiple"/>
 
+<mapID target="package.jmri.jmrit.display.EditLayoutSlip" url="package/jmri/jmrit/display/EditLayoutSlip.shtml"/>
+
 <mapID target="manual.JMRI_2-12_Manual.Main_LocoNet_SE8CProgrammer" url="manual/JMRI_2-12_Manual/Main_LocoNet.shtml#SE8CProgrammer"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_ModifyTrainsByCarType" url="package/jmri/jmrit/operations/Operations.shtml#ModifyTrainsByCarType"/>
@@ -553,6 +559,8 @@
 <mapID target="manual.DP3_2-14_manual.Start_DecoderPro_New_Top" url="manual/DP3_2-14_manual/Start_DecoderPro_New.shtml#Top"/>
 
 <mapID target="html.tools.throttle.ToolsMenuThrottleEntry" url="html/tools/throttle/ToolsMenuThrottleEntry.shtml"/>
+
+<mapID target="package.jmri.jmrit.display.SetSignalsAtSlip" url="package/jmri/jmrit/display/SetSignalsAtSlip.shtml"/>
 
 <mapID target="package.jmri.jmrit.dispatcher.Options" url="package/jmri/jmrit/dispatcher/Options.shtml"/>
 

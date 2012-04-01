@@ -140,7 +140,7 @@ public class Router extends TrainCommon {
 					//log.debug("Siding full, searching for a yard at destination ("+clone.getDestinationName()+")");
 					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterSidingFull"),new Object[]{clone.getDestinationTrackName(), clone.getDestinationName()}));
 					Location dest = clone.getDestination();
-					List<String> yards = dest.getTracksByMovesList(Track.YARD);
+					List<String> yards = dest.getTrackIdsByMovesList(Track.YARD);
 					log.debug("Found "+yards.size()+" yard(s) at destination ("+clone.getDestinationName()+")");
 					for (int i=0; i<yards.size(); i++){
 						Track track = dest.getTrackById(yards.get(i));
@@ -260,7 +260,7 @@ public class Router extends TrainCommon {
 		List<String> locations = LocationManager.instance().getLocationsByIdList();
 		for (int i=0; i<locations.size(); i++){
 			Location location = LocationManager.instance().getLocationById(locations.get(i));
-			List<String> tracks = location.getTracksByNameList(trackType);	// restrict to yards, interchanges, or staging
+			List<String> tracks = location.getTrackIdsByNameList(trackType);	// restrict to yards, interchanges, or staging
 			for (int j=0; j<tracks.size(); j++){
 				Track track = location.getTrackById(tracks.get(j));
 				if (ts.testLocation(location, track).equals(Track.OKAY)){
@@ -337,7 +337,7 @@ public class Router extends TrainCommon {
 		List<String> locations = LocationManager.instance().getLocationsByIdList();
 		for (int i=0; i<locations.size(); i++){
 			Location location = LocationManager.instance().getLocationById(locations.get(i));
-			List<String> tracks = location.getTracksByNameList(null);	
+			List<String> tracks = location.getTrackIdsByNameList(null);	
 			for (int j=0; j<tracks.size(); j++){
 				Track track = location.getTrackById(tracks.get(j));
 				if ((track.getLocType().equals(Track.INTERCHANGE)

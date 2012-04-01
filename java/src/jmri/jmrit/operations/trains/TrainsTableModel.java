@@ -268,7 +268,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         	if (train.isBuilt())
         		if (manager.isPrintPreviewEnabled())
         			return rb.getString("Preview");
-        		else if (train.getPrinted())
+        		else if (train.isPrinted())
         			return rb.getString("Printed");
         		else
         			return rb.getString("Print");
@@ -378,7 +378,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	if(Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
        	if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY) ||
        			e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)){
-       		manager.setFilesDirty();
        		_frame.setModifiedFlag(true);
        	}
     	if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||

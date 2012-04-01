@@ -27,7 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.ModifyLocationsAction;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
@@ -314,12 +314,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 			f.setTitle(rb.getString("TitleCarAdd"));
 		}
 		if (ae.getSource() == saveButton){
-			/* all JMRI window position and size are now saved
-			carManager.setCarsFrame(this);
-			*/
 			carManager.setCarsFrameTableColumnWidths(getCurrentTableColumnWidths());
-			LocationManagerXml.instance().writeFileIfDirty();	// could have created locations or tracks during import
-			CarManagerXml.instance().writeOperationsFile();
+			OperationsXml.save();
 			saveTableDetails(carsTable);
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();

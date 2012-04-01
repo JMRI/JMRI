@@ -5,9 +5,9 @@ package jmri.jmrit.operations.routes;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainIcon;
 
@@ -210,8 +210,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 					JOptionPane.YES_NO_OPTION);
 	   		if (value == JOptionPane.YES_OPTION)
 	   			saveSpinnerValues(l);
-    		LocationManagerXml.instance().writeOperationsFile();
-    		RouteManagerXml.instance().writeOperationsFile();
+	   		OperationsXml.save();	// save location and route files
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
     	}

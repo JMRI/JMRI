@@ -119,6 +119,8 @@ public class RouteManagerXml extends OperationsXml {
         else {
             log.error("Unrecognized operations route file contents in file: "+name);
         }
+        // clear dirty bit
+        setDirty(false);
     }
 
     public void setOperationsFileName(String name) { operationsFileName = name; }

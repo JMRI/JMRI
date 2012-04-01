@@ -3,9 +3,9 @@
 package jmri.jmrit.operations.locations;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.PhysicalLocationPanel;
 import jmri.util.PhysicalLocation;
@@ -124,8 +124,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
 							new Object[] { l.getName() }), rb.getString("UpdateDefaults"), JOptionPane.YES_NO_OPTION);
 			if (value == JOptionPane.YES_OPTION)
 				saveSpinnerValues(l);
-			LocationManagerXml.instance().writeOperationsFile();
-			// RouteManagerXml.instance().writeOperationsFile();
+			OperationsXml.save();
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
 		}

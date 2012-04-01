@@ -1082,7 +1082,7 @@ public class OperationsLocationsTest extends TestCase {
 		t7.setMoves(15);	
 		
 		// get all tracks ids
-		List<String> tracks = l.getTracksByMovesList(null);
+		List<String> tracks = l.getTrackIdsByMovesList(null);
 		
 		Assert.assertEquals("number of tracks", 7 , tracks.size());		
 		Assert.assertEquals("1st track", t5 ,l.getTrackById(tracks.get(0)));
@@ -1094,7 +1094,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("7th track", t3 ,l.getTrackById(tracks.get(6)));
 		
 		// get interchange tracks ids
-		tracks = l.getTracksByMovesList(Track.INTERCHANGE);
+		tracks = l.getTrackIdsByMovesList(Track.INTERCHANGE);
 		
 		Assert.assertEquals("number of tracks", 3 , tracks.size());		
 		Assert.assertEquals("1st track", t5 ,l.getTrackById(tracks.get(0)));
@@ -1102,14 +1102,14 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("3rd track", t6 ,l.getTrackById(tracks.get(2)));
 		
 		// get siding tracks ids
-		tracks = l.getTracksByMovesList(Track.SIDING);
+		tracks = l.getTrackIdsByMovesList(Track.SIDING);
 		
 		Assert.assertEquals("number of tracks", 2 , tracks.size());		
 		Assert.assertEquals("1st track", t4 ,l.getTrackById(tracks.get(0)));
 		Assert.assertEquals("2nd track", t3 ,l.getTrackById(tracks.get(1)));
 		
 		// get yard tracks ids
-		tracks = l.getTracksByMovesList(Track.YARD);
+		tracks = l.getTrackIdsByMovesList(Track.YARD);
 		
 		Assert.assertEquals("number of tracks", 2 , tracks.size());		
 		Assert.assertEquals("1st track", t1 ,l.getTrackById(tracks.get(0)));
@@ -1120,7 +1120,7 @@ public class OperationsLocationsTest extends TestCase {
 		t3.setScheduleId(sch.getId());
 		
 		// get all tracks ids
-		tracks = l.getTracksByMovesList(null);
+		tracks = l.getTrackIdsByMovesList(null);
 		
 		Assert.assertEquals("number of tracks", 7 , tracks.size());		
 		Assert.assertEquals("1st track", t3 ,l.getTrackById(tracks.get(0)));
@@ -1135,7 +1135,7 @@ public class OperationsLocationsTest extends TestCase {
 		t4.setScheduleId(sch.getId());
 		
 		// get all tracks ids
-		tracks = l.getTracksByMovesList(null);
+		tracks = l.getTrackIdsByMovesList(null);
 		
 		Assert.assertEquals("number of tracks", 7 , tracks.size());		
 		Assert.assertEquals("1st track", t4 ,l.getTrackById(tracks.get(0)));
@@ -1497,7 +1497,7 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 1 car type", true, loc.acceptsTypeName("BoxCar"));
 				Assert.assertEquals("Location 1 car type", false, loc.acceptsTypeName("boxCar"));
 				Assert.assertEquals("Location 1 car type", true, loc.acceptsTypeName("Boxcar"));
-				List<String> list = loc.getTracksByNameList(null);
+				List<String> list = loc.getTrackIdsByNameList(null);
 				Assert.assertEquals("Location 1 has n tracks", 1, list.size());
 				Track t = loc.getTrackById(list.get(0));
 				Assert.assertEquals("Location 1 first track name", "An Interchange", t.getName());
@@ -1516,7 +1516,7 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 2 car type", false, loc.acceptsTypeName("boxCar"));
 				Assert.assertEquals("Location 2 car type", false, loc.acceptsTypeName("BoxCar"));
 		
-				List<String> list = loc.getTracksByNameList(null);
+				List<String> list = loc.getTrackIdsByNameList(null);
 				Assert.assertEquals("Location 2 has n tracks", 2, list.size());
 				Track t = loc.getTrackById(list.get(0));
 				Assert.assertEquals("Location 2 first track name", "A Siding", t.getName());
@@ -1559,7 +1559,7 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 3 car type", false, loc.acceptsTypeName("BoxCar"));
 				Assert.assertEquals("Location 3 car type", true, loc.acceptsTypeName("Boxcar"));
 		
-				List<String> list = loc.getTracksByNameList(null);
+				List<String> list = loc.getTrackIdsByNameList(null);
 				Assert.assertEquals("Location 3 has n tracks", 1, list.size());
 				Track t = loc.getTrackById(list.get(0));
 				Assert.assertEquals("Location 3 first track name", "A Stage", t.getName());

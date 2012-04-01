@@ -326,8 +326,6 @@ public class CarManager extends RollingStockManager{
      * @param newLoadName new load name
      */
 	public void replaceLoad(String type, String oldLoadName, String newLoadName){
-		// Set dirty
-		CarManagerXml.instance().setDirty(true);
 		List<String> cars = getByIdList();
 		for (int i = 0; i < cars.size(); i++) {
 			Car car = getById(cars.get(i));

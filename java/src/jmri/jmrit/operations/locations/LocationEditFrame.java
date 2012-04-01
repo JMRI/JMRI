@@ -7,6 +7,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 
 import java.awt.*;
 
@@ -380,7 +381,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			enableCheckboxes(false);
 			enableButtons(false);
 			// save location file
-			managerXml.writeOperationsFile();
+			OperationsXml.save();
 		}
 		if (ae.getSource() == addLocationButton){
 			Location l = manager.getLocationByName(locationNameTextField.getText());
@@ -441,7 +442,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		manager.setLocationEditFrame(this);
 		*/
 		// save location file
-		managerXml.writeOperationsFile();
+		OperationsXml.save();
 	}
 	
 
@@ -604,7 +605,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		for (int i=0; i < checkBoxes.size(); i++){
 			checkBoxes.get(i).setSelected(false);
 			// check each track to determine which car types are serviced by this location
-			List<String> tracks = _location.getTracksByNameList(null);
+			List<String> tracks = _location.getTrackIdsByNameList(null);
 			for (int j=0; j<tracks.size(); j++){
 				Track track = _location.getTrackById(tracks.get(j));
 				if (track.acceptsTypeName(checkBoxes.get(i).getText()))

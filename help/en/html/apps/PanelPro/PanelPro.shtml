@@ -49,10 +49,10 @@ application is another tool for creating modern-style control panels.
 
 <p>
 Please see our
-<a href="http://jmri.sf.net/apps/PanelPro/Gallery.shtml">gallery page</a>
+<a href="http://jmri.sf.net/community/examples/Gallery.shtml">gallery page</a>
 for example of how model railroaders have used this on their own layouts.
 There's also an example of using PanelPro for
-<a href="http://jmri.sf.net/apps/PanelPro/Modules.shtml">modular layouts</a>.
+<a href="http://jmri.sf.net/community/examples/Modules.shtml">modular layouts</a>.
 
 <h2>The Panel Editor</h2>
 <IMG SRC="../../../images/PiecedPanel.gif" ALT="Screen shot of panel" WIDTH="292" HEIGHT="107" HSPACE="0" VSPACE="0">
@@ -73,7 +73,7 @@ You can use these tools to configure quite complicated panels for
 large layouts.  The example above is from 
 <A href="http://kc.pennsyrr.com/layouts/kulp/index.html">Nick Kulp's Cornwall Railroad</a>.
 There's a
-<A HREF="http://jmri.sourceforge.net/apps/PanelPro/Panels-Cornwall/Cornwall.html">page on the main web site</a>
+<A HREF="http://jmri.sourceforge.net/community/examples/Panels-Cornwall/Cornwall.html">page on the main web site</a>
 that describes this in detail.
 For another example, see 
 <A HREF="http://jbritton.pennsyrr.com/control_panels.ws4d">Jerry Britton's page</a> describing how he's controlling his layout.

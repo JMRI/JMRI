@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 
 
 /**
@@ -118,7 +119,7 @@ class ScheduleOptionsFrame extends OperationsFrame{
 				_track.setAlternativeTrack((Track)trackBox.getSelectedItem());
 			else 
 				_track.setAlternativeTrack(null);
-			LocationManagerXml.instance().writeOperationsFile();
+			OperationsXml.save();
 		}		
 	}
 	

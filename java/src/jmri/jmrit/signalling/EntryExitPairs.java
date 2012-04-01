@@ -34,10 +34,11 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.jmrit.display.SensorIcon;
-
+import java.util.UUID;
 
 /**
  * Implements an Entry Exit based method of setting turnouts, setting up signal logic and the 
@@ -279,6 +280,10 @@ public class EntryExitPairs {
     }
     
     public void addNXDestination(NamedBean source, NamedBean destination, LayoutEditor panel){
+        addNXDestination(source, destination, panel, null);
+    }
+    
+    public void addNXDestination(NamedBean source, NamedBean destination, LayoutEditor panel, String id){
         if (source==null) {
             log.error("no source Object provided");
             return;
@@ -302,7 +307,7 @@ public class EntryExitPairs {
             if (!nxpair.containsKey(sourcePoint)){
                 nxpair.put(sourcePoint, new Source(sourcePoint));
             }
-            nxpair.get(sourcePoint).addDestination(destPoint);
+            nxpair.get(sourcePoint).addDestination(destPoint, id);
         }
         
         firePropertyChange("length", null, null);
@@ -399,6 +404,13 @@ public class EntryExitPairs {
         return 0x00;
     }
     
+    public String getUniqueId(Object source, LayoutEditor panel, Object dest){
+        if(nxpair.containsKey(getPointDetails(source, panel))){
+            return nxpair.get(getPointDetails(source, panel)).getUniqueId(dest, panel);
+        }
+        return null;
+    }
+    
     //protecting helps us to determine which direction we are going in.
     //validateOnly flag is used, if all we are doing is simply checking to see if the source/destpoints are valid, when creating the pairs in the user GUI
 
@@ -487,12 +499,12 @@ public class EntryExitPairs {
             return sourceSignal;
         }
         
-        void addDestination(PointDetails dest){
+        void addDestination(PointDetails dest, String id){
             if(pointToDest.containsKey(dest)){
                 return;
             }
             
-            DestinationPoints dstPoint = new DestinationPoints(dest);
+            DestinationPoints dstPoint = new DestinationPoints(dest, id);
             dest.setDestination(dstPoint, this);
             pointToDest.put(dest, dstPoint);
         }
@@ -592,6 +604,13 @@ public class EntryExitPairs {
             }
         }
         
+        String getUniqueId(Object dest, LayoutEditor panel){
+            PointDetails lookingFor = getPointDetails(dest, panel);
+            if(pointToDest.containsKey(lookingFor)){
+                return pointToDest.get(lookingFor).getUniqueId();
+            }
+            return null;
+        }
         class DestinationPoints{
         
             PointDetails point = null;
@@ -602,6 +621,7 @@ public class EntryExitPairs {
             ArrayList<LayoutBlock> routeDetails = new ArrayList<LayoutBlock>();
             LayoutBlock destination;
             boolean disposed = false;
+            String uniqueId = null;
             
             boolean isEnabled(){
                 return enabled;
@@ -613,9 +633,17 @@ public class EntryExitPairs {
                 enabled = boo;
             }
         
-            DestinationPoints(PointDetails point){
+            DestinationPoints(PointDetails point, String id){
                 this.point=point;
-                //point.setDestination(this);
+                if(id==null){
+                 uniqueId = UUID.randomUUID().toString();
+                } else {
+                    uniqueId = id;
+                }
+            }
+            
+            String getUniqueId(){
+                return uniqueId;
             }
             
             PointDetails getPoint(){
@@ -770,7 +798,9 @@ public class EntryExitPairs {
                         SignalMast mast = (SignalMast) getSignal();
                         mast.setHeld(false);
                     }
-                    destination=null;
+                    synchronized(this){
+                        destination=null;
+                    }
                     return;
                 }
                 if(!state){
@@ -802,11 +832,37 @@ public class EntryExitPairs {
                                     turnoutlist=connection.getTurnoutList(routeDetails.get(i).getBlock(), routeDetails.get(preBlk).getBlock(), routeDetails.get(nxtBlk).getBlock());
                                     ArrayList<Integer> throwlist=connection.getTurnoutSettingList();
                                     for (int x=0; x<turnoutlist.size(); x++){
-                                        String t = turnoutlist.get(x).getTurnoutName();
-                                        Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
-                                        turnout.setCommandedState(throwlist.get(x));
-                                        turnoutSettings.put(turnout, throwlist.get(x));
-                                        
+                                        if(turnoutlist.get(x) instanceof LayoutSlip){
+                                            int slipState = throwlist.get(x);
+                                            LayoutSlip ls = (LayoutSlip)turnoutlist.get(x);
+                                            int taState = ls.getTurnoutState(slipState);
+                                            ls.getTurnout().setCommandedState(taState);
+                                            turnoutSettings.put(ls.getTurnout(), taState);
+                                            Runnable r = new Runnable() {
+                                              public void run() {
+                                                try {
+                                                    Thread.sleep(250 + turnoutSetDelay);
+                                                } catch (InterruptedException ex) {
+                                                    Thread.currentThread().interrupt();
+                                                }
+                                              }
+                                            };
+                                            Thread thr = new Thread(r, "Entry Exit Route, turnout setting");
+                                            thr.start();
+                                            try{
+                                                thr.join();
+                                            } catch (InterruptedException ex) {
+                                    //            log.info("interrupted at join " + ex);
+                                            }
+                                            int tbState = ls.getTurnoutBState(slipState);
+                                            ls.getTurnoutB().setCommandedState(tbState);
+                                            turnoutSettings.put(ls.getTurnoutB(), tbState);
+                                        } else {
+                                            String t = turnoutlist.get(x).getTurnoutName();
+                                            Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
+                                            turnout.setCommandedState(throwlist.get(x));
+                                            turnoutSettings.put(turnout, throwlist.get(x));
+                                        }
                                         Runnable r = new Runnable() {
                                           public void run() {
                                             try {
@@ -891,9 +947,9 @@ public class EntryExitPairs {
                                 setNXButtonState(pd, NXBUTTONINACTIVE);
                                 setNXButtonState(point, NXBUTTONINACTIVE);
                             }
-
-                        } catch (Exception ex) {
+                        } catch (RuntimeException ex) {
                             log.error("An error occured while setting the route");
+                            ex.printStackTrace();
                         }
                         getPoint().getPanel().getGlassPane().setVisible(false);
                     }
@@ -1078,7 +1134,9 @@ public class EntryExitPairs {
                 setRouteFrom(false);
                 setRouteTo(false);
                 routeDetails=null;
-                lastSeenActiveBlockObject = null;
+                synchronized(this){
+                    lastSeenActiveBlockObject = null;
+                }
                 pd.cancelNXButtonTimeOut();
                 point.cancelNXButtonTimeOut();
                 getPoint().getPanel().getGlassPane().setVisible(false);
@@ -1158,7 +1216,9 @@ public class EntryExitPairs {
                         if(log.isDebugEnabled()){
                             log.debug("Path chossen " + startlBlock.getDisplayName() + " " + destinationLBlock.getDisplayName() + " " +  protectLBlock.getDisplayName());
                         }
-                        destination = destinationLBlock;
+                        synchronized(this){
+                            destination = destinationLBlock;
+                        }
                         try{
                             routeDetails = InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, 0x00/*jmri.jmrit.display.layoutEditor.LayoutBlockManager.MASTTOMAST*/);
                         } catch (jmri.JmriException e){
@@ -1189,12 +1249,14 @@ public class EntryExitPairs {
                 setRouteFrom(false);
                 setRouteTo(false);
                 point.removeDestination(this);
-                lastSeenActiveBlockObject = null;
+                synchronized(this){
+                    lastSeenActiveBlockObject = null;
+                }
                 disposed=true;
             }
             
             void setActiveEntryExit(boolean boo){
-                firePropertyChange("active", activeEntryExit, boo);
+                firePropertyChange("active", getSourceObject(), getPoint().getRefObject());
                 activeEntryExit = boo;
                 
             }
@@ -1351,6 +1413,28 @@ public class EntryExitPairs {
                 else if((x.getSignalDName().equals(username)) || (x.getSignalDName().equals(systemname)))
                     sensor = sm.getSensor(x.getSensorDName());
             }
+        } else if (objLoc instanceof LayoutSlip) {
+            LayoutSlip sl = (LayoutSlip)objLoc;
+            if(mast!=null){
+                if((sl.getSignalAMast().equals(username)) || (sl.getSignalAMast().equals(systemname)))
+                    sensor = sm.getSensor(sl.getSensorA());
+                else if((sl.getSignalBMast().equals(username)) || (sl.getSignalBMast().equals(systemname)))
+                    sensor = sm.getSensor(sl.getSensorB());
+                else if((sl.getSignalCMast().equals(username)) || (sl.getSignalCMast().equals(systemname)))
+                    sensor = sm.getSensor(sl.getSensorC());
+                else if((sl.getSignalDMast().equals(username)) || (sl.getSignalDMast().equals(systemname)))
+                    sensor = sm.getSensor(sl.getSensorD());
+            }
+            if(head!=null){
+                if((sl.getSignalA1Name().equals(username)) || (sl.getSignalA1Name().equals(systemname)))
+                    sensor = sm.getSensor(sl.getSensorA());
+                else if((sl.getSignalB1Name().equals(username)) || (sl.getSignalB1Name().equals(systemname)))
+                    sensor = sm.getSensor(sl.getSensorB());
+                else if((sl.getSignalC1Name().equals(username)) || (sl.getSignalC1Name().equals(systemname)))
+                    sensor = sm.getSensor(sl.getSensorC());
+                else if((sl.getSignalD1Name().equals(username)) || (sl.getSignalD1Name().equals(systemname)))
+                    sensor = sm.getSensor(sl.getSensorD());
+            }
         }
         point.setSensor(sensor);
         return sensor;
@@ -1408,7 +1492,7 @@ public class EntryExitPairs {
                     signal =  sh.getSignalHead(p.getWestBoundSignal());
             }
         }
-        if(point.getRefLocation() instanceof LayoutTurnout){
+        else if(point.getRefLocation() instanceof LayoutTurnout){
             LayoutTurnout t = (LayoutTurnout)point.getRefLocation();
             if(t.getSensorA().equals(username) || t.getSensorA().equals(systemname))
                 if(!t.getSignalAMast().equals(""))
@@ -1460,6 +1544,32 @@ public class EntryExitPairs {
                     signal =  sm.getSignalMast(x.getSignalDMastName());
                 else if(!x.getSignalDName().equals(""))
                     signal =  sh.getSignalHead(x.getSignalDName());
+        }
+        else if(point.getRefLocation() instanceof LayoutSlip){
+            LayoutSlip t = (LayoutSlip)point.getRefLocation();
+            if(t.getSensorA().equals(username) || t.getSensorA().equals(systemname))
+                if(!t.getSignalAMast().equals(""))
+                    signal =  sm.getSignalMast(t.getSignalAMast());
+                else if(!t.getSignalA1Name().equals(""))
+                    signal =  sh.getSignalHead(t.getSignalA1Name());
+                    
+            else if(t.getSensorB().equals(username) || t.getSensorB().equals(systemname))
+                if(!t.getSignalBMast().equals(""))
+                    signal =  sm.getSignalMast(t.getSignalBMast());
+                else if(!t.getSignalB1Name().equals(""))
+                    signal =  sh.getSignalHead(t.getSignalB1Name());
+                    
+            else if(t.getSensorC().equals(username) || t.getSensorC().equals(systemname))
+                if(!t.getSignalCMast().equals(""))
+                    signal =  sm.getSignalMast(t.getSignalCMast());
+                else if(!t.getSignalC1Name().equals(""))
+                    signal =  sh.getSignalHead(t.getSignalC1Name());
+                    
+            else if(t.getSensorD().equals(username) || t.getSensorD().equals(systemname))
+                if(!t.getSignalDMast().equals(""))
+                    signal =  sm.getSignalMast(t.getSignalDMast());
+                else if(!t.getSignalD1Name().equals(""))
+                    signal =  sh.getSignalHead(t.getSignalD1Name());
         }
         if(signal instanceof SignalMast)
             point.setSignalMast(((SignalMast)signal));
@@ -1721,6 +1831,8 @@ public class EntryExitPairs {
                         refLoc = panel.findLayoutTurnoutBySignalMast(mast);
                     if(refLoc==null)
                         refLoc = panel.findLevelXingBySignalMast(mast);
+                    if(refLoc==null)
+                        refLoc = panel.findLayoutSlipBySignalMast(mast);
                     if(refLoc==null){
                         mast = ((SignalMast)refObj).getSystemName();
                         if(refLoc==null)
@@ -1729,6 +1841,8 @@ public class EntryExitPairs {
                             refLoc = panel.findLayoutTurnoutBySignalMast(mast);
                         if(refLoc==null)
                             refLoc = panel.findLevelXingBySignalMast(mast);
+                        if(refLoc==null)
+                            refLoc = panel.findLayoutSlipBySignalMast(mast);
                     }
                 } else if (refObj instanceof Sensor) {
                     String sourceSensor = ((Sensor)refObj).getSystemName();
@@ -1739,6 +1853,8 @@ public class EntryExitPairs {
                         refLoc = panel.findLayoutTurnoutBySensor(sourceSensor);
                     if(refLoc==null)
                         refLoc = panel.findLevelXingBySensor(sourceSensor);
+                    if(refLoc==null)
+                        refLoc = panel.findLayoutSlipBySensor(sourceSensor);
                     if(refLoc==null){
                         sourceSensor = ((Sensor)refObj).getUserName();
                         refLoc = panel.findPositionablePointByEastBoundSensor(sourceSensor);
@@ -1748,6 +1864,8 @@ public class EntryExitPairs {
                             refLoc = panel.findLayoutTurnoutBySensor(sourceSensor);
                         if(refLoc==null)
                             refLoc = panel.findLevelXingBySensor(sourceSensor);
+                        if(refLoc==null)
+                            refLoc = panel.findLayoutSlipBySensor(sourceSensor);
                     }
                     setSensor((Sensor)refObj);
                 } else if (refObj instanceof SignalHead){
@@ -1764,6 +1882,8 @@ public class EntryExitPairs {
                     //((LayoutTurnout)refLoc).addPropertyChangeListener(this);
                 } else if (refLoc instanceof LevelXing){
                     //((LevelXing)refLoc).addPropertyChangeListener(this);
+                } else if (refLoc instanceof LayoutSlip){
+                    //((Layoutslip)refLoc).addPropertyChangeListener(this);
                 }
             }
             //With this set ref we can probably add a listener to it, so that we can detect when a change to the point details takes place

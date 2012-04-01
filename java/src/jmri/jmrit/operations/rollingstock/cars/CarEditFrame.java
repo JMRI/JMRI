@@ -20,13 +20,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainManagerXml;
 
 
 /**
@@ -542,20 +541,12 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		}
 	}
 	
-	private boolean filesModified = false;
 	/**
 	 * Need to also write the location and train files if a road name
 	 * was deleted. Need to also write files if car type was changed.
 	 */
 	private void writeFiles(){
-		managerXml.writeOperationsFile();
-		if (filesModified){
-			filesModified = false;
-			LocationManagerXml.instance().writeOperationsFile();
-			TrainManagerXml.instance().writeOperationsFile();
-		} else
-			LocationManagerXml.instance().writeFileIfDirty();	// write location file if track is part of pool
-		
+		OperationsXml.save();
 	}
 	
 	private boolean checkCar(Car c){
@@ -827,14 +818,11 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		if(Control.showProperty && log.isDebugEnabled()) 
 			log.debug ("CarEditFrame sees propertyChange "+e.getPropertyName()+" old: "+e.getOldValue()+" new: "+e.getNewValue());
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)){
-			if ((Integer)e.getOldValue() > (Integer)e.getNewValue())
-				filesModified = true;
 			CarRoads.instance().updateComboBox(roadComboBox);
 			if (_car != null)
 				roadComboBox.setSelectedItem(_car.getRoad());
 		}
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)){
-			filesModified = true;
 			CarTypes.instance().updateComboBox(typeComboBox);
 			if (_car != null)
 				typeComboBox.setSelectedItem(_car.getType());
