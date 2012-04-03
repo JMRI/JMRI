@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 
 import org.jdom.Element;
 
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
@@ -1105,29 +1106,34 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Determines if this train will service this car.
      * Note this code doesn't check the location or tracks
-     * that needs to be do separately.  See Router.java.
-     * @param car The car to be tested.
+     * that needs to be done separately.  See Router.java.
+     * @param rs The car to be tested.
      * @return true if this train can service the car.
      */
-    public boolean servicesCar(Car car){
-    	if (acceptsTypeName(car.getType()) && acceptsBuiltDate(car.getBuilt()) 
-    			&& acceptsOwnerName(car.getOwner()) && acceptsRoadName(car.getRoad())
-    			&& acceptsLoadName(car.getLoad())){
+    public boolean servicesCar(RollingStock rs){
+    	if (acceptsTypeName(rs.getType()) && acceptsBuiltDate(rs.getBuilt()) 
+    			&& acceptsOwnerName(rs.getOwner()) && acceptsRoadName(rs.getRoad())){
+    		// if car, check to see if train accepts car load
+    		if (Car.class.isInstance(rs)){
+    			Car car = (Car)rs;
+    			if (!acceptsLoadName(car.getLoad()))
+    				return false;
+    		}
     		Route route = getRoute();
     		if (route != null){
     			List<String> rLocations = route.getLocationsBySequenceList();
     			if (rLocations.size() == 1){
     				RouteLocation rLoc = route.getLocationById(rLocations.get(0));
-    				if (rLoc.getName().equals(car.getLocationName()) 
+    				if (rLoc.getName().equals(rs.getLocationName()) 
     						&& rLoc.canPickup()  
     						&& rLoc.getMaxCarMoves()>0
     						&& !skipsLocation(rLoc.getId())
-    						&& rLoc.getName().equals(car.getDestinationName())
+    						&& rLoc.getName().equals(rs.getDestinationName())
     						&& rLoc.canDrop()){
-    					if (car.getTrack() != null && !car.getTrack().acceptsPickupTrain(this)){
+    					if (rs.getTrack() != null && !rs.getTrack().acceptsPickupTrain(this)){
     						return false;
     					}
-       					if (car.getDestinationTrack() != null && !car.getDestinationTrack().acceptsDropTrain(this)){
+       					if (rs.getDestinationTrack() != null && !rs.getDestinationTrack().acceptsDropTrain(this)){
     						return false;
     					}
     					if (debugFlag)
@@ -1138,31 +1144,31 @@ public class Train implements java.beans.PropertyChangeListener {
     			// Multiple locations in the train's route
     			else for (int j=0; j<rLocations.size()-1; j++){
     				RouteLocation rLoc = route.getLocationById(rLocations.get(j));
-    				if (rLoc.getName().equals(car.getLocationName()) 
+    				if (rLoc.getName().equals(rs.getLocationName()) 
     						&& rLoc.canPickup()  
     						&& rLoc.getMaxCarMoves()>0
     						&& !skipsLocation(rLoc.getId())
-    						&& (car.getLocation().getTrainDirections() & rLoc.getTrainDirection()) > 0){
-    					if (car.getTrack() != null){
-    						if ((car.getTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 
-    								|| !car.getTrack().acceptsPickupTrain(this))
+    						&& (rs.getLocation().getTrainDirections() & rLoc.getTrainDirection()) > 0){
+    					if (rs.getTrack() != null){
+    						if ((rs.getTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 
+    								|| !rs.getTrack().acceptsPickupTrain(this))
     							continue;
     					}
     					if (debugFlag)
-    						log.debug("Car ("+car.toString()+") can be picked up by train ("+getName()+") from ("
-    								+car.getLocationName()+", "+car.getTrackName()+")");
-    					if (car.getDestination() != null){
+    						log.debug("Car ("+rs.toString()+") can be picked up by train ("+getName()+") from ("
+    								+rs.getLocationName()+", "+rs.getTrackName()+")");
+    					if (rs.getDestination() != null){
     						// now check car's destination
     						for (int k=j; k<rLocations.size(); k++){
     							rLoc = route.getLocationById(rLocations.get(k));
-    							if (rLoc.getName().equals(car.getDestinationName()) 
+    							if (rLoc.getName().equals(rs.getDestinationName()) 
     									&& rLoc.canDrop() 
     									&& rLoc.getMaxCarMoves()>0
     									&& !skipsLocation(rLoc.getId())
-    									&& (car.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0){
-    								if (car.getDestinationTrack() != null){
-    									if ((car.getDestinationTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0
-    											|| !car.getDestinationTrack().acceptsDropTrain(this))
+    									&& (rs.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0){
+    								if (rs.getDestinationTrack() != null){
+    									if ((rs.getDestinationTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0
+    											|| !rs.getDestinationTrack().acceptsDropTrain(this))
     										continue;
     								}
     		    					// check to see if moves are available
@@ -1174,14 +1180,14 @@ public class Train implements java.beans.PropertyChangeListener {
     		    						}
     		    					}
     								if (debugFlag)
-    									log.debug("Car ("+car.toString()+") can be dropped by train ("+getName()+") to ("
-    											+car.getDestinationName()+", "+car.getDestinationTrackName()+")");
+    									log.debug("Car ("+rs.toString()+") can be dropped by train ("+getName()+") to ("
+    											+rs.getDestinationName()+", "+rs.getDestinationTrackName()+")");
     								return true;
     							}
     						}
     					} else {
     						if (debugFlag)
-        						log.debug("Car ("+car.toString()+") does not have a destination");
+        						log.debug("Car ("+rs.toString()+") does not have a destination");
     						return true;
     					}
     				}

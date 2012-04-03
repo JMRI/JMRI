@@ -150,7 +150,6 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	}
 	
 	protected boolean change(Car car){
-
 		// set final destination fields before destination in case there's a schedule at destination
 		if (!ignoreFinalDestinationCheckBox.isSelected()){
 			if (finalDestinationBox.getSelectedItem() == null || finalDestinationBox.getSelectedItem().equals("")) {
@@ -268,14 +267,15 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
-			if (car.getDestination()!=null && !train.servicesCar(car)){
-				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carTrainNotService"),
-						new Object[] {train.getName()}), rb.getString("rsNotMove"),
+			if (car.getLocation()!=null && car.getDestination()!=null && !train.servicesCar(car)){
+				JOptionPane.showMessageDialog(this, 
+						MessageFormat.format(rb.getString("carTrainNotService"), new Object[] {train.getName()}),
+						rb.getString("rsNotMove"),
 						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 		}
-
+		checkTrain(car);
 		// is this car part of a kernel?
 		if (car.getKernel() != null){
 			if (JOptionPane.showConfirmDialog(this,
