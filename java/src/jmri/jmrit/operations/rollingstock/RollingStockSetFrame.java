@@ -550,7 +550,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	}
 	
 	protected void setRouteLocationAndDestination(RollingStock rs, Train train, RouteLocation rl, RouteLocation rd){
-		if (rs.getRouteLocation() != null)
+		if (rs.getRouteLocation() != null || rl != null)
 			train.setModified(true);
 		rs.setRouteLocation(rl);
 		rs.setRouteDestination(rd);

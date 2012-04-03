@@ -93,15 +93,18 @@ public class TrainManifest extends TrainCommon {
 					(routeLocationName.equals(previousRouteLocationName) && oldWork == false && work == true && newWork == false)){
 				if (work){
 					newWork = true;
+					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
 					if (r == 0){
 						addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
 								+", "+rb.getString("departureTime")+" "+train.getFormatedDepartureTime());
 					} else if (!rl.getDepartureTime().equals("")){
 						addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
 								+", "+rb.getString("departureTime")+" "+rl.getFormatedDepartureTime());
-					} else {
+					} else if (!expectedArrivalTime.equals("-1")){
 						addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
-								+", "+rb.getString("estimatedArrival")+" "+train.getExpectedArrivalTime(rl));
+								+", "+rb.getString("estimatedArrival")+" "+ expectedArrivalTime);
+					} else {
+						addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName);
 					}
 					// add route comment
 					if (!rl.getComment().equals(""))
