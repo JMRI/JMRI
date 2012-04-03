@@ -15,15 +15,18 @@ public class AutoSave {
 	
 	static Thread autoSave = null;
 	
+	//@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SC_START_IN_CTOR")
 	public AutoSave(){
-		if (Setup.isAutoSaveEnabled() && autoSave == null){
-			autoSave = new Thread(new Runnable() {
-				public void run() {
-					saveFiles();
-				}
-			});
-			autoSave.setName("Auto Save");
-			autoSave.start();
+		synchronized (this) {
+			if (Setup.isAutoSaveEnabled() && autoSave == null){
+				autoSave = new Thread(new Runnable() {
+					public void run() {
+						saveFiles();
+					}
+				});
+				autoSave.setName("Auto Save");
+				autoSave.start();
+			}
 		}
 	}
 	

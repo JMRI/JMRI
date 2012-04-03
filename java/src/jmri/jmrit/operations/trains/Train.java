@@ -1259,7 +1259,7 @@ public class Train implements java.beans.PropertyChangeListener {
     
     /**
      * Gets the train's length at the route location specified
-     * @param rl The route location
+     * @param routeLocation The route location
      * @return The train length at the route location
      */
     public int getTrainLength(RouteLocation routeLocation){

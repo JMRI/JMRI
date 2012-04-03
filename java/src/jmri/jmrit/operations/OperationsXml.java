@@ -169,7 +169,7 @@ public class OperationsXml extends XmlFile {
     
     /**
      * Checks to see if any operations files are dirty
-     * @return
+     * @return True if any operations parameters have been modified.
      */
     public static boolean areFilesDirty(){
 		if (OperationsSetupXml.instance().isDirty()
