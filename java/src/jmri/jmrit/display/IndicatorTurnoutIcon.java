@@ -437,7 +437,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         }
     }
 
-    private void setStatus(int state) {
+    public void setStatus(int state) {
         if (state==Sensor.ACTIVE) {
             _status = "OccupiedTrack";
         } else if (state==Sensor.INACTIVE) {

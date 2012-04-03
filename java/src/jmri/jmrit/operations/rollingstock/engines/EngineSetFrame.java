@@ -61,6 +61,8 @@ public class EngineSetFrame extends RollingStockSetFrame implements java.beans.P
 	protected boolean save(){
 		if (!super.save())
 			return false;
+		// check for train change
+		checkTrain(_engine);
 		// is this engine part of a consist?
 		if (_engine.getConsist() != null){
 			if (JOptionPane.showConfirmDialog(this,

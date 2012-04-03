@@ -502,8 +502,11 @@ public class PanelEditor extends Editor implements ItemListener {
         		removeMarkers();
             }
         });
-         
-        menuBar.add(jmri.jmrit.logix.WarrantTableAction.makeWarrantMenu());
+        
+        JMenu warrantMenu = jmri.jmrit.logix.WarrantTableAction.makeWarrantMenu();
+        if (warrantMenu!=null) {
+        	menuBar.add(warrantMenu);
+        }
 
         targetFrame.addHelpMenu("package.jmri.jmrit.display.PanelTarget", true);
         return targetFrame;
