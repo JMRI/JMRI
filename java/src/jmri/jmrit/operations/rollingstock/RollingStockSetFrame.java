@@ -358,13 +358,14 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			if (trainBox.getSelectedItem() == null || trainBox.getSelectedItem().equals("")){
 				if (rs.getTrain() != null){
 					// prevent rs from being picked up and delivered
-					rs.setRouteLocation(null);
-					rs.setRouteDestination(null);
-					rs.getTrain().setModified(true);
+					setRouteLocationAndDestination(rs, rs.getTrain(), null, null);
 				}
 				rs.setTrain(null);
 			} else {
 				Train train = (Train)trainBox.getSelectedItem();
+				if (rs.getTrain() != null && !rs.getTrain().equals(train))
+					// prevent rs from being picked up and delivered
+					setRouteLocationAndDestination(rs, rs.getTrain(), null, null);
 				rs.setTrain(train);
 				if (train != null){
 					// determine if train services this rs's type
@@ -519,39 +520,40 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	protected void checkTrain(RollingStock rs){
 		// determine if train is built and car is part of train or want to be part of the train
 		Train train = rs.getTrain(); 
-		if (train != null && train.isBuilt() && !train.isTrainInRoute()){
+		if (train != null && train.isBuilt()){
 			if (_rs.getRouteLocation() != null && _rs.getRouteDestination() != null 
 					&& rl != null && rd != null
 					&& (!_rs.getRouteLocation().getName().equals(rl.getName()) 
 							|| !_rs.getRouteDestination().getName().equals(rd.getName())
 							|| _rs.getDestinationTrack() == null)){
-						// user changed rolling stock location or destination or no destination track
-						rs.setRouteLocation(null);
-						rs.setRouteDestination(null);
-						train.setModified(true);
-					}
+				// user changed rolling stock location or destination or no destination track
+				setRouteLocationAndDestination(rs, train, null, null);
+			}
 			if (_rs.getRouteLocation() != null || _rs.getRouteDestination() != null){
 				if (JOptionPane.showConfirmDialog(this, 
 						MessageFormat.format(getRb().getString("rsRemoveRsFromTrain"), new Object[]{rs.toString(), train.getName()}),
 						getRb().getString("rsInRoute"),
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 					// prevent rs from being picked up and delivered
-					rs.setRouteLocation(null);
-					rs.setRouteDestination(null);
-					train.setModified(true);
+					setRouteLocationAndDestination(rs, train, null, null);
 				}
 			} else if (rl != null && rd != null &&_rs.getDestinationTrack() != null ) {
 				if (JOptionPane.showConfirmDialog(this, 
 						MessageFormat.format(getRb().getString("rsAddRsToTrain"), new Object[]{rs.toString(), train.getName()}),
 						getRb().getString("rsAddManuallyToTrain"),						
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-					// prevent rs from being picked up and delivered
-					rs.setRouteLocation(rl);
-					rs.setRouteDestination(rd);
-					train.setModified(true);
+					// set new pick up and set out locations
+					setRouteLocationAndDestination(rs, train, rl, rd);
 				}
 			}		
 		}
+	}
+	
+	protected void setRouteLocationAndDestination(RollingStock rs, Train train, RouteLocation rl, RouteLocation rd){
+		if (rs.getRouteLocation() != null || rl != null)
+			train.setModified(true);
+		rs.setRouteLocation(rl);
+		rs.setRouteDestination(rd);
 	}
 	
 	protected void updateComboBoxes(){
