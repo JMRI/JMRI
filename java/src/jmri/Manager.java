@@ -159,6 +159,7 @@ public interface Manager {
     public static final int AUDIO = LOGIXS + 10;
     public static final int TIMEBASE = AUDIO + 10;
     public static final int PANELFILES = TIMEBASE + 10;
+    public static final int ENTRYEXIT = PANELFILES + 10;
     
     public int getXMLOrder();
     

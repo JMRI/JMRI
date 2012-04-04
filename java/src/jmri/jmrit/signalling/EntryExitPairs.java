@@ -55,7 +55,7 @@ import java.util.UUID;
  * @author Kevin Dickerson  Copyright (C) 2011
  * @version			$Revision: 19923 $
  */
-public class EntryExitPairs {
+public class EntryExitPairs implements jmri.Manager{
 
 	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
     static volatile EntryExitPairs _instance = null;
@@ -171,6 +171,72 @@ public class EntryExitPairs {
         return sourcePoint.getRefLocation();
     }
     
+    public int getXMLOrder(){
+        return ENTRYEXIT;
+    }
+    
+    public NamedBean getBySystemName(String systemName){
+        for(Source e : nxpair.values()){
+            Source.DestinationPoints pd = e.getByUniqueId(systemName);
+            if(pd!=null)
+                return pd;
+        }
+        return null;
+    }
+    
+    public NamedBean getBeanBySystemName(String systemName){
+        return getBySystemName(systemName);
+    }
+    
+    public NamedBean getBeanByUserName(String userName){
+        for(Source e : nxpair.values()){
+            Source.DestinationPoints pd = e.getByUserName(userName);
+            if(pd!=null)
+                return pd;
+        }
+        return null;
+    }
+    
+    public NamedBean getNamedBean(String name){
+        NamedBean b = getBeanByUserName(name);
+        if(b!=null) return b;
+        return getBeanBySystemName(name);
+    }
+    
+    @Deprecated
+    public char systemLetter() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public String getSystemPrefix() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public char typeLetter() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public String makeSystemName(String s) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public String[] getSystemNameArray() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public List<String> getSystemNameList() {
+        return getEntryExitList();
+    }
+    
+    public void register(NamedBean n) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void deregister(NamedBean n) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    public void dispose(){ }
     /**
     * This method will generate the point details, given a known source and layout panel.
     * 
@@ -411,6 +477,14 @@ public class EntryExitPairs {
         return null;
     }
     
+    public List<String> getEntryExitList(){
+        ArrayList<String> destlist = new ArrayList<String>();
+        for(Source e : nxpair.values()){
+            destlist.addAll(e.getDestinationUniqueId());
+        }
+        return destlist;
+    }
+    
     //protecting helps us to determine which direction we are going in.
     //validateOnly flag is used, if all we are doing is simply checking to see if the source/destpoints are valid, when creating the pairs in the user GUI
 
@@ -445,7 +519,7 @@ public class EntryExitPairs {
         NamedBean sourceObject = null;
         NamedBean sourceSignal = null;
         jmri.SignalMastLogic sml;
-        String ref = "Empty";
+        //String ref = "Empty";
         PointDetails pd = null;
         
         //Using Object here rather than sourceSensor, working on the basis that it might
@@ -611,7 +685,32 @@ public class EntryExitPairs {
             }
             return null;
         }
-        class DestinationPoints{
+        
+        ArrayList<String> getDestinationUniqueId(){
+            ArrayList<String> rList = new ArrayList<String>();
+            for(DestinationPoints d: pointToDest.values()){
+                rList.add(d.getUniqueId());
+            }
+            return rList;
+        }
+        
+        DestinationPoints getByUniqueId(String id){
+            for(DestinationPoints d: pointToDest.values()){
+                if(d.getUniqueId().equals(id))
+                    return d;
+            }
+            return null;
+        }
+        
+        DestinationPoints getByUserName(String id){
+            for(DestinationPoints d: pointToDest.values()){
+                if(d.getUserName().equals(id))
+                    return d;
+            }
+            return null;
+        }
+        
+        class DestinationPoints extends jmri.implementation.AbstractNamedBean{
         
             PointDetails point = null;
             Boolean uniDirection = true;
@@ -632,21 +731,30 @@ public class EntryExitPairs {
                 //Need to do other bits when enabling
                 enabled = boo;
             }
-        
+            
+            //DestinationPoints(){}
+            
             DestinationPoints(PointDetails point, String id){
+                super(id);
                 this.point=point;
                 if(id==null){
                  uniqueId = UUID.randomUUID().toString();
+                 mSystemName = uniqueId;
                 } else {
                     uniqueId = id;
                 }
+                mUserName = (getPoint().getDisplayName() + " to " + this.point.getDisplayName());
+            }
+            
+            public String getDisplayName(){
+                return mSystemName;
             }
             
             String getUniqueId(){
                 return uniqueId;
             }
             
-            PointDetails getPoint(){
+            PointDetails getDestPoint(){
                 return point;
             }
             
@@ -701,7 +809,7 @@ public class EntryExitPairs {
                 public void propertyChange(PropertyChangeEvent e) {
                     Block blk = (Block) e.getSource();
                     if (e.getPropertyName().equals("state")) {
-                        if (log.isDebugEnabled()) log.debug(ref + "  We have a change of state on the block " + blk.getDisplayName());
+                        if (log.isDebugEnabled()) log.debug(mUserName + "  We have a change of state on the block " + blk.getDisplayName());
                         int now = ((Integer) e.getNewValue()).intValue();
                         
                         if (now==Block.OCCUPIED){
@@ -1073,11 +1181,11 @@ public class EntryExitPairs {
                 
                 if (cancelClear == CLEARROUTE){
                     if (routeDetails.size()==0){
-                        if (log.isDebugEnabled()) log.debug(ref + "  all blocks have automatically been cleared down");
+                        if (log.isDebugEnabled()) log.debug(mUserName + "  all blocks have automatically been cleared down");
                     } else {
-                        if (log.isDebugEnabled()) log.debug(ref + "  No blocks were cleared down " + routeDetails.size());
+                        if (log.isDebugEnabled()) log.debug(mUserName + "  No blocks were cleared down " + routeDetails.size());
                         try{
-                            if (log.isDebugEnabled()) log.debug(ref + "  set first block as active so that we can manually clear this down " + routeDetails.get(0).getBlock().getSensor().getDisplayName());
+                            if (log.isDebugEnabled()) log.debug(mUserName + "  set first block as active so that we can manually clear this down " + routeDetails.get(0).getBlock().getSensor().getDisplayName());
                             routeDetails.get(0).getBlock().getSensor().setState(Sensor.ACTIVE);
                             getStart().getBlock().getSensor().setState(Sensor.INACTIVE);
                         } catch (java.lang.NullPointerException e){
@@ -1086,7 +1194,7 @@ public class EntryExitPairs {
                             log.error(e);
                         }
                         if (log.isDebugEnabled()){ 
-                            log.debug(ref + "  Going to clear routeDetails down " + routeDetails.size());
+                            log.debug(mUserName + "  Going to clear routeDetails down " + routeDetails.size());
                             for(int i = 0; i<routeDetails.size(); i++){
                                 log.debug("Block at " + i + " " + routeDetails.get(i).getDisplayName());
                             }
@@ -1095,12 +1203,12 @@ public class EntryExitPairs {
                             //We will remove the propertychange listeners on the sensors as we will now manually clear things down.
                             //Should we just be updating the block status and not the sensor
                             for (int i = 1; i <routeDetails.size()-1; i++){
-                                if (log.isDebugEnabled()) log.debug(ref + " in loop Set active " + routeDetails.get(i).getDisplayName() + " " + routeDetails.get(i).getBlock().getSystemName());
+                                if (log.isDebugEnabled()) log.debug(mUserName + " in loop Set active " + routeDetails.get(i).getDisplayName() + " " + routeDetails.get(i).getBlock().getSystemName());
                                 try{
                                     routeDetails.get(i).getOccupancySensor().setState(Sensor.ACTIVE); //was getBlock().getSensor()
                                     routeDetails.get(i).getBlock().goingActive();
                                     
-                                    if (log.isDebugEnabled()) log.debug(ref + " in loop Set inactive " + routeDetails.get(i-1).getDisplayName() + " " + routeDetails.get(i-1).getBlock().getSystemName());
+                                    if (log.isDebugEnabled()) log.debug(mUserName + " in loop Set inactive " + routeDetails.get(i-1).getDisplayName() + " " + routeDetails.get(i-1).getBlock().getSystemName());
                                     routeDetails.get(i-1).getOccupancySensor().setState(Sensor.INACTIVE); //was getBlock().getSensor()
                                     routeDetails.get(i-1).getBlock().goingInactive();
                                 } catch (java.lang.NullPointerException e){
@@ -1110,10 +1218,10 @@ public class EntryExitPairs {
                                 }
                             }
                             try{
-                                if (log.isDebugEnabled()) log.debug(ref + " out of loop Set active " + routeDetails.get(routeDetails.size()-1).getDisplayName() + " " + routeDetails.get(routeDetails.size()-1).getBlock().getSystemName());
+                                if (log.isDebugEnabled()) log.debug(mUserName + " out of loop Set active " + routeDetails.get(routeDetails.size()-1).getDisplayName() + " " + routeDetails.get(routeDetails.size()-1).getBlock().getSystemName());
                                 //Get the last block an set it active.
                                 routeDetails.get(routeDetails.size()-1).getOccupancySensor().setState(Sensor.ACTIVE);
-                                if (log.isDebugEnabled()) log.debug(ref + " out of loop Set inactive " + routeDetails.get(routeDetails.size()-2).getUserName() + " " + routeDetails.get(routeDetails.size()-2).getBlock().getSystemName());
+                                if (log.isDebugEnabled()) log.debug(mUserName + " out of loop Set inactive " + routeDetails.get(routeDetails.size()-2).getUserName() + " " + routeDetails.get(routeDetails.size()-2).getBlock().getSystemName());
                                 routeDetails.get(routeDetails.size()-2).getOccupancySensor().setState(Sensor.INACTIVE);
                             } catch (java.lang.NullPointerException e){
                                 log.error(e);
@@ -1145,24 +1253,24 @@ public class EntryExitPairs {
         
             void activeBean(boolean reverseDirection){
                 if(activeEntryExit){
-                   // log.debug(ref + "  Our route is active so this would go for a clear down but we need to check that the we can clear it down" + activeEndPoint);
+                   // log.debug(mUserName + "  Our route is active so this would go for a clear down but we need to check that the we can clear it down" + activeEndPoint);
                     if(!isEnabled()){
                         log.info("A disabled entry exit has been called will bomb out");
                     }
                     if (activeEntryExit){
-                        log.debug(ref + "  We have a valid match on our end point so we can clear down");
+                        log.debug(mUserName + "  We have a valid match on our end point so we can clear down");
                         //setRouteTo(false);
                         //pd.setRouteFrom(false);
                         setRoute(false);
                     } else {
-                        log.debug(ref + "  sourceSensor that has gone active doesn't match the active end point so will not clear");
+                        log.debug(mUserName + "  sourceSensor that has gone active doesn't match the active end point so will not clear");
                         JOptionPane.showMessageDialog(null, "A conflicting route has already been set");
                         setNXButtonState(pd, NXBUTTONINACTIVE);
                         setNXButtonState(point, NXBUTTONINACTIVE);
                     }
                 } else {
                     if (isRouteToPointSet()){
-                        log.debug(ref + "  route to this point is set therefore can not set another to it " /*+ destPoint.getPoint().getID()*/);
+                        log.debug(mUserName + "  route to this point is set therefore can not set another to it " /*+ destPoint.getPoint().getID()*/);
                         setNXButtonState(pd, NXBUTTONINACTIVE);
                         setNXButtonState(point, NXBUTTONINACTIVE);
                         return;
@@ -1224,7 +1332,7 @@ public class EntryExitPairs {
                         } catch (jmri.JmriException e){
                             JOptionPane.showMessageDialog(null, e.getMessage());
                                 //Considered normal if not a valid through path
-                                log.error(ref + " " + e.getMessage());
+                                log.error(mUserName + " " + e.getMessage());
                                 setNXButtonState(pd, NXBUTTONINACTIVE);
                                 setNXButtonState(point, NXBUTTONINACTIVE);
                                 return;
@@ -1242,7 +1350,7 @@ public class EntryExitPairs {
                     }
                 }
             }
-            void dispose(){
+            public void dispose(){
                 enabled = false;
                 setActiveEntryExit(false);
                 cancelClearInterlock(CANCELROUTE);
@@ -1255,9 +1363,20 @@ public class EntryExitPairs {
                 disposed=true;
             }
             
+            public int getState(){
+                if(activeEntryExit)
+                    return 0x02;
+                return 0x04;
+            }
+            
+            public boolean isActive() { return activeEntryExit; }
+            
+            public void setState(int state){}
+            
             void setActiveEntryExit(boolean boo){
-                firePropertyChange("active", getSourceObject(), getPoint().getRefObject());
+                int oldvalue = getState();
                 activeEntryExit = boo;
+                firePropertyChange("active", oldvalue, getState());
                 
             }
         }

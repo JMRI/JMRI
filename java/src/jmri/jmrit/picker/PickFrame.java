@@ -25,7 +25,9 @@ public class PickFrame extends JmriJFrame {
                                     PickListModel.lightPickModelInstance(),
                                     PickListModel.warrantPickModelInstance(),
                                     PickListModel.oBlockPickModelInstance(),
-                                    PickListModel.conditionalPickModelInstance()
+                                    PickListModel.conditionalPickModelInstance(),
+                                    PickListModel.entryExitPickModelInstance(),
+                                    
             };
         setContentPane(new PickPanel(models));
         setLocation(0,100);

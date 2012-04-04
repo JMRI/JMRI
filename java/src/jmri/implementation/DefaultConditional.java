@@ -230,6 +230,7 @@ public class DefaultConditional extends AbstractNamedBean
                     log.error(getDisplayName()+" parseCalculation error antecedent= "+_antecedent+ ", ex= " + je);
                 }
                 break;
+            default : break;
         }
 		int newState = FALSE;
         if (log.isDebugEnabled()) log.debug("Conditional \""+getUserName()+"\" ("+getSystemName()+") has calculated its state to be "+
@@ -957,6 +958,7 @@ public class DefaultConditional extends AbstractNamedBean
                                     case Audio.CMD_RESET_POSITION:
                                         audioSource.resetCurrentPosition();
                                         break;
+                                    default : break;
                                 }
                             } else if (audio.getSubType()==Audio.LISTENER) {
                                 AudioListener audioListener = (AudioListener) audio;
@@ -1209,6 +1211,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
 						}
 						break;
+                    default : break;
 				}
 			}
             if (PARKS_DEBUG) { System.out.println("Global state= "+_currentState+" Local state= "+currentState+

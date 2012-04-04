@@ -2099,6 +2099,7 @@ public class LogixTableAction extends AbstractTableAction {
                 break;
             case Conditional.MIXED:
                 _antecedentPanel.setVisible(true);
+            default : break;
         }
         _logicType = type;
         _variableTableModel.fireTableDataChanged();
@@ -2144,6 +2145,7 @@ public class LogixTableAction extends AbstractTableAction {
                     case Conditional.OPERATOR_OR:
                         str = str + or;
                         break;
+                    default : break;
                 }
                 if (variable.isNegated())
                 {
@@ -2801,6 +2803,13 @@ public class LogixTableAction extends AbstractTableAction {
                 _variableStateBox.setSelectedItem(OBlock.getLocalStatusName(_curVariable.getDataString()));
                 _variableStateBox.setVisible(true);
                break;
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                _variableNameField.setText(_curVariable.getBean().getUserName());
+                _variableStateBox.setSelectedIndex(DefaultConditional.getIndexInTable(
+                                Conditional.ITEM_TO_ENTRYEXIT_TEST, testType));
+                _variableStateBox.setVisible(true);
+                break;
+            default : break;
         }
         _editVariableFrame.pack();
         _editVariableFrame.transferFocusBackward();
@@ -3392,6 +3401,7 @@ public class LogixTableAction extends AbstractTableAction {
                     _namePanel.setVisible(true);
                 }
                 break;
+            default : break;
         }
         _actionTypeBox.setMaximumSize(_actionTypeBox.getPreferredSize());
         _actionBox.setMaximumSize(_actionBox.getPreferredSize());
@@ -3666,6 +3676,16 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _variableStatePanel.setVisible(true);
                 break;
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                _variableNameField.setText(_curVariable.getName());
+                for (int i=0; i<Conditional.ITEM_TO_ENTRYEXIT_TEST.length; i++) {
+                    _variableStateBox.addItem(
+                    ConditionalVariable.getStateString(Conditional.ITEM_TO_ENTRYEXIT_TEST[i]));
+                }
+                _variableStatePanel.setVisible(true);
+                _variableNamePanel.setVisible(true);
+                break;
+            default : break;
         }
         _variableStateBox.setMaximumSize(_variableStateBox.getPreferredSize());
     } /* variableTypeChanged */
@@ -3719,6 +3739,9 @@ public class LogixTableAction extends AbstractTableAction {
                 break;
             case Conditional.ITEM_TYPE_OBLOCK:
                 testType =Conditional.TYPE_BLOCK_STATUS_EQUALS;
+                break;
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                testType = Conditional.ITEM_TO_ENTRYEXIT_TEST[_variableStateBox.getSelectedIndex()];
                 break;
             default:
                 javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
@@ -3839,6 +3862,12 @@ public class LogixTableAction extends AbstractTableAction {
                 if (log.isDebugEnabled()) log.debug("OBlock \""+name+"\"of type '"+testType+
                                                     "' _variableStateBox.getSelectedItem()= "+
                                                     _variableStateBox.getSelectedItem()); 
+                break;
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                name = validateEntryExitReference(name);
+                if (name == null) {
+                    return false;
+                }
                 break;
             default:
                 javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
@@ -4204,6 +4233,7 @@ public class LogixTableAction extends AbstractTableAction {
                     _curAction.setDeviceName(name);
                 }
                 break;
+            default : break;
         }
         _curAction.setType(actionType);
         if (actionType != Conditional.ACTION_NONE) {
@@ -4319,6 +4349,7 @@ public class LogixTableAction extends AbstractTableAction {
                 case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
                     errorNum = "Error29";
                     break;
+                default : break;
             }
             javax.swing.JOptionPane.showMessageDialog(
                     editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Error38"),
@@ -4609,6 +4640,22 @@ public class LogixTableAction extends AbstractTableAction {
             return null;
         }
         return name;
+    }
+    
+    String validateEntryExitReference(String name) {
+        log.info("Still to do");
+        NamedBean nb = null;
+        if( name != null){
+            name = name.trim();
+            if (name.length()>0) {
+            	nb = jmri.jmrit.signalling.EntryExitPairs.instance().getNamedBean(name);
+            	if (nb != null) {
+            		return nb.getSystemName();
+            	}
+        	}
+        }
+        messageInvalidActionItemName(name, "Entry Exit");
+        return null;
     }
 
     /**
@@ -5088,6 +5135,7 @@ public class LogixTableAction extends AbstractTableAction {
                     return rbx.getString("ButtonEdit");
                 case DELETE_COLUMN:
                     return rbx.getString("ButtonDelete");
+                default : break;
 			}
 			return null;
 		}
@@ -5141,6 +5189,7 @@ public class LogixTableAction extends AbstractTableAction {
                 case DELETE_COLUMN:
                     deleteVariablePressed(r);
                     break;
+                default : break;
             }
 		}
 	}

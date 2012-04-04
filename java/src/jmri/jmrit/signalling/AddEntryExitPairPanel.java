@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.GridLayout;
 import java.awt.Dimension;
+import java.io.File;
 
 import java.util.ArrayList;
 import javax.swing.*;
@@ -148,7 +149,13 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         entryExitFrame.setPreferredSize(null);
         JPanel panel1 = new JPanel();
         sourceLabel = new JLabel("Discovering Entry Exit Pairs");
+        /*ImageIcon i;
+        i = new ImageIcon("resources"+File.separator+"icons"+File.separator+"misc" + File.separator+ "gui3" + File.separator+"process-working.gif");
+        JLabel label = new JLabel(); 
+        label.setIcon(i); 
+        panel1.add(label);*/
         panel1.add(sourceLabel);
+
         entryExitFrame.add(panel1);
         entryExitFrame.pack();
         entryExitFrame.setVisible(true);

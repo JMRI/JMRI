@@ -101,6 +101,10 @@ public interface Conditional extends NamedBean {
 	public static final int TYPE_SIGNAL_MAST_HELD = 32;
     public static final int TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS = 33;
     public static final int TYPE_BLOCK_STATUS_EQUALS = 34;
+    
+    //Entry Exit Rules
+    public static final int TYPE_ENTRYEXIT_ACTIVE = 35;
+    public static final int TYPE_ENTRYEXIT_INACTIVE = 36;
 	
 	// action definitions
 	public static final int ACTION_OPTION_ON_CHANGE_TO_TRUE = 1;
@@ -202,12 +206,13 @@ public interface Conditional extends NamedBean {
     public static final int ITEM_TYPE_WARRANT  = 8;
     public static final int ITEM_TYPE_CLOCK    = 9;
     public static final int ITEM_TYPE_OBLOCK  = 10;
-    public static final int ITEM_TYPE_LAST_STATE_VAR = 10;
+    public static final int ITEM_TYPE_ENTRYEXIT  = 11;
+    public static final int ITEM_TYPE_LAST_STATE_VAR = 11;
 
-    public static final int ITEM_TYPE_AUDIO = 11;
-    public static final int ITEM_TYPE_SCRIPT= 12;
-    public static final int ITEM_TYPE_OTHER = 13;
-    public static final int ITEM_TYPE_LAST_ACTION = 13;
+    public static final int ITEM_TYPE_AUDIO = 12;
+    public static final int ITEM_TYPE_SCRIPT= 13;
+    public static final int ITEM_TYPE_OTHER = 14;
+    public static final int ITEM_TYPE_LAST_ACTION = 14;
 				
     /***************** ConditionalVariable Maps ********************************/
     // Map state variable types to their item type
@@ -250,7 +255,9 @@ public interface Conditional extends NamedBean {
                                     ITEM_TYPE_SIGNALMAST,   // TYPE_SIGNAL_MAST_LIT = 31;
                                     ITEM_TYPE_SIGNALMAST,   // TYPE_SIGNAL_MAST_HELD = 32
                                     ITEM_TYPE_SIGNALHEAD,   // TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS = 33;
-                                    ITEM_TYPE_OBLOCK        // TYPE_BLOCK_STATUS_EQUALS = 34
+                                    ITEM_TYPE_OBLOCK,        // TYPE_BLOCK_STATUS_EQUALS = 34
+                                    ITEM_TYPE_ENTRYEXIT,        // TYPE_ENTRYEXIT_ACTIVE = 35
+                                    ITEM_TYPE_ENTRYEXIT        // TYPE_ENTRYEXIT_INACTIVE = 36
                                     };
 
     // Map SignalHead comboBox items to SignalHead Conditional variable types
@@ -327,6 +334,9 @@ public interface Conditional extends NamedBean {
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") 
     public static final int[] ITEM_TO_OBLOCK_TEST = {TYPE_BLOCK_STATUS_EQUALS };
+    
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") 
+    public static final int[] ITEM_TO_ENTRYEXIT_TEST = {TYPE_ENTRYEXIT_ACTIVE, TYPE_ENTRYEXIT_INACTIVE};
 
     /***************** ConditionalAction Maps ********************************/
     // Map action type to the item type
