@@ -718,6 +718,10 @@ It's a bit complicated, so here's the order you need to do things:
 <li>Finally, print out your switch lists.</li>
 </uL>
 
+<P>Printing out the switch list for a location tells the program that you're done consolidating your trains for this location.
+The program will clear the switch list when the next change occurs to that location.  If there are no changes to a location, then
+the switch list is a copy of the last one printed.  This allows you to print more than one copy of the switch list if needed.</P>
+
 <H3>Manifest Preview</H3>
 
 If you want to use a text editor to preview your manifests and switch
