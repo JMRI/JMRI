@@ -60,18 +60,14 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                 Object obj = m.getValue();
                 if (obj != null)
                 {
-
-                    if(obj instanceof java.lang.String){
-                        String value = obj.toString();
-                        elem.setAttribute("value", value);
-                    } else {
+                    if(obj instanceof jmri.jmrit.roster.RosterEntry){
                         String valueClass = obj.getClass().getName();
-                        String value = obj.toString();
-                        if(obj instanceof RosterEntry){
-                            value = ((RosterEntry)obj).getId();
-                        }
+                        String value = ((RosterEntry)obj).getId();
                         elem.setAttribute("value", value);
                         elem.setAttribute("valueClass", valueClass);
+                    } else {
+                        String value = obj.toString();
+                        elem.setAttribute("value", value);
                     }
                 }
 
