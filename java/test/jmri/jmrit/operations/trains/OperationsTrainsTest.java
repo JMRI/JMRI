@@ -1289,7 +1289,7 @@ public class OperationsTrainsTest extends TestCase {
 
 		l1.addTrack("North End 1", Track.STAGING);
 		l1.addTrack("North End 2", Track.STAGING);
-		List<String> templist1 = l1.getTracksByNameList("");
+		List<String> templist1 = l1.getTrackIdsByNameList("");
 		for (int i = 0; i < templist1.size(); i++){
 			if (i == 0) {
 				Assert.assertEquals("RL 1 Staging 1 Name", "North End 1", templist1.get(i));
@@ -1356,7 +1356,7 @@ public class OperationsTrainsTest extends TestCase {
 
 		l3.addTrack("South End 1", Track.STAGING);
 		l3.addTrack("South End 2", Track.STAGING);
-		List<String> templist3 = l3.getTracksByNameList("");
+		List<String> templist3 = l3.getTrackIdsByNameList("");
 		for (int i = 0; i < templist3.size(); i++){
 			if (i == 0) {
 				Assert.assertEquals("RL 3 Staging 1 Name", "South End 1", templist3.get(i));

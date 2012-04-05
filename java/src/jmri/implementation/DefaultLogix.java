@@ -348,6 +348,10 @@ public class DefaultLogix extends AbstractNamedBean
                         case Conditional.TYPE_BLOCK_STATUS_EQUALS:
                             varListenerType = LISTENER_TYPE_OBLOCK;
                             break;
+                        case Conditional.TYPE_ENTRYEXIT_ACTIVE:
+                        case Conditional.TYPE_ENTRYEXIT_INACTIVE:
+                            varListenerType = LISTENER_TYPE_ENTRYEXIT;
+                            break;
                     }
                     int positionOfListener = getPositionOfListener(varListenerType, varType, varName);
                     // add to list if new
@@ -405,6 +409,10 @@ public class DefaultLogix extends AbstractNamedBean
                                 listener = new JmriTwoStatePropertyListener("state", LISTENER_TYPE_OBLOCK,
                                                                     varName, varType, conditional);
                                 break;
+                            case LISTENER_TYPE_ENTRYEXIT:
+                                listener = new JmriTwoStatePropertyListener("active", LISTENER_TYPE_ENTRYEXIT, 
+                                    namedBean, varType, conditional);
+                                break;
                             default:
                                 if (!LRouteTableAction.LOGIX_INITIALIZER.equals(varName)) {
                                     log.error("Unknown (new) Variable Listener type= "+varListenerType+", for varName= "
@@ -426,6 +434,7 @@ public class DefaultLogix extends AbstractNamedBean
                             case LISTENER_TYPE_WARRANT:
                             case LISTENER_TYPE_SIGNALMAST:
                             case LISTENER_TYPE_OBLOCK:
+                            case LISTENER_TYPE_ENTRYEXIT:
                                 listener = _listeners.get(positionOfListener);
                                 listener.addConditional(conditional);
                                 break;
@@ -776,6 +785,14 @@ public class DefaultLogix extends AbstractNamedBean
 				}
 				b.addPropertyChangeListener (listener);
                 return;
+            case LISTENER_TYPE_ENTRYEXIT:
+				NamedBean ex = jmri.jmrit.signalling.EntryExitPairs.instance().getBySystemName(listener.getDevName());
+				if (ex==null) {
+					msg= "entryexit";
+					break;
+				}
+				ex.addPropertyChangeListener (listener);
+                return;
 		}
         log.error("Bad name for " +msg+" \""+listener.getDevName()+
                         "\" when setting up Logix listener");
@@ -881,6 +898,14 @@ public class DefaultLogix extends AbstractNamedBean
                     }
                     // remove listener for this Memory
                     b.removePropertyChangeListener(listener);
+                    return;
+                case LISTENER_TYPE_ENTRYEXIT:
+                    NamedBean ex = jmri.jmrit.signalling.EntryExitPairs.instance().getBySystemName(listener.getDevName());
+                    if (ex==null) {
+                        msg= "entryexit";
+                        break;
+                    }
+                    ex.removePropertyChangeListener (listener);
                     return;
             }
         } catch (Throwable t) {

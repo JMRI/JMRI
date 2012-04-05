@@ -67,7 +67,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     	// first, remove listeners from the individual objects
     	removePropertyChangeTracks();
 
-    	tracksList = _location.getTracksByNameList(_trackType);
+    	tracksList = _location.getTrackIdsByNameList(_trackType);
     	// and add them back in
     	for (int i = 0; i < tracksList.size(); i++){
     		//log.debug("tracks ids: " + tracksList.get(i));

@@ -480,9 +480,9 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
            	if (csf != null)
            		csf.dispose();
        		csf = new CarSetFrame();
+       		csf.setTitle(rb.getString("TitleCarSet"));
     		csf.initComponents();
-	    	csf.loadCar(car);
-	    	csf.setTitle(rb.getString("TitleCarSet"));
+	    	csf.loadCar(car);    	
 	    	csf.setVisible(true);
 	    	csf.setExtendedState(Frame.NORMAL);
 	    	focusCsf = true;

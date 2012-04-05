@@ -325,10 +325,10 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			List<String> trains = getSortByList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById(trains.get(i));
-				if (train.isBuildEnabled() && train.isBuilt() && train.getPrinted()){
+				if (train.isBuildEnabled() && train.isBuilt() && train.isPrinted()){
 					train.terminate();
 				}
-				else if (train.isBuildEnabled() && train.isBuilt() && !train.getPrinted()){
+				else if (train.isBuildEnabled() && train.isBuilt() && !train.isPrinted()){
 					int status = JOptionPane.showConfirmDialog(null,
 							rb.getString("WarningTrainManifestNotPrinted"),
 							MessageFormat.format(rb.getString("TerminateTrain"),new Object[]{train.getName(), train.getDescription()}),

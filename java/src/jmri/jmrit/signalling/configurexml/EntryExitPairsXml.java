@@ -14,9 +14,9 @@ import jmri.Sensor;
 import jmri.NamedBean;
 
 /**
- * This module handles configuration for display.PositionablePoint objects for a LayoutEditor.
+ * This module handles configuration for the Entry Exit pairs unsed in interlocking on a layouteditor
  *
- * @author David Duchamp Copyright (c) 2007
+ * @author Kevin Dickerson Copyright (c) 2007
  * @version $Revision: 1.2 $
  */
 public class EntryExitPairsXml extends AbstractXmlAdapter {
@@ -62,7 +62,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                     
                     source.setAttribute("type", type);
                     source.setAttribute("item", item);
-
+                    
                     ArrayList<Object> a = p.getDestinationList(key, panel);
                     for (int i = 0; i<a.size(); i++){
                         Object keyDest = a.get(i);
@@ -96,6 +96,8 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                             default   : dest.setAttribute("nxType", "turnoutsetting");
                                         break;
                         }
+                        if(p.getUniqueId(key, panel, keyDest)!=null)
+                            dest.setAttribute("uniqueid", p.getUniqueId(key, panel, keyDest));
                         source.addContent(dest);
                     }
                     panelElem.addContent(source);
@@ -157,6 +159,9 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                         eep.addNXSourcePoint(source, panel);
                     }
                     for (int j = 0; j < destinationList.size(); j++) {
+                        String id = null;
+                        if(destinationList.get(j).getAttribute("uniqueid")!=null)
+                            id = destinationList.get(j).getAttribute("uniqueid").getValue();
                         String destType = destinationList.get(j).getAttribute("type").getValue();
                         String destItem = destinationList.get(j).getAttribute("item").getValue();
                         NamedBean dest = null;
@@ -168,7 +173,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
                             dest = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(destItem);
                         }
                         try {
-                            eep.addNXDestination(source, dest, panel);
+                            eep.addNXDestination(source, dest, panel, id);
                         } catch (java.lang.NullPointerException e) {
                             log.error("An error occured while trying to add a point");
                         }

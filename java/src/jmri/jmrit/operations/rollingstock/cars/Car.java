@@ -168,7 +168,12 @@ public class Car extends RollingStock {
 		if (!isCaboose() && !isPassenger())
 			return weight;
 		//.9 tons/foot for caboose and passenger cars
-		return Integer.toString((int)(Double.parseDouble(getLength()) * .9));
+		try {
+			weight = Integer.toString((int)(Double.parseDouble(getLength()) * .9));
+		} catch (Exception e){
+			log.debug ("Car ("+toString()+") length not set for caboose or passenger car");
+		}
+		return weight;
 	}
 	
 	/**

@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 
 import org.jdom.Element;
 
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
@@ -60,6 +61,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected RouteLocation _current = null;// where the train is located in its route
 	protected String _status = "";
 	protected boolean _built = false;		// when true, a train manifest has been built
+	protected boolean _modified = false;	// when true, user has modified train after being built
 	protected boolean _build = true;		// when true, build this train
 	protected boolean _buildFailed = false;	// when true, build for this train failed
 	protected boolean _printed = false;		// when true, manifest has been printed
@@ -334,7 +336,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		return parseTime(minutes);
 	}
 	
-	private int getExpectedTravelTimeInMinutes(RouteLocation routeLocation){
+	protected int getExpectedTravelTimeInMinutes(RouteLocation routeLocation){
 		int minutes = 0;
 		if (!isTrainInRoute()){
 			minutes += _departureTime.get(Calendar.MINUTE); 
@@ -1104,29 +1106,34 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Determines if this train will service this car.
      * Note this code doesn't check the location or tracks
-     * that needs to be do separately.  See Router.java.
-     * @param car The car to be tested.
+     * that needs to be done separately.  See Router.java.
+     * @param rs The car to be tested.
      * @return true if this train can service the car.
      */
-    public boolean servicesCar(Car car){
-    	if (acceptsTypeName(car.getType()) && acceptsBuiltDate(car.getBuilt()) 
-    			&& acceptsOwnerName(car.getOwner()) && acceptsRoadName(car.getRoad())
-    			&& acceptsLoadName(car.getLoad())){
+    public boolean servicesCar(RollingStock rs){
+    	if (acceptsTypeName(rs.getType()) && acceptsBuiltDate(rs.getBuilt()) 
+    			&& acceptsOwnerName(rs.getOwner()) && acceptsRoadName(rs.getRoad())){
+    		// if car, check to see if train accepts car load
+    		if (Car.class.isInstance(rs)){
+    			Car car = (Car)rs;
+    			if (!acceptsLoadName(car.getLoad()))
+    				return false;
+    		}
     		Route route = getRoute();
     		if (route != null){
     			List<String> rLocations = route.getLocationsBySequenceList();
     			if (rLocations.size() == 1){
     				RouteLocation rLoc = route.getLocationById(rLocations.get(0));
-    				if (rLoc.getName().equals(car.getLocationName()) 
+    				if (rLoc.getName().equals(rs.getLocationName()) 
     						&& rLoc.canPickup()  
     						&& rLoc.getMaxCarMoves()>0
     						&& !skipsLocation(rLoc.getId())
-    						&& rLoc.getName().equals(car.getDestinationName())
+    						&& rLoc.getName().equals(rs.getDestinationName())
     						&& rLoc.canDrop()){
-    					if (car.getTrack() != null && !car.getTrack().acceptsPickupTrain(this)){
+    					if (rs.getTrack() != null && !rs.getTrack().acceptsPickupTrain(this)){
     						return false;
     					}
-       					if (car.getDestinationTrack() != null && !car.getDestinationTrack().acceptsDropTrain(this)){
+       					if (rs.getDestinationTrack() != null && !rs.getDestinationTrack().acceptsDropTrain(this)){
     						return false;
     					}
     					if (debugFlag)
@@ -1137,31 +1144,31 @@ public class Train implements java.beans.PropertyChangeListener {
     			// Multiple locations in the train's route
     			else for (int j=0; j<rLocations.size()-1; j++){
     				RouteLocation rLoc = route.getLocationById(rLocations.get(j));
-    				if (rLoc.getName().equals(car.getLocationName()) 
+    				if (rLoc.getName().equals(rs.getLocationName()) 
     						&& rLoc.canPickup()  
     						&& rLoc.getMaxCarMoves()>0
     						&& !skipsLocation(rLoc.getId())
-    						&& (car.getLocation().getTrainDirections() & rLoc.getTrainDirection()) > 0){
-    					if (car.getTrack() != null){
-    						if ((car.getTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 
-    								|| !car.getTrack().acceptsPickupTrain(this))
+    						&& (rs.getLocation().getTrainDirections() & rLoc.getTrainDirection()) > 0){
+    					if (rs.getTrack() != null){
+    						if ((rs.getTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 
+    								|| !rs.getTrack().acceptsPickupTrain(this))
     							continue;
     					}
     					if (debugFlag)
-    						log.debug("Car ("+car.toString()+") can be picked up by train ("+getName()+") from ("
-    								+car.getLocationName()+", "+car.getTrackName()+")");
-    					if (car.getDestination() != null){
+    						log.debug("Car ("+rs.toString()+") can be picked up by train ("+getName()+") from ("
+    								+rs.getLocationName()+", "+rs.getTrackName()+")");
+    					if (rs.getDestination() != null){
     						// now check car's destination
     						for (int k=j; k<rLocations.size(); k++){
     							rLoc = route.getLocationById(rLocations.get(k));
-    							if (rLoc.getName().equals(car.getDestinationName()) 
+    							if (rLoc.getName().equals(rs.getDestinationName()) 
     									&& rLoc.canDrop() 
     									&& rLoc.getMaxCarMoves()>0
     									&& !skipsLocation(rLoc.getId())
-    									&& (car.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0){
-    								if (car.getDestinationTrack() != null){
-    									if ((car.getDestinationTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0
-    											|| !car.getDestinationTrack().acceptsDropTrain(this))
+    									&& (rs.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0){
+    								if (rs.getDestinationTrack() != null){
+    									if ((rs.getDestinationTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0
+    											|| !rs.getDestinationTrack().acceptsDropTrain(this))
     										continue;
     								}
     		    					// check to see if moves are available
@@ -1173,14 +1180,14 @@ public class Train implements java.beans.PropertyChangeListener {
     		    						}
     		    					}
     								if (debugFlag)
-    									log.debug("Car ("+car.toString()+") can be dropped by train ("+getName()+") to ("
-    											+car.getDestinationName()+", "+car.getDestinationTrackName()+")");
+    									log.debug("Car ("+rs.toString()+") can be dropped by train ("+getName()+") to ("
+    											+rs.getDestinationName()+", "+rs.getDestinationTrackName()+")");
     								return true;
     							}
     						}
     					} else {
     						if (debugFlag)
-        						log.debug("Car ("+car.toString()+") does not have a destination");
+        						log.debug("Car ("+rs.toString()+") does not have a destination");
     						return true;
     					}
     				}
@@ -1231,7 +1238,7 @@ public class Train implements java.beans.PropertyChangeListener {
      * @return The train length at this location
      */
     public int getTrainLength(){
-    	RouteLocation rl = getCurrentLocation();
+       	RouteLocation rl = getCurrentLocation();
     	int length = 0;
     	List<String> engines = EngineManager.instance().getByTrainList(this);
     	for (int i=0; i<engines.size(); i++){
@@ -1245,6 +1252,45 @@ public class Train implements java.beans.PropertyChangeListener {
        		Car car = CarManager.instance().getById(cars.get(i));
     		if (car.getRouteLocation() == rl && car.getRouteDestination() != rl){
     			length = length + Integer.parseInt(car.getLength()) + Car.COUPLER;
+    		}
+    	}
+    	return length;
+    }
+    
+    /**
+     * Gets the train's length at the route location specified
+     * @param routeLocation The route location
+     * @return The train length at the route location
+     */
+    public int getTrainLength(RouteLocation routeLocation){
+    	int length = 0;
+    	Route route = getRoute();
+    	if (route != null){
+    		List<String> engines = EngineManager.instance().getByTrainList(this);
+    		List<String> cars = CarManager.instance().getByTrainList(this);
+    		List<String> ids = route.getLocationsBySequenceList();
+    		for (int i=0; i<ids.size(); i++){
+    			RouteLocation rl = route.getLocationById(ids.get(i));
+    			for (int j=0; j<engines.size(); j++){
+    				Engine eng = EngineManager.instance().getById(engines.get(j));
+    				if (eng.getRouteLocation() == rl){
+    					length += Integer.parseInt(eng.getLength()) + Engine.COUPLER;
+    				}
+    				if (eng.getRouteDestination() == rl){
+    					length += - (Integer.parseInt(eng.getLength()) + Engine.COUPLER);
+    				}
+    			}		
+    			for (int j=0; j<cars.size(); j++){
+    				Car car = CarManager.instance().getById(cars.get(j));
+    				if (car.getRouteLocation() == rl){
+    					length += Integer.parseInt(car.getLength()) + Car.COUPLER;
+    				}
+       				if (car.getRouteDestination() == rl){
+    					length += - (Integer.parseInt(car.getLength()) + Car.COUPLER);
+    				}
+    			}
+    			if (rl == routeLocation)
+    				break;
     		}
     	}
     	return length;
@@ -1269,6 +1315,40 @@ public class Train implements java.beans.PropertyChangeListener {
        		Car car = CarManager.instance().getById(cars.get(i));
     		if (car.getRouteLocation() == rl && car.getRouteDestination() != rl){
     			weight = weight + car.getAdjustedWeightTons();
+    		}
+    	}
+    	return weight;
+    }
+    
+    public int getTrainWeight(RouteLocation routeLocation){
+    	int weight = 0;
+    	Route route = getRoute();
+    	if (route != null){
+    		List<String> engines = EngineManager.instance().getByTrainList(this);
+    		List<String> cars = CarManager.instance().getByTrainList(this);
+    		List<String> ids = route.getLocationsBySequenceList();
+    		for (int i=0; i<ids.size(); i++){
+    			RouteLocation rl = route.getLocationById(ids.get(i));
+    			for (int j=0; j<engines.size(); j++){
+    				Engine eng = EngineManager.instance().getById(engines.get(j));
+    				if (eng.getRouteLocation() == rl){
+    					weight += eng.getAdjustedWeightTons();
+    				}
+    				if (eng.getRouteDestination() == rl){
+    					weight += - eng.getAdjustedWeightTons();
+    				}
+    			}		
+    			for (int j=0; j<cars.size(); j++){
+    				Car car = CarManager.instance().getById(cars.get(j));
+    				if (car.getRouteLocation() == rl){
+    					weight += car.getAdjustedWeightTons();
+    				}
+       				if (car.getRouteDestination() == rl){
+       					weight += - car.getAdjustedWeightTons();
+    				}
+    			}
+    			if (rl == routeLocation)
+    				break;
     		}
     	}
     	return weight;
@@ -1752,6 +1832,20 @@ public class Train implements java.beans.PropertyChangeListener {
 		return _built;
 	}
 	
+	public void setModified(boolean modified) {
+		boolean old = _modified;
+		_modified = modified;
+		if (modified)
+			setPrinted(false);
+		if (old != modified) {
+			setDirtyAndFirePropertyChange("TrainModified", old?"true":"false", modified?"true":"false");
+		}
+	}
+	
+	public boolean isModified() {
+		return _modified;
+	}
+	
 	/**
 	 * Deprecated, kept for user scripts.  Use isBuilt()
 	 * @return true if the train was successfully built.
@@ -1913,6 +2007,11 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return true if print successful.
 	 */
 	public boolean printManifest(boolean isPreview){
+		if (isModified()){
+			new TrainManifest(this);
+			if (Setup.isGenerateCsvManifestEnabled())
+				new TrainCsvManifest(this);
+		}		
 		File file = TrainManagerXml.instance().getTrainManifestFile(getName());
 		if (!file.exists()){
 			log.warn("Manifest file missing for train "+getName());
@@ -1942,6 +2041,22 @@ public class Train implements java.beans.PropertyChangeListener {
 			setDirtyAndFirePropertyChange("trainPrinted", old?"true":"false", printed?"true":"false");
 	}
 	
+	/**
+	 * Used to determine if train manifest was printed.
+	 * @return true if the train manifest was printed.
+	 * 
+	 */
+	public boolean isPrinted(){
+		return _printed;
+	}
+	
+	
+	/**
+	 * Deprecated, kept for user scripts.  Use isPrinted()
+	 * @return true if the train manifest was printed.
+	 * 
+	 */
+	@Deprecated
 	public boolean getPrinted(){
 		return _printed;
 	}
@@ -2361,6 +2476,8 @@ public class Train implements java.beans.PropertyChangeListener {
     		_buildFailed = a.getValue().equals("true");
     	if ((a = e.getAttribute("printed")) != null)
     		_printed = a.getValue().equals("true");
+    	if ((a = e.getAttribute("modified")) != null)
+    		_modified = a.getValue().equals("true");    	
     	if ((a = e.getAttribute("switchListStatus")) != null)
     		_switchListStatus = a.getValue();
     	if ((a = e.getAttribute("leadEngine")) != null)
@@ -2477,7 +2594,8 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("built", isBuilt()?"true":"false");
         e.setAttribute("build", isBuildEnabled()?"true":"false");
         e.setAttribute("buildFailed", getBuildFailed()?"true":"false");
-        e.setAttribute("printed", getPrinted()?"true":"false");
+        e.setAttribute("printed", isPrinted()?"true":"false");
+        e.setAttribute("modified", isModified()?"true":"false");
         e.setAttribute("switchListStatus", getSwitchListStatus());
         if(getLeadEngine()!= null)
         	e.setAttribute("leadEngine", getLeadEngine().getId());

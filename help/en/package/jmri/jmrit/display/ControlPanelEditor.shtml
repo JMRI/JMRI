@@ -30,14 +30,6 @@ same content data as <b>Panel Editor</b>.  You may change the view and control o
 panel whenever and as often as you please.  Storage and loading can be done from either
 editor.  The editor used to store the panel will be the editor used at the next load.
 
-<p><b><i>Note:
-Control Panel Editor was developed and tested on Windows only.  The developer
-would very much like to have this application work on other operating systems 
-(e.g. Mac and Linux),
-but is unable to test on these environments.  Any comments would be appreciated.
-</i></b>
-</p> 
-
 <H2>Changing the View between Editors</H2>
 
 In either editor when in edit mode the last item in the <b>File</b> menu is <b>Change 
@@ -48,12 +40,10 @@ the other editor mode.
 <H2>Differences in the View between Editors</H2>
 
 Panel Editor has a separate window for its editing functions. Control Panel Editor
-does not.  Instead three new menus are introduced to the panel: <b>Edit</b>, <b>Options</b>, 
-<b>Zoom</b>, <b>AddItems</b>.  When operating mode (non-edit) is selected these 
-three menus disappear.
+does not.  In Panel Editor the <b>Edit</b> menu opens an edit window.  In Control Panel Editor 
+the <b>Edit</b> menu adds three additional menus to the panel: <b>File</b>, <b>Options</b>, 
+<b>Zoom</b>, <b>AddItems</b>.
 </p>
-
-<H3>Operating Mode</H3>
 
 <H2>Control Panel Editor Menus</H2>
 <H3>File Menu</H3>
@@ -67,7 +57,6 @@ Panel Editor's edit window with a few additional items.  They are:</p>
         <li> <b>Rename Panel</b> .</li>
         <li> <b>Create/Edit Image Index</b> .</li>
         <li> <b>Change View to Panel Editor</b> .</li>
-        <li> <b>Change View to Circuit Builder</b> .</li>
         <li> <b>Delete This Panel...</b> .</li>
         <li> <b>Close Editor</b> .</li>
 </ul>
@@ -78,20 +67,23 @@ In operating mode Control Panel Editor's File menu has only one item, <b>Open Ed
 <H3>Edit Menu</H3>
 This menu supports Cut, Copy and Paste with the system clipboard.  Cut and Copy will 
 place a copy of a selection item or group into the clipboard.  This feature allows 
-copying selections from one panel to another panel.
+copying selections from one panel to different panel.
 <p>It also has a menu item to Select All panel items.
 
 </p>
 <H3>Options Menu</H3>
 The items in this menu are similar to the checkboxes in Panel Editor's edit window with
-a few additional items and features.
+a few additional items and features. As with PE, CPE can globally set repositioning and 
+control attributes. Hwever CPE will preserve the individual repositioning and controlling 
+attributes of items when global overriding is removed.
 <p>The <b>Override individual Position & Control settings</b> item enables or disables, 
 the next two menu items 
 (<b>All panel items can be repositioned</b> and <b>All panel items control layout</b>).  
 When <b>Override individual Position & Control settings</b> is unchecked, locking or unlocking
-icon positions is done as it is in Panel Editor - as is enabling or disabling an item's control
-of the layout.  When <b>Override individual Position & Control settings</b> is checked, the
-next two menu items perform as they do in Panel Editor.  However, the individual locking and 
+individual icon positions is done as it is in Panel Editor - likewise for enabling or disabling an item's control
+of layout devices.  When <b>Override individual Position & Control settings</b> is checked, the
+next two menu items perform as they do in Panel Editor - changing these attributes for all panel items.  
+However, in control Panel Editor the individual locking and 
 control settings for each item are remembered. 
 <p>Unchecking the <b>Override individual Position & Control settings</b> item will 
 return the individual item settings to their previous settings.  
@@ -116,16 +108,36 @@ the panel.  Each item type has a tab in the window.  Adding items
 is done by drag and drop.  Iconic items may have multiple sets of icons to choose from.
 Icon sets may be customized and added or deleted to suit the user.
 Details may be found at <a href="ItemPalette.shtml">The Item Palette</a>.  Note that the Item Palette
-can also be openned with the accelerator key, Control P.</p>
+can also be opened with the accelerator key, Control P.</p>
+<p>
+The Palette in Control Panel Editor does not support the <b>Slip/3-Way/Scissor</b> turnout icons that
+are available from Panel Editor.</p> 
 <p>
 The <b>Item Table List</b> menu item opens the device table list.  The menu item can also
-be invoked with the accelerator key, Control T.<\p>
+be invoked with the accelerator key, Control T.</p>
+
+<H3>Warrants</H3>
+The items under this menu are help files for defining Occupancy Blocks and using the them to
+define Warrants.  When two or more Occupancy Blocks are defined additional menu items for defining 
+Warrants will appear.</p>
+<p>
+
+<H3>Circuit Builder</H3>
+The items under this menu provide a graphic user interface (GUI) for defining Occupancy Blocks,
+Portals and Paths.  Each item has the help file for such track circuit building.</p>
+<p>
 
 <H2>Mouse operation in Control Panel Editor</H2>
 Control Panel Editor does not implement the rollover highlighting found in Panel Editor.
-<p>Another difference is selection is done with a simple click. Right click (meta-click 
-on Mac? or Linux?) brings up the popup menu for the item.</p>
-<p>Dragging can be done with either a simple click or a meta-click.</p>
+
+<H3>Selection</H3>
+<p>In Control Panel Editor selection is done with a simple click. Also selections are dragged with 
+ a simple click held down.</p>
+ 
+ <p>When items are stacked, Shift-click will select the second-most item in the layer.  Control-click
+ will select the bottom-most item in the stack.  If the items are stacked over a background item,
+ Control-click will select the bottom-most item above the background.  Control-click over only the background
+ will select the background icon.  
 
 <H3>Multiple Selection</H3>
 As with Panel Editor, a selection group can be made using the "selection fence" -
@@ -133,11 +145,11 @@ a dotted red rectangle that will select all the items completely <b><i>within</i
 the <b>Shift</b> key is held down while creating a selection fence, then all items that
 <b><i>intersect</i></b> the dotted red rectangle are selected.  This can be a useful feature when items are
 located at the top and left borders of the panel.
-<p>Another shared feature is adding or deleting items from a selection group by
-holding the <b>Control</b> key dowm whhen slecting the item.</p>  
+<p>Add or delete items from a selection group by
+holding the <b>Control</b> key down when selecting the item.</p>  
  
 <H3>Dragging selections</H3>
-Dragging a selection or selection group may be done with either mouse button in Control Panel Editor.
+Drag selection or selection group with the mouse button held down on any item in the group.
 <p>A background icon (i.e. an icon at level 1) can be moved by dragging it with the control
 key held down.</p>
 
@@ -152,6 +164,7 @@ copy to continue to make more copies.
 <H2>Item Popups in Control Panel Editor</H2>
 Right click (meta-click 
 on Mac or Linux) brings up the popup menu for the item.
+<p>Hold the <b>Control</b> key down to open  the popup menu for a background item.
 
 <H3>Edit Text Attributes</H3>
 The <b>Edit Text Attributes</b> popup item opens a dialog to set any of the 

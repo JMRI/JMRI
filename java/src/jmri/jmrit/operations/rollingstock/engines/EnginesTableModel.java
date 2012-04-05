@@ -385,9 +385,9 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
            		esf.dispose();
         	}
        		esf = new EngineSetFrame();
+       		esf.setTitle(rb.getString("TitleEngineSet"));
     		esf.initComponents();
-	    	esf.loadEngine(engine);
-	    	esf.setTitle(rb.getString("TitleEngineSet"));
+	    	esf.loadEngine(engine);  	
 	    	esf.setVisible(true);
 	    	esf.setExtendedState(java.awt.Frame.NORMAL);
 	    	focusEsf = true;

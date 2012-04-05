@@ -4,8 +4,13 @@ package jmri.jmrit.operations.trains;
 
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
+import jmri.jmrit.operations.routes.RouteManagerXml;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -14,6 +19,7 @@ import junit.extensions.jfcunit.finder.*;
 import junit.extensions.jfcunit.eventdata.*;
 import jmri.util.JmriJFrame;
 
+import java.io.File;
 import java.util.List;
 import java.util.Locale;
 
@@ -472,6 +478,16 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		
 		// set the locale to US English
 		Locale.setDefault(Locale.ENGLISH);
+		
+		// Repoint OperationsSetupXml to JUnitTest subdirectory
+		OperationsSetupXml.setOperationsDirectoryName("operations"+File.separator+"JUnitTest");
+		// Change file names to ...Test.xml
+		OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml"); 
+		RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
+		EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+		CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
+		LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+		TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 	}
 
 	public OperationsTrainsGuiTest(String s) {

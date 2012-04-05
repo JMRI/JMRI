@@ -124,6 +124,15 @@ public class ConditionalVariable {
                     }
                     _namedBean = nbhm.getNamedBeanHandle(_name, sm);
                     break;
+                case Conditional.ITEM_TYPE_ENTRYEXIT:
+                    NamedBean nb = jmri.jmrit.signalling.EntryExitPairs.instance().getBySystemName(_name);
+                    if(nb == null){
+                        log.error("invalid entry exit name= \""+_name+"\" in state variable");
+                        return;
+                    }
+                    _namedBean = nbhm.getNamedBeanHandle(_name, nb);
+                    break;
+                default : break;
             }
         } catch (java.lang.NumberFormatException ex) {
             //Can be Considered Normal where the logix is loaded prior to any other beans
@@ -197,6 +206,10 @@ public class ConditionalVariable {
             case Conditional.ITEM_TYPE_SIGNALHEAD:
                 bean = InstanceManager.signalHeadManagerInstance().getSignalHead(_name);
                 break;
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                bean = jmri.jmrit.signalling.EntryExitPairs.instance().getBySystemName(_name);
+                break;
+            default : log.error("Type not set for " + _name);
         }
 
         //Once all refactored, we should probably register an error if the bean is returned null.
@@ -290,8 +303,8 @@ public class ConditionalVariable {
                 return "";
             case Conditional.OPERATOR_OR:
                 return rbx.getString("LogicOR");
+            default : return "";
         }
-        return "";
     }
 
 	/**
@@ -521,6 +534,17 @@ public class ConditionalVariable {
 				}
                 result = b.statusIs(_dataString); 
                 break;
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                NamedBean e = getBean();
+                if (_type == Conditional.TYPE_ENTRYEXIT_ACTIVE) {
+                    if (e.getState() == 0x02) result = true;
+                    else result = false;
+                } else {
+                    if (e.getState()==0x04) result = true;
+                    else result = false;
+                }
+                break;
+            default : break;
 		}
 		// apply NOT if specified
 		if ( _not ) {
@@ -638,6 +662,8 @@ public class ConditionalVariable {
                 return (rbx.getString("FastClock"));
             case Conditional.ITEM_TYPE_OBLOCK:
                 return (rbx.getString("OBlock"));
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                return (rbx.getString("EntryExit"));
         }
         return "";
     }
@@ -715,6 +741,10 @@ public class ConditionalVariable {
                 return (rbx.getString("StateSignalMastLit"));
             case Conditional.TYPE_SIGNAL_MAST_HELD:
                 return (rbx.getString("StateSignalMastHeld"));
+            case Conditional.TYPE_ENTRYEXIT_ACTIVE:
+                return (rbx.getString("StateEntryExitActive"));
+            case Conditional.TYPE_ENTRYEXIT_INACTIVE:
+                return (rbx.getString("StateEntryExitInactive"));
         }
         return "";
     }
@@ -792,6 +822,10 @@ public class ConditionalVariable {
                 return (rbx.getString("TypeSignalMastLit"));
             case Conditional.TYPE_SIGNAL_MAST_HELD:
                 return (rbx.getString("TypeSignalMastHeld"));
+            case Conditional.TYPE_ENTRYEXIT_ACTIVE:
+                return (rbx.getString("TypeEntryExitActive"));
+            case Conditional.TYPE_ENTRYEXIT_INACTIVE:
+                return (rbx.getString("TypeEntryExitInactive"));
         }
         return ("None");
     }
@@ -927,6 +961,9 @@ public class ConditionalVariable {
             case Conditional.ITEM_TYPE_OBLOCK:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
                              new Object[] {rbx.getString("OBlockStatus"), getName(), _dataString} );
+            case Conditional.ITEM_TYPE_ENTRYEXIT:
+                    return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
+                             new Object[] {rbx.getString("EntryExit"), getBean().getUserName(), type} );
             case Conditional.TYPE_NONE:
                 return getName()+" type "+type;
         }

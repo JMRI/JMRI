@@ -449,14 +449,7 @@ public class WarrantTableAction extends AbstractAction {
         if (jmri.InstanceManager.oBlockManagerInstance().getSystemNameList().size() > 1) {
             updateWarrantMenu();
         } else {
-            if (HelpUtil.initOK()) {
-                JMenuItem aboutItem = new JMenuItem("About Warrants");
-                HelpUtil.getGlobalHelpBroker().enableHelpOnButton(aboutItem, "package.jmri.jmrit.logix.Warrant", null);
-                _warrantMenu.add(aboutItem);
-                aboutItem = new JMenuItem("About OBlocks&Portals");
-                HelpUtil.getGlobalHelpBroker().enableHelpOnButton(aboutItem, "package.jmri.jmrit.logix.OBlockTable", null);
-                _warrantMenu.add(aboutItem);
-            }
+        	return null;
         }
         return _warrantMenu;
     }

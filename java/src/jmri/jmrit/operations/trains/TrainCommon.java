@@ -304,8 +304,11 @@ public class TrainCommon {
 			return " "+tabString(rs.getLength()+ LENGTHABV, CarLengths.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.COLOR))
 			return " "+tabString(rs.getColor(), CarColors.instance().getCurMaxNameLength());
-		else if (attribute.equals(Setup.LOCATION) && (pickup || local))
-			return " "+rb.getString("from")+ " "+splitString(rs.getTrackName());
+		else if (attribute.equals(Setup.LOCATION) && (pickup || local)){
+			if (rs.getTrack() != null)
+				return " "+rb.getString("from")+ " "+splitString(rs.getTrackName());
+			return "";
+		}
 		else if (attribute.equals(Setup.LOCATION) && !pickup && !local)
 			return " "+rb.getString("from")+ " "+splitString(rs.getLocationName());
 		else if (attribute.equals(Setup.DESTINATION) && pickup){

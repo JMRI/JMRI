@@ -2,8 +2,6 @@
 
 package jmri.jmrit.operations.locations;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.util.Enumeration;
 
 import java.util.ArrayList;
@@ -29,11 +27,6 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength";
 	
-	// Edit Location frame attributes
-	protected LocationEditFrame _locationEditFrame = null;
-	protected Dimension _editFrameDimension = null;
-	protected Point _editFramePosition = null;
-    
 	public LocationManager() {
 		CarTypes.instance().addPropertyChangeListener(this);
 		CarRoads.instance().addPropertyChangeListener(this);
@@ -57,20 +50,6 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		if (Control.showInstance && log.isDebugEnabled()) log.debug("LocationManager returns instance "+_instance);
 		return _instance;
 	}
-
-	/* all JMRI window position and size are now saved
-	public void setLocationEditFrame(LocationEditFrame frame){
-		_locationEditFrame = frame;
-	}
-
-	public Dimension getLocationEditFrameSize(){
-		return _editFrameDimension;
-	}
-
-	public Point getLocationEditFramePosition(){
-		return _editFramePosition;
-	}
-	*/
 
     public void dispose() {
         _locationHashTable.clear();
@@ -236,7 +215,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     
     /**
      * Returns all tracks of type
-     * @param type Siding, Yard, Interchange, or Staging
+     * @param type Siding, Yard, Interchange, Staging, or null (returns all track types)
      * @return List of tracks ordered by use
      */
     public List<Track> getTracks(String type){
@@ -245,7 +224,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     	Location l;
     	for (int i=0; i<sortList.size(); i++){
     		l = getLocationById (sortList.get(i));
-    		List<String> tracks = l.getTracksByNameList(type);
+    		List<String> tracks = l.getTrackIdsByNameList(type);
     		for (int j=0; j<tracks.size(); j++){
     			Track track = l.getTrackById(tracks.get(j));
     			trackList.add(track);
@@ -304,7 +283,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			if (loc.acceptsTypeName(oldType)){
 				loc.addTypeName(newType);
 				// now adjust tracks
-				List<String> tracks = loc.getTracksByNameList(null);
+				List<String> tracks = loc.getTrackIdsByNameList(null);
 				for (int j=0; j<tracks.size(); j++){
 					Track track = loc.getTrackById(tracks.get(j));
 					if (track.acceptsTypeName(oldType)){
@@ -322,7 +301,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		for (int i=0; i<locs.size(); i++){
 			Location loc = getLocationById(locs.get(i));
 			// now adjust any track locations
-			List<String> tracks = loc.getTracksByNameList(null);
+			List<String> tracks = loc.getTrackIdsByNameList(null);
 			for (int j=0; j<tracks.size(); j++){
 				Track track = loc.getTrackById(tracks.get(j));
 				if(track.containsRoadName(oldRoad)){
@@ -339,7 +318,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		for (int i=0; i<locs.size(); i++){
 			Location loc = getLocationById(locs.get(i));
 			// now adjust tracks
-			List<String> tracks = loc.getTracksByNameList(null);
+			List<String> tracks = loc.getTrackIdsByNameList(null);
 			for (int j=0; j<tracks.size(); j++){
 				Track track = loc.getTrackById(tracks.get(j));
 				String[] loadNames = track.getLoadNames();

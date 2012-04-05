@@ -4,6 +4,7 @@ package jmri.jmrit.picker;
 import jmri.*;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrit.signalling.EntryExitPairs;
 
 import java.beans.PropertyChangeListener;
 
@@ -376,6 +377,16 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         }
         return new ConditionalPickModel();
     }
+    
+    public static PickListModel entryExitPickModelInstance() {
+        Integer num = _listMap.get("entryExit");
+        if (num!=null) {
+            _listMap.put("entryExit", Integer.valueOf(num.intValue()+1));
+        } else {
+            _listMap.put("entryExit", Integer.valueOf(1));
+        }
+        return new EntryExitPickModel();
+    }
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PickListModel.class.getName());
 }
@@ -503,7 +514,6 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
             return false;
         }
     }
-
 
     class MemoryPickModel extends PickListModel {
         MemoryManager manager;
@@ -659,6 +669,40 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
                 }
             }
             return super.getValueAt(r, c);
+        }
+    }
+    
+    class EntryExitPickModel extends PickListModel {
+        
+        EntryExitPairs manager;
+        EntryExitPickModel () {
+            manager = jmri.jmrit.signalling.EntryExitPairs.instance();
+            _name = rb.getString("TitleEntryExitTable");
+        }
+        public Manager getManager() {
+            return manager;
+        }
+        public NamedBean getBySystemName(String name) {
+            return manager.getBySystemName(name);
+        }
+        
+        public NamedBean addBean(String name) {
+            return null;
+        }
+        public NamedBean addBean(String sysName, String userName) {
+            return null;
+        }
+        public boolean canAddBean() {
+            return false;
+        }
+        
+        public String getColumnName(int c) {
+            if (c == SNAME_COLUMN) {
+                return "Unique Id";
+            } else if (c == UNAME_COLUMN) {
+                return rb.getString("ColumnUserName");
+            }
+            return "";
         }
     }
 

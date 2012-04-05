@@ -22,7 +22,7 @@ import org.jdom.Element;
 /**
  * Represents a location on the layout
  * 
- * @author Daniel Boudreau Copyright (C) 2008
+ * @author Daniel Boudreau Copyright (C) 2008, 2012
  * @version $Revision$
  */
 public class Location implements java.beans.PropertyChangeListener {
@@ -50,6 +50,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	protected Point _trainIconSouth = new Point();
 	protected Hashtable<String, Track> _trackHashTable = new Hashtable<String, Track>();
 	protected PhysicalLocation _physicalLocation = new PhysicalLocation();
+    protected List<String> _listTypes  = new ArrayList<String>();
 	
 	// Pool
 	protected int _idPoolNumber = 0;
@@ -405,12 +406,12 @@ public class Location implements java.beans.PropertyChangeListener {
 		return _comment;
 	}
 	
-    List<String> list  = new ArrayList<String>();
+
     
     private String[] getTypeNames(){
-      	String[] types = new String[list.size()];
-     	for (int i=0; i<list.size(); i++)
-     		types[i] = list.get(i);
+      	String[] types = new String[_listTypes.size()];
+     	for (int i=0; i<_listTypes.size(); i++)
+     		types[i] = _listTypes.get(i);
    		return types;
     }
     
@@ -418,7 +419,7 @@ public class Location implements java.beans.PropertyChangeListener {
     	if (types.length == 0) return;
     	jmri.util.StringUtil.sort(types);
  		for (int i=0; i<types.length; i++)
- 			list.add(types[i]);
+ 			_listTypes.add(types[i]);
     }
     
     /**
@@ -427,25 +428,25 @@ public class Location implements java.beans.PropertyChangeListener {
      */
     public void addTypeName(String type){
     	// insert at start of list, sort later
-    	if (list.contains(type))
+    	if (_listTypes.contains(type))
     		return;
-    	list.add(0,type);
+    	_listTypes.add(0,type);
     	log.debug("location ("+getName()+") add rolling stock type "+type);
-    	setDirtyAndFirePropertyChange (TYPES_CHANGED_PROPERTY, list.size()-1, list.size());
+    	setDirtyAndFirePropertyChange (TYPES_CHANGED_PROPERTY, _listTypes.size()-1, _listTypes.size());
     }
     
     public void deleteTypeName(String type){
-    	if (!list.contains(type))
+    	if (!_listTypes.contains(type))
     		return;
-    	list.remove(type);
+    	_listTypes.remove(type);
     	log.debug("location ("+getName()+") delete rolling stock type "+type);
-     	setDirtyAndFirePropertyChange (TYPES_CHANGED_PROPERTY, list.size()+1, list.size());
+     	setDirtyAndFirePropertyChange (TYPES_CHANGED_PROPERTY, _listTypes.size()+1, _listTypes.size());
      }
     
     public boolean acceptsTypeName(String type){
     	if (!CarTypes.instance().containsName(type) && !EngineTypes.instance().containsName(type))
     		return false;
-    	return list.contains(type);
+    	return _listTypes.contains(type);
     }
   
 	/** 
@@ -524,7 +525,11 @@ public class Location implements java.beans.PropertyChangeListener {
     	return _trackHashTable.get(id);
     }
     
-    private List<String> getTracksByIdList() {
+    /**
+     * Gets a list of track ids ordered by id for this location.
+     * @return list of track ids for this location
+     */
+    public List<String> getTrackIdsByIdList() {
 		String[] arr = new String[_trackHashTable.size()];
 		List<String> out = new ArrayList<String>();
 		Enumeration<String> en = _trackHashTable.keys();
@@ -545,9 +550,9 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * @param type track type: Track.YARD, Track.SIDING, Track.INTERCHANGE, Track.STAGING
 	 * @return list of track ids ordered by name
 	 */
-    public List<String> getTracksByNameList(String type) {
+    public List<String> getTrackIdsByNameList(String type) {
 		// first get id list
-		List<String> sortList = getTracksByIdList();
+		List<String> sortList = getTrackIdsByIdList();
 		// now re-sort
 		List<String> out = new ArrayList<String>();
 		String locName = "";
@@ -580,12 +585,13 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * Sort ids by track moves.  Returns a list of ids of a given track type.
      * If type is null returns all track ids for the location are returned.  
+     * Tracks with schedules are placed at the start of the list.
      * @param type track type: Track.YARD, Track.SIDING, Track.INTERCHANGE, Track.STAGING
      * @return list of track ids ordered by moves
      */
-    public List<String> getTracksByMovesList(String type) {
+    public List<String> getTrackIdsByMovesList(String type) {
 		// first get id list
-		List<String> sortList = getTracksByIdList();
+		List<String> sortList = getTrackIdsByIdList();
 		// now re-sort
 		List<String> moveList = new ArrayList<String>();
 		boolean locAdded = false;
@@ -637,7 +643,7 @@ public class Location implements java.beans.PropertyChangeListener {
      * Reset the move count for all tracks at this location
      */
     public void resetMoves(){
-    	List<String> tracks = getTracksByIdList();
+    	List<String> tracks = getTrackIdsByIdList();
     	for (int i=0; i<tracks.size(); i++) {
     		Track track = getTrackById(tracks.get(i));
     		track.setMoves(0);
@@ -652,7 +658,7 @@ public class Location implements java.beans.PropertyChangeListener {
     public void updateComboBox(JComboBox box) {
     	box.removeAllItems();
     	box.addItem("");
-    	List<String> tracks = getTracksByNameList(null);
+    	List<String> tracks = getTrackIdsByNameList(null);
 		for (int i = 0; i < tracks.size(); i++){
 			box.addItem(getTrackById(tracks.get(i)));
 		}
@@ -669,7 +675,7 @@ public class Location implements java.beans.PropertyChangeListener {
     	updateComboBox(box);
     	if (!filter || rs == null)
     		return;
-       	List<String> tracks = getTracksByNameList(null);
+       	List<String> tracks = getTrackIdsByNameList(null);
 		for (int i = 0; i < tracks.size(); i++){
 			Track track = getTrackById(tracks.get(i));
 			String status = "";
@@ -687,6 +693,12 @@ public class Location implements java.beans.PropertyChangeListener {
 		}   	
     }
     
+    /**
+     * Adds a track pool for this location.  A track pool is a set of tracks
+     * where the length of the tracks is shared between all of them.
+     * @param name the name of the Pool to create
+     * @return Pool
+     */
     public Pool addPool(String name){
 		Pool pool = getPoolByName(name);
 		if (pool == null){
@@ -737,6 +749,10 @@ public class Location implements java.beans.PropertyChangeListener {
 		}
     }
     
+    /**
+     * Gets a list of Pools for this location.
+     * @return A list of Pools
+     */
     public List<Pool> getPoolsByNameList(){
     	List<Pool> pools = new ArrayList<Pool>();
     	Enumeration<Pool> en =_poolHashTable.elements();
@@ -746,12 +762,16 @@ public class Location implements java.beans.PropertyChangeListener {
     	return pools;
     }
     
+    /**
+     * Used to determine if there are Pools at this location.
+     * @return True if there are Pools at this location
+     */
     public boolean hasPools(){
     	return _poolHashTable.size()>0;
     }
   	    
     public void dispose(){
-    	List<String> tracks = getTracksByIdList();
+    	List<String> tracks = getTrackIdsByIdList();
     	for (int i=0; i<tracks.size(); i++){
     		Track track = getTrackById(tracks.get(i));
     		deleteTrack(track);
@@ -872,7 +892,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
         e.setAttribute("comment", getComment());
         
-        List<String> tracks = getTracksByIdList();
+        List<String> tracks = getTrackIdsByIdList();
         for (int i=0; i<tracks.size(); i++) {
         	String id = tracks.get(i);
         	Track track = getTrackById(id);
