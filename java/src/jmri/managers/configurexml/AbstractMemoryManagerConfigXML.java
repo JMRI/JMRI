@@ -3,6 +3,8 @@ package jmri.managers.configurexml;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.Roster;
 import java.util.List;
 import org.jdom.Element;
 
@@ -58,8 +60,19 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                 Object obj = m.getValue();
                 if (obj != null)
                 {
-                    String value = obj.toString();
-                    elem.setAttribute("value", value);
+
+                    if(obj instanceof java.lang.String){
+                        String value = obj.toString();
+                        elem.setAttribute("value", value);
+                    } else {
+                        String valueClass = obj.getClass().getName();
+                        String value = obj.toString();
+                        if(obj instanceof RosterEntry){
+                            value = ((RosterEntry)obj).getId();
+                        }
+                        elem.setAttribute("value", value);
+                        elem.setAttribute("valueClass", valueClass);
+                    }
                 }
 
                 log.debug("store Memory "+sname);
@@ -115,8 +128,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
             if (log.isDebugEnabled()) log.debug("create Memory: ("+sysName+")("+(userName==null?"<null>":userName)+")");
             Memory m = tm.newMemory(sysName, userName);
             if (memoryList.get(i).getAttribute("value") != null) {
-                String value = memoryList.get(i).getAttribute("value").getValue();
-                m.setValue(value);
+                loadValue(memoryList.get(i), m);
             }
             // load common parts
             loadCommon(m, memoryList.get(i));
@@ -125,6 +137,19 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
     
     public int loadOrder(){
         return InstanceManager.memoryManagerInstance().getXMLOrder();
+    }
+    
+    void loadValue(Element memory, Memory m){
+        String value = memory.getAttribute("value").getValue();
+        if(memory.getAttribute("valueClass")!=null){
+            String adapter = memory.getAttribute("valueClass").getValue();
+            if (adapter.equals("jmri.jmrit.roster.RosterEntry")){
+                RosterEntry re = jmri.jmrit.roster.Roster.instance().getEntryForId(value);
+                m.setValue(re);
+                return;
+            }
+        }
+        m.setValue(value);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMemoryManagerConfigXML.class.getName());
