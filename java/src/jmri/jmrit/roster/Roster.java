@@ -280,6 +280,17 @@ public class Roster extends XmlFile implements RosterGroupSelector {
        }
    }
 
+    public List<RosterEntry> getEntriesMatchingCriteria(String roadName, String roadNumber, String dccAddress,
+            String mfg, String decoderMfgID, String decoderVersionID, String id, String group) {
+        List<RosterEntry> l = new ArrayList<RosterEntry>();
+        for (int i = 0; i < this.numEntries(); i++) {
+            if (this.checkEntry(i, roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderMfgID, id, group)) {
+                l.add(this.getEntry(i));
+            }
+        }
+        return l;
+    }
+
     /**
      * List of contained {@link RosterEntry} elements.
      */
@@ -294,14 +305,14 @@ public class Roster extends XmlFile implements RosterGroupSelector {
                              String mfg, String decoderMfgID, String decoderVersionID, String id ) {
         List<RosterEntry> l = new ArrayList<RosterEntry>();
         for (int i = 0; i < numEntries(); i++) {
-            if ( checkEntry(i, roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id ))
+            if (checkEntry(i, roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id, null))
                 l.add(_list.get(i));
         }
         return l;
     }
 
     /**
-     * Check if an entry is consistent with specific properties. 
+     * Check if an entry is consistent with specific properties.
      *<P>
      * A null String entry
      * always matches. Strings are used for convenience in GUI building.
@@ -309,7 +320,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      */
     public boolean checkEntry(int i, String roadName, String roadNumber, String dccAddress,
                               String mfg, String decoderModel, String decoderFamily,
-                              String id ) {
+                              String id, String group) {
         RosterEntry r = _list.get(i);
         if (id != null && !id.equals(r.getId())) return false;
         if (roadName != null && !roadName.equals(r.getRoadName())) return false;
@@ -318,6 +329,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         if (mfg != null && !mfg.equals(r.getMfg())) return false;
         if (decoderModel != null && !decoderModel.equals(r.getDecoderModel())) return false;
         if (decoderFamily != null && !decoderFamily.equals(r.getDecoderFamily())) return false;
+        if (group != null && !r.getAttribute(Roster.getRosterGroupProperty(group)).equals("yes")) return false;
         return true;
     }
 
@@ -344,7 +356,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
  
  
     static final public String schemaVersion = "";
-    
+
     /**
      * Write the entire roster to a file object. This does not do backup; that has
      * to be done separately. See writeRosterFile() for a public function that
