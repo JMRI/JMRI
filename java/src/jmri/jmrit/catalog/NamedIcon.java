@@ -9,6 +9,7 @@ import java.awt.image.PixelGrabber;
 import java.io.File;
 import java.net.URL;
 import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.awt.RenderingHints;
 import java.awt.Graphics2D;
@@ -236,6 +237,7 @@ public class NamedIcon extends ImageIcon {
     private double _scale = 1.0;
     private AffineTransform _transformR = new AffineTransform();    // rotations
     private AffineTransform _transformS = new AffineTransform();    // scaling
+    private AffineTransform _transformF = new AffineTransform();    // Fliped or Mirrored
 
     public int getDegrees() { return _deg; }
     public double getScale() { return _scale; }
@@ -384,6 +386,34 @@ public class NamedIcon extends ImageIcon {
             transformImage((int)Math.ceil(scale*w), (int)Math.ceil(scale*h), t, null);
         }
         return scale;
+    }
+    
+    public final static int NOFLIP = 0X00;
+    public final static int HORIZONTALFLIP = 0X01;
+    public final static int VERTICALFLIP = 0X02;
+    
+    public void flip(int flip, Component comp){
+        if(flip==NOFLIP){
+            setImage(mDefaultImage);
+            _transformF = new AffineTransform();
+            _deg = 0;
+            int w = (int)Math.ceil(_scale*getIconWidth());
+            int h = (int)Math.ceil(_scale*getIconHeight());
+            transformImage(w, h, _transformF, comp);
+            return;
+        }
+        int w = getIconWidth();
+        int h = getIconHeight();
+        if(flip==HORIZONTALFLIP){
+            _transformF = AffineTransform.getScaleInstance(-1, 1);
+            _transformF.translate(-w, 0);
+        } else {
+            _transformF = AffineTransform.getScaleInstance(1, -1);
+            _transformF.translate(0, -h);
+        }
+
+
+        transformImage(w, h, _transformF, null);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NamedIcon.class.getName());
