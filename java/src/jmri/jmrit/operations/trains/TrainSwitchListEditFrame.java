@@ -158,7 +158,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			buildSwitchList(false, true, true, false);
 		}
 		if (ae.getSource() == updateButton){
-			buildSwitchList(true, true, false, true);
+			buildSwitchList(true, false, false, true);
 		}
 		if (ae.getSource() == saveButton){
 			save();
@@ -194,7 +194,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 				if (!isCsv) {
 					ts.buildSwitchList(location);
 					if (!isUpdate && !isChanged ||
-							(isChanged && !location.getStatus().equals(Location.PRINTED)))
+							(!isUpdate && isChanged && !location.getStatus().equals(Location.PRINTED)))
 						ts.printSwitchList(location, isPreview);
 					if (!isPreview){
 						location.setStatus(Location.PRINTED);
