@@ -31,15 +31,15 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 	TrainManager trainManager = TrainManager.instance();
 	
 	// builds a switch list for a location
-	public void buildSwitchList(Location location, boolean newTrainsOnly){
+	public void buildSwitchList(Location location){
+		boolean newTrainsOnly = !Setup.isSwitchListRealTime();
 		// create csv switch list file
 		File file = TrainManagerXml.instance().createCsvSwitchListFile(
 				location.getName());
 		PrintWriter fileOut;
 
 		try {
-			fileOut = new PrintWriter(new BufferedWriter(new FileWriter(file)),
-					true);
+			fileOut = new PrintWriter(new BufferedWriter(new FileWriter(file)), true);
 		} catch (IOException e) {
 			log.error("can not open cvs switchlist file");
 			return;
