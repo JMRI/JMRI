@@ -149,9 +149,6 @@ class LocoFile extends XmlFile {
      * @param variableModel provides the variable names and contents
      * @param r  RosterEntry providing name, etc, information
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     public void writeFile(File file, CvTableModel cvModel, IndexedCvTableModel iCvModel, VariableTableModel variableModel, RosterEntry r) {
         if (log.isDebugEnabled()) log.debug("writeFile to "+file.getAbsolutePath()+" "+file.getName());
         try {
@@ -173,41 +170,6 @@ class LocoFile extends XmlFile {
             m.put("href", xsltLocation+"locomotive.xsl");
             ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
             doc.addContent(0,p);
-        
-            //Before adding the roster locomotive values, scan the Comment and
-            //Decoder Comment fields to change any \n to a <?p?> processor directive.
-            //Extract the Comment from the RosterEntry and transfer it one character
-            //at a time to the xmlComment string.  If a \n is encountered, insert
-            //<?p?> in the xmlComment string instead.  When adding the Attribute
-            //to the xml file, use the new xmlComment string instead.  This
-            //leaves the RosterEntry model unchanged, but records the values
-            //correctly in the xml file
-            //Note: an equivalent change also done in the Roster.java class to do the
-            //same thing for the roster index file
-            String tempComment =  r.getComment();
-            String xmlComment = "";
-            for (int k = 0; k < tempComment.length(); k++) {
-                if (tempComment.startsWith("\n",k)){
-                    xmlComment = xmlComment + "<?p?>";
-                }
-                else {
-                    xmlComment = xmlComment + tempComment.substring(k,k+1);
-                }
-            }
-
-            //Now do the same thing for the Decoder Comment field
-            String tempDecoderComment =  r.getDecoderComment();
-            String xmlDecoderComment = "";
-            for (int k = 0; k < tempDecoderComment.length(); k++) {
-                if (tempDecoderComment.startsWith("\n",k)){
-                    xmlDecoderComment = xmlDecoderComment + "<?p?>";
-                }
-                else {
-                    xmlDecoderComment = xmlDecoderComment + tempDecoderComment.substring(k,k+1);
-                }
-            }
-
-
             // add top-level elements
             Element locomotive = r.store();   // the locomotive element from the RosterEntry
 
@@ -271,9 +233,7 @@ class LocoFile extends XmlFile {
      * should be done elsewhere. This is intended for copy and import
      * operations, where the tree has been read from an existing file.
      * Hence, only the "ID" information in the roster entry is updated.
-     * Note that any multi-line comments are not changed here.  Any calling
-     * class should ensure that they are in xml file format
-     * with embedded <?p?> processor directives for line breaks.
+     * Note that any multi-line comments are not changed here.
      *
      * @param pFile Destination file. This file is overwritten if it exists.
      * @param pRootElement Root element of the JDOM tree to write.
