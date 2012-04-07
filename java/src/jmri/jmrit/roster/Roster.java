@@ -329,7 +329,11 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         if (mfg != null && !mfg.equals(r.getMfg())) return false;
         if (decoderModel != null && !decoderModel.equals(r.getDecoderModel())) return false;
         if (decoderFamily != null && !decoderFamily.equals(r.getDecoderFamily())) return false;
-        if (group != null && !r.getAttribute(Roster.getRosterGroupProperty(group)).equals("yes")) return false;
+        if (group != null
+                && r.getAttribute(Roster.getRosterGroupProperty(group)) != null
+                && !r.getAttribute(Roster.getRosterGroupProperty(group)).equals("yes")) {
+            return false;
+        }
         return true;
     }
 
