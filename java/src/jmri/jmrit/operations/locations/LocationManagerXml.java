@@ -161,6 +161,7 @@ public class LocationManagerXml extends OperationsXml {
     			sch.setComment(convertFromXmlComment(sch.getComment()));
     		}
     	}
+    	setDirty(false);
     }
     
     public void setOperationsFileName(String name) { operationsFileName = name; }
