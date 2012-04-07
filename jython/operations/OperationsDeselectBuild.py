@@ -24,7 +24,7 @@ class terminateCheckBoxTrain(jmri.jmrit.automat.AbstractAutomaton) :
     for trainId in tList :
       train = self.tm.getTrainById(trainId)
       print "checking train", train.getName(), train.getDescription(), "status:", train.getStatus()
-      if (train.getStatus() == jmri.jmrit.operations.trains.Train.TERMINATED):
+      if (train.getStatus().startswith(jmri.jmrit.operations.trains.Train.TERMINATED)):
         print "train", train.getName(), train.getDescription(), "is terminated, deselect build checkbox"
         train.setBuildEnabled(False);
 
