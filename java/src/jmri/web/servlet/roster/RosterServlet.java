@@ -35,9 +35,9 @@ import org.jdom.output.XMLOutputter;
 /*
  * TODO:
  *
- * Implement /roster/groups response.
- * Implement a special roster-only XSLT that respects newlines in comments and uses correct image urls.
- * Include decoder defs and CVs in roster entry response.
+ * Implement /roster/groups response. Implement a special roster-only XSLT that
+ * respects newlines in comments and uses correct image urls. Include decoder
+ * defs and CVs in roster entry response.
  *
  */
 public class RosterServlet extends HttpServlet {
@@ -161,6 +161,10 @@ public class RosterServlet extends HttpServlet {
      * <li>/roster/&lt;ID&gt;/image</li> <li>/roster/&lt;ID&gt;/icon</li></ul>
      * <b>Note:</b> The use of the term <em>entry</em> in URLs is optional.
      *
+     * Images and icons can be rescaled using the following parameters:<ul>
+     * <li>height</li> <li>maxHeight</li> <li>minHeight</li> <li>width</li>
+     * <li>maxWidth</li> <li>minWidth</li></ul>
+     *
      * @param request
      * @param response
      * @throws ServletException
@@ -196,8 +200,10 @@ public class RosterServlet extends HttpServlet {
     }
 
     /**
-     * Generate the XML output specified by {@link #doList(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse) }
-     * and {@link #doEntry(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse) }.
+     * Generate the XML output specified by {@link #doList(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * }
+     * and {@link #doEntry(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * }.
      *
      * @param request
      * @param response
@@ -250,11 +256,62 @@ public class RosterServlet extends HttpServlet {
         }
         int height = image.getHeight();
         int width = image.getWidth();
+        int pWidth = width;
+        int pHeight = height;
+        if (request.getParameter("maxWidth") != null) {
+            pWidth = Integer.parseInt(request.getParameter("maxWidth"));
+            if (pWidth < width) {
+                width = pWidth;
+            }
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("@maxWidth: width: " + width + ", pWidth: " + pWidth + ", height: " + height + ", pHeight: " + pHeight);
+        }
+        if (request.getParameter("minWidth") != null) {
+            pWidth = Integer.parseInt(request.getParameter("minWidth"));
+            if (pWidth > width) {
+                width = pWidth;
+            }
+        }
         if (request.getParameter("width") != null) {
             width = Integer.parseInt(request.getParameter("width"));
         }
+        if (log.isDebugEnabled()) {
+            log.debug("@minWidth: width: " + width + ", pWidth: " + pWidth + ", height: " + height + ", pHeight: " + pHeight);
+        }
+        if (width != image.getWidth()) {
+            height = (int) (height * (1.0 * width / image.getWidth()));
+            pHeight = height;
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("@processing height: width: " + width + ", pWidth: " + pWidth + ", height: " + height + ", pHeight: " + pHeight);
+        }
+        if (request.getParameter("maxHeight") != null) {
+            pHeight = Integer.parseInt(request.getParameter("maxHeight"));
+            if (pHeight < height) {
+                height = pHeight;
+            }
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("@maxHeight: width: " + width + ", pWidth: " + pWidth + ", height: " + height + ", pHeight: " + pHeight);
+        }
+        if (request.getParameter("minHeight") != null) {
+            pHeight = Integer.parseInt(request.getParameter("minHeight"));
+            if (pHeight > height) {
+                height = pHeight;
+            }
+        }
         if (request.getParameter("height") != null) {
             height = Integer.parseInt(request.getParameter("height"));
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("@minHeight: width: " + width + ", pWidth: " + pWidth + ", height: " + height + ", pHeight: " + pHeight);
+        }
+        if (height != image.getHeight() && width == image.getWidth()) {
+            width = (int) (width * (1.0 * height / image.getHeight()));
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("@responding: width: " + width + ", pWidth: " + pWidth + ", height: " + height + ", pHeight: " + pHeight);
         }
         response.setContentType("image/png");
         response.setStatus(HttpServletResponse.SC_OK);
