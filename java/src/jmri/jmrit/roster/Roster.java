@@ -321,7 +321,20 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     public boolean checkEntry(int i, String roadName, String roadNumber, String dccAddress,
                               String mfg, String decoderModel, String decoderFamily,
                               String id, String group) {
-        RosterEntry r = _list.get(i);
+        return this.checkEntry(_list, i, roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, id, group);
+    }
+
+    /**
+     * Check if an entry is consistent with specific properties.
+     *<P>
+     * A null String entry
+     * always matches. Strings are used for convenience in GUI building.
+     *
+     */
+    public boolean checkEntry(List<RosterEntry> list, int i, String roadName, String roadNumber, String dccAddress,
+                              String mfg, String decoderModel, String decoderFamily,
+                              String id, String group) {
+        RosterEntry r = list.get(i);
         if (id != null && !id.equals(r.getId())) return false;
         if (roadName != null && !roadName.equals(r.getRoadName())) return false;
         if (roadNumber != null && !roadNumber.equals(r.getRoadNumber())) return false;
