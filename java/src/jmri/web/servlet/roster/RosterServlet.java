@@ -116,30 +116,33 @@ public class RosterServlet extends HttpServlet {
             if (filter.equals("group")) {
                 group = URLDecoder.decode(request.getParameter(filter), "UTF-8");
                 if (!group.equals(Roster.ALLENTRIES)) {
-                    criteria += "Group: " + group;
+                    criteria += ", Group: " + group;
                 }
             } else if (filter.equals("roadName")) {
                 roadName = URLDecoder.decode(request.getParameter(filter), "UTF-8");
-                criteria += "RoadName: " + roadName;
+                criteria += ", RoadName: " + roadName;
             } else if (filter.equals("roadNumber")) {
                 roadNumber = request.getParameter(filter);
-                criteria += "RoadNumber: " + roadNumber;
+                criteria += ", RoadNumber: " + roadNumber;
             } else if (filter.equals("dccAddress")) {
                 dccAddress = request.getParameter(filter);
-                criteria += "DCC Address: " + dccAddress;
+                criteria += ", DCC Address: " + dccAddress;
             } else if (filter.equals("mfg")) {
                 mfg = URLDecoder.decode(request.getParameter(filter), "UTF-8");
-                criteria += "Manufacturer: " + mfg;
+                criteria += ", Manufacturer: " + mfg;
             } else if (filter.equals("decoderMfgID")) {
                 decoderMfgID = request.getParameter(filter);
-                criteria += "Decoder Manufacturer Id: " + decoderMfgID;
+                criteria += ", Decoder Manufacturer Id: " + decoderMfgID;
             } else if (filter.equals("decoderVersionID")) {
                 decoderVersionID = request.getParameter(filter);
-                criteria += "Decoder Version Id: " + decoderVersionID;
+                criteria += ", Decoder Version Id: " + decoderVersionID;
             } else if (filter.equals("id")) {
                 id = request.getParameter(filter);
-                criteria += "Id: " + id;
+                criteria += ", Id: " + id;
             }
+        }
+        if (criteria.startsWith(", ")) {
+            criteria = criteria.substring(2);
         }
         List<RosterEntry> list = Roster.instance().getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id, group);
         this.doRoster(request, response, list, (criteria.isEmpty() ? null : criteria), groups);
