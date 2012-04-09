@@ -280,6 +280,10 @@ public class Roster extends XmlFile implements RosterGroupSelector {
        }
    }
 
+    /**
+     * Get a List of {@link RosterEntry} objects in Roster matching some
+     * information. The list may have null contents if there are no matches.
+     */
     public List<RosterEntry> getEntriesMatchingCriteria(String roadName, String roadNumber, String dccAddress,
             String mfg, String decoderMfgID, String decoderVersionID, String id, String group) {
         List<RosterEntry> l = new ArrayList<RosterEntry>();
@@ -297,18 +301,17 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     protected List<RosterEntry> _list = new ArrayList<RosterEntry>();
 
     /**
-     *	Get a List of {@link RosterEntry} objects in Roster matching some information. 
-     * The list may have
-     *  null contents if there are no matches.
+     * Get a List of {@link RosterEntry} objects in Roster matching some
+     * information. The list may have null contents if there are no matches.
+     *
+     * This method calls {@link #getEntriesMatchingCriteria(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String) }
+     * with a null group.
+     *
+     * @see #getEntriesMatchingCriteria(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      */
     public List<RosterEntry> matchingList(String roadName, String roadNumber, String dccAddress,
-                             String mfg, String decoderMfgID, String decoderVersionID, String id ) {
-        List<RosterEntry> l = new ArrayList<RosterEntry>();
-        for (int i = 0; i < numEntries(); i++) {
-            if (checkEntry(i, roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id, null))
-                l.add(_list.get(i));
-        }
-        return l;
+            String mfg, String decoderMfgID, String decoderVersionID, String id) {
+        return this.getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id, null);
     }
 
     /**

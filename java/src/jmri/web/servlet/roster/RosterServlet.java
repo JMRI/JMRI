@@ -6,6 +6,7 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
@@ -55,12 +56,12 @@ public class RosterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getPathInfo().length() == 1) {
-            this.doList(request, response);
+            this.doList(request, response, true);
         } else {
             // split the path after removing the leading /
             String[] pathInfo = request.getPathInfo().substring(1).split("/");
             if (pathInfo[0].equals("list")) {
-                this.doList(request, response);
+                this.doList(request, response, false);
             } else if (pathInfo[0].equals("groups")) {
                 this.doGroups(request, response);
             } else {
@@ -88,20 +89,20 @@ public class RosterServlet extends HttpServlet {
      * List roster entries.
      *
      * Lists roster entries and return an XML document conforming to the JMRI
-     * Roster XML schema. This method can be passed multiple filter criteria
-     * matching the criteria in {@link jmri.jmrit.roster.Roster#getEntriesMatchingCriteria(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+     * Roster XML schema. This method can be passed multiple filter filter
+     * matching the filter in {@link jmri.jmrit.roster.Roster#getEntriesMatchingCriteria(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      * }. <b>Note:</b> Any given filter can be specified only once.
      *
      * This method responds to the following URL patterns: <ul>
      * <li>/roster/</li> <li>/roster/list</li>
-     * <li>/roster/list?filter=criteria[&filter=criteria]</li> </ul>
+     * <li>/roster/list?filter=filter[&filter=filter]</li> </ul>
      *
      * @param request
      * @param response
      * @throws ServletException
      * @throws IOException
      */
-    protected void doList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doList(HttpServletRequest request, HttpServletResponse response, Boolean groups) throws ServletException, IOException {
         String group = null;
         String roadName = null;
         String roadNumber = null;
@@ -110,27 +111,38 @@ public class RosterServlet extends HttpServlet {
         String decoderMfgID = null;
         String decoderVersionID = null;
         String id = null;
+        String criteria = "";
         for (String filter : request.getParameterMap().keySet()) {
             if (filter.equals("group")) {
-                group = request.getParameter(filter);
+                group = URLDecoder.decode(request.getParameter(filter), "UTF-8");
+                if (!group.equals(Roster.ALLENTRIES)) {
+                    criteria += "Group: " + group;
+                }
             } else if (filter.equals("roadName")) {
-                roadName = request.getParameter(filter);
+                roadName = URLDecoder.decode(request.getParameter(filter), "UTF-8");
+                criteria += "RoadName: " + roadName;
             } else if (filter.equals("roadNumber")) {
                 roadNumber = request.getParameter(filter);
+                criteria += "RoadNumber: " + roadNumber;
             } else if (filter.equals("dccAddress")) {
                 dccAddress = request.getParameter(filter);
+                criteria += "DCC Address: " + dccAddress;
             } else if (filter.equals("mfg")) {
-                mfg = request.getParameter(filter);
+                mfg = URLDecoder.decode(request.getParameter(filter), "UTF-8");
+                criteria += "Manufacturer: " + mfg;
             } else if (filter.equals("decoderMfgID")) {
                 decoderMfgID = request.getParameter(filter);
+                criteria += "Decoder Manufacturer Id: " + decoderMfgID;
             } else if (filter.equals("decoderVersionID")) {
                 decoderVersionID = request.getParameter(filter);
+                criteria += "Decoder Version Id: " + decoderVersionID;
             } else if (filter.equals("id")) {
                 id = request.getParameter(filter);
+                criteria += "Id: " + id;
             }
         }
         List<RosterEntry> list = Roster.instance().getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id, group);
-        this.doRoster(request, response, list);
+        this.doRoster(request, response, list, (criteria.isEmpty() ? null : criteria), groups);
     }
 
     /**
@@ -146,7 +158,7 @@ public class RosterServlet extends HttpServlet {
      * @throws IOException
      */
     protected void doGroups(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED);
+        this.doRoster(request, response, null, null, true);
     }
 
     /**
@@ -188,7 +200,7 @@ public class RosterServlet extends HttpServlet {
         if (type == null || type.equals("entry")) {
             List<RosterEntry> list = new ArrayList<RosterEntry>();
             list.add(re);
-            this.doRoster(request, response, list);
+            this.doRoster(request, response, list, "Entry " + id, false);
         } else if (type.equals("image")) {
             this.doImage(request, response, new File(FileUtil.getAbsoluteFilename(re.getImagePath())));
         } else if (type.equals("icon")) {
@@ -211,7 +223,7 @@ public class RosterServlet extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    void doRoster(HttpServletRequest request, HttpServletResponse response, List<RosterEntry> list) throws ServletException, IOException {
+    void doRoster(HttpServletRequest request, HttpServletResponse response, List<RosterEntry> list, String filter, Boolean groups) throws ServletException, IOException {
         XMLOutputter fmt = new XMLOutputter(Format.getPrettyFormat());
         Element root = new Element("roster-config");
         root.setAttribute("noNamespaceSchemaLocation",
@@ -221,13 +233,32 @@ public class RosterServlet extends HttpServlet {
         Document doc = XmlFile.newDocument(root);
         java.util.Map<String, String> m = new java.util.HashMap<String, String>();
         m.put("type", "text/xsl");
-        m.put("href", Roster.xsltLocation + "roster2array.xsl");
+        if (request.getParameter("simple") != null && request.getParameter("simple").equals("yes")) {
+            m.put("href", Roster.xsltLocation + "roster4web-simple.xsl");
+        } else {
+            m.put("href", Roster.xsltLocation + "roster4web.xsl");
+        }
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
         doc.addContent(0, p);
-        Element values;
-        root.addContent(values = new Element("roster"));
-        for (RosterEntry re : list) {
-            values.addContent(re.store());
+        if (list != null) {
+            Element values = new Element("roster");
+            if (filter != null) {
+                values.setAttribute("filter", filter);
+            }
+            for (RosterEntry re : list) {
+                values.addContent(re.store());
+            }
+            root.addContent(values);
+        }
+        if (groups) {
+            Element rosterGroup = new Element("rosterGroup");
+            rosterGroup.addContent(new Element("group").addContent(Roster.ALLENTRIES));
+            if (!Roster.instance().getRosterGroupList().isEmpty()) {
+                for (String group : Roster.instance().getRosterGroupList()) {
+                    rosterGroup.addContent(new Element("group").addContent(group));
+                }
+                root.addContent(rosterGroup);
+            }
         }
         response.setContentType("text/xml");
         response.setStatus(HttpServletResponse.SC_OK);
