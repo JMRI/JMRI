@@ -1765,6 +1765,7 @@ public class TrainBuilder extends TrainCommon{
 				if (car.getTrack() == departStageTrack){
 					// has car been assigned to another train?
 					if (car.getRouteLocation() != null){
+						log.debug("Car "+car.toString()+" has route location "+car.getRouteLocation().getName());
 						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingDepart"),
 								new Object[]{departStageTrack.getName(), car.getTrainName()}));
 						return false;
@@ -2617,15 +2618,21 @@ public class TrainBuilder extends TrainCommon{
 		}
 		// Use random loads rather that the first one that works to create interesting loads
 		if (loads.size()>0){
+			String oldLoad = car.getLoad();	// in case creating a new load still doesn't allow the car to be placed into staging
 			int rnd = (int)(Math.random()*loads.size());
-			String load = loads.get(rnd);
-			car.setLoad(load);
-			car.setLoadGeneratedFromStaging(true);
-			// is car part of kernel?
-			car.updateKernel();
-			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCreateNewLoadForCar"),
-					new Object[]{car.toString(), car.getLoad(), terminateStageTrack.getLocation().getName(), terminateStageTrack.getName()}));
-			return true;
+			car.setLoad(loads.get(rnd));
+			// check to see if car is now accepted by staging
+			String status = car.testDestination(terminateStageTrack.getLocation(), terminateStageTrack); 	// will staging now accept this car?
+			if (status.equals(Track.OKAY)){
+				car.setLoadGeneratedFromStaging(true);
+				// is car part of kernel?
+				car.updateKernel();
+				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCreateNewLoadForCar"),
+						new Object[]{car.toString(), car.getLoad(), terminateStageTrack.getLocation().getName(), terminateStageTrack.getName()}));
+				return true;
+			}
+			car.setLoad(oldLoad);	// restore load and report failure
+			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), terminateStageTrack.getName(), status}));
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildUnableNewLoad"), new Object[]{car.toString()}));
 		return false;
