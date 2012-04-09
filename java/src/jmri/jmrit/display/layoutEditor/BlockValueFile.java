@@ -65,8 +65,15 @@ public class BlockValueFile extends jmri.jmrit.XmlFile {
 						Block b = blockManager.getBySystemName(sysName);
 						if (b!=null) {
 							// Block was found, set its value
-							String v = blockList.get(i).
+							Object v = blockList.get(i).
 												getAttribute("value").getValue();
+                            if(blockList.get(i).getAttribute("valueClass")!=null){
+                                if(blockList.get(i).getAttribute("valueClass").getValue().equals("jmri.jmrit.roster.RosterEntry")){
+                                    jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.Roster.instance().getEntryForId(((String)v));
+                                    if(re!=null)
+                                        v = re;
+                                }
+                            }
 							b.setValue(v);
 							// set direction if there is one
 							int dd = jmri.Path.NONE;
@@ -120,7 +127,12 @@ public class BlockValueFile extends jmri.jmrit.XmlFile {
 						// block has value, save it
 						Element val = new Element("block");
 						val.setAttribute("systemname", sname);
-						val.setAttribute("value",o.toString());
+                        if(o instanceof jmri.jmrit.roster.RosterEntry){
+                            val.setAttribute("value", ((jmri.jmrit.roster.RosterEntry)o).getId());
+                            val.setAttribute("valueClass", "jmri.jmrit.roster.RosterEntry");
+                        } else {
+                            val.setAttribute("value",o.toString());
+                        }
 						int v = b.getDirection();
 						if (v!=jmri.Path.NONE) val.setAttribute("dir",""+v);
 						values.addContent(val);

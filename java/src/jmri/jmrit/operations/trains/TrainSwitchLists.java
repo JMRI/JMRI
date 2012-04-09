@@ -36,7 +36,19 @@ public class TrainSwitchLists extends TrainCommon {
 	 * @param location The Location needing a switch list
 	 * @param newTrainsOnly When true, ignore trains that have already been added to the switch lists
 	 */
-	public void buildSwitchList(Location location, boolean newTrainsOnly){
+	public void buildSwitchList(Location location){
+		// Append switch list data if not operating in real time
+		boolean newTrainsOnly = !Setup.isSwitchListRealTime();
+		boolean append = false;
+		if (newTrainsOnly){
+			if (!location.getStatus().equals(Location.MODIFIED))
+				return;	// nothing to add
+			append = location.getSwitchListState() == Location.SW_APPEND;
+			if (location.getSwitchListState() != Location.SW_APPEND)
+				location.setSwitchListState(Location.SW_APPEND);
+			location.setStatus(Location.UPDATED);
+		}
+		
 		// load message formats
 		pickupUtilityMessageFormat = Setup.getSwitchListPickupUtilityCarMessageFormat();
 		setoutUtilityMessageFormat = Setup.getSwitchListSetoutUtilityCarMessageFormat();
@@ -44,14 +56,6 @@ public class TrainSwitchLists extends TrainCommon {
 
 		// create manifest file
 		File file = TrainManagerXml.instance().createSwitchListFile(location.getName());
-		
-		// Append switch list data if not operating in real time
-		boolean append = !Setup.isSwitchListRealTime() && location.getSwitchListState() == Location.SW_APPEND;
-		if (append)
-			newTrainsOnly = true;
-		if (!Setup.isSwitchListRealTime() && location.getSwitchListState() != Location.SW_APPEND){
-			location.setSwitchListState(Location.SW_APPEND);
-		}
 		
 		PrintWriter fileOut;
 		try {

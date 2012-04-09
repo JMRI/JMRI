@@ -49,6 +49,7 @@
                 <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
             </xs:attribute>
             <xs:attribute name="value" type="xs:string" />
+            <xs:attribute name="valueClass" type="xs:string" />
           </xs:complexType>
         </xs:element>
             

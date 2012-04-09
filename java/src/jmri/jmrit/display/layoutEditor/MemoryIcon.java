@@ -26,7 +26,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
             super.setText(text); 
         }
     }
-
+    
     public void displayState() {
         log.debug("displayState");
     	if (getMemory() == null) {  // use default if not connected yet
@@ -34,12 +34,39 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
     		updateSize();
     		return;
     	}
+        if(re!=null){
+            jmri.InstanceManager.throttleManagerInstance().removeListener(re.getDccLocoAddress(), this);
+            re=null;
+        }
 		Object key = getMemory().getValue();
 		if (key != null) {
             java.util.HashMap<String, NamedIcon> map = getMap();
 		    if (map == null) {
 		        // no map, attempt to show object directly
                 Object val = key;
+                if (val instanceof jmri.jmrit.roster.RosterEntry){
+                    jmri.jmrit.roster.RosterEntry roster = (jmri.jmrit.roster.RosterEntry) val;
+                    javax.swing.ImageIcon icon = jmri.InstanceManager.rosterIconFactoryInstance().getIcon(roster);
+                    if(icon.getIconWidth()==-1 || icon.getIconHeight()==-1){
+                        //the IconPath is still at default so no icon set
+                        val = roster.titleString();
+                    } else {
+                        icon = jmri.InstanceManager.rosterIconFactoryInstance().getIcon(roster);
+                        NamedIcon rosterIcon = new NamedIcon(roster.getIconPath(), roster.getIconPath());
+                        _text = false;
+                        _icon = true;
+                        updateIcon(rosterIcon);
+                        rosterIcon.reduceTo(maxWidth(), maxHeight(), 0.2);
+                        re=roster;
+                        jmri.InstanceManager.throttleManagerInstance().attachListener(re.getDccLocoAddress(), this);
+                        Object isForward = jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(re.getDccLocoAddress(), "IsForward");
+                        if(isForward!=null){
+                            if(!(Boolean)isForward)
+                                flipIcon(NamedIcon.HORIZONTALFLIP);
+                        }
+                        return;
+                    }
+                }
                 if (val instanceof String) {
                     if (val.equals(""))
                         setText(defaultText);

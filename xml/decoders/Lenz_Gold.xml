@@ -1357,7 +1357,7 @@
         <label>CV indicator for SUSI, offset 800</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="CV transport device for SUSI" CV="127" minOut="4" item="SUSI transport" default="0" comment="Range 0-255">
+      <variable label="CV transport device for SUSI" CV="127" writeOnly="yes" minOut="4" item="SUSI transport" default="0" comment="Range 0-255">
         <decVal min="0" max="255"/>
         <label>CV transport device for SUSI</label>
         <comment>Range 0-255</comment>

@@ -630,7 +630,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 		if ( (memory!=null) && (block!=null) && !suppressNameUpdate ) {
 			// copy block value to memory if there is a value
 			Object val = block.getValue();
-			if (val!=null) val = val.toString();
+			if (val!=null){
+                if(!(val instanceof jmri.jmrit.roster.RosterEntry)){
+                    val = val.toString();
+                } 
+            }
 			memory.setValue(val);
 		}				
 		// Redraw all Layout Editor panels using this Layout Block

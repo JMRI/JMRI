@@ -91,6 +91,14 @@ public class Backup extends XmlFile {
 		return backupDirectoryNames;
 	}
 	
+	private static boolean saved = false;
+	public synchronized void autoBackup(){
+		if (!saved){
+			backupFiles(createBackupDirectoryName());
+			saved = true;
+		}
+	}
+	
 	/**
 	 * Check to see if a backup operations directory already exists
 	 * @param directoryName

@@ -84,6 +84,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	JCheckBox mainMenuCheckBox = new JCheckBox(rb.getString("MainMenu"));
 	JCheckBox closeOnSaveCheckBox = new JCheckBox(rb.getString("CloseOnSave"));
 	JCheckBox autoSaveCheckBox = new JCheckBox(rb.getString("AutoSave"));
+	JCheckBox autoBackupCheckBox = new JCheckBox(rb.getString("AutoBackup"));
 	JCheckBox iconCheckBox = new JCheckBox(rb.getString("trainIcon"));
 	JCheckBox appendCheckBox = new JCheckBox(rb.getString("trainIconAppend"));
 	//JCheckBox rfidCheckBox = new JCheckBox(rb.getString("EnableRfid"));
@@ -134,6 +135,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		mainMenuCheckBox.setSelected(Setup.isMainMenuEnabled());
 		closeOnSaveCheckBox.setSelected(Setup.isCloseWindowOnSaveEnabled());
 		autoSaveCheckBox.setSelected(Setup.isAutoSaveEnabled());
+		autoBackupCheckBox.setSelected(Setup.isAutoBackupEnabled());
 		iconCheckBox.setSelected(Setup.isTrainIconCordEnabled());
 		appendCheckBox.setSelected(Setup.isTrainIconAppendEnabled());		
 
@@ -270,6 +272,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addItem (options, mainMenuCheckBox, 0,0);
 		addItem (options, closeOnSaveCheckBox, 1,0);
 		addItem (options, autoSaveCheckBox, 2,0);
+		addItem (options, autoBackupCheckBox, 3,0);
 		
 		//p9.add(options);
 		
@@ -479,6 +482,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		Setup.setMainMenuEnabled(mainMenuCheckBox.isSelected());
 		Setup.setCloseWindowOnSaveEnabled(closeOnSaveCheckBox.isSelected());
 		Setup.setAutoSaveEnabled(autoSaveCheckBox.isSelected());
+		Setup.setAutoBackupEnabled(autoBackupCheckBox.isSelected());
 		// RFID enabled?
 		// Setup.setRfidEnabled(rfidCheckBox.isSelected());
 		// add panel name to setup
