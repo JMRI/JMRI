@@ -220,6 +220,7 @@ public class Setup {
 	private static boolean mainMenuEnabled = false;		//when true add operations menu to main menu bar
 	private static boolean closeWindowOnSave = false;	//when true, close window when save button is activated
 	private static boolean autoSave = true;				//when true, automatically save files if modified
+	private static boolean autoBackup = true;			//when true, automatically backup files
 	private static boolean enableValue = false;			//when true show value fields for rolling stock
 	private static String labelValue = rb.getString("Value");
 	private static boolean enableRfid = false;			//when true show RFID fields for rolling stock
@@ -279,6 +280,16 @@ public class Setup {
 		autoSave = enabled;
 		if (!old && enabled)
 			new AutoSave();
+	}
+	
+	public static boolean isAutoBackupEnabled(){
+		return autoBackup;
+	}
+	
+	public static void setAutoBackupEnabled(boolean enabled){
+		autoBackup = enabled;
+		if (enabled)
+			new Backup().autoBackup();
 	}
 	
 	public static boolean isValueEnabled(){
@@ -1329,6 +1340,7 @@ public class Setup {
     	values.setAttribute("mainMenu", isMainMenuEnabled()?"true":"false");
     	values.setAttribute("closeOnSave", isCloseWindowOnSaveEnabled()?"true":"false");
     	values.setAttribute("autoSave", isAutoSaveEnabled()?"true":"false");
+    	values.setAttribute("autoBackup", isAutoBackupEnabled()?"true":"false");
     	values.setAttribute("trainDirection", Integer.toString(getTrainDirection()));
     	values.setAttribute("trainLength", Integer.toString(getTrainLength()));
     	values.setAttribute("maxEngines", Integer.toString(getEngineSize()));
@@ -1540,6 +1552,11 @@ public class Setup {
         		String enabled = a.getValue();
         		if (log.isDebugEnabled()) log.debug("autoSave: "+enabled);
         		setAutoSaveEnabled(enabled.equals("true"));
+        	}
+          	if ((a = operations.getChild("settings").getAttribute("autoBackup"))!= null){
+        		String enabled = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("autoBackup: "+enabled);
+        		setAutoBackupEnabled(enabled.equals("true"));
         	}
         	if ((a = operations.getChild("settings").getAttribute("trainDirection"))!= null){
         		String dir = a.getValue();
