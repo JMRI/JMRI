@@ -34,11 +34,8 @@ import org.jdom.output.XMLOutputter;
  * @author Randall Wood
  */
 /*
- * TODO:
- *
- * Implement /roster/groups response. Implement a special roster-only XSLT that
- * respects newlines in comments and uses correct image urls. Include decoder
- * defs and CVs in roster entry response.
+ * TODO: Implement an XSLT that respects newlines in comments.
+ * TODO: Include decoder defs and CVs in roster entry response.
  *
  */
 public class RosterServlet extends HttpServlet {
