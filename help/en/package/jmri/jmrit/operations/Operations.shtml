@@ -349,6 +349,16 @@ operations menu will appear the next time you restart JMRI.
 
 When selected, close operation windows when the "Save" button is pressed.
 
+<H3>Auto Save</H3>
+
+When selected, the program will automatically save the operation files after they have been changed.  
+When a change occurs the program will after 1 to 2 minutes automatically save the operations files.
+
+<H3>Auto Backup</H3>
+
+When selected, the program will create a set of operation backup files each time the program is started.
+See <A HREF="#BackupRestore">Backup and Restore</A> for more information.
+
 <H3>Panel Options (Train Icons)</H3>
 
 If you want the operations program to place an icon representing the
