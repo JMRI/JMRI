@@ -197,7 +197,9 @@ public class RosterServlet extends HttpServlet {
             type = pathInfo[pathInfo.length - 1];
         }
         RosterEntry re = Roster.instance().getEntryForId(id);
-        if (type == null || type.equals("entry")) {
+        if (re == null) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Could not find roster entry " + id);
+        } else if (type == null || type.equals("entry")) {
             List<RosterEntry> list = new ArrayList<RosterEntry>();
             list.add(re);
             this.doRoster(request, response, list, "Entry " + id, false);
