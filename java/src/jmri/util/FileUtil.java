@@ -33,7 +33,7 @@ public class FileUtil {
     static public final char SEPARATOR = '/';
 
     static private String programPath = null;
-    static private String homePath = System.getProperty("user.home") + File.separator;;
+    static private String homePath = System.getProperty("user.home") + File.separator;
     
     /**
      * Find the resource file corresponding to a name. There are five cases:
