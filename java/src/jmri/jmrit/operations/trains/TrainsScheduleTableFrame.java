@@ -25,7 +25,6 @@ import javax.swing.table.TableColumnModel;
 
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -156,8 +155,6 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     		
     	pack();
     	
-    	setSortBy(trainManager.getTrainsFrameSortBy());
-    	
     	scheduleManager.addPropertyChangeListener(this);
     	addPropertyChangeTrainSchedules();
     }
@@ -203,17 +200,6 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     	}
     	schedule.revalidate();
 	}
-	
-	private void setSortBy(String sortBy){
-		if(sortBy.equals(TIME)){
-			sortByTime.setSelected(true);
-			trainsScheduleModel.setSort(trainsScheduleModel.SORTBYTIME);
-		}
-	}
-
-	public List<String> getSortByList(){
-		return trainsScheduleModel.getSelectedTrainList();
-	}
 
 	private void applySchedule(){
 		setActiveId();
@@ -243,7 +229,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 		saveTableDetails(trainsScheduleTable);
 		//trainManager.setTrainScheduleFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
 		trainManager.setTrainSecheduleActiveId(_activeId);
-		OperationsXml.save();
+		trainManagerXml.writeOperationsFile();
 	}
 	
 	protected int[] getCurrentTableColumnWidths(){
