@@ -43,9 +43,8 @@ public class Schedule implements java.beans.PropertyChangeListener {
 	public void setName(String name){
 		String old = _name;
 		_name = name;
-		if (!old.equals(name)){
-			firePropertyChange("name", old, name);
-		}
+		if (!old.equals(name))
+			firePropertyChange("ScheduleName", old, name);
 	}
 	
 	// for combo boxes
@@ -62,7 +61,10 @@ public class Schedule implements java.beans.PropertyChangeListener {
 	}
 
 	public void setComment(String comment){
+		String old = _comment;
 		_comment = comment;
+		if (!old.equals(comment))
+			firePropertyChange("ScheduleComment", old, comment);
 	}
 	
 	public String getComment(){
@@ -353,8 +355,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
     	firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
     }
 
-	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(
-			this);
+	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
 	public synchronized void addPropertyChangeListener(
 			java.beans.PropertyChangeListener l) {
@@ -367,10 +368,11 @@ public class Schedule implements java.beans.PropertyChangeListener {
 	}
 
 	protected void firePropertyChange(String p, Object old, Object n) {
+   	   	// set dirty
+    	LocationManagerXml.instance().setDirty(true);
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(Schedule.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Schedule.class.getName());
 
 }

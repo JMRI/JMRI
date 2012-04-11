@@ -132,7 +132,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public void setTrainSecheduleActiveId(String id){
     	String old = _trainScheduleActiveId;
     	_trainScheduleActiveId = id;
-    	firePropertyChange(ACTIVE_TRAIN_SCHEDULE_ID, old, id);
+    	if (!old.equals(id))
+    		firePropertyChange(ACTIVE_TRAIN_SCHEDULE_ID, old, id);
     }
     
     public String getTrainScheduleActiveId(){
@@ -685,7 +686,10 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
-    private void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
+    private void firePropertyChange(String p, Object old, Object n) {
+    	TrainManagerXml.instance().setDirty(true);
+    	pcs.firePropertyChange(p,old,n);
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainManager.class.getName());
 

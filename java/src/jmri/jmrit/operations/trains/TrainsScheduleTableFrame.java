@@ -25,6 +25,7 @@ import javax.swing.table.TableColumnModel;
 
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -227,9 +228,8 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	protected void storeValues(){
 		setActiveId();
 		saveTableDetails(trainsScheduleTable);
-		//trainManager.setTrainScheduleFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
 		trainManager.setTrainSecheduleActiveId(_activeId);
-		trainManagerXml.writeOperationsFile();
+		OperationsXml.save();
 	}
 	
 	protected int[] getCurrentTableColumnWidths(){
@@ -241,7 +241,6 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	}
 	
     public void dispose() {
-    	//trainManager.setTrainScheduleFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
     	scheduleManager.removePropertyChangeListener(this);
     	removePropertyChangeTrainSchedules();
     	trainsScheduleModel.dispose();

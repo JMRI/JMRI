@@ -314,6 +314,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		_disableComboBoxUpdate = true;	// stop updates
 		super.checkBoxActionPerformed(ae);
 		if (ae.getSource() == autoFinalDestTrackCheckBox) 
 			updateFinalDestination();
@@ -325,6 +326,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			loadComboBox.setEnabled(!ignoreLoadCheckBox.isSelected());
 			editLoadButton.setEnabled(!ignoreLoadCheckBox.isSelected() & _car != null);
 		}
+		_disableComboBoxUpdate = false;
 	}
 	
 	protected void updateReturnWhenEmpty(){

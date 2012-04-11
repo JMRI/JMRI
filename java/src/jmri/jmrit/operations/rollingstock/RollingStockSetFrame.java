@@ -608,6 +608,9 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	
 	// location combo box
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		log.debug("Combobox action");
+		if (_disableComboBoxUpdate)
+			return;
 		if (ae.getSource()== locationBox){
 			updateLocation();
 		}

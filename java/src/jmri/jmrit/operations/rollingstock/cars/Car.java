@@ -264,17 +264,18 @@ public class Car extends RollingStock {
 	public void setNextDestTrack(Track track){
 		//setPreviousNextDestTrack(_nextDestTrack);
 		Track old = _nextDestTrack;
-		if (old != null){
-			old.removePropertyChangeListener(this);
-			old.deleteReservedInRoute(this);
-		}
 		_nextDestTrack = track;
-		if (_nextDestTrack != null){
-			_nextDestTrack.addReservedInRoute(this);
-			_nextDestTrack.addPropertyChangeListener(this);
-		}
-		if ((old!= null && !old.equals(track)) || (track != null && !track.equals(old)))
+		if ((old!= null && !old.equals(track)) || (track != null && !track.equals(old))){
+			if (old != null){
+				old.removePropertyChangeListener(this);
+				old.deleteReservedInRoute(this);
+			}
+			if (_nextDestTrack != null){
+				_nextDestTrack.addReservedInRoute(this);
+				_nextDestTrack.addPropertyChangeListener(this);
+			}
 			firePropertyChange(NEXT_DESTINATION_TRACK_CHANGED_PROPERTY, old, track);
+		}
 	}
 	
 	public Track getNextDestTrack(){
