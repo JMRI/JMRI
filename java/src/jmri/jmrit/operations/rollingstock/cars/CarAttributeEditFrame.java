@@ -123,10 +123,10 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		
     	pack();
   
-    	if (getWidth()<275) 
-    		setSize(275, getHeight());
-    	if (getHeight()<150)
-    		setSize(getWidth(), 150);
+    	if (getWidth()<300) 
+    		setSize(300, getHeight());
+    	if (getHeight()<180)
+    		setSize(getWidth(), 180);
     	setVisible(true);
     }
  
