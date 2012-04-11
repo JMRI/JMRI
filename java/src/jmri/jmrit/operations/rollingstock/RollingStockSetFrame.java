@@ -25,6 +25,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -278,7 +279,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		// get notified if train combo box gets modified
 		trainManager.addPropertyChangeListener(this);
 				
-		setMinimumSize(new Dimension(500, getHeight()));
+		setMinimumSize(new Dimension(500, Control.panelHeight));
 	}
 	
 	public void load(RollingStock rs){

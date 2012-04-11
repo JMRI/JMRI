@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
@@ -321,19 +322,12 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		locationManager.addPropertyChangeListener(this);
 		carManager.addPropertyChangeListener(this);
 
-		// set frame size and location for display
 		pack();
 		if (getWidth()<450) 
 			setSize(450, getHeight());
 		if (getHeight()<500)
 			setSize(getWidth(), 500);
-		/* all JMRI window position and size are now saved
-		if (carManager.getEditFrameSize()!= null)
-			setSize(carManager.getEditFrameSize());
-		if (carManager.getEditFramePosition()!= null){
-			setLocation(carManager.getEditFramePosition());
-		}
-		*/
+		setMinimumSize(new Dimension(450, Control.panelHeight));
 		setVisible(true);	
 	}
 

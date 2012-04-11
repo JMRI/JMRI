@@ -181,14 +181,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		// Layout the panel by rows
 		// row 1a
        	JPanel pName = new JPanel();
-       	//pName.setMinimumSize(new Dimension(180,50));
     	pName.setLayout(new GridBagLayout());
     	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
 		addItem(pName, trainNameTextField, 0, 0);
 
 		// row 1b
        	JPanel pDesc = new JPanel();
-       	//pDesc.setMinimumSize(new Dimension(300,50));
     	pDesc.setLayout(new GridBagLayout());
     	pDesc.setBorder(BorderFactory.createTitledBorder(rb.getString("Description")));
 		addItem(pDesc, trainDescriptionTextField, 0, 0);
@@ -990,15 +988,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     private void packFrame(){
     	setVisible(false);
  		pack();
- 		/* all JMRI window position and size are now saved
-		if (manager.getTrainEditFrameSize()!= null){
-			setSize(manager.getTrainEditFrameSize());
-		}
-		*/
 		if (getWidth()<550)
 			setSize(550, getHeight());
 		if (getHeight()<Control.panelHeight)
 			setSize(getWidth(), Control.panelHeight);
+		setMinimumSize(new Dimension(550, Control.panelHeight));
 		setVisible(true);
     }
     

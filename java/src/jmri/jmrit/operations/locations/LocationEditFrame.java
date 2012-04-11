@@ -178,7 +178,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
        	
 		// row 1a
     	JPanel pName = new JPanel();
-    	//pName.setMinimumSize(new Dimension(180,1));
     	pName.setLayout(new GridBagLayout());
     	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
 				
@@ -277,24 +276,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);
 
-		//	 get notified if combo box gets modified
-		
-		// set frame size and location for display
 		pack();
-		/* all JMRI window position and size are now saved
-		if (manager.getLocationEditFrameSize()!= null){
-			setSize(manager.getLocationEditFrameSize());
-		} 
-		*/
 		if (getWidth()<750)
 			setSize(750, getHeight());
 		if (getHeight()<Control.panelHeight)
 			setSize(getWidth(), Control.panelHeight);
-		/* all JMRI window position and size are now saved
-		if (manager.getLocationEditFramePosition()!= null){
-			setLocation(manager.getLocationEditFramePosition());
-		}
-		*/
+		setMinimumSize(new Dimension(750, Control.panelHeight));
 		setVisible(true);
 	}
 	
