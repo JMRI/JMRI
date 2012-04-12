@@ -4,6 +4,7 @@ package jmri.jmrit.roster.swing;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 import javax.swing.Icon;
 import javax.swing.WindowConstants;
 import jmri.InstanceManager;
@@ -18,17 +19,24 @@ import jmri.util.swing.WindowInterface;
  * @author Kevin Dickerson Copyright (C) 2011
  * @author Randall Wood Copyright (C) 2012
  */
-public class RosterFrameAction extends JmriAbstractAction
-     {
+public class RosterFrameAction extends JmriAbstractAction {
     
     public RosterFrameAction(String s, WindowInterface wi) {
-    	super(s, wi);
+        super(s, wi);
     }
      
- 	public RosterFrameAction(String s, Icon i, WindowInterface wi) {
-    	super(s, i, wi);
+    public RosterFrameAction(String s, Icon i, WindowInterface wi) {
+        super(s, i, wi);
     }
     
+    /**
+     * Default constructor used when instantiating via startup action
+     * or button configured in user preferences
+     */
+    public RosterFrameAction() {
+        super(ResourceBundle.getBundle("apps.ActionListBundle").getString("jmri.jmrit.roster.swing.RosterFrameAction"));
+        allowQuit = false;
+    }
     /**
     * Method for opening a new window via the classic JMRI interface
     */
