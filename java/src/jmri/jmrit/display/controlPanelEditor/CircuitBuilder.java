@@ -28,6 +28,7 @@ import jmri.NamedBeanHandle;
 //import jmri.jmrit.catalog.NamedIcon;
 
 import jmri.jmrit.logix.*;
+import jmri.util.JmriJFrame;
 
 /**
  * <P>
@@ -73,6 +74,7 @@ public class CircuitBuilder  {
     
     // OBlock list to open edit frames 
     private PickListModel _oblockModel;
+    private boolean hasOBlocks = false;
 
     // "Editing Frames" - Called from menu in Main Frame
     private EditCircuitFrame _editCircuitFrame;
@@ -163,7 +165,11 @@ public class CircuitBuilder  {
                 blockNeeds.add(mi);                                                  
             }
         } else {
-            blockNeeds.add(new JMenuItem(rbcp.getString("circuitsHaveIcons")));
+        	if (hasOBlocks) {
+        		blockNeeds.add(new JMenuItem(rbcp.getString("circuitsHaveIcons")));
+        	} else {
+        		blockNeeds.add(new JMenuItem(rbcp.getString("noTrackCircuits")));        		
+        	}
         }
 
         blockNeeds = new JMenu(rbcp.getString("blocksNeedConversionItem"));
@@ -178,7 +184,11 @@ public class CircuitBuilder  {
                 blockNeeds.add(mi);                                                  
             }
         } else {
-            blockNeeds.add(new JMenuItem(rbcp.getString("circuitIconsConverted")));
+        	if (hasOBlocks) {
+                blockNeeds.add(new JMenuItem(rbcp.getString("circuitIconsConverted")));
+        	} else {
+        		blockNeeds.add(new JMenuItem(rbcp.getString("noTrackCircuits")));        		
+        	}
         }
         JMenuItem iconNeeds;
         if (_unconvertedTrack.size()>0) {
@@ -209,7 +219,11 @@ public class CircuitBuilder  {
                 }
              });
         } else {
-            iconNeeds = new JMenuItem(rbcp.getString("IconsHaveCircuits"));
+        	if (hasOBlocks) {
+                iconNeeds = new JMenuItem(rbcp.getString("IconsHaveCircuits"));
+        	} else {
+        		iconNeeds = new JMenuItem(rbcp.getString("noTrackCircuits"));        		
+        	}
         }
         _todoMenu.add(iconNeeds);
 
@@ -231,7 +245,11 @@ public class CircuitBuilder  {
                 blockNeeds.add(mi);                                                  
             }
         } else {
-            blockNeeds.add(new JMenuItem(rbcp.getString("portalsInPlace")));
+        	if (hasOBlocks) {
+                blockNeeds.add(new JMenuItem(rbcp.getString("portalsInPlace")));
+        	} else {
+        		blockNeeds.add(new JMenuItem(rbcp.getString("noTrackCircuits")));        		
+        	}
         }
 
         JMenuItem pError = new JMenuItem(rbcp.getString("CheckPortalPaths"));
@@ -309,6 +327,7 @@ public class CircuitBuilder  {
             addCircuitDialog();
             if (_currentBlock!=null) {
                 if (_editCircuitFrame==null) {
+                    checkCircuits();
                 	_editor.setSelectionGroup(null);
                     _editor.disableMenus();
                     _editor.setSelectionGroupColor(_editGroupColor);
@@ -612,13 +631,17 @@ public class CircuitBuilder  {
     /**
     * Update block data in menus
     */
-    protected void closeCircuitFrame(OBlock block) {
+    protected void checkCircuitFrame(OBlock block) {
         if (block!=null) {
         	java.util.List<Positionable> group = _editor.getSelectionGroup();
             // check icons to be indicator type
             iconsConverted(group);
             setIconGroup(block, group);
         }
+        closeCircuitFrame();
+    }
+
+    protected void closeCircuitFrame() {
         _editCircuitFrame = null;
         closeCircuitBuilder();
     }
@@ -734,6 +757,7 @@ public class CircuitBuilder  {
         _portalMap = new Hashtable<String, Portal>();
         OBlockManager manager = InstanceManager.oBlockManagerInstance();
         String[] sysNames = manager.getSystemNameArray();
+        hasOBlocks = (sysNames.length>0);
         for (int i = 0; i < sysNames.length; i++) {
             OBlock block = manager.getBySystemName(sysNames[i]);
             java.util.List<Positionable> icons = _circuitMap.get(block);
@@ -896,6 +920,7 @@ public class CircuitBuilder  {
     IndicatorItemPanel _trackPanel;
     IndicatorTOItemPanel _trackTOPanel;
     PositionableLabel _oldIcon;
+    JmriJFrame _convertFrame;     // must be modal dialog to halt convetIcons loop
     JDialog _convertDialog;     // must be modal dialog to halt convetIcons loop
 
     /**
@@ -954,8 +979,8 @@ public class CircuitBuilder  {
         _editor.repaint();
         if (pos instanceof TurnoutIcon) {
             makePalettteFrame("IndicatorTO");
-            _trackTOPanel = new IndicatorTOItemPanel(null, "IndicatorTO", null, null, _editor);
-            _convertDialog.add(_trackTOPanel);
+            _trackTOPanel = new IndicatorTOItemPanel(_convertFrame, "IndicatorTO", null, null, _editor);
+ //           _convertDialog.add(_trackTOPanel);
             ActionListener updateAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     convertTO();
@@ -965,8 +990,8 @@ public class CircuitBuilder  {
             _convertDialog.add(_trackTOPanel);
         } else {
             makePalettteFrame("IndicatorTrack");
-            _trackPanel = new IndicatorItemPanel(null, "IndicatorTrack", null, _editor);
-            _convertDialog.add(_trackPanel);
+            _trackPanel = new IndicatorItemPanel(_convertFrame, "IndicatorTrack", null, _editor);
+//            _convertDialog.add(_trackPanel);
             ActionListener updateAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     convertSeg();
@@ -981,12 +1006,29 @@ public class CircuitBuilder  {
     }
 
     private void makePalettteFrame(String title) {
-    	_editor.makePalette();
-        _convertDialog = new JDialog(_editor, java.text.MessageFormat.format(
+    	jmri.jmrit.display.palette.ItemPalette.loadIcons();
+    	_convertDialog = new JDialog(_editor, java.text.MessageFormat.format(
         		Editor.rb.getString("EditItem"), Editor.rb.getString(title)), true);
+    	_convertFrame = new convertFrame(_convertDialog);
+
         _convertDialog.setLocationRelativeTo(_editor);
         _convertDialog.toFront();
     }
+
+    /*
+     * gimmick to get JDialog to re-layout contents and repaint 
+     */
+    class convertFrame extends JmriJFrame {
+    	JDialog _dialog;
+    	convertFrame (JDialog dialog) {
+    		super(false, false);
+    		_dialog = dialog;
+    	}
+    	public void pack() {
+    		super.pack();
+    		_dialog.pack();
+    	}
+	}
 
     private void convertTO() {
         IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_editor);
@@ -1002,7 +1044,7 @@ public class CircuitBuilder  {
             Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<String, NamedIcon> ent = iter.next();
-                t.setIcon(status, ent.getKey(), ent.getValue());
+                t.setIcon(status, ent.getKey(), new NamedIcon(ent.getValue()));
             }
         }
         t.setLevel(Editor.TURNOUTS);
@@ -1037,13 +1079,13 @@ public class CircuitBuilder  {
         _editor.putItem(pos);
         _circuitIcons.add(pos);
         pos.updateSize();
-        _oldIcon.remove();
 
         _oldIcon = null;
         _trackPanel = null;
         _trackTOPanel = null;
         _convertDialog.dispose();
         _convertDialog = null;
+        _convertFrame = null;
     }
     /*************** end convert icons *******************/
 
@@ -1076,6 +1118,8 @@ public class CircuitBuilder  {
 
     protected boolean isTrack(Positionable pos) {
         if (pos instanceof IndicatorTrack) {
+            return true;
+        } else if (pos instanceof TurnoutIcon) {
             return true;
         } else if (pos instanceof PositionableLabel) {
             PositionableLabel pl = (PositionableLabel)pos;
@@ -1190,8 +1234,14 @@ public class CircuitBuilder  {
     
     protected void doMousePressed(MouseEvent event) {
         if (_editCircuitFrame!=null || _editPathsFrame!=null) {
+        	if (_editCircuitFrame!=null) {
+        		_editCircuitFrame.toFront();
+        	} else {
+        		_editPathsFrame.toFront();
+        	}
             _editor.setSelectionGroup(_saveSelectionGroup);
         } else if (_editPortalFrame!=null) {
+        	_editPortalFrame.toFront();
             _editor.setSelectionGroup(_saveSelectionGroup);
 //            _editor.setSelectionGroup(null);
         }

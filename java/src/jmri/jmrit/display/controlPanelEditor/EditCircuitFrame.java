@@ -286,7 +286,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
                         JOptionPane.QUESTION_MESSAGE);
         if (result==JOptionPane.YES_OPTION) {
             _parent.removeBlock(_block);
-            _parent.closeCircuitFrame(null);
+            _parent.closeCircuitFrame();
             dispose();
         }
     }
@@ -389,7 +389,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         }
         closePickList();
         
-        _parent.closeCircuitFrame(_block);
+        _parent.checkCircuitFrame(_block);
         _loc = getLocation(_loc);
         _dim = getSize(_dim);
         dispose();

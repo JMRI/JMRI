@@ -1,5 +1,6 @@
 package jmri.jmrit.display.palette;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -53,7 +54,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _bottom2Panel = makeBottom2Panel();
         initIconFamiliesPanel();
         add(_iconFamilyPanel);
-        JPanel bottomPanel = new JPanel();
+        JPanel bottomPanel = new JPanel(new FlowLayout());
         bottomPanel.add(_bottom1Panel);
         bottomPanel.add(_bottom2Panel);
         add(bottomPanel);
@@ -87,7 +88,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _bottom1Panel = makeBottom3Panel(doneAction, makeBottom1Panel());
         initIconFamiliesPanel();
         add(_iconFamilyPanel);
-        JPanel bottomPanel = new JPanel();
+        JPanel bottomPanel = new JPanel(new FlowLayout());
         bottomPanel.add(_bottom1Panel);
         bottomPanel.add(_bottom2Panel);
         add(bottomPanel);
@@ -160,7 +161,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
         initIconFamiliesPanel();
         add(_iconFamilyPanel, 1);
         reset();
-        validate();
     }
     
     protected JPanel makeFamilyButtons (Iterator <String> it, boolean setDefault) {
@@ -168,12 +168,11 @@ public abstract class FamilyItemPanel extends ItemPanel {
         familyPanel.setLayout(new BoxLayout(familyPanel, BoxLayout.Y_AXIS));
         String txt = java.text.MessageFormat.format(ItemPalette.rbp.getString("IconFamiliesLabel"),
                                                     ItemPalette.rbp.getString(_itemType));
-        JPanel p = new JPanel();
+        JPanel p = new JPanel(new FlowLayout());
         p.add(new JLabel(txt));
         familyPanel.add(p);
         ButtonGroup group = new ButtonGroup();
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
+        JPanel buttonPanel = new JPanel(new FlowLayout());
         String family = null;
         JRadioButton button = null;
         int count = 0;
@@ -198,7 +197,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             if (count>4) {
                 count = 0;
                 familyPanel.add(buttonPanel);
-                buttonPanel = new JPanel();
+                buttonPanel = new JPanel(new FlowLayout());
                 buttonPanel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
             }
             buttonPanel.add(button);
@@ -215,11 +214,11 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
 
     protected void addFamilyPanels(JPanel familyPanel) {
-        _iconPanel = new JPanel();
+        _iconPanel = new JPanel(new FlowLayout());
         _iconFamilyPanel.add(_iconPanel);
         _iconPanel.setVisible(false);
         if (!_update) {
-            _dragIconPanel = new JPanel();
+            _dragIconPanel = new JPanel(new FlowLayout());
             _iconFamilyPanel.add(_dragIconPanel);
             _dragIconPanel.setVisible(true);
         }
@@ -262,7 +261,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
            Entry<String, NamedIcon> entry = it.next();
            NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
            icon.reduceTo(100, 100, 0.2);
-           JPanel panel = new JPanel();
+           JPanel panel = new JPanel(new FlowLayout());
            String borderName = ItemPalette.convertText(entry.getKey());
            panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
                                                             borderName));
@@ -279,7 +278,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                c.gridy++;
                c.gridx = 0;
                if (cnt < numCol-1) { // last row
-                   JPanel p =  new JPanel();
+                   JPanel p =  new JPanel(new FlowLayout());
                    p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
                    p.add(Box.createHorizontalStrut(100));
                    gridbag.setConstraints(p, c);
@@ -305,7 +304,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             NamedIcon ic = iconMap.get(displayKey);
             if (ic!=null) {
                 NamedIcon icon = new NamedIcon(ic);
-               JPanel panel = new JPanel();
+               JPanel panel = new JPanel(new FlowLayout());
                String borderName = ItemPalette.convertText("dragToPanel");
                panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
                                                                 borderName));
@@ -365,18 +364,20 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _iconPanel.setVisible(false);
         if (!_update) {
             _dragIconPanel.setVisible(true);
+            _dragIconPanel.invalidate();
         }
         _showIconsButton.setText(ItemPalette.rbp.getString("ShowIcons"));
-        setSize(getPreferredSize());
+        reset();
     }
 
     protected void showIcons() {
         _iconPanel.setVisible(true);
+        _iconPanel.invalidate();
         if (!_update) {
             _dragIconPanel.setVisible(false);
         }
         _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
-        setSize(getPreferredSize());
+        reset();
     }
      
     /**
@@ -410,10 +411,10 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
     // add update buttons to  bottom1Panel
     protected JPanel makeBottom3Panel(ActionListener doneAction, JPanel bottom1Panel) {
-        JPanel bottomPanel = new JPanel();
+        JPanel bottomPanel = new JPanel(new FlowLayout());
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
         bottomPanel.add(bottom1Panel);
-        JPanel updatePanel = new JPanel();
+        JPanel updatePanel = new JPanel(new FlowLayout());
         _updateButton = new JButton(ItemPalette.rbp.getString("updateButton"));
         _updateButton.addActionListener(doneAction);
         _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
@@ -424,9 +425,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
     
     protected void removeIconFamiliesPanel() {
         remove(_iconFamilyPanel);
-    }
-    protected void reset() {
-        hideIcons();
     }
  
     protected void openEditDialog() {
@@ -443,11 +441,11 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _family = family;
         if (log.isDebugEnabled()) log.debug("setFamily: for type \""+_itemType+"\", family \""+family+"\"");
         _iconFamilyPanel.remove(_iconPanel);
-        _iconPanel = new JPanel();
+        _iconPanel = new JPanel(new FlowLayout());
         _iconFamilyPanel.add(_iconPanel, 0);
         if (!_update) {
             _iconFamilyPanel.remove(_dragIconPanel);
-            _dragIconPanel = new JPanel();
+            _dragIconPanel = new JPanel(new FlowLayout());
             _iconFamilyPanel.add(_dragIconPanel, 0);
         }
         _currentIconMap = ItemPalette.getIconMap(_itemType, _family);

@@ -109,6 +109,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         makeOptionMenu();
         makeEditMenu();
         makeWarrantMenu();
+        makeFileMenu();
 
         setJMenuBar(_menuBar);
         addHelpMenu("package.jmri.jmrit.display.ControlPanelEditor", true);
@@ -135,7 +136,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         mi.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     makePalette();
-                    _itemPalette.setVisible(true);
                 }
             });
         mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
@@ -344,17 +344,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 					changeView("jmri.jmrit.display.panelEditor.PanelEditor");
                 }
             });
-/*
-        editItem = new JMenuItem(rb.getString("IMView"));
-        _fileMenu.add(editItem);
-        editItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-					jmri.jmrit.display.controlPanelEditor.CircuitBuilder ed =
-                        (jmri.jmrit.display.controlPanelEditor.CircuitBuilder)changeView("jmri.jmrit.display.controlPanelEditor.CircuitBuilder");
-                    ed.init();
-                }
-            });
-*/
+
         _fileMenu.addSeparator();
         JMenuItem deleteItem = new JMenuItem(rb.getString("DeletePanel"));
         _fileMenu.add(deleteItem);
@@ -765,11 +755,38 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
     }
 
-    public void makePalette() {
+	JDialog d;
+	public void makePalette() {
         if (_itemPalette==null) {
-            _itemPalette = new jmri.jmrit.display.palette.ItemPalette("Item Pallet", this);
+            _iconMenu.setEnabled(false);
+        	String title = rb.getString("MenuItemItemPallette");
+        	d = new JDialog(this, title, false);
+            JPanel panel = new JPanel();
+            panel.setLayout(new BorderLayout(60,60));
+            JPanel p = new JPanel();
+            p.add(new JLabel(rbcp.getString("waitForPalette")));
+            panel.add(p);
+            d.getContentPane().add(panel);
+            d.setLocation(getLocation().x+100, getLocation().y+100);
+            d.pack();
+            d.setVisible(true);
+            
+            Thread t = new Thread() {
+                public void run() {
+                		loadPalette();
+                    }
+                };
+            javax.swing.SwingUtilities.invokeLater(t);
         }
-        _itemPalette.setVisible(false);
+        else {
+            _itemPalette.setVisible(true);        	
+        }
+    }
+    private void loadPalette() {
+        _itemPalette = new jmri.jmrit.display.palette.ItemPalette(rb.getString("MenuItemItemPallette"), this);   	
+        _itemPalette.setVisible(true);
+        _iconMenu.setEnabled(true);
+        d.dispose();
     }
 
     // all content loaded from file.
