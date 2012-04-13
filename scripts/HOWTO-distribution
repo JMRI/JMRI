@@ -75,7 +75,15 @@ Second, we build the release branch:
     ant -Dsourceforge.userid='you' -Dsourceforge.password='password' make-test-release-branch
 
     (Yes, you probably do have to provide both userid and password, or it will
-    silently hang)
+    silently hang) (if you have them provided in the local.properties file, see
+    above, you don't need to provide them here) 
+    (alternately, change the svnSetting element in build.xml to:
+        <svnSetting
+        id="svn.settings"
+        javahl="false"
+        svnkit="false"/>
+    to have it use your default command line setup; note that this doesn't include
+    user name and password)
     
     This will do (more or less) the following actions:
 
