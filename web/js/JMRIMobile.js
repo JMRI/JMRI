@@ -23,6 +23,9 @@
 //TODO: support addition of memory variables, maybe turnouts?
 //TODO: (long-term) read panel xml and "draw" panels on page
 //TODO: set static parms as defaults in ajaxSetup()
+//TODO: fix momentary rounded corners on Settings options when refreshing
+//TODO: page refresh isn't called when adding new function on Android browser (intermittent)
+//TODO: fix pageloadingmsg to display message
 
 var $gPrevType = ""; //persistent variable to help refresh views only on change 
 var $gLastLogMsgTime =new Date().getTime();  //save last time (for logging elapsed time in debug messages)
@@ -128,11 +131,6 @@ var $processResponse = function($returnedData, $success, $xhr) {
 					//include a "safe" version of name for use as ID   TODO: other cleanup needed?
 					$currentItem.safeName = $currentItem.name.replace(/:/g, "_").replace(/ /g, "_").replace(/%20/g, "_");
 					
-					//htmlencode the icon filename TODO: improve this to handle more exceptions
-					if ($currentItem.imageIconName) {
-						$currentItem.imageIconName = $currentItem.imageIconName.replace(/&/g, "%26").replace(/ /g, "%20").replace(/#/g, "%23");
-					}
-
 					//if a "page" of this type doesn't exist yet, create it, and add menu buttons to all
 					if (!$("#type-" + $type).length) {
 						//add the new page, following the settings page
@@ -311,9 +309,7 @@ function $logMsg(msg) {
 			$.mobile.changePage("#settings");  //if retries exhausted, show settings page
 		}
 	}
-//	$.mobile.changePage(location.href.substr(0, $hashLoc));
 }
-
 
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 $(document).ready(function() {

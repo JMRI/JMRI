@@ -101,7 +101,7 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
                     Thread.sleep(300000);  // not quite so long (5 minutes)
                     log.debug("Thread sleep completed.");
                 } catch (InterruptedException e) {
-                    log.debug("Interrupted", e);
+                    log.debug("Thread sleep interrupted");
                 }
                 log.debug("thread resumes and replies");
             }
