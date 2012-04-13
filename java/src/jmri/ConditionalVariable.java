@@ -132,6 +132,31 @@ public class ConditionalVariable {
                     }
                     _namedBean = nbhm.getNamedBeanHandle(_name, nb);
                     break;
+                case Conditional.ITEM_TYPE_CONDITIONAL:
+                	Conditional c = InstanceManager.conditionalManagerInstance().getConditional(_name);
+                    if(c == null){
+                        log.error("invalid conditiona; name= \""+_name+"\" in state variable");
+                        return;
+                    }
+                    _namedBean = nbhm.getNamedBeanHandle(_name, c);
+                    break;
+                case Conditional.ITEM_TYPE_WARRANT:
+                    Warrant w = InstanceManager.warrantManagerInstance().getWarrant(_name);
+                    if(w == null){
+                        log.error("invalid warrant name= \""+_name+"\" in state variable");
+                        return;
+                    }
+                    _namedBean = nbhm.getNamedBeanHandle(_name, w);
+                    break;
+                case Conditional.ITEM_TYPE_OBLOCK:
+                    OBlock b = InstanceManager.oBlockManagerInstance().getOBlock(_name);
+                    if(b == null){
+                        log.error("invalid block name= \""+_name+"\" in state variable");
+                        return;
+                    }
+                    _namedBean = nbhm.getNamedBeanHandle(_name, b);
+                    break;
+
                 default : break;
             }
         } catch (java.lang.NumberFormatException ex) {
@@ -188,6 +213,8 @@ public class ConditionalVariable {
         int itemType = Conditional.TEST_TO_ITEM[_type];
         
         switch (itemType) {
+        	case Conditional.TYPE_NONE:
+        		break;
             case Conditional.ITEM_TYPE_SENSOR:
                 bean = InstanceManager.sensorManagerInstance().provideSensor(_name);
                 break;
@@ -206,10 +233,19 @@ public class ConditionalVariable {
             case Conditional.ITEM_TYPE_SIGNALHEAD:
                 bean = InstanceManager.signalHeadManagerInstance().getSignalHead(_name);
                 break;
+            case Conditional.ITEM_TYPE_CONDITIONAL:
+                bean = InstanceManager.conditionalManagerInstance().getConditional(_name);
+                break;
+            case Conditional.ITEM_TYPE_WARRANT:
+                bean = InstanceManager.warrantManagerInstance().getWarrant(_name);
+                break;
+            case Conditional.ITEM_TYPE_OBLOCK:
+                bean = InstanceManager.oBlockManagerInstance().getOBlock(_name);
+                break;
             case Conditional.ITEM_TYPE_ENTRYEXIT:
                 bean = jmri.jmrit.signalling.EntryExitPairs.instance().getBySystemName(_name);
                 break;
-            default : log.error("Type not set for " + _name);
+            default : log.error("Type "+itemType+" not set for " + _name);
         }
 
         //Once all refactored, we should probably register an error if the bean is returned null.
