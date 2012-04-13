@@ -19,9 +19,12 @@ body {
 .ui-content .ui-listview {
   margin-bottom: 15px !important;
 }
-.roster-list .ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li {
+ul.roster-list .ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li {
     padding-top: 0.1em !important;
     padding-bottom: 0.1em !important;
+}
+img.ui-li-thumb {
+	z-index: -1;
 }
 a.ui-link-inherit.two-line-item {
     padding-top: 0.2em !important; 

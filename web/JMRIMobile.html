@@ -28,7 +28,7 @@
 </script>
 <script id='rosterItemTemplate' type='text/html'>
     <li class='ui-li-has-thumb' id='name-${safeName}'><a  class='ui-link-inherit' href='/web/inControl.html?locoaddress=${dccAddress}&loconame=${name}' target='${safeName}'>
-        <img class='ui-li-thumb' src='/prefs/resources/${imageIconName}?MaxHeight=50'><h3 class='ui-li-heading'>${name}</h3></a></li>
+        <img class='ui-li-thumb' src='/prefs/resources/${imageIconName}?maxHeight=62' onerror='$(this).hide();'><h3 class='ui-li-heading'>${name}</h3></a></li>
 </script>
 
 <!-- Generic jquery templates for pages ==========================================-->
@@ -92,42 +92,38 @@
 			<div class='errorMessage'></div>
 		</div>
 		<div data-role='content' data-theme='b'>
-			<a href='/' rel='external'><img src='/dist/resources/logo.gif'
-				style='float: right;' alt='JMRI logo'> </a>
-			<h2>JMRI Mobile</h2>
-			This is an alpha version of a browser-based UI for controlling
-			a layout with JMRI.
-			<div id='includes' data-role="fieldcontain">
-				<fieldset data-role="controlgroup">
-					<legend>Include in app?:</legend>
-					<input type="checkbox" name="include-power" id="include-power"
-						class="custom" /> <label for="include-power">Power</label> <input
-						type="checkbox" name="include-turnout" id="include-turnout"
-						class="custom" /> <label for="include-turnout">Turnouts</label> <input
-						type="checkbox" name="include-route" id="include-route"
-						class="custom" /> <label for="include-route">Routes</label> <input
-						type="checkbox" name="include-sensor" id="include-sensor"
-						class="custom" /> <label for="include-sensor">Sensors</label> <input
-						type="checkbox" name="include-roster" id="include-roster"
-						class="custom" /> <label for="include-roster">Roster</label> <input
-						type="checkbox" name="include-frame" id="include-frame"
-						class="custom" /> <label for="include-frame">Frames</label> <input
-						type="checkbox" name="include-memory" id="include-memory"
-						class="custom" /> <label for="include-memory">Memory
-						Variables</label> <input type="checkbox" name="include-metadata"
-						id="include-metadata" class="custom" /> <label
-						for="include-metadata">Metadata</label>
-				</fieldset>
+			<div>
+				<a href='/' rel='external'><img src='/dist/resources/logo.gif'
+					style='float: right;' width=160px height=135px alt='JMRI logo'> </a>
+				<h2>JMRI Mobile</h2>
+				This is an alpha version of a browser-based UI for controlling a layout with JMRI.
 			</div>
-			The screens are currently formatted for a mobile (phone-sized), but
-			should work on any WebKit-capable web browser. (Chrome, FireFox 4,
-			Safari, IE 9, etc.)<br /> Use the Settings to include only those
-			items you're interested in controlling. Includes:
-			<ul>
-				<li>turnout, route, power and sensor control,</li>
-				<li>links to open InControl throttles for each roster entry</li>
-				<li>clickable panels for each open JMRI window</li>
-			</ul>
+			<div id='includes' data-role="fieldcontain" class="ui-field-contain ui-body ui-br" >
+					<fieldset data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-vertical" >
+					<div role="heading">Include in app?:</div>
+					<div class="ui-controlgroup-controls">
+						<input type="checkbox" name="include-power"   id="include-power" /> <label for="include-power">Power</label> 
+						<input type="checkbox" name="include-turnout" id="include-turnout" /> <label for="include-turnout">Turnouts</label> 
+						<input type="checkbox" name="include-route" id="include-route" /> <label for="include-route">Routes</label>
+						<input type="checkbox" name="include-sensor" id="include-sensor" /> <label for="include-sensor">Sensors</label> 
+						<input type="checkbox" name="include-roster" id="include-roster" /> <label for="include-roster">Roster</label> 
+						<input type="checkbox" name="include-frame" id="include-frame"	 /> <label for="include-frame">Frames</label>
+						<input type="checkbox" name="include-memory" id="include-memory"  /> <label for="include-memory">Memory Variables</label> 
+						<input type="checkbox" name="include-metadata" id="include-metadata" /> <label for="include-metadata">Metadata</label>
+					</div>
+					</fieldset>
+			</div>
+			<div>
+				The screens are currently formatted for a mobile (phone-sized), but
+				should work on any WebKit-capable web browser. (Chrome, FireFox 4,
+				Safari, IE 9, etc.)<br /> Use the Settings to include only those
+				items you're interested in controlling. Includes:
+				<ul>
+					<li>turnout, route, power and sensor control,</li>
+					<li>links to open InControl throttles for each roster entry</li>
+					<li>clickable panels for each open JMRI window</li>
+				</ul>
+			</div>
 		</div>
 
 		<div id='footer' class='ui-bar' data-role='footer' data-id='footer' data-position='fixed'>
