@@ -422,11 +422,12 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 						boolean foundLoc = false;	// when true, found the rs's location in the route
 						boolean foundDes = false;
 						for (int i=0; i<routeSequence.size(); i++){
-							RouteLocation location = route.getLocationById(routeSequence.get(i));
-							if (rs.getLocationName().equals(location.getName())){
+							RouteLocation rlocation = route.getLocationById(routeSequence.get(i));
+							if (rs.getLocationName().equals(rlocation.getName())){
+								rl = rlocation;
 								foundLoc = true;
 							}
-							if (rs.getDestinationName().equals(location.getName()) && foundLoc){
+							if (rs.getDestinationName().equals(rlocation.getName()) && foundLoc){
 								foundDes = true;
 								break;
 							}
@@ -555,6 +556,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 					// set new pick up and set out locations
 					setRouteLocationAndDestination(rs, train, rl, rd);
+					log.debug("Add rolling stock ("+rs.toString()+") to train "+train.getName()+" route pick up "+rl.getId()+" drop "+rd.getId());
 				}
 			}		
 		}
