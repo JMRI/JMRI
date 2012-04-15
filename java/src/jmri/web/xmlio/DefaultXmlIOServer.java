@@ -2,16 +2,22 @@
 
 package jmri.web.xmlio;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import jmri.*;
+import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
-import jmri.web.miniserver.MiniServerManager;
-
-import org.jdom.*;
-
-import java.io.File;
-import java.util.*;
+import jmri.web.server.WebServerManager;
+import org.jdom.Attribute;
+import org.jdom.DataConversionException;
+import org.jdom.Element;
 
 /**
  * Default implementation for XML I/O.
@@ -36,9 +42,9 @@ import java.util.*;
  */
 public class DefaultXmlIOServer implements XmlIOServer {
 	
-	static ArrayList<String> disallowedFrames = new ArrayList<String>(
-			Arrays.asList(MiniServerManager.miniServerPreferencesInstance().getDisallowedFrames().split("\n")));
+	static List<String> disallowedFrames = WebServerManager.getWebServerPreferences().getDisallowedFrames();
 
+    @Override
     public Element immediateRequest(Element e) throws JmriException {
 
         // process panels and frames as the same elements through 2.14.
@@ -225,28 +231,49 @@ public class DefaultXmlIOServer implements XmlIOServer {
                         }
                     }
                 }
-            // identical to "frame" above until after 2.14
+
             } else if (type.equals("panel")) {
-            	// list frames, (open JMRI windows)
-            	List<JmriJFrame> framesList = JmriJFrame.getFrameList();
-            	int framesNumber = framesList.size();
-            	for (int i = 0; i < framesNumber; i++) { //add all non-blank titles to list
-            		JmriJFrame iFrame = framesList.get(i);
-            		String frameTitle = iFrame.getTitle();
-            		if (!frameTitle.equals("") && !disallowedFrames.contains(frameTitle)) {
-                            Element n = new Element((useAttributes) ? "panel" : "item");
-                            if (useAttributes) {
-                                n.setAttribute("name", frameTitle.replaceAll(" ", "%20"));
-                                n.setAttribute("userName", frameTitle);
-                            } else {
-                        n.addContent(new Element("type").addContent("panel"));
-                        //get rid of spaces in name
-            			n.addContent(new Element("name").addContent(frameTitle.replaceAll(" ","%20")));
-            			n.addContent(new Element("userName").addContent(frameTitle));
-                            }
-            			e.addContent(n);
-            		}
-            	}
+
+            	// list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor)
+                List<JmriJFrame> frames = JmriJFrame.getFrameList(ControlPanelEditor.class);
+                for (JmriJFrame frame : frames) {
+                    if (frame.getAllowInFrameServlet()) {
+                        String title = ((JmriJFrame) ((Editor)frame).getTargetPanel().getTopLevelAncestor()).getTitle();
+                        if (!title.equals("") && !disallowedFrames.contains(title)) {
+                            Element n = new Element("panel");
+                            n.setAttribute("name", "ControlPanel/" + title.replaceAll(" ", "%20"));
+                            n.setAttribute("userName", title);
+                            n.setAttribute("type", "Control Panel");
+                            e.addContent(n);
+                        }
+                    }
+                }
+                frames = JmriJFrame.getFrameList(PanelEditor.class);
+                for (JmriJFrame frame : frames) {
+                    if (frame.getAllowInFrameServlet()) {
+                        String title = ((JmriJFrame) ((Editor)frame).getTargetPanel().getTopLevelAncestor()).getTitle();
+                        if (!title.equals("") && !disallowedFrames.contains(title)) {
+                            Element n = new Element("panel");
+                            n.setAttribute("name", "Panel/" + title.replaceAll(" ", "%20"));
+                            n.setAttribute("userName", title);
+                            n.setAttribute("type", "Panel");
+                            e.addContent(n);
+                        }
+                    }
+                }
+                frames = JmriJFrame.getFrameList(LayoutEditor.class);
+                for (JmriJFrame frame : frames) {
+                    if (frame.getAllowInFrameServlet()) {
+                        String title = ((JmriJFrame) ((Editor)frame).getTargetPanel().getTopLevelAncestor()).getTitle();
+                        if (!title.equals("") && !disallowedFrames.contains(title)) {
+                            Element n = new Element("panel");
+                            n.setAttribute("name", "Layout/" + title.replaceAll(" ", "%20"));
+                            n.setAttribute("userName", title);
+                            n.setAttribute("type", "Layout");
+                            e.addContent(n);
+                        }
+                    }
+                }
 
             } else if (type.equals("power")) {
             	// add a power element
@@ -271,6 +298,11 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     }
                     e.addContent(n);
                 }
+            } else if (type.equals("railroad")) {
+                // return the Web Server's Railroad name preference
+                Element n = new Element("railroad");
+                n.setAttribute("name", WebServerManager.getWebServerPreferences().getRailRoadName());
+                e.addContent(n);
             } else log.warn("Unexpected type in list element: " + type);
         }
         
@@ -314,6 +346,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 // nothing to process
             } else if (type.equals("panel")) {
                 // nothing to process
+            } else if (type.equals("railroad")) {
+                // nothing to process
             } else if (item.getName().equals("item")) {
                 log.warn("Unexpected type in item: " + type);
             } else {
@@ -324,6 +358,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
         return e;
     }
 
+    @Override
     public void monitorRequest(Element e, XmlIORequestor r) throws JmriException {
         
         // check for differences now
@@ -393,7 +428,6 @@ public class DefaultXmlIOServer implements XmlIOServer {
         }
         
         r.monitorReply(e);
-        return;
     }
     
     boolean checkValues(Element e) {
@@ -832,18 +866,21 @@ public class DefaultXmlIOServer implements XmlIOServer {
         ThrottleContext tc = map.get(address);
         if (tc == null) {
             // first request does the allocation
-            InstanceManager.throttleManagerInstance()
-                .requestThrottle(address,new ThrottleListener() {
-                    public void notifyThrottleFound(DccThrottle t) {
-                        log.debug("callback for throttle");
-                        // store back into context
-                        ThrottleContext tc = new ThrottleContext();
-                        tc.throttle = t;
-                        Integer address = Integer.valueOf( ((DccLocoAddress)t.getLocoAddress()).getNumber());
-                        map.put(address, tc);
-                    }
-                    public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason){
-                    }
+            InstanceManager.throttleManagerInstance().requestThrottle(address, new ThrottleListener() {
+
+                @Override
+                public void notifyThrottleFound(DccThrottle t) {
+                    log.debug("callback for throttle");
+                    // store back into context
+                    ThrottleContext tc = new ThrottleContext();
+                    tc.throttle = t;
+                    Integer address = Integer.valueOf(((DccLocoAddress) t.getLocoAddress()).getNumber());
+                    map.put(address, tc);
+                }
+
+                @Override
+                public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
+                }
             });
         } else {
             log.debug("process active throttle");
@@ -1236,6 +1273,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
         Element request;
         XmlIORequestor requestor;
         
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             boolean changed = checkValues(request);
             

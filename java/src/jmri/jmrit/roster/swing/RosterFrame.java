@@ -86,6 +86,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
     public RosterFrame(String name, File menubarFile, File toolbarFile) {
         super(name, menubarFile, toolbarFile);
+        this.allowInFrameServlet = false;
         this.setBaseTitle(name);
         this.buildWindow();
     }

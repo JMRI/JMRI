@@ -52,7 +52,7 @@ public class TabbedPreferences extends AppConfigBase {
     JTabbedPane connectionPanel = new JTabbedPane();
     jmri.jmrit.throttle.ThrottlesPreferencesPane throttlePreferences;
     jmri.jmrit.withrottle.WiThrottlePrefsPanel withrottlePrefsPanel;
-    jmri.web.miniserver.MiniServerPrefsPanel miniserverPrefsPanel;
+    jmri.web.server.WebServerPreferencesPanel webServerPreferences;
     
     ArrayList<JmrixConfigPane> connectionTabInstance = new ArrayList<JmrixConfigPane>();
     ArrayList<preferencesCatItems> preferencesArray = new ArrayList<preferencesCatItems>();
@@ -83,7 +83,7 @@ public class TabbedPreferences extends AppConfigBase {
         
         preferencesArray.add(new preferencesCatItems("WITHROTTLE", rb.getString("MenuWiThrottle")));
 
-        preferencesArray.add(new preferencesCatItems("MINISERVER", rb.getString("MenuMiniServer")));
+        preferencesArray.add(new preferencesCatItems("WEBSERVER", rb.getString("MenuWebServer")));
     }
     
     static final int UNINITIALISED = 0x00;
@@ -106,7 +106,7 @@ public class TabbedPreferences extends AppConfigBase {
 
         throttlePreferences = new jmri.jmrit.throttle.ThrottlesPreferencesPane();
         withrottlePrefsPanel = new jmri.jmrit.withrottle.WiThrottlePrefsPanel();
-        miniserverPrefsPanel = new jmri.web.miniserver.MiniServerPrefsPanel();
+        webServerPreferences = new jmri.web.server.WebServerPreferencesPanel();
         list = new JList();
         listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(100, 100));
@@ -130,7 +130,7 @@ public class TabbedPreferences extends AppConfigBase {
                     invokeSaveOptions();
                     throttlePreferences.jbSaveActionPerformed(e);
                     withrottlePrefsPanel.storeValues();
-                    miniserverPrefsPanel.storeValues();
+                    webServerPreferences.storeValues();
                     apps.FileLocationPane.save();
                     savePressed();
                 }
@@ -205,10 +205,9 @@ public class TabbedPreferences extends AppConfigBase {
             log.error("Error in trying to add WiThrottle preferences " + ex.toString());
         }
         try {
-            addItem("MINISERVER", rb.getString("MenuMiniServer"), null, null,
-                miniserverPrefsPanel, false, null);
+            addItem("WEBSERVER", rb.getString("MenuWebServer"), null, null, webServerPreferences, false, null);
         } catch (Exception ex) {
-            log.error("Error in trying to add Mini Webserver preferences " + ex.toString());
+            log.error("Error trying to add Web Server preferences " + ex.toString());
         }
         for(int x=0; x<preferencesArray.size(); x++){
             detailpanel.add(preferencesArray.get(x).getPanel(), preferencesArray.get(x).getPrefItem());

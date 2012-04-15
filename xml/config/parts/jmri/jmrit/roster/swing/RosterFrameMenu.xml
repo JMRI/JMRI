@@ -195,8 +195,8 @@
     <node name="Start WiThrottle Server">
         <adapter>jmri.jmrit.withrottle.WiThrottleCreationAction</adapter>
     </node>
-    <node name="Start Mini WebServer">
-        <adapter>jmri.web.miniserver.MiniServerAction</adapter>
+    <node name="Start Web Server">
+        <adapter>jmri.web.server.WebServerAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
     <node name="Recreate Roster Index">

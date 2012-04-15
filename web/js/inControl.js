@@ -31,7 +31,7 @@ var $imageSettings = "images/Settings.png";
 var $imageClose = "images/Close.png";
 var $imageTrash = "images/Trash.png";
 var $xmlRosterPath = "/prefs/roster.xml";
-var $xmlioPath = "/xmlio";
+var $xmlioPath = "/xmlio/";
 var $imagesPath = "/web/images/";
 var $userImagesPath = "/prefs/resources/";
 var allUrlParameters;

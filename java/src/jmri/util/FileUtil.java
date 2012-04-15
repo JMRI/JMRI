@@ -3,6 +3,9 @@ package jmri.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import jmri.jmrit.XmlFile;
+import org.apache.log4j.Logger;
 
 /**
  * Common utility methods for working with Files. <P> We needed a place to
@@ -29,6 +32,9 @@ public class FileUtil {
      */
     static public final char SEPARATOR = '/';
 
+    static private String programPath = null;
+    static private String homePath = System.getProperty("user.home") + File.separator;
+    
     /**
      * Find the resource file corresponding to a name. There are five cases:
      * <UL> <LI> Starts with "resource:", treat the rest as a pathname relative
@@ -73,7 +79,7 @@ public class FileUtil {
             }
             // assume this is a relative path from the
             // preferences directory
-            filename = jmri.jmrit.XmlFile.userFileLocationDefault() + filename;
+            filename = XmlFile.userFileLocationDefault() + filename;
             if (log.isDebugEnabled()) {
                 log.debug("load from user preferences file: " + filename);
             }
@@ -92,7 +98,7 @@ public class FileUtil {
             }
             // assume this is a relative path from the
             // preferences directory
-            filename = jmri.jmrit.XmlFile.userFileLocationDefault() + "resources" + File.separator + filename;
+            filename = FileUtil.getPreferencesPath() + "resources" + File.separator + filename;
             if (log.isDebugEnabled()) {
                 log.debug("load from user preferences file: " + filename);
             }
@@ -109,7 +115,7 @@ public class FileUtil {
             }
             // assume this is a relative path from the
             // user.home directory
-            filename = System.getProperty("user.home") + File.separator + filename;
+            filename = FileUtil.getHomePath() + filename;
             if (log.isDebugEnabled()) {
                 log.debug("load from user preferences file: " + filename);
             }
@@ -130,35 +136,41 @@ public class FileUtil {
         if (path == null || path.length() == 0) {
             return null;
         }
-        if (path.startsWith(RESOURCE)) {
-            return getAbsoluteFilename(getPortableFilename(getExternalFilename(path)));
-        } else if (path.startsWith(PROGRAM)) {
+        if (log.isDebugEnabled()) {
+            log.debug("Getting path for: " + path);
+            log.debug("PROGRAM: " + FileUtil.getProgramPath());
+            log.debug("PREFERENCES: " + FileUtil.getPreferencesPath());
+            log.debug("HOME: " + FileUtil.getHomePath());
+        }
+        if (path.startsWith(PROGRAM)) {
             if (new File(path.substring(PROGRAM.length())).isAbsolute()) {
                 path = path.substring(PROGRAM.length());
             } else {
-                String program = ClassLoader.getSystemClassLoader().getResource(".").getPath() + File.separator;
-                path = path.replaceFirst(PROGRAM, program);
+                path = path.replaceFirst(PROGRAM, Matcher.quoteReplacement(FileUtil.getProgramPath()));
             }
         } else if (path.startsWith(PREFERENCES)) {
             if (new File(path.substring(PREFERENCES.length())).isAbsolute()) {
                 path = path.substring(PREFERENCES.length());
             } else {
-                path = path.replaceFirst(PREFERENCES, jmri.jmrit.XmlFile.userFileLocationDefault() + File.separator);
+                path = path.replaceFirst(PREFERENCES, Matcher.quoteReplacement(FileUtil.getPreferencesPath()));
             }
         } else if (path.startsWith(HOME)) {
             if (new File(path.substring(HOME.length())).isAbsolute()) {
                 path = path.substring(HOME.length());
             } else {
-                path = path.replaceFirst(HOME, System.getProperty("user.home") + File.separator);
+                path = path.replaceFirst(HOME, Matcher.quoteReplacement(FileUtil.getHomePath()));
             }
-        } else if (path.startsWith(FILE)) {
+        } else if (path.startsWith(RESOURCE) || path.startsWith(FILE)) {
             return getAbsoluteFilename(getPortableFilename(getExternalFilename(path)));
         } else if (!new File(path).isAbsolute()) {
             return null;
         }
         try {
             // if path cannot be converted into a canonical path, return null
-            return new File(path).getCanonicalPath();
+            if (log.isDebugEnabled()) {
+                log.debug("Using " + path);
+            }
+            return new File(path.replace(SEPARATOR, File.separatorChar)).getCanonicalPath();
         } catch (IOException ex) {
             log.warn("Can not convert " + path + " into a usable filename.", ex);
             return null;
@@ -179,24 +191,19 @@ public class FileUtil {
         String filename = file.getAbsolutePath();
 
         // compare full path name to see if same as preferences
-        String preferencePrefix = jmri.jmrit.XmlFile.userFileLocationDefault();
-
-        if (filename.startsWith(preferencePrefix)) {
-            return PREFERENCES + filename.substring(preferencePrefix.length(), filename.length()).replace(File.separatorChar, SEPARATOR);
+        if (filename.startsWith(getPreferencesPath())) {
+            return PREFERENCES + filename.substring(getPreferencesPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
         }
 
         // now check for relative to program dir
-        String progname = (new File("").getAbsolutePath() + File.separator);
-        if (filename.startsWith(progname)) {
-            return PROGRAM + filename.substring(progname.length(), filename.length()).replace(File.separatorChar, SEPARATOR);
+        if (filename.startsWith(getProgramPath())) {
+            return PROGRAM + filename.substring(getProgramPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
         }
 
         // compare full path name to see if same as home directory
         // do this last, in case preferences or program dir are in home directory
-        String homePrefix = System.getProperty("user.home") + File.separator;
-
-        if (filename.startsWith(homePrefix)) {
-            return HOME + filename.substring(homePrefix.length(), filename.length()).replace(File.separatorChar, SEPARATOR);
+        if (filename.startsWith(getHomePath())) {
+            return HOME + filename.substring(getHomePath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
         }
 
         return filename.replace(File.separatorChar, SEPARATOR);   // absolute, and doesn't match; not really portable...
@@ -224,6 +231,26 @@ public class FileUtil {
             return getPortableFilename(new File(filename));
         }
     }
+
+    static public String getHomePath() {
+        return homePath;
+    }
+
+    static public String getPreferencesPath() {
+        return XmlFile.userFileLocationDefault();
+    }
+
+    static public String getProgramPath() {
+        if (programPath == null) {
+            try {
+                programPath = (new File(".")).getCanonicalPath() + File.separator;
+            } catch (IOException ex) {
+                log.error("Unable to get JMRI program directory.", ex);
+            }
+        }
+        return programPath;
+    }
+
     // initialize logging
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FileUtil.class.getName());
+    static private Logger log = Logger.getLogger(FileUtil.class.getName());
 }

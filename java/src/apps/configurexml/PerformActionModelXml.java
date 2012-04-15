@@ -54,6 +54,11 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
     public boolean load(Element e) {
     	boolean result = true;
         String className = e.getAttribute("name").getValue();
+        // rename MiniServerAction to WebServerAction
+        if (className.equals("jmri.web.miniserver.MiniServerAction")) {
+            className = "jmri.web.server.WebServerAction";
+            log.debug("Updating MiniServerAction to WebServerAction");
+        }
         log.debug("Invoke Action from"+className);
         try {
             Action action = (Action)Class.forName(className).newInstance();

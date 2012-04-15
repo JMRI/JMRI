@@ -190,3 +190,23 @@ div#frame_image_wrapper:hover {
 	voice-family: "\"}\"";
 	voice-family: inherit; /* Tantek's hack */
 }
+
+/* navigation */
+
+	ul.snav {/* section navigation or short navigation, whichever you prefer */
+		margin: 0.7em 10%;
+		padding: .2em;
+		text-align: center;
+	}
+	ul.snav li {
+		list-style-type: none;
+	}
+	ul.snav > li {
+		display: inline;
+	}
+	ul.snav > li:before {
+		content: " | ";
+	}
+	ul.snav > li:first-child:before {
+		content: "";
+	}
