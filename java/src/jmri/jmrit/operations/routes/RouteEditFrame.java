@@ -108,14 +108,12 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	    
 	    // name panel
     	JPanel pName = new JPanel();
-    	//pName.setMinimumSize(new Dimension(180,50));
     	pName.setLayout(new GridBagLayout());
     	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));  	
 		addItem(pName, routeNameTextField, 0, 0);
 		
 		// comment panel
 	   	JPanel pComment = new JPanel();
-	   	//pComment.setMinimumSize(new Dimension(300,50));
     	pComment.setLayout(new GridBagLayout());
     	pComment.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment"))); 	
 		addItem(pComment, commentTextField, 0, 0);

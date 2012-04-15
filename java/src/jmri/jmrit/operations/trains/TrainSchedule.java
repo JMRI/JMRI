@@ -50,7 +50,10 @@ public class TrainSchedule {
 	}
 
 	public void setComment(String comment) {
+		String old = _comment;
 		_comment = comment;
+		if (!old.equals(comment))
+			firePropertyChange("AddTrainScheduleComment", old, comment);
 	}
 
 	public String getComment() {
@@ -60,11 +63,13 @@ public class TrainSchedule {
 	public void addTrainId(String id){
 		if (!_trainIds.contains(id)){
 			_trainIds.add(id);
+			firePropertyChange("AddTrainId", null, id);
 		}
 	}
 	
 	public void removeTrainId(String id){
 		_trainIds.remove(id);
+		firePropertyChange("RemoveTrainId", id, null);
 	}
 	
 	public boolean containsTrainId(String id){
@@ -121,8 +126,7 @@ public class TrainSchedule {
 					+ e.getNewValue());
 	}
 
-	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(
-			this);
+	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
 	public synchronized void addPropertyChangeListener(
 			java.beans.PropertyChangeListener l) {
@@ -135,10 +139,10 @@ public class TrainSchedule {
 	}
 
 	protected void firePropertyChange(String p, Object old, Object n) {
+		TrainManagerXml.instance().setDirty(true);
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(TrainSchedule.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainSchedule.class.getName());
 
 }

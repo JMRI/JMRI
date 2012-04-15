@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationTrackPair;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.setup.Control;
@@ -25,7 +24,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * three or more trains using any combination of interchanges and yards.
  * Currently the router is limited to five trains.
  * 
- * @author Daniel Boudreau Copyright (C) 2010, 2011
+ * @author Daniel Boudreau Copyright (C) 2010, 2011, 2012
  * @version $Revision$
  */
 
@@ -33,9 +32,9 @@ public class Router extends TrainCommon {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.router.JmritOperationsRouterBundle");
 	
-	private List<LocationTrackPair> firstLocationTrackPairs = new ArrayList<LocationTrackPair>();
-	private List<LocationTrackPair> lastLocationTrackPairs = new ArrayList<LocationTrackPair>();
-	private List<LocationTrackPair> otherLocationTrackPairs = new ArrayList<LocationTrackPair>();
+	private List<Track> firstLocationTracks = new ArrayList<Track>();
+	private List<Track> lastLocationTracks = new ArrayList<Track>();
+	private List<Track> otherLocationTracks = new ArrayList<Track>();
 	
 	private String _status = "";
 	private Train _train = null;
@@ -73,12 +72,6 @@ public class Router extends TrainCommon {
 		_status = Track.OKAY;
 		_train = train;
 		_buildReport = buildReport;
-		// Only keep train if car is departing staging
-		/*
-		if (!car.getTrack().getLocType().equals(Track.STAGING))
-			_train = null;
-		 */
-
 		log.debug("Car ("+car.toString()+") at location ("+car.getLocationName()+", "+car.getTrackName()+") " +
 				"next destination ("+car.getNextDestinationName()+", "+car.getNextDestTrackName()+") car routing begins");
 		if (_train != null)
@@ -161,9 +154,9 @@ public class Router extends TrainCommon {
 			return true;
 		} else if (Setup.isCarRoutingEnabled()) {
 			log.debug("Car ("+car.toString()+") next destination ("+car.getNextDestinationName()+") is not served by a single train");
-			firstLocationTrackPairs.clear();
-			lastLocationTrackPairs.clear();
-			otherLocationTrackPairs.clear();
+			firstLocationTracks.clear();
+			lastLocationTracks.clear();
+			otherLocationTracks.clear();
 			// first try using 2 trains and an interchange track to route the car
 			if (setCarDestinationInterchange(car)){
 				log.debug("Was able to find route via interchange ("+car.getDestinationName()+", "+car.getDestinationTrackName()+") for car ("+car.toString()+")");
@@ -242,14 +235,14 @@ public class Router extends TrainCommon {
 			log.debug("Car routing is disabled");
 			return false;
 		}
-		Car ts = clone(car);	// reload
-		log.debug("Find an "+trackType+" track for car ("+car.toString()+") final destination ("+ts.getDestinationName()+", "+ts.getDestinationTrackName()+")");
+		Car testCar = clone(car);	// reload
+		log.debug("Find an "+trackType+" track for car ("+car.toString()+") final destination ("+testCar.getDestinationName()+", "+testCar.getDestinationTrackName()+")");
 
 		// save car's location, track, destination, and destination track
-		Location saveLocation = ts.getLocation();
-		Track saveTrack = ts.getTrack();
-		Location saveDestation = ts.getDestination();
-		Track saveDestTrack = ts.getDestinationTrack();
+		Location saveLocation = testCar.getLocation();
+		Track saveTrack = testCar.getTrack();
+		Location saveDestation = testCar.getDestination();
+		Track saveDestTrack = testCar.getDestinationTrack();
 		
 		// setup the test car with the save location and destination
 		if (saveTrack == null){
@@ -263,33 +256,33 @@ public class Router extends TrainCommon {
 			List<String> tracks = location.getTrackIdsByNameList(trackType);	// restrict to yards, interchanges, or staging
 			for (int j=0; j<tracks.size(); j++){
 				Track track = location.getTrackById(tracks.get(j));
-				if (ts.testLocation(location, track).equals(Track.OKAY)){
+				if (testCar.testLocation(location, track).equals(Track.OKAY)){
 					if (debugFlag)
 						log.debug("Found "+trackType+" track ("+location.getName()+", "+track.getName()+") for car ("+car.toString()+")");
 					// test to see if there's a train that can deliver the car to its final location
-					ts.setLocation(location);
-					ts.setTrack(track);
-					Train nextTrain = TrainManager.instance().getTrainForCar(ts);
+					testCar.setLocation(location);
+					testCar.setTrack(track);
+					Train nextTrain = TrainManager.instance().getTrainForCar(testCar);
 					if (nextTrain != null){
 						if (debugFlag)
-							log.debug("Train ("+nextTrain.getName()+") can service car ("+car.toString()+") from "+trackType+" ("+ts.getLocationName()+", "+ts.getTrackName()+") to final destination ("+ts.getDestinationName()+", "+ts.getDestinationTrackName()+")");
-						// Save the "last" location/track pairs for later use
-						lastLocationTrackPairs.add(new LocationTrackPair(location, track));
-						ts.setLocation(saveLocation); // restore car's location and track
-						ts.setTrack(saveTrack);	
-						ts.setDestination(location); // forward test car to this intermediate destination and track
-						ts.setDestinationTrack(track);
+							log.debug("Train ("+nextTrain.getName()+") can service car ("+car.toString()+") from "+trackType+" ("+testCar.getLocationName()+", "+testCar.getTrackName()+") to final destination ("+testCar.getDestinationName()+", "+testCar.getDestinationTrackName()+")");
+						// Save the "last" tracks for later use
+						lastLocationTracks.add(track);
+						testCar.setLocation(saveLocation); // restore car's location and track
+						testCar.setTrack(saveTrack);	
+						testCar.setDestination(location); // forward test car to this intermediate destination and track
+						testCar.setDestinationTrack(track);
 						// test to see if car can be transported from current location to this yard or interchange
-						Train firstTrain = TrainManager.instance().getTrainForCar(ts);
-						String status = ts.testDestination(location, track);
+						Train firstTrain = TrainManager.instance().getTrainForCar(testCar);
+						String status = testCar.testDestination(location, track);
 						// Is there a "first" train for this car out of staging?
-						if (_train != null && !_train.servicesCar(ts) && car.getTrack().getLocType().equals(Track.STAGING))
+						if (_train != null && !_train.servicesCar(testCar) && car.getTrack().getLocType().equals(Track.STAGING))
 							firstTrain = null;	// can't use this train
 						if (status.equals(Track.OKAY) && firstTrain != null){
-							addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("RouterRoute2ForCar"),new Object[]{car.toString(),car.getLocationName(),ts.getDestinationName(),car.getNextDestinationName()}));
+							addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("RouterRoute2ForCar"),new Object[]{car.toString(),car.getLocationName(),testCar.getDestinationName(),car.getNextDestinationName()}));
 							// only set car's destination if specific train can service car
-							if (_train != null && !_train.servicesCar(ts)){
-								addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("TrainDoesNotServiceCar"),new Object[]{_train.getName(), car.toString(), (ts.getDestinationName()+", "+ts.getDestinationTrackName())}));
+							if (_train != null && !_train.servicesCar(testCar)){
+								addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("TrainDoesNotServiceCar"),new Object[]{_train.getName(), car.toString(), (testCar.getDestinationName()+", "+testCar.getDestinationTrackName())}));
 								return true;
 							}
 							// check to see if intermediate track is staging
@@ -301,8 +294,8 @@ public class Router extends TrainCommon {
 							return true;
 						}
 						// restore car's destination
-						ts.setDestination(saveDestation);
-						ts.setDestinationTrack(saveDestTrack);
+						testCar.setDestination(saveDestation);
+						testCar.setDestinationTrack(saveDestTrack);
 					} else if (debugFlag){
 						log.debug("Could not find a train to service car from "+trackType+" ("+location.getName()+", "+track.getName()+") to destination ("+car.getNextDestinationName()+")");
 					}
@@ -312,28 +305,25 @@ public class Router extends TrainCommon {
 		return false;	// couldn't find two trains to service this car
 	}
 
-	// Note that "last" set of location/track pairs was loaded by
-	// setCarDestinationTwoTrains.
-	// The following code builds two additional sets of location/track pairs called
-	// "first" and "other".
-	// "first" is the first set of location/track pairs that the car can reach
-	// by a single train.
-	// "last" is the last set of location/track pairs that services the cars
-	// final destination.
-	// And "other" is the remaining sets of location/track pairs that are not "first" or
-	// "last".
-	// The code then tries to connect the "first" and "last" track pair sets
-	// with a train that can service the car.
-	// If successful, that would be a three train route for the car. If not
-	// successful, the code than tries combinations of "first", "other" and "last"
-	// location/track pairs to create a route for the car.
-	// 
+	/*
+	 * Note that "last" set of location/tracks was loaded by
+	 * setCarDestinationTwoTrains. The following code builds two additional sets
+	 * of location/tracks called "first" and "other". "first" is the first set
+	 * of location/tracks that the car can reach by a single train. "last" is
+	 * the last set of location/tracks that services the cars final destination.
+	 * And "other" is the remaining sets of location/tracks that are not "first"
+	 * or "last". The code then tries to connect the "first" and "last"
+	 * location/track sets with a train that can service the car. If successful,
+	 * that would be a three train route for the car. If not successful, the
+	 * code than tries combinations of "first", "other" and "last"
+	 * location/tracks to create a route for the car.
+	 */ 
 	private boolean setCarDestinationMultipleTrains(Car car){
-		if (lastLocationTrackPairs.size()== 0)
+		if (lastLocationTracks.size()== 0)
 			return false;
 		log.debug("Multiple train routing begins");
-		Car ts = clone(car);	//reload
-		// build the "first" and "other" location/track pairs
+		Car testCar = clone(car);	//reload
+		// build the "first" and "other" location/tracks
 		List<String> locations = LocationManager.instance().getLocationsByIdList();
 		for (int i=0; i<locations.size(); i++){
 			Location location = LocationManager.instance().getLocationById(locations.get(i));
@@ -343,25 +333,25 @@ public class Router extends TrainCommon {
 				if ((track.getLocType().equals(Track.INTERCHANGE)
 						|| track.getLocType().equals(Track.YARD) 
 						|| (enable_staging && track.getLocType().equals(Track.STAGING)))
-						&& ts.testLocation(location, track).equals(Track.OKAY)) {
+						&& testCar.testLocation(location, track).equals(Track.OKAY)) {
 					if (debugFlag)
 						log.debug("Found "+track.getLocType()+" track ("+location.getName()+", "+track.getName()+") for car ("+car.toString()+")");
 					// test to see if there's a train that can deliver the car to this location
-					ts.setDestination(location);
-					ts.setDestinationTrack(track);
-					Train firstTrain = TrainManager.instance().getTrainForCar(ts);
+					testCar.setDestination(location);
+					testCar.setDestinationTrack(track);
+					Train firstTrain = TrainManager.instance().getTrainForCar(testCar);
 					// Is there a train assigned to carry this car out of staging?
-					if (_train != null && !_train.servicesCar(ts) && car.getTrack().getLocType().equals(Track.STAGING))
+					if (_train != null && !_train.servicesCar(testCar) && car.getTrack().getLocType().equals(Track.STAGING))
 						firstTrain = null;
 					if (firstTrain != null){
 						if (debugFlag)
-							log.debug("Train ("+firstTrain.getName()+") can service car ("+car.toString()+") from "+track.getLocType()+" ("+ts.getLocationName()+", "+ts.getTrackName()+") to next destination ("+ts.getDestinationName()+", "+ts.getDestinationTrackName()+")");
-						firstLocationTrackPairs.add(new LocationTrackPair(location, track));
+							log.debug("Train ("+firstTrain.getName()+") can service car ("+car.toString()+") from "+track.getLocType()+" ("+testCar.getLocationName()+", "+testCar.getTrackName()+") to next destination ("+testCar.getDestinationName()+", "+testCar.getDestinationTrackName()+")");
+						firstLocationTracks.add(track);
 					} else {
 						// don't add to other if already in last location list
 						boolean match = false;
-						for (int k=0; k<lastLocationTrackPairs.size(); k++){
-							LocationTrackPair ltp = lastLocationTrackPairs.get(k);
+						for (int k=0; k<lastLocationTracks.size(); k++){
+							Track ltp = lastLocationTracks.get(k);
 							if (ltp.getLocation().equals(location)){
 								match = true;
 								break;
@@ -369,100 +359,100 @@ public class Router extends TrainCommon {
 						} if (!match){
 							if (debugFlag)
 								log.debug("Adding location ("+location.getName()+", "+track.getName()+") to other locations");
-							otherLocationTrackPairs.add(new LocationTrackPair(location, track));
+							otherLocationTracks.add(track);
 						}
 					}
 				}
 			}
 		}
-		// location track pairs that could be the very next destination for the car
-		for (int i=0; i<firstLocationTrackPairs.size(); i++){
-			LocationTrackPair ltp = firstLocationTrackPairs.get(i);
-			log.debug("First location ("+ltp.getLocation().getName()+", "+ltp.getTrack().getName()+") can service car ("+car.toString()+")");
+		// tracks that could be the very next destination for the car
+		for (int i=0; i<firstLocationTracks.size(); i++){
+			Track ltp = firstLocationTracks.get(i);
+			log.debug("First location ("+ltp.getLocation().getName()+", "+ltp.getName()+") can service car ("+car.toString()+")");
 		}
-		// location track pairs that could be the next to last destination for the car
-		for (int i=0; i<lastLocationTrackPairs.size(); i++){
-			LocationTrackPair ltp = lastLocationTrackPairs.get(i);
-			log.debug("Last location ("+ltp.getLocation().getName()+", "+ltp.getTrack().getName()+") can service car ("+car.toString()+")");
+		// tracks that could be the next to last destination for the car
+		for (int i=0; i<lastLocationTracks.size(); i++){
+			Track ltp = lastLocationTracks.get(i);
+			log.debug("Last location ("+ltp.getLocation().getName()+", "+ltp.getName()+") can service car ("+car.toString()+")");
 		}
-		// location track pairs that are not the first or the last
-		for (int i=0; i<otherLocationTrackPairs.size(); i++){
-			LocationTrackPair ltp = otherLocationTrackPairs.get(i);
-			log.debug("Other location ("+ltp.getLocation().getName()+", "+ltp.getTrack().getName()+") may be needed to service car ("+car.toString()+")");
+		// tracks that are not the first or the last
+		for (int i=0; i<otherLocationTracks.size(); i++){
+			Track ltp = otherLocationTracks.get(i);
+			log.debug("Other location ("+ltp.getLocation().getName()+", "+ltp.getName()+") may be needed to service car ("+car.toString()+")");
 		}
-		if (firstLocationTrackPairs.size()>0){
+		if (firstLocationTracks.size()>0){
 			log.debug("Try to find route using 3 trains");
-			for (int i=0; i<firstLocationTrackPairs.size(); i++){
-				LocationTrackPair fltp = firstLocationTrackPairs.get(i);
-				ts.setLocation(fltp.getLocation()); // set car to this location and track
-				ts.setTrack(fltp.getTrack());
-				for (int j=0; j<lastLocationTrackPairs.size(); j++){
-					LocationTrackPair lltp = lastLocationTrackPairs.get(j);
-					ts.setDestination(lltp.getLocation());	// set car to this destination and track
-					ts.setDestinationTrack(lltp.getTrack());
+			for (int i=0; i<firstLocationTracks.size(); i++){
+				Track fltp = firstLocationTracks.get(i);
+				testCar.setLocation(fltp.getLocation()); // set car to this location and track
+				testCar.setTrack(fltp);
+				for (int j=0; j<lastLocationTracks.size(); j++){
+					Track lltp = lastLocationTracks.get(j);
+					testCar.setDestination(lltp.getLocation());	// set car to this destination and track
+					testCar.setDestinationTrack(lltp);
 					// does a train service these two locations?
-					Train middleTrain = TrainManager.instance().getTrainForCar(ts);
+					Train middleTrain = TrainManager.instance().getTrainForCar(testCar);
 					if (middleTrain != null){
 						// check to see if track is staging
-						if (ts.getTrack().getLocType().equals(Track.STAGING))
-							ts.setTrack(null);	// don't specify which track in staging is to be used, decide later
-						log.debug("Found 3 train route, setting car destination ("+ts.getLocationName()+", "+ts.getTrackName()+")");
-						addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("RouterRoute3ForCar"),new Object[]{car.toString(),car.getLocationName(),ts.getLocationName(),ts.getDestinationName(),car.getNextDestinationName()}));
+						if (testCar.getTrack().getLocType().equals(Track.STAGING))
+							testCar.setTrack(null);	// don't specify which track in staging is to be used, decide later
+						log.debug("Found 3 train route, setting car destination ("+testCar.getLocationName()+", "+testCar.getTrackName()+")");
+						addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("RouterRoute3ForCar"),new Object[]{car.toString(),car.getLocationName(),testCar.getLocationName(),testCar.getDestinationName(),car.getNextDestinationName()}));
 						// only set car's destination if specific train can service car
 						Car ts2 = clone(car);
 						ts2.setDestination(fltp.getLocation());
-						ts2.setDestinationTrack(fltp.getTrack());
+						ts2.setDestinationTrack(fltp);
 						if (_train != null && !_train.servicesCar(ts2)){
-							addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("TrainDoesNotServiceCar"),new Object[]{_train.getName(), car.toString(), (fltp.getLocation().getName()+", "+fltp.getTrack().getName())}));
+							addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("TrainDoesNotServiceCar"),new Object[]{_train.getName(), car.toString(), (fltp.getLocation().getName()+", "+fltp.getName())}));
 							return true;
 						}
-						String status = car.setDestination(ts.getLocation(), ts.getTrack());
+						String status = car.setDestination(testCar.getLocation(), testCar.getTrack());
 						if (status.equals(Track.OKAY)){							
 							return true;	// done 3 train routing
 						} else {
-							log.debug("Could not set car ("+car.toString()+") destination ("+ts.getLocation()+", "+ts.getTrack()+") status "+status);
+							log.debug("Could not set car ("+car.toString()+") destination ("+testCar.getLocation()+", "+testCar.getTrack()+") status "+status);
 						}
 					}
 				}
 			}
 			log.debug("Using 3 trains to route car was unsuccessful");
 			log.debug("Try to find route using 4 trains");
-			for (int i=0; i<firstLocationTrackPairs.size(); i++){
-				LocationTrackPair fltp = firstLocationTrackPairs.get(i);			
-				for (int j=0; j<otherLocationTrackPairs.size(); j++){
-					LocationTrackPair mltp = otherLocationTrackPairs.get(j);
-					ts.setLocation(fltp.getLocation()); // set car to this location and track
-					ts.setTrack(fltp.getTrack());
-					ts.setDestination(mltp.getLocation()); // set car to this destination and track
-					ts.setDestinationTrack(mltp.getTrack());
+			for (int i=0; i<firstLocationTracks.size(); i++){
+				Track fltp = firstLocationTracks.get(i);			
+				for (int j=0; j<otherLocationTracks.size(); j++){
+					Track mltp = otherLocationTracks.get(j);
+					testCar.setLocation(fltp.getLocation()); // set car to this location and track
+					testCar.setTrack(fltp);
+					testCar.setDestination(mltp.getLocation()); // set car to this destination and track
+					testCar.setDestinationTrack(mltp);
 					// does a train service these two locations?
-					Train middleTrain2 = TrainManager.instance().getTrainForCar(ts);
+					Train middleTrain2 = TrainManager.instance().getTrainForCar(testCar);
 					if (middleTrain2 != null){
-						log.debug("Train 2 ("+middleTrain2.getName()+") services car from "+ts.getLocationName()+" to "+ts.getDestinationName()+", "+ts.getDestinationTrackName());										
-						for (int k=0; k<lastLocationTrackPairs.size(); k++){
-							LocationTrackPair lltp = lastLocationTrackPairs.get(k);
-							ts.setLocation(mltp.getLocation()); // set car to this location and track
-							ts.setTrack(mltp.getTrack());
-							ts.setDestination(lltp.getLocation()); // set car to this destination and track
-							ts.setDestinationTrack(lltp.getTrack());
-							Train middleTrain3 = TrainManager.instance().getTrainForCar(ts);
+						log.debug("Train 2 ("+middleTrain2.getName()+") services car from "+testCar.getLocationName()+" to "+testCar.getDestinationName()+", "+testCar.getDestinationTrackName());										
+						for (int k=0; k<lastLocationTracks.size(); k++){
+							Track lltp = lastLocationTracks.get(k);
+							testCar.setLocation(mltp.getLocation()); // set car to this location and track
+							testCar.setTrack(mltp);
+							testCar.setDestination(lltp.getLocation()); // set car to this destination and track
+							testCar.setDestinationTrack(lltp);
+							Train middleTrain3 = TrainManager.instance().getTrainForCar(testCar);
 							if (middleTrain3 != null){
-								log.debug("Train 3 ("+middleTrain3.getName()+") services car from "+ts.getLocationName()+" to "+ts.getDestinationName()+", "+ts.getDestinationTrackName());
+								log.debug("Train 3 ("+middleTrain3.getName()+") services car from "+testCar.getLocationName()+" to "+testCar.getDestinationName()+", "+testCar.getDestinationTrackName());
 								addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("RouterRoute4ForCar"),new Object[]{car.toString(),car.getLocationName(),fltp.getLocation(),mltp.getLocation().getName(),lltp.getLocation().getName(),car.getNextDestinationName()}));
 								// only set car's destination if specific train can service car
 								Car ts2 = clone(car);
 								ts2.setDestination(fltp.getLocation());
-								ts2.setDestinationTrack(fltp.getTrack());
+								ts2.setDestinationTrack(fltp);
 								if (_train != null && !_train.servicesCar(ts2)){
-									addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("TrainDoesNotServiceCar"),new Object[]{_train.getName(), car.toString(), (fltp.getLocation().getName()+", "+fltp.getTrack().getName())}));
+									addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("TrainDoesNotServiceCar"),new Object[]{_train.getName(), car.toString(), (fltp.getLocation().getName()+", "+fltp.getName())}));
 									return true;
 								}
 								// check to see if track is staging
-								Track track = fltp.getTrack();
-								if (track.getLocType().equals(Track.STAGING))
-									track = null;	// don't specify which track in staging is to be used, decide later
+								Track track = null;	// don't specify track if staging
+								if (!fltp.getLocType().equals(Track.STAGING))
+									track = fltp;
 								String status = car.setDestination(fltp.getLocation(), track);
-								log.debug("Found 4 train route, setting car destination ("+fltp.getLocation().getName()+", "+fltp.getTrack().getName()+")");					
+								log.debug("Found 4 train route, setting car destination ("+fltp.getLocation().getName()+", "+fltp.getName()+")");					
 								if (status.equals(Track.OKAY)){
 									//log.info("Route for car ("+car.toString()+") "+car.getLocationName()+"->"+car.getDestinationName()+"->"+mltp.getLocation().getName()+"->"+lltp.getLocation().getName()+"->"+car.getNextDestinationName());
 									return true;	// done 4 train routing
@@ -476,53 +466,53 @@ public class Router extends TrainCommon {
 			}
 			log.debug("Using 4 trains to route car was unsuccessful");
 			log.debug("Try to find route using 5 trains");
-			for (int i=0; i<firstLocationTrackPairs.size(); i++){
-				LocationTrackPair fltp = firstLocationTrackPairs.get(i);			
-				for (int j=0; j<otherLocationTrackPairs.size(); j++){
-					LocationTrackPair mltp1 = otherLocationTrackPairs.get(j);
-					ts.setLocation(fltp.getLocation()); // set car to this location and track
-					ts.setTrack(fltp.getTrack());
-					ts.setDestination(mltp1.getLocation()); // set car to this destination and track
-					ts.setDestinationTrack(mltp1.getTrack());
+			for (int i=0; i<firstLocationTracks.size(); i++){
+				Track fltp = firstLocationTracks.get(i);			
+				for (int j=0; j<otherLocationTracks.size(); j++){
+					Track mltp1 = otherLocationTracks.get(j);
+					testCar.setLocation(fltp.getLocation()); // set car to this location and track
+					testCar.setTrack(fltp);
+					testCar.setDestination(mltp1.getLocation()); // set car to this destination and track
+					testCar.setDestinationTrack(mltp1);
 					// does a train service these two locations?
-					Train middleTrain2 = TrainManager.instance().getTrainForCar(ts);
+					Train middleTrain2 = TrainManager.instance().getTrainForCar(testCar);
 					if (middleTrain2 != null){		
-						log.debug("Train 2 ("+middleTrain2.getName()+") services car from "+ts.getLocationName()+" to "+ts.getDestinationName()+", "+ts.getDestinationTrackName());										
-						for (int k=0; k<otherLocationTrackPairs.size(); k++){
-							LocationTrackPair mltp2 = otherLocationTrackPairs.get(k);
-							ts.setLocation(mltp1.getLocation()); // set car to this location and track
-							ts.setTrack(mltp1.getTrack());
-							ts.setDestination(mltp2.getLocation()); // set car to this destination and track
-							ts.setDestinationTrack(mltp2.getTrack());
+						log.debug("Train 2 ("+middleTrain2.getName()+") services car from "+testCar.getLocationName()+" to "+testCar.getDestinationName()+", "+testCar.getDestinationTrackName());										
+						for (int k=0; k<otherLocationTracks.size(); k++){
+							Track mltp2 = otherLocationTracks.get(k);
+							testCar.setLocation(mltp1.getLocation()); // set car to this location and track
+							testCar.setTrack(mltp1);
+							testCar.setDestination(mltp2.getLocation()); // set car to this destination and track
+							testCar.setDestinationTrack(mltp2);
 							// does a train service these two locations?
-							Train middleTrain3 = TrainManager.instance().getTrainForCar(ts);
+							Train middleTrain3 = TrainManager.instance().getTrainForCar(testCar);
 							if (middleTrain3 != null){
-								log.debug("Train 3 ("+middleTrain3.getName()+") services car from "+ts.getLocationName()+" to "+ts.getDestinationName()+", "+ts.getDestinationTrackName());										
-								for (int n=0; n<lastLocationTrackPairs.size(); n++){
-									LocationTrackPair lltp = lastLocationTrackPairs.get(n);
-									ts.setLocation(mltp2.getLocation()); // set car to this location and track
-									ts.setTrack( mltp2.getTrack());
-									ts.setDestination(lltp.getLocation()); // set car to this destination and track
-									ts.setDestinationTrack(lltp.getTrack());
+								log.debug("Train 3 ("+middleTrain3.getName()+") services car from "+testCar.getLocationName()+" to "+testCar.getDestinationName()+", "+testCar.getDestinationTrackName());										
+								for (int n=0; n<lastLocationTracks.size(); n++){
+									Track lltp = lastLocationTracks.get(n);
+									testCar.setLocation(mltp2.getLocation()); // set car to this location and track
+									testCar.setTrack( mltp2);
+									testCar.setDestination(lltp.getLocation()); // set car to this destination and track
+									testCar.setDestinationTrack(lltp);
 									// does a train service these two locations?
-									Train middleTrain4 = TrainManager.instance().getTrainForCar(ts);
+									Train middleTrain4 = TrainManager.instance().getTrainForCar(testCar);
 									if (middleTrain4 != null){
-										log.debug("Train 4 ("+middleTrain4.getName()+") services car from "+ts.getLocationName()+" to "+ts.getDestinationName()+", "+ts.getDestinationTrackName());	
+										log.debug("Train 4 ("+middleTrain4.getName()+") services car from "+testCar.getLocationName()+" to "+testCar.getDestinationName()+", "+testCar.getDestinationTrackName());	
 										addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("RouterRoute5ForCar"),new Object[]{car.toString(),car.getLocationName(),fltp.getLocation().getName(),mltp1.getLocation().getName(),mltp2.getLocation().getName(),lltp.getLocation().getName(),car.getNextDestinationName()}));
 										// only set car's destination if specific train can service car
 										Car ts2 = clone(car);
 										ts2.setDestination(fltp.getLocation());
-										ts2.setDestinationTrack(fltp.getTrack());
+										ts2.setDestinationTrack(fltp);
 										if (_train != null && !_train.servicesCar(ts2)){
-											addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("TrainDoesNotServiceCar"),new Object[]{_train.getName(), car.toString(), (fltp.getLocation().getName()+", "+fltp.getTrack().getName())}));
+											addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("TrainDoesNotServiceCar"),new Object[]{_train.getName(), car.toString(), (fltp.getLocation().getName()+", "+fltp.getName())}));
 											return true;
 										}
 										// check to see if track is staging
-										Track track = fltp.getTrack();
-										if (track.getLocType().equals(Track.STAGING))
-											track = null;	// don't specify which track in staging is to be used, decide later
+										Track track = null;	// don't specify track if staging
+										if (!fltp.getLocType().equals(Track.STAGING))
+											track = fltp;
 										String status = car.setDestination(fltp.getLocation(), track);
-										log.debug("Found 5 train route, setting car destination ("+fltp.getLocation().getName()+", "+fltp.getTrack().getName()+")");			
+										log.debug("Found 5 train route, setting car destination ("+fltp.getLocation().getName()+", "+fltp.getName()+")");			
 										if (status.equals(Track.OKAY)){
 											//log.info("Route for car ("+car.toString()+") "+car.getLocationName()+"->"+car.getDestinationName()+"->"+mltp1.getLocation().getName()+"->"+mltp2.getLocation().getName()+"->"+lltp.getLocation().getName()+"->"+car.getNextDestinationName());
 											return true;	// done 5 train routing

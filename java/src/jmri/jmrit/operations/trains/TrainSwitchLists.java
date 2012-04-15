@@ -34,7 +34,6 @@ public class TrainSwitchLists extends TrainCommon {
 	/**
 	 * builds a switch list for a location
 	 * @param location The Location needing a switch list
-	 * @param newTrainsOnly When true, ignore trains that have already been added to the switch lists
 	 */
 	public void buildSwitchList(Location location){
 		// Append switch list data if not operating in real time

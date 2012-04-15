@@ -23,6 +23,7 @@ import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.jmrit.progsupport.ProgServiceModeComboBox;
 import jmri.jmrit.roster.*;
@@ -1039,7 +1040,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      *
      * @param dccAddress
      */
-    protected void selectLoco(int dccAddress) {
+    protected void selectLoco(int dccAddress, boolean isLong, int mfgId, int modelId) {
         // raise the button again
         //idloco.setSelected(false);
         // locate that loco
@@ -1053,7 +1054,44 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             log.debug("selectLoco found " + l.size() + " matches");
         }
         if (l.size() > 0) {
-            re = l.get(0);
+            if(l.size() > 1){
+                //More than one possible loco, so check long flag
+                List<RosterEntry> l2 = new ArrayList<RosterEntry>();
+                for(RosterEntry _re:l){
+                    if(_re.isLongAddress()==isLong){
+                        l2.add(_re);
+                    }
+                }
+                if(l2.size()==1){
+                    re=l2.get(0);
+                } else {
+                    if(l2.size()==0){
+                        l2 = l;
+                    }
+                    //Still more than one possible loco, so check against the decoder family
+                    List<RosterEntry> l3 = new ArrayList<RosterEntry>();
+                    List<DecoderFile> temp = DecoderIndexFile.instance().matchingDecoderList(null, null, ""+mfgId, ""+modelId, null, null);
+                    ArrayList<String> decoderFam = new ArrayList<String>();
+                    for(DecoderFile f:temp){
+                        if(!decoderFam.contains(f.getModel()))
+                            decoderFam.add(f.getModel());
+                    }
+                    for(RosterEntry _re:l2){
+                        if(decoderFam.contains(_re.getDecoderModel())){
+                            l3.add(_re);
+                        }
+                    }
+                    if(l3.size()==0){
+                        //Unable to determine the loco against the manufacture therefore will be unable to further identify against decoder.
+                        re = l2.get(0);
+                    } else {
+                        //We have no other options to match against so will return the first one we come across;
+                        re=l3.get(0);
+                    }
+                }
+            } else {
+                re = l.get(0);
+            }
             re.addPropertyChangeListener(rosterEntryUpdateListener);
             updateDetails();
             moveTableViewToSelected();
@@ -1192,7 +1230,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             @Override
             protected void done(int dccAddress) {
                 // if Done, updated the selected decoder
-                who.selectLoco(dccAddress);
+                who.selectLoco(dccAddress, !shortAddr, cv8val, cv7val);
             }
 
             @Override

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
@@ -24,6 +25,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 
@@ -273,19 +275,12 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		locationManager.addPropertyChangeListener(this);
 		manager.addPropertyChangeListener(this);
 
-		// set frame size and location for display
 		pack();
 		if (getWidth()<450)
 			setSize(450, getHeight());
 		if (getHeight()<500)
 			setSize(getWidth(), 500);
-		/* all JMRI window position and size are now saved
-		if (manager.getEditFrameSize()!= null)
-			setSize(manager.getEditFrameSize());
-		if (manager.getEditFramePosition()!= null){
-			setLocation(manager.getEditFramePosition());
-		}
-		*/
+		setMinimumSize(new Dimension(450, Control.panelHeight));
 		setVisible(true);	
 	}
 

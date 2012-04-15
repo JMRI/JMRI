@@ -171,7 +171,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
         _reporter = reporter;
         if (_reporter != null) {
             // attach listener
-            _reporter.addPropertyChangeListener(_sensorListener = new java.beans.PropertyChangeListener() {
+            _reporter.addPropertyChangeListener(_reporterListener = new java.beans.PropertyChangeListener() {
                 public void propertyChange(java.beans.PropertyChangeEvent e) { handleReporterChange(e); }
             });
 

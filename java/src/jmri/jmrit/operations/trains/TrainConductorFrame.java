@@ -473,6 +473,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 			setSize(600, getHeight());
 		if (getHeight()<Control.panelHeight)
 			setSize(getWidth(), Control.panelHeight);
+		setMinimumSize(new Dimension(600, Control.panelHeight));
 		setVisible(true);
     }
     

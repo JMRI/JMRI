@@ -256,7 +256,8 @@ public class Track {
 	public void setReservationFactor(int factor){
 		int old = _reservationFactor;
 		_reservationFactor = factor;
-		setDirtyAndFirePropertyChange("reservationFactor", old, factor);
+		if (old != factor)
+			setDirtyAndFirePropertyChange("reservationFactor", old, factor);
 	}
 	
 	public int getReservationFactor(){
@@ -271,7 +272,8 @@ public class Track {
 	public void setScheduleMode(int mode){
 		int old = _mode;
 		_mode = mode;
-		setDirtyAndFirePropertyChange("scheduleMode", old, mode);
+		if (old != mode)
+			setDirtyAndFirePropertyChange("scheduleMode", old, mode);
 	}
 	
 	/**
@@ -284,12 +286,14 @@ public class Track {
 	}
 	
 	public void setAlternativeTrack(Track track){
-		Track old = _location.getTrackById(_alternativeTrackId);
+		Track oldTrack = _location.getTrackById(_alternativeTrackId);
+		String old = _alternativeTrackId;
 		if (track != null)
 			_alternativeTrackId = track.getId();
 		else
 			_alternativeTrackId = "";
-		setDirtyAndFirePropertyChange("alternativeTrack", old, track);
+		if (!old.equals(_alternativeTrackId))
+			setDirtyAndFirePropertyChange("alternativeTrack", oldTrack, track);
 	}
 	
 	public Track getAlternativeTrack(){

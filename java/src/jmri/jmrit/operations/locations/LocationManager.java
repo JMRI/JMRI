@@ -91,8 +91,6 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     		location = new Location(Integer.toString(_id), name);
     		Integer oldSize = Integer.valueOf(_locationHashTable.size());
     		_locationHashTable.put(location.getId(), location);
-    	   	// set dirty
-        	LocationManagerXml.instance().setDirty(true);
     		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_locationHashTable.size()));
     	}
     	return location;
@@ -362,7 +360,11 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
-    protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
+    protected void firePropertyChange(String p, Object old, Object n) { 
+   	   	// set dirty
+    	LocationManagerXml.instance().setDirty(true);
+    	pcs.firePropertyChange(p,old,n);
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocationManager.class.getName());
 

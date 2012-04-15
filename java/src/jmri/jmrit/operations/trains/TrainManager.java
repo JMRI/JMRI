@@ -14,7 +14,6 @@ import org.jdom.Element;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.util.com.sun.TableSorter;
 
 /**
  * Manages trains.
@@ -25,8 +24,6 @@ import jmri.util.com.sun.TableSorter;
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
 	// Train frame attributes
-	private String _sortBy = "";				// Trains frame sort
-	private int _sortStatus = TableSorter.ASCENDING;	// Trains frame sort status
 	private String _trainAction = TrainsTableFrame.MOVE;	// Trains frame table button action
 	private boolean _buildMessages = true;	// when true, show build messages
 	private boolean _buildReport = false;		// when true, print/preview build reports
@@ -104,15 +101,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	firePropertyChange(PRINTPREVIEW_CHANGED_PROPERTY, old?"Preview":"Print", enable?"Preview":"Print");
     }
     
-    @Deprecated
-    public String getTrainsFrameSortBy (){
-    	return _sortBy;
-    }
-    @Deprecated
-    public int getTrainsFrameSortStatus (){
-    	return _sortStatus;
-    }
-    
     public String getTrainsFrameTrainAction (){
     	return _trainAction;
     }
@@ -144,7 +132,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public void setTrainSecheduleActiveId(String id){
     	String old = _trainScheduleActiveId;
     	_trainScheduleActiveId = id;
-    	firePropertyChange(ACTIVE_TRAIN_SCHEDULE_ID, old, id);
+    	if (!old.equals(id))
+    		firePropertyChange(ACTIVE_TRAIN_SCHEDULE_ID, old, id);
     }
     
     public String getTrainScheduleActiveId(){
@@ -576,11 +565,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	if (log.isDebugEnabled()) log.debug("ctor from element "+values);
     	Element e = values.getChild("trainOptions");
     	org.jdom.Attribute a;
-    	if (e != null){   		
-    		if ((a = e.getAttribute("sortBy")) != null)
-    			_sortBy = a.getValue();
-    		if ((a = e.getAttribute("sortStatus")) != null)
-    			_sortStatus = Integer.parseInt(a.getValue());
+    	if (e != null){
     		if ((a = e.getAttribute("buildMessages")) != null)
     			_buildMessages = a.getValue().equals("true");
     		if ((a = e.getAttribute("buildReport")) != null)
@@ -701,7 +686,10 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
-    private void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
+    private void firePropertyChange(String p, Object old, Object n) {
+    	TrainManagerXml.instance().setDirty(true);
+    	pcs.firePropertyChange(p,old,n);
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainManager.class.getName());
 

@@ -25,6 +25,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -33,7 +34,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 /**
  * Frame for user to place RollingStock on the layout
  * 
- * @author Dan Boudreau Copyright (C) 2010, 2011
+ * @author Dan Boudreau Copyright (C) 2010, 2011, 2012
  * @version $Revision$
  */
 
@@ -278,7 +279,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		// get notified if train combo box gets modified
 		trainManager.addPropertyChangeListener(this);
 				
-		setMinimumSize(new Dimension(500, getHeight()));
+		setMinimumSize(new Dimension(500, Control.panelHeight));
 	}
 	
 	public void load(RollingStock rs){
@@ -350,102 +351,93 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			// clear the rolling stock's location
 			locationBox.setSelectedItem("");
 			rs.setLocation(null, null);
-		}	
+		}
+		
+		loadTrain(rs);
+		
 		if (!changeDestination(rs))
 			return false;
 
-		if (!ignoreTrainCheckBox.isSelected()){
-			if (trainBox.getSelectedItem() == null || trainBox.getSelectedItem().equals("")){
-				if (rs.getTrain() != null){
-					// prevent rs from being picked up and delivered
-					setRouteLocationAndDestination(rs, rs.getTrain(), null, null);
+		if (!ignoreTrainCheckBox.isSelected()){	
+			Train train = rs.getTrain();
+			if (train != null){
+				// determine if train services this rs's type
+				if (!train.acceptsTypeName(rs.getType())){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(getRb().getString("rsTrainNotServType"), new Object[]{rs.getType(), train.getName()}),
+							getRb().getString("rsNotMove"),
+							JOptionPane.ERROR_MESSAGE);
+					return false;
 				}
-				rs.setTrain(null);
-			} else {
-				Train train = (Train)trainBox.getSelectedItem();
-				if (rs.getTrain() != null && !rs.getTrain().equals(train))
-					// prevent rs from being picked up and delivered
-					setRouteLocationAndDestination(rs, rs.getTrain(), null, null);
-				rs.setTrain(train);
-				if (train != null){
-					// determine if train services this rs's type
-					if (!train.acceptsTypeName(rs.getType())){
+				// determine if train services this rs's road
+				if (!train.acceptsRoadName(rs.getRoad())){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(getRb().getString("rsTrainNotServRoad"), new Object[]{rs.getRoad(), train.getName()}),
+							getRb().getString("rsNotMove"),
+							JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				// determine if train services this rs's built date
+				if (!train.acceptsBuiltDate(rs.getBuilt())){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(getRb().getString("rsTrainNotServBuilt"), new Object[]{rs.getBuilt(), train.getName()}),
+							getRb().getString("rsNotMove"),
+							JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				// determine if train services this rs's built date
+				if (!train.acceptsOwnerName(rs.getOwner())){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(getRb().getString("rsTrainNotServOwner"), new Object[]{rs.getOwner(), train.getName()}),
+							getRb().getString("rsNotMove"),
+							JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
+				// determine if train services the location and destination selected by user
+				rl = null;
+				rd = null;
+				if (rs.getLocation() != null){
+					Route route = train.getRoute();
+					if (route != null){
+						rl = route.getLastLocationByName(rs.getLocationName());
+						rd = route.getLastLocationByName(rs.getDestinationName());
+					}
+					if (rl == null){
 						JOptionPane.showMessageDialog(this,
-								MessageFormat.format(getRb().getString("rsTrainNotServType"), new Object[]{rs.getType(), train.getName()}),
+								MessageFormat.format(getRb().getString("rsLocNotServ"), new Object[]{rs.getLocationName(), train.getName()}),
 								getRb().getString("rsNotMove"),
 								JOptionPane.ERROR_MESSAGE);
 						return false;
 					}
-					// determine if train services this rs's road
-					if (!train.acceptsRoadName(rs.getRoad())){
+					if (rd == null && !rs.getDestinationName().equals("")){
 						JOptionPane.showMessageDialog(this,
-								MessageFormat.format(getRb().getString("rsTrainNotServRoad"), new Object[]{rs.getRoad(), train.getName()}),
+								MessageFormat.format(getRb().getString("rsDestNotServ"), new Object[]{rs.getDestinationName(), train.getName()}),
 								getRb().getString("rsNotMove"),
 								JOptionPane.ERROR_MESSAGE);
 						return false;
-					}
-					// determine if train services this rs's built date
-					if (!train.acceptsBuiltDate(rs.getBuilt())){
-						JOptionPane.showMessageDialog(this,
-								MessageFormat.format(getRb().getString("rsTrainNotServBuilt"), new Object[]{rs.getBuilt(), train.getName()}),
-								getRb().getString("rsNotMove"),
-								JOptionPane.ERROR_MESSAGE);
-						return false;
-					}
-					// determine if train services this rs's built date
-					if (!train.acceptsOwnerName(rs.getOwner())){
-						JOptionPane.showMessageDialog(this,
-								MessageFormat.format(getRb().getString("rsTrainNotServOwner"), new Object[]{rs.getOwner(), train.getName()}),
-								getRb().getString("rsNotMove"),
-								JOptionPane.ERROR_MESSAGE);
-						return false;
-					}
-					// determine if train services the location and destination selected by user
-					rl = null;
-					rd = null;
-					if (rs.getLocation() != null){
-						Route route = train.getRoute();
-						if (route != null){
-							rl = route.getLastLocationByName(rs.getLocationName());
-							rd = route.getLastLocationByName(rs.getDestinationName());
-						}
-						if (rl == null){
-							JOptionPane.showMessageDialog(this,
-									MessageFormat.format(getRb().getString("rsLocNotServ"), new Object[]{rs.getLocationName(), train.getName()}),
-									getRb().getString("rsNotMove"),
-									JOptionPane.ERROR_MESSAGE);
-							return false;
-						}
-						if (rd == null && !rs.getDestinationName().equals("")){
-							JOptionPane.showMessageDialog(this,
-									MessageFormat.format(getRb().getString("rsDestNotServ"), new Object[]{rs.getDestinationName(), train.getName()}),
-									getRb().getString("rsNotMove"),
-									JOptionPane.ERROR_MESSAGE);
-							return false;
-						} 
-						if (rd != null && route != null){
-							// now determine if destination is after location
-							List<String> routeSequence = route.getLocationsBySequenceList();
-							boolean foundLoc = false;	// when true, found the rs's location in the route
-							boolean foundDes = false;
-							for (int i=0; i<routeSequence.size(); i++){
-								RouteLocation location = route.getLocationById(routeSequence.get(i));
-								if (rs.getLocationName().equals(location.getName())){
-									foundLoc = true;
-								}
-								if (rs.getDestinationName().equals(location.getName()) && foundLoc){
-									foundDes = true;
-									break;
-								}
+					} 
+					if (rd != null && route != null){
+						// now determine if destination is after location
+						List<String> routeSequence = route.getLocationsBySequenceList();
+						boolean foundLoc = false;	// when true, found the rs's location in the route
+						boolean foundDes = false;
+						for (int i=0; i<routeSequence.size(); i++){
+							RouteLocation location = route.getLocationById(routeSequence.get(i));
+							if (rs.getLocationName().equals(location.getName())){
+								foundLoc = true;
+							}
+							if (rs.getDestinationName().equals(location.getName()) && foundLoc){
+								foundDes = true;
+								break;
+							}
 
-							}
-							if (!foundDes){
-								JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString("rsLocOrder"),
-										new Object[] {rs.getDestinationName(),	rs.getLocationName(),
-									train.getName() }), getRb().getString("rsNotMove"),
-									JOptionPane.ERROR_MESSAGE);
-								return false;
-							}
+						}
+						if (!foundDes){
+							JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString("rsLocOrder"),
+									new Object[] {rs.getDestinationName(),	rs.getLocationName(),
+								train.getName() }), getRb().getString("rsNotMove"),
+								JOptionPane.ERROR_MESSAGE);
+							return false;
 						}
 					}
 				}
@@ -485,6 +477,24 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		return true;
 	}
 	
+	private void loadTrain(RollingStock rs){
+		if (!ignoreTrainCheckBox.isSelected()){
+			if (trainBox.getSelectedItem() == null || trainBox.getSelectedItem().equals("")){
+				if (rs.getTrain() != null){
+					// prevent rs from being picked up and delivered
+					setRouteLocationAndDestination(rs, rs.getTrain(), null, null);
+				}
+				rs.setTrain(null);
+			} else {
+				Train train = (Train)trainBox.getSelectedItem();
+				if (rs.getTrain() != null && !rs.getTrain().equals(train))
+					// prevent rs from being picked up and delivered
+					setRouteLocationAndDestination(rs, rs.getTrain(), null, null);
+				rs.setTrain(train);
+			}
+		}
+	}
+	
 	private boolean changeDestination(RollingStock rs){
 		if (!ignoreDestinationCheckBox.isSelected()){
 			if (destinationBox.getSelectedItem() == null || destinationBox.getSelectedItem().equals("")) {
@@ -495,7 +505,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 						&& !trackDestinationBox.getSelectedItem().equals("")){
 					destTrack = (Track)trackDestinationBox.getSelectedItem();
 				}
-				if (destTrack != null && rs.getDestinationTrack() != destTrack && destTrack.getLocType().equals(Track.STAGING)){
+				if (destTrack != null && rs.getDestinationTrack() != destTrack && destTrack.getLocType().equals(Track.STAGING)
+						&& (rs.getTrain() == null || !rs.getTrain().isBuilt())){
 					log.debug ("Destination track ("+destTrack.getName()+") is staging");
 					JOptionPane.showMessageDialog(this,
 							getRb().getString("rsDoNotSelectStaging"),
@@ -518,7 +529,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	}
 	
 	protected void checkTrain(RollingStock rs){
-		// determine if train is built and car is part of train or want to be part of the train
+		// determine if train is built and car is part of train or wants to be part of the train
 		Train train = rs.getTrain(); 
 		if (train != null && train.isBuilt()){
 			if (_rs.getRouteLocation() != null && _rs.getRouteDestination() != null 
@@ -537,7 +548,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 					// prevent rs from being picked up and delivered
 					setRouteLocationAndDestination(rs, train, null, null);
 				}
-			} else if (rl != null && rd != null &&_rs.getDestinationTrack() != null ) {
+			} else if (rl != null && rd != null && _rs.getDestinationTrack() != null){
 				if (JOptionPane.showConfirmDialog(this, 
 						MessageFormat.format(getRb().getString("rsAddRsToTrain"), new Object[]{rs.toString(), train.getName()}),
 						getRb().getString("rsAddManuallyToTrain"),						
@@ -608,6 +619,9 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	
 	// location combo box
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		log.debug("Combobox action");
+		if (_disableComboBoxUpdate)
+			return;
 		if (ae.getSource()== locationBox){
 			updateLocation();
 		}

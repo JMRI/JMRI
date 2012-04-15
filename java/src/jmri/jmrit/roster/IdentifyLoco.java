@@ -21,9 +21,11 @@ import jmri.*;
  */
 abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
 
-    private boolean shortAddr;
+    protected boolean shortAddr;
     private int cv17val;
     private int cv18val;
+    protected int cv7val;
+    protected int cv8val;
     int address = -1;
 
     int originalMode = Programmer.NONE;
@@ -81,9 +83,11 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
     public boolean test3(int value) {
         // check if we're reading short or long
         if (shortAddr) {
-            // short - this is the address & we're done
+            // short - this is the address
             address = value;
-            return true;
+            statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("READMFG"));
+            readCV(7);
+            return false;
         } else {
             // long - need CV18 also
             cv17val = value;
@@ -92,24 +96,43 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
             return false;
         }
     }
-
+    
     public boolean test4(int value) {
         // only for long address
-        if (shortAddr) log.error("test4 routine reached in short address mode");
+        if (shortAddr) {
+            cv7val = value;
+            statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("READMFGVER"));
+            readCV(8);
+            return false;
+            
+        }
 
         // value is CV18, calculate address
         cv18val = value;
         address = (cv17val&0x3f)*256 + cv18val;
-        return true;
+        statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("READMFG"));
+        readCV(7);
+        return false;
     }
 
     public boolean test5(int value) {
-        log.error("unexpected step 5 reached with value: "+value);
-        return true;
+        if(shortAddr){
+            cv8val = value;
+            //We have read manufacturer and decoder version details
+            return true;
+        }
+        statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("READMFGVER"));
+        readCV(8);
+        cv7val = value;
+        return false;
     }
 
     public boolean test6(int value) {
-        log.error("unexpected step 6 reached with value: "+value);
+        if(shortAddr){
+            log.error("test4 routine reached in short address mode");
+            return true;
+        }
+        cv8val = value;
         return true;
     }
 

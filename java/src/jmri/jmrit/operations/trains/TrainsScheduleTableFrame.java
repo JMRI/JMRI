@@ -156,8 +156,6 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     		
     	pack();
     	
-    	setSortBy(trainManager.getTrainsFrameSortBy());
-    	
     	scheduleManager.addPropertyChangeListener(this);
     	addPropertyChangeTrainSchedules();
     }
@@ -203,17 +201,6 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     	}
     	schedule.revalidate();
 	}
-	
-	private void setSortBy(String sortBy){
-		if(sortBy.equals(TIME)){
-			sortByTime.setSelected(true);
-			trainsScheduleModel.setSort(trainsScheduleModel.SORTBYTIME);
-		}
-	}
-
-	public List<String> getSortByList(){
-		return trainsScheduleModel.getSelectedTrainList();
-	}
 
 	private void applySchedule(){
 		setActiveId();
@@ -241,7 +228,6 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	protected void storeValues(){
 		setActiveId();
 		saveTableDetails(trainsScheduleTable);
-		//trainManager.setTrainScheduleFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
 		trainManager.setTrainSecheduleActiveId(_activeId);
 		OperationsXml.save();
 	}
@@ -255,7 +241,6 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	}
 	
     public void dispose() {
-    	//trainManager.setTrainScheduleFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
     	scheduleManager.removePropertyChangeListener(this);
     	removePropertyChangeTrainSchedules();
     	trainsScheduleModel.dispose();

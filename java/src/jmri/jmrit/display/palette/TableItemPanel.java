@@ -134,17 +134,22 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             if (uname!=null && uname.trim().length()==0) {
                 uname = null;
             }
-            jmri.NamedBean bean = _model.addBean(sysname, uname);
-            if (bean!=null) {
-                int setRow = _model.getIndexOf(bean);
-                if (log.isDebugEnabled()) log.debug("addToTable: row= "+setRow+", bean= "+bean.getDisplayName());
-                _table.setRowSelectionInterval(setRow, setRow);
-                _scrollPane.getVerticalScrollBar().setValue(setRow*ROW_HEIGHT);
+            try {
+                jmri.NamedBean bean = _model.addBean(sysname, uname);
+                if (bean!=null) {
+                    int setRow = _model.getIndexOf(bean);
+                    if (log.isDebugEnabled()) log.debug("addToTable: row= "+setRow+", bean= "+bean.getDisplayName());
+                    _table.setRowSelectionInterval(setRow, setRow);
+                    _scrollPane.getVerticalScrollBar().setValue(setRow*ROW_HEIGHT);
+                }            	
+                _addTableDialog.dispose();
+            }catch(IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(_paletteFrame, ex.getMessage(), 
+                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);            	
             }
         }
         _sysNametext.setText("");
         _userNametext.setText("");
-        _addTableDialog.dispose();
     }
 
     /**

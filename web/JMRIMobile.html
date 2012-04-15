@@ -27,8 +27,8 @@
     <li id='name-${safeName}'><a class='ui-link-inherit' href='/frame/${name}.html' target='${safeName}'>${userName}</a></li>
 </script>
 <script id='rosterItemTemplate' type='text/html'>
-    <li class='ui-li-has-thumb' id='name-${safeName}'><a class='ui-link-inherit' href='/web/inControl.html?locoaddress=${dccAddress}&loconame=${name}' target='${safeName}'>
-        <img class='ui-li-thumb' src='/roster/${name}/icon?maxHeight=62' onerror="$(this).hide();"><h3 class='ui-li-heading'>${name}</h3></a></li>
+    <li class='ui-li-has-thumb' id='name-${safeName}'><a  class='ui-link-inherit' href='/web/inControl.html?locoaddress=${dccAddress}&loconame=${name}' target='${safeName}'>
+        <img class='ui-li-thumb' src='/prefs/resources/${imageIconName}?maxHeight=62' onerror='$(this).hide();'><h3 class='ui-li-heading'>${name}</h3></a></li>
 </script>
 
 <!-- Generic jquery templates for pages ==========================================-->

@@ -76,7 +76,6 @@ class SchedulesByLoadFrame extends OperationsFrame implements java.beans.Propert
 		// load the panel
     	JPanel p1 = new JPanel();
     	p1.setLayout(new BoxLayout(p1,BoxLayout.X_AXIS));
-    	//p1.setMinimumSize(new Dimension(100, 100));
     	
     	JPanel type = new JPanel();
     	type.setBorder(BorderFactory.createTitledBorder(rb.getString("Type")));

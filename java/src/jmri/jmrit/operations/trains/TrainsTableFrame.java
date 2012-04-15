@@ -249,7 +249,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
     		
     	pack();
-    	setSortBy();
     	
     	// listen for timetable changes
     	trainManager.addPropertyChangeListener(this);
@@ -354,18 +353,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		for (int i=0; i<trains.size(); i++){
 			Train train = trainManager.getTrainById(trains.get(i));
 			train.buildIfSelected();
-		}
-	}
-	
-	private void setSortBy(){
-		String sortBy = getSortBy();
-		if(sortBy.equals(TIME)){
-			showTime.setSelected(true);
-			trainsModel.setSort(trainsModel.SORTBYTIME);
-		}
-		if(sortBy.equals(ID)){
-			showId.setSelected(true);
-			trainsModel.setSort(trainsModel.SORTBYID);
 		}
 	}
 	

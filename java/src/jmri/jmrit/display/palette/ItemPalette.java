@@ -118,7 +118,7 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         return typeNode;
     }
 
-    static void loadIcons() {
+    static public void loadIcons() {
         if (_iconMaps==null) {
             _iconMaps = new HashMap <String, Hashtable<String, Hashtable<String, NamedIcon>>>();
             _indicatorTOMaps = 

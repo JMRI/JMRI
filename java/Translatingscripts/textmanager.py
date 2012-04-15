@@ -1,5 +1,4 @@
-# This Python class represents the text manager for the translation structure
-
+#!/usr/bin/pythonw 
 # This file is part of JMRI.
 #
 # JMRI is free software; you can redistribute it and/or modify it under 
@@ -11,36 +10,56 @@
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
 # for more details.
-
+#
 # Revision $Revision$
 # by Simon Ginsburg (simon.ginsburg at bluewin.ch)
+"""
+This module represents the text manager to be used with the translation utility
 
-import sys
+This module hast four major functionalities:
+- Access to the directory manager
+- Access to Default texts and files
+- Access to the text conversion utility 
+  from a human readible representation to UNICODE
+- Tests the validity and existance of a version number in a file
+   
+This modue consists of the public class textmanager and two nested local classes:
+- elementitem: Managment class for the confelement class
+  - confelement: Representation of the three forms ASCIIstring Normalstring UUCode
+
+These characters are stored in a file called Convertioncharacters.txt and are "=" separated.
+"""
+
 import os
-import re
-#import curses.ascii
 from directorymanager import directorymanager
 from singlefile import singlefile
 
 class textmanager:
     def __init__(self, dm):
-        # print "Init Textmanager"
+        """
+        At startup a directory manager will be handed over
+        """
         self.dm = dm
         self.Defaults = []
         self.NonTrans = []
         self.Convertible = False
-        #self.Verspat = re.compile(str("$"))
         self.elements = elementitem()
         self.getconf()
         if os.path.exists(self.dm.Defpath):
             self.addDefaults()
         
     def getstring(self, inputstring):
+        """
+        Convert input to string
+        """
         outputstring = str(inputstring)
         return outputstring
     
     def getversion(self, inputstring):
-    # Revision $Revision$
+        """
+        Return version string from file
+        """
+        # Revision $Revision$
         partlist = inputstring.rsplit("$",2)
         #print partlist
         revstring = str(partlist[1]).strip()
@@ -49,7 +68,25 @@ class textmanager:
         #print outputstring
         return outputstring
     
+    def isvalidversion(self, inputstring):
+        """
+        Check validity of the version string
+        
+        If no version number is detected the return value is -1
+        If an old CVS style version number is detected the return value is 0
+        """
+        # Revision $Revision$
+        if float(inputstring) < 0.0:
+            return -1
+        temp1 = str(inputstring).split(".", 1)
+        if len(temp1) > 1:
+            return 0
+        return 1
+      
     def getconf(self):
+        """
+        Load Configuration files 
+        """
         # print "GetConf"
         if os.path.exists(self.dm.Progpath):
             os.chdir(self.dm.Progpath)
@@ -67,6 +104,9 @@ class textmanager:
                 print ('File not fond: Convertioncharacters.txt')
 
     def addDefaults(self):
+        """
+        Load Defaults files 
+        """
         os.chdir(self.dm.Defpath)
         for filelistitem in os.listdir(self.dm.Defpath):
             if str(filelistitem).strip() == str("NonTranslatable.txt").strip():
@@ -86,6 +126,9 @@ class textmanager:
                 # print ('Default file ' + filelistitem +  ' read...')
                 
     def isDefaults(self, corename, seachstring):
+        """
+        Check if string is part of (non translatable) default values
+        """
         for filelistitem in self.Defaults:
             #print filelistitem.corename
             #print corename
@@ -95,9 +138,12 @@ class textmanager:
         return 0
 
     def isNonTrans(self, corename):
+        """
+        Check if filename belongs to non translatable list
+        """
         #print ('Calling function isNonTrans...')
         if not self.NonTrans is []:
-            print ('Searching: ' + corename)
+            #print ('Searching: ' + corename)
             if self.NonTrans.isitem(corename):
                 #print ('Found...')
                 return 1
@@ -106,11 +152,20 @@ class textmanager:
 
             
 class elementitem:
+    """
+    This internal class maintaines the character triples
+    """
     def __init__(self):
+        """
+        Initialize an empty class
+        """
         self.numels = 0
         self.elements = []
     
     def addelement(self, string):
+        """
+        Add a character triple
+        """
         temp = string.split("=")
         if len(temp) == 2:
             ASCIItemp = temp[0].strip()
@@ -122,11 +177,18 @@ class elementitem:
             UUCtemp = temp[2].strip()
         tempel = confelement(ASCIItemp,Normaltemp,UUCtemp)
         self.elements.append(tempel)
+        self.numels = self.numels + 1
 
 
 
 class confelement:
+    """
+    This internal class represents the character triples
+    """
     def __init__(self, ASCIIstring, Normalstring, UUCode):
+        """
+        At startup the triples are initialized
+        """
         self.ASCII = ASCIIstring
         self.Normal = Normalstring
         self.UUCode = UUCode

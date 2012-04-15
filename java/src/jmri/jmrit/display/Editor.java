@@ -2045,8 +2045,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return frame;
     }
 
-    public void makePalette() {}
-
     /********************* cleanup *************************/
 
     protected void removeFromTarget(Positionable l) {
