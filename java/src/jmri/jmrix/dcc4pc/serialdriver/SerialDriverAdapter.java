@@ -53,6 +53,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
                       +" "+activeSerialPort.isReceiveTimeoutEnabled());
 
             // purge contents, if any
+            serialStream = activeSerialPort.getInputStream();
             int count = serialStream.available();
             log.debug("input stream shows "+count+" bytes available");
             while ( count > 0) {
@@ -210,7 +211,6 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
 
     
     public void dispose(){
-        log.info("Disposed called");
         if (adaptermemo!=null)
             adaptermemo.dispose();
         adaptermemo = null;
