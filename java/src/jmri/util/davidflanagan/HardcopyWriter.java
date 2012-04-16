@@ -281,6 +281,8 @@ public class HardcopyWriter extends Writer {
                     continue;
                 }
                 else last_char_was_return = false;
+                
+                if (buffer[i] == '\f') pageBreak();
 
                 // if some other non-printing char, ignore it
                 if (Character.isWhitespace(buffer[i]) &&

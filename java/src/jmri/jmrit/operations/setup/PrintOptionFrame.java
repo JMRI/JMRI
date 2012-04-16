@@ -30,7 +30,7 @@ import jmri.jmrit.operations.OperationsFrame;
 /**
  * Frame for user edit of print options
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012
  * @version $Revision$
  */
 
@@ -74,6 +74,8 @@ public class PrintOptionFrame extends OperationsFrame{
     JCheckBox tabFormatCheckBox = new JCheckBox(rb.getString("TabFormat"));
     JCheckBox formatSwitchListCheckBox = new JCheckBox(rb.getString("SameAsManifest"));
     JCheckBox switchListRealTimeCheckBox = new JCheckBox(rb.getString("SwitchListRealTime"));
+    JCheckBox switchListAllTrainsCheckBox = new JCheckBox(rb.getString("SwitchListAllTrains"));
+    JCheckBox switchListPageCheckBox = new JCheckBox(rb.getString("SwitchListPage"));
     JCheckBox editManifestCheckBox = new JCheckBox(rb.getString("UseTextEditor"));
 	JCheckBox buildReportCheckBox = new JCheckBox(rb.getString("BuildReportEdit"));
 	JCheckBox printLocCommentsCheckBox = new JCheckBox(rb.getString("PrintLocationComments"));
@@ -421,10 +423,13 @@ public class PrintOptionFrame extends OperationsFrame{
 		pSwitchListOptions.setLayout(new GridBagLayout());
 		pSwitchListOptions.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListOptions")));		
 		addItem(pSwitchListOptions, switchListRealTimeCheckBox, 0, 0);
+		addItem(pSwitchListOptions, switchListAllTrainsCheckBox, 1, 0);
+		addItem(pSwitchListOptions, switchListPageCheckBox, 2, 0);
 
 		JPanel pEdit = new JPanel();
+		pEdit.setLayout(new GridBagLayout());
 		pEdit.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifestPreview")));
-		pEdit.add(editManifestCheckBox);
+		addItem(pEdit, editManifestCheckBox, 0, 0);
 			
 		// build report
 		JPanel pReport = new JPanel();
@@ -459,6 +464,8 @@ public class PrintOptionFrame extends OperationsFrame{
 		tabFormatCheckBox.setSelected(Setup.isTabEnabled());
 		formatSwitchListCheckBox.setSelected(Setup.isSwitchListFormatSameAsManifest());
 		switchListRealTimeCheckBox.setSelected(Setup.isSwitchListRealTime());
+		switchListAllTrainsCheckBox.setSelected(Setup.isSwitchListAllTrainsEnabled());
+		switchListPageCheckBox.setSelected(Setup.isSwitchListPagePerTrainEnabled());
 		printLocCommentsCheckBox.setSelected(Setup.isPrintLocationCommentsEnabled());
 		printRouteCommentsCheckBox.setSelected(Setup.isPrintRouteCommentsEnabled());
 		printLoadsEmptiesCheckBox.setSelected(Setup.isPrintLoadsAndEmptiesEnabled());
@@ -672,6 +679,8 @@ public class PrintOptionFrame extends OperationsFrame{
 			Setup.setTabEnabled(tabFormatCheckBox.isSelected());
 			Setup.setSwitchListFormatSameAsManifest(formatSwitchListCheckBox.isSelected());
 			Setup.setSwitchListRealTime(switchListRealTimeCheckBox.isSelected());
+			Setup.setSwitchListAllTrainsEnabled(switchListAllTrainsCheckBox.isSelected());
+			Setup.setSwitchListPagePerTrainEnabled(switchListPageCheckBox.isSelected());
 			Setup.setPrintLocationCommentsEnabled(printLocCommentsCheckBox.isSelected());
 			Setup.setPrintRouteCommentsEnabled(printRouteCommentsCheckBox.isSelected());
 			Setup.setPrintLoadsAndEmptiesEnabled(printLoadsEmptiesCheckBox.isSelected());
