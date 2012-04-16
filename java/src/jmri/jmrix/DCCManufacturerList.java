@@ -26,6 +26,7 @@ public class DCCManufacturerList {
     public static final String CMRI = "C/MRI";
     public static final String CTI = "CTI Electronics";
     public static final String EASYDCC = "Easy DCC";
+    public static final String DCC4PC = "DCC4PC";
     public static final String DCCSPEC = "DCC Specialties";
     public static final String FLEISHMANN = "Fleishmann";
     public static final String JMRI = "JMRI (Network)";
@@ -59,6 +60,7 @@ public class DCCManufacturerList {
           CTI,
           DIGITRAX,
           DCCSPEC,
+          DCC4PC,
           EASYDCC,
           ESU,
           FLEISHMANN,
@@ -99,6 +101,7 @@ public class DCCManufacturerList {
         if(System.equals(CMRI)) { return new jmri.jmrix.cmri.CMRIConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(CTI)) { return new jmri.jmrix.acela.AcelaConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(DIGITRAX)) { return new jmri.jmrix.loconet.LnConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(DCC4PC)) { return new jmri.jmrix.dcc4pc.Dcc4PcConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(EASYDCC)) { return new jmri.jmrix.easydcc.EasyDccConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(ESU)) { return new jmri.jmrix.ecos.EcosConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(FLEISHMANN)) { return new jmri.jmrix.loconet.Intellibox.FleischmannConnectionTypeList().getAvailableProtocolClasses(); }
