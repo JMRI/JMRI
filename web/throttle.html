@@ -74,7 +74,7 @@ function loadDoc(evt) {
         var elem = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
 
         try {
-            loadXMLDoc("/xmlio", "<xmlio><throttle><address>"
+            loadXMLDoc("/xmlio/", "<xmlio><throttle><address>"
                         +document.form.address.value
                         +"</address><speed>"
                         +document.form.speed.value

@@ -1,5 +1,4 @@
-#  This Python class is used to trigger file processing errors
-
+#!/usr/bin/pythonw 
 # This file is part of JMRI.
 #
 # JMRI is free software; you can redistribute it and/or modify it under 
@@ -11,11 +10,12 @@
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
 # for more details.
-
+#
 # Revision $Revision$
 # by Simon Ginsburg (simon.ginsburg at bluewin.ch)
-#
-
+"""
+This Python class is used to trigger file processing errors
+"""
 
 class Property_File_Error(Exception):
     def __init__(self, filename, linenum, tag):

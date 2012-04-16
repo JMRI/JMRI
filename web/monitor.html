@@ -76,7 +76,7 @@ function loadDoc(evt) {
         var elem = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
 
         try {
-            loadXMLDoc("/xmlio", "<xmlio><list><type>sensor</type></list><list><type>turnout</type></list></xmlio>");
+            loadXMLDoc("/xmlio/", "<xmlio><list><type>sensor</type></list><list><type>turnout</type></list></xmlio>");
         }
         catch(e) {
             var msg = (typeof e == "string") ? e : ((e.message) ? e.message : "Unknown Error");
@@ -149,7 +149,7 @@ function processReturn() {
     tbl.setAttribute("cellpadding", "3");    
     
     // send the next request
-    loadXMLDoc("/xmlio", req.responseText);
+    loadXMLDoc("/xmlio/", req.responseText);
 }
 
 

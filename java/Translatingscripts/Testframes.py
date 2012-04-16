@@ -1,5 +1,4 @@
-# This is the main function for the translation suite
-
+#!/usr/bin/pythonw 
 # This file is part of JMRI.
 #
 # JMRI is free software; you can redistribute it and/or modify it under 
@@ -11,15 +10,36 @@
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
 # for more details.
-
+#
 # Revision $Revision$
 # by Simon Ginsburg (simon.ginsburg at bluewin.ch)
+"""
+This is the main function and GUI for the translation utility
+
+The main class of this module is Mainframe_Translation where all GUI interactions are concentrated.
+
+There's a pdf document provided with this suite.
+Read "Translation_documentation.pdf" for details.
+
+This is the calling hierarchy of this module:
+Testframes: Mainframe_Translation
+  --> Property_File_Error
+  --> filestruct
+      --> directorymanager
+  --> singlefilestructure
+  --> os
+  --> os.path
+  --> Tkinter
+  
+Test version 1.2.1 contains these updates:
+- added internal documentation within the code
+- added a test function, which checks the existence 
+  and validity of the versin number string.
+- streamlined import funcion removing all obsolete statements
+"""
 
 import Tkinter
-import sys
 import os
-import re
-import curses.ascii
 from Property_File_Error import Property_File_Error
 from filestruct import filestruct
 from singlefilestructure import singlefilestructure
@@ -27,7 +47,10 @@ from singlefilestructure import singlefilestructure
 
 class Mainframe_Translation(Tkinter.Frame):
 
-    def Create_Filestructure(self):        
+    def Create_Filestructure(self):
+        """
+        This function builds up the internal file structure based on the original project structure.
+        """
         self.statustext.set("Creating structure...")
         self.update()
         try:
@@ -64,7 +87,10 @@ class Mainframe_Translation(Tkinter.Frame):
             self.statustext.set(str(e.filename + ": " + str(e.linenum)))
         self.update()
         
-    def Load_Filestructure(self):        
+    def Load_Filestructure(self): 
+        """
+        This function reloads the internal file structure from disk
+        """
         try:
             if os.path.exists(self.filestruct.dm.Refdir):
                 self.statustext.set("Loading structure...")
@@ -104,7 +130,10 @@ class Mainframe_Translation(Tkinter.Frame):
             self.statustext.set(str(e.filename + ": " + str(e.linenum)))
         self.update()
         
-    def Create_Stringlists(self):        
+    def Create_Stringlists(self): 
+        """
+        This function creates the default files to simplify ths initial defaults
+        """
         if self.filestruct == []:
             self.statustext.set("Failed! Load Data First!")
             self.update()
@@ -119,7 +148,10 @@ class Mainframe_Translation(Tkinter.Frame):
             self.statustext.set("Done!")
             self.update()
            
-    def Evallist(self):        
+    def Evallist(self):
+        """
+        This function activates or disables function buttons based on the language selection
+        """
         self.currlist = self.List.get(self.List.curselection())
         if not self.currlist == "":
             if not os.path.exists(self.filestruct.dm.Refdir):
@@ -134,9 +166,13 @@ class Mainframe_Translation(Tkinter.Frame):
                 self.Update["state"] = Tkinter.NORMAL
                 self.STAT["state"] = Tkinter.NORMAL
                 self.Export["state"] = Tkinter.NORMAL
+                self.Test1["state"] = Tkinter.NORMAL
         
         
-    def Exportfunction(self):        
+    def Exportfunction(self):
+        """
+        This function exports all new or improved files into the project structure
+        """
         #print ("Entering function Exportfunction...")
         if self.filestruct == []:
             self.statustext.set("Failed! Load Data First!")
@@ -155,9 +191,25 @@ class Mainframe_Translation(Tkinter.Frame):
                 self.filestruct.export(self.currlist)
             self.statustext.set("Done!")
             self.update()
-
+            
+    def Testfunction1(self):     
+        self.statustext.set("Starting...")
+        self.update()
+        self.filestruct.testfun1()
+        self.statustext.set("Done!")
+        self.update()
         
-    def Set_Reference_Data(self):        
+    def Testfunction2(self):        
+        self.statustext.set("Starting...")
+        self.update()
+        self.filestruct.testfun2()
+        self.statustext.set("Done!")
+        self.update()
+        
+    def Set_Reference_Data(self):
+        """
+        This function saves the current data as reference data
+        """
         if self.filestruct == []:
             self.statustext.set("Failed! Load Data First!")
             self.update()
@@ -175,6 +227,9 @@ class Mainframe_Translation(Tkinter.Frame):
             self.update()
 
     def Update_Data(self):
+        """
+        This function updates the internal file structure based on the internal data
+        """
         if self.filestruct == []:
             self.statustext.set("Failed! Load Data First!")
             self.update()
@@ -192,6 +247,9 @@ class Mainframe_Translation(Tkinter.Frame):
             self.update()
             
     def Importfunction(self):
+        """
+        This function imports new or improved translation documents
+        """
         if not os.path.exists(self.filestruct.dm.Currdir):
             self.statustext.set("Failed! Create Data First!")
             self.update()
@@ -228,6 +286,9 @@ class Mainframe_Translation(Tkinter.Frame):
                 self.update()
 
     def Output_Statistics(self):
+        """
+        This function creates the statistical information for the selected language
+        """
         if self.filestruct == []:
             self.statustext.set("Failed! Load Data First!")
             self.update()
@@ -237,17 +298,14 @@ class Mainframe_Translation(Tkinter.Frame):
         else:
             self.statustext.set("Starting...")
             self.update()
-            #if self.currlist.strip() == "All":
-            #    for actlang in self.filestruct.kinds:
-            #        if not actlang.strip() == '':
-            #            self.filestruct.getstat(actlang.strip())
-            #else:
-            #    self.filestruct.getstat(self.currlist)
             self.filestruct.getstat(self.currlist)
             self.statustext.set("Done!")
             self.update()
             
     def createWidgets(self):
+        """
+        This function defines all GUI elements and their pointers to callback functions
+        """
         self.Init = Tkinter.Button(self)
         self.Init["text"] = "Read File Structure"
         self.Init["command"] = self.Create_Filestructure
@@ -305,20 +363,32 @@ class Mainframe_Translation(Tkinter.Frame):
         self.Strlist["state"] = Tkinter.DISABLED
         self.Strlist.grid(row = 3, column = 1)
 
+        self.Test1 = Tkinter.Button(self)
+        self.Test1["text"] = "Version number test"
+        self.Test1["command"] =  self.Testfunction1
+        self.Test1["state"] = Tkinter.NORMAL
+        self.Test1.grid(row = 4, column = 0)
+
+        self.Test2 = Tkinter.Button(self)
+        self.Test2["text"] = "Encoding Tests"
+        self.Test2["command"] = self.Testfunction2
+        self.Test2["state"] = Tkinter.NORMAL
+        self.Test2.grid(row = 4, column = 1)
+
         self.OK = Tkinter.Button(self)
         self.OK["text"] = "OK"
         self.OK["command"] =  self.Evallist
-        self.OK.grid(row = 4, column = 2)
+        self.OK.grid(row = 5, column = 2)
 
         self.QUIT = Tkinter.Button(self)
         self.QUIT["text"] = "QUIT"
         self.QUIT["command"] =  self.quit
-        self.QUIT.grid(row = 4, column = 3)
+        self.QUIT.grid(row = 5, column = 3)
 
         self.statustext = Tkinter.StringVar()
         self.Status = Tkinter.Label(self,width=20,  textvariable=self.statustext)
         self.statustext.set("Init")
-        self.Status.grid(row = 4,  column = 0, columnspan=2, sticky="news")
+        self.Status.grid(row = 5,  column = 0, columnspan=2, sticky="news")
 
     def __init__(self, master=None):
         Tkinter.Frame.__init__(self, master)

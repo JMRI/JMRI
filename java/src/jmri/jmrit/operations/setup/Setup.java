@@ -211,7 +211,9 @@ public class Setup {
 	private static boolean manifestEditorEnabled = false;	// when true use text editor to view build report
 	private static boolean switchListSameManifest = true;	// when true switch list format is the same as the manifest
 	private static boolean manifestTruncated = false;		// when true, manifest is truncated if switch list is available
-	private static boolean switchListRealTime = true;			// when true switch list only show work for built trains
+	private static boolean switchListRealTime = true;		// when true switch list only show work for built trains
+	private static boolean switchListAllTrains = true;		// when true show all trains that visit the location
+	private static boolean switchListPage = false;			// when true each train has its own page
 	private static boolean buildReportEditorEnabled = false;	// when true use text editor to view build report
 	
 	private static boolean enableTrainIconXY = true;
@@ -598,6 +600,22 @@ public class Setup {
 	
 	public static boolean isSwitchListRealTime(){
 		return switchListRealTime;
+	}
+
+	public static void setSwitchListAllTrainsEnabled(boolean b){
+		switchListAllTrains = b;
+	}
+	
+	public static boolean isSwitchListAllTrainsEnabled(){
+		return switchListAllTrains;
+	}
+	
+	public static void setSwitchListPagePerTrainEnabled(boolean b){
+		switchListPage = b;
+	}
+	
+	public static boolean isSwitchListPagePerTrainEnabled(){
+		return switchListPage;
 	}
 
 	public static void setTruncateManifestEnabled(boolean b){
@@ -1417,6 +1435,8 @@ public class Setup {
        	e.addContent(values = new Element("switchList"));
        	values.setAttribute("sameAsManifest", isSwitchListFormatSameAsManifest()?"true":"false");
        	values.setAttribute("realTime", isSwitchListRealTime()?"true":"false");
+       	values.setAttribute("allTrains", isSwitchListAllTrainsEnabled()?"true":"false");
+       	values.setAttribute("pageMode", isSwitchListPagePerTrainEnabled()?"true":"false");
        	
       	e.addContent(values = new Element("switchListPickupCarFormat"));
       	values.setAttribute("prefix", getSwitchListPickupCarPrefix());
@@ -1745,6 +1765,16 @@ public class Setup {
         		String b = a.getValue();
         		if (log.isDebugEnabled()) log.debug("realTime: "+b);
         		setSwitchListRealTime(b.equals("true"));
+        	}
+           	if ((a = operations.getChild("switchList").getAttribute("allTrains"))!= null){
+        		String b = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("allTrains: "+b);
+        		setSwitchListAllTrainsEnabled(b.equals("true"));
+        	}
+          	if ((a = operations.getChild("switchList").getAttribute("pageMode"))!= null){
+        		String b = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("pageMode: "+b);
+        		setSwitchListPagePerTrainEnabled(b.equals("true"));
         	}
         }
         if (operations.getChild("switchListPickupCarFormat") != null){

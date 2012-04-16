@@ -2,9 +2,13 @@
 
 package jmri.implementation;
 
+import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.DccLocoAddress;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Enumeration;
 
 /**
  * Concrete implementation of the {@link jmri.RailCom} interface.
@@ -68,7 +72,6 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom{
             case LONG_ADDRESS:  return "Long";
             case CONSIST_ADDRESS:  return "Consist";
             default :           return "No Address";
-
         }
     }
     
@@ -90,7 +93,6 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom{
     }
     
     int actual_speed = -1;
-    
     
     public void setActualSpeed(int type){
         if(type==actual_speed)
@@ -183,6 +185,26 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom{
         return routing_no;
     }
     
+    int expectedCV = -1;
+    
+    public void setExpectedCv(int cv){
+        expectedCV = cv;
+    }
+    
+    public int getExpectedCv(){
+        return expectedCV;
+    }
+    
+    public void setCvValue(int value){
+        if(expectedCV == -1){
+            log.debug("set cv value called but no CV is expected");
+            return;
+        }
+        int exp = expectedCV;
+        expectedCV = -1;
+        setCv(exp, value);
+    }
+    
     public int getCv(int cv){
         if(cvValues.containsKey(cv))
             return cvValues.get(cv);
@@ -191,15 +213,32 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom{
     
     public void setCv(int cv, int value){
         if(cvValues.containsKey(cv)){
-            if(cvValues.get(cv)==value)
+            if(cvValues.get(cv)==value){
+                firePropertyChange("cvvalue", cv, value);
                 return;
+            }
         }
         cvValues.put(cv, value);
         firePropertyChange("cvvalue", cv, value);
     }
     
-    Hashtable <Integer, Integer> cvValues = new Hashtable <Integer, Integer>();
+    public List<Integer> getCVList(){
+        int[] arr = new int[cvValues.size()];
+        List<Integer> out = new ArrayList<Integer>();
+        Enumeration<Integer> en = cvValues.keys();
+        int i=0;
+        while (en.hasMoreElements()) {
+            arr[i] = en.nextElement();
+            i++;
+        }
+        //jmri.util.StringUtil.sort(arr);
+        for (i=0; i<arr.length; i++) out.add(arr[i]);
+        return out;
+    }
 
+    Hashtable <Integer, Integer> cvValues = new Hashtable <Integer, Integer>();
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultRailCom.class.getName());
 }
 
 /* @(#)DefaultRailCom.java */

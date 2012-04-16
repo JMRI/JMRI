@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -22,7 +23,7 @@ import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Builds a switch list for a location on the railroad
- * @author Daniel Boudreau (C) Copyright 2008, 2011
+ * @author Daniel Boudreau (C) Copyright 2008, 2011, 2012
  *
  */
 public class TrainSwitchLists extends TrainCommon {
@@ -30,6 +31,7 @@ public class TrainSwitchLists extends TrainCommon {
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
 	TrainManager manager = TrainManager.instance();
+	char formFeed = '\f';
 		
 	/**
 	 * builds a switch list for a location
@@ -90,20 +92,49 @@ public class TrainSwitchLists extends TrainCommon {
 			Route route = train.getRoute();
 			if (route == null)
 				continue;	// no route for this train
+			// get engine and car lists
+			List<String> enginesList = engineManager.getByTrainList(train);
+			List<String> carList = carManager.getByTrainDestinationList(train);
+			// determine if train works this location
+			boolean works = false;
+			List<String> routeList = route.getLocationsBySequenceList();
+			for (int r=0; r<routeList.size(); r++){
+				RouteLocation rl = route.getLocationById(routeList.get(r));
+				if (splitString(rl.getName()).equals(splitString(location.getName()))){
+					for (int k = 0; k < carList.size(); k++) {
+						Car car = carManager.getById(carList.get(k));
+						if (car.getRouteLocation() == rl || car.getRouteDestination() == rl){
+							works = true;
+							break;
+						}
+					}
+					for (int k = 0; k < enginesList.size(); k++) {
+						Engine eng = engineManager.getById(enginesList.get(k));
+						if (eng.getRouteLocation() == rl || eng.getRouteDestination() == rl){
+							works = true;
+							break;
+						}
+					}
+					if (works)
+						break;
+				}
+			}		
+			if (!works && !Setup.isSwitchListAllTrainsEnabled()) {
+				log.debug("No work for train ("+train.getName()+") at location "+location.getName());
+				continue;
+			}
 			// some cars counts and the number of times this location get's serviced
 			int pickupCars = 0;
 			int dropCars = 0;
 			int stops = 1;
 			boolean trainDone = false;
 			// does the train stop once or more at this location?
-			List<String> routeList = route.getLocationsBySequenceList();
 			for (int r=0; r<routeList.size(); r++){
 				RouteLocation rl = route.getLocationById(routeList.get(r));
 				if (splitString(rl.getName()).equals(splitString(location.getName()))){
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
 					if (expectedArrivalTime.equals("-1")){
 						trainDone = true;
-						//expectedArrivalTime = "0";
 					}
 					if (stops > 1){
 						// Print visit number only if previous location wasn't the same
@@ -143,12 +174,9 @@ public class TrainSwitchLists extends TrainCommon {
 								addLine(fileOut, MessageFormat.format(rb.getString("DepartsAtExpectedArrival"), new Object[]{splitString(train.getTrainDepartsName()), train.getFormatedDepartureTime(), expectedArrivalTime, rl.getTrainDirectionString()}));
 						}
 					}
-					// go through the list of engines and determine if the engine departs here
-					List<String> enginesList = engineManager.getByTrainList(train);
+					// go through the list of engines and determine if the engine departs here					
 					pickupEngines(fileOut, enginesList, rl);
 
-					// get a list of cars and determine if this location is serviced
-					List<String> carList = carManager.getByTrainDestinationList(train);
 					// block cars by destination
 					for (int j = 0; j < routeList.size(); j++) {						
 						RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
@@ -192,6 +220,8 @@ public class TrainSwitchLists extends TrainCommon {
 					addLine(fileOut, rb.getString("NoCarDrops"));
 				}
 			}
+			if (Setup.isSwitchListPagePerTrainEnabled())
+				fileOut.write(formFeed);
 		}
 		// Are there any cars that need to be found?
 		getCarsLocationUnknown(fileOut);

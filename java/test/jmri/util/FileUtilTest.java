@@ -2,14 +2,13 @@
 
 package jmri.util;
 
+import java.io.File;
+import java.io.IOException;
+import jmri.jmrit.XmlFile;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.framework.Assert;
-
-import java.io.*;
-
-import jmri.jmrit.XmlFile;
 
 /**
  * Tests for the jmri.util.FileUtil class.
@@ -164,6 +163,66 @@ public class FileUtilTest extends TestCase {
         File f = new File(System.getProperty("user.home")+File.separator+"resources"+File.separator+"icons");
         String name = FileUtil.getPortableFilename(f);
         Assert.assertEquals("home:resources/icons", name);
+    }
+
+    /*
+     * test getAbsoluteFilename()
+     *
+     * There are no tests for resource: and file: since getAbsoluteFilename()
+     * uses getPortableFilename() to convert these prefixes to one of the
+     * other prefixes.
+     */
+
+    // relative file with no prefix: Should become null
+    public void testGAFRel() {
+        String name = FileUtil.getAbsoluteFilename("resources/icons");
+        Assert.assertEquals(null, name);
+    }
+
+    // absolute file: Should become canonical path
+    public void testGAFAbs() throws IOException {
+        File f = new File("resources/icons");
+        String name = FileUtil.getAbsoluteFilename(f.getAbsolutePath());
+        Assert.assertEquals(f.getCanonicalPath(), name);
+    }
+
+    // program: prefix with relative path, convert to relative in system-specific form
+    public void testGAFProgRel() throws IOException {
+        String name = FileUtil.getAbsoluteFilename(FileUtil.PROGRAM + "jython");
+        Assert.assertEquals(new File("jython").getCanonicalPath(), name);
+    }
+
+    // program: prefix with absolute path, convert to absolute in system-specific form
+    public void testGAFProgAbs() throws IOException {
+        File f = new File("resources/icons");
+        String name = FileUtil.getAbsoluteFilename(FileUtil.PROGRAM + f.getAbsolutePath());
+        Assert.assertEquals(f.getCanonicalPath(), name);
+    }
+
+    // preference: prefix with relative path, convert to absolute in system-specific form
+    public void testGAFPrefRel() throws IOException {
+        String name = FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + "foo");
+        Assert.assertEquals(new File(XmlFile.userFileLocationDefault() + "foo").getCanonicalPath(), name);
+    }
+
+    // preference: prefix with absolute path, convert to absolute in system-specific form
+    public void testGAFPrefAbs() throws IOException {
+        File f = new File("resources/icons");
+        String name = FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + f.getAbsolutePath());
+        Assert.assertEquals(f.getCanonicalPath(), name);
+    }
+
+    // home: prefix with relative path, convert to absolute in system-specific form
+    public void testGAFHomeRel() throws IOException {
+        String name = FileUtil.getAbsoluteFilename(FileUtil.HOME + "foo");
+        Assert.assertEquals(new File(System.getProperty("user.home") + File.separator + "foo").getCanonicalPath(), name);
+    }
+
+    // home: prefix with absolute path, convert to absolute in system-specific form
+    public void testGAFHomeAbs() throws IOException {
+        File f = new File("resources/icons");
+        String name = FileUtil.getAbsoluteFilename(FileUtil.HOME + f.getAbsolutePath());
+        Assert.assertEquals(f.getCanonicalPath(), name);
     }
 
 	// from here down is testing infrastructure

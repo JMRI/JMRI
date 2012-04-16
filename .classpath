@@ -12,6 +12,13 @@
 	<classpathentry kind="lib" path="lib/javacc.jar"/>
 	<classpathentry kind="lib" path="lib/javacsv.jar"/>
 	<classpathentry kind="lib" path="lib/jdom.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-continuation-8.1.0.v20120127.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-http-8.1.0.v20120127.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-io-8.1.0.v20120127.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-security-8.1.0.v20120127.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-server-8.1.0.v20120127.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-servlet-8.1.0.v20120127.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-util-8.1.0.v20120127.jar"/>
 	<classpathentry kind="lib" path="lib/jfcunit.jar"/>
 	<classpathentry kind="lib" path="lib/jhall.jar"/>
 	<classpathentry kind="lib" path="lib/jhidrawplugin.jar"/>
@@ -28,7 +35,9 @@
 	<classpathentry kind="lib" path="lib/rscbundlecheck.jar"/>
 	<classpathentry kind="lib" path="lib/RXTXcomm.jar"/>
 	<classpathentry kind="lib" path="lib/Serialio.jar"/>
-	<classpathentry kind="lib" path="lib/servlet.jar"/>
+	<classpathentry kind="lib" path="lib/servlet-api-3.0.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.6.4.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.6.4.jar"/>
 	<classpathentry kind="lib" path="lib/smtp.jar"/>
 	<classpathentry kind="lib" path="lib/swing-worker-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/UmlGraph-5.2.jar"/>

@@ -42,8 +42,8 @@ public class RosterTest extends TestCase {
         RosterEntry e = new RosterEntry("file name Bob");
         e.setRoadNumber("123");
         r.addEntry(e);
-        Assert.assertEquals("search not OK ", false, r.checkEntry(0, null, "321", null, null, null, null, null));
-        Assert.assertEquals("search OK ", true, r.checkEntry(0, null, "123", null, null, null, null, null));
+        Assert.assertEquals("search not OK ", false, r.checkEntry(0, null, "321", null, null, null, null, null, null));
+        Assert.assertEquals("search OK ", true, r.checkEntry(0, null, "123", null, null, null, null, null, null));
     }
 
     public void testSearchList() {

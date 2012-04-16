@@ -55,7 +55,7 @@ and create turnouts 1 through 4.
 <p>
 Please note that this servlet has only been used with 
 the 
-<a href="MiniServer.shtml">JMRI mini-server</a>, and may 
+<a href="MiniServer.shtml">JMRI Web Server</a>, and may
 not work with other servlet containers.  We're committed to
 making it work, however, so just get in touch with 
 the JMRI developers if you encounter any problems.

@@ -1,7 +1,4 @@
-# This Python class represents the content of one single file for translation
-# It contains all keys individually and also all commentary text lines
-# It technically extends and replaces the earlier class "singlefile".
-
+#!/usr/bin/pythonw 
 # This file is part of JMRI.
 #
 # JMRI is free software; you can redistribute it and/or modify it under 
@@ -13,21 +10,24 @@
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
 # for more details.
-
+#
 # Revision $Revision$
 # by Simon Ginsburg (simon.ginsburg at bluewin.ch)
+"""
+This Python class represents the content of one single file for translation
+It contains all keys individually and also all commentary text lines
+It technically extends and replaces the earlier class "singlefile".
+"""
 
-import sys
-import os
-#import re
-#import curses.ascii
 from fileitem import fileitem
 from Property_File_Error import Property_File_Error
-#from textitem import textitem
 from textmanager import textmanager
 
 class singlefilestructure:
     def __init__(self, tm, fullfilename, path, filename, corename, key, content):
+        '''
+        At initialisation the class will be filled basic naming information as well as the file content.
+        '''
         self.fullfilename = fullfilename
         self.path = path
         self.filename = filename
@@ -45,8 +45,13 @@ class singlefilestructure:
         self.report = []
         if not (content == []):
             self.createstructure(content)
-        
+        if self.version == []:
+            self.version = -1
+       
     def createstructure(self, content):
+        """
+        This is the helper function to fill the file content into the class at initialisation time
+        """
         lineidx = 0
         tempstr = []
         tempkey = []
@@ -69,22 +74,12 @@ class singlefilestructure:
                         temp = lines.split("=",1)
                         if len(temp) is 1:
                             raise Property_File_Error(self.fullfilename, str(lineidx),  temp[0])
-                            #print (str("File " +  self.fullfilename + ":"))
-                            #print (str("Error  on line " + str(lineidx) + ". Unknown Key: " + temp[0]))
-                            #print (str("Starting Charakter: " + lines[0] ))
                         else:
-                            #print temp[0].strip()
                             tempkey = temp[0].strip()
-                            #tempstr = temp[1].strip()
                             tempstr.append(temp[1].strip())
-                        # if len(temp) is 1:
                     else:
-                        #print lines
-                        #print lines.strip()
-                        #tempstr = str(tempstr + "\n" + lines.strip())
                         tempstr.append(str(lines.strip()))
                         numlines = numlines + 1
-                    # if tempstr == []:
                     if not (lines.strip().endswith("\\")):
                         if numlines is 1:
                             tempitem = fileitem(lineidx + 1 - numlines,numlines,tempkey,tempstr[0],0)
@@ -103,7 +98,10 @@ class singlefilestructure:
                 else:
                     tempprevel = tempitem
                     self.firstel = tempitem
-                # if not tempprevel == []:
+        #if not self.tm.isvalidversion(self.version):
+        #    print "Found Version string found in:"
+        #    print self.fullfilename
+        #    print self.version
             
     def copystructure(self, firstel):
         self.firstel = firstel

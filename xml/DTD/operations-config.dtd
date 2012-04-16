@@ -151,6 +151,8 @@
 <!ATTLIST vsd enablePhysicalLocations	(true | false ) "false">
 <!ATTLIST switchList sameAsManifest		(true | false ) "true">
 <!ATTLIST switchList realTime			(true | false ) "true">
+<!ATTLIST switchList allTrains			(true | false ) "true">
+<!ATTLIST switchList pageMode			(true | false ) "false">
 
 <!ATTLIST pageOrientation manifest		CDATA #IMPLIED>
 <!ATTLIST pageOrientation switchList	CDATA #IMPLIED>

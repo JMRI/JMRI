@@ -1,5 +1,4 @@
-# This Python class represents one single file for translation containing several keys
-
+#!/usr/bin/pythonw 
 # This file is part of JMRI.
 #
 # JMRI is free software; you can redistribute it and/or modify it under 
@@ -11,17 +10,16 @@
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
 # for more details.
-
+#
 # Revision $Revision$
 # by Simon Ginsburg (simon.ginsburg at bluewin.ch)
+"""
+This Python class represents one single file for translation containing several keys
+"""
 
-import sys
 import os
-import re
-import curses.ascii
 from textmanager import textmanager
 from directorymanager import directorymanager
-#from singlefile import singlefile
 from singlefilestructure import singlefilestructure
 from translatefilestructure import translatefilestructure
 
@@ -179,24 +177,39 @@ class filestruct:
                 return group
         return []
     
-    def testfun(self, languagestring):
+    def testfun1(self):
         #Lineseparator = str(os.linesep)
+        if not os.path.exists(self.dm.Testdir):
+            os.mkdir(self.dm.Testdir)
+        os.chdir(self.dm.Testdir)
         descfile = open('Testdesc.txt','w')
-        for currfile in self.files2:
-            if (currfile.key is "" or currfile.key == languagestring):
-                descfile.write(str("file " + currfile.fullfilename + " written!\n"))
-                #print group.original.fullfilename
-                #if group.exist(Statkind):
-                origfile = open(currfile.fullfilename,'w')
-                currfile.write(origfile)
-                origfile.close()
-            else:
-                descfile.write(str("file " + currfile.fullfilename + " ignored!\n"))
-                descfile.write(str("because " + languagestring + " did not match with " + currfile.key + "!\n"))
+        for group in self.currdata:
+            group.testversion(descfile)
         descfile.close()
 
+    def testfun2(self):
+        if not os.path.exists(self.dm.Testdir):
+            os.mkdir(self.dm.Testdir)
+        os.chdir(self.dm.Testdir)
+        for root, dirs, files in os.walk(self.dm.Startpath):
+            for name in files:
+                trunkname, ext = os.path.splitext(name)
+                if ext == ".properties":
+                    fullfilename =  self.dm.getfullname(root, trunkname)
+                    os.chdir(root)
+                    origfile = open(name,"rU")
+                    originalcontent = origfile.readlines()
+                    origfile.close()
+                    newcontent = []
+                    for indline in originalcontent:
+                        templine = indline.decode('utf_16','replace')
+                        newline = templine.encode('utf_8','replace')
+                        newcontent = newcontent + newline
+                    cpfile = open(fullfilename,'w')
+                    cpfile.write(newcontent)
+                    cpfile.close()            
+
     def savestruct(self, languagestring):
-        #Lineseparator = str(os.linesep)
         for group in self.sortgroups:
             if group.exist(languagestring):
                 origfile = open(group.original.fullfilename,'w')
@@ -385,7 +398,7 @@ class filestruct:
                     self.statistics.write(str("Number of translated properties: " + str(Num_of_translated_properties) + " (" + str((100*Num_of_translated_properties)/Num_of_total_properties) + "%)" + "\n"))
             statfile.write(str("\n"))
             statfile.write(str("\n" + "Total number of properties: " + str(Num_of_total_properties) + "\n"))
-            print self.statistics
+            #print self.statistics
             if Num_of_total_properties == 0:
                 statfile.write("Number of translated properties: " + str(Num_of_translated_properties) + " \n")
             else:

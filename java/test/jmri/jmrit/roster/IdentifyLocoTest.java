@@ -43,7 +43,15 @@ public class IdentifyLocoTest extends TestCase {
         
         // simulate CV read of short address complete
         i.programmingOpReply(123, 0);
-        Assert.assertEquals("running after 2 ", false, i.isRunning());
+        Assert.assertEquals("step 3 reads CV ", 7, cvRead);
+        Assert.assertEquals("running after 3 ", true, i.isRunning());
+        
+        i.programmingOpReply(7, 0);
+        Assert.assertEquals("step 4 reads CV ", 8, cvRead);
+        Assert.assertEquals("running after 4 ", true, i.isRunning());
+        
+        i.programmingOpReply(8, 0);
+        Assert.assertEquals("running after 5 ", false, i.isRunning());
         Assert.assertEquals("found address ", 123, i.address);
         
     }
@@ -80,8 +88,17 @@ public class IdentifyLocoTest extends TestCase {
         
         // simulate read of CV18 complete
         i.programmingOpReply(189, 0);
-        Assert.assertEquals("running after 4 ", false, i.isRunning());
+        Assert.assertEquals("step 4 reads CV ", 7, cvRead);
+        Assert.assertEquals("running after 4 ", true, i.isRunning());
+        
+        i.programmingOpReply(7, 0);
+        Assert.assertEquals("step 5 reads CV ", 8, cvRead);
+        Assert.assertEquals("running after 5 ", true, i.isRunning());
+        
+        i.programmingOpReply(8, 0);
+        Assert.assertEquals("running after 6 ", false, i.isRunning());
         Assert.assertEquals("found address ", 4797, i.address);
+
         
     }
     // from here down is testing infrastructure

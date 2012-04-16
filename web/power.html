@@ -74,7 +74,7 @@ function loadDoc(evt) {
         var elem = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
 
         try {
-            loadXMLDoc("/xmlio", "<xmlio><item><type>power</type><name>power</name><set>2</set></item></xmlio>");
+            loadXMLDoc("/xmlio/", "<xmlio><item><type>power</type><name>power</name><set>2</set></item></xmlio>");
         }
         catch(e) {
             var msg = (typeof e == "string") ? e : ((e.message) ? e.message : "Unknown Error");

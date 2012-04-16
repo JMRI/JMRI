@@ -1040,9 +1040,13 @@ public class RouteTableAction extends AbstractTableAction {
         String sName = _systemName.getText();
         Route g = jmri.InstanceManager.routeManagerInstance().getBySystemName(sName);
         if (g==null) {
+            sName = _userName.getText();
+            g = jmri.InstanceManager.routeManagerInstance().getByUserName(sName);
+            if(g==null){
             // Route does not exist, so cannot be edited
-            status1.setText("Route with the entered System Name was not found.");
-            return;
+                status1.setText("Route with the entered System or User Name was not found.");
+                return;
+            }
         }
         // Route was found, make its system name not changeable
         curRoute = g;

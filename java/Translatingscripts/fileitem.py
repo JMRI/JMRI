@@ -1,5 +1,4 @@
-# This Python class represents one key of one single file for translation or one text
-
+#!/usr/bin/pythonw 
 # This file is part of JMRI.
 #
 # JMRI is free software; you can redistribute it and/or modify it under 
@@ -11,14 +10,12 @@
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
 # for more details.
-
+#
 # Revision $Revision$
 # by Simon Ginsburg (simon.ginsburg at bluewin.ch)
-
-import sys
-import os
-#import re
-#import curses.ascii
+"""
+This Python class represents one key of one single file for translation or one text
+"""
 
 class fileitem:
     def __init__(self, linenum, numlines, key, content, isText):

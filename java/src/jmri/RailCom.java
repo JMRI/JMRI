@@ -1,6 +1,7 @@
 // RailComTag.java
 
 package jmri;
+import java.util.List;
 
 /**
  * RailCom represents a RailCom enabled decoder that might be fitted to a specific piece of
@@ -179,7 +180,28 @@ public interface RailCom extends IdTag{
     * @param value Value of the CV
     */
     public void setCv(int cv, int value);
-
+    
+    /**
+    * This sets the cv number of the next expected value to be returned
+    * in a RailCom Packet.
+    */
+    public void setExpectedCv(int cv);
+    
+    /**
+    * returns the CV that we are expecting to be returned in a railcom packet
+    */
+    public int getExpectedCv();
+    
+    /**
+    * Sets the value of the cv that has been read from the rail comm packet
+    */
+    public void setCvValue(int value);
+    
+    /**
+    * returns a list of the CVs and values last seen for this Railcom device.
+    */
+    public List<Integer> getCVList();
+    
 }
 
 /* @(#)RailComTag.java */

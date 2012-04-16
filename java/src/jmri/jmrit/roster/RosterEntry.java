@@ -3,23 +3,21 @@
 package jmri.jmrit.roster;
 
 import java.awt.HeadlessException;
-import jmri.DccLocoAddress;
-import jmri.jmrit.XmlFile;
-import jmri.jmrit.symbolicprog.CvTableModel;
-import jmri.jmrit.symbolicprog.IndexedCvTableModel;
-import jmri.jmrit.symbolicprog.VariableTableModel;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.StringTokenizer;
 import java.util.Vector;
-import javax.swing.*;
-import jmri.util.davidflanagan.HardcopyWriter;
-
 import javax.swing.ImageIcon;
-import java.awt.Image;
-
-
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import jmri.DccLocoAddress;
+import jmri.jmrit.XmlFile;
+import jmri.jmrit.symbolicprog.CvTableModel;
+import jmri.jmrit.symbolicprog.IndexedCvTableModel;
+import jmri.jmrit.symbolicprog.VariableTableModel;
+import jmri.util.davidflanagan.HardcopyWriter;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -328,9 +326,9 @@ public class RosterEntry {
      *
      * @param e  Locomotive XML element
      */
-    public RosterEntry(org.jdom.Element e) {
+    public RosterEntry(Element e) {
         if (log.isDebugEnabled()) log.debug("ctor from element "+e);
-        org.jdom.Attribute a;
+        Attribute a;
         if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
         else log.warn("no id attribute in locomotive element when reading roster");
         if ((a = e.getAttribute("fileName")) != null )  _fileName = a.getValue();
@@ -347,7 +345,7 @@ public class RosterEntry {
         if ((a = e.getAttribute("IsShuntingOn")) != null )  _isShuntingOn = a.getValue();
         if ((a = e.getAttribute("maxSpeed")) != null )  
         	_maxSpeedPCT = Integer.parseInt(a.getValue());     
-        org.jdom.Element e3;
+        Element e3;
         if ((e3 = e.getChild("dateUpdated")) != null )  {
             _dateUpdated = e3.getText();
         }
@@ -385,7 +383,7 @@ public class RosterEntry {
             }
         }        
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
-        org.jdom.Element d = e.getChild("decoder");
+        Element d = e.getChild("decoder");
         if (d != null) {
             if ((a = d.getAttribute("model")) != null )  _decoderModel = a.getValue();
             if ((a = d.getAttribute("family")) != null )  _decoderFamily = a.getValue();
@@ -565,8 +563,8 @@ public class RosterEntry {
      * detailed DTD in roster-config.xml.
      * @return Contents in a JDOM Element
      */
-    org.jdom.Element store() {
-        org.jdom.Element e = new org.jdom.Element("locomotive");
+    public Element store() {
+        Element e = new Element("locomotive");
         e.setAttribute("id", getId());
         e.setAttribute("fileName", getFileName());
         e.setAttribute("roadNumber",getRoadNumber());
@@ -593,7 +591,7 @@ public class RosterEntry {
 
         if (! _dateUpdated.equals("")) 
             e.addContent(new Element("dateUpdated").addContent(getDateUpdated()));
-        org.jdom.Element d = new org.jdom.Element("decoder");
+        Element d = new Element("decoder");
         d.setAttribute("model",getDecoderModel());
         d.setAttribute("family",getDecoderFamily());
         d.setAttribute("comment",getDecoderComment());
@@ -607,12 +605,12 @@ public class RosterEntry {
         }
 
         if (functionLabels!=null) {
-            d = new org.jdom.Element("functionlabels");
+            d = new Element("functionlabels");
             
             // loop to copy non-null elements
             for (int i = 0; i<MAXFNNUM; i++) {
                 if (functionLabels[i]!=null && !functionLabels[i].equals("")) {
-                        org.jdom.Element fne = new org.jdom.Element("functionlabel");  
+                        Element fne = new Element("functionlabel");  
                         fne.setAttribute("num", ""+i);
                         boolean lockable = false;
                         if (functionLockables!=null) lockable = functionLockables[i];
@@ -646,11 +644,11 @@ public class RosterEntry {
                 while (keys.hasNext()) {
                     String key = keys.next();
                     String value = getAttribute(key);
-                    d.addContent(new org.jdom.Element("keyvaluepair")
-                        .addContent(new org.jdom.Element("key")
+                    d.addContent(new Element("keyvaluepair")
+                        .addContent(new Element("key")
                             .addContent(key)
                         )
-                        .addContent(new org.jdom.Element("value")
+                        .addContent(new Element("value")
                             .addContent(value)
                         )
                     );

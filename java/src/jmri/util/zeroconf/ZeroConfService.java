@@ -13,6 +13,7 @@ import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
+import jmri.web.server.WebServerManager;
 
 /**
  * ZeroConfService objects manage a zeroConf network service advertisement.
@@ -89,7 +90,7 @@ public class ZeroConfService {
      * @param properties Additional information to be listed in service advertisement
      */
     public static ZeroConfService create(String type, int port, HashMap<String, String> properties) {
-        return create(type, ZeroConfService.hostName(), port, 0, 0, properties);
+        return create(type, WebServerManager.getWebServerPreferences().getRailRoadName(), port, 0, 0, properties);
     }
 
     /**
@@ -305,6 +306,14 @@ public class ZeroConfService {
         // we would have to check for the existance of . if we did not add .
         // to the string above.
         return hostName.substring(0, hostName.indexOf('.'));
+    }
+
+    /**
+     * Return the fully qualified domain name or "computer" if the system name
+     * cannot be determined. This method uses the JmDNS.getHostName() method.
+     */
+    public static String FQDN() {
+        return ZeroConfService.jmdns().getHostName();
     }
 
     /**

@@ -22,8 +22,8 @@
 
 # Make list of properties classes, removing a couple that are intended not for translation
 VALS=`find classes -name \*.properties ! -name \*_\?\?.properties -print \
-| grep -v jmri/web/miniserver/Services.properties \
-| grep -v jmri/web/miniserver/servlet/fileservlet/FileServletPaths.properties`
+| grep -v jmri/web/server/Services.properties \
+| grep -v jmri/web/server/FilePaths.properties`
 
 # index over those to translate
 for x in $VALS; do \
