@@ -157,6 +157,9 @@ public class PrintOptionFrame extends OperationsFrame{
 		use12hrFormatCheckBox.setToolTipText(rb.getString("Use12hrFormatTip"));
 		printValidCheckBox.setToolTipText(rb.getString("PrintValidTip"));
 		truncateCheckBox.setToolTipText(rb.getString("TruncateTip"));
+		switchListRealTimeCheckBox.setToolTipText(rb.getString("RealTimeTip"));
+		switchListAllTrainsCheckBox.setToolTipText(rb.getString("AllTrainsTip"));
+		switchListPageCheckBox.setToolTipText(rb.getString("PageTrainTip"));
 		buildReportCheckBox.setToolTipText(rb.getString("CreatesTextFileTip"));
 		editManifestCheckBox.setToolTipText(rb.getString("UseTextEditorTip"));
 		
@@ -422,9 +425,9 @@ public class PrintOptionFrame extends OperationsFrame{
 		JPanel pSwitchListOptions = new JPanel();
 		pSwitchListOptions.setLayout(new GridBagLayout());
 		pSwitchListOptions.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListOptions")));		
-		addItem(pSwitchListOptions, switchListRealTimeCheckBox, 0, 0);
 		addItem(pSwitchListOptions, switchListAllTrainsCheckBox, 1, 0);
 		addItem(pSwitchListOptions, switchListPageCheckBox, 2, 0);
+		addItem(pSwitchListOptions, switchListRealTimeCheckBox, 3, 0);
 
 		JPanel pEdit = new JPanel();
 		pEdit.setLayout(new GridBagLayout());
