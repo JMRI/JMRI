@@ -86,12 +86,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	final public static  int MULTI_SENSOR = 16;
 	final public static  int MARKER = 17;
     final public static  int TRACK_CIRCLE_CENTRE = 18;
+	final public static  int SLIP_CENTER = 20; // 
+	final public static  int SLIP_A = 21; // offset for slip connection points
+	final public static  int SLIP_B = 22; // offset for slip connection points
+	final public static  int SLIP_C = 23; // offset for slip connection points
+	final public static  int SLIP_D = 24; // offset for slip connection points
 	final public static  int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
-	final public static  int SLIP_CENTER = 70; // 
-	final public static  int SLIP_A = 71; // offset for slip connection points
-	final public static  int SLIP_B = 72; // offset for slip connection points
-	final public static  int SLIP_C = 73; // offset for slip connection points
-	final public static  int SLIP_D = 74; // offset for slip connection points
+
     
 	// dashed line parameters
 	//private static int minNumDashes = 3;
@@ -6314,6 +6315,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			else {
 				g2.setColor(defaultTrackColor);
 			}
+            if(!(t.getHidden() && !isEditable())){
 			if (t.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER) {
 				//  double crossover turnout
 				Turnout t1 = t.getTurnout();
@@ -6781,6 +6783,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 					}
 				}
 			}
+            }
 		}
 	}
 	
@@ -6974,10 +6977,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		// loop over all defined turnouts
 		for (int i = 0; i<turnoutList.size();i++) {
 			LayoutTurnout t = turnoutList.get(i);
-			Point2D pt = t.getCoordsCenter();
-			g2.setColor(defaultTrackColor);
-			g2.draw(new Ellipse2D.Double (
-							pt.getX()-SIZE2, pt.getY()-SIZE2, SIZE2+SIZE2, SIZE2+SIZE2));
+            if(!(t.getHidden() && !isEditable())){
+                Point2D pt = t.getCoordsCenter();
+                g2.setColor(defaultTrackColor);
+                g2.draw(new Ellipse2D.Double (
+                                pt.getX()-SIZE2, pt.getY()-SIZE2, SIZE2+SIZE2, SIZE2+SIZE2));
+            }
 		}
 	}
 
