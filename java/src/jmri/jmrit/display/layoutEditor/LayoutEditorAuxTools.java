@@ -1337,6 +1337,10 @@ public class LayoutEditorAuxTools
                     //At double slip, can not follow any further
                     curConnection = null;
                 }
+            } else if (typeCurConnection>=50){
+                if(log.isDebugEnabled())
+                    log.debug("Layout Block: " + layoutBlock.getDisplayName() + " found track type: " + typeCurConnection + " to Block: " + p.getBlock().getDisplayName() + " Is potentially assigned to turntable ray");
+                curConnection = null;
             }
 			else {
 				// catch when some new type got added
