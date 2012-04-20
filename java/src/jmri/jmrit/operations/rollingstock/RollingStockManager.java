@@ -22,13 +22,6 @@ import java.util.List;
  * @version	$Revision$
  */
 public class RollingStockManager {
-	
-	/* all JMRI window position and size are now saved
-	// Edit RollingStock frame attributes
-	protected OperationsFrame _editFrame = null;
-	protected Dimension _editFrameDimension = null;
-	protected Point _editFramePosition = null;
-	*/
 
 	protected Hashtable<String, RollingStock> _hashTable = new Hashtable<String, RollingStock>(); //RollingStock by id
 
@@ -36,20 +29,6 @@ public class RollingStockManager {
 
     public RollingStockManager() {
     }
-    
-    /*
-	public void setEditFrame(OperationsFrame frame){
-		_editFrame = frame;
-	}
-
-	public Dimension getEditFrameSize(){
-		return _editFrameDimension;
-	}
-
-	public Point getEditFramePosition(){
-		return _editFramePosition;
-	}
-	*/
 
 	/**
 	 * Get the number of items in the roster
@@ -339,6 +318,10 @@ public class RollingStockManager {
      * @return list of RollingStock ids ordered by RollingStock moves
      */
     public List<String> getByMovesList() {
+    	return getByIntList(getByIdList(), BY_MOVES);
+    }
+    /*
+    public List<String> getByMovesList() {
     	// get random order of RollingStock ids
     	Enumeration<String> en = _hashTable.keys();
     	List<String> sortIn = new ArrayList<String>();
@@ -379,6 +362,7 @@ public class RollingStockManager {
     	}
     	return out;
     }
+    */
 
     /**
      * Sort by when rolling stock was built
@@ -445,6 +429,37 @@ public class RollingStockManager {
     	return out;
     }
     
+    protected List<String> getByIntList(List<String> sortIn, int attribute) {
+    	List<String> out = new ArrayList<String>();
+    	int rsIn;
+    	for (int i=0; i<sortIn.size(); i++){
+    		boolean rsAdded = false;
+    		rsIn = (Integer)getRsAttribute(getById(sortIn.get(i)), attribute);
+    		int start = 0;
+    		// page to improve performance.  Most have id = road+number
+      		int divisor = out.size()/pageSize;
+      		for (int k=divisor; k>0; k--){
+      			int rsOut = (Integer)getRsAttribute(getById(out.get((out.size()-1)*k/divisor)), attribute);
+      			if (rsIn>=rsOut){
+      				start = (out.size()-1)*k/divisor;
+      				break;
+      			}
+      		}
+      		for (int j=start; j<out.size(); j++ ){
+    			int rsOut = (Integer)getRsAttribute(getById(out.get(j)), attribute);
+    			if (rsIn<rsOut){
+    				out.add(j, sortIn.get(i));
+    				rsAdded = true;
+    				break;
+    			}
+    		}
+    		if (!rsAdded){
+    			out.add(sortIn.get(i));
+    		}
+    	}
+    	return out;
+    }
+    
     // The various sort options for RollingStock
     protected static final int BY_NUMBER = 0;
     protected static final int BY_ROAD = 1;
@@ -462,6 +477,7 @@ public class RollingStockManager {
     // BY_RWE = 13
     // BY_FINAL_DEST = 14
     protected static final int BY_VALUE = 15;
+    // BY_WAIT = 16
     
     protected Object getRsAttribute(RollingStock rs, int attribute){
     	switch (attribute){

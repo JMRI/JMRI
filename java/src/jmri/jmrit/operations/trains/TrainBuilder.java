@@ -2197,10 +2197,7 @@ public class TrainBuilder extends TrainCommon{
 			for (int k = routeIndex; k<routeList.size(); k++){
 				rld = train.getRoute().getLocationById(routeList.get(k));
 				// if car can be picked up later at same location, skip
-				if (rl != rld && rld.getName().equals(car.getLocationName())
-						&& !rld.getName().equals(terminateLocation.getName())
-						&& (rld.getMaxCarMoves()-rld.getCarMoves()>0) 
-						&& rld.canPickup() && checkPickUpTrainDirection(car, rld)){
+				if (checkForLaterPickUp(rl, rld, car)){
 					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarHasSecond"),new Object[]{car.toString(), car.getLocationName()}));
 					break;
 				}
@@ -2362,11 +2359,7 @@ public class TrainBuilder extends TrainCommon{
 		for (int k = start; k<routeEnd; k++){
 			rld = train.getRoute().getLocationById(routeList.get(k));
 			// if car can be picked up later at same location, set flag	
-			if (rl != rld && rld.getName().equals(car.getLocationName())
-					&& !rld.getName().equals(terminateLocation.getName())
-					&& (rld.getMaxCarMoves()-rld.getCarMoves()>0) 
-					&& rld.canPickup() && checkPickUpTrainDirection(car, rld)){
-				log.debug("Car ("+car.toString()+") can be picked up later!");
+			if (checkForLaterPickUp(rl, rld, car)){
 				multiplePickup = true;
 			}
 			if (rld.canDrop() || car.hasFred() || car.isCaboose()){
@@ -2604,6 +2597,29 @@ public class TrainBuilder extends TrainCommon{
 			}
 		}
 		return false;	// no build errors, but car not given destination
+	}
+	
+	/*
+	 * Returns true if car can be picked up later in a train's route
+	 */
+	private boolean checkForLaterPickUp(RouteLocation rl, RouteLocation rld, Car car){
+		if (rl != rld && rld.getName().equals(car.getLocationName())
+				&& !rld.getName().equals(terminateLocation.getName())
+				&& checkPickUpTrainDirection(car, rld)){
+			if (!rld.canPickup()){
+				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildPickupLater"), new Object[]{car.toString(), rld.getName(), rld.getId()}));
+				//log.debug("Later pick up for car ("+car.toString()+") from route location ("+rld.getName()+") id "+ rld.getId()+" not possible, no pick ups allowed!");
+				return false;
+			}
+			if (rld.getMaxCarMoves()-rld.getCarMoves() <= 0){
+				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildPickupLaterNoRoom"), new Object[]{car.toString(), rld.getName(), rld.getId()}));
+				//log.debug("Later pick up for car ("+car.toString()+") from route location ("+rld.getName()+") id "+ rld.getId()+" not possible, no moves left!");
+				return false;
+			}
+			log.debug("Car ("+car.toString()+") can be picked up later!");
+			return true;
+		}
+		return false;
 	}
 	
 	private boolean generateLoadForCarDepartingAndTerminatingIntoStaging(Car car){

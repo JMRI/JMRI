@@ -28,12 +28,6 @@ import org.jdom.Element;
  */
 public class CarManager extends RollingStockManager{
 
-	/* all JMRI window position and size are now saved
-	// Cars frame attributes
-	private CarsTableFrame _carsFrame = null;
-	private Dimension _carsFrameDimension = new Dimension(Control.panelWidth,Control.panelHeight);
-	private Point _carsFramePosition = new Point();
-	*/
 	// Cars frame table column widths (12), starts with Number column and ends with Edit
 	private int[] _carsTableColumnWidths = {60, 60, 65, 35, 75, 65, 190, 190, 65, 50, 65, 70};
 	
@@ -191,7 +185,7 @@ public class CarManager extends RollingStockManager{
     
     /**
      * Sort by rolling stock location
-     * @return list of RollingStock ids ordered by RollingStock location
+     * @return list of car ids ordered by RollingStock location
      */
     public List<String> getByLocationList() {
     	return getByList(getByKernelList(), BY_LOCATION);
@@ -215,7 +209,7 @@ public class CarManager extends RollingStockManager{
     
     /**
      * Sort by car return when empty location and track
-     * @return list of RollingStock ids ordered by car return when empty
+     * @return list of car ids ordered by car return when empty
      */
     public List<String> getByRweList() {
     	return getByList(getByLocationList(), BY_RWE);
@@ -225,11 +219,20 @@ public class CarManager extends RollingStockManager{
     	return getByList(getByDestinationList(), BY_FINAL_DEST);
     }
     
+    /**
+     * Sort by car kernel names
+     * @return list of car ids ordered by car kernel
+     */
+    public List<String> getByWaitList() {
+    	return getByIntList(getByIdList(), BY_WAIT);
+    }
+    
     // The special sort options for cars
     private static final int BY_LOAD = 4;
     private static final int BY_KERNEL = 5;
     private static final int BY_RWE = 13;		// Return When Empty
     private static final int BY_FINAL_DEST = 14;// Next destination
+    private static final int BY_WAIT = 16;
     
     // add car options to sort list
     protected Object getRsAttribute(RollingStock rs, int attribute){
@@ -239,6 +242,7 @@ public class CarManager extends RollingStockManager{
     	case BY_KERNEL: return car.getKernelName();
     	case BY_RWE: return car.getReturnWhenEmptyDestName();
     	case BY_FINAL_DEST: return car.getNextDestinationName() + car.getNextDestTrackName();
+    	case BY_WAIT: return car.getWait();	// returns an integer
     	default: return super.getRsAttribute(car, attribute);
     	}
     }
@@ -344,20 +348,6 @@ public class CarManager extends RollingStockManager{
 		}
 		return mias;
 	}
-	
-	/* all JMRI window position and size are now saved
-	public void setCarsFrame(CarsTableFrame frame){
-		_carsFrame = frame;
-	}
-	
-	public Dimension getCarsFrameSize(){
-		return _carsFrameDimension;
-	}
-	
-	public Point getCarsFramePosition(){
-		return _carsFramePosition;
-	}
-	*/
 
 	/**
     * 
@@ -377,21 +367,8 @@ public class CarManager extends RollingStockManager{
 		// get Cars Table Frame attributes
 		Element e = values.getChild("carsOptions");
 		if (e != null){
-			/* all JMRI window position and size are now saved
-			try {
-				int x = e.getAttribute("x").getIntValue();
-				int y = e.getAttribute("y").getIntValue();
-				int height = e.getAttribute("height").getIntValue();
-				int width = e.getAttribute("width").getIntValue();
-				_carsFrameDimension = new Dimension(width, height);
-				_carsFramePosition = new Point(x,y);
-			} catch ( org.jdom.DataConversionException ee) {
-				log.debug("Did not find car edit frame attributes");
-			} catch ( NullPointerException ne) {
-				log.debug("Did not find car edit frame attributes");
-			}
-			*/
 			org.jdom.Attribute a;
+			// backwards compatible TODO remove in 2013 after production release
 	  		if ((a = e.getAttribute("columnWidths")) != null){
              	String[] widths = a.getValue().split(" ");
              	for (int i=0; i<widths.length; i++){
@@ -403,24 +380,6 @@ public class CarManager extends RollingStockManager{
              	}
     		}
 		}
-		// get Car Edit attributes
-		/* all JMRI window position and size are now saved
-		e = values.getChild("carEditOptions");
-		if (e != null){
-			try {
-				int x = e.getAttribute("x").getIntValue();
-				int y = e.getAttribute("y").getIntValue();
-				int height = e.getAttribute("height").getIntValue();
-				int width = e.getAttribute("width").getIntValue();
-				_editFrameDimension = new Dimension(width, height);
-				_editFramePosition = new Point(x,y);
-			} catch ( org.jdom.DataConversionException ee) {
-				log.debug("Did not find car edit frame attributes");
-			} catch ( NullPointerException ne) {
-				log.debug("Did not find car edit frame attributes");
-			}
-		}
-		*/
 	}
 
 	   /**

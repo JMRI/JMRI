@@ -29,6 +29,7 @@ import javax.swing.ScrollPaneConstants;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.ModifyLocationsAction;
+import jmri.jmrit.operations.locations.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -78,6 +79,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     JRadioButton sortByOwner = new JRadioButton(rb.getString("Owner"));
     JRadioButton sortByValue = new JRadioButton(Setup.getValueLabel());
     JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
+    JRadioButton sortByWait = new JRadioButton(rb.getString("Wait"));
     ButtonGroup group = new ButtonGroup();
     
 	// major buttons
@@ -131,6 +133,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     		cp1.add(sortByValue);
     	if(Setup.isRfidEnabled())
     		cp1.add(sortByRfid);
+    	if(ScheduleManager.instance().numEntries()>0)
+    		cp1.add(sortByWait);
     	
     	// row 2
     	JPanel cp2 = new JPanel();
@@ -181,6 +185,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		addRadioButtonAction (sortByOwner);
 		addRadioButtonAction (sortByValue);
 		addRadioButtonAction (sortByRfid);
+		addRadioButtonAction (sortByWait);
 		
 		group.add(sortByNumber);
 		group.add(sortByRoad);
@@ -198,6 +203,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		group.add(sortByOwner);
 		group.add(sortByValue);
 		group.add(sortByRfid);
+		group.add(sortByWait);
 		
 		// sort by location
 		if (!showAllCars){
@@ -283,6 +289,9 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		}
 		if (ae.getSource() == sortByRfid){
 			carsModel.setSort(carsModel.SORTBYRFID);
+		}
+		if (ae.getSource() == sortByWait){
+			carsModel.setSort(carsModel.SORTBYWAIT);
 		}
 	}
 	
