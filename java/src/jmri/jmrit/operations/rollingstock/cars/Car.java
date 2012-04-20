@@ -697,10 +697,10 @@ public class Car extends RollingStock {
 	
 	private void loadNext(Track destTrack){
 		setLoadGeneratedFromStaging(false);
+		// update wait count
+		setWait(getNextWait());
+		setNextWait(0);
 		if (destTrack != null && destTrack.getLocType().equals(Track.SIDING)){
-			// update wait count
-			setWait(getNextWait());
-			setNextWait(0);
 			if (!getNextLoad().equals("")){
 				setLoad(getNextLoad());
 				setNextLoad("");
