@@ -63,6 +63,7 @@ import org.apache.log4j.Logger;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
  * @author  Bob Jacobsen Copyright (C) 2010
+ * @author  Kevin Dickerson Copyright (C) 2011
  * @author  Randall Wood Copyright (C) 2012
  * @version $Revision: 20027 $
  */
@@ -411,7 +412,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         final JPanel rosters = new JPanel();
         rosters.setLayout(new BorderLayout());
         // set up roster table
-        rtable = new RosterTable(false, ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        rtable = new RosterTable(true, ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         ((RosterTableModel) rtable.getModel().getTableModel()).setRosterGroup(this.getSelectedRosterGroup());
         rtable.setRosterGroupSource(groups);
         rosters.add(rtable, BorderLayout.CENTER);

@@ -359,6 +359,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         // handle the roster entry
         _rosterEntry =  pRosterEntry;
         if (_rosterEntry == null) log.error("null RosterEntry pointer");
+        else _rosterEntry.setOpen(true);
         filename = pProgrammerFile;
         installComponents();
 
@@ -1276,6 +1277,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         variableModel.dispose();
         cvModel.dispose();
         iCvModel.dispose();
+        if(_rosterEntry!=null){
+               _rosterEntry.setOpen(false);
+        }
 
         // remove references to everything we remember
         progStatus = null;
