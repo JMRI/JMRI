@@ -89,6 +89,7 @@ public class PrintCarRosterAction  extends AbstractAction {
         String kernel = "";
         String value = "";
         String rfid = "";
+        String comment = "";
         
 		ownerMaxLen = 5;
 		if (!printCarLoad.isSelected() && !printCarKernel.isSelected() && !printCarColor.isSelected())
@@ -143,11 +144,13 @@ public class PrintCarRosterAction  extends AbstractAction {
            			value = padAttribute(car.getValue().trim(), Control.MAX_LEN_STRING_ATTRIBUTE); 
            		if (printCarRfid.isSelected())
            			rfid = padAttribute(car.getRfid().trim(), Control.MAX_LEN_STRING_ATTRIBUTE); 
+           		if (printCarComment.isSelected())
+           			comment = car.getComment().trim();
 
         		String s = number + road + type
         		+ length + weight + color + load + kernel
         		+ owner + built + value + rfid
-        		+ location;
+        		+ location + comment;
     			if (s.length() > numberCharPerLine)
     				s = s.substring(0, numberCharPerLine);
         		writer.write(s+newLine);
@@ -173,6 +176,7 @@ public class PrintCarRosterAction  extends AbstractAction {
     	+ (printCarValue.isSelected()?Setup.getValueLabel()+"        ":"")
     	+ (printCarRfid.isSelected()?Setup.getRfidLabel()+"        ":"")
     	+ (printCarLocation.isSelected()?rb.getString("Location"):"")
+    	+ (printCarComment.isSelected()?rb.getString("Comment"):"")
     	+ newLine;
     	writer.write(s);
     }
@@ -197,6 +201,7 @@ public class PrintCarRosterAction  extends AbstractAction {
     JCheckBox printCarValue = new JCheckBox(MessageFormat.format(rb.getString("PrintCar"),new Object[]{Setup.getValueLabel()}));
     JCheckBox printCarRfid = new JCheckBox(MessageFormat.format(rb.getString("PrintCar"),new Object[]{Setup.getRfidLabel()}));
     JCheckBox printCarLocation = new JCheckBox(rb.getString("PrintCarLocation"));
+    JCheckBox printCarComment = new JCheckBox(rb.getString("PrintCarComment"));
     JCheckBox printSpace = new JCheckBox(rb.getString("PrintSpace"));
     JCheckBox printPage = new JCheckBox(rb.getString("PrintPage"));
     
@@ -227,6 +232,7 @@ public class PrintCarRosterAction  extends AbstractAction {
     		if (Setup.isRfidEnabled())
     			pPanel.add(printCarRfid);
     		pPanel.add(printCarLocation);
+    		pPanel.add(printCarComment);
 			pPanel.add(printSpace);
 			pPanel.add(printPage);
     		    		
@@ -242,8 +248,12 @@ public class PrintCarRosterAction  extends AbstractAction {
     		printCarValue.setSelected(false);
     		printCarRfid.setSelected(false);
     		printCarLocation.setSelected(true);
+    		printCarComment.setSelected(false);
     		printSpace.setSelected(false);
     		printPage.setSelected(false);
+    		
+    		addCheckBoxAction(printCarLocation);
+    		addCheckBoxAction(printCarComment);
     		
     		//add tool tips
     		printSpace.setToolTipText(rb.getString("TipSelectSortByLoc"));
@@ -274,6 +284,15 @@ public class PrintCarRosterAction  extends AbstractAction {
     	public void buttonActionPerformed(java.awt.event.ActionEvent ae) { 		
     		setVisible(false);
     		pcr.printCars();  		
+    	}
+    	
+    	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+    		if (ae.getSource() == printCarLocation)
+    			if (printCarLocation.isSelected())
+    				printCarComment.setSelected(false);
+      		if (ae.getSource() == printCarComment)
+    			if (printCarComment.isSelected())
+    				printCarLocation.setSelected(false);    			
     	}
     }
 
