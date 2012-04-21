@@ -170,6 +170,7 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
         }
         // need to mark as updated
         re.changeDateUpdated();
+        re.updateFile();
     }
 
     public int getPreferredWidth(int column) {
