@@ -630,7 +630,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		if (trainName.length() > 25){
+		if (trainName.length() > Control.MAX_LEN_STRING_TRAIN_NAME){
 			log.error("Train name must be less than 26 charaters");
 			JOptionPane.showMessageDialog(this,
 					rb.getString("TrainNameLess26"), MessageFormat.format(rb.getString("CanNot"), new Object[] {s}),
