@@ -24,7 +24,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
- * @author Daniel Boudreau Copyright (C) 2009
+ * @author Daniel Boudreau Copyright (C) 2009, 2012
  * @version     $Revision$
  */
 public class PrintRouteAction  extends AbstractAction {
@@ -33,9 +33,8 @@ public class PrintRouteAction  extends AbstractAction {
 	String newLine = "\n";
 	private static final int MAX_NAME_LENGTH = 20;
 
-    public PrintRouteAction(String actionName, Frame frame, boolean preview, Route route) {
+    public PrintRouteAction(String actionName, boolean preview, Route route) {
         super(actionName);
-        mFrame = frame;
         isPreview = preview;
         this.route = route;
     }
@@ -43,7 +42,7 @@ public class PrintRouteAction  extends AbstractAction {
     /**
      * Frame hosting the printing
      */
-    Frame mFrame;
+    Frame mFrame = new Frame();
     /**
      * Variable to set whether this is to be printed or previewed
      */
@@ -63,14 +62,21 @@ public class PrintRouteAction  extends AbstractAction {
     		log.debug("Print cancelled");
     		return;
     	}
+    	printRoute(writer, route);
+    	// and force completion of the printing
+    	writer.close();
+    }
+    	
+    protected void printRoute(HardcopyWriter writer, Route route) {
     	try {
+    		writer.write(route.getComment()+newLine);
         	String s = rb.getString("Location") 
         	+ "\t    " + rb.getString("Direction") 
         	+ " " + rb.getString("MaxMoves") 
         	+ " " + rb.getString("Pickups")
         	+ " " + rb.getString("Drops")
-        	+ " " + rb.getString("Length")
         	+ " " + rb.getString("Wait")
+        	+ "\t" + rb.getString("Length")     	
         	+ "\t" + rb.getString("Grade")
         	+ "\t" + rb.getString("X")
         	+ "    " + rb.getString("Y")
@@ -93,8 +99,8 @@ public class PrintRouteAction  extends AbstractAction {
     			+ "\t" + rl.getMaxCarMoves()
     			+ "\t" + (rl.canPickup()?rb.getString("yes"):rb.getString("no"))
     			+ "\t" + (rl.canDrop()?rb.getString("yes"):rb.getString("no"))
-    			+ "\t" + rl.getMaxTrainLength()
     			+ "\t" + rl.getWait()
+    			+ "\t" + rl.getMaxTrainLength()
     			+ "\t" + rl.getGrade()
     			+ "\t" + rl.getTrainIconX()
     			+ pad + rl.getTrainIconY()
@@ -116,11 +122,8 @@ public class PrintRouteAction  extends AbstractAction {
     			+ newLine;
     			writer.write(s);
     		}
-    		 		
-    		// and force completion of the printing
-    		writer.close();
     	} catch (IOException we) {
-    		log.error("Error printing ConsistRosterEntry: " + e);
+    		log.error("Error printing route");
     	}
     }
     

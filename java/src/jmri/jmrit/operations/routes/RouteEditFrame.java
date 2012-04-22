@@ -175,10 +175,10 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
-		toolMenu.add(new PrintRouteAction(rb.getString("MenuItemPrint"), new Frame(), false, _route));
-		toolMenu.add(new PrintRouteAction(rb.getString("MenuItemPreview"), new Frame(), true, _route));
 		toolMenu.add(new RouteCopyAction(rb.getString("MenuItemCopy"), routeName));
 		toolMenu.add(new SetTrainIconRouteAction(rb.getString("MenuSetTrainIconRoute"), routeName));
+		toolMenu.add(new PrintRouteAction(rb.getString("MenuItemPrint"), false, _route));
+		toolMenu.add(new PrintRouteAction(rb.getString("MenuItemPreview"), true, _route));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_EditRoute", true);

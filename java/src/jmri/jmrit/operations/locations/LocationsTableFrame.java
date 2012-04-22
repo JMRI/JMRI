@@ -88,14 +88,13 @@ public class LocationsTableFrame extends OperationsFrame {
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
-		Frame newFrame = new Frame();
-		toolMenu.add(new PrintLocationsAction(rb.getString("MenuItemPrint"), newFrame, false, this));
-		toolMenu.add(new PrintLocationsAction(rb.getString("MenuItemPreview"), newFrame, true, this));
 		toolMenu.add(new SchedulesTableAction(rb.getString("Schedules")));
 		toolMenu.add(new ModifyLocationsAction(rb.getString("TitleModifyLocations")));
 		toolMenu.add(new ShowCarsByLocationAction(false, null, null));
 		if (Setup.isVsdPhysicalLocationEnabled())
 			toolMenu.add(new SetPhysicalLocationAction(rb.getString("MenuSetPhysicalLocation"), null));
+		toolMenu.add(new PrintLocationsAction(rb.getString("MenuItemPrint"), new Frame(), false, this));
+		toolMenu.add(new PrintLocationsAction(rb.getString("MenuItemPreview"), new Frame(), true, this));
 		menuBar.add(toolMenu);
 		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
