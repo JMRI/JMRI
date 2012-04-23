@@ -471,7 +471,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
           	else if (showMoveCol == SHOWWAIT)
         		return c.getWait();
         	else
-        		return Integer.toString(c.getMoves());
+        		return c.getMoves();
         }
         case SETCOLUMN: return rb.getString("Set");
         case EDITCOLUMN: return rb.getString("Edit");
