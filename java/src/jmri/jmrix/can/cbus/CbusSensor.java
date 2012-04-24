@@ -48,9 +48,9 @@ public class CbusSensor extends AbstractSensor implements CanListener {
                 // need to complement here for addr 1
                 // so address _must_ start with address + or -
                 if (address.startsWith("+")) {
-                    addrInactive = new CbusAddress("-"+address);
+                    addrInactive = new CbusAddress("-"+address.substring(1));
                 } else if (address.startsWith("-")) {
-                    addrInactive = new CbusAddress("+"+address);
+                    addrInactive = new CbusAddress("+"+address.substring(1));
                 } else {
                     log.error("can't make 2nd event from systemname "+address);
                     return;
