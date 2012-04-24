@@ -109,14 +109,13 @@ public class PrintCarRosterAction  extends AbstractAction {
         	String previousLocation = "";
         	for (int i=0; i<cars.size(); i++){
         		Car car = manager.getById(cars.get(i));
-    		
+        		if (printCarsWithLocation.isSelected() && car.getLocation() == null)
+        			continue;	// car doesn't have a location skip
         		if (printCarLocation.isSelected()){
         			location = car.getLocationName().trim() + " - " + car.getTrackName().trim();
         			// reduce location name by one half of the track name
         			location = padAttribute(location, Control.MAX_LEN_STRING_LOCATION_NAME+Control.MAX_LEN_STRING_TRACK_NAME/2);
-        		} else if (printCarsWithLocation.isSelected())
-        			continue;	// car doesn't have a location skip
-        		
+        		}
         		// Page break between locations?
         		if (!previousLocation.equals("") && !car.getLocationName().trim().equals(previousLocation) && printPage.isSelected()){
         			writer.pageBreak();
