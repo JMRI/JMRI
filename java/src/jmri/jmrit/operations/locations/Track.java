@@ -1027,7 +1027,7 @@ public class Track {
     }
     
     public void setScheduleItemId(String id){
-    	log.debug("set schedule item id "+id+" for track "+getName());
+    	log.debug("set schedule item id: "+id+" for track ("+getName()+")");
     	String old = _scheduleItemId;
     	_scheduleItemId = id;
     	setDirtyAndFirePropertyChange (SCHEDULE_CHANGED_PROPERTY, old, id);
