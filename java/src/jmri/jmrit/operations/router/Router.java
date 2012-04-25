@@ -105,8 +105,8 @@ public class Router extends TrainCommon {
 			testTrain = null;
 		}
 		if (testTrain != null){
-			boolean trainServicesCar = _train.servicesCar(clone);
-			if (_train != null && trainServicesCar){
+			boolean trainServicesCar = false;
+			if (_train != null && (trainServicesCar = _train.servicesCar(clone))){
 				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterCarSingleTrain"),new Object[]{car.toString(),clone.getDestinationName(),clone.getDestinationTrackName(),_train.getName()}));
 			} else
 				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterCarSingleTrain"),new Object[]{car.toString(),clone.getDestinationName(),clone.getDestinationTrackName(),testTrain.getName()}));
@@ -155,7 +155,7 @@ public class Router extends TrainCommon {
 				car.setDestination(null, null);
 				return false;
 			}
-			return true;
+			return true;	// done, car has new destination
 		} else if (Setup.isCarRoutingEnabled()) {
 			log.debug("Car ("+car.toString()+") next destination ("+car.getNextDestinationName()+") is not served by a single train");
 			firstLocationTracks.clear();

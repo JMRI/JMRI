@@ -4119,9 +4119,10 @@ public class OperationsTrainsTest extends TestCase {
 		train3.build();
 		Assert.assertEquals("c1 destination Old Chelmsford", "", c1.getDestinationTrackName());
 		
-		// confirm that c1 destination has been modified
+		// confirm that c1 isn't part of this train
+		Assert.assertNull("c1 isn't assigned to a train",c1.getTrain());
 		Assert.assertNull("c1 destination has been set to null",c1.getDestination());
-		Assert.assertEquals("c1 now has a next destination", loc2, c1.getNextDestination());
+		Assert.assertNull("c1 next destination should be null",c1.getNextDestination());
 		Assert.assertNull("c1 next destination track should be null",c1.getNextDestTrack());
 		
 		// try without moves

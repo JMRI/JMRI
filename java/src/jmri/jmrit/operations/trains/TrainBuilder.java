@@ -1975,8 +1975,8 @@ public class TrainBuilder extends TrainCommon{
 						// send car to this destination
 						car.setNextDestination(track.getLocation());
 						car.setNextDestTrack(track);
-						// test to see if destination is reachable
-						if (Router.instance().setDestination(car, train, buildReport)){
+						// test to see if destination is reachable by this train
+						if (Router.instance().setDestination(car, train, buildReport) && car.getDestination() != null){
 							// is car part of kernel?
 							car.updateKernel();
 							if (car.getDestination() != track.getLocation()){
@@ -2303,11 +2303,9 @@ public class TrainBuilder extends TrainCommon{
 			}
 			if (!carAdded){
 				log.debug("car ("+car.toString()+") not added to train");
-				// remove destination and change to next destination
-				if (car.getNextDestination() == null && car.getNextDestTrack() == null){
-					car.setNextDestination(car.getDestination());
-					car.setNextDestTrack(car.getDestinationTrack());
-				}
+				// remove destination and revert to next destination
+				car.setNextDestination(car.getPreviousNextDestination());
+				car.setNextDestTrack(car.getPreviousNextDestTrack());
 				car.setDestination(null,null);
 			}
 		}
