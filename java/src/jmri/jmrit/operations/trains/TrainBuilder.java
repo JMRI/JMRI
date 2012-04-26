@@ -2304,6 +2304,13 @@ public class TrainBuilder extends TrainCommon{
 			if (!carAdded){
 				log.debug("car ("+car.toString()+") not added to train");
 				// remove destination and revert to next destination
+				if (car.getDestinationTrack() != null){
+					Track destTrack = car.getDestinationTrack();
+					if (destTrack.getSchedule() != null && destTrack.getScheduleMode() == Track.SEQUENTIAL){
+						//log.debug("Scheduled delivery to ("+destTrack.getName()+") cancelled");
+						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildPickupCancelled"),new Object[]{destTrack.getLocation().getName(), destTrack.getName()}));
+					}
+				}			
 				car.setNextDestination(car.getPreviousNextDestination());
 				car.setNextDestTrack(car.getPreviousNextDestTrack());
 				car.setDestination(null,null);
