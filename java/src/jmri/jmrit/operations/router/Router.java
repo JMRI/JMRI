@@ -36,6 +36,9 @@ public class Router extends TrainCommon {
 	private List<Track> lastLocationTracks = new ArrayList<Track>();
 	private List<Track> otherLocationTracks = new ArrayList<Track>();
 	
+	private static final String STATUS_TRAIN = rb.getString("RouterTrain");	// report that train can not move car
+	private static final String STATUS_NOT_ABLE = rb.getString("RouterNotAble");
+	
 	private String _status = "";
 	private Train _train = null;
 	PrintWriter _buildReport = null;	// build report
@@ -113,6 +116,7 @@ public class Router extends TrainCommon {
 			// now check to see if specific train can service car directly
 			if (_train != null && !trainServicesCar){
 				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("TrainDoesNotServiceCar"),new Object[]{_train.getName(), car.toString(), (clone.getDestinationName()+", "+clone.getDestinationTrackName())}));
+				_status = STATUS_TRAIN;
 				return true;	// car can be routed, but not by this train!
 			}
 			_status = car.setDestination(clone.getDestination(), clone.getDestinationTrack());
@@ -175,7 +179,7 @@ public class Router extends TrainCommon {
 				log.debug("Was able to find multiple train route for car ("+car.toString()+")");
 			} else {
 				log.debug("Wasn't able to set route for car ("+car.toString()+")");
-				_status = "not able to route car";
+				_status = STATUS_NOT_ABLE;
 				return false;	// maybe next time
 			}
 		} else {

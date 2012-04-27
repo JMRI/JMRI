@@ -1509,8 +1509,10 @@ public class TrainBuilder extends TrainCommon{
 	 * the boolean "success" true if location doesn't need any more pick ups. 
 	 */
 	private boolean addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track){
+		/*
 		if (!checkTrainLength(car, rl, rld))
 			return false;
+			*/
 		Location location = locationManager.getLocationByName(rl.getName());
 		location.setStatus();
 		Location destination = locationManager.getLocationByName(rld.getName());
@@ -2213,6 +2215,10 @@ public class TrainBuilder extends TrainCommon{
 						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildNoAvailableMovesStop"),new Object[]{rld.getName(), locCount}));
 						continue;
 					}
+					// is the train length okay?
+					if (!checkTrainLength(car, rl, rld)){
+						continue;
+					}
 					// check for valid destination track
 					if (car.getDestinationTrack() == null){
 						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarDoesNotHaveDest"),new Object[]{car.toString()}));
@@ -2306,6 +2312,7 @@ public class TrainBuilder extends TrainCommon{
 				// remove destination and revert to next destination
 				if (car.getDestinationTrack() != null){
 					Track destTrack = car.getDestinationTrack();
+					//TODO should we leave the car's destination?  The spur expects this car!
 					if (destTrack.getSchedule() != null && destTrack.getScheduleMode() == Track.SEQUENTIAL){
 						//log.debug("Scheduled delivery to ("+destTrack.getName()+") cancelled");
 						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildPickupCancelled"),new Object[]{destTrack.getLocation().getName(), destTrack.getName()}));
