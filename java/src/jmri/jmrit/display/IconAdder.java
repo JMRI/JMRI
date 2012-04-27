@@ -169,16 +169,26 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     /**
     *  Build iconMap and orderArray from user's choice of defaults
     */
-    private void makeIcons(CatalogTreeNode n) {
+    protected void makeIcons(CatalogTreeNode n) {
         if (log.isDebugEnabled()) log.debug("makeIcons from node= "+n.toString()+", numChildren= "+
                                             n.getChildCount()+", NumLeaves= "+n.getNumLeaves());
         _iconMap = new HashMap <String, JToggleButton>(10);
         _order = new ArrayList <String>();
         ArrayList <CatalogTreeLeaf> list = n.getLeaves();
-        for (int i=0; i<list.size(); i++) {
+        // adjust order of icons
+        int k = list.size()-1;
+        for (int i=list.size()-1; i>=0; i--) {
             CatalogTreeLeaf leaf = list.get(i);
-            String name = leaf.getPath();
-            this.setIcon(i, leaf.getName(), new NamedIcon(name, name));
+            String name = leaf.getName();
+            String path = leaf.getPath();
+            if ("BeanStateInconsistent".equals(name)) {
+                this.setIcon(0, name, new NamedIcon(path, path));          	
+            } else if ("BeanStateUnknown".equals(name)) {
+                this.setIcon(1, name, new NamedIcon(path, path));          	
+            } else {
+            	this.setIcon(k, name, new NamedIcon(path, path));
+            	k--;
+            }
         }
     }
 
@@ -210,15 +220,15 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         _iconMap.put(label, button);
         // calls may not be in ascending order, so pad array
         if (order > _order.size()) {
-            for (int i=_order.size(); i<order+1; i++) {
-                _order.add(i, label);
+            for (int i=_order.size(); i<order; i++) {
+                _order.add(i, "placeHolder");
             }
         } else {
             if (order < _order.size()) {
                 _order.remove(order);
             }
-            _order.add(order, label);
         }
+        _order.add(order, label);
     }
 
     /**
@@ -367,12 +377,11 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     void makeIconMap(NamedBean bean) {
-    	_order = new ArrayList <String>();
-    	ArrayList <CatalogTreeLeaf> list = _defaultIcons.getLeaves();
-    	if (log.isDebugEnabled()) log.debug("makeIconMap: num defaultIcons= "+list.size());
-        _iconMap = new HashMap <String, JToggleButton>(12);
-    	int k=0;
     	if (bean!=null && _type!=null && _type.equals("SignalHead")) {
+        	_order = new ArrayList <String>();
+            _iconMap = new HashMap <String, JToggleButton>(12);
+        	int k=0;
+        	ArrayList <CatalogTreeLeaf> list = _defaultIcons.getLeaves();
     		String[] states = ((SignalHead)bean).getValidStateNames();
     		for (int i=0; i<list.size(); i++) {
     			CatalogTreeLeaf leaf = list.get(i);
@@ -393,11 +402,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     			}
     		}
     	} else {
-    		for (int i=0; i<list.size(); i++) {
-    			CatalogTreeLeaf leaf = list.get(i);
-    			String path = leaf.getPath();
-    			this.setIcon(k++, leaf.getName(), new NamedIcon(path, path));
-    		}
+    		makeIcons(_defaultIcons);
     	}
     	if (log.isDebugEnabled()) log.debug("makeIconMap: _iconMap.size()= "+_iconMap.size());
     }
