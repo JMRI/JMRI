@@ -313,7 +313,7 @@ public class Track {
 			int length = Integer.parseInt(car.getLength())+ RollingStock.COUPLER;
 		if (car.getKernel() != null)
 			length = car.getKernel().getLength();
-		if (getLength()*getReservationFactor()/100 - (getReservedInRoute() + length) > 0)
+		if (getLength()*getReservationFactor()/100 - (getReservedInRoute() + length) >= 0)
 			return true;
 		else
 			return false;
