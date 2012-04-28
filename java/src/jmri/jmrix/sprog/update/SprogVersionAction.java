@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 /**
- * Swing action to get SPROG frimware version
+ * Swing action to get SPROG firmware version
  *
  * @author			Andrew crosland    Copyright (C) 2004
  * @version			$Revision$
