@@ -11,6 +11,8 @@ import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogConstants;
+import jmri.jmrix.sprog.SprogConstants.SprogState;
+import jmri.jmrix.sprog.update.*;
 
 /**
  * Frame for Sprog Console
@@ -18,10 +20,12 @@ import jmri.jmrix.sprog.SprogConstants;
  * Updated Jan 2010 by Andrew Berridge - fixed errors caused by trying
  * to send some commands while slot manager is active
  * 
+ * Refactored
+ * 
  * @author			Andrew Crosland   Copyright (C) 2008
  * @version			$Revision$
  */
-public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
+public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener, SprogVersionListener {
     
     // member declarations
     protected javax.swing.JLabel cmdLabel = new javax.swing.JLabel();
@@ -46,19 +50,14 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     // members for handling the SPROG interface
     SprogTrafficController tc = null;
     SprogCommandStation sm = null;
+    SprogMessage msg;
     String replyString;
-    int sprogMajorVersion;
-    int sprogMinorVersion;
-    String sprogType = "";
-    String sprogUSB = "";
     String tmpString = null;
-    boolean isSprogII = false;
-    boolean isSprog3 = false;
     State state = State.IDLE;
+
+    SprogVersion sv;
     
     enum State { IDLE, 
-    	CRSENT, 			// awaiting reply to " "
-    	QUERYSENT, 			// awaiting reply to "?"
     	CURRENTQUERYSENT, 	// awaiting reply to "I"
     	MODEQUERYSENT, 		// awaiting reply to "M"
     	CURRENTSENT, 		// awaiting reply to "I xxx"
@@ -100,20 +99,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         SprogMessage msg;
         super.initComponents();
 
-        // Send a blank message to kick off the state machine to get the
-        // current configuration of the attached SPROG
-        //Only send this if we have zero active slots in slot manager
-        //in command mode
-
-        if (sm.getInUseCount() == 0) {
-	        msg = new SprogMessage(1);
-	        msg.setOpCode(' ');
-	        nextLine("cmd: \""+msg+"\"\n", "");
-	        tc.sendSprogMessage(msg, this);
-	        state = State.CRSENT;  
-	        startShortTimer();
-        }
-        
         // Add a nice border to super class
         super.jScrollPane1.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Command History"));
@@ -256,6 +241,14 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
 
         // pack for display
         pack();
+
+        // Now the GUI is all setup we can get the SPROG version
+        // Only send this if we have zero active slots in slot manager
+        // in command mode
+
+        if (sm.getInUseCount() == 0) {
+            SprogVersionQuery.instance().requestVersion(this);
+        }
 }
     
     /**
@@ -287,7 +280,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     public void validateCurrent() {
         String currentRange = "200 - 996";
         int validLimit = 996;
-        if (isSprog3) {
+        if (sv.sprogType.sprogType > SprogType.SPROGIIv3) {
             currentRange = "200 - 2499";
             validLimit = 2499;
         }
@@ -316,7 +309,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             validateCurrent();
             // Value written is number of ADC steps 0f 4.88mV across 0.47 ohms
             currentLimit = currentLimit*470/4880;
-            if (!isSprog3) {
+            if (sv.sprogType.sprogType <= SprogType.SPROGIIv3) {
                 // Hack for SPROG bug where MSbyte of value must be non-zero
                 currentLimit += 256;
             }
@@ -335,9 +328,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isCurrentLimitPossible() {
-        if (isSprogII && ((sprogMajorVersion == 1) && (sprogMinorVersion >= 6))
-            || ((sprogMajorVersion == 2) && (sprogMinorVersion >= 1))
-            || isSprog3) {
+        if (sv.hasCurrentLimit()) {
             return true;
         } else
             return false;
@@ -346,9 +337,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isBlueLineSupportPossible() {
-        if (isSprogII && ((sprogMajorVersion == 1) && (sprogMinorVersion >= 6))
-            || ((sprogMajorVersion == 2) && (sprogMinorVersion >= 1))
-            || isSprog3) {
+        if (sv.hasBlueLine()) {
             return true;
         } else
             return false;
@@ -357,14 +346,76 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isFirmwareUnlockPossible() {
-        if (isSprogII && ((sprogMajorVersion == 1) && (sprogMinorVersion >= 6))
-                          || ((sprogMajorVersion == 2) && (sprogMinorVersion >= 1))
-                          || isSprog3) {
+        if (sv.hasFirmwareLock()) {
             return true;
         } else
             return false;
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC")
+    // Called from synchronised code
+    public boolean isZTCModePossible() {
+        if (sv.hasZTCMode()) {
+            return true;
+        } else
+            return false;
+    }
+    
+    synchronized public void notifyVersion(SprogVersion v) {
+        sv = v;
+        if (log.isDebugEnabled()) { log.debug("Found: " + sv.toString()); }
+        if (sv.sprogType.isSprog() == false) {
+            // Didn't recognize a SPROG so check if it is in boot mode already
+            JOptionPane.showMessageDialog(null, "SPROG prompt not found",
+                    "SPROG Console", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (sv.sprogType.sprogType > SprogType.SPROGIIv3) {
+                currentTextField.setToolTipText("Enter new current limit in milliAmps (less than 2500)");
+            }
+            // We know what we're connected to
+            setTitle(title() + " - Connected to " + sv.toString());
+
+            // Enable blueline & firmware unlock check boxes
+            if (isBlueLineSupportPossible()) {
+                if (log.isDebugEnabled()) { log.debug("Enable blueline check box"); }
+                blueCheckBox.setEnabled(true);
+                if (log.isDebugEnabled()) { log.debug(blueCheckBox.isEnabled()); }
+            }
+            if (isFirmwareUnlockPossible()) {
+                if (log.isDebugEnabled()) { log.debug("Enable firmware check box"); }
+                unlockCheckBox.setEnabled(true);
+                if (log.isDebugEnabled()) { log.debug(unlockCheckBox.isEnabled()); }
+            }
+
+            ztcCheckBox.setEnabled(isZTCModePossible());
+            
+            // Get Current Limit if available
+            if (isCurrentLimitPossible() && sm.getInUseCount() == 0) {
+                state = State.CURRENTQUERYSENT;
+                msg = new SprogMessage(1);
+                msg.setOpCode('I');
+                nextLine("cmd: \"" + msg + "\"\n", "");
+                tc.sendSprogMessage(msg, this);
+            } else {
+                // Set default and get the mode word
+                currentLimit = (SprogConstants.DEFAULT_I * 4880) / 470;
+                currentTextField.setText(String.valueOf(SprogConstants.DEFAULT_I));
+
+                //Only send this if we have zero active slots in slot manager
+                //in command mode           
+                if (sm.getInUseCount() == 0) {
+                    state = State.MODEQUERYSENT;
+                    msg = new SprogMessage(1);
+                    msg.setOpCode('M');
+                    nextLine("cmd: \"" + msg + "\"\n", "");
+                    tc.sendSprogMessage(msg, this);
+                } else {
+                    state = State.IDLE;
+                }
+            }
+        }
+    }
+
     public synchronized void notifyMessage(SprogMessage l) {  // receive a message and log it
     	nextLine("cmd: \""+l.toString()+"\"\n", "");
     }
@@ -376,194 +427,118 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         
         // *** Check for error reply
         
-        if (state == State.IDLE) {
-            if (log.isDebugEnabled()) {
-                log.debug("reply in IDLE state");
-            }
-            return;
-        } else if (state == State.CRSENT) {
-            stopTimer();
-            if (log.isDebugEnabled()) {
-                log.debug("reply in CRSENT state");
-            }
-            if ( (replyString.indexOf("P>")) >= 0) {
-                state = State.QUERYSENT;
-                msg = new SprogMessage(1);
-                msg.setOpCode('?');
-                nextLine("cmd: \""+msg+"\"\n", "");
-                tc.sendSprogMessage(msg, this);
-            } else {
-                JOptionPane.showMessageDialog(null, "SPROG prompt not found",
-                        "SPROG Version", JOptionPane.ERROR_MESSAGE);
-            }
-        } else if (state == State.QUERYSENT) {
-            if (log.isDebugEnabled()) {
-                log.debug("reply in QUERYSENT state");
-            }
-            // see if reply is from a SPROG
-            if (replyString.indexOf("SPROG") < 0) {
-                JOptionPane.showMessageDialog(null, "Not connected to a SPROG",
-                        "SPROG Version", JOptionPane.ERROR_MESSAGE);
-            } else {
+        switch (state) {
+            case IDLE:
+                if (log.isDebugEnabled()) { log.debug("reply in IDLE state: "+replyString); }
+                break;
+            case CURRENTQUERYSENT:
+                if (log.isDebugEnabled()) { log.debug("reply in CURRENTQUERYSENT state: "+replyString); }
+                int valueLength = 4;
+                if (sv.sprogType.sprogType >= SprogType.SPROGIIv3) {
+                    valueLength = 6;
+                }
+                tmpString = replyString.substring(replyString.indexOf("=") + 
+                            1, replyString.indexOf("=") + valueLength);
+                if (log.isDebugEnabled()) { log.debug("Current limit string: "+tmpString); }
+                // Value returned is number of ADC steps 0f 4.88mV across 0.47 ohms
+                // SPROG 3 is equivalent, using .047R sense with 10x amplifier
+                // Convert to milliAmps using integer math
                 try {
-                    sprogMajorVersion = Integer.parseInt(replyString.substring(replyString.indexOf(".") -
-                            1, replyString.indexOf(".")));
-                    sprogMinorVersion = Integer.parseInt(replyString.substring(replyString.indexOf(".") +
-                        1, replyString.indexOf(".") + 2));
+                    currentLimit = (Integer.parseInt(tmpString)*4880)/470;
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Cannot parse SPROG version",
+                    JOptionPane.showMessageDialog(null, "Malformed Reply for current limit",
                             "SPROG Console", JOptionPane.ERROR_MESSAGE);
                     state = State.IDLE;
                     return;
                 }
-                if ((replyString.indexOf("3") >= 0) || (replyString.indexOf("III")) >= 0) {
-                    isSprog3 = true;
-                    sprogType = "SPROG 3 ";
-                    currentTextField.setToolTipText("Enter new current limit in milliAmps (less than 2500)");
-                } else if (replyString.indexOf("II") >= 0) {
-                    isSprogII = true;
-                    sprogType = "SPROG II ";
-                } else {
-                    sprogType = "SPROG ";
-                }
-                if (replyString.indexOf("USB") >= 0) {
-                    sprogUSB = "USB ";
-                }
-                // We know what we're connected to
-                setTitle(title()+" - Connected to " + sprogType + sprogUSB + "v"
-                        + String.valueOf(sprogMajorVersion) + "." 
-                        + String.valueOf(sprogMinorVersion));
-                
-                // Enable blueline & firmware unlock check boxes
-                if (isBlueLineSupportPossible()) {
-                    blueCheckBox.setEnabled(true);
-                }
-                if (isFirmwareUnlockPossible()) {
-                    unlockCheckBox.setEnabled(true);
-                }
-                
-                // Get Current Limit if available
-                if (isCurrentLimitPossible() && sm.getInUseCount() == 0) {
-                    state = State.CURRENTQUERYSENT;
+                if (log.isDebugEnabled()) { log.debug("Current limit value: "+currentLimit); }
+                currentTextField.setText(String.valueOf(currentLimit));
+                currentTextField.setEnabled(true);
+                // Next get the mode word
+                // Only get this if we have zero active slots in slot manager
+                // in command mode
+                if (sm.getInUseCount() == 0) {
+                    state = State.MODEQUERYSENT;
                     msg = new SprogMessage(1);
-                    msg.setOpCode('I');
+                    msg.setOpCode('M');
                     nextLine("cmd: \""+msg+"\"\n", "");
                     tc.sendSprogMessage(msg, this);
                 } else {
-                    // Set default and get the mode word
-                    currentLimit = (SprogConstants.DEFAULT_I*4880)/470;
-                    currentTextField.setText(String.valueOf(currentLimit));
-                   
-                    //Only send this if we have zero active slots in slot manager
-                    //in command mode           
-                    if (sm.getInUseCount() == 0) {
-                    	state = State.MODEQUERYSENT;
-	                    msg = new SprogMessage(1);
-	                    msg.setOpCode('M');
-	                    nextLine("cmd: \""+msg+"\"\n", "");
-	                    tc.sendSprogMessage(msg, this);
-                    } else {
-                    	state = State.IDLE;
-                    }
+                    state = State.IDLE;
                 }
-            }
-        } else if (state == SprogConsoleFrame.State.CURRENTQUERYSENT) {
-            int valueLength = 4;
-            if (isSprog3) {
-                valueLength = 6;
-            }
-            tmpString = replyString.substring(replyString.indexOf("=") + 
-                        1, replyString.indexOf("=") + valueLength);
-            // Value returned is number of ADC steps 0f 4.88mV across 0.47 ohms
-            // SPROG 3 is equivalent, using .047R sense with 10x amplifier
-            // Convert to milliAmps using integer math
-            try {
-                currentLimit = (Integer.parseInt(tmpString)*4880)/470;
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Malformed Reply for current limit",
-                        "SPROG Console", JOptionPane.ERROR_MESSAGE);
+                break;
+            case MODEQUERYSENT:
+                if (log.isDebugEnabled()) { log.debug("reply in MODEQUERYSENT state: "+replyString); }
+                tmpString = replyString.substring(replyString.indexOf("=") + 
+                            2, replyString.indexOf("=") + 6);
+                // Value returned is in hex
+                try {
+                    modeWord = Integer.parseInt(tmpString, 16);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Malformed Reply for mode word",
+                            "SPROG Console", JOptionPane.ERROR_MESSAGE);
+                    state = State.IDLE;
+                    return;
+                }
                 state = State.IDLE;
-                return;
-            }
-            currentTextField.setText(String.valueOf(currentLimit));
-            currentTextField.setEnabled(true);
-            // Next get the mode word
-            //Only get this if we have zero active slots in slot manager
-            //in command mode
-            if (sm.getInUseCount() == 0) {
-	            state = State.MODEQUERYSENT;
-	            msg = new SprogMessage(1);
-	            msg.setOpCode('M');
-	            nextLine("cmd: \""+msg+"\"\n", "");
-	            tc.sendSprogMessage(msg, this);
-            } else {
-            	state = State.IDLE;
-            }
-        } else if (state == State.MODEQUERYSENT) {
-            tmpString = replyString.substring(replyString.indexOf("=") + 
-                        2, replyString.indexOf("=") + 6);
-            // Value returned is in hex
-            try {
-                modeWord = Integer.parseInt(tmpString, 16);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Malformed Reply for mode word",
-                        "SPROG Console", JOptionPane.ERROR_MESSAGE);
-                state = State.IDLE;
-                return;
-            }
-            state = State.IDLE;
-            // Set Speed step radio buttons, etc., according to mode word
-            if ((modeWord & SprogConstants.STEP14_BIT) != 0) {
-                speed14Button.setSelected(true);
-            } else if ((modeWord & SprogConstants.STEP28_BIT) != 0) {
-                speed28Button.setSelected(true);
-            } else {
-                speed128Button.setSelected(true);
-            }
-            if ((modeWord & SprogConstants.ZTC_BIT) != 0) {
-                ztcCheckBox.setSelected(true);
-            }
-            if ((modeWord & SprogConstants.BLUE_BIT) != 0) {
-                blueCheckBox.setSelected(true);
-            }
-        } else if (state == State.CURRENTSENT) {
-            // Get new mode word - assume 128 steps
-            modeWord = SprogConstants.STEP128_BIT;
-            if (speed14Button.isSelected()) {
-                modeWord = modeWord & ~SprogConstants.STEP_MASK | SprogConstants.STEP14_BIT;
-            } else if (speed28Button.isSelected()) {
-                modeWord = modeWord & ~SprogConstants.STEP_MASK | SprogConstants.STEP28_BIT;
-            }
+                // Set Speed step radio buttons, etc., according to mode word
+                if ((modeWord & SprogConstants.STEP14_BIT) != 0) {
+                    speed14Button.setSelected(true);
+                } else if ((modeWord & SprogConstants.STEP28_BIT) != 0) {
+                    speed28Button.setSelected(true);
+                } else {
+                    speed128Button.setSelected(true);
+                }
+                if ((modeWord & SprogConstants.ZTC_BIT) != 0) {
+                    ztcCheckBox.setSelected(true);
+                }
+                if ((modeWord & SprogConstants.BLUE_BIT) != 0) {
+                    blueCheckBox.setSelected(true);
+                }
+                break;
+            case CURRENTSENT:
+                if (log.isDebugEnabled()) { log.debug("reply in CURRENTSENT state: "+replyString); }
+                // Get new mode word - assume 128 steps
+                modeWord = SprogConstants.STEP128_BIT;
+                if (speed14Button.isSelected()) {
+                    modeWord = modeWord & ~SprogConstants.STEP_MASK | SprogConstants.STEP14_BIT;
+                } else if (speed28Button.isSelected()) {
+                    modeWord = modeWord & ~SprogConstants.STEP_MASK | SprogConstants.STEP28_BIT;
+                }
 
-            // ZTC mode
-            if (ztcCheckBox.isSelected() == true) {
-                modeWord = modeWord | SprogConstants.ZTC_BIT;
-            }
-            
-            // Blueline mode
-            if (blueCheckBox.isSelected() == true) {
-                modeWord = modeWord | SprogConstants.BLUE_BIT;
-            }
-            
-            // firmware unlock
-            if (unlockCheckBox.isSelected() == true) {
-                modeWord = modeWord | SprogConstants.UNLOCK_BIT;
-            }
-           
-            // Send new mode word
-            state = State.MODESENT;
-            msg = new SprogMessage("M "+modeWord);
-            nextLine("cmd: \""+msg.toString()+"\"\n", "");
-            tc.sendSprogMessage(msg, this);
-        } else if (state == State.MODESENT) {
-            // Write to EEPROM
-            state = State.WRITESENT;
-            msg = new SprogMessage("W");
-            nextLine("cmd: \""+msg.toString()+"\"\n", "");
-            tc.sendSprogMessage(msg, this);
-        } else if (state == State.WRITESENT) {
-            // All done
-            state = State.IDLE;
+                // ZTC mode
+                if (ztcCheckBox.isSelected() == true) {
+                    modeWord = modeWord | SprogConstants.ZTC_BIT;
+                }
+
+                // Blueline mode
+                if (blueCheckBox.isSelected() == true) {
+                    modeWord = modeWord | SprogConstants.BLUE_BIT;
+                }
+
+                // firmware unlock
+                if (unlockCheckBox.isSelected() == true) {
+                    modeWord = modeWord | SprogConstants.UNLOCK_BIT;
+                }
+
+                // Send new mode word
+                state = State.MODESENT;
+                msg = new SprogMessage("M "+modeWord);
+                nextLine("cmd: \""+msg.toString()+"\"\n", "");
+                tc.sendSprogMessage(msg, this);
+                break;
+            case MODESENT:
+                if (log.isDebugEnabled()) { log.debug("reply in MODESENT state: "+replyString); }
+                // Write to EEPROM
+                state = State.WRITESENT;
+                msg = new SprogMessage("W");
+                nextLine("cmd: \""+msg.toString()+"\"\n", "");
+                tc.sendSprogMessage(msg, this);
+                break;
+            case WRITESENT:
+                if (log.isDebugEnabled()) { log.debug("reply in WRITESENT state: "+replyString); }
+                // All done
+                state = State.IDLE;
         }
     }
     

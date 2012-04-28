@@ -2,8 +2,7 @@
 
 package jmri.jmrix.sprog.update;
 
-import jmri.jmrix.sprog.SprogMessage;
-import jmri.jmrix.sprog.SprogTrafficController;
+import jmri.jmrix.sprog.*;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 
 import javax.swing.*;
@@ -12,18 +11,22 @@ import javax.swing.*;
  * Frame for SPROG firmware update utility. 
  * 
  * Andrew Berridge - Feb 2010 - removed implementation of SprogListener - wasn't being used
+ *
+ * Refactored
  * 
  * @author			Andrew Crosland   Copyright (C) 2004
  * @version			$Revision$
  */
-public class SprogUpdateFrame
-    extends jmri.util.JmriJFrame {
+abstract public class SprogUpdateFrame
+        extends jmri.util.JmriJFrame
+        implements SprogListener {
 
   // member declarations
-  protected JButton connectButton = new JButton();
   protected JButton programButton = new JButton();
   protected JButton openFileChooserButton = new JButton();
   protected JButton setSprogModeButton = new JButton();
+
+  protected SprogVersion sv;
 
   // to find and remember the hex file
   final javax.swing.JFileChooser hexFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
@@ -36,31 +39,30 @@ public class SprogUpdateFrame
   SprogMessage msg;
 
   // members for handling the bootloader interface
-  int bootState = 0;
-  static final int IDLE = 0;
-  static final int CRSENT = 1;         // awaiting reply to " "
-  static final int QUERYSENT = 2;      // awaiting reply to "?"
-  static final int SETBOOTSENT = 3;    // awaiting reply from bootloader
-  static final int VERREQSENT = 4;     // awaiting reply to version request
-  static final int WRITESENT = 5;      // write flash command sent, waiting reply
-  static final int NULLWRITE = 6;      // no write sent
-  static final int ERASESENT = 7;      // erase sent
-  static final int SPROGMODESENT = 8;  // enable sprog mode sent
-  static final int RESETSENT = 9;      // reset sent
-  static final int EOFSENT = 10;      // v4 end of file sent
-  static final int V4RESET = 11;       // wait for v4 to reset
+  protected enum BootState {IDLE,
+                  CRSENT,           // awaiting reply to " "
+                  QUERYSENT,        // awaiting reply to "?"
+                  SETBOOTSENT,      // awaiting reply from bootloader
+                  VERREQSENT,       // awaiting reply to version request
+                  WRITESENT,        // write flash command sent, waiting reply
+                  NULLWRITE,        // no write sent
+                  ERASESENT,        // erase sent
+                  SPROGMODESENT,    // enable sprog mode sent
+                  RESETSENT,        // reset sent
+                  EOFSENT,          // v4 end of file sent
+                  V4RESET,          // wait for v4 to reset
+  }
+  protected BootState bootState = BootState.IDLE;
   protected int eraseAddress;
-
+ 
   static final boolean UNKNOWN = false;
   static final boolean KNOWN = true;
 
-  String replyString;
-  String sprogVersionString = null;
-  String sprogTypeString = null;
-  int sprogTypeInt = 0;
+  protected SprogReply reply;
+  protected String replyString;
   int blockLen = 0;
 
-  SprogTrafficController tc = null;
+  protected SprogTrafficController tc = null;
 
   public SprogUpdateFrame() {
     super();
@@ -89,10 +91,6 @@ public class SprogUpdateFrame
      */
   public void initComponents() throws Exception {
     // the following code sets the frame's initial state
-    connectButton.setText("Connect");
-    connectButton.setVisible(true);
-    connectButton.setToolTipText("Identify and connect to SPROG bootloader");
-
     programButton.setText("Program");
     programButton.setVisible(true);
     programButton.setEnabled(false);
@@ -121,7 +119,6 @@ public class SprogUpdateFrame
 
     JPanel buttons1 = new JPanel();
     buttons1.setLayout(new BoxLayout(buttons1, BoxLayout.X_AXIS));
-    buttons1.add(connectButton);
     buttons1.add(openFileChooserButton);
     buttons1.add(programButton);
 
@@ -138,13 +135,6 @@ public class SprogUpdateFrame
     paneA.add(status);
 
     getContentPane().add(paneA);
-
-    // connect actions to buttons
-    connectButton.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent e) {
-        connectButtonActionPerformed(e);
-      }
-    });
 
     openFileChooserButton.addActionListener(new java.awt.event.
                                             ActionListener() {
@@ -176,9 +166,87 @@ public class SprogUpdateFrame
     pack();
   }
 
-  public synchronized void connectButtonActionPerformed(java.awt.event.
-      ActionEvent e) {
-  }
+
+    public void notifyMessage(SprogMessage m){}
+
+    // State machine to catch replies that calls functions to handle each state.
+    // These functions can be overridden for each SPROG type
+    synchronized public void notifyReply(SprogReply m) {
+        reply = m;
+        frameCheck();
+        replyString = m.toString();
+        switch (bootState) {
+            case IDLE:
+                stateIdle();
+                break;
+            case SETBOOTSENT:           // Awaiting reply from bootloader
+                stateSetBootSent();
+                break;
+            case VERREQSENT:            // awaiting reply to version request
+                stateBootVerReqSent();
+                break;
+            case WRITESENT:             // write flash command sent, waiting reply
+                stateWriteSent();
+                break;
+            case ERASESENT:             // erase sent
+                stateEraseSent();
+                break;
+            case SPROGMODESENT:         // enable sprog mode sent
+                stateSprogModeSent();
+                break;
+            case RESETSENT:             // reset sent
+                stateResetSent();
+                break;
+            case EOFSENT:               // v4 end of file sent
+                stateEofSent();
+                break;
+            case V4RESET:               // wait for v4 to reset
+                stateV4Reset();
+                break;
+            default:
+                stateDefault();
+                break;
+        }
+    }
+
+    protected void frameCheck() {
+    }
+
+    protected void stateIdle() {
+      if (log.isDebugEnabled()) { log.debug("reply in IDLE state"); }
+    }
+
+    protected void stateSetBootSent() {
+    }
+
+    protected void stateBootVerReqSent() {
+    }
+
+    protected void stateWriteSent() {
+    }
+
+    protected void stateEraseSent() {
+    }
+
+    protected void stateSprogModeSent() {
+    }
+
+    protected void stateResetSent() {
+    }
+
+    protected void stateEofSent() {
+    }
+
+    protected void stateV4Reset() {
+    }
+
+    protected void stateDefault() {
+        // Houston, we have a problem
+        if (log.isDebugEnabled()) { log.debug("Reply in unknown state"); }
+        bootState = BootState.IDLE;
+        tc.setSprogState(SprogState.NORMAL);
+    }
+
 
   // Normally this happens well before the transfer thread
   // is kicked off, but it's synchronized anyway to control
@@ -211,11 +279,48 @@ public class SprogUpdateFrame
       ActionEvent e) {
   }
 
-  /**
-   * Internal routine to handle a timeout
-   */
-  synchronized protected void timeout() {
-  }
+    abstract protected void requestBoot();
+
+    abstract protected void sendWrite();
+
+    abstract protected void doneWriting();
+
+    /**
+     * Internal routine to handle a timeout
+     */
+    synchronized protected void timeout() {
+        if (bootState == BootState.CRSENT) {
+            if (log.isDebugEnabled()) {
+                log.debug("timeout in CRSENT - assuming boot mode");
+                // we were looking for a SPROG in normal mode but have had no reply
+                // so maybe it was already in boot mode.
+                // Try looking for bootloader
+            }
+            requestBoot();
+        } else if (bootState == BootState.VERREQSENT) {
+            log.error("timeout in VERREQSENT!");
+            JOptionPane.showMessageDialog(this, "Unable to connect to bootloader",
+                    "Fatal Error", JOptionPane.ERROR_MESSAGE);
+            statusBar.setText("Fatal error - unable to connect");
+            bootState = BootState.IDLE;
+            tc.setSprogState(SprogState.NORMAL);
+        } else if (bootState == BootState.WRITESENT) {
+            log.error("timeout in WRITESENT!");
+            // This is fatal!
+            JOptionPane.showMessageDialog(this, "Timeout during write",
+                    "Fatal Error", JOptionPane.ERROR_MESSAGE);
+            statusBar.setText("Fatal error - unable to write");
+            bootState = BootState.IDLE;
+            tc.setSprogState(SprogState.NORMAL);
+        } else if (bootState == BootState.NULLWRITE) {
+            if (hexFile.read() > 0) {
+                // More data to write
+                sendWrite();
+            } else {
+                doneWriting();
+            }
+        }
+    }
 
   protected int V_SHORT_TIMEOUT=5;
   protected int SHORT_TIMEOUT=500;
@@ -257,10 +362,10 @@ public class SprogUpdateFrame
   protected void restartTimer(int delay) {
       if (timer==null) {
           timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
-                  public void actionPerformed(java.awt.event.ActionEvent e) {
-                      timeout();
-                  }
-              });
+              public void actionPerformed(java.awt.event.ActionEvent e) {
+                  timeout();
+              }
+          });
       }
       timer.stop();
       timer.setInitialDelay(delay);
@@ -270,5 +375,4 @@ public class SprogUpdateFrame
 
   static org.apache.log4j.Logger log = org.apache.log4j.Logger
   .getLogger(SprogUpdateFrame.class.getName());
-
 }
