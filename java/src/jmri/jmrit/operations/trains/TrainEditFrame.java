@@ -117,9 +117,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JTextField trainDescriptionTextField = new JTextField(30);
 	
 	// text area
-	JTextArea commentTextArea	= new JTextArea(2,50);
+	JTextArea commentTextArea	= new JTextArea(2,70);
 	JScrollPane commentScroller = new JScrollPane(commentTextArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	Dimension minScrollerDim = new Dimension(500,42);
+	Dimension minScrollerDim = new Dimension(800,42);
 	
 	// for padding out panel
 	JLabel space1 = new JLabel("       ");
