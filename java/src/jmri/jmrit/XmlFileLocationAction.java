@@ -4,7 +4,8 @@ package jmri.jmrit;
 
 import javax.swing.AbstractAction;
 import javax.swing.JTextArea;
-import java.awt.event.ActionEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 
 import javax.swing.*;
@@ -29,21 +30,51 @@ public class XmlFileLocationAction extends AbstractAction {
     
     public void actionPerformed(ActionEvent ev) {
         
+        final String prefs = jmri.jmrit.XmlFile.prefsDir();
+        final String prog = System.getProperty("user.dir");
+
         JFrame frame = new jmri.util.JmriJFrame();  // to ensure fits
+                
+        JPanel pane = new JPanel();
+        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         
-        JTextArea pane = new javax.swing.JTextArea();
-        pane.setEditable(false);
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new FlowLayout());
+        pane.add(buttons);
+        
+        JButton b = new JButton("Open Preferences Directory");
+        buttons.add(b);
+        b.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                            try {
+                                java.awt.Desktop.getDesktop().open(new java.io.File(prefs));
+                            } catch (java.io.IOException e) {
+                            }
+                        }
+        });
+        b = new JButton("Open Program Directory");
+        buttons.add(b);
+        b.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                            try {
+                                java.awt.Desktop.getDesktop().open(new java.io.File(prog));
+                            } catch (java.io.IOException e) {
+                            }
+                        }
+        });
         
         JScrollPane  scroll = new JScrollPane(pane);
         frame.getContentPane().add(scroll);
         
-        String prefs = jmri.jmrit.XmlFile.prefsDir();
-        pane.append("Preferences directory: "+prefs+"\n");
+        JTextArea textPane = new javax.swing.JTextArea();
+        textPane.setEditable(false);
+        pane.add(textPane);
         
-        String prog = System.getProperty("user.dir");
-        pane.append("Program directory: "+prog+"\n");
+        textPane.append("Preferences directory: "+prefs+"\n");
+        
+        textPane.append("Program directory: "+prog+"\n");
 
-        addLogFiles(pane);
+        addLogFiles(textPane);
                 
         frame.pack();
         frame.setVisible(true);
