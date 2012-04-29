@@ -159,20 +159,22 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
      */
     public void setNewWindowMenuAction(JmriAbstractAction action) {
         if (action != null) {
-            MenuActionListener ml = new MenuActionListener();
+            if (newWindowMenuItemAction == null) {
+                MenuActionListener ml = new MenuActionListener();
+                JMenuItem mi = new JMenuItem("Open in New Window");
+                mi.addActionListener(ml);
+                mi.setActionCommand("newWindow");
+                groupsMenu.insert(mi, 0);
+                groupsMenu.insert(new JSeparator(), 1);
+                // create the menu item twice because a menu item can only
+                // be attached to a single menu
+                mi = new JMenuItem("Open in New Window");
+                mi.addActionListener(ml);
+                mi.setActionCommand("newWindow");
+                allEntriesMenu.insert(mi, 0);
+                allEntriesMenu.insert(new JSeparator(), 1);
+            }
             newWindowMenuItemAction = action;
-            JMenuItem mi = new JMenuItem("Open in New Window");
-            mi.addActionListener(ml);
-            mi.setActionCommand("newWindow");
-            groupsMenu.insert(mi, 0);
-            groupsMenu.insert(new JSeparator(), 1);
-            // create the menu item twice because a single menu item can only
-            // be attached to a single menu
-            mi = new JMenuItem("Open in New Window");
-            mi.addActionListener(ml);
-            mi.setActionCommand("newWindow");
-            allEntriesMenu.insert(mi, 0);
-            allEntriesMenu.insert(new JSeparator(), 1);
         } else if (newWindowMenuItemAction != null) {
             groupsMenu.remove(0);
             groupsMenu.remove(0);
