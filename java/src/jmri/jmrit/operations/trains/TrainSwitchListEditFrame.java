@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.trains;
 
 
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.border.Border;
 import javax.swing.ScrollPaneConstants;
 
@@ -52,9 +54,11 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	// labels
 	JLabel textName = new JLabel(rb.getString("Location"));
 	JLabel textStatus = new JLabel(rb.getString("Status"));
+	JLabel textComment = new JLabel(rb.getString("Comment"));
 	JLabel textPrinter = new JLabel(rb.getString("Printer"));
 	JLabel space1 = new JLabel("        ");
 	JLabel space2 = new JLabel("        ");
+	JLabel space3 = new JLabel("        ");
 
 	// major buttons
 	JButton clearButton = new JButton(rb.getString("Clear"));
@@ -247,7 +251,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	    addItem(locationPanelCheckBoxes, space1, 1, 0);
 	    addItem(locationPanelCheckBoxes, textStatus, 2, 0);
 	    addItem(locationPanelCheckBoxes, space2, 3, 0);
-	    addItem(locationPanelCheckBoxes, textPrinter, 4, 0);
+	    addItem(locationPanelCheckBoxes, textComment, 4, 0);
+	    addItem(locationPanelCheckBoxes, space3, 5, 0);
+	    addItem(locationPanelCheckBoxes, textPrinter, 6, 0);
 		
 		int y = 1;		// vertical position in panel
 
@@ -275,10 +281,17 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			}
 			addItem(locationPanelCheckBoxes, status, 2, y);
 			
+			JButton button = new JButton(rb.getString("Add"));
+			if (!l.getSwitchListComment().equals(""))
+				button.setText(rb.getString("Edit"));
+			button.setName(l.getName());
+			addCommentButtonAction(button);
+			addItem(locationPanelCheckBoxes, button, 4, y);
+			
 			JComboBox comboBox = TrainPrintUtilities.getPrinterJComboBox();
 			locationComboBoxes.add(comboBox);
 			comboBox.setSelectedItem(l.getDefaultPrinterName());
-			addItem(locationPanelCheckBoxes, comboBox, 4, y++);
+			addItem(locationPanelCheckBoxes, comboBox, 6, y++);
 			
 			l.addPropertyChangeListener(this);					
 		}
@@ -309,12 +322,27 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			}
 		});
 	}
-
+	
 	public void locationCheckBoxActionPerformed(ActionEvent ae) {
 		JCheckBox b =  (JCheckBox)ae.getSource();
 		log.debug("checkbox change "+ b.getName());
 		Location l = manager.getLocationByName(b.getName());
 		l.setSwitchListEnabled(b.isSelected());
+	}
+	
+	private void addCommentButtonAction(JButton b) {
+		b.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				commentButtonActionPerformed(e);
+			}
+		});
+	}
+	
+	public void commentButtonActionPerformed(ActionEvent ae) {
+		JButton b =  (JButton)ae.getSource();
+		log.debug("button action "+ b.getName());
+		Location l = manager.getLocationByName(b.getName());
+		new TrainSwitchListCommentFrame(l);
 	}
 
 	public void dispose() {
@@ -333,8 +361,63 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			changeLocationCheckboxes(e);
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY))
+				e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(Location.SWITCHLIST_COMMENT_CHANGED_PROPERTY))
 			updateLocationCheckboxes();
+	}
+	
+	public class TrainSwitchListCommentFrame extends OperationsFrame {
+		
+		// text area
+		JTextArea commentTextArea	= new JTextArea(10,90);
+		JScrollPane commentScroller = new JScrollPane(commentTextArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		Dimension minScrollerDim = new Dimension(1200, 500);
+		JButton saveButton = new JButton(rb.getString("Save"));
+		
+		Location _location;
+		
+		public TrainSwitchListCommentFrame(Location location) {
+			super();
+			initComponents(location);
+		}
+		
+		private void initComponents(Location location) {
+			_location = location;
+			// the following code sets the frame's initial state
+		    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
+		    
+	     	JPanel pC = new JPanel();
+	    	pC.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
+	    	pC.setLayout(new GridBagLayout());
+	    	commentScroller.setMinimumSize(minScrollerDim);
+			addItem(pC, commentScroller, 1, 0);
+			
+			commentTextArea.setText(location.getSwitchListComment());
+			
+		   	JPanel pB = new JPanel();
+	    	pB.setLayout(new GridBagLayout());	
+	    	addItem(pB, saveButton, 0, 0);
+			
+			getContentPane().add(pC);
+			getContentPane().add(pB);
+			
+			addButtonAction(saveButton);
+			
+			pack();
+			setTitle(location.getName());
+			setVisible(true);
+		}
+		
+		// Buttons 
+		public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+			if (ae.getSource() == saveButton){
+				_location.setSwitchListComment(commentTextArea.getText());
+				// save location file
+				OperationsXml.save();
+				if (Setup.isCloseWindowOnSaveEnabled())
+					dispose();
+			}				
+		}
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger

@@ -40,6 +40,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	protected int _length = 0;						//length of all tracks at this location
 	protected int _usedLength = 0;					//length of track filled by cars and engines 
 	protected String _comment = "";
+	protected String _switchListComment = "";		//optional switch list comment
 	protected boolean _switchList = true;			//when true print switchlist for this location
 	protected String _defaultPrinter = "";			//the default printer name when printing a switchlist
 	protected String _status = UNKNOWN;				//print switch list status
@@ -87,6 +88,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	public static final String DISPOSE_CHANGED_PROPERTY = "dispose";
 	public static final String STATUS_CHANGED_PROPERTY = "locationStatus";
 	public static final String POOL_LENGTH_CHANGED_PROPERTY = "PoolLengthChanged";
+	public static final String SWITCHLIST_COMMENT_CHANGED_PROPERTY = "switchListComment";
 
 	public Location(String id, String name) {
 		log.debug("New location " + name + " " + id);
@@ -398,16 +400,24 @@ public class Location implements java.beans.PropertyChangeListener {
 		String old = _comment;
 		_comment = comment;
 		if (!old.equals(comment))
-			setDirtyAndFirePropertyChange ("LocationComment", old, comment);
-		
+			setDirtyAndFirePropertyChange ("LocationComment", old, comment);		
 	}
 
 	public String getComment() {
 		return _comment;
 	}
 	
+	public void setSwitchListComment(String comment) {
+		String old = _switchListComment;
+		_switchListComment = comment;
+		if (!old.equals(comment))
+			setDirtyAndFirePropertyChange (SWITCHLIST_COMMENT_CHANGED_PROPERTY, old, comment);		
+	}
 
-    
+	public String getSwitchListComment() {
+		return _switchListComment;
+	}
+   
     private String[] getTypeNames(){
       	String[] types = new String[_listTypes.size()];
      	for (int i=0; i<_listTypes.size(); i++)
@@ -816,6 +826,7 @@ public class Location implements java.beans.PropertyChangeListener {
         	setTrainIconSouth(new Point(Integer.parseInt(x.getValue()),Integer.parseInt(y.getValue())));
         }      
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
+        if ((a = e.getAttribute("switchListComment")) != null )  _switchListComment = a.getValue();
         if ((a = e.getAttribute("physicalLocation")) != null) _physicalLocation = PhysicalLocation.parse(a.getValue());
         if ((a = e.getAttribute("carTypes")) != null ) {
         	String names = a.getValue();
@@ -891,6 +902,7 @@ public class Location implements java.beans.PropertyChangeListener {
         	e.setAttribute("physicalLocation", _physicalLocation.toString());
 
         e.setAttribute("comment", getComment());
+        e.setAttribute("switchListComment", getSwitchListComment());
         
         List<String> tracks = getTrackIdsByIdList();
         for (int i=0; i<tracks.size(); i++) {

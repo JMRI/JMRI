@@ -758,11 +758,11 @@ print options.  You can change the comment if desired, and press "Save" to keep 
 
    <H3>Manifest Preview</H3>
 
-If you want to use a text editor to preview your manifests and switch
-lists, select this option.
-
-<A NAME="BuildReportDetails"></A>
-<H3>Build Report Details</H3>
+   If you want to use a text editor to preview your manifests and switch lists, select this option.  
+   This option also allows you to make manual changes to your manifests before you print them.
+   
+   <A NAME="BuildReportDetails"></A>
+   <H3>Build Report Details</H3>
 
    You can adjust the amount of information that the build report will show. Select one of the four
    levels using the radio buttons in the Print Options window. The program when generating the build
@@ -774,8 +774,8 @@ lists, select this option.
    locomotives and cars. The "Detailed" provides additional comments about the build and shows all
    of the available cars for the train. The "Very Detailed" setting produces the most pages, and
    will show why cars are excluded from the train, and why they are not picked up or set out. Be
-   sure and press "Save" after changing the build report selection. 
-   
+   sure and press "Save" after changing the build report selection.
+
    <P>
    You also have the option of using a text editor to view your build report.  A text editor can make
    trouble shooting a problem much easier for you.  For example, say you have a car that isn't moving.

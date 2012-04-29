@@ -79,6 +79,9 @@ public class TrainSwitchLists extends TrainCommon {
 		}
 		addLine(fileOut, valid);
 		
+		if (!location.getSwitchListComment().equals(""))
+			addLine(fileOut, location.getSwitchListComment());
+		
 		// get a list of trains sorted by arrival time
 		List<Train> trains = getTrainsArrivingThisLocationList(location);
 		CarManager carManager = CarManager.instance();
