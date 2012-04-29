@@ -1,4 +1,4 @@
-package jmri.jmrix.dcc4pc.swing.boardlist;
+package jmri.jmrix.dcc4pc.swing.boardlists;
 
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import javax.swing.table.*;
