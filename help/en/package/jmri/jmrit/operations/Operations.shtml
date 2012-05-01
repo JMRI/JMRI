@@ -2532,13 +2532,16 @@ A switch list shows the work required to service all of the trains
 visiting that location. Normally a switch list is given to the person in
 charge of a yard or a location with many spurs or industries.
 
-<P>Press the "Print Switch List" button if you want a switch list
-for a given location. A menu will appear that allows you to select which
-locations to preview or print. Once you've determined which locations
-you want to print or preview, press the "Save" button to keep your
-selections.</P>
+   <P>Press the "Switch List" button found at the bottom of the "Trains" window if you want a
+    switch list for a given location. A menu will appear that allows you to select which locations
+    to preview or print. Once you've determined which locations you want to print or preview, press
+    the "Save" button to keep your selections.</P>
 
-<P><img src="images/SwitchList.png"></P>
+   <P>The switch list menu also lets you add a comment to the switch list for a location and
+    select which printer to use when printing out the switch list.  Note that the program when
+    printing out manifests will also use the printer associated the train's departure location.</P>
+
+   <P><img src="images/SwitchList.png"></P>
 
 <A NAME="TrainMove"></A>
 <H3>Moving Trains</H3>

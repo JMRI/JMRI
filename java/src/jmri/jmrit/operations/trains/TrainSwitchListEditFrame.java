@@ -366,7 +366,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			updateLocationCheckboxes();
 	}
 	
-	public class TrainSwitchListCommentFrame extends OperationsFrame {
+	public static class TrainSwitchListCommentFrame extends OperationsFrame {
 		
 		// text area
 		JTextArea commentTextArea	= new JTextArea(10,90);
@@ -415,11 +415,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 				// save location file
 				OperationsXml.save();
 				if (Setup.isCloseWindowOnSaveEnabled())
-					dispose();
+					super.dispose();
 			}				
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(TrainSwitchListEditFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainSwitchListEditFrame.class.getName());
 }
