@@ -549,7 +549,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 					// prevent rs from being picked up and delivered
 					setRouteLocationAndDestination(rs, train, null, null);
 				}
-			} else if (rl != null && rd != null && rs.getDestinationTrack() != null){
+			} else if (rl != null && rd != null && rs.getDestinationTrack() != null  && !train.isTrainInRoute()){
 				if (JOptionPane.showConfirmDialog(this, 
 						MessageFormat.format(getRb().getString("rsAddRsToTrain"), new Object[]{rs.toString(), train.getName()}),
 						getRb().getString("rsAddManuallyToTrain"),						
