@@ -293,6 +293,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		if (ae.getSource() == sortByWait){
 			carsModel.setSort(carsModel.SORTBYWAIT);
 		}
+		// clear any sorts by column
+    	clearTableSort(carsTable);
 	}
 	
 	public List<String> getSortByList(){

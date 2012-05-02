@@ -237,6 +237,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		if (ae.getSource() == sortByRfid){
 			enginesModel.setSort(enginesModel.SORTBYRFID);
 		}
+		// clear any sorts by column
+    	clearTableSort(enginesTable);
 	}
 	
 	public List<String> getSortByList(){

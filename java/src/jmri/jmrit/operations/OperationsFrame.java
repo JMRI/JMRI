@@ -275,7 +275,20 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		}
 		return sortDone;	
 	}
+	
+	protected void clearTableSort(JTable table){
+		TableSorter sorter = null;
+		try {
+			sorter = (TableSorter) table.getModel();
+		} catch (Exception e) {
+			log.debug("table doesn't use sorter");
+		} 
+		if (sorter == null)
+			return;
+		for (int i = 0; i <table.getColumnCount(); i++) {
+			sorter.setSortingStatus(i, TableSorter.NOT_SORTED);
+		}
+	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(OperationsFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OperationsFrame.class.getName());
 }
