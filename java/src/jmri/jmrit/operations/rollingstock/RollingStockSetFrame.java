@@ -570,8 +570,6 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	}
 	
 	protected void updateComboBoxes(){
-		if (_disableComboBoxUpdate)
-			return;
 		log.debug("update combo boxes");
 		locationManager.updateComboBox(locationBox);
 		locationManager.updateComboBox(destinationBox);
@@ -748,6 +746,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug ("PropertyChange "+e.getPropertyName()+" "+e.getNewValue());
+		if (_disableComboBoxUpdate)
+			return;
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||
 				e.getSource().getClass().equals(Car.class) ||

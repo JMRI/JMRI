@@ -165,14 +165,14 @@ public class CarLoads {
      * @param name load name.
      */
     public void addName(String type, String name){
+    	// don't add if name already exists
+    	if (containsName(type, name))
+    		return;
     	List<CarLoad> loads = list.get(type);
     	if (loads == null){
     		log.debug("car type ("+type+") does not exist");
     		return;
     	}
-    	// don't add if name already exists
-    	if (containsName(type, name))
-    		return;
     	loads.add(0, new CarLoad(name));
     	maxNameLength = 0;	// reset maximum name length
     	firePropertyChange (LOAD_CHANGED_PROPERTY, loads.size()-1, loads.size());
@@ -203,18 +203,12 @@ public class CarLoads {
      * @return true if car can have this load name.
      */
     public boolean containsName(String type, String name){
-       	List<CarLoad> loads = list.get(type);
-    	if (loads == null){
-    		//log.debug("car type ("+type+") does not exist");
-    		return false;
-    	}
-       	for (int i=0; i<loads.size(); i++){
-    		CarLoad cl = loads.get(i);
-    		if (cl.getName().equals(name)){
+    	List<String> names = getNames(type);
+    	for (int i=0; i<names.size(); i++){
+    		if (names.get(i).equals(name))
     			return true;
-    		}
     	}
-    	return false;
+    	return false; 
     }
     
     public void updateComboBox(String type, JComboBox box) {
