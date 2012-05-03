@@ -523,7 +523,12 @@ public class CarLoads {
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
-    protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
+    
+    protected void firePropertyChange(String p, Object old, Object n) {
+    	// Set dirty
+    	CarManagerXml.instance().setDirty(true);
+    	pcs.firePropertyChange(p,old,n);
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarLoads.class.getName());
 

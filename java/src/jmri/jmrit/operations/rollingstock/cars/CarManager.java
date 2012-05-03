@@ -392,6 +392,12 @@ public class CarManager extends RollingStockManager{
     	// nothing to save!
         return values;
     }
+    
+    protected void firePropertyChange(String p, Object old, Object n){
+		// Set dirty
+		CarManagerXml.instance().setDirty(true);
+    	super.firePropertyChange(p, old, n);
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarManager.class.getName());
 
