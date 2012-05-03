@@ -305,13 +305,15 @@ public class MultiSensorIconAdder extends IconAdder {
 
     private void addIcon() {
         int index = _order.size();
-        String name = "resources/icons/misc/X-red.gif"; //"resources/icons/USS/plate/levers/l-vertical.gif";
-        super.setIcon(index, "MultiSensorPosition " +(index-3), new NamedIcon(name, name));
+        String path = "resources/icons/misc/X-red.gif"; //"resources/icons/USS/plate/levers/l-vertical.gif";
+        String label = "MultiSensorPosition " +(index-3);
+        super.setIcon(index, label, new NamedIcon(path, path));
         valueChanged(null);
-        makeIconPanel(!_update);
         if (!_update) {
+            _defaultIcons.addLeaf(label, path);
             ImageIndexEditor.indexChanged(true);        	
         }
+        makeIconPanel(!_update);
         this.invalidate();
     }
 
@@ -337,7 +339,6 @@ public class MultiSensorIconAdder extends IconAdder {
     *
     */
     void delete(String key) {
-        NamedIcon icon = (NamedIcon)_iconMap.get(key).getIcon();
         _iconMap.remove(key);
         _sensorMap.remove(key);
         int index = _order.indexOf(key);
@@ -352,7 +353,7 @@ public class MultiSensorIconAdder extends IconAdder {
             		String path = leaves.get(i).getPath();
                     _defaultIcons.deleteLeaves(label);
                     _defaultIcons.addLeaf("MultiSensorPosition " + (k-3), path);
-                    break;
+//                    break;
             	}
             }      
             ImageIndexEditor.indexChanged(true);

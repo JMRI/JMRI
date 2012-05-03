@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Hashtable;
 import java.util.ResourceBundle;
 import java.io.IOException;
@@ -143,14 +144,15 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (log.isDebugEnabled()) log.debug("initDefaultIcons: type= "+_type+", defaultIcons= "+_defaultIcons);
     }
 
-    public CatalogTreeNode getDefaultIconNodeFromMap() {
+    private CatalogTreeNode getDefaultIconNodeFromMap() {
         if (log.isDebugEnabled()) log.debug("getDefaultIconNodeFromMap for node= "+_type+
                                             ", _order.size()= "+_order.size());
         _defaultIcons =new CatalogTreeNode(_type);
-        for (int i=0; i<_order.size(); i++) {
-            String key = _order.get(i);
-            NamedIcon icon = (NamedIcon)_iconMap.get(key).getIcon();
-            _defaultIcons.addLeaf(new CatalogTreeLeaf(key, icon.getURL(), i));
+        Iterator<Entry<String, JToggleButton>> it = _iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+        	Entry<String, JToggleButton> e = it.next();
+            NamedIcon icon = (NamedIcon)e.getValue().getIcon();
+            _defaultIcons.addLeaf(new CatalogTreeLeaf(e.getKey(), icon.getURL(), _order.indexOf(e.getKey())));
         }
         return _defaultIcons;
     }
@@ -576,7 +578,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _catalog.setToolTipText(rb.getString("ToolTipDragIcon"));
             this.add(_catalog);
         }
-        if (_type != null && _defaultIcons == null) {
+        if (_type != null /*&& _defaultIcons == null*/) {
             getDefaultIconNodeFromMap();
         }
         // Allow initial row to be set without getting callback to valueChanged
