@@ -63,7 +63,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public final int SORTBYSTATUS = 6;
     public final int SORTBYID = 7;
     
-    private int _sort = SORTBYNAME;
+    private int _sort = SORTBYTIME;
     
     public void setSort (int sort){
     	synchronized(this){
@@ -94,7 +94,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		if (_sort == SORTBYID)
 			sysList = manager.getTrainsByIdList();
 		else
-			sysList = manager.getTrainsByNameList();
+			sysList = manager.getTrainsByTimeList();
 		/*
 		else if (_sort == SORTBYNAME)
 			sysList = manager.getTrainsByNameList();
