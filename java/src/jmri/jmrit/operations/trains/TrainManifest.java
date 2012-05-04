@@ -64,7 +64,7 @@ public class TrainManifest extends TrainCommon {
 		}
 		
 		List<String> engineList = engineManager.getByTrainList(train);		
-		pickupEngines(fileOut, engineList, train.getTrainDepartsRouteLocation());
+		//pickupEngines(fileOut, engineList, train.getTrainDepartsRouteLocation());
 		
 		if (Setup.isPrintRouteCommentsEnabled() && !train.getRoute().getComment().equals(""))
 			addLine(fileOut, train.getRoute().getComment());
@@ -131,23 +131,19 @@ public class TrainManifest extends TrainCommon {
 			
 			// engine change or helper service?
 			if (train.getSecondLegOptions() != Train.NONE){
-				if (rl == train.getSecondLegStartLocation()){
+				if (rl == train.getSecondLegStartLocation())
 					printChange(fileOut, rl, train.getSecondLegOptions());
-					dropEngines(fileOut, engineList, rl);
-					pickupEngines(fileOut, engineList, rl);
-				}
-				if (rl == train.getSecondLegEndLocation())
+				if (rl == train.getSecondLegEndLocation() && train.getSecondLegOptions() == Train.HELPER_ENGINES)
 					addLine(fileOut, MessageFormat.format(rb.getString("RemoveHelpersAt"), new Object[]{splitString(rl.getName())}));
 			}
 			if (train.getThirdLegOptions() != Train.NONE){
-				if (rl == train.getThirdLegStartLocation()){
+				if (rl == train.getThirdLegStartLocation())
 					printChange(fileOut, rl, train.getThirdLegOptions());
-					dropEngines(fileOut, engineList, rl);
-					pickupEngines(fileOut, engineList, rl);
-				}
-				if (rl == train.getThirdLegEndLocation())
+				if (rl == train.getThirdLegEndLocation() && train.getThirdLegOptions() == Train.HELPER_ENGINES)
 					addLine(fileOut, MessageFormat.format(rb.getString("RemoveHelpersAt"), new Object[]{splitString(rl.getName())}));
 			}
+			
+			pickupEngines(fileOut, engineList, rl);
 
 			// block cars by destination
 			for (int j = r; j < routeList.size(); j++) {
@@ -188,6 +184,9 @@ public class TrainManifest extends TrainCommon {
 						emptyCars--;
 				}
 			}
+			
+			dropEngines(fileOut, engineList, rl);
+
 			if (r != routeList.size() - 1) {
 				// Is the next location the same as the previous?
 				RouteLocation rlNext = train.getRoute().getLocationById(routeList.get(r+1));
@@ -212,7 +211,6 @@ public class TrainManifest extends TrainCommon {
 					}
 				}
 			} else {
-				dropEngines(fileOut, engineList, rl);
 				addLine(fileOut, rb.getString("TrainTerminatesIn")+ " " + routeLocationName);
 			}
 			previousRouteLocationName = routeLocationName;
