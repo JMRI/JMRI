@@ -205,7 +205,10 @@ public class Backup extends XmlFile {
     	for (int i=0; i<100; i++){
     		if (checkDirectoryExists(backupName)){
     			log.debug("Operations backup directory "+backupName+" already exist");
-    			backupName = getDirectoryName()+"_"+i;
+    			if (i<10)
+    				backupName = getDirectoryName()+"_0"+i;
+    			else 
+    				backupName = getDirectoryName()+"_"+i;
     		} else {
     			break;
     		}
