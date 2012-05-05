@@ -11,6 +11,7 @@ import org.openlcb.can.MessageBuilder;
 import org.openlcb.can.OpenLcbCanFrame;
 import org.openlcb.MimicNodeStore;
 import org.openlcb.Connection;
+import org.openlcb.AbstractConnection;
 import org.openlcb.Message;
 
 import jmri.jmrix.can.*;
@@ -186,7 +187,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
     }
     
-    static class TransmittedFrameAdapter implements Connection {
+    static class TransmittedFrameAdapter extends AbstractConnection {
         public void put(org.openlcb.Message m,org.openlcb.Connection c) {
             System.out.println("c: "+m);
         }
@@ -195,4 +196,4 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OlcbConfigurationManager.class.getName());
 }
 
-/* @(#)ConfigurationManager.java */
+/* @(#)OlcbConfigurationManager.java */
