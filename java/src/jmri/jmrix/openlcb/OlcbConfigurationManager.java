@@ -7,6 +7,7 @@ import jmri.InstanceManager;
 import java.util.ResourceBundle;
 import java.util.List;
 import java.util.ArrayList;
+import java.net.*;
 
 import org.openlcb.can.AliasMap;
 import org.openlcb.can.MessageBuilder;
@@ -36,7 +37,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     jmri.jmrix.swing.ComponentFactory cf = null;
     
     public void configureManagers(){
-                
+        
+        // create our NodeID
+        getOurNodeID();
         // create JMRI objects
         InstanceManager.setSensorManager(
             getSensorManager());
@@ -69,7 +72,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     MimicNodeStore nodeStore;
     Connection connection;
     TrafficController tc;
-    NodeID nodeID = new NodeID(new byte[]{2,1,18,0,0,1});
+    NodeID nodeID;
     
     /** 
      * Tells which managers this provides by class
@@ -163,6 +166,54 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return null;
     }
 
+    /**
+     * Create a node ID in the JMRI range from one byte of IP address, and
+     * 2 bytes of PID.  That changes each time, which isn't perhaps what's
+     * wanted.
+     */
+    protected void getOurNodeID() {
+        long pid = getProcessId(1);
+        log.debug("Process ID: "+pid);
+        
+        InetAddress address = null;
+        try {
+            NetworkInterface n = NetworkInterface.getNetworkInterfaces().nextElement();
+            if (n!=null) {
+                address = n.getInetAddresses().nextElement();
+            }
+        } catch (SocketException e) {
+            log.warn("Can't get IP address to make NodeID", e);
+        }
+        log.debug("InetAddress: "+address);
+        int b1 = 0;
+        if (address != null) {
+            b1 = address.getAddress()[0];
+        }
+        nodeID = new NodeID(new byte[]{2,1,18,(byte)(b1&0xFF),(byte)((pid>>8)&0xFF),(byte)(pid&0xFF)});
+        log.debug("Node ID: "+nodeID);
+    }
+    
+    protected long getProcessId(final long fallback) {
+        // Note: may fail in some JVM implementations
+        // therefore fallback has to be provided
+    
+        // something like '<pid>@<hostname>', at least in SUN / Oracle JVMs
+        final String jvmName = java.lang.management.ManagementFactory.getRuntimeMXBean().getName();
+        final int index = jvmName.indexOf('@');
+    
+        if (index < 1) {
+            // part before '@' empty (index = 0) / '@' not found (index = -1)
+            return fallback;
+        }
+    
+        try {
+            return Long.parseLong(jvmName.substring(0, index));
+        } catch (NumberFormatException e) {
+            // ignore
+        }
+        return fallback;
+    }
+    
     /**
      * Receives frames from the TrafficController, and
      * forwards into OpenLCB system objects
