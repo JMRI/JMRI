@@ -49,7 +49,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     JTextField mDelayField[]    = new JTextField[MAXSEQUENCE];
     JToggleButton    mRunButton = new JToggleButton("Go");
 
-    JTextField srcAliasField = new JTextField("123");
+    JTextField srcAliasField = new JTextField(4);
     JTextField verifyNodeField = new JTextField("02 03 04 05 06 07 ");
     JTextField sendEventField = new JTextField("02 03 04 05 06 07 00 01 ");
     JTextField dstAliasField = new JTextField(4);
@@ -499,6 +499,17 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         connection = memo.get(org.openlcb.Connection.class);
         srcNodeID = memo.get(org.openlcb.NodeID.class);
         aliasMap = memo.get(org.openlcb.can.AliasMap.class);
+        
+        // register request for notification
+        Connection.ConnectionListener cl = new Connection.ConnectionListener(){
+            public void connectionActive(Connection c) {
+                log.debug("connection active");
+                // load the alias field
+                srcAliasField.setText(Integer.toHexString(aliasMap.getAlias(srcNodeID)));
+            }
+        };
+        connection.registerStartNotification(cl);
+        
     }
 
     /**

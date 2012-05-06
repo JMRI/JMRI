@@ -9,10 +9,12 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 
 import org.openlcb.MimicNodeStore;
+import org.openlcb.Connection;
+import org.openlcb.NodeID;
 import org.openlcb.swing.networktree.TreePane;
 
 /**
- * Frame displaying (and logging) OpenLCB (CAN) frames
+ * Frame displaying tree of OpenLCB nodes
  *
  * @author	    Bob Jacobsen   Copyright (C) 2009, 2010, 2012
  * @version         $Revision: 17977 $
@@ -40,7 +42,11 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
         // add GUI component
         treePane = new TreePane();
         
-        treePane.initComponents((MimicNodeStore)memo.get(MimicNodeStore.class));
+        treePane.initComponents(
+                (MimicNodeStore)memo.get(MimicNodeStore.class),
+                (Connection)memo.get(Connection.class),
+                (NodeID)memo.get(NodeID.class)
+            );
         add(treePane);
     }
     

@@ -6,15 +6,13 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.InstanceManager;
 import java.util.ResourceBundle;
 import java.util.List;
+import java.util.ArrayList;
 
 import org.openlcb.can.AliasMap;
 import org.openlcb.can.MessageBuilder;
 import org.openlcb.can.OpenLcbCanFrame;
-import org.openlcb.MimicNodeStore;
-import org.openlcb.Connection;
-import org.openlcb.NodeID;
-import org.openlcb.AbstractConnection;
-import org.openlcb.Message;
+import org.openlcb.can.NIDaAlgorithm;
+import org.openlcb.*;
 
 import jmri.jmrix.can.*;
 
@@ -38,12 +36,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     jmri.jmrix.swing.ComponentFactory cf = null;
     
     public void configureManagers(){
-    
-        // create OpenLCB objects
-        aliasMap = new AliasMap();
-        messageBuilder = new MessageBuilder(aliasMap);
-        nodeStore = new MimicNodeStore();
-            
+                
         // create JMRI objects
         InstanceManager.setSensorManager(
             getSensorManager());
@@ -58,8 +51,14 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         
         connection = new TransmittedFrameAdapter();
         
-        // load temp alias
-        aliasMap.insert(0x222, nodeID);
+        // create OpenLCB objects
+        aliasMap = new AliasMap();
+        messageBuilder = new MessageBuilder(aliasMap);
+        
+        nodeStore = new MimicNodeStore(connection, nodeID);
+        
+        // start alias acquisition
+        new StartUpHandler().start(nodeID);
         
         // show active
         ActiveFlag.setActive();
@@ -70,7 +69,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     MimicNodeStore nodeStore;
     Connection connection;
     TrafficController tc;
-    NodeID nodeID = new NodeID(new byte[]{5,0,0,0,0,1});
+    NodeID nodeID = new NodeID(new byte[]{2,1,18,0,0,1});
     
     /** 
      * Tells which managers this provides by class
@@ -146,8 +145,21 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         InstanceManager.deregister(this, OlcbConfigurationManager.class);
     }
     
+    void updateSimpleNodeInfo() {
+        byte[] part1 = new byte[]{1,'J','M','R','I',0,'P','a','n','e','l','P','r','o',0};
+        byte[] part2 = jmri.Version.name().getBytes();
+        byte[] part3 = new byte[]{0,' ',0,' ',0};
+        byte[] content = new byte[part1.length+part2.length+part3.length];
+        int i = 0;
+        for (int j=0; j<part1.length; j++) content[i++] = part1[j];
+        for (int j=0; j<part2.length; j++) content[i++] = part2[j];
+        for (int j=0; j<part3.length; j++) content[i++] = part3[j];
+        
+        nodeStore.put(new SimpleNodeIdentInfoReplyMessage(nodeID,content),null);
+    }
+    
     protected ResourceBundle getActionModelResourceBundle(){
-        //No actions that can be loaded at startup
+        //No actions that can be loaded at startup)
         return null;
     }
 
@@ -205,6 +217,16 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
     }
     
+    
+    boolean initialized = false;
+    ArrayList<Connection.ConnectionListener> pendingList = new ArrayList<Connection.ConnectionListener>();
+    
+    jmri.jmrix.can.CanMessage convertToCan(OpenLcbCanFrame f) {
+        jmri.jmrix.can.CanMessage fout = new jmri.jmrix.can.CanMessage(f.getData(), f.getHeader());
+        fout.setExtended(true);
+        return fout;
+    }
+    
     class TransmittedFrameAdapter extends AbstractConnection {
         public void put(org.openlcb.Message m,org.openlcb.Connection c) {
             if (log.isDebugEnabled()) log.debug("transmitting message "+m);
@@ -212,15 +234,73 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             List<OpenLcbCanFrame> list = messageBuilder.processMessage(m);
             for (OpenLcbCanFrame f : list) {
                 if (log.isDebugEnabled()) log.debug("    as frame "+f);
-                // convert to proper CAN type
-                jmri.jmrix.can.CanMessage fout = new jmri.jmrix.can.CanMessage(f.getData(), f.getHeader());
-                fout.setExtended(true);
-                // and send
-                tc.sendCanMessage(fout, null);
+                // convert to proper CAN type and send
+                tc.sendCanMessage(convertToCan(f), null);
+            }
+        }
+        public void registerStartNotification(ConnectionListener c) {
+            if (initialized) {
+                super.registerStartNotification(c);
+            } else {
+                pendingList.add(c); 
             }
         }
     }
 
+    /**
+     * State machine to handle startup
+     */
+    class StartUpHandler {
+        NIDaAlgorithm nidaa;
+        NodeID n;
+        javax.swing.Timer timer;
+        
+        void start(NodeID n) {
+            this.n = n;
+            log.debug("StartUpHandler starts up");
+            // wait 4 seconds for adapter startup
+            javax.swing.Action doNextStep = new javax.swing.AbstractAction() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    run();
+                }
+            };
+            
+            timer = new javax.swing.Timer(2500, doNextStep);
+            timer.start();
+        }
+        
+        void run() {
+            // Start acquiring our alias
+            nidaa = new NIDaAlgorithm(n);
+            OpenLcbCanFrame f;
+            while ( (f = nidaa.nextFrame() ) != null) {
+                tc.sendCanMessage(convertToCan(f), null);
+            }
+
+            // and switch to repeating faster
+            // timer.setDelay(200);
+            
+            // done, kill timer and handle rest of startup
+            timer.stop();
+            
+            // map our nodeID
+            aliasMap.insert((int)nidaa.getNIDa(), n);
+
+            // insert our protocol info
+            updateSimpleNodeInfo();
+            
+            // Request everybody else's info
+            connection.put(new org.openlcb.VerifyNodeIDNumberMessage(n), null);
+
+            // and wake up all
+            initialized = true;
+            for (Connection.ConnectionListener c : pendingList) {
+                c.connectionActive(connection);
+            }
+        }
+        
+    }
+    
 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OlcbConfigurationManager.class.getName());
 }
 
