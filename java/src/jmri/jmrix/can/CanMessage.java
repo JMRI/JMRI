@@ -58,6 +58,15 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
         }
     }
     
+    // create a new one from a byte array, as a service
+    public CanMessage(byte [] d, int header) {
+        this(header);
+        _nDataChars = (d.length <= 8) ? d.length : 8;
+        for (int i = 0; i < _nDataChars; i++) {
+            _dataChars[i] = d[i]&0xFF;
+        }
+    }
+    
     // copy one
     @SuppressWarnings("null")
 	public  CanMessage(CanMessage m) {
