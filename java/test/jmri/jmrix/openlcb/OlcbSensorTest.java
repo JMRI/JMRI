@@ -29,13 +29,13 @@ public class OlcbSensorTest extends TestCase {
         // message for Active and Inactive
         CanMessage mActive = new CanMessage( //[182df123] 01 02 03 04 05 06 07 08
                     new int[]{1,2,3,4,5,6,7,8},
-                    0x182df123
+                    0x18adf123
         );
         mActive.setExtended(true);
         
         CanMessage mInactive = new CanMessage( //[182df123] 01 02 03 04 05 06 07 09
                     new int[]{1,2,3,4,5,6,7,9},
-                    0x182df123
+                    0x18adf123
         );
         mInactive.setExtended(true);
 
