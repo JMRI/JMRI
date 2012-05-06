@@ -5,12 +5,14 @@ package jmri.jmrix.openlcb;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.InstanceManager;
 import java.util.ResourceBundle;
+import java.util.List;
 
 import org.openlcb.can.AliasMap;
 import org.openlcb.can.MessageBuilder;
 import org.openlcb.can.OpenLcbCanFrame;
 import org.openlcb.MimicNodeStore;
 import org.openlcb.Connection;
+import org.openlcb.NodeID;
 import org.openlcb.AbstractConnection;
 import org.openlcb.Message;
 
@@ -50,9 +52,14 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             getTurnoutManager());
         
         // do the connections
-        TrafficController tc = adapterMemo.getTrafficController();
+        tc = adapterMemo.getTrafficController();
         
         tc.addCanListener(new ReceivedFrameAdapter());
+        
+        connection = new TransmittedFrameAdapter();
+        
+        // load temp alias
+        aliasMap.insert(0x222, nodeID);
         
         // show active
         ActiveFlag.setActive();
@@ -61,6 +68,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     AliasMap aliasMap;
     MessageBuilder messageBuilder;
     MimicNodeStore nodeStore;
+    Connection connection;
+    TrafficController tc;
+    NodeID nodeID = new NodeID(new byte[]{5,0,0,0,0,1});
     
     /** 
      * Tells which managers this provides by class
@@ -77,6 +87,10 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (type.equals(MessageBuilder.class))
             return true;
         if (type.equals(MimicNodeStore.class))
+            return true;
+        if (type.equals(Connection.class))
+            return true;
+        if (type.equals(NodeID.class))
             return true;
         return false; // nothing, by default
     }
@@ -95,6 +109,10 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return (T)messageBuilder;
         if (T.equals(MimicNodeStore.class))
             return (T)nodeStore;
+        if (T.equals(Connection.class))
+            return (T)connection;
+        if (T.equals(NodeID.class))
+            return (T)nodeID;
         return null; // nothing, by default
     }
     
@@ -152,7 +170,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             }
             
             aliasMap.processFrame(frame);
-            if (log.isDebugEnabled()) log.debug("processing message frame "+frame);
+            if (log.isDebugEnabled()) log.debug("received message frame "+frame);
             java.util.List<Message> list = messageBuilder.processFrame(frame);
             if (list != null) {
                 for (Message m : list) {
@@ -187,9 +205,19 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
     }
     
-    static class TransmittedFrameAdapter extends AbstractConnection {
+    class TransmittedFrameAdapter extends AbstractConnection {
         public void put(org.openlcb.Message m,org.openlcb.Connection c) {
-            System.out.println("c: "+m);
+            if (log.isDebugEnabled()) log.debug("transmitting message "+m);
+            
+            List<OpenLcbCanFrame> list = messageBuilder.processMessage(m);
+            for (OpenLcbCanFrame f : list) {
+                if (log.isDebugEnabled()) log.debug("    as frame "+f);
+                // convert to proper CAN type
+                jmri.jmrix.can.CanMessage fout = new jmri.jmrix.can.CanMessage(f.getData(), f.getHeader());
+                fout.setExtended(true);
+                // and send
+                tc.sendCanMessage(fout, null);
+            }
         }
     }
 

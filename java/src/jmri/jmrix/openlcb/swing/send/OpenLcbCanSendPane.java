@@ -9,10 +9,14 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+
 import jmri.jmrix.can.cbus.CbusAddress;
 
 // This makes it a bit CBUS specific
 // May need refactoring one day
+
+import org.openlcb.*;
+import org.openlcb.can.AliasMap;
 
 import java.awt.*;
 
@@ -28,7 +32,7 @@ import jmri.util.javaworld.GridLayout2;
  * <LI>Send the next message and start a timer
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
- * @author			Bob Jacobsen   Copyright (C) 2008
+ * @author			Bob Jacobsen   Copyright (C) 2008, 2012
  * @version			$Revision: 19697 $
  */
 public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
@@ -55,6 +59,10 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     JTextField writeDataField = new JTextField("00 00");
     JComboBox addrSpace = new JComboBox(new String[]{"CDI", "All", "Config", "None"});
 
+    Connection connection;
+    AliasMap aliasMap;
+    NodeID srcNodeID;
+    
     public OpenLcbCanSendPane() {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -291,60 +299,51 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         tc.sendCanMessage(m, this);
     }
 
+    NodeID destNodeID() {
+        //int alias = Integer.parseInt(verifyNodeField.getText(),16);
+        //NodeID match = aliasMap.getNodeID(alias);
+        //log.debug("mapped alias "+sendEventField.getText()+" to ID "+match);
+        
+        return new NodeID(jmri.util.StringUtil.bytesFromHexString(verifyNodeField.getText()));
+    }
+    
+    EventID eventID() {        
+        return new EventID(jmri.util.StringUtil.bytesFromHexString(sendEventField.getText()));
+    }
+
     public void sendVerifyNode(java.awt.event.ActionEvent e) {
-        String data = "[180A7"+srcAliasField.getText()+"] "+verifyNodeField.getText();
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("sendVerifyNode: "+m);
-        tc.sendCanMessage(m, this);
+        Message m  = new VerifyNodeIDNumberMessage(srcNodeID);
+        connection.put(m, null);
     }
 
     public void sendRequestEvents(java.awt.event.ActionEvent e) {
-        String data = "[182B7"+srcAliasField.getText()+"] "+verifyNodeField.getText();
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("sendVerifyNode: "+m);
-        tc.sendCanMessage(m, this);
+        Message m = new IdentifyEventsMessage(srcNodeID, destNodeID());
+        connection.put(m, null);
     }
 
     public void sendEventPerformed(java.awt.event.ActionEvent e) {
-        String data = "[182DF"+srcAliasField.getText()+"] "+sendEventField.getText();
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("sendEventPerformed: "+m);
-        tc.sendCanMessage(m, this);
+        Message m = new ProducerConsumerEventReportMessage(srcNodeID, eventID());
+        connection.put(m, null);
     }
 
     public void sendReqConsumers(java.awt.event.ActionEvent e) {
-        String data = "[1824F"+srcAliasField.getText()+"] "+sendEventField.getText();
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("sendEventPerformed: "+m);
-        tc.sendCanMessage(m, this);
+        Message m = new IdentifyConsumersMessage(srcNodeID, eventID());
+        connection.put(m, null);
     }
     public void sendReqProducers(java.awt.event.ActionEvent e) {
-        String data = "[1828F"+srcAliasField.getText()+"] "+sendEventField.getText();
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("sendEventPerformed: "+m);
-        tc.sendCanMessage(m, this);
+        Message m = new IdentifyProducersMessage(srcNodeID, eventID());
+        connection.put(m, null);
     }
 
     public void sendDatagramPerformed(java.awt.event.ActionEvent e) {
-        // for now, no more than 8 bytes
-        String data = "[1d"+dstAliasField.getText()+srcAliasField.getText()+"] "+datagramContentsField.getText();
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("sendDatagramPerformed: "+m);
-        tc.sendCanMessage(m, this);
+        Message m = new DatagramMessage(srcNodeID, destNodeID(), 
+                jmri.util.StringUtil.bytesFromHexString(datagramContentsField.getText()));
+        connection.put(m, null);
     }
 
     public void sendDatagramReply(java.awt.event.ActionEvent e) {
-        String data = "[1e"+dstAliasField.getText()+srcAliasField.getText()+"] 4C";
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("sendDatagramPerformed: "+m);
-        tc.sendCanMessage(m, this);
+        Message m = new DatagramAcknowledgedMessage(srcNodeID, destNodeID());
+        connection.put(m, null);
     }
 
     public void readPerformed(java.awt.event.ActionEvent e) {
@@ -463,7 +462,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
      */
     CanMessage createPacket(String s) {
         CanMessage m;
-        // Try to convert using CbusAddress class
+        // Try to convert using CbusAddress class to reuse a little code
         CbusAddress a = new CbusAddress(s);
         if (a.check()) {
             m = a.makeMessage(tc.getCanid());
@@ -497,6 +496,9 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         super.initComponents(memo);
         tc = memo.getTrafficController();
         tc.addCanListener(this);
+        connection = memo.get(org.openlcb.Connection.class);
+        srcNodeID = memo.get(org.openlcb.NodeID.class);
+        aliasMap = memo.get(org.openlcb.can.AliasMap.class);
     }
 
     /**
