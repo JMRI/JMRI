@@ -58,15 +58,15 @@ class translatefilestructure:
         """
         testval = self.tm.isvalidversion(self.original.version)
         if testval == -1:
-            rptfile.write(str("File "+self.original.fullfilename +" contains NO version number!\n"))
+            rptfile.write(str("File " + self.original.fullfilename + " contains NO version number!\n"))
         elif testval == 0:
-            rptfile.write(str("File "+self.original.fullfilename +" contains old CVS version number " + self.original.version + "!\n"))
+            rptfile.write(str("File " + self.original.fullfilename + " contains old CVS version number " + self.original.version + "!\n"))
         for actfile in self.translations:
             testval = self.tm.isvalidversion(actfile.version)
             if testval == -1:
-                rptfile.write(str("File "+actfile.fullfilename +" contains NO version number!\n"))
+                rptfile.write(str("File " + actfile.fullfilename +" contains NO version number!\n"))
             elif testval == 0:
-                rptfile.write(str("File "+actfile.fullfilename +" contains old CVS version number " + actfile.version + "!\n"))
+                rptfile.write(str("File " + actfile.fullfilename +" contains old CVS version number " + actfile.version + "!\n"))
             
     def exist(self, key):
         """

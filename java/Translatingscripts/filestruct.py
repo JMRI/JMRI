@@ -52,6 +52,7 @@ class filestruct:
     def CopyCurr(self, key):
         for actfile in self.files:
             if actfile.iskey(""):
+                #print ('Copy Current File: ' + actfile.corename)
                 temp = translatefilestructure(self.tm, actfile.corename, actfile.copy())
                 #print ('Copy Current File: ' + actfile.corename)
                 self.currdata.append(temp)

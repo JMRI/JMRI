@@ -25,9 +25,9 @@ from textmanager import textmanager
 
 class singlefilestructure:
     def __init__(self, tm, fullfilename, path, filename, corename, key, content):
-        '''
+        """
         At initialisation the class will be filled basic naming information as well as the file content.
-        '''
+        """
         self.fullfilename = fullfilename
         self.path = path
         self.filename = filename
@@ -43,6 +43,9 @@ class singlefilestructure:
         self.firstel = []
         self.tm = tm
         self.report = []
+        #self.Debugkey = 0
+        #if self.corename == "jmri-web-server-Html":
+        #    self.Debugkey = 1
         if not (content == []):
             self.createstructure(content)
         if self.version == []:
@@ -57,6 +60,7 @@ class singlefilestructure:
         tempkey = []
         numlines = 1
         tempprevel = []
+        #print self.filename
         for lines in content:
             lineidx = lineidx + 1
             if not (len(lines.strip()) < 1):
@@ -68,11 +72,13 @@ class singlefilestructure:
                     if self.version == []:
                         if lines.strip().endswith("$"):
                             self.version = self.tm.getversion(lines)
+                    #if self.Debugkey:
+                    #    print str(str(lineidx) + ": " + "Textstring: " + lines)
                 else:
-                    errorflag = 0
+                    #errorflag = 0
                     if tempstr == []:
                         temp = lines.split("=",1)
-                        if len(temp) is 1:
+                        if len(temp) == 1:
                             raise Property_File_Error(self.fullfilename, str(lineidx),  temp[0])
                         else:
                             tempkey = temp[0].strip()
@@ -80,11 +86,17 @@ class singlefilestructure:
                     else:
                         tempstr.append(str(lines.strip()))
                         numlines = numlines + 1
+                        #if self.Debugkey:
+                        #    print str(str(lineidx) + ": " + "Addon line " + str(numlines) + ": " + lines)
                     if not (lines.strip().endswith("\\")):
                         if numlines is 1:
-                            tempitem = fileitem(lineidx + 1 - numlines,numlines,tempkey,tempstr[0],0)
+                            tempitem = fileitem(lineidx,1,tempkey,tempstr[0],0)
+                            #if self.Debugkey:
+                            #    print str(str(lineidx) + ": " + "Singleline Key: " + tempkey)
                         else:
                             tempitem = fileitem(lineidx + 1 - numlines,numlines,tempkey,tempstr,0)
+                            #if self.Debugkey:
+                            #    print str(str(lineidx) + ": " + "Multiline Key: " + tempkey + str(numlines) + " lines")
                         self.list.append(tempitem)
                         self.numitems = self.numitems + 1
                         self.numkeys = self.numkeys + 1
@@ -98,6 +110,10 @@ class singlefilestructure:
                 else:
                     tempprevel = tempitem
                     self.firstel = tempitem
+        if numlines > 1:
+            raise Property_File_Error(self.fullfilename, str(lineidx + 1 - numlines),  tempkey)
+        #if self.Debugkey:
+        #    print str(str(lineidx) + ": " + str(numlines) + " Key: " + tempkey)
         #if not self.tm.isvalidversion(self.version):
         #    print "Found Version string found in:"
         #    print self.fullfilename
