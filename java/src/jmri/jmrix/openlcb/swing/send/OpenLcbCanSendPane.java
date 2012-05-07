@@ -17,6 +17,7 @@ import jmri.jmrix.can.cbus.CbusAddress;
 
 import org.openlcb.*;
 import org.openlcb.can.AliasMap;
+import org.openlcb.implementations.MemoryConfigurationService;
 
 import java.awt.*;
 
@@ -55,13 +56,14 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     JTextField dstAliasField = new JTextField(4);
     JTextField datagramContentsField = new JTextField("20 61 00 00 00 00 08");
     JTextField configNumberField = new JTextField("40");
-    JTextField configAddressField = new JTextField("00 00 00 00");
+    JTextField configAddressField = new JTextField("000000");
     JTextField writeDataField = new JTextField("00 00");
     JComboBox addrSpace = new JComboBox(new String[]{"CDI", "All", "Config", "None"});
 
     Connection connection;
     AliasMap aliasMap;
     NodeID srcNodeID;
+    MemoryConfigurationService mcs;
     
     public OpenLcbCanSendPane() {
 
@@ -256,24 +258,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.add(b); 
         pane2.add(new JLabel("Data: "));
         pane2.add(writeDataField);
-        pane2 = new JPanel();
-        pane2.setLayout(new FlowLayout());
-        add(pane2);
-        b = new JButton("Send Confirm ");
-        b.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent e) {
-                        sendDatagramReply(e);
-                    }
-                });
-        pane2.add(b); 
 
-        // configuration
-        
-        // end GUI, add help
-
-        
-        // pack to cause display
-        //pack();
     }
     
     public String getHelpTarget() { return "package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane"; }
@@ -347,21 +332,31 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     public void readPerformed(java.awt.event.ActionEvent e) {
-        String data = "[1d"+dstAliasField.getText()+srcAliasField.getText()+"] 20 6"+addrSpace.getSelectedIndex()+" "+configAddressField.getText()+" "+configNumberField.getText();
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("readPerformed: "+m);
-        tc.sendCanMessage(m, this);
+        int space = 0xFF - addrSpace.getSelectedIndex();
+        long addr = Integer.parseInt(configAddressField.getText(), 16);
+        int length = Integer.parseInt(configNumberField.getText());
+        mcs.request(new MemoryConfigurationService.McsReadMemo(destNodeID(),space,addr,length){
+            public void handleWriteReply(int code) { 
+                System.out.println("reply "+code);
+            }
+            public void handleReadData(int[] data) { 
+                System.out.println("done "+data);
+            }
+        });
     }
 
     public void writePerformed(java.awt.event.ActionEvent e) {
-        // for now, no more than 8 bytes
-        String data = "[1d"+dstAliasField.getText()+srcAliasField.getText()+"] 20 2"+addrSpace.getSelectedIndex()
-                        +" "+configAddressField.getText()+" "+writeDataField.getText();
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("writePerformed: "+m);
-        tc.sendCanMessage(m, this);
+        int space = 0xFF - addrSpace.getSelectedIndex();
+        long addr = Integer.parseInt(configAddressField.getText(), 16);
+        byte[] content = jmri.util.StringUtil.bytesFromHexString(writeDataField.getText());
+        mcs.request(new MemoryConfigurationService.McsWriteMemo(destNodeID(),space,addr,content){
+            public void handleWriteReply(int code) { 
+                System.out.println("reply "+code);
+            }
+            public void handleReadData(int[] data) { 
+                System.out.println("data "+data);
+            }
+        });
     }
 
 
@@ -509,6 +504,8 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
             }
         };
         connection.registerStartNotification(cl);
+        
+        mcs = memo.get(MemoryConfigurationService.class);
         
     }
 

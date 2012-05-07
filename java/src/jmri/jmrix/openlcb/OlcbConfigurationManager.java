@@ -13,6 +13,8 @@ import org.openlcb.can.AliasMap;
 import org.openlcb.can.MessageBuilder;
 import org.openlcb.can.OpenLcbCanFrame;
 import org.openlcb.can.NIDaAlgorithm;
+import org.openlcb.implementations.DatagramService;
+import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.*;
 
 import jmri.jmrix.can.*;
@@ -63,6 +65,10 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         // start alias acquisition
         new StartUpHandler().start(nodeID);
         
+        // configure configuration service
+        dcs = new DatagramService(nodeID, connection);
+        mcs = new MemoryConfigurationService(nodeID, dcs);
+        
         // show active
         ActiveFlag.setActive();
     }
@@ -73,6 +79,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     Connection connection;
     TrafficController tc;
     NodeID nodeID;
+    DatagramService dcs;
+    MemoryConfigurationService mcs;
     
     /** 
      * Tells which managers this provides by class
@@ -91,6 +99,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (type.equals(MimicNodeStore.class))
             return true;
         if (type.equals(Connection.class))
+            return true;
+        if (type.equals(MemoryConfigurationService.class))
             return true;
         if (type.equals(NodeID.class))
             return true;
@@ -113,6 +123,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return (T)nodeStore;
         if (T.equals(Connection.class))
             return (T)connection;
+        if (T.equals(MemoryConfigurationService.class))
+            return (T)mcs;
         if (T.equals(NodeID.class))
             return (T)nodeID;
         return null; // nothing, by default
@@ -175,6 +187,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         long pid = getProcessId(1);
         log.debug("Process ID: "+pid);
         
+        // get first network interface internet address
+        // almost certainly the wrong approach, isn't likely to 
+        // find real IP address for coms, but it gets some entropy.
         InetAddress address = null;
         try {
             NetworkInterface n = NetworkInterface.getNetworkInterfaces().nextElement();
@@ -189,6 +204,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (address != null) {
             b1 = address.getAddress()[0];
         }
+        
+        // store new NodeID
         nodeID = new NodeID(new byte[]{2,1,18,(byte)(b1&0xFF),(byte)((pid>>8)&0xFF),(byte)(pid&0xFF)});
         log.debug("Node ID: "+nodeID);
     }
@@ -233,13 +250,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             }
             
             aliasMap.processFrame(frame);
-            if (log.isDebugEnabled()) log.debug("received message frame "+frame);
+            if (log.isDebugEnabled()) log.debug("processing received message frame "+frame);
             java.util.List<Message> list = messageBuilder.processFrame(frame);
-            if (list != null) {
-                for (Message m : list) {
-                    nodeStore.put(m, null);
-                }
-            }
+            processToNetMessages(list);
         }
         public synchronized void reply(CanReply l) { 
             int header = l.getHeader();
@@ -258,16 +271,27 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             }
             
             aliasMap.processFrame(frame);
-            if (log.isDebugEnabled()) log.debug("processing reply frame "+frame);
+            if (log.isDebugEnabled()) log.debug("processing received reply frame "+frame);
             java.util.List<Message> list = messageBuilder.processFrame(frame);
-            if (list != null) {
-                for (Message m : list) {
-                    nodeStore.put(m, null);
-                }
-            }
+            processFromNetMessages(list);
         }
     }
     
+    void processToNetMessages(java.util.List<Message> list) {
+        if (list != null) {
+            for (Message m : list) {
+                nodeStore.put(m, null);
+            }
+        }
+    }
+    void processFromNetMessages(java.util.List<Message> list) {
+        if (list != null) {
+            for (Message m : list) {
+                nodeStore.put(m, null);
+                dcs.put(m, null);
+            }
+        }
+    }
     
     boolean initialized = false;
     ArrayList<Connection.ConnectionListener> pendingList = new ArrayList<Connection.ConnectionListener>();
