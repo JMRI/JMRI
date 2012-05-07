@@ -57,7 +57,8 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     JTextField datagramContentsField = new JTextField("20 61 00 00 00 00 08");
     JTextField configNumberField = new JTextField("40");
     JTextField configAddressField = new JTextField("000000");
-    JTextField writeDataField = new JTextField("00 00");
+    JTextField readDataField = new JTextField(80);
+    JTextField writeDataField = new JTextField(80);
     JComboBox addrSpace = new JComboBox(new String[]{"CDI", "All", "Config", "None"});
 
     Connection connection;
@@ -237,6 +238,8 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
         add(pane2);
+        pane2.add(new JLabel("Byte Count: "));
+        pane2.add(configNumberField);
         b = new JButton("Read");
         b.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -244,8 +247,9 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
                     }
                 });
         pane2.add(b); 
-        pane2.add(new JLabel("Byte Count: "));
-        pane2.add(configNumberField);
+        pane2.add(new JLabel("Data: "));
+        pane2.add(readDataField);
+        
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
         add(pane2);
@@ -257,6 +261,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
                 });
         pane2.add(b); 
         pane2.add(new JLabel("Data: "));
+        writeDataField.setText("00 00");
         pane2.add(writeDataField);
 
     }
@@ -336,11 +341,9 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         long addr = Integer.parseInt(configAddressField.getText(), 16);
         int length = Integer.parseInt(configNumberField.getText());
         mcs.request(new MemoryConfigurationService.McsReadMemo(destNodeID(),space,addr,length){
-            public void handleWriteReply(int code) { 
-                System.out.println("reply "+code);
-            }
-            public void handleReadData(int[] data) { 
-                System.out.println("done "+data);
+            public void handleReadData(NodeID dest, int space, long address, byte[] data) { 
+                log.debug("Read data received "+data.length+" bytes");
+                readDataField.setText(jmri.util.StringUtil.hexStringFromBytes(data));
             }
         });
     }
@@ -350,12 +353,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         long addr = Integer.parseInt(configAddressField.getText(), 16);
         byte[] content = jmri.util.StringUtil.bytesFromHexString(writeDataField.getText());
         mcs.request(new MemoryConfigurationService.McsWriteMemo(destNodeID(),space,addr,content){
-            public void handleWriteReply(int code) { 
-                System.out.println("reply "+code);
-            }
-            public void handleReadData(int[] data) { 
-                System.out.println("data "+data);
-            }
         });
     }
 
