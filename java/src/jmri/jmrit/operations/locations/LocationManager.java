@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
-import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -44,7 +43,6 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			_instance = new LocationManager();
 			OperationsSetupXml.instance();					// load setup
 			LocationManagerXml.instance();				// load locations
-			RouteManagerXml.instance();					// load routes
 			log.debug("Locations have been loaded!");
 		}
 		if (Control.showInstance && log.isDebugEnabled()) log.debug("LocationManager returns instance "+_instance);

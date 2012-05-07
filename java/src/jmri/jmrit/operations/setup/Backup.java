@@ -55,16 +55,16 @@ public class Backup extends XmlFile {
 			}
 			OperationsSetupXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
 					OperationsSetupXml.instance().getOperationsFileName());
-			CarManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
-					CarManagerXml.instance().getOperationsFileName());
-			EngineManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
-					EngineManagerXml.instance().getOperationsFileName());
-			TrainManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
-					TrainManagerXml.instance().getOperationsFileName());
 			LocationManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
 					LocationManagerXml.instance().getOperationsFileName());
 			RouteManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
 					RouteManagerXml.instance().getOperationsFileName());
+			TrainManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
+					TrainManagerXml.instance().getOperationsFileName());
+			CarManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
+					CarManagerXml.instance().getOperationsFileName());
+			EngineManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
+					EngineManagerXml.instance().getOperationsFileName());
 		} catch (Exception e) {
 			log.error("Exception while making backup, may not be complete: "
 					+ e);
