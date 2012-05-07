@@ -280,6 +280,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     void processToNetMessages(java.util.List<Message> list) {
         if (list != null) {
             for (Message m : list) {
+                log.debug("distribute message (to net): "+m);
                 nodeStore.put(m, null);
             }
         }
@@ -287,6 +288,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     void processFromNetMessages(java.util.List<Message> list) {
         if (list != null) {
             for (Message m : list) {
+                log.debug("distribute message (fr net): "+m);
                 nodeStore.put(m, null);
                 dcs.put(m, null);
             }
