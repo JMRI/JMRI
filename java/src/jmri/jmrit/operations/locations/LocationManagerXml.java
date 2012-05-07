@@ -161,6 +161,7 @@ public class LocationManagerXml extends OperationsXml {
     		}
     	}
     	setDirty(false);
+		log.debug("Locations have been loaded!");
     }
     
     public void setOperationsFileName(String name) { operationsFileName = name; }
