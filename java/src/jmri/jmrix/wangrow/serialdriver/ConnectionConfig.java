@@ -13,7 +13,7 @@ import jmri.jmrix.nce.serialdriver.SerialDriverAdapter;
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
-	public final static String NAME = "Serial Interface";
+	public final static String NAME = "Serial";
 	
     /**
      * Ctor for an object being created during load process;
