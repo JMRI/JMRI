@@ -192,9 +192,8 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         _details.removeAll();
         _details.setLayout(new GridLayout(0,2));	// 0 = any number of rows
         boolean incAdvancedOptions=false;
-        if ((!isOptList1Advanced())&&(opt1List.length>1)) incAdvancedOptions=true;
-        if ((!isOptList2Advanced())&&(opt2List.length>1)) incAdvancedOptions=true;
-
+        if ((isOptList1Advanced())&&(opt1List.length>1)) incAdvancedOptions=true;
+        if ((isOptList2Advanced())&&(opt2List.length>1)) incAdvancedOptions=true;
         addStandardDetails(incAdvancedOptions);
         
         if (showAdvanced.isSelected()) {
@@ -208,8 +207,10 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
             }           
         }
         _details.validate();
-        if (_details.getTopLevelAncestor()!=null)
-            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).repaint();
+        if (_details.getTopLevelAncestor()!=null){
+            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).getPreferredSize());
+            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).pack();
+        }
         _details.repaint();
     }
     
