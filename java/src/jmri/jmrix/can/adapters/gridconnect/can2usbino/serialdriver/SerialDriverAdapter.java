@@ -24,6 +24,11 @@ import gnu.io.SerialPort;
  */
 public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.jmrix.SerialPortAdapter {
 
+    public SerialDriverAdapter() {
+        super();
+        mBaudRate = "230,400";
+    }
+    
     /**
      * Get an array of valid baud rates.
      */
