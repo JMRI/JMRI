@@ -72,7 +72,9 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
     public void confirmCV(int cv, int val, ProgListener p) throws ProgrammerException {
         rcTag.addPropertyChangeListener(this);
         rcTag.setExpectedCv(cv);
-        progListener = p;
+        synchronized (this) {
+             progListener = p;
+        }
         this.cv = cv;
         defaultProgrammer.confirmCV(cv, val, new ProxyProgList());
     }

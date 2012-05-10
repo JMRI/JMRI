@@ -582,7 +582,9 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     boolean processing = false;
     
     public void processingData(){
-        processing = true;
+        synchronized (this) {
+            processing = true;
+        }
         //We should be increasing our timeout
     }
     
