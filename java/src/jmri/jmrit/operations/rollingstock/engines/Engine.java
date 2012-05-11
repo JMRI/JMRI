@@ -88,12 +88,10 @@ public class Engine extends RollingStock {
 	 * @param length engine length
 	 */
 	public void setLength(String length){
+		super.setLength(length);
 		if(getModel().equals(""))
 			return;
-		String old = getLength();
 		engineModels.setModelLength(getModel(), length);
-		if (!old.equals(length))
-			firePropertyChange(LENGTH_CHANGED_PROPERTY, old, length);
 	}
 	
 	public String getLength(){

@@ -150,7 +150,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	 * @param length
 	 */
 	public void setLength(String length) {
-		String old = _length;
+		String old = getLength();
 		_length = length;
 		// adjust used length if rolling stock is at a location
 		if (_location != null && _trackLocation != null){
@@ -158,7 +158,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			_trackLocation.setUsedLength(_trackLocation.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
 		}
 		if (!old.equals(length))
-			firePropertyChange("rolling stock length", old, length);
+			firePropertyChange(LENGTH_CHANGED_PROPERTY, old, length);
 	}
 
 	public String getLength() {
