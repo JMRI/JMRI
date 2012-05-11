@@ -94,10 +94,17 @@ public class Engine extends RollingStock {
 		engineModels.setModelLength(getModel(), length);
 	}
 	
+
 	public String getLength(){
 		String length = engineModels.getModelLength(getModel());
 		if(length == null)
 			length = "";
+		if (!length.equals(_length)){
+			if (_lengthChange)	// return "old" length, used for track reserve changes
+				return _length;
+			log.debug("Loco "+toString()+" length has been modified");
+			super.setLength(length); // adjust track lengths
+		}
 		return length;
 	}
 	

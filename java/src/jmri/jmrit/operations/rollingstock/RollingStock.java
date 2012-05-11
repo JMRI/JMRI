@@ -145,18 +145,20 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _type;
 	}
 
+	protected boolean _lengthChange = false;	// used for loco length change
 	/**
 	 * Sets the length of the rolling stock.
 	 * @param length
 	 */
 	public void setLength(String length) {
-		String old = getLength();
+		String old = _length;
 		if (!old.equals(length)){
 			// adjust used length if rolling stock is at a location
 			if (_location != null && _trackLocation != null){
 				_location.setUsedLength(_location.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
 				_trackLocation.setUsedLength(_trackLocation.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
-				if (_destination != null && _trackDestination != null){
+				if (_destination != null && _trackDestination != null && !_lengthChange){
+					_lengthChange = true;	// prevent recursive loop, and we want the "old" loco length
 					log.debug("Rolling stock "+toString()+" has destination ("+_destination.getName()+", "+_trackDestination.getName()+")");
 					_trackLocation.deletePickupRS(this);
 					_trackDestination.deleteDropRS(this);
@@ -164,6 +166,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 					_length = length;
 					_trackLocation.addPickupRS(this);
 					_trackDestination.addDropRS(this);
+					_lengthChange = false;	// done
 				}
 			}
 			_length = length;
