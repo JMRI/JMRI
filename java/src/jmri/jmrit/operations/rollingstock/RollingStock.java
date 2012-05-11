@@ -151,14 +151,24 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	 */
 	public void setLength(String length) {
 		String old = getLength();
-		_length = length;
-		// adjust used length if rolling stock is at a location
-		if (_location != null && _trackLocation != null){
-			_location.setUsedLength(_location.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
-			_trackLocation.setUsedLength(_trackLocation.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
-		}
-		if (!old.equals(length))
+		if (!old.equals(length)){
+			// adjust used length if rolling stock is at a location
+			if (_location != null && _trackLocation != null){
+				_location.setUsedLength(_location.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
+				_trackLocation.setUsedLength(_trackLocation.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
+				if (_destination != null && _trackDestination != null){
+					log.debug("Rolling stock "+toString()+" has destination ("+_destination.getName()+", "+_trackDestination.getName()+")");
+					_trackLocation.deletePickupRS(this);
+					_trackDestination.deleteDropRS(this);
+					// now change the length and update tracks
+					_length = length;
+					_trackLocation.addPickupRS(this);
+					_trackDestination.addDropRS(this);
+				}
+			}
+			_length = length;
 			firePropertyChange(LENGTH_CHANGED_PROPERTY, old, length);
+		}
 	}
 
 	public String getLength() {
