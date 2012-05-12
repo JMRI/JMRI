@@ -197,8 +197,6 @@ public class TrainSwitchLists extends TrainCommon {
 						}
 					}
 					
-					dropEngines(fileOut, enginesList, rl);
-					
 					utilityCarTypes.clear();	// list utility cars by quantity
 					for (int j=0; j<carList.size(); j++){
 						Car car = carManager.getById(carList.get(j));
@@ -210,6 +208,8 @@ public class TrainSwitchLists extends TrainCommon {
 							dropCars++;
 						}
 					}
+					
+					dropEngines(fileOut, enginesList, rl);
 					stops++;
 				}
 			}
