@@ -922,7 +922,6 @@ file (OperationsLocationRoster.xml) in your JMRI directory in a folder
 called "operations". The program will also create a backup file
 containing the last settings for all of your locations. 
 
-
 <A	NAME="Sidings"></A>
 <H3>Spurs</H3>
 
@@ -1036,6 +1035,16 @@ means send 10 times the available space in cars to this spur. If you
 enter this value, you hopefully have 10 times the spur's available
 track space in a storage yard that is near by!</P>
 
+<P>The other option in the edit schedule tools menu is the ability to 
+specify an alternate track.  The program when it finds a spur full
+will send new cars to the track you specify in the alternate track
+pull down menu.  If you don't specify an alternate, the program will
+try to find a yard at that location.  The alternate track feature
+can be used to create an "Off Spot" track for your cars.  To prevent
+the program from placing cars on the off spot track that aren't destined 
+to your industry, use the "Select loads serviced by track" to only accept
+cars with loads that your industry is demanding.</P>
+
 <P>Schedules can operate in one of two modes, sequential as
 described above, or in match mode. Match mode eliminates the sequential
 aspects of a schedule. In match mode, the program will search the entire
@@ -1083,7 +1092,8 @@ These are called the default load and empty respectively. You can't
 delete them, but you can rename them if you wish. For every car type,
 you can create additional loads. For example, let's say you have an
 industry that needs paper loaded in boxcars. You could create this <A
-	HREF="#EditCarLoads">load</A> for your boxcars and name it L(paper).
+	HREF="#EditCarLoads">load</A> for your boxcars and name it "L(paper)"
+ or just "paper".
 Now at the spur that serves your paper industry, you need to create a
 schedule. In this schedule, the first item you enter is a boxcar, and
 then select as the receive load, L(paper). If the train that services
@@ -1096,7 +1106,7 @@ paper load, and the car's load status will become empty or "E".</P>
 
 <P>That was easy, so let's make things more interesting and have the
 industry ship some printed materials. We'll create and call this load
-L(print). Now in the first schedule item, instead of leaving the menu
+"L(print)". Now in the first schedule item, instead of leaving the menu
 under "Ship" blank, select L(print). Next to the ship menu are
 destination and track menus. We could select a destination that is
 staging. No need to select the track, just the staging location. Now
