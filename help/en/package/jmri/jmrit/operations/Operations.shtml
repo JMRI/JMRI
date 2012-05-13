@@ -726,7 +726,7 @@ print options.  You can change the comment if desired, and press "Save" to keep 
     discard the paperwork for that train. This mode is also useful if you have more than one
     operator working a location, this way they can easily hand out the work by train.</P>
 
-   <P>The last option is whether you want you're switch lists in real time or consolidation
+   <P>The last option is whether you want your switch lists in real time or consolidation
     mode. Normally you would generate your switch lists in real time. In this mode the switch list
     for a location shows the work planned for trains that are built and not yet terminated. However,
     if you have a small layout, you might have to build and terminate a few trains in order to
@@ -1673,27 +1673,27 @@ To edit a car's load, press the Load "Edit" button in the Edit Car window.
 <P>
 <img src="images/EditCarLoads.png">
 </P>
-<P>
-	In addition to the Add, Delete, and Replace buttons and fields
-	described above in the <A HREF="#EditCarAttributes">Car Edit
-		Attributes</A> section, the edit car loads window allows you to set the
-	load's type, priority, pick up and set out messages. A load type of
-	"Load" means the program will consider the car as being loaded and
-	the maximum car weight is used when calculating the train's total
-	weight. A load type of "Empty" tells the program that the car is
-	empty as to only use 1/3 of the car's maximum weight when
-	calculating the train's total weight. The default load priority is
-	low and you can change the priority to high for a given car type and
-	load. High priority car loads are normally serviced before low
-	priority. Useful if you need to get your reefer loaded with fruit to
-	the market ASAP!
-</P>
+   <P>
+    In addition to the Add, Delete, and Replace buttons and fields described above in the <A
+     HREF="#EditCarAttributes">Car Edit Attributes</A> section, the edit car loads window allows you
+    to set the load's type, priority, pick up and set out messages. A load type of "Load" means the
+    program will consider the car as being loaded and the maximum car weight is used when
+    calculating the train's total weight. A load type of "Empty" tells the program that the car is
+    empty as to only use 1/3 of the car's maximum weight when calculating the train's total weight.
+    If you use the <A HREF="#ManifestComments">Loads and Empties</A> option when printing your
+    manifest, you will want to use the correct load type so that the program prints out the correct
+    number of load and empties in the train.
+   </P>
 
-<P>You can also provide optional messages for your operators based on
-the type of car and load. The messages can be useful if you have visible
-car loads that need to be added or removed by your operators.</P> 
+   <P>The default load priority is low and you can change the priority to high for a given car
+    type and load. High priority car loads are normally serviced before low priority. Useful if you
+    need to get your reefer loaded with fruit to the market ASAP!</P>
 
-<A NAME="CarsSet"></A>
+   <P>You can also provide optional messages for your operators based on the type of car and
+    load. The messages can be useful if you have visible car loads that need to be added or removed
+    by your operators.</P>
+
+   <A NAME="CarsSet"></A>
 <H3>Set Car</H3>
 
 After creating a car, you can set the car's location, and optionally the

@@ -746,7 +746,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					if (!status.equals(Track.OKAY)){
 						log.debug ("Can't set car's location because of "+ status);
 						JOptionPane.showMessageDialog(this,
-								MessageFormat.format(rb.getString("rsCanNotLocMsg"), new Object[]{status}), 
+								MessageFormat.format(rb.getString("rsCanNotLocMsg"), new Object[]{_car.toString(), status}), 
 								rb.getString("rsCanNotLoc"),
 								JOptionPane.ERROR_MESSAGE);
 					}

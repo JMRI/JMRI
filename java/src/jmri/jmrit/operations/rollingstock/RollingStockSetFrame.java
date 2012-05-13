@@ -467,7 +467,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 					if (!status.equals(Track.OKAY)){
 						log.debug ("Can't set rs's location because of "+ status);
 						JOptionPane.showMessageDialog(this,
-								MessageFormat.format(getRb().getString("rsCanNotLocMsg"), new Object[]{status}),
+								MessageFormat.format(getRb().getString("rsCanNotLocMsg"), new Object[]{rs.toString(), status}),
 								getRb().getString("rsCanNotLoc"),
 								JOptionPane.ERROR_MESSAGE);
 						return false;
@@ -519,7 +519,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 				if (!status.equals(Track.OKAY)){
 					log.debug ("Can't set rs's destination because of "+ status);
 					JOptionPane.showMessageDialog(this,
-							MessageFormat.format(getRb().getString("rsCanNotDestMsg"), new Object[]{status}),
+							MessageFormat.format(getRb().getString("rsCanNotDestMsg"), new Object[]{rs.toString(), status}),
 							getRb().getString("rsCanNotDest"),
 							JOptionPane.ERROR_MESSAGE);
 					return false;
