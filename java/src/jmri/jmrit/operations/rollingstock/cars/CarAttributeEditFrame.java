@@ -137,7 +137,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			String addItem = addTextBox.getText();
 			if (addItem.equals(""))
 				return;
-			String[] item = addItem.split("-");
+			String[] item = {addItem};
+			if(_comboboxName == CarEditFrame.TYPE)
+				item = addItem.split("-");
 			if (item[0].length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 						MessageFormat.format(rb.getString("canNotAdd"),new Object[]{_comboboxName}),
@@ -153,7 +155,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			String newItem = addTextBox.getText();
 			if (newItem.equals(""))
 				return;
-			String[] item = newItem.split("-");
+			String[] item = {newItem};
+			if(_comboboxName == CarEditFrame.TYPE)
+				item = newItem.split("-");
 			if (item[0].length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 						MessageFormat.format(rb.getString("canNotReplace"),new Object[]{_comboboxName}),
