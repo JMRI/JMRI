@@ -309,7 +309,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             validateCurrent();
             // Value written is number of ADC steps 0f 4.88mV across 0.47 ohms
             currentLimit = currentLimit*470/4880;
-            if (sv.sprogType.sprogType <= SprogType.SPROGIIv3) {
+            if (sv.sprogType.sprogType < SprogType.SPROGIIv3) {
                 // Hack for SPROG bug where MSbyte of value must be non-zero
                 currentLimit += 256;
             }
