@@ -53,7 +53,7 @@ public class SpeedoDial extends JPanel {
     int mphLimit = 80;
     int mphInc = 40;
     int kphLimit = 140;
-    int kphInc = 60;
+    int kphInc = 70;
     float priMajorTick;
     float priMinorTick;
     float secTick;
@@ -119,15 +119,7 @@ public class SpeedoDial extends JPanel {
 
         // Draw the speed markers for the primary units
         int dashSize = size/60;
-        if (units == Speed.MPH) {
-            priMajorTick = 240/((float)mphLimit/10);
-            priMinorTick = priMajorTick/5;
-            secTick = 240/(Speed.mphToKph(mphLimit)/10);
-        } else {
-            priMajorTick = 240/((float)kphLimit/10);
-            priMinorTick = priMajorTick/5;
-            secTick = 240/(Speed.kphToMph(kphLimit)/10);
-        }
+        setTicks();
         // i is degrees clockwise from the X axis
         // Add minor tick marks
         for (float i = 150; i < 391; i = i + priMinorTick) {
@@ -274,14 +266,37 @@ public class SpeedoDial extends JPanel {
         // hand rotation starts at 12 o'clock position so offset it by 120 degrees
         // scale by the angle between major tick marks divided by 10
         if (units == Speed.MPH) {
+            if (Speed.kphToMph(speed) > mphLimit) {
+                mphLimit += mphInc;
+                kphLimit += kphInc;
+            }
+            setTicks();
             speedDigits = Math.round(Speed.kphToMph(speed));
             speedAngle = -120 + Speed.kphToMph(speed*priMajorTick/10);
         } else {
+            if (speed > kphLimit) {
+                mphLimit += mphInc;
+                kphLimit += kphInc;
+            }
+            setTicks();
             speedDigits = Math.round(speed);
             speedAngle = -120+speed*priMajorTick/10;
         }
         repaint();
     }
+
+    void setTicks() {
+        if (units == Speed.MPH) {
+            priMajorTick = 240/((float)mphLimit/10);
+            priMinorTick = priMajorTick/5;
+            secTick = 240/(Speed.mphToKph(mphLimit)/10);
+        } else {
+            priMajorTick = 240/((float)kphLimit/10);
+            priMinorTick = priMajorTick/5;
+            secTick = 240/(Speed.kphToMph(kphLimit)/10);
+        }
+    }
+
 
     void setUnitsMph() {
         units = Speed.MPH;
