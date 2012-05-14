@@ -81,8 +81,6 @@ public class SpeedoDial extends JPanel {
             public void componentResized(ComponentEvent e) {
                 scaleFace();
             }});
-
-        setPreferredSize(new java.awt.Dimension(300,300));
     }
         
     public void paint(Graphics g){
@@ -261,7 +259,7 @@ public class SpeedoDial extends JPanel {
 
         return ;
     }
-    
+
     void update(float speed) {
         // hand rotation starts at 12 o'clock position so offset it by 120 degrees
         // scale by the angle between major tick marks divided by 10

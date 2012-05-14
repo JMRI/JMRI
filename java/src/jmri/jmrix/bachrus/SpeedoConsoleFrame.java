@@ -550,6 +550,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         
         // pack for display
         pack();
+
+        speedoDialDisplay.scaleFace();
     }
 
     /**
