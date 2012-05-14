@@ -18,6 +18,8 @@ import jmri.jmrix.can.cbus.CbusAddress;
 import org.openlcb.*;
 import org.openlcb.can.AliasMap;
 import org.openlcb.implementations.MemoryConfigurationService;
+import org.openlcb.cdi.jdom.CdiMemConfigReader;
+import org.openlcb.cdi.swing.CdiPanel;
 
 import java.awt.*;
 
@@ -65,6 +67,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     AliasMap aliasMap;
     NodeID srcNodeID;
     MemoryConfigurationService mcs;
+    MimicNodeStore store;
     
     public OpenLcbCanSendPane() {
 
@@ -264,6 +267,14 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         writeDataField.setText("00 00");
         pane2.add(writeDataField);
 
+        b = new JButton("Open CDI Config Tool");
+        add(b);
+        b.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                         openCdiPane();
+                    }
+                });
+        
     }
     
     public String getHelpTarget() { return "package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane"; }
@@ -356,7 +367,35 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         });
     }
 
+    public void openCdiPane() {
 
+        CdiMemConfigReader cmcr = new CdiMemConfigReader(destNodeID(), store, mcs);
+
+        CdiMemConfigReader.ReaderAccess rdr = new CdiMemConfigReader.ReaderAccess() {
+            public void provideReader(java.io.Reader r) {
+                JFrame f = new JFrame();
+                f.setTitle("Configure "+destNodeID());
+                CdiPanel m = new CdiPanel();
+                m.initComponents();
+
+                try {
+                    m.loadCDI(
+                         new org.openlcb.cdi.jdom.JdomCdiRep(
+                             (new org.openlcb.cdi.jdom.JdomCdiReader()).getHeadFromReader(r)
+                         )
+                     );
+                } catch (Exception e) { log.error("caught exception while parsing CDI", e);}
+                
+                f.add( m );
+        
+                f.pack();
+                f.setVisible(true);
+            }
+        };
+        
+        cmcr.startLoadReader(rdr);
+    }
+    
     // control sequence operation
     int mNextSequenceElement = 0;
     javax.swing.Timer timer = null;

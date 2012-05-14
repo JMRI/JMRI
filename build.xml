@@ -125,6 +125,7 @@
         <pathelement location="${libdir}/jinput.jar"/>
         <pathelement location="${libdir}/jmdns.jar"/>
         <pathelement location="${libdir}/openlcb.jar"/>
+        <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
         <pathelement location="${libdir}/jython.jar"/>
         <pathelement location="${libdir}/log4j.jar"/>
