@@ -13008,8 +13008,7 @@ public class LayoutEditorTools
 					SignalHead head, Turnout farTurn, int farState, LayoutSlip slip, int number) {
 		String turnoutName = turn.getDisplayName();
         String farTurnoutName = farTurn.getDisplayName();
-        String namer = head.getDisplayName()+":"+turnoutName;
-		
+        
 		String logixName = "SYS_LAYOUTSLIP:"+slip.ident;
         String sensorName = "IS:"+logixName+"C"+number;
 		Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
