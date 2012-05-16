@@ -54,6 +54,8 @@ public class OperationsSetupXml extends OperationsXml {
 	        Setup.setMiaComment(convertToXmlComment(Setup.getMiaComment()));	        
 	        // add top-level elements	        
 	        root.addContent(Setup.store());
+	        // add control elements
+	        root.addContent(Control.store());
 
 	        writeXML(file, doc);	        
 	        Setup.setMiaComment(convertFromXmlComment(Setup.getMiaComment()));
@@ -76,6 +78,8 @@ public class OperationsSetupXml extends OperationsXml {
 		}
 		Setup.load(root);		
         Setup.setMiaComment(convertFromXmlComment(Setup.getMiaComment()));
+        // load control settings
+        Control.load(root);
 	}
 	
 	public void setOperationsFileName(String name) { operationsFileName = name; }

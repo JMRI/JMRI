@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.trains;
  
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.setup.Control;
 
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -124,7 +125,7 @@ public class TrainCopyFrame extends OperationsFrame {
 	
 	/**
 	 * 
-	 * @return true if name is less than 26 characters
+	 * @return true if name isn't too long
 	 */
 	private boolean checkName(){
 		if (trainNameTextField.getText().trim().equals("")){
@@ -133,9 +134,10 @@ public class TrainCopyFrame extends OperationsFrame {
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		if (trainNameTextField.getText().length() > 25){
+		if (trainNameTextField.getText().length() > Control.max_len_string_train_name){
 			JOptionPane.showMessageDialog(this,
-					rb.getString("TrainNameLess26"), MessageFormat.format(rb.getString("CanNot"), new Object[] {rb.getString("copy")}),
+					MessageFormat.format(rb.getString("TrainNameLess"),  new Object[] {Control.max_len_string_train_name+1}),
+					MessageFormat.format(rb.getString("CanNot"), new Object[] {rb.getString("copy")}),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT operations-config (operations)*>
+<!ELEMENT operations-config (operations | control)*>
 <!ELEMENT operations (railRoad | settings | panel | fontName | fontSize | manifestColors
  | manifestLogo | buildOptions | buildReport | owner | iconColor | options 
  | pickupEngFormat | dropEngFormat | pickupCarFormat | dropCarFormat | localFormat
@@ -161,4 +161,31 @@
 
 <!ATTLIST comments misplacedCars		CDATA #IMPLIED> 
 
+<!ELEMENT control (maximumStringLengths)*>
+ 
+<!ELEMENT maximumStringLengths (max_len_string_attibute | max_len_string_road_number | max_len_string_location_name
+| max_len_string_track_name | max_len_string_track_length_name | max_len_string_length_name
+| max_len_string_weight_name | max_len_string_built_name | max_len_string_train_name
+| max_len_string_route_name)*>
 
+<!ELEMENT max_len_string_attibute EMPTY>
+<!ELEMENT max_len_string_road_number EMPTY>
+<!ELEMENT max_len_string_location_name EMPTY>
+<!ELEMENT max_len_string_track_name EMPTY>
+<!ELEMENT max_len_string_track_length_name EMPTY>
+<!ELEMENT max_len_string_length_name EMPTY>
+<!ELEMENT max_len_string_weight_name EMPTY>
+<!ELEMENT max_len_string_built_name EMPTY>
+<!ELEMENT max_len_string_train_name EMPTY>
+<!ELEMENT max_len_string_route_name EMPTY>
+
+<!ATTLIST max_len_string_attibute length		CDATA #IMPLIED>
+<!ATTLIST max_len_string_road_number length		CDATA #IMPLIED>
+<!ATTLIST max_len_string_location_name length	CDATA #IMPLIED>
+<!ATTLIST max_len_string_track_name length		CDATA #IMPLIED>
+<!ATTLIST max_len_string_track_length_name length	CDATA #IMPLIED>
+<!ATTLIST max_len_string_length_name length		CDATA #IMPLIED>
+<!ATTLIST max_len_string_weight_name length		CDATA #IMPLIED>
+<!ATTLIST max_len_string_built_name length		CDATA #IMPLIED>
+<!ATTLIST max_len_string_train_name length		CDATA #IMPLIED>
+<!ATTLIST max_len_string_route_name length		CDATA #IMPLIED>

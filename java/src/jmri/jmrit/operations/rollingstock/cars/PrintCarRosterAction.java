@@ -114,7 +114,7 @@ public class PrintCarRosterAction  extends AbstractAction {
         		if (printCarLocation.isSelected()){
         			location = car.getLocationName().trim() + " - " + car.getTrackName().trim();
         			// reduce location name by one half of the track name
-        			location = padAttribute(location, Control.MAX_LEN_STRING_LOCATION_NAME+Control.MAX_LEN_STRING_TRACK_NAME/2);
+        			location = padAttribute(location, Control.max_len_string_location_name+Control.max_len_string_track_name/2);
         		}
         		// Page break between locations?
         		if (!previousLocation.equals("") && !car.getLocationName().trim().equals(previousLocation) && printPage.isSelected()){
@@ -135,28 +135,28 @@ public class PrintCarRosterAction  extends AbstractAction {
         		type = padAttribute(car.getType().trim(), CarTypes.instance().getCurMaxNameLength());
  
         		if (printCarLength.isSelected())
-        			length = padAttribute(car.getLength().trim(), Control.MAX_LEN_STRING_LENGTH_NAME);
+        			length = padAttribute(car.getLength().trim(), Control.max_len_string_length_name);
         		if (printCarWeight.isSelected())
-        			weight = padAttribute(car.getWeight().trim(), Control.MAX_LEN_STRING_WEIGHT_NAME);
+        			weight = padAttribute(car.getWeight().trim(), Control.max_len_string_weight_name);
         		if (printCarColor.isSelected())
         			color = padAttribute(car.getColor().trim(), CarColors.instance().getCurMaxNameLength());        		
            		if (printCarLoad.isSelected())
            			load = padAttribute(car.getLoad().trim(), CarLoads.instance().getCurMaxNameLength());          		
            		if (printCarKernel.isSelected())
-           			kernel = padAttribute(car.getKernelName().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);
+           			kernel = padAttribute(car.getKernelName().trim(), Control.max_len_string_attibute);
         		if (printCarOwner.isSelected())
         			owner = padAttribute(car.getOwner().trim(), ownerMaxLen);
         		if (printCarBuilt.isSelected())
-        			built = padAttribute(car.getBuilt().trim(), Control.MAX_LEN_STRING_BUILT_NAME);
+        			built = padAttribute(car.getBuilt().trim(), Control.max_len_string_built_name);
            		if (printCarValue.isSelected())
-           			value = padAttribute(car.getValue().trim(), Control.MAX_LEN_STRING_ATTRIBUTE); 
+           			value = padAttribute(car.getValue().trim(), Control.max_len_string_attibute); 
            		if (printCarRfid.isSelected())
-           			rfid = padAttribute(car.getRfid().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);
+           			rfid = padAttribute(car.getRfid().trim(), Control.max_len_string_attibute);
            		if (printCarTrain.isSelected())
            			// pad out train to half of its maximum
-           			train = padAttribute(car.getTrainName().trim(), Control.MAX_LEN_STRING_TRAIN_NAME/2);    		
+           			train = padAttribute(car.getTrainName().trim(), Control.max_len_string_train_name/2);    		
         		if (printCarDestination.isSelected())
-        			destination = padAttribute(car.getDestinationName().trim(), Control.MAX_LEN_STRING_LOCATION_NAME);
+        			destination = padAttribute(car.getDestinationName().trim(), Control.max_len_string_location_name);
            		if (printCarComment.isSelected())
            			comment = car.getComment().trim();
 
@@ -185,14 +185,14 @@ public class PrintCarRosterAction  extends AbstractAction {
     			+ (printCarWeight.isSelected()?"     ":"")
     			+ (printCarColor.isSelected()?padAttribute(rb.getString("Color"),CarColors.instance().getCurMaxNameLength()):"")
     			+ (printCarLoad.isSelected()?padAttribute(rb.getString("Load"),CarLoads.instance().getCurMaxNameLength()):"")
-    			+ (printCarKernel.isSelected()?padAttribute(("Kernel"),Control.MAX_LEN_STRING_ATTRIBUTE):"")
+    			+ (printCarKernel.isSelected()?padAttribute(("Kernel"),Control.max_len_string_attibute):"")
     			+ (printCarOwner.isSelected()?padAttribute(rb.getString("Owner"),ownerMaxLen):"")
     			+ (printCarBuilt.isSelected()?rb.getString("Built")+" ":"")
     			+ (printCarValue.isSelected()?Setup.getValueLabel()+"        ":"")
     			+ (printCarRfid.isSelected()?Setup.getRfidLabel()+"        ":"")
-    			+ (printCarLocation.isSelected()?padAttribute(rb.getString("Location"),Control.MAX_LEN_STRING_LOCATION_NAME+Control.MAX_LEN_STRING_TRACK_NAME/2):"")
-    			+ (printCarTrain.isSelected()?padAttribute(rb.getString("Train"),Control.MAX_LEN_STRING_TRAIN_NAME/2):"")
-    			+ (printCarDestination.isSelected()?padAttribute(rb.getString("Destination"),Control.MAX_LEN_STRING_LOCATION_NAME):"")
+    			+ (printCarLocation.isSelected()?padAttribute(rb.getString("Location"),Control.max_len_string_location_name+Control.max_len_string_track_name/2):"")
+    			+ (printCarTrain.isSelected()?padAttribute(rb.getString("Train"),Control.max_len_string_train_name/2):"")
+    			+ (printCarDestination.isSelected()?padAttribute(rb.getString("Destination"),Control.max_len_string_location_name):"")
     			+ (printCarComment.isSelected()?rb.getString("Comment"):"");
     	if (s.length() > numberCharPerLine)
     		s = s.substring(0, numberCharPerLine);

@@ -281,7 +281,7 @@ public class TrainCommon {
 		else if (attribute.equals(Setup.PICKUP_COMMENT))
 			return " "+car.getPickupComment();
 		else if (attribute.equals(Setup.KERNEL))
-			return " "+tabString(car.getKernelName(), Control.MAX_LEN_STRING_ATTRIBUTE);
+			return " "+tabString(car.getKernelName(), Control.max_len_string_attibute);
 		else if (attribute.equals(Setup.RWE)){
 			if (!car.getReturnWhenEmptyDestName().equals(""))
 				return " "+rb.getString("RWE")+" "+splitString(car.getReturnWhenEmptyDestinationName())
@@ -293,7 +293,7 @@ public class TrainCommon {
 
 	protected String getRollingStockAttribute(RollingStock rs, String attribute, boolean pickup, boolean local){
 		if (attribute.equals(Setup.NUMBER))
-			return " "+tabString(splitString(rs.getNumber()), Control.MAX_LEN_STRING_ROAD_NUMBER-4);
+			return " "+tabString(splitString(rs.getNumber()), Control.max_len_string_road_number-4);
 		else if (attribute.equals(Setup.ROAD))
 			return " "+tabString(rs.getRoad(), CarRoads.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.TYPE)){
@@ -330,7 +330,7 @@ public class TrainCommon {
 			return "";
 		// the three utility attributes that don't get printed but need to be tabbed out
 		else if (attribute.equals(Setup.NO_NUMBER))
-			return " "+tabString("", Control.MAX_LEN_STRING_ROAD_NUMBER-7);	// (-4 -3) for utility quantity field
+			return " "+tabString("", Control.max_len_string_road_number-7);	// (-4 -3) for utility quantity field
 		else if (attribute.equals(Setup.NO_ROAD))
 			return " "+tabString("", CarRoads.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.NO_COLOR))

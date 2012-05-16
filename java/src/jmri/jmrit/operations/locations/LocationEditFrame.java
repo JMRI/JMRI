@@ -88,7 +88,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	// combo boxes
 
 	public static final String NAME = rb.getString("Name");
-	public static final int MAX_NAME_LENGTH = Control.MAX_LEN_STRING_LOCATION_NAME;
+	public static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
 	public static final String DISPOSE = "dispose" ;
 
 	public LocationEditFrame() {

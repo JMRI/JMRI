@@ -41,7 +41,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 	javax.swing.JComboBox comboBox;
 	
 	// text box
-	javax.swing.JTextField addTextBox = new javax.swing.JTextField(Control.MAX_LEN_STRING_ATTRIBUTE);
+	javax.swing.JTextField addTextBox = new javax.swing.JTextField(Control.max_len_string_attibute);
 	
 	// property change
 	public static final String DISPOSE = "dispose" ;
@@ -113,8 +113,8 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 			String addItem = addTextBox.getText();
 			if (addItem.equals(""))
 					return;
-			if (addItem.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
-				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
+			if (addItem.length() > Control.max_len_string_attibute){
+				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.max_len_string_attibute}),
 						MessageFormat.format(rb.getString("canNotAdd"),new Object[]{_comboboxName}),
 						JOptionPane.ERROR_MESSAGE);
 				return;
@@ -129,8 +129,8 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 			String newItem = addTextBox.getText();
 			if (newItem.equals(""))
 				return;
-			if (newItem.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
-				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
+			if (newItem.length() > Control.max_len_string_attibute){
+				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.max_len_string_attibute}),
 						MessageFormat.format(rb.getString("canNotReplace"),new Object[]{_comboboxName}),
 						JOptionPane.ERROR_MESSAGE);
 				return;
@@ -216,9 +216,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 			// confirm that length is a number and less than 10000 feet
 			try {
 				Integer.parseInt(addItem);
-				if (addItem.length() > Control.MAX_LEN_STRING_LENGTH_NAME){
-					log.error("engine length must be less than 10,000 feet");
-					JOptionPane.showMessageDialog(this,rb.getString("engineAttribute5"),
+				if (addItem.length() > Control.max_len_string_length_name){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.max_len_string_length_name}),
 							MessageFormat.format(rb.getString("canNotAdd"),new Object[]{_comboboxName}),
 							JOptionPane.ERROR_MESSAGE);
 					return;

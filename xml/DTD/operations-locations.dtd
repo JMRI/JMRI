@@ -43,7 +43,7 @@
 <!ATTLIST location southTrainIconX	CDATA #IMPLIED>
 <!ATTLIST location southTrainIconY	CDATA #IMPLIED>
 <!ATTLIST location comment			CDATA #IMPLIED>
-<!ATTLIST location switchListcomment CDATA #IMPLIED>
+<!ATTLIST location switchListComment CDATA #IMPLIED>
 <!ATTLIST location physicalLocation CDATA #IMPLIED>
 
 <!ATTLIST track id				CDATA #REQUIRED>          

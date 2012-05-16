@@ -173,24 +173,24 @@ public class ImportCars extends Thread {
 					carColor = inputLine[base+5];
 
 				log.debug("Checking car number ("+carNumber+") road ("+carRoad+ ") type ("+carType+ ") length ("+carLength+") weight ("+carWeight+") color ("+carColor+")" );
-				if (carNumber.length() > Control.MAX_LEN_STRING_ROAD_NUMBER){
+				if (carNumber.length() > Control.max_len_string_road_number){
 					JOptionPane.showMessageDialog(null, 
 							MessageFormat.format(rb.getString("CarRoadNumberTooLong"),new Object[]{(carRoad+" "+carNumber),carNumber}),
-							rb.getString("carRoadNum"),
+							MessageFormat.format(rb.getString("carRoadNum"), new Object[]{Control.max_len_string_road_number+1}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-				if (carRoad.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
+				if (carRoad.length() > Control.max_len_string_attibute){
 					JOptionPane.showMessageDialog(null, 
 							MessageFormat.format(rb.getString("CarRoadNameTooLong"),new Object[]{(carRoad+" "+carNumber),carRoad}),
-							MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
+							MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.max_len_string_attibute}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-				if (carType.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
+				if (carType.length() > Control.max_len_string_attibute){
 					JOptionPane.showMessageDialog(null, 
 							MessageFormat.format(rb.getString("CarTypeNameTooLong"),new Object[]{(carRoad+" "+carNumber),carType}),
-							MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
+							MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.max_len_string_attibute}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
@@ -219,10 +219,10 @@ public class ImportCars extends Thread {
 						}
 					}
 				}
-				if (carLength.length() > Control.MAX_LEN_STRING_LENGTH_NAME){
+				if (carLength.length() > Control.max_len_string_length_name){
 					JOptionPane.showMessageDialog(null, 
 							MessageFormat.format(rb.getString("CarLengthNameTooLong"),new Object[]{(carRoad+" "+carNumber),carLength}),
-							rb.getString("carAttribute5"),
+							MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.max_len_string_length_name}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
@@ -241,17 +241,17 @@ public class ImportCars extends Thread {
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-				if (carWeight.length() > Control.MAX_LEN_STRING_WEIGHT_NAME){
+				if (carWeight.length() > Control.max_len_string_weight_name){
 					JOptionPane.showMessageDialog(null, 
 							MessageFormat.format(rb.getString("CarWeightNameTooLong"),new Object[]{(carRoad+" "+carNumber),carWeight}),
-							rb.getString("carAttribute5"),
+							MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.max_len_string_weight_name}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-				if (carColor.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
+				if (carColor.length() > Control.max_len_string_attibute){
 					JOptionPane.showMessageDialog(null, 
 							MessageFormat.format(rb.getString("CarColorNameTooLong"),new Object[]{(carRoad+" "+carNumber),carColor}),
-							MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
+							MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.max_len_string_attibute}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
@@ -276,20 +276,20 @@ public class ImportCars extends Thread {
 				} else {
 					if(inputLine.length > base+6){
 						carOwner = inputLine[base+6];
-						if (carOwner.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
+						if (carOwner.length() > Control.max_len_string_attibute){
 							JOptionPane.showMessageDialog(null, 
 									MessageFormat.format(rb.getString("CarOwnerNameTooLong"),new Object[]{(carRoad+" "+carNumber),carOwner}),
-									MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
+									MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.max_len_string_attibute}),
 									JOptionPane.ERROR_MESSAGE);
 							break;
 						}
 					}
 					if(inputLine.length > base+7){
 						carBuilt = inputLine[base+7];
-						if (carBuilt.length() > Control.MAX_LEN_STRING_BUILT_NAME){
+						if (carBuilt.length() > Control.max_len_string_built_name){
 							JOptionPane.showMessageDialog(null, 
 									MessageFormat.format(rb.getString("CarBuiltNameTooLong"),new Object[]{(carRoad+" "+carNumber),carBuilt}),
-									rb.getString("carAttribute5"),
+									MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.max_len_string_built_name}),
 									JOptionPane.ERROR_MESSAGE);
 							break;
 						}
@@ -322,17 +322,17 @@ public class ImportCars extends Thread {
 						log.debug("Car ("+carRoad+" "+carNumber+") has track ("+carTrack+")");
 					}
 
-					if (carLocation.length() > Control.MAX_LEN_STRING_LOCATION_NAME){
+					if (carLocation.length() > Control.max_len_string_location_name){
 						JOptionPane.showMessageDialog(null, 
 								MessageFormat.format(rb.getString("CarLocationNameTooLong"),new Object[]{(carRoad+" "+carNumber),carLocation}),
-								rb.getString("carAttribute25"),
+								MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.max_len_string_location_name}),
 								JOptionPane.ERROR_MESSAGE);
 						break;
 					}
-					if (carTrack.length() > Control.MAX_LEN_STRING_TRACK_NAME){
+					if (carTrack.length() > Control.max_len_string_track_name){
 						JOptionPane.showMessageDialog(null, 
 								MessageFormat.format(rb.getString("CarTrackNameTooLong"),new Object[]{(carRoad+" "+carNumber),carTrack}),
-								rb.getString("carAttribute25"),
+								MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.max_len_string_track_name}),
 								JOptionPane.ERROR_MESSAGE);
 						break;
 					}

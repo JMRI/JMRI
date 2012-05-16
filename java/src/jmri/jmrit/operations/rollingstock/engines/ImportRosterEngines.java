@@ -57,15 +57,15 @@ public class ImportRosterEngines extends Thread {
 			// add engines that have a road name and number
 			if (!re.getRoadName().equals("") && !re.getRoadNumber().equals("") ){
 				String road = re.getRoadName();
-				if (road.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
-					road = road.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
+				if (road.length() > Control.max_len_string_attibute)
+					road = road.substring(0, Control.max_len_string_attibute);
 				textId.setText(road+" "+re.getRoadNumber());
 				Engine engine = manager.getByRoadAndNumber(road, re.getRoadNumber());
 				if (engine == null){
 					engine = manager.newEngine(road, re.getRoadNumber());
 					String model = re.getModel();
-					if (model.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
-						model = model.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
+					if (model.length() > Control.max_len_string_attibute)
+						model = model.substring(0, Control.max_len_string_attibute);
 					engine.setModel(model);
 					// does this model already have a length?
 					if (engine.getLength().equals(""))
@@ -77,8 +77,8 @@ public class ImportRosterEngines extends Thread {
 					if (engine.getHp().equals(""))
 						engine.setHp(defaultEngineHp);
 					String owner = re.getOwner();
-					if (owner.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
-						owner = owner.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
+					if (owner.length() > Control.max_len_string_attibute)
+						owner = owner.substring(0, Control.max_len_string_attibute);
 					engine.setOwner(owner);
 					enginesAdded++;
 				} else{

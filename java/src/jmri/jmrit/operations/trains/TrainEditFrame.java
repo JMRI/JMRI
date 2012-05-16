@@ -619,7 +619,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 	/**
 	 * 
-	 * @return true if name is less than 26 characters and is at least one character
+	 * @return true if name isn't too long and is at least one character
 	 */
 	private boolean checkName(String s){
 		String trainName = trainNameTextField.getText().trim();
@@ -630,10 +630,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		if (trainName.length() > Control.MAX_LEN_STRING_TRAIN_NAME){
-			log.error("Train name must be less than 26 charaters");
+		if (trainName.length() > Control.max_len_string_train_name){
 			JOptionPane.showMessageDialog(this,
-					rb.getString("TrainNameLess26"), MessageFormat.format(rb.getString("CanNot"), new Object[] {s}),
+					MessageFormat.format(rb.getString("TrainNameLess"),  new Object[] {Control.max_len_string_train_name+1}),
+					MessageFormat.format(rb.getString("CanNot"), new Object[] {s}),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

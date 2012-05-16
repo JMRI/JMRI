@@ -545,8 +545,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	
 	private boolean checkCar(Car c){
 		String roadNum = roadNumberTextField.getText();
-		if (roadNum.length() > 10){
-			JOptionPane.showMessageDialog(this,rb.getString("carRoadNum"),
+		if (roadNum.length() > Control.max_len_string_road_number){
+			JOptionPane.showMessageDialog(this,
+					MessageFormat.format(rb.getString("carRoadNum"), new Object[]{Control.max_len_string_road_number+1}),
 					rb.getString("carRoadLong"),
 					JOptionPane.ERROR_MESSAGE);
 			return false;

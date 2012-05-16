@@ -52,7 +52,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	JComboBox comboBox;
 	
 	// text box
-	JTextField addTextBox = new JTextField(Control.MAX_LEN_STRING_ATTRIBUTE);
+	JTextField addTextBox = new JTextField(Control.max_len_string_attibute);
 	
 	// property change
 	public static final String DISPOSE = "dispose" ;
@@ -140,8 +140,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			String[] item = {addItem};
 			if(_comboboxName == CarEditFrame.TYPE)
 				item = addItem.split("-");
-			if (item[0].length() > Control.MAX_LEN_STRING_ATTRIBUTE){
-				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
+			if (item[0].length() > Control.max_len_string_attibute){
+				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.max_len_string_attibute}),
 						MessageFormat.format(rb.getString("canNotAdd"),new Object[]{_comboboxName}),
 						JOptionPane.ERROR_MESSAGE);
 				return;
@@ -158,8 +158,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			String[] item = {newItem};
 			if(_comboboxName == CarEditFrame.TYPE)
 				item = newItem.split("-");
-			if (item[0].length() > Control.MAX_LEN_STRING_ATTRIBUTE){
-				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
+			if (item[0].length() > Control.max_len_string_attibute){
+				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.max_len_string_attibute}),
 						MessageFormat.format(rb.getString("canNotReplace"),new Object[]{_comboboxName}),
 						JOptionPane.ERROR_MESSAGE);
 				return;
@@ -281,9 +281,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			// confirm that length is a number and less than 10000 feet
 			try {
 				Integer.parseInt(addItem);
-				if (addItem.length() > Control.MAX_LEN_STRING_LENGTH_NAME){
-					log.error("car length must be less than 10,000 feet");
-					JOptionPane.showMessageDialog(this,rb.getString("carAttribute5"),
+				if (addItem.length() > Control.max_len_string_length_name){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.max_len_string_length_name}),
 							MessageFormat.format(rb.getString("canNotAdd"),new Object[]{_comboboxName}),
 							JOptionPane.ERROR_MESSAGE);
 					return;
