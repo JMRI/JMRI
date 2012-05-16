@@ -1,8 +1,5 @@
 package jmri.jmrit.operations.setup;
 
-import java.awt.Toolkit;
-import java.awt.Dimension;
-
 import org.jdom.Element;
 
 /**
@@ -24,9 +21,11 @@ public class Control {
 	// Default panel height
 	public static final int panelHeight = 500;
 	
+	/*
 	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();	
 	// Maximum panel height
 	public static final int panelMaxHeight = screenSize.height;
+	*/
 	
 	// Default panel edit locations
 	public static final int panelX = 0;
