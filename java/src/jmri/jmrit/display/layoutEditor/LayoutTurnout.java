@@ -96,7 +96,9 @@ public class LayoutTurnout
 	public static final int WYE_TURNOUT = 3;
 	public static final int DOUBLE_XOVER = 4;
 	public static final int RH_XOVER = 5;
-	public static final int LH_XOVER = 6;	
+	public static final int LH_XOVER = 6;
+    public final static int SINGLE_SLIP = 7; //used in LayoutSlip which extends this class
+    public final static int DOUBLE_SLIP = 8; //used in LayoutSlip which extends this class
 	// defined constants - link types
 	public static final int NO_LINK = 0;
 	public static final int FIRST_3_WAY = 1;       // this turnout is the first turnout of a 3-way

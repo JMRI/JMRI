@@ -6845,13 +6845,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		g2.draw(new Line2D.Double(x.getCoordsB(),x.getCoordsD()));
 	}
     
-    //Will need to sort out state of the turnout
     private void drawSlips(Graphics2D g2) {
         for (int i = 0; i<slipList.size();i++) {
             LayoutSlip x = slipList.get(i);
-            // set color - check for an AC block
             LayoutBlock b = x.getLayoutBlock();
-            // set track width for AC block
             setTrackStrokeWidth(g2,x.isMainline());
             Color mainColour;
             Color subColour;
@@ -6942,23 +6939,30 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                         third(x.getCoordsD(),x.getCoordsA())));
                 }
             } else {
+                g2.draw(new Line2D.Double(x.getCoordsA(),
+                    third(x.getCoordsA(),x.getCoordsD())));
+                    
+                g2.draw(new Line2D.Double(x.getCoordsD(),
+                    third(x.getCoordsD(),x.getCoordsA())));
                 if (x.getSlipState()==LayoutSlip.STATE_AD){
                     g2.setColor(mainColour);
                     g2.draw(new Line2D.Double(x.getCoordsA(),x.getCoordsD()));
                 
-                } else if (x.getSlipState()!=LayoutSlip.UNKNOWN) {
-                
-                    g2.draw(new Line2D.Double(x.getCoordsA(),
-                        third(x.getCoordsA(),x.getCoordsD())));
-                        
-                    g2.draw(new Line2D.Double(x.getCoordsD(),
-                        third(x.getCoordsD(),x.getCoordsA())));
+                } else if (x.getSlipState()==LayoutSlip.STATE_BD){
                     g2.setColor(mainColour);
-                    // draw AC segment
-                    g2.draw(new Line2D.Double(x.getCoordsA(),x.getCoordsC()));
-                    //Might want to do something neat here depending upon the state/type of the blocks connected
-                    // draw BD segment	
                     g2.draw(new Line2D.Double(x.getCoordsB(),x.getCoordsD()));
+                    if(x.singleSlipStraightEqual()){
+                        g2.setColor(mainColour);
+                        g2.draw(new Line2D.Double(x.getCoordsA(),x.getCoordsC()));
+                    }
+                
+                } else if (x.getSlipState()==LayoutSlip.STATE_AC){
+                    g2.setColor(mainColour);
+                    g2.draw(new Line2D.Double(x.getCoordsA(),x.getCoordsC()));
+                    if(x.singleSlipStraightEqual()){
+                        g2.setColor(mainColour);
+                        g2.draw(new Line2D.Double(x.getCoordsB(),x.getCoordsD()));
+                    }
                 } else {
                     g2.draw(new Line2D.Double(x.getCoordsA(),
                         third(x.getCoordsA(),x.getCoordsD())));
@@ -6967,8 +6971,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                         third(x.getCoordsD(),x.getCoordsA())));
                 }
             }
-
-
         }
 	}
 	

@@ -53,10 +53,6 @@ public class LayoutSlip extends LayoutTurnout
 
 	// Defined text resource
 	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
-
-	// defined constants 
-    public final static int SINGLE_SLIP = 7;
-    public final static int DOUBLE_SLIP = 8;
     
 	// operational instance variables (not saved between sessions)
     
@@ -102,8 +98,8 @@ public class LayoutSlip extends LayoutTurnout
             turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
             turnoutStates.put(STATE_BC, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
         } else {
-            turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
-            turnoutStates.put(STATE_BD, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
+            turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
+            turnoutStates.put(STATE_BD, new TurnoutState(Turnout.THROWN, Turnout.CLOSED));
             turnoutStates.put(STATE_AD, new TurnoutState(Turnout.THROWN, Turnout.THROWN));
             turnoutStates.remove(STATE_BC);
         }
@@ -167,7 +163,7 @@ public class LayoutSlip extends LayoutTurnout
 	 */
     public void toggleState() {
         switch(currentState) {
-            case STATE_AC : if(type==SINGLE_SLIP) {
+            case STATE_AC : if(singleSlipStraightEqual()) {
                                 setTurnoutState(turnoutStates.get(STATE_AD));
                                 currentState = STATE_AD;
                             } else {
@@ -711,7 +707,7 @@ public class LayoutSlip extends LayoutTurnout
             layoutEditor.third(A,C)));
         g2.draw(new Line2D.Double(C,
             layoutEditor.third(C,A)));
-            
+        
         if(state==STATE_AC || state==STATE_BD || state==UNKNOWN){
             g2.draw(new Line2D.Double(A,
             layoutEditor.third(A,D)));
@@ -774,29 +770,33 @@ public class LayoutSlip extends LayoutTurnout
                     layoutEditor.third(D,B)));
             }
         } else {
+            g2.draw(new Line2D.Double(A,
+                layoutEditor.third(A,D)));
+                
+            g2.draw(new Line2D.Double(D,
+                layoutEditor.third(D,A)));
             if (state==LayoutSlip.STATE_AD){
                 g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(A,D));
             
-            } else if (state!=LayoutSlip.UNKNOWN) {
-            
-                g2.draw(new Line2D.Double(A,
-                    layoutEditor.third(A,D)));
-                    
+            } else if (state==LayoutSlip.STATE_AC){
+                g2.draw(new Line2D.Double(B,
+                    layoutEditor.third(B,D)));
                 g2.draw(new Line2D.Double(D,
-                    layoutEditor.third(D,A)));
+                    layoutEditor.third(D,B)));
+                
                 g2.setColor(Color.red);
-                // draw AC segment
                 g2.draw(new Line2D.Double(A,C));
-                //Might want to do something neat here depending upon the state/type of the blocks connected
-                // draw BD segment	
+            
+            } else if (state==LayoutSlip.STATE_BD){
+                g2.setColor(Color.red);
                 g2.draw(new Line2D.Double(B,D));
+            
             } else {
-                g2.draw(new Line2D.Double(A,
-                    layoutEditor.third(A,D)));
-                    
+                g2.draw(new Line2D.Double(B,
+                    layoutEditor.third(B,D)));
                 g2.draw(new Line2D.Double(D,
-                    layoutEditor.third(D,A)));
+                    layoutEditor.third(D,B)));
             }
         }
     
@@ -826,15 +826,9 @@ public class LayoutSlip extends LayoutTurnout
         int turnAState;
         int turnBState;
         switch(testState) {
-            case STATE_AC : if(type==SINGLE_SLIP) {
-                                turnAState = turnoutStates.get(STATE_AD).getTestTurnoutAState();
-                                turnBState = turnoutStates.get(STATE_AD).getTestTurnoutBState();
-                                testState = STATE_AD;
-                            } else {
-                                turnAState = turnoutStates.get(STATE_BD).getTestTurnoutAState();
-                                turnBState = turnoutStates.get(STATE_BD).getTestTurnoutBState();
-                                testState = STATE_BD;
-                            }
+            case STATE_AC : turnAState = turnoutStates.get(STATE_BD).getTestTurnoutAState();
+                            turnBState = turnoutStates.get(STATE_BD).getTestTurnoutBState();
+                            testState = STATE_BD;
                             break;
             case STATE_BD :
                             turnAState = turnoutStates.get(STATE_AD).getTestTurnoutAState();
@@ -863,10 +857,12 @@ public class LayoutSlip extends LayoutTurnout
                             break;
         
         }
-        if(getTurnout()!=null)
+        ((Turnout)turnoutAComboBox.getSelectedBean()).setCommandedState(turnAState);
+        ((Turnout)turnoutBComboBox.getSelectedBean()).setCommandedState(turnBState);
+        /*if(getTurnout()!=null)
             getTurnout().setCommandedState(turnAState);
         if(getTurnoutB()!=null)
-            getTurnoutB().setCommandedState(turnBState);
+            getTurnoutB().setCommandedState(turnBState);*/
         if(testPanel!=null)
             testPanel.repaint();
     }
@@ -995,6 +991,12 @@ public class LayoutSlip extends LayoutTurnout
         return active;
     }
     
+    public boolean singleSlipStraightEqual(){
+        if(type!=SINGLE_SLIP)
+            return false;
+        return turnoutStates.get(STATE_AC).equals(turnoutStates.get(STATE_BD));
+    }
+    
     Hashtable <Integer, TurnoutState> turnoutStates = new Hashtable<Integer, TurnoutState>(4);
     
     public int getTurnoutState(Turnout turn, int state){
@@ -1111,6 +1113,14 @@ public class LayoutSlip extends LayoutTurnout
             } else {
                 turnoutB=Turnout.THROWN;
             }
+        }
+        
+        boolean equals(TurnoutState ts){
+            if(ts.getTurnoutAState()!=this.getTurnoutAState())
+                return false;
+            if(ts.getTurnoutBState()!=this.getTurnoutBState())
+                return false;
+            return true;
         }
     
     }
