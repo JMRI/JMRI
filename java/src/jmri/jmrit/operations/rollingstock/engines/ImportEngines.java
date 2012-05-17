@@ -144,24 +144,24 @@ public class ImportEngines extends Thread {
 				engineTrack ="";
 
 				log.debug("Checking engine number ("+engineNumber+") road ("+engineRoad+ ") model ("+engineModel+ ") length ("+engineLength+")");
-				if (engineNumber.length() > Control.MAX_LEN_STRING_ROAD_NUMBER){
+				if (engineNumber.length() > Control.max_len_string_road_number){
 					JOptionPane.showMessageDialog(null, 
 							MessageFormat.format(rb.getString("EngineRoadNumberTooLong"),new Object[]{(engineRoad+" "+engineNumber),engineNumber}),
 							rb.getString("engineRoadNum"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-				if (engineRoad.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
+				if (engineRoad.length() > Control.max_len_string_attibute){
 					JOptionPane.showMessageDialog(null, 
 							MessageFormat.format(rb.getString("EngineRoadNameTooLong"),new Object[]{(engineRoad+" "+engineNumber),engineRoad}),
-							MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
+							MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.max_len_string_attibute}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-				if (engineModel.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
+				if (engineModel.length() > Control.max_len_string_attibute){
 					JOptionPane.showMessageDialog(null, 
 							MessageFormat.format(rb.getString("EngineModelNameTooLong"),new Object[]{(engineRoad+" "+engineNumber),engineModel}),
-							MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
+							MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.max_len_string_attibute}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
@@ -175,10 +175,10 @@ public class ImportEngines extends Thread {
 					else if (results == JOptionPane.CANCEL_OPTION)
 						break;		
 				}
-				if (engineLength.length() > Control.MAX_LEN_STRING_LENGTH_NAME){
+				if (engineLength.length() > Control.max_len_string_length_name){
 					JOptionPane.showMessageDialog(null, 
 							MessageFormat.format(rb.getString("EngineLengthNameTooLong"),new Object[]{(engineRoad+" "+engineNumber),engineLength}),
-							rb.getString("engineAttribute5"),
+							MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.max_len_string_length_name}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
@@ -197,20 +197,20 @@ public class ImportEngines extends Thread {
 
 					if(inputLine.length > base+5){
 						engineOwner = inputLine[base+5];
-						if (engineOwner.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
+						if (engineOwner.length() > Control.max_len_string_attibute){
 							JOptionPane.showMessageDialog(null, 
 									MessageFormat.format(rb.getString("EngineOwnerNameTooLong"),new Object[]{(engineRoad+" "+engineNumber),engineOwner}),
-									MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
+									MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.max_len_string_attibute}),
 									JOptionPane.ERROR_MESSAGE);
 							break;
 						}
 					}
 					if(inputLine.length > base+6){
 						engineBuilt = inputLine[base+6];
-						if (engineBuilt.length() > Control.MAX_LEN_STRING_BUILT_NAME){
+						if (engineBuilt.length() > Control.max_len_string_built_name){
 							JOptionPane.showMessageDialog(null, 
 									MessageFormat.format(rb.getString("EngineBuiltDateTooLong"),new Object[]{(engineRoad+" "+engineNumber),engineBuilt}),
-									rb.getString("engineAttribute5"),
+									MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.max_len_string_built_name}),
 									JOptionPane.ERROR_MESSAGE);
 							break;
 						}
@@ -242,17 +242,17 @@ public class ImportEngines extends Thread {
 						log.debug("Engine ("+engineRoad+" "+engineNumber+") has track ("+engineTrack+")");
 					}
 
-					if (engineLocation.length() > Control.MAX_LEN_STRING_LOCATION_NAME){
+					if (engineLocation.length() > Control.max_len_string_location_name){
 						JOptionPane.showMessageDialog(null, 
 								MessageFormat.format(rb.getString("EngineLocationNameTooLong"),new Object[]{(engineRoad+" "+engineNumber),engineLocation}),
-								rb.getString("engineAttribute25"),
+								MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.max_len_string_location_name}),
 								JOptionPane.ERROR_MESSAGE);
 						break;
 					}
-					if (engineTrack.length() > Control.MAX_LEN_STRING_TRACK_NAME){
+					if (engineTrack.length() > Control.max_len_string_track_name){
 						JOptionPane.showMessageDialog(null, 
 								MessageFormat.format(rb.getString("EngineTrackNameTooLong"),new Object[]{(engineRoad+" "+engineNumber),engineTrack}),
-								rb.getString("engineAttribute25"),
+								MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.max_len_string_track_name}),
 								JOptionPane.ERROR_MESSAGE);
 						break;
 					}

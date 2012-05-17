@@ -173,8 +173,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 			String addLoad = addTextBox.getText();
 			if (addLoad.equals(""))
 				return;
-			if (addLoad.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
-				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
+			if (addLoad.length() > Control.max_len_string_attibute){
+				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.max_len_string_attibute}),
 						MessageFormat.format(rb.getString("canNotAdd"),new Object[]{rb.getString("Load")}),
 						JOptionPane.ERROR_MESSAGE);
 				return;
@@ -195,8 +195,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 			String newLoad = addTextBox.getText();
 			if (newLoad.equals(""))
 				return;
-			if (newLoad.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
-				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
+			if (newLoad.length() > Control.max_len_string_attibute){
+				JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.max_len_string_attibute}),
 						MessageFormat.format(rb.getString("canNotReplace"),new Object[]{rb.getString("Load")}),
 						JOptionPane.ERROR_MESSAGE);
 				return;

@@ -114,7 +114,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		if (size== null)
 			return minCheckboxes;	// default is 6 checkboxes per row
 		StringBuffer pad = new StringBuffer("X");
-		for (int i=0; i<Control.MAX_LEN_STRING_ATTRIBUTE; i++)
+		for (int i=0; i<Control.max_len_string_attibute; i++)
 			pad.append("X");
 		
 		JCheckBox box = new JCheckBox(pad.toString());
@@ -275,7 +275,20 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		}
 		return sortDone;	
 	}
+	
+	protected void clearTableSort(JTable table){
+		TableSorter sorter = null;
+		try {
+			sorter = (TableSorter) table.getModel();
+		} catch (Exception e) {
+			log.debug("table doesn't use sorter");
+		} 
+		if (sorter == null)
+			return;
+		for (int i = 0; i <table.getColumnCount(); i++) {
+			sorter.setSortingStatus(i, TableSorter.NOT_SORTED);
+		}
+	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(OperationsFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OperationsFrame.class.getName());
 }

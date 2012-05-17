@@ -61,7 +61,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		
 		Car car;
 		int rows[] = _carsTable.getSelectedRows();
-		if (rows.length >0)
+		if (rows.length > 0)
 			car = _carsTableModel.getCarAtIndex(rows[0]);
 		else
 			return;		
@@ -88,6 +88,10 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 			
 		for (int i=0; i<rows.length; i++){
 			Car car = _carsTableModel.getCarAtIndex(rows[i]);
+			if (_car == null){
+				super.loadCar(car);
+				continue;
+			}
 			if (!super.change(car))
 				return false;
 		}
@@ -95,6 +99,5 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 	}
 
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(CarsSetFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarsSetFrame.class.getName());
 }

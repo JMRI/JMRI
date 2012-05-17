@@ -85,8 +85,8 @@ public class PrintEngineRosterAction  extends AbstractAction {
 					+ "\t" + rb.getString("Model") + "\t     "
 					+ rb.getString("Type") + "      " + rb.getString("Length")
 					+ " " + (panel.sortByConsist.isSelected()?rb.getString("Consist")+"     ":rb.getString("Owner"))
-					+ (panel.sortByValue.isSelected()?" " +padAttribute(Setup.getValueLabel(), Control.MAX_LEN_STRING_ATTRIBUTE):"")
-					+ (panel.sortByRfid.isSelected()?" " +padAttribute(Setup.getRfidLabel(), Control.MAX_LEN_STRING_ATTRIBUTE):"")
+					+ (panel.sortByValue.isSelected()?" " +padAttribute(Setup.getValueLabel(), Control.max_len_string_attibute):"")
+					+ (panel.sortByRfid.isSelected()?" " +padAttribute(Setup.getRfidLabel(), Control.max_len_string_attibute):"")
 					+ ((!panel.sortByValue.isSelected() && !panel.sortByRfid.isSelected())?" " +rb.getString("Built"):"")
 					+ " " + rb.getString("Location")
 					+ newLine;
@@ -97,21 +97,21 @@ public class PrintEngineRosterAction  extends AbstractAction {
         		// loco number
         		number = padAttribute(engine.getNumber().trim(), 7);     		
         		road = padAttribute(engine.getRoad().trim(), 7);     		
-        		model = padAttribute(engine.getModel().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);     		
-        		type = padAttribute(engine.getType().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);       		
-      			length = padAttribute(engine.getLength().trim(), Control.MAX_LEN_STRING_LENGTH_NAME); 
+        		model = padAttribute(engine.getModel().trim(), Control.max_len_string_attibute);     		
+        		type = padAttribute(engine.getType().trim(), Control.max_len_string_attibute);       		
+      			length = padAttribute(engine.getLength().trim(), Control.max_len_string_length_name); 
         				
     			if (panel.sortByConsist.isSelected())
-       				consist = padAttribute(engine.getConsistName().trim(), Control.MAX_LEN_STRING_ATTRIBUTE); 
+       				consist = padAttribute(engine.getConsistName().trim(), Control.max_len_string_attibute); 
     			else
     				owner = padAttribute(engine.getOwner().trim(), ownerMaxLen);
          		
     			if (panel.sortByValue.isSelected())
-    				value = padAttribute(engine.getValue().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);
+    				value = padAttribute(engine.getValue().trim(), Control.max_len_string_attibute);
     			else if (panel.sortByRfid.isSelected())
-    				rfid = padAttribute(engine.getRfid().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);
+    				rfid = padAttribute(engine.getRfid().trim(), Control.max_len_string_attibute);
     			else
-    				built = padAttribute(engine.getBuilt().trim(), Control.MAX_LEN_STRING_BUILT_NAME);
+    				built = padAttribute(engine.getBuilt().trim(), Control.max_len_string_built_name);
     			
         		location = "";
         		if (!engine.getLocationName().equals("")){

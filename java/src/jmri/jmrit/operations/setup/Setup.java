@@ -1568,16 +1568,6 @@ public class Setup {
         		if (log.isDebugEnabled()) log.debug("closeOnSave: "+enabled);
         		setCloseWindowOnSaveEnabled(enabled.equals("true"));
         	}
-          	if ((a = operations.getChild("settings").getAttribute("autoSave"))!= null){
-        		String enabled = a.getValue();
-        		if (log.isDebugEnabled()) log.debug("autoSave: "+enabled);
-        		setAutoSaveEnabled(enabled.equals("true"));
-        	}
-          	if ((a = operations.getChild("settings").getAttribute("autoBackup"))!= null){
-        		String enabled = a.getValue();
-        		if (log.isDebugEnabled()) log.debug("autoBackup: "+enabled);
-        		setAutoBackupEnabled(enabled.equals("true"));
-        	}
         	if ((a = operations.getChild("settings").getAttribute("trainDirection"))!= null){
         		String dir = a.getValue();
         		if (log.isDebugEnabled()) log.debug("direction: "+dir);
@@ -2028,8 +2018,18 @@ public class Setup {
         }
         
         // logging has to be last, causes cars and engines to load
-        // fixed by only configuring the booleans
         if (operations.getChild("settings") != null){
+          	if ((a = operations.getChild("settings").getAttribute("autoSave"))!= null){
+        		String enabled = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("autoSave: "+enabled);
+        		setAutoSaveEnabled(enabled.equals("true"));
+        	}
+          	if ((a = operations.getChild("settings").getAttribute("autoBackup"))!= null){
+        		String enabled = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("autoBackup: "+enabled);
+        		setAutoBackupEnabled(enabled.equals("true"));
+        	}
+         // fixed by only configuring the booleans
         	if ((a = operations.getChild("settings").getAttribute("carLogger"))!= null){
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("carLogger: "+enable);

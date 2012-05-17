@@ -69,7 +69,7 @@
 <p><img src="images/Main_Loconet14.png" width="452" height="91" alt="PR3 Mode"></p>
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
 <p><strong><a name="Firmware"></a>Download Firmware</strong></p>
-<p>Opens the Firmware Downloader.</p>
+<p>Opens the <a href="#FirmwareDownloader">Firmware Downloader.</a></p>
 <p><strong><a name="Sounds"></a>Download Sounds</strong></p>
 <p>Opens the <a href="#SoundDownloader">Decoder Sound Downloader</a>.</p>
 <p><strong>Edit SPJ Sound</strong> <strong>File</strong></p>

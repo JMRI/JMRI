@@ -39,6 +39,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 
     public SerialDriverAdapter() {
 		super();
+		setManufacturer(jmri.jmrix.DCCManufacturerList.WANGROW);
         adaptermemo = new NceSystemConnectionMemo();
 	}
 
@@ -72,6 +73,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
+            activeSerialPort.enableReceiveTimeout(50);  // 50 mSec timeout before sending chars
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
@@ -89,18 +91,10 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
                 count = serialStream.available();
             }
 
-            // report status?
-            if (log.isInfoEnabled()) {
-                log.info(portName+" port opened at "
-                         +activeSerialPort.getBaudRate()+" baud, sees "
-                         +" DTR: "+activeSerialPort.isDTR()
-                         +" RTS: "+activeSerialPort.isRTS()
-						+" DSR: "+activeSerialPort.isDSR()
-                         +" CTS: "+activeSerialPort.isCTS()
-                         +"  CD: "+activeSerialPort.isCD()
-                         );
-            }
-
+            // report status
+            if (log.isInfoEnabled())
+                log.info("Wangrow "+portName+" port opened at "
+                         +activeSerialPort.getBaudRate()+" baud");
             opened = true;
 
         } catch (gnu.io.NoSuchPortException p) {
@@ -158,7 +152,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
     public boolean status() {return opened;}
 
     /**
-     * Get an array of valid baud rates. This is currently only 19,200 bps
+     * Get an array of valid baud rates. This is currently only 9,600 bps
      */
     public String[] validBaudRates() {
         return new String[]{"9,600 bps"};
@@ -168,16 +162,13 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
     private boolean opened = false;
     InputStream serialStream = null;
 
+    /*
     static public SerialDriverAdapter instance() {
         if (mInstance == null) mInstance = new SerialDriverAdapter();
         return mInstance;
     }
     static SerialDriverAdapter mInstance = null;
-    
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.WANGROW;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
+    */
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 

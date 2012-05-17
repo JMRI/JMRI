@@ -520,12 +520,12 @@ public class EntryExitPairs implements jmri.Manager{
         NamedBean sourceSignal = null;
         jmri.SignalMastLogic sml;
         //String ref = "Empty";
-        PointDetails pd = null;
+        transient PointDetails pd = null;
         
         //Using Object here rather than sourceSensor, working on the basis that it might
         //one day be possible to have a signal icon selectable on a panel and 
         //generate a propertychange, so hence do not want to tie it down at this stage.
-        HashMap<PointDetails, DestinationPoints> pointToDest = new HashMap<PointDetails, DestinationPoints>();
+        transient HashMap<PointDetails, DestinationPoints> pointToDest = new HashMap<PointDetails, DestinationPoints>();
         
         
         boolean isEnabled(Object dest,LayoutEditor panel){
@@ -711,8 +711,8 @@ public class EntryExitPairs implements jmri.Manager{
         }
         
         class DestinationPoints extends jmri.implementation.AbstractNamedBean{
-        
-            PointDetails point = null;
+            private static final long serialVersionUID = 1L;
+            transient PointDetails point = null;
             Boolean uniDirection = true;
             int entryExitType = SETUPTURNOUTSONLY;//SETUPSIGNALMASTLOGIC;
             boolean enabled = true;
@@ -805,7 +805,7 @@ public class EntryExitPairs implements jmri.Manager{
                     uniDirection = true;
             }
             
-            protected PropertyChangeListener propertyBlockListener = new PropertyChangeListener() {
+            transient protected PropertyChangeListener propertyBlockListener = new PropertyChangeListener() {
                 public void propertyChange(PropertyChangeEvent e) {
                     Block blk = (Block) e.getSource();
                     if (e.getPropertyName().equals("state")) {
@@ -1067,7 +1067,7 @@ public class EntryExitPairs implements jmri.Manager{
             }
             
             private JFrame cancelClearFrame;
-            private Thread threadAutoClearFrame = null;
+            transient private Thread threadAutoClearFrame = null;
             
             void cancelClearOptionBox(){
                 if(cancelClearFrame==null){
@@ -1758,7 +1758,7 @@ public class EntryExitPairs implements jmri.Manager{
         private SignalHead signalhead;
         
         Source sourceRoute;
-        Hashtable<Source.DestinationPoints, Source> destinations = new Hashtable<Source.DestinationPoints, Source>(5);
+        transient Hashtable<Source.DestinationPoints, Source> destinations = new Hashtable<Source.DestinationPoints, Source>(5);
         
         PointDetails(LayoutBlock facing, LayoutBlock protecting){
             this.facing=facing;

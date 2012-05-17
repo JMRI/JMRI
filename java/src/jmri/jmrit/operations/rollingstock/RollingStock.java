@@ -145,20 +145,33 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _type;
 	}
 
+	protected boolean _lengthChange = false;	// used for loco length change
 	/**
 	 * Sets the length of the rolling stock.
 	 * @param length
 	 */
 	public void setLength(String length) {
 		String old = _length;
-		_length = length;
-		// adjust used length if rolling stock is at a location
-		if (_location != null && _trackLocation != null){
-			_location.setUsedLength(_location.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
-			_trackLocation.setUsedLength(_trackLocation.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
+		if (!old.equals(length)){
+			// adjust used length if rolling stock is at a location
+			if (_location != null && _trackLocation != null){
+				_location.setUsedLength(_location.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
+				_trackLocation.setUsedLength(_trackLocation.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
+				if (_destination != null && _trackDestination != null && !_lengthChange){
+					_lengthChange = true;	// prevent recursive loop, and we want the "old" loco length
+					log.debug("Rolling stock "+toString()+" has destination ("+_destination.getName()+", "+_trackDestination.getName()+")");
+					_trackLocation.deletePickupRS(this);
+					_trackDestination.deleteDropRS(this);
+					// now change the length and update tracks
+					_length = length;
+					_trackLocation.addPickupRS(this);
+					_trackDestination.addDropRS(this);
+					_lengthChange = false;	// done
+				}
+			}
+			_length = length;
+			firePropertyChange(LENGTH_CHANGED_PROPERTY, old, length);
 		}
-		if (!old.equals(length))
-			firePropertyChange("rolling stock length", old, length);
 	}
 
 	public String getLength() {
@@ -758,15 +771,18 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _comment;
 	}
 	
-	protected void moveRollingStock(RouteLocation old, RouteLocation next){
-		if(old == getRouteLocation()){	
+	protected void moveRollingStock(RouteLocation old, RouteLocation next) {
+		if(old == getRouteLocation()) {	
 			// Arriving at destination?
-			if(getRouteLocation() == getRouteDestination()){
-				log.debug("Rolling stock ("+toString()+") has arrived at destination ("+getDestination()+")");
+			if(getRouteLocation() == getRouteDestination() || next == null) {
+				if (getRouteLocation() == getRouteDestination())
+					log.debug("Rolling stock ("+toString()+") has arrived at destination ("+getDestination()+")");
+				else
+					log.error("Rolling stock ("+toString()+") has a null route location for next");
 				setLocation(getDestination(), getDestinationTrack(), true);	// force RS to destination
 				setDestination(null, null); 	// this also clears the route locations
 				setTrain(null);					// this must come after setDestination (route id is set)
-			}else{
+			} else {
 				log.debug("Rolling stock ("+toString()+") is in train (" +_train.getName()+") leaves location ("+old.getName()+") destination ("+next.getName()+")");
 				Location nextLocation = locationManager.getLocationByName(next.getName());
 				setLocation(nextLocation, null, true); // force RS to location

@@ -126,17 +126,19 @@ import jmri.RailCom;
     
     public void setRailComState(int ori){
         if((ori==Sensor.INACTIVE) || (ori==Sensor.ACTIVE)){
-            addr = 0;
-            address_part_1 = 0x100;
-            address_part_2 = -1;
-            addr_type = -1;
-            actual_speed = -1;
-            actual_load = -1;
-            actual_temperature = -1;
-            fuelLevel = -1;
-            waterLevel = -1;
-            location = -1;
-            routing_no = -1;
+            synchronized(this){
+                addr = 0;
+                address_part_1 = 0x100;
+                address_part_2 = -1;
+                addr_type = -1;
+                actual_speed = -1;
+                actual_load = -1;
+                actual_temperature = -1;
+                fuelLevel = -1;
+                waterLevel = -1;
+                location = -1;
+                routing_no = -1;
+            }
             cvNumber = -1;
             cvValues = new Hashtable<Integer, Integer>();
             setReport(null);
@@ -448,7 +450,9 @@ import jmri.RailCom;
         rcTag.setAddressType(addr_type);
         setReport(rcTag);
         lastLoco = address;
-        addr=address;
+        synchronized(this){
+            addr=address;
+        }
         return rcTag;
     }
  

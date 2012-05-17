@@ -12078,6 +12078,7 @@ public class LayoutEditorTools
     
     private JPanel dblSlipC2SigPanel;
     private JPanel dblSlipB2SigPanel;
+    private boolean slipSignalFromMenu = false;
     
     public void setSlipFromMenu( LayoutSlip ls, 
             MultiIconEditor theEditor, JFrame theFrame ) {
@@ -12090,6 +12091,8 @@ public class LayoutEditorTools
 		c2SlipField.setText("");
 		d1SlipField.setText("");
 		d2SlipField.setText("");
+        slipSignalFromMenu = true;
+        
 		setSignalsAtSlip(theEditor,theFrame);
 	}	
 	public void setSignalsAtSlip( MultiIconEditor theEditor, JFrame theFrame ) {
@@ -12337,6 +12340,7 @@ public class LayoutEditorTools
             dblSlipB2SigPanel.setVisible(true);
             dblSlipC2SigPanel.setVisible(true);
         }
+        if (slipSignalFromMenu) getSlipTurnoutSignalsGetSaved(null);
         setSignalsAtSlipFrame.pack();
         setSignalsAtSlipFrame.setVisible(true);		
 		setSignalsAtSlipOpen = true;
@@ -12521,7 +12525,7 @@ public class LayoutEditorTools
 				}
 			}
 			else if (assigned!=C1) {
-// need to figure out what to do in this case.			
+                // need to figure out what to do in this case.
 			}
 		}
         if(layoutSlip.getTurnoutType()==LayoutSlip.DOUBLE_SLIP){
@@ -12543,7 +12547,7 @@ public class LayoutEditorTools
                     removeAssignment(b2SlipHead);
                     layoutSlip.setSignalB2Name(b2SlipField.getText().trim());
                     needRedraw = true;
-                }		
+                }
             }
             else if (b2SlipHead!=null) {
                 int assigned = isHeadAssignedHere(b2SlipHead,layoutSlip);
@@ -12577,7 +12581,6 @@ public class LayoutEditorTools
                 layoutSlip.setSignalB2Name("");
                 b2SlipHead=null;
             }
-        
         }
 		// signal heads on turnout 2
 		if (setC1SlipHead.isSelected()) {
@@ -12766,25 +12769,25 @@ public class LayoutEditorTools
 			setLogicSlip(a1SlipHead,(TrackSegment)layoutSlip.getConnectC(),a2SlipHead,
 					(TrackSegment)layoutSlip.getConnectD(),setupA1SlipLogic.isSelected(),
 					setupA2SlipLogic.isSelected(),layoutSlip, layoutSlip.getTurnout(), 
-                       layoutSlip.getTurnoutB(), LayoutSlip.STATE_AC, LayoutSlip.STATE_AD);
+                       layoutSlip.getTurnoutB(), LayoutSlip.STATE_AC, LayoutSlip.STATE_AD, 0);
 		}
 		if (setupB1SlipLogic.isSelected() || setupB2SlipLogic.isSelected()) {
 			setLogicSlip(b1SlipHead,(TrackSegment)layoutSlip.getConnectD(),b2SlipHead,
 					(TrackSegment)layoutSlip.getConnectC(),setupB1SlipLogic.isSelected(),
 					setupB2SlipLogic.isSelected(),layoutSlip, layoutSlip.getTurnout(),
-                      layoutSlip.getTurnoutB(), LayoutSlip.STATE_BD, LayoutSlip.STATE_BC);
+                      layoutSlip.getTurnoutB(), LayoutSlip.STATE_BD, LayoutSlip.STATE_BC, 2);
 		}
 		if (setupC1SlipLogic.isSelected() || setupC2SlipLogic.isSelected()) {
 			setLogicSlip(c1SlipHead,(TrackSegment)layoutSlip.getConnectA(),c2SlipHead,
 					(TrackSegment)layoutSlip.getConnectB(),setupC1SlipLogic.isSelected(),
 					setupC2SlipLogic.isSelected(),layoutSlip, layoutSlip.getTurnoutB(), 
-                     layoutSlip.getTurnout(),LayoutSlip.STATE_AC, LayoutSlip.STATE_BC);
+                     layoutSlip.getTurnout(),LayoutSlip.STATE_AC, LayoutSlip.STATE_BC, 4);
 		}
 		if (setupD1SlipLogic.isSelected() || setupD2SlipLogic.isSelected()) {
 			setLogicSlip(d1SlipHead,(TrackSegment)layoutSlip.getConnectB(),d2SlipHead,
 					(TrackSegment)layoutSlip.getConnectA(),setupD1SlipLogic.isSelected(),
 					setupD2SlipLogic.isSelected(),layoutSlip, layoutSlip.getTurnoutB(), 
-                     layoutSlip.getTurnout(),LayoutSlip.STATE_BD, LayoutSlip.STATE_AD);
+                     layoutSlip.getTurnout(),LayoutSlip.STATE_BD, LayoutSlip.STATE_AD, 6);
 		}
 		// finish up
 		setSignalsAtSlipOpen = false;
@@ -12844,7 +12847,7 @@ public class LayoutEditorTools
 	private void setLogicSlip(SignalHead head,TrackSegment track1,SignalHead secondHead,TrackSegment track2,
 					boolean setup1, boolean setup2, 
 						LayoutSlip slip, Turnout nearTurnout, Turnout farTurnout,
-                            int continueState, int divergeState) {
+                            int continueState, int divergeState, int number) {
 		// initialize common components and ensure all is defined
 		LayoutBlock connectorBlock = slip.getLayoutBlock();
 		Sensor connectorOccupancy = null;
@@ -12858,7 +12861,7 @@ public class LayoutEditorTools
 			JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
 					java.text.MessageFormat.format(rb.getString("InfoMessage4"),
 						new Object[]{connectorBlock.getUserName()}), 
-							null,JOptionPane.INFORMATION_MESSAGE);						
+							null,JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
         
@@ -12915,7 +12918,7 @@ public class LayoutEditorTools
 				if (auxSignal!=null) {
 					logic.setWatchedSignal1Alt(auxSignal.getSystemName());
 				}
-				String nearSensorName = setupNearLogixSlip(nearTurnout, nearState, head, farTurnout, farState);
+				String nearSensorName = setupNearLogixSlip(nearTurnout, nearState, head, farTurnout, farState, slip, number);
 				addNearSensorToSlipLogic(nearSensorName);
 				finalizeBlockBossLogic();
 			}
@@ -12972,7 +12975,7 @@ public class LayoutEditorTools
 			if (auxSignal!=null) {
 				logic.setWatchedSignal2Alt(auxSignal.getSystemName());
 			}		
-			String nearSensorName = setupNearLogixSlip(nearTurnout, nearState,head, farTurnout, farState);
+			String nearSensorName = setupNearLogixSlip(nearTurnout, nearState,head, farTurnout, farState, slip, number+1);
 			addNearSensorToSlipLogic(nearSensorName);
 			logic.setLimitSpeed2(true);
 			finalizeBlockBossLogic();
@@ -12995,60 +12998,71 @@ public class LayoutEditorTools
 			if (auxSignal!=null) {
 				logic.setWatchedSignal1Alt(auxSignal.getSystemName());
 			}
-			String nearSensorName = setupNearLogixSlip(nearTurnout, nearState, secondHead, farTurnout, farState);
+			String nearSensorName = setupNearLogixSlip(nearTurnout, nearState, secondHead, farTurnout, farState, slip, number+1);
 			addNearSensorToSlipLogic(nearSensorName);
 			logic.setLimitSpeed2(true);
 			finalizeBlockBossLogic();			
 		}
 	}
     private String setupNearLogixSlip(Turnout turn, int nearState, 
-					SignalHead head, Turnout farTurn, int farState) {
+					SignalHead head, Turnout farTurn, int farState, LayoutSlip slip, int number) {
 		String turnoutName = turn.getDisplayName();
         String farTurnoutName = farTurn.getDisplayName();
-        String namer = turnoutName+head.getDisplayName();
-		String sensorName = "IS"+namer;
-		String logixName = "IX"+namer;
+        
+		String logixName = "SYS_LAYOUTSLIP:"+slip.ident;
+        String sensorName = "IS:"+logixName+"C"+number;
 		Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
 		if (sensor==null) {
 			log.error("Trouble creating sensor "+sensorName+" while setting up Logix.");
 			return "";
 		}
-		if (InstanceManager.logixManagerInstance().getBySystemName(logixName)==null) {
-			// Logix does not exist, create it
-			Logix x = InstanceManager.logixManagerInstance().createNewLogix(logixName,"");
-			if (x==null) {
-				log.error("Trouble creating logix "+logixName+" while setting up signal logic.");
-				return "";
-			}
-			String cName = x.getSystemName()+"C1";
-			Conditional c = InstanceManager.conditionalManagerInstance().
-												createNewConditional(cName,"");
-			if (c==null) {
-				log.error("Trouble creating conditional "+cName+" while setting up Logix.");
-				return "";
-			}
-			int type = Conditional.TYPE_TURNOUT_THROWN;
-            if(nearState==Turnout.CLOSED) type = Conditional.TYPE_TURNOUT_CLOSED;
-            ArrayList <ConditionalVariable> variableList = c.getCopyOfStateVariables();
-            variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND, 
-                                                 type, turnoutName, true));
-            
-            type = Conditional.TYPE_TURNOUT_THROWN;
-            if (farState==Turnout.CLOSED) type = Conditional.TYPE_TURNOUT_CLOSED;
-            variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND, 
-                                                 type, farTurnoutName, true));
-            c.setStateVariables(variableList);
-            ArrayList <ConditionalAction> actionList = c.getCopyOfActions();
-            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                                                 Conditional.ACTION_SET_SENSOR, sensorName,
-                                                 Sensor.INACTIVE, ""));
-            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
-                                                 Conditional.ACTION_SET_SENSOR, sensorName,
-                                                 Sensor.ACTIVE, ""));
-			c.setAction(actionList);										// string data
-			x.addConditional(cName,-1);
-			x.activateLogix();
-		}
+        boolean newConditional = false;
+        Logix x = InstanceManager.logixManagerInstance().getBySystemName(logixName);
+        if(x==null){
+            x = InstanceManager.logixManagerInstance().createNewLogix(logixName, "");
+            newConditional = true;
+            if(x==null){
+                log.error("Trouble creating logix "+logixName+" while setting up signal logic.");
+                return "";
+            }
+            x.setComment("Layout Slip, Signalhead logic");
+        }
+        x.deActivateLogix();
+        String cName = logixName+"C"+number;
+        
+        Conditional c = InstanceManager.conditionalManagerInstance().getBySystemName(cName);
+        if(c==null){
+            c = InstanceManager.conditionalManagerInstance().
+                                                createNewConditional(cName,"");
+            newConditional = true;
+            if (c==null) {
+                log.error("Trouble creating conditional "+cName+" while setting up Logix.");
+                return "";
+            }
+        }
+        int type = Conditional.TYPE_TURNOUT_THROWN;
+        if(nearState==Turnout.CLOSED) type = Conditional.TYPE_TURNOUT_CLOSED;
+        ArrayList <ConditionalVariable> variableList = new ArrayList <ConditionalVariable> ();
+        variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND, 
+                                             type, turnoutName, true));
+        
+        type = Conditional.TYPE_TURNOUT_THROWN;
+        if (farState==Turnout.CLOSED) type = Conditional.TYPE_TURNOUT_CLOSED;
+        variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND, 
+                                             type, farTurnoutName, true));
+        c.setStateVariables(variableList);
+        ArrayList <ConditionalAction> actionList = new ArrayList <ConditionalAction> ();
+        actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
+                                             Conditional.ACTION_SET_SENSOR, sensorName,
+                                             Sensor.INACTIVE, ""));
+        actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
+                                             Conditional.ACTION_SET_SENSOR, sensorName,
+                                             Sensor.ACTIVE, ""));
+        c.setAction(actionList);        // string data
+        if(newConditional){
+            x.addConditional(cName,-1);
+        }
+        x.activateLogix();
 		return sensorName;
 	}
 	/*

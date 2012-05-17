@@ -25,7 +25,6 @@ import javax.swing.JTextField;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -36,7 +35,7 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
 /**
  * Frame for user edit of operation parameters
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012
  * @version $Revision$
  */
 
@@ -90,7 +89,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	//JCheckBox rfidCheckBox = new JCheckBox(rb.getString("EnableRfid"));
 	
 	// text field
-	JTextField ownerTextField = new JTextField(10);
+	//JTextField ownerTextField = new JTextField(10);
 	JTextField panelTextField = new JTextField(35);
 	JTextField railroadNameTextField = new JTextField(35);
 	JTextField maxLengthTextField = new JTextField(5);
@@ -128,7 +127,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		switchTimeTextField.setText(Integer.toString(Setup.getSwitchTime()));
 		travelTimeTextField.setText(Integer.toString(Setup.getTravelTime()));
 		panelTextField.setText(Setup.getPanelName());
-		ownerTextField.setText(Setup.getOwnerName());
+		//ownerTextField.setText(Setup.getOwnerName());
 		yearTextField.setText(Setup.getYearModeled());
 
 		// load checkboxes
@@ -407,14 +406,16 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	}
 	
 	private void save() {
+		/*
 		String addOwner = ownerTextField.getText();
-		if (addOwner.length() > Control.MAX_LEN_STRING_ATTRIBUTE) {
+		if (addOwner.length() > Control.max_len_string_attibute) {
 			JOptionPane.showMessageDialog(this, MessageFormat.format(rb
 					.getString("OwnerText"), new Object[] { Integer
-					.toString(Control.MAX_LEN_STRING_ATTRIBUTE) }), rb
+					.toString(Control.max_len_string_attibute) }), rb
 					.getString("CanNotAddOwner"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		*/
 		// check input fields
 		try {
 			Integer.parseInt(maxLengthTextField.getText());
@@ -451,9 +452,9 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		// if max train length has changed, check routes
 		checkRoutes();
 		// add owner name to setup
-		Setup.setOwnerName(addOwner);
+		//Setup.setOwnerName(addOwner);
 		// add owner name to list
-		CarOwners.instance().addName(addOwner);
+		//CarOwners.instance().addName(addOwner);
 		// set car types
 		if (typeDesc.isSelected()
 				&& !Setup.getCarTypes().equals(Setup.DESCRIPTIVE)

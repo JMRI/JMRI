@@ -204,7 +204,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
     }
     
     public int loadOrder(){
-        return 900;
+        return EntryExitPairs.instance().getXMLOrder();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EntryExitPairsXml.class.getName());

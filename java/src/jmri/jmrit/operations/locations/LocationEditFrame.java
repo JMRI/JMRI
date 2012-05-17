@@ -81,14 +81,14 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	JTextField locationNameTextField = new JTextField(20);
 	
 	// text area
-	JTextArea commentTextArea	= new JTextArea(2,60);
+	JTextArea commentTextArea	= new JTextArea(2,80);
 	JScrollPane commentScroller = new JScrollPane(commentTextArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	Dimension minScrollerDim = new Dimension(500,42);
+	Dimension minScrollerDim = new Dimension(800,42);
 	
 	// combo boxes
 
 	public static final String NAME = rb.getString("Name");
-	public static final int MAX_NAME_LENGTH = Control.MAX_LEN_STRING_LOCATION_NAME;
+	public static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
 	public static final String DISPOSE = "dispose" ;
 
 	public LocationEditFrame() {

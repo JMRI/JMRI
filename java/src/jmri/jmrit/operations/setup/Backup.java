@@ -55,16 +55,16 @@ public class Backup extends XmlFile {
 			}
 			OperationsSetupXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
 					OperationsSetupXml.instance().getOperationsFileName());
-			CarManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
-					CarManagerXml.instance().getOperationsFileName());
-			EngineManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
-					EngineManagerXml.instance().getOperationsFileName());
-			TrainManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
-					TrainManagerXml.instance().getOperationsFileName());
 			LocationManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
 					LocationManagerXml.instance().getOperationsFileName());
 			RouteManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
 					RouteManagerXml.instance().getOperationsFileName());
+			TrainManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
+					TrainManagerXml.instance().getOperationsFileName());
+			CarManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
+					CarManagerXml.instance().getOperationsFileName());
+			EngineManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
+					EngineManagerXml.instance().getOperationsFileName());
 		} catch (Exception e) {
 			log.error("Exception while making backup, may not be complete: "
 					+ e);
@@ -205,7 +205,10 @@ public class Backup extends XmlFile {
     	for (int i=0; i<100; i++){
     		if (checkDirectoryExists(backupName)){
     			log.debug("Operations backup directory "+backupName+" already exist");
-    			backupName = getDirectoryName()+"_"+i;
+    			if (i<10)
+    				backupName = getDirectoryName()+"_0"+i;
+    			else 
+    				backupName = getDirectoryName()+"_"+i;
     		} else {
     			break;
     		}

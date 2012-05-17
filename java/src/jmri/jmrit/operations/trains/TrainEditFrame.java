@@ -117,9 +117,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JTextField trainDescriptionTextField = new JTextField(30);
 	
 	// text area
-	JTextArea commentTextArea	= new JTextArea(2,50);
+	JTextArea commentTextArea	= new JTextArea(2,70);
 	JScrollPane commentScroller = new JScrollPane(commentTextArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	Dimension minScrollerDim = new Dimension(500,42);
+	Dimension minScrollerDim = new Dimension(800,42);
 	
 	// for padding out panel
 	JLabel space1 = new JLabel("       ");
@@ -619,7 +619,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 	/**
 	 * 
-	 * @return true if name is less than 26 characters and is at least one character
+	 * @return true if name isn't too long and is at least one character
 	 */
 	private boolean checkName(String s){
 		String trainName = trainNameTextField.getText().trim();
@@ -630,10 +630,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		if (trainName.length() > 25){
-			log.error("Train name must be less than 26 charaters");
+		if (trainName.length() > Control.max_len_string_train_name){
 			JOptionPane.showMessageDialog(this,
-					rb.getString("TrainNameLess26"), MessageFormat.format(rb.getString("CanNot"), new Object[] {s}),
+					MessageFormat.format(rb.getString("TrainNameLess"),  new Object[] {Control.max_len_string_train_name+1}),
+					MessageFormat.format(rb.getString("CanNot"), new Object[] {s}),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

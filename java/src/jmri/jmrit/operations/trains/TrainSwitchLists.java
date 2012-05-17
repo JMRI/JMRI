@@ -79,6 +79,9 @@ public class TrainSwitchLists extends TrainCommon {
 		}
 		addLine(fileOut, valid);
 		
+		if (!location.getSwitchListComment().equals(""))
+			addLine(fileOut, location.getSwitchListComment());
+		
 		// get a list of trains sorted by arrival time
 		List<Train> trains = getTrainsArrivingThisLocationList(location);
 		CarManager carManager = CarManager.instance();
@@ -194,8 +197,6 @@ public class TrainSwitchLists extends TrainCommon {
 						}
 					}
 					
-					dropEngines(fileOut, enginesList, rl);
-					
 					utilityCarTypes.clear();	// list utility cars by quantity
 					for (int j=0; j<carList.size(); j++){
 						Car car = carManager.getById(carList.get(j));
@@ -207,6 +208,8 @@ public class TrainSwitchLists extends TrainCommon {
 							dropCars++;
 						}
 					}
+					
+					dropEngines(fileOut, enginesList, rl);
 					stops++;
 				}
 			}

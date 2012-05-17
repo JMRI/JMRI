@@ -21,6 +21,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 
 	protected String _id = "";
 	protected Location _location = null;	// the location in the route
+	protected String _locationId = "";		// the location's id
 	protected int _trainDir = (Setup.getTrainDirection()== Setup.EAST+Setup.WEST )?EAST:NORTH; 	//train direction when arriving at this location
 	protected int _maxTrainLength = Setup.getTrainLength();
 	protected int _maxCarMoves = Setup.getCarMoves();
@@ -85,7 +86,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	private String getNameId(){
 		if (_location != null)
 			return _location.getId();
-		return DELETED;
+		return _locationId;
 	}
 	
 	public Location getLocation(){
@@ -351,8 +352,9 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         //if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         org.jdom.Attribute a;
         if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
-        else log.warn("no id attribute in track location element when reading operations");
+        else log.warn("no id attribute in route location element when reading operations");
         if ((a = e.getAttribute("locationId")) != null ){
+        	_locationId = a.getValue();
         	_location = LocationManager.instance().getLocationById(a.getValue());
         	if (_location != null)
         		_location.addPropertyChangeListener(this);

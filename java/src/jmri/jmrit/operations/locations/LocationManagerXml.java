@@ -57,10 +57,6 @@ public class LocationManagerXml extends OperationsXml {
 	        doc.addContent(0,p);
 		        
 	        LocationManager manager = LocationManager.instance();
-	        /* all JMRI window position and size are now saved
-	        // add top-level elements
-	        root.addContent(manager.store());
-	        */
 	        Element values;
 	        root.addContent(values = new Element("locations"));
 	        // add entries
@@ -69,6 +65,7 @@ public class LocationManagerXml extends OperationsXml {
 	        	String locationId = locationList.get(i);
 	        	Location loc = manager.getLocationById(locationId);
 	        	loc.setComment(convertToXmlComment(loc.getComment()));
+	        	loc.setSwitchListComment(convertToXmlComment(loc.getSwitchListComment()));
  	            values.addContent(loc.store());
 	        }
 	        
@@ -92,6 +89,7 @@ public class LocationManagerXml extends OperationsXml {
 	        	String locationId = locationList.get(i);
 	        	Location loc = manager.getLocationById(locationId);
 	        	loc.setComment(convertFromXmlComment(loc.getComment()));
+	        	loc.setSwitchListComment(convertFromXmlComment(loc.getSwitchListComment()));
 	        }	        
 	        for (int i=0; i<scheduleList.size(); i++){
 	        	String scheduleId = scheduleList.get(i);
@@ -137,6 +135,7 @@ public class LocationManagerXml extends OperationsXml {
     		for (int i = 0; i < locationList.size(); i++) {
     			Location loc = manager.getLocationById(locationList.get(i));
     			loc.setComment(convertFromXmlComment(loc.getComment()));
+    			loc.setSwitchListComment(convertFromXmlComment(loc.getSwitchListComment()));
     		}
     	}
     	else {
@@ -162,6 +161,7 @@ public class LocationManagerXml extends OperationsXml {
     		}
     	}
     	setDirty(false);
+		log.debug("Locations have been loaded!");
     }
     
     public void setOperationsFileName(String name) { operationsFileName = name; }

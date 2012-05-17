@@ -64,7 +64,7 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		f.maxEngineSizeTextField.setText("6");
 		f.switchTimeTextField.setText("3");
 		f.travelTimeTextField.setText("4");
-		f.ownerTextField.setText("Bob J");
+		//f.ownerTextField.setText("Bob J");
 		
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.scaleHO ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.typeDesc ) );
@@ -93,7 +93,7 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("max engines", "6", f.maxEngineSizeTextField.getText());
 		Assert.assertEquals("switch time", "3", f.switchTimeTextField.getText());
 		Assert.assertEquals("travel time", "4", f.travelTimeTextField.getText());
-		Assert.assertEquals("owner", "Bob J", f.ownerTextField.getText());
+		//Assert.assertEquals("owner", "Bob J", f.ownerTextField.getText());
 				
 		Assert.assertTrue("HO scale", f.scaleHO.isSelected());
 		Assert.assertFalse("N scale", f.scaleN.isSelected());

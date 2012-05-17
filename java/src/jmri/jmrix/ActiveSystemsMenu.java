@@ -103,8 +103,8 @@ public class ActiveSystemsMenu extends JMenu {
         if (jmri.jmrix.tmcc.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
 
-        if (jmri.jmrix.wangrow.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.wangrow.WangrowMenu"));
+/*        if (jmri.jmrix.wangrow.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.wangrow.WangrowMenu"));*/
 
         if (jmri.jmrix.xpa.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.xpa.XpaMenu"));
@@ -158,8 +158,8 @@ public class ActiveSystemsMenu extends JMenu {
             m.add(getMenu("jmri.jmrix.srcp.SystemMenu"));
         if (jmri.jmrix.tmcc.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
-        if (jmri.jmrix.wangrow.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.wangrow.WangrowMenu"));
+        /*if (jmri.jmrix.wangrow.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.wangrow.WangrowMenu"));*/
         if (jmri.jmrix.xpa.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.xpa.XpaMenu"));
         if (jmri.jmrix.zimo.ActiveFlag.isActive())

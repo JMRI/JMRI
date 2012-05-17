@@ -19,6 +19,9 @@ This Python class represents one key of one single file for translation or one t
 
 class fileitem:
     def __init__(self, linenum, numlines, key, content, isText):
+        #print linenum
+        #print numlines
+        #print content
         self.linenum = linenum
         self.numlines = numlines
         self.key = key

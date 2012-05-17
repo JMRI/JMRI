@@ -175,10 +175,10 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
-		toolMenu.add(new PrintRouteAction(rb.getString("MenuItemPrint"), new Frame(), false, _route));
-		toolMenu.add(new PrintRouteAction(rb.getString("MenuItemPreview"), new Frame(), true, _route));
 		toolMenu.add(new RouteCopyAction(rb.getString("MenuItemCopy"), routeName));
 		toolMenu.add(new SetTrainIconRouteAction(rb.getString("MenuSetTrainIconRoute"), routeName));
+		toolMenu.add(new PrintRouteAction(rb.getString("MenuItemPrint"), false, _route));
+		toolMenu.add(new PrintRouteAction(rb.getString("MenuItemPreview"), true, _route));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_EditRoute", true);
@@ -296,7 +296,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
 	/**
 	 * 
-	 * @return true if name is less than 26 characters
+	 * @return true if name is length is okay
 	 */
 	private boolean checkName(String s){
 		if (routeNameTextField.getText().trim().equals("")){
@@ -306,10 +306,10 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		if (routeNameTextField.getText().length() > Control.MAX_LEN_STRING_ROUTE_NAME){
-			log.error("Route name must be less than 26 charaters");
+		if (routeNameTextField.getText().length() > Control.max_len_string_route_name){
 			JOptionPane.showMessageDialog(this,
-					rb.getString("RouteNameLess"), MessageFormat.format(rb.getString("CanNotRoute"), new Object[] {s}),
+					MessageFormat.format(rb.getString("RouteNameLess"), new Object[] {Control.max_len_string_route_name+1}), 
+					MessageFormat.format(rb.getString("CanNotRoute"), new Object[] {s}),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

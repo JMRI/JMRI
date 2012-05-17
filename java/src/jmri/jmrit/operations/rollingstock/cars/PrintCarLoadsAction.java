@@ -104,7 +104,7 @@ public class PrintCarLoadsAction  extends AbstractAction {
         					writer.write(key + newLine);
         					printType = false;
         				}
-        				buf.append(tabString(load, Control.MAX_LEN_STRING_ATTRIBUTE));
+        				buf.append(tabString(load, Control.max_len_string_attibute));
         				buf.append(tabString(loads.get(j).getPriority(), 5));
         				buf.append(tabString(loads.get(j).getPickupComment(), 27));
         				buf.append(loads.get(j).getDropComment());

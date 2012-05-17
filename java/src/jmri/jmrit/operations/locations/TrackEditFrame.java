@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 /**
  * Frame for user edit of tracks
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012
  * @version $Revision$
  */
 
@@ -131,7 +131,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JPanel panelOpt4 = new JPanel();
 
 	public static final String DISPOSE = "dispose" ;
-	public static final int MAX_NAME_LENGTH = Control.MAX_LEN_STRING_TRACK_NAME;
+	public static final int MAX_NAME_LENGTH = Control.max_len_string_track_name;
 
 	public TrackEditFrame() {
 		super();
@@ -658,10 +658,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		int trackLength = 0;
 		try {
 			trackLength = Integer.parseInt(length);
-			if (length.length() > Control.MAX_LEN_STRING_TRACK_LENGTH_NAME){
-				log.error("Track length must be less than 100,000 feet");
+			if (length.length() > Control.max_len_string_track_length_name){
 				JOptionPane.showMessageDialog(this,
-						rb.getString("TrackMustBeLessThan"), rb.getString("ErrorTrackLength"),
+						MessageFormat.format(rb.getString("TrackMustBeLessThan"), new Object[]{Math.pow(10, Control.max_len_string_track_length_name)}), 
+						rb.getString("ErrorTrackLength"),
 						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}

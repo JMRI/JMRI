@@ -48,7 +48,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     public final int SORTBYROUTE = 5;
     public final int SORTBYID = 6;
     
-    private int _sort = SORTBYNAME;
+    private int _sort = SORTBYTIME;
     
     public void setSort (int sort){
     	synchronized(this){

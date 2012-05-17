@@ -47,6 +47,20 @@ code.
 As part of this, the JMRI CAN support is designed to
 use as many CAN adapter types as possible.
 
+<h2>Node ID</h2>
+
+JMRI on an OpenLCB network acts, in part, like an OpenLCB node.
+As such, it needs a unique 6-byte OpenLCB node ID.  
+It builds this automatically every time it starts up.
+It's built from the JMRI OpenLCB unique prefix,
+along with one byte from the computer's IP address,
+and two bytes of the process ID of the program.
+This allows you to e.g. run JMRI on multiple computers
+or multiple copies on ome computer without problems.
+<p>
+A future enhancement will make these persistent from run
+to run, so that they can be used to create unique and persistent
+eventIDs easily.
 
 <!--#include virtual="/Footer" -->
 </body>

@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.routes;
  
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.setup.Control;
 
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -130,7 +131,7 @@ public class RouteCopyFrame extends OperationsFrame {
 	
 	/**
 	 * 
-	 * @return true if name is less than 26 characters
+	 * @return true if name length is okay
 	 */
 	private boolean checkName(){
 		if (routeNameTextField.getText().trim().equals("")){
@@ -139,9 +140,10 @@ public class RouteCopyFrame extends OperationsFrame {
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		if (routeNameTextField.getText().length() > 25){
+		if (routeNameTextField.getText().length() > Control.max_len_string_route_name){
 			JOptionPane.showMessageDialog(this,
-					rb.getString("RouteNameLess"), rb.getString("CanNotAddRoute"),
+					MessageFormat.format(rb.getString("RouteNameLess"), new Object[] {Control.max_len_string_route_name+1}),
+					rb.getString("CanNotAddRoute"),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

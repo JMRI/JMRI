@@ -55,6 +55,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     private static final int SHOWOWNER = 2;
     private static final int SHOWVALUE = 3;
     private static final int SHOWRFID = 4;
+    private static final int SHOWWAIT = 5;
     private int showMoveCol = SHOWMOVES;
     
     public final int SORTBYNUMBER = 1;
@@ -73,6 +74,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     public final int SORTBYRWE = 14;	// return when empty
     public final int SORTBYFINALDESTINATION = 15;
     public final int SORTBYVALUE = 16;
+    public final int SORTBYWAIT = 17;
     
     private int _sort = SORTBYNUMBER;
     
@@ -137,6 +139,11 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     	}
     	else if (sort == SORTBYRFID){
     		showMoveCol = SHOWRFID;
+       		fireTableStructureChanged();
+    		initTable();
+    	}
+       	else if (sort == SORTBYWAIT){
+    		showMoveCol = SHOWWAIT;
        		fireTableStructureChanged();
     		initTable();
     	}
@@ -239,6 +246,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			list = manager.getByRweList();
 		else if (_sort == SORTBYFINALDESTINATION)
 			list = manager.getByFinalDestinationList();
+		else if (_sort == SORTBYWAIT)
+			list = manager.getByWaitList();
 		else
 			list = manager.getByNumberList();
     	filterList(list);
@@ -336,6 +345,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         		return Setup.getValueLabel();
            	else if (showMoveCol == SHOWRFID)
         		return Setup.getRfidLabel();
+        	else if (showMoveCol == SHOWWAIT)
+        		return rb.getString("Wait");
         	else
         		return rb.getString("Moves");
         }
@@ -457,8 +468,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         		return c.getValue();
           	else if (showMoveCol == SHOWRFID)
         		return c.getRfid();
+          	else if (showMoveCol == SHOWWAIT)
+        		return c.getWait();
         	else
-        		return Integer.toString(c.getMoves());
+        		return c.getMoves();
         }
         case SETCOLUMN: return rb.getString("Set");
         case EDITCOLUMN: return rb.getString("Edit");

@@ -96,7 +96,9 @@ public class LayoutTurnout
 	public static final int WYE_TURNOUT = 3;
 	public static final int DOUBLE_XOVER = 4;
 	public static final int RH_XOVER = 5;
-	public static final int LH_XOVER = 6;	
+	public static final int LH_XOVER = 6;
+    public final static int SINGLE_SLIP = 7; //used in LayoutSlip which extends this class
+    public final static int DOUBLE_SLIP = 8; //used in LayoutSlip which extends this class
 	// defined constants - link types
 	public static final int NO_LINK = 0;
 	public static final int FIRST_3_WAY = 1;       // this turnout is the first turnout of a 3-way
@@ -166,6 +168,8 @@ public class LayoutTurnout
 	public Point2D dispC = new Point2D.Double(20.0,10.0);
 	public String linkedTurnoutName = ""; // name of the linked Turnout (as entered in tool)
 	public int linkType = NO_LINK;
+    
+    private boolean hidden = false;
     
     private boolean useBlockSpeed = false;
     
@@ -272,6 +276,9 @@ public class LayoutTurnout
             return secondNamedTurnout.getName();
         return secondTurnoutName;
     }
+    
+    public boolean getHidden() {return hidden;}
+	public void setHidden(boolean hide) {hidden = hide;} 
 	public String getBlockName() {return blockName;}
 	public String getBlockBName() {return blockBName;}
 	public String getBlockCName() {return blockCName;}
@@ -1246,6 +1253,8 @@ public class LayoutTurnout
 			if (blockC!=null) popup.add(rb.getString("Block3ID")+": "+blockCName);
 			if (blockD!=null) popup.add(rb.getString("Block4ID")+": "+blockDName);
 		}
+        if (hidden) popup.add(rb.getString("Hidden"));
+        else popup.add(rb.getString("NotHidden"));
 		popup.add(new JSeparator(JSeparator.HORIZONTAL));
 		popup.add(new AbstractAction(rb.getString("UseSizeAsDefault")) {
 				public void actionPerformed(ActionEvent e) {
@@ -1499,6 +1508,7 @@ public class LayoutTurnout
 	private JTextField blockCNameField = new JTextField(16);
 	private JTextField blockDNameField = new JTextField(16);
     private JComboBox stateBox = new JComboBox();
+    private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideTurnout"));
     private int turnoutClosedIndex;
     private int turnoutThrownIndex;
 	private JButton turnoutEditBlock;
@@ -1578,6 +1588,12 @@ public class LayoutTurnout
 				panel3.add (stateBox);
 				contentPane.add(panel3);
 			} 
+            
+            JPanel panel33 = new JPanel(); 
+            panel33.setLayout(new FlowLayout());
+			hiddenBox.setToolTipText(rb.getString("HiddenToolTip"));
+			panel33.add (hiddenBox);
+            contentPane.add(panel33);			
 
 			// setup block name
             JPanel panel2 = new JPanel(); 
@@ -1668,6 +1684,9 @@ public class LayoutTurnout
 				contentPane.add(panel6);
 			}
 		}
+        
+        hiddenBox.setSelected(hidden);
+        
 		// Set up for Edit
 		blockNameField.setText(blockName);
 		if ( (type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER) ) {
@@ -1954,6 +1973,11 @@ public class LayoutTurnout
 				needsBlockUpdate = true;
 			}
 		}
+        // set hidden
+		boolean oldHidden = hidden;
+		hidden = hiddenBox.isSelected();
+        if(oldHidden!=hidden)
+            needRedraw=true;
 		editOpen = false;
 		editLayoutTurnoutFrame.setVisible(false);
 		editLayoutTurnoutFrame.dispose();

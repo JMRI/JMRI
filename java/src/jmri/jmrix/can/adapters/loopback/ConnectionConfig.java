@@ -13,7 +13,7 @@ import jmri.jmrix.can.ConfigurationManager;
  * @author      Bob Jacobsen   Copyright (C) 2008
  * @version	$Revision$
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.can.adapters.ConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;
@@ -21,43 +21,6 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionCon
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p){
         super(p);
-    }
-    /**
-     * Ctor for a functional Swing object with no prexisting adapter
-     */
-    public ConnectionConfig() {
-        super();
-    }
-    
-    @Override
-    protected void checkInitDone(){
-        if (log.isDebugEnabled()) log.debug("init called for "+name());
-        if (init) return;
-        super.checkInitDone();
-
-        opt1Box.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String selection = (String)opt1Box.getSelectedItem();
-                String newUserName = "MERG";
-                if(ConfigurationManager.OPENLCB.equals(selection)){
-                    newUserName = "OpenLCB";
-                } else if (ConfigurationManager.RAWCAN.equals(selection)){
-                    newUserName = "CANraw";
-                } else if(ConfigurationManager.TEST.equals(selection)){
-                    newUserName = "CANtest";
-                }
-                connectionNameField.setText(newUserName);
-                
-                if(!adapter.getSystemConnectionMemo().setUserName(newUserName)){
-                    for (int x = 2; x<50; x++){
-                        if(adapter.getSystemConnectionMemo().setUserName(newUserName+x)){
-                            connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-                            break;
-                        }
-                    }
-                }
-            }
-        });
     }
 
     public String name() { return "CAN Simulation"; }
@@ -68,15 +31,5 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionCon
         }
     }
     
-	/*protected Vector<String> getPortNames() {
-        Vector<String> portNameVector = new Vector<String>();
-        portNameVector.addElement("(None)");
-        return portNameVector;
-    }*/
-    
-    //@Override
-    protected ResourceBundle getActionModelResourceBundle(){
-        return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
-    }
 }
 

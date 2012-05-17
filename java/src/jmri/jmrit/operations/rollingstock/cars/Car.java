@@ -496,6 +496,7 @@ public class Car extends RollingStock {
 	
 	private static final boolean debugFlag = false;
 	private String searchSchedule(Track track){
+		if (debugFlag)log.debug("Search match for car "+toString()+" type ("+getType()+") load ("+getLoad()+")");
 		for (int i=0; i<track.getSchedule().getSize(); i++){
 			ScheduleItem si = track.getNextScheduleItem();
 			if (debugFlag)log.debug("Item id ("+si.getId()+") requesting type ("+si.getType()+") " +
@@ -510,6 +511,7 @@ public class Car extends RollingStock {
 				if (debugFlag)log.debug("Item id ("+si.getId()+") status ("+status+")");
 			}
 		}
+		if (debugFlag)log.debug("No Match");
 		return SCHEDULE + " NO MATCH";
 	}
 	
@@ -569,6 +571,9 @@ public class Car extends RollingStock {
 		Track oldDestTrack = getDestinationTrack();
 		String status = super.setDestination(destination, track, force);
 		// return if not Okay 
+		if (!status.equals(Track.OKAY))
+			return status;
+		status = testSchedule(track);
 		if (!status.equals(Track.OKAY))
 			return status;
 		// now check to see if the track has a schedule
@@ -697,10 +702,10 @@ public class Car extends RollingStock {
 	
 	private void loadNext(Track destTrack){
 		setLoadGeneratedFromStaging(false);
+		// update wait count
+		setWait(getNextWait());
+		setNextWait(0);
 		if (destTrack != null && destTrack.getLocType().equals(Track.SIDING)){
-			// update wait count
-			setWait(getNextWait());
-			setNextWait(0);
 			if (!getNextLoad().equals("")){
 				setLoad(getNextLoad());
 				setNextLoad("");

@@ -101,8 +101,6 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	}
 	
 	protected void updateComboBoxes(){
-		if (_disableComboBoxUpdate)
-			return;
 		super.updateComboBoxes();
 		finalDestinationBox.setSelectedItem(_car.getNextDestination());
 		destReturnWhenEmptyBox.setSelectedItem(_car.getReturnWhenEmptyDestination());

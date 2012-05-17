@@ -72,7 +72,9 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
     public void confirmCV(int cv, int val, ProgListener p) throws ProgrammerException {
         rcTag.addPropertyChangeListener(this);
         rcTag.setExpectedCv(cv);
-        progListener = p;
+        synchronized (this) {
+             progListener = p;
+        }
         this.cv = cv;
         defaultProgrammer.confirmCV(cv, val, new ProxyProgList());
     }
@@ -115,7 +117,9 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
                 int value = (Integer) e.getNewValue();
                 stopTimer();
                 rcTag.removePropertyChangeListener(this);
-                progListener.programmingOpReply(value, ProgListener.OK);
+                synchronized(this){
+                    progListener.programmingOpReply(value, ProgListener.OK);
+                }
             } else {
                 log.error("Unexpected cv " + repliedCv + " returned, was expecting CV " + cv);
             }

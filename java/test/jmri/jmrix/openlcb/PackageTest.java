@@ -1,4 +1,4 @@
-// OpenLcbTest.java
+// PackageTest.java
 
 package jmri.jmrix.openlcb;
 
@@ -7,31 +7,31 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.jmrix.can.nmranet package.
- * @author      Bob Jacobsen  Copyright 2009
+ * Tests for the jmri.jmrix.openlcb package.
+ * @author      Bob Jacobsen  Copyright 2009, 2012
  * @version   $Revision$
  */
-public class OpenLcbTest extends TestCase {
+public class PackageTest extends TestCase {
 
     public void testDefinitions() {
     }
     
     // from here down is testing infrastructure
 
-    public OpenLcbTest(String s) {
+    public PackageTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
-        String[] testCaseName = {"-noloading", OpenLcbTest.class.getName()};
+        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.can.openlcb.OpenLcbTest");
+        TestSuite suite = new TestSuite("jmri.jmrix.openlcb.PackageTest");
 
         suite.addTest(CanConverterTest.suite());
         suite.addTest(OlcbAddressTest.suite());

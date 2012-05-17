@@ -319,6 +319,25 @@ public class RosterEntry {
         firePropertyChange("dateupdated", old, s);
     }
     public String getDateUpdated() { return _dateUpdated; }
+    
+    //openCounter is used purely to indicate if the roster entry has been opened in an editing mode.
+    int openCounter =0;
+    public void setOpen(boolean boo){
+        if(boo){
+            openCounter++;
+        } else {
+            openCounter--;
+        }
+        if(openCounter<0){
+            openCounter=0;
+        }
+    }
+    
+    public boolean isOpen(){
+        if(openCounter==0)
+            return false;
+        return true;
+    }
 
     /**
      * Construct this Entry from XML. This member has to remain synchronized with the

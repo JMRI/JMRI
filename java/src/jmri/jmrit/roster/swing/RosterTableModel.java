@@ -104,6 +104,12 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
         if (col == DECODERCOL) return false;
         if (col == ICONCOL) return false;
         if (col == DATEUPDATECOL) return false;
+        if(editable){
+            RosterEntry re = Roster.instance().getGroupEntry(rosterGroup, row);
+            if (re != null){
+                return (!re.isOpen());
+            }
+        }
         return editable;
     }
     
@@ -148,7 +154,11 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
         if (re == null){
         	log.warn("roster entry is null!");
         	return;
-        }    
+        }
+        if (re.isOpen()){
+            log.warn("Entry is already open");
+            return;
+        }
         switch (col) {
         case IDCOL:         re.setId((String)value); break;
         case ROADNAMECOL:   re.setRoadName((String)value); break;
@@ -160,6 +170,7 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
         }
         // need to mark as updated
         re.changeDateUpdated();
+        re.updateFile();
     }
 
     public int getPreferredWidth(int column) {

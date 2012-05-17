@@ -9,10 +9,17 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+
 import jmri.jmrix.can.cbus.CbusAddress;
 
 // This makes it a bit CBUS specific
 // May need refactoring one day
+
+import org.openlcb.*;
+import org.openlcb.can.AliasMap;
+import org.openlcb.implementations.MemoryConfigurationService;
+import org.openlcb.cdi.jdom.CdiMemConfigReader;
+import org.openlcb.cdi.swing.CdiPanel;
 
 import java.awt.*;
 
@@ -28,7 +35,7 @@ import jmri.util.javaworld.GridLayout2;
  * <LI>Send the next message and start a timer
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
- * @author			Bob Jacobsen   Copyright (C) 2008
+ * @author			Bob Jacobsen   Copyright (C) 2008, 2012
  * @version			$Revision: 19697 $
  */
 public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
@@ -45,16 +52,23 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     JTextField mDelayField[]    = new JTextField[MAXSEQUENCE];
     JToggleButton    mRunButton = new JToggleButton("Go");
 
-    JTextField srcAliasField = new JTextField("123");
+    JTextField srcAliasField = new JTextField(4);
     JTextField verifyNodeField = new JTextField("02 03 04 05 06 07 ");
     JTextField sendEventField = new JTextField("02 03 04 05 06 07 00 01 ");
     JTextField dstAliasField = new JTextField(4);
     JTextField datagramContentsField = new JTextField("20 61 00 00 00 00 08");
     JTextField configNumberField = new JTextField("40");
-    JTextField configAddressField = new JTextField("00 00 00 00");
-    JTextField writeDataField = new JTextField("00 00");
+    JTextField configAddressField = new JTextField("000000");
+    JTextField readDataField = new JTextField(80);
+    JTextField writeDataField = new JTextField(80);
     JComboBox addrSpace = new JComboBox(new String[]{"CDI", "All", "Config", "None"});
 
+    Connection connection;
+    AliasMap aliasMap;
+    NodeID srcNodeID;
+    MemoryConfigurationService mcs;
+    MimicNodeStore store;
+    
     public OpenLcbCanSendPane() {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -227,6 +241,8 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
         add(pane2);
+        pane2.add(new JLabel("Byte Count: "));
+        pane2.add(configNumberField);
         b = new JButton("Read");
         b.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -234,8 +250,9 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
                     }
                 });
         pane2.add(b); 
-        pane2.add(new JLabel("Byte Count: "));
-        pane2.add(configNumberField);
+        pane2.add(new JLabel("Data: "));
+        pane2.add(readDataField);
+        
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
         add(pane2);
@@ -247,25 +264,17 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
                 });
         pane2.add(b); 
         pane2.add(new JLabel("Data: "));
+        writeDataField.setText("00 00");
         pane2.add(writeDataField);
-        pane2 = new JPanel();
-        pane2.setLayout(new FlowLayout());
-        add(pane2);
-        b = new JButton("Send Confirm ");
+
+        b = new JButton("Open CDI Config Tool");
+        add(b);
         b.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
-                        sendDatagramReply(e);
+                         openCdiPane();
                     }
                 });
-        pane2.add(b); 
-
-        // configuration
         
-        // end GUI, add help
-
-        
-        // pack to cause display
-        //pack();
     }
     
     public String getHelpTarget() { return "package.jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane"; }
@@ -291,81 +300,117 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         tc.sendCanMessage(m, this);
     }
 
+    NodeID destNodeID() {
+        //int alias = Integer.parseInt(verifyNodeField.getText(),16);
+        //NodeID match = aliasMap.getNodeID(alias);
+        //log.debug("mapped alias "+sendEventField.getText()+" to ID "+match);
+        
+        return new NodeID(jmri.util.StringUtil.bytesFromHexString(verifyNodeField.getText()));
+    }
+    
+    EventID eventID() {        
+        return new EventID(jmri.util.StringUtil.bytesFromHexString(sendEventField.getText()));
+    }
+
     public void sendVerifyNode(java.awt.event.ActionEvent e) {
-        String data = "[180A7"+srcAliasField.getText()+"] "+verifyNodeField.getText();
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("sendVerifyNode: "+m);
-        tc.sendCanMessage(m, this);
+        Message m  = new VerifyNodeIDNumberMessage(srcNodeID);
+        connection.put(m, null);
     }
 
     public void sendRequestEvents(java.awt.event.ActionEvent e) {
-        String data = "[182B7"+srcAliasField.getText()+"] "+verifyNodeField.getText();
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("sendVerifyNode: "+m);
-        tc.sendCanMessage(m, this);
+        Message m = new IdentifyEventsMessage(srcNodeID, destNodeID());
+        connection.put(m, null);
     }
 
     public void sendEventPerformed(java.awt.event.ActionEvent e) {
-        String data = "[182DF"+srcAliasField.getText()+"] "+sendEventField.getText();
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("sendEventPerformed: "+m);
-        tc.sendCanMessage(m, this);
+        Message m = new ProducerConsumerEventReportMessage(srcNodeID, eventID());
+        connection.put(m, null);
     }
 
     public void sendReqConsumers(java.awt.event.ActionEvent e) {
-        String data = "[1824F"+srcAliasField.getText()+"] "+sendEventField.getText();
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("sendEventPerformed: "+m);
-        tc.sendCanMessage(m, this);
+        Message m = new IdentifyConsumersMessage(srcNodeID, eventID());
+        connection.put(m, null);
     }
     public void sendReqProducers(java.awt.event.ActionEvent e) {
-        String data = "[1828F"+srcAliasField.getText()+"] "+sendEventField.getText();
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("sendEventPerformed: "+m);
-        tc.sendCanMessage(m, this);
+        Message m = new IdentifyProducersMessage(srcNodeID, eventID());
+        connection.put(m, null);
     }
 
     public void sendDatagramPerformed(java.awt.event.ActionEvent e) {
-        // for now, no more than 8 bytes
-        String data = "[1d"+dstAliasField.getText()+srcAliasField.getText()+"] "+datagramContentsField.getText();
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("sendDatagramPerformed: "+m);
-        tc.sendCanMessage(m, this);
+        Message m = new DatagramMessage(srcNodeID, destNodeID(), 
+                jmri.util.StringUtil.bytesFromHexString(datagramContentsField.getText()));
+        connection.put(m, null);
     }
 
     public void sendDatagramReply(java.awt.event.ActionEvent e) {
-        String data = "[1e"+dstAliasField.getText()+srcAliasField.getText()+"] 4C";
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("sendDatagramPerformed: "+m);
-        tc.sendCanMessage(m, this);
+        Message m = new DatagramAcknowledgedMessage(srcNodeID, destNodeID());
+        connection.put(m, null);
     }
 
     public void readPerformed(java.awt.event.ActionEvent e) {
-        String data = "[1d"+dstAliasField.getText()+srcAliasField.getText()+"] 20 6"+addrSpace.getSelectedIndex()+" "+configAddressField.getText()+" "+configNumberField.getText();
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("readPerformed: "+m);
-        tc.sendCanMessage(m, this);
+        int space = 0xFF - addrSpace.getSelectedIndex();
+        long addr = Integer.parseInt(configAddressField.getText(), 16);
+        int length = Integer.parseInt(configNumberField.getText());
+        mcs.request(new MemoryConfigurationService.McsReadMemo(destNodeID(),space,addr,length){
+            public void handleReadData(NodeID dest, int space, long address, byte[] data) { 
+                log.debug("Read data received "+data.length+" bytes");
+                readDataField.setText(jmri.util.StringUtil.hexStringFromBytes(data));
+            }
+        });
     }
 
     public void writePerformed(java.awt.event.ActionEvent e) {
-        // for now, no more than 8 bytes
-        String data = "[1d"+dstAliasField.getText()+srcAliasField.getText()+"] 20 2"+addrSpace.getSelectedIndex()
-                        +" "+configAddressField.getText()+" "+writeDataField.getText();
-        log.debug("|"+data+"|");
-        CanMessage m = createPacket(data);
-        log.debug("writePerformed: "+m);
-        tc.sendCanMessage(m, this);
+        int space = 0xFF - addrSpace.getSelectedIndex();
+        long addr = Integer.parseInt(configAddressField.getText(), 16);
+        byte[] content = jmri.util.StringUtil.bytesFromHexString(writeDataField.getText());
+        mcs.request(new MemoryConfigurationService.McsWriteMemo(destNodeID(),space,addr,content));
     }
 
+    public void openCdiPane() {
 
+        CdiMemConfigReader cmcr = new CdiMemConfigReader(destNodeID(), store, mcs);
+
+        CdiMemConfigReader.ReaderAccess rdr = new CdiMemConfigReader.ReaderAccess() {
+            public void provideReader(java.io.Reader r) {
+                JFrame f = new JFrame();
+                f.setTitle("Configure "+destNodeID());
+                CdiPanel m = new CdiPanel();
+                
+                // create an adapter for reading and writing
+                CdiPanel.ReadWriteAccess accessor = new CdiPanel.ReadWriteAccess(){
+                    public void doWrite(long address, int space, byte[] data) {
+                        mcs.request(new MemoryConfigurationService.McsWriteMemo(destNodeID(),space,address,data));                       
+                    }
+                    public void doRead(long address, int space, int length, final CdiPanel.ReadReturn handler) {
+                        mcs.request(new MemoryConfigurationService.McsReadMemo(destNodeID(),space,address,length){
+                            public void handleReadData(NodeID dest, int space, long address, byte[] data) { 
+                                log.debug("Read data received "+data.length+" bytes");
+                                handler.returnData(data);
+                            }
+                        });
+                    }
+                 };
+                
+                m.initComponents(accessor);
+
+                try {
+                    m.loadCDI(
+                         new org.openlcb.cdi.jdom.JdomCdiRep(
+                             (new org.openlcb.cdi.jdom.JdomCdiReader()).getHeadFromReader(r)
+                         )
+                     );
+                } catch (Exception e) { log.error("caught exception while parsing CDI", e);}
+                
+                f.add( m );
+        
+                f.pack();
+                f.setVisible(true);
+            }
+        };
+        
+        cmcr.startLoadReader(rdr);
+    }
+    
     // control sequence operation
     int mNextSequenceElement = 0;
     javax.swing.Timer timer = null;
@@ -463,7 +508,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
      */
     CanMessage createPacket(String s) {
         CanMessage m;
-        // Try to convert using CbusAddress class
+        // Try to convert using CbusAddress class to reuse a little code
         CbusAddress a = new CbusAddress(s);
         if (a.check()) {
             m = a.makeMessage(tc.getCanid());
@@ -497,6 +542,22 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         super.initComponents(memo);
         tc = memo.getTrafficController();
         tc.addCanListener(this);
+        connection = memo.get(org.openlcb.Connection.class);
+        srcNodeID = memo.get(org.openlcb.NodeID.class);
+        aliasMap = memo.get(org.openlcb.can.AliasMap.class);
+        
+        // register request for notification
+        Connection.ConnectionListener cl = new Connection.ConnectionListener(){
+            public void connectionActive(Connection c) {
+                log.debug("connection active");
+                // load the alias field
+                srcAliasField.setText(Integer.toHexString(aliasMap.getAlias(srcNodeID)));
+            }
+        };
+        connection.registerStartNotification(cl);
+        
+        mcs = memo.get(MemoryConfigurationService.class);
+        
     }
 
     /**

@@ -538,7 +538,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 						if (!status.equals(Track.OKAY)){
 							log.debug ("Can't set engine's location because of "+ status);
 							JOptionPane.showMessageDialog(this,
-									MessageFormat.format(rb.getString("rsCanNotLocMsg"), new Object[]{status}), 
+									MessageFormat.format(rb.getString("rsCanNotLocMsg"), new Object[]{_engine.toString(), status}), 
 									rb.getString("rsCanNotLoc"),
 									JOptionPane.ERROR_MESSAGE);
 						}

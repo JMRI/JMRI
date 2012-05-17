@@ -46,9 +46,9 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
                 // need to complement here for addr 1
                 // so address _must_ start with address + or -
                 if (address.startsWith("+")) {
-                    addrClosed = new CbusAddress("-"+address);
+                    addrClosed = new CbusAddress("-"+address.substring(1));
                 } else if (address.startsWith("-")) {
-                    addrClosed = new CbusAddress("+"+address);
+                    addrClosed = new CbusAddress("+"+address.substring(1));
                 } else {
                     log.error("can't make 2nd event from systemname "+address);
                     return;

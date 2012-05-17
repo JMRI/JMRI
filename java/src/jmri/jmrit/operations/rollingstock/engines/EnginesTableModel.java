@@ -361,7 +361,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
            	else if (showMoveCol == SHOWRFID)
         		return engine.getRfid();
         	else
-        		return Integer.toString(engine.getMoves());
+        		return engine.getMoves();
         }
         case SETCOLUMN: return rb.getString("Set");
         case EDITCOLUMN: return rb.getString("Edit");

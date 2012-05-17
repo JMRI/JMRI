@@ -36,6 +36,7 @@ abstract public class ConfigurationManager {
      * Set the list of protocols to start with OpenLCB
      */
     static public void setOpenLCB() {   
+        log.debug("setOpenLCB");
         options = new String[]{OPENLCB, MERGCBUS, RAWCAN, TEST};
     }
     
@@ -43,6 +44,7 @@ abstract public class ConfigurationManager {
      * Set the list of protocols to start with MERG
      */
     static public void setMERG() {
+        log.debug("setMERG");
         options = new String[]{MERGCBUS, OPENLCB, RAWCAN, TEST};
     }
     
@@ -66,6 +68,7 @@ abstract public class ConfigurationManager {
     
     abstract protected ResourceBundle getActionModelResourceBundle();
 
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConfigurationManager.class.getName());
 }
 
 /* @(#)ConfigurationManager.java */

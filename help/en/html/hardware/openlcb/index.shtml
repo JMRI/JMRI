@@ -95,7 +95,7 @@ button on the
 
 The scheme for Turnouts is similar to Sensors above, 
 except JMRI is emitting the OpenLCB frames instead of receiving them, and
-the type letter is "T" instead of "S", e.g. <code>MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>)
+the type letter is "T" instead of "S", e.g. "<code>MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>".
 
 <!--#include virtual="/Footer" -->
 </body>

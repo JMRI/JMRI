@@ -88,18 +88,23 @@ public class Engine extends RollingStock {
 	 * @param length engine length
 	 */
 	public void setLength(String length){
+		super.setLength(length);
 		if(getModel().equals(""))
 			return;
-		String old = getLength();
 		engineModels.setModelLength(getModel(), length);
-		if (!old.equals(length))
-			firePropertyChange(LENGTH_CHANGED_PROPERTY, old, length);
 	}
 	
+
 	public String getLength(){
 		String length = engineModels.getModelLength(getModel());
 		if(length == null)
 			length = "";
+		if (!length.equals(_length)){
+			if (_lengthChange)	// return "old" length, used for track reserve changes
+				return _length;
+			log.debug("Loco "+toString()+" length has been modified");
+			super.setLength(length); // adjust track lengths
+		}
 		return length;
 	}
 	

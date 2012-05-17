@@ -1592,11 +1592,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                                   "resources/icons/USS/plate/levers/l-unknown.gif");
         editor.setIcon(2, "SensorStateInactive",
                                   "resources/icons/USS/plate/levers/l-inactive.gif");
-        editor.setIcon(3, "MultiSensorPosition",
+        editor.setIcon(3, "MultiSensorPosition 0",
                                   "resources/icons/USS/plate/levers/l-left.gif");
-        editor.setIcon(4, "MultiSensorPosition",
+        editor.setIcon(4, "MultiSensorPosition 1",
                                   "resources/icons/USS/plate/levers/l-vertical.gif");
-        editor.setIcon(5, "MultiSensorPosition",
+        editor.setIcon(5, "MultiSensorPosition 2",
                                   "resources/icons/USS/plate/levers/l-right.gif");
 
         JFrameItem frame = makeAddIconFrame("MultiSensor", true, false, editor);

@@ -726,7 +726,7 @@ print options.  You can change the comment if desired, and press "Save" to keep 
     discard the paperwork for that train. This mode is also useful if you have more than one
     operator working a location, this way they can easily hand out the work by train.</P>
 
-   <P>The last option is whether you want you're switch lists in real time or consolidation
+   <P>The last option is whether you want your switch lists in real time or consolidation
     mode. Normally you would generate your switch lists in real time. In this mode the switch list
     for a location shows the work planned for trains that are built and not yet terminated. However,
     if you have a small layout, you might have to build and terminate a few trains in order to
@@ -758,11 +758,11 @@ print options.  You can change the comment if desired, and press "Save" to keep 
 
    <H3>Manifest Preview</H3>
 
-If you want to use a text editor to preview your manifests and switch
-lists, select this option.
-
-<A NAME="BuildReportDetails"></A>
-<H3>Build Report Details</H3>
+   If you want to use a text editor to preview your manifests and switch lists, select this option.  
+   This option also allows you to make manual changes to your manifests before you print them.
+   
+   <A NAME="BuildReportDetails"></A>
+   <H3>Build Report Details</H3>
 
    You can adjust the amount of information that the build report will show. Select one of the four
    levels using the radio buttons in the Print Options window. The program when generating the build
@@ -774,8 +774,8 @@ lists, select this option.
    locomotives and cars. The "Detailed" provides additional comments about the build and shows all
    of the available cars for the train. The "Very Detailed" setting produces the most pages, and
    will show why cars are excluded from the train, and why they are not picked up or set out. Be
-   sure and press "Save" after changing the build report selection. 
-   
+   sure and press "Save" after changing the build report selection.
+
    <P>
    You also have the option of using a text editor to view your build report.  A text editor can make
    trouble shooting a problem much easier for you.  For example, say you have a car that isn't moving.
@@ -922,7 +922,6 @@ file (OperationsLocationRoster.xml) in your JMRI directory in a folder
 called "operations". The program will also create a backup file
 containing the last settings for all of your locations. 
 
-
 <A	NAME="Sidings"></A>
 <H3>Spurs</H3>
 
@@ -1036,6 +1035,16 @@ means send 10 times the available space in cars to this spur. If you
 enter this value, you hopefully have 10 times the spur's available
 track space in a storage yard that is near by!</P>
 
+<P>The other option in the edit schedule tools menu is the ability to 
+specify an alternate track.  The program when it finds a spur full
+will send new cars to the track you specify in the alternate track
+pull down menu.  If you don't specify an alternate, the program will
+try to find a yard at that location.  The alternate track feature
+can be used to create an "Off Spot" track for your cars.  To prevent
+the program from placing cars on the off spot track that aren't destined 
+to your industry, use the "Select loads serviced by track" to only accept
+cars with loads that your industry is demanding.</P>
+
 <P>Schedules can operate in one of two modes, sequential as
 described above, or in match mode. Match mode eliminates the sequential
 aspects of a schedule. In match mode, the program will search the entire
@@ -1083,7 +1092,8 @@ These are called the default load and empty respectively. You can't
 delete them, but you can rename them if you wish. For every car type,
 you can create additional loads. For example, let's say you have an
 industry that needs paper loaded in boxcars. You could create this <A
-	HREF="#EditCarLoads">load</A> for your boxcars and name it L(paper).
+	HREF="#EditCarLoads">load</A> for your boxcars and name it "L(paper)"
+ or just "paper".
 Now at the spur that serves your paper industry, you need to create a
 schedule. In this schedule, the first item you enter is a boxcar, and
 then select as the receive load, L(paper). If the train that services
@@ -1096,7 +1106,7 @@ paper load, and the car's load status will become empty or "E".</P>
 
 <P>That was easy, so let's make things more interesting and have the
 industry ship some printed materials. We'll create and call this load
-L(print). Now in the first schedule item, instead of leaving the menu
+"L(print)". Now in the first schedule item, instead of leaving the menu
 under "Ship" blank, select L(print). Next to the ship menu are
 destination and track menus. We could select a destination that is
 staging. No need to select the track, just the staging location. Now
@@ -1663,27 +1673,27 @@ To edit a car's load, press the Load "Edit" button in the Edit Car window.
 <P>
 <img src="images/EditCarLoads.png">
 </P>
-<P>
-	In addition to the Add, Delete, and Replace buttons and fields
-	described above in the <A HREF="#EditCarAttributes">Car Edit
-		Attributes</A> section, the edit car loads window allows you to set the
-	load's type, priority, pick up and set out messages. A load type of
-	"Load" means the program will consider the car as being loaded and
-	the maximum car weight is used when calculating the train's total
-	weight. A load type of "Empty" tells the program that the car is
-	empty as to only use 1/3 of the car's maximum weight when
-	calculating the train's total weight. The default load priority is
-	low and you can change the priority to high for a given car type and
-	load. High priority car loads are normally serviced before low
-	priority. Useful if you need to get your reefer loaded with fruit to
-	the market ASAP!
-</P>
+   <P>
+    In addition to the Add, Delete, and Replace buttons and fields described above in the <A
+     HREF="#EditCarAttributes">Car Edit Attributes</A> section, the edit car loads window allows you
+    to set the load's type, priority, pick up and set out messages. A load type of "Load" means the
+    program will consider the car as being loaded and the maximum car weight is used when
+    calculating the train's total weight. A load type of "Empty" tells the program that the car is
+    empty as to only use 1/3 of the car's maximum weight when calculating the train's total weight.
+    If you use the <A HREF="#ManifestComments">Loads and Empties</A> option when printing your
+    manifest, you will want to use the correct load type so that the program prints out the correct
+    number of load and empties in the train.
+   </P>
 
-<P>You can also provide optional messages for your operators based on
-the type of car and load. The messages can be useful if you have visible
-car loads that need to be added or removed by your operators.</P> 
+   <P>The default load priority is low and you can change the priority to high for a given car
+    type and load. High priority car loads are normally serviced before low priority. Useful if you
+    need to get your reefer loaded with fruit to the market ASAP!</P>
 
-<A NAME="CarsSet"></A>
+   <P>You can also provide optional messages for your operators based on the type of car and
+    load. The messages can be useful if you have visible car loads that need to be added or removed
+    by your operators.</P>
+
+   <A NAME="CarsSet"></A>
 <H3>Set Car</H3>
 
 After creating a car, you can set the car's location, and optionally the
@@ -1692,12 +1702,12 @@ in the <A HREF="#Cars">Cars</A> window. Normally the car's destination and assig
 train are generated by the program, but you can use these fields to
 force a car to a specific destination using the specified train.
 
-<P>You can remove a car that has been assigned to a train by
-simply pressing the "Save" button.  You can also add a car to an already
-built train.  Select a destination and train for the car, then press the "Save" button.</P>
-<P>
-<img src="images/SetCarLocation.png">
-</P>
+   <P>You can remove a car that has been assigned to a train by simply pressing the "Save"
+    button. You can also add a car to an already built train that hasn't departed its first
+    location. Select a destination and train for the car, then press the "Save" button.</P>
+   <P>
+    <img src="images/SetCarLocation.png">
+   </P>
 
    <P>
     In the upper right hand corner of the Set Car Location window is a checkbox labeled "Location
@@ -2532,13 +2542,16 @@ A switch list shows the work required to service all of the trains
 visiting that location. Normally a switch list is given to the person in
 charge of a yard or a location with many spurs or industries.
 
-<P>Press the "Print Switch List" button if you want a switch list
-for a given location. A menu will appear that allows you to select which
-locations to preview or print. Once you've determined which locations
-you want to print or preview, press the "Save" button to keep your
-selections.</P>
+   <P>Press the "Switch List" button found at the bottom of the "Trains" window if you want a
+    switch list for a given location. A menu will appear that allows you to select which locations
+    to preview or print. Once you've determined which locations you want to print or preview, press
+    the "Save" button to keep your selections.</P>
 
-<P><img src="images/SwitchList.png"></P>
+   <P>The switch list menu also lets you add a comment to the switch list for a location and
+    select which printer to use when printing out the switch list.  Note that the program when
+    printing out manifests will also use the printer associated the train's departure location.</P>
+
+   <P><img src="images/SwitchList.png"></P>
 
 <A NAME="TrainMove"></A>
 <H3>Moving Trains</H3>

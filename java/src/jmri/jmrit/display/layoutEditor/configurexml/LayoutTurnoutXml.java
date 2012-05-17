@@ -55,6 +55,8 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 			element.setAttribute("blockdname", p.getBlockDName());
 		}
 		element.setAttribute("type", ""+p.getTurnoutType());
+        if(p.getHidden())
+            element.setAttribute("hidden", ""+(p.getHidden()?"yes":"no"));
 		if (p.getConnectA()!=null) {
 			element.setAttribute("connectaname", ((TrackSegment)p.getConnectA()).getID());
 		}
@@ -281,6 +283,12 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         if ((a = element.getAttribute("disableWhenOccupied"))!=null && a.getValue().equals("yes"))
             value = true;
         l.setDisableWhenOccupied(value);
+        boolean hide = false;
+        if(element.getAttribute("hidden")!=null){
+            if (element.getAttribute("hidden").getValue().equals("yes"))
+                hide = true;
+        }
+        l.setHidden(hide);
 		try {
 			x = element.getAttribute("xb").getFloatValue();
 			y = element.getAttribute("yb").getFloatValue();

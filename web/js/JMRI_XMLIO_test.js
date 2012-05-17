@@ -17,7 +17,6 @@ $(document).ready(
                                 },
                                 'xml' //<--dataType
                         );
-//                      }
                     }
             );
 

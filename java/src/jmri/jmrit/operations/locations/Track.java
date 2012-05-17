@@ -313,7 +313,7 @@ public class Track {
 			int length = Integer.parseInt(car.getLength())+ RollingStock.COUPLER;
 		if (car.getKernel() != null)
 			length = car.getKernel().getLength();
-		if (getLength()*getReservationFactor()/100 - (getReservedInRoute() + length) > 0)
+		if (getLength()*getReservationFactor()/100 - (getReservedInRoute() + length) >= 0)
 			return true;
 		else
 			return false;
@@ -1027,7 +1027,7 @@ public class Track {
     }
     
     public void setScheduleItemId(String id){
-    	log.debug("set schedule item id "+id+" for track "+getName());
+    	log.debug("set schedule item id: "+id+" for track ("+getName()+")");
     	String old = _scheduleItemId;
     	_scheduleItemId = id;
     	setDirtyAndFirePropertyChange (SCHEDULE_CHANGED_PROPERTY, old, id);

@@ -44,7 +44,7 @@ public class JmrixTest extends TestCase {
         suite.addTest(jmri.jmrix.loconet.LocoNetTest.suite());
         suite.addTest(jmri.jmrix.nce.NceTest.suite());
         suite.addTest(jmri.jmrix.oaktree.SerialTest.suite());
-		suite.addTest(jmri.jmrix.openlcb.OpenLcbTest.suite());
+		suite.addTest(jmri.jmrix.openlcb.PackageTest.suite());
         suite.addTest(jmri.jmrix.maple.SerialTest.suite());
         suite.addTest(jmri.jmrix.powerline.SerialTest.suite());
         suite.addTest(jmri.jmrix.pricom.PricomTest.suite());

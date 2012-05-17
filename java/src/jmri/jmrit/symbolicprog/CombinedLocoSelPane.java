@@ -22,6 +22,7 @@ import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 
 import java.util.List;
+import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 
 /**
@@ -158,21 +159,23 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         locoBox.setNonSelectedItem(rbt.getString("<NONE - NEW LOCO>"));
         Roster.instance().addPropertyChangeListener(this);
         pane2a.add(locoBox);
-        locoBox.addActionListener(new ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    if (locoBox.getSelectedRosterEntries().length != 0) {
-                        // reset and disable decoder selection
-                        setDecoderSelectionFromLoco(locoBox.getSelectedRosterEntries()[0].titleString());
-                        go2.setEnabled(true);
-                        go2.setRequestFocusEnabled(true);
-                        go2.requestFocus();
-                        go2.setToolTipText(rbt.getString("CLICK TO OPEN THE PROGRAMMER"));
-                    } else {
-                        go2.setEnabled(false);
-                        go2.setToolTipText(rbt.getString("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
-                    }
+        locoBox.addPropertyChangeListener(RosterEntrySelector.SELECTED_ROSTER_ENTRIES, new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent pce) {
+                if (locoBox.getSelectedRosterEntries().length != 0) {
+                    // reset and disable decoder selection
+                    setDecoderSelectionFromLoco(locoBox.getSelectedRosterEntries()[0].titleString());
+                    go2.setEnabled(true);
+                    go2.setRequestFocusEnabled(true);
+                    go2.requestFocus();
+                    go2.setToolTipText(rbt.getString("CLICK TO OPEN THE PROGRAMMER"));
+                } else {
+                    go2.setEnabled(false);
+                    go2.setToolTipText(rbt.getString("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
                 }
-            });
+            }
+        });
         idloco = new JToggleButton(rbt.getString("IDENT"));
         idloco.setToolTipText(rbt.getString("READ THE LOCOMOTIVE'S ADDRESS AND ATTEMPT TO SELECT THE RIGHT SETTINGS"));
         if (jmri.InstanceManager.programmerManagerInstance() != null &&

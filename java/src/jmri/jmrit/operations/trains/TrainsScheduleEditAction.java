@@ -38,7 +38,7 @@ class TrainsScheduleEditFrame extends OperationsFrame implements java.beans.Prop
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
 	// text box
-	JTextField addTextBox = new JTextField(Control.MAX_LEN_STRING_ATTRIBUTE);
+	JTextField addTextBox = new JTextField(Control.max_len_string_attibute);
 
 	// combo box
 	JComboBox comboBox;

@@ -139,7 +139,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	   	ButtonGroup sortGroup = new ButtonGroup();
 	   	sortGroup.add(sortByTime);
     	sortGroup.add(sortByName);
-    	sortByName.setSelected(true);
+    	sortByTime.setSelected(true);
     	
     	addRadioButtonAction(sortByTime);
 		addRadioButtonAction(sortByName);	
