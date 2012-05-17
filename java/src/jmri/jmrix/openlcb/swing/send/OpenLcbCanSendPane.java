@@ -363,8 +363,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         int space = 0xFF - addrSpace.getSelectedIndex();
         long addr = Integer.parseInt(configAddressField.getText(), 16);
         byte[] content = jmri.util.StringUtil.bytesFromHexString(writeDataField.getText());
-        mcs.request(new MemoryConfigurationService.McsWriteMemo(destNodeID(),space,addr,content){
-        });
+        mcs.request(new MemoryConfigurationService.McsWriteMemo(destNodeID(),space,addr,content));
     }
 
     public void openCdiPane() {
@@ -376,7 +375,23 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
                 JFrame f = new JFrame();
                 f.setTitle("Configure "+destNodeID());
                 CdiPanel m = new CdiPanel();
-                m.initComponents();
+                
+                // create an adapter for reading and writing
+                CdiPanel.ReadWriteAccess accessor = new CdiPanel.ReadWriteAccess(){
+                    public void doWrite(long address, int space, byte[] data) {
+                        mcs.request(new MemoryConfigurationService.McsWriteMemo(destNodeID(),space,address,data));                       
+                    }
+                    public void doRead(long address, int space, int length, final CdiPanel.ReadReturn handler) {
+                        mcs.request(new MemoryConfigurationService.McsReadMemo(destNodeID(),space,address,length){
+                            public void handleReadData(NodeID dest, int space, long address, byte[] data) { 
+                                log.debug("Read data received "+data.length+" bytes");
+                                handler.returnData(data);
+                            }
+                        });
+                    }
+                 };
+                
+                m.initComponents(accessor);
 
                 try {
                     m.loadCDI(
