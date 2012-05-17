@@ -446,7 +446,14 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             // get the class, hence the adapter object to do loading
             Element item = items.get(i);
             String adapterName = item.getAttribute("class").getValue();
-            log.debug("load via "+adapterName);
+            if (log.isDebugEnabled()) {
+            	String id = "<null>";
+				try {
+					id = item.getAttribute("ident").getValue();
+				} catch (Exception e) {
+				}
+            	log.debug("Load "+ id + " for [" + panel.getName() + "] via " + adapterName);
+            }
             try {
                 XmlAdapter adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
                 // and do it

@@ -89,7 +89,6 @@ public class JmriJFrameServlet extends HttpServlet {
             if (log.isDebugEnabled()) {
                 log.debug("Invoke Pressed, Released and Clicked on Positionable");
             }
-
             MouseEvent e = new MouseEvent(c,
                     MouseEvent.MOUSE_PRESSED,
                     0, // time
@@ -402,11 +401,50 @@ public class JmriJFrameServlet extends HttpServlet {
     }
 
     private void doClick(JmriJFrame frame, String coords) {
-        String[] click = coords.split(",");
-        int x = Integer.parseInt(click[0]);
-        int y = Integer.parseInt(click[1]);
-        Component c = frame.getContentPane().findComponentAt(x, y);
-        sendClick(frame.getTitle(), c, x, y, frame.getContentPane());
+    	String[] click = coords.split(",");
+    	int x = Integer.parseInt(click[0]);
+    	int y = Integer.parseInt(click[1]);
+
+    	//send click to topmost component under click spot
+    	Component c = frame.getContentPane().findComponentAt(x, y);
+    	//log.debug("topmost component is class="+ c.getClass().getName());
+    	sendClick(frame.getTitle(), c, x, y, frame.getContentPane());
+
+    	//if clicked on background, search for layout editor target pane TODO: simplify id'ing background
+    	if (!c.getClass().getName().equals("jmri.jmrit.display.Editor$TargetPane") &&
+    			(c instanceof jmri.jmrit.display.PositionableLabel) && 
+    			!(c instanceof jmri.jmrit.display.LightIcon) &&
+    			!(c instanceof jmri.jmrit.display.LocoIcon) &&
+    			!(c instanceof jmri.jmrit.display.MemoryIcon) &&
+    			!(c instanceof jmri.jmrit.display.MultiSensorIcon) &&
+    			!(c instanceof jmri.jmrit.display.PositionableIcon) &&
+    			!(c instanceof jmri.jmrit.display.ReporterIcon) &&
+    			!(c instanceof jmri.jmrit.display.RpsPositionIcon) &&
+    			!(c instanceof jmri.jmrit.display.SlipTurnoutIcon) &&
+    			!(c instanceof jmri.jmrit.display.TurnoutIcon)
+    			) {
+    		clickOnEditorPane(frame.getContentPane(), x, y, frame);
+    	}
     }
+    
+    //recursively search components to find editor target pane, where layout editor paints components
+    public void clickOnEditorPane(Component c, int x, int y, JmriJFrame f) {
+
+    	if (c.getClass().getName().equals("jmri.jmrit.display.Editor$TargetPane")) {
+    		log.debug("Sending additional click to Editor$TargetPane");
+    		//then click on it
+    		sendClick(f.getTitle(), c, x, y, f);
+    	
+    	//keep looking
+    	} else {
+
+    		//check this component's children
+    		Container component = (Container) c;
+    		for (Component child : component.getComponents()) {
+    			clickOnEditorPane(child, x, y, f);
+    		}
+    	}
+    }
+    
     static Logger log = Logger.getLogger(JmriJFrameServlet.class.getName());
 }
