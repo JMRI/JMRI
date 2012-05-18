@@ -314,14 +314,14 @@ public class Block extends jmri.implementation.AbstractNamedBean {
     
     public List<String> getDeniedBlocks(){
         List<String> list = new ArrayList<String>(blockDenyList.size());
-        for(NamedBeanHandle bean: blockDenyList){
+        for(NamedBeanHandle<Block> bean: blockDenyList){
             list.add(bean.getName());
         }
         return list;
     }
     
     public boolean isBlockDenied(String deny){
-        for(NamedBeanHandle bean: blockDenyList){
+        for(NamedBeanHandle<Block> bean: blockDenyList){
             if(bean.getName().equals(deny))
                 return true;
         }
@@ -329,7 +329,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
     }
     
     public boolean isBlockDenied(Block deny){
-        for(NamedBeanHandle bean: blockDenyList){
+        for(NamedBeanHandle<Block> bean: blockDenyList){
             if(bean.getBean()==deny)
                 return true;
         }
