@@ -9,6 +9,7 @@ import org.jdom.Element;
  * @author Daniel Boudreau Copyright (C) 2008
  * 
  */
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_CANNOT_BE_FINAL")
 public class Control {
 	
 	// debug flags
