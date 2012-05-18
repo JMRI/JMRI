@@ -364,7 +364,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     void closeWindow(WindowEvent e) {
         saveWindowDetails();
         //Save any changes made in the roster entry details
-        Roster.instance().writeRosterFile();
+        Roster.writeRosterFile();
         if (allowQuit && openWindowInstances == 1) {
             handleQuit(e);
         } else {

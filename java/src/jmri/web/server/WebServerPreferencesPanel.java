@@ -10,9 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javax.swing.GroupLayout.Group;
-import javax.swing.GroupLayout.ParallelGroup;
-import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.ListDataEvent;
@@ -52,6 +49,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         parentFrame = f;
     }
 
+    /*
     private void initComponents() {
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
@@ -62,6 +60,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         group.addGroup(webServerPreferences(layout));
         layout.setVerticalGroup(group);
     }
+    */
 
     private void initGUI() {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -75,6 +74,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         add(cancelApplySave());
     }
 
+    /*
     private Group webServerPreferences(GroupLayout layout) {
         railroadName = new JTextField(preferences.getRailRoadName());
         railroadName.setToolTipText(rb.getString("ToolTipRailRoadName"));
@@ -84,6 +84,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         group.addComponent(this.railroadName, GroupLayout.Alignment.LEADING);
         return group;
     }
+    */
 
     private void setGUI() {
         clickDelaySpinner.setValue(preferences.getClickDelay());

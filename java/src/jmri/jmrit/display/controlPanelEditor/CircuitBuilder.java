@@ -417,6 +417,7 @@ public class CircuitBuilder  {
         }
     }
 
+    /*
     private void addPortalIcons() {
         Iterator<PortalIcon> it = _portalIcons.iterator();
         while (it.hasNext()) {
@@ -425,6 +426,7 @@ public class CircuitBuilder  {
            	_editor.putItem(pi);
         }    	
     }
+    */
 
     private void removePortalIcons() {
         Iterator<PortalIcon> it = _portalIcons.iterator();
@@ -772,12 +774,12 @@ public class CircuitBuilder  {
                     }
                 }
                 java.util.List<Portal> list = block.getPortals();
-                int iconCount = 0;
+                //int iconCount = 0;
                 if (list!=null && list.size()>0) {
                     for (int k=0; k<list.size(); k++) {
                         PortalIcon pi = _portalIconMap.get(list.get(k).getName());
                         if (pi!=null) {
-                            iconCount++;
+                            //iconCount++;
                             addIcon(block, pi);
                             if (!EditPortalFrame.portalIconOK(icons, pi)) {
                                 if (!_portalMisplacedBlock.contains(block)) {
@@ -846,7 +848,7 @@ public class CircuitBuilder  {
     }
     
     protected void addPortalIcon(PortalIcon icon) {
-    	Portal portal = icon.getPortal();
+    	//Portal portal = icon.getPortal();
     	String name = icon.getName();
         // Eliminate possible duplicate icons for this portal
         if(!_portalIconMap.containsKey(name)) {
