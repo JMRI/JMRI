@@ -25,6 +25,11 @@ public class ConnectionConfig  extends jmri.jmrix.can.adapters.ConnectionConfig 
         super(p);
     }
 
+    // Needed for instantiation by reflection, do not remove.
+    public ConnectionConfig() {
+        super();
+    }
+
     public String name() { return "CAN via MERG CAN-RS or CAN-USB"; }
     
     public boolean isOptList2Advanced() { return false; }
@@ -34,5 +39,6 @@ public class ConnectionConfig  extends jmri.jmrix.can.adapters.ConnectionConfig 
             adapter = new SerialDriverAdapter();
         }
     }
+
 }
 

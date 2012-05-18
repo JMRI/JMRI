@@ -21,6 +21,11 @@ public class ConnectionConfig  extends jmri.jmrix.can.adapters.ConnectionConfig 
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p){
         super(p);
+    }    
+    
+    // Needed for instantiation by reflection, do not remove.
+    public ConnectionConfig() {
+        super();
     }
 
     public String name() { return "CAN Simulation"; }
@@ -29,7 +34,6 @@ public class ConnectionConfig  extends jmri.jmrix.can.adapters.ConnectionConfig 
         if(adapter ==null){
             adapter = new Port();
         }
-    }
-    
+    }    
 }
 

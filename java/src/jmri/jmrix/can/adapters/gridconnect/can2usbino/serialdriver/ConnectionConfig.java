@@ -25,6 +25,11 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super(p);
     }
 
+    // Needed for instantiation by reflection, do not remove.
+    public ConnectionConfig() {
+        super();
+    }
+
     public String name() { return "CAN via TCH Tech CAN/USB adapter"; }
     
     protected void setInstance() { 
