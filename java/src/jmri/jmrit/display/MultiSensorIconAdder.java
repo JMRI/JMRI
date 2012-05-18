@@ -5,7 +5,6 @@ import jmri.jmrit.catalog.CatalogTreeNode;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.NamedBeanHandle;
-import jmri.NamedBean;
 import jmri.Sensor;
 
 import java.awt.Dimension;

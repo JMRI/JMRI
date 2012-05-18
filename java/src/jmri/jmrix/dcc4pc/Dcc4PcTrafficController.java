@@ -3,7 +3,6 @@
 package jmri.jmrix.dcc4pc;
 
 import jmri.CommandStation;
-import java.util.List;
 import java.util.Calendar;
 
 import jmri.jmrix.AbstractMRListener;

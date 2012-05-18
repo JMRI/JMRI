@@ -8,7 +8,6 @@ import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
-import java.util.TooManyListenersException;
 import java.util.List;
 import java.util.ArrayList;
 

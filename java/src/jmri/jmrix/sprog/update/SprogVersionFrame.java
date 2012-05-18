@@ -2,8 +2,6 @@
 
 package jmri.jmrix.sprog.update;
 
-import jmri.jmrix.sprog.SprogTrafficController;
-
 import javax.swing.*;
 
 /**

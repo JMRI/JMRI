@@ -2,11 +2,6 @@
 
 package jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver;
 
-import java.util.ResourceBundle;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import jmri.jmrix.can.ConfigurationManager;
-
 /**
  * Definition of objects to handle configuring a layout connection
  * via a Canusb SerialDriverAdapter object.

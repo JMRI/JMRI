@@ -11,7 +11,6 @@ import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogConstants;
-import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.update.*;
 
 /**

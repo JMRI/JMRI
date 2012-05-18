@@ -1,10 +1,6 @@
 // ConnectionConfig.java
 
 package jmri.jmrix.can.adapters.loopback;
-import java.util.ResourceBundle;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import jmri.jmrix.can.ConfigurationManager;
 
 /**
  * Definition of objects to handle configuring a layout connection

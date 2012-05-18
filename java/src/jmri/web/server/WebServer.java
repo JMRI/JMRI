@@ -1,6 +1,5 @@
 package jmri.web.server;
 
-import java.io.File;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.HashMap;
