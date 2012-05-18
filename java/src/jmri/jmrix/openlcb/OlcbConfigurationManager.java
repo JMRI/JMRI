@@ -163,13 +163,15 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     
     void updateSimpleNodeInfo() {
         byte[] part1 = new byte[]{1,'J','M','R','I',0,'P','a','n','e','l','P','r','o',0};
-        byte[] part2 = jmri.Version.name().getBytes();
-        byte[] part3 = new byte[]{0,' ',0,' ',0};
-        byte[] content = new byte[part1.length+part2.length+part3.length];
+        byte[] part2 = new byte[]{0};
+        byte[] part3 = jmri.Version.name().getBytes();
+        byte[] part4 = new byte[]{0,' ',0,' ',0};
+        byte[] content = new byte[part1.length+part2.length+part3.length+part4.length];
         int i = 0;
         for (int j=0; j<part1.length; j++) content[i++] = part1[j];
         for (int j=0; j<part2.length; j++) content[i++] = part2[j];
         for (int j=0; j<part3.length; j++) content[i++] = part3[j];
+        for (int j=0; j<part4.length; j++) content[i++] = part4[j];
         
         nodeStore.put(new SimpleNodeIdentInfoReplyMessage(nodeID,content),null);
     }
