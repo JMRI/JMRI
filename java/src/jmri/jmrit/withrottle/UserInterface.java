@@ -364,7 +364,8 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         if (deviceList.size()>0) do{
             device = deviceList.get(0);
             if (device != null){
-                device.closeSocket();   //Tell device to stop its throttles, close its sockets
+            	device.closeThrottles(); //Tell device to stop its throttles, 
+                device.closeSocket();   //close its sockets
                                         //close() will throw read error and it will be caught
                                         //and drop the thread.
                 cnt++;
