@@ -1010,10 +1010,10 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
     public String getTableColumnAtNum(String table, int i){
         if(tableColumnPrefs.containsKey(table)){
             Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
-            for(Object o: columnPrefs.entrySet()){
-                Map.Entry entry = (Map.Entry) o;
-                if(((TableColumnPreferences)entry.getValue()).getOrder()==i){
-                    return (String)entry.getKey();
+            for(Map.Entry<String, TableColumnPreferences> e: columnPrefs.entrySet()){
+                Map.Entry<String, TableColumnPreferences> entry = e;
+                if((entry.getValue()).getOrder()==i){
+                    return entry.getKey();
                 }
             }
         

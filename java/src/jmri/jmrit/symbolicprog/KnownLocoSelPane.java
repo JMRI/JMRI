@@ -122,7 +122,7 @@ public class KnownLocoSelPane extends LocoSelPane  {
             if (log.isDebugEnabled()) log.debug("Loco id is "+id);
             String group = locoBox.getSelectedRosterGroup();
             if (group != null && !group.equals(Roster.ALLENTRIES)) {
-                List entries = Roster.instance().getEntriesWithAttributeKeyValue(Roster.getRosterGroupProperty(group), "yes");
+                List<RosterEntry> entries = Roster.instance().getEntriesWithAttributeKeyValue(Roster.getRosterGroupProperty(group), "yes");
                 if (entries.contains(r)) {
                     locoBox.setSelectedRosterEntry(r);
                 } else {
