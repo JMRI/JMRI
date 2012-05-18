@@ -2300,9 +2300,9 @@ public class ConnectivityUtil
 								else if (lt.getLayoutBlockB()==lb) {
 									curTS = (TrackSegment)lt.getConnectB();
 									if ( (tType!=LayoutTurnout.LH_XOVER) && (lt.getLayoutBlockC()==lb) ) {
-										if (posTS != null) {
+										//if (posTS != null) {
 											posTS.add((TrackSegment)lt.getConnectC());
-										}
+										//}
 										posOB.add(conObj);
 									}
 								}
@@ -2322,9 +2322,9 @@ public class ConnectivityUtil
 								else if (lt.getLayoutBlock()==lb) {
 									curTS = (TrackSegment)lt.getConnectA();
 									if ( (tType!=LayoutTurnout.RH_XOVER) && (lt.getLayoutBlockD()==lb) ) {
-										if (posTS != null) {
+										//if (posTS != null) {
 											posTS.add((TrackSegment)lt.getConnectD());
-										}
+										//}
 										posOB.add(conObj);
 									}
 								}
@@ -2344,9 +2344,9 @@ public class ConnectivityUtil
 								else if (lt.getLayoutBlockD()==lb) {
 									curTS = (TrackSegment)lt.getConnectD();
 									if ( (tType!=LayoutTurnout.LH_XOVER) && (lt.getLayoutBlock()==lb) ) {
-										if (posTS != null) {
+										//if (posTS != null) {
 											posTS.add((TrackSegment)lt.getConnectA());
-										}
+										//}
 										posOB.add(conObj);
 									}
 								}
@@ -2366,9 +2366,9 @@ public class ConnectivityUtil
 								else if (lt.getLayoutBlockC()==lb) {
 									curTS = (TrackSegment)lt.getConnectC();
 									if ( (tType!=LayoutTurnout.RH_XOVER) && (lt.getLayoutBlockB()==lb) ) {
-										if (posTS != null) {
+										//if (posTS != null) {
 											posTS.add((TrackSegment)lt.getConnectB());
-										}
+										//}
 										posOB.add(conObj);
 									}
 								}
@@ -2395,9 +2395,9 @@ public class ConnectivityUtil
 								else if (((TrackSegment)lt.getConnectB()).getLayoutBlock()==lb) {
 									curTS = (TrackSegment)lt.getConnectB();
 									if (((TrackSegment)lt.getConnectC()).getLayoutBlock()==lb) {
-										if (posTS != null) {
+										//if (posTS != null) {
 											posTS.add((TrackSegment)lt.getConnectC());
-										}
+										//}
 										posOB.add(conObj);
 									}
 								}
@@ -2428,9 +2428,9 @@ public class ConnectivityUtil
                                                      if (((TrackSegment)ls.getConnectC()).getLayoutBlock()==lb){
                                                         curTS = (TrackSegment)ls.getConnectC();
                                                         if (((TrackSegment)ls.getConnectD()).getLayoutBlock()==lb) {
-                                                            if (posTS != null) {
+                                                            //if (posTS != null) {
                                                                 posTS.add((TrackSegment)ls.getConnectD());
-                                                            }
+                                                            //}
                                                             posOB.add(conObj);
                                                         }
                                                      } else {
@@ -2453,9 +2453,9 @@ public class ConnectivityUtil
                                                         if (((TrackSegment)ls.getConnectC()).getLayoutBlock()==lb){
                                                             curTS = (TrackSegment)ls.getConnectC();
                                                             if (((TrackSegment)ls.getConnectD()).getLayoutBlock()==lb) {
-                                                                if (posTS != null) {
+                                                                //if (posTS != null) {
                                                                     posTS.add((TrackSegment)ls.getConnectD());
-                                                                }
+                                                                //}
                                                                 posOB.add(conObj);
                                                             }
                                                         } else {
@@ -2478,9 +2478,9 @@ public class ConnectivityUtil
                                                         if (((TrackSegment)ls.getConnectB()).getLayoutBlock()==lb){
                                                             curTS = (TrackSegment)ls.getConnectB();
                                                             if (((TrackSegment)ls.getConnectA()).getLayoutBlock()==lb) {
-                                                                if (posTS != null) {
+                                                                //if (posTS != null) {
                                                                     posTS.add((TrackSegment)ls.getConnectA());
-                                                                }
+                                                                //}
                                                                 posOB.add(conObj);
                                                             }
                                                         } else {
@@ -2499,9 +2499,9 @@ public class ConnectivityUtil
                                                         if (((TrackSegment)ls.getConnectB()).getLayoutBlock()==lb){
                                                             curTS = (TrackSegment)ls.getConnectB();
                                                             if (((TrackSegment)ls.getConnectA()).getLayoutBlock()==lb) {
-                                                                if (posTS != null) {
+                                                                //if (posTS != null) {
                                                                     posTS.add((TrackSegment)ls.getConnectA());
-                                                                }
+                                                                //}
                                                                 posOB.add(conObj);
                                                             }
                                                         } else {
@@ -2516,7 +2516,8 @@ public class ConnectivityUtil
 				
 			if (curTS==null) {
 				// reached an end point outside this block that was not 'nlb' - any other paths to follow?
-				if ( (posTS!=null) && (posTS.size()>0) ) {
+				//if ( (posTS!=null) && (posTS.size()>0) ) {
+				if (posTS.size()>0) {	
 					// paths remain, initialize the next one
 					curTS = posTS.get(0);
 					curObj = posOB.get(0);
