@@ -309,10 +309,10 @@ public class JmrixConfigPane extends JPanel {
                         modeBox.setSelectedIndex(1);
                     }
                 } catch (NullPointerException e) {
-                    log.debug("Attempt to load "+classConnectionNameList[i]+" failed: "+e);
+                    log.warn("Attempt to load "+classConnectionNameList[i]+" failed: "+e);
                     e.printStackTrace();
                 } catch (Exception e) {
-                    log.debug("Attempt to load "+classConnectionNameList[i]+" failed: "+e);
+                    log.warn("Attempt to load "+classConnectionNameList[i]+" failed: "+e);
                 }
             }
             if (p.getComboBoxLastSelection((String) manuBox.getSelectedItem())!=null){
