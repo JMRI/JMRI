@@ -3,6 +3,7 @@
 package jmri.jmrix.openlcb.swing.send;
 
 import jmri.util.StringUtil;
+import jmri.util.JmriJFrame;
 
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.CanListener;
@@ -20,6 +21,7 @@ import org.openlcb.can.AliasMap;
 import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.cdi.jdom.CdiMemConfigReader;
 import org.openlcb.cdi.swing.CdiPanel;
+import org.openlcb.swing.NodeSelector;
 
 import java.awt.*;
 
@@ -53,7 +55,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     JToggleButton    mRunButton = new JToggleButton("Go");
 
     JTextField srcAliasField = new JTextField(4);
-    JTextField verifyNodeField = new JTextField("02 03 04 05 06 07 ");
+    NodeSelector nodeSelector;
     JTextField sendEventField = new JTextField("02 03 04 05 06 07 00 01 ");
     JTextField dstAliasField = new JTextField(4);
     JTextField datagramContentsField = new JTextField("20 61 00 00 00 00 08");
@@ -70,6 +72,30 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     MimicNodeStore store;
     
     public OpenLcbCanSendPane() {
+        // most of the action is in initComponents
+    }
+
+    public void initComponents(CanSystemConnectionMemo memo) {
+        super.initComponents(memo);
+        tc = memo.getTrafficController();
+        tc.addCanListener(this);
+        connection = memo.get(org.openlcb.Connection.class);
+        srcNodeID = memo.get(org.openlcb.NodeID.class);
+        aliasMap = memo.get(org.openlcb.can.AliasMap.class);
+        
+        // register request for notification
+        Connection.ConnectionListener cl = new Connection.ConnectionListener(){
+            public void connectionActive(Connection c) {
+                log.debug("connection active");
+                // load the alias field
+                srcAliasField.setText(Integer.toHexString(aliasMap.getAlias(srcNodeID)));
+            }
+        };
+        connection.registerStartNotification(cl);
+        
+        mcs = memo.get(MemoryConfigurationService.class);
+        store = memo.get(MimicNodeStore.class);
+        nodeSelector = new NodeSelector(store);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -177,8 +203,8 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
                     }
                 });
         pane2.add(b); 
-        pane2.add(new JLabel("Node ID (6 bytes)"));
-        pane2.add(verifyNodeField);
+        pane2.add(new JLabel("Node: "));
+        pane2.add(nodeSelector);
 
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
@@ -301,11 +327,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     NodeID destNodeID() {
-        //int alias = Integer.parseInt(verifyNodeField.getText(),16);
-        //NodeID match = aliasMap.getNodeID(alias);
-        //log.debug("mapped alias "+sendEventField.getText()+" to ID "+match);
-        
-        return new NodeID(jmri.util.StringUtil.bytesFromHexString(verifyNodeField.getText()));
+        return (NodeID) nodeSelector.getSelectedItem();
     }
     
     EventID eventID() {        
@@ -372,9 +394,13 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
         CdiMemConfigReader.ReaderAccess rdr = new CdiMemConfigReader.ReaderAccess() {
             public void provideReader(java.io.Reader r) {
-                JFrame f = new JFrame();
+                JmriJFrame f = new JmriJFrame();
                 f.setTitle("Configure "+destNodeID());
+                
                 CdiPanel m = new CdiPanel();
+                JScrollPane scrollPane = new JScrollPane(m, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER );
+                Dimension minScrollerDim = new Dimension(800,12);
+                scrollPane.setMinimumSize(minScrollerDim);
                 
                 // create an adapter for reading and writing
                 CdiPanel.ReadWriteAccess accessor = new CdiPanel.ReadWriteAccess(){
@@ -401,7 +427,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
                      );
                 } catch (Exception e) { log.error("caught exception while parsing CDI", e);}
                 
-                f.add( m );
+                f.add( scrollPane );
         
                 f.pack();
                 f.setVisible(true);
@@ -536,28 +562,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
             for (int i=0; i<b.length; i++) m.setElement(i, b[i]&0xff);
         }
         return m;
-    }
-
-    public void initComponents(CanSystemConnectionMemo memo) {
-        super.initComponents(memo);
-        tc = memo.getTrafficController();
-        tc.addCanListener(this);
-        connection = memo.get(org.openlcb.Connection.class);
-        srcNodeID = memo.get(org.openlcb.NodeID.class);
-        aliasMap = memo.get(org.openlcb.can.AliasMap.class);
-        
-        // register request for notification
-        Connection.ConnectionListener cl = new Connection.ConnectionListener(){
-            public void connectionActive(Connection c) {
-                log.debug("connection active");
-                // load the alias field
-                srcAliasField.setText(Integer.toHexString(aliasMap.getAlias(srcNodeID)));
-            }
-        };
-        connection.registerStartNotification(cl);
-        
-        mcs = memo.get(MemoryConfigurationService.class);
-        
     }
 
     /**
