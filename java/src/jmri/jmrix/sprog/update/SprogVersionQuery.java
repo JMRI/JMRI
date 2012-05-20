@@ -25,7 +25,7 @@ public class SprogVersionQuery implements SprogListener {
     enum QueryState {IDLE,
                      CRSENT,     // awaiting reply to " "
                      QUERYSENT,  // awaiting reply to "?"
-                     DONE};      // Version has been found
+                     DONE}       // Version has been found
     static QueryState state = QueryState.IDLE;
 
     static protected int LONG_TIMEOUT = 2000;
@@ -227,6 +227,10 @@ public class SprogVersionQuery implements SprogListener {
                 state = QueryState.IDLE;
                 ver = new SprogVersion(new SprogType(SprogType.NOT_A_SPROG));
                 notifyVersion();
+                break;
+            case DONE:
+            case IDLE:
+                log.error("Timeout in unexpected state: "+state);
                 break;
         }
 
