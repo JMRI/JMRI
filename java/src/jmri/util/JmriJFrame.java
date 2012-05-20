@@ -765,7 +765,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         }
     }
     
-    protected WindowInterface windowInterface = null;
+    protected transient WindowInterface windowInterface = null;
     
     public void show(JmriPanel child, JmriAbstractAction action) {
         if (null != windowInterface) {
