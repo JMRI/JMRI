@@ -66,7 +66,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         new StartUpHandler().start(nodeID);
         
         // configure configuration service
-        dcs = new DatagramService(nodeID, connection);
+        dmb = new DatagramMeteringBuffer(connection);
+        dcs = new DatagramService(nodeID, dmb);
         mcs = new MemoryConfigurationService(nodeID, dcs);
         
         // show active
@@ -79,6 +80,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     Connection connection;
     TrafficController tc;
     NodeID nodeID;
+    DatagramMeteringBuffer dmb;
     DatagramService dcs;
     MemoryConfigurationService mcs;
     
@@ -292,6 +294,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             for (Message m : list) {
                 log.debug("distribute message (fr net): "+m);
                 nodeStore.put(m, null);
+                dmb.connectionForRepliesFromDownstream().put(m, null);
                 dcs.put(m, null);
             }
         }
