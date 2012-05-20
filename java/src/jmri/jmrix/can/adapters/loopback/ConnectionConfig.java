@@ -1,10 +1,6 @@
 // ConnectionConfig.java
 
 package jmri.jmrix.can.adapters.loopback;
-import java.util.ResourceBundle;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import jmri.jmrix.can.ConfigurationManager;
 
 /**
  * Definition of objects to handle configuring a layout connection
@@ -13,6 +9,7 @@ import jmri.jmrix.can.ConfigurationManager;
  * @author      Bob Jacobsen   Copyright (C) 2008
  * @version	$Revision$
  */
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification="name assigned historically")
 public class ConnectionConfig  extends jmri.jmrix.can.adapters.ConnectionConfig {
 
     /**
@@ -21,6 +18,11 @@ public class ConnectionConfig  extends jmri.jmrix.can.adapters.ConnectionConfig 
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p){
         super(p);
+    }    
+    
+    // Needed for instantiation by reflection, do not remove.
+    public ConnectionConfig() {
+        super();
     }
 
     public String name() { return "CAN Simulation"; }
@@ -29,7 +31,6 @@ public class ConnectionConfig  extends jmri.jmrix.can.adapters.ConnectionConfig 
         if(adapter ==null){
             adapter = new Port();
         }
-    }
-    
+    }    
 }
 

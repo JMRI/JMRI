@@ -2,11 +2,6 @@
 
 package jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver;
 
-import java.util.ResourceBundle;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import jmri.jmrix.can.ConfigurationManager;
-
 /**
  * Definition of objects to handle configuring a layout connection
  * via a Canusb SerialDriverAdapter object.
@@ -25,6 +20,11 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super(p);
     }
     
+    // Needed for instantiation by reflection, do not remove.
+    public ConnectionConfig() {
+        super();
+    }
+
     public String name() { return "CAN via GridConnect adapter"; }
     
     protected void setInstance() { 

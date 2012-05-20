@@ -141,7 +141,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected float count = 1;
     protected float freq;
     protected static final int DISPLAY_UPDATE = 500;
-    protected static final int FAST_DISPLAY_RATIO = 3;
+    protected static final int FAST_DISPLAY_RATIO = 5;
 
     /*
      * At low speed, readings arrive less often and less filtering
@@ -334,6 +334,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 profileGraphPane.setUnitsMph();
                 profileGraphPane.repaint();
                 speedoDialDisplay.setUnitsMph();
+                speedoDialDisplay.update(currentSpeed);
                 speedoDialDisplay.repaint();
             }
         });
@@ -342,6 +343,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 profileGraphPane.setUnitsKph();
                 profileGraphPane.repaint();
                 speedoDialDisplay.setUnitsKph();
+                speedoDialDisplay.update(currentSpeed);
                 speedoDialDisplay.repaint();
             }
         });

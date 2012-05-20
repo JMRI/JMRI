@@ -475,7 +475,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * @return An ArrayList of Frames.
      */
     // this probably should use and return a generic type
-    public static java.util.List<JmriJFrame> getFrameList(Class subClass) {
+    public static java.util.List<JmriJFrame> getFrameList(Class<?> subClass) {
         if (subClass == null) {
             return JmriJFrame.getFrameList();
         }
@@ -765,7 +765,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         }
     }
     
-    protected WindowInterface windowInterface = null;
+    protected transient WindowInterface windowInterface = null;
     
     public void show(JmriPanel child, JmriAbstractAction action) {
         if (null != windowInterface) {

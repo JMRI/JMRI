@@ -4,7 +4,6 @@ import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.roster.Roster;
 import java.util.List;
 import org.jdom.Element;
 

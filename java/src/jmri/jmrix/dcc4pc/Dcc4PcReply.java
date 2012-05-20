@@ -119,8 +119,7 @@ public class Dcc4PcReply extends AbstractMRReply {
     }
 
     public int[] getDataAsArray(){
-        return (int[])_dataChars.clone();
-        //return _dataChars;
+        return _dataChars.clone();
     }
     
     public byte[] getFormattedReply() {

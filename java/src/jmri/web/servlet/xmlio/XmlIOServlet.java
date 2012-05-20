@@ -37,9 +37,9 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
         if (request.getParameterNames().hasMoreElements()) {
             Document doc = new Document(new Element("xmlio"));
             Element e = new Element(request.getPathInfo().substring(request.getPathInfo().indexOf("/") + 1));
-            Enumeration parameters = request.getParameterNames();
+            Enumeration<String> parameters = request.getParameterNames();
             while (parameters.hasMoreElements()) {
-                String parameter = (String) parameters.nextElement();
+                String parameter = parameters.nextElement();
                 e.setAttribute(parameter, request.getParameter(parameter));
             }
             doc.getRootElement().addContent(e);

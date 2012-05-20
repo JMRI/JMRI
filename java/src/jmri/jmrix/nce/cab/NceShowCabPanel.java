@@ -702,7 +702,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 			        	} else {
 			        		text1.append(" ");
 			        	}
-		        		debug1.append(" " + (int)recChars[i]);
+		        		debug1.append(" " + recChars[i]);
 		        	}
 		        	line1.setText(text1.toString());
 		        	if (log.isDebugEnabled()) log.debug("TextLine1Debug: " + debug1);
@@ -723,7 +723,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 			        	} else {
 			        		text2.append(" ");
 			        	}
-		        		debug2.append(" " + (int)recChars[i]);
+		        		debug2.append(" " + recChars[i]);
 		        	}
 		        	line2.setText(text2.toString());
 		        	if (log.isDebugEnabled()) log.debug("TextLine2Debug: " + debug2);

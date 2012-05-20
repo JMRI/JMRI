@@ -2,7 +2,6 @@
 
 package jmri.jmrix.can.adapters.gridconnect.can2usbino;
 
-import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.adapters.gridconnect.GridConnectMessage;
 

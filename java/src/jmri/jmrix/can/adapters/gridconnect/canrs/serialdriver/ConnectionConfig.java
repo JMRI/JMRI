@@ -2,11 +2,6 @@
 
 package jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver;
 
-import java.util.ResourceBundle;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import jmri.jmrix.can.ConfigurationManager;
-
 /**
  * Definition of objects to handle configuring a layout connection
  * via a Canrs SerialDriverAdapter object.
@@ -15,6 +10,7 @@ import jmri.jmrix.can.ConfigurationManager;
  * @author      Andrew Crosland 2008
  * @version	$Revision$
  */
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification="name assigned historically")
 public class ConnectionConfig  extends jmri.jmrix.can.adapters.ConnectionConfig {
 
     /**
@@ -23,6 +19,11 @@ public class ConnectionConfig  extends jmri.jmrix.can.adapters.ConnectionConfig 
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p){
         super(p);
+    }
+
+    // Needed for instantiation by reflection, do not remove.
+    public ConnectionConfig() {
+        super();
     }
 
     public String name() { return "CAN via MERG CAN-RS or CAN-USB"; }
@@ -34,5 +35,6 @@ public class ConnectionConfig  extends jmri.jmrix.can.adapters.ConnectionConfig 
             adapter = new SerialDriverAdapter();
         }
     }
+
 }
 

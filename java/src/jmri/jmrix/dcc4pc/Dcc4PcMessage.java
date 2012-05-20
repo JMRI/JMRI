@@ -2,9 +2,6 @@
 
 package jmri.jmrix.dcc4pc;
 
-import jmri.Programmer;
-//import jmri.jmrix.dcc4pc.Dcc4PcConstants.Dcc4PcState;
-
 /**
  * Encodes a message to the DCC4PC Interface.
  * <P>

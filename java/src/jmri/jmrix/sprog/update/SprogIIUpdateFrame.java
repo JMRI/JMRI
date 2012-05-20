@@ -35,7 +35,7 @@ public class SprogIIUpdateFrame
       addHelpMenu("package.jmri.jmrix.sprog.update.SprogIIUpdateFrame", true);
 
       // Get the SPROG version
-      SprogVersionQuery.instance().requestVersion(this);
+      SprogVersionQuery.requestVersion(this);
     }
 
     int bootVer = 0;

@@ -1,9 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
 import jmri.util.JmriJFrame;
-import jmri.SignalMast;
 import jmri.Turnout;
-import jmri.SignalMastLogic;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.*;
 import java.awt.*;
 import java.awt.geom.*;
@@ -11,14 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
-import jmri.Sensor;
 import jmri.NamedBeanHandle;
 import jmri.InstanceManager;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.swing.JmriBeanComboBox;
 
 import java.util.ResourceBundle;
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 

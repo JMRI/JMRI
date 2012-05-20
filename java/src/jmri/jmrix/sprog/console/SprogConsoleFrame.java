@@ -11,7 +11,6 @@ import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogConstants;
-import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.update.*;
 
 /**
@@ -94,9 +93,9 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
     
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC")
-    // Ignore unsunchronised access to state
+    // Ignore unsynchronized access to state
     public void initComponents() throws Exception {
-        SprogMessage msg;
+        //SprogMessage msg;
         super.initComponents();
 
         // Add a nice border to super class
@@ -247,7 +246,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         // in command mode
 
         if (sm.getInUseCount() == 0) {
-            SprogVersionQuery.instance().requestVersion(this);
+            SprogVersionQuery.requestVersion(this);
         }
 }
     

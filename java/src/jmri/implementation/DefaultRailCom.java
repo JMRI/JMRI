@@ -2,7 +2,6 @@
 
 package jmri.implementation;
 
-import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.DccLocoAddress;
 import java.util.Hashtable;

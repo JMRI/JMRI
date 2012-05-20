@@ -319,7 +319,7 @@ public class CbusMessage {
      */
     static public CanMessage getBootEntry(int nn, int header) {
         CanMessage m = new CanMessage(3, header);
-        m.setElement(0, CbusConstants.CBUS_BOOT);
+        m.setElement(0, CbusConstants.CBUS_BOOTM);
         m.setElement(1, (nn/256) & 0xFF);
         m.setElement(2, nn & 0xFF);
         setPri(m, 0xb);

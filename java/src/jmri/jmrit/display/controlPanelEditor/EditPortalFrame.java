@@ -418,7 +418,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         Portal portal = (Portal)_portalList.getSelectedValue();
         String oldName = portal.getName();
         String name = _portalName.getText();
-        if (name==null || name.trim().length()==0 || portal==null) {
+        if (name==null || name.trim().length()==0 ) {
             JOptionPane.showMessageDialog(this, rbcp.getString("changePortalName"), 
                             rbcp.getString("makePortal"), JOptionPane.INFORMATION_MESSAGE);
             return;

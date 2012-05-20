@@ -104,6 +104,7 @@ public class WebServerManager {
         }
     }
 
+    /*
     private void removeV2Index() {
         File indexFile = new File(FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + "index.html"));
         File backup = new File(FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES + "index.v2.html"));
@@ -116,6 +117,7 @@ public class WebServerManager {
             log.error("Failed to move index.html.", ex);
         }
     }
+    */
 
     private void preferencesFromMiniServerPreferences(File MSFile, File WSFile) {
         WebServerPreferences.WebServerPreferencesXml xmlFile = new WebServerPreferences.WebServerPreferencesXml();

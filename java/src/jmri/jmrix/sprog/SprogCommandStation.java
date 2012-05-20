@@ -75,12 +75,11 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             final SprogTrafficController thisTC = SprogTrafficController.instance();
 
             Runnable r = new Runnable() {
-                SprogMessage messageForLater = m;
+                //SprogMessage messageForLater = m;
                 SprogTrafficController myTC = thisTC;
 
                 public void run() {
                     myTC.sendSprogMessage(m, null);
-                    ;
                 }
             };
             javax.swing.SwingUtilities.invokeLater(r);

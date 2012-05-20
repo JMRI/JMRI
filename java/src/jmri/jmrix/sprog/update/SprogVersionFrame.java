@@ -2,8 +2,6 @@
 
 package jmri.jmrix.sprog.update;
 
-import jmri.jmrix.sprog.SprogTrafficController;
-
 import javax.swing.*;
 
 /**
@@ -25,7 +23,7 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
         addHelpMenu("package.jmri.jmrix.sprog.update.SprogVersionFrame", true);
 
         // Start the query
-	SprogVersionQuery.instance().requestVersion(this);
+	SprogVersionQuery.requestVersion(this);
     }
     
     synchronized public void notifyVersion(SprogVersion v) {

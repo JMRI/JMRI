@@ -1,20 +1,12 @@
 package jmri.jmrix.dcc4pc.swing.boardlists;
 
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import javax.swing.table.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.beans.PropertyChangeListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import jmri.util.JmriJFrame;
-import jmri.InstanceManager;
-
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;

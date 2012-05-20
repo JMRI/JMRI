@@ -17,7 +17,7 @@ import javax.swing.border.TitledBorder;
  */
 public class JTitledSeparator extends JPanel {
 
-    private final class SeparatorPane extends JPanel {
+    private final static class SeparatorPane extends JPanel {
 
         private SeparatorPane() {
             super(new GridBagLayout());
