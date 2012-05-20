@@ -80,7 +80,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
 
                 public void run() {
                     myTC.sendSprogMessage(m, null);
-                    ;
                 }
             };
             javax.swing.SwingUtilities.invokeLater(r);
