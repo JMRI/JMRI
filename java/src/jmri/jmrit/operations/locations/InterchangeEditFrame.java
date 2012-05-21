@@ -28,7 +28,7 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Interchange", true);
 		
 		// override text strings for tracks
-		panelTrainDir.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainInterchange")));
+		//panelTrainDir.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainInterchange")));
 		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesInterchange")));
 		deleteTrackButton.setText(rb.getString("DeleteInterchange"));
 		addTrackButton.setText(rb.getString("AddInterchange"));
