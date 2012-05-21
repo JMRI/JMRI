@@ -260,9 +260,19 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             return Boolean.valueOf(train.isBuildEnabled());
         }
         case ROUTECOLUMN: return train.getTrainRouteName();
-        case DEPARTSCOLUMN: return train.getTrainDepartsName();
+        case DEPARTSCOLUMN: {
+        	if (train.getDepartureTrack() == null)
+        		return train.getTrainDepartsName();
+        	else
+        		return train.getTrainDepartsName() + " ("+ train.getDepartureTrack().getName()+")";
+        }
         case CURRENTCOLUMN: return train.getCurrentLocationName();
-        case TERMINATESCOLUMN: return train.getTrainTerminatesName();
+        case TERMINATESCOLUMN: {
+        	if (train.getTerminationTrack() == null)
+        		return train.getTrainTerminatesName();
+        	else
+        		return train.getTrainTerminatesName() + " ("+ train.getTerminationTrack().getName()+")";
+        }
         case STATUSCOLUMN: return train.getStatus();
         case BUILDCOLUMN: {
         	if (train.isBuilt())
