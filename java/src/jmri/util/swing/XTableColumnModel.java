@@ -26,7 +26,7 @@ public class XTableColumnModel extends DefaultTableColumnModel {
     /** Array of TableColumn objects in this model.
      *  Holds all column objects, regardless of their visibility
      */
-    protected Vector allTableColumns            = new Vector();
+    protected Vector<TableColumn> allTableColumns            = new Vector<TableColumn>();
     
     /**
      * Creates an extended table column model.
@@ -58,7 +58,7 @@ public class XTableColumnModel extends DefaultTableColumnModel {
             
             for(int invisibleIndex = 0; invisibleIndex < noInvisibleColumns; ++invisibleIndex) {
                 TableColumn visibleColumn   = (visibleIndex < noVisibleColumns ? (TableColumn)tableColumns.get(visibleIndex) : null);
-                TableColumn testColumn      = (TableColumn)allTableColumns.get(invisibleIndex);
+                TableColumn testColumn      = allTableColumns.get(invisibleIndex);
                 
                 if(testColumn == column) {
                     if(visibleColumn != column) {
@@ -82,7 +82,7 @@ public class XTableColumnModel extends DefaultTableColumnModel {
         
         for(int columnIndex = 0; columnIndex < noColumns; ++columnIndex) {
             TableColumn visibleColumn = (columnIndex < tableColumns.size() ? (TableColumn)tableColumns.get(columnIndex) : null);
-            TableColumn invisibleColumn = (TableColumn)allTableColumns.get(columnIndex);
+            TableColumn invisibleColumn = allTableColumns.get(columnIndex);
             
             if(visibleColumn != invisibleColumn) {
                 super.addColumn(invisibleColumn);
@@ -101,7 +101,7 @@ public class XTableColumnModel extends DefaultTableColumnModel {
  */
     public TableColumn getColumnByModelIndex(int modelColumnIndex) {
         for (int columnIndex = 0; columnIndex < allTableColumns.size(); ++columnIndex) {
-            TableColumn column = (TableColumn)allTableColumns.elementAt(columnIndex);
+            TableColumn column = allTableColumns.elementAt(columnIndex);
             if(column.getModelIndex() == modelColumnIndex) {
                 return column;
             }
@@ -157,8 +157,8 @@ public class XTableColumnModel extends DefaultTableColumnModel {
 	    (newIndex < 0) || (newIndex >= getColumnCount()))
 	    throw new IllegalArgumentException("moveColumn() - Index out of range");
         
-        TableColumn fromColumn  = (TableColumn) tableColumns.get(oldIndex);
-        TableColumn toColumn    = (TableColumn) tableColumns.get(newIndex);
+        TableColumn fromColumn  = tableColumns.get(oldIndex);
+        TableColumn toColumn    = tableColumns.get(newIndex);
         
         int allColumnsOldIndex  = allTableColumns.indexOf(fromColumn);
         int allColumnsNewIndex  = allTableColumns.indexOf(toColumn);
@@ -243,6 +243,6 @@ public class XTableColumnModel extends DefaultTableColumnModel {
      *				at <code>columnIndex</code>
      */
     public TableColumn getColumn(int columnIndex, boolean onlyVisible) {
-	return (TableColumn)tableColumns.elementAt(columnIndex);
+	return tableColumns.elementAt(columnIndex);
     }
 }
