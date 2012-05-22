@@ -1,4 +1,4 @@
-package jmri.util;
+package jmri.util.swing;
 import javax.swing.table.*;
 import java.util.Vector;
 import java.util.Enumeration;

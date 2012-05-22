@@ -13,7 +13,7 @@ import jmri.TurnoutOperation;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.NamedBeanHandle;
-import jmri.util.XTableColumnModel;
+import jmri.util.swing.XTableColumnModel;
 import javax.swing.table.TableColumn;
 
 import java.awt.event.ActionEvent;
