@@ -3,6 +3,13 @@ package jmri.jmrit.display.layoutEditor;
  * An icon to display a status of a Memory.<P>
  */
 import jmri.jmrit.catalog.NamedIcon;
+import javax.swing.JTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.AbstractAction;
+import java.awt.event.ActionListener;
+import javax.swing.JPopupMenu;
+import javax.swing.JSeparator;
 
 // This is the same name as display.MemoryIcon, but a very
 // separate class. That's not good. Unfortunately, it's too 
@@ -25,6 +32,16 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         } else {
             super.setText(text); 
         }
+    }
+    
+    LayoutBlock lBlock = null;
+    
+    public LayoutBlock getLayoutBlock(){
+        return lBlock;
+    }
+    
+    public void setLayoutBlock(LayoutBlock lb){
+        lBlock = lb;
     }
     
     public void displayState() {
@@ -120,6 +137,48 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
             _icon = false;
             updateSize();
         }
+    }
+    
+    JCheckBoxMenuItem  updateBlockItem = new JCheckBoxMenuItem("Update Block Details");
+    
+    public boolean showPopUp(JPopupMenu popup) {
+        if (isEditable()) {
+            popup.add(updateBlockItem);
+            updateBlockItem.setSelected (updateBlockValueOnChange());
+            updateBlockItem.addActionListener(new ActionListener(){
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    updateBlockValueOnChange(updateBlockItem.isSelected());
+                }
+            });
+            return super.showPopUp(popup);
+        }  // end of selectable
+        return false;
+    }
+    
+    protected void editMemoryValue(){
+        JTextField newMemory = new JTextField(20);
+        if (getMemory().getValue()!=null)
+            newMemory.setText(getMemory().getValue().toString());
+        Object[] options = {"Cancel", "OK", newMemory};
+        int retval = JOptionPane.showOptionDialog(this,
+                                                  "Edit Current Memory Value", getNamedMemory().getName(),
+                                                  0, JOptionPane.INFORMATION_MESSAGE, null,
+                                                  options, options[2] );
+
+        if (retval != 1) return;
+        log.info(updateBlockValue);
+        log.info(lBlock);
+        if(updateBlockValue && lBlock!=null){
+            lBlock.getBlock().setValue(newMemory.getText());
+        } else {
+            getMemory().setValue(newMemory.getText());
+            updateSize();
+        }
+    }
+    
+    public void setMemory(String pName){
+        super.setMemory(pName);
+        lBlock = jmri.InstanceManager.layoutBlockManagerInstance().getBlockWithMemoryAssigned(getMemory());
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryIcon.class.getName());

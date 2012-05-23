@@ -450,6 +450,7 @@
       <xs:attribute name="memory" type="beanNameType" />
       <xs:attribute name="defaulticon" type="xs:string" />
       <xs:attribute name="selectable" type="yesNoType" />
+      <xs:attribute name="updateBlockValue" type="yesNoType" />
       <xs:attribute name="fixedHeight" type="xs:string" />
       <xs:attribute name="fixedWidth" type="xs:string" />
       <xs:attribute name="margin" type="xs:int" />
@@ -837,6 +838,97 @@
       <xs:attribute name="signald2name" type="beanNameType" />
       <xs:attribute name="linkedturnoutname" type="beanNameType" />
       <xs:attribute name="linktype" type="xs:string" />
+
+    </xs:complexType>
+    
+    <xs:complexType name="EditorLayoutSlipType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing a SlipLayout
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.layouteditor.configurexml.LayoutSlipXml
+        </xs:appinfo>
+      </xs:annotation>
+      
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="signalAMast" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="signalBMast" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="signalCMast" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="signalDMast" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="sensorA" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="sensorB" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="sensorC" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="sensorD" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="signala1name" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="signalb1name" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="signalc1name" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="signald1name" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="signala2name" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="signalb2name" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="signalc2name" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="signald2name" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="turnout" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="turnoutB" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="states" minOccurs="0" maxOccurs="1">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="A-C" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="turnout" type="xs:string" />
+                        <xs:element name="turnoutB" type="xs:string" />
+                      </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="A-D" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="turnout" type="xs:string" />
+                        <xs:element name="turnoutB" type="xs:string" />
+                      </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="B-D" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="turnout" type="xs:string" />
+                        <xs:element name="turnoutB" type="xs:string" />
+                      </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="B-C" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="turnout" type="xs:string" />
+                        <xs:element name="turnoutB" type="xs:string" />
+                      </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attribute name="class" type="classType" use="required" />
+      <xs:attribute name="ident" type="xs:string" use="required" />
+      <xs:attribute name="slipType" type="xs:string" use="required" />
+      
+      <xs:attribute name="xa" type="xs:float" use="required" />
+      <xs:attribute name="ya" type="xs:float" use="required" />
+      <xs:attribute name="xcen" type="xs:float" use="required" />
+      <xs:attribute name="yb" type="xs:float" use="required" />
+      <xs:attribute name="xb" type="xs:float" use="required" />
+      <xs:attribute name="ycen" type="xs:float" use="required" />
+
+      <xs:attribute name="disabled" type="yesNoType" />
+      <xs:attribute name="disableWhenOccupied" type="yesNoType" />
+
+      <xs:attribute name="blockname" type="beanNameType" />
+      <xs:attribute name="connectaname" type="beanNameType" />
+      <xs:attribute name="connectbname" type="beanNameType" />
+      <xs:attribute name="connectcname" type="beanNameType" />
+      <xs:attribute name="connectdname" type="beanNameType" />
 
     </xs:complexType>
 

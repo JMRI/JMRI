@@ -50,6 +50,7 @@
         <xs:element name="signalmasticon"     type="EditorSignalMastIconType"    minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="reportericon"       type="EditorReporterIconType"      minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="layoutturnout"      type="EditorLayoutTurnoutType"     minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="layoutSlip"         type="EditorLayoutSlipType"        minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="tracksegment"       type="EditorTrackSegmentType"      minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="fastclock"          type="EditorFastClockIconType"     minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="multisensoricon"    type="EditorMultiSensorIconType"   minOccurs="0" maxOccurs="unbounded" />

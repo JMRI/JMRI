@@ -7,6 +7,7 @@ import jmri.Path;
 import jmri.Block;
 import jmri.Turnout;
 import jmri.NamedBeanHandle;
+import javax.swing.JOptionPane;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -306,7 +307,35 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 		if ( !(memName.equals(m.getUserName())) ) {
 			memName = memName.toUpperCase();
 		}
-		memoryName = memName;
+        memoryName = memName;
+        
+        //Go through the memory icons on the panel and see if any are linked to this layout block
+		if (m!=getMemory() && panels.size()>0) {
+			if (panels.size()>0) {
+                boolean updateall = false;
+                boolean found = false;
+                for(LayoutEditor panel: panels){
+                    for(MemoryIcon memIcon: panel.memoryLabelList){
+                        if(memIcon.getLayoutBlock()==this){
+                            if(!updateall && !found){
+                                int n = JOptionPane.showConfirmDialog(
+                                    openFrame,
+                                    "Would you like to update all memory icons on the panel linked to the block to use the new one?",
+                                    "Update Memory Icons",
+                                    JOptionPane.YES_NO_OPTION);
+                                found = true;
+                                if(n==0){
+                                    updateall=true;
+                                }
+                            }
+                            if(updateall){
+                                memIcon.setMemory(memoryName);
+                            }
+                        }
+                    }
+				}
+			}
+		}
 		return m;
 	}
 		
