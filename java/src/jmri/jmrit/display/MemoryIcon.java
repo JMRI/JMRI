@@ -438,6 +438,16 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         getMemory().setValue(newMemory.getText());
         updateSize();
     }
+    
+    protected boolean updateBlockValue = false;
+    
+    public void updateBlockValueOnChange(boolean boo){
+        updateBlockValue = boo;
+    }
 
+    public boolean updateBlockValueOnChange(){
+        return updateBlockValue;
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryIcon.class.getName());
 }
