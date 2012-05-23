@@ -397,8 +397,9 @@ public interface UserPreferencesManager {
      * @param order The position that the column appears in the header
      * @param width The width of the column
      * @param sort The sort order of the column
+     * @param hidden Should the column be hidden
      */
-    public void setTableColumnPreferences(String table, String column, int order, int width, int sort);
+    public void setTableColumnPreferences(String table, String column, int order, int width, int sort, boolean hidden);
     
     /**
      * Get the stored position of the column for a given table
@@ -423,6 +424,14 @@ public interface UserPreferencesManager {
      * @return 0 if not found
      */
     public int getTableColumnSort(String table, String column);
+    
+    /**
+     * Get the stored column hidden state for a given table
+     * @param table The reference for the table
+     * @param column The column name
+     * @return 0 if not found
+     */
+    public boolean getTableColumnHidden(String table, String column);
     
     /**
      * Get a name for a column at index i

@@ -969,12 +969,12 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
     }
     
     Hashtable<String, Hashtable<String, TableColumnPreferences>> tableColumnPrefs = new Hashtable<String, Hashtable<String,TableColumnPreferences>>();
-    public void setTableColumnPreferences(String table, String column, int order, int width, int sort){
+    public void setTableColumnPreferences(String table, String column, int order, int width, int sort, boolean hidden){
         if(!tableColumnPrefs.containsKey(table)){
             tableColumnPrefs.put(table, new Hashtable<String, TableColumnPreferences>());
         }
         Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
-        columnPrefs.put(column,  new TableColumnPreferences(order, width, sort));
+        columnPrefs.put(column,  new TableColumnPreferences(order, width, sort, hidden));
     }
     
     public int getTableColumnOrder(String table, String column){
@@ -1005,6 +1005,16 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
             }
         }
         return 0;
+    }
+    
+    public boolean getTableColumnHidden(String table, String column){
+        if(tableColumnPrefs.containsKey(table)){
+            Hashtable<String, TableColumnPreferences> columnPrefs = tableColumnPrefs.get(table);
+            if(columnPrefs.containsKey(column)){
+                return columnPrefs.get(column).getHidden();
+            }
+        }
+        return false;
     }
     
     public String getTableColumnAtNum(String table, int i){
@@ -1262,11 +1272,13 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
         int order;
         int width;
         int sort;
+        boolean hidden;
     
-        TableColumnPreferences(int order, int width, int sort){
+        TableColumnPreferences(int order, int width, int sort, boolean hidden){
             this.order = order;
             this.width = width;
             this.sort = sort;
+            this.hidden = hidden;
         }
         
         int getOrder(){
@@ -1279,6 +1291,9 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
         
         int getSort(){
             return sort;
+        }
+        boolean getHidden(){
+            return hidden;
         }
     }
     File file;
