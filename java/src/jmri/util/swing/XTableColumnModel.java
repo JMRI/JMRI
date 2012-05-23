@@ -18,6 +18,7 @@ import java.util.Enumeration;
  * you specify wether you want invisible columns taken into account.
  *
  * @version 0.9 04/03/01
+ * @version	$Revision: 20525 $
  * @author Stephen Kelvin, mail@StephenKelvin.de
  * @see DefaultTableColumnModel
  */
@@ -189,8 +190,8 @@ public class XTableColumnModel extends DefaultTableColumnModel {
      * @param   onlyVisible   if set all invisible columns will be missing from the enumeration.
      * @return an <code>Enumeration</code> of the columns in the model
      */
-    public Enumeration getColumns(boolean onlyVisible) {
-        Vector columns = (onlyVisible ? tableColumns : allTableColumns);
+    public Enumeration<TableColumn> getColumns(boolean onlyVisible) {
+        Vector<TableColumn> columns = (onlyVisible ? tableColumns : allTableColumns);
         
 	return columns.elements();
     }
