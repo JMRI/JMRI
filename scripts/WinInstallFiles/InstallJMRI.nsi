@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.20.1
+; - Added removal of obsolete library 'lib\servlet.jar'
+; -------------------------------------------------------------------------
 ; - Version 0.1.20.0
 ; - Update installer to no longer install on Windows 98 and Windows ME
 ; - Change JRE version and copyright date to be determined by build.xml
@@ -208,7 +211,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.6"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.20.0"                    ; Installer version
+!define INST_VER  "0.1.20.1"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -385,6 +388,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- Delete old .jar & support files in lib/ directory
     Delete "$OUTDIR\lib\crimson.jar"
     Delete "$OUTDIR\lib\comm.jar"
+    Delete "$OUTDIR\lib\servlet.jar"
 
     ; -- Delete .jar & support files installed using previous layout
     Delete "$OUTDIR\activation.jar"
