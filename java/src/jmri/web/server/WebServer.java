@@ -132,9 +132,7 @@ public final class WebServer implements LifeCycle.Listener {
         if (InstanceManager.shutDownManagerInstance() != null) {
             InstanceManager.shutDownManagerInstance().register(shutDownTask);
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Starting Web Server on port " + preferences.getPort());
-        }
+        log.info("Starting Web Server on port " + preferences.getPort());
     }
 
     @Override
