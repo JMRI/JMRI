@@ -1401,7 +1401,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 if (connList != null) {
                     for (int x = 0; x < connList.size(); x++) {
                         ConnectionConfig conn = (ConnectionConfig) connList.get(x);
-                        if (conn.getConnectionName().equals(serviceModeProgrammer)) {
+                        if (conn.getConnectionName()!=null && conn.getConnectionName().equals(serviceModeProgrammer)) {
                             serModeProCon = conn;
                         }
                     }
@@ -1415,7 +1415,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 if (connList != null) {
                     for (int x = 0; x < connList.size(); x++) {
                         ConnectionConfig conn = (ConnectionConfig) connList.get(x);
-                        if (conn.getConnectionName().equals(opsModeProgrammer)) {
+                        if (conn.getConnectionName()!=null && conn.getConnectionName().equals(opsModeProgrammer)) {
                             opsModeProCon = conn;
                         }
                     }
