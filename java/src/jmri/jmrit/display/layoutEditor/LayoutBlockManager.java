@@ -990,7 +990,7 @@ public class LayoutBlockManager extends AbstractManager {
 				}
 			}
 		}
-        if((cType>=LayoutEditor.SLIP_A) || (cType<=LayoutEditor.SLIP_D)){
+        if((cType>=LayoutEditor.SLIP_A) && (cType<=LayoutEditor.SLIP_D)){
             if(!facingIsBlock1)
                 return null;
         
@@ -1341,7 +1341,7 @@ public class LayoutBlockManager extends AbstractManager {
             return null;
         }
         
-        if((cType>=LayoutEditor.SLIP_A) || (cType<=LayoutEditor.SLIP_D)){
+        if((cType>=LayoutEditor.SLIP_A) && (cType<=LayoutEditor.SLIP_D)){
             LayoutSlip ls = (LayoutSlip)connected;
             if(cType==LayoutEditor.SLIP_A){
                 if((ls.getSignalAMast()!=null) || (!ls.getSignalAMast().equals(""))){
@@ -1501,7 +1501,7 @@ public class LayoutBlockManager extends AbstractManager {
                 }
             return null;
         }
-        if((cType>=LayoutEditor.SLIP_A) || (cType<=LayoutEditor.SLIP_D)){
+        if((cType>=LayoutEditor.SLIP_A) && (cType<=LayoutEditor.SLIP_D)){
             LayoutSlip ls = (LayoutSlip)connected;
             if(cType==LayoutEditor.SLIP_A){
                 if((ls.getSensorA()!=null) || (!ls.getSensorA().equals(""))){
