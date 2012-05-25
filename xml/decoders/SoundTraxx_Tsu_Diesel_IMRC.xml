@@ -16,11 +16,13 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20100828"/>
   <version author="Michael Mosher" version="2" lastUpdated="20111212"/>
+  <version author="Michael Mosher" version="3" lastUpdated="20111223"/>
 
 <!-- This file contains the Tsunami definitions for Intermountain OEM diesel locomotives	-->
 
 <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file.						-->
 <!-- version 2	Add SD40-2W and use xi:includes to cleanup redundancy						-->
+<!-- version 3	Fix function mapping bug													-->
 
 <!-- Decoder Model information follows -->
 
@@ -616,7 +618,7 @@
 			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output Bell</label>
       </variable>
-      <variable label="F6 controls output FX5" CV="40" mask="XXXXXXVX" item="F6 controls output 3" minOut="1" default="0" include="ES">
+      <variable label="F6 controls output FX5" CV="40" mask="XXXXXXVX" item="F6 controls output 3" minOut="1" default="0" include="ES,SD">
 			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output FX5</label>
       </variable>
@@ -628,7 +630,7 @@
 			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output FX6</label>
       </variable>
-      <variable label="F6 controls output FX6" CV="40" mask="XXXXXVXX" item="F6 controls output 4" minOut="2" default="1" include="ES">
+      <variable label="F6 controls output FX6" CV="40" mask="XXXXXVXX" item="F6 controls output 4" minOut="2" default="1" include="ES,SD">
 			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 controls output FX6</label>
       </variable>
