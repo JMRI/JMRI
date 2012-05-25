@@ -65,6 +65,8 @@ public class Track {
 	public static final String ANY = "Any";			// track accepts any train or route
 	public static final String TRAINS = "trains";	// track only accepts certain trains
 	public static final String ROUTES = "routes";	// track only accepts certain routes
+	public static final String EXCLUDE_TRAINS = "excludeTrains";	// track excludes certain trains
+	public static final String EXCLUDE_ROUTES = "excludeRoutes";	// track excludes certain routes
 
 	// load options
 	protected int _loadOptions = 0;
@@ -769,6 +771,8 @@ public class Track {
     		return true;
     	if (_dropOption.equals(TRAINS))
     		return containsDropId(train.getId());
+    	if (_dropOption.equals(EXCLUDE_TRAINS))
+    		return !containsDropId(train.getId());
     	else if (train.getRoute() == null)
     		return false;
    		return acceptsDropRoute(train.getRoute());
@@ -777,8 +781,10 @@ public class Track {
     public boolean acceptsDropRoute(Route route){
       	if (_dropOption.equals(ANY))
     		return true;
-      	if (_dropOption.equals(TRAINS))
+      	if (_dropOption.equals(TRAINS) || _dropOption.equals(EXCLUDE_TRAINS))
       		return false;
+      	if (_dropOption.equals(EXCLUDE_ROUTES))
+      		return !containsDropId(route.getId());
       	return containsDropId(route.getId());
     }
     
@@ -833,6 +839,8 @@ public class Track {
     		return true;
     	if (_pickupOption.equals(TRAINS))
     		return containsPickupId(train.getId());
+    	if (_pickupOption.equals(EXCLUDE_TRAINS))
+    		return !containsPickupId(train.getId());
     	else if (train.getRoute() == null)
     		return false;
    		return acceptsPickupRoute(train.getRoute());
@@ -841,8 +849,10 @@ public class Track {
     public boolean acceptsPickupRoute(Route route){
       	if (_pickupOption.equals(ANY))
     		return true;
-      	if (_pickupOption.equals(TRAINS))
+      	if (_pickupOption.equals(TRAINS) || _pickupOption.equals(EXCLUDE_TRAINS))
       		return false;
+      	if (_pickupOption.equals(EXCLUDE_ROUTES))
+      			return !containsPickupId(route.getId());
       	return containsPickupId(route.getId());
     }
     

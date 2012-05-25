@@ -100,10 +100,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JRadioButton anyDrops = new JRadioButton(rb.getString("Any"));
 	JRadioButton trainDrop = new JRadioButton(rb.getString("Trains"));
 	JRadioButton routeDrop = new JRadioButton(rb.getString("Routes"));
+	JRadioButton excludeTrainDrop = new JRadioButton(rb.getString("ExcludeTrains"));
+	JRadioButton excludeRouteDrop = new JRadioButton(rb.getString("ExcludeRoutes"));
 	
 	JRadioButton anyPickups = new JRadioButton(rb.getString("Any"));
 	JRadioButton trainPickup = new JRadioButton(rb.getString("Trains"));
 	JRadioButton routePickup = new JRadioButton(rb.getString("Routes"));
+	JRadioButton excludeTrainPickup = new JRadioButton(rb.getString("ExcludeTrains"));
+	JRadioButton excludeRoutePickup = new JRadioButton(rb.getString("ExcludeRoutes"));
 
 	JComboBox comboBoxDropTrains = trainManager.getComboBox();
 	JComboBox comboBoxDropRoutes = routeManager.getComboBox();
@@ -224,16 +228,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// drop panel
 		dropPanel.setLayout(new GridBagLayout());
 		dropPanel.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainsOrRoutesDrops")));
-		dropPanel.add(anyDrops);
-		dropPanel.add(trainDrop);
-		dropPanel.add(routeDrop);
 		
 		// pickup panel
 		pickupPanel.setLayout(new GridBagLayout());
 		pickupPanel.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainsOrRoutesPickups")));
-		pickupPanel.add(anyPickups);
-		pickupPanel.add(trainPickup);
-		pickupPanel.add(routePickup);
 		
 		// row 11
     	JPanel panelComment = new JPanel();
@@ -303,10 +301,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addRadioButtonAction(anyDrops);
 		addRadioButtonAction(trainDrop);
 		addRadioButtonAction(routeDrop);
+		addRadioButtonAction(excludeTrainDrop);
+		addRadioButtonAction(excludeRouteDrop);
 
 		addRadioButtonAction(anyPickups);
 		addRadioButtonAction(trainPickup);
 		addRadioButtonAction(routePickup);
+		addRadioButtonAction(excludeTrainPickup);
+		addRadioButtonAction(excludeRoutePickup);
 		
 		addComboBoxAction(comboBoxTypes);
 		
@@ -414,7 +416,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (ae.getSource() == addDropButton){
 			String id ="";
-			if (trainDrop.isSelected()){
+			if (trainDrop.isSelected() || excludeTrainDrop.isSelected()){
 				if (comboBoxDropTrains.getSelectedItem().equals(""))
 					return;
 				Train train = ((Train) comboBoxDropTrains.getSelectedItem());
@@ -445,7 +447,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (ae.getSource() == deleteDropButton){
 			String id ="";
-			if (trainDrop.isSelected()){
+			if (trainDrop.isSelected() || excludeTrainDrop.isSelected()){
 				if (comboBoxDropTrains.getSelectedItem().equals(""))
 					return;
 				id = ((Train) comboBoxDropTrains.getSelectedItem()).getId();
@@ -461,7 +463,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (ae.getSource() == addPickupButton){
 			String id ="";
-			if (trainPickup.isSelected()){
+			if (trainPickup.isSelected() || excludeTrainPickup.isSelected()){
 				if (comboBoxPickupTrains.getSelectedItem().equals(""))
 					return;
 				Train train = ((Train) comboBoxPickupTrains.getSelectedItem());
@@ -492,7 +494,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (ae.getSource() == deletePickupButton){
 			String id ="";
-			if (trainPickup.isSelected()){
+			if (trainPickup.isSelected()|| excludeTrainPickup.isSelected()){
 				if (comboBoxPickupTrains.getSelectedItem().equals(""))
 					return;
 				id = ((Train) comboBoxPickupTrains.getSelectedItem()).getId();
@@ -687,7 +689,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	private boolean checkService(Track track){
 		// check train and route restrictions
-		if (!anyDrops.isSelected() && track.getDropIds().length == 0){
+		if ((trainDrop.isSelected() || routeDrop.isSelected()) && track.getDropIds().length == 0){
 			log.debug("Must enter trains or routes for this track");
 			JOptionPane.showMessageDialog(this,
 					rb.getString("UseAddTrainsOrRoutes"),
@@ -695,7 +697,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		if (!anyPickups.isSelected() && track.getPickupIds().length == 0){
+		if ((trainPickup.isSelected() || routePickup.isSelected()) && track.getPickupIds().length == 0){
 			log.debug("Must enter trains or routes for this track");
 			JOptionPane.showMessageDialog(this,
 					rb.getString("UseAddTrainsOrRoutes"),
@@ -731,9 +733,13 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		anyDrops.setEnabled(enabled);
 		trainDrop.setEnabled(enabled);
 		routeDrop.setEnabled(enabled);
+		excludeTrainDrop.setEnabled(enabled);
+		excludeRouteDrop.setEnabled(enabled);
 		anyPickups.setEnabled(enabled);
 		trainPickup.setEnabled(enabled);
 		routePickup.setEnabled(enabled);
+		excludeTrainPickup.setEnabled(enabled);
+		excludeRoutePickup.setEnabled(enabled);
 		orderNormal.setEnabled(enabled);
 		orderFIFO.setEnabled(enabled);
 		orderLIFO.setEnabled(enabled);
@@ -787,6 +793,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			_track.setDropOption(Track.ROUTES);
 			updateDropOptions();
 		}
+		if (ae.getSource() == excludeTrainDrop){
+			_track.setDropOption(Track.EXCLUDE_TRAINS);
+			updateDropOptions();
+		}
+		if (ae.getSource() == excludeRouteDrop){
+			_track.setDropOption(Track.EXCLUDE_ROUTES);
+			updateDropOptions();
+		}
 		if (ae.getSource() == anyPickups){
 			_track.setPickupOption(Track.ANY);
 			updatePickupOptions();
@@ -797,6 +811,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (ae.getSource() == routePickup){
 			_track.setPickupOption(Track.ROUTES);
+			updatePickupOptions();
+		}
+		if (ae.getSource() == excludeTrainPickup){
+			_track.setPickupOption(Track.EXCLUDE_TRAINS);
+			updatePickupOptions();
+		}
+		if (ae.getSource() == excludeRoutePickup){
+			_track.setPickupOption(Track.EXCLUDE_ROUTES);
 			updatePickupOptions();
 		}
 	}
@@ -811,6 +833,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     	p.add(anyDrops, 0);
     	p.add(trainDrop, 1);
     	p.add(routeDrop, 2);
+		p.add(excludeTrainDrop);
+		p.add(excludeRouteDrop);
     	GridBagConstraints gc = new GridBagConstraints();
     	gc.gridwidth = numberOfCheckboxes+1;
     	dropPanel.add(p, gc);
@@ -822,11 +846,13 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			anyDrops.setSelected(_track.getDropOption().equals(Track.ANY));
 			trainDrop.setSelected(_track.getDropOption().equals(Track.TRAINS));
 			routeDrop.setSelected(_track.getDropOption().equals(Track.ROUTES));
+			excludeTrainDrop.setSelected(_track.getDropOption().equals(Track.EXCLUDE_TRAINS));
+			excludeRouteDrop.setSelected(_track.getDropOption().equals(Track.EXCLUDE_ROUTES));
 			
 			if (!anyDrops.isSelected()){
 		    	p = new JPanel();
 		    	p.setLayout(new FlowLayout());
-		    	if (trainDrop.isSelected()){
+		    	if (trainDrop.isSelected() || excludeTrainDrop.isSelected()){
 		    		p.add(comboBoxDropTrains);
 		    	} else {
 		    		p.add(comboBoxDropRoutes);
@@ -842,7 +868,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		    	for (int i =0; i<dropIds.length; i++){
 		    		JLabel names = new JLabel();
 		    		String name = "<deleted>";
-		    		if (trainDrop.isSelected()){
+		    		if (trainDrop.isSelected() || excludeTrainDrop.isSelected()){
 		    			Train train = trainManager.getTrainById(dropIds[i]);
 		    			if(train != null)
 		    				name = train.getName();
@@ -879,6 +905,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     	p.add(anyPickups, 0);
     	p.add(trainPickup, 1);
     	p.add(routePickup, 2);
+		p.add(excludeTrainPickup);
+		p.add(excludeRoutePickup);
     	GridBagConstraints gc = new GridBagConstraints();
     	gc.gridwidth = numberOfCheckboxes+1;
     	pickupPanel.add(p, gc);
@@ -890,11 +918,13 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			anyPickups.setSelected(_track.getPickupOption().equals(Track.ANY));
 			trainPickup.setSelected(_track.getPickupOption().equals(Track.TRAINS));
 			routePickup.setSelected(_track.getPickupOption().equals(Track.ROUTES));
+			excludeTrainPickup.setSelected(_track.getPickupOption().equals(Track.EXCLUDE_TRAINS));
+			excludeRoutePickup.setSelected(_track.getPickupOption().equals(Track.EXCLUDE_ROUTES));
 			
 			if (!anyPickups.isSelected()){
 		    	p = new JPanel();
 		    	p.setLayout(new FlowLayout());
-		    	if (trainPickup.isSelected()){
+		    	if (trainPickup.isSelected() || excludeTrainPickup.isSelected()){
 		    		p.add(comboBoxPickupTrains);
 		    	} else {
 		    		p.add(comboBoxPickupRoutes);
@@ -910,7 +940,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		    	for (int i =0; i<pickupIds.length; i++){
 		    		JLabel names = new JLabel();
 		    		String name = "<deleted>";
-		    		if (trainPickup.isSelected()){
+		    		if (trainPickup.isSelected() || excludeTrainPickup.isSelected()){
 		    			Train train = trainManager.getTrainById(pickupIds[i]);
 		    			if(train != null)
 		    				name = train.getName();
