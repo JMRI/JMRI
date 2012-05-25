@@ -166,7 +166,7 @@ public class PositionablePropertiesUtil {
             } catch (Exception ce) {
                 log.error("Unable to get font colour from field " + ce);
             }
-            if (desiredColor.equals(defaultForeground))
+            if (desiredColor!=null && desiredColor.equals(defaultForeground))
                 fontCurrentColor = i;
         }
     
@@ -346,7 +346,7 @@ public class PositionablePropertiesUtil {
             } catch (Exception ce) {
                 log.error("Unable to convert the selected font color to a color " + ce);
             }
-            if (desiredColor.equals(defaultBorderColor)){
+            if (desiredColor!=null && desiredColor.equals(defaultBorderColor)){
                 borderCurrentColor = i;
             }
         }

@@ -63,25 +63,10 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                 Object val = key;
                 if (val instanceof jmri.jmrit.roster.RosterEntry){
                     jmri.jmrit.roster.RosterEntry roster = (jmri.jmrit.roster.RosterEntry) val;
-                    javax.swing.ImageIcon icon = jmri.InstanceManager.rosterIconFactoryInstance().getIcon(roster);
-                    if(icon.getIconWidth()==-1 || icon.getIconHeight()==-1){
-                        //the IconPath is still at default so no icon set
-                        val = roster.titleString();
-                    } else {
-                        NamedIcon rosterIcon = new NamedIcon(roster.getIconPath(), roster.getIconPath());
-                        _text = false;
-                        _icon = true;
-                        updateIcon(rosterIcon);
-                        rosterIcon.reduceTo(maxWidth(), maxHeight(), 0.2);
-                        re=roster;
-                        jmri.InstanceManager.throttleManagerInstance().attachListener(re.getDccLocoAddress(), this);
-                        Object isForward = jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(re.getDccLocoAddress(), "IsForward");
-                        if(isForward!=null){
-                            if(!(Boolean)isForward)
-                                flipIcon(NamedIcon.HORIZONTALFLIP);
-                        }
+                    val = updateMemoryFromRosterVal(roster);
+                    flipRosterIcon = false;
+                    if(val == null)
                         return;
-                    }
                 }
                 if (val instanceof String) {
                     if (val.equals(""))
@@ -141,6 +126,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
     
     JCheckBoxMenuItem  updateBlockItem = new JCheckBoxMenuItem("Update Block Details");
     
+    @Override
     public boolean showPopUp(JPopupMenu popup) {
         if (isEditable()) {
             popup.add(updateBlockItem);
@@ -150,35 +136,23 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                     updateBlockValueOnChange(updateBlockItem.isSelected());
                 }
             });
-            return super.showPopUp(popup);
         }  // end of selectable
-        return false;
-    }
-    
-    protected void editMemoryValue(){
-        JTextField newMemory = new JTextField(20);
-        if (getMemory().getValue()!=null)
-            newMemory.setText(getMemory().getValue().toString());
-        Object[] options = {"Cancel", "OK", newMemory};
-        int retval = JOptionPane.showOptionDialog(this,
-                                                  "Edit Current Memory Value", getNamedMemory().getName(),
-                                                  0, JOptionPane.INFORMATION_MESSAGE, null,
-                                                  options, options[2] );
-
-        if (retval != 1) return;
-        log.info(updateBlockValue);
-        log.info(lBlock);
-        if(updateBlockValue && lBlock!=null){
-            lBlock.getBlock().setValue(newMemory.getText());
-        } else {
-            getMemory().setValue(newMemory.getText());
-            updateSize();
-        }
+        return super.showPopUp(popup);
     }
     
     public void setMemory(String pName){
         super.setMemory(pName);
         lBlock = jmri.InstanceManager.layoutBlockManagerInstance().getBlockWithMemoryAssigned(getMemory());
+    }
+    
+    @Override
+    protected void setValue(Object obj){
+        if(updateBlockValue && lBlock!=null){
+            lBlock.getBlock().setValue(obj);
+        } else {
+            getMemory().setValue(obj);
+            updateSize();
+        }
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryIcon.class.getName());

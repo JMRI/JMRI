@@ -3,16 +3,38 @@ package jmri.jmrit.display;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.jmrit.catalog.NamedIcon;
-
+//import javax.swing.TransferHandler;
+import java.awt.datatransfer.Transferable;
 import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.*;
+import java.awt.dnd.DropTargetListener;
+import java.awt.dnd.DropTargetDragEvent;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.dnd.DropTargetEvent;
+import java.awt.datatransfer.DataFlavor;
+
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.throttle.ThrottleFrame;
+import jmri.jmrit.throttle.ThrottleFrameManager;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.dnd.DropTarget;
+
+import jmri.util.datatransfer.RosterEntrySelection;
 
 import jmri.NamedBeanHandle;
 
@@ -25,7 +47,7 @@ import jmri.NamedBeanHandle;
  * @version $Revision$
  */
 
-public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
+public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener/*, DropTargetListener*/ {
 
 	NamedIcon defaultIcon = null;
     // the associated Memory object
@@ -42,6 +64,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         //updateSize();
         //By default all memory is left justified
         _popupUtil.setJustification(LEFT);
+        this.setTransferHandler(new TransferHandler());
     }
 
     public MemoryIcon(NamedIcon s, Editor editor) {
@@ -51,7 +74,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         //updateSize();
         _popupUtil.setJustification(LEFT);
         log.debug("MemoryIcon ctor= "+MemoryIcon.class.getName());
-
+        this.setTransferHandler(new TransferHandler());
     }
     
     public Positionable deepClone() {
@@ -96,7 +119,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
       * @param pName Used as a system/user name to lookup the Memory object
      */
      public void setMemory(String pName) {
-     
          if (InstanceManager.memoryManagerInstance()!=null) {
             Memory memory = InstanceManager.memoryManagerInstance().
                  provideMemory(pName);
@@ -195,12 +217,22 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 popup.add(new AbstractAction(key) {
                     public void actionPerformed(ActionEvent e) {
                         String key = e.getActionCommand();
-                        getMemory().setValue(key);
+                        setValue(key);
                     }
                 });
             }
             return true;
         }  // end of selectable
+        if(re!=null){
+            popup.add(new AbstractAction("Open Throttle") {
+                public void actionPerformed(ActionEvent e) {
+                    ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
+                    tf.toFront();
+                    tf.getAddressPanel().setRosterEntry(re);
+                }
+            });
+            return true;
+        }
         return false;
     }
 
@@ -244,25 +276,10 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 		        // no map, attempt to show object directly
                 if (val instanceof jmri.jmrit.roster.RosterEntry){
                     jmri.jmrit.roster.RosterEntry roster = (jmri.jmrit.roster.RosterEntry) val;
-                    javax.swing.ImageIcon icon = jmri.InstanceManager.rosterIconFactoryInstance().getIcon(roster);
-                    if(icon.getIconWidth()==-1 || icon.getIconHeight()==-1){
-                        //the IconPath is still at default so no icon set
-                        val = roster.titleString();
-                    } else {
-                        NamedIcon rosterIcon = new NamedIcon(roster.getIconPath(), roster.getIconPath());
-                        _text = false;
-                        _icon = true;
-                        updateIcon(rosterIcon);
-                        rosterIcon.reduceTo(maxWidth(), maxHeight(), 0.2);
-                        re=roster;
-                        jmri.InstanceManager.throttleManagerInstance().attachListener(re.getDccLocoAddress(), this);
-                        Object isForward = jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(re.getDccLocoAddress(), "IsForward");
-                        if(isForward!=null){
-                            if(!(Boolean)isForward)
-                                flipIcon(NamedIcon.HORIZONTALFLIP);
-                        }
+                    val = updateMemoryFromRosterVal(roster);
+                    flipRosterIcon = false;
+                    if(val == null)
                         return;
-                    }
                 }
                 if (val instanceof String) {
                     String str = (String)val;
@@ -309,7 +326,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 				    super.setIcon(newicon);
 			    } else {
 			        // no match, use default
-		            setIcon(defaultIcon);                    
+		            setIcon(defaultIcon);
                     setText(null);
                     _icon = true;
                     _text = false;
@@ -323,6 +340,31 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             _text = false;
         }
         updateSize();
+    }
+    
+    protected Object updateMemoryFromRosterVal(RosterEntry roster){
+        re=roster;
+        javax.swing.ImageIcon icon = jmri.InstanceManager.rosterIconFactoryInstance().getIcon(roster);
+        if(icon.getIconWidth()==-1 || icon.getIconHeight()==-1){
+            //the IconPath is still at default so no icon set
+            return roster.titleString();
+        } else {
+            NamedIcon rosterIcon = new NamedIcon(roster.getIconPath(), roster.getIconPath());
+            _text = false;
+            _icon = true;
+            updateIcon(rosterIcon);
+            rosterIcon.reduceTo(maxWidth(), maxHeight(), 0.2);
+            if(flipRosterIcon){
+                flipIcon(NamedIcon.HORIZONTALFLIP);
+            }
+            jmri.InstanceManager.throttleManagerInstance().attachListener(re.getDccLocoAddress(), this);
+            Object isForward = jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(re.getDccLocoAddress(), "IsForward");
+            if(isForward!=null){
+                if(!(Boolean)isForward)
+                    flipIcon(NamedIcon.HORIZONTALFLIP);
+            }
+            return null;
+        }
     }
     
     protected jmri.jmrit.roster.RosterEntry re = null;
@@ -422,9 +464,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         if (e.getClickCount() == 2) { // double click?
             editMemoryValue();
         }
-    }    
+    }
     
-    private void editMemoryValue(){
+    protected void editMemoryValue(){
         JTextField newMemory = new JTextField(20);
         if (getMemory().getValue()!=null)
             newMemory.setText(getMemory().getValue().toString());
@@ -435,19 +477,81 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                                                   options, options[2] );
 
         if (retval != 1) return;
-        getMemory().setValue(newMemory.getText());
+        setValue(newMemory.getText());
         updateSize();
     }
     
+    //This is used by the LayoutEditor
     protected boolean updateBlockValue = false;
     
     public void updateBlockValueOnChange(boolean boo){
         updateBlockValue = boo;
     }
-
+    
     public boolean updateBlockValueOnChange(){
         return updateBlockValue;
     }
     
+    protected boolean flipRosterIcon = false;
+    
+    protected void addRosterToMemory(RosterEntry roster){
+        
+        Object[] options = {"Facing West",
+                    "Facing East",
+                    "Do Not Add"};
+        int n = JOptionPane.showOptionDialog(this,
+            "Would you like to assign loco "
+            +  roster.titleString() + " to this location",
+            "Assign Loco",
+            JOptionPane.YES_NO_CANCEL_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            options,
+            options[2]);
+        if(n==2)
+            return;
+        flipRosterIcon = false;
+        if(n==0) {
+            flipRosterIcon = true;
+        }
+        if(getMemory().getValue()==roster){
+            //No change in the loco but a change in direction facing might have occured
+             updateMemoryFromRosterVal(roster);
+        } else {
+            setValue(roster);
+        }
+    }
+    
+    protected void setValue(Object val){
+        getMemory().setValue(val);
+    }
+    
+    class TransferHandler extends javax.swing.TransferHandler {
+    
+        @Override
+        public boolean canImport(JComponent c, DataFlavor[] transferFlavors) {
+            for (DataFlavor flavor : transferFlavors) {
+                if (RosterEntrySelection.rosterEntryFlavor.equals(flavor)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public boolean importData(JComponent c, Transferable t) {
+            try {
+                ArrayList<RosterEntry> REs = RosterEntrySelection.getRosterEntries(t);
+                for (RosterEntry roster : REs) {
+                    addRosterToMemory(roster);
+                }
+            } catch(Exception e){
+            
+            }
+            return true;
+        }
+
+    }
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryIcon.class.getName());
 }
