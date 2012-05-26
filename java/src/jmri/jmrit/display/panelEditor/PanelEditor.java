@@ -947,6 +947,7 @@ public class PanelEditor extends Editor implements ItemListener {
         addItemPopUp(new ComboBoxItem("RPSreporter"),_add);
         addItemPopUp(new ComboBoxItem("FastClock"),_add);
         addItemPopUp(new ComboBoxItem("Icon"),_add);
+        addItemPopUp(new ComboBoxItem("Text"),_add);
         popup.add(_add);
     }
     

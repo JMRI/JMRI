@@ -1247,7 +1247,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     static final public String[] ICON_EDITORS = {"Sensor", "RightTurnout", "LeftTurnout",
                         "SlipTOEditor", "SignalHead", "SignalMast", "Memory", "Light", 
-                        "Reporter", "Background", "MultiSensor", "Icon"};
+                        "Reporter", "Background", "MultiSensor", "Icon", "Text"};
     /**
     * @param name Icon editor's name
     */
@@ -1278,12 +1278,18 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 addMultiSensorEditor();
             } else if ("Icon".equals(name)) {
                 addIconEditor();
+            } else if ("Text".equals(name)) {
+                addTextEditor();
             } else {
 //                log.error("No such Icon Editor \""+name+"\"");
                 return null;
             }
             // frame added in the above switch 
             frame = _iconEditorFrame.get(name);
+
+            if (frame==null) { // addTextEditor does not create a usable frame
+                return null;
+            }
             //frame.setLocationRelativeTo(this);
             frame.setLocation(frameLocationX, frameLocationY);
             frameLocationX += DELTA;
