@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<decoder-config>
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="Nigel Cliffe, ncliffe@btinternet.com" version="1" lastUpdated="20110511"/>
 	<version author="John Stather, steam.bloke@tesco.net" version="2" lastUpdated="20120125" />
 <!-- Version 1.0 - based on correspondance with Richard Johnson of DCC Concepts -->
