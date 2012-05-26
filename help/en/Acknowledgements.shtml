@@ -27,7 +27,7 @@
 
 <H2>Acknowledgements: People who've contributed to JMRI</H2>
     A number have people have contributed their effort to JMRI.  
-    They are listed below and deserve our thanks.
+    They are listed below in alphabetical order. They deserve our thanks.
     <P>
     In addition, a large number of people have donated to the 
     project.  For more information, or to donate, please see
@@ -99,8 +99,9 @@
 	connection to an MS100.  Check out their great Java serial library!
 	<LI>Peter Brandenburg, for many CT Electronik decoder definitions, definitions for Haber &amp; Koenig decoders, 
 	and for creating the SPROG web page
-	<li>Chris Bradshaw, who fixed some broken links
-	    and provided a decoder definition for the TCS Z2
+	<li>Chris Bradshaw, who fixed some broken links,
+	    provided a decoder definition for the TCS Z2,
+	    and provided a definition for the ANE Model Loco-Cruiser LC201 decoder.
 	<li>Rodolphe Braud, who updated the French translation
 	<LI>Jerry Britton, who acquired and maintained the domain registration 
 	for decoderpro.com, despite Matt Katzer's
@@ -380,6 +381,7 @@
     <LI>John Sacrey wrote instructions for getting Java to work on 64-bit Windows
 	<LI>Joe Salemi, who contributed the Atlas 345 decoder definition and
 	updated the TCS Tx definition.
+	<LI>Richard Sauerbrun provided a definition for the DN163K4B decoder.
     <LI>Jeff Schmaltz, who contributed decoder definitions for 
     the Massoth eMotion and LGB decoders,
     the Zimo MX65, 
@@ -389,6 +391,7 @@
 	<LI>Jim Scorse, who gave generously of his time to answer questions about NCE details
 	and provided debug hardware
 	<LI>Brett Scott contributed the scripts for programming DCC Specialties products
+	<LI>John Sebastian provided a decoder definition for the MRC Sound Brilliance 1957.
     <LI>Fred Severson, who gave permission to use QSI manuals to make decoder definitions
 	<LI>Jack Shall, who cleaned up the XML files, contributed decoder definitions,
 	added a huge number of tooltips to DecoderPro,
@@ -415,6 +418,7 @@
 	for JMRI development
 	<LI>Ron Sommer, who provided the PanelPro icon for Windows
 	<li>Tom Starbuck, who updated and organized the model numbers in the TCS BEMF decoder definitions.
+	<li>John Stather fixed some issues with the DCC Concepts locomotive decoder definition.
 	<LI>Dima Stepanchuk, who provided a fix for the Packet Analyzer
 	<li>John Stewart, who provided a decoder definition for the Lenz Plus 2010 decoder.
 <a name="T"></A>
