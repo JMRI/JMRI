@@ -5,6 +5,8 @@ package jmri.jmrix.loconet.downloader;
 import java.awt.FlowLayout;
 
 import javax.swing.*;
+
+import java.util.Locale;
 import java.util.ResourceBundle;
 import jmri.jmrix.loconet.*;
 import java.io.*;
@@ -60,6 +62,20 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
     static int PXCT2SENDDATA     = 0x20;
     static int PXCT2VERIFYDATA   = 0x30;
     static int PXCT2ENDOPERATION = 0x40;
+    
+    /*
+     * Flags for "Options"
+     * see http://embeddedloconet.cvs.sourceforge.net/viewvc/embeddedloconet/apps/BootLoader/BootloaderUser.c
+     */
+    private static final int DO_NOT_CHECK_SOFTWARE_VERSION        = 0x00;
+    private static final int CHECK_SOFTWARE_VERSION_LESS          = 0x04;
+
+    private static final int DO_NOT_CHECK_HARDWARE_VERSION        = 0x00;
+    private static final int REQUIRE_HARDWARE_VERSION_EXACT_MATCH = 0x01;
+    private static final int ACCEPT_LATER_HARDWARE_VERSIONS       = 0x03;
+    
+    private static final int SW_FLAGS_MSK                         = 0x04;
+    private static final int HW_FLAGS_MSK                         = 0x03;
 
     public LoaderPane() { }
     
@@ -272,12 +288,17 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
     JFileChooser chooser;
 
-    void selectInputFile() {
+    private void selectInputFile() {
         String name = inputFileName.getText();
         if (name.equals("")) {
             name = jmri.jmrit.XmlFile.userFileLocationDefault();
         }
-        if (chooser == null) chooser = new JFileChooser(name);
+        if (chooser == null) {
+            chooser = new JFileChooser(name);
+            chooser.addChoosableFileFilter(
+                    new javax.swing.filechooser.FileNameExtensionFilter(
+                            "Digitrax Mangled Firmware (*.dmf)","dmf"));
+        }
         inputFileName.setText("");  // clear out in case of failure
         int retVal = chooser.showOpenDialog(this);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
@@ -292,7 +313,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
         status.setText(res.getString("StatusReadFile"));
     }
 
-    void doRead() {
+    private void doRead() {
         if (inputFileName.getText() == "") {
             JOptionPane.showMessageDialog(this, res.getString("ErrorNoInputFile"),
                                       res.getString("ErrorTitle"),
@@ -316,11 +337,13 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
         // load
         try {
+            //FIXME: errors in file are not reported to user
             inputContent.readHex(new File(chooser.getSelectedFile().getPath()));
         } catch (FileNotFoundException f) {
             JOptionPane.showMessageDialog(this, res.getString("ErrorFileNotFound"),
                                       res.getString("ErrorTitle"),
                                       JOptionPane.ERROR_MESSAGE);
+            this.enableGUI();
             return;
         }
         loadButton.setEnabled(true);
@@ -330,7 +353,10 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
         status.setText(res.getString("StatusDoDownload"));
 
         // get some contents & update
-        ResourceBundle l = ResourceBundle.getBundle("jmri.jmrix.loconet.downloader.File");
+        // Always load the from baseName "File.properties". There should be
+        // no translations because this defines the file format of dmf file.
+        ResourceBundle l = ResourceBundle.getBundle(
+                            "jmri.jmrix.loconet.downloader.File", Locale.ROOT);
 
         String text = inputContent.getComment(l.getString("StringLoader"));
         if (text!=null) bootload.setText(text);
@@ -350,6 +376,20 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
         text = inputContent.getComment(l.getString("StringSoftware"));
         if (text!=null) software.setText(text);
 
+        text = inputContent.getComment(l.getString("StringOptions"));
+        if (text != null) {
+            try {
+                this.setCheckBoxes(text);
+            } catch(NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this,
+                        res.getString("ErrorInvalidOptionInFile")+ex.getMessage(),
+                        res.getString("ErrorTitle"),
+                        JOptionPane.ERROR_MESSAGE);
+                this.enableGUI();
+                return;
+            }
+        }
+
         text = inputContent.getComment(l.getString("StringDelay"));
         if (text!=null) delay.setText(text);
 
@@ -357,7 +397,49 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
         if (text!=null) eestart.setText(text);
     }
 
-    void doLoad() {
+    private void setCheckBoxes(String text) {
+        try {
+            int control = Integer.parseInt(text);
+            switch (control & SW_FLAGS_MSK) {
+            case CHECK_SOFTWARE_VERSION_LESS:
+                checksoftwareless.setSelected(true);
+                checksoftwareno.setSelected(false);
+                break;
+            case DO_NOT_CHECK_SOFTWARE_VERSION:
+                checksoftwareless.setSelected(false);
+                checksoftwareno.setSelected(true);
+                break;
+            default:
+                throw new NumberFormatException("Invalid Software Options: "
+                                                     +(control & SW_FLAGS_MSK));
+            }
+            switch (control & HW_FLAGS_MSK) {
+            case DO_NOT_CHECK_HARDWARE_VERSION:
+                checkhardwareno.setSelected(true);
+                checkhardwareexact.setSelected(false);
+                checkhardwaregreater.setSelected(false);
+                break;
+            case REQUIRE_HARDWARE_VERSION_EXACT_MATCH:
+                checkhardwareno.setSelected(false);
+                checkhardwareexact.setSelected(true);
+                checkhardwaregreater.setSelected(false);
+                break;
+            case ACCEPT_LATER_HARDWARE_VERSIONS:
+                checkhardwareno.setSelected(false);
+                checkhardwareexact.setSelected(false);
+                checkhardwaregreater.setSelected(true);
+                break;
+            default:
+                throw new NumberFormatException("Invalid Hardware Options: "
+                                                     +(control & HW_FLAGS_MSK));
+            }
+        } catch (NumberFormatException ex) {
+            log.error("Invalid Options: " + text, ex);
+            throw ex;
+        }
+    }
+
+    private void doLoad() {
         status.setText(res.getString("StatusDownloading"));
         readButton.setEnabled(false);
         readButton.setToolTipText(res.getString("TipDisabledDownload"));
@@ -389,45 +471,102 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
         sendSequence();
     }
 
+    private void enableGUI() {
+        if (log.isDebugEnabled()) log.debug("enableGUI");
+
+        if (isOperationAborted())
+          status.setText(res.getString("StatusAbort"));
+        else
+          status.setText(res.getString("StatusDone"));
+
+          // remove the
+        setOperationAborted(false);
+
+        readButton.setEnabled(true);
+        readButton.setToolTipText(res.getString("TipReadEnabled"));
+        loadButton.setEnabled(true);
+        loadButton.setToolTipText(res.getString("TipLoadEnabled"));
+        verifyButton.setEnabled(true);
+        verifyButton.setToolTipText(res.getString("TipVerifyEnabled"));
+        abortButton.setEnabled(false);
+        abortButton.setToolTipText(res.getString("TipAbortDisabled"));
+    }
+
       // boolean used to abort the threaded operation
       // access has to be synchronized to make sure
       // the Sender threads sees the value change from the
       // GUI thread
-    boolean abortOperation ;
+    private boolean abortOperation ;
 
-    void setOperationAborted( boolean state ) {
+    private void setOperationAborted( boolean state ) {
       synchronized(this){
         abortOperation = state;
       }
     }
 
-    boolean isOperationAborted() {
+    private boolean isOperationAborted() {
       synchronized(this){
         return abortOperation ;
       }
     }
 
-    int operation;
+    private int operation;
 
-    void sendSequence() {
+    private void sendSequence() {
+        int mfgval;
+        int developerval;
+        int prodval;
+        int hardval;
+        int softval;
+        int control;
+        try {
+            mfgval = Integer.valueOf(mfg.getText()).intValue();
+            if(mfgval<0 || mfgval>0xff) {
+                throw new NumberFormatException("Invalid Manufacturer Code: "+mfgval);
+            }
+            developerval = Integer.valueOf(developer.getText()).intValue();
+            if(developerval<0 || developerval>0xff) {
+                throw new NumberFormatException("Invalid Developer Code: "+developerval);
+            }
+            prodval = Integer.valueOf(product.getText()).intValue();
+            if(prodval<0 || prodval>0xffff) {
+                throw new NumberFormatException("Invalid Product Code: "+prodval);
+            }
+            hardval = Integer.valueOf(hardware.getText()).intValue();
+            if(hardval<0 || hardval>0xff) {
+                throw new NumberFormatException("Invalid Hardware Version: "+hardval);
+            }
+            softval = Integer.valueOf(software.getText()).intValue();
+            if(softval<0 || softval>0xff) {
+                throw new NumberFormatException("Invalid Software Version: "+softval);
+            }
+            control = 0;
+
+            if (checksoftwareless.isSelected()) {
+                control |= CHECK_SOFTWARE_VERSION_LESS;
+            }
+
+            if (checkhardwareexact.isSelected()) {
+                control |= REQUIRE_HARDWARE_VERSION_EXACT_MATCH;
+            } else if (checkhardwaregreater.isSelected()) {
+                control |= ACCEPT_LATER_HARDWARE_VERSIONS;
+            }
+
+            delayval = Integer.valueOf(delay.getText()).intValue();
+            eestartval = Integer.valueOf(eestart.getText(),16).intValue();
+        } catch( NumberFormatException ex ) {
+            log.error("sendSequence() failed", ex);
+            JOptionPane.showMessageDialog(this,
+                    res.getString("ErrorInvalidInput")+ex.getLocalizedMessage(),
+                    res.getString("ErrorTitle"),
+                    JOptionPane.ERROR_MESSAGE);
+            this.enableGUI();
+            return;
+        }
+
         // send start
-        int mfgval = Integer.valueOf(mfg.getText()).intValue();
-        int developerval = Integer.valueOf(developer.getText()).intValue();
-        int prodval = Integer.valueOf(product.getText()).intValue();
-        int hardval = Integer.valueOf(hardware.getText()).intValue();
-        int softval = Integer.valueOf(software.getText()).intValue();
-        int control = 0;
-
-        if (checksoftwareless.isSelected()) control |= 0x04;
-
-        if (checkhardwareexact.isSelected()) control |= 0x01;
-        else if (checkhardwaregreater.isSelected()) control |= 0x03;
-
         sendOne(PXCT2SETUP, mfgval, prodval&0xff ,hardval,softval,
                 control,0,developerval,prodval/256);
-
-        delayval = Integer.valueOf(delay.getText()).intValue();
-        eestartval = Integer.valueOf(eestart.getText(),16).intValue();
 
         // start transmission loop
         new Thread(new Sender()).start();
@@ -475,7 +614,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
     int delayval;
     int eestartval;
         
-    class Sender implements Runnable {
+    private class Sender implements Runnable {
         int totalmsgs;
         int sentmsgs;
 
@@ -531,14 +670,8 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
                 // update GUI intermittently
                 if ( (sentmsgs % 5) == 0) {
-
                     // update progress bar via the queue to ensure synchronization
-                    Runnable r = new Runnable() {
-                        public void run() {
-                            updateGUI();
-                        }
-                    };
-                    javax.swing.SwingUtilities.invokeLater(r);
+                    updateGUI(100*sentmsgs/totalmsgs);
                 }
 
                 // update to the next location for data
@@ -558,6 +691,8 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
             // send end (after wait)
             doWait(location);
             sendOne(PXCT2ENDOPERATION, 0,0,0,0, 0,0,0,0);
+
+            this.updateGUI(100); //draw bar to 100%
 
             // signal end to GUI via the queue to ensure synchronization
             Runnable r = new Runnable() {
@@ -608,36 +743,20 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
          * Should be invoked on the Swing thread
          */
         void enableGUI() {
-            if (log.isDebugEnabled()) log.debug("enableGUI");
-
-            if (isOperationAborted())
-              status.setText(res.getString("StatusAbort"));
-            else
-              status.setText(res.getString("StatusDone"));
-
-              // remove the
-            setOperationAborted(false);
-
-            readButton.setEnabled(true);
-            readButton.setToolTipText(res.getString("TipReadEnabled"));
-            loadButton.setEnabled(true);
-            loadButton.setToolTipText(res.getString("TipLoadEnabled"));
-            verifyButton.setEnabled(true);
-            verifyButton.setToolTipText(res.getString("TipVerifyEnabled"));
-            abortButton.setEnabled(false);
-            abortButton.setToolTipText(res.getString("TipAbortDisabled"));
+            LoaderPane.this.enableGUI();
         }
 
         /**
          * Update the GUI for progress
-         * <P>
-         * Should be invoked on the Swing thread
          */
-        void updateGUI() {
-            if (log.isDebugEnabled()) log.debug("updateGUI with "+sentmsgs+" / "+totalmsgs);
-            // update progress bar
-            bar.setValue(100*sentmsgs/totalmsgs);
-
+        void updateGUI(final int value) {
+            javax.swing.SwingUtilities.invokeLater( new Runnable() {
+                public void run() {
+                    if (log.isDebugEnabled()) log.debug("updateGUI with "+value);
+                    // update progress bar
+                    bar.setValue(100*sentmsgs/totalmsgs);
+                }
+            });
         }
 
     }
