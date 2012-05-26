@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
@@ -17,12 +18,13 @@ import java.io.FileWriter;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jmri.util.PythonInterp;
+import javax.swing.event.*;
 
 /**
  * This Action runs creates a JFrame for sending input to the
  * global jython interpreter
  *
- * @author	Bob Jacobsen    Copyright (C) 2004
+ * @author      Bob Jacobsen    Copyright (C) 2004
  * @version     $Revision$
  */
 public class InputWindow extends JPanel {
@@ -31,6 +33,7 @@ public class InputWindow extends JPanel {
     JButton button;
     JButton loadButton;
     JButton storeButton;
+    JLabel status;
     JCheckBox alwaysOnTopCheckBox = new JCheckBox();
     static java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.jython.JythonBundle");
 
@@ -40,6 +43,41 @@ public class InputWindow extends JPanel {
         setLayout(new BorderLayout());
         
         area = new JTextArea(12, 50);
+
+        // from: http://stackoverflow.com/questions/5139995/java-column-number-and-line-number-of-cursors-current-position
+        area.addCaretListener(new CaretListener() {
+            // Each time the caret is moved, it will trigger the listener and its method caretUpdate.
+            // It will then pass the event to the update method including the source of the event (which is our textarea control)
+            public void caretUpdate(CaretEvent e) {
+                JTextArea editArea = (JTextArea)e.getSource();
+
+                // Lets start with some default values for the line and column.
+                int linenum = 1;
+                int columnnum = 1;
+
+                // We create a try catch to catch any exceptions. We will simply ignore such an error for our demonstration.
+                try {
+                    // First we find the position of the caret. This is the number of where the caret is in relation to the start of the JTextArea
+                    // in the upper left corner. We use this position to find offset values (eg what line we are on for the given position as well as
+                    // what position that line starts on.
+                    int caretpos = editArea.getCaretPosition();
+                    linenum = editArea.getLineOfOffset(caretpos);
+
+                    // We subtract the offset of where our line starts from the overall caret position.
+                    // So lets say that we are on line 5 and that line starts at caret position 100, if our caret position is currently 106
+                    // we know that we must be on column 6 of line 5.
+                    columnnum = caretpos - editArea.getLineStartOffset(linenum);
+
+                    // We have to add one here because line numbers start at 0 for getLineOfOffset and we want it to start at 1 for display.
+                    linenum += 1;
+                }
+                catch(Exception ex) { }
+
+                // Once we know the position of the line and the column, pass it to a helper function for updating the status bar.
+                updateStatus(linenum, columnnum);
+            }
+        });
+
         JScrollPane js = new JScrollPane(area);
         js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -55,6 +93,11 @@ public class InputWindow extends JPanel {
         alwaysOnTopCheckBox.setVisible(true);
         alwaysOnTopCheckBox.setToolTipText("If checked, this window be always be displayed in front of any other window");
         p.add(alwaysOnTopCheckBox);
+
+        status = new JLabel("         ");   // create some space for the counters
+        p.add(status);
+        updateStatus(1,0);
+
         add(p, BorderLayout.SOUTH);
         
         button.addActionListener(new java.awt.event.ActionListener() {
@@ -89,6 +132,11 @@ public class InputWindow extends JPanel {
 
     }
     
+
+    // This helper function updates the status bar with the line number and column number.
+    private void updateStatus(int linenumber, int columnnumber) {
+        status.setText("    " + linenumber + ":" + columnnumber);
+    }
     /**
      *
      * @param fileChooser
