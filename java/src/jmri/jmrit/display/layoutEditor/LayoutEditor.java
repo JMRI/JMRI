@@ -3150,6 +3150,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                     SignalMastIcon sm = checkSignalMastIcons(dLoc);
                     if (sm!=null) {
                         showPopUp(sm, event);
+                    } else {
+                        PositionableLabel im = checkLabelImages(dLoc);
+                        if(im!=null){
+                            if(im instanceof MemoryIcon){
+                                showPopUp(im, event);
+                            }
+                        }
                     }
                 }
             }

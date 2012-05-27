@@ -73,6 +73,9 @@ log4j.appender.T.layout.ConversionPattern=%6r %-37.37c{2} %-5p - %m [%t]%n
 log4j.appender.T.MaxFileSize=1000KB
 log4j.appender.T.MaxBackupIndex=2
 
+# Default Jetty server to only logging WARN since it can be verbose at points
+log4j.category.org.eclipse.jetty=WARN
+
 # Examples of changing priority of specific categories (classes, packages):
 #
 # log4j.category.jmri=DEBUG

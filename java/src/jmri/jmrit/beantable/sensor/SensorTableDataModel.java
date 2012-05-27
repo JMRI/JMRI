@@ -3,9 +3,11 @@
 package jmri.jmrit.beantable.sensor;
 
 import jmri.*;
+import jmri.util.swing.XTableColumnModel;
 
 import jmri.jmrit.beantable.BeanTableDataModel;
 import javax.swing.*;
+import javax.swing.table.TableColumn;
 
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
@@ -24,8 +26,8 @@ public class SensorTableDataModel extends BeanTableDataModel {
     static public final int USEGLOBALDELAY = INVERTCOL+1;
     static public final int ACTIVEDELAY = USEGLOBALDELAY+1;
     static public final int INACTIVEDELAY = ACTIVEDELAY+1;
-
-    public boolean showDebounce = false;
+    
+    XTableColumnModel columnModel = new XTableColumnModel();
     
     SensorManager senManager = InstanceManager.sensorManagerInstance();
     public SensorTableDataModel() {
@@ -92,9 +94,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
     }
 
     public int getColumnCount( ){
-        if(showDebounce)
-            return INACTIVEDELAY+1;
-        return NUMCOLUMN+1;
+        return INACTIVEDELAY+1;
     }
 
     public String getColumnName(int col) {
@@ -113,9 +113,9 @@ public class SensorTableDataModel extends BeanTableDataModel {
     }
     public int getPreferredWidth(int col) {
         if (col==INVERTCOL) return new JTextField(4).getPreferredSize().width;
-        if(col==USEGLOBALDELAY) return new JTextField(4).getPreferredSize().width;
-        if(col==ACTIVEDELAY) return new JTextField(4).getPreferredSize().width;
-        if(col==INACTIVEDELAY) return new JTextField(4).getPreferredSize().width;
+        if(col==USEGLOBALDELAY || col==ACTIVEDELAY || col==INACTIVEDELAY){
+            return new JTextField(8).getPreferredSize().width;
+        }
         else return super.getPreferredWidth(col);
     }
     public boolean isCellEditable(int row, int col) {
@@ -201,6 +201,31 @@ public class SensorTableDataModel extends BeanTableDataModel {
                 return true;
         }
         else return super.matchPropertyName(e);
+    }
+    
+    @Override
+    public void configureTable(JTable table){
+        table.setColumnModel(columnModel);
+        table.createDefaultColumnsFromModel();
+        
+        super.configureTable(table);
+        
+        TableColumn column  = columnModel.getColumnByModelIndex(USEGLOBALDELAY);
+        columnModel.setColumnVisible(column, false);
+        column  = columnModel.getColumnByModelIndex(ACTIVEDELAY);
+        columnModel.setColumnVisible(column, false);
+        column  = columnModel.getColumnByModelIndex(INACTIVEDELAY);
+        columnModel.setColumnVisible(column, false);
+    }
+    
+    public void showDebounce(boolean show){
+        TableColumn column  = columnModel.getColumnByModelIndex(USEGLOBALDELAY);
+        columnModel.setColumnVisible(column, show);
+        column  = columnModel.getColumnByModelIndex(ACTIVEDELAY);
+        columnModel.setColumnVisible(column, show);
+        column  = columnModel.getColumnByModelIndex(INACTIVEDELAY);
+        columnModel.setColumnVisible(column, show);
+    
     }
     
     protected String getClassName() { return jmri.jmrit.beantable.SensorTableAction.class.getName(); }

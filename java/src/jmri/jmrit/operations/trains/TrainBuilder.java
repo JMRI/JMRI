@@ -1057,7 +1057,7 @@ public class TrainBuilder extends TrainCommon{
     			}
     		}
     		if (c.getTrack().getLocType().equals(Track.INTERCHANGE) || c.getTrack().getLocType().equals(Track.SIDING)){
-    			if (c.getTrack().getPickupOption().equals(Track.TRAINS)){
+    			if (c.getTrack().getPickupOption().equals(Track.TRAINS) || c.getTrack().getPickupOption().equals(Track.EXCLUDE_TRAINS)){
     				if (c.getTrack().acceptsPickupTrain(train)){
     					log.debug("Car ("+c.toString()+") can be picked up by this train");
     				} else {
@@ -1067,7 +1067,7 @@ public class TrainBuilder extends TrainCommon{
     					continue;
     				}
     			}
-    			else if (c.getTrack().getPickupOption().equals(Track.ROUTES)){
+    			else if (c.getTrack().getPickupOption().equals(Track.ROUTES) || c.getTrack().getPickupOption().equals(Track.EXCLUDE_ROUTES)){
     				if (c.getTrack().acceptsPickupRoute(train.getRoute())){
     					log.debug("Car ("+c.toString()+") can be picked up by this route");
     				} else {
@@ -1718,7 +1718,7 @@ public class TrainBuilder extends TrainCommon{
 	 */
 	private boolean checkTrainCanDrop (Car car, Track track){
 		if (track.getLocType().equals(Track.INTERCHANGE) || track.getLocType().equals(Track.SIDING)){
-			if (track.getDropOption().equals(Track.TRAINS)){
+			if (track.getDropOption().equals(Track.TRAINS) || track.getDropOption().equals(Track.EXCLUDE_TRAINS)){
 				if (track.acceptsDropTrain(train)){
 					log.debug("Car ("+car.toString()+") can be droped by train to track (" +track.getName()+")");
 				} else {
@@ -1726,7 +1726,7 @@ public class TrainBuilder extends TrainCommon{
 					return false;
 				}
 			}
-			if (track.getDropOption().equals(Track.ROUTES)){
+			if (track.getDropOption().equals(Track.ROUTES) || track.getDropOption().equals(Track.EXCLUDE_ROUTES)){
 				if (track.acceptsDropRoute(train.getRoute())){
 					log.debug("Car ("+car.toString()+") can be droped by route to track (" +track.getName()+")");
 				} else {

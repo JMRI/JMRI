@@ -45,6 +45,9 @@ public class MemoryIconXml extends PositionableLabelXml {
             element.setAttribute("y", ""+p.getOriginalY());
         }
         element.setAttribute("selectable", (p.isSelectable()?"yes":"no"));
+        if(p.updateBlockValueOnChange()){
+            element.setAttribute("updateBlockValue", (p.updateBlockValueOnChange()?"yes":"no"));
+        }
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.MemoryIconXml");
         if (p.getDefaultIcon()!=null)
@@ -123,6 +126,9 @@ public class MemoryIconXml extends PositionableLabelXml {
         Attribute a = element.getAttribute("selectable");
         if (a!=null && a.getValue().equals("yes")) l.setSelectable(true);
         else l.setSelectable(false);
+        
+        a = element.getAttribute("updateBlockValue");
+        if(a!=null && a.getValue().equals("yes")) l.updateBlockValueOnChange(true);
         
         // get the icon pairs
         List<Element> items = element.getChildren("memorystate");

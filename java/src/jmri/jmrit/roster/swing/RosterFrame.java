@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Enumeration;
 import javax.help.SwingHelpUtilities;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -45,6 +46,8 @@ import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.ResizableImagePanel;
 import jmri.util.swing.WindowInterface;
 import jmri.util.swing.multipane.TwoPaneTBWindow;
+import jmri.util.swing.XTableColumnModel;
+import javax.swing.table.TableColumn;
 import org.apache.log4j.Logger;
 
 /**
@@ -437,7 +440,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 }
             }
         });
+        
+        //Set all the sort and width details of the table first.
         String rostertableref = getWindowFrameRef() + ":roster";
+
+        //Reorder the columns first
         for (int i = 0; i < jtable.getColumnCount(); i++) {
             String columnName = p.getTableColumnAtNum(rostertableref, i);
             if (columnName != null) {
@@ -445,19 +452,33 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 for (int j = 0; j < jtable.getColumnCount(); j++) {
                     if (jtable.getColumnName(j).equals(columnName)) {
                         originalLocation = j;
+                        break;
                     }
                 }
                 if (originalLocation != -1 && (originalLocation != i)) {
                     jtable.moveColumn(originalLocation, i);
                 }
-                int sort = p.getTableColumnSort(rostertableref, columnName);
-                rtable.getModel().setSortingStatus(i, sort);
-                if (p.getTableColumnWidth(rostertableref, columnName) != -1) {
-                    int width = p.getTableColumnWidth(rostertableref, columnName);
-                    jtable.getColumnModel().getColumn(i).setPreferredWidth(width);
-                }
             }
         }
+        
+        //Set column widths, sort order and hidden status
+        XTableColumnModel tcm = rtable.getXTableColumnModel();
+        Enumeration<TableColumn> en = tcm.getColumns(false);
+        while(en.hasMoreElements()){
+            TableColumn tc = en.nextElement();
+            String columnName = (String) tc.getHeaderValue();
+            if (p.getTableColumnWidth(rostertableref, columnName) != -1) {
+                int width = p.getTableColumnWidth(rostertableref, columnName);
+                tc.setPreferredWidth(width);
+            }
+            int sort = p.getTableColumnSort(rostertableref, columnName);
+            rtable.getModel().setSortingStatus(tc.getModelIndex(), sort);
+            
+            if(p.getTableColumnHidden(rostertableref, columnName)){
+                tcm.setColumnVisible(tc, false);
+            }
+        }
+        
         jtable.setDragEnabled(true);
         jtable.setTransferHandler(new TransferHandler() {
 
@@ -492,6 +513,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 log.error("Unable to get the double click speed, Using JMRI default of half a second" + e.toString());
             }
         }
+        /*MouseListener mouseHeaderListener = new tableHeaderListener();
+        jtable.getTableHeader().addMouseListener(mouseHeaderListener);*/
         // assemble roster/groups splitpane
         rosterGroupSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, groups, rosters);
         rosterGroupSplitPane.setOneTouchExpandable(true);
@@ -1027,8 +1050,20 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         p.setProperty(getWindowFrameRef(), "selectedRosterGroup", groups.getSelectedRosterGroup());
         //Method to save table sort, width and column order status
         String rostertableref = getWindowFrameRef() + ":roster";
-        for (int i = 0; i < rtable.getTable().getColumnCount(); i++) {
-            p.setTableColumnPreferences(rostertableref, rtable.getTable().getColumnName(i), i, rtable.getTable().getColumnModel().getColumn(i).getPreferredWidth(), rtable.getModel().getSortingStatus(i));
+        
+        XTableColumnModel tcm = rtable.getXTableColumnModel();
+        Enumeration<TableColumn> en = tcm.getColumns(false);
+        while(en.hasMoreElements()){
+            TableColumn tc = en.nextElement();
+            
+            try {
+                String columnName = (String) tc.getHeaderValue();
+                int index = tcm.getColumnIndex(tc.getIdentifier(), false);
+                p.setTableColumnPreferences(rostertableref, columnName, index, tc.getPreferredWidth(), rtable.getModel().getSortingStatus(tc.getModelIndex()), !tcm.isColumnVisible(tc));
+            } catch (Exception e){
+                log.warn("unable to store settings for table column " + tc.getHeaderValue());
+                e.printStackTrace();
+            }
         }
         if (rosterGroupSplitPane.getDividerLocation() > 2) {
             p.setProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation", rosterGroupSplitPane.getDividerLocation());
@@ -1123,8 +1158,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     public void setSelectedRosterGroup(String rosterGroup) {
         groups.setSelectedRosterGroup(rosterGroup);
     }
-
-
+    
     protected void showPopup(MouseEvent e) {
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem menuItem = new JMenuItem("Program");
@@ -1367,7 +1401,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 if (connList != null) {
                     for (int x = 0; x < connList.size(); x++) {
                         ConnectionConfig conn = (ConnectionConfig) connList.get(x);
-                        if (conn.getConnectionName().equals(serviceModeProgrammer)) {
+                        if (conn.getConnectionName()!=null && conn.getConnectionName().equals(serviceModeProgrammer)) {
                             serModeProCon = conn;
                         }
                     }
@@ -1381,7 +1415,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 if (connList != null) {
                     for (int x = 0; x < connList.size(); x++) {
                         ConnectionConfig conn = (ConnectionConfig) connList.get(x);
-                        if (conn.getConnectionName().equals(opsModeProgrammer)) {
+                        if (conn.getConnectionName()!=null && conn.getConnectionName().equals(opsModeProgrammer)) {
                             opsModeProCon = conn;
                         }
                     }

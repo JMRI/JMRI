@@ -42,7 +42,7 @@ a location can service, the available track space for a location, and
 the maximum length the train can be between any two locations on the
 train's route.
 <P>
-Locations can have spurs, yards, staging and interchange tracks. Spurs
+Locations can have spurs, yards, staging and classification/interchange tracks. Spurs
 are used to service industries, and can optionally have custom <A
 HREF="#Schedules">schedules</A> assigned to them. Trains can be
 configured to require a caboose or car with Flashing Rear End Device
@@ -78,7 +78,7 @@ of tools and can be found under the main menu heading
         <LI><A HREF="#SchedulesAndLoads">Schedules and Loads</A></LI>
         <LI><A HREF="#ShowSchedulesByCarTypeAndLoad">Show Schedules by Car Type and Load</A></LI>
        </UL></LI>
-      <LI><A HREF="#Interchange">Interchange Tracks</A>
+      <LI><A HREF="#Interchange">Classification/Interchange Tracks</A>
        <UL>
         <LI><A HREF="#CreateClassificationYard">How to Create a Classification Yard</A></LI>
        </UL></LI>
@@ -166,7 +166,7 @@ are six items in this menu. We recommend that you start with <A
 	HREF="#Settings">Settings</A> and work your way down to <A
 	HREF="#Trains">Trains</A>. We also recommend that when defining your
 locations that you first use yard and spur tracks, and try staging and
-interchange tracks when you're more comfortable with how the program
+classification/interchange tracks when you're more comfortable with how the program
 operates.
 
 <P>If this is your first time using a computer generated car forwarding
@@ -816,10 +816,10 @@ the bottom of the window. The various fields that were disabled should
 now appear.
 </P>
 <P>Each location can have several <A HREF="#Yards">yard</A>, 
-<A HREF="#Sidings">spur</A>, <A HREF="#Interchange">interchange</A> or
+<A HREF="#Sidings">spur</A>, <A HREF="#Interchange">classification/interchange</A> or
 <A HREF="#Staging">staging</A> tracks. Yards are where cars and locomotives are placed for
 temporary storage. A spur can be an industry or any place where a car
-is loaded or unloaded.  An interchange track is used to exchange cars
+is loaded or unloaded.  A classification/interchange track is used to exchange cars
 between trains, or to create a classification yard which is used to build
 trains.  Staging tracks represent distant locations where trains can travel between to service
 the layout.
@@ -1150,41 +1150,37 @@ any load that you've created for the that type of car.  The window then shows wh
 or shipping that specific car load.</P>  
    
 <A	NAME="Interchange"></A>
-<H3>Interchange Tracks</H3>
+<H3>Classification/Interchange Tracks</H3>
 
-If you want the program to force the exchange of cars between trains you
-need to define an interchange track. Cars dropped off to an interchange
-track by a train on a given route will not be picked up by any train
-using that route. Another train with a different route is required to
-pick up the cars. For example, you might have a branch line that picks up
-and set out cars from a terminal. By defining the track as an
-interchange, once the branch line train delivers the cars, they will remain
-there until the main line train stops to service the terminal's
-interchange track.
+   If you want the program to force the exchange of cars between trains you need to define a
+   classification/interchange track. The program uses the term "Interchange" to loosely define a
+   track that can be used for classification, the movement of cars within the same railroad, and
+   an interchange, the movement of cars between railroads. Cars dropped off to an interchange track by a
+   train on a given route will not be picked up by any train using that route. Another train with a
+   different route is required to pick up the cars. For example, you might have a branch line that
+   picks up and set out cars from a terminal. By defining the track as a interchange, once the
+   branch line train delivers the cars, they will remain there until the main line train stops to
+   service the terminal's interchange track.
 
-<P>The car's load status does not change when placed at an interchange track.</P>
+   <P>The car's load status does not change when placed at an interchange track.</P>
 
-<P>If you want more control on how your interchange track will
-operate, you can optionally specify a train or route to pick up or set out
-cars at an interchange track.</P>
+   <P>If you want more control on how your interchange track will operate, you can optionally
+    specify a train or route to pick up or set out cars at an interchange track.</P>
 
-<A NAME="CreateClassificationYard"></A>
-<H3>How to Create a Classification Yard</H3>
+   <A NAME="CreateClassificationYard"></A>
+   <H3>How to Create a Classification Yard</H3>
 
-A classification yard is used to sort cars into various trains. Normally
-a yard track is assigned to a specific train and cars are delivered to
-that track until there are enough cars to complete a train. To create a
-classification yard, you need to assign an <A HREF="#Interchange">interchange
-track</A> to each of the trains that will depart your yard. For each
-track, allow any train to set out cars, but assign only one train to
-pick them up. You should configure the interchange track to service the
-same car types and roads that the train services, otherwise you could
-end up with orphan cars.
+   A classification yard is used to sort cars into various trains. Normally a yard track is assigned
+   to a specific train and cars are delivered to that track until there are enough cars to complete
+   a train. To create a classification yard, you need to assign a
+   <A HREF="#Interchange">classification/interchange track</A> to each of the trains that will
+   depart your yard. For each track, allow any train to set out cars, but assign only one train to
+   pick them up. You should configure the classification track to service the same car types and
+   roads that the train services, otherwise you could end up with orphan cars.
 
-<P>Note that it is okay to create more interchange tracks then there
-are physical tracks in your classification yard. The cars can share the
-same "slough" track until its time to finally sort them into their
-various trains.</P>
+   <P>Note that it is okay to create more classification tracks then there are physical tracks
+    in your classification yard. The cars can share the same "slough" track until its time to
+    finally sort them into their various trains.</P>
 
    <A NAME="Staging"></A>
    <H3>Staging Tracks</H3>
@@ -1385,8 +1381,8 @@ track's pool.
    The program when searching for tracks to set out cars, checks to see if there's space available for
    new cars. Sometimes due to the order that you're building your trains, you know better than the
    program that certain cars will be picked up during your session, say by a train that will be
-   built later. This feature can be useful for interchange tracks, especially if you want the
-   interchange tracks to be more to the full side rather than empty side. Also if you are switching
+   built later. This feature can be useful for classification/interchange tracks, especially if you want the
+   classification/interchange tracks to be more to the full side rather than empty side. Also if you are switching
    cars to and from tracks that are basically full, using this option on one or more of the tracks
    in question can increase car movement.
 

@@ -42,7 +42,7 @@ ones being actively used.
 <p>
 The checkboxes at the top allow you to show just the active (in use) slots,
 or all locomotive slots.  You can also choose whether to show the "system" slots,
-which don't carry locomotive information.  The "Estop all" button sets the
+which don't carry locomotive information.  The "estop all" button sets the
 speed of all the locomotives to "Emergency Stop" very quickly.
 
 <p>
@@ -54,9 +54,9 @@ The columns are:
 <dt>Speed<dd>For unconsisted locomotives and addresses that are the top 
 of a consist, this is the current speed setting.  It's an internal value
 for consisted slots.
-<dt>Decoder Type<dd>The format of the commands being sent to the decoder, 
-typically either 128 step or 28 step, though other valuesa re possible.
-<dt>Status<dd>One of the four possible states:
+<dt>Status<dd>The format of the commands being sent to the decoder, 
+typically either 128 step , 28 step, or 14 step, though other values are possible.
+<dt>Use<dd>One of the four possible states:
     <dl>
     <dt>Free<dd>Not reserved for any particular use, no contents
     <dt>Idle<dd>Not reserved for any particular use, no contents
@@ -69,7 +69,10 @@ the top of a consist, included in a consist, etc.
 <dt>Throttle ID<dd>The ID of the throttle using this slot.  It's displayed as two hexadecimal bytes.
 The second pair can be configured into the throttle, see the Digitrax instructions.
 <dt>Direction<dd>Whether the decoder is currently being commanded to go Forward or Reverse
-<dt>F0-F8<dd>The current function settings
+<dt>F0-F8<dd>The current function settings. Check mark indicates function is On.
+<p>
+
+<dt>         package/jmri/jmrix/loconet/slotmon/
 </dd>
 
 <!--#include virtual="/Footer" -->

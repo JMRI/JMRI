@@ -26,7 +26,6 @@ import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 
-
 /**
  * Swing action to create and register a
  * SensorTable GUI.
@@ -76,7 +75,7 @@ public class SensorTableAction extends AbstractTableAction {
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.SensorTable";
     }
-
+    
     JmriJFrame addFrame = null;
 
     JTextField sysName = new JTextField(10);
@@ -284,12 +283,10 @@ public class SensorTableAction extends AbstractTableAction {
             });
         menuBar.add(debounceMenu);
     }
-    
-    boolean showDebounce = false;
+
     void showDebounceChanged() {
         jmri.jmrit.beantable.sensor.SensorTableDataModel a = (jmri.jmrit.beantable.sensor.SensorTableDataModel)m;
-        a.showDebounce = showDebounceBox.isSelected();
-        m.fireTableStructureChanged(); // update view
+        a.showDebounce(showDebounceBox.isSelected());
     }
     
     JCheckBox showDebounceBox = new JCheckBox(rb.getString("SensorDebounceCheckBox"));
@@ -298,10 +295,10 @@ public class SensorTableAction extends AbstractTableAction {
         f.addToBottomBox(showDebounceBox, this.getClass().getName());
         showDebounceBox.setToolTipText(rb.getString("SensorDebounceToolTip"));
         showDebounceBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    showDebounceChanged();
-                }
-            });
+            public void actionPerformed(ActionEvent e) {
+                showDebounceChanged();
+            }
+        });
     }
     
     public void addToPanel(AbstractTableTabAction f) {
@@ -312,10 +309,10 @@ public class SensorTableAction extends AbstractTableAction {
         f.addToBottomBox(showDebounceBox, systemPrefix);
         showDebounceBox.setToolTipText(rb.getString("SensorDebounceToolTip"));
         showDebounceBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    showDebounceChanged();
-                }
-            });
+            public void actionPerformed(ActionEvent e) {
+                showDebounceChanged();
+            }
+        });
     }
     
     public void setMessagePreferencesDetails(){

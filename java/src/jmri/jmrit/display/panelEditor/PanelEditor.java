@@ -908,11 +908,11 @@ public class PanelEditor extends Editor implements ItemListener {
     
     protected void showMultiSelectPopUp(final MouseEvent event, Positionable p){
         JPopupMenu popup = new JPopupMenu();
-        JMenuItem edit = new JMenuItem("Copy");
+        JMenuItem copy = new JMenuItem("Copy"); // changed "edit" to "copy"
         if (p.isPositionable()) {
             setShowAlignmentMenu(p, popup);
         }
-        edit.addActionListener(new ActionListener() {
+        copy.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { 
                 _multiItemCopyGroup = new ArrayList <Positionable>();
                 // must make a copy or pasteItem() will hang
@@ -923,9 +923,13 @@ public class PanelEditor extends Editor implements ItemListener {
                 }
             }
         });
+
+        setMultiItemsPositionableMenu(popup); // adding Lock Position for all
+                                              // selected items
+
         setRemoveMenu(p, popup);
-        showAddItemPopUp(event, popup);
-        popup.add(edit);
+        //showAddItemPopUp(event, popup); // no need to Add when group selected
+        popup.add(copy);
         popup.show(event.getComponent(), event.getX(), event.getY());
     }
     
@@ -947,6 +951,7 @@ public class PanelEditor extends Editor implements ItemListener {
         addItemPopUp(new ComboBoxItem("RPSreporter"),_add);
         addItemPopUp(new ComboBoxItem("FastClock"),_add);
         addItemPopUp(new ComboBoxItem("Icon"),_add);
+        addItemPopUp(new ComboBoxItem("Text"),_add);
         popup.add(_add);
     }
     
@@ -1093,7 +1098,57 @@ public class PanelEditor extends Editor implements ItemListener {
             _multiItemCopyGroup = null;
     }
     
-    public void setBackgroundMenu(JPopupMenu popup){
+    // This adds a single CheckBox in the PopupMenu to set or clear all the selected
+    // items "Lock Position" or Positionable setting, when clicked, all the items in 
+    // the selection will be changed accordingly.
+    private void setMultiItemsPositionableMenu(JPopupMenu popup) {
+        // This would do great with a "greyed" CheckBox if the multiple items have different states.
+        // Then selecting the true or false state would force all to change to true or false
+        
+        JCheckBoxMenuItem lockItem = new JCheckBoxMenuItem(rb.getString("LockPosition"));
+        boolean allSetToMove = false;  // used to decide the state of the checkbox shown
+        int trues = 0;                 // used to see if all items have the same setting
+
+        int size = _selectionGroup.size();
+
+        for (int i = 0; i < size; i++) {
+            Positionable comp = _selectionGroup.get(i);
+
+            if (!comp.isPositionable()) {
+                allSetToMove = true;
+                trues++;
+            }
+
+            lockItem.setSelected( allSetToMove );
+
+            lockItem.addActionListener(new ActionListener() {
+                Positionable comp;
+                JCheckBoxMenuItem checkBox;
+
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    comp.setPositionable(!checkBox.isSelected());
+                    setSelectionsPositionable(!checkBox.isSelected(), comp);
+                }
+
+                ActionListener init(Positionable pos, JCheckBoxMenuItem cb) {
+                    comp = pos;
+                    checkBox = cb;
+                    return this;
+                }
+            }.init(comp, lockItem));
+        }
+
+        // Add "~" to the Text when all items do not have the same setting,
+        // until we get a "greyed" CheckBox ;) - GJM
+        if ((trues != size) && (trues != 0)) {
+            lockItem.setText("~ "+lockItem.getText());
+            // uncheck box if all not the same
+            lockItem.setSelected( false );
+        }
+        popup.add(lockItem);
+    }
+
+    public void setBackgroundMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(rb.getString("FontBackgroundColor"));
         makeColorMenu(edit);
         popup.add(edit);

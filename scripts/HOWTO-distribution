@@ -34,9 +34,9 @@ First, we merge in as much tentative content as possible to the SVN trunk.
     If so, remake the decoder index.
         Delete old index from preferences
         ant remakedecoderindex
+        Move the new file from preferences into the SVN tree.
         Change file to Unix line ends.  (ant might eventually do this with <fixcrlf file="path/to/file" eol="unix" />, but be careful with cross-platform SVN expectations)
-        Diff w file in SVN tree as a check.
-        Copy the new file from preferences into the SVN tree.
+        svn diff as a check.
         Update the internal version number by hand, adding 2.
         Commit.
 
@@ -47,7 +47,7 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 ( ) Remake the help index  (need a command line approach, so can put in ant!)
     cd help/en/
     ./JHelpDev.csh   (See the doc page for setup)
-    (navigate to JHelpDev.xml in release & open it)
+    (navigate to JHelpDev.xml in release html/en/ & open it)
     (click "create all")
 
     In that same directory, also remake the index and toc web

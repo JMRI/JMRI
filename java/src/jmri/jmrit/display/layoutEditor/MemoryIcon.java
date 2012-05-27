@@ -3,6 +3,13 @@ package jmri.jmrit.display.layoutEditor;
  * An icon to display a status of a Memory.<P>
  */
 import jmri.jmrit.catalog.NamedIcon;
+import javax.swing.JTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.AbstractAction;
+import java.awt.event.ActionListener;
+import javax.swing.JPopupMenu;
+import javax.swing.JSeparator;
 
 // This is the same name as display.MemoryIcon, but a very
 // separate class. That's not good. Unfortunately, it's too 
@@ -27,6 +34,16 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         }
     }
     
+    LayoutBlock lBlock = null;
+    
+    public LayoutBlock getLayoutBlock(){
+        return lBlock;
+    }
+    
+    public void setLayoutBlock(LayoutBlock lb){
+        lBlock = lb;
+    }
+    
     public void displayState() {
         log.debug("displayState");
     	if (getMemory() == null) {  // use default if not connected yet
@@ -46,25 +63,10 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                 Object val = key;
                 if (val instanceof jmri.jmrit.roster.RosterEntry){
                     jmri.jmrit.roster.RosterEntry roster = (jmri.jmrit.roster.RosterEntry) val;
-                    javax.swing.ImageIcon icon = jmri.InstanceManager.rosterIconFactoryInstance().getIcon(roster);
-                    if(icon.getIconWidth()==-1 || icon.getIconHeight()==-1){
-                        //the IconPath is still at default so no icon set
-                        val = roster.titleString();
-                    } else {
-                        NamedIcon rosterIcon = new NamedIcon(roster.getIconPath(), roster.getIconPath());
-                        _text = false;
-                        _icon = true;
-                        updateIcon(rosterIcon);
-                        rosterIcon.reduceTo(maxWidth(), maxHeight(), 0.2);
-                        re=roster;
-                        jmri.InstanceManager.throttleManagerInstance().attachListener(re.getDccLocoAddress(), this);
-                        Object isForward = jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(re.getDccLocoAddress(), "IsForward");
-                        if(isForward!=null){
-                            if(!(Boolean)isForward)
-                                flipIcon(NamedIcon.HORIZONTALFLIP);
-                        }
+                    val = updateMemoryFromRosterVal(roster);
+                    flipRosterIcon = false;
+                    if(val == null)
                         return;
-                    }
                 }
                 if (val instanceof String) {
                     if (val.equals(""))
@@ -118,6 +120,37 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
             setText(defaultText);
             _text = true;
             _icon = false;
+            updateSize();
+        }
+    }
+    
+    JCheckBoxMenuItem  updateBlockItem = new JCheckBoxMenuItem("Update Block Details");
+    
+    @Override
+    public boolean showPopUp(JPopupMenu popup) {
+        if (isEditable()) {
+            popup.add(updateBlockItem);
+            updateBlockItem.setSelected (updateBlockValueOnChange());
+            updateBlockItem.addActionListener(new ActionListener(){
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    updateBlockValueOnChange(updateBlockItem.isSelected());
+                }
+            });
+        }  // end of selectable
+        return super.showPopUp(popup);
+    }
+    
+    public void setMemory(String pName){
+        super.setMemory(pName);
+        lBlock = jmri.InstanceManager.layoutBlockManagerInstance().getBlockWithMemoryAssigned(getMemory());
+    }
+    
+    @Override
+    protected void setValue(Object obj){
+        if(updateBlockValue && lBlock!=null){
+            lBlock.getBlock().setValue(obj);
+        } else {
+            getMemory().setValue(obj);
             updateSize();
         }
     }

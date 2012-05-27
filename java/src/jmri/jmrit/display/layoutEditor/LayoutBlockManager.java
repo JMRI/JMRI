@@ -4,6 +4,7 @@ package jmri.jmrit.display.layoutEditor;
 import jmri.managers.AbstractManager;
 import jmri.Sensor;
 import jmri.Block;
+import jmri.Memory;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.InstanceManager;
@@ -150,6 +151,26 @@ public class LayoutBlockManager extends AbstractManager {
             else {
 				LayoutBlock block = getBySystemName(sName);
 				if (block.getOccupancySensor() == s) return block;
+            }
+        }
+		return null;
+	}
+    
+	/**
+	 * Method to find a LayoutBlock with a specified Memory assigned as its 
+	 *    value display.  Returns the block or null if no existing LayoutBlock
+	 *    has the memory assigned.
+	 */
+	public LayoutBlock getBlockWithMemoryAssigned(Memory m) {
+		java.util.Iterator<String> iter = getSystemNameList().iterator();
+        while (iter.hasNext()) {
+            String sName = iter.next();
+            if (sName==null) { 
+                log.error("System name null during scan of LayoutBlocks");
+            }
+            else {
+				LayoutBlock block = getBySystemName(sName);
+				if (block.getMemory() == m) return block;
             }
         }
 		return null;
@@ -969,7 +990,7 @@ public class LayoutBlockManager extends AbstractManager {
 				}
 			}
 		}
-        if((cType>=LayoutEditor.SLIP_A) || (cType<=LayoutEditor.SLIP_D)){
+        if((cType>=LayoutEditor.SLIP_A) && (cType<=LayoutEditor.SLIP_D)){
             if(!facingIsBlock1)
                 return null;
         
@@ -1320,7 +1341,7 @@ public class LayoutBlockManager extends AbstractManager {
             return null;
         }
         
-        if((cType>=LayoutEditor.SLIP_A) || (cType<=LayoutEditor.SLIP_D)){
+        if((cType>=LayoutEditor.SLIP_A) && (cType<=LayoutEditor.SLIP_D)){
             LayoutSlip ls = (LayoutSlip)connected;
             if(cType==LayoutEditor.SLIP_A){
                 if((ls.getSignalAMast()!=null) || (!ls.getSignalAMast().equals(""))){
@@ -1480,7 +1501,7 @@ public class LayoutBlockManager extends AbstractManager {
                 }
             return null;
         }
-        if((cType>=LayoutEditor.SLIP_A) || (cType<=LayoutEditor.SLIP_D)){
+        if((cType>=LayoutEditor.SLIP_A) && (cType<=LayoutEditor.SLIP_D)){
             LayoutSlip ls = (LayoutSlip)connected;
             if(cType==LayoutEditor.SLIP_A){
                 if((ls.getSensorA()!=null) || (!ls.getSensorA().equals(""))){

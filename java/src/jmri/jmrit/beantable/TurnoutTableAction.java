@@ -13,6 +13,8 @@ import jmri.TurnoutOperation;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.NamedBeanHandle;
+import jmri.util.swing.XTableColumnModel;
+import javax.swing.table.TableColumn;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,6 +37,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JComponent;
 
 import jmri.util.JmriJFrame;
 import jmri.util.ConnectionNameFromSystemName;
@@ -105,6 +109,22 @@ public class TurnoutTableAction extends AbstractTableAction {
     public void setManager(Manager man) {
         turnManager = (TurnoutManager) man;
     }
+    
+    static public final int INVERTCOL = BeanTableDataModel.NUMCOLUMN;
+    static public final int LOCKCOL = INVERTCOL+1;
+    static public final int KNOWNCOL = LOCKCOL+1;
+    static public final int MODECOL = KNOWNCOL+1;
+    static public final int SENSOR1COL = MODECOL+1;
+    static public final int SENSOR2COL = SENSOR1COL+1;
+    static public final int OPSONOFFCOL = SENSOR2COL+1;
+    static public final int OPSEDITCOL = OPSONOFFCOL+1;
+    static public final int LOCKOPRCOL = OPSEDITCOL+1;
+    static public final int LOCKDECCOL = LOCKOPRCOL+1;
+    static public final int STRAIGHTCOL = LOCKDECCOL+1;
+    static public final int DIVERGCOL = STRAIGHTCOL+1;
+    
+    XTableColumnModel columnModel;
+    
     /**
      * Create the JTable DataModel, along with the changes
      * for the specific case of Turnouts
@@ -118,68 +138,26 @@ public class TurnoutTableAction extends AbstractTableAction {
         // create the data model object that drives the table;
         // note that this is a class creation, and very long
         m = new BeanTableDataModel() {
-        	static public final int INVERTCOL = NUMCOLUMN;
-            static public final int LOCKCOL = INVERTCOL+1;
-            static public final int KNOWNCOL = LOCKCOL+1;
-            
-            static public final int MODECOL = KNOWNCOL+1;
-            static public final int SENSOR1COL = MODECOL+1;
-            static public final int SENSOR2COL = SENSOR1COL+1;
-            static public final int OPSONOFFCOL = SENSOR2COL+1;
-            static public final int OPSEDITCOL = OPSONOFFCOL+1;
-            static public final int LOCKOPRCOL = OPSEDITCOL+1;
-            static public final int LOCKDECCOL = LOCKOPRCOL+1;
-            static public final int STRAIGHTCOL = LOCKDECCOL+1;
-            static public final int DIVERGCOL = STRAIGHTCOL+1;
-    
-            // show only lock columns, no feedback columns
-            static public final int xLOCKOPRCOL = LOCKCOL+1;
-            static public final int xLOCKDECCOL = xLOCKOPRCOL+1;
-            
-            static public final int xSTRAIGHTCOL = xLOCKDECCOL+1;
-            static public final int xDIVERGCOL = xSTRAIGHTCOL+1;
-            
-            static public final int ySTRAIGHTCOL = OPSEDITCOL+1;
-            static public final int yDIVERGCOL = ySTRAIGHTCOL+1;
-            
-            static public final int zSTRAIGHTCOL = LOCKCOL+1;
-            static public final int zDIVERGCOL = zSTRAIGHTCOL+1;
-                
                 
             @Override
-    		public int getColumnCount(){ 
-                if(showLock && showFeedback && showTurnoutSpeed)
-                    return DIVERGCOL+1;
-                if (showLock && showFeedback)
-                        return LOCKDECCOL+1;
-                if(showLock && showTurnoutSpeed)
-                    return xDIVERGCOL+1;
-                if(showFeedback && showTurnoutSpeed)
-                    return yDIVERGCOL+1;
-    		    if (showFeedback)
-    		        return OPSEDITCOL+1;
-    		    if (showLock)
-    		    	return xLOCKDECCOL+1;
-    		    if(showTurnoutSpeed)
-                    return zDIVERGCOL+1;
-                else
-    		        return LOCKCOL+1;
+    		public int getColumnCount(){
+                return DIVERGCOL+1;
      		}
     		
             @Override
     		public String getColumnName(int col) {
                 if (col==INVERTCOL) return "Inverted";
                 else if (col==LOCKCOL) return "Locked";
-                else if (col==KNOWNCOL && showFeedback) return "Feedback";
-                else if (col==MODECOL && showFeedback) return "Mode";
-                else if (col==SENSOR1COL && showFeedback) return "Sensor 1";
-                else if (col==SENSOR2COL && showFeedback) return "Sensor 2";
-                else if (col==OPSONOFFCOL && showFeedback) return "Automate";
-                else if (col==OPSEDITCOL && showFeedback) return "";
-                else if ((col==LOCKOPRCOL || col==xLOCKOPRCOL) && showLock) return "Lock Mode";
-                else if ((col==LOCKDECCOL || col==xLOCKDECCOL) && showLock) return "Decoder";
-                else if ((col==DIVERGCOL || col==xDIVERGCOL || col==yDIVERGCOL || col==zDIVERGCOL) && showTurnoutSpeed) return "Thrown Speed";
-                else if ((col==STRAIGHTCOL|| col==xSTRAIGHTCOL || col==ySTRAIGHTCOL || col==zSTRAIGHTCOL) && showTurnoutSpeed) return "Closed Speed";
+                else if (col==KNOWNCOL) return "Feedback";
+                else if (col==MODECOL) return "Mode";
+                else if (col==SENSOR1COL) return "Sensor 1";
+                else if (col==SENSOR2COL) return "Sensor 2";
+                else if (col==OPSONOFFCOL) return "Automate";
+                else if (col==OPSEDITCOL) return "";
+                else if (col==LOCKOPRCOL) return "Lock Mode";
+                else if (col==LOCKDECCOL) return "Decoder";
+                else if (col==DIVERGCOL) return "Thrown Speed";
+                else if (col==STRAIGHTCOL) return "Closed Speed";
                 else if (col==VALUECOL) return "Cmd";  // override default title
 
                 else return super.getColumnName(col);
@@ -189,34 +167,37 @@ public class TurnoutTableAction extends AbstractTableAction {
     		public Class<?> getColumnClass(int col) {
                 if (col==INVERTCOL) return Boolean.class;
                 else if (col==LOCKCOL) return Boolean.class;
-                else if (col==KNOWNCOL && showFeedback) return String.class;
-                else if (col==MODECOL && showFeedback) return JComboBox.class;
-                else if (col==SENSOR1COL && showFeedback) return String.class;
-                else if (col==SENSOR2COL && showFeedback) return String.class;
-                else if (col==OPSONOFFCOL && showFeedback) return JComboBox.class;
-                else if (col==OPSEDITCOL && showFeedback) return JButton.class;
-                else if ((col==LOCKOPRCOL || col==xLOCKOPRCOL) && showLock) return JComboBox.class;
-                else if ((col==LOCKDECCOL || col==xLOCKDECCOL) && showLock) return JComboBox.class;
-                else if ((col==DIVERGCOL || col==xDIVERGCOL || col==yDIVERGCOL || col==zDIVERGCOL) && showTurnoutSpeed) return JComboBox.class;
-                else if ((col==STRAIGHTCOL|| col==xSTRAIGHTCOL || col==ySTRAIGHTCOL || col==zSTRAIGHTCOL) && showTurnoutSpeed) return JComboBox.class;
+                else if (col==KNOWNCOL) return String.class;
+                else if (col==MODECOL) return JComboBox.class;
+                else if (col==SENSOR1COL) return String.class;
+                else if (col==SENSOR2COL) return String.class;
+                else if (col==OPSONOFFCOL) return JComboBox.class;
+                else if (col==OPSEDITCOL) return JButton.class;
+                else if (col==LOCKOPRCOL)  return JComboBox.class;
+                else if (col==LOCKDECCOL) return JComboBox.class;
+                else if (col==DIVERGCOL) return JComboBox.class;
+                else if (col==STRAIGHTCOL) return JComboBox.class;
                 else return super.getColumnClass(col);
             }
             
             @Override
     		public int getPreferredWidth(int col) {
-                if (col==INVERTCOL) return new JTextField(6).getPreferredSize().width;
-                else if (col==LOCKCOL) return new JTextField(6).getPreferredSize().width;
-                else if (col==KNOWNCOL && showFeedback) return new JTextField(10).getPreferredSize().width;
-                else if (col==MODECOL && showFeedback) return new JTextField(10).getPreferredSize().width;
-                else if (col==SENSOR1COL && showFeedback) return new JTextField(5).getPreferredSize().width;
-                else if (col==SENSOR2COL && showFeedback) return new JTextField(5).getPreferredSize().width;
-                else if (col==OPSONOFFCOL && showFeedback) return new JTextField(14).getPreferredSize().width;
-                else if (col==OPSEDITCOL && showFeedback) return new JTextField(7).getPreferredSize().width;
-                else if ((col==LOCKOPRCOL || col==xLOCKOPRCOL) && showLock) return new JTextField(10).getPreferredSize().width;
-                else if ((col==LOCKDECCOL || col==xLOCKDECCOL) && showLock) return new JTextField(10).getPreferredSize().width;
-                else if ((col==DIVERGCOL || col==xDIVERGCOL || col==yDIVERGCOL || col==zDIVERGCOL) && showTurnoutSpeed) return new JTextField(14).getPreferredSize().width;
-                else if ((col==STRAIGHTCOL|| col==xSTRAIGHTCOL || col==ySTRAIGHTCOL || col==zSTRAIGHTCOL) && showTurnoutSpeed) return new JTextField(14).getPreferredSize().width;
-                else return super.getPreferredWidth(col);
+                switch(col){
+                    case INVERTCOL  : return new JTextField(6).getPreferredSize().width;
+                    case LOCKCOL    : return new JTextField(6).getPreferredSize().width;
+                    case LOCKOPRCOL : return new JTextField(10).getPreferredSize().width;
+                    case LOCKDECCOL : return new JTextField(10).getPreferredSize().width;
+                    case KNOWNCOL : return new JTextField(10).getPreferredSize().width;
+                    case MODECOL : return new JTextField(10).getPreferredSize().width;
+                    case SENSOR1COL : return new JTextField(5).getPreferredSize().width;
+                    case SENSOR2COL : return new JTextField(5).getPreferredSize().width;
+                    case OPSONOFFCOL : return new JTextField(14).getPreferredSize().width;
+                    case OPSEDITCOL : return new JTextField(7).getPreferredSize().width;
+                    case DIVERGCOL : return new JTextField(14).getPreferredSize().width;
+                    case STRAIGHTCOL : return new JTextField(14).getPreferredSize().width;
+                    default: super.getPreferredWidth(col);
+                }
+                return super.getPreferredWidth(col);
             }
             
             @Override
@@ -226,16 +207,16 @@ public class TurnoutTableAction extends AbstractTableAction {
                 Turnout t = manager.getBySystemName(name);
                 if (col==INVERTCOL) return t.canInvert();
                 else if (col == LOCKCOL)return t.canLock(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT);
-                else if (col==KNOWNCOL && showFeedback) return false;
-                else if (col==MODECOL && showFeedback) return true;
-                else if (col==SENSOR1COL && showFeedback) return true;
-                else if (col==SENSOR2COL && showFeedback) return true;
-                else if (col==OPSONOFFCOL && showFeedback) return true;
-                else if (col==OPSEDITCOL && showFeedback) return t.getTurnoutOperation()!=null;
-                else if ((col==LOCKOPRCOL || col==xLOCKOPRCOL) && showLock) return true;
-                else if ((col==LOCKDECCOL || col==xLOCKDECCOL) && showLock) return true;
-                else if ((col==DIVERGCOL || col==xDIVERGCOL || col==yDIVERGCOL || col==zDIVERGCOL) && showTurnoutSpeed) return true;
-                else if ((col==STRAIGHTCOL|| col==xSTRAIGHTCOL || col==ySTRAIGHTCOL || col==zSTRAIGHTCOL) && showTurnoutSpeed) return true;
+                else if (col==KNOWNCOL ) return false;
+                else if (col==MODECOL ) return true;
+                else if (col==SENSOR1COL ) return true;
+                else if (col==SENSOR2COL ) return true;
+                else if (col==OPSONOFFCOL ) return true;
+                else if (col==OPSEDITCOL ) return t.getTurnoutOperation()!=null;
+                else if (col==LOCKOPRCOL) return true;
+                else if (col==LOCKDECCOL) return true;
+                else if (col==DIVERGCOL) return true;
+                else if (col==STRAIGHTCOL) return true;
                 else return super.isCellEditable(row,col);
             }
 
@@ -259,12 +240,12 @@ public class TurnoutTableAction extends AbstractTableAction {
                 } else if (col==LOCKCOL){
                     boolean val = t.getLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT);
                     return Boolean.valueOf(val);
-                } else if (col==KNOWNCOL && showFeedback) {
+                } else if (col==KNOWNCOL ) {
                     if (t.getKnownState()==Turnout.CLOSED) return closedText;
                     if (t.getKnownState()==Turnout.THROWN) return thrownText;
                     if (t.getKnownState()==Turnout.INCONSISTENT) return "Inconsistent";
                     else return "Unknown";
-                } else if (col==MODECOL && showFeedback) {
+                } else if (col==MODECOL ) {
                     JComboBox c = new JComboBox(t.getValidFeedbackNames());
                     c.setSelectedItem(t.getFeedbackModeName());
                     c.addActionListener(new ActionListener(){
@@ -273,19 +254,19 @@ public class TurnoutTableAction extends AbstractTableAction {
                         }
                     });
                     return c;
-                } else if (col==SENSOR1COL && showFeedback) {
+                } else if (col==SENSOR1COL ) {
                     NamedBeanHandle<Sensor> s = t.getFirstNamedSensor();
                     if (s!=null) return s.getName();
                     else return "";
-                } else if (col==SENSOR2COL && showFeedback) {
+                } else if (col==SENSOR2COL ) {
                     NamedBeanHandle<Sensor> s = t.getSecondNamedSensor();
                     if (s!=null) return s.getName();
                     else return "";
-                } else if (col==OPSONOFFCOL && showFeedback) {
+                } else if (col==OPSONOFFCOL ) {
                     return makeAutomationBox(t);
-                } else if (col==OPSEDITCOL && showFeedback) {
+                } else if (col==OPSEDITCOL ) {
                     return AbstractTableAction.rb.getString("EditTurnoutOperation");
-                } else if ((col == LOCKDECCOL || col==xLOCKDECCOL) && showLock) {
+                } else if (col == LOCKDECCOL) {
                     JComboBox c = new JComboBox(t.getValidDecoderNames());
                     c.setSelectedItem (t.getDecoderName());
                     c.addActionListener(new ActionListener(){
@@ -294,7 +275,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                         }
                     });
                     return c;
-                } else if ((col == LOCKOPRCOL || col==xLOCKOPRCOL) && showLock) {
+                } else if (col == LOCKOPRCOL) {
                     JComboBox c = new JComboBox(lockOperations);
                     if (t.canLock(Turnout.CABLOCKOUT) && t.canLock(Turnout.PUSHBUTTONLOCKOUT)){
                         c.setSelectedItem (bothText);
@@ -311,194 +292,206 @@ public class TurnoutTableAction extends AbstractTableAction {
                         }
                     });
                     return c;
-                } else if(showTurnoutSpeed){
-                    if ((col==STRAIGHTCOL) ||
-                        (col==zSTRAIGHTCOL &&!showLock && !showFeedback) ||
-                            (col==xSTRAIGHTCOL &&showLock && !showFeedback) ||
-                            (col==ySTRAIGHTCOL &&!showLock && showFeedback)){
+                } else if (col==STRAIGHTCOL){
 
-                        String speed = t.getStraightSpeed();
-                        if(!speedListClosed.contains(speed)){
-                            speedListClosed.add(speed);
-                        }
-                        JComboBox c = new JComboBox(speedListClosed);
-                        c.setEditable(true);
-                        c.setSelectedItem(speed);
-
-                        return c;
+                    String speed = t.getStraightSpeed();
+                    if(!speedListClosed.contains(speed)){
+                        speedListClosed.add(speed);
                     }
-                    else if ((col==DIVERGCOL) ||
-                        (col==zDIVERGCOL &&!showLock && !showFeedback) ||
-                            (col==xDIVERGCOL &&showLock && !showFeedback) ||
-                            (col==yDIVERGCOL &&!showLock && showFeedback)){
+                    JComboBox c = new JComboBox(speedListClosed);
+                    c.setEditable(true);
+                    c.setSelectedItem(speed);
 
-                        String speed = t.getDivergingSpeed();
-                        if(!speedListThrown.contains(speed)){
-                            speedListThrown.add(speed);
-                        }
-                        JComboBox c = new JComboBox(speedListThrown);
-                        c.setEditable(true);
-                        c.setSelectedItem(speed);
-                        return c;
+                    return c;
+                }
+                else if (col==DIVERGCOL){
+
+                    String speed = t.getDivergingSpeed();
+                    if(!speedListThrown.contains(speed)){
+                        speedListThrown.add(speed);
                     }
+                    JComboBox c = new JComboBox(speedListThrown);
+                    c.setEditable(true);
+                    c.setSelectedItem(speed);
+                    return c;
                 }
                 return super.getValueAt(row, col);
             }
+            
             @Override
     		public void setValueAt(Object value, int row, int col) {
-                    String name = sysNameList.get(row);
-                    TurnoutManager manager = turnManager;
-                    Turnout t = manager.getBySystemName(name);
-                    if (col == INVERTCOL) {
-                        if (t.canInvert()) {
-                            boolean b = ((Boolean) value).booleanValue();
-                            t.setInverted(b);
-                        }
-                    } else if (col == LOCKCOL) {
+                String name = sysNameList.get(row);
+                TurnoutManager manager = turnManager;
+                Turnout t = manager.getBySystemName(name);
+                if (col == INVERTCOL) {
+                    if (t.canInvert()) {
                         boolean b = ((Boolean) value).booleanValue();
-                        t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT,	b);
-                    } else if (col == MODECOL && showFeedback) {
-                        String modeName = (String)((JComboBox)value).getSelectedItem();
-                        t.setFeedbackMode(modeName);
-                    } else if (col==SENSOR1COL && showFeedback) {
-                        String sname = (String)value;
-                        try {
-                            t.provideFirstFeedbackSensor(sname);
-                        } catch (jmri.JmriException e) {
-                            JOptionPane.showMessageDialog(null, e.toString());
-                        }
-                    } else if (col==SENSOR2COL && showFeedback) {
-                        String sname = (String)value;
-                        try {
-                            t.provideSecondFeedbackSensor(sname);
-                        } catch (jmri.JmriException e) {
-                            JOptionPane.showMessageDialog(null, e.toString());
-                        }
-                    } else if (col==OPSONOFFCOL && showFeedback) {
-                        // do nothing as this is handled by the combo box listener
-                    } else if (col==OPSEDITCOL && showFeedback) {
-                        t.setInhibitOperation(false);
-                        editTurnoutOperation(t, (JComboBox)getValueAt(row,OPSONOFFCOL));
-                    } else if ((col == LOCKOPRCOL || col==xLOCKOPRCOL) && showLock) {
-                        String lockOpName = (String) ((JComboBox) value)
-                            .getSelectedItem();
-                        if (lockOpName.equals(bothText)){
-                            t.enableLockOperation(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
-                        }
-                        if (lockOpName.equals(cabOnlyText)) {
-                            t.enableLockOperation(Turnout.CABLOCKOUT, true);
-                            t.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, false);
-                        }
-                        if (lockOpName.equals(pushbutText)) {
-                            t.enableLockOperation(Turnout.CABLOCKOUT, false);
-                            t.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, true);
-                        }
-                    } else if ((col == LOCKDECCOL || col==xLOCKDECCOL) && showLock) {
-                        String decoderName = (String)((JComboBox)value).getSelectedItem();
-                        t.setDecoderName(decoderName);
-                    } else if(showTurnoutSpeed){
-                        if ((col==STRAIGHTCOL) || 
-                            (col==zSTRAIGHTCOL &&!showLock && !showFeedback) ||
-                                (col==xSTRAIGHTCOL &&showLock && !showFeedback) || 
-                                (col==ySTRAIGHTCOL &&!showLock && showFeedback)){
-                                
-                            String speed = (String)((JComboBox)value).getSelectedItem();
-                            try {
-                                t.setStraightSpeed(speed);
-                            } catch (jmri.JmriException ex) {
-                                JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
-                                return;
-                            }
-                            if ((!speedListClosed.contains(speed)) && !speed.contains("Global")){
-                                speedListClosed.add(speed);
-                            }
-                            fireTableRowsUpdated(row,row);
-                        }
-                        else if ((col==DIVERGCOL) || 
-                            (col==zDIVERGCOL &&!showLock && !showFeedback) ||
-                                (col==xDIVERGCOL &&showLock && !showFeedback) || 
-                                (col==yDIVERGCOL &&!showLock && showFeedback)){
+                        t.setInverted(b);
+                    }
+                } else if (col == LOCKCOL) {
+                    boolean b = ((Boolean) value).booleanValue();
+                    t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT,	b);
+                } else if (col == MODECOL ) {
+                    String modeName = (String)((JComboBox)value).getSelectedItem();
+                    t.setFeedbackMode(modeName);
+                } else if (col==SENSOR1COL ) {
+                    String sname = (String)value;
+                    try {
+                        t.provideFirstFeedbackSensor(sname);
+                    } catch (jmri.JmriException e) {
+                        JOptionPane.showMessageDialog(null, e.toString());
+                    }
+                } else if (col==SENSOR2COL ) {
+                    String sname = (String)value;
+                    try {
+                        t.provideSecondFeedbackSensor(sname);
+                    } catch (jmri.JmriException e) {
+                        JOptionPane.showMessageDialog(null, e.toString());
+                    }
+                } else if (col==OPSONOFFCOL ) {
+                    // do nothing as this is handled by the combo box listener
+                } else if (col==OPSEDITCOL ) {
+                    t.setInhibitOperation(false);
+                    editTurnoutOperation(t, (JComboBox)getValueAt(row,OPSONOFFCOL));
+                } else if (col == LOCKOPRCOL) {
+                    String lockOpName = (String) ((JComboBox) value)
+                        .getSelectedItem();
+                    if (lockOpName.equals(bothText)){
+                        t.enableLockOperation(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
+                    }
+                    if (lockOpName.equals(cabOnlyText)) {
+                        t.enableLockOperation(Turnout.CABLOCKOUT, true);
+                        t.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, false);
+                    }
+                    if (lockOpName.equals(pushbutText)) {
+                        t.enableLockOperation(Turnout.CABLOCKOUT, false);
+                        t.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, true);
+                    }
+                } else if (col == LOCKDECCOL){
+                    String decoderName = (String)((JComboBox)value).getSelectedItem();
+                    t.setDecoderName(decoderName);
+                } else if (col==STRAIGHTCOL){
                             
-                            String speed = (String)((JComboBox)value).getSelectedItem();
-                            try {
-                                t.setDivergingSpeed(speed);
-                            } catch (jmri.JmriException ex) {
-                                JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
-                                return;
-                            }
-                            if ((!speedListThrown.contains(speed)) && !speed.contains("Global")){
-                                speedListThrown.add(speed);
-                            }
-                            fireTableRowsUpdated(row,row);
+                        String speed = (String)((JComboBox)value).getSelectedItem();
+                        try {
+                            t.setStraightSpeed(speed);
+                        } catch (jmri.JmriException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
+                            return;
                         }
-                    } else super.setValueAt(value, row, col);
-    		}
-                
-                public String getValue(String name) {
-                    int val = turnManager.getBySystemName(name).getCommandedState();
-                    switch (val) {
-                    case Turnout.CLOSED: return closedText;
-                    case Turnout.THROWN: return thrownText;
-                    case Turnout.UNKNOWN: return rbean.getString("BeanStateUnknown");
-                    case Turnout.INCONSISTENT: return rbean.getString("BeanStateInconsistent");
-                    default: return "Unexpected value: "+val;
+                        if ((!speedListClosed.contains(speed)) && !speed.contains("Global")){
+                            speedListClosed.add(speed);
+                        }
+                        fireTableRowsUpdated(row,row);
+                } else if (col==DIVERGCOL) {
+                    
+                    String speed = (String)((JComboBox)value).getSelectedItem();
+                    try {
+                        t.setDivergingSpeed(speed);
+                    } catch (jmri.JmriException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
+                        return;
                     }
-                }
-                public Manager getManager() { return turnManager; }
-
-                public NamedBean getBySystemName(String name) { return turnManager.getBySystemName(name);}
-                public NamedBean getByUserName(String name) { return turnManager.getByUserName(name);}
-                protected String getMasterClassName() { return getClassName(); }
-
-                
-                public void clickOn(NamedBean t) {
-                    int state = ((Turnout)t).getCommandedState();
-                    if (state==Turnout.CLOSED) ((Turnout)t).setCommandedState(Turnout.THROWN);
-                    else ((Turnout)t).setCommandedState(Turnout.CLOSED);
-                }
-                
-                JTable table;
-                @Override
-                public void configureTable(JTable table) {
-                	this.table = table;
-                    table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
-                    table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-                    table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
-                    if(showFeedback)
-                        setColumnToHoldButton(table,OPSEDITCOL,editButton());
-                    super.configureTable(table);
-                }
-                
-                // update table if turnout lock or feedback changes
-                @Override
-                protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-                    if (e.getPropertyName().equals("locked")) return true;
-                    if (e.getPropertyName().equals("feedbackchange")) return true;
-                    if (e.getPropertyName().equals("TurnoutDivergingSpeedChange")) return true;
-                    if (e.getPropertyName().equals("TurnoutStraightSpeedChange")) return true;
-                    else return super.matchPropertyName(e);
-                }
-                
-                public void comboBoxAction(ActionEvent e){
-                	if(log.isDebugEnabled()) log.debug("Combobox change");
-                	table.getCellEditor().stopCellEditing();
-                }
-
-                @Override
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    if (e.getPropertyName().equals("DefaultTurnoutClosedSpeedChange")){
-                        updateClosedList();
-                    } else if (e.getPropertyName().equals("DefaultTurnoutThrownSpeedChange")){
-                        updateThrownList();
-                    } else {
-                        super.propertyChange(e);
+                    if ((!speedListThrown.contains(speed)) && !speed.contains("Global")){
+                        speedListThrown.add(speed);
                     }
+                    fireTableRowsUpdated(row,row);
                 }
+                else super.setValueAt(value, row, col);
+            }
                 
-                protected String getBeanType(){
-                    return AbstractTableAction.rbean.getString("BeanNameTurnout");
-                }               
-            };  // end of custom data model
+            public String getValue(String name) {
+                int val = turnManager.getBySystemName(name).getCommandedState();
+                switch (val) {
+                case Turnout.CLOSED: return closedText;
+                case Turnout.THROWN: return thrownText;
+                case Turnout.UNKNOWN: return rbean.getString("BeanStateUnknown");
+                case Turnout.INCONSISTENT: return rbean.getString("BeanStateInconsistent");
+                default: return "Unexpected value: "+val;
+                }
+            }
+            public Manager getManager() { return turnManager; }
+
+            public NamedBean getBySystemName(String name) { return turnManager.getBySystemName(name);}
+            public NamedBean getByUserName(String name) { return turnManager.getByUserName(name);}
+            protected String getMasterClassName() { return getClassName(); }
+            
+            
+            public void clickOn(NamedBean t) {
+                int state = ((Turnout)t).getCommandedState();
+                if (state==Turnout.CLOSED) ((Turnout)t).setCommandedState(Turnout.THROWN);
+                else ((Turnout)t).setCommandedState(Turnout.CLOSED);
+            }
+            
+            JTable table;
+            @Override
+            public void configureTable(JTable table) {
+                this.table = table;
+                columnModel = new XTableColumnModel();
+                table.setColumnModel(columnModel);
+                table.createDefaultColumnsFromModel();
+                
+                table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
+                table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
+                table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+                setColumnToHoldButton(table,OPSEDITCOL,editButton());
+                
+                super.configureTable(table);
+                //Hide the following columns by default
+                TableColumn column  = columnModel.getColumnByModelIndex(STRAIGHTCOL);
+                columnModel.setColumnVisible(column, false);
+                column  = columnModel.getColumnByModelIndex(DIVERGCOL);
+                columnModel.setColumnVisible(column, false);
+                column  = columnModel.getColumnByModelIndex(KNOWNCOL);
+                columnModel.setColumnVisible(column, false);
+                column  = columnModel.getColumnByModelIndex(MODECOL);
+                columnModel.setColumnVisible(column, false);
+                column  = columnModel.getColumnByModelIndex(SENSOR1COL);
+                columnModel.setColumnVisible(column, false);
+                column  = columnModel.getColumnByModelIndex(SENSOR2COL);
+                columnModel.setColumnVisible(column, false);
+                column  = columnModel.getColumnByModelIndex(OPSONOFFCOL);
+                columnModel.setColumnVisible(column, false);
+                column  = columnModel.getColumnByModelIndex(OPSEDITCOL);
+                columnModel.setColumnVisible(column, false);
+                column  = columnModel.getColumnByModelIndex(LOCKOPRCOL);
+                columnModel.setColumnVisible(column, false);
+                column  = columnModel.getColumnByModelIndex(LOCKDECCOL);
+                columnModel.setColumnVisible(column, false);
+                
+                //super.configureTable(table);
+            }
+            
+            // update table if turnout lock or feedback changes
+            @Override
+            protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+                if (e.getPropertyName().equals("locked")) return true;
+                if (e.getPropertyName().equals("feedbackchange")) return true;
+                if (e.getPropertyName().equals("TurnoutDivergingSpeedChange")) return true;
+                if (e.getPropertyName().equals("TurnoutStraightSpeedChange")) return true;
+                else return super.matchPropertyName(e);
+            }
+            
+            public void comboBoxAction(ActionEvent e){
+                if(log.isDebugEnabled()) log.debug("Combobox change");
+                table.getCellEditor().stopCellEditing();
+            }
+
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if (e.getPropertyName().equals("DefaultTurnoutClosedSpeedChange")){
+                    updateClosedList();
+                } else if (e.getPropertyName().equals("DefaultTurnoutThrownSpeedChange")){
+                    updateThrownList();
+                } else {
+                    super.propertyChange(e);
+                }
+            }
+            
+            protected String getBeanType(){
+                return AbstractTableAction.rbean.getString("BeanNameTurnout");
+            }               
+        };  // end of custom data model
     }
     
     private void updateClosedList(){
@@ -586,23 +579,41 @@ public class TurnoutTableAction extends AbstractTableAction {
         addFrame.pack();
         addFrame.setVisible(true);
     }
+    JTable table;
     
-    boolean showFeedback = false;
+    //boolean showFeedback = false;
     void showFeedbackChanged() {
-        showFeedback = showFeedbackBox.isSelected();
-        m.fireTableStructureChanged(); // update view
+        boolean showFeedback = showFeedbackBox.isSelected();
+        TableColumn column  = columnModel.getColumnByModelIndex(KNOWNCOL);
+        columnModel.setColumnVisible(column, showFeedback);
+        column  = columnModel.getColumnByModelIndex(MODECOL);
+        columnModel.setColumnVisible(column, showFeedback);
+        column  = columnModel.getColumnByModelIndex(SENSOR1COL);
+        columnModel.setColumnVisible(column, showFeedback);
+        column  = columnModel.getColumnByModelIndex(SENSOR2COL);
+        columnModel.setColumnVisible(column, showFeedback);
+        column  = columnModel.getColumnByModelIndex(OPSONOFFCOL);
+        columnModel.setColumnVisible(column, showFeedback);
+        column  = columnModel.getColumnByModelIndex(OPSEDITCOL);
+        columnModel.setColumnVisible(column, showFeedback);
     }
     
-    boolean showLock = false;
+    //boolean showLock = false;
     void showLockChanged() {
-        showLock = showLockBox.isSelected();
-        m.fireTableStructureChanged(); // update view
+        boolean showLock = showLockBox.isSelected();
+        TableColumn column  = columnModel.getColumnByModelIndex(LOCKDECCOL);
+        columnModel.setColumnVisible(column, showLock);
+        column  = columnModel.getColumnByModelIndex(LOCKOPRCOL);
+        columnModel.setColumnVisible(column, showLock);
     }
     
-    boolean showTurnoutSpeed = false;
+    //boolean showTurnoutSpeed = false;
     void showTurnoutSpeedChanged() {
-        showTurnoutSpeed = showTurnoutSpeedBox.isSelected();
-        m.fireTableStructureChanged(); // update view
+        boolean showTurnoutSpeed = showTurnoutSpeedBox.isSelected();
+        TableColumn column  = columnModel.getColumnByModelIndex(STRAIGHTCOL);
+        columnModel.setColumnVisible(column, showTurnoutSpeed);
+        column  = columnModel.getColumnByModelIndex(DIVERGCOL);
+        columnModel.setColumnVisible(column, showTurnoutSpeed);
     }
     
     /**

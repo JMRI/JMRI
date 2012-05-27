@@ -212,7 +212,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 			int sortStatus = 0;
 			if (sorter != null)
 				sortStatus = sorter.getSortingStatus(i);
-			p.setTableColumnPreferences(tableref, table.getColumnName(i), i, table.getColumnModel().getColumn(i).getPreferredWidth(), sortStatus);
+			p.setTableColumnPreferences(tableref, table.getColumnName(i), i, table.getColumnModel().getColumn(i).getPreferredWidth(), sortStatus, false);
 		}
 	}
 	

@@ -228,6 +228,10 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                 InstanceManager.blockManagerInstance().createNewBlock(sysName, userName);
                 block = InstanceManager.blockManagerInstance().getBlock(sysName);
             }
+            if (block==null){
+                log.error("Unable to load block with system name " + sysName + " and username of " +(userName==null?"<null>":userName));
+                return;
+            }
             if (userName!=null) block.setUserName(userName);
 			if (element.getAttribute("length") != null) {
 				// load length in millimeters

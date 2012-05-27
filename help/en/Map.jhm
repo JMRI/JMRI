@@ -2660,6 +2660,8 @@
 
 <mapID target="manual.JMRI_2-14_manual.Dcode_Testing" url="manual/JMRI_2-14_manual/Dcode_Testing.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_HazardousComment" url="package/jmri/jmrit/operations/Operations.shtml#HazardousComment"/>
+
 <mapID target="manual.JMRI_2-12_Manual.Main_Roster_Import" url="manual/JMRI_2-12_Manual/Main_Roster.shtml#Import"/>
 
 <mapID target="package.apps.PanelPro.PanelPro" url="package/apps/PanelPro/PanelPro.shtml"/>

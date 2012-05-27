@@ -128,15 +128,18 @@ public class PositionablePropertiesUtil {
                 Field f = Color.class.getField((_backgroundcolors[i].toUpperCase()).replaceAll(" ", "_"));
                 desiredColor = (Color) f.get(null);
               } catch (NoSuchFieldException ce) {
+                //Can be considered normal if background is set None
                 desiredColor = null;
               } catch (SecurityException ce) {
+                //Can be considered normal if background is set None
                 desiredColor = null;
               } catch (IllegalAccessException ce) {
+                //Can be considered normal if background is set None
                 desiredColor = null;
               }
             if (desiredColor!=null){
                 images[i] = getColourIcon(desiredColor);
-                if (desiredColor==defaultBackground)
+                if (desiredColor.equals(defaultBackground))
                     backCurrentColor = i;
             }
             else{
@@ -163,7 +166,7 @@ public class PositionablePropertiesUtil {
             } catch (Exception ce) {
                 log.error("Unable to get font colour from field " + ce);
             }
-            if (desiredColor == defaultForeground)
+            if (desiredColor!=null && desiredColor.equals(defaultForeground))
                 fontCurrentColor = i;
         }
     
@@ -246,9 +249,9 @@ public class PositionablePropertiesUtil {
                     desiredColor = null;
                   }
                 if (desiredColor!=null){
-                    if (desiredColor==txtList.get(i).getBackground())
+                    if (desiredColor.equals(txtList.get(i).getBackground()))
                         backcolor = j;
-                    if (desiredColor==txtList.get(i).getForeground())
+                    if (desiredColor.equals(txtList.get(i).getForeground()))
                         fontcolor = j;
                 }
             }
@@ -335,7 +338,7 @@ public class PositionablePropertiesUtil {
         
         Integer[] intArray = new Integer[_backgroundcolors.length];
         int borderCurrentColor =_backgroundcolors.length-1;
-        for (int i = 0; i < _backgroundcolors.length; i++) {
+        for (int i = 0; i < (_backgroundcolors.length-1); i++) {
             intArray[i] = Integer.valueOf(i);
             try {
                 Field f = Color.class.getField((_fontcolors[i].toUpperCase()).replaceAll(" ", "_"));
@@ -343,9 +346,12 @@ public class PositionablePropertiesUtil {
             } catch (Exception ce) {
                 log.error("Unable to convert the selected font color to a color " + ce);
             }
-            if (desiredColor == defaultBorderColor)
+            if (desiredColor!=null && desiredColor.equals(defaultBorderColor)){
                 borderCurrentColor = i;
+            }
         }
+        //Last colour on the background is none.
+        intArray[_backgroundcolors.length-1] = Integer.valueOf(_backgroundcolors.length-1);
         borderColorCombo = new JComboBox(intArray);
         borderColorCombo.setRenderer(new ColorComboBoxRenderer());
         borderColorCombo.setMaximumRowCount(5);
@@ -512,11 +518,6 @@ public class PositionablePropertiesUtil {
             pop.setForeground(txtList.get(0).getForeground());
             pop.setBackgroundColor(txtList.get(0).getBackground());
         }
-        
-        //pop.setForeground(desiredColor);
-        
-        /*desiredColor = colorFromComboBox(backgroundColor, null);
-        pop.setBackgroundColor(desiredColor);*/
         
         desiredColor = colorFromComboBox(borderColorCombo, null);
         pop.setBorderColor(desiredColor);
@@ -801,14 +802,13 @@ public class PositionablePropertiesUtil {
                 text = "";
             else
                 text = txt;
-            example = new JLabel(text);
             description = desc;
-            foreground = fore;
-            background = back;
+            example = new JLabel(text);
+            setForeground(fore);
+            setBackground(back);
             origForeground = fore;
             origBackground = back;
             origText = txt;
-            
         }
         
         Color foreground;

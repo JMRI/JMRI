@@ -2,6 +2,8 @@
 #
 #
 # Author: Bob Jacobsen, copyright 2008
+# Author: Gert Muller, copyright 2012
+#
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
@@ -20,14 +22,31 @@ class MyCanListener (jmri.jmrix.can.CanListener) :
         print "content: ", msg.toString()
         return
     
-jmri.jmrix.can.TrafficController.instance().addCanListener(MyCanListener())
+# Get the traffic controller
+tc = None
+ 
+# Old way first...
+try:
+  tc = jmri.jmrix.can.TrafficController.instance()
+except:
+  # Then the new way...
+  try:
+    tc = jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo).getTrafficController()
+  except:
+    print "no traffic controller"
+    tc = None
+ 
+tc.addCanListener(MyCanListener())
 
 
 # Send a frame
-frame = jmri.jmrix.can.CanMessage()
-frame.setHeader(0x123)
+frame = jmri.jmrix.can.CanMessage(0x123)
 frame.setNumDataElements(2)   # will load 2 bytes
 frame.setElement(0, 0x45)
 frame.setElement(1, 0x67)
-jmri.jmrix.can.TrafficController.instance().sendCanMessage(frame, None)
+if tc != None:
+  tc.sendCanMessage(frame, None)
+  print "CAN frame sent!"
+else:
+  print "Sorry, no Traffic Controller!"
 

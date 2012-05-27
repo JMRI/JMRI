@@ -3,9 +3,19 @@
 package jmri.jmrit.roster.swing;
 
 import javax.swing.*;
+import javax.swing.table.TableColumn;
+import javax.swing.JPopupMenu;
+import javax.swing.JMenuItem;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.Enumeration;
 
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.com.sun.TableSorter;
+import jmri.util.swing.XTableColumnModel;
 
 /**
  * Provide a table of roster entries
@@ -20,6 +30,7 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
     TableSorter         sorter;
     JTable			    dataTable;
     JScrollPane 		dataScroll;
+    XTableColumnModel columnModel = new XTableColumnModel();
     
     private RosterGroupSelector rosterGroupSource = null;
 
@@ -54,6 +65,9 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
 
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         dataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        
+        dataTable.setColumnModel(columnModel);
+        dataTable.createDefaultColumnsFromModel();
 
         // resize columns as requested
         resetColumnWidths();
@@ -71,12 +85,10 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
         dataTableSize.height = Math.max(dataTableSize.height, 400);
         dataTableSize.width = Math.max(dataTableSize.width, 400);
         dataScroll.getViewport().setPreferredSize(dataTableSize);
- 	    
-        // set preferred scrolling options
-        //dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        //dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         
         dataTable.setSelectionMode(selectionMode);
+        MouseListener mouseHeaderListener = new tableHeaderListener();
+        dataTable.getTableHeader().addMouseListener(mouseHeaderListener);
 
     }
 	   
@@ -84,9 +96,11 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
 	public TableSorter getModel() { return sorter; }
 
     public void resetColumnWidths(){
-        for (int i=0; i<dataTable.getColumnCount(); i++) {
-            int width = dataModel.getPreferredWidth(i);
-            dataTable.getColumnModel().getColumn(i).setPreferredWidth(width);
+        Enumeration<TableColumn> en = columnModel.getColumns(false);
+        while(en.hasMoreElements()){
+            TableColumn tc = en.nextElement();
+            int width = dataModel.getPreferredWidth(tc.getModelIndex());
+            tc.setPreferredWidth(width);
         }
         dataTable.sizeColumnsToFit(-1);
     }
@@ -118,6 +132,62 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
         this.rosterGroupSource = rosterGroupSource;
         if (this.rosterGroupSource != null) {
             this.rosterGroupSource.addPropertyChangeListener("selectedRosterGroup", dataModel);
+        }
+    }
+    
+    public XTableColumnModel getXTableColumnModel(){
+        return columnModel;
+    }
+    
+    protected void showTableHeaderPopup(MouseEvent e){
+        JPopupMenu popupMenu = new JPopupMenu();
+        for (int i = 0; i < columnModel.getColumnCount(false); i++) {
+            TableColumn tc = columnModel.getColumnByModelIndex(i);
+            JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(dataTable.getModel().getColumnName(i), columnModel.isColumnVisible(tc));
+            menuItem.addActionListener(new headerActionListener(tc));
+            popupMenu.add(menuItem);
+            
+        }
+        popupMenu.show(e.getComponent(), e.getX(), e.getY());
+    }
+    
+    class headerActionListener implements ActionListener {
+        TableColumn tc;
+        headerActionListener(TableColumn tc){
+             this.tc = tc;
+        }
+        
+        public void actionPerformed(ActionEvent e){
+            JCheckBoxMenuItem check = (JCheckBoxMenuItem) e.getSource();
+            //Do not allow the last column to be hidden
+            if(!check.isSelected() && columnModel.getColumnCount(true)==1){
+                return;
+            }
+            columnModel.setColumnVisible(tc, check.isSelected());
+        }
+    }
+    
+    class tableHeaderListener extends MouseAdapter {
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                showTableHeaderPopup(e);
+            }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                showTableHeaderPopup(e);
+            }
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                showTableHeaderPopup(e);
+            }
         }
     }
 }

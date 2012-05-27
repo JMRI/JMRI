@@ -175,6 +175,9 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     if(p.getTableColumnSort(table, column)!=0){
                         columnElement.addContent(new Element("sort").addContent(Integer.toString(p.getTableColumnSort(table, column))));
                     }
+                    if(p.getTableColumnHidden(table, column)){
+                        columnElement.addContent(new Element("hidden").addContent("yes"));
+                    }
                     tableElement.addContent(columnElement);
                 }
                 tablesElement.addContent(tableElement);
@@ -337,6 +340,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     int order = -1;
                     int width = -1;
                     int sort = 0;
+                    boolean hidden = false;
                     if(column.getChild("order")!=null){
                         order = Integer.parseInt(column.getChild("order").getText());
                     }
@@ -346,7 +350,11 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     if(column.getChild("sort")!=null){
                         sort = Integer.parseInt(column.getChild("sort").getText());
                     }
-                    p.setTableColumnPreferences(strTableName, strColumnName, order, width, sort);
+                    if(column.getChild("hidden")!=null && column.getChild("hidden").getText().equals("yes")){
+                        hidden=true;
+                    }
+                    
+                    p.setTableColumnPreferences(strTableName, strColumnName, order, width, sort, hidden);
                 }
             }
         

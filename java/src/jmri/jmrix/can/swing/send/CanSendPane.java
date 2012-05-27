@@ -112,7 +112,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
         tc.addCanListener(this);
     }
     
-    public String getHelpTarget() { return "package.jmri.jmrix.can.swing.send.CanSendPane"; }
+    public String getHelpTarget() { return "package.jmri.jmrix.can.swing.send.CanSendFrame"; }
     
     public String getTitle() {
         if(memo!=null) {

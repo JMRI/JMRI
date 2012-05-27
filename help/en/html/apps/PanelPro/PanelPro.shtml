@@ -40,6 +40,47 @@ while constructing the logic for signals, etc.  It constrains how
 the panel appears a little, but it can save significant time when
 first bringing your layout up.
 </UL>
+
+
+<h2>Which to use ?  Layout Editor or Panel Editor ? </h2>
+
+<p> 
+The Layout Editor builds a "Layout" which is a <i>logical description</i> of
+your entire layout. You only have a single Layout, otherwise it is not 
+possible for the software to connect track elements together across the boundaries
+between multiple Layouts. 
+A Layout, built with the Layout Editor, can be used for directly controlling
+elements such as turnouts and signals; indeed many users find it very suitable for 
+this task. But, it is primarily designed for automation and
+semi-automation within JMRI. For example, you can use the Layout Editor to
+construct a description of your track and its blocks and signals.
+The software can automatically work out how to set your signals
+based on the position of turnouts and whether blocks are occupied,
+and the rules appropriate to your railroad (ie. select the signal
+rules based on different company practises!, and no need to know how to create
+the rules to link your signals to the state of turnouts, blocks and other signals !).  
+In addition, the Layout description of your railway can be used by 
+scripts such as AutoDispatcher2 to automatically control your trains. There are many
+other tools within JMRI which require a description of your railroad and 
+the description comes from the Layout built in the Layout Editor. 
+The Layout Editor has many rules built into it about how track is connected, the 
+naming of blocks, etc..  In order to function, there are
+constraints on the appearance of track elements and how they are used.  
+
+<p> 
+The Panel Editor builds <i>graphical control</i> Panels.  You can have as
+many of Panels as you like, covering as much or as little of
+your railway as you like, with overlaps in area or functionality if required.   
+Panels might be diagrams showing the state of the track and signals, or 
+they might be prototypical signalling and dispatcher panels.  Or anything else
+you find useful to control your railroad; you have total flexibility over
+their appearance. There are several standard graphics sets distributed with
+JMRI, but it is often necessary to make some of the elements in an
+external graphics package to be imported as GIF or PNG files. These might be
+the Panel Background, or the icons to attach to active elements (switches, 
+levers, track state, signals, etc.) which are then placed on the Panel.
+
+<p>
 Many people use both, with the Layout Editor creating schematic panels
 to handle the actual configuration for signals and Panel Editor providing
 exactly the appearance desired.

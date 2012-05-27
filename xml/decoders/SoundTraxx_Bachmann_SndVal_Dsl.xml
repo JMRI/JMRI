@@ -16,6 +16,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <version author="Brett Hoffman bhoffman351@mac.com" version="1" lastUpdated="20111229"/>
     <version author="Brett Hoffman bhoffman351@mac.com" version="2" lastUpdated="20111231"/>
+    <version author="Michael Mosher" version="3" lastUpdated="20120524"/>
 
 
 <!-- This file contains the definitions for the Bachmann spec'd Sound Value series of decoders	-->
@@ -23,6 +24,7 @@
 <!-- version 1	Based on the "Soundtraxx_Tsu_Diesel files.                                          -->
 <!--			Includes the Alco S4, FA2, and FB2                                                  -->
 <!-- version 2	Added FX5/6, BEMF. Removed Brake Squeal                                             -->
+<!-- version 3	Add CV5,6,132 per document on Sounstraxx web                                        -->
 
 
 <!-- Decoder Model information follows -->
@@ -86,11 +88,11 @@
         <label>Primary Address (1-127)</label>
       </variable>
 
-      <variable label="Start Voltage (0-255)" CV="2" item="Vstart" default="0"
+      <variable label="Start Voltage" CV="2" item="Vstart" default="0"
 			comment="A value of 255 corresponds to full voltage available"
 			tooltip="Sets the starting voltage at throttle speed step 1">
         <decVal/>
-        <label>Start Voltage (0-255)</label>
+        <label>Start Voltage</label>
         <comment>A value of 255 corresponds to full voltage available</comment>
       </variable>
 
@@ -106,6 +108,16 @@
         <label>Braking Rate (0-255)</label>
       </variable>
 
+      <variable label="Max Voltage" item="Vhigh" CV="5" default="0">
+        <decVal max="255"/>
+        <label>Max Voltage</label>
+      </variable>
+	  
+      <variable label="Mid Voltage" item="Vmid" CV="6" default="0">
+        <decVal max="255"/>
+        <label>Mid Voltage</label>
+      </variable>
+	  
       <variable label="Manufacturer Version ID" CV="7" readOnly="yes" item="Decoder Version" default="82"
 			tooltip="This is the decoder software version identifier (read only)">
         <decVal/>
@@ -2043,7 +2055,11 @@
         <label>Engine Exhaust Volume</label>
       </variable>
 
-
+      <variable label="Air Compressor Volume" CV="132" mask="VVVVVVVV" item="Sound Setting 23" default="100"
+			tooltip="Sets the volume of the air compressor">
+        <decVal/>
+        <label>Air Compressor Volume</label>
+      </variable>
 
 <!-- Automatic Sound Controls (ASC) follow -->
 

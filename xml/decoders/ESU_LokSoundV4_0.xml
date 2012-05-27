@@ -15,8 +15,10 @@
 <!-- made from the ESU_LokSound_Select.file -->
 <!-- ver1 new file -->
 <!-- ver2 Added CV16, fixed CV 474.3, fixed light effect type, moved some var to other panes -->
+<!-- ver3 fixed CV293.0 bug -->
   <version author="Michael Mosher" version="1" lastUpdated="20110505"/>
   <version author="Michael Mosher" version="2" lastUpdated="20110523"/>
+  <version author="Michael Mosher" version="3" lastUpdated="20120223"/>
   <decoder>
     <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
       <model model="LokSound V4.0 NEM652" numOuts="40" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="54400">
@@ -1155,7 +1157,7 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="AUX3 Auto Switch Off" CVname="293.0" CV="2936" PI="0" default="0" item="Function 3 options" tooltip="Units = 0.4 seconds">
+      <ivariable label="AUX3 Auto Switch Off" CVname="293.0" CV="293" PI="0" default="0" item="Function 3 options" tooltip="Units = 0.4 seconds">
         <indexedVal/>
       </ivariable>
       <ivariable label="AUX3 Brightness" CVname="294.0" CV="294" PI="0" default="31" item="Function 3 behavior">
