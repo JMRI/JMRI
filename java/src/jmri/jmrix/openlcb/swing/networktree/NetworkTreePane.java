@@ -39,7 +39,9 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
 
         memo.getTrafficController().addCanListener(this);
         
-        // add GUI component
+        // add GUI components
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
+
         treePane = new TreePane();
         
         treePane.initComponents(
