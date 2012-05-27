@@ -16,7 +16,6 @@ import jmri.jmrix.sprog.SprogReply;
  */
 public class SprogVersionQuery implements SprogListener {
     
-    static SprogMessage msg;
     String replyString;
     static SprogTrafficController tc;
     static SprogVersion ver;
@@ -28,7 +27,7 @@ public class SprogVersionQuery implements SprogListener {
                      DONE}       // Version has been found
     static QueryState state = QueryState.IDLE;
 
-    static protected int LONG_TIMEOUT = 2000;
+    static final protected int LONG_TIMEOUT = 2000;
     static javax.swing.Timer timer = null;
     
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
@@ -40,7 +39,7 @@ public class SprogVersionQuery implements SprogListener {
         state = QueryState.IDLE;
     }
 
-    protected static Vector<SprogVersionListener> versionListeners = new Vector<SprogVersionListener>();
+    protected static final Vector<SprogVersionListener> versionListeners = new Vector<SprogVersionListener>();
 
     protected synchronized void addSprogVersionListener(SprogVersionListener l) {
         // add only if not already registered
@@ -79,6 +78,7 @@ public class SprogVersionQuery implements SprogListener {
     static volatile protected SprogVersionQuery self = null;
 
     static synchronized public void requestVersion(SprogVersionListener l) {
+        SprogMessage m;
         if (log.isDebugEnabled()) { log.debug("SprogVersion requested by "+l.toString()); }
         if (state == QueryState.DONE) {
             // Reply immediately
@@ -89,9 +89,9 @@ public class SprogVersionQuery implements SprogListener {
         SprogVersionQuery.instance().addSprogVersionListener(l);
         if (state == QueryState.IDLE) {
             // Kick things off with a blank message
-            msg = new SprogMessage(1);
-            msg.setOpCode(' ');
-            tc.sendSprogMessage(msg, SprogVersionQuery.instance());
+            m = new SprogMessage(1);
+            m.setOpCode(' ');
+            tc.sendSprogMessage(m, SprogVersionQuery.instance());
             state = QueryState.CRSENT;
             startLongTimer();
         }
@@ -102,7 +102,8 @@ public class SprogVersionQuery implements SprogListener {
      *
      * @param v
      */
-    protected static synchronized void notifyVersion() {
+    protected static synchronized void notifyVersion(SprogVersion v) {
+        ver = v;
         for (SprogVersionListener listener : getCopyOfListeners()) {
             try {
                 listener.notifyVersion(ver);
@@ -125,6 +126,8 @@ public class SprogVersionQuery implements SprogListener {
      * @param m
      */
     synchronized public void notifyReply(SprogReply m) {
+        SprogMessage msg;
+        SprogVersion v;
         replyString = m.toString();
             switch(state) {
                 case IDLE: {
@@ -158,47 +161,47 @@ public class SprogVersionQuery implements SprogListener {
                         if (log.isDebugEnabled()) { log.debug("Found a SPROG "+splits[index]); }
                         if (splits[index].equals("3")) {
                             index += 2;
-                            ver = new SprogVersion(new SprogType(SprogType.SPROG3), splits[index]);
+                            v = new SprogVersion(new SprogType(SprogType.SPROG3), splits[index]);
                         } else if (splits[index].equals("IV")) {
                             index += 2;
-                            ver = new SprogVersion(new SprogType(SprogType.SPROGIV), splits[index]);
+                            v = new SprogVersion(new SprogType(SprogType.SPROGIV), splits[index]);
                         } else if (splits[index].equals("5")) {
                             index += 2;
-                            ver = new SprogVersion(new SprogType(SprogType.SPROG5), splits[index]);
+                            v = new SprogVersion(new SprogType(SprogType.SPROG5), splits[index]);
                         } else if (splits[index].equals("Nano")) {
                             index += 2;
-                            ver = new SprogVersion(new SprogType(SprogType.NANO), splits[index]);
+                            v = new SprogVersion(new SprogType(SprogType.NANO), splits[index]);
                         } else if (splits[index].equals("Sniffer")) {
                             index += 2;
-                            ver = new SprogVersion(new SprogType(SprogType.SNIFFER), splits[index]);
+                            v = new SprogVersion(new SprogType(SprogType.SNIFFER), splits[index]);
                         } else if (splits[index].equals("II")) {
                             index++;
                             if (splits[index].equals("USB")) {
                                 index += 2;
-                                ver = new SprogVersion(new SprogType(SprogType.SPROGIIUSB), splits[index]);
+                                v = new SprogVersion(new SprogType(SprogType.SPROGIIUSB), splits[index]);
                             } else {
                                 index++;
-                                ver = new SprogVersion(new SprogType(SprogType.SPROGII), splits[index]);
+                                v = new SprogVersion(new SprogType(SprogType.SPROGII), splits[index]);
                             }
                         } else if (splits[index].equals("Ver")) {
                             index += 1;
-                            ver = new SprogVersion(new SprogType(SprogType.SPROGV4), splits[index]);
+                            v = new SprogVersion(new SprogType(SprogType.SPROGV4), splits[index]);
                         } else {
                             if (log.isDebugEnabled()) { log.debug("Unrecognised SPROG"+splits[index]); }
-                            ver = new SprogVersion(new SprogType(SprogType.NOT_RECOGNISED));
+                            v = new SprogVersion(new SprogType(SprogType.NOT_RECOGNISED));
                         }
                     } else {
                         // Wait for timeout
                         break;
                     }
 
-                    if ((ver.sprogType.sprogType == SprogType.SPROGII) && (ver.getMajorVersion() >= 3)) {
+                    if ((v.sprogType.sprogType == SprogType.SPROGII) && (v.getMajorVersion() >= 3)) {
                         // Correct for SPROG IIv3 which is different hardware
-                        ver = new SprogVersion(new SprogType(SprogType.SPROGIIv3), ver.sprogVersion);
+                        v = new SprogVersion(new SprogType(SprogType.SPROGIIv3), v.sprogVersion);
                     }
-                    if (log.isDebugEnabled()) { log.debug("Found: " + ver.toString()); }
+                    if (log.isDebugEnabled()) { log.debug("Found: " + v.toString()); }
                     stopTimer();
-                    notifyVersion();
+                    notifyVersion(v);
                     state = QueryState.DONE;
                     break;
                 }
@@ -215,18 +218,19 @@ public class SprogVersionQuery implements SprogListener {
      * Internal routine to handle a timeout
      */
     synchronized static protected void timeout() {
+        SprogVersion v;
         switch(state) {
             case CRSENT: 
                 if (log.isDebugEnabled()) { log.debug("Timeout no SPROG prompt"); }
                 state = QueryState.IDLE;
-                ver = new SprogVersion(new SprogType(SprogType.TIMEOUT));
-                notifyVersion();
+                v = new SprogVersion(new SprogType(SprogType.TIMEOUT));
+                notifyVersion(v);
                 break;
             case QUERYSENT:
                 if (log.isDebugEnabled()) { log.debug("Timeout no SPROG found"); }
                 state = QueryState.IDLE;
-                ver = new SprogVersion(new SprogType(SprogType.NOT_A_SPROG));
-                notifyVersion();
+                v = new SprogVersion(new SprogType(SprogType.NOT_A_SPROG));
+                notifyVersion(v);
                 break;
             case DONE:
             case IDLE:

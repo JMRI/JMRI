@@ -143,7 +143,7 @@ public class SprogVersion  {
      */
     public String toString(SprogVersion s) {
         if (log.isDebugEnabled()) { log.debug("sprogType: " + s.sprogType.sprogType); }
-        return new String(s.sprogType.toString() + sprogVersion);
+        return (s.sprogType.toString() + sprogVersion);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogVersion.class.getName());
