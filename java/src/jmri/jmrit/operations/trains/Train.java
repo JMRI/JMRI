@@ -28,6 +28,7 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Track;
 
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.setup.Control;
@@ -41,7 +42,7 @@ import jmri.jmrit.display.Editor;
 /**
  * Represents a train on the layout
  * 
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012
  * @author Rodney Black Copyright (C) 2011
  * @version $Revision$
  */
@@ -68,6 +69,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected boolean _sendToTerminal = false;	// when true, cars picked up by train only go to terminal
 	protected boolean _buildNormal = false;	// when true build this train in normal mode
 	protected Route _route = null;
+	protected Track _departureTrack;		// the departure track from staging
+	protected Track _terminationTrack;		// the termination track into staging
 	protected String _roadOption = ALLROADS;// train road name restrictions
 	protected int _requires = 0;			// train requirements, caboose, FRED
 	protected String _numberEngines = "0";	// number of engines this train requires
@@ -96,7 +99,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected RouteLocation _end2Leg = null;		// route location where 2nd leg ends
 	protected String _leg2Engines = "0";			// number of engines 2nd leg
 	protected String _leg2Road = "";				// engine road name 2nd leg 
-	protected String _leg2Model = "";			// engine model 2nd leg
+	protected String _leg2Model = "";				// engine model 2nd leg
 	protected String _leg2CabooseRoad = "";			// road name for caboose 2nd leg
 	
 	protected int _leg3Options = 0;					// options
@@ -104,7 +107,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected RouteLocation _leg3End = null;		// route location where 3rd leg ends
 	protected String _leg3Engines = "0";			// number of engines 3rd leg
 	protected String _leg3Road = "";				// engine road name 3rd leg 
-	protected String _leg3Model = "";			// engine model 3rd leg
+	protected String _leg3Model = "";				// engine model 3rd leg
 	protected String _leg3CabooseRoad = "";			// road name for caboose 3rd leg
 	
 	// engine change and helper options
@@ -602,6 +605,30 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 		}
 		return null;	// At end of route		
+	}
+	
+	public void setDepartureTrack(Track track){
+		Track old = _departureTrack;
+		_departureTrack = track;
+		if (old != track){
+			setDirtyAndFirePropertyChange("DepartureTrackChanged", old, track);
+		}
+	}
+	
+	public Track getDepartureTrack(){
+		return _departureTrack;
+	}
+	
+	public void setTerminationTrack(Track track){
+		Track old = _terminationTrack;
+		_terminationTrack = track;
+		if (old != track){
+			setDirtyAndFirePropertyChange("TerminationTrackChanged", old, track);
+		}
+	}
+	
+	public Track getTerminationTrack(){
+		return _terminationTrack;
 	}
 	
 	/**
@@ -2346,6 +2373,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			return false;
 		}
 		setCurrentLocation(null);
+		setDepartureTrack(null);
+		setTerminationTrack(null);
 		setBuilt(false);
 		setBuildFailed(false);
 		setPrinted(false);
@@ -2495,7 +2524,12 @@ public class Train implements java.beans.PropertyChangeListener {
     			_end2Leg = _route.getLocationById(a.getValue());
     		if ((a = e.getAttribute("leg3End")) != null) 		
     			_leg3End = _route.getLocationById(a.getValue());
+        	if ((a = e.getAttribute("departureTrack")) != null)
+        		_departureTrack = LocationManager.instance().getLocationByName(getTrainDepartsName()).getTrackById(a.getValue());
+        	if ((a = e.getAttribute("terminationTrack")) != null)
+        		_terminationTrack = LocationManager.instance().getLocationByName(getTrainTerminatesName()).getTrackById(a.getValue());
     	}
+
     	// check for scripts
     	if (e.getChild("scripts") != null){
     		@SuppressWarnings("unchecked")
@@ -2579,6 +2613,10 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("skip", buf.toString());        
         if (getCurrentLocation() != null)
         	e.setAttribute("current", getCurrentLocation().getId());
+        if (getDepartureTrack() != null)
+        	e.setAttribute("departureTrack", getDepartureTrack().getId());
+        if (getTerminationTrack() != null)
+        	e.setAttribute("terminationTrack", getTerminationTrack().getId());
     	e.setAttribute("carRoadOperation", getRoadOption());
     	e.setAttribute("carLoadOption", getLoadOption());	
     	e.setAttribute("carOwnerOption", getOwnerOption());	

@@ -77,6 +77,8 @@
 <!ATTLIST train switchListStatus	CDATA #IMPLIED>
 <!ATTLIST train status				CDATA #IMPLIED>
 <!ATTLIST train current				CDATA #IMPLIED>
+<!ATTLIST train departureTrack		CDATA #IMPLIED>
+<!ATTLIST train terminationTrack	CDATA #IMPLIED>
 <!ATTLIST train skip				CDATA #IMPLIED>
 <!ATTLIST train leg2Options			CDATA #IMPLIED>
 <!ATTLIST train leg3Options			CDATA #IMPLIED>

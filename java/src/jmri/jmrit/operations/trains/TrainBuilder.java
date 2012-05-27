@@ -374,6 +374,11 @@ public class TrainBuilder extends TrainCommon{
 				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorEngines"),new Object[]{reqNumEngines, train.getTrainDepartsName(), engineTerminatesFirstLeg.getName()}));
 			}
 		}
+		
+		// Save termination and departure tracks
+		train.setTerminationTrack(terminateStageTrack);
+		train.setDepartureTrack(departStageTrack);
+		
 		// First engine change in route?
 		Engine secondLeadEngine = null;
 		if ((train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES){
