@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
- * @author Daniel Boudreau Copyright (C) 2008, 2011
+ * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012
  * @version     $Revision$
  */
 public class PrintLocationsAction  extends AbstractAction {
@@ -676,6 +676,8 @@ public class PrintLocationsAction  extends AbstractAction {
 		StringBuffer buf = new StringBuffer("\t\t" + MessageFormat.format(rb.getString("TrackScheduleName"),new Object[]{track.getScheduleName()}) + newLine);
 		if (track.getAlternativeTrack() != null)
 			buf.append("\t\t" + MessageFormat.format(rb.getString("AlternateTrackName"),new Object[]{track.getAlternativeTrack().getName()}) + newLine);
+		if (track.getReservationFactor() != 100)
+			buf.append("\t\t" + MessageFormat.format(rb.getString("PercentageStaging"),new Object[]{track.getReservationFactor()}) + newLine);
 		return buf.toString();
 	}
 
