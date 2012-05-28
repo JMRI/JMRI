@@ -69,6 +69,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 		panel.setAttribute("yscale", Float.toString((float)p.getYScale()));
         panel.setAttribute("sidetrackwidth", ""+p.getSideTrackWidth());
 		panel.setAttribute("defaulttrackcolor",p.getDefaultTrackColor());
+		panel.setAttribute("defaultoccupiedtrackcolor",p.getDefaultOccupiedTrackColor());
+		panel.setAttribute("defaultalternativetrackcolor",p.getDefaultAlternativeTrackColor());
         panel.setAttribute("defaulttextcolor",p.getDefaultTextColor());
 		panel.setAttribute("turnoutbx", Float.toString((float)p.getTurnoutBX()));
 		panel.setAttribute("turnoutcx", Float.toString((float)p.getTurnoutCX()));
@@ -76,6 +78,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 		panel.setAttribute("xoverlong", Float.toString((float)p.getXOverLong()));
 		panel.setAttribute("xoverhwid", Float.toString((float)p.getXOverHWid()));
 		panel.setAttribute("xovershort", Float.toString((float)p.getXOverShort()));
+        panel.setAttribute("autoblkgenerate", ""+(p.getAutoBlockAssignment()?"yes":"no"));
         if (p.getBackgroundColor()!=null){
             panel.setAttribute("redBackground", ""+p.getBackgroundColor().getRed());
             panel.setAttribute("greenBackground", ""+p.getBackgroundColor().getGreen());
@@ -241,6 +244,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 			if((a = element.getAttribute("panelwidth")) != null) {
 				panelWidth = a.getIntValue();
 			}
+
 			mainlinetrackwidth = element.getAttribute("mainlinetrackwidth").getIntValue();
 			sidetrackwidth = element.getAttribute("sidetrackwidth").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
@@ -417,15 +421,28 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         if ((a = element.getAttribute("tooltipsnotedit"))!=null && a.getValue().equals("yes"))
             value = true;
 		panel.setTooltipsNotEdit(value);
+        
+        value = false;
+        if((a = element.getAttribute("autoblkgenerate")) != null && a.getValue().equals("yes")) {
+				value = true;
+		}
+        panel.setAutoBlockAssignment(value);
 
 		value = true;
         if ((a = element.getAttribute("tooltipsinedit"))!=null && a.getValue().equals("no"))
             value = false;
 		panel.setTooltipsInEdit(value);
-
 		// set default track color
-		if ((a = element.getAttribute("defaultTrackColor"))!=null) {
+		if ((a = element.getAttribute("defaulttrackcolor"))!=null) {
 			panel.setDefaultTrackColor(a.getValue());
+		}
+		// set default track color
+		if ((a = element.getAttribute("defaultoccupiedtrackcolor"))!=null) {
+			panel.setDefaultOccupiedTrackColor(a.getValue());
+		}
+		// set default track color
+		if ((a = element.getAttribute("defaultalternativetrackcolor"))!=null) {
+			panel.setDefaultAlternativeTrackColor(a.getValue());
 		}
         try {
             int red = element.getAttribute("redBackground").getIntValue();

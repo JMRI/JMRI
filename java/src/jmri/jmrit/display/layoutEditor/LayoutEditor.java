@@ -196,6 +196,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     private JCheckBoxMenuItem animationItem = null;
     private JCheckBoxMenuItem showHelpItem = null;
     private JCheckBoxMenuItem showGridItem = null;
+    private JCheckBoxMenuItem autoAssignBlocksItem = null;
     private JMenu scrollMenu = null;
     private JRadioButtonMenuItem scrollBoth = null;
     private JRadioButtonMenuItem scrollNone = null;
@@ -213,17 +214,26 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	private JCheckBoxMenuItem skipTurnoutItem = null;
 	//private ButtonGroup bkColorButtonGroup = null;
 	private ButtonGroup trackColorButtonGroup = null;
+	private ButtonGroup trackOccupiedColorButtonGroup = null;
+	private ButtonGroup trackAlternativeColorButtonGroup = null;
     private ButtonGroup textColorButtonGroup = null;
     private ButtonGroup backgroundColorButtonGroup = null;
 	private Color[] trackColors = new Color[13];
+	private Color[] trackOccupiedColors = new Color[13];
+	private Color[] trackAlternativeColors = new Color[13];
     private Color[] textColors = new Color[13];
     private Color[] backgroundColors = new Color[13];
 	private JRadioButtonMenuItem[] trackColorMenuItems = new JRadioButtonMenuItem[13];
+	private JRadioButtonMenuItem[] trackOccupiedColorMenuItems = new JRadioButtonMenuItem[13];
+	private JRadioButtonMenuItem[] trackAlternativeColorMenuItems = new JRadioButtonMenuItem[13];
     private JRadioButtonMenuItem[] backgroundColorMenuItems = new JRadioButtonMenuItem[13];
     private JRadioButtonMenuItem[] textColorMenuItems = new JRadioButtonMenuItem[13];
 	private int trackColorCount = 0;
+	private int trackOccupiedColorCount = 0;
+	private int trackAlternativeColorCount = 0;
     private int textColorCount = 0;
     private int backgroundColorCount = 0;
+    private boolean autoAssignBlocks = false;
 	
 	// Selected point information
     //private final static int TURNOUT = 1;      // possible object types
@@ -290,6 +300,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     private float mainlineTrackWidth = 4.0F;
     private float sideTrackWidth = 2.0F;
 	private Color defaultTrackColor = Color.black;
+	private Color defaultOccupiedTrackColor = Color.black;
+	private Color defaultAlternativeTrackColor = Color.black;
     private Color defaultBackgroundColor = Color.lightGray;
     private Color defaultTextColor = Color.black;
     private String layoutName = "";
@@ -1069,7 +1081,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 					repaint();
                 }
             });
-            
+        
         JMenu backgroundColorMenu = new JMenu(rb.getString("SetBackgroundColor"));
 		backgroundColorButtonGroup = new ButtonGroup();
 		addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Black"), Color.black);
@@ -1136,6 +1148,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 }
             });
 		// track color item
+        JMenu trkColourMenu = new JMenu(rb.getString("DefaultTrackColor"));
+        optionMenu.add(trkColourMenu);
 		JMenu trackColorMenu = new JMenu(rb.getString("DefaultTrackColor"));
 		trackColorButtonGroup = new ButtonGroup();
 		addTrackColorMenuEntry(trackColorMenu, rb.getString("Black"), Color.black);
@@ -1151,7 +1165,41 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		addTrackColorMenuEntry(trackColorMenu, rb.getString("Blue"),Color.blue);
 		addTrackColorMenuEntry(trackColorMenu, rb.getString("Magenta"),Color.magenta);
 		addTrackColorMenuEntry(trackColorMenu, rb.getString("Cyan"),Color.cyan);
-        optionMenu.add(trackColorMenu);
+        trkColourMenu .add(trackColorMenu);
+        
+		JMenu trackOccupiedColorMenu = new JMenu(rb.getString("DefaultOccupiedTrackColor"));
+		trackOccupiedColorButtonGroup = new ButtonGroup();
+		addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Black"), Color.black);
+		addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("DarkGray"),Color.darkGray);
+		addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Gray"),Color.gray);
+		addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("LightGray"),Color.lightGray);
+		addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("White"),Color.white);
+		addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Red"),Color.red);
+		addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Pink"),Color.pink);
+		addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Orange"),Color.orange);
+		addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Yellow"),Color.yellow);
+		addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Green"),Color.green);
+		addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Blue"),Color.blue);
+		addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Magenta"),Color.magenta);
+		addTrackOccupiedColorMenuEntry(trackOccupiedColorMenu, rb.getString("Cyan"),Color.cyan);
+        trkColourMenu .add(trackOccupiedColorMenu);
+        
+		JMenu trackAlternativeColorMenu = new JMenu(rb.getString("DefaultAlternativeTrackColor"));
+		trackAlternativeColorButtonGroup = new ButtonGroup();
+		addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Black"), Color.black);
+		addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("DarkGray"),Color.darkGray);
+		addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Gray"),Color.gray);
+		addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("LightGray"),Color.lightGray);
+		addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("White"),Color.white);
+		addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Red"),Color.red);
+		addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Pink"),Color.pink);
+		addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Orange"),Color.orange);
+		addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Yellow"),Color.yellow);
+		addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Green"),Color.green);
+		addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Blue"),Color.blue);
+		addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Magenta"),Color.magenta);
+		addTrackAlternativeColorMenuEntry(trackAlternativeColorMenu, rb.getString("Cyan"),Color.cyan);
+        trkColourMenu .add(trackAlternativeColorMenu);
 
 		JMenu textColorMenu = new JMenu(rb.getString("DefaultTextColor"));
 		textColorButtonGroup = new ButtonGroup();
@@ -1170,6 +1218,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		addTextColorMenuEntry(textColorMenu, rb.getString("Cyan"),Color.cyan);
         optionMenu.add(textColorMenu);
 
+        		// show grid item
+		autoAssignBlocksItem = new JCheckBoxMenuItem(rb.getString("AutoAssignBlock"));
+        optionMenu.add(autoAssignBlocksItem);
+        autoAssignBlocksItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    autoAssignBlocks = autoAssignBlocksItem.isSelected();
+                }
+            });                    
+        autoAssignBlocksItem.setSelected(autoAssignBlocks);
+        
         return optionMenu;
 	}
 
@@ -2138,6 +2196,52 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		trackColorCount ++;
     }
     
+    void addTrackOccupiedColorMenuEntry(JMenu menu, final String name, final Color color) {
+        ActionListener a = new ActionListener() {
+				//final String desiredName = name;
+				final Color desiredColor = color;
+				public void actionPerformed(ActionEvent e) { 
+					if (defaultOccupiedTrackColor!=desiredColor) {
+						defaultOccupiedTrackColor = desiredColor;
+						setDirty(true);
+						repaint();
+					}
+				}
+			};
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
+        r.addActionListener(a);
+        trackOccupiedColorButtonGroup.add(r);
+        if (defaultOccupiedTrackColor == color) r.setSelected(true);
+        else r.setSelected(false);
+        menu.add(r);
+		trackOccupiedColorMenuItems[trackOccupiedColorCount] = r;
+		trackOccupiedColors[trackOccupiedColorCount] = color;
+		trackOccupiedColorCount ++;
+    }
+    
+    void addTrackAlternativeColorMenuEntry(JMenu menu, final String name, final Color color) {
+        ActionListener a = new ActionListener() {
+				//final String desiredName = name;
+				final Color desiredColor = color;
+				public void actionPerformed(ActionEvent e) { 
+					if (defaultAlternativeTrackColor!=desiredColor) {
+						defaultAlternativeTrackColor = desiredColor;
+						setDirty(true);
+						repaint();
+					}
+				}
+			};
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
+        r.addActionListener(a);
+        trackAlternativeColorButtonGroup.add(r);
+        if (defaultAlternativeTrackColor == color) r.setSelected(true);
+        else r.setSelected(false);
+        menu.add(r);
+		trackAlternativeColorMenuItems[trackAlternativeColorCount] = r;
+		trackAlternativeColors[trackAlternativeColorCount] = color;
+		trackAlternativeColorCount ++;
+    }
+    
 	protected void setOptionMenuTrackColor() {
 		for (int i = 0;i<trackColorCount;i++) {
 			if (trackColors[i] == defaultTrackColor) 
@@ -2145,6 +2249,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			else 
 				trackColorMenuItems[i].setSelected(false);
 		}	
+        for (int i = 0;i<trackOccupiedColorCount;i++) {
+			if (trackOccupiedColors[i] == defaultOccupiedTrackColor) 
+				trackOccupiedColorMenuItems[i].setSelected(true);
+			else 
+				trackOccupiedColorMenuItems[i].setSelected(false);
+		}
+        for (int i = 0;i<trackAlternativeColorCount;i++) {
+			if (trackAlternativeColors[i] == defaultAlternativeTrackColor) 
+				trackAlternativeColorMenuItems[i].setSelected(true);
+			else 
+				trackAlternativeColorMenuItems[i].setSelected(false);
+		}
 	}
     
     void addTextColorMenuEntry(JMenu menu, final String name, final Color color) {
@@ -4813,32 +4929,47 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	 *		a system name is automatically created by LayoutBlockManager if needed.
      */
     public LayoutBlock provideLayoutBlock(String s) {
-		if (s.length() < 1) {
-			// nothing entered
-			return null;
-		}
-		// check if this Layout Block already exists
-		LayoutBlock blk = InstanceManager.layoutBlockManagerInstance().getByUserName(s);
-		if (blk == null) {
-			blk = InstanceManager.layoutBlockManagerInstance().createNewLayoutBlock(null,s);
-			if (blk == null) {
-				log.error("Failure to create LayoutBlock '"+s+"'.");
-				return null;
-			}
-			else {
-				// initialize the new block
-				blk.initializeLayoutBlock();
-				blk.setBlockTrackColor(defaultTrackColor);
-				blk.setBlockOccupiedColor(defaultTrackColor);
-			}
-		}
+		LayoutBlock blk;
+        if (s.length() < 1) {
+            if(!autoAssignBlocks){
+                // nothing entered
+                return null;
+            } else {
+                blk = InstanceManager.layoutBlockManagerInstance().createNewLayoutBlock();
+                if (blk == null) {
+                    log.error("Unable to create a layout block");
+                }
+                // initialize the new block
+                blk.initializeLayoutBlock();
+                blk.setBlockTrackColor(defaultTrackColor);
+                blk.setBlockOccupiedColor(defaultOccupiedTrackColor);
+                blk.setBlockExtraColor(defaultAlternativeTrackColor);
+            }
+		} else {
+            // check if this Layout Block already exists
+            blk = InstanceManager.layoutBlockManagerInstance().getByUserName(s);
+            if (blk == null) {
+                blk = InstanceManager.layoutBlockManagerInstance().createNewLayoutBlock(null,s);
+                if (blk == null) {
+                    log.error("Failure to create LayoutBlock '"+s+"'.");
+                    return null;
+                }
+                else {
+                    // initialize the new block
+                    blk.initializeLayoutBlock();
+                    blk.setBlockTrackColor(defaultTrackColor);
+                    blk.setBlockOccupiedColor(defaultOccupiedTrackColor);
+                    blk.setBlockExtraColor(defaultAlternativeTrackColor);
+                }
+            }
+        }
 		// set both new and previously existing block
 		blk.addLayoutEditor(this);
 		setDirty(true);
 		blk.incrementUse();
 		return blk;
 	}
-
+    
 	/**
 	 * Validates that the supplied occupancy sensor name corresponds to an existing sensor
 	 *   and is unique among all blocks.  If valid, returns true and sets the block sensor
@@ -5777,6 +5908,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	public double getXScale() {return xScale;}
 	public double getYScale() {return yScale;}
 	public String getDefaultTrackColor() {return colorToString(defaultTrackColor);}
+	public String getDefaultOccupiedTrackColor() {return colorToString(defaultOccupiedTrackColor);}
+	public String getDefaultAlternativeTrackColor() {return colorToString(defaultAlternativeTrackColor);}
     public String getDefaultTextColor() {return colorToString(defaultTextColor);}
 	public String getLayoutName() {return layoutName;}
 	public boolean getShowHelpBar() {return showHelpBar;}
@@ -5787,6 +5920,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	public boolean getTurnoutCircles() {return turnoutCirclesWithoutEditMode;}
 	public boolean getTooltipsNotEdit() {return tooltipsWithoutEditMode;}
 	public boolean getTooltipsInEdit() {return tooltipsInEditMode;}
+    public boolean getAutoBlockAssignment() { return autoAssignBlocks;}
 	public void setLayoutDimensions(int windowW, int windowH, int x, int y, int panelW, int panelH) {
 		upperLeftX = x;
 		upperLeftY = y;
@@ -5803,6 +5937,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	public void setSideTrackWidth(int w) {sideTrackWidth = w;}
 	public void setDefaultTrackColor(String color) {
 		defaultTrackColor = stringToColor(color);
+		setOptionMenuTrackColor();
+	}
+    public void setDefaultOccupiedTrackColor(String color) {
+		defaultOccupiedTrackColor = stringToColor(color);
+		setOptionMenuTrackColor();
+	}
+    public void setDefaultAlternativeTrackColor(String color) {
+		defaultAlternativeTrackColor = stringToColor(color);
 		setOptionMenuTrackColor();
 	}
 	public void setDefaultTextColor(String color) {
@@ -5852,6 +5994,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		}
 	}
     
+    public void setAutoBlockAssignment(boolean boo){
+        if(autoAssignBlocks != boo){
+            autoAssignBlocks = boo;
+            autoAssignBlocksItem.setSelected(autoAssignBlocks);
+        }
+    }
 	public void setTooltipsNotEdit(boolean state) {
 		if (tooltipsWithoutEditMode != state) {
 			tooltipsWithoutEditMode = state;

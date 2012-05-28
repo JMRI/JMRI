@@ -84,7 +84,24 @@ public class LayoutBlockManager extends AbstractManager {
 		register(block);
 		return block;
     }
-
+    
+    public LayoutBlock createNewLayoutBlock(){
+        boolean found = true;
+        while (found) {
+            String sName = "ILB"+blkNum;
+            LayoutBlock block = getBySystemName(sName);
+            if (block==null){
+                found = false;
+                String uName = "AUTOBLK:"+blkNum;
+                block = new LayoutBlock(sName,uName);
+                register(block);
+                return block;
+            }
+            blkNum++;
+        }
+        return null;
+    }
+    
     /**
      * Remove an existing LayoutBlock. 
 	 */
