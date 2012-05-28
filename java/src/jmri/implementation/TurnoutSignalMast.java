@@ -69,11 +69,13 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         if(resetPreviousStates){
             //Clear all the current states, this will result in the signalmast going blank for a very short time.
             for(String appearances: turnouts.keySet()){
-                int setState = Turnout.CLOSED;
-                if(turnouts.get(appearances).getTurnoutState()==Turnout.CLOSED)
-                    setState = Turnout.THROWN;
-                if(turnouts.get(appearances).getTurnout().getKnownState()!=setState){
-                    turnouts.get(appearances).getTurnout().setCommandedState(setState);
+                if(!isAspectDisabled(appearances)){
+                    int setState = Turnout.CLOSED;
+                    if(turnouts.get(appearances).getTurnoutState()==Turnout.CLOSED)
+                        setState = Turnout.THROWN;
+                    if(turnouts.get(appearances).getTurnout().getKnownState()!=setState){
+                        turnouts.get(appearances).getTurnout().setCommandedState(setState);
+                    }
                 }
             }
         }
