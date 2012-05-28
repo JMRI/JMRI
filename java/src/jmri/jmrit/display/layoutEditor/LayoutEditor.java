@@ -4938,7 +4938,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 blk = InstanceManager.layoutBlockManagerInstance().createNewLayoutBlock();
                 if (blk == null) {
                     log.error("Unable to create a layout block");
-                    return;
+                    return null;
                 }
                 // initialize the new block
                 blk.initializeLayoutBlock();
