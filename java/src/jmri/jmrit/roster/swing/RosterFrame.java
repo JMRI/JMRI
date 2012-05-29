@@ -18,6 +18,7 @@ import java.util.Enumeration;
 import javax.help.SwingHelpUtilities;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import jmri.InstanceManager;
@@ -48,6 +49,8 @@ import jmri.util.swing.WindowInterface;
 import jmri.util.swing.multipane.TwoPaneTBWindow;
 import jmri.util.swing.XTableColumnModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableCellEditor;
+import javax.swing.DefaultCellEditor;
 import org.apache.log4j.Logger;
 
 /**
@@ -354,6 +357,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         if (ProgDefault.getDefaultProgFile() != null) {
             programmer1 = ProgDefault.getDefaultProgFile();
         }
+        
+
     }
 
     boolean checkIfEntrySelected() {
@@ -464,6 +469,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         //Set column widths, sort order and hidden status
         XTableColumnModel tcm = rtable.getXTableColumnModel();
         Enumeration<TableColumn> en = tcm.getColumns(false);
+        jtable.setDefaultEditor(Object.class, new RosterCellEditor());
         while(en.hasMoreElements()){
             TableColumn tc = en.nextElement();
             String columnName = (String) tc.getHeaderValue();
@@ -1289,34 +1295,39 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             log.debug("Call to start programmer has been called twice when the first call hasn't opened");
             return;
         }
-        inStartProgrammer = true;
-        String title = re.getId();
-        JFrame progFrame = null;
-        if (edit.isSelected()) {
-            progFrame = new PaneProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", null, false) {
+        try {
+            setCursor(new Cursor(Cursor.WAIT_CURSOR));
+            inStartProgrammer = true;
+            String title = re.getId();
+            JFrame progFrame = null;
+            if (edit.isSelected()) {
+                progFrame = new PaneProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", null, false) {
 
-                @Override
-                protected JPanel getModePane() {
-                    return null;
-                }
-            };
-        } else if (service.isSelected()) {
-            progFrame = new PaneServiceProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", modePanel.getProgrammer()) {
-            };
-        } else if (ops.isSelected()) {
-            int address = Integer.parseInt(re.getDccAddress());
-            boolean longAddr = re.isLongAddress();
-            Programmer pProg = InstanceManager.programmerManagerInstance().getAddressedProgrammer(longAddr, address);
-            progFrame = new PaneOpsProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", pProg);
+                    @Override
+                    protected JPanel getModePane() {
+                        return null;
+                    }
+                };
+            } else if (service.isSelected()) {
+                progFrame = new PaneServiceProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", modePanel.getProgrammer()) {
+                };
+            } else if (ops.isSelected()) {
+                int address = Integer.parseInt(re.getDccAddress());
+                boolean longAddr = re.isLongAddress();
+                Programmer pProg = InstanceManager.programmerManagerInstance().getAddressedProgrammer(longAddr, address);
+                progFrame = new PaneOpsProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", pProg);
+            }
+            if (progFrame == null) {
+                return;
+            }
+            progFrame.pack();
+            progFrame.setVisible(true);
+        } finally {
+            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
-        if (progFrame == null) {
-            return;
-        }
-        progFrame.pack();
-        progFrame.setVisible(true);
         inStartProgrammer = false;
     }
-
+    
     /*
      * This status bar needs sorting out properly
      */
@@ -1567,5 +1578,39 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         protected boolean selectFrom() {
             return true;
         }
+    }
+    
+    public class RosterCellEditor extends DefaultCellEditor implements TableCellEditor{
+    
+        public RosterCellEditor(){
+            super(new JTextField() {
+                @Override public void setBorder(Border border) {
+                    //No border required
+                }
+            });
+        }
+        
+        //This allows the cell to be edited using a single click if the row was previously selected, this allows a double on an unselected row to launch the programmer
+        public boolean isCellEditable( java.util.EventObject e ){
+            log.info(re);
+            if(re==null){
+                //No previous roster entry selected so will take this as a select so no return false to prevent editing
+                return false;
+            }
+            
+            if(e instanceof MouseEvent){
+                MouseEvent me = (MouseEvent) e;
+                //If the click count is not equal to 1 then return false.
+                if(me.getClickCount()!=1)
+                    return false;
+            }
+            if(rtable.getModel().getValueAt(rtable.getTable().getSelectedRow(), RosterTableModel.IDCOL).equals(re.getId())){
+                //if the current select roster entry matches the one that we have selected, then we can allow this field to be edited.
+                return true;
+            }
+            return false;
+        }
+
+    
     }
 }
