@@ -996,6 +996,39 @@ public class TrainBuilder extends TrainCommon{
 				continue;
     		}
     		
+       		// is car at interchange?
+    		if (c.getTrack().getLocType().equals(Track.INTERCHANGE)){
+    			// don't service a car at interchange and has been dropped of by this train
+    			if (c.getTrack().getPickupOption().equals(Track.ANY) && c.getSavedRouteId().equals(train.getRoute().getId())){
+    				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarDropByTrain"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
+    				carList.remove(c.getId());
+    				carIndex--;
+    				continue;
+    			}
+    		}
+    		if (c.getTrack().getLocType().equals(Track.INTERCHANGE) || c.getTrack().getLocType().equals(Track.SIDING)){
+    			if (c.getTrack().getPickupOption().equals(Track.TRAINS) || c.getTrack().getPickupOption().equals(Track.EXCLUDE_TRAINS)){
+    				if (c.getTrack().acceptsPickupTrain(train)){
+    					log.debug("Car ("+c.toString()+") can be picked up by this train");
+    				} else {
+    					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarByTrain"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
+    					carList.remove(c.getId());
+    					carIndex--;
+    					continue;
+    				}
+    			}
+    			else if (c.getTrack().getPickupOption().equals(Track.ROUTES) || c.getTrack().getPickupOption().equals(Track.EXCLUDE_ROUTES)){
+    				if (c.getTrack().acceptsPickupRoute(train.getRoute())){
+    					log.debug("Car ("+c.toString()+") can be picked up by this route");
+    				} else {
+    					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarByRoute"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
+    					carList.remove(c.getId());
+    					carIndex--;
+    					continue;
+    				}
+    			}
+    		}
+    		
     		// all cars in staging must be accepted, so don't exclude if in staging
     		// note that for trains departing staging the engine and car roads and types were
     		// checked in the routine checkDepartureStagingTrack().
@@ -1045,39 +1078,7 @@ public class TrainBuilder extends TrainCommon{
     				carIndex--;
     				continue;
         		}
-    		}
-    		// is car at interchange?
-    		if (c.getTrack().getLocType().equals(Track.INTERCHANGE)){
-    			// don't service a car at interchange and has been dropped of by this train
-    			if (c.getTrack().getPickupOption().equals(Track.ANY) && c.getSavedRouteId().equals(train.getRoute().getId())){
-    				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarDropByTrain"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
-    				carList.remove(c.getId());
-    				carIndex--;
-    				continue;
-    			}
-    		}
-    		if (c.getTrack().getLocType().equals(Track.INTERCHANGE) || c.getTrack().getLocType().equals(Track.SIDING)){
-    			if (c.getTrack().getPickupOption().equals(Track.TRAINS) || c.getTrack().getPickupOption().equals(Track.EXCLUDE_TRAINS)){
-    				if (c.getTrack().acceptsPickupTrain(train)){
-    					log.debug("Car ("+c.toString()+") can be picked up by this train");
-    				} else {
-    					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarByTrain"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
-    					carList.remove(c.getId());
-    					carIndex--;
-    					continue;
-    				}
-    			}
-    			else if (c.getTrack().getPickupOption().equals(Track.ROUTES) || c.getTrack().getPickupOption().equals(Track.EXCLUDE_ROUTES)){
-    				if (c.getTrack().acceptsPickupRoute(train.getRoute())){
-    					log.debug("Car ("+c.toString()+") can be picked up by this route");
-    				} else {
-    					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarByRoute"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
-    					carList.remove(c.getId());
-    					carIndex--;
-    					continue;
-    				}
-    			}
-    		}
+    		} 
 		}
 
 		addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildFoundCars"),new Object[]{Integer.toString(carList.size()), train.getName()}));
