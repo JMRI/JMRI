@@ -148,26 +148,26 @@ public class TrainSwitchLists extends TrainCommon {
 							newLine(fileOut);
 							if (train.isTrainInRoute()){
 								if (expectedArrivalTime.equals("-1"))
-									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberDone"), new Object[]{stops, train.getName()}));
+									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberDone"), new Object[]{stops, train.getIconName()}));
 								else if (r != routeList.size()-1)
-									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberDeparted"), new Object[]{stops, train.getName(), expectedArrivalTime, rl.getTrainDirectionString()}));
+									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberDeparted"), new Object[]{stops, train.getIconName(), expectedArrivalTime, rl.getTrainDirectionString()}));
 								else
-									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberTerminatesDeparted"), new Object[]{stops, train.getName(), expectedArrivalTime, splitString(rl.getName())}));
+									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberTerminatesDeparted"), new Object[]{stops, train.getIconName(), expectedArrivalTime, splitString(rl.getName())}));
 							} else {
 								if (r != routeList.size()-1)
-									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumber"), new Object[]{stops, train.getName(), expectedArrivalTime, rl.getTrainDirectionString()}));
+									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumber"), new Object[]{stops, train.getIconName(), expectedArrivalTime, rl.getTrainDirectionString()}));
 								else
-									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberTerminates"), new Object[]{stops, train.getName(), expectedArrivalTime, splitString(rl.getName())}));
+									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberTerminates"), new Object[]{stops, train.getIconName(), expectedArrivalTime, splitString(rl.getName())}));
 							}
 						} else {
 							stops--;	// don't bump stop count, same location
 							// Does the train reverse direction?
 							if (rl.getTrainDirection() != rlPrevious.getTrainDirection())
-								addLine(fileOut, MessageFormat.format(rb.getString("TrainDirectionChange"), new Object[]{train.getName(), rl.getTrainDirectionString()}));
+								addLine(fileOut, MessageFormat.format(rb.getString("TrainDirectionChange"), new Object[]{train.getIconName(), rl.getTrainDirectionString()}));
 						}
 					} else {
 						newLine(fileOut);
-						addLine(fileOut, MessageFormat.format(rb.getString("ScheduledWork"), new Object[]{train.getName(), train.getDescription()}));										
+						addLine(fileOut, MessageFormat.format(rb.getString("ScheduledWork"), new Object[]{train.getIconName(), train.getDescription()}));										
 						if (train.isTrainInRoute()){
 							if (!trainDone){
 								addLine(fileOut, MessageFormat.format(rb.getString("DepartedExpected"), new Object[]{splitString(train.getTrainDepartsName()), expectedArrivalTime, rl.getTrainDirectionString()}));
