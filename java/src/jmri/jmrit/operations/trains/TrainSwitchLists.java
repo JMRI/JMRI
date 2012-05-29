@@ -70,6 +70,7 @@ public class TrainSwitchLists extends TrainCommon {
 			addLine(fileOut, Setup.getRailroadName());
 		newLine(fileOut);
 		addLine(fileOut, MessageFormat.format(rb.getString("SwitchListFor"), new Object[]{splitString(location.getName())}));
+		
 		String valid = MessageFormat.format(rb.getString("Valid"), new Object[]{getDate()});
 		
 		if (Setup.isPrintTimetableNameEnabled()){
@@ -77,7 +78,8 @@ public class TrainSwitchLists extends TrainCommon {
 			if (sch != null)
 				valid = valid + " ("+sch.getName()+")"; 
 		}
-		addLine(fileOut, valid);
+		if (Setup.isPrintValidEnabled())
+			addLine(fileOut, valid);
 		
 		if (!location.getSwitchListComment().equals(""))
 			addLine(fileOut, location.getSwitchListComment());

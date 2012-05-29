@@ -55,13 +55,12 @@ public class TrainManifest extends TrainCommon {
 			TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(TrainManager.instance().getTrainScheduleActiveId());
 			if (sch != null)
 				valid = valid + " ("+sch.getName()+")"; 
-		}
-		
+		}		
 		if (Setup.isPrintValidEnabled())
 			addLine(fileOut, valid);
-		if (!train.getComment().equals("")){
+		
+		if (!train.getComment().equals(""))
 			addLine(fileOut, train.getComment());
-		}
 		
 		List<String> engineList = engineManager.getByTrainList(train);		
 		//pickupEngines(fileOut, engineList, train.getTrainDepartsRouteLocation());
