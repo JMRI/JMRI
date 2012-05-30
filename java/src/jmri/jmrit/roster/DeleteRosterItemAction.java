@@ -144,7 +144,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
                   +selections.getSelectedItem());
         if (retval != 1) return null;
         RosterEntry[] entries = new RosterEntry[1];
-        entries[0] = Roster.instance().entryFromTitle((String)selections.getSelectedItem());
+        entries[0] = (RosterEntry) selections.getSelectedItem();
         return entries;
     }
 

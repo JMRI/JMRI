@@ -97,13 +97,9 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
                   +selections.getSelectedItem()+"\"");
         if (retval!=1) return false;  // user didn't select
 
-        mFromID = (String) selections.getSelectedItem();
-
         // find the file for the selected entry to copy
-        mFromEntry = Roster.instance().entryFromTitle(mFromID);
-        mFromFilename = Roster.instance().fileFromTitle(mFromID);
-        mFullFromFilename = LocoFile.getFileLocation()+mFromFilename;
-        log.debug(" from resolves to \""+mFromFilename+"\", \""+mFullFromFilename+"\"");
+        setExistingEntry((RosterEntry) selections.getSelectedItem());
+        
         return true;
     }
     
@@ -113,9 +109,9 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     
     public void setExistingEntry(RosterEntry mFromEntry){
         this.mFromEntry = mFromEntry;
-        mFromID = mFromEntry.titleString();
         mFromFilename = mFromEntry.getFileName();
         mFullFromFilename = LocoFile.getFileLocation()+mFromFilename;
+        log.debug(" from resolves to \""+mFromFilename+"\", \""+mFullFromFilename+"\"");
     }
 
     boolean selectNewToEntryID() {
