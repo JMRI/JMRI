@@ -22,11 +22,45 @@
 <!-- derived this 1644 from 1645, decoder identical except for physical size of the board -->
   <version author="Bill Chown" version="3" lastUpdated="20080430"/>
 <!-- corrected more typos causing incorrect values -->
+  <version author="Steve Todd" version="4" lastUpdated="20120522"/>
+    <!-- fixed CV21, added function label defaults -->
+	
   <decoder>
-    <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
+    <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="44">
       <model model="Synch Diesel Sound 1644" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
         <size length="90" width="14" height="4.2" units="mm"/>
       </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Light</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="false">Horn</functionlabel>
+        <functionlabel num="3" lockable="false">Air Release/Acc1 on or off</functionlabel>
+        <functionlabel num="4" lockable="false">Coupling</functionlabel>
+        <functionlabel num="5" lockable="true">Brake release/Squeal</functionlabel>
+        <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+        <functionlabel num="7" lockable="false">Air Hose/Uncoupling Lever</functionlabel>
+        <functionlabel num="8" lockable="false">Shut Down/Notch Down</functionlabel>
+        <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
+        <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+        <functionlabel num="11" lockable="false">loco Sound</functionlabel>
+        <functionlabel num="12" lockable="false">Prime MoverType</functionlabel>
+        <functionlabel num="13" lockable="false">Air release/ Acc2 on or off</functionlabel>
+        <functionlabel num="14" lockable="false">Coupling 2</functionlabel>
+        <functionlabel num="15" lockable="true">Air Pump</functionlabel>
+        <functionlabel num="16" lockable="false">Loco Sound</functionlabel>
+        <functionlabel num="17" lockable="false">Flange Noise 1</functionlabel>
+        <functionlabel num="18" lockable="false">Bell Type</functionlabel>
+        <functionlabel num="19" lockable="false">Horn Type</functionlabel>
+        <functionlabel num="20" lockable="false">Loco Sound</functionlabel>
+        <functionlabel num="21" lockable="false">Bell Volume</functionlabel>
+        <functionlabel num="22" lockable="false">Horn Volume</functionlabel>
+        <functionlabel num="23" lockable="false">Prime Mover Volume</functionlabel>
+        <functionlabel num="24" lockable="false">Coupling</functionlabel>
+        <functionlabel num="25" lockable="false">Air Release</functionlabel>
+        <functionlabel num="26" lockable="false">Flange Noise 2</functionlabel>
+        <functionlabel num="27" lockable="false">Air hose firing</functionlabel>
+        <functionlabel num="28" lockable="false">short air release</functionlabel>
+      </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -97,16 +131,16 @@
         </enumVal>
         <label>Consist Direction</label>
       </variable>
-      <variable label="Functions Respond to Address" CV="21" mask="XXXXXXXV" tooltip="CV21, least bit">
+      <variable label="Consist Function" CV="21" item="Functions Respond To" mask="XXXXXXXV" tooltip="CV21 selects the address that functions will respond to" default="0">
         <enumVal>
-          <enumChoice choice="Locomotive address only">
-            <choice>Locomotive address only</choice>
+          <enumChoice choice="Functions respond to Locomotive Address Only">
+            <choice>Functions respond to Locomotive Address Only</choice>
           </enumChoice>
-          <enumChoice choice="Respond to consist address">
-            <choice>Respond to consist address</choice>
+          <enumChoice choice="Functions respond to Consist Address Only">
+            <choice>Functions respond to Consist Address Only</choice>
           </enumChoice>
         </enumVal>
-        <label>Functions Respond to Address</label>
+        <label>Consist Function</label>
       </variable>
       <variable label="Normal direction of motion" CV="29" tooltip="CV29, '1' (least significant) bit, Forward(0)(default) or Reverse(1)" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
