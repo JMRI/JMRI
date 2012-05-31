@@ -10,7 +10,12 @@ import java.util.*;
 import java.util.List;
 import java.io.File;
 
-import jmri.*;
+import jmri.DccThrottle;
+import jmri.ThrottleManager;
+import jmri.ThrottleListener;
+import jmri.DccLocoAddress;
+import jmri.InstanceManager;
+import jmri.Programmer;
 import jmri.jmrit.roster.*;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;

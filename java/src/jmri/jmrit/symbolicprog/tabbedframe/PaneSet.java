@@ -9,7 +9,8 @@ import java.util.List;
 
 import javax.swing.*;
 
-import jmri.*;
+//import jmri.*;
+import jmri.Programmer;
 import jmri.jmrit.decoderdefn.*;
 import jmri.jmrit.roster.*;
 import jmri.jmrit.symbolicprog.*;

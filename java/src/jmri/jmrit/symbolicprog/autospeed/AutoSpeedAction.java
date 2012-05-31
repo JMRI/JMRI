@@ -7,7 +7,8 @@ import java.io.*;
 
 import javax.swing.*;
 
-import jmri.*;
+import jmri.Programmer;
+import jmri.InstanceManager;
 import jmri.jmrit.decoderdefn.*;
 import jmri.jmrit.roster.*;
 import jmri.jmrit.symbolicprog.*;
