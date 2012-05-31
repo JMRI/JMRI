@@ -3,13 +3,13 @@
  package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -52,9 +52,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 	// labels
 	JLabel numEngines = new JLabel();
 	JLabel textEngines = new JLabel();
-	JLabel textSort = new JLabel(rb.getString("SortBy"));
 	JLabel textSep1 = new JLabel("          ");
-	JLabel textSep2 = new JLabel();
 	
 	// radio buttons	
     JRadioButton sortByNumber = new JRadioButton(rb.getString("Number"));
@@ -102,8 +100,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     	
     	//row 1
     	JPanel cp1 = new JPanel();
+    	cp1.setBorder(BorderFactory.createTitledBorder(rb.getString("SortBy")));
     	
-    	cp1.add(textSort);
     	cp1.add(sortByNumber);
     	cp1.add(sortByRoad);
     	cp1.add(sortByModel);
@@ -121,6 +119,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 
        	// row 2
     	JPanel cp2 = new JPanel();
+    	cp2.setBorder(BorderFactory.createTitledBorder(""));
 		findButton.setToolTipText(rb.getString("findEngine"));
 		findEngineTextBox.setToolTipText(rb.getString("findEngine"));
 		
@@ -134,13 +133,14 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 				
 		// place controls in scroll pane
 		JPanel controlPanel = new JPanel();
-		controlPanel.setLayout(new GridBagLayout());
-		addItem(controlPanel, cp1, 0, 0 );
-		addItem(controlPanel, cp2, 0, 1);
+		controlPanel.setLayout(new BoxLayout(controlPanel,BoxLayout.Y_AXIS));
+		controlPanel.add(cp1);
+		controlPanel.add(cp2);
 		
 	    JScrollPane controlPane = new JScrollPane(controlPanel);
-	    // make sure panel doesn't get too short
-	    controlPane.setMinimumSize(new Dimension(50,90));
+	    // make sure control panel is the right size
+	    controlPane.setMinimumSize(new Dimension(500,130));
+	    controlPane.setMaximumSize(new Dimension(2000,200));
 	    controlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		
     	getContentPane().add(enginesPane);
@@ -189,10 +189,6 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Locomotives", true);
     	
     	pack();
-    	/* all JMRI window position and size are now saved
-       	setSize(engineManager.getEnginesFrameSize());
-    	setLocation(engineManager.getEnginesFramePosition());
-    	*/
     	setVisible(true);
     	
     	// also load the cars

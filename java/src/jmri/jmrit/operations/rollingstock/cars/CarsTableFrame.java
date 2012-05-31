@@ -3,7 +3,6 @@
  package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import javax.swing.event.TableModelListener; 
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableColumnModel;
@@ -12,6 +11,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.ButtonGroup;
@@ -58,7 +58,6 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 	// labels
 	JLabel numCars = new JLabel();
 	JLabel textCars = new JLabel(rb.getString("cars"));
-	JLabel textSort = new JLabel(rb.getString("SortBy"));
 	JLabel textSep1 = new JLabel("      ");
 	
 	// radio buttons
@@ -114,7 +113,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     	
     	//row 1
     	JPanel cp1 = new JPanel();
-    	cp1.add(textSort);
+    	cp1.setBorder(BorderFactory.createTitledBorder(rb.getString("SortBy")));
+
     	cp1.add(sortByNumber);
     	cp1.add(sortByRoad);
     	cp1.add(sortByType);
@@ -138,6 +138,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     	
     	// row 2
     	JPanel cp2 = new JPanel();
+    	cp2.setBorder(BorderFactory.createTitledBorder(""));
 		findButton.setToolTipText(rb.getString("findCar"));
 		findCarTextBox.setToolTipText(rb.getString("findCar"));
 		
@@ -151,13 +152,14 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		
 		// place controls in scroll pane
 		JPanel controlPanel = new JPanel();
-		controlPanel.setLayout(new GridBagLayout());
-		addItem(controlPanel, cp1, 0, 0 );
-		addItem(controlPanel, cp2, 0, 1);
+		controlPanel.setLayout(new BoxLayout(controlPanel,BoxLayout.Y_AXIS));
+		controlPanel.add(cp1);
+		controlPanel.add(cp2);
 		
 	    JScrollPane controlPane = new JScrollPane(controlPanel);
-	    // make sure panel doesn't get too short
-	    controlPane.setMinimumSize(new Dimension(50,90));
+	    // make sure control panel is the right size
+	    controlPane.setMinimumSize(new Dimension(500,130));
+	    controlPane.setMaximumSize(new Dimension(2000,200));
 	    controlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		
     	getContentPane().add(carsPane);
@@ -230,10 +232,6 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
     	
     	pack();
-    	/* all JMRI window position and size are now saved
-    	setSize(carManager.getCarsFrameSize());
-    	setLocation(carManager.getCarsFramePosition());
-    	*/
 		setVisible(true);
 		
     	// also load the engines

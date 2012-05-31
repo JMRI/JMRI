@@ -305,7 +305,8 @@ public class Track {
 	/**
 	 * Used to determine if there's space available at this track for the car.
 	 * Considers cars currently placed on the track and cars in route to this
-	 * track.  Ignores car pick ups.  Used to prevent overloading the track.
+	 * track.  Ignores car pick ups.  Used to prevent overloading the track
+	 * with cars from staging.
 	 * 
 	 * @param car
 	 *            The car to be set out.

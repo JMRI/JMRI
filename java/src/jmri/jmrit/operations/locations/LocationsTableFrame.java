@@ -14,6 +14,8 @@ import java.awt.Frame;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -38,15 +40,15 @@ public class LocationsTableFrame extends OperationsFrame {
 	JScrollPane locationsPane;
 	
 	// labels
-	javax.swing.JLabel textSort = new javax.swing.JLabel();
-	javax.swing.JLabel textSep = new javax.swing.JLabel();
+	JLabel textSort = new JLabel(rb.getString("SortBy"));
+	JLabel textSep = new JLabel("          ");
 	
 	// radio buttons
     javax.swing.JRadioButton sortByName = new javax.swing.JRadioButton(rb.getString("Name"));
     javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(rb.getString("Id"));
 
 	// major buttons
-	javax.swing.JButton addButton = new javax.swing.JButton();
+	JButton addButton = new JButton(rb.getString("Add"));
 
     public LocationsTableFrame() {
         super(ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle").getString("TitleLocationsTable"));
@@ -65,19 +67,16 @@ public class LocationsTableFrame extends OperationsFrame {
     	JPanel controlPanel = new JPanel();
     	controlPanel.setLayout(new FlowLayout());
     	
-    	textSort.setText("Sort by");
     	controlPanel.add(textSort);
     	controlPanel.add(sortByName);
-    	sortByName.setSelected(true);
     	controlPanel.add(sortById);
-    	textSep.setText("          ");
     	controlPanel.add(textSep);
-
-		addButton.setText(rb.getString("Add"));
-		addButton.setVisible(true);
 		controlPanel.add (addButton);
 		controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
-	   	getContentPane().add(controlPanel);
+	   	
+		getContentPane().add(controlPanel);
+	   	
+    	sortByName.setSelected(true);
 	   	
 		// setup buttons
 		addButtonAction(addButton);

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.routes;
  
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ResourceBundle;
 
@@ -19,6 +20,7 @@ import javax.swing.JRadioButton;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
+import jmri.jmrit.operations.setup.Control;
 import jmri.util.com.sun.TableSorter;
 
 
@@ -72,10 +74,11 @@ public class RoutesTableFrame extends OperationsFrame {
     	controlPanel.add(sortById);
     	controlPanel.add(textSep);
     	controlPanel.add (addButton);
-    	
-       	sortByName.setSelected(true);
-		
+    	controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
+			    
 	   	getContentPane().add(controlPanel);
+	   	
+       	sortByName.setSelected(true);
 	   	
 		// setup buttons
 		addButtonAction(addButton);

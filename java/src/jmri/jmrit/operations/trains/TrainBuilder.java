@@ -1995,7 +1995,7 @@ public class TrainBuilder extends TrainCommon{
 	}
 	
 	/**
-	 * Find a next destination and track for a car with a schedule load.
+	 * Find a next destination and track for a car with a custom load.
 	 * @param car the car with the load
 	 * @throws BuildFailedException 
 	 */
@@ -2297,7 +2297,7 @@ public class TrainBuilder extends TrainCommon{
 							// no, find a destination track this this car
 						} else {
 							List<String> tracks = car.getDestination().getTrackIdsByMovesList(null);
-							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchForTrack"),new Object[]{car.toString(), car.getDestinationName()}));
+							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchForTrack"),new Object[]{car.toString(), car.getLoad(), car.getDestinationName()}));
 							for (int s = 0; s < tracks.size(); s++){
 								Track testTrack = car.getDestination().getTrackById(tracks.get(s));
 								// log.debug("track (" +testTrack.getName()+ ") has "+ testTrack.getMoves() + " moves");
