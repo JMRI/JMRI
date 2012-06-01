@@ -2455,7 +2455,7 @@ public class TrainBuilder extends TrainCommon{
 						new Object[]{train.getRoute().getName(), rld.getName()}));
 			}
 			// don't move car to same location unless the route only has one location (local moves) or is passenger, caboose or car with FRED
-			if (rl.getName().equals(rld.getName()) && routeList.size() != 1 && !car.isPassenger() && !car.isCaboose() && !car.hasFred()){
+			if (splitString(rl.getName()).equals(splitString(rld.getName())) && routeList.size() != 1 && !car.isPassenger() && !car.isCaboose() && !car.hasFred()){
 				// allow cars to return to the same staging location if no other options (tracks) are available
 				if (Setup.isAllowReturnToStagingEnabled() && testDestination.getLocationOps() == Location.STAGING && trackSave == null){
 					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildReturnCarToStaging"),new Object[]{car.toString(), rld.getName()}));
