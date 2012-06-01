@@ -2633,7 +2633,7 @@ public class TrainBuilder extends TrainCommon{
 						RouteLocation rle = train.getRoute().getLocationById(routeList.get(m));
 						if (rle == rld)
 							break;	// done
-						if (rle.getName().equals(rld.getName()) 
+						if (splitString(rle.getName()).equals(splitString(rld.getName())) 
 								&& (rle.getMaxCarMoves()-rle.getCarMoves()>0) 
 								&& rle.canDrop() && checkDropTrainDirection(car, rle, trackTemp)){
 							log.debug("Found an earlier drop for car ("+car.toString()+") destination ("+rle.getName()+")");
