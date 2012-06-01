@@ -90,7 +90,7 @@ public class JMenuUtil extends GuiUtilBase {
                     menu.addSeparator();
                     addSep = false;
                 }
-                if((child.getText().trim()).equals("group")){
+                if(child.getChild("group")!=null  && child.getChild("group").getText().equals("yes")){
                     //A seperate method is required for creating radio button groups
                     menu.add(createMenuGroupFromElement(child, wi, context));
                 } else {

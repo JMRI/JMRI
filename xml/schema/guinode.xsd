@@ -49,6 +49,11 @@
       Keyboard mnemonic for this node
       </xs:documentation></xs:annotation>
     </xs:element>
+    <xs:element name="group" minOccurs="0" maxOccurs="1">
+      <xs:annotation><xs:documentation>
+      Menu items with in this node are all grouped together, with only one item valid at any one time
+      </xs:documentation></xs:annotation>
+    </xs:element>
     <xs:element name="icon" minOccurs="0" maxOccurs="1">
       <xs:annotation><xs:documentation>
       Image icon file name to display

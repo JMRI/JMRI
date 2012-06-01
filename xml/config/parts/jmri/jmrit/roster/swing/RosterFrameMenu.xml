@@ -124,6 +124,7 @@
     <node>separator</node><!-- separator -->
     <node name="Programming">
         <mnemonic>p</mnemonic>
+        <group>yes</group>
         <node name="Programming Track">
             <current>setprogservice</current>
         </node>
