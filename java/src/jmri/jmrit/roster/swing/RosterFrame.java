@@ -358,6 +358,18 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             programmer1 = ProgDefault.getDefaultProgFile();
         }
         
+        String lastProg = (String) p.getProperty(getWindowFrameRef(), "selectedProgrammer");
+        if(lastProg.equals("service") && service.isEnabled()){
+            service.setSelected(true);
+            updateProgMode();
+        } else if(lastProg.equals("ops") && ops.isEnabled()){
+            ops.setSelected(true);
+            updateProgMode();
+        } else if(lastProg.equals("edit") && edit.isEnabled()){
+            edit.setSelected(true);
+            updateProgMode();
+        }
+        
 
     }
 
@@ -1054,6 +1066,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         p.setSimplePreferenceState(RosterFrame.class.getName() + ".hideGroups", hideGroups);
         p.setSimplePreferenceState(RosterFrame.class.getName() + ".hideRosterImage", hideRosterImage);
         p.setProperty(getWindowFrameRef(), "selectedRosterGroup", groups.getSelectedRosterGroup());
+        String selectedProgMode = "edit";
+        if(service.isSelected())
+            selectedProgMode="service";
+        if(ops.isSelected())
+            selectedProgMode="ops";
+        p.setProperty(getWindowFrameRef(), "selectedProgrammer", selectedProgMode);
         //Method to save table sort, width and column order status
         String rostertableref = getWindowFrameRef() + ":roster";
         
@@ -1207,6 +1225,13 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 updateProgMode();
             }
         });
+        if(service.isSelected()){
+            contextService.setSelected(true);
+        } else if (ops.isSelected()){
+            contextOps.setSelected(true);
+        } else {
+            contextEdit.setSelected(true);
+        }
         progMenu.add(contextEdit);
         popupMenu.add(progMenu);
         popupMenu.addSeparator();
@@ -1592,7 +1617,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         
         //This allows the cell to be edited using a single click if the row was previously selected, this allows a double on an unselected row to launch the programmer
         public boolean isCellEditable( java.util.EventObject e ){
-            log.info(re);
             if(re==null){
                 //No previous roster entry selected so will take this as a select so no return false to prevent editing
                 return false;
