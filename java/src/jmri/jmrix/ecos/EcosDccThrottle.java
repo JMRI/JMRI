@@ -3,6 +3,7 @@ package jmri.jmrix.ecos;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.jmrix.AbstractThrottle;
+import java.awt.HeadlessException;
 
 import javax.swing.*;
 
@@ -709,7 +710,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                     _haveControl = true;
                 if (!_hadControl){
                     ((EcosDccThrottleManager)adapterMemo.get(jmri.ThrottleManager.class)).throttleSetup(this, this.address, true);
-                    //adapterMemo.getThrottleManager().throttleSetup(this, this.address, true);
                 }
                 getInitialStates();
             }
@@ -735,7 +735,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         }
         else if (resultCode==15){
             log.info("Loco can not be accessed via the Ecos Object Id " + this.objectNumber);
-            javax.swing.JOptionPane.showMessageDialog(null,"Loco is unknown on the Ecos" + "\n" + this.address + "Please try access again","No Control",javax.swing.JOptionPane.WARNING_MESSAGE);
+            try {
+                javax.swing.JOptionPane.showMessageDialog(null,"Loco is unknown on the Ecos" + "\n" + this.address + "Please try access again","No Control",javax.swing.JOptionPane.WARNING_MESSAGE);
+            } catch (HeadlessException he) {
+                // silently ignore inability to display dialog
+            }
             jmri.InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
         }
         else log.debug("Last Message resulted in an END code we do not understand\n" + lines[lines.length-1]);
@@ -776,7 +780,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             ecosretry++;
             int val=0;
             if (p.getForceControlFromEcos()==0x00)
-                val = javax.swing.JOptionPane.showConfirmDialog(null,"Unable to gain control of the Loco \n Another operator may have control of the Loco \n Do you want to attempt a forced take over?","No Control", JOptionPane.YES_NO_OPTION,javax.swing.JOptionPane.QUESTION_MESSAGE);
+                try {
+                    val = javax.swing.JOptionPane.showConfirmDialog(null,"Unable to gain control of the Loco \n Another operator may have control of the Loco \n Do you want to attempt a forced take over?","No Control", JOptionPane.YES_NO_OPTION,javax.swing.JOptionPane.QUESTION_MESSAGE);
+                } catch (HeadlessException he) {
+                    val=1;
+                }
             else{
                 if(p.getForceControlFromEcos()==0x01)
                     val=1;
@@ -798,16 +806,13 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 log.error("We have no control over the ecos object " + this.objectNumber + "Trying a forced control");
         }
         else{
-            //javax.swing.JOptionPane.showMessageDialog(null,"We have lost control over" + "\n" + this.address + " and the Ecos","No Control",javax.swing.JOptionPane.WARNING_MESSAGE);
             ecosretry=0;
             if(_hadControl) {
                 notifyPropertyChangeListener("LostControl", 0, 0);
             } else{
-               // adapterMemo.getThrottleManager().throttleSetup(this, this.address, false);
                 ((EcosDccThrottleManager)adapterMemo.get(jmri.ThrottleManager.class)).throttleSetup(this, this.address, false);
             }
              ((EcosDccThrottleManager)adapterMemo.get(jmri.ThrottleManager.class)).releaseThrottle(this, null);
-            //jmri.InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
         }
     }
     
