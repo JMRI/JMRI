@@ -94,6 +94,7 @@ public class Backup extends XmlFile {
 	private static boolean saved = false;
 	public synchronized void autoBackup(){
 		if (!saved){
+			CarManagerXml.instance();				// make sure all files have been loaded
 			backupFiles(createBackupDirectoryName());
 			saved = true;
 		}
