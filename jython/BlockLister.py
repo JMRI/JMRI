@@ -219,8 +219,8 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
             self.msgText("Block Length: " + b.getLengthIn().toString() + "\n")
         if (b.getDirection() != None) :
             self.msgText("Block Direction: " + jmri.Path.decodeDirection(b.getDirection()) + "\n")
-        if (b.getWorkingDirection() != None) :
-            self.msgText("Block Working Direction: " + jmri.Path.decodeDirection(b.getWorkingDirection()) + "\n")
+        #if (b.getWorkingDirection() != None) :
+        #    self.msgText("Block Working Direction: " + jmri.Path.decodeDirection(b.getWorkingDirection()) + "\n")
         if (b.getState() != None) :
             self.msgText("Block State: " + self.cvtBlockStateToText(b.getState()) + "\n")
         if (b.getBlockSpeed() != "") :
