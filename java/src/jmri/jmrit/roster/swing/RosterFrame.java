@@ -359,17 +359,18 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
         
         String lastProg = (String) p.getProperty(getWindowFrameRef(), "selectedProgrammer");
-        if(lastProg.equals("service") && service.isEnabled()){
-            service.setSelected(true);
-            updateProgMode();
-        } else if(lastProg.equals("ops") && ops.isEnabled()){
-            ops.setSelected(true);
-            updateProgMode();
-        } else if(lastProg.equals("edit") && edit.isEnabled()){
-            edit.setSelected(true);
-            updateProgMode();
+        if(lastProg!=null){
+            if(lastProg.equals("service") && service.isEnabled()){
+                service.setSelected(true);
+                updateProgMode();
+            } else if(lastProg.equals("ops") && ops.isEnabled()){
+                ops.setSelected(true);
+                updateProgMode();
+            } else if(lastProg.equals("edit") && edit.isEnabled()){
+                edit.setSelected(true);
+                updateProgMode();
+            }
         }
-        
 
     }
 
