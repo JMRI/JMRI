@@ -48,6 +48,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     * subclasses will insert other panels
     */
     public void init() {
+    	Thread.yield();
         _update = false;
         _bottom1Panel = makeBottom1Panel();
         _bottom2Panel = makeBottom2Panel();
@@ -57,7 +58,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
         bottomPanel.add(_bottom1Panel);
         bottomPanel.add(_bottom2Panel);
         add(bottomPanel);
-        if (log.isDebugEnabled()) log.debug("init done for family "+_family);
     }
 
     /**
@@ -108,6 +108,27 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 return;     // Must assume no family names were changed
             }
         }
+        Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
+        Iterator<Entry<String, Hashtable<String, NamedIcon>>> it = families.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, Hashtable<String, NamedIcon>> entry = it.next();
+            if (entry.getValue().size()==iconMap.size()) {
+            	Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
+            	boolean match = true;
+            	while (iter.hasNext()) {
+            		Entry<String, NamedIcon> ent = iter.next();
+            		NamedIcon icon = iconMap.get(ent.getKey());
+            		if (icon==null || !icon.getURL().equals(ent.getValue().getURL())) {
+            			match = false;
+            			break;
+            		}           		
+            	}
+            	if (match) { 
+                	_family = entry.getKey();
+            		return; 
+            	}
+            }
+        }        
         int result = JOptionPane.showConfirmDialog(_paletteFrame,
                             ItemPalette.rbp.getString("NoFamilyName"), ItemPalette.rb.getString("questionTitle"),
                             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -116,7 +137,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         }
         if (_family!=null && _family.trim().length()>0 && ItemPalette.addFamily(_paletteFrame, _itemType, _family, iconMap)) {
             return;
-        } 
+        }
         do {
             _family = JOptionPane.showInputDialog(_paletteFrame, ItemPalette.rbp.getString("EnterFamilyName"), 
                     ItemPalette.rb.getString("questionTitle"), JOptionPane.QUESTION_MESSAGE);
@@ -133,8 +154,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
         Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
         if (families!=null && families.size()>0) {
-            JPanel familyPanel = makeFamilyButtons(families.keySet().iterator(),
-                                                   (_currentIconMap==null));
+            JPanel familyPanel = makeFamilyButtons(families.keySet().iterator(), (_currentIconMap==null));
             if (_currentIconMap==null) {
             	_currentIconMap = families.get(_family);
             }
@@ -159,6 +179,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
         removeIconFamiliesPanel();
         initIconFamiliesPanel();
         add(_iconFamilyPanel, 1);
+        hideIcons();
+        _iconFamilyPanel.invalidate();
+        invalidate();
         reset();
     }
     
@@ -300,6 +323,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
         }
         _dragIconPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
         if (iconMap!=null) {
+        	if (iconMap.get(displayKey)==null) {
+        		displayKey = (String)iconMap.keySet().toArray()[0];
+            }
             NamedIcon ic = iconMap.get(displayKey);
             if (ic!=null) {
                 NamedIcon icon = new NamedIcon(ic);
@@ -398,7 +424,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         cancelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     updateFamiliesPanel();
-                }
+                 }
         });
         panel.add(cancelButton);
         return panel;
@@ -450,6 +476,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _currentIconMap = ItemPalette.getIconMap(_itemType, _family);
         addIconsToPanel(_currentIconMap);
         makeDndIconPanel(_currentIconMap, "BeanStateUnknown");
+        _iconFamilyPanel.invalidate();
         hideIcons();
     }
 

@@ -62,7 +62,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     }
 
     public void init() {
-        if (log.isDebugEnabled()) log.debug("init "+_itemType);
+    	Thread.yield();
         add(instructions());
         initIconFamiliesPanel();
         initButtonPanel();

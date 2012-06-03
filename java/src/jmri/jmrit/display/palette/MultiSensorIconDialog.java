@@ -27,25 +27,11 @@ public class MultiSensorIconDialog extends IconDialog {
     						Hashtable <String, NamedIcon> iconMap) {
         super(type, family, parent, iconMap); 
     }
-/*
-    protected JPanel makeButtonPanel() {
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        makeAddIconButtonPanel(buttonPanel, "ToolTipAddPosition", "ToolTipDeletePosition");
-        makeAddSetButtonPanel(buttonPanel);
-        makeDoneButtonPanel(buttonPanel);
-        return buttonPanel;
-    }
-*/
+
     protected String getIconName() {
         return MultiSensorItemPanel.POSITION[_iconMap.size()-3];
     }
     
-    protected void makeAddSetButtonPanel(JPanel buttonPanel) {
-        makeAddIconButtonPanel(buttonPanel, "ToolTipAddPosition", "ToolTipDeletePosition");
-        super.makeAddSetButtonPanel(buttonPanel);
-    }
-
     /**
     * add/delete icon. For Multisensor, it adds another sensor position.
     */
@@ -82,6 +68,14 @@ public class MultiSensorIconDialog extends IconDialog {
         deleteSensor.setToolTipText(ItemPalette.rbp.getString(deleteTip));
         panel2.add(deleteSensor);
         buttonPanel.add(panel2);
+    }
+    
+    protected boolean doDoneAction() {
+    	MultiSensorItemPanel parent = (MultiSensorItemPanel)_parent;
+    	if(_iconMap.size()!= parent._currentIconMap.size()) {
+    		parent.setSelections();
+    	}
+    	return super.doDoneAction();
     }
 
     /**

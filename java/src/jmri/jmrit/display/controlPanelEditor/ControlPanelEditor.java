@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 import javax.swing.*;
 
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.HelpUtil;
 
@@ -64,7 +65,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private JMenu _warrantMenu;
     private JMenu _circuitMenu;
     private CircuitBuilder _circuitBuilder;
-    private jmri.jmrit.display.palette.ItemPalette _itemPalette;
+    private ItemPalette _itemPalette;
 
     private JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(rb.getString("CheckBoxGlobalFlags"));
 //    private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(rb.getString("CloseEditor"));
@@ -113,6 +114,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         setJMenuBar(_menuBar);
         addHelpMenu("package.jmri.jmrit.display.ControlPanelEditor", true);
+        LoadPalette p = new LoadPalette(this);
+        javax.swing.SwingUtilities.invokeLater(p);
 
         super.setTargetPanel(null, null);
         super.setTargetPanelSize(300, 300);
@@ -755,39 +758,42 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
     }
 
-	JDialog d;
+	JDialog _dialog; 
 	public void makePalette() {
-        if (_itemPalette==null) {
+    	if (_itemPalette==null) {
             _iconMenu.setEnabled(false);
         	String title = rb.getString("MenuItemItemPallette");
-        	d = new JDialog(this, title, false);
+        	_dialog = new JDialog(this, title, false);
             JPanel panel = new JPanel();
-            panel.setLayout(new BorderLayout(60,60));
+            panel.setLayout(new BorderLayout(100,100));
             JPanel p = new JPanel();
             p.add(new JLabel(rbcp.getString("waitForPalette")));
             panel.add(p);
-            d.getContentPane().add(panel);
-            d.setLocation(getLocation().x+100, getLocation().y+100);
-            d.pack();
-            d.setVisible(true);
-            
-            Thread t = new Thread() {
-                public void run() {
-                		loadPalette();
-                    }
-                };
-            javax.swing.SwingUtilities.invokeLater(t);
+            _dialog.getContentPane().add(panel);
+            _dialog.setLocation(getLocation().x+200, getLocation().y+150);
+            _dialog.pack();
+            _dialog.setVisible(true);
         }
         else {
             _itemPalette.setVisible(true);        	
         }
     }
-    private void loadPalette() {
-        _itemPalette = new jmri.jmrit.display.palette.ItemPalette(rb.getString("MenuItemItemPallette"), this);   	
-        _itemPalette.setVisible(true);
-        _iconMenu.setEnabled(true);
-        d.dispose();
-    }
+        
+	class LoadPalette extends Thread {
+		Editor ed;
+		LoadPalette(Editor e) {
+			ed = e;
+		}
+		public void run() {
+	        ItemPalette.loadIcons();   	
+	        _itemPalette = new ItemPalette(rb.getString("MenuItemItemPallette"), ed);        		
+	        if (_dialog!=null) {
+	        	_dialog.dispose();
+	        	_dialog = null;	        	
+	        }
+            _iconMenu.setEnabled(true);
+		}
+	}
 
     // all content loaded from file.
     public void loadComplete() {
