@@ -15,6 +15,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -78,19 +79,21 @@ public class TrainManifest extends TrainCommon {
 		List<String> routeList = train.getRoute().getLocationsBySequenceList();
 		
 		for (int r = 0; r < routeList.size(); r++) {
-			RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));
-			// add line break between locations without work and ones with work
+			RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));			
 			boolean oldWork = work;
-			work = isThereWorkAtLocation(carList, rl);
-			if (oldWork == false && work == true)
-				newLine(fileOut);		
-			
+			work = isThereWorkAtLocation(carList, engineList, rl);	
+
 			// print info only if new location
 			Location location = locationManager.getLocationByName(rl.getName());
 			String routeLocationName = splitString(rl.getName());
 			if (!routeLocationName.equals(previousRouteLocationName) ||
 					(routeLocationName.equals(previousRouteLocationName) && oldWork == false && work == true && newWork == false)){
 				if (work){
+					// add line break between locations without work and ones with work
+					// TODO sometimes an extra line break appears when the user has two or more locations with the "same" name
+					// and the second location doesn't have work
+					if (oldWork == false)
+						newLine(fileOut);
 					newWork = true;
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
 					if (r == 0){
@@ -108,20 +111,6 @@ public class TrainManifest extends TrainCommon {
 					// add route comment
 					if (!rl.getComment().equals(""))
 						addLine(fileOut, rl.getComment());
-				} else {
-					// no work at this location
-					String s = MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName});
-					// if a route comment, then only use location name and route comment, useful for passenger trains
-					if (!rl.getComment().equals("")){
-						s = routeLocationName;
-						if (rl.getComment().trim().length()>0)
-							s = s +", "+rl.getComment();
-					}
-					if (r == 0)
-						s = s +", "+rb.getString("departureTime")+" "+train.getDepartureTime();
-					else if (!rl.getDepartureTime().equals(""))
-						s = s +", "+rb.getString("departureTime")+" "+rl.getFormatedDepartureTime();				
-					addLine(fileOut, s);
 				}
 				// add location comment
 				if (Setup.isPrintLocationCommentsEnabled() && !location.getComment().equals(""))
@@ -207,6 +196,20 @@ public class TrainManifest extends TrainCommon {
 						addLine(fileOut, buf.toString());
 						newWork = false;
 						newLine(fileOut);
+					} else {
+						// no work at this location
+						String s = MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName});
+						// if a route comment, then only use location name and route comment, useful for passenger trains
+						if (!rl.getComment().equals("")){
+							s = routeLocationName;
+							if (rl.getComment().trim().length()>0)
+								s = s +", "+rl.getComment();
+						}
+						if (r == 0)
+							s = s +", "+rb.getString("departureTime")+" "+train.getDepartureTime();
+						else if (!rl.getDepartureTime().equals(""))
+							s = s +", "+rb.getString("departureTime")+" "+rl.getFormatedDepartureTime();				
+						addLine(fileOut, s);
 					}
 				}
 			} else {
@@ -224,10 +227,15 @@ public class TrainManifest extends TrainCommon {
 	}
 	
 	// returns true if there's work at location
-	private boolean isThereWorkAtLocation(List<String> carList, RouteLocation rl){
+	private boolean isThereWorkAtLocation(List<String> carList, List<String> engList, RouteLocation rl){
 		for (int i = 0; i < carList.size(); i++) {
 			Car car = carManager.getById(carList.get(i));
 			if (car.getRouteLocation() == rl || car.getRouteDestination() == rl)
+				return true;
+		}
+		for (int i = 0; i < engList.size(); i++) {
+			Engine eng = engineManager.getById(engList.get(i));
+			if (eng.getRouteLocation() == rl || eng.getRouteDestination() == rl)
 				return true;
 		}
 		return false;
