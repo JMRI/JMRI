@@ -372,8 +372,8 @@ teach the operations program where to place the train icon on your panel
 when moving your train from location to location. Deselect this feature
 after your done teaching the program to prevent accidentally changing
 the train icon's position on your panel. If you also want the lead
-locomotive number as part of your train icon text, select the "Append
-Locomotive Number" box. You can select the background color of your
+locomotive number as part of your train icon text and switch lists, select the "Append
+Loco Number" box. You can select the background color of your
 train icon depending on the train's direction. Select the color desired
 for each direction using the pull down menus. A <A
 	HREF="#SwitcherService">switcher</A> is a train with only one location
