@@ -2760,6 +2760,15 @@ public class TrainBuilder extends TrainCommon{
 					removeCarsFromStaging();
 				}
 			}
+			int size = carManager.getByTrainList(train).size();
+			if (size > 0){
+				if (JOptionPane.showConfirmDialog(null,
+						MessageFormat.format(rb.getString("buildCarsResetTrain"), new Object[]{size, train.getName()}),
+						rb.getString("buildResetTrain"),					
+						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+					train.reset();
+				}
+			}
 		}
 		if (buildReport != null){
 			addLine(buildReport, ONE, msg);
