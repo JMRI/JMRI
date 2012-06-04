@@ -249,9 +249,10 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 			} else {
 				// name not found so use one that exists
 				String name = p.getTableColumnAtNum(tableref, i);
-				width = p.getTableColumnWidth(tableref, name);
-				table.getColumnModel().getColumn(i).setPreferredWidth(width);
-				log.debug("Could not find column name "+columnName+" using name "+name+" setting width "+width);
+				if (name != null){
+					width = p.getTableColumnWidth(tableref, name);
+					table.getColumnModel().getColumn(i).setPreferredWidth(width);
+				}
 			}
 		}
 		return true;

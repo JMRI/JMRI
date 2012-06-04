@@ -212,6 +212,8 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     		addPropertyChangeTrainSchedules();
     		fireTableStructureChanged();
     		initTable();
+    	} else if (e.getPropertyName().equals(TrainSchedule.SCHEDULE_CHANGED_PROPERTY)){
+    		fireTableDataChanged();
     	} else if (e.getSource().getClass().equals(Train.class)){
     		String trainId = ((Train) e.getSource()).getId();
     		int row = sysList.indexOf(trainId);

@@ -16,6 +16,7 @@ import org.jdom.Element;
 public class TrainSchedule {
 	
 	public static final String NAME_CHANGED_PROPERTY = "trainScheduleName";
+	public static final String SCHEDULE_CHANGED_PROPERTY = "trainScheduleChanged";
 
 	protected String _id = "";
 	protected String _name = "";
@@ -63,13 +64,13 @@ public class TrainSchedule {
 	public void addTrainId(String id){
 		if (!_trainIds.contains(id)){
 			_trainIds.add(id);
-			firePropertyChange("AddTrainId", null, id);
+			firePropertyChange(SCHEDULE_CHANGED_PROPERTY, null, id);
 		}
 	}
 	
 	public void removeTrainId(String id){
 		_trainIds.remove(id);
-		firePropertyChange("RemoveTrainId", id, null);
+		firePropertyChange(SCHEDULE_CHANGED_PROPERTY, id, null);
 	}
 	
 	public boolean containsTrainId(String id){

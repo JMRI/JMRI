@@ -60,11 +60,14 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	// radio buttons
     JRadioButton sortByName = new JRadioButton(NAME);
     JRadioButton sortByTime = new JRadioButton(TIME);
+	JRadioButton noneButton = new JRadioButton(rb.getString("None"));
     
     // radio button groups
-   	ButtonGroup schGroup;
+   	ButtonGroup schGroup = new ButtonGroup();
         
 	// major buttons
+   	JButton selectButton = new JButton(rb.getString("Select"));
+   	JButton clearButton = new JButton(rb.getString("Clear"));
 	JButton applyButton = new JButton(rb.getString("Apply"));
 	JButton saveButton = new JButton(rb.getString("Save"));
 	
@@ -111,10 +114,14 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 			
     	JPanel cp3 = new JPanel();
     	cp3.setBorder(BorderFactory.createTitledBorder(""));
+    	cp3.add (clearButton);
+    	cp3.add (selectButton);
 		cp3.add (applyButton);
 		cp3.add (saveButton);
 		
     	//tool tips
+		selectButton.setToolTipText(rb.getString("SelectAllButtonTip"));
+		clearButton.setToolTipText(rb.getString("ClearAllButtonTip"));
     	applyButton.setToolTipText(rb.getString("ApplyButtonTip"));
     	saveButton.setToolTipText(rb.getString("SaveButtonTip"));
 		
@@ -133,6 +140,8 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	   	getContentPane().add(controlPane);
 	   	
 		// setup buttons
+		addButtonAction(clearButton);
+		addButtonAction(selectButton);
 		addButtonAction(applyButton);
 		addButtonAction(saveButton);
 		
@@ -143,6 +152,8 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     	
     	addRadioButtonAction(sortByTime);
 		addRadioButtonAction(sortByName);	
+		
+		addRadioButtonAction(noneButton);
     	
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
@@ -164,10 +175,15 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 		log.debug("radio button actived");
 		if (ae.getSource() == sortByName){
 			trainsScheduleModel.setSort(trainsScheduleModel.SORTBYNAME);
-		}
-		if (ae.getSource() == sortByTime){
+		} else if (ae.getSource() == sortByTime){
 			trainsScheduleModel.setSort(trainsScheduleModel.SORTBYTIME);
+		} else if (ae.getSource() == noneButton){
+			enableButtons(false);
+		// must be one of the schedule radio buttons
+		} else {
+			enableButtons(true);		   	
 		}
+		
 	}
 	
 	TrainSwitchListEditFrame tslef;
@@ -175,6 +191,12 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	// add, build, print, switch lists, terminate, and save buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("schedule train button activated");
+		if (ae.getSource() == clearButton){
+			updateCheckboxes(false);
+		}
+		if (ae.getSource() == selectButton){
+			updateCheckboxes(true);
+		}
 		if (ae.getSource() == applyButton){
 			applySchedule();
 		}
@@ -187,7 +209,11 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	
 	private void updateControlPanel(){
 		schedule.removeAll();
-	   	schGroup = new ButtonGroup();
+		noneButton.setName("");
+		noneButton.setSelected(true);
+		enableButtons(false);
+		schedule.add(noneButton);
+		schGroup.add(noneButton);
     	List<String> l = scheduleManager.getSchedulesByIdList();
     	for (int i=0; i<l.size(); i++){
     		TrainSchedule ts = scheduleManager.getScheduleById(l.get(i));
@@ -196,33 +222,57 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     		b.setName(l.get(i));
     		schedule.add(b);
     		schGroup.add(b);
-    		if (b.getName().equals(_activeId))
+    		addRadioButtonAction(b);
+    		if (b.getName().equals(_activeId)){
     			b.setSelected(true);
+    			enableButtons(true);
+    		}
     	}
     	schedule.revalidate();
+	}
+	
+	private void updateCheckboxes(boolean selected){
+		TrainSchedule ts = TrainScheduleManager.instance().getScheduleById(getSelectedScheduleId());
+		if (ts != null){
+			List<String> trains = trainManager.getTrainsByIdList();
+			for (int j=0; j<trains.size(); j++){
+				log.debug("train id: "+trains.get(j));
+				if (selected)
+					ts.addTrainId(trains.get(j));
+				else
+					ts.removeTrainId(trains.get(j));
+			}
+		}
 	}
 
 	private void applySchedule(){
 		setActiveId();
 		TrainSchedule ts = TrainScheduleManager.instance().getScheduleById(_activeId);
-		List<String> trains = trainManager.getTrainsByIdList();
-		for (int j=0; j<trains.size(); j++){
-			log.debug("train id: "+trains.get(j));
-			Train train = trainManager.getTrainById(trains.get(j));
-			train.setBuildEnabled(ts.containsTrainId(trains.get(j)));
+		if (ts != null){
+			List<String> trains = trainManager.getTrainsByIdList();
+			for (int j=0; j<trains.size(); j++){
+				log.debug("train id: "+trains.get(j));
+				Train train = trainManager.getTrainById(trains.get(j));
+				train.setBuildEnabled(ts.containsTrainId(trains.get(j)));
+			}
 		}
 	}
 	
 	private void setActiveId(){
+		_activeId = getSelectedScheduleId();
+	}
+	
+	private String getSelectedScheduleId(){
 		AbstractButton b;
 		Enumeration<AbstractButton> en = schGroup.getElements();
 		for (int i=0; i<schGroup.getButtonCount(); i++){
 			b = en.nextElement();
 			if (b.isSelected()){
 				log.debug("schedule radio button "+b.getText());
-				_activeId = b.getName();
+				return b.getName();
 			}
 		}
+		return null;
 	}
 	
 	protected void storeValues(){
@@ -263,6 +313,12 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     		if (ts != null)
     			ts.removePropertyChangeListener(this);
     	}
+    }
+    
+    private void enableButtons(boolean enable){
+	   	selectButton.setEnabled(enable);
+	   	clearButton.setEnabled(enable);
+	   	applyButton.setEnabled(enable);
     }
     
     public void propertyChange(PropertyChangeEvent e) {
