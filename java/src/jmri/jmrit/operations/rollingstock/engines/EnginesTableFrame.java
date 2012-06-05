@@ -254,9 +254,10 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 						JOptionPane.INFORMATION_MESSAGE);
 				return;
 				
-			}else{
-				enginesTable.changeSelection(rowindex, 0, false, false);
 			}
+			// clear any sorts by column
+			clearTableSort(enginesTable);
+			enginesTable.changeSelection(rowindex, 0, false, false);
 			return;
 		}
 		if (ae.getSource() == addButton){

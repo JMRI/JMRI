@@ -132,8 +132,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 		controlPanel.add(cp3);
 		
 	    JScrollPane controlPane = new JScrollPane(controlPanel);
-	    // make sure panel doesn't get too short
-	    controlPane.setMinimumSize(new Dimension(50,90));
+	    // make sure control panel is the right size
+	    controlPane.setMinimumSize(new Dimension(500,130));
+	    controlPane.setMaximumSize(new Dimension(2000,200));
 	    controlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		
     	getContentPane().add(trainsPane);

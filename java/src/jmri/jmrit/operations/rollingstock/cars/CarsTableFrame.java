@@ -312,6 +312,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 						JOptionPane.INFORMATION_MESSAGE);
 				return;
 			}
+			// clear any sorts by column
+		   	clearTableSort(carsTable);
 			carsTable.changeSelection(rowindex, 0, false, false);
 			return;
 		}
