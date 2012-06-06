@@ -177,7 +177,16 @@
     <typedef
         resource="org/tigris/subversion/svnant/svnantlib.xml"
         classpathref="path.svnant"/>
+    
+    <!-- to use default command link authentification -->
+<!-- 
+    <svnSetting
+        id="svn.settings"
+        javahl="false"
+        svnkit="false"/>
+ -->
 
+    <!-- to use authentification credentials from local.properties file -->
     <svnSetting
         id="svn.settings"
         username="${sourceforge.userid}"
@@ -863,7 +872,7 @@
     </target>
 
 
-    <target name="javadoc" depends="init, jjdoc" description="create JavaDocs">
+    <target name="javadoc" depends="init, jjdoc, compile-generated-source" description="create JavaDocs">
         <javadoc packagenames="jmri.*, apps.*"
            maxmemory="512m"
            overview="${source}/jmri/overview.html"
@@ -922,7 +931,7 @@
   <!-- use of the public option in the main task definition, and -->
   <!-- the execution of "dot" at the bottom.                     -->
   <!-- Requires Graphviz from http://www.graphviz.org            -->
-    <target name="javadoc-uml" depends="init, jjdoc" description="create JavaDocs with UML; requires java 1.6">
+    <target name="javadoc-uml" depends="init, jjdoc, compile-generated-source" description="create JavaDocs with UML; requires java 1.6">
         <javadoc packagenames="jmri.*, apps.*"
            maxmemory="512m"
            overview="${source}/jmri/overview.html"
