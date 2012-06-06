@@ -180,7 +180,7 @@ Final release steps:
 	ant
 	ant upload
 
-	Set ~/.ant/ant.conf back to Java 1.5 afterwards
+	(no need to set ~/.ant/ant.conf back to Java 1.5 afterwards)
 
 ( ) Format the release note page, change date, etc
 
