@@ -132,7 +132,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         adapter.configureBaudRate((String)baudBox.getSelectedItem());
         adapter.configureOption1((String)opt1Box.getSelectedItem());
         adapter.configureOption2((String)opt2Box.getSelectedItem());
-        if(!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())){
+        if(adapter.getSystemConnectionMemo()!=null && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())){
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
