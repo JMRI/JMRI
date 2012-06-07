@@ -60,7 +60,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     public int supportedSpeedModes() {
         return(DccThrottle.SpeedStepMode128|
                DccThrottle.SpeedStepMode28|
-               DccThrottle.SpeedStepMode28Tri|
+               DccThrottle.SpeedStepMode28Mot|
                DccThrottle.SpeedStepMode14);
     }
 
