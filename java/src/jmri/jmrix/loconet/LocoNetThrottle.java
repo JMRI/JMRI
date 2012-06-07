@@ -470,6 +470,61 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         
     }
 
+    /*
+     * setSpeedStepMode - set the speed step value and the related
+     *                    speedIncrement value.
+     * <P>
+     * specific implementations should override this function
+     * <P>
+     * @param Mode - the current speed step mode - default should be 128
+     *              speed step mode in most cases
+     */
+    @Override
+    public void setSpeedStepMode(int Mode) {
+        int status=slot.slotStatus();
+        if(log.isDebugEnabled()) {
+             log.debug("Speed Step Mode Change to Mode: " + Mode +
+                " Current mode is: " + this.speedStepMode);
+                log.debug("Current Slot Mode: " +LnConstants.DEC_MODE(status));
+        }
+        if(speedStepMode!=Mode)
+                notifyPropertyChangeListener("SpeedSteps", this.speedStepMode,
+                                              this.speedStepMode=Mode );
+        if(Mode==DccThrottle.SpeedStepMode14) {
+                speedIncrement=SPEED_STEP_14_INCREMENT;
+                log.debug("14 speed step change");
+                status=status&((~LnConstants.DEC_MODE_MASK)|
+                                LnConstants.STAT1_SL_SPDEX)|
+                                LnConstants.DEC_MODE_14;
+        }
+        else if(Mode==DccThrottle.SpeedStepMode28Mot) {
+                speedIncrement=SPEED_STEP_28_INCREMENT;
+                log.debug("28-Tristate speed step change");
+                status=status&((~LnConstants.DEC_MODE_MASK)|
+                                LnConstants.STAT1_SL_SPDEX)|
+                                LnConstants.DEC_MODE_28TRI;
+             }
+        else if(Mode==DccThrottle.SpeedStepMode28) {
+                speedIncrement=SPEED_STEP_28_INCREMENT;
+                log.debug("28 speed step change");
+                status=status&((~LnConstants.DEC_MODE_MASK)|
+                                LnConstants.STAT1_SL_SPDEX)|
+                                LnConstants.DEC_MODE_28;
+             }
+        else { // default to 128 speed step mode
+                speedIncrement=SPEED_STEP_128_INCREMENT;
+                log.debug("128 speed step change");
+                status=status&((~LnConstants.DEC_MODE_MASK)|
+                                LnConstants.STAT1_SL_SPDEX)|
+                                LnConstants.DEC_MODE_128;
+             }
+        if(log.isDebugEnabled()) 
+              log.debug("New Slot Mode: " +LnConstants.DEC_MODE(status));
+        network.sendLocoNetMessage(slot.writeMode(status));
+    }
+
+
+
     public LocoAddress getLocoAddress() {
         return new DccLocoAddress(address, LnThrottleManager.isLongAddress(address));
     }

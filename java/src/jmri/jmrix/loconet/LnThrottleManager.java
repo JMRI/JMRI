@@ -53,6 +53,18 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     public boolean hasDispatchFunction(){ return true; }     
 
     /**
+     * What speed modes are supported by this system?
+     * value should be xor of possible modes specifed by the
+     * DccThrottle interface
+     */
+    public int supportedSpeedModes() {
+        return(DccThrottle.SpeedStepMode128|
+               DccThrottle.SpeedStepMode28|
+               DccThrottle.SpeedStepMode28Tri|
+               DccThrottle.SpeedStepMode14);
+    }
+
+    /**
      * SlotListener contract. Get notification that an address has changed slot.
      * This method creates a throttle for all ThrottleListeners of that address
      * and notifies them via the ThrottleListener.notifyThrottleFound method.

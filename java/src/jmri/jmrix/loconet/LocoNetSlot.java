@@ -241,7 +241,20 @@ public class LocoNetSlot {
     }
     
     /**
-     * Update the status bits in STAT1 (D5, D4)
+     * Update the decoder type bits in STAT1 (D2, D1, D0)
+     * @param status New values for STAT1 (D2, D1, D0)
+     * @return Formatted LocoNet message to change value.
+     */
+    public LocoNetMessage writeMode(int status) {
+        LocoNetMessage l = new LocoNetMessage(4);
+        l.setOpCode( LnConstants.OPC_SLOT_STAT1 );
+        l.setElement(1, slot);
+        l.setElement(2, (stat&~LnConstants.DEC_MODE_MASK)|status);
+        return l;
+    }
+ 
+   /**
+     * Update the status mode bits in STAT1 (D5, D4)
      * @param status New values for STAT1 (D5, D4)
      * @return Formatted LocoNet message to change value.
      */

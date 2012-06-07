@@ -405,7 +405,12 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 	        } else {
 		  LocoNetSlot tempSlot=((LocoNetThrottle) t).getLocoNetSlot();
 		  tempSlot.addSlotListener(this);
-		  setDirection(((LocoNetThrottle) t));
+                  if(consistRequestState==LINKSTAGEONESTATE){
+                     notifyChangedSlot(tempSlot);
+		     setDirection(((LocoNetThrottle) t));
+                     consistRequestState=LINKSTAGETWOSTATE;
+                  }
+		  else setDirection(((LocoNetThrottle) t));
 	       }
 	     } catch (java.lang.ClassCastException cce) {
 	       // if the simulator is in use, we will
