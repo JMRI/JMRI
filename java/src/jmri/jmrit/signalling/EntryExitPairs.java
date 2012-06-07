@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import java.util.Hashtable;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.ArrayList;
 import java.util.List;
@@ -1017,7 +1018,7 @@ public class EntryExitPairs implements jmri.Manager{
                                         sml.setDestinationMast(smDest);
                                         sml.setStore(jmri.SignalMastLogic.STORENONE, smDest);
                                     }
-                                    Hashtable<Block, Integer> blks = new Hashtable<Block, Integer>();
+                                    LinkedHashMap<Block, Integer> blks = new LinkedHashMap<Block, Integer>();
                                     //Remove the first block as it is our start block
                                     routeDetails.remove(0);
                                     for(int i = 0; i<routeDetails.size(); i++){
