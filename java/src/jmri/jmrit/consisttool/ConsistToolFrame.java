@@ -24,7 +24,7 @@ import jmri.jmrit.throttle.ThrottleFrameManager;
  * @author Paul Bender Copyright (C) 2003-2008
  * @version $Revision$
  */
-public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.ConsistListener {
+public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.ConsistListener,jmri.ConsistListListener {
 
     final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.consisttool.ConsistTool");
     // GUI member declarations
@@ -60,6 +60,12 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         } catch (Exception e) {
             log.warn("error reading consist file: " + e);
         }
+
+        // register to be notified if the consist list changes.
+        ConsistMan.addConsistListListener(this);
+
+        // request an update from the layout.
+        ConsistMan.requestUpdateFromLayout();
 
         // configure items for GUI
 
@@ -640,5 +646,18 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
             log.warn("error writing consist file: " + e);
         }
     }
+
+    public void dispose(){
+        super.dispose();
+        // de-register to be notified if the consist list changes.
+        ConsistMan.removeConsistListListener(this);
+    }
+
+    // ConsistListListener interface
+    public void notifyConsistListChanged(){
+       // update the consist list.
+       initializeConsistBox();
+    }
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConsistToolFrame.class.getName());
 }

@@ -25,8 +25,6 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
      **/
     public EasyDccConsistManager(){
         super();
-        // Initilize the consist reader thread.
-        new EasyDccConsistReader();
     }
     
     
@@ -52,8 +50,15 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
         consistList.add(address);
         return consist;
     }
-    
-    
+   
+    /* request an update from the layout, loading
+     * Consists from the command station.
+     */
+    public void requestUpdateFromLayout(){
+        // Initilize the consist reader thread.
+        new EasyDccConsistReader();
+    } 
+
     // Internal class to read consists from the command station
     private class EasyDccConsistReader implements Runnable,EasyDccListener {
         
@@ -137,7 +142,10 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
                         }
                     if(_lastAddress<255)
                         searchNext();
-                    else CurrentState=IDLE;
+                    else {
+                        CurrentState=IDLE;
+                        notifyConsistListChanged();
+                    }
                 } else {
                     if(log.isDebugEnabled()) log.debug("Message Recieved in IDLE state.  Message is: " + r.toString());
                 }

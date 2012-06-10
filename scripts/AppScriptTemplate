@@ -120,6 +120,12 @@ then
               ARCH="armv5"
             fi
 
+            if [ "$ARCH" = "armv6l" ]
+            then
+              # Will separate this out later but is OK for now
+              ARCH="armv5"
+            fi
+
 	    if [ -d "${SYSLIBPATH}/$ARCH" ]
 	    then
 	       SYSLIBPATH="${SYSLIBPATH}/$ARCH:$SYSLIBPATH"

@@ -35,6 +35,7 @@ public interface DccThrottle extends Throttle {
     public static final int SpeedStepMode28 = 2;
     public static final int SpeedStepMode27 = 4;
     public static final int SpeedStepMode14 = 8;
+    public static final int SpeedStepMode28Mot = 16;
 
     /*
      * setSpeedStepMode - set the speed step value.

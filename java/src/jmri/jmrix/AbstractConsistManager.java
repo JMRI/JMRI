@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import jmri.Consist;
 import jmri.ConsistListener;
+import jmri.ConsistListListener;
 import jmri.DccLocoAddress;
 
 /**
@@ -22,9 +23,12 @@ abstract public class AbstractConsistManager implements jmri.ConsistManager{
     
 	protected ArrayList<DccLocoAddress> consistList = null;
 
+        private ArrayList<ConsistListListener> ChangeListeners = null;
+
 	public AbstractConsistManager(){
 	      consistTable = new Hashtable<DccLocoAddress,Consist>();
 	      consistList = new ArrayList<DccLocoAddress>();
+              ChangeListeners = new ArrayList<ConsistListListener>();
 	}
 
 	/**
@@ -94,5 +98,35 @@ abstract public class AbstractConsistManager implements jmri.ConsistManager{
 		else return retval;
 	}
 
+       /* request an update from the layout, loading
+        * Consists from the command station.
+        */
+       public void requestUpdateFromLayout(){}
 
+        /*
+         * register a ConsistListListener object with this Consist
+         * Manager
+         * @param listener a Consist List Listener object.
+         */
+        public void addConsistListListener(ConsistListListener l){
+           ChangeListeners.add(l);
+        }
+
+        /*
+         * remove a ConsistListListener object with this Consist
+         * Manager
+         * @param listener a Consist List Listener object.
+         */
+        public void removeConsistListListener(ConsistListListener l){
+           ChangeListeners.remove(l);
+        }
+
+        /*
+         * Notify the registered Consist List Listener objects that the
+         * Consist List has changed.
+         */
+        public void notifyConsistListChanged(){
+           for(ConsistListListener l:ChangeListeners)
+               l.notifyConsistListChanged();
+        }
 }

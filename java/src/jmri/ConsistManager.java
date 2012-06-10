@@ -59,4 +59,29 @@ public interface  ConsistManager {
 	 */
 	public String decodeErrorCode(int ErrorCode);
 
+        /* request an update from the layout, loading
+         * Consists from the command station.
+         */
+        public void requestUpdateFromLayout();
+
+        /*
+         * register a ConsistListListener object with this Consist 
+         * Manager
+         * @param listener a Consist List Listener object.
+         */
+        public void addConsistListListener(ConsistListListener l);
+
+        /*
+         * remove a ConsistListListener object with this Consist 
+         * Manager
+         * @param listener a Consist List Listener object.
+         */
+        public void removeConsistListListener(ConsistListListener l);
+
+        /*
+         * Notify the registered Consist List Listener objects that the
+         * Consist List has changed.
+         */
+        public void notifyConsistListChanged();
+
 }

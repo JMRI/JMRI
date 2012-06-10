@@ -2,6 +2,7 @@ package jmri;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 
@@ -99,7 +100,19 @@ public interface SignalMastLogic {
 
     public int getAutoBlockState(Block block, SignalMast destination);
 
+    /**
+    * returns all the blocks that have been detected as being in use for this logic,
+    * this includes blocks on level xings that are not directly in the path but do
+    * have an affect on the logic
+    */
     public ArrayList<Block> getAutoBlocks(SignalMast destination);
+    
+    /**
+    * returns only the blocks that have been detected as being directly between
+    * the source and destination mast.  The order of the block in the list, is the 
+    * order that they are connected.
+    */
+    public ArrayList<Block> getAutoBlocksBetweenMasts(SignalMast destination);
 
     public ArrayList<SignalMast> getAutoMasts(SignalMast destination);
 
@@ -194,7 +207,7 @@ public interface SignalMastLogic {
      * These blocks are not stored in the panel file.
      * @param blocks
      */
-    public void setAutoBlocks(Hashtable<Block, Integer> blocks, SignalMast destination);
+    public void setAutoBlocks(LinkedHashMap<Block, Integer> blocks, SignalMast destination);
 
     /**
      * Sets which masts must be in a given state before our mast can be set.
@@ -315,4 +328,9 @@ public interface SignalMastLogic {
     public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
 
     public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
+    
+    public LayoutBlock getFacingBlock();
+    
+    public LayoutBlock getProtectingBlock();
+    
 }

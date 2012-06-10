@@ -27,6 +27,9 @@ public class EasyDccConsistManagerTest extends TestCase {
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
         new EasyDccListenerScaffold();
         EasyDccConsistManager m = new EasyDccConsistManager();
+        // we need to call requestUpdateFromLayout() to trigger the 
+        // init sequence.
+        m.requestUpdateFromLayout();
         
         for(int i=1;i<255;i++){
             // check "display consist" message sent
