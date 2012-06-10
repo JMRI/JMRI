@@ -171,7 +171,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
 	  if(status.getText().equals(rb.getString("LZ100StatusSetMode")))
 		status.setText(rb.getString("LZ100StatusOK"));
 	  if(resetMode==OFFSENT) {
-            XNetMessage msgon=XNetMessage.getFunctionGroup1OpsMsg(0,false,false,false,true,false);
+            XNetMessage msgon=XNetMessage.getFunctionGroup1OpsMsg(0,false,false,false,false,true);
 	    sendCount--;
 	    resetMode=ONSENT;
 	    tc.sendXNetMessage(msgon,this);
