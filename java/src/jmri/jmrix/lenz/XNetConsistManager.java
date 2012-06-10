@@ -28,12 +28,6 @@ public final class XNetConsistManager extends jmri.jmrix.AbstractConsistManager 
               super();
               tc=systemMemo.getXNetTrafficController();
               this.systemMemo = systemMemo;
-              // Initilize the consist reader thread.
-	      initThread = new Thread(new XNetConsistReader());
-              int it=initThread.getPriority();
-              it--;
-              initThread.setPriority(it);
-              initThread.start();
         }
         
         XNetSystemConnectionMemo systemMemo;
@@ -61,6 +55,18 @@ public final class XNetConsistManager extends jmri.jmrix.AbstractConsistManager 
                         consistList.add(address);
                         return(consist);
 	}
+
+       /* request an update from the layout, loading
+        * Consists from the command station.
+        */
+       public void requestUpdateFromLayout(){
+              // Initilize the consist reader thread.
+              initThread = new Thread(new XNetConsistReader());
+              int it=initThread.getPriority();
+              it--;
+              initThread.setPriority(it);
+              initThread.start();
+       }
 
         // Internal class to read consists from the command station
 	private class XNetConsistReader implements Runnable,XNetListener {
@@ -156,6 +162,7 @@ public final class XNetConsistManager extends jmri.jmrix.AbstractConsistManager 
                                break;
                             case XNetConstants.LOCO_SEARCH_NO_RESULT:
                                CurrentState=IDLE;
+                               notifyConsistListChanged();
                                break;
                             case XNetConstants.LOCO_NOT_AVAILABLE:
                             case XNetConstants.LOCO_FUNCTION_STATUS:

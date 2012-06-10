@@ -23,9 +23,12 @@ public class DccConsistManager implements ConsistManager{
 
 	private ArrayList<DccLocoAddress> ConsistList = null;
 
+	private ArrayList<ConsistListListener> ChangeListeners = null;
+
 	public DccConsistManager(){
 	      ConsistTable = new Hashtable<DccLocoAddress, DccConsist>();
 	      ConsistList = new ArrayList<DccLocoAddress>();
+	      ChangeListeners = new ArrayList<ConsistListListener>();
 	}
 
 	/**
@@ -96,6 +99,38 @@ public class DccConsistManager implements ConsistManager{
 		   return "Unknown Status Code: " + ErrorCode;
 		else return retval;
 	}
+
+       /* request an update from the layout, loading
+        * Consists from the command station.
+        */
+       public void requestUpdateFromLayout(){}
+
+        /*
+         * register a ConsistListListener object with this Consist
+         * Manager
+         * @param listener a Consist List Listener object.
+         */
+        public void addConsistListListener(ConsistListListener l){
+           ChangeListeners.add(l);
+        }
+
+        /*
+         * remove a ConsistListListener object with this Consist
+         * Manager
+         * @param listener a Consist List Listener object.
+         */
+        public void removeConsistListListener(ConsistListListener l){
+           ChangeListeners.remove(l);
+        }
+
+        /*
+         * Notify the registered Consist List Listener objects that the
+         * Consist List has changed.
+         */
+        public void notifyConsistListChanged(){
+           for(ConsistListListener l:ChangeListeners)
+               l.notifyConsistListChanged();
+        }
 
 
 }

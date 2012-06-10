@@ -38,25 +38,29 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 	private int consistRequestState = IDLESTATE;
 
 	// Initialize a consist for the specific address
-        // the Default consist type is an advanced consist 
+        // the Default consist type for loconet is a Command
+        // Station Consist. 
 	public LocoNetConsist(int address,LocoNetSystemConnectionMemo lm) {
 		super(address);
 		this.slotManager=lm.getSlotManager();
 		this.trafficController=lm.getLnTrafficController();
 		this.throttleManager=(jmri.jmrix.AbstractThrottleManager)lm.getThrottleManager();
 		consistRequestState = LEADREQUESTSTATE;
+	        ConsistType=Consist.CS_CONSIST;
 		needToWrite=new ArrayList<DccLocoAddress>();
 	        throttleManager.requestThrottle(ConsistAddress,this);
 	}
 
 	// Initialize a consist for the specific address
-        // the Default consist type is an advanced consist 
+        // the Default consist type for loconet is a Command
+        // Station Consist. 
 	public LocoNetConsist(DccLocoAddress address,LocoNetSystemConnectionMemo lm) {
 		super(address);
 		this.slotManager=lm.getSlotManager();
 		this.trafficController=lm.getLnTrafficController();
 		this.throttleManager=(jmri.jmrix.AbstractThrottleManager)lm.getThrottleManager();
 		consistRequestState = LEADREQUESTSTATE;
+	        ConsistType=Consist.CS_CONSIST;
 		needToWrite=new ArrayList<DccLocoAddress>();
 	        throttleManager.requestThrottle(ConsistAddress,this);
 	}
