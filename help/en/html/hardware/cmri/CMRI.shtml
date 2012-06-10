@@ -300,7 +300,7 @@ assignments for its bits.)
     more nodes, by returning to the Configure C/MRI Nodes dialog 
     (<a href="#nodes">see below</a>).
 
-<H2 name="susic">Getting Started with a USIC or SUSIC</H2></a>
+<a name=susic><H2>Getting Started with a USIC or SUSIC</H2></a>
 
 After you have physically connected your SUSIC (or USIC) to your computer, 
 follow the procedure below to configure your SUSIC (or USIC) as a C/MRI 
