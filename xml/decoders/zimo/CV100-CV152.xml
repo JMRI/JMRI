@@ -3,6 +3,7 @@
 
 
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 27 Jan 12 JES  - fixed bug in diesel steam effect enum value -->
 
 <variables>
       <variable label="User Data #1" CV="105" item="User Id #1">
@@ -588,7 +589,7 @@
           <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
             <choice>Speed or Load dependent Smoke for Steam Engines</choice>
           </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
             <choice>Operation dependent Smoke for Diesels</choice>
           </enumChoice>
         </enumVal>
@@ -667,7 +668,7 @@
           <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
             <choice>Speed or Load dependent Smoke for Steam Engines</choice>
           </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
             <choice>Operation dependent Smoke for Diesels</choice>
           </enumChoice>
         </enumVal>
@@ -746,7 +747,7 @@
           <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
             <choice>Speed or Load dependent Smoke for Steam Engines</choice>
           </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
             <choice>Operation dependent Smoke for Diesels</choice>
           </enumChoice>
         </enumVal>
@@ -825,7 +826,7 @@
           <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
             <choice>Speed or Load dependent Smoke for Steam Engines</choice>
           </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
             <choice>Operation dependent Smoke for Diesels</choice>
           </enumChoice>
         </enumVal>
@@ -904,7 +905,7 @@
           <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
             <choice>Speed or Load dependent Smoke for Steam Engines</choice>
           </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
             <choice>Operation dependent Smoke for Diesels</choice>
           </enumChoice>
         </enumVal>
@@ -983,7 +984,7 @@
           <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
             <choice>Speed or Load dependent Smoke for Steam Engines</choice>
           </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
             <choice>Operation dependent Smoke for Diesels</choice>
           </enumChoice>
         </enumVal>
@@ -1062,7 +1063,7 @@
           <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
             <choice>Speed or Load dependent Smoke for Steam Engines</choice>
           </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
             <choice>Operation dependent Smoke for Diesels</choice>
           </enumChoice>
         </enumVal>
@@ -1141,7 +1142,7 @@
           <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
             <choice>Speed or Load dependent Smoke for Steam Engines</choice>
           </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
             <choice>Operation dependent Smoke for Diesels</choice>
           </enumChoice>
         </enumVal>
