@@ -44,6 +44,8 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
      *    Add a new EasyDccConsist with the given address to consistTable/consistList
      */
     public Consist addConsist(DccLocoAddress address){ 
+        if(consistList.contains(address)) // no duplicates allowed.
+           return consistTable.get(address);
         EasyDccConsist consist;
         consist = new EasyDccConsist(address);
         consistTable.put(address,consist);

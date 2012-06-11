@@ -44,6 +44,8 @@ public class LocoNetConsistManager extends jmri.jmrix.AbstractConsistManager imp
      *    consistTable/consistList
      */
     public Consist addConsist(DccLocoAddress address){ 
+        if(consistList.contains(address)) // no duplicates allowed.
+           return consistTable.get(address);
         LocoNetConsist consist;
         consist = new LocoNetConsist(address,memo);
         consistTable.put(address,consist);
