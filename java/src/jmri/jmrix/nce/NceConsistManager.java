@@ -24,6 +24,12 @@ public class NceConsistManager extends jmri.jmrix.AbstractConsistManager impleme
     public NceConsistManager(NceSystemConnectionMemo m){
         super();
         memo=m;
+    }
+
+    /* request an update from the layout, loading
+     * Consists from the command station.
+     */
+    public void requestUpdateFromLayout() {
         startConsistReader();
     }
     
@@ -42,7 +48,9 @@ public class NceConsistManager extends jmri.jmrix.AbstractConsistManager impleme
      *    Add a new NceConsist with the given address to 
      *    consistTable/consistList
      */
-    public Consist addConsist(DccLocoAddress locoAddress){ 
+    public Consist addConsist(DccLocoAddress locoAddress){
+        if(consistList.contains(locoAddress)) // no duplicates allowed.
+           return consistTable.get(locoAddress); 
     	log.debug("Add consist, address "+locoAddress);
         NceConsist consist = new NceConsist(locoAddress, memo);
         consistTable.put(locoAddress, consist);
@@ -123,6 +131,8 @@ public class NceConsistManager extends jmri.jmrix.AbstractConsistManager impleme
             	}          		
             	_consistNum--;
             }
+            // when we finish reading, notify any listeners.
+            notifyConsistListChanged();
         }
     }
 
