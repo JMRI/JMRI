@@ -48,7 +48,9 @@ public final class XNetConsistManager extends jmri.jmrix.AbstractConsistManager 
 	/**
 	 *    Add a new XNetConsist with the given address to consistTable/consistList
 	 */
-	public Consist addConsist(DccLocoAddress address){ 
+	public Consist addConsist(DccLocoAddress address){
+                        if(consistList.contains(address)) // no duplicates allowed. 
+                           return consistTable.get(address);
 		        XNetConsist consist;
                         consist = new XNetConsist(address,tc, systemMemo);
                         consistTable.put(address,consist);
