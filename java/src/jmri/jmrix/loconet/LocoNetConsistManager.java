@@ -82,12 +82,13 @@ public class LocoNetConsistManager extends jmri.jmrix.AbstractConsistManager imp
              if(!consistList.contains(address)){
                 if(log.isDebugEnabled()) log.debug("Adding Consist with Address " + address + " due to command station read");
                 addConsist(address);
+                getConsist(address).add(address,true); // add the address to the consist.
              }
           } else {
              // this is not a consist top, so remove it from the list, if it
              // is currently there.
                 if(log.isDebugEnabled()) log.debug("Removing Consist with Address " + address + " due to command station read");
-                consistList.remove(address);
+                consistList.remove(address); 
           } 
        }
 
