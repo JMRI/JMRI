@@ -44,5 +44,14 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
 	public void notifyAddressChosen(int newAddress, boolean isLong) {		
 	}
 
+        public void notifyConsistAddressChosen(int newAddress, boolean isLong) { 
+        }
+                
+        public void notifyConsistAddressReleased(int address, boolean isLong) {
+        }
+
+        public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
+        }
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BackgroundPanel.class.getName());
 }

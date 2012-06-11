@@ -1358,6 +1358,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             _speedStepModeForLater = 0;
         }
 
+
         // Set speed steps
         this.setSpeedStepsMode(throttle.getSpeedStepMode());
 
@@ -1372,6 +1373,17 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         	setSwitchSliderFunction(addressPanel.getRosterEntry().getShuntingFunction());
         }	
 	}
+
+        public void notifyConsistAddressChosen(int newAddress, boolean isLong) { 
+        }
+                
+        public void notifyConsistAddressReleased(int address, boolean isLong) {
+        }
+
+        public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
+        if(log.isDebugEnabled()) log.debug("control panel received consist throttle");
+             notifyAddressThrottleFound(throttle);
+        }
 	
 	public void setSwitchSliderFunction(String fn) {
 		switchSliderFunction = fn;

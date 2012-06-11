@@ -535,5 +535,14 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	public void notifyAddressChosen(int newAddress, boolean isLong) {
 	}
 
+        public void notifyConsistAddressChosen(int newAddress, boolean isLong) { 
+        }
+                
+        public void notifyConsistAddressReleased(int address, boolean isLong) {
+        }
+
+        public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
+        }
+
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FunctionPanel.class.getName());
 }

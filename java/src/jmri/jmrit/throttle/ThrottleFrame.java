@@ -867,6 +867,15 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 		setFrameTitle();
 		throttleWindow.updateGUI();
 	}
+
+	public void notifyConsistAddressChosen(int newAddress, boolean isLong) {	
+	}
+
+	public void notifyConsistAddressReleased(int address, boolean isLong) {
+	}
+
+	public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
+        }
 	
 	public String getLastUsedSaveFile() {
 		return lastUsedSaveFile;

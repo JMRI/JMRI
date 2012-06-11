@@ -52,6 +52,15 @@ public class ThrottlesTableModel extends AbstractTableModel implements AddressLi
         throttle.addPropertyChangeListener(this);
     }
 
+        public void notifyConsistAddressChosen(int newAddress, boolean isLong) { 
+        }
+                
+        public void notifyConsistAddressReleased(int address, boolean isLong) {
+        }
+
+        public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
+        }
+
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if ((e.getPropertyName().equals("SpeedSetting")) || (e.getPropertyName().equals("SpeedSteps")) || (e.getPropertyName().equals("IsForward"))) {
             fireTableDataChanged();

@@ -160,6 +160,13 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	 */
 	public void notifyThrottleFound(DccThrottle t) {
 		log.warn("Asked for "+currentAddress.getNumber()+" got "+ t.getLocoAddress() );
+		if ( consistAddress!=null && 
+                    ((DccLocoAddress)t.getLocoAddress()).getNumber() == consistAddress.getNumber()) {
+                    // notify the listeners that a throttle was found
+                    // for the consist address.
+                    notifyConsistThrottleFound(t); 
+                    return;
+                }
 		if ( ((DccLocoAddress)t.getLocoAddress()).getNumber() != currentAddress.getNumber()) {
 			log.warn("Not correct address, asked for "+currentAddress.getNumber()+" got "+ t.getLocoAddress()+", requesting again..." );
 	    	boolean requestOK =
@@ -167,7 +174,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	    	if (!requestOK)
 	    		JOptionPane.showMessageDialog(mainPanel, rb.getString("AddressInUse"));
 	    	return;
-		}
+		} 
 		
 		throttle = t;
 		releaseButton.setEnabled(true);
@@ -223,7 +230,13 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	 */
 	public void notifyConsistThrottleFound(DccThrottle t) {
 		this.consistThrottle = t;
-		// TODO: notify controlPanel? functionPanel? everybody?
+               for (int i = 0; i < listeners.size(); i++) {
+                        AddressListener l = listeners.get(i);
+                        if (log.isDebugEnabled())
+                                log.debug("Notify address listener of address change " + l.getClass());
+                        l.notifyConsistAddressThrottleFound(t);
+                }
+
 	}
 
 	/**
@@ -443,6 +456,23 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     		JOptionPane.showMessageDialog(mainPanel, rb.getString("AddressInUse"));
 	}
 
+	private void changeOfConsistAddress() {
+		if (consistAddress == null)
+			return;	// no address
+		// send notification of new address
+		for (int i = 0; i < listeners.size(); i++) {
+			AddressListener l = listeners.get(i);
+			if (log.isDebugEnabled())
+				log.debug("Notify address listener of address change " + l.getClass());			
+			l.notifyConsistAddressChosen(consistAddress.getNumber(), consistAddress.isLongAddress());
+		}
+
+    	boolean requestOK =
+    		InstanceManager.throttleManagerInstance().requestThrottle(consistAddress.getNumber(), consistAddress.isLongAddress(), this);
+    	if (!requestOK)
+    		JOptionPane.showMessageDialog(mainPanel, rb.getString("AddressInUse"));
+	}
+
     /**
      * Open a programmer for this address
      */
@@ -585,6 +615,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	}
 
 	public void setCurrentAddress(DccLocoAddress currentAddress) {
+                if(log.isDebugEnabled()) log.debug("Setting CurrentAddress to " + currentAddress);
 		this.addrSelector.setAddress(currentAddress);
 		changeOfAddress();
 	}
@@ -599,7 +630,10 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	}
 
 	public void setConsistAddress(DccLocoAddress consistAddress) {
+                if(log.isDebugEnabled()) log.debug("Setting Consist Address to " + consistAddress);
 		this.consistAddress = consistAddress;
+		changeOfConsistAddress();
+                
 	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AddressPanel.class.getName());
