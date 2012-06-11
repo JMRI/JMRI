@@ -26,7 +26,15 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super();
     }
 
-    public String name() { return "Direct Drive (Serial)"; }
+    public String name() { 
+        String osName;
+    	if ((osName = System.getProperty("os.name","<unknown>").toLowerCase()).equals("mac os x")
+            || (osName.contains("windows") && Double.valueOf(System.getProperty("os.version")) >= 6 ) )
+
+            return "(Direct Drive (Serial) not available)";
+        
+        return "Direct Drive (Serial)";
+    }
 
     protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }

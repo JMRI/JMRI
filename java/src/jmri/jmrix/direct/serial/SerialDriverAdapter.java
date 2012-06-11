@@ -45,6 +45,8 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
             // Serialio.SerialConfig exists on this machine, we use that
             // else we revert to gnu.io
             try {
+                if (System.getProperty("os.name","<unknown>").toLowerCase().contains("windows") && Double.valueOf(System.getProperty("os.version")) >= 6 )
+                    throw new Exception("Direct interface not compatible.");
                 Class.forName("Serialio.SerialConfig");
                 log.debug("openPort using SerialIO");
                 InnerSerial inner = new InnerSerial();
