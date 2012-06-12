@@ -88,7 +88,9 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
                                                           (nibble==0x00));
        msg.setElement(1,baseaddress);
        msg.setParity();
-       statusRequested=true;
+       synchronized(this){
+          statusRequested=true;
+       }
        tc.sendXNetMessage(msg, null); // The reply is treated as a broadcast
                                       // and is returned using the manager.
     }
