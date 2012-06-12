@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <pane name="Advanced">
+  <name xml:lang="ca">Avançat</name>
     <column>
         <display item="Advanced Ack" tooltip="Enable advanced acknowledgment"/>
         <display item="Packet Time-out Value" tooltip="The maximum time period that the decoder will maintain its speed without receiving a valid packet addressed to it"/>

@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.13.7ish-20111216-2259-jake on Fri Dec 16 15:00:04 PST 2011 $Id$-->
-  <decoderIndex version="227">
+  <!--Written by JMRI version 2.14.1ish-20120612-1612-jake on Tue Jun 12 12:13:02 EDT 2012 $Id$-->
+  <decoderIndex version="300">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -133,6 +133,16 @@
       </family>
       <family name="Raw CVs 1-255" mfg="NMRA" file="0NMRA_test.xml">
         <model model="Raw CVs 1-255" />
+      </family>
+      <family name="LocoCruiser" mfg="ANE Model Co, Ltd" lowVersionID="201" highVersionID="201" file="ANE_LC201.xml">
+        <model model="LC201" numOuts="5" numFns="5">
+          <output name="1" label="White" connection="wire" />
+          <output name="2" label="Yellow" connection="wire" />
+          <output name="3" label="Green" connection="wire" />
+          <output name="4" label="Violet" connection="wire" />
+          <output name="5" label="Brown" connection="wire" />
+          <size length="1.0" width="0.8" height="0.2" units="inches" />
+        </model>
       </family>
       <family name="ARNOLD Digital" mfg="Arnold - Rivarossi" type="locomotive" file="Arnold.xml">
         <model model="ARNOLD 81210-81" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
@@ -866,6 +876,15 @@
           <output name="6" label="Pad" connection="solder" />
           <size length="3.18" width="0.354" height="0.128" units="inches" />
         </model>
+        <model model="DN163K4B" numOuts="6" numFns="6" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="9pin">
+          <output name="1" label="LED" connection="solder" />
+          <output name="2" label="LED" connection="solder" />
+          <output name="3" label="Pad" connection="solder" />
+          <output name="4" label="Pad" connection="solder" />
+          <output name="5" label="Pad" connection="solder" />
+          <output name="6" label="Pad" connection="solder" />
+          <size length="3.11" width="0.426" height="0.195" units="inches" />
+        </model>
         <model model="DN163M0" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=1.5A)" formFactor="N" connector="9pin">
           <output name="1" label="LED" connection="solder" />
           <output name="2" label="Pad" connection="solder" />
@@ -978,6 +997,22 @@
           <output name="4" label="F2 Pad" connection="solder" />
           <output name="5" label="F3 Pad" connection="solder" />
           <output name="6" label="F4 Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="Con-cor Zephyr - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1645" comment="SDH164D">
+          <output name="1" label="F0F Pad" connection="solder" />
+          <output name="2" label="F0R Pad" connection="solder" />
+          <output name="3" label="F1 Pad" connection="solder" />
+          <output name="4" label="F2 Pad" connection="solder" />
+          <output name="5" label="F3 Pad" connection="solder" />
+          <output name="6" label="F4 Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="Con-cor Zephyr - N" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1446" comment="SDN144PS">
+          <output name="1" label="F0F Pad" connection="plug" />
+          <output name="2" label="F0R Pad" connection="plug" />
+          <output name="3" label="F1 Pad" connection="plug" />
+          <output name="4" label="F2 Pad" connection="plug" />
           <size length="1.05" width="0.67" height="0.25" units="inches" />
         </model>
         <model model="EVO GE Diesel" numOuts="12" numFns="14" lowVersionID="16" highVersionID="49" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" productID="1041" comment="SDH104T1">
@@ -2898,10 +2933,41 @@
           <size length="33" width="10.5" height="5.0" units="mm" />
         </model>
       </family>
-      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_soundbrilliance1644.xml">
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="44" file="MRC_soundbrilliance1644.xml">
         <model model="Synch Diesel Sound 1644" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
           <size length="90" width="14" height="4.2" units="mm" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="false">Air Release/Acc1 on or off</functionlabel>
+          <functionlabel num="4" lockable="false">Coupling</functionlabel>
+          <functionlabel num="5" lockable="true">Brake release/Squeal</functionlabel>
+          <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="7" lockable="false">Air Hose/Uncoupling Lever</functionlabel>
+          <functionlabel num="8" lockable="false">Shut Down/Notch Down</functionlabel>
+          <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
+          <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+          <functionlabel num="11" lockable="false">loco Sound</functionlabel>
+          <functionlabel num="12" lockable="false">Prime MoverType</functionlabel>
+          <functionlabel num="13" lockable="false">Air release/ Acc2 on or off</functionlabel>
+          <functionlabel num="14" lockable="false">Coupling 2</functionlabel>
+          <functionlabel num="15" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="16" lockable="false">Loco Sound</functionlabel>
+          <functionlabel num="17" lockable="false">Flange Noise 1</functionlabel>
+          <functionlabel num="18" lockable="false">Bell Type</functionlabel>
+          <functionlabel num="19" lockable="false">Horn Type</functionlabel>
+          <functionlabel num="20" lockable="false">Loco Sound</functionlabel>
+          <functionlabel num="21" lockable="false">Bell Volume</functionlabel>
+          <functionlabel num="22" lockable="false">Horn Volume</functionlabel>
+          <functionlabel num="23" lockable="false">Prime Mover Volume</functionlabel>
+          <functionlabel num="24" lockable="false">Coupling</functionlabel>
+          <functionlabel num="25" lockable="false">Air Release</functionlabel>
+          <functionlabel num="26" lockable="false">Flange Noise 2</functionlabel>
+          <functionlabel num="27" lockable="false">Air hose firing</functionlabel>
+          <functionlabel num="28" lockable="false">short air release</functionlabel>
+        </functionlabels>
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_soundbrilliance1645.xml">
         <model model="Synch Diesel Sound 1645" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes">
@@ -2983,6 +3049,37 @@
         <model model="Synch Diesel Sound 1808 - N Scale KATO SD80 - SD90/43MAC" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
           <size length="72" width="9.7" height="3.0" units="mm" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="false">Air Release/Acc1 on or off</functionlabel>
+          <functionlabel num="4" lockable="false">Coupling</functionlabel>
+          <functionlabel num="5" lockable="true">Brake release/Squeal</functionlabel>
+          <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="7" lockable="false">Air Hose/Uncoupling Lever</functionlabel>
+          <functionlabel num="8" lockable="false">Shut Down/Notch Down</functionlabel>
+          <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
+          <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+          <functionlabel num="11" lockable="false">loco Sound</functionlabel>
+          <functionlabel num="12" lockable="false">Prime MoverType</functionlabel>
+          <functionlabel num="13" lockable="false">Air release/ Acc2 on or off</functionlabel>
+          <functionlabel num="14" lockable="false">Coupling 2</functionlabel>
+          <functionlabel num="15" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="16" lockable="false">Loco Sound</functionlabel>
+          <functionlabel num="17" lockable="false">Flange Noise 1</functionlabel>
+          <functionlabel num="18" lockable="false">Bell Type</functionlabel>
+          <functionlabel num="19" lockable="false">Horn Type</functionlabel>
+          <functionlabel num="20" lockable="false">Loco Sound</functionlabel>
+          <functionlabel num="21" lockable="false">Bell Volume</functionlabel>
+          <functionlabel num="22" lockable="false">Horn Volume</functionlabel>
+          <functionlabel num="23" lockable="false">Prime Mover Volume</functionlabel>
+          <functionlabel num="24" lockable="false">Air Release</functionlabel>
+          <functionlabel num="25" lockable="false">Flange Noise 2</functionlabel>
+          <functionlabel num="26" lockable="false">loco sound</functionlabel>
+          <functionlabel num="27" lockable="false">Sand drop</functionlabel>
+          <functionlabel num="28" lockable="false">short air release</functionlabel>
+        </functionlabels>
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45" file="MRC_soundbrilliance1810.xml">
         <model model="Synch Diesel Sound 1810 - N Scale KATO F40PH" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
@@ -2993,6 +3090,37 @@
         <model model="Synch Diesel Sound 1812 - N Scale Atlas Short Board Dropin" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
           <size length="" width="" height="" units="mm" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="false">Air Release/Acc1 on or off</functionlabel>
+          <functionlabel num="4" lockable="false">Coupling</functionlabel>
+          <functionlabel num="5" lockable="true">Brake release/Squeal</functionlabel>
+          <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="7" lockable="false">Air Hose/Uncoupling Lever</functionlabel>
+          <functionlabel num="8" lockable="false">Shut Down/Notch Down</functionlabel>
+          <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
+          <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+          <functionlabel num="11" lockable="false">loco Sound</functionlabel>
+          <functionlabel num="12" lockable="false">Prime MoverType</functionlabel>
+          <functionlabel num="13" lockable="false">Air release/ Acc2 on or off</functionlabel>
+          <functionlabel num="14" lockable="false">Coupling 2</functionlabel>
+          <functionlabel num="15" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="16" lockable="false">Loco Sound</functionlabel>
+          <functionlabel num="17" lockable="false">Flange Noise 1</functionlabel>
+          <functionlabel num="18" lockable="false">Bell Type</functionlabel>
+          <functionlabel num="19" lockable="false">Horn Type</functionlabel>
+          <functionlabel num="20" lockable="false">Loco Sound</functionlabel>
+          <functionlabel num="21" lockable="false">Bell Volume</functionlabel>
+          <functionlabel num="22" lockable="false">Horn Volume</functionlabel>
+          <functionlabel num="23" lockable="false">Prime Mover Volume</functionlabel>
+          <functionlabel num="24" lockable="false">Air Release</functionlabel>
+          <functionlabel num="25" lockable="false">Flange Noise 2</functionlabel>
+          <functionlabel num="26" lockable="false">loco sound</functionlabel>
+          <functionlabel num="27" lockable="false">Sand drop</functionlabel>
+          <functionlabel num="28" lockable="false">short air release</functionlabel>
+        </functionlabels>
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_soundbrilliance1819.xml">
         <model model="G Gauge Steam Decoder 1819" maxTotalCurrent="5A" extFnsMRC="yes">
@@ -3039,6 +3167,11 @@
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="27" highVersionID="45" file="MRC_soundbrilliance1827.xml">
         <model model="Synch Diesel Sound 1827 - N - KATO PA1" numOuts="2" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes">
           <size length="74.5" width="14" height="3.8" units="mm" />
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45" file="MRC_soundbrilliance1957.xml">
+        <model model="Synch Diesel Sound (16-bit) 1957 - N Scale KATO F Series" numOuts="2" numFns="28" maxTotalCurrent="1.00A" extFnsMRC="yes">
+          <size length="66" width="14" height="3.5" units="mm" />
         </model>
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" comment="MRC Brilliance Sound Decoders" lowVersionID="31" highVersionID="31" file="MRC_soundbrillianceBigBoy.xml">
@@ -3564,6 +3697,8 @@
           <output name="4" label="Pad 4" connection="solder" maxcurrent="50 mA" />
           <size length="0.57" width="0.34" height="0.13" units="inches" />
         </model>
+        <model model="BLI Hi-Rail Pick-up" numOuts="0" numFns="0" />
+        <model model="BLI Track Inspection Sedan" numOuts="0" numFns="0" />
         <model model="FDT Trackmobile" numOuts="0" numFns="0" />
       </family>
       <family name="Silent Running BEMF" mfg="North Coast Engineering" lowVersionID="40" highVersionID="40" comment="These are the version 4.0 decoders released after September 2006" file="NCE_E.xml">
@@ -4795,6 +4930,68 @@
       </family>
       <family name="Servo Accessory Decoders" mfg="SPROG DCC" comment="Servo6 is an accessory decoder for servo motors, it can be programmed via CV1... and/or CV513..." file="SPROG_DCC_Servo6.xml">
         <model model="Servo6" lowVersionID="10" highVersionID="10" />
+      </family>
+      <family name="Bachmann Sound Value" mfg="Throttle-Up (SoundTraxx)" comment="Bachmann Standard line HO locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value" file="SoundTraxx_Bachmann_SndVal_Dsl.xml">
+        <model model="Alco S4" numOuts="2" numFns="14" connector="other" productID="Alco S4" comment="Model Diesel">
+          <versionCV lowVersionID="82" />
+          <output name="Bell" />
+          <output name="Air Horn" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Short Horn" />
+          <output name="Dimming" />
+          <output name="Mute" />
+        </model>
+        <model model="Alco FA2" numOuts="2" numFns="14" connector="other" productID="Alco FA2" comment="Model Diesel">
+          <versionCV lowVersionID="82" />
+          <output name="Bell" />
+          <output name="Air Horn" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Short Horn" />
+          <output name="Dimming" />
+          <output name="Mute" />
+        </model>
+        <model model="Alco FB2" numOuts="2" numFns="14" connector="other" productID="Alco FB2" comment="Model Diesel">
+          <versionCV lowVersionID="82" />
+          <output name="Bell" />
+          <output name="Air Horn" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Short Horn" />
+          <output name="Dimming" />
+          <output name="Mute" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Air Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="7" lockable="true">Dimming</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Bachmann Sound Value" mfg="Throttle-Up (SoundTraxx)" comment="Bachmann Standard line HO locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value" file="SoundTraxx_Bachmann_SndVal_Stm.xml">
+        <model model="Alco 2-6-0" numOuts="2" numFns="14" connector="other" productID="Alco 2-6-0" comment="Model 2-6-0">
+          <versionCV lowVersionID="82" />
+          <output name="Bell" />
+          <output name="Whistle" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Short Whistle" />
+          <output name="Steam-Release" />
+          <output name="Dimming" />
+          <output name="Mute" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Short Whistle</functionlabel>
+          <functionlabel num="4" lockable="true">Steam-Release</functionlabel>
+          <functionlabel num="7" lockable="true">Dimming</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+        </functionlabels>
       </family>
       <family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)" file="SoundTraxx_DSD_Diesel.xml">
         <model model="DSD diesel" numOuts="4" numFns="10">
@@ -6708,6 +6905,23 @@
           <output name="Coupler" />
         </model>
       </family>
+      <family name="Tsunami Diesel Walthers OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Walthers Proto2000 Tsunami diesel decoders" file="SoundTraxx_Tsu_Diesel_Walthers.xml">
+        <model model="E8" numOuts="4" numFns="14" connector="other" productID="E8">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+      </family>
       <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" comment="These are the -retail- version Tsunami steam decoders" file="SoundTraxx_Tsu_Steam.xml">
         <model model="TSU-750 Light Steam" numOuts="2" numFns="14" connector="other" productID="826001" comment="Model 826001">
           <versionCV lowVersionID="64" />
@@ -6968,6 +7182,21 @@
       </family>
       <family name="Tsunami Steam Bachmann OEM" mfg="Throttle-Up (SoundTraxx)" file="SoundTraxx_Tsu_Steam_Bachmann.xml">
         <model model="HO 2-6-6-2" numOuts="2" numFns="14" connector="other" productID="2662">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO 2-8-8-4 EM-1" numOuts="2" numFns="14" connector="other" productID="2884">
           <versionCV lowVersionID="80" />
           <output name="Whistle" />
           <output name="Bell" />
@@ -8613,6 +8842,9 @@
       </family>
       <family name="BlocD8" mfg="Team Digital" type="stationary" file="TD_BlocD8.xml">
         <model model="BlocD8" lowVersionID="1" comment="BlocD8 can be programmed in the usual way" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
+      </family>
+      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SC8.xml">
+        <model model="SC8" lowVersionID="1" comment="SC8 is a stationary decoder, but it can be programmed in the usual way" />
       </family>
       <family name="SIC24" mfg="Team Digital" type="stationary" comment="SIC24 is not stationary decoder, but it can be programmed in the usual way" file="TD_SIC24.xml">
         <model model="SIC24" lowVersionID="12" />

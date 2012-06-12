@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="10" lastUpdated="20120425"/>
   <version author="Michael Mosher" version="9" lastUpdated="20080331"/>
   <version author="Michael Mosher" version="8" lastUpdated="20080319"/>
   <version author="Michael Mosher" version="7" lastUpdated="20070813"/>
@@ -31,6 +32,7 @@
 <!-- Version 7 - high Ver ID 36 -->
 <!-- Version 8 - added D408SR V3.6 which has different function mapping then V3.5 -->
 <!-- Version 9 - added Factory Direct Trains Trackmobile -->
+<!-- Version 10 - added BLI Hi-Rail pickup and track inspection sedan -->
   <decoder>
     <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="36" comment="These are the version 3.5 decoders released after September 2003, 3.6 released July 2007">
       <model model="D12IP" numOuts="2" numFns="5" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
@@ -275,6 +277,10 @@
         <output name="4" label="Pad 4" connection="solder" maxcurrent="50 mA"/>
         <size length="0.57" width="0.34" height="0.13" units="inches"/>
       </model>
+      <model model="BLI Hi-Rail Pick-up" numOuts="0" numFns="0">
+		</model>
+      <model model="BLI Track Inspection Sedan" numOuts="0" numFns="0">
+		</model>
       <model model="FDT Trackmobile" numOuts="0" numFns="0">
 		</model>
     </family>
@@ -429,7 +435,7 @@
         </enumVal>
         <label>Consist Address Active For F8</label>
       </variable>
-      <variable label="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" default="1">
+      <variable label="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" minFn="1" default="1">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>
@@ -440,7 +446,7 @@
         </enumVal>
         <label>Consist Address Active For FL in Forward</label>
       </variable>
-      <variable label="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" default="1">
+      <variable label="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" minFn="1" default="1">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
             <choice>Locomotive Address Only</choice>

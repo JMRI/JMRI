@@ -4,9 +4,12 @@
 <!-- See the COPYING file for more information on licensing and appropriate use -->
 <!-- $Id$ -->
 <decoder-config>
-		<version author="ncliffe" version="4c" lastUpdated="20111116"/>
-			<!--  Version 4c (beta) by Nigel Cliffe    -->
+		<version author="ncliffe@btinternet.com" version="4d" lastUpdated="20120201"/>
+			<!--  Version 4d (beta) by Nigel Cliffe    -->
 			<!--  Uses decoder indexed variables for address range setting
+			      Bug fixes over version 4c, separating the address ranges from other features, 
+				  asking users to use two panels  (because the indexed variables break if 
+				  used on a single panel due to the index CV controlling too many other features!)
 			-->
 			
 <decoder>
@@ -121,16 +124,6 @@
 			<decVal min="0" max = "255"></decVal>
 		</variable>
 		
-		<!-- abuse the value in CV29, which should be 128 in all these decoders
-		<variable label="Do Not Change address mode" CV="29" readOnly="yes" mask="VXXXXXXX"
-				item="Address Format" default="1" >
-			<enumVal>
-				<enumChoice choice="(do not change)"/>
-				<enumChoice choice="Turnout Addresses"/>
-				
-				</enumVal>
-			</variable>
-		 -->
 		 
 		<variable label="Lenz Toggle Mode" CV="33" mask="VVVVVVVV"
 			default="15" >
@@ -232,12 +225,12 @@
 					<decVal min="0" max = "255"></decVal>
 		</variable>
 		
-		<constant label="PICV" default="33" comment="CV used for Primary Index"/>
+		<constant label="PICV" default="33" comment="CV used for Primary Index" />
 		<ivariable label="Address Range 1" CVname="513.0" CV="513" PI="0" default="1" mask="XXVVVVVV" >
 			<indexedPairVal highCVname="521.0" upperMask="XXXXXVVV" /> 
 		</ivariable>
 
-	 	<ivariable label="Address Range 2" CVname="513.128" CV="513" PI="1" default="1" mask="XXVVVVVV" >
+	 	<ivariable label="Address Range 2" CVname="513.128" CV="513" PI="128" default="1" mask="XXVVVVVV" >
 			<indexedPairVal highCVname="521.128" upperMask="XXXXXVVV" /> 
 		</ivariable>
 		
@@ -254,16 +247,16 @@
 			<indexedPairVal highCVname="521.0" upperMask="XXXXXVVV" factor="4" offset="-0" /> 
 		</ivariable>
 
-		<ivariable label="Turnout Address 5th output (1-2041)" CVname="513.128" CV="513" PI="1" default="1" mask="XXVVVVVV" >
+		<ivariable label="Turnout Address 5th output (1-2041)" CVname="513.128" CV="513" PI="128" default="1" mask="XXVVVVVV" >
 			<indexedPairVal highCVname="521.128" upperMask="XXXXXVVV" factor="4" offset="-3" /> 
 		</ivariable>
-		<ivariable label="Turnout Address 6th output" CVname="513.128" CV="513" PI="1" default="1" mask="XXVVVVVV" >
+		<ivariable label="Turnout Address 6th output" CVname="513.128" CV="513" PI="128" default="2" mask="XXVVVVVV" >
 			<indexedPairVal highCVname="521.128" upperMask="XXXXXVVV" factor="4" offset="-2" /> 
 		</ivariable>
-		<ivariable label="Turnout Address 7th output" CVname="513.128" CV="513" PI="1" default="1" mask="XXVVVVVV" >
+		<ivariable label="Turnout Address 7th output" CVname="513.128" CV="513" PI="128" default="2" mask="XXVVVVVV" >
 			<indexedPairVal highCVname="521.128" upperMask="XXXXXVVV" factor="4" offset="-1" /> 
 		</ivariable>
-		<ivariable label="Turnout Address 8th output" CVname="513.128" CV="513" PI="1" default="1" mask="XXVVVVVV" >
+		<ivariable label="Turnout Address 8th output" CVname="513.128" CV="513" PI="128" default="2" mask="XXVVVVVV" >
 			<indexedPairVal highCVname="521.128" upperMask="XXXXXVVV" factor="4" offset="-0" /> 
 		</ivariable>
 
@@ -302,8 +295,8 @@
 				<label label=" "/>
 				<row>
 					<column>
-					<label label="Decoder Address (1-511) "/>
-					<display item="Long Address" label="Decoder Address "/>
+					<label label="Decoder Address (1-511)"/>
+					<display item="Decoder Address (1-511)" label="  "/>
 					<label label=" "/>
 					<label label=" "/>
 					<label label=" "/>
@@ -313,7 +306,7 @@
 					<column>
 					<label label="    Turnout Address in blocks"/>
 					<label label="    of 4, range 1-2024"/>
-					<display item="Short Address" label="    Output 1 or 5 " />
+					<display item="Turnout Address of Output 1 (1-2041)" label="    Output 1 or 5 " />
 					<display item="Turnout Address 2" label="    Output 2 or 6 " />
 					<display item="Turnout Address 3" label="    Output 3 or 7 " />
 					<display item="Turnout Address 4" label="    Output 4 or 8 " />
@@ -426,12 +419,12 @@
 -->
 
   
-  <pane name="DCCACC5 Settings">
+  <pane name="DCCACC5 Addresses">
 	<column>
 		<row>
 			<column>
 				<label label="If requiring 8 independent addresses, set dual address to on and set both the first and second address blocks" />
-				<label label="Lenz Toggle Mode (bits set) gives a toggle action for Lenz systems." />
+				<label label="After setting anything on this pane, double check mode and toggle bits on Settings Pane" />
 				<label label=" "/>
 			</column>
 		</row>
@@ -485,12 +478,25 @@
 					</column>
 				</row>
 			</column>
+		</row>
+	</column>
+  </pane>
 
+
+  <pane name="DCCACC5 Settings">
+	<column>
+		<row>
 			<column>
-				<label label="              "/>
+				<label label="Set operating modes" />
+				<label label="After setting address on Addresses pane, double check mode and toggle bits on this pane" />
+				<label label=" "/>
 			</column>
-
+		</row>
+		<row>
 			<column>
+				<display item="Dual Address Mode" label="Dual Address Mode  "/>
+				<label label=" "/>
+
 				<label label="Output operation, select / deselect as required" />
 				<separator/>
 				<label label=" "/>
@@ -569,16 +575,13 @@
 				</row>
 				<label label=" "/>
 				<label label=" "/>
-				
 			</column>
-							
 		</row>
-
-
-		
 	</column>
   </pane>
 
+  
+  
 <pane name="Indexed CVs">
     <column>
       <row>

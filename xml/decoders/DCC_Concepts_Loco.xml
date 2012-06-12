@@ -12,46 +12,46 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
+
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Nigel Cliffe, ncliffe@btinternet.com" version="1" lastUpdated="20110511"/>
-<!-- Version 1.0 - based on correspondance with Richard Johnson of DCC Concepts
--->
+	<version author="Nigel Cliffe, ncliffe@btinternet.com" version="1" lastUpdated="20110511"/>
+	<version author="John Stather, steam.bloke@tesco.net" version="2" lastUpdated="20120125" />
+<!-- Version 1.0 - based on correspondance with Richard Johnson of DCC Concepts -->
+<!-- Version 2.0 - Correction of compound accel/decel CVs, add CV3/4 to Momentum page and add dither amplitude and frequency CV56/57 -->
 
-
-  <decoder>
-    <family name="DCC Concepts Loco Decoders" mfg="DCC Concepts">
-      <model model="Red Sleeve 2 Function" numOuts="2" numFns="14" lowVersionID="18" highVersionID="18" maxMotorCurrent="1.3A (peak=2A)">
-        <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
-        <output name="Dim"/>
-        <output name="Ditch"/>
-        <output name="Motor"/>
-        <output name="BEMF"/>
+<decoder>
+	<family name="DCC Concepts Loco Decoders" mfg="DCC Concepts">
+		<model model="Red Sleeve 2 Function" numOuts="2" numFns="14" lowVersionID="18" highVersionID="18" maxMotorCurrent="1.3A (peak=2A)">
+			<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
+			<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
+			<output name="Dim"/>
+			<output name="Ditch"/>
+			<output name="Motor"/>
+			<output name="BEMF"/>
         
-      </model>
-      <model model="Blue Sleeve 4 Function" numOuts="4" numFns="14" lowVersionID="18" highVersionID="18" maxMotorCurrent="1.3A (peak=2A)">
-        <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-        <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
-        <output name="Dim"/>
-        <output name="Ditch"/>
-        <output name="Motor"/>
-        <output name="BEMF"/>
+		</model>
+		<model model="Blue Sleeve 4 Function" numOuts="4" numFns="14" lowVersionID="18" highVersionID="18" maxMotorCurrent="1.3A (peak=2A)">
+			<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
+			<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
+			<output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+			<output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+			<output name="Dim"/>
+			<output name="Ditch"/>
+			<output name="Motor"/>
+			<output name="BEMF"/>
         
-      </model>
+		</model>
+		</family>
 
-	  </family>
-
-    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+	<programming direct="yes" paged="yes" register="yes" ops="yes"/>
  
-     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" tooltip="Sets the Short, Primary or 2-digit address, CV 1, range 1-127" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
-      <variable label="Start voltage" CV="2" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1, range 0(default)-255, CV5" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
+		<variables>
+			<variable label="Primary Address" CV="1" comment="Short address" tooltip="Sets the Short, Primary or 2-digit address, CV 1, range 1-127" item="Short Address" default="03">
+				<shortAddressVal/>
+				<label>Primary Address</label>
+				<comment>Short address</comment>
+			</variable>
+				<variable label="Start voltage" CV="2" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1, range 0(default)-255, CV5" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
         <decVal/>
         <label>Start voltage</label>
         <comment>Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration</comment>
@@ -80,7 +80,7 @@
         <decVal/>
         <label>Version ID</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="153" tooltip="Decoder Maker, Read Only">
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="36" tooltip="Decoder Maker, Read Only">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
@@ -1019,7 +1019,14 @@
         </enumVal>
         <label>Purple Wire Timing</label>
       </variable>
-
+      <variable label="Dither Frequency" CV="56" default="3" item="Dither frequency" tooltip="Range 1 (high) to 10 (low)">
+        <decVal/>
+        <label>Dither Frequency</label>
+      </variable>
+      <variable label="Dither Amplitude" CV="57" default="10" item="Dither option" tooltip="Practical range is 5 (low) to 50 (high)">
+        <decVal/>
+        <label>Dither Amplitude</label>
+      </variable>
       <variable label="BEMF Enable" CV="61" mask="XXXXXXXV" default="1" item="EMF Enable" tooltip="Turn off/on(default) BEMF, CV61 least bit, enabling BEMF disables Dither">
         <enumVal>
           <enumChoice choice="Disabled">
@@ -1379,44 +1386,44 @@
         </enumVal>
         <label>F6 controls output Ditch</label>
       </variable>
-      <variable label="Accel 2 Starting Point" CV="125" default="0" tooltip="Sets the Accel 2 start point, range 0(default)-255, CV125" comment="Range 0-255">
+      <variable label="Decel 2 Rate End Point" CV="125" default="0" tooltip="Sets the Decel 2 Rate End Point, range 0(default)-255, CV125" comment="Range 0-255">
         <decVal max="255"/>
-        <label>Accel 2 Starting Point</label>
+        <label>Decel 2 Rate End Point</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Accel 2 Rate" CV="126" default="0" tooltip="Sets the Accel 2 rate, range 0(default)-255, CV126" comment="Range 0-255">
+      <variable label="Decel 2 Rate" CV="126" default="0" tooltip="Sets the Decel 2 Rate, range 0(default)-255, CV126" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Decel 2 Rate</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable label="Decel 3 Rate End Point" CV="127" default="0" tooltip="Sets the Decel 3 Rate End Point, range 0(default)-255, CV127" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Decel 3 Rate End Point</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable label="Decel 3 Rate" CV="128" default="0" tooltip="Sets the Decel 3 Rate, range 0(default)-255, CV128" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Decel 3 Rate</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable label="Accel 2 Rate Start Point" CV="129" default="0" tooltip="Sets the Accel 2 Rate Start point, range 0(default)-255, CV129" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Accel 2 Rate Start Point</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable label="Accel 2 Rate" CV="130" default="0" tooltip="Sets the Accel 2 rate, range 0(default)-255, CV130" comment="Range 0-255">
         <decVal max="255"/>
         <label>Accel 2 Rate</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Accel 3 Starting Point" CV="127" default="0" tooltip="Sets the Accel 3 start point, range 0(default)-255, CV127" comment="Range 0-255">
+      <variable label="Accel 3 Rate Start Point" CV="131" default="0" tooltip="Sets the Accel Rate 3 Start point, range 0(default)-255, CV131" comment="Range 0-255">
         <decVal max="255"/>
-        <label>Accel 3 Starting Point</label>
+        <label>Accel 3 Start Point</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Accel 3 Rate" CV="128" default="0" tooltip="Sets the Accel 3 rate, range 0(default)-255, CV128" comment="Range 0-255">
+      <variable label="Accel 3 Rate" CV="132" default="0" tooltip="Sets the Accel 3 Rate, range 0(default)-255, CV132" comment="Range 0-255">
         <decVal max="255"/>
         <label>Accel 3 Rate</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable label="Decel 4 Ending Point" CV="129" default="0" tooltip="Sets the Decel 2 End point, range 0(default)-255, CV129" comment="Range 0-255">
-        <decVal max="255"/>
-        <label>Decel 4 Ending Point</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable label="Decel 4 Rate" CV="130" default="0" tooltip="Sets the Decel 2 rate, range 0(default)-255, CV130" comment="Range 0-255">
-        <decVal max="255"/>
-        <label>Decel 4 Rate</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable label="Decel 5 Ending Point" CV="131" default="0" tooltip="Sets the Decel 3 end point, range 0(default)-255, CV131" comment="Range 0-255">
-        <decVal max="255"/>
-        <label>Decel 5 Ending Point</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable label="Decel 5 Rate" CV="132" default="0" tooltip="Sets the Decel 3 rate, range 0(default)-255, CV132" comment="Range 0-255">
-        <decVal max="255"/>
-        <label>Decel 5 Rate</label>
         <comment>Range 0-255</comment>
       </variable>
       <variable label="Power to button controlled motor" CV="133" default="255" item="EMF Droop Config" tooltip="If button control of motor is active, range 0-255, CV133">
@@ -1612,8 +1619,8 @@
   
   <pane name="Momentum">
     <column>
-      <label label="If Accel 2, 3 and Decel 4, 5 are all set to zero,">
-        <label>If Accel 2, 3 and Decel 4, 5 are all set to zero,</label>
+      <label label="If Accel 2, 3 and Decel 2, 3 are all set to zero,">
+        <label>If Accel 2, 3 and Decel 2, 3 are all set to zero,</label>
       </label>
       <label label="base rates (CV3,CV4) apply to whole speed range">
         <label>base rates (CV3,CV4) apply to whole speed range</label>
@@ -1624,34 +1631,34 @@
       <label label=" ">
         <label> </label>
       </label>
-      <display item="Accel 2 Starting Point" format="hslider" label="">
+      <display item="Accel 2 Rate Start Point" format="hslider" label="">
         <label/>
       </display>
-      <display item="Accel 2 Starting Point"/>
+      <display item="Accel 2 Rate Start Point"/>
       <label label=" ">
         <label> </label>
       </label>
-      <display item="Accel 3 Starting Point" format="hslider" label="">
+      <display item="Accel 3 Rate Start Point" format="hslider" label="">
         <label/>
       </display>
-      <display item="Accel 3 Starting Point"/>
+      <display item="Accel 3 Rate Start Point"/>
       <label label=" ">
         <label> </label>
       </label>
       <label label=" ">
         <label> </label>
       </label>
-      <display item="Decel 4 Ending Point" format="hslider" label="">
+      <display item="Decel 3 Rate End Point" format="hslider" label="">
         <label/>
       </display>
-      <display item="Decel 4 Ending Point"/>
+      <display item="Decel 3 Rate End Point"/>
       <label label=" ">
         <label> </label>
       </label>
-      <display item="Decel 5 Ending Point" format="hslider" label="">
+      <display item="Decel 2 Rate End Point" format="hslider" label="">
         <label/>
       </display>
-      <display item="Decel 5 Ending Point"/>
+      <display item="Decel 2 Rate End Point"/>
       <label label=" ">
         <label> </label>
       </label>
@@ -1672,6 +1679,13 @@
       <label label=" ">
         <label> </label>
       </label>
+      <display item="Accel Base Rate (CV3)" format="hslider" label="">
+        <label/>
+      </display>
+      <display item="Accel Base Rate (CV3)"/>
+      <label label=" ">
+        <label> </label>
+      </label>
       <display item="Accel 2 Rate" format="hslider" label="">
         <label/>
       </display>
@@ -1689,20 +1703,24 @@
       <label label=" ">
         <label> </label>
       </label>
-      <display item="Decel 4 Rate" format="hslider" label="">
+      <display item="Decel 3 Rate" format="hslider" label="">
         <label/>
       </display>
-      <display item="Decel 4 Rate"/>
+      <display item="Decel 3 Rate"/>
       <label label=" ">
         <label> </label>
       </label>
-      <display item="Decel 5 Rate" format="hslider" label="">
+      <display item="Decel 2 Rate" format="hslider" label="">
         <label/>
       </display>
-      <display item="Decel 5 Rate"/>
+      <display item="Decel 2 Rate"/>
       <label label=" ">
         <label> </label>
       </label>
+	  <display item="Decel Base Rate (CV4)" format="hslider" label="">
+        <label/>
+      </display>
+      <display item="Decel Base Rate (CV4)"/>
       <label label=" ">
         <label> </label>
       </label>

@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <pane name="Analog Controls">
+  <name xml:lang="ca">Control Analògic</name>
     <column>
         <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)"/>
         <display item="Analog Vstart" tooltip="CV 60"/>

@@ -15,8 +15,12 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20111003"/>
   <version author="Michael Mosher" version="2" lastUpdated="20111118"/>
+  <version author="Michael Mosher" version="3" lastUpdated="20111231"/>
+  <version author="Michael Mosher" version="3" lastUpdated="20120216"/>
 <!-- version 1 - Created from Ver 7 file -->
 <!-- version 2 - Add diesel & electric -->
+<!-- version 3 - fix bug in balance CV -->
+<!-- version 4 - fix bug in CV115.76.0 -->
   <decoder>
     <family name="QSI Ver. 8" mfg="QSIndustries" lowVersionID="8">
       <model model="Titan Diesel" numFns="14" numOuts="0" productID="1100">
@@ -310,7 +314,7 @@
         <indexedVal/>
       </ivariable>
       <ivariable label="System Balance" CVname="51.14" CV="51" PI="14" default="0" item="CV51.14 Value" mask="XVVVVVVV">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="System Balance Sign" CVname="51.14" CV="51" PI="14" default="0" item="CV51.14 Sign" mask="VXXXXXXX">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
@@ -2420,7 +2424,7 @@
 		include="1100,1112,2100,5100">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Front Mars" CVname="115.76.0" CV="115" PI="706" SI="0" item="CV115.76.0" default="3" 
+      <ivariable label="Front Mars" CVname="115.76.0" CV="115" PI="76" SI="0" item="CV115.76.0" default="3" 
 		include="1100,1112,2100,5100">
         <indexedVal/>
       </ivariable>
@@ -2505,7 +2509,7 @@
 <!-- CV116.PI.SI speaker balance -->
       <ivariable label="Horn Balance" CVname="116.0" CV="116" PI="0" default="0" item="CV116.0 Value" mask="XVVVVVVV"
 		include="1100,1112,2100,5100">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Horn Balance Sign" CVname="116.0" CV="116" PI="0" default="0" item="CV116.0 Sign" mask="VXXXXXXX"
 		include="1100,1112,2100,5100">
@@ -2513,21 +2517,21 @@
       </ivariable>
       <ivariable label="Whistle Balance" CVname="116.0" CV="116" PI="0" default="0" item="CV116.0 Value" mask="XVVVVVVV"
 		include="3100,4100">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Whistle Balance Sign" CVname="116.0" CV="116" PI="0" default="0" item="CV116.0 Sign" mask="VXXXXXXX"
 		include="3100,4100">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Bell Balance" CVname="116.8" CV="116" PI="8" default="0" item="CV116.8 Value" mask="XVVVVVVV">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Bell Balance Sign" CVname="116.8" CV="116" PI="8" default="0" item="CV116.8 Sign" mask="VXXXXXXX">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Chuff Balance" CVname="116.10" CV="116" PI="10" default="0" item="CV116.10 Value" mask="XVVVVVVV"
 		include="3100,4100">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Chuff Balance Sign" CVname="116.10" CV="116" PI="10" default="0" item="CV116.10 Sign" mask="VXXXXXXX"
 		include="3100,4100">
@@ -2535,7 +2539,7 @@
       </ivariable>
       <ivariable label="Motor Balance" CVname="116.10" CV="116" PI="10" default="0" item="CV116.10 Value" mask="XVVVVVVV"
 		include="1100,1112,5100">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Motor Balance Sign" CVname="116.10" CV="116" PI="10" default="0" item="CV116.10 Sign" mask="VXXXXXXX"
 		include="1100,1112,5100">
@@ -2543,7 +2547,7 @@
       </ivariable>
       <ivariable label="Traction Motor Balance" CVname="116.10" CV="116" PI="10" default="0" item="CV116.10 Value" mask="XVVVVVVV"
 		include="2100">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Traction Motor Balance Sign" CVname="116.10" CV="116" PI="10" default="0" item="CV116.10 Sign" mask="VXXXXXXX"
 		include="2100">
@@ -2551,7 +2555,7 @@
       </ivariable>
       <ivariable label="Motor 2 Balance" CVname="116.11" CV="116" PI="11" default="0" item="CV116.11 Value" mask="XVVVVVVV"
 		include="1100">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Motor 2 Balance Sign" CVname="116.11" CV="116" PI="11" default="0" item="CV116.11 Sign" mask="VXXXXXXX"
 		include="1100">
@@ -2559,7 +2563,7 @@
       </ivariable>
       <ivariable label="Chuff 2 Balance" CVname="116.11" CV="116" PI="11" default="0" item="CV116.11 Value" mask="XVVVVVVV"
 		include="4100">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Chuff 2 Balance Sign" CVname="116.11" CV="116" PI="11" default="0" item="CV116.11 Sign" mask="VXXXXXXX"
 		include="4100">
@@ -2567,7 +2571,7 @@
       </ivariable>
       <ivariable label="Valve Rod Clank Balance" CVname="116.13" CV="116" PI="13" default="0" item="CV116.13 Value" mask="XVVVVVVV"
 		include="3100,4100">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Valve Rod Clank Balance Sign" CVname="116.13" CV="116" PI="13" default="0" item="CV116.13 Sign" mask="VXXXXXXX"
 		include="3100,4100">
@@ -2575,7 +2579,7 @@
       </ivariable>
       <ivariable label="Whoosh Balance" CVname="116.13" CV="116" PI="13" default="0" item="CV116.13 Value" mask="XVVVVVVV"
 		include="5100">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Whoosh Balance Sign" CVname="116.13" CV="116" PI="13" default="0" item="CV116.13 Sign" mask="VXXXXXXX"
 		include="5100">
@@ -2583,7 +2587,7 @@
       </ivariable>
       <ivariable label="Turbo Balance" CVname="116.14" CV="116" PI="14" default="0" item="CV116.14 Value" mask="XVVVVVVV"
 		include="1100,5100">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Turbo Balance Sign" CVname="116.14" CV="116" PI="14" default="0" item="CV116.14 Sign" mask="VXXXXXXX"
 		include="1100,5100">
@@ -2591,7 +2595,7 @@
       </ivariable>
       <ivariable label="Cylinder Cocks Balance" CVname="116.15" CV="116" PI="15" default="0" item="CV116.15 Value" mask="XVVVVVVV"
 		include="3100,4100">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Cylinder Cocks Balance Sign" CVname="116.15" CV="116" PI="15" default="0" item="CV116.15 Sign" mask="VXXXXXXX" 
 		include="3100,4100" >
@@ -2599,21 +2603,21 @@
       </ivariable>
       <ivariable label="Whine Balance" CVname="116.15" CV="116" PI="15" default="0" item="CV116.15 Value" mask="XVVVVVVV"
 		include="5100">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Whine Balance Sign" CVname="116.15" CV="116" PI="15" default="0" item="CV116.15 Sign" mask="VXXXXXXX" 
 		include="5100" >
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Air Pump Balance" CVname="116.16" CV="116" PI="16" default="0" item="CV116.16 Value" mask="XVVVVVVV">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Air Pump Balance Sign" CVname="116.16" CV="116" PI="16" default="0" item="CV116.16 Sign" mask="VXXXXXXX">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Air Pump 2 Balance" CVname="116.17" CV="116" PI="17" default="0" item="CV116.17 Value" mask="XVVVVVVV"
 		include="3100,4100" >
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Air Pump 2 Balance Sign" CVname="116.17" CV="116" PI="17" default="0" item="CV116.17 Sign" mask="VXXXXXXX"
 		include="3100,4100" >
@@ -2621,7 +2625,7 @@
       </ivariable>
       <ivariable label="Blower Hiss Balance" CVname="116.19" CV="116" PI="19" default="0" item="CV116.19 Value" mask="XVVVVVVV"
 		include="3100,4100" >
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Blower Hiss Balance Sign" CVname="116.19" CV="116" PI="19" default="0" item="CV116.19 Sign" mask="VXXXXXXX"
 		include="3100,4100" >
@@ -2629,33 +2633,33 @@
       </ivariable>
       <ivariable label="Colling Fans Balance" CVname="116.19" CV="116" PI="19" default="0" item="CV116.19 Value" mask="XVVVVVVV"
 		include="1100,1112,2100,5100" >
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Colling Fans  Balance Sign" CVname="116.19" CV="116" PI="19" default="0" item="CV116.19 Sign" mask="VXXXXXXX"
 		include="1100,1112,2100,5100" >
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Long Air Letoff Balance" CVname="116.21" CV="116" PI="21" default="0" item="CV116.21 Value" mask="XVVVVVVV">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Long Air Letoff Balance Sign" CVname="116.21" CV="116" PI="21" default="0" item="CV116.21 Sign" mask="VXXXXXXX">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Short Air Letoff Balance" CVname="116.22" CV="116" PI="22" default="0" item="CV116.22 Value" mask="XVVVVVVV">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Short Air Letoff Balance Sign" CVname="116.22" CV="116" PI="22" default="0" item="CV116.22 Sign" mask="VXXXXXXX">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Squealing Brakes Balance" CVname="116.24" CV="116" PI="24" default="0" item="CV116.24 Value" mask="XVVVVVVV">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Squealing Brakes Balance Sign" CVname="116.24" CV="116" PI="24" default="0" item="CV116.24 Sign" mask="VXXXXXXX">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Steam Generator Balance" CVname="116.26" CV="116" PI="26" default="0" item="CV116.26 Value" mask="XVVVVVVV"
 		include="3100,4100" >
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Steam Generator Balance Sign" CVname="116.26" CV="116" PI="26" default="0" item="CV116.26 Sign" mask="VXXXXXXX"
 		include="3100,4100" >
@@ -2663,7 +2667,7 @@
       </ivariable>
       <ivariable label="Diesel Generator Idle Balance" CVname="116.26" CV="116" PI="26" default="0" item="CV116.26 Value" mask="XVVVVVVV"
 		include="1100,5100" >
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Diesel Generator Idle Balance Sign" CVname="116.26" CV="116" PI="26" default="0" item="CV116.26 Sign" mask="VXXXXXXX"
 		include="1100,5100" >
@@ -2671,7 +2675,7 @@
       </ivariable>
       <ivariable label="Dynamic Brakes Balance" CVname="116.28" CV="116" PI="28" default="0" item="CV116.28 Value" mask="XVVVVVVV"
 		include="1100,1112,5100" >
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Dynamic Brakes Balance Sign" CVname="116.28" CV="116" PI="28" default="0" item="CV116.28 Sign" mask="VXXXXXXX"
 		include="1100,1112,5100" >
@@ -2679,7 +2683,7 @@
       </ivariable>
       <ivariable label="Boiler Popoff Balance" CVname="116.29" CV="116" PI="29" default="0" item="CV116.29 Value" mask="XVVVVVVV"
  		include="3100,4100" >
-       <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Boiler Popoff Balance Sign" CVname="116.29" CV="116" PI="29" default="0" item="CV116.29 Sign" mask="VXXXXXXX"
 		include="3100,4100" >
@@ -2687,7 +2691,7 @@
       </ivariable>
       <ivariable label="Spitter Valve Balance" CVname="116.29" CV="116" PI="29" default="0" item="CV116.29 Value" mask="XVVVVVVV"
  		include="1100,1112,5100" >
-       <indexedVal/>
+       <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Spitter Valve Balance Sign" CVname="116.29" CV="116" PI="29" default="0" item="CV116.29 Sign" mask="VXXXXXXX"
  		include="1100,1112,5100" >
@@ -2695,7 +2699,7 @@
       </ivariable>
       <ivariable label="Blow Down Balance" CVname="116.30" CV="116" PI="30" default="0" item="CV116.30 Value" mask="XVVVVVVV"
 		include="3100,4100" >
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Blow Down Balance Sign" CVname="116.30" CV="116" PI="30" default="0" item="CV116.30 Sign" mask="VXXXXXXX"
 		include="3100,4100" >
@@ -2703,7 +2707,7 @@
       </ivariable>
       <ivariable label="Injector Balance" CVname="116.31" CV="116" PI="31" default="0" item="CV116.31 Value" mask="XVVVVVVV"
 		include="3100,4100" >
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Injector Balance Sign" CVname="116.31" CV="116" PI="31" default="0" item="CV116.31 Sign" mask="VXXXXXXX"
 		include="3100,4100" >
@@ -2711,83 +2715,83 @@
       </ivariable>
       <ivariable label="Fuel Balance" CVname="116.32" CV="116" PI="32" default="0" item="CV116.32 Value" mask="XVVVVVVV"
 		include="3100,4100" >
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Fuel Balance Sign" CVname="116.32" CV="116" PI="32" default="0" item="CV116.32 Sign" mask="VXXXXXXX"
 		include="3100,4100" >
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Coupler Balance" CVname="116.34" CV="116" PI="34" default="0" item="CV116.34 Value" mask="XVVVVVVV">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Coupler Balance Sign" CVname="116.34" CV="116" PI="34" default="0" item="CV116.34 Sign" mask="VXXXXXXX">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Air Brakes Balance" CVname="116.37" CV="116" PI="37" default="0" item="CV116.37 Value" mask="XVVVVVVV">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Air Brakes Balance Sign" CVname="116.37" CV="116" PI="37" default="0" item="CV116.37 Sign" mask="VXXXXXXX">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Alt Horn Balance" CVname="116.40" CV="116" PI="40" default="0" item="CV116.40 Value" mask="XVVVVVVV">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Alt Horn Balance Sign" CVname="116.40" CV="116" PI="40" default="0" item="CV116.40 Sign" mask="VXXXXXXX">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="User Sound Balance" CVname="116.46" CV="116" PI="46" default="0" item="CV116.46 Value" mask="XVVVVVVV">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="User Sound Balance Sign" CVname="116.46" CV="116" PI="46" default="0" item="CV116.46 Sign" mask="VXXXXXXX">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Crew Talk Balance" CVname="116.52" CV="116" PI="52" default="0" item="CV116.52 Value" mask="XVVVVVVV">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Crew Talk Balance Sign" CVname="116.52" CV="116" PI="52" default="0" item="CV116.52 Sign" mask="VXXXXXXX">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Water Loading Balance" CVname="116.53" CV="116" PI="53" default="0" item="CV116.53 Value" mask="XVVVVVVV">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Water Loading Balance Sign" CVname="116.53" CV="116" PI="53" default="0" item="CV116.53 Sign" mask="VXXXXXXX">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Water Scoop Balance" CVname="116.54" CV="116" PI="54" default="0" item="CV116.54 Value" mask="XVVVVVVV"
 		include="3100,4100" >
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Water Scoop Balance Sign" CVname="116.54" CV="116" PI="54" default="0" item="CV116.54 Sign" mask="VXXXXXXX"
 		include="3100,4100" >
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Fuel Loading Balance" CVname="116.55" CV="116" PI="55" default="0" item="CV116.55 Value" mask="XVVVVVVV">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Fuel Loading Balance Sign" CVname="116.55" CV="116" PI="55" default="0" item="CV116.55 Sign" mask="VXXXXXXX">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Maintenance Balance" CVname="116.56" CV="116" PI="56" default="0" item="CV116.56 Value" mask="XVVVVVVV">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Maintenance Balance Sign" CVname="116.56" CV="116" PI="56" default="0" item="CV116.56 Sign" mask="VXXXXXXX">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
 <!-- in pdf ref manual, not in defualt value file from QSI
       <ivariable label="Motor Exhaust Idle Balance" CVname="116.58" CV="116" PI="58" default="0" item="CV116.58 Value" mask="XVVVVVVV">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Motor Exhaust Idle Balance Sign" CVname="116.58" CV="116" PI="58" default="0" item="CV116.58 Sign" mask="VXXXXXXX">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Motor Labored Exhaust Min Balance" CVname="116.60" CV="116" PI="60" default="0" item="CV116.60 Value" mask="XVVVVVVV">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Motor Labored Exhaust Min Balance Sign" CVname="116.60" CV="116" PI="60" default="0" item="CV116.60 Sign" mask="VXXXXXXX">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>
       </ivariable>
       <ivariable label="Motor Rod Knock Balance" CVname="116.62" CV="116" PI="62" default="0" item="CV116.62 Value" mask="XVVVVVVV">
-        <indexedVal/>
+        <indexedVal max="127"/>
       </ivariable>
       <ivariable label="Motor Rod Knock Balance Sign" CVname="116.62" CV="116" PI="62" default="0" item="CV116.62 Sign" mask="VXXXXXXX">
 			<xi:include href="http://jmri.org/xml/decoders/qsi/ienum-Speaker.xml"/>

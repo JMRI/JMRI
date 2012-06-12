@@ -8,6 +8,7 @@
                  - added CV107-108
                  - tweaked some "minOut"s in CVs 114,118,119,120,130,131,152
 -->
+<!-- version 1.2 27 Jan 12 JES  - fixed bug in diesel steam effect enum value -->
 
 <variables>
       <variable label="User Data #1" CV="105" item="User Id #1">
@@ -835,7 +836,7 @@
           <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
             <choice>Speed or Load dependent Smoke for Steam Engines</choice>
           </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
             <choice>Operation dependent Smoke for Diesels</choice>
           </enumChoice>
         </enumVal>
@@ -914,7 +915,7 @@
           <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
             <choice>Speed or Load dependent Smoke for Steam Engines</choice>
           </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
             <choice>Operation dependent Smoke for Diesels</choice>
           </enumChoice>
         </enumVal>
@@ -993,7 +994,7 @@
           <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
             <choice>Speed or Load dependent Smoke for Steam Engines</choice>
           </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
             <choice>Operation dependent Smoke for Diesels</choice>
           </enumChoice>
         </enumVal>
@@ -1072,7 +1073,7 @@
           <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
             <choice>Speed or Load dependent Smoke for Steam Engines</choice>
           </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
             <choice>Operation dependent Smoke for Diesels</choice>
           </enumChoice>
         </enumVal>
@@ -1151,7 +1152,7 @@
           <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
             <choice>Speed or Load dependent Smoke for Steam Engines</choice>
           </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
             <choice>Operation dependent Smoke for Diesels</choice>
           </enumChoice>
         </enumVal>
@@ -1230,7 +1231,7 @@
           <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
             <choice>Speed or Load dependent Smoke for Steam Engines</choice>
           </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
             <choice>Operation dependent Smoke for Diesels</choice>
           </enumChoice>
         </enumVal>
@@ -1309,7 +1310,7 @@
           <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
             <choice>Speed or Load dependent Smoke for Steam Engines</choice>
           </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
             <choice>Operation dependent Smoke for Diesels</choice>
           </enumChoice>
         </enumVal>
@@ -1388,7 +1389,7 @@
           <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
             <choice>Speed or Load dependent Smoke for Steam Engines</choice>
           </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+          <enumChoice choice="Operation dependent Smoke for Diesels" value="20">
             <choice>Operation dependent Smoke for Diesels</choice>
           </enumChoice>
         </enumVal>
