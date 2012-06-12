@@ -1539,26 +1539,18 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 
         Block destBlockToAdd = addPath.getBlock();
         int ourWorkingDirection = RXTX;
+        if (destBlockToAdd == null) {
+        	log.error("Found null destination block for path from " + this.getDisplayName());
+            return;
+        }
         if(this.getBlock().isBlockDenied(destBlockToAdd.getDisplayName())){
             ourWorkingDirection=RXONLY;
         } else if(destBlockToAdd.isBlockDenied(this.getBlock().getDisplayName())){
             ourWorkingDirection=TXONLY;
         }
-        /*int ourWorkingDirection = this.getBlock().getWorkingDirection();
 
-        if (ourWorkingDirection!=0){
-            if(ourWorkingDirection == addPath.getToBlockDirection()){
-                //As our direction is the same as the direction to the neighbour, then we can only be a route reciever.
-                ourWorkingDirection=RXONLY;
-            } else {
-                //As our direction is the opposite, then we can recieve routes from this neighbour.
-                ourWorkingDirection=TXONLY;
-            }
-        } else {
-            ourWorkingDirection=RXTX;
-        }*/
         if(enableAddRouteLogging)
-            log.info("From " + this.getDisplayName() +/* " working direction " + Path.decodeDirection(this.getBlock().getWorkingDirection()) +*/ " to block " + addPath.getBlock().getDisplayName() + " we should therefore be... " + decodePacketFlow(ourWorkingDirection));        
+            log.info("From " + this.getDisplayName() + " to block " + addPath.getBlock().getDisplayName() + " we should therefore be... " + decodePacketFlow(ourWorkingDirection));
         addNeighbour(addPath.getBlock(), addPath.getToBlockDirection(), ourWorkingDirection);
         
     }
