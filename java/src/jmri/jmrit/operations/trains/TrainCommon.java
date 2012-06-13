@@ -199,6 +199,21 @@ public class TrainCommon {
 		if(log.isDebugEnabled())
 			log.debug(string);
 		if (file != null){
+			int lineLengthMax = lineLength(Setup.PORTRAIT);
+			if (string.length() > lineLengthMax){
+				log.debug("String is too long for "+Setup.PORTRAIT);
+				String[] s = string.split(SPACE);
+				StringBuffer sb = new StringBuffer();
+				for (int i=0; i<s.length; i++){
+					if (sb.length() + s[i].length() < lineLengthMax){
+						sb.append(s[i]+SPACE);
+					} else {
+						file.println(level +"- " + sb.toString());
+						sb = new StringBuffer(s[i]+SPACE);
+					}
+				}
+				string = sb.toString();
+			}
 			String[] msg = string.split(NEW_LINE);
 			for (int i=0; i<msg.length; i++)
 				file.println(level +"- " + msg[i]);
