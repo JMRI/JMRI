@@ -38,35 +38,36 @@ public class TrainCommon {
 	private static final String LENGTHABV = Setup.LENGTHABV;
 	protected static final String TAB = "    ";
 	protected static final String NEW_LINE = "\n";
+	protected static final String SPACE = " ";
 	private static final boolean pickup = true;
 	private static final boolean local = true;
 	
 	CarManager carManager = CarManager.instance();
 	EngineManager engineManager = EngineManager.instance();
 	
-	protected void pickupEngines(PrintWriter fileOut, List<String> engineList, RouteLocation rl){
+	protected void pickupEngines(PrintWriter fileOut, List<String> engineList, RouteLocation rl, String orientation){
 		for (int i =0; i < engineList.size(); i++){
 			Engine engine = engineManager.getById(engineList.get(i));
 			if (engine.getRouteLocation() == rl && !engine.getTrackName().equals(""))
-				pickupEngine(fileOut, engine);
+				pickupEngine(fileOut, engine, orientation);
 		}
 	}
 	
-	protected void dropEngines(PrintWriter fileOut, List<String> engineList, RouteLocation rl){
+	protected void dropEngines(PrintWriter fileOut, List<String> engineList, RouteLocation rl, String orientation){
 		for (int i =0; i < engineList.size(); i++){
 			Engine engine = engineManager.getById(engineList.get(i));
 			if (engine.getRouteDestination() == rl)
-				dropEngine(fileOut, engine);
+				dropEngine(fileOut, engine, orientation);
 		}
 	}
 	
 	
-	protected void pickupEngine(PrintWriter file, Engine engine){
+	protected void pickupEngine(PrintWriter file, Engine engine, String orientation){
 		StringBuffer buf = new StringBuffer(Setup.getPickupEnginePrefix());
 		String[] format = Setup.getPickupEngineMessageFormat();
 		for (int i=0; i<format.length; i++){
 			String s = getEngineAttribute(engine, format[i], pickup);
-			if (buf.length()+s.length()>lineLength(Setup.PORTRAIT)){
+			if (buf.length()+s.length()>lineLength(orientation)){
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
 			}
@@ -75,12 +76,12 @@ public class TrainCommon {
 		addLine(file, buf.toString());
 	}
 	
-	protected void dropEngine(PrintWriter file, Engine engine){
+	protected void dropEngine(PrintWriter file, Engine engine, String orientation){
 		StringBuffer buf = new StringBuffer(Setup.getDropEnginePrefix());
 		String[] format = Setup.getDropEngineMessageFormat();
 		for (int i=0; i<format.length; i++){
 			String s = getEngineAttribute(engine, format[i], !pickup);
-			if (buf.length()+s.length()>lineLength(Setup.PORTRAIT)){
+			if (buf.length()+s.length()>lineLength(orientation)){
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
 			}
@@ -206,10 +207,31 @@ public class TrainCommon {
 	
 	// writes string to console and file
 	protected void addLine (PrintWriter file, String string){
-		if(log.isDebugEnabled())
+		if(log.isDebugEnabled()){
 			log.debug(string);
+		}
 		if (file != null)
 			file.println(string);
+	}
+	
+	protected void newLine (PrintWriter file, String string, String orientation){
+		int lineLengthMax = lineLength(orientation);
+		if (string.length() > lineLengthMax){
+			log.debug("String is too long for "+orientation);
+			String[] s = string.split(SPACE);
+			StringBuffer sb = new StringBuffer();
+			for (int i=0; i<s.length; i++){
+				if (sb.length() + s[i].length() < lineLengthMax){
+					sb.append(s[i]+SPACE);
+				} else {
+					addLine(file, sb.toString());
+					sb = new StringBuffer(s[i]+SPACE);
+				}
+			}
+			addLine(file, sb.toString());
+			return;
+		}
+		addLine(file, string);
 	}
 	
 	protected void newLine (PrintWriter file){
@@ -396,9 +418,11 @@ public class TrainCommon {
 	protected int lineLength(String orientation){
 		// page size has been adjusted to account for margins of .5
 		// Dimension pagesize = new Dimension(612,792);
-		Dimension pagesize = new Dimension(540,792);
+		Dimension pagesize = new Dimension(540,792);	// Portrait
 		if (orientation.equals(Setup.LANDSCAPE))
 			pagesize = new Dimension(720,612);
+		if (orientation.equals(Setup.HANDHELD))
+			pagesize = new Dimension(206,792);
 		// Metrics don't always work for the various font names, so use Monospaced
 		Font font = new Font("Monospaced", Font.PLAIN, Setup.getFontSize());
 		Frame frame = new Frame();

@@ -107,6 +107,7 @@ public class Setup {
 	
 	public static final String PORTRAIT = rb.getString("Portrait");
 	public static final String LANDSCAPE = rb.getString("Landscape");
+	public static final String HANDHELD	= rb.getString("HandHeld");
 	
 	public static final String LENGTHABV =rb.getString("LengthSymbol");
 	
@@ -1224,6 +1225,7 @@ public class Setup {
 		JComboBox box = new JComboBox();
 		box.addItem(PORTRAIT);
 		box.addItem(LANDSCAPE);
+		box.addItem(HANDHELD);
 		return box;
 	}
 	

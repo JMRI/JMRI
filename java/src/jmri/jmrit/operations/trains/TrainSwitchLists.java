@@ -41,6 +41,7 @@ public class TrainSwitchLists extends TrainCommon {
 		// Append switch list data if not operating in real time
 		boolean newTrainsOnly = !Setup.isSwitchListRealTime();
 		boolean append = false;
+		boolean nextTrain = false;
 		if (newTrainsOnly){
 			if (!location.getStatus().equals(Location.MODIFIED))
 				return;	// nothing to add
@@ -67,9 +68,9 @@ public class TrainSwitchLists extends TrainCommon {
 		}
 		// build header
 		if (!append)
-			addLine(fileOut, Setup.getRailroadName());
+			newLine(fileOut, Setup.getRailroadName());
 		newLine(fileOut);
-		addLine(fileOut, MessageFormat.format(rb.getString("SwitchListFor"), new Object[]{splitString(location.getName())}));
+		newLine(fileOut, MessageFormat.format(rb.getString("SwitchListFor"), new Object[]{splitString(location.getName())}));
 		
 		String valid = MessageFormat.format(rb.getString("Valid"), new Object[]{getDate()});
 		
@@ -79,10 +80,10 @@ public class TrainSwitchLists extends TrainCommon {
 				valid = valid + " ("+sch.getName()+")"; 
 		}
 		if (Setup.isPrintValidEnabled())
-			addLine(fileOut, valid);
+			newLine(fileOut, valid);
 		
 		if (!location.getSwitchListComment().equals(""))
-			addLine(fileOut, location.getSwitchListComment());
+			newLine(fileOut, location.getSwitchListComment());
 		
 		// get a list of trains sorted by arrival time
 		List<Train> trains = getTrainsArrivingThisLocationList(location);
@@ -128,6 +129,9 @@ public class TrainSwitchLists extends TrainCommon {
 				log.debug("No work for train ("+train.getName()+") at location "+location.getName());
 				continue;
 			}
+			if (nextTrain && Setup.isSwitchListPagePerTrainEnabled())
+				fileOut.write(formFeed);
+			nextTrain = true;
 			// some cars counts and the number of times this location get's serviced
 			int pickupCars = 0;
 			int dropCars = 0;
@@ -148,39 +152,39 @@ public class TrainSwitchLists extends TrainCommon {
 							newLine(fileOut);
 							if (train.isTrainInRoute()){
 								if (expectedArrivalTime.equals("-1"))
-									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberDone"), new Object[]{stops, train.getIconName()}));
+									newLine(fileOut, MessageFormat.format(rb.getString("VisitNumberDone"), new Object[]{stops, train.getIconName()}));
 								else if (r != routeList.size()-1)
-									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberDeparted"), new Object[]{stops, train.getIconName(), expectedArrivalTime, rl.getTrainDirectionString()}));
+									newLine(fileOut, MessageFormat.format(rb.getString("VisitNumberDeparted"), new Object[]{stops, train.getIconName(), expectedArrivalTime, rl.getTrainDirectionString()}));
 								else
-									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberTerminatesDeparted"), new Object[]{stops, train.getIconName(), expectedArrivalTime, splitString(rl.getName())}));
+									newLine(fileOut, MessageFormat.format(rb.getString("VisitNumberTerminatesDeparted"), new Object[]{stops, train.getIconName(), expectedArrivalTime, splitString(rl.getName())}));
 							} else {
 								if (r != routeList.size()-1)
-									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumber"), new Object[]{stops, train.getIconName(), expectedArrivalTime, rl.getTrainDirectionString()}));
+									newLine(fileOut, MessageFormat.format(rb.getString("VisitNumber"), new Object[]{stops, train.getIconName(), expectedArrivalTime, rl.getTrainDirectionString()}));
 								else
-									addLine(fileOut, MessageFormat.format(rb.getString("VisitNumberTerminates"), new Object[]{stops, train.getIconName(), expectedArrivalTime, splitString(rl.getName())}));
+									newLine(fileOut, MessageFormat.format(rb.getString("VisitNumberTerminates"), new Object[]{stops, train.getIconName(), expectedArrivalTime, splitString(rl.getName())}));
 							}
 						} else {
 							stops--;	// don't bump stop count, same location
 							// Does the train reverse direction?
 							if (rl.getTrainDirection() != rlPrevious.getTrainDirection())
-								addLine(fileOut, MessageFormat.format(rb.getString("TrainDirectionChange"), new Object[]{train.getIconName(), rl.getTrainDirectionString()}));
+								newLine(fileOut, MessageFormat.format(rb.getString("TrainDirectionChange"), new Object[]{train.getIconName(), rl.getTrainDirectionString()}));
 						}
 					} else {
 						newLine(fileOut);
-						addLine(fileOut, MessageFormat.format(rb.getString("ScheduledWork"), new Object[]{train.getIconName(), train.getDescription()}));										
+						newLine(fileOut, MessageFormat.format(rb.getString("ScheduledWork"), new Object[]{train.getIconName(), train.getDescription()}));										
 						if (train.isTrainInRoute()){
 							if (!trainDone){
-								addLine(fileOut, MessageFormat.format(rb.getString("DepartedExpected"), new Object[]{splitString(train.getTrainDepartsName()), expectedArrivalTime, rl.getTrainDirectionString()}));
+								newLine(fileOut, MessageFormat.format(rb.getString("DepartedExpected"), new Object[]{splitString(train.getTrainDepartsName()), expectedArrivalTime, rl.getTrainDirectionString()}));
 							}
 						} else {
 							if (r == 0 && routeList.size()>1)
-								addLine(fileOut, MessageFormat.format(rb.getString("DepartsAt"), new Object[]{splitString(train.getTrainDepartsName()), rl.getTrainDirectionString(), train.getFormatedDepartureTime()}));
+								newLine(fileOut, MessageFormat.format(rb.getString("DepartsAt"), new Object[]{splitString(train.getTrainDepartsName()), rl.getTrainDirectionString(), train.getFormatedDepartureTime()}));
 							else if (routeList.size()>1)
-								addLine(fileOut, MessageFormat.format(rb.getString("DepartsAtExpectedArrival"), new Object[]{splitString(train.getTrainDepartsName()), train.getFormatedDepartureTime(), expectedArrivalTime, rl.getTrainDirectionString()}));
+								newLine(fileOut, MessageFormat.format(rb.getString("DepartsAtExpectedArrival"), new Object[]{splitString(train.getTrainDepartsName()), train.getFormatedDepartureTime(), expectedArrivalTime, rl.getTrainDirectionString()}));
 						}
 					}
 					// go through the list of engines and determine if the engine departs here					
-					pickupEngines(fileOut, enginesList, rl);
+					pickupEngines(fileOut, enginesList, rl, Setup.getSwitchListOrientation());
 
 					// block cars by destination
 					for (int j = 0; j < routeList.size(); j++) {						
@@ -211,22 +215,20 @@ public class TrainSwitchLists extends TrainCommon {
 						}
 					}
 					
-					dropEngines(fileOut, enginesList, rl);
+					dropEngines(fileOut, enginesList, rl, Setup.getSwitchListOrientation());
 					stops++;
 				}
 			}
 			if (trainDone && pickupCars == 0 && dropCars == 0){
-				addLine(fileOut, rb.getString("TrainDone"));
+				newLine(fileOut, rb.getString("TrainDone"));
 			} else {
 				if (stops > 1 && pickupCars == 0){
-					addLine(fileOut, rb.getString("NoCarPickUps"));
+					newLine(fileOut, rb.getString("NoCarPickUps"));
 				}
 				if (stops > 1 && dropCars == 0){
-					addLine(fileOut, rb.getString("NoCarDrops"));
+					newLine(fileOut, rb.getString("NoCarDrops"));
 				}
 			}
-			if (Setup.isSwitchListPagePerTrainEnabled())
-				fileOut.write(formFeed);
 		}
 		// Are there any cars that need to be found?
 		getCarsLocationUnknown(fileOut);
@@ -309,6 +311,10 @@ public class TrainSwitchLists extends TrainCommon {
 
 		}
 		return trains;
+	}
+	
+	protected void newLine (PrintWriter file, String string){
+		newLine (file, string, Setup.getSwitchListOrientation());
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainSwitchLists.class.getName());

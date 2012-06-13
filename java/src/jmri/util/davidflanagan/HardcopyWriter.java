@@ -57,6 +57,7 @@ public class HardcopyWriter extends Writer {
     protected int charoffset =0;
     protected int pagenum = 0;
     protected Color color = Color.black;
+    protected boolean printHeader = true;
     
     protected boolean isPreview;
     protected Graphics previewedPage;
@@ -97,8 +98,11 @@ public class HardcopyWriter extends Writer {
 	// constructor modified to add default printer name and page orientation
 	public HardcopyWriter(Frame frame, String jobname, int fontsize,
 			double leftmargin, double rightmargin, double topmargin,
-			double bottommargin, boolean preview, String printerName, boolean landscape)
+			double bottommargin, boolean preview, String printerName, boolean landscape, boolean printHeader)
 			throws HardcopyWriter.PrintCanceledException {
+		
+		// print header?
+		this.printHeader = printHeader;
 		
 		// set default print name
 		jobAttributes.setPrinter(printerName);
@@ -469,21 +473,22 @@ public class HardcopyWriter extends Writer {
         }
         pagenum++;
         linenum = 0; charnum = 0;
-        page.setFont(headerfont);
-        page.drawString(jobname, x0, headery);
+        if (printHeader){
+        	page.setFont(headerfont);
+        	page.drawString(jobname, x0, headery);
 
-        String s = "- " + pagenum + " -";  // print page number centered
-        int w = headermetrics.stringWidth(s);
-        page.drawString(s, x0 + (this.width - w)/2, headery);
-        w = headermetrics.stringWidth(time);
-        page.drawString(time, x0 + width - w, headery);
+        	String s = "- " + pagenum + " -";  // print page number centered
+        	int w = headermetrics.stringWidth(s);
+        	page.drawString(s, x0 + (this.width - w)/2, headery);
+        	w = headermetrics.stringWidth(time);
+        	page.drawString(time, x0 + width - w, headery);
 
-        // draw a line under the header
-        int y = headery + headermetrics.getDescent() + 1;
-        page.drawLine(x0, y, x0+width, y);
-
-        // set basic font
-        page.setFont(font);
+        	// draw a line under the header
+        	int y = headery + headermetrics.getDescent() + 1;
+        	page.drawLine(x0, y, x0+width, y);
+        }
+       	// set basic font
+    	page.setFont(font);
     }
 
     /**

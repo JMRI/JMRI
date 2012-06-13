@@ -59,10 +59,13 @@ public class TrainPrintUtilities {
 		HardcopyWriter writer = null;
 		Frame mFrame = new Frame();
 		boolean isLandScape = false;
+		boolean printHeader = true;
 		if (orientation.equals(Setup.LANDSCAPE))
 			isLandScape = true;
+		if (orientation.equals(Setup.HANDHELD))
+			printHeader = false;
         try {
-            writer = new HardcopyWriter(mFrame, name, Setup.getFontSize(), .5, .5, .5, .5, isPreview, printerName, isLandScape);
+            writer = new HardcopyWriter(mFrame, name, Setup.getFontSize(), .5, .5, .5, .5, isPreview, printerName, isLandScape, printHeader);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
