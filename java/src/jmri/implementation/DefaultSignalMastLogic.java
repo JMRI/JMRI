@@ -813,6 +813,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         } else {
             advancedAspect = getSourceMast().getAppearanceMap().getValidAspectsForAdvancedAspect(destination.getAspect());
         }
+
         if(log.isDebugEnabled())
             log.debug("distant aspect is " + destination.getAspect());
 
@@ -822,11 +823,16 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 //if a block is in a permissive state then we set the permissive appearance
                 aspect = getSourceMast().getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE);
             } else {
-                aspect = advancedAspect[0];
+                for(int i = 0; i<advancedAspect.length; i++){
+                    if(!getSourceMast().isAspectDisabled(advancedAspect[i])){
+                        aspect = advancedAspect[i];
+                        break;
+                    }
+                }
                 ArrayList<Integer> divergAspects = new ArrayList<Integer>();
                 ArrayList<Integer> nonDivergAspects = new ArrayList<Integer>();
                 ArrayList<Integer> eitherAspects = new ArrayList<Integer>();
-                if (advancedAspect.length>1) {                
+                if (advancedAspect.length>1) {
                     float maxSigSpeed = -1;
                     float maxPathSpeed = destList.get(destination).getMinimumSpeed();
                     boolean divergRoute = destList.get(destination).turnoutThrown;
@@ -835,7 +841,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     boolean divergFlagsAvailable = false;
                         //We split the aspects into two lists, one with divering flag set, the other without.
                     for(int i = 0; i<advancedAspect.length; i++){
-                        String div = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "route");
+                        String div = null;
+                        if(!getSourceMast().isAspectDisabled(advancedAspect[i])){
+                            div = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "route");
+                        }
                         if(div!=null){
                             if (div.equals("Diverging")){
                                 log.debug("Aspect " + advancedAspect[i] + "added as Diverging Route");
@@ -866,68 +875,72 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     }
                     log.debug("path max speed : " + maxPathSpeed);
                     for (int i = 0; i<advancedAspect.length; i++){
-                        String strSpeed = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "speed");
-                        if(log.isDebugEnabled())
-                            log.debug("Aspect Speed = " + strSpeed + " for aspect " + advancedAspect[i]);
-                        /*  if the diverg flags available is set and the diverg aspect 
-                            array contains the entry then we will check this aspect.
-                            
-                            If the diverg flag has not been set then we will check.
-                        */
-                        log.debug(advancedAspect[i]);
-                        if((divergRoute && (divergFlagsAvailable) && (divergAspects.contains(i))) || ((divergRoute && !divergFlagsAvailable)||(!divergRoute)) && (nonDivergAspects.contains(i))){
-                            log.debug("In list");
-                            if ((strSpeed!=null) && (!strSpeed.equals(""))){
-                                float speed = 0.0f;
-                                try {
-                                    speed = new Float(strSpeed);
-                                }catch (NumberFormatException nx) {
-                                    try{
-                                        speed = jmri.implementation.SignalSpeedMap.getMap().getSpeed(strSpeed);
-                                    } catch (Exception ex){
-                                        //Considered Normal if the speed does not appear in the map
-                                    }
-                                }
-                                //Integer state = Integer.parseInt(strSpeed);
-                                /* This pics out either the highest speed signal if there
-                                 * is no block speed specified or the highest speed signal
-                                 * that is under the minimum block speed.
-                                 */
-                                if(log.isDebugEnabled())
-                                    log.debug(destination.getDisplayName() + " signal state speed " + speed + " maxSigSpeed " + maxSigSpeed + " max Path Speed " + maxPathSpeed);
-                                if(maxPathSpeed==0){
-                                    if (maxSigSpeed ==-1){
-                                        log.debug("min speed on this route is equal to 0 so will set this as our max speed");
-                                        maxSigSpeed=speed;
-                                        aspect = advancedAspect[i];
-                                        log.debug("Aspect to set is " + aspect);
-                                    } else if (speed > maxSigSpeed){
-                                        log.debug("new speed is faster than old will use this");
-                                        maxSigSpeed=speed;
-                                        aspect = advancedAspect[i];
-                                        log.debug("Aspect to set is " + aspect);
-                                    }
-                                }
-                                else if ((speed>maxSigSpeed) && (maxSigSpeed<maxPathSpeed) && (speed<=maxPathSpeed)){
-                                    //Only set the speed to the lowest if the max speed is greater than the path speed
-                                    //and the new speed is less than the last max speed
-                                    log.debug("our minimum speed on this route is less than our state speed, we will set this as our max speed");
-                                    maxSigSpeed = speed;
-                                    aspect = advancedAspect[i];
-                                    log.debug("Aspect to set is " + aspect);
-                                } else if ((maxSigSpeed>maxPathSpeed) && (speed<maxSigSpeed)){
-                                    log.debug("our max signal speed is greater than our path speed on this route, our speed is less that the maxSigSpeed");
-                                    maxSigSpeed = speed;
-                                    aspect = advancedAspect[i];
-                                    log.debug("Aspect to set is " + aspect);
+                        if(!getSourceMast().isAspectDisabled(advancedAspect[i])){
+                            String strSpeed = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "speed");
+                            if(log.isDebugEnabled())
+                                log.debug("Aspect Speed = " + strSpeed + " for aspect " + advancedAspect[i]);
+                            /*  if the diverg flags available is set and the diverg aspect 
+                                array contains the entry then we will check this aspect.
                                 
-                                } else if (maxSigSpeed == -1){
-                                    log.debug("maxSigSpeed returned as -1");
-                                    maxSigSpeed = speed;
-                                    aspect = advancedAspect[i];
-                                    log.debug("Aspect to set is " + aspect);
+                                If the diverg flag has not been set then we will check.
+                            */
+                            log.debug(advancedAspect[i]);
+                            if((divergRoute && (divergFlagsAvailable) && (divergAspects.contains(i))) || ((divergRoute && !divergFlagsAvailable)||(!divergRoute)) && (nonDivergAspects.contains(i))){
+                                log.debug("In list");
+                                if ((strSpeed!=null) && (!strSpeed.equals(""))){
+                                    float speed = 0.0f;
+                                    try {
+                                        speed = new Float(strSpeed);
+                                    }catch (NumberFormatException nx) {
+                                        try{
+                                            speed = jmri.implementation.SignalSpeedMap.getMap().getSpeed(strSpeed);
+                                        } catch (Exception ex){
+                                            //Considered Normal if the speed does not appear in the map
+                                        }
+                                    }
+                                    //Integer state = Integer.parseInt(strSpeed);
+                                    /* This pics out either the highest speed signal if there
+                                     * is no block speed specified or the highest speed signal
+                                     * that is under the minimum block speed.
+                                     */
+                                    if(log.isDebugEnabled())
+                                        log.debug(destination.getDisplayName() + " signal state speed " + speed + " maxSigSpeed " + maxSigSpeed + " max Path Speed " + maxPathSpeed);
+                                    if(maxPathSpeed==0){
+                                        if (maxSigSpeed ==-1){
+                                            log.debug("min speed on this route is equal to 0 so will set this as our max speed");
+                                            maxSigSpeed=speed;
+                                            aspect = advancedAspect[i];
+                                            log.debug("Aspect to set is " + aspect);
+                                        } else if (speed > maxSigSpeed){
+                                            log.debug("new speed is faster than old will use this");
+                                            maxSigSpeed=speed;
+                                            aspect = advancedAspect[i];
+                                            log.debug("Aspect to set is " + aspect);
+                                        }
+                                    }
+                                    else if ((speed>maxSigSpeed) && (maxSigSpeed<maxPathSpeed) && (speed<=maxPathSpeed)){
+                                        //Only set the speed to the lowest if the max speed is greater than the path speed
+                                        //and the new speed is less than the last max speed
+                                        log.debug("our minimum speed on this route is less than our state speed, we will set this as our max speed");
+                                        maxSigSpeed = speed;
+                                        aspect = advancedAspect[i];
+                                        log.debug("Aspect to set is " + aspect);
+                                    } else if ((maxSigSpeed>maxPathSpeed) && (speed<maxSigSpeed)){
+                                        log.debug("our max signal speed is greater than our path speed on this route, our speed is less that the maxSigSpeed");
+                                        maxSigSpeed = speed;
+                                        aspect = advancedAspect[i];
+                                        log.debug("Aspect to set is " + aspect);
+                                    
+                                    } else if (maxSigSpeed == -1){
+                                        log.debug("maxSigSpeed returned as -1");
+                                        maxSigSpeed = speed;
+                                        aspect = advancedAspect[i];
+                                        log.debug("Aspect to set is " + aspect);
+                                    }
                                 }
                             }
+                        } else if(log.isDebugEnabled()){
+                            log.debug("Aspect has been disabled " + advancedAspect[i]);
                         }
                     }
                 }

@@ -88,5 +88,7 @@ public interface SignalMast extends NamedBean {
      */
     public boolean getHeld();
     public void setHeld(boolean newHeld);
+    
+    public boolean isAspectDisabled(String aspect);
 }
 /* @(#)SignalMast.java */
