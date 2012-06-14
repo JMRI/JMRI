@@ -2434,35 +2434,95 @@ public class Train implements java.beans.PropertyChangeListener {
     		//        	if (log.isDebugEnabled()) log.debug("Train skips : "+locationIds);
     		setTrainSkipsLocations(locs);
     	}
+    	// old way of reading car types up to version 2.99.6
+    	// TODO remove backward compatibility
     	if ((a = e.getAttribute("carTypes")) != null ) {
     		String names = a.getValue();
-    		String[] Types = names.split("%%");
+    		String[] types = names.split("%%");
     		//        	if (log.isDebugEnabled()) log.debug("Car types: "+names);
-    		setTypeNames(Types);
+    		setTypeNames(types);
     	}
+    	// new way of reading car types using elements
+      	if (e.getChild("carTypes") != null){
+    		@SuppressWarnings("unchecked")
+    		List<Element> carTypes = e.getChild("carTypes").getChildren("carType");
+    		String[] types = new String[carTypes.size()];
+    		for (int i=0; i<carTypes.size(); i++){
+    			Element type = carTypes.get(i);
+    			if ((a = type.getAttribute("name")) != null ){
+    				types[i] = a.getValue();
+    			}
+    		}
+    		setTypeNames(types);
+      	}
     	if ((a = e.getAttribute("carRoadOperation")) != null )  _roadOption = a.getValue();
+    	// old way of reading car roads up to version 2.99.6
+    	// TODO remove backward compatibility
     	if ((a = e.getAttribute("carRoads")) != null ) {
     		String names = a.getValue();
     		String[] roads = names.split("%%");
     		if (log.isDebugEnabled()) log.debug("Train (" +getName()+ ") " +getRoadOption()+  " car roads: "+ names);
     		setRoadNames(roads);
     	}
+    	// new way of reading car roads using elements
+      	if (e.getChild("carRoads") != null){
+    		@SuppressWarnings("unchecked")
+    		List<Element> carRoads = e.getChild("carRoads").getChildren("carRoad");
+    		String[] roads = new String[carRoads.size()];
+    		for (int i=0; i<carRoads.size(); i++){
+    			Element road = carRoads.get(i);
+    			if ((a = road.getAttribute("name")) != null ){
+    				roads[i] = a.getValue();
+    			}
+    		}
+    		setRoadNames(roads);
+      	}
     	if ((a = e.getAttribute("carLoadOption")) != null )  _loadOption = a.getValue();
     	if ((a = e.getAttribute("carOwnerOption")) != null )  _ownerOption = a.getValue();
     	if ((a = e.getAttribute("builtStartYear")) != null )  _builtStartYear = a.getValue();
     	if ((a = e.getAttribute("builtEndYear")) != null )  _builtEndYear = a.getValue();
+    	// old way of reading car loads up to version 2.99.6
+    	// TODO remove backward compatibility
     	if ((a = e.getAttribute("carLoads")) != null ) {
     		String names = a.getValue();
     		String[] loads = names.split("%%");
     		if (log.isDebugEnabled()) log.debug("Train (" +getName()+ ") " +getLoadOption()+  " car loads: "+ names);
     		setLoadNames(loads);
     	}
+    	// new way of reading car loads using elements
+      	if (e.getChild("carLoads") != null){
+    		@SuppressWarnings("unchecked")
+    		List<Element> carLoads = e.getChild("carLoads").getChildren("carLoad");
+    		String[] loads = new String[carLoads.size()];
+    		for (int i=0; i<carLoads.size(); i++){
+    			Element load = carLoads.get(i);
+    			if ((a = load.getAttribute("name")) != null ){
+    				loads[i] = a.getValue();
+    			}
+    		}
+    		setLoadNames(loads);
+      	}
+    	// old way of reading car owners up to version 2.99.6
+    	// TODO remove backward compatibility
     	if ((a = e.getAttribute("carOwners")) != null ) {
     		String names = a.getValue();
     		String[] owners = names.split("%%");
     		if (log.isDebugEnabled()) log.debug("Train (" +getName()+ ") " +getOwnerOption()+  " car owners: "+ names);
     		setOwnerNames(owners);
     	}
+       	// new way of reading car owners using elements
+      	if (e.getChild("carOwners") != null){
+    		@SuppressWarnings("unchecked")
+    		List<Element> carOwners = e.getChild("carOwners").getChildren("carOwner");
+    		String[] owners = new String[carOwners.size()];
+    		for (int i=0; i<carOwners.size(); i++){
+    			Element owner = carOwners.get(i);
+    			if ((a = owner.getAttribute("name")) != null ){
+    				owners[i] = a.getValue();
+    			}
+    		}
+    		setOwnerNames(owners);
+      	}
     	if ((a = e.getAttribute("numberEngines")) != null)
     		_numberEngines = a.getValue();
     	if ((a = e.getAttribute("leg2Engines")) != null)
@@ -2641,6 +2701,7 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("comment", getComment());
         // build list of car types for this train
         String[] types = getTypeNames();
+        /*  Old way of saving car types      
         buf = new StringBuffer();
         for (int i=0; i<types.length; i++){
        		// remove types that have been deleted by user
@@ -2648,32 +2709,70 @@ public class Train implements java.beans.PropertyChangeListener {
     			buf.append(types[i]+"%%");
         }
         e.setAttribute("carTypes", buf.toString());
+        */
+        Element eTypes = new Element("carTypes");
+        for (int i=0; i<types.length; i++){
+       		// don't save types that have been deleted by user
+    		if (CarTypes.instance().containsName(types[i]) || EngineTypes.instance().containsName(types[i])){
+    			Element eType = new Element("carType");
+    			eType.setAttribute("name", types[i]);
+    			eTypes.addContent(eType);
+    		} 			
+        }
+        e.addContent(eTypes);
       	// save list of car roads for this train
         if (!getRoadOption().equals(ALLROADS)){
         	String[] roads = getRoadNames();
+        	/* old way of saving road names
         	buf = new StringBuffer();
         	for (int i=0; i<roads.length; i++){
         		buf.append(roads[i]+"%%");
         	}
         	e.setAttribute("carRoads", buf.toString());
+        	*/
+        	Element eRoads = new Element("carRoads");
+           	for (int i=0; i<roads.length; i++){
+    			Element eRoad = new Element("carRoad");
+    			eRoad.setAttribute("name", roads[i]);
+    			eRoads.addContent(eRoad);
+        	}
+           	e.addContent(eRoads);
         }
         // save list of car loads for this train
         if (!getLoadOption().equals(ALLLOADS)){
         	String[] loads = getLoadNames();
+        	/* old way of saving car loads
         	buf = new StringBuffer();
         	for (int i=0; i<loads.length; i++){
         		buf.append(loads[i]+"%%");
         	}
         	e.setAttribute("carLoads", buf.toString());
+        	*/
+           	Element eLoads = new Element("carLoads");
+           	for (int i=0; i<loads.length; i++){
+    			Element eLoad = new Element("carLoad");
+    			eLoad.setAttribute("name", loads[i]);
+    			eLoads.addContent(eLoad);
+        	}
+           	e.addContent(eLoads);
         }
         // save list of car owners for this train
         if (!getOwnerOption().equals(ALLOWNERS)){
         	String[] owners = getOwnerNames();
+        	/* old way of saving car owners
         	buf = new StringBuffer();
         	for (int i=0; i<owners.length; i++){
         		buf.append(owners[i]+"%%");
         	}
         	e.setAttribute("carOwners", buf.toString());
+        	*/
+           	Element eOwners = new Element("carOwners");
+           	for (int i=0; i<owners.length; i++){
+    			Element eOwner = new Element("carOwner");
+    			eOwner.setAttribute("name", owners[i]);
+    			eOwners.addContent(eOwner);
+        	}
+           	e.addContent(eOwners);
         }
         // save list of scripts for this train
         if (getBuildScripts().size()>0 || getAfterBuildScripts().size()>0 || getMoveScripts().size()>0 || getTerminationScripts().size()>0){

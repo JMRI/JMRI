@@ -19,7 +19,6 @@
 <!ELEMENT trainOptions EMPTY>
 <!ELEMENT trainEditOptions EMPTY>
 <!ELEMENT trainScheduleOptions EMPTY>
-<!ELEMENT scripts (startUp | shutDown | build | afterBuild | move | terminate)*>
 
 <!ATTLIST trainOptions buildReport		(true | false) "false">
 <!ATTLIST trainOptions printPreview 	(true | false) "false">
@@ -36,7 +35,17 @@
 <!ELEMENT terminate EMPTY>
 
 <!ELEMENT trains (train)*>
-<!ELEMENT train (scripts | railRoad | manifestLogo)*>
+<!ELEMENT train (carTypes | carLoads | carRoads | carOwners |scripts | railRoad | manifestLogo)*>
+
+<!ELEMENT carTypes (carType)*>
+<!ELEMENT carType EMPTY>
+<!ELEMENT carLoads (carLoad)*>
+<!ELEMENT carLoad EMPTY>
+<!ELEMENT carRoads (carRoad)*>
+<!ELEMENT carRoad EMPTY>
+<!ELEMENT carOwners (carOwner)*>
+<!ELEMENT carOwner EMPTY>
+<!ELEMENT scripts (startUp | shutDown | build | afterBuild | move | terminate)*>
 
 <!ELEMENT railRoad EMPTY>
 <!ELEMENT manifestLogo EMPTY>
@@ -95,6 +104,11 @@
 <!ATTLIST train leg2End				CDATA #IMPLIED>
 <!ATTLIST train leg3End				CDATA #IMPLIED>
 <!ATTLIST train comment				CDATA #IMPLIED>
+
+<!ATTLIST carType name				CDATA #IMPLIED>
+<!ATTLIST carLoad name				CDATA #IMPLIED>
+<!ATTLIST carRoad name				CDATA #IMPLIED>
+<!ATTLIST carOwner name				CDATA #IMPLIED>
 
 <!ATTLIST build name				CDATA #IMPLIED>
 <!ATTLIST afterBuild name			CDATA #IMPLIED>

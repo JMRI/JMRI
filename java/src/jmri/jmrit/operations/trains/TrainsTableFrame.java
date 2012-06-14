@@ -261,7 +261,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button actived");
-		trainManagerXml.setDirty(true);
 		if (ae.getSource() == showId){
 			trainsModel.setSort(trainsModel.SORTBYID);
 		}
@@ -416,7 +415,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		trainManagerXml.setDirty(true);
 		if (ae.getSource() == buildMsgBox){
 			trainManager.setBuildMessagesEnabled(buildMsgBox.isSelected());
 		}

@@ -72,7 +72,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
     
     public void setBuildMessagesEnabled(boolean enable){
+    	boolean old = _buildMessages;
     	_buildMessages = enable;
+    	firePropertyChange("BuildMessagesEnabled", enable, old);
     }
     
     /**
@@ -84,7 +86,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
     
     public void setBuildReportEnabled(boolean enable){
+    	boolean old = _buildReport;
     	_buildReport = enable;
+    	firePropertyChange("BuildReportEnabled", enable, old);
     }
     
     /**
@@ -146,10 +150,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 */
 	public void addStartUpScript(String pathname){
 		_startUpScripts.add(pathname);
+		firePropertyChange("addStartUpScript", pathname, null);
 	}
 	
 	public void deleteStartUpScript(String pathname){
 		_startUpScripts.remove(pathname);
+		firePropertyChange("deleteStartUpScript", null, pathname);
 	}
 	
 	/**
@@ -173,10 +179,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 */
 	public void addShutDownScript(String pathname){
 		_shutDownScripts.add(pathname);
+		firePropertyChange("addShutDownScript", pathname, null);
 	}
 	
 	public void deleteShutDownScript(String pathname){
 		_shutDownScripts.remove(pathname);
+		firePropertyChange("deleteShutDownScript", null, pathname);
 	}
 	
 	/**
