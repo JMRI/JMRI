@@ -91,6 +91,14 @@ public class DefaultSignalSystemManager extends AbstractManager
         //Now get the user defined systems.
         signalDir = new File(XmlFile.prefsDir()+
             java.io.File.separator+"resources"+File.separator+"signals");
+        if(!signalDir.exists()){
+            log.info("User signal resource directory has not been created");
+            try {
+                signalDir.mkdir();
+            } catch (Exception ex){
+                log.error("Unable to create signal resource directory " + ex);
+            }
+        }
         files = signalDir.listFiles();
         if(files!=null){
             for (int i=0; i<files.length; i++) {
