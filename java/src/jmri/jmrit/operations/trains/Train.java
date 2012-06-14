@@ -1714,10 +1714,12 @@ public class Train implements java.beans.PropertyChangeListener {
 	 */
 	public void addBuildScript(String pathname){
 		_buildScripts.add(pathname);
+		setDirtyAndFirePropertyChange("addBuildScript", pathname, null);
 	}
 	
 	public void deleteBuildScript(String pathname){
 		_buildScripts.remove(pathname);
+		setDirtyAndFirePropertyChange("deleteBuildScript", null, pathname);
 	}
 	
 	/**
@@ -1734,10 +1736,12 @@ public class Train implements java.beans.PropertyChangeListener {
 	 */
 	public void addAfterBuildScript(String pathname){
 		_afterBuildScripts.add(pathname);
+		setDirtyAndFirePropertyChange("addAfterBuildScript", pathname, null);
 	}
 	
 	public void deleteAfterBuildScript(String pathname){
 		_afterBuildScripts.remove(pathname);
+		setDirtyAndFirePropertyChange("deleteAfterBuildScript", null, pathname);
 	}
 	
 	/**
@@ -1754,10 +1758,12 @@ public class Train implements java.beans.PropertyChangeListener {
 	 */
 	public void addMoveScript(String pathname){
 		_moveScripts.add(pathname);
+		setDirtyAndFirePropertyChange("addMoveScript", pathname, null);
 	}
 	
 	public void deleteMoveScript(String pathname){
 		_moveScripts.remove(pathname);
+		setDirtyAndFirePropertyChange("deleteMoveScript", null, pathname);
 	}
 	
 	/**
@@ -1774,10 +1780,12 @@ public class Train implements java.beans.PropertyChangeListener {
 	 */
 	public void addTerminationScript(String pathname){
 		_terminationScripts.add(pathname);
+		setDirtyAndFirePropertyChange("addTerminationScript", pathname, null);
 	}
 	
 	public void deleteTerminationScript(String pathname){
 		_terminationScripts.remove(pathname);
+		setDirtyAndFirePropertyChange("deleteTerminationScript", null, pathname);
 	}
 	
 	/**
