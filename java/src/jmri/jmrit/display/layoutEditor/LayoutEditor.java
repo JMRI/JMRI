@@ -212,26 +212,35 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	private JCheckBoxMenuItem antialiasingOnItem = null;
 	private JCheckBoxMenuItem turnoutCirclesOnItem = null;
 	private JCheckBoxMenuItem skipTurnoutItem = null;
-	//private ButtonGroup bkColorButtonGroup = null;
+	private JCheckBoxMenuItem turnoutDrawUnselectedLegItem = null;
 	private ButtonGroup trackColorButtonGroup = null;
 	private ButtonGroup trackOccupiedColorButtonGroup = null;
 	private ButtonGroup trackAlternativeColorButtonGroup = null;
     private ButtonGroup textColorButtonGroup = null;
     private ButtonGroup backgroundColorButtonGroup = null;
+	private ButtonGroup turnoutCircleColorButtonGroup = null;
+	private ButtonGroup turnoutCircleSizeButtonGroup = null;
 	private Color[] trackColors = new Color[13];
 	private Color[] trackOccupiedColors = new Color[13];
 	private Color[] trackAlternativeColors = new Color[13];
     private Color[] textColors = new Color[13];
     private Color[] backgroundColors = new Color[13];
+	private Color[] turnoutCircleColors = new Color[14];
+	private int[] turnoutCircleSizes = new int[4];
 	private JRadioButtonMenuItem[] trackColorMenuItems = new JRadioButtonMenuItem[13];
 	private JRadioButtonMenuItem[] trackOccupiedColorMenuItems = new JRadioButtonMenuItem[13];
 	private JRadioButtonMenuItem[] trackAlternativeColorMenuItems = new JRadioButtonMenuItem[13];
     private JRadioButtonMenuItem[] backgroundColorMenuItems = new JRadioButtonMenuItem[13];
     private JRadioButtonMenuItem[] textColorMenuItems = new JRadioButtonMenuItem[13];
+	private JRadioButtonMenuItem[] turnoutCircleColorMenuItems = new JRadioButtonMenuItem[14];
+	private JRadioButtonMenuItem[] turnoutCircleSizeMenuItems = new JRadioButtonMenuItem[4];
 	private int trackColorCount = 0;
 	private int trackOccupiedColorCount = 0;
 	private int trackAlternativeColorCount = 0;
     private int textColorCount = 0;
+	private int turnoutCircleColorCount = 0;
+	private int turnoutCircleSizeCount = 0;
+    private boolean turnoutDrawUnselectedLeg = true;
     private int backgroundColorCount = 0;
     private boolean autoAssignBlocks = false;
 	
@@ -304,6 +313,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	private Color defaultAlternativeTrackColor = Color.black;
     private Color defaultBackgroundColor = Color.lightGray;
     private Color defaultTextColor = Color.black;
+	private Color turnoutCircleColor = defaultTrackColor; //matches earlier versions
+	private int   turnoutCircleSize = 2;  //matches earlier versions
     private String layoutName = "";
 	private double xScale = 1.0;
 	private double yScale = 1.0;
@@ -1030,16 +1041,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                     setAllShowTooltip(!isEditable());
                 }
             });
-        // circle on Turnouts 
-		turnoutCirclesOnItem = new JCheckBoxMenuItem(rb.getString("TurnoutCirclesOn"));
-        optionMenu.add(turnoutCirclesOnItem);
-        turnoutCirclesOnItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-                    turnoutCirclesWithoutEditMode = turnoutCirclesOnItem.isSelected();
-					repaint();
-                }
-            });                    
-        turnoutCirclesOnItem.setSelected(turnoutCirclesWithoutEditMode);
         // antialiasing
 		antialiasingOnItem = new JCheckBoxMenuItem(rb.getString("AntialiasingOn"));
         optionMenu.add(antialiasingOnItem);
@@ -1217,6 +1218,60 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		addTextColorMenuEntry(textColorMenu, rb.getString("Magenta"),Color.magenta);
 		addTextColorMenuEntry(textColorMenu, rb.getString("Cyan"),Color.cyan);
         optionMenu.add(textColorMenu);
+        
+        //turnout options submenu
+        JMenu turnoutOptionsMenu = new JMenu(rb.getString("TurnoutOptions"));
+        optionMenu.add(turnoutOptionsMenu);
+
+        // circle on Turnouts 
+		turnoutCirclesOnItem = new JCheckBoxMenuItem(rb.getString("TurnoutCirclesOn"));
+		turnoutOptionsMenu.add(turnoutCirclesOnItem);
+        turnoutCirclesOnItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    turnoutCirclesWithoutEditMode = turnoutCirclesOnItem.isSelected();
+					repaint();
+                }
+            });                    
+        turnoutCirclesOnItem.setSelected(turnoutCirclesWithoutEditMode);
+
+        // select turnout circle color 
+        JMenu turnoutCircleColorMenu = new JMenu(rb.getString("TurnoutCircleColor"));
+		turnoutCircleColorButtonGroup = new ButtonGroup();
+		addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("UseDefaultTrackColor"), null);
+		addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Black"), Color.black);
+		addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("DarkGray"),Color.darkGray);
+		addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Gray"),Color.gray);
+		addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("LightGray"),Color.lightGray);
+		addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("White"),Color.white);
+		addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Red"),Color.red);
+		addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Pink"),Color.pink);
+		addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Orange"),Color.orange);
+		addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Yellow"),Color.yellow);
+		addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Green"),Color.green);
+		addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Blue"),Color.blue);
+		addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Magenta"),Color.magenta);
+		addTurnoutCircleColorMenuEntry(turnoutCircleColorMenu, rb.getString("Cyan"),Color.cyan);
+        turnoutOptionsMenu.add(turnoutCircleColorMenu);
+        
+        // select turnout circle size 
+        JMenu turnoutCircleSizeMenu = new JMenu(rb.getString("TurnoutCircleSize"));
+		turnoutCircleSizeButtonGroup = new ButtonGroup();
+		addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "1", 1);
+		addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "2", 2);
+		addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "3", 3);
+		addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "4", 4);
+        turnoutOptionsMenu.add(turnoutCircleSizeMenu);
+        
+        // enable drawing of unselected leg (helps when diverging angle is small)
+		turnoutDrawUnselectedLegItem = new JCheckBoxMenuItem(rb.getString("TurnoutDrawUnselectedLeg"));
+		turnoutOptionsMenu.add(turnoutDrawUnselectedLegItem);
+		turnoutDrawUnselectedLegItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                	turnoutDrawUnselectedLeg = turnoutDrawUnselectedLegItem.isSelected();
+					repaint();
+                }
+            });                    
+		turnoutDrawUnselectedLegItem.setSelected(turnoutDrawUnselectedLeg);
 
         		// show grid item
 		autoAssignBlocksItem = new JCheckBoxMenuItem(rb.getString("AutoAssignBlock"));
@@ -2285,7 +2340,70 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		textColors[textColorCount] = color;
 		textColorCount ++;
     }
+
+    void addTurnoutCircleColorMenuEntry(JMenu menu, final String name, final Color color) {
+        ActionListener a = new ActionListener() {
+				final Color desiredColor = color;
+				public void actionPerformed(ActionEvent e) { 
+					if (turnoutCircleColor!=desiredColor) {
+						turnoutCircleColor = desiredColor;
+						setDirty(true);
+						repaint();
+					}
+				}
+			};
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
+        r.addActionListener(a);
+        turnoutCircleColorButtonGroup.add(r);
+        if (turnoutCircleColor == color) r.setSelected(true);
+        else r.setSelected(false);
+        menu.add(r);
+        turnoutCircleColorMenuItems[turnoutCircleColorCount] = r;
+        turnoutCircleColors[turnoutCircleColorCount] = color;
+        turnoutCircleColorCount ++;
+    }
+
+    void addTurnoutCircleSizeMenuEntry(JMenu menu, final String name, final int size) {
+        ActionListener a = new ActionListener() {
+				final int desiredSize = size;
+				public void actionPerformed(ActionEvent e) { 
+					if (turnoutCircleSize!=desiredSize) {
+						turnoutCircleSize = desiredSize;
+						setDirty(true);
+						repaint();
+					}
+				}
+			};
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
+        r.addActionListener(a);
+        turnoutCircleSizeButtonGroup.add(r);
+        if (turnoutCircleSize == size) r.setSelected(true);
+        else r.setSelected(false);
+        menu.add(r);
+        turnoutCircleSizeMenuItems[turnoutCircleSizeCount] = r;
+        turnoutCircleSizes[turnoutCircleSizeCount] = size;
+        turnoutCircleSizeCount ++;
+    }
+
+    protected void setOptionMenuTurnoutCircleColor() {
+		for (int i = 0;i<turnoutCircleColorCount;i++) {
+			if (turnoutCircleColors[i] == turnoutCircleColor) 
+				turnoutCircleColorMenuItems[i].setSelected(true);
+			else 
+				turnoutCircleColorMenuItems[i].setSelected(false);
+		}	
+	}
     
+    protected void setOptionMenuTurnoutCircleSize() {
+		for (int i = 0;i<turnoutCircleSizeCount;i++) {
+			if (turnoutCircleSizes[i] == turnoutCircleSize) 
+				turnoutCircleSizeMenuItems[i].setSelected(true);
+			else 
+				turnoutCircleSizeMenuItems[i].setSelected(false);
+		}	
+	}
+    
+
 	protected void setOptionMenuTextColor() {
 		for (int i = 0;i<textColorCount;i++) {
 			if (textColors[i] == defaultTextColor) 
@@ -5912,6 +6030,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	public String getDefaultOccupiedTrackColor() {return colorToString(defaultOccupiedTrackColor);}
 	public String getDefaultAlternativeTrackColor() {return colorToString(defaultAlternativeTrackColor);}
     public String getDefaultTextColor() {return colorToString(defaultTextColor);}
+	public String getTurnoutCircleColor() {return colorToString(turnoutCircleColor);}
+	public int getTurnoutCircleSize() {return turnoutCircleSize;}
+	public boolean getTurnoutDrawUnselectedLeg() {return turnoutDrawUnselectedLeg;}
 	public String getLayoutName() {return layoutName;}
 	public boolean getShowHelpBar() {return showHelpBar;}
 	public boolean getDrawGrid() {return drawGrid;}
@@ -5947,6 +6068,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     public void setDefaultAlternativeTrackColor(String color) {
 		defaultAlternativeTrackColor = stringToColor(color);
 		setOptionMenuTrackColor();
+	}
+	public void setTurnoutCircleColor(String color) {
+		turnoutCircleColor = stringToColor(color);
+		setOptionMenuTurnoutCircleColor();
+	}
+	public void setTurnoutCircleSize(int size) {
+		turnoutCircleSize = size;
+		setOptionMenuTurnoutCircleSize();
+	}
+	public void setTurnoutDrawUnselectedLeg(boolean state) {
+		if (turnoutDrawUnselectedLeg != state) {
+			turnoutDrawUnselectedLeg = state;
+			turnoutDrawUnselectedLegItem.setSelected(turnoutDrawUnselectedLeg);
+		}
 	}
 	public void setDefaultTextColor(String color) {
 		defaultTextColor = stringToColor(color);
@@ -6120,6 +6255,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		else if (color == Color.blue) return "blue";
 		else if (color == Color.magenta) return "magenta";
 		else if (color == Color.cyan) return "cyan";
+		else if (color == null) return "track";
 		log.error ("unknown color sent to colorToString");
 		return "black";
 	}
@@ -6137,6 +6273,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		else if (string.equals("blue")) return Color.blue;	
 		else if (string.equals("magenta")) return Color.magenta;	
 		else if (string.equals("cyan")) return Color.cyan;	
+		else if (string.equals("track")) return null;	
 		log.error("unknown color text '"+string+"' sent to stringToColor");
 		return Color.black;
 	}
@@ -6887,6 +7024,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				}
 				else {
 					setTrackStrokeWidth(g2,t.isMainlineA());
+					//line from throat to center
 					g2.draw(new Line2D.Double(t.getCoordsA(),t.getCoordsCenter()));
 					int state = Turnout.CLOSED;
 					if (animatingLayout)
@@ -6895,37 +7033,49 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 						case Turnout.CLOSED:
 							if (t.getContinuingSense()==Turnout.CLOSED) {
 								setTrackStrokeWidth(g2,t.isMainlineB());
+								//line from continuing leg to center
 								g2.draw(new Line2D.Double(t.getCoordsB(),t.getCoordsCenter()));
-								setTrackStrokeWidth(g2,t.isMainlineC());
-                                if (b!=null) g2.setColor(b.getBlockTrackColor());
-								g2.draw(new Line2D.Double(t.getCoordsC(),
+								if (turnoutDrawUnselectedLeg) {
+									//line from diverging leg halfway to center
+									setTrackStrokeWidth(g2,t.isMainlineC());
+									if (b!=null) g2.setColor(b.getBlockTrackColor());
+									g2.draw(new Line2D.Double(t.getCoordsC(),
 											midpoint(t.getCoordsCenter(),t.getCoordsC())));
+								}
 							}
 							else { 
 								setTrackStrokeWidth(g2,t.isMainlineC());
+								//line from diverging leg to center
 								g2.draw(new Line2D.Double(t.getCoordsC(),t.getCoordsCenter()));
-								setTrackStrokeWidth(g2,t.isMainlineB());
-                                if (b!=null) g2.setColor(b.getBlockTrackColor());
-								g2.draw(new Line2D.Double(t.getCoordsB(),
+								if (turnoutDrawUnselectedLeg) {
+									//line from continuing leg halfway to center
+									setTrackStrokeWidth(g2,t.isMainlineB());
+									if (b!=null) g2.setColor(b.getBlockTrackColor());
+									g2.draw(new Line2D.Double(t.getCoordsB(),
 											midpoint(t.getCoordsCenter(),t.getCoordsB())));
+								}
 							}
 							break;
 						case Turnout.THROWN:
 							if (t.getContinuingSense()==Turnout.THROWN) {
 								setTrackStrokeWidth(g2,t.isMainlineB());
 								g2.draw(new Line2D.Double(t.getCoordsB(),t.getCoordsCenter()));
-								setTrackStrokeWidth(g2,t.isMainlineC());
-                                if (b!=null) g2.setColor(b.getBlockTrackColor());
-								g2.draw(new Line2D.Double(t.getCoordsC(),
+								if (turnoutDrawUnselectedLeg) {
+									setTrackStrokeWidth(g2,t.isMainlineC());
+									if (b!=null) g2.setColor(b.getBlockTrackColor());
+									g2.draw(new Line2D.Double(t.getCoordsC(),
 											midpoint(t.getCoordsCenter(),t.getCoordsC())));
+								}
 							}
 							else { 
 								setTrackStrokeWidth(g2,t.isMainlineC());
 								g2.draw(new Line2D.Double(t.getCoordsC(),t.getCoordsCenter()));
-								setTrackStrokeWidth(g2,t.isMainlineB());
-                                if (b!=null) g2.setColor(b.getBlockTrackColor());
-								g2.draw(new Line2D.Double(t.getCoordsB(),
+								if (turnoutDrawUnselectedLeg) {
+									setTrackStrokeWidth(g2,t.isMainlineB());
+									if (b!=null) g2.setColor(b.getBlockTrackColor());
+									g2.draw(new Line2D.Double(t.getCoordsB(),
 											midpoint(t.getCoordsCenter(),t.getCoordsB())));
+								}
 							}
 							break;
 						default:
@@ -7137,9 +7287,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			LayoutTurnout t = turnoutList.get(i);
             if(!(t.getHidden() && !isEditable())){
                 Point2D pt = t.getCoordsCenter();
-                g2.setColor(defaultTrackColor);
+                double size = SIZE * turnoutCircleSize;
+                g2.setColor(turnoutCircleColor != null ? turnoutCircleColor : defaultTrackColor);
                 g2.draw(new Ellipse2D.Double (
-                                pt.getX()-SIZE2, pt.getY()-SIZE2, SIZE2+SIZE2, SIZE2+SIZE2));
+                                pt.getX()-size, pt.getY()-size, size+size, size+size));
             }
 		}
 	}

@@ -72,6 +72,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 		panel.setAttribute("defaultoccupiedtrackcolor",p.getDefaultOccupiedTrackColor());
 		panel.setAttribute("defaultalternativetrackcolor",p.getDefaultAlternativeTrackColor());
         panel.setAttribute("defaulttextcolor",p.getDefaultTextColor());
+        panel.setAttribute("turnoutcirclecolor",p.getTurnoutCircleColor());
+        panel.setAttribute("turnoutcirclesize",""+p.getTurnoutCircleSize());
+        panel.setAttribute("turnoutdrawunselectedleg",(p.getTurnoutDrawUnselectedLeg()?"yes":"no"));
 		panel.setAttribute("turnoutbx", Float.toString((float)p.getTurnoutBX()));
 		panel.setAttribute("turnoutcx", Float.toString((float)p.getTurnoutCX()));
 		panel.setAttribute("turnoutwid", Float.toString((float)p.getTurnoutWid()));
@@ -294,6 +297,20 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             defaultColor = element.getAttribute("defaulttrackcolor").getValue();
         if (element.getAttribute("defaulttextcolor")!=null)
             defaultTextColor = element.getAttribute("defaulttextcolor").getValue();
+        String turnoutCircleColor = "track";  //default to using use default track color for circle color
+        if (element.getAttribute("turnoutcirclecolor")!=null)
+            turnoutCircleColor = element.getAttribute("turnoutcirclecolor").getValue();
+        int turnoutCircleSize = 2;
+        if (element.getAttribute("turnoutcirclesize")!=null)
+			try {
+				turnoutCircleSize = element.getAttribute("turnoutcirclesize").getIntValue();
+			} catch (DataConversionException e1) {
+				//leave at default if cannot convert
+				log.warn("unable to convert turnoutcirclesize");
+			}
+        boolean turnoutDrawUnselectedLeg = true;
+        if ((a = element.getAttribute("turnoutdrawunselectedleg"))!=null && a.getValue().equals("no"))
+        	turnoutDrawUnselectedLeg = false;
         // create the objects
         LayoutEditor panel = new LayoutEditor(name);
 		panel.setLayoutName(name);
@@ -301,6 +318,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 		panel.setSideTrackWidth(sidetrackwidth);
 		panel.setDefaultTrackColor(defaultColor);
         panel.setDefaultTextColor(defaultTextColor);
+        panel.setTurnoutCircleColor(turnoutCircleColor);
+        panel.setTurnoutCircleSize(turnoutCircleSize);
+        panel.setTurnoutDrawUnselectedLeg(turnoutDrawUnselectedLeg);
 		panel.setXScale(xScale);
 		panel.setYScale(yScale);
 		// turnout size parameters

@@ -402,10 +402,6 @@ selection is described below.
 	tooltips are displayed when in Edit Mode and when not in Edit Mode. When the mouse 
 	is hovered over an icon, and tooltips are on, the name of the icon is displayed 
 	while the mouse remains over the icon. Drawn track items do not have tooltips.</li>
-	<li><b>Show Turnout Circles</b> - When this item is checked, circles at the center 
-	of turnouts are shown when not in Edit Mode.  Turnout circles are always 
-	shown when in Edit Mode.  When not in Edit Mode, turnout circles can be useful 
-	if you are toggling turnouts by clicking on them.
 	<li> <b>Enable antialiasing (Smoother lines)</b> - If this item is selected,
 	the panel is displayed (rendered) with antialiasing enabled. Antialiasing 
 	smoothes out lines in the drawn panel, but it does take longer to refresh
@@ -446,6 +442,20 @@ selection is described below.
 	the selection rectangle.</li>
 	<li><b>Set Default Text Color</b> - This item's submenu allows one of 
 	thirteen colors to be selected as the default text color. </li>
+	<li><b>Turnout Options</b> - This sub-menu controls the look of turnouts on the panel.
+	  Contains:
+	<ul>
+	  <li><b>Show Turnout Circles</b> - When this item is checked, circles at the center 
+	  of turnouts are shown when not in Edit Mode.  Turnout circles are always 
+	  shown when in Edit Mode.  When not in Edit Mode, turnout circles can be useful 
+	  if you are toggling turnouts by clicking on them.</li>
+	  <li><b>Turnout Circle Colors</b> - Sets the color of the turnout circle.  Default is to 
+	    use the Default Track Color.</li>
+	  <li><b>Turnout Circle Size</b> - Sets the relative size of the turnout circle.</li>
+	  <li><b>Draw Unselected Turnout Leg</b> - When on, draws the unselected leg of each turnout.  
+	    When off, this leg is not drawn.  This makes the turnout position more visible when 
+	    the diverging angle is small.</li>
+	</ul>
 </ul></p>
 
 <a name="toolsmenu"><h2>Using Layout Editor's Tools Menu</h2>
