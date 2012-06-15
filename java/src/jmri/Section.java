@@ -273,7 +273,7 @@ public class Section extends AbstractNamedBean
 		Sensor s = validateSensor();
 		if (s==null) {
 			// sensor name not correct or not in sensor table
-			log.error("Sensor name -"+forwardSensor+"invalid when setting forward sensor in Section "+getSystemName());
+			log.error("Sensor name - "+forwardSensor+" invalid when setting forward sensor in Section "+getSystemName());
 			return null;
 		}
         nbhm.getNamedBeanHandle(tempSensorName, s);
@@ -1147,7 +1147,7 @@ public class Section extends AbstractNamedBean
 				return EntryPoint.FORWARD;
 			}
 		}
-		for (int j = 0; j<mForwardEntryPoints.size(); j++) {
+		for (int j = 0; j<mReverseEntryPoints.size(); j++) {
 			if (mReverseEntryPoints.get(j).getFromBlock() == b.getBlock()) {
 				return EntryPoint.REVERSE;
 			}
