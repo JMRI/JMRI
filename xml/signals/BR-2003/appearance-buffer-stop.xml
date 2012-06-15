@@ -51,6 +51,8 @@
     <held>
       <aspect>Danger</aspect>
     </held>
-    <dark>Danger</dark>
+    <dark>
+      <aspect>Danger</aspect>
+    </dark>
   </specificappearances>
 </appearancetable>  

@@ -82,7 +82,55 @@
 
         <xs:element name="reference" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="description" minOccurs="0" maxOccurs="unbounded" />
-        
+                <xs:element name="appearances" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              
+              <xs:element name="appearance" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:annotation><xs:documentation>
+                  We allow unlimited extension at the end of the aspect element
+                  for the purposes of automatically-created documentation, 
+                  but only the aspectname and show element(s) are used by the
+                  program.
+                  </xs:documentation></xs:annotation>
+                  <xs:sequence>
+                    
+                    <xs:element name="aspectname" minOccurs="1" maxOccurs="1" >
+                      <xs:annotation><xs:documentation>
+                      This must match the "name" element of exactly one
+                      "aspect" element in the "aspects.xml" file.
+                      </xs:documentation></xs:annotation>
+                    </xs:element>
+                    <xs:element name="show" type="signalColorType" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element name="reference" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element name="comment" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element name="delay" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
+                      <xs:annotation><xs:documentation>
+                      *** Indicates a image location and type ***
+                      *** Type should be a member of the list in **
+                      *** the imagetype elements in the aspects.xml file **
+                      </xs:documentation></xs:annotation>
+                        <xs:complexType>
+                          <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                              <xs:attribute name="type" type="xs:string"/>
+                            </xs:extension>
+                          </xs:simpleContent>
+                         </xs:complexType>
+                    </xs:element>
+                    
+                    
+                    <!-- next line causes a "Unique Particle Attribution" error -->
+                    <!--<xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>-->
+
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       <xs:element name="specificappearances" minOccurs="0" maxOccurs="1">
         <xs:annotation><xs:documentation>
         These are the appearences that the jmri code will specifically look for,
@@ -198,62 +246,10 @@
               </xs:element>
             </xs:sequence>
           </xs:complexType>
-        </xs:element>
-        
-        <xs:element name="appearances" minOccurs="1" maxOccurs="1">
-          <xs:complexType>
-            <xs:sequence>
-              
-              <xs:element name="appearance" minOccurs="1" maxOccurs="unbounded">
-                <xs:complexType>
-                  <xs:annotation><xs:documentation>
-                  We allow unlimited extension at the end of the aspect element
-                  for the purposes of automatically-created documentation, 
-                  but only the aspectname and show element(s) are used by the
-                  program.
-                  </xs:documentation></xs:annotation>
-                  <xs:sequence>
-                    
-                    <xs:element name="aspectname" minOccurs="1" maxOccurs="1" >
-                      <xs:annotation><xs:documentation>
-                      This must match the "name" element of exactly one
-                      "aspect" element in the "aspects.xml" file.
-                      </xs:documentation></xs:annotation>
-                    </xs:element>
-                    <xs:element name="show" type="signalColorType" minOccurs="0" maxOccurs="unbounded" />
-                    <xs:element name="reference" minOccurs="0" maxOccurs="unbounded" />
-                    <xs:element name="comment" minOccurs="0" maxOccurs="unbounded" />
-                    <xs:element name="delay" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" >
-                      <xs:annotation><xs:documentation>
-                      *** Indicates a image location and type ***
-                      *** Type should be a member of the list in **
-                      *** the imagetype elements in the aspects.xml file **
-                      </xs:documentation></xs:annotation>
-                        <xs:complexType>
-                          <xs:simpleContent>
-                            <xs:extension base="xs:string">
-                              <xs:attribute name="type" type="xs:string"/>
-                            </xs:extension>
-                          </xs:simpleContent>
-                         </xs:complexType>
-                    </xs:element>
-                    
-                    
-                    <!-- next line causes a "Unique Particle Attribution" error -->
-                    <!-- <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/> -->
-
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        
-      <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
-      
+        </xs:element>      
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   
 </xs:schema>
+

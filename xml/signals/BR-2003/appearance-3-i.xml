@@ -77,20 +77,14 @@
     </appearance>
 
   </appearances>
+  
   <specificappearances>
     <danger>
       <aspect>Danger</aspect>
     </danger>
-    <held>
-      <aspect>Danger</aspect>
-    </held>
-  </specificappearances>
-  
-    <specificappearances>
-    <danger>
-      <aspect>Danger</aspect>
-    </danger>
-    <permissive>Off</permissive>
+    <permissive>
+      <aspect>Off</aspect>
+    </permissive>
     <held>
       <aspect>Danger</aspect>
     </held>

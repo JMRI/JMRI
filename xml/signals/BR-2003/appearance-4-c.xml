@@ -132,7 +132,7 @@
    <aspectMapping>
      <advancedAspect>Caution</advancedAspect>
      <ourAspect>Preliminary Caution</ourAspect>
-     <advancedAspect>Flash Caution</advancedAspect>
+     <ourAspect>Flash Caution</ourAspect>
    </aspectMapping>
    
    <aspectMapping>
@@ -147,7 +147,7 @@
    
    <aspectMapping>
      <advancedAspect>Flash Caution</advancedAspect>
-     <advancedAspect>Flash Preliminary Caution</advancedAspect>
+     <ourAspect>Flash Preliminary Caution</ourAspect>
    </aspectMapping>
    
    <aspectMapping>
