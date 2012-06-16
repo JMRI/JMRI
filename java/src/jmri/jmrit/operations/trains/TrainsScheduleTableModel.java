@@ -216,10 +216,12 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     		fireTableDataChanged();
     	} else if (e.getSource().getClass().equals(Train.class)){
     		String trainId = ((Train) e.getSource()).getId();
-    		int row = sysList.indexOf(trainId);
-    		if(Control.showProperty && log.isDebugEnabled()) log.debug("Update train table row: "+row + " id: " + trainId);
-    		if (row >= 0)
-    			fireTableRowsUpdated(row, row);
+    		synchronized(this) {
+    			int row = sysList.indexOf(trainId);
+    			if(Control.showProperty && log.isDebugEnabled()) log.debug("Update train table row: "+row + " id: " + trainId);
+    			if (row >= 0)
+    				fireTableRowsUpdated(row, row);
+    		}
     	}
     }
     
