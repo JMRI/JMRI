@@ -116,7 +116,9 @@ public class TrainCommon {
 			}
 			buf.append(s);
 		}
-		addLine(file, buf.toString());
+		String s = buf.toString();
+		if (!s.equals(TAB))
+			addLine(file, s);
 	} 
 	
 	protected String pickupCar(Car car){
@@ -181,7 +183,9 @@ public class TrainCommon {
 			}
 			buf.append(s);
 		}
-		addLine(file, buf.toString());
+		String s = buf.toString();
+		if (!s.equals(TAB))
+			addLine(file, s);
 	}
 	
 	protected String dropCar(Car car){

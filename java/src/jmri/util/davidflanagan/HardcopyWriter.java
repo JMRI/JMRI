@@ -110,6 +110,9 @@ public class HardcopyWriter extends Writer {
 			pageAttributes.setOrientationRequested(PageAttributes.OrientationRequestedType.LANDSCAPE);
 			if (preview)
 				pagesize = new Dimension(792,612);
+		} else if (!printHeader && preview) {
+			// Paper size is 3.25 x 11 if there isn't a header
+			pagesize = new Dimension(290,792);
 		}
 		
 		hardcopyWriter(frame, jobname, fontsize, leftmargin, rightmargin,
