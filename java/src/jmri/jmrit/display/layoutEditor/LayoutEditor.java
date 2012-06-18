@@ -7301,7 +7301,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		for (int i = 0; i<turnoutList.size();i++) {
 			LayoutTurnout t = turnoutList.get(i);
 			Point2D pt = t.getCoordsCenter();
-			g2.setColor(defaultTrackColor);
+            g2.setColor(turnoutCircleColor != null ? turnoutCircleColor : defaultTrackColor);
 			g2.draw(new Ellipse2D.Double (
 							pt.getX()-SIZE2, pt.getY()-SIZE2, SIZE2+SIZE2, SIZE2+SIZE2));
 			pt = t.getCoordsA();
@@ -7559,12 +7559,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			}
 		}
 	}
-	private void drawSolidTrack(Graphics2D g2, boolean mainline)
+	
+	/* draw all track segments which are not hidden, not dashed, and that match the isMainline parm */
+	private void drawSolidTrack(Graphics2D g2, boolean isMainline)
 	{
 		for (int i = 0; i<trackList.size();i++) {
-            setTrackStrokeWidth(g2, mainline);
+            setTrackStrokeWidth(g2, isMainline);
 			TrackSegment t = trackList.get(i);
-			if ( (!t.getHidden()) && (!t.getDashed()) && (mainline == t.getMainline()) ) {		
+			if ( (!t.getHidden()) && (!t.getDashed()) && (isMainline == t.getMainline()) ) {		
 				LayoutBlock b = t.getLayoutBlock();
 				if (b!=null) g2.setColor(b.getBlockColor());
 				else g2.setColor(defaultTrackColor);
