@@ -2003,10 +2003,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
         if (newTurnout==null){
             noTurnoutMessage(title, bp.getDisplayName());
         }
-        
-        if (newTurnout==oldTurnout || oldTurnout==null)
+        if(newTurnout!=null && (newTurnout.getComment()==null || newTurnout.getComment().equals("")))
+            newTurnout.setComment(reference);
+        if (oldTurnout==null || newTurnout==oldTurnout)
             return newTurnout;
-        if(oldTurnout.getComment().equals(reference))
+        if(oldTurnout.getComment()!=null && oldTurnout.getComment().equals(reference))
             oldTurnout.setComment(null);
         return newTurnout;
     
