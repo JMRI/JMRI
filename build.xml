@@ -1119,7 +1119,8 @@
             <fileset dir="${jartarget}"
                      includes="jmri.jar"/>
             <fileset dir="."
-                     includes="xml/,resources/,help/,web/,jython/"/>
+                     includes="xml/,resources/,help/,web/,jython/"
+                     excludes="help/en/manual/**" />
             <fileset dir="${scriptdir}"
                      includes="default.lcf,COPYING"/>
             <fileset dir="${scriptdir}/WinInstallFiles"
@@ -1154,7 +1155,8 @@
             <fileset dir="${jartarget}"
                      includes="jmri.jar"/>
             <fileset dir="."
-                     includes="xml/,resources/,help/,web/,jython/"/>
+                     includes="xml/,resources/,help/,web/,jython/"
+                     excludes="help/en/manual/**" />
             <!-- use question marks for spaces in filename; Ant will split the list on commas and spaces -->
             <fileset dir="${dist.apps}"
                      includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/,Loco?Tools.app/,Cornwall?RR.app/,DecoderPro?3.app/"/>
@@ -1211,7 +1213,8 @@
             <fileset dir="${jartarget}"
                      includes="jmri.jar"/>
             <fileset dir="."
-                     includes="xml/,resources/,help/,web/,jython/"/>
+                     includes="xml/,resources/,help/,web/,jython/"
+                     excludes="help/en/manual/**" />
             <fileset dir="${scriptdir}"
                      includes="default.lcf,COPYING"/>
         </copy>
@@ -1402,13 +1405,13 @@
              the release.build value in order to point to the NEW next
              release (the one after we're branching to create) -->
         <propertyfile file="${head-dir}/release.properties">
-	    <entry key="release.build" type="int" operation="+" value="1"/>
+            <entry key="release.build" type="int" operation="+" value="1"/>
         </propertyfile>
 
         <!-- and in the newly created release branch, we modify
              release.properties to show that we have indeed branched -->
         <propertyfile file="${branch-dir}/release.properties">
-	    <entry key="release.is_branched" type="string" operation="=" value="true"/>
+            <entry key="release.is_branched" type="string" operation="=" value="true"/>
         </propertyfile>
 
         <!-- now we check in the now modified files from trunk/HEAD
