@@ -545,13 +545,18 @@ public class DefaultXmlIOServer implements XmlIOServer {
         return false;  // no difference
     }
 
-    /** Return true if there is a difference   */
+    /** Return true if there is a difference in passed in route  */
     boolean monitorProcessRoute(String name, Element item) {
-        Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
-        Sensor routeAligned = InstanceManager.sensorManagerInstance().getBySystemName(b.getTurnoutsAlignedSensor());
-        int newState = (routeAligned != null) ? routeAligned.getKnownState() : 0;  //default to unknown
-        int state;
+    	int newState = 0;  //default to unknown
+    	RouteManager manager = InstanceManager.routeManagerInstance();
+    	Route r = manager.getBySystemName(name);
+    	String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
+		if (turnoutsAlignedSensor != "") {  //only set if found
+			Sensor routeAligned = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
+	        newState = (routeAligned != null) ? routeAligned.getKnownState() : 0;  //default to unknown
+		}
 
+		int state;
         // check for value element, which means compare
         if (item.getAttributeValue("value") != null) {
             state = Integer.parseInt(item.getAttributeValue("value"));
@@ -766,10 +771,14 @@ public class DefaultXmlIOServer implements XmlIOServer {
     
     void immediateReadRoute(String name, Element item) {
 
-        Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
-        Sensor routeAligned = InstanceManager.sensorManagerInstance().getBySystemName(b.getTurnoutsAlignedSensor());
-        // 0 is the "unknown" state
-        String state = Integer.toString((routeAligned != null) ? routeAligned.getKnownState() : 0);
+    	String state = "0";  //default to unknown
+    	RouteManager manager = InstanceManager.routeManagerInstance();
+    	Route r = manager.getBySystemName(name);
+    	String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
+		if (turnoutsAlignedSensor != "") {  //only set if found
+			Sensor routeAligned = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
+			state = Integer.toString((routeAligned != null) ? routeAligned.getKnownState() : 0);
+		}
         
         if (useAttributes) {
             item.setAttribute("value", state);
