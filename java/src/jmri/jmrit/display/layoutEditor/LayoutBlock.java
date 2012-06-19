@@ -3012,6 +3012,10 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if(neigh==null)
             return Path.NONE;
         Block neighbourBlock = neigh.getBlock();
+        return getNeighbourDirection(neighbourBlock);
+    }
+    
+    public int getNeighbourDirection(Block neighbourBlock){
         for(int i = 0; i<neighbours.size(); i++){
             if (neighbours.get(i).getBlock()==neighbourBlock)
                 return neighbours.get(i).getDirection();
