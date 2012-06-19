@@ -3,11 +3,17 @@ package jmri.jmrit.display;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.ItemPalette;
+import java.awt.FontMetrics;
+import java.awt.Dimension;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Color;
+import java.awt.geom.AffineTransform;
 
 import java.util.ResourceBundle;
 
@@ -223,6 +229,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         if (debug) {
             log.debug("updateSize() w= "+maxWidth()+", h= "+maxHeight()+" _namedIcon= "+_namedIcon);
         }
+        
         setSize(maxWidth(), maxHeight());
         if ( _namedIcon!=null && _text) {
             //we have a combined icon/text therefore the icon is central to the text.
@@ -231,6 +238,34 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
     
     public int maxWidth() {
+        if(_popupUtil==null){
+             return maxWidthTrue();
+        } 
+
+        switch (_popupUtil.getOrientation()) {
+            case PositionablePopupUtil.VERTICAL_DOWN:
+            case PositionablePopupUtil.VERTICAL_UP:
+                    return maxHeightTrue();
+            default:
+                    return maxWidthTrue();
+        }
+    }
+    
+    
+    public int maxHeight() {
+        if(_popupUtil==null){
+             return maxHeightTrue();
+        } 
+        switch (_popupUtil.getOrientation()) {
+            case PositionablePopupUtil.VERTICAL_DOWN:
+            case PositionablePopupUtil.VERTICAL_UP:
+                        return maxWidthTrue();
+            default:
+                        return maxHeightTrue();
+        }
+    }
+    
+    public int maxWidthTrue() {
         int max = 0;
         if (_popupUtil!=null && _popupUtil.getFixedWidth()!=0) {
             max = _popupUtil.getFixedWidth();
@@ -265,7 +300,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         return max;
     }
 
-    public int maxHeight() {
+    public int maxHeightTrue() {
         int max = 0;
         if (_popupUtil!=null && _popupUtil.getFixedHeight()!=0) {
             max = _popupUtil.getFixedHeight();
@@ -520,6 +555,62 @@ public class PositionableLabel extends JLabel implements Positionable {
      */
     public boolean isActive() {
         return active;
+    }
+
+    private boolean needsRotate;
+
+    @Override
+    public Dimension getSize() {
+        if (!needsRotate) {
+            return super.getSize();
+        }
+
+        Dimension size = super.getSize();
+        if(_popupUtil==null){
+            return super.getSize();
+        }
+        switch (_popupUtil.getOrientation()) {
+            case PositionablePopupUtil.VERTICAL_DOWN:
+            case PositionablePopupUtil.VERTICAL_UP:
+                    return new Dimension(size.height, size.width);
+            default:
+                    return super.getSize();
+        }
+    }
+
+    @Override
+    public int getHeight() {
+      return getSize().height;
+    }
+
+    @Override
+    public int getWidth() {
+      return getSize().width;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        if(/*_/*icon || */_popupUtil==null){
+            super.paintComponent(g);
+        } else {
+            Graphics2D gr = (Graphics2D) g.create();
+
+            switch (_popupUtil.getOrientation()) {
+            case PositionablePopupUtil.VERTICAL_UP:
+            gr.translate(0, getSize().getHeight());
+            gr.transform(AffineTransform.getQuadrantRotateInstance(-1));
+            break;
+            case PositionablePopupUtil.VERTICAL_DOWN:
+            gr.transform(AffineTransform.getQuadrantRotateInstance(1));
+            gr.translate(0, -getSize().getWidth());
+            break;
+            default:
+            }
+
+            needsRotate = true;
+            super.paintComponent(gr);
+            needsRotate = false;
+        }
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableLabel.class.getName());

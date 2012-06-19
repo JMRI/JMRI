@@ -353,7 +353,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             _text = false;
             _icon = true;
             updateIcon(rosterIcon);
-            rosterIcon.reduceTo(maxWidth(), maxHeight(), 0.2);
+            
             if(flipRosterIcon){
                 flipIcon(NamedIcon.HORIZONTALFLIP);
             }
@@ -390,6 +390,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             setSize(maxWidth(), maxHeight());
         } else {
             super.updateSize();
+            if(_icon){
+                _namedIcon.reduceTo(maxWidthTrue(), maxHeightTrue(), 0.2);
+            }
         }
     }
     

@@ -587,6 +587,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 util.setTextFontMenu(popup);
                 util.setBackgroundMenu(popup);
                 util.setTextJustificationMenu(popup);
+                util.setTextOrientationMenu(popup);
                 util.copyItem(popup);
                 popup.addSeparator();
                 util.propertyUtil(popup);

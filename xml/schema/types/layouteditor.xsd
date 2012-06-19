@@ -92,7 +92,12 @@
       <xs:attribute name="xscale" type="xs:float"/>
       <xs:attribute name="yscale" type="xs:float"/>
       <xs:attribute name="defaulttrackcolor" type="screenColorType" use="required" />
+      <xs:attribute name="defaultalternativetrackcolor" type="screenColorType"/>
+      <xs:attribute name="defaultoccupiedtrackcolor" type="screenColorType"/>
       <xs:attribute name="defaulttextcolor" type="screenColorType"/>
+      <xs:attribute name="turnoutcirclecolor" type="screenColorType"/>
+      <xs:attribute name="turnoutcirclesize" type="xs:integer"/>
+      <xs:attribute name="turnoutdrawunselectedleg" type="yesNoType" default="yes"/>
       <xs:attribute name="turnoutbx" type="xs:float"/>
       <xs:attribute name="turnoutcx" type="xs:float"/>
       <xs:attribute name="turnoutwid" type="xs:float"/>
@@ -102,6 +107,7 @@
       <xs:attribute name="redBackground" type="xs:integer"/>
       <xs:attribute name="greenBackground" type="xs:integer"/>
       <xs:attribute name="blueBackground" type="xs:integer"/>
+      <xs:attribute name="autoblkgenerate" type="yesNoType" default="yes"/>
     </xs:complexType>
 
 

@@ -5,6 +5,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
+import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
 import java.awt.Color;
 
@@ -61,7 +62,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
      */
     protected void storeTextInfo(Positionable p, Element element) {
         //if (p.getText()!=null) element.setAttribute("text", p.getText());
-        jmri.jmrit.display.PositionablePopupUtil util = p.getPopupUtility();
+        PositionablePopupUtil util = p.getPopupUtility();
         element.setAttribute("size", ""+util.getFontSize());
         element.setAttribute("style", ""+util.getFontStyle());
         if (!util.getForeground().equals(Color.black)) {
@@ -98,6 +99,18 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             }
         element.setAttribute("justification", just);
         
+        if(util.getOrientation()!=PositionablePopupUtil.HORIZONTAL){
+            String ori;
+            switch (util.getOrientation()){
+                case PositionablePopupUtil.VERTICAL_DOWN: ori="vertical_down";
+                                                          break;
+                case PositionablePopupUtil.VERTICAL_UP:   ori = "vertical_up";
+                                                          break;
+                default : ori = "horizontal";
+                          break;
+            }
+            element.setAttribute("orientation", ori);
+        }
         //return element;
     }
     /**
@@ -322,7 +335,11 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             util.setJustification(a.getValue());
         else
             util.setJustification("left");
-
+        a = element.getAttribute("orientation");
+        if(a!=null)
+            util.setOrientation(a.getValue());
+        else
+            util.setOrientation("horizontal");
     }
 
 	public void loadCommonAttributes(Positionable l, int defaultLevel, Element element) {

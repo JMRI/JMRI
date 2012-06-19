@@ -152,6 +152,15 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
+      <xs:attribute name="orientation" default="horizontal" >
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="horizontal"/>
+            <xs:enumeration value="vertical_up"/>
+            <xs:enumeration value="vertical_down"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
       <xs:attribute name="fixed" type="trueFalseType" />
 
       <xs:attribute name="height" type="xs:integer" >
@@ -249,6 +258,15 @@
             <xs:enumeration value="left"/>
             <xs:enumeration value="centre"/>
             <xs:enumeration value="right"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="orientation" default="horizontal" >
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="horizontal"/>
+            <xs:enumeration value="vertical_up"/>
+            <xs:enumeration value="vertical_down"/>
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
@@ -467,6 +485,15 @@
             <xs:enumeration value="left"/>
             <xs:enumeration value="centre"/>
             <xs:enumeration value="right"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="orientation" default="horizontal" >
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="horizontal"/>
+            <xs:enumeration value="vertical_up"/>
+            <xs:enumeration value="vertical_down"/>
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>

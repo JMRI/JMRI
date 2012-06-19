@@ -72,6 +72,7 @@ public class PositionablePopupUtil {
             util.setBorderColor(getBorderColor());
             util.setFont(util.getFont().deriveFont(getFontStyle()));
             util.setFontSize(getFontSize());
+            util.setOrientation(getOrientation());
             if (_parent.isOpaque()) {
                 util.setBackgroundColor(getBackground());
             } else {
@@ -111,7 +112,6 @@ public class PositionablePopupUtil {
             public void actionPerformed(ActionEvent e) { _propertiesUtil.display(); }
         });
         popup.add(edit);
-       //popup.add(_propertiesUtil.display());
     }
 
     public void setFixedTextMenu(JPopupMenu popup) {
@@ -577,5 +577,59 @@ public class PositionablePopupUtil {
         return null;
     }
 
+    public final static int HORIZONTAL = 0x00;
+    public final static int VERTICAL_UP =0x01;
+    public final static int VERTICAL_DOWN =0x02;
+    
+    private int orientation = HORIZONTAL;
+    
+    public int getOrientation(){
+        return orientation;
+    }
+    
+    public void setOrientation(int ori){
+        orientation=ori;
+        _parent.updateSize();
+    }
+    
+    public void setOrientation(String ori){
+        if(ori.equals("vertical_up"))
+            setOrientation(VERTICAL_UP);
+        else if(ori.equals("vertical_down"))
+            setOrientation(VERTICAL_DOWN);
+        else
+            setOrientation(HORIZONTAL);
+    }
+    
+    public void setTextOrientationMenu(JPopupMenu popup) {
+        JMenu oriMenu = new JMenu("Orientation");
+        addOrientationMenuEntry(oriMenu, HORIZONTAL);
+        addOrientationMenuEntry(oriMenu, VERTICAL_UP);
+        addOrientationMenuEntry(oriMenu, VERTICAL_DOWN);
+        popup.add(oriMenu);
+    }
+    
+    void addOrientationMenuEntry(JMenu menu, final int ori) {
+        ButtonGroup justButtonGroup = new ButtonGroup();
+        JRadioButtonMenuItem r;
+        switch(ori){
+            case HORIZONTAL :     r = new JRadioButtonMenuItem("Horizontal");
+                            break;
+            case VERTICAL_UP:     r = new JRadioButtonMenuItem("Vertical Up");
+                            break;
+            case VERTICAL_DOWN:    r = new JRadioButtonMenuItem("Vertical Down");
+                            break;
+            default :       r = new JRadioButtonMenuItem("Horizontal");
+        }
+        r.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { setOrientation(ori); }
+        });
+        justButtonGroup.add(r);
+        if (orientation == ori) r.setSelected(true);
+        else r.setSelected(false);
+        menu.add(r);
+    }
+
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionablePopupUtil.class.getName());
 }

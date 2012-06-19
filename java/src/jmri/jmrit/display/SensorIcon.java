@@ -600,7 +600,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
     
     @Override
-    public int maxWidth() {
+    public int maxWidthTrue() {
         int max = 0;
         if (_popupUtil!=null && _popupUtil.getFixedWidth()!=0) {
             max = _popupUtil.getFixedWidth();
@@ -642,7 +642,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     @Override
-    public int maxHeight() {
+    public int maxHeightTrue() {
         int max = 0;
         if (_popupUtil!=null && _popupUtil.getFixedHeight()!=0) {
             max = _popupUtil.getFixedHeight();
@@ -894,6 +894,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         @Override
         public void setTextJustificationMenu(JPopupMenu popup) {
             if (isText()) { super.setTextJustificationMenu(popup); }
+        }
+        @Override
+        public void setTextOrientationMenu(JPopupMenu popup) {
+            if (isText()) { super.setTextOrientationMenu(popup); }
         }
         @Override
         public void setFixedTextMenu(JPopupMenu popup) {

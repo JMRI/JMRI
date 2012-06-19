@@ -3531,12 +3531,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 
                 PositionablePopupUtil util = p.getPopupUtility();
                 if (util!=null) {
-                    util.setFixedTextMenu(popup);        
-                    util.setTextMarginMenu(popup);        
-                    util.setTextBorderMenu(popup);        
+                    util.setFixedTextMenu(popup);
+                    util.setTextMarginMenu(popup);
+                    util.setTextBorderMenu(popup);
                     util.setTextFontMenu(popup);
                     util.setBackgroundMenu(popup);
                     util.setTextJustificationMenu(popup);
+                    util.setTextOrientationMenu(popup);
                     popup.addSeparator();
                     util.propertyUtil(popup);
                     popupSet = true;
@@ -7898,7 +7899,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         tip.setText(selection.getNameString());
         setToolTip(tip);
     }
-
+    
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutEditor.class.getName());
 }
