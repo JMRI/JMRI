@@ -180,7 +180,7 @@ public class HardcopyWriter extends Writer {
         this.fontsize = fontsize;
         
         if (isPreview) {
-            previewFrame = new JmriJFrame("Print Preview");
+            previewFrame = new JmriJFrame("Print Preview: " + jobname);
             previewFrame.getContentPane().setLayout(new BorderLayout());
             toolBarInit();
             previewToolBar.setFloatable(false);
