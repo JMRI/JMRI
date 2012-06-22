@@ -115,9 +115,10 @@ var $processResponse = function($returnedData, $success, $xhr) {
 					
 					$gValues[$key] = $currentItem.value;  //save this value for later comparison
 					
-					//reapply jqm formatting to previous page, if current page is different
+					//reapply sort and jqm formatting to previous page, if current page is different
 					if ($type != $gPrevType) {
 						if ($gPrevType != "") {
+							$("#type-" + $gPrevType + " ul.listview li").sort(sortByInnerHTML).appendTo("#type-" + $gPrevType + " ul.listview");
 							$("#type-" + $gPrevType + " ul.listview").listview("refresh");
 						}
 						$gPrevType = $type;
@@ -161,8 +162,9 @@ var $processResponse = function($returnedData, $success, $xhr) {
 			}  //end of function
 	);  //end of each
 
-	//apply mobile formatting to last page
+	//for previous page, sort the list, then apply mobile formatting
 	if ($gPrevType != "") {
+		$("#type-" + $gPrevType + " ul.listview li").sort(sortByInnerHTML).appendTo("#type-" + $gPrevType + " ul.listview");
 		$("#type-" + $gPrevType + " ul.listview").listview("refresh");
 	}
 
@@ -177,6 +179,17 @@ var $processResponse = function($returnedData, $success, $xhr) {
 	$.mobile.hidePageLoadingMsg(); //hide the pageloading message
 
 };    	
+
+//details of sort comparison, use the data-sort value from each list item (push empties to bottom)
+function sortByInnerHTML(a,b){
+	var va = a.dataset['sort'];
+	var vb = b.dataset['sort'];
+	if (va == "") va = "zz" + a.innerHTML.toLowerCase();  //push empty sort values to bottom, then sort by HTML
+	if (vb == "") vb = "zz" + b.innerHTML.toLowerCase();
+
+	return va > vb ? 1 : -1;
+};
+
 
 //handle the toggling of the next value for buttons
 var $getNextValue = function($type, $value){

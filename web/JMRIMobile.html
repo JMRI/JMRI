@@ -16,7 +16,7 @@
 
 <!-- Generic jquery templates for list items ==========================================-->
 <script id='genItemTemplate' type='text/html'>
-    <li id='name-${safeName}' data-icon='false' >
+    <li id='name-${safeName}' data-icon='false' data-sort='${userName}'>
         <a class='ui-link-inherit two-line-item' href="javascript:$sendChange('${type}','${name}','${nextValue}');">
             <div class='userName float-left'><small><em>${name}</em></small><br /> ${userName}</div>
             <div class='valueText float-right'>{{html valueText}}</div>
@@ -24,11 +24,16 @@
     </li>
 </script>
 <script id='frameItemTemplate' type='text/html'>
-    <li id='name-${safeName}'><a class='ui-link-inherit' href='/frame/${name}.html' target='${safeName}'>${userName}</a></li>
+    <li id='name-${safeName}' data-sort='${name}'>
+        <a class='ui-link-inherit' href='/frame/${name}.html' target='${safeName}'>${userName}</a>
+    </li>
 </script>
 <script id='rosterItemTemplate' type='text/html'>
-    <li class='ui-li-has-thumb' id='name-${safeName}'><a  class='ui-link-inherit' href='/web/inControl.html?locoaddress=${dccAddress}&loconame=${name}' target='${safeName}'>
-        <img class='ui-li-thumb' src='/prefs/resources/${imageIconName}?maxHeight=62' onerror='$(this).hide();'><h3 class='ui-li-heading'>${name}</h3></a></li>
+    <li class='ui-li-has-thumb' id='name-${safeName}' data-sort='${name}'>
+      <a  class='ui-link-inherit' href='/web/inControl.html?locoaddress=${dccAddress}&loconame=${name}' target='${safeName}'>
+        <img class='ui-li-thumb' src='/roster/${safeName}/icon?maxHeight=55' onerror='$(this).hide();'><h3 class='ui-li-heading'>${name}</h3>
+      </a>
+    </li>
 </script>
 
 <!-- Generic jquery templates for pages ==========================================-->
