@@ -191,6 +191,9 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		if (getWidth()<Control.panelWidth)
 			setSize(Control.panelWidth, Control.panelHeight);
 		setVisible(true);
+		
+        // create ShutDownTasks
+        createShutDownTask();
 	}
 	
 	// Save, Delete, Add 

@@ -17,6 +17,7 @@ import javax.swing.JTable;
 
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
+import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.com.sun.TableSorter;
 
@@ -31,7 +32,7 @@ import jmri.util.com.sun.TableSorter;
 public class OperationsFrame extends jmri.util.JmriJFrame {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.JmritOperationsBundle");
-
+	public static SwingShutDownTask trainDirtyTask;
 
 	public OperationsFrame(String s) {
 		super(s);
@@ -290,6 +291,33 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 			sorter.setSortingStatus(i, TableSorter.NOT_SORTED);
 		}
 	}
+	
+	protected synchronized void createShutDownTask(){
+		if (jmri.InstanceManager.shutDownManagerInstance() != null && trainDirtyTask == null) {
+			trainDirtyTask = new SwingShutDownTask(
+					"Operations Train Window Check", rb.getString("PromptQuitWindowNotWritten"),
+					rb.getString("PromptSaveQuit"), this) {
+				public boolean checkPromptNeeded() {
+					return !OperationsXml.areFilesDirty();
+				}
 
+				public boolean doPrompt() {
+					storeValues();
+					return true;
+				}
+				
+				public boolean doClose() {
+					storeValues();
+					return true;
+				}
+			};
+			jmri.InstanceManager.shutDownManagerInstance().register(trainDirtyTask);        
+		}
+	}
+	
+	protected void storeValues(){
+		OperationsXml.save();
+	}
+	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OperationsFrame.class.getName());
 }

@@ -191,6 +191,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     	pack();
     	setVisible(true);
     	
+        // create ShutDownTasks
+        createShutDownTask();
     	// also load the cars
     	CarManagerXml.instance();
     }

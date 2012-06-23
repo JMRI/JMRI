@@ -24,7 +24,6 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 //import javax.swing.table.TableColumnModel;
 
-import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -49,7 +48,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_CANNOT_BE_FINAL")
-	public static SwingShutDownTask trainDirtyTask;
 	
 	public static final String NAME = rb.getString("Name");	// Sort by choices
 	public static final String TIME = rb.getString("Time");
@@ -430,54 +428,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		}
 	}
 	
-	protected void storeValues(){
-		OperationsXml.save();
-		saveTableDetails(trainsTable);
-	}
-	
-	protected void handleModified() {
-		if (OperationsXml.areFilesDirty()) {
-			ResourceBundle rbu = ResourceBundle.getBundle("jmri.util.UtilBundle");
-			int result = javax.swing.JOptionPane.showOptionDialog(this,
-					rb.getString("PromptQuitWindowNotWritten"),
-					rb.getString("PromptSaveQuit"),
-					javax.swing.JOptionPane.YES_NO_OPTION,
-					javax.swing.JOptionPane.WARNING_MESSAGE,
-					null, // icon
-					new String[]{rbu.getString("WarnYesSave"),rbu.getString("WarnNoClose")},
-					rbu.getString("WarnYesSave")
-					);
-			if (result == javax.swing.JOptionPane.NO_OPTION) {
-				return;
-			}
-			// user wants to save
-			storeValues();
-		}
-	}
-	
-	private synchronized void createShutDownTask(){
-		if (jmri.InstanceManager.shutDownManagerInstance() != null && trainDirtyTask == null) {
-			trainDirtyTask = new SwingShutDownTask(
-					"Operations Train Window Check", rb.getString("PromptQuitWindowNotWritten"),
-					rb.getString("PromptSaveQuit"), this) {
-				public boolean checkPromptNeeded() {
-					return !OperationsXml.areFilesDirty();
-				}
 
-				public boolean doPrompt() {
-					storeValues();
-					return true;
-				}
-				
-				public boolean doClose() {
-					storeValues();
-					return true;
-				}
-			};
-			jmri.InstanceManager.shutDownManagerInstance().register(trainDirtyTask);        
-		}
-	}
-	
 	private void updateTitle(){
 		String title = rb.getString("TitleTrainsTable");
 		TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(trainManager.getTrainScheduleActiveId());
@@ -529,6 +480,31 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     	removePropertyChangeLocations();
         super.dispose();
     }
+    
+	protected void handleModified() {
+		if (OperationsXml.areFilesDirty()) {
+			ResourceBundle rbu = ResourceBundle.getBundle("jmri.util.UtilBundle");
+			int result = javax.swing.JOptionPane.showOptionDialog(this,
+					rb.getString("PromptQuitWindowNotWritten"),
+					rb.getString("PromptSaveQuit"),
+					javax.swing.JOptionPane.YES_NO_OPTION,
+					javax.swing.JOptionPane.WARNING_MESSAGE,
+					null, // icon
+					new String[]{rbu.getString("WarnYesSave"),rbu.getString("WarnNoClose")},
+					rbu.getString("WarnYesSave")
+					);
+			if (result == javax.swing.JOptionPane.NO_OPTION) {
+				return;
+			}
+			// user wants to save
+			storeValues();
+		}
+	}
+    
+	protected void storeValues(){
+		super.storeValues();
+		saveTableDetails(trainsTable);
+	}
     
     public void propertyChange(java.beans.PropertyChangeEvent e) {
     	if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()

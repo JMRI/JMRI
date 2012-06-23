@@ -234,6 +234,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     	pack();
 		setVisible(true);
 		
+        // create ShutDownTasks
+        createShutDownTask();
     	// also load the engines
     	EngineManagerXml.instance();
     }
