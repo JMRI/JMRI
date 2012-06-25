@@ -492,10 +492,10 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		f.typeBox.setSelectedItem("Boxcar");
 		//f.addTypeButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
-		f.typeBox.setSelectedItem("Flat");
+		f.typeBox.setSelectedItem("Flatcar");
 		//f.addTypeButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
-		f.typeBox.setSelectedItem("Coil Car");
+		f.typeBox.setSelectedItem("Coilcar");
 		//f.addTypeButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
 		// put Tank Food at start of list
@@ -515,9 +515,9 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		si = s.getItemById(list.get(1));		
 		Assert.assertEquals("2nd type", "Boxcar", si.getType());
 		si = s.getItemById(list.get(2));		
-		Assert.assertEquals("3rd type", "Flat", si.getType());
+		Assert.assertEquals("3rd type", "Flatcar", si.getType());
 		si = s.getItemById(list.get(3));		
-		Assert.assertEquals("3rd type", "Coil Car", si.getType());
+		Assert.assertEquals("3rd type", "Coilcar", si.getType());
 		
 		//f.deleteScheduleButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteScheduleButton ) );
