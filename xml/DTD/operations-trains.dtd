@@ -35,10 +35,14 @@
 <!ELEMENT terminate EMPTY>
 
 <!ELEMENT trains (train)*>
-<!ELEMENT train (carTypes | carLoads | carRoads | carOwners |scripts | railRoad | manifestLogo)*>
+<!ELEMENT train (route | types | carLoads | carRoads | carOwners |scripts | railRoad | manifestLogo)*>
 
-<!ELEMENT carTypes (carType)*>
+<!ELEMENT route (skips)*>
+<!ELEMENT skips (location)*>
+<!ELEMENT location EMPTY>
+<!ELEMENT types (carType | locoType)*>
 <!ELEMENT carType EMPTY>
+<!ELEMENT locoType EMPTY>
 <!ELEMENT carLoads (carLoad)*>
 <!ELEMENT carLoad EMPTY>
 <!ELEMENT carRoads (carRoad)*>
@@ -106,6 +110,7 @@
 <!ATTLIST train comment				CDATA #IMPLIED>
 
 <!ATTLIST carType name				CDATA #IMPLIED>
+<!ATTLIST locoType name				CDATA #IMPLIED>
 <!ATTLIST carLoad name				CDATA #IMPLIED>
 <!ATTLIST carRoad name				CDATA #IMPLIED>
 <!ATTLIST carOwner name				CDATA #IMPLIED>
@@ -124,5 +129,11 @@
 <!ATTLIST schedule name				CDATA #IMPLIED>
 <!ATTLIST schedule comment			CDATA #IMPLIED>
 <!ATTLIST schedule trainIds			CDATA #IMPLIED>
+
+<!ATTLIST route id					CDATA #REQUIRED>          
+<!ATTLIST route name				CDATA #IMPLIED>
+
+<!ATTLIST location id				CDATA #REQUIRED>          
+<!ATTLIST location name				CDATA #IMPLIED>
 
 

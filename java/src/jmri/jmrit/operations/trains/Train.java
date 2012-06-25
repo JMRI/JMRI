@@ -2430,25 +2430,56 @@ public class Train implements java.beans.PropertyChangeListener {
     			setDepartureTime(hour, minute);
     		}
     	}
-    	// try and first get the route by id then by name
-    	if ((a = e.getAttribute("routeId")) != null ) {
-    		setRoute(RouteManager.instance().getRouteById(a.getValue()));
-    	}else if ((a = e.getAttribute("route")) != null ) {
-    		setRoute(RouteManager.instance().getRouteByName(a.getValue()));
-    	}
-    	if ((a = e.getAttribute("skip")) != null ) {
-    		String locationIds = a.getValue();
-    		String[] locs = locationIds.split("%%");
-    		//        	if (log.isDebugEnabled()) log.debug("Train skips : "+locationIds);
-    		setTrainSkipsLocations(locs);
+    	// new format for train's route added in 2.99.7
+    	Element route = e.getChild("route");
+    	if (route != null){
+    		if ((a = route.getAttribute("id")) != null ) {
+    			setRoute(RouteManager.instance().getRouteById(a.getValue()));
+    		}
+    		if (route.getChild("skips") != null){
+    			@SuppressWarnings("unchecked")
+    			List<Element> skips = route.getChild("skips").getChildren("location");
+    			String[] locs = new String[skips.size()];
+    			for (int i=0; i<skips.size(); i++){
+    				Element loc = skips.get(i);
+    				if ((a = loc.getAttribute("id")) != null ){
+    					locs[i] = a.getValue();
+    				}
+    			}
+    			setTrainSkipsLocations(locs);
+    		}
+    	} else {  		
+    		// old format 
+    		// try and first get the route by id then by name
+    		if ((a = e.getAttribute("routeId")) != null ) {
+    			setRoute(RouteManager.instance().getRouteById(a.getValue()));
+    		} else if ((a = e.getAttribute("route")) != null ) {
+    			setRoute(RouteManager.instance().getRouteByName(a.getValue()));
+    		}
+    		if ((a = e.getAttribute("skip")) != null ) {
+    			String locationIds = a.getValue();
+    			String[] locs = locationIds.split("%%");
+    			//        	if (log.isDebugEnabled()) log.debug("Train skips : "+locationIds);
+    			setTrainSkipsLocations(locs);
+    		}
     	}
     	// new way of reading car types using elements
-      	if (e.getChild("carTypes") != null){
+      	if (e.getChild("types") != null){
     		@SuppressWarnings("unchecked")
-    		List<Element> carTypes = e.getChild("carTypes").getChildren("carType");
+    		List<Element> carTypes = e.getChild("types").getChildren("carType");
     		String[] types = new String[carTypes.size()];
     		for (int i=0; i<carTypes.size(); i++){
     			Element type = carTypes.get(i);
+    			if ((a = type.getAttribute("name")) != null ){
+    				types[i] = a.getValue();
+    			}
+    		}
+    		setTypeNames(types);
+    		@SuppressWarnings("unchecked")
+       		List<Element> locoTypes = e.getChild("types").getChildren("locoType");
+    		types = new String[locoTypes.size()];
+    		for (int i=0; i<locoTypes.size(); i++){
+    			Element type = locoTypes.get(i);
     			if ((a = type.getAttribute("name")) != null ){
     				types[i] = a.getValue();
     			}
@@ -2669,12 +2700,36 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("description", getDescription());
         e.setAttribute("departHour", getDepartureTimeHour());
         e.setAttribute("departMinute", getDepartureTimeMinute());
-        Route route = getRoute();
-        if (route != null){
+        Element eRoute = new Element("route");
+        if (getRoute() != null){
+        	// old format
+        	// TODO remove backward compatible save
         	e.setAttribute("route", getRoute().getName());
         	e.setAttribute("routeId", getRoute().getId());
+        	// new format
+        	eRoute.setAttribute("name", getRoute().getName());
+           	eRoute.setAttribute("id", getRoute().getId());
+           	e.addContent(eRoute);
+           	// build list of locations that this train skips
+            // new format
+           	String[] locationIds = getTrainSkipsLocations();
+            if (locationIds.length > 0){
+            	Element eSkips = new Element("skips");
+            	for (int i=0; i<locationIds.length; i++){
+            		Element eLoc = new Element("location");
+            		RouteLocation rl = getRoute().getLocationById(locationIds[i]);
+            		if (rl != null) {
+            			eLoc.setAttribute("name", getRoute().getLocationById(locationIds[i]).getName());
+            			eLoc.setAttribute("id", locationIds[i]);
+                       	eSkips.addContent(eLoc);
+            		}
+                } 
+                eRoute.addContent(eSkips);
+            }
         }
         // build list of locations that this train skips
+        // old format
+        // TODO remove backward compatible save
         String[] locationIds = getTrainSkipsLocations();
         StringBuffer buf = new StringBuffer();
         for (int i=0; i<locationIds.length; i++){
@@ -2721,10 +2776,15 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         e.setAttribute("carTypes", buf.toString());
         // new way of saving car types
-        Element eTypes = new Element("carTypes");
+        Element eTypes = new Element("types");
         for (int i=0; i<types.length; i++){
        		// don't save types that have been deleted by user
-    		if (CarTypes.instance().containsName(types[i]) || EngineTypes.instance().containsName(types[i])){
+       		if (EngineTypes.instance().containsName(types[i])){
+    			Element eType = new Element("locoType");
+    			eType.setAttribute("name", types[i]);
+    			eTypes.addContent(eType);
+    		} 	
+       		else if (CarTypes.instance().containsName(types[i])){
     			Element eType = new Element("carType");
     			eType.setAttribute("name", types[i]);
     			eTypes.addContent(eType);
