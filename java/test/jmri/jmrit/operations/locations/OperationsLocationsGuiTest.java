@@ -582,6 +582,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(OperationsLocationsGuiTest.class);
+		suite.addTest(jmri.jmrit.operations.locations.PoolTrackGuiTest.suite());
 		return suite;
 	}
 
