@@ -750,7 +750,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
      * Before going active or checking that we can go active, we will wait 500ms
      * for things to settle down to help prevent a race condition
      */
-    void setSignalAppearance(){
+    synchronized void setSignalAppearance(){
         log.debug("In appearance called " + source.getDisplayName());
         if (inWait){
             log.debug("In wait for set appearance");
@@ -776,7 +776,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         try{
             thr.start();
         } catch (java.lang.IllegalThreadStateException ex){
-            log.error(ex.toString());
+            log.error("In Setting Signal Mast Appearance " + ex.toString());
         }
     }
     
