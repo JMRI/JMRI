@@ -47,8 +47,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_CANNOT_BE_FINAL")
-	
 	public static final String NAME = rb.getString("Name");	// Sort by choices
 	public static final String TIME = rb.getString("Time");
 	public static final String DEPARTS = rb.getString("Departs");

@@ -32,6 +32,8 @@ import jmri.util.com.sun.TableSorter;
 public class OperationsFrame extends jmri.util.JmriJFrame {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.JmritOperationsBundle");
+	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_CANNOT_BE_FINAL")
 	public static SwingShutDownTask trainDirtyTask;
 
 	public OperationsFrame(String s) {
