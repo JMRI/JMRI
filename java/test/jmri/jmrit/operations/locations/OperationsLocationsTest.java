@@ -1151,118 +1151,6 @@ public class OperationsLocationsTest extends TestCase {
 		
 	}
 	
-	public void testTrackPools() {
-		LocationManager locMan = new LocationManager();
-		Location l = locMan.newLocation("TestTrackPoolsLocation");
-		Track t1 = l.addTrack("Yard 1", Track.YARD);
-		Track t2 = l.addTrack("Yard 2", Track.YARD);
-		Track t3 = l.addTrack("Siding 1", Track.SIDING);
-		Track t4 = l.addTrack("Siding 2", Track.SIDING);
-		Track t5 = l.addTrack("Interchange 1", Track.INTERCHANGE);
-		Track t6 = l.addTrack("Interchange 2", Track.INTERCHANGE);
-		Track t7 = l.addTrack("Interchange 3", Track.INTERCHANGE);
-		
-		// create two pools
-		Pool pool1 = l.addPool("Pool One");
-		Pool pool2 = l.addPool("Pool Two");
-		
-		t1.setPool(pool1);
-		t3.setPool(pool1);
-		t7.setPool(pool1);
-		
-		t2.setPool(pool2);
-		t4.setPool(pool2);
-		t5.setPool(pool2);
-		t6.setPool(pool2);
-		
-		// only give one track in the pool some length
-		t3.setLength(100);
-		t5.setLength(200);
-		
-		// set minimums
-		t2.setMinimumLength(50);
-		t5.setMinimumLength(100);
-		
-		Car c1 = new Car("C", "1");
-		c1.setLength("40");
-		c1.setType("Boxcar");	// location and track defaults should support type Boxcar
-		
-		Car c2 = new Car("C", "2");
-		c2.setLength("25");
-		c2.setType("Boxcar");	// location and track defaults should support type Boxcar
-		
-		Car c3 = new Car("C", "3");
-		c3.setLength("32");
-		c3.setType("Boxcar");	// location and track defaults should support type Boxcar
-		
-		// now place cars and see if track lengths adjust correctly
-		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(l, t1));
-		Assert.assertEquals("track length", 40+Car.COUPLER, t1.getLength());
-		Assert.assertEquals("track length", 100-(40+Car.COUPLER), t3.getLength());
-		Assert.assertEquals("track length", 0, t7.getLength());
-		
-		Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(l, t7));
-		Assert.assertEquals("track length", 40+Car.COUPLER, t1.getLength());
-		Assert.assertEquals("track length", 25+Car.COUPLER, t7.getLength());
-		Assert.assertEquals("track length", 100-(40+Car.COUPLER)-(25+Car.COUPLER), t3.getLength());
-		
-		// not able to place c3, not enough available track length
-		Assert.assertEquals("Place c3", Track.LENGTH + " ("+(32+Car.COUPLER)+")", c3.setLocation(l, t1));
-		Assert.assertEquals("track length", 40+Car.COUPLER, t1.getLength());
-		Assert.assertEquals("track length", 25+Car.COUPLER, t7.getLength());
-		Assert.assertEquals("track length", 100-(40+Car.COUPLER)-(25+Car.COUPLER), t3.getLength());
-		
-		// now test the minimum track length pool feature
-		// tracks t2 t4 t5 and t6 in the same pool 
-		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(l, t2));
-		Assert.assertEquals("track length", 40+Car.COUPLER, t2.getLength());
-		Assert.assertEquals("track length", 200-(40+Car.COUPLER), t5.getLength());
-		Assert.assertEquals("track length", 0, t4.getLength());
-		Assert.assertEquals("track length", 0, t6.getLength());
-		
-		Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(l, t2));
-		Assert.assertEquals("track length", 40+Car.COUPLER+25+Car.COUPLER, t2.getLength());
-		Assert.assertEquals("track length", 200-(40+Car.COUPLER+25+Car.COUPLER), t5.getLength());
-		Assert.assertEquals("track length", 0, t4.getLength());
-		Assert.assertEquals("track length", 0, t6.getLength());
-
-		// not able to place c3, not enough available track length because of minimum for t5
-		Assert.assertEquals("Place c3", Track.LENGTH + " ("+(32+Car.COUPLER)+")", c3.setLocation(l, t2));
-		Assert.assertEquals("track length", 40+Car.COUPLER+25+Car.COUPLER, t2.getLength());
-		Assert.assertEquals("track length", 200-(40+Car.COUPLER+25+Car.COUPLER), t5.getLength());
-		Assert.assertEquals("track length", 0, t4.getLength());
-		Assert.assertEquals("track length", 0, t6.getLength());
-		
-		// now give t6 some length so the set location will work
-		t6.setLength(50);
-		
-		Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(l, t2));
-		Assert.assertEquals("track length", 40+Car.COUPLER+25+Car.COUPLER+32+Car.COUPLER, t2.getLength());
-		Assert.assertEquals("track length", 200-(40+Car.COUPLER+25+Car.COUPLER), t5.getLength());
-		Assert.assertEquals("track length", 0, t4.getLength());
-		Assert.assertEquals("track length", 50-(32+Car.COUPLER), t6.getLength());
-		
-		// now move the cars on t2 to t4 to test the minimum for t2
-		c1.setLocation(null,null);	// release the used track. TODO requestTrackLength() should have checked
-									// to see if car's track was part of pool
-		
-		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(l, t4));
-		Assert.assertEquals("track length", 25+Car.COUPLER+32+Car.COUPLER, t2.getLength());
-		Assert.assertEquals("track length", 200-(40+Car.COUPLER+25+Car.COUPLER), t5.getLength());
-		Assert.assertEquals("track length", 40+Car.COUPLER, t4.getLength());
-		Assert.assertEquals("track length", 50-(32+Car.COUPLER), t6.getLength());
-		
-		c2.setLocation(null,null);
-		
-		// not enough track length for c2
-		Assert.assertEquals("Place c2", Track.LENGTH + " ("+(25+Car.COUPLER)+")", c2.setLocation(l, t4));
-		Assert.assertEquals("track length", 25+Car.COUPLER+32+Car.COUPLER, t2.getLength());
-		Assert.assertEquals("track length", 200-(40+Car.COUPLER+25+Car.COUPLER), t5.getLength());
-		Assert.assertEquals("track length", 40+Car.COUPLER, t4.getLength());
-		Assert.assertEquals("track length", 50-(32+Car.COUPLER), t6.getLength());
-			
-	}
-
 	// test location Xml create support
 	public void testXMLCreate() {
 		LocationManager manager = LocationManager.instance();
@@ -1678,6 +1566,7 @@ public class OperationsLocationsTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(OperationsLocationsTest.class);
+		suite.addTest(jmri.jmrit.operations.locations.OperationsPoolTest.suite());
 		return suite;
 	}
 
