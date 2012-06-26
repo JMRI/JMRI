@@ -4,17 +4,17 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.util.JmriJFrame;
+//import jmri.util.JmriJFrame;
 
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.extensions.jfcunit.eventdata.*;
-import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.extensions.jfcunit.finder.DialogFinder;
+//import junit.extensions.jfcunit.finder.AbstractButtonFinder;
+//import junit.extensions.jfcunit.finder.DialogFinder;
 
 import java.io.File;
-import java.util.List;
+//import java.util.List;
 import java.util.Locale;
 
 
@@ -50,68 +50,68 @@ public class PoolTrackGuiTest extends jmri.util.SwingTestCase {
 		l5.setLength(1005);
 	}
 
-	private void AddTestSidings() {
-		LocationManager lManager = LocationManager.instance();
-
-		Location l1 = lManager.getLocationByName("Test Loc C");
-		Track t;
-		t = l1.addTrack("new siding track", "Siding");
-
-		t = l1.addTrack("2nd siding track", "Siding");
-
-		t = l1.addTrack("3rd siding track", "Siding");
-	}
-
-	private void AddTestInterchanges() {
-		LocationManager lManager = LocationManager.instance();
-		Location l1 = lManager.getLocationByName("Test Loc C");
-
-		Track t;
-		t = l1.addTrack("new interchange track", "Interchange");
-		// t.setLength(321);
-
-		t = l1.addTrack("2nd interchange track", "Interchange");
-		// t.setLength(4331);
-
-	}
-
-	private void AddTestYardTracks() {
-		LocationManager lManager = LocationManager.instance();
-		Location l1 = lManager.getLocationByName("Test Loc C");
-
-		Track t;
-		t = l1.addTrack("new yard track", "Yard");
-		// t.setLength(43);
-
-		t = l1.addTrack("2nd yard track", "Yard");
-		// t.setLength(6543);
-
-		t = l1.addTrack("3rd yard track", "Yard");
-		// t.setLength(1);
-
-		t = l1.addTrack("4th yard track", "Yard");
-		t.setLength(21);
-
-	}
-
-	private void AddTestStagingTracks() {
-		LocationManager lManager = LocationManager.instance();
-		Location l1 = lManager.getLocationByName("Test Loc A");
-
-		Track t;
-		t = l1.addTrack("new staging track", "Staging");
-		// t.setLength(43);
-
-		t = l1.addTrack("2nd staging track", "Staging");
-		// t.setLength(6543);
-
-		t = l1.addTrack("3rd staging track", "Staging");
-		// t.setLength(1);
-
-		t = l1.addTrack("4th staging track", "Staging");
-		// t.setLength(21);
-
-	}
+//	private void AddTestSidings() {
+//		LocationManager lManager = LocationManager.instance();
+//
+//		Location l1 = lManager.getLocationByName("Test Loc C");
+//		Track t;
+//		t = l1.addTrack("new siding track", "Siding");
+//
+//		t = l1.addTrack("2nd siding track", "Siding");
+//
+//		t = l1.addTrack("3rd siding track", "Siding");
+//	}
+//
+//	private void AddTestInterchanges() {
+//		LocationManager lManager = LocationManager.instance();
+//		Location l1 = lManager.getLocationByName("Test Loc C");
+//
+//		Track t;
+//		t = l1.addTrack("new interchange track", "Interchange");
+//		// t.setLength(321);
+//
+//		t = l1.addTrack("2nd interchange track", "Interchange");
+//		// t.setLength(4331);
+//
+//	}
+//
+//	private void AddTestYardTracks() {
+//		LocationManager lManager = LocationManager.instance();
+//		Location l1 = lManager.getLocationByName("Test Loc C");
+//
+//		Track t;
+//		t = l1.addTrack("new yard track", "Yard");
+//		// t.setLength(43);
+//
+//		t = l1.addTrack("2nd yard track", "Yard");
+//		// t.setLength(6543);
+//
+//		t = l1.addTrack("3rd yard track", "Yard");
+//		// t.setLength(1);
+//
+//		t = l1.addTrack("4th yard track", "Yard");
+//		t.setLength(21);
+//
+//	}
+//
+//	private void AddTestStagingTracks() {
+//		LocationManager lManager = LocationManager.instance();
+//		Location l1 = lManager.getLocationByName("Test Loc A");
+//
+//		Track t;
+//		t = l1.addTrack("new staging track", "Staging");
+//		// t.setLength(43);
+//
+//		t = l1.addTrack("2nd staging track", "Staging");
+//		// t.setLength(6543);
+//
+//		t = l1.addTrack("3rd staging track", "Staging");
+//		// t.setLength(1);
+//
+//		t = l1.addTrack("4th staging track", "Staging");
+//		// t.setLength(21);
+//
+//	}
 
 	/*
 	 * Things to test with this frame:
@@ -984,20 +984,20 @@ public class PoolTrackGuiTest extends jmri.util.SwingTestCase {
 	// f.dispose();
 	// }
 
-	@SuppressWarnings("unchecked")
-	private void pressDialogButton(JmriJFrame f, String buttonName) {
-		// (with JfcUnit, not pushing this off to another thread)
-		// Locate resulting dialog box
-		List<javax.swing.JDialog> dialogList = new DialogFinder(null)
-				.findAll(f);
-		javax.swing.JDialog d = dialogList.get(0);
-		// Find the button
-		AbstractButtonFinder finder = new AbstractButtonFinder(buttonName);
-		javax.swing.JButton button = (javax.swing.JButton) finder.find(d, 0);
-		Assert.assertNotNull("button not found", button);
-		// Click button
-		getHelper().enterClickAndLeave(new MouseEventData(this, button));
-	}
+//	@SuppressWarnings("unchecked")
+//	private void pressDialogButton(JmriJFrame f, String buttonName) {
+//		// (with JfcUnit, not pushing this off to another thread)
+//		// Locate resulting dialog box
+//		List<javax.swing.JDialog> dialogList = new DialogFinder(null)
+//				.findAll(f);
+//		javax.swing.JDialog d = dialogList.get(0);
+//		// Find the button
+//		AbstractButtonFinder finder = new AbstractButtonFinder(buttonName);
+//		javax.swing.JButton button = (javax.swing.JButton) finder.find(d, 0);
+//		Assert.assertNotNull("button not found", button);
+//		// Click button
+//		getHelper().enterClickAndLeave(new MouseEventData(this, button));
+//	}
 
 	// Ensure minimal setup for log4J
 	@Override
