@@ -47,6 +47,14 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
                     URI uri = new URI("file:"+System.getProperty("user.dir")+"/"+u.getFile());
                     java.awt.Desktop.getDesktop().browse(uri);
                     return;
+                } else if ( u.getProtocol().equalsIgnoreCase("file") ) {
+                    // if file not present, fall back to web browser
+                    // first, get file name
+                    java.io.File file = new java.io.File(u.getFile());
+                    if (!file.exists()) {
+                        URI uri = new URI("http://jmri.org/"+u.getFile());
+                        java.awt.Desktop.getDesktop().browse(uri);                  
+                    }
                 }
             }
             catch(Throwable t){}
