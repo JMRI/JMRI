@@ -182,8 +182,8 @@ var $processResponse = function($returnedData, $success, $xhr) {
 
 //details of sort comparison, use the data-sort value from each list item (push empties to bottom)
 function sortByInnerHTML(a,b){
-	var va = a.dataset['sort'];
-	var vb = b.dataset['sort'];
+	var va = a.getAttribute('data-sort');
+	var vb = b.getAttribute('data-sort');
 	if (va == "") va = "zz" + a.innerHTML.toLowerCase();  //push empty sort values to bottom, then sort by HTML
 	if (vb == "") vb = "zz" + b.innerHTML.toLowerCase();
 
