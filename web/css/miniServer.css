@@ -136,8 +136,7 @@ table th {
 }
 
 table.frame-list td a img {
-	max-height: 80px;
-	height: expression(this.height >     80 ?     "80px" :     true);	/* for IE */
+	height: 80px;
 	border: 1px solid transparent;
 	vertical-align: bottom;
 	padding: 1px 6px 2px 5px;
