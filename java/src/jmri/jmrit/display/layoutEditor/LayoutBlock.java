@@ -154,13 +154,16 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 				block.setNamedSensor(occupancyNamedSensor);
 			}
 		}
-            if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
-                setBlockMetric();
-                for (int i = 0; i<block.getPaths().size(); i++){
-                    addAdjacency(block.getPaths().get(i));
-                }
-            }
 	}
+    
+    protected void initializeLayoutBlockRouting(){
+        if(!InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled())
+            return;
+        setBlockMetric();
+        for (int i = 0; i<block.getPaths().size(); i++){
+            addAdjacency(block.getPaths().get(i));
+        }    
+    }
 	
 	/**
 	 * Accessor methods
