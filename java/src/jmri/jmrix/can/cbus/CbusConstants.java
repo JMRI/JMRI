@@ -193,11 +193,14 @@ public final class CbusConstants {
     /**
      * Error codes returned by CBUS_ERR
      */
-    public static final int ERR_ADDR_FULL = 1;
-    public static final int ERR_ADDR_TAKEN = 2;
-    public static final int ERR_SESS_LOCO_NOT_FOUND = 3;
-    public static final int ERR_NO_MORE_ENGINES = 4;
-    public static final int ERR_ENGINE_NOT_FOUND = 5;
+    public static final int ERR_LOCO_STACK_FULL = 1;
+    public static final int ERR_LOCO_ADDRESS_TAKEN = 2;
+    public static final int ERR_SESSION_NOT_PRESENT = 3;
+    public static final int ERR_CONSIST_EMPTY = 4;
+    public static final int ERR_LOCO_NOT_FOUND = 5;
+    public static final int ERR_CAN_BUS_ERROR = 6;
+    public static final int ERR_INVALID_REQUEST = 7;
+    public static final int ERR_SESSION_CANCELLED = 8;
 
     /**
      * Status codes for OPC_SSTAT
@@ -250,6 +253,30 @@ public final class CbusConstants {
     public static final int CBUS_F10 = 2;
     public static final int CBUS_F11 = 4;
     public static final int CBUS_F12 = 8;
+
+    /**
+     * Function bits for group4
+     */
+    public static final int CBUS_F13 = 1;
+    public static final int CBUS_F14 = 2;
+    public static final int CBUS_F15 = 4;
+    public static final int CBUS_F16 = 8;
+    public static final int CBUS_F17 = 0x10;
+    public static final int CBUS_F18 = 0x20;
+    public static final int CBUS_F19 = 0x40;
+    public static final int CBUS_F20 = 0x80;
+
+    /**
+     * Function bits for group5
+     */
+    public static final int CBUS_F21 = 1;
+    public static final int CBUS_F22 = 2;
+    public static final int CBUS_F23 = 4;
+    public static final int CBUS_F24 = 8;
+    public static final int CBUS_F25 = 0x10;
+    public static final int CBUS_F26 = 0x20;
+    public static final int CBUS_F27 = 0x40;
+    public static final int CBUS_F28 = 0x80;
 
     /**
      * Throttle modes

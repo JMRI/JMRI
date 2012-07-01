@@ -36,6 +36,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
      * lets the listeners know that a change happened, and then was undone.
      * @param mode The new mode, use values from the jmri.Programmer interface
      */
+    @Override
     public void setMode(int mode) {
         int oldMode = _mode;  // preserve this in case we need to go back
         if (mode != _mode) {
@@ -57,6 +58,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
      * @param mode
      * @return True if paged or direct or register mode
      */
+    @Override
     public boolean hasMode(int mode) {
         if ( mode == Programmer.DIRECTBITMODE ||
              mode == Programmer.DIRECTBYTEMODE ||
@@ -69,8 +71,10 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         return false;
     }
 
+    @Override
     public int getMode() { return _mode; }
 
+    @Override
     public boolean getCanRead() {
         return true;
     }
@@ -104,6 +108,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     int _cv;	// remember the cv being read/written
 
     // programming interface
+    @Override
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);
         useProgrammer(p);
@@ -124,10 +129,12 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         }
     }
 
+    @Override
     synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    @Override
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
         useProgrammer(p);
@@ -162,10 +169,12 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         }
     }
 
+    @Override
     public void message(CanMessage m) {
-        log.error("message received unexpectedly: "+m.toString());
+        //log.error("message received unexpectedly: "+m.toString());
     }
 
+    @Override
     synchronized public void reply(CanReply m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
@@ -215,6 +224,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     /**
      * Internal routine to handle a timeout
      */
+    @Override
     synchronized protected void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop

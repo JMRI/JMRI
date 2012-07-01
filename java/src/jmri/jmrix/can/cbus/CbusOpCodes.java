@@ -88,14 +88,14 @@ public class CbusOpCodes {
         result.put(CbusConstants.CBUS_RQMN,"Request Module Name (RQMN)");
 
         // Opcodes with 1 data
-        result.put(CbusConstants.CBUS_STAT,"Command Station Status Report (STAT): %1");
-        result.put(CbusConstants.CBUS_KLOC,"Release Engine (KLOC) Session: %1");
-        result.put(CbusConstants.CBUS_QLOC,"Query Engine (QLOC) Session: %1");
-        result.put(CbusConstants.CBUS_DKEEP,"Keep Alive (DKEEP) Session: %1");
+        result.put(CbusConstants.CBUS_STAT,"Command Station Status Report (STAT): ,%1");
+        result.put(CbusConstants.CBUS_KLOC,"Release Engine (KLOC) Session: ,%1");
+        result.put(CbusConstants.CBUS_QLOC,"Query Engine (QLOC) Session: ,%1");
+        result.put(CbusConstants.CBUS_DKEEP,"Keep Alive (DKEEP) Session: ,%1");
 
-        result.put(CbusConstants.CBUS_DBG1,"Debug (DBG1) Data: %1");
+        result.put(CbusConstants.CBUS_DBG1,"Debug (DBG1) Data: ,%1");
 
-        result.put(CbusConstants.CBUS_EXTC,"Extended op-code (EXTC): %1");
+        result.put(CbusConstants.CBUS_EXTC,"Extended op-code (EXTC): ,%1");
 
        // Opcodes with 2 data
         result.put(CbusConstants.CBUS_RLOC,"Request Session (RLOC) Addr:,%2");
