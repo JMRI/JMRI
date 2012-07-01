@@ -66,7 +66,7 @@ public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements Tams
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         reset();
         TamsMessage m = new TamsMessage("xV");
-        tc.sendTamsMessage(m, null);
+        tc.sendTamsMessage(m, this);
 
 	}
 

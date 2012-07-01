@@ -11,7 +11,7 @@ package jmri.jmrix.tams.serialdriver;
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
-	public final static String NAME = "Master Controller";
+	public final static String NAME = "MasterControl";
 	
     /**
      * Ctor for an object being created during load process;

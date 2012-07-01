@@ -33,7 +33,7 @@ public class TamsTurnout extends AbstractTurnout
         this.prefix = prefix;
         tc = etc;
         //Request status of turnout
-        TamsMessage m = new TamsMessage("T "+ _number + ",,1");
+        TamsMessage m = new TamsMessage("xT "+ _number + ",,1");
         tc.sendTamsMessage(m, this);
         tc.addPollMessage(m, this);
         
@@ -182,7 +182,7 @@ public class TamsTurnout extends AbstractTurnout
             //if we received an update last time we send a request again, but if we did not we shall skip it once and try again next time.
             if(updateReceived){
                 updateReceived = false;
-                TamsMessage m = new TamsMessage("T "+ _number + ",,1");
+                TamsMessage m = new TamsMessage("xT "+ _number + ",,1");
                 m.setTimeout(TamsMessage.POLLTIMEOUT);
                 tc.sendTamsMessage(m, this);
             } else {
@@ -193,7 +193,7 @@ public class TamsTurnout extends AbstractTurnout
     
     @Override
     public void setFeedbackMode(int mode) throws IllegalArgumentException {
-        TamsMessage m = new TamsMessage("T "+ _number + ",,1");
+        TamsMessage m = new TamsMessage("xT "+ _number + ",,1");
         if(mode==MONITORING){
             tc.addPollMessage(m, this);
         } else {
@@ -207,7 +207,7 @@ public class TamsTurnout extends AbstractTurnout
     }
     
     public void dispose(){
-        TamsMessage m = new TamsMessage("T "+ _number + ",,1");
+        TamsMessage m = new TamsMessage("xT "+ _number + ",,1");
         tc.removePollMessage(m, this);
         super.dispose();
     }
