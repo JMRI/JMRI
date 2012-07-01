@@ -98,6 +98,10 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     
     ConcurrentLinkedQueue<PollMessage> pollQueue = new ConcurrentLinkedQueue<PollMessage>();
     
+    boolean disablePoll = false;
+    public boolean getPollQueueDisabled() { return disablePoll; }
+    public void setPollQueueDisabled(boolean poll) { disablePoll = poll; }
+    
     /**
     * As we have to poll the tams system to get updates we put request into a queue and allow the
     * the abstrct traffic controller to handle them when it is free.
@@ -130,6 +134,8 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
 	 * Check Tams MC for updates.
 	 */
 	protected AbstractMRMessage pollMessage() {
+        if(disablePoll)
+            return null;
         if(!pollQueue.isEmpty()){
             PollMessage pm = pollQueue.peek();
             if(pm!=null){
@@ -142,6 +148,8 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     
  
     protected AbstractMRListener pollReplyHandler() {
+        if(disablePoll)
+            return null;
         if(!pollQueue.isEmpty()){
             PollMessage pm = pollQueue.poll();
             if(pm!=null){

@@ -11,6 +11,9 @@
 
 package jmri.jmrix.tams.swing.monitor;
 
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JCheckBox;
 import jmri.jmrix.tams.*;
 import jmri.jmrix.tams.swing.*;
 import java.util.ResourceBundle;
@@ -38,6 +41,8 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
     
     TamsSystemConnectionMemo memo;
     
+    JCheckBox disablePollingCheckBox = new JCheckBox();
+    
     public void initContext(Object context) {
         if (context instanceof TamsSystemConnectionMemo ) {
             initComponents((TamsSystemConnectionMemo) context);
@@ -48,6 +53,25 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
         this.memo = memo;
         // connect to the TamsTrafficController
         memo.getTrafficController().addTamsListener(this);
+        disablePollingCheckBox.setSelected(memo.getTrafficController().getPollQueueDisabled());
+    }
+    
+    public void initComponents() throws Exception {
+        super.initComponents();
+        JPanel check = new JPanel();
+        disablePollingCheckBox.setText("Disable Polling");
+        disablePollingCheckBox.setVisible(true);
+        disablePollingCheckBox.setToolTipText("If checked, this will disable the polling messages");
+        disablePollingCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                if (memo!=null){
+                    memo.getTrafficController().setPollQueueDisabled(disablePollingCheckBox.isSelected());
+                }
+            }
+        });
+        check.add(disablePollingCheckBox);
+        add(check);
     }
 
     public synchronized void message(TamsMessage l) {  // receive a message and log it
