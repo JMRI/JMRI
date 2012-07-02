@@ -151,6 +151,20 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
         }
         return Integer.parseInt(sb.toString());
     }
+    /**
+    * get the contents of the reply, excluding the header and footer
+    */
+    public String[] getContents(){
+        String[] lines = toString().split("\n");
+        int length = lines.length-2;
+        
+        String[] returnval = new String[length];
+        for(int i = 1; i<=length; i++){
+            returnval[i-1] = lines[i];
+        }
+        return returnval;
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosReply.class.getName());
 
 }
