@@ -84,15 +84,17 @@ on the
 <a href="http://www.loksound.de/us/index.php?showId=205">ESU web site</a>.
 
 <p>
-Support for ECoS was first available in 
-<a href="http://jmri.sf.net/releasenotes/jmri2.3.3.shtml">JMRI 2.3.3</a>.
+Support for ECoS was first available in <br>
+<a href="http://jmri.sf.net/releasenotes/jmri2.3.3.shtml">JMRI 2.3.3</a>.<br>
 
-Support for the ECoS throttle was first available in 
-<a href="http://jmri.sf.net/releasenotes/jmri2.7.4.shtml">JMRI 2.7.4</a>.
+Support for the ECoS throttle was first available in <br>
+<a href="http://jmri.sf.net/releasenotes/jmri2.7.4.shtml">JMRI 2.7.4</a>.<br>
 
-Support for the ECoS s88 Feedback Sensors was first available in 
-<a href="http://jmri.sf.net/releasenotes/jmri2.7.9.shtml">JMRI 2.7.9</a>.
-    
+Support for the ECoS s88 Feedback Sensors was first available in <br>
+<a href="http://jmri.sf.net/releasenotes/jmri2.7.9.shtml">JMRI 2.7.9</a>.<br>
+
+Support for the ECoS RailCom Feedback was first available in <br>
+<a href="http://jmri.sf.net/releasenotes/jmri2.99.7.shtml">JMRI 2.99.7</a>.<br>    
 <!--#include virtual="/Footer" -->
 </body>
 </html>
