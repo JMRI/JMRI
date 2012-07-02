@@ -45,6 +45,7 @@ public class DCCManufacturerList {
     public static final String ROCO = "Roco";
     public static final String SPROG = "SPROG DCC";
     public static final String SRCP = "SRCP";
+    public static final String TAMS = "Tams";
     public static final String TRACTRONICS = "TracTronics";
     public static final String UHLEN = "Uhlenbrock";
     public static final String WANGROW = "Wangrow";
@@ -82,6 +83,7 @@ public class DCCManufacturerList {
           ROCO,
           SPROG,
           SRCP,
+          TAMS,
           TRACTRONICS,
           UHLEN,
           WANGROW,
@@ -103,6 +105,7 @@ public class DCCManufacturerList {
         if(System.equals(DIGITRAX)) { return new jmri.jmrix.loconet.LnConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(DCC4PC)) { return new jmri.jmrix.dcc4pc.Dcc4PcConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(EASYDCC)) { return new jmri.jmrix.easydcc.EasyDccConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(DCC4PC)) { return new jmri.jmrix.dcc4pc.Dcc4PcConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(ESU)) { return new jmri.jmrix.ecos.EcosConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(FLEISHMANN)) { return new jmri.jmrix.loconet.Intellibox.FleischmannConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(HORNBY)) { return new jmri.jmrix.lenz.hornbyelite.EliteConnectionTypeList().getAvailableProtocolClasses(); }
@@ -121,6 +124,7 @@ public class DCCManufacturerList {
         if(System.equals(ROCO)) { return new jmri.jmrix.lenz.LenzConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(SPROG)) { return new jmri.jmrix.sprog.SprogConnectionTypeList().getAvailableProtocolClasses();  }
         if(System.equals(SRCP)) { return new jmri.jmrix.srcp.SRCPConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(TAMS)) { return new jmri.jmrix.tams.TamsConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(TRACTRONICS)) { return new jmri.jmrix.secsi.SerialConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(UHLEN)) { return new jmri.jmrix.loconet.uhlenbrock.UhlenbrockConnectionTypeList().getAvailableProtocolClasses();   }
         if(System.equals(WANGROW)) { return new jmri.jmrix.wangrow.WangrowConnectionTypeList().getAvailableProtocolClasses(); }

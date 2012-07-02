@@ -1363,6 +1363,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         JLabel programmerStatusLabel = new JLabel("Programmer Status : ");
         statusField.setText("idle");
         addToStatusBox(programmerStatusLabel, statusField);
+        JLabel ver = new JLabel("Version : " + jmri.Version.name());
+        addToStatusBox(ver, null);
     }
 
     protected void systemsMenu() {

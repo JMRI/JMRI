@@ -589,7 +589,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 //Need to really check if this all fits together correctly!  Might need to get the loco id from the reply string to
                 //identify the loco correctly
                     EcosLocoAddress tmploco;
-                    if((lines[0].contains("speed[")) || (lines[0].contains("dir["))){
+                    if((lines[1].contains("speed[")) || (lines[1].contains("dir["))){
                         log.debug("Forwarding on State change for " + ecosObjectId);
                         String strLocoObject = Integer.toString(ecosObjectId);
                         tmploco = _tecos.get(strLocoObject);

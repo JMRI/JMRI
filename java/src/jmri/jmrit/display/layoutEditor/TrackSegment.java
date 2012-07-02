@@ -72,15 +72,17 @@ public class TrackSegment
 		}
 		connect1 = c1;
 		connect2 = c2;
-		if ( (t1<LayoutEditor.POS_POINT) || ( (t1>LayoutEditor.LEVEL_XING_D) && 
-						(t1<LayoutEditor.TURNTABLE_RAY_OFFSET) ) ) { 
+		if ( (t1<LayoutEditor.POS_POINT) || 
+                    ( ((t1>LayoutEditor.LEVEL_XING_D) && (t1<LayoutEditor.SLIP_A)) 
+                        || ((t1>LayoutEditor.SLIP_D) && (t1<LayoutEditor.TURNTABLE_RAY_OFFSET)) ) ) {
 			log.error("Invalid connect type 1 in TrackSegment constructor - "+id);
 		}
 		else {
 			type1 = t1;
 		}
-		if ( (t2<LayoutEditor.POS_POINT) || ( (t2>LayoutEditor.LEVEL_XING_D) && 
-						(t2<LayoutEditor.TURNTABLE_RAY_OFFSET) ) ) { 
+		if ( (t2<LayoutEditor.POS_POINT) ||
+                    ( ((t2>LayoutEditor.LEVEL_XING_D) && (t2<LayoutEditor.SLIP_A)) 
+                        || ((t2>LayoutEditor.SLIP_D) && (t2<LayoutEditor.TURNTABLE_RAY_OFFSET)) ) ) {
 			log.error("Invalid connect type 2 in TrackSegment constructor - "+id);
 		}
 		else {

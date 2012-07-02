@@ -235,7 +235,11 @@ public class LayoutBlockManager extends AbstractManager {
 //		LayoutEditorTests layoutEditorTests = new LayoutEditorTests();
 //		layoutEditorTests.runClinicTests();
 //		layoutEditorTests.runTestPanel3Tests();
+        initialized = true;
+        initializeLayoutBlockRouting();
 	}
+    
+    private boolean initialized = false;
 	private int badBeanErrors = 0;
 	public void addBadBeanError() {badBeanErrors ++;}
 	
@@ -2083,10 +2087,20 @@ public class LayoutBlockManager extends AbstractManager {
         if (boo==enableAdvancedRouting)
             return;
         enableAdvancedRouting = boo;
-        if (boo){
-            initializeLayoutBlockPaths();
+        if (boo && initialized){
+            initializeLayoutBlockRouting();
         }
         firePropertyChange("advancedRoutingEnabled", !enableAdvancedRouting, enableAdvancedRouting);
+    }
+    
+    private void initializeLayoutBlockRouting() {
+        if(!enableAdvancedRouting || !initialized)
+            return;
+		// cycle through all LayoutBlocks, completing initialization of the layout block routing
+        java.util.Enumeration<jmri.NamedBean> en = _tsys.elements();
+        while (en.hasMoreElements()) {
+			((LayoutBlock)en.nextElement()).initializeLayoutBlockRouting();
+        }
     }
     
     public LayoutBlockConnectivityTools getLayoutBlockConnectivityTools(){

@@ -66,14 +66,26 @@ public class DccAddressPanel extends JPanel {
         // update initial contents & color
         if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
             if (primaryAddr!=null) {
-                // short address
+                // short address commonRep will be JTextField if variable, JLabel if constant
+                JTextField f;
+                if (primaryAddr.getCommonRep() instanceof JTextField) f = (JTextField)primaryAddr.getCommonRep();
+                else {
+                    f = new JTextField();
+                    f.setText(((JLabel)primaryAddr.getCommonRep()) .getText());
+                }
                 val.setBackground(primaryAddr.getCommonRep().getBackground());
-                val.setDocument( ((JTextField)primaryAddr.getCommonRep()).getDocument());
+                val.setDocument( f.getDocument());
             }
         } else {
-            // long address
+            // long address commonRep will be JTextField if variable, JLabel if constant
+            JTextField f;
+            if (extendAddr.getCommonRep() instanceof JTextField) f = (JTextField)extendAddr.getCommonRep();
+            else {
+                f = new JTextField();
+                f.setText(((JLabel)extendAddr.getCommonRep()) .getText());
+            }
             val.setBackground(extendAddr.getCommonRep().getBackground());
-            val.setDocument( ((JTextField)extendAddr.getCommonRep()).getDocument());
+            val.setDocument( f.getDocument());
         }
 
         // start listening for changes to this value
@@ -154,16 +166,28 @@ public class DccAddressPanel extends JPanel {
                       " mode "+(addMode==null?"<null>":addMode.getValueString()));
         if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
             if (primaryAddr!=null) {
-                // short address mode
-                val.setDocument( ((JTextField)primaryAddr.getCommonRep()).getDocument());
+                // short address commonRep will be JTextField if variable, JLabel if constant
+                JTextField f;
+                if (primaryAddr.getCommonRep() instanceof JTextField) f = (JTextField)primaryAddr.getCommonRep();
+                else {
+                    f = new JTextField();
+                    f.setText(((JLabel)primaryAddr.getCommonRep()) .getText());
+                }
                 val.setBackground(primaryAddr.getCommonRep().getBackground());
+                val.setDocument( f.getDocument());
                 if (log.isDebugEnabled()) log.debug("set color: "+primaryAddr.getCommonRep().getBackground());
             }
         }
         else {
-            // long address
-            val.setDocument( ((JTextField)extendAddr.getCommonRep()).getDocument());
+            // long address commonRep will be JTextField if variable, JLabel if constant
+            JTextField f;
+            if (extendAddr.getCommonRep() instanceof JTextField) f = (JTextField)extendAddr.getCommonRep();
+            else {
+                f = new JTextField();
+                f.setText(((JLabel)extendAddr.getCommonRep()) .getText());
+            }
             val.setBackground(extendAddr.getCommonRep().getBackground());
+            val.setDocument( f.getDocument());
             if (log.isDebugEnabled()) log.debug("set color: "+extendAddr.getCommonRep().getBackground());
         }
     }

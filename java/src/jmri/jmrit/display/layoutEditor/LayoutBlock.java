@@ -154,13 +154,16 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 				block.setNamedSensor(occupancyNamedSensor);
 			}
 		}
-            if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
-                setBlockMetric();
-                for (int i = 0; i<block.getPaths().size(); i++){
-                    addAdjacency(block.getPaths().get(i));
-                }
-            }
 	}
+    
+    protected void initializeLayoutBlockRouting(){
+        if(!InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled())
+            return;
+        setBlockMetric();
+        for (int i = 0; i<block.getPaths().size(); i++){
+            addAdjacency(block.getPaths().get(i));
+        }    
+    }
 	
 	/**
 	 * Accessor methods
@@ -2051,7 +2054,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             connectionLog.setLevel(currentLevel);
         } catch (java.lang.NullPointerException ex){
             connectionLog.setLevel(currentLevel);
-            log.error("Exception caught while trying to dicover turnout connectivity\n"  + block.getDisplayName() + " Source " + srcBlock.getDisplayName() + ", dest  " + dstBlock.getDisplayName());
+            if(enableAddRouteLogging)
+                log.error(block.getDisplayName() + " Exception caught while trying to dicover turnout connectivity\nSource " + srcBlock.getDisplayName() + ", dest  " + dstBlock.getDisplayName()+"\n"+ex.toString());
+            return;
         }
         
         if(!connection.isTurnoutConnectivityComplete())
@@ -2067,7 +2072,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             connectionLog.setLevel(currentLevel);
         } catch (java.lang.NullPointerException ex){
             connectionLog.setLevel(currentLevel);
-            log.error("Exception caught while trying to dicover turnout connectivity\n" + block.getDisplayName() + " Source " + srcBlock.getDisplayName() + ", dest  " + dstBlock.getDisplayName());
+            if(enableAddRouteLogging)
+                log.error(block.getDisplayName() + " Exception caught while trying to dicover turnout connectivity\nSource " + srcBlock.getDisplayName() + ", dest  " + dstBlock.getDisplayName()+"\n"+ex.toString());
+            return;
         }
         
         if(!connection.isTurnoutConnectivityComplete())
@@ -3543,34 +3550,34 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         
         Hashtable <Turnout, Integer> _turnouts =new Hashtable<Turnout, Integer>();
         
-        public ThroughPaths(Block srcBlock, jmri.Path srcPath, Block destBlock, jmri.Path dstPath){
+        ThroughPaths(Block srcBlock, jmri.Path srcPath, Block destBlock, jmri.Path dstPath){
             sourceBlock = srcBlock;
             destinationBlock = destBlock;
             sourcePath = srcPath;
             destinationPath=dstPath;
         }
         
-        public Block getSourceBlock(){
+        Block getSourceBlock(){
             return sourceBlock;
         }
         
-        public Block getDestinationBlock(){
+        Block getDestinationBlock(){
             return destinationBlock;
         }
         
-        public jmri.Path getSourcePath(){
+        jmri.Path getSourcePath(){
             return sourcePath;
         }
         
-        public jmri.Path getDestinationPath(){
+        jmri.Path getDestinationPath(){
             return destinationPath;
         }
         
-        public boolean isPathActive(){
+        boolean isPathActive(){
             return pathActive;
         }
         
-        public void setTurnoutList(ArrayList<LayoutTurnout> turnouts, ArrayList<Integer> turnoutSettings){
+        void setTurnoutList(ArrayList<LayoutTurnout> turnouts, ArrayList<Integer> turnoutSettings){
             if (!_turnouts.isEmpty()){
                 Enumeration<Turnout> en = _turnouts.keys();
                 while (en.hasMoreElements()) {
@@ -3598,8 +3605,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     _turnouts.put(ls.getTurnoutB(), tbState);
                     ls.getTurnoutB().addPropertyChangeListener(this, ls.getTurnoutBName(), "Layout Block Routing");
                 } else {
-                    _turnouts.put(turnouts.get(i).getTurnout(), turnoutSettings.get(i));
-                    turnouts.get(i).getTurnout().addPropertyChangeListener(this, turnouts.get(i).getTurnoutName(), "Layout Block Routing");
+                    if(turnouts.get(i).getTurnout()!=null){
+                        _turnouts.put(turnouts.get(i).getTurnout(), turnoutSettings.get(i));
+                        turnouts.get(i).getTurnout().addPropertyChangeListener(this, turnouts.get(i).getTurnoutName(), "Layout Block Routing");
+                    } else {
+                        log.error(turnouts.get(i) + " has no physical turnout allocated");
+                    }
                 }
             }
         }

@@ -38,6 +38,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
      * @param repeats Number of times to repeat the transmission,
      *      but is ignored in the current implementation
      */
+    @Override
     public void sendPacket(byte[] packet, int repeats) {
 
         if (repeats != 1) {
@@ -72,6 +73,19 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
         tc.sendCanMessage(msg, null);
     }
 
+    /**
+     * Send keep alive (DKEEP) packet for a throttle
+     * 
+     * @param handle
+     */
+    public void sendKeepAlive(int handle) {
+        CanMessage msg = new CanMessage(2, tc.getCanid());
+        msg.setOpCode(CbusConstants.CBUS_DKEEP);
+        msg.setElement(1, handle);
+        log.debug("keep alive handle: " + handle);
+        tc.sendCanMessage(msg, null);
+    }
+    
     /**
      * Set loco speed and direction
      *
@@ -116,9 +130,11 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
         tc.sendCanMessage(msg, this);
     }
 
+    @Override
     public void message(CanMessage m) {
     }
 
+    @Override
     synchronized public void reply(CanReply m) {
     }
 
@@ -126,6 +142,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
      * Does this command station have a "service mode", where it
      * stops normal train operation while programming?
      */
+    @Override
     public boolean getHasServiceMode() {
         return true;
     }
@@ -134,6 +151,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
      * If this command station has a service mode, is the command
      * station currently in that mode?
      */
+    @Override
     public boolean getInServiceMode() {
 
         // *** ???
@@ -146,12 +164,15 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
      * be as close as possible to what the command station
      * replied when asked; it should not be reformatted
      **/
+    @Override
     public String getVersionString() {
         return "0.0";
     }
     
+    @Override
     public String getUserName() { return adapterMemo.getUserName(); }
     
+    @Override
     public String getSystemPrefix() { return adapterMemo.getSystemPrefix(); }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusCommandStation.class.getName());

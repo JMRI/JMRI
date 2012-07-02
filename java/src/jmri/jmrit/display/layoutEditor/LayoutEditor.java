@@ -5061,6 +5061,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 }
                 // initialize the new block
                 blk.initializeLayoutBlock();
+                blk.initializeLayoutBlockRouting();
                 blk.setBlockTrackColor(defaultTrackColor);
                 blk.setBlockOccupiedColor(defaultOccupiedTrackColor);
                 blk.setBlockExtraColor(defaultAlternativeTrackColor);
@@ -5077,6 +5078,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 else {
                     // initialize the new block
                     blk.initializeLayoutBlock();
+                    blk.initializeLayoutBlockRouting();
                     blk.setBlockTrackColor(defaultTrackColor);
                     blk.setBlockOccupiedColor(defaultOccupiedTrackColor);
                     blk.setBlockExtraColor(defaultAlternativeTrackColor);
