@@ -3,7 +3,6 @@
 package jmri.jmrix.ecos;
 
 import jmri.implementation.AbstractSensor;
-//import jmri.Sensor;
 
 /**
  * Implement a Sensor via Ecos communications.
@@ -12,8 +11,7 @@ import jmri.implementation.AbstractSensor;
  * it should be the only object that is sending messages for this sensor;
  * more than one Sensor object pointing to a single device is not allowed.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author Daniel Boudreau (C) 2007
+ * @author Kevin Dickerson (C) 2009
  * @version	$Revision$
  */
 public class EcosSensor extends AbstractSensor {
@@ -46,8 +44,10 @@ public class EcosSensor extends AbstractSensor {
         
     public int getObject() { return objectNumber; }
 
-    public void setOwnState(int state) {
-        super.setOwnState(state);
+    EcosReporter reporter = null;
+    
+    public void setReporter(EcosReporter er){
+        reporter = er;
     }
  
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosSensor.class.getName());
