@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20120610-1740-jake on Sun Jun 10 10:40:18 PDT 2012 $Id$-->
-  <decoderIndex version="234">
+  <!--Written by JMRI version 20120702-1723-jake on Mon Jul 02 10:23:30 PDT 2012 $Id$-->
+  <decoderIndex version="236">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -4903,6 +4903,12 @@
         <model model="Titan Steam" numFns="14" numOuts="0" productID="3100" />
         <model model="Titan Articulated Steam" numFns="14" numOuts="0" productID="4100" />
         <model model="Titan Gas Turbine" numFns="14" numOuts="0" productID="5100" />
+        <model model="FX-JTT KiHa52 (Tenshodo)" numFns="14" numOuts="0" productID="1102" />
+        <model model="FX-SD GE Dash-8 40B (Atlas)" numFns="14" numOuts="0" productID="1106" />
+        <model model="FX-SD GP40-2 (Atlas)" numFns="14" numOuts="0" productID="1107" />
+        <model model="FX-SD SD35 (Atlas)" numFns="14" numOuts="0" productID="1108" />
+        <model model="FX-MT MP-15 (Atlas)" numFns="14" numOuts="0" productID="1110" />
+        <model model="FX-DO E7 (Sunset Models)" numFns="14" numOuts="0" productID="1111" />
         <functionlabels>
           <functionlabel num="0" lockable="true">Light</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -8875,6 +8881,17 @@
       </family>
       <family name="Version 1" mfg="Trix Modelleisenbahn" highVersionID="65" lowVersionID="65" comment="Trx Selectrix &amp; DCC decoder" file="Trix_Modelleisenbahn_version_1.xml">
         <model model="Version 1" numOuts="0" numFns="0" lowVersionID="65" />
+      </family>
+      <family name="Trix_Sound_HO" mfg="Trix Modelleisenbahn" type="locomotive" file="Trix_Snd.xml">
+        <model model="Trix_Sound_HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Lights</functionlabel>
+          <functionlabel num="1" lockable="true">Passengers Lights</functionlabel>
+          <functionlabel num="2" lockable="false">Announcement</functionlabel>
+          <functionlabel num="3" lockable="true">Horn</functionlabel>
+          <functionlabel num="4" lockable="false">ABV</functionlabel>
+          <functionlabel num="5" lockable="true">Dimming lights</functionlabel>
+        </functionlabels>
       </family>
       <family name="IntelliSound Module" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_32100.xml">
         <model model="32100">
