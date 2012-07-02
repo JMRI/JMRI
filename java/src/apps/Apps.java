@@ -445,6 +445,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         }
         // Include prefs in Edit menu if not on Mac OS X or not using Aqua Look and Feel
         if (!SystemType.isMacOSX() || !UIManager.getLookAndFeel().isNativeLookAndFeel()) {
+            editMenu.addSeparator();
             editMenu.add(prefsAction);
         }
 
