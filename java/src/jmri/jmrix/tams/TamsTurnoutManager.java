@@ -1,16 +1,7 @@
 // TamsTurnoutManager.java
 
 package jmri.jmrix.tams;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Hashtable;
 import jmri.Turnout;
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.Component;
-import java.util.ResourceBundle;
 
 /**
  * Implement turnout manager for Tams systems.

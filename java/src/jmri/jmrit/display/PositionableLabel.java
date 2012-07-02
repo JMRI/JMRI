@@ -3,7 +3,6 @@ package jmri.jmrit.display;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.ItemPalette;
-import java.awt.FontMetrics;
 import java.awt.Dimension;
 
 import java.awt.Container;
@@ -12,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
 import java.util.ResourceBundle;

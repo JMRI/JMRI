@@ -9,21 +9,11 @@ import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.*;
-import java.awt.dnd.DropTargetListener;
-import java.awt.dnd.DropTargetDragEvent;
-import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetEvent;
 import java.awt.datatransfer.DataFlavor;
 
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import java.util.ArrayList;
 
@@ -32,8 +22,6 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
-import java.awt.dnd.DropTarget;
-
 import jmri.util.datatransfer.RosterEntrySelection;
 
 import jmri.NamedBeanHandle;

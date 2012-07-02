@@ -4,13 +4,10 @@ package jmri.jmrit.display.layoutEditor;
  */
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.RosterEntry;
-import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.AbstractAction;
 import java.awt.event.ActionListener;
 import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
 
 // This is the same name as display.MemoryIcon, but a very
 // separate class. That's not good. Unfortunately, it's too 

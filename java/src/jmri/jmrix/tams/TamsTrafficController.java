@@ -3,7 +3,6 @@
 package jmri.jmrix.tams;
 
 import jmri.CommandStation;
-import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import jmri.jmrix.AbstractMRListener;
