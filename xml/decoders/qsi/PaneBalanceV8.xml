@@ -511,5 +511,10 @@
 		</column>
 		</row>
 		<label label=" "/>
+			<label label="Sets the relative volumes of the two speakers, adjust overall volume on the Volume tab"/>
+			<label label="Please treat the 'Off' in the sliders as '0%' also slider is percent reduction of selected speaker"/>
+			<label label="If silder is at 'Off' read as 0% reduction, ie both speakers are 100% of volume setting as set on Volume tab"/>
+			<label label="If Speaker 1 selected and silder is at '50%', speaker 1 is half the volume as speaker 2 and speaker 2 is as set on Volume tab"/>
+			<label label="If Speaker 2 selected and silder is at '100%', speaker 2 is silent and speaker 1 is as set on Volume tab"/>
 	</column>
 </pane>
