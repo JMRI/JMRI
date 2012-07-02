@@ -2054,7 +2054,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             connectionLog.setLevel(currentLevel);
         } catch (java.lang.NullPointerException ex){
             connectionLog.setLevel(currentLevel);
-            log.error("Exception caught while trying to dicover turnout connectivity\n"  + block.getDisplayName() + " Source " + srcBlock.getDisplayName() + ", dest  " + dstBlock.getDisplayName());
+            if(enableAddRouteLogging)
+                log.error(block.getDisplayName() + " Exception caught while trying to dicover turnout connectivity\nSource " + srcBlock.getDisplayName() + ", dest  " + dstBlock.getDisplayName()+"\n"+ex.toString());
+            return;
         }
         
         if(!connection.isTurnoutConnectivityComplete())
@@ -2070,7 +2072,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             connectionLog.setLevel(currentLevel);
         } catch (java.lang.NullPointerException ex){
             connectionLog.setLevel(currentLevel);
-            log.error("Exception caught while trying to dicover turnout connectivity\n" + block.getDisplayName() + " Source " + srcBlock.getDisplayName() + ", dest  " + dstBlock.getDisplayName());
+            if(enableAddRouteLogging)
+                log.error(block.getDisplayName() + " Exception caught while trying to dicover turnout connectivity\nSource " + srcBlock.getDisplayName() + ", dest  " + dstBlock.getDisplayName()+"\n"+ex.toString());
+            return;
         }
         
         if(!connection.isTurnoutConnectivityComplete())
