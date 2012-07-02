@@ -110,16 +110,16 @@
         	<display item="CV52.21" layout="above" format="hslider"/>
         </row>
         <label label=" "/>
-      </column>
-      <column>
-        <label label="        "/>
-      </column>
-      <column>
         <row>
         	<display item="CV52.22" layout="above" label="" />
         	<display item="CV52.22" layout="above" format="hslider"/>
         </row>
         <label label=" "/>
+      </column>
+      <column>
+        <label label="        "/>
+      </column>
+      <column>
         <row>
         	<display item="CV52.24" layout="above" label="" />
         	<display item="CV52.24" layout="above" format="hslider"/>
@@ -170,16 +170,21 @@
         	<display item="CV52.40" layout="above" format="hslider"/>
         </row>
         <label label=" "/>
-      </column>
-      <column>
-        <label label="        "/>
-      </column>
-      <column>
         <row>
         	<display item="CV52.46" layout="above" label="" />
         	<display item="CV52.46" layout="above" format="hslider"/>
         </row>
         <label label=" "/>
+        <row>
+        	<display item="CV52.50" layout="above" label="" />
+        	<display item="CV52.50" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+      </column>
+      <column>
+        <label label="        "/>
+      </column>
+      <column>
         <row>
         	<display item="CV52.53" layout="above" label="" />
         	<display item="CV52.53" layout="above" format="hslider"/>
@@ -233,6 +238,11 @@
         <row>
         	<display item="CV52.64" layout="above" label="" />
         	<display item="CV52.64" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+        	<display item="CV52.65" layout="above" label="" />
+        	<display item="CV52.65" layout="above" format="hslider"/>
         </row>
         <label label=" "/>
       </column>
