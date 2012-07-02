@@ -9,6 +9,8 @@ import jmri.jmrit.XmlFile;
 import java.io.File;
 import javax.swing.*;
 import java.util.Enumeration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Base class for the core of JMRI applications.
@@ -36,11 +38,19 @@ public abstract class AppsBase {
      * frame is created, invoked in the 
      * applications main() routine.
      */
-    static public void preInit() {
+    static public void preInit(String applicationName) {
         if (!log4JSetUp) initLog4J();
-        
+
+        try {
+            Application.setApplicationName(applicationName);
+        } catch (IllegalAccessException ex) {
+            log.info("Unable to set application name");
+        } catch (IllegalArgumentException ex) {
+            log.info("Unable to set application name");
+        }
+
         //jmri.util.Log4JUtil.initLog4J();
-        log.info(jmri.util.Log4JUtil.startupInfo("Gui3IDE"));
+        log.info(jmri.util.Log4JUtil.startupInfo(applicationName));
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_PKGPROTECT",

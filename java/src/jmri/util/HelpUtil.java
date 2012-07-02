@@ -13,10 +13,17 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.Locale;
 
 import java.net.URL;
+import java.util.EventObject;
+import javax.swing.*;
+import jmri.plaf.macosx.AboutHandler;
+import jmri.plaf.macosx.Application;
+import jmri.swing.AboutDialog;
+import jmri.util.swing.JmriAbstractAction;
 
 /**
  * Common utility methods for working with Java Help.
@@ -80,6 +87,30 @@ public class HelpUtil {
             console.addActionListener(new apps.SystemConsoleAction());
 
             helpMenu.add(new jmri.jmrit.mailreport.ReportAction());
+
+            // Put about dialog in Apple's prefered area on Mac OS X
+            if (SystemType.isMacOSX()) {
+                Application.getApplication().setAboutHandler(new AboutHandler() {
+
+                    @Override
+                    public void handleAbout(EventObject eo) {
+                        new AboutDialog(null, true).setVisible(true);
+                    }
+                });
+            }
+            // Include About in Help menu if not on Mac OS X or not using Aqua Look and Feel
+            if (!SystemType.isMacOSX() || !UIManager.getLookAndFeel().isNativeLookAndFeel()) {
+                helpMenu.addSeparator();
+                JMenuItem about = new JMenuItem(rb.getString("MenuItemAbout") + " " + jmri.Application.getApplicationName());
+                helpMenu.add(about);
+                about.addActionListener(new JmriAbstractAction("About") {
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        new AboutDialog(null, true).setVisible(true);
+                    }
+                });
+            }
         }
         return helpMenu;
     }

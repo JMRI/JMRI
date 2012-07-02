@@ -25,6 +25,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
 
     private static File menuFile = null;
     private static File toolbarFile = null;
+    private static String applicationName = "DecoderPro 3";
 
     public synchronized static File getMenuFile() {
         if (menuFile == null) {
@@ -92,7 +93,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
     public static void main(String args[]) {
         // do processing needed immediately, before
         // we attempt anything else
-        preInit();
+        preInit(applicationName);
         setConfigFilename("DecoderProConfig3.xml", args);
 
         // create the program object
@@ -136,7 +137,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
 
     @Override
     public String getAppName() {
-        return "DecoderPro 3";
+        return applicationName;
     }
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderPro3.class.getName());
 }

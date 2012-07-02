@@ -34,9 +34,11 @@ import java.util.ArrayList;
 
 import java.util.EventObject;
 import javax.swing.*;
+import jmri.plaf.macosx.AboutHandler;
 import jmri.plaf.macosx.Application;
 import jmri.plaf.macosx.PreferencesHandler;
 import jmri.plaf.macosx.QuitHandler;
+import jmri.swing.AboutDialog;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.WindowInterface;
 
