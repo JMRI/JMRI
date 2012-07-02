@@ -110,8 +110,6 @@ public class AboutDialog extends JDialog implements PropertyChangeListener {
             cs.setText(cf);
         }
 
-
-        this.revalidate();
     }
 
     protected JPanel namePane() {
