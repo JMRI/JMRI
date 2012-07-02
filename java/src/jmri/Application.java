@@ -4,7 +4,7 @@ package jmri;
 
 /**
  * A lightweight class that provides a methods to retrieve the current
- * JMRI application name.
+ * JMRI application name and icon.
  * <P>
  * The current name is set via reflection when a given JMRI application
  * is launched.
@@ -27,35 +27,75 @@ package jmri;
  */
 public class Application {
 
-    private static String applicationName = null;
+    private static String name = null;
+    private static String logo = "resources/logo.gif";
+    private static String URL = "http://jmri.org";
 
     /**
-     * Return the current JMRI application name
+     * Return the current JMRI application name.
      * @return String containing JMRI application name or "JMRI" if name has not been set.
      */
     public static String getApplicationName() {
-        if (Application.applicationName == null) {
+        if (Application.name == null) {
             return "JMRI";
         }
-        return Application.applicationName;
+        return Application.name;
     }
 
     /**
-     * Set the current JMRI application name
-     * @param applicationName String containing the JMRI application name
+     * Set the current JMRI application name.
+     * @param name String containing the JMRI application name
      * @throws IllegalAccessException
      * @throws IllegalArgumentException
      */
     public static void setApplicationName(String applicationName) throws IllegalAccessException, IllegalArgumentException {
-        if (Application.applicationName == null) {
+        if (Application.name == null) {
             if (applicationName != null) {
-                Application.applicationName = applicationName;
+                Application.name = applicationName;
             } else {
                 throw new IllegalArgumentException("Application name cannot be null.");
             }
         } else {
             throw new IllegalAccessException("Application name cannot be modified once set.");
         }
+    }
+
+    /**
+     * Return the current JMRI application logo path.
+     * This path is relative to the JMRI application installation path. If the
+     * application does not have its own icon, return the JMRI default icon.
+     * @return String containing the application icon path
+     */
+    public static String getLogo() {
+        return logo;
+    }
+
+    /**
+     * Set the current JMRI application logo path.
+     * @param logo String with the relative path to the JMRI application icon
+     */
+    public static void setLogo(String logo) {
+        if (logo == null) {
+            logo = "resources/logo.gif";
+        }
+        Application.logo = logo;
+    }
+
+    /**
+     * @return the URL
+     */
+    public static String getURL() {
+        return Application.URL;
+    }
+
+    /**
+     * @param URL the URL to set
+     */
+    public static void setURL(String URL) {
+        if (URL ==  null) {
+            URL = "http://jmri.org";
+        }
+        Application.URL = URL;
     }
 
 }

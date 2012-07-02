@@ -17,16 +17,17 @@ import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 
 /**
- * Base class for Jmri applications. <P>
+ * About dialog.
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2010
- * @author Dennis Miller Copyright 2005
- * @author Giorgio Terdina Copyright 2008
- * @author Matthew Harris Copyright (C) 2011
+ * @author Randall Wood Copyright (C) 2012
  * @version $Revision$
  */
 public class AboutDialog extends JDialog implements PropertyChangeListener {
 
+    ConnectionConfig[] connection = {null, null, null, null};
+    protected static ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
+
+    // this should probably be changed to a JmriAbstractAction that opens a JOptionPane with the contents and an OK button instead.
     public AboutDialog(JFrame frame, boolean modal) {
 
         super(frame, modal);
@@ -44,7 +45,6 @@ public class AboutDialog extends JDialog implements PropertyChangeListener {
         this.setLocationRelativeTo(null); // center on screen
         log.debug("End constructor");
     }
-
     // line 4
     JLabel cs4 = new JLabel();
 
@@ -88,7 +88,7 @@ public class AboutDialog extends JDialog implements PropertyChangeListener {
         updateLine(conn, cs);
         pane.add(cs);
     }
-
+    
     protected void updateLine(ConnectionConfig conn, JLabel cs) {
         if (conn.getDisabled()) {
             return;
@@ -115,17 +115,17 @@ public class AboutDialog extends JDialog implements PropertyChangeListener {
     }
 
     protected JPanel namePane() {
-        String logo = "resources/logo.gif";
+        String logo = Application.getLogo();
         JPanel pane = new JPanel();
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         if (log.isDebugEnabled()) {
             log.debug("Fetch main logo: " + logo + " " + getToolkit().getImage(logo));
         }
-        pane.add(new JLabel(new ImageIcon(getToolkit().getImage("resources/logo.gif"), "JMRI logo"), JLabel.CENTER));
-        pane.add(Box.createRigidArea(new Dimension(0,15)));
+        pane.add(new JLabel(new ImageIcon(getToolkit().getImage(logo), "JMRI logo"), JLabel.CENTER));
+        pane.add(Box.createRigidArea(new Dimension(0, 15)));
         pane.add(new JLabel(Application.getApplicationName()));
-        pane.add(new JLabel("http://jmri.org"));
-        pane.add(Box.createRigidArea(new Dimension(0,15)));
+        pane.add(new JLabel(Application.getURL()));
+        pane.add(Box.createRigidArea(new Dimension(0, 15)));
         return pane;
     }
 
@@ -170,9 +170,6 @@ public class AboutDialog extends JDialog implements PropertyChangeListener {
         // c.setAlignmentX(Component.CENTER_ALIGNMENT); // doesn't work
         p.add(c);
     }
-    //int[] connection = {-1,-1,-1,-1};
-    jmri.jmrix.ConnectionConfig[] connection = {null, null, null, null};
-    protected static ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
 
     @Override
     public void propertyChange(PropertyChangeEvent ev) {

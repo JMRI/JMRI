@@ -65,6 +65,9 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         setButtonSpace();
         setJynstrumentSpace();
 
+        jmri.Application.setLogo(logo());
+        jmri.Application.setURL(line2());
+
         // Enable proper snapping of JSliders
         jmri.util.swing.SliderSnap.init();
 
@@ -553,7 +556,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
                                 new Object[]{jmri.Version.name()});
     }
     protected String line2() {
-        return "http://jmri.org/ ";
+        return "http://jmri.org/";
     }
     protected String line3() {
         return " ";
