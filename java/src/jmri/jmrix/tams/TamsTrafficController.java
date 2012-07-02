@@ -138,7 +138,6 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         if(!pollQueue.isEmpty()){
             PollMessage pm = pollQueue.peek();
             if(pm!=null){
-                log.info(pm.getMessage().toString());
                 return pm.getMessage();
             }
         }
