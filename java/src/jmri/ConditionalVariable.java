@@ -215,6 +215,8 @@ public class ConditionalVariable {
         switch (itemType) {
         	case Conditional.TYPE_NONE:
         		break;
+        	case Conditional.ITEM_TYPE_CLOCK:
+        		break;	/* no beans for these, at least that I know of */
             case Conditional.ITEM_TYPE_SENSOR:
                 bean = InstanceManager.sensorManagerInstance().provideSensor(_name);
                 break;
