@@ -520,7 +520,11 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
              }
         if(log.isDebugEnabled()) 
               log.debug("New Slot Mode: " +LnConstants.DEC_MODE(status));
-        network.sendLocoNetMessage(slot.writeMode(status));
+        if(mRefreshTimer!=null) // the refresh timer isn't created until
+                                // after initilization.  We only want to
+                                // modify the slot after the initilization 
+                                // is complete.
+           network.sendLocoNetMessage(slot.writeMode(status));
     }
 
 
