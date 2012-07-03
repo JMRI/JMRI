@@ -210,6 +210,9 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener
     }
     
     public void reply(TamsReply m) {
+        if(m.match("WARNING")){
+            return;
+        }
         if(m.match("L "+address.getNumber())>=0){
             try{
                 String[] lines = m.toString().split(" ");
