@@ -2,6 +2,7 @@
 
 package jmri.util;
 
+import apps.AboutAction;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
 
@@ -103,13 +104,7 @@ public class HelpUtil {
                 helpMenu.addSeparator();
                 JMenuItem about = new JMenuItem(rb.getString("MenuItemAbout") + " " + jmri.Application.getApplicationName());
                 helpMenu.add(about);
-                about.addActionListener(new JmriAbstractAction("About") {
-
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        new AboutDialog(null, true).setVisible(true);
-                    }
-                });
+                about.addActionListener(new AboutAction());
             }
         }
         return helpMenu;
