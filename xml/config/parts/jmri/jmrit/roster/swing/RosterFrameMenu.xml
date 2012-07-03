@@ -87,6 +87,7 @@
         <name xml:lang="fr">Coller</name>
         <mnemonic>p</mnemonic>
     </node>
+    <node>separator</node><!-- separator -->
     <node name="Duplicate Loco">
         <current>copyloco</current>
     </node>
