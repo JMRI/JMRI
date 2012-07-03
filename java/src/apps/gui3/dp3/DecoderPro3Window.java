@@ -2,6 +2,7 @@
 package apps.gui3.dp3;
 
 import java.io.File;
+import javax.swing.JLabel;
 import jmri.Application;
 import jmri.jmrit.roster.swing.RosterFrame;
 
@@ -31,5 +32,12 @@ public class DecoderPro3Window extends RosterFrame {
     @Override
     public void remoteCalls(String[] args) {
         super.remoteCalls(args);
+    }
+
+    @Override
+    protected void statusBar() {
+        super.statusBar();
+        JLabel ver = new JLabel("Version : " + jmri.Version.name());
+        addToStatusBox(ver, null);
     }
 }
