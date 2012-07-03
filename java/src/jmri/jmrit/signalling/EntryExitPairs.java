@@ -1172,11 +1172,15 @@ public class EntryExitPairs implements jmri.Manager{
                 }
                 sml=null;
                 
-                for (int i = 0; i<routeDetails.size(); i++){
+                if(routeDetails==null){
+                    return;
+                }
+                
+                for(LayoutBlock blk : routeDetails){
                     if((getEntryExitType()==FULLINTERLOCK)){
-                        routeDetails.get(i).setUseExtraColor(false);
+                        blk.setUseExtraColor(false);
                     }
-                    routeDetails.get(i).getBlock().removePropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
+                    blk.getBlock().removePropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
                 }
                 
                 if (cancelClear == CLEARROUTE){
@@ -1232,11 +1236,6 @@ public class EntryExitPairs implements jmri.Manager{
                             }
                         }
                     }
-                } else {
-                    for(LayoutBlock blk : routeDetails){
-                        blk.getBlock().removePropertyChangeListener(propertyBlockListener);
-                    }
-                    //Need sort out the method to cancel said route.
                 }
                 setActiveEntryExit(false);
                 setRouteFrom(false);
