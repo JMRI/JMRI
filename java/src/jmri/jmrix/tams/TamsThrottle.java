@@ -44,10 +44,16 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener
         
         //get the status if know of the current loco
         TamsMessage m = new TamsMessage("xL " + address.getNumber());
+        m.setTimeout(10000);
         tc.sendTamsMessage(m, this);
+        
         tc.addPollMessage(m, this);
         
         m = new TamsMessage("xF " + address.getNumber());
+        tc.sendTamsMessage(m, this);
+        tc.addPollMessage(m, this);
+        
+        m = new TamsMessage("xFX " + address.getNumber());
         tc.sendTamsMessage(m, this);
         tc.addPollMessage(m, this);
         
@@ -75,9 +81,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener
         sb.append((f3?"1":"0"));
         sb.append(",");
         sb.append((f4?"1":"0"));
-        log.info(sb.toString());
         TamsMessage m = new TamsMessage(sb.toString());
-        log.info("Send function group 1");
         tc.sendTamsMessage(m, this);
     }
 
@@ -103,7 +107,6 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener
         sb.append((f8?"1":"0"));
         
         TamsMessage m = new TamsMessage(sb.toString());
-        log.info("Send function group 2");
         tc.sendTamsMessage(m, this);
     }
     
@@ -121,7 +124,6 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener
         sb.append((f12?"1":"0"));
         
         TamsMessage m = new TamsMessage(sb.toString());
-        log.info("Send function group 3");
         tc.sendTamsMessage(m, this);
     
     }
@@ -149,15 +151,13 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener
         sb.append(value);
         sb.append(",");
         sb.append(",");
-        sb.append((isForward?"1":"0"));
+        sb.append((isForward?"f":"r"));
         sb.append(",");
         sb.append(",");
         sb.append(",");
         sb.append(",");
-        log.info(sb.toString());
         
         TamsMessage m = new TamsMessage(sb.toString());
-        log.info("Send speed setting");
         tc.sendTamsMessage(m, this);
 
         if (oldSpeed != this.speedSetting)
@@ -187,6 +187,9 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener
         
         m = new TamsMessage("xF " + address.getNumber());
         tc.removePollMessage(m, this);
+        
+        m = new TamsMessage("xFX " + address.getNumber());
+        tc.removePollMessage(m, this);
     }
     
     public void message(TamsMessage m) {
@@ -194,11 +197,185 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener
         // messages are ignored
     }
     
-    public void reply(TamsReply m) {
-        log.info("Tams Reply " + m);
-        if(m.toString().equals("ERROR: no data."))
-            log.info("Loco has no data");
+    /**
+     * Convert a Tams speed integer to a float speed value
+     */
+    protected float floatSpeed(int lSpeed) {
+        if (lSpeed == 0) return 0.f;
+        else if (lSpeed == 1) return -1.f;   // estop
+        else if (super.speedStepMode == SpeedStepMode128)
+          return ( (lSpeed-1)/126.f);
+        else
+          return (int)(lSpeed * 27.f + 0.5) + 1 ;
     }
+    
+    public void reply(TamsReply m) {
+        if(m.match("L "+address.getNumber())>=0){
+            try{
+                String[] lines = m.toString().split(" ");
+                Float newSpeed = new Float ( floatSpeed(Integer.parseInt(lines[2]) ) ) ;
+                super.setSpeedSetting(newSpeed);
+                if(lines[3].equals("1") && !this.f0){
+                    notifyPropertyChangeListener("F0", this.f0, true);
+                    this.f0=true;
+                } else if (lines[3].equals("0") && this.f0){
+                    notifyPropertyChangeListener("F0", this.f0, false);
+                    this.f0=false;
+                }
+                if(lines[4].equals("r") && isForward){
+                    notifyPropertyChangeListener("IsForward", isForward, false);
+                    isForward=false;
+                } else if (lines[4].equals("f") &&  !isForward) {
+                    notifyPropertyChangeListener("IsForward", isForward, true);
+                    isForward=true;
+                }
+                if(lines[5].equals("1") && !this.f1){
+                    notifyPropertyChangeListener("F1", this.f1, true);
+                    this.f1=true;
+                } else if (lines[5].equals("0") && this.f1){
+                    notifyPropertyChangeListener("F1", this.f1, false);
+                    this.f1=false;
+                }
+                if(lines[6].equals("1") && !this.f2){
+                    notifyPropertyChangeListener("F2", this.f2, true);
+                    this.f2=true;
+                } else if (lines[6].equals("0") && this.f2) {
+                    notifyPropertyChangeListener("F2", this.f2, false);
+                    this.f2=false;
+                }
+                if(lines[7].equals("1") && !this.f3){
+                    notifyPropertyChangeListener("F3", this.f3, true);
+                    this.f3=true;
+                } else if (lines[7].equals("0") && this.f3) {
+                    notifyPropertyChangeListener("F3", this.f3, false);
+                    this.f3=false;
+                }
+                if(lines[8].equals("1") && !this.f4){
+                    notifyPropertyChangeListener("F4", this.f4, true);
+                    this.f4=true;
+                } else if (lines[8].equals("0") && this.f4) {
+                    notifyPropertyChangeListener("F4", this.f4, false);
+                    this.f4=false;
+                }
+            } catch (Exception ex){
+                log.error("Error phrasing reply from MC " + ex);
+            }
+        } else if (m.match("FX "+address.getNumber())>=0){
+            String[] lines = m.toString().split(" ");
+            try{
+                if(lines[2].equals("1") && !this.f9){
+                    notifyPropertyChangeListener("F9", this.f9, true);
+                    this.f9=true;
+                } else if (lines[2].equals("0") && this.f9){
+                    notifyPropertyChangeListener("F9", this.f9, false);
+                    this.f9=false;
+                }
+                if(lines[3].equals("1") && !this.f10){
+                    notifyPropertyChangeListener("F10", this.f10, true);
+                    this.f10=true;
+                } else if (lines[3].equals("0") && this.f10){
+                    notifyPropertyChangeListener("F10", this.f10, false);
+                    this.f10=false;
+                }
+                if(lines[4].equals("1") && !this.f11){
+                    notifyPropertyChangeListener("F11", this.f11, true);
+                    this.f11=true;
+                } else if (lines[4].equals("0") && this.f11){
+                    notifyPropertyChangeListener("F11", this.f11, false);
+                    this.f11=false;
+                }
+                if(lines[5].equals("1") && !this.f12){
+                    notifyPropertyChangeListener("F12", this.f12, true);
+                    this.f12=true;
+                } else if (lines[5].equals("0") && this.f12){
+                    notifyPropertyChangeListener("F12", this.f12, false);
+                    this.f12=false;
+                }
+                if(lines[6].equals("1") && !this.f13){
+                    notifyPropertyChangeListener("F13", this.f13, true);
+                    this.f13=true;
+                } else if (lines[6].equals("0") && this.f13){
+                    notifyPropertyChangeListener("F13", this.f13, false);
+                    this.f13=false;
+                }
+                if(lines[7].equals("1") && !this.f14){
+                    notifyPropertyChangeListener("F14", this.f14, true);
+                    this.f14=true;
+                } else if (lines[7].equals("0") && this.f14){
+                    notifyPropertyChangeListener("F14", this.f14, false);
+                    this.f14=false;
+                }
+            } catch (Exception ex){
+                log.error("Error phrasing reply from MC " + ex);
+            }
+        } else if (m.match("F "+address.getNumber())>=0){
+            String[] lines = m.toString().split(" ");
+            try {
+                if(lines[2].equals("1") && !this.f1){
+                    notifyPropertyChangeListener("F1", this.f1, true);
+                    this.f1=true;
+                } else if (lines[2].equals("0") && this.f1){
+                    notifyPropertyChangeListener("F1", this.f1, false);
+                    this.f1=false;
+                }
+                if(lines[3].equals("1") && !this.f2){
+                    notifyPropertyChangeListener("F2", this.f2, true);
+                    this.f2=true;
+                } else if (lines[3].equals("0") && this.f2){
+                    notifyPropertyChangeListener("F2", this.f2, false);
+                    this.f2=false;
+                }
+                if(lines[4].equals("1") && !this.f3){
+                    notifyPropertyChangeListener("F3", this.f3, true);
+                    this.f3=true;
+                } else if (lines[4].equals("0") && this.f3){
+                    notifyPropertyChangeListener("F3", this.f3, false);
+                    this.f3=false;
+                }
+                if(lines[5].equals("1") && !this.f4){
+                    notifyPropertyChangeListener("F4", this.f4, true);
+                    this.f4=true;
+                } else if (lines[5].equals("0") && this.f4){
+                    notifyPropertyChangeListener("F4", this.f4, false);
+                    this.f4=false;
+                }
+                
+                if(lines[6].equals("1") && !this.f5){
+                    notifyPropertyChangeListener("F5", this.f5, true);
+                    this.f5=true;
+                } else if (lines[6].equals("0") && this.f5){
+                    notifyPropertyChangeListener("F5", this.f5, false);
+                    this.f5=false;
+                }
+                if(lines[7].equals("1") && !this.f6){
+                    notifyPropertyChangeListener("F6", this.f6, true);
+                    this.f6=true;
+                } else if (lines[7].equals("0") && this.f6){
+                    notifyPropertyChangeListener("F6", this.f6, false);
+                    this.f6=false;
+                }
+                if(lines[8].equals("1") && !this.f7){
+                    notifyPropertyChangeListener("F7", this.f7, true);
+                    this.f7=true;
+                } else if (lines[8].equals("0") && this.f7){
+                    notifyPropertyChangeListener("F7", this.f7, false);
+                    this.f7=false;
+                }
+                if(lines[9].equals("1") && !this.f8){
+                    notifyPropertyChangeListener("F8", this.f8, true);
+                    this.f8=true;
+                } else if (lines[9].equals("0") && this.f8){
+                    notifyPropertyChangeListener("F8", this.f8, false);
+                    this.f8=false;
+                }
+            } catch (Exception ex){
+                log.error("Error phrasing reply from MC " + ex);
+            }
+        }
+        else if(m.toString().equals("ERROR: no data."))
+            log.debug("Loco has no data");
+    }
+    
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsThrottle.class.getName());
 

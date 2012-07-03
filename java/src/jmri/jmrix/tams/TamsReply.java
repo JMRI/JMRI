@@ -43,6 +43,7 @@ public class TamsReply extends jmri.jmrix.AbstractMRReply {
         if((char)getElement(index++) != ' '){
             s = s + (char)getElement(index);
         }
+        s.trim();
         int val = -1;
         try {
             val = Integer.parseInt(s);
