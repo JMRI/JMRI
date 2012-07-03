@@ -1,6 +1,7 @@
 // AboutDialog.java
 package jmri.swing;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -69,13 +70,17 @@ public class AboutDialog extends JDialog {
 
         // add listerner for Com port updates
         ArrayList connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
-        if (!connList.isEmpty()) {
+        if (connList != null && !connList.isEmpty()) {
             for (Object conn : connList) {
                 if (!((ConnectionConfig) conn).getDisabled()) {
                     pane1.add(new ConnectionLabel((ConnectionConfig) conn));
                 }
             }
             pane1.add(Box.createRigidArea(new Dimension(0, 15)));
+        } else {
+            JLabel error = new JLabel("Unable to read connections list");
+            error.setForeground(Color.red);
+            pane1.add(error);
         }
 
         pane1.add(new JLabel(MessageFormat.format(rb.getString("DefaultVersionCredit"),
