@@ -76,12 +76,12 @@ public class AboutDialog extends JDialog {
                     pane1.add(new ConnectionLabel((ConnectionConfig) conn));
                 }
             }
-            pane1.add(Box.createRigidArea(new Dimension(0, 15)));
         } else {
             JLabel error = new JLabel("Unable to read connections list");
             error.setForeground(Color.red);
             pane1.add(error);
         }
+        pane1.add(Box.createRigidArea(new Dimension(0, 15)));
 
         pane1.add(new JLabel(MessageFormat.format(rb.getString("DefaultVersionCredit"),
                 new Object[]{Version.name()})));
