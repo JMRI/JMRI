@@ -5,7 +5,6 @@ package jmri.jmrit.roster.swing;
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 import javax.swing.JPopupMenu;
-import javax.swing.JMenuItem;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseAdapter;

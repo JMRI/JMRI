@@ -3,7 +3,6 @@
 package jmri.jmrix.tams;
 
 import jmri.CommandStation;
-import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import jmri.jmrix.AbstractMRListener;
@@ -34,7 +33,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         if (log.isDebugEnabled()) log.debug("creating a new TamsTrafficController object");
         // set as command station too
         jmri.InstanceManager.setCommandStation(this);
-        this.setAllowUnexpectedReply(true);
+        this.setAllowUnexpectedReply(false);
     }
 
     public void setAdapterMemo(TamsSystemConnectionMemo memo){
@@ -139,7 +138,6 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         if(!pollQueue.isEmpty()){
             PollMessage pm = pollQueue.peek();
             if(pm!=null){
-                log.info(pm.getMessage().toString());
                 return pm.getMessage();
             }
         }

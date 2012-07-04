@@ -279,7 +279,14 @@
 	    <dt class="im"><a href="http://srcpd.sourceforge.net/"><img src="http://www.der-moba.de/skins/dermoba/wiki.png" height="55" width="78" alt="SRCP"></a></dt>
 	    <dt>SRCP</dt>
 	    <dd><p class="dl">Configure: <a href="SRCP/index.shtml">Connection to SRCP server</a></p></dd>
-
+	    <dt class="im">
+	    </dt>
+	    <dt>TAMS</dt>
+	    <dd><p class="dl">Configure connection to 
+		<a href="tams/index.shtml">TAMS</a> Master Control command station.</p>
+		<p>&nbsp;</p>
+	    </dd>
+        
 	    <dt class="im"><a href="http://www.uhlenbrock.de/">
 	    <IMG src="images/ico-Ur.gif" width="44" height="34" alt="Uhlenbrock"></a></dt>
 	    <dt>Uhlenbrock</dt>

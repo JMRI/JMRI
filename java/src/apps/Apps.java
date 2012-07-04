@@ -34,9 +34,11 @@ import java.util.ArrayList;
 
 import java.util.EventObject;
 import javax.swing.*;
+import jmri.plaf.macosx.AboutHandler;
 import jmri.plaf.macosx.Application;
 import jmri.plaf.macosx.PreferencesHandler;
 import jmri.plaf.macosx.QuitHandler;
+import jmri.swing.AboutDialog;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.WindowInterface;
 
@@ -62,6 +64,9 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         splash(true, true);
         setButtonSpace();
         setJynstrumentSpace();
+
+        jmri.Application.setLogo(logo());
+        jmri.Application.setURL(line2());
 
         // Enable proper snapping of JSliders
         jmri.util.swing.SliderSnap.init();
@@ -440,6 +445,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         }
         // Include prefs in Edit menu if not on Mac OS X or not using Aqua Look and Feel
         if (!SystemType.isMacOSX() || !UIManager.getLookAndFeel().isNativeLookAndFeel()) {
+            editMenu.addSeparator();
             editMenu.add(prefsAction);
         }
 
@@ -551,7 +557,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
                                 new Object[]{jmri.Version.name()});
     }
     protected String line2() {
-        return "http://jmri.org/ ";
+        return "http://jmri.org/";
     }
     protected String line3() {
         return " ";

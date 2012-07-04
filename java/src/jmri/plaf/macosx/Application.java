@@ -1,6 +1,7 @@
 // Application.java
 package jmri.plaf.macosx;
 
+import com.apple.eawt.AppEvent.AboutEvent;
 import com.apple.eawt.AppEvent.PreferencesEvent;
 import com.apple.eawt.AppEvent.QuitEvent;
 import com.apple.eawt.ApplicationEvent;
@@ -51,11 +52,31 @@ public class Application {
         }
     }
 
+    public void setAboutHandler(final AboutHandler handler) {
+        try {
+            if (handler != null) {
+                application.setAboutHandler(new com.apple.eawt.AboutHandler() {
+
+                    @Override
+                    public void handleAbout(AboutEvent ae) {
+                        handler.handleAbout(ae);
+                    }
+                });
+            } else {
+                application.setAboutHandler(null);
+            }
+        } catch (java.lang.NoClassDefFoundError ex) {
+            legacyListener();
+            legacyListener.setAboutHandler(handler);
+        }
+    }
+
     public void setPreferencesHandler(final PreferencesHandler handler) {
         try {
             if (handler != null) {
                 application.setPreferencesHandler(new com.apple.eawt.PreferencesHandler() {
 
+                    @Override
                     public void handlePreferences(PreferencesEvent pe) {
                         handler.handlePreferences(pe);
                     }
@@ -74,6 +95,7 @@ public class Application {
             if (handler != null) {
                 application.setQuitHandler(new com.apple.eawt.QuitHandler() {
 
+                    @Override
                     public void handleQuitRequestWith(QuitEvent qe, QuitResponse qr) {
                         if (handler.handleQuitRequest(qe)) {
                             qr.performQuit();
@@ -102,7 +124,19 @@ public class Application {
     // Support Java 1.5
     private class ApplicationListener implements com.apple.eawt.ApplicationListener {
         private QuitHandler quitHandler = null;
+        private AboutHandler aboutHandler = null;
         private PreferencesHandler preferencesHandler = null;
+
+        protected void setAboutHandler(AboutHandler handler) {
+            aboutHandler = handler;
+            if (handler != null) {
+                application.addAboutMenuItem();
+                application.setEnabledAboutMenu(true);
+            } else {
+                application.setEnabledAboutMenu(false);
+                application.removeAboutMenuItem();
+            }
+        }
 
         protected void setPreferencesHandler(PreferencesHandler handler) {
             preferencesHandler = handler;
@@ -119,34 +153,41 @@ public class Application {
             quitHandler = handler;
         }
 
+        @Override
         public void handleAbout(ApplicationEvent ae) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
+        @Override
         public void handleOpenApplication(ApplicationEvent ae) {
             // Do not take any special activity if a user opens the application
         }
 
+        @Override
         public void handleOpenFile(ApplicationEvent ae) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
+        @Override
         public void handlePreferences(ApplicationEvent ae) {
             if (preferencesHandler != null) {
                 preferencesHandler.handlePreferences(ae);
             }
         }
 
+        @Override
         public void handlePrintFile(ApplicationEvent ae) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
+        @Override
         public void handleQuit(ApplicationEvent ae) {
             if (quitHandler != null) {
                 ae.setHandled(quitHandler.handleQuitRequest(ae));
             }
         }
 
+        @Override
         public void handleReOpenApplication(ApplicationEvent ae) {
             // Do not take any special activity if a user opens the application
         }

@@ -2,6 +2,8 @@
 package apps.gui3.dp3;
 
 import java.io.File;
+import javax.swing.JLabel;
+import jmri.Application;
 import jmri.jmrit.roster.swing.RosterFrame;
 
 /**
@@ -13,14 +15,14 @@ public class DecoderPro3Window extends RosterFrame {
      * Loads Decoder Pro 3 with the default set of menus and toolbars
      */
     public DecoderPro3Window() {
-        super("DecoderPro 3");
+        super(Application.getApplicationName());
     }
 
     /**
      * Loads Decoder Pro 3 with specific menu and toolbar files
      */
     public DecoderPro3Window(File menuFile, File toolbarFile) {
-        super("DecoderPro 3",
+        super(Application.getApplicationName(),
                 menuFile,
                 toolbarFile);
         this.setNewWindowAction(new DecoderPro3Action("newWindow", this));
@@ -30,5 +32,12 @@ public class DecoderPro3Window extends RosterFrame {
     @Override
     public void remoteCalls(String[] args) {
         super.remoteCalls(args);
+    }
+
+    @Override
+    protected void statusBar() {
+        super.statusBar();
+        JLabel ver = new JLabel("Version : " + jmri.Version.name());
+        addToStatusBox(ver, null);
     }
 }

@@ -24,11 +24,11 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
 
     public TamsProgrammer(TamsTrafficController tc) {
     	this.tc = tc;
-        super.SHORT_TIMEOUT = 4000;
+        super.SHORT_TIMEOUT = 6000;
     }
 
     // handle mode
-    protected int _mode = Programmer.PAGEMODE;
+    protected int _mode = Programmer.DIRECTBYTEMODE;
 
     /**
      * Switch to a new programming mode.  Note that NCE can only
@@ -193,7 +193,6 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
     }
 
     public synchronized void reply(TamsReply m) {
-        log.info(m.toString());
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
             if (log.isDebugEnabled()) log.debug("reply in NOTPROGRAMMING state");

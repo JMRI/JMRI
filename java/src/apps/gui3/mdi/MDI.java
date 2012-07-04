@@ -48,7 +48,7 @@ public class MDI extends apps.gui3.Apps3 {
 
         // do processing needed immediately, before
         // we attempt anything else
-        preInit();
+        preInit(nameString);
         
         // create the program object
         MDI app = new MDI();

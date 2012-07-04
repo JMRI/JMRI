@@ -38,10 +38,10 @@ public abstract class Apps3 extends apps.AppsBase {
      * frame is created, invoked in the 
      * applications main() routine.
      */
-    static public void preInit() {
-        nameString = "JMRI GUI3 Demo";
+    static public void preInit(String applicationName) {
+        nameString = applicationName;
         
-        apps.AppsBase.preInit();
+        apps.AppsBase.preInit(applicationName);
         
         // Initialise system console
         // Put this here rather than in apps.AppsBase as this is only relevant
@@ -260,14 +260,23 @@ public abstract class Apps3 extends apps.AppsBase {
 
     protected void initMacOSXMenus() {
         jmri.plaf.macosx.Application macApp = jmri.plaf.macosx.Application.getApplication();
+        macApp.setAboutHandler(new jmri.plaf.macosx.AboutHandler() {
+
+            @Override
+            public void handleAbout(EventObject eo) {
+                new jmri.swing.AboutDialog(null, true).setVisible(true);
+            }
+        });
         macApp.setPreferencesHandler(new jmri.plaf.macosx.PreferencesHandler() {
 
+            @Override
             public void handlePreferences(EventObject eo) {
                 new apps.gui3.TabbedPreferencesAction("Preferences").actionPerformed();
             }
         });
         macApp.setQuitHandler(new jmri.plaf.macosx.QuitHandler() {
 
+            @Override
             public boolean handleQuitRequest(EventObject eo) {
                 handleQuit();
                 return true;

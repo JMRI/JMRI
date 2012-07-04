@@ -70,8 +70,11 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         throttleManager = new jmri.jmrix.ecos.EcosDccThrottleManager(this);
         jmri.InstanceManager.setThrottleManager(throttleManager);
 
-        sensorManager = new jmri.jmrix.ecos.EcosSensorManager(getTrafficController(), getSystemPrefix());
+        sensorManager = new jmri.jmrix.ecos.EcosSensorManager(this);
         jmri.InstanceManager.setSensorManager(sensorManager);
+        
+        reporterManager = new jmri.jmrix.ecos.EcosReporterManager(this);
+        jmri.InstanceManager.setReporterManager(reporterManager);
         
     }
     
@@ -85,6 +88,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private EcosPreferences prefManager;
     private EcosDccThrottleManager throttleManager;
     private EcosPowerManager powerManager;
+    private EcosReporterManager reporterManager;
     
     public EcosLocoAddressManager getLocoAddressManager() { return locoManager; }
     public EcosTurnoutManager getTurnoutManager() { return turnoutManager; }
@@ -92,6 +96,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public EcosPreferences getPreferenceManager() { return prefManager; }
     public EcosDccThrottleManager getThrottleManager() { return throttleManager; }
     public EcosPowerManager getPowerManager() { return powerManager; }
+    public EcosReporterManager getReporterManager() { return reporterManager; }
     
     /** 
      * Tells which managers this provides by class
@@ -106,6 +111,8 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (type.equals(jmri.SensorManager.class))
             return true;
         if (type.equals(jmri.TurnoutManager.class))
+            return true;
+        if (type.equals(jmri.ReporterManager.class))
             return true;
         return false; // nothing, by default
     }
@@ -122,6 +129,8 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return (T)getSensorManager();
         if (T.equals(jmri.TurnoutManager.class))
             return (T)getTurnoutManager();
+        if (T.equals(jmri.ReporterManager.class))
+            return (T)getReporterManager();
         return null; // nothing, by default
     }
     
@@ -134,6 +143,10 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if(turnoutManager!=null){
             turnoutManager.dispose();
             turnoutManager=null;
+        }
+        if(reporterManager!=null){
+            reporterManager.dispose();
+            reporterManager=null;
         }
         
         if (powerManager != null) 

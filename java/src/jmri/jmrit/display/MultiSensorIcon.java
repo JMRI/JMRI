@@ -21,8 +21,6 @@ import jmri.NamedBeanHandle;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map.Entry;
 
 /**
  * An icon to display a status of set of Sensors.
