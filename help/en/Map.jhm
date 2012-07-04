@@ -244,6 +244,8 @@
 
 <mapID target="manual.DP3_2-14_manual.Main_NCE_Clock" url="manual/DP3_2-14_manual/Main_NCE.shtml#Clock"/>
 
+<mapID target="html.hardware.tams.index" url="html/hardware/tams/index.shtml"/>
+
 <mapID target="package.jmri.jmrit.display.ItemPalette" url="package/jmri/jmrit/display/ItemPalette.shtml"/>
 
 <mapID target="package.jmri.jmrix.acela.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml"/>
