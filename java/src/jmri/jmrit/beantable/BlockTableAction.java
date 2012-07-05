@@ -27,6 +27,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JFrame;
 import jmri.Reporter;
+import jmri.Sensor;
 
 import jmri.util.JmriJFrame;
 
@@ -65,6 +66,7 @@ public class BlockTableAction extends AbstractTableAction {
                 speedList.add(_speedMap.get(i));
             }
         }
+        updateSensorList();
     }
 
     public BlockTableAction() { this("Block Table");}
@@ -75,6 +77,7 @@ public class BlockTableAction extends AbstractTableAction {
 	private String severeText = rb.getString("BlockSevere");
 	private String[] curveOptions = {noneText, gradualText, tightText, severeText};
     private java.util.Vector<String> speedList = new java.util.Vector<String>();
+    private String[] sensorList;
 	private DecimalFormat twoDigit = new DecimalFormat("0.00");
     String defaultBlockSpeedText;
     
@@ -89,7 +92,8 @@ public class BlockTableAction extends AbstractTableAction {
 			static public final int LENGTHCOL = DIRECTIONCOL+1;
 			static public final int CURVECOL = LENGTHCOL+1;
             static public final int STATECOL = CURVECOL+1;
-            static public final int REPORTERCOL = STATECOL+1;
+            static public final int SENSORCOL = STATECOL+1;
+            static public final int REPORTERCOL = SENSORCOL+1;
             static public final int CURRENTREPCOL = REPORTERCOL+1;
             static public final int PERMISCOL = CURRENTREPCOL+1;
             static public final int SPEEDCOL = PERMISCOL+1;
@@ -159,9 +163,6 @@ public class BlockTableAction extends AbstractTableAction {
                     boolean val = b.getPermissiveWorking();
                     return Boolean.valueOf(val);
                 }
-                /*else if (col==SPEEDCOL){
-                    return b.getSpeedLimit();
-                }*/
                 else if (col==SPEEDCOL){
                     String speed = b.getBlockSpeed();
                     if(!speedList.contains(speed)){
@@ -179,6 +180,16 @@ public class BlockTableAction extends AbstractTableAction {
                         case (Block.UNKNOWN) : return rb.getString("BlockUnknown");
                         default : return rb.getString("BlockInconsistent");
                     }
+                }
+                else if (col==SENSORCOL){
+                    Sensor sensor = b.getSensor();
+                    JComboBox c = new JComboBox(sensorList);
+                    String name = "";
+                    if(sensor!=null){
+                        name = sensor.getDisplayName();
+                    }
+                    c.setSelectedItem(name);
+                    return c;
                 }
                 else if (col==REPORTERCOL){
                     Reporter r = b.getReporter();
@@ -239,6 +250,11 @@ public class BlockTableAction extends AbstractTableAction {
                     b.setReporter(r);
                     fireTableRowsUpdated(row,row);
                 }
+                else if (col==SENSORCOL){
+                    String strSensor = (String)((JComboBox)value).getSelectedItem();
+                    b.setSensor(strSensor);
+                    return;
+                }
                 else if (col==CURRENTREPCOL){
                     boolean boo = ((Boolean) value).booleanValue();
                     b.setReportingCurrent(boo);
@@ -256,6 +272,7 @@ public class BlockTableAction extends AbstractTableAction {
                 if (col==SPEEDCOL) return rb.getString("BlockSpeedColName");
                 if (col==STATECOL) return rb.getString("BlockState");
                 if (col==REPORTERCOL) return rb.getString("BlockReporter");
+                if (col==SENSORCOL) return rb.getString("BlockSensor");
                 if (col==CURRENTREPCOL) return rb.getString("BlockReporterCurrent");
         		return super.getColumnName(col);
         	}
@@ -266,10 +283,10 @@ public class BlockTableAction extends AbstractTableAction {
 				if (col==CURVECOL) return JComboBox.class;
 				if (col==LENGTHCOL) return String.class;
                 if (col==PERMISCOL) return Boolean.class;
-                //if (col==SPEEDCOL) return String.class;
                 if (col==SPEEDCOL) return JComboBox.class;
                 if (col==STATECOL) return String.class;
                 if (col==REPORTERCOL) return String.class;
+                if (col==SENSORCOL) return JComboBox.class;
                 if (col==CURRENTREPCOL) return Boolean.class;
     			else return super.getColumnClass(col);
 		    }
@@ -282,6 +299,7 @@ public class BlockTableAction extends AbstractTableAction {
                 if (col==SPEEDCOL) return new JTextField(7).getPreferredSize().width;
                 if (col==STATECOL) return new JTextField(8).getPreferredSize().width;
                 if (col==REPORTERCOL) return new JTextField(8).getPreferredSize().width;
+                if (col==SENSORCOL) return new JTextField(8).getPreferredSize().width;
                 if (col==CURRENTREPCOL) return new JTextField(7).getPreferredSize().width;
     			else return super.getPreferredWidth(col);
 		    }
@@ -297,6 +315,7 @@ public class BlockTableAction extends AbstractTableAction {
                 else if (col==SPEEDCOL) return true;
                 else if (col==STATECOL) return false;
                 else if (col==REPORTERCOL) return true;
+                else if (col==SENSORCOL) return true;
                 else if (col==CURRENTREPCOL) return true;
 				else return super.isCellEditable(row,col);
 			}
@@ -305,6 +324,7 @@ public class BlockTableAction extends AbstractTableAction {
 				table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
 				table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
+                jmri.InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
 				super.configureTable(table);
 			}
 			
@@ -319,6 +339,11 @@ public class BlockTableAction extends AbstractTableAction {
 			}
             
             public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if(e.getSource() instanceof jmri.SensorManager){
+                    if(e.getPropertyName().equals("length") || e.getPropertyName().equals("DisplayListName")){
+                        updateSensorList();
+                    }
+                }
                 if (e.getPropertyName().equals("DefaultBlockSpeedChange")){
                     updateSpeedList();
                 } else {
@@ -329,7 +354,31 @@ public class BlockTableAction extends AbstractTableAction {
             protected String getBeanType(){
                 return AbstractTableAction.rbean.getString("BeanNameBlock");
             }
+            
+            synchronized public void dispose() {
+                super.dispose();
+                jmri.InstanceManager.sensorManagerInstance().removePropertyChangeListener(this);
+            }
         };
+    }
+    
+    private void updateSensorList(){
+        String[] nameList = jmri.InstanceManager.sensorManagerInstance().getSystemNameArray();
+        String[] displayList = new String[nameList.length];
+        for(int i = 0; i<nameList.length; i++){
+            NamedBean nBean = jmri.InstanceManager.sensorManagerInstance().getBeanBySystemName(nameList[i]);
+            if (nBean!=null){
+                displayList[i] = nBean.getDisplayName();
+            }
+        }
+        java.util.Arrays.sort(displayList);
+        sensorList = new String[displayList.length+1];
+        sensorList[0] = "";
+        int i = 1;
+        for(String name:displayList){
+            sensorList[i] = name;
+            i++;
+        }
     }
 
     private void updateSpeedList(){

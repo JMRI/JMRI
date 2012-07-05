@@ -112,6 +112,10 @@ public class Block extends jmri.implementation.AbstractNamedBean {
 	static final public int SEVERE = 0x04;
     
     public void setSensor(String pName){
+        if(pName==null || pName.equals("")){
+            setNamedSensor(null);
+            return;
+        }
         if (InstanceManager.sensorManagerInstance()!=null) {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
             if (sensor != null) {
