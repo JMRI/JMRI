@@ -23,6 +23,7 @@ public class NmraNetComponentFactory extends jmri.jmrix.swing.ComponentFactory {
      * Provide a menu with all items attached to this system connection
      */
     public javax.swing.JMenu getMenu() {
+        if (memo.getDisabled()) return null;
         return new NmraNetMenu(memo);
     }
 }

@@ -28,17 +28,13 @@ public class RfidComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     RfidSystemConnectionMemo memo;
 
-    JMenu currentMenu;
-
     public RfidComponentFactory(RfidSystemConnectionMemo memo) {
         this.memo = memo;
     }
 
     public JMenu getMenu() {
         if (memo.getDisabled()) return null;
-        if (currentMenu==null)
-            currentMenu = new RfidMenu(memo);
-        return currentMenu;
+        return new RfidMenu(memo);
     }
 
 }

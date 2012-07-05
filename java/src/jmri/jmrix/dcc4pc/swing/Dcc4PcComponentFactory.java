@@ -19,13 +19,9 @@ public class Dcc4PcComponentFactory extends jmri.jmrix.swing.ComponentFactory {
      * Provide a menu with all items attached to this system connection
      */
 
-    JMenu currentMenu;
-
     public javax.swing.JMenu getMenu() { 
         if (memo.getDisabled()) return null;
-        if (currentMenu==null)
-            currentMenu = new Dcc4PcMenu(memo);
-        return currentMenu;
+        return new Dcc4PcMenu(memo);
     }
 
 }

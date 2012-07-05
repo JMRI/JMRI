@@ -19,15 +19,10 @@ public class TamsComponentFactory extends jmri.jmrix.swing.ComponentFactory {
      * Provide a menu with all items attached to this system connection
      */
 
-    JMenu currentMenu;
-
     public javax.swing.JMenu getMenu() {
         if (memo.getDisabled()) return null;
-        if (currentMenu==null)
-            currentMenu = new TamsMenu(memo);
-        return currentMenu;
+        return new TamsMenu(memo);
     }
-
 }
 
 // TamsComponentFactory.java
