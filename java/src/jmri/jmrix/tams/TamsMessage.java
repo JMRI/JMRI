@@ -53,70 +53,70 @@ public class TamsMessage extends jmri.jmrix.AbstractMRMessage {
 
     static public TamsMessage getReadPagedCV(int cv) { //Rxxx
         TamsMessage m = new TamsMessage("xPTRP " + cv);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+       // m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
         return m;
     }
 
     static public TamsMessage getWritePagedCV(int cv, int val) { //Pxxx xxx
         TamsMessage m = new TamsMessage("xPTWP " + cv + ", " + val);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+      //  m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
         return m;
     }
 
     static public TamsMessage getReadRegister(int reg) { //Vx
         TamsMessage m = new TamsMessage("xPTRR " + reg);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+      //  m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
         return m;
     }
 
     static public TamsMessage getWriteRegister(int reg, int val) { //Sx xxx
         TamsMessage m = new TamsMessage("xPTWR " + reg + ", " + val);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+      //  m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
         return m;
     }
 
     static public TamsMessage getReadDirectByteCV(int cv) { //Rxxx
         TamsMessage m = new TamsMessage("xPTRD " + cv);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+      //  m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
         return m;
     }
 
     static public TamsMessage getWriteDirectByteCV(int cv, int val) { //Pxxx xxx
         TamsMessage m = new TamsMessage("xPTWD " + cv + ", " + val);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+       // m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
         return m;
     }
     
     static public TamsMessage getReadDirectBitCV(int cv) { //Rxxx
         TamsMessage m = new TamsMessage("xPTRB " + cv);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+      //  m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
         return m;
     }
     
     static public TamsMessage getWriteDirectBitCV(int cv, int bit, int val) { //Pxxx xxx
         TamsMessage m = new TamsMessage("xPTWB " + cv + ", " + bit + ", " + val);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+      //  m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
         return m;
     }
     
     static public TamsMessage getWriteOpsModeCVMsg(int adr, int cv, int val) { //Pxxx xxx
         TamsMessage m = new TamsMessage("xPD " + adr + ", " + cv + ", " + val);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+      //  m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
         return m;
     }
     
     static public TamsMessage getWriteOpsModeAccCVMsg(int adr, int cv, int val) { //Pxxx xxx
         TamsMessage m = new TamsMessage("xPA " + adr + ", " + cv + ", " + val);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+      //  m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
         m.setTimeout(TamsProgrammingTimeout);
         return m;
     }
