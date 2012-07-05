@@ -14,6 +14,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.DefaultCellEditor;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
 
 import jmri.jmrix.ecos.EcosLocoAddress;
 import jmri.jmrix.ecos.EcosLocoAddressManager;
@@ -148,32 +149,38 @@ public class EcosLocoTableAction extends AbstractTableAction {
             @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col==COMMENTCOL) {
-                    List<RosterEntry> l;
+                    String ecosObjectNo = ecosObjectIdList.get(row);
                     if (value==null)
                         return;
-                    if (value.equals(" ")){
-                        l = Roster.instance().getEntriesWithAttributeKeyValue(getRosterAttribute(), ecosObjectIdList.get(row));
-                        if(l.size()!=0){
-                            l.get(0).deleteAttribute(getRosterAttribute());
-                            getByEcosObject(ecosObjectIdList.get(row)).setRosterId((String) value);
-                            l.get(0).updateFile();
+                    GlobalRosterEntryComboBox c = (GlobalRosterEntryComboBox) value;
+                    RosterEntry[] l = c.getSelectedRosterEntries();
+                    if (l.length == 0){
+                        List<RosterEntry> r = Roster.instance().getEntriesWithAttributeKeyValue(getRosterAttribute(), ecosObjectNo);
+                        if(r.size()!=0){
+                            r.get(0).deleteAttribute(getRosterAttribute());
+                            getByEcosObject(ecosObjectNo).setRosterId(null);
+                            r.get(0).updateFile();
                         }
-                    } else{
-                        l = Roster.instance().matchingList(null, null, null, null, null, null, (String) value);
-                        for (int i = 0; i < l.size(); i++) {
-                            if ((l.get(i).getAttribute(getRosterAttribute())==null)||(l.get(i).getAttribute(getRosterAttribute()).equals(""))){
-                                l.get(i).putAttribute(getRosterAttribute(), ecosObjectIdList.get(row));
-                                getByEcosObject(ecosObjectIdList.get(row)).setRosterId((String) value);
-                            } else{
-                                value=null;
-                                //return;
-                            }
-                            l.get(i).updateFile();
+                    } else {
+                        if((l[0].getAttribute(getRosterAttribute())!=null) && !l[0].getAttribute(getRosterAttribute()).equals("")){
+                            JOptionPane.showMessageDialog(f, ecosObjectNo +" This roster entry already has an ECOS loco assigned to it ");
+                            log.error(ecosObjectNo +" This roster entry already has an ECOS loco assigned to it ");
+                            return;
                         }
+                        String oldRoster = getByEcosObject(ecosObjectNo).getRosterId();
+                        RosterEntry oldre =null;
+                        if(oldRoster!=null){
+                            oldre = Roster.instance().getEntryForId(oldRoster);
+                            if(oldre!=null)
+                                oldre.deleteAttribute(getRosterAttribute());
+                        }
+                        RosterEntry re = l[0];
+                        re.putAttribute(getRosterAttribute(), ecosObjectNo);
+                        getByEcosObject(ecosObjectNo).setRosterId(re.getId());
+                        re.updateFile();
                     }
-                    fireTableRowsUpdated(row, row);
                     Roster.writeRosterFile();
-
+                    fireTableRowsUpdated(row, row);
                 }  else if (col==ADDTOROSTERCOL) {
                     addToRoster(row, col);
                 } else if (col==STOP){
@@ -187,7 +194,6 @@ public class EcosLocoTableAction extends AbstractTableAction {
              * Note that events will come both from the jmri.jmrix.ecos.EcosLocoAddressManagers and also from the manager
              */
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-                refreshSelections();
                 return true;
             }
             
@@ -231,7 +237,8 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 case COMMENTCOL:
                     return true;
                 case ADDTOROSTERCOL:
-                    if (getValueAt(row, COMMENTCOL)==null)
+                    jmri.jmrix.ecos.EcosLocoAddress b = getByEcosObject(ecosObjectIdList.get(row));
+                    if(b.getRosterId()==null || b.getRosterId().equals(""))
                         return true;
                     else
                         return false;
@@ -242,36 +249,13 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 }
             }
             
-            GlobalRosterEntryComboBox selections;
-    
-            public void setUpCOMMENTCOL(TableColumn Rosterid){
-                selections = new GlobalRosterEntryComboBox();
-                selections.insertItemAt(" ",0);
-                selections.setSelectedIndex(-1);
-                Rosterid.setCellEditor(new DefaultCellEditor(selections));
-                
-                DefaultTableCellRenderer renderer =
-                        new DefaultTableCellRenderer();
-                renderer.setToolTipText("Click for combo box");
-                Rosterid.setCellRenderer(renderer);
-            }
-            
-            public void refreshSelections(){
-                if (selections==null)
-                    return;
-                selections.update();
-                selections.insertItemAt(" ",0);
-                selections.setSelectedIndex(-1);
-                fireTableRowsUpdated(0, getRowCount());
-            }
-        
             @Override
             public int getPreferredWidth(int col) {
                 switch (col) {
                 case SYSNAMECOL:
                     return new JTextField(5).getPreferredSize().width;
                 case COMMENTCOL:
-                    return 75;
+                    return new JTextField(20).getPreferredSize().width;
                 case USERNAMECOL:
                     return new JTextField(20).getPreferredSize().width;
                 case ADDTOROSTERCOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
@@ -289,7 +273,8 @@ public class EcosLocoTableAction extends AbstractTableAction {
             }
     
             public void configureTable(JTable table) {
-                setUpCOMMENTCOL(table.getColumnModel().getColumn(COMMENTCOL));
+                table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
+				table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
                 setColumnToHoldButton(table, ADDTOROSTERCOL, 
                         new JButton("Add to Roster"));
                 if(showLocoMonitor)
@@ -311,7 +296,6 @@ public class EcosLocoTableAction extends AbstractTableAction {
                         if (b!=null) b.removePropertyChangeListener(this);
                     }
                 }
-                selections=null;
             }
             
             public int getRowCount() {
@@ -324,6 +308,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 if (row >= ecosObjectIdList.size()){
                     log.debug("row is greater than list size");
                     return null;
+                    
                 }
                 jmri.jmrix.ecos.EcosLocoAddress b;
                 switch (col) {
@@ -338,17 +323,25 @@ public class EcosLocoTableAction extends AbstractTableAction {
                     return (b!=null) ? b.getEcosLocoAddress() : null;
                 case COMMENTCOL:
                     b = getByEcosObject(ecosObjectIdList.get(row));
+                    RosterEntry re = null;
                     if (b!=null){
-                        if (b.getRosterId()!=null){
-                            return b.getRosterId();
-                        }
+                        re = Roster.instance().getEntryForId(b.getRosterId());
                     }
-                    return (b!=null) ? b.getRosterId() : null;
+                    
+                    GlobalRosterEntryComboBox c = new GlobalRosterEntryComboBox();
+                    c.setNonSelectedItem(" ");
+                    if(re==null){
+                        c.setSelectedIndex(0);
+                    } else {
+                        c.setSelectedItem(re);
+                    }
+                    return c;
                 case DELETECOL:
                     b = getByEcosObject(ecosObjectIdList.get(row));
                     return (b!=null) ? b.getProtocol() : null;
                 case ADDTOROSTERCOL:  //
-                    if (getValueAt(row, COMMENTCOL)==null)
+                    b = getByEcosObject(ecosObjectIdList.get(row));
+                    if(b.getRosterId()==null || b.getRosterId().equals(""))
                         return "Add To Roster";
                     else
                         return " ";

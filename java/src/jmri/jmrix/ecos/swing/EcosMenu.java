@@ -10,7 +10,7 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
  */
 public class EcosMenu extends JMenu{
 
-        public EcosMenu(EcosSystemConnectionMemo memo) {
+    public EcosMenu(EcosSystemConnectionMemo memo) {
         super();
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ecos.EcosBundle");

@@ -33,7 +33,7 @@ public class EcosLocoAddress {
         //if so we add the rosterId to the ecoclocoaddress entry.
         List<RosterEntry> l = Roster.instance().getEntriesWithAttributeKeyValue(rosterAtt, ecosObject);
         //It should be unique
-        if (l.size()==1){
+        if (l.size()>0){
            _rosterId = l.get(0).getId();
         }
     }
