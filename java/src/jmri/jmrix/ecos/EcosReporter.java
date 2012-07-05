@@ -20,12 +20,9 @@ import jmri.IdTag;
  
  public class EcosReporter extends AbstractReporter{
 
-    public EcosReporter(String systemName, String userName, EcosSystemConnectionMemo memo) {  // a human-readable Reporter number must be specified!
+    public EcosReporter(String systemName, String userName) {  // a human-readable Reporter number must be specified!
         super(systemName, userName);  // can't use prefix here, as still in construction
-        this.memo=memo;
      }
-    
-    EcosSystemConnectionMemo memo;
     
 	/**
 	 * Provide an int value for use in scripts, etc.  This will be

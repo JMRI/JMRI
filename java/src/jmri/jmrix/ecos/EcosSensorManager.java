@@ -60,7 +60,6 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                 log.debug("message receieved that is not within the valid Sensor object range");
                 return;
             }
-            String msg = m.toString();
             if (m.isUnsolicited() || m.getReplyType().equals("get")){ //<Event Messages are unsolicited
                 String[] lines = m.getContents();
                 for(int i = 0; i<lines.length; i++){
@@ -175,7 +174,6 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         EcosSensor es;
         int k = 1;
         int result;
-        String sensorSystemName;
         String sensorprefix = getSystemPrefix()+"S:"+object+":";
         for(int port =1; port<=_sport.get(object); port++){
             result = intState & k;

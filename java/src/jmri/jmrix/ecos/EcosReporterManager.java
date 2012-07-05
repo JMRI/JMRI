@@ -28,7 +28,7 @@ public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
     }
 
     public Reporter createNewReporter(String systemName, String userName) {
-        Reporter r = new EcosReporter(systemName, userName, memo);
+        Reporter r = new EcosReporter(systemName, userName);
         register(r);
         return r;
     }
