@@ -39,15 +39,18 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/{
 
     boolean preferencesLoaded = false;
     public boolean getPreferencesLoaded() { return preferencesLoaded; }
-    public void setPreferencesLoaded() { preferencesLoaded=true; }
+    public void setPreferencesLoaded() { 
+        preferencesLoaded=true;
+        firePropertyChange("loaded", null, null);
+    }
     
     ShutDownTask ecosPreferencesShutDownTask = null;
 
-    private static final int ASK = 0x00; // ie always ask the question
+    public static final int ASK = 0x00; // ie always ask the question
     @SuppressWarnings("unused")
-    private static final int NO = 0x01; //ie never do the operation
+    public static final int NO = 0x01; //ie never do the operation
     @SuppressWarnings("unused")
-    private static final int YES = 0x02; //ie always perform the operation
+    public static final int YES = 0x02; //ie always perform the operation
     
     private boolean _changeMade = false;
     

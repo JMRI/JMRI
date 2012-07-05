@@ -580,7 +580,9 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                                     tmploco.setProtocol(getProtocol(lines[i]));
                                 }
                                 register(tmploco);
-                                locoToRoster.addToQueue(tmploco);
+                                if(p.getAddLocoToJMRI()!=EcosPreferences.NO){
+                                    locoToRoster.addToQueue(tmploco);
+                                }
                              }
                         }
                         locoToRoster.processQueue();
@@ -695,10 +697,10 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                     re.deleteAttribute(p.getRosterAttribute());
                     re.writeFile(null, null, null);
                     Roster.writeRosterFile();
-                    if(p.getRemoveLocoFromJMRI()==0x02){
+                    if(p.getRemoveLocoFromJMRI()==EcosPreferences.YES){
                         _roster.removeEntry(re);
                         Roster.writeRosterFile();
-                    } else if (p.getRemoveLocoFromJMRI()==0x00) {
+                    } else if (p.getRemoveLocoFromJMRI()==EcosPreferences.ASK) {
                         final JDialog dialog = new JDialog();
                         dialog.setTitle("Remove Roster Entry From JMRI?");
                         dialog.setLocation(300,200);
@@ -727,7 +729,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                         noButton.addActionListener(new ActionListener(){
                             public void actionPerformed(ActionEvent e) {
                                 if(remember.isSelected()){
-                                    p.setRemoveLocoFromJMRI(0x01);
+                                    p.setRemoveLocoFromJMRI(EcosPreferences.ASK);
                                 }
                                 dialog.dispose();
                             }
@@ -736,7 +738,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                         yesButton.addActionListener(new ActionListener(){
                             public void actionPerformed(ActionEvent e) {
                                 if(remember.isSelected()) {
-                                    p.setRemoveLocoFromJMRI(0x02);
+                                    p.setRemoveLocoFromJMRI(EcosPreferences.YES);
                                 }
                                 setLocoToRoster();
                                 _roster.removeEntry(re);

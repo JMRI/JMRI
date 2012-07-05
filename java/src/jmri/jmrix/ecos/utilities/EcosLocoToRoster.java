@@ -49,6 +49,7 @@ public class EcosLocoToRoster implements EcosListener {
     JFrame frame;
     EcosSystemConnectionMemo adaptermemo;
     EcosPreferences p;
+    boolean suppressFurtherAdditions = false;
 
     public EcosLocoToRoster(EcosSystemConnectionMemo memo){
         adaptermemo =  memo;
@@ -63,16 +64,17 @@ public class EcosLocoToRoster implements EcosListener {
     public void processQueue(){
         if(inProcess)
             return;
+        suppressFurtherAdditions = false;
         inProcess=true;
         Runnable run = new Runnable() {
           public void run() {
             while(locoList.size()!=0){
                 final EcosLocoAddress tmploco=locoList.get(0);
                 waitingForComplete = false;
-                if (p.getAddLocoToJMRI()==0x02){
+                if (p.getAddLocoToJMRI()==EcosPreferences.YES){
                     adaptermemo.getLocoAddressManager().setLocoToRoster();
                     ecosLocoToRoster(tmploco.getEcosObject());
-                } else if(p.getAddLocoToJMRI()==0x00 && tmploco.addToRoster() && (tmploco.getRosterId()==null)){
+                } else if(!suppressFurtherAdditions && tmploco.addToRoster() && (tmploco.getRosterId()==null)){
                     class WindowMaker implements Runnable {
                         EcosLocoAddress ecosObject;
                         WindowMaker(EcosLocoAddress o){
@@ -113,7 +115,8 @@ public class EcosLocoToRoster implements EcosListener {
                                     ecosObject.doNotAddToRoster();
                                     waitingForComplete=true;
                                     if(remember.isSelected()){
-                                        p.setAddLocoToJMRI(0x01);
+                                        suppressFurtherAdditions = false;
+                                        p.setAddLocoToJMRI(EcosPreferences.NO);
                                     }
                                     dialog.dispose();
                                 }
@@ -122,7 +125,7 @@ public class EcosLocoToRoster implements EcosListener {
                             yesButton.addActionListener(new ActionListener(){
                                 public void actionPerformed(ActionEvent e) {
                                     if(remember.isSelected()) {
-                                        p.setAddLocoToJMRI(0x02);
+                                        p.setAddLocoToJMRI(EcosPreferences.YES);
                                     }
                                     ecosLocoToRoster(ecosObject.getEcosObject());
                                     dialog.dispose();
