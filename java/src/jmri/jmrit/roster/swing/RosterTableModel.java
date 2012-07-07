@@ -159,13 +159,20 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
             log.warn("Entry is already open");
             return;
         }
+        String valueToSet = (String) value;
         switch (col) {
-        case IDCOL:         re.setId((String)value); break;
-        case ROADNAMECOL:   re.setRoadName((String)value); break;
-        case ROADNUMBERCOL: re.setRoadNumber((String)value); break;
-        case MFGCOL:        re.setMfg((String)value); break;
-        case MODELCOL:      re.setModel((String)value); break;
-        case OWNERCOL:      re.setOwner((String)value); break;
+        case IDCOL:         if(re.getId().equals(valueToSet)) return;
+                            re.setId(valueToSet); break;
+        case ROADNAMECOL:   if(re.getRoadName().equals(valueToSet)) return;
+                            re.setRoadName(valueToSet); break;
+        case ROADNUMBERCOL: if(re.getRoadNumber().equals(valueToSet)) return;
+                            re.setRoadNumber(valueToSet); break;
+        case MFGCOL:        if(re.getMfg().equals(valueToSet)) return;
+                            re.setMfg(valueToSet); break;
+        case MODELCOL:      if(re.getModel().equals(valueToSet)) return;
+                            re.setModel(valueToSet); break;
+        case OWNERCOL:      if(re.getOwner().equals(valueToSet)) return;
+                            re.setOwner(valueToSet); break;
         default:            log.error("invalid setValueAt column: "+col); return;
         }
         // need to mark as updated
