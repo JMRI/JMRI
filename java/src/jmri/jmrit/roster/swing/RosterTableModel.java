@@ -150,7 +150,7 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
     @Override
     public void setValueAt(Object value, int row, int col) {
         // get roster entry for row
-        RosterEntry re = Roster.instance().getEntry(row);
+        RosterEntry re = Roster.instance().getGroupEntry(rosterGroup, row);
         if (re == null){
         	log.warn("roster entry is null!");
         	return;
