@@ -51,6 +51,16 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
        }
        _leaves.add(new CatalogTreeLeaf(name, path, h));
    }
+    /** Leaves can be used for many-to-many relations
+	*/
+   public void deleteLeaves(String name) {
+       for (int i=0; i<_leaves.size(); i++) {
+           CatalogTreeLeaf leaf = _leaves.get(i);
+           if (name.equals(leaf.getName())) {
+               _leaves.remove(i);
+           }
+       }
+   }
    public void deleteLeaf(String name, String path) {
        for (int i=0; i<_leaves.size(); i++) {
            CatalogTreeLeaf leaf = _leaves.get(i);
@@ -68,6 +78,18 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
            }
        }
        return null;
+   }
+   /** Leaves can be used for many-to-many relations
+	*/
+   public ArrayList <CatalogTreeLeaf> getLeaves(String name) {
+	   ArrayList <CatalogTreeLeaf> leaves = new ArrayList <CatalogTreeLeaf>();
+       for (int i=0; i<_leaves.size(); i++) {
+           CatalogTreeLeaf leaf = _leaves.get(i);
+           if (name.equals(leaf.getName())) {
+        	   leaves.add(leaf);
+           }
+       }
+       return leaves;
    }
    public ArrayList <CatalogTreeLeaf> getLeaves() {
        return _leaves;
