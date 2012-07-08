@@ -448,7 +448,7 @@ public class PrintLocationsAction  extends AbstractAction {
 		}
 	}
 
-	private int characters = 60;
+	private int characters = 70;
 	private String getLocationTypes(Location location){
 		StringBuffer buf = new StringBuffer("\t\t" + rb.getString("TypesServiced") + newLine + "\t\t");
 		int charCount = 0;
@@ -456,25 +456,25 @@ public class PrintLocationsAction  extends AbstractAction {
 		String[] cTypes = CarTypes.instance().getNames();	
 		for (int i =0; i<cTypes.length; i++){
 			if(location.acceptsTypeName(cTypes[i])){
-				buf.append(cTypes[i] + ", ");
 				typeCount++;
 				charCount += cTypes[i].length() +2;
 				if(charCount > characters){
 					buf.append(newLine + "\t\t");
-					charCount = 0;
+					charCount = cTypes[i].length() +2;
 				}
+				buf.append(cTypes[i] + ", ");
 			}
 		}
 		String[] eTypes = EngineTypes.instance().getNames();
 		for (int i =0; i<eTypes.length; i++){
 			if (location.acceptsTypeName(eTypes[i])){
-				buf.append(eTypes[i] + ", ");
 				typeCount++;
 				charCount += eTypes[i].length() +2;
 				if(charCount > characters){
 					buf.append(newLine + "\t\t");
-					charCount = 0;
+					charCount = eTypes[i].length() +2;
 				}
+				buf.append(eTypes[i] + ", ");
 			}
 		}
 		if (buf.length() > 2) buf.setLength(buf.length()-2);	// remove trailing separators
@@ -492,25 +492,25 @@ public class PrintLocationsAction  extends AbstractAction {
 		String[] cTypes = CarTypes.instance().getNames();	
 		for (int i =0; i<cTypes.length; i++){
 			if(track.acceptsTypeName(cTypes[i])){
-				buf.append(cTypes[i] + ", ");
 				typeCount++;
 				charCount += cTypes[i].length() +2;
 				if(charCount > characters){
 					buf.append(newLine + "\t\t");
-					charCount = 0;
+					charCount = cTypes[i].length() +2;
 				}
+				buf.append(cTypes[i] + ", ");
 			}
 		}
 		String[] eTypes = EngineTypes.instance().getNames();
 		for (int i=0; i<eTypes.length; i++){
 			if (track.acceptsTypeName(eTypes[i])){
-				buf.append(eTypes[i] + ", ");
 				typeCount++;
 				charCount += eTypes[i].length() +2;
 				if( charCount > characters){
 					buf.append(newLine + "\t\t");
-					charCount = 0;
+					charCount = eTypes[i].length() +2;
 				}
+				buf.append(eTypes[i] + ", ");
 			}
 		}
 		if (buf.length() > 2) buf.setLength(buf.length()-2);	// remove trailing separators
@@ -530,12 +530,12 @@ public class PrintLocationsAction  extends AbstractAction {
 		String[] roads = CarRoads.instance().getNames();	
 		for (int i=0; i<roads.length; i++){
 			if (track.acceptsRoadName(roads[i])){
-				buf.append(roads[i] +", ");
 				charCount += roads[i].length() +2;
 				if( charCount > characters){
 					buf.append(newLine + "\t\t");
-					charCount = 0;
+					charCount = roads[i].length() +2;
 				}
+				buf.append(roads[i] +", ");
 			}
 		}
 		if (buf.length() > 2) buf.setLength(buf.length()-2);	// remove trailing separators
@@ -558,12 +558,12 @@ public class PrintLocationsAction  extends AbstractAction {
 					if (track.acceptsLoadName(loads.get(j))){
 						if (!serviceLoads.contains(loads.get(j))){
 							serviceLoads.add(loads.get(j));
-							buf.append(loads.get(j) +", ");
 							charCount += loads.get(j).length() +2;
 							if( charCount > characters){
 								buf.append(newLine + "\t\t");
-								charCount = 0;
+								charCount = loads.get(j).length() +2;
 							}
+							buf.append(loads.get(j) +", ");
 						}
 					}
 				}
@@ -599,12 +599,12 @@ public class PrintLocationsAction  extends AbstractAction {
 					log.info("Could not find a train for id: "+ids[i]+" track ("+track.getName()+")");
 					continue;
 				}
-				buf.append(train.getName() +", ");
 				charCount += train.getName().length() +2;
 				if( charCount > characters){
 					buf.append(newLine + "\t\t");
-					charCount = 0;
+					charCount = train.getName().length() +2;
 				}
+				buf.append(train.getName() +", ");
 			}
 		} else {
 			buf = new StringBuffer("\t\t" + rb.getString("RoutesSetOutTrack") + newLine + "\t\t");
@@ -614,12 +614,12 @@ public class PrintLocationsAction  extends AbstractAction {
 					log.info("Could not find a route for id: "+ids[i]+" track ("+track.getName()+")");
 					continue;
 				}
-				buf.append(route.getName() +", ");
 				charCount += route.getName().length() +2;
 				if( charCount > characters){
 					buf.append(newLine + "\t\t");
-					charCount = 0;
+					charCount = route.getName().length() +2;
 				}
+				buf.append(route.getName() +", ");
 			}
 		}
 		if (buf.length() > 2) buf.setLength(buf.length()-2);	// remove trailing separators
@@ -641,12 +641,12 @@ public class PrintLocationsAction  extends AbstractAction {
 					log.info("Could not find a train for id: "+ids[i]+" track ("+track.getName()+")");
 					continue;
 				}
-				buf.append(train.getName() +", ");
 				charCount += train.getName().length() +2;
 				if( charCount > characters){
 					buf.append(newLine + "\t\t");
-					charCount = 0;
+					charCount = train.getName().length() +2;;
 				}
+				buf.append(train.getName() +", ");
 			}
 		} else {
 			buf = new StringBuffer("\t\t" + rb.getString("RoutesPickUpTrack") + newLine + "\t\t");
@@ -656,12 +656,12 @@ public class PrintLocationsAction  extends AbstractAction {
 					log.info("Could not find a route for id: "+ids[i]+" track ("+track.getName()+")");
 					continue;
 				}
-				buf.append(route.getName() +", ");
 				charCount += route.getName().length() +2;
 				if( charCount > characters){
 					buf.append(newLine + "\t\t");
-					charCount = 0;
+					charCount = route.getName().length() +2;
 				}
+				buf.append(route.getName() +", ");
 			}
 		}
 		if (buf.length() > 2) buf.setLength(buf.length()-2);	// remove trailing separators
