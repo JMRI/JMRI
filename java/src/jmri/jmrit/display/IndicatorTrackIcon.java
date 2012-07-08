@@ -282,7 +282,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         }
     }
 
-    private void setStatus(int state) {
+    public void setStatus(int state) {
         if (state==Sensor.ACTIVE) {
             _status = "OccupiedTrack";
         } else if (state==Sensor.INACTIVE) {

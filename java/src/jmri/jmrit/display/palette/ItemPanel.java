@@ -64,6 +64,10 @@ public abstract class ItemPanel extends JPanel {
     protected void removeIconMap(String family) {
     }
     protected void reset() {
+//      _paletteFrame.pack();
+      _paletteFrame.invalidate();
+      invalidate();
+      _paletteFrame.repaint();
     }
     protected void updateFamiliesPanel() {
     }
@@ -78,18 +82,6 @@ public abstract class ItemPanel extends JPanel {
     	return _update;
     }
     
-
-/*
-    static final Hashtable<String, NamedIcon> cloneMap(Hashtable<String, NamedIcon> map) {
-        Hashtable<String, NamedIcon> iconMap = new Hashtable<String, NamedIcon>();
-        Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, NamedIcon> entry = it.next();
-            iconMap.put(entry.getKey(), new NamedIcon(entry.getValue()));
-        }
-        return iconMap;
-    }
-*/
     /******** Default family icon names ********/
     static final String[] TURNOUT = {"TurnoutStateClosed", "TurnoutStateThrown",
                                          "BeanStateInconsistent", "BeanStateUnknown"};

@@ -57,7 +57,7 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
     static HashMap<String, Hashtable<String, Hashtable<String, NamedIcon>>> _iconMaps;
     // for now, special case 4 level maps since IndicatorTO is the only case.
     static HashMap<String, Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>>> _indicatorTOMaps;
-
+    
     /**
     * Store palette icons in preferences file catalogTrees.xml 
     */
@@ -118,8 +118,9 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         return typeNode;
     }
 
-    static void loadIcons() {
+    static public void loadIcons() {
         if (_iconMaps==null) {
+//        	long t = System.currentTimeMillis();
             _iconMaps = new HashMap <String, Hashtable<String, Hashtable<String, NamedIcon>>>();
             _indicatorTOMaps = 
                 new HashMap<String, Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>>>();
@@ -127,6 +128,7 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
             if (!loadSavedIcons()) {
                 loadDefaultIcons();
             }
+//            System.out.println("Palette icons loaded in "+ (System.currentTimeMillis()-t)+ " milliseconds.");
         }
     }
 
@@ -171,6 +173,7 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
             CatalogTreeNode famNode = ee.nextElement();
             String name = (String)famNode.getUserObject();
             familyMap.put(name, loadFamilyMap(famNode));
+            Thread.yield();
         }
         return familyMap;
     }
@@ -196,7 +199,8 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
                 h = Math.max(h, icon.getIconHeight());
                 iconMap.put(iconName, icon);
                 if (log.isDebugEnabled()) log.debug("Add "+iconName+" icon to family "+familyName);
-            }
+                Thread.yield();
+           }
             familyMap.put(familyName, iconMap); 
         }
         return familyMap;
@@ -231,6 +235,7 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
                     if (log.isDebugEnabled()) log.debug("Add "+familyMap.size()+
                                                         " families to item type "+typeName+" to _iconMaps.");
                 }
+                Thread.yield();
             }
         } catch (org.jdom.JDOMException e) {
             log.error("error reading file \""+file.getName()+"\" due to: "+e);
@@ -288,6 +293,7 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
 
     public ItemPalette(String title, Editor editor) {
         super(title, false, false);
+//        long t = System.currentTimeMillis();
         loadIcons();
         addWindowListener(new java.awt.event.WindowAdapter() {
                 Editor editor;
@@ -396,7 +402,8 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         add(_tabPane, BorderLayout.CENTER);
         setLocation(10,10);               
         pack();
-    }
+//        System.out.println("Palette built in "+ (System.currentTimeMillis()-t)+ " milliseconds.");
+   }
 
     private void makeMenus(Editor editor) {
         JMenuBar menuBar = new JMenuBar();

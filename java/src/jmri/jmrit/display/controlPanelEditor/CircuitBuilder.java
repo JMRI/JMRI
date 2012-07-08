@@ -1,6 +1,7 @@
 package jmri.jmrit.display.controlPanelEditor;
 
 import jmri.InstanceManager;
+import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 
 import jmri.jmrit.display.*;
@@ -12,11 +13,8 @@ import java.awt.*;
 import java.awt.event.*;
 //import java.awt.event.KeyEvent;
 
-import java.awt.geom.Rectangle2D;
-
-import java.awt.dnd.DropTargetListener;
-
 import java.util.*;
+import java.util.List;
 import java.util.Map.Entry;
 
 import javax.swing.*;
@@ -26,6 +24,7 @@ import jmri.NamedBeanHandle;
 //import jmri.jmrit.catalog.NamedIcon;
 
 import jmri.jmrit.logix.*;
+import jmri.util.JmriJFrame;
 
 /**
  * <P>
@@ -33,7 +32,7 @@ import jmri.jmrit.logix.*;
  * 
  */
 
-public class CircuitBuilder extends ControlPanelEditor implements DropTargetListener {
+public class CircuitBuilder  {
 
     static int STRUT_SIZE = 10;
 
@@ -61,11 +60,17 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
     // list of OBlocks whose portal icons are misplaced
     private ArrayList<OBlock> _portalMisplacedBlock;
     
+    protected ArrayList <PortalIcon> _portalIcons = new ArrayList<PortalIcon>();
+    
     // map of PortalIcons by portal name
     private Hashtable<String, PortalIcon> _portalIconMap;
     
+    // map of Portals by portal name
+    private Hashtable<String, Portal> _portalMap;
+    
     // OBlock list to open edit frames 
     private PickListModel _oblockModel;
+    private boolean hasOBlocks = false;
 
     // "Editing Frames" - Called from menu in Main Frame
     private EditCircuitFrame _editCircuitFrame;
@@ -79,6 +84,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
     private JTextField _userNameBox = new JTextField();
     private OBlock  _currentBlock;
     private JDialog _dialog;
+    protected ControlPanelEditor _editor;
 
     public final static ResourceBundle rbcp = ControlPanelEditor.rbcp;
     public final static Color _editGroupColor = new Color(150, 150, 255);
@@ -88,27 +94,15 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
     /******************************************************************/
 
     public CircuitBuilder() {
-        _menuBar = new JMenuBar();
-        if (log.isDebugEnabled()) log.debug("CircuitBuilder ctor width= "+getSize().width);
+//        _menuBar = new JMenuBar();
+        log.error("CircuitBuilder ctor requires an Editor class");
     }
 
-    public CircuitBuilder(String name) {
-        super(name);
-        if (log.isDebugEnabled()) log.debug("CircuitBuilder ctor "+name);
+    public CircuitBuilder(ControlPanelEditor ed) {
+         _editor = ed;
     }
 
-    // Do the things needed by ChangeView
-    protected void init(String name) {
-        setJMenuBar(_menuBar);
-
-        super.setTargetPanel(null, null);
-        makeDataFlavors();
-
-        super.setDefaultToolTip(new ToolTip(null,0,0,new Font("Serif", Font.PLAIN, 12),
-                                                     Color.black, new Color(255, 250, 210), Color.black));
-        // register the resulting panel for later configuration
-        InstanceManager.configureManagerInstance().registerUser(this);
-
+    protected JMenu makeMenu() {
         _circuitMap = new Hashtable<OBlock, ArrayList<Positionable>>();
         OBlockManager manager = InstanceManager.oBlockManagerInstance();
         String[] sysNames = manager.getSystemNameArray();
@@ -119,65 +113,18 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
 
         // make menus
         checkCircuits();
-        _todoMenu =  new JMenu(rbcp.getString("MenuToDo"));
-        _menuBar.add(_todoMenu, 0);
+        _todoMenu =  new JMenu(rbcp.getString("circuitErrorsItem"));
         makeToDoMenu();
-        _circuitMenu = new JMenu(rbcp.getString("MenuCircuit"));
-        _menuBar.add(_circuitMenu, 0);
-        makeIconMenu();
-        makeZoomMenu();
-        makeOptionMenu();
+        _circuitMenu = new JMenu(rbcp.getString("CircuitBuilder"));
         makeCircuitMenu();
-        makeEditMenu();
-        makeFileMenu();
-
-        addHelpMenu("package.jmri.jmrit.display.CircuitBuilder", true);
-        pack();
-        setVisible(true);
-    }
-
-    /**
-    * Second init needed because changeView() must call init(String name) before contents
-    * are transferred to this editor. 
-    */
-    protected void init() {
-        removeWindowListener(getWindowListeners()[0]);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                closeBuilder();
-            }
-        });
-        checkCircuits();
-        makeToDoMenu();
-        makeCircuitMenu();
-    }
-
-    private void closeBuilder() {
-        if (_editPathsFrame!=null) {
-            _editPathsFrame.closingEvent();
-            _editPathsFrame = null;
-        }
-        if (_editCircuitFrame!=null) {
-           _editCircuitFrame.closingEvent();
-           _editCircuitFrame = null;
-        }
-        if (_editPortalFrame!=null) {
-            _editPortalFrame.closingEvent();
-            _editPortalFrame = null;
-        }
-        hidePortalIcons();
-        if (_convertBlock.size()>0) {
-            JOptionPane.showMessageDialog(this,
-                    rbcp.getString("cantSaveIcon"), rb.getString("warnTitle"),
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        }
+        return _circuitMenu;
     }
         
     /**
     * Add icon 'pos' to circuit 'block'
     */
     private void addIcon(OBlock block, Positionable pos) {
-        ArrayList<Positionable> icons = _circuitMap.get(block);
+    	ArrayList<Positionable> icons = _circuitMap.get(block);
         if (icons==null) {
             icons = new ArrayList<Positionable>();
         }
@@ -214,7 +161,11 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                 blockNeeds.add(mi);                                                  
             }
         } else {
-            blockNeeds.add(new JMenuItem(rbcp.getString("circuitsHaveIcons")));
+        	if (hasOBlocks) {
+        		blockNeeds.add(new JMenuItem(rbcp.getString("circuitsHaveIcons")));
+        	} else {
+        		blockNeeds.add(new JMenuItem(rbcp.getString("noTrackCircuits")));        		
+        	}
         }
 
         blockNeeds = new JMenu(rbcp.getString("blocksNeedConversionItem"));
@@ -229,18 +180,22 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                 blockNeeds.add(mi);                                                  
             }
         } else {
-            blockNeeds.add(new JMenuItem(rbcp.getString("circuitIconsConverted")));
+        	if (hasOBlocks) {
+                blockNeeds.add(new JMenuItem(rbcp.getString("circuitIconsConverted")));
+        	} else {
+        		blockNeeds.add(new JMenuItem(rbcp.getString("noTrackCircuits")));        		
+        	}
         }
         JMenuItem iconNeeds;
         if (_unconvertedTrack.size()>0) {
             iconNeeds = new JMenuItem(rbcp.getString("iconsNeedConversionItem"));
             iconNeeds.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
-                    _selectionGroup = new ArrayList<Positionable>();
+                	ArrayList<Positionable> group = new ArrayList<Positionable>();
                     for (int i=0; i<_unconvertedTrack.size(); i++) {
-                        _selectionGroup.add(_unconvertedTrack.get(i));
+                    	group.add(_unconvertedTrack.get(i));
                     }
-                    repaint();
+                    _editor.setSelectionGroup(group);
                 }
              });
         } else {
@@ -252,15 +207,19 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             iconNeeds = new JMenuItem(rbcp.getString("iconsNeedsBlocksItem"));
             iconNeeds.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
-                    _selectionGroup = new ArrayList<Positionable>();
+                	ArrayList<Positionable> group = new ArrayList<Positionable>();
                     for (int i=0; i<_darkTrack.size(); i++) {
-                        _selectionGroup.add(_darkTrack.get(i));
+                    	group.add(_darkTrack.get(i));
                     }
-                    repaint();
+                    _editor.setSelectionGroup(group);
                 }
              });
         } else {
-            iconNeeds = new JMenuItem(rbcp.getString("IconsHaveCircuits"));
+        	if (hasOBlocks) {
+                iconNeeds = new JMenuItem(rbcp.getString("IconsHaveCircuits"));
+        	} else {
+        		iconNeeds = new JMenuItem(rbcp.getString("noTrackCircuits"));        		
+        	}
         }
         _todoMenu.add(iconNeeds);
 
@@ -282,7 +241,11 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                 blockNeeds.add(mi);                                                  
             }
         } else {
-            blockNeeds.add(new JMenuItem(rbcp.getString("portalsInPlace")));
+        	if (hasOBlocks) {
+                blockNeeds.add(new JMenuItem(rbcp.getString("portalsInPlace")));
+        	} else {
+        		blockNeeds.add(new JMenuItem(rbcp.getString("noTrackCircuits")));        		
+        	}
         }
 
         JMenuItem pError = new JMenuItem(rbcp.getString("CheckPortalPaths"));
@@ -304,7 +267,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         }
         if (!WarrantTableAction.showPathPortalErrors()) {
 	        JOptionPane.showMessageDialog(_editCircuitFrame,
-                    rbcp.getString("blocksEtcOK"), rb.getString("OK"),
+                    rbcp.getString("blocksEtcOK"), Editor.rb.getString("OK"),
 					javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -349,33 +312,8 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             editPortalsItem.add(new JMenuItem(rbcp.getString("noCircuitsItem")));
             editCircuitPathsItem.add(new JMenuItem(rbcp.getString("noCircuitsItem")));
         }
-    }
-    
-    private void makeFileMenu() {
-        _fileMenu = new JMenu(rb.getString("MenuFile"));
-        _menuBar.add(_fileMenu, 0);
-        /*
-        _fileMenu.add(new jmri.jmrit.display.NewPanelAction(rb.getString("MenuItemNew")));
-
-        _fileMenu.add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStore")));
-        */
-        JMenuItem editItem = new JMenuItem(rb.getString("CPEView"));
-        _fileMenu.add(editItem);
-        editItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-                    closeBuilder();
-                    changeView("jmri.jmrit.display.controlPanelEditor.ControlPanelEditor");
-                }
-            });
-    }
-    
-    private void hidePortalIcons() {
-        java.util.List<Positionable> content = getContents();
-        for (int i=0; i<content.size(); i++) {
-            if (content.get(i) instanceof PortalIcon) {
-                ((PortalIcon)content.get(i)).setStatus(PortalIcon.HIDDEN);
-            }
-        }
+        
+        _circuitMenu.add(_todoMenu);
     }
 
     /**************** Set up editing Frames *****************/
@@ -385,9 +323,11 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             addCircuitDialog();
             if (_currentBlock!=null) {
                 if (_editCircuitFrame==null) {
-                    _selectionGroup = null;
-                    _currentSelection = null;
-                    disableMenus();
+                    checkCircuits();
+                	_editor.setSelectionGroup(null);
+                    _editor.disableMenus();
+                    _editor.setSelectionGroupColor(_editGroupColor);
+                    _editor.setHighlightColor(_editGroupColor);
                     _editCircuitFrame = new EditCircuitFrame(rbcp.getString("newCircuitItem"), this, _currentBlock);
                 }
             }
@@ -398,8 +338,11 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         if (editingOK()) {
             editCircuitDialog(title);
             if (_currentBlock!=null) {
-                setSelectionGroup(_currentBlock, false);
-                disableMenus();
+                 checkCircuits();
+                 makeSelectionGroup(_currentBlock, null);
+                _editor.disableMenus();
+                _editor.setSelectionGroupColor(_editGroupColor);
+                _editor.setHighlightColor(_editGroupColor);
                 _editCircuitFrame = new EditCircuitFrame(rbcp.getString("OpenCircuitItem"), this, _currentBlock);
             }
         }
@@ -409,8 +352,9 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         if (editingOK()) {
             _currentBlock = InstanceManager.oBlockManagerInstance().getBySystemName(sysName);
             if (_currentBlock!=null) {
-                setSelectionGroup(_currentBlock, false);
-                disableMenus();
+                checkCircuits();
+                makeSelectionGroup(_currentBlock, null);
+                _editor.disableMenus();
                 _editCircuitFrame = new EditCircuitFrame(rbcp.getString("OpenCircuitItem"), this, _currentBlock);
             }
         }
@@ -420,16 +364,14 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         if (editingOK()) {
             editCircuitDialog(title);
             if (_currentBlock!=null) {
-                setSelectionGroup(_currentBlock, true);
+                checkCircuits();
                 // check icons to be indicator type
-                _circuitIcons = _circuitMap.get(_currentBlock);
-                if (!iconsConverted()) {
-                    _circuitIcons = null;
-                    _selectionGroup = null;
-                } else {
-                    disableMenus();
-                    _selectionGroup = null;
-                    _editPortalFrame = new EditPortalFrame(rbcp.getString("OpenPortalTitle"), this, _currentBlock);
+                if (iconsConverted(_circuitMap.get(_currentBlock))) {
+                    makeSelectionGroup(_currentBlock, PortalIcon.BLOCK);
+                	_editor.disableMenus();
+                    _editor.setSelectionGroupColor(_editGroupColor);
+                    _editor.setHighlightColor(_highlightColor);
+                   _editPortalFrame = new EditPortalFrame(rbcp.getString("OpenPortalTitle"), this, _currentBlock);
                 }
             }
 
@@ -440,15 +382,15 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         if (editingOK()) {
             _currentBlock = InstanceManager.oBlockManagerInstance().getBySystemName(sysName);
             if (_currentBlock!=null) {
-                setSelectionGroup(_currentBlock, true);
+                checkCircuits();
                 // check icons to be indicator type
                 _circuitIcons = _circuitMap.get(_currentBlock);
-                if (!iconsConverted()) {
-                    _selectionGroup = null;
-                    _circuitIcons = null;
-                } else {
-                    disableMenus();
-                    _editPortalFrame = new EditPortalFrame(rbcp.getString("OpenPortalTitle"), this, _currentBlock);
+                if (iconsConverted(_circuitMap.get(_currentBlock))) {
+                    makeSelectionGroup(_currentBlock, PortalIcon.BLOCK);
+                	_editor.disableMenus();
+                    _editor.setSelectionGroupColor(_editGroupColor);
+                    _editor.setHighlightColor(_highlightColor);
+                   _editPortalFrame = new EditPortalFrame(rbcp.getString("OpenPortalTitle"), this, _currentBlock);
                 }
             }
         }
@@ -458,20 +400,38 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         if (editingOK()) {
             editCircuitDialog(title);
             if (_currentBlock!=null) {
-                setSelectionGroup(_currentBlock, true);
+                checkCircuits();
                 // check icons to be indicator type
                 _circuitIcons = _circuitMap.get(_currentBlock);
-                if (!iconsConverted()) {
-                    _selectionGroup = null;
-                    _circuitIcons = null;
-                } else {
-                    _selectionGroup = null;
+                if (iconsConverted(_circuitMap.get(_currentBlock))) {
+                    makeSelectionGroup(_currentBlock, PortalIcon.BLOCK);
                     _currentBlock.setState(OBlock.UNOCCUPIED);
+                    // A temporary path "TEST_PATH" is used to display the icons representing a path
                     _currentBlock.allocate(EditCircuitPaths.TEST_PATH);
-                    disableMenus();
+                    _editor.disableMenus();
+                    _editor.setSelectionGroupColor(_editGroupColor);
+                    _editor.setHighlightColor(_editGroupColor);
                     _editPathsFrame = new EditCircuitPaths(rbcp.getString("OpenPathTitle"), this, _currentBlock);
                 }
             }
+        }
+    }
+
+    /*
+    private void addPortalIcons() {
+        Iterator<PortalIcon> it = _portalIcons.iterator();
+        while (it.hasNext()) {
+         	PortalIcon pi = it.next();
+         	pi.setStatus(PortalIcon.HIDDEN);
+           	_editor.putItem(pi);
+        }    	
+    }
+    */
+
+    private void removePortalIcons() {
+        Iterator<PortalIcon> it = _portalIcons.iterator();
+        while (it.hasNext()) {
+           	_editor.removeFromContents(it.next());
         }
     }
 
@@ -479,7 +439,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         if (_editCircuitFrame!=null || _editPathsFrame!=null || _editPortalFrame!=null) {
 			// Already editing a circuit, ask for completion of that edit
 	        JOptionPane.showMessageDialog(_editCircuitFrame,
-                    rbcp.getString("AlreadyEditing"), rb.getString("errorTitle"),
+                    rbcp.getString("AlreadyEditing"), Editor.rb.getString("errorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
             if (_editPathsFrame!=null) {
                 _editPathsFrame.toFront();
@@ -496,28 +456,13 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         return true;
     }
 
-    private void disableMenus() {
-        _iconMenu.setEnabled(false);
-        _zoomMenu.setEnabled(false);
-        _optionMenu.setEnabled(false);
-        _editMenu.setEnabled(false);
-        _fileMenu.setEnabled(false);
-    }
-    private void enableMenus() {
-        _iconMenu.setEnabled(true);
-        _zoomMenu.setEnabled(true);
-        _optionMenu.setEnabled(true);
-        _editMenu.setEnabled(true);
-        _fileMenu.setEnabled(true);
-    }
-
     /**
     * Create a new OBlock
     * Used by New to set up _editCircuitFrame
     * Sets _currentBlock to created new OBlock
     */
     private void addCircuitDialog() {
-        _dialog = new JDialog(this, rbcp.getString("TitleCircuitDialog"), true);
+        _dialog = new JDialog(_editor, rbcp.getString("TitleCircuitDialog"), true);
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout(10,10));
         JPanel mainPanel = new JPanel();
@@ -534,7 +479,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         mainPanel.add(makeDoneButtonPanel(true));
         panel.add(mainPanel);
         _dialog.getContentPane().add(panel);
-        _dialog.setLocation(getLocation().x+100, getLocation().y+100);
+        _dialog.setLocation(_editor.getLocation().x+100, _editor.getLocation().y+100);
         _dialog.pack();
         _dialog.setVisible(true);
     }
@@ -545,7 +490,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
     * Sets _currentBlock to chosen OBlock or null if none selected
     */
     private void editCircuitDialog(String title) {
-        _dialog = new JDialog(this, rbcp.getString(title), true);
+        _dialog = new JDialog(_editor, rbcp.getString(title), true);
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout(10,10));
         JPanel mainPanel = new JPanel();
@@ -563,7 +508,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         mainPanel.add(makeDoneButtonPanel(false));
         panel.add(mainPanel);
         _dialog.getContentPane().add(panel);
-        _dialog.setLocation(getLocation().x+100, getLocation().y+100);
+        _dialog.setLocation(_editor.getLocation().x+100, _editor.getLocation().y+100);
         _dialog.pack();
         _dialog.setVisible(true);
     }
@@ -581,9 +526,9 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         c.gridx = 0;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.EAST;
-        p.add(new JLabel(rb.getString("SystemName")), c);
+        p.add(new JLabel(Editor.rb.getString("SystemName")), c);
         c.gridy = 1;
-        p.add(new JLabel(rb.getString("UserName")),c);
+        p.add(new JLabel(Editor.rb.getString("UserName")),c);
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.WEST;
@@ -646,7 +591,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             if (_currentBlock!=null) {
                 return true;
             } else {
-                int result = JOptionPane.showConfirmDialog(this, java.text.MessageFormat.format(
+                int result = JOptionPane.showConfirmDialog(_editor, java.text.MessageFormat.format(
                                 rbcp.getString("blockExists"), sysname), 
                                 rbcp.getString("AskTitle"), JOptionPane.YES_NO_OPTION, 
                                 JOptionPane.QUESTION_MESSAGE);
@@ -655,7 +600,8 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                     if (_currentBlock==null) {
                         return false;
                     }
-                    setSelectionGroup(_currentBlock, false);
+                    checkCircuits();
+                    _editor.setSelectionGroup(_circuitMap.get(_currentBlock));
                     _editCircuitFrame = new EditCircuitFrame(rbcp.getString("OpenCircuitItem"), this, _currentBlock);
                     return true;
                 }            }
@@ -670,7 +616,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
            _currentBlock = (OBlock)_oblockModel.getBeanAt(row);
            return true;
         } else {
-            JOptionPane.showMessageDialog(this, rbcp.getString("selectOBlock"), 
+            JOptionPane.showMessageDialog(_editor, rbcp.getString("selectOBlock"), 
                             rbcp.getString("NeedDataTitle"), JOptionPane.INFORMATION_MESSAGE);
         }
         _currentBlock = null;
@@ -683,19 +629,26 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
     /**
     * Update block data in menus
     */
-    protected void closeCircuitFrame(OBlock block) {
+    protected void checkCircuitFrame(OBlock block) {
         if (block!=null) {
-            setIconGroup(block);
+        	java.util.List<Positionable> group = _editor.getSelectionGroup();
+            // check icons to be indicator type
+            iconsConverted(group);
+            setIconGroup(block, group);
         }
+        closeCircuitFrame();
+    }
+
+    protected void closeCircuitFrame() {
         _editCircuitFrame = null;
-        closeEditFrame();
+        closeCircuitBuilder();
     }
 
     /**
     *  Edit frame closing, set block's icons
     */
-    private void setIconGroup(OBlock block) {
-        ArrayList<Positionable> oldIcons = _circuitMap.get(block);
+    private void setIconGroup(OBlock block, java.util.List<Positionable> selections) {
+    	java.util.List<Positionable> oldIcons = _circuitMap.get(block);
         if (oldIcons!=null) {
             for (int i=0; i<oldIcons.size(); i++) {
                 Positionable pos = oldIcons.get(i);
@@ -705,15 +658,15 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                 _iconMap.remove(pos);
             }
         }
-        // the _selectionGroup for all edit frames is full collection of icons
+        // the selectionGroup for all edit frames is full collection of icons
         // comprising the block.  Gather them and store in the block's hashMap
         ArrayList<Positionable> icons = new ArrayList<Positionable>();
-        if (_selectionGroup!=null) {
-            if (log.isDebugEnabled()) log.debug("setIconGroup: _selectionGroup has "+
-                                                _selectionGroup.size()+" icons.");
+        if (selections!=null) {
+            if (log.isDebugEnabled()) log.debug("setIconGroup: selectionGroup has "+
+            		selections.size()+" icons.");
             NamedBeanHandle<OBlock> handle = new NamedBeanHandle<OBlock>(block.getSystemName(), block);
-            for (int i=0; i<_selectionGroup.size(); i++) {
-                Positionable pos = _selectionGroup.get(i);
+            for (int i=0; i<selections.size(); i++) {
+                Positionable pos = selections.get(i);
                 if (pos instanceof IndicatorTrack) {
                     ((IndicatorTrack)pos).setOccBlockHandle(handle);
                 }
@@ -727,8 +680,6 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                     _iconMap.put(icon, block);
                 }
             }
-        } else {
-            if (log.isDebugEnabled()) log.debug("setIconGroup: _selectionGroup is null.");
         }
         _circuitMap.put(block, icons);
         if (log.isDebugEnabled()) log.debug("setIconGroup: block "+block.getDisplayName()+
@@ -738,26 +689,22 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
     protected void closePathFrame(OBlock block) {
         _currentBlock.deAllocate(null);
         _editPathsFrame = null;
-        closeEditFrame();
+        closeCircuitBuilder();
     }
 
     protected void closePortalFrame(OBlock block) {
         _editPortalFrame = null;
-        closeEditFrame();
+        closeCircuitBuilder();
     }
 
-    private void closeEditFrame() {
-        _selectionGroup = null;
+    private void closeCircuitBuilder() {
         _circuitIcons = null;
         _currentBlock = null;
         checkCircuits();
         makeToDoMenu();
         makeCircuitMenu();
-        enableMenus();
-        _highlightcomponent = null;
-        TargetPane targetPane = (TargetPane)getTargetPanel();
-        targetPane.setDefaultColors();
-        repaint();
+        removePortalIcons();
+        _editor.resetEditor();
     }
     /**************** end closing frames ********************/
     /**
@@ -771,12 +718,18 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         _darkTrack = new ArrayList<Positionable>();
         _unconvertedTrack = new ArrayList<Positionable>();
         _portalMisplacedBlock = new ArrayList<OBlock>();
-        Iterator<Positionable> it = getContents().iterator();
+        Iterator<PortalIcon> pit = _portalIcons.iterator();
+        while (pit.hasNext()) {
+        	PortalIcon pi = pit.next();
+            _portalIconMap.put(pi.getName(), pi);
+        }
+        Iterator<Positionable> it = _editor.getContents().iterator();
         while (it.hasNext()) {
             Positionable pos = it.next();
 //            if (log.isDebugEnabled()) log.debug("class: "+pos.getClass().getName());
             if (pos instanceof IndicatorTrack) {
                 OBlock block = ((IndicatorTrack)pos).getOccBlock();
+                ((IndicatorTrack)pos).removePath(EditCircuitPaths.TEST_PATH);
                 if (block!=null) {
                     addIcon(block, pos);
                 } else {
@@ -785,7 +738,11 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             } else if (pos instanceof PortalIcon) {
                 PortalIcon pIcon = (PortalIcon)pos;
                 pIcon.setStatus(PortalIcon.BLOCK);
-                _portalIconMap.put(pIcon.getName(), pIcon);
+                // Eliminate possible duplicate icons for this portal
+                if(!_portalIconMap.containsKey(pIcon.getName())) {
+                    _portalIconMap.put(pIcon.getName(), pIcon);
+                    _portalIcons.add(pIcon);                	
+                }
             } else if (isUnconvertedTrack(pos)) {
                 if (!_unconvertedTrack.contains(pos)) {
                     _unconvertedTrack.add(pos);
@@ -795,11 +752,13 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
 
         _bareBlock = new ArrayList<OBlock>();
         _convertBlock = new ArrayList<OBlock>();
+        _portalMap = new Hashtable<String, Portal>();
         OBlockManager manager = InstanceManager.oBlockManagerInstance();
         String[] sysNames = manager.getSystemNameArray();
+        hasOBlocks = (sysNames.length>0);
         for (int i = 0; i < sysNames.length; i++) {
             OBlock block = manager.getBySystemName(sysNames[i]);
-            ArrayList<Positionable> icons = _circuitMap.get(block);
+            java.util.List<Positionable> icons = _circuitMap.get(block);
             if (log.isDebugEnabled()) log.debug("checkCircuits: block "+block.getDisplayName()
                                                 +" has "+icons.size()+" icons.");
             if (icons==null || icons.size()==0) {
@@ -815,12 +774,12 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                     }
                 }
                 java.util.List<Portal> list = block.getPortals();
-                int iconCount = 0;
+                //int iconCount = 0;
                 if (list!=null && list.size()>0) {
                     for (int k=0; k<list.size(); k++) {
                         PortalIcon pi = _portalIconMap.get(list.get(k).getName());
                         if (pi!=null) {
-                            iconCount++;
+                            //iconCount++;
                             addIcon(block, pi);
                             if (!EditPortalFrame.portalIconOK(icons, pi)) {
                                 if (!_portalMisplacedBlock.contains(block)) {
@@ -830,22 +789,17 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                         }
                     }
                 }
-                if (log.isDebugEnabled() && list!=null )
-                                log.debug("checkCircuits: block "+block.getDisplayName()
-                                         +" has "+list.size()+" portals, "+iconCount+
-                                         " portal icons and "+icons.size()+" total icons.");
-            }
+                // make map of all Portals
+                List <Portal> pList = block.getPortals();
+                for (int k=0; k<pList.size(); k++) {
+                    Portal portal = pList.get(k);
+                    _portalMap.put(portal.getName(), portal);
+                }
+}
         }
     }   // end checkCircuits
 
     /*************** Frame Utilities **************/
-    
-    /**
-    * Used by Path Frame
-    */
-    protected java.util.List<Positionable> getSelectionGroup() {
-        return _selectionGroup;
-    }
     
     /**
     * Used by Portal Frame
@@ -869,15 +823,47 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
     }
 
     /**
-    * Used by Portal Frame and Path Frame
+    * Used by Portal Frame
     */    
     protected Hashtable<String, PortalIcon> getPortalIconMap() {
         return _portalIconMap;
     }
-
-    protected void highlight(Positionable pos) {
-        _highlightcomponent = new Rectangle(pos.getX(), pos.getY(), 
-                                            pos.maxWidth(), pos.maxHeight());
+    
+    protected Portal getPortalByName(String name) {
+    	return _portalMap.get(name);
+    }
+    
+    protected void changePortalName(String oldName, String newName) {
+    	PortalIcon icon = _portalIconMap.get(oldName);
+    	Portal portal = _portalMap.get(oldName);
+    	_portalMap.remove(oldName);
+       	_portalIconMap.remove(oldName);
+       	_portalMap.put(newName, portal);
+     	_portalIconMap.put(newName, icon);
+    }
+    
+    protected void removePortal(String name) {
+    	_portalMap.remove(name);
+    	_portalIconMap.remove(name);    	
+    }
+    
+    protected void addPortalIcon(PortalIcon icon) {
+    	//Portal portal = icon.getPortal();
+    	String name = icon.getName();
+        // Eliminate possible duplicate icons for this portal
+        if(!_portalIconMap.containsKey(name)) {
+        	_portalMap.put(name, icon.getPortal());
+        	_portalIconMap.put(name, icon);
+            _portalIcons.add(icon);                	
+        }
+        // 
+    	if (_circuitIcons!=null) {
+    		_circuitIcons.add(icon);
+    	}
+    }
+    
+    public java.util.List<PortalIcon> getPortalIcons() {
+        return _portalIcons;
     }
 
     /**
@@ -901,17 +887,6 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         block.dispose();
     }
 
-    protected void setEditColors(boolean highlight) {
-        TargetPane targetPane = (TargetPane)getTargetPanel();
-        targetPane.setHighlightColor(_editGroupColor);
-        if (highlight) {
-            targetPane.setSelectGroupColor(_highlightColor);
-        } else {
-            targetPane.setSelectGroupColor(_editGroupColor);
-        }
-    }
-
-
     /***************** Overriden methods of Editor *******************/
 
     public void paintTargetPanel(Graphics g) {
@@ -929,96 +904,32 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             g2d.setStroke(stroke);
         }
     }
-
+/*
     public void setAllEditable(boolean state) {
 		_editable = state;
         for (int i = 0; i<_contents.size(); i++) {
             _contents.get(i).setEditable(state);
         }
-        _highlightcomponent = null;
-        _selectionGroup = null;
+        _editor.setSelectionGroup(null);
     }
 
-    /**
-    *  Create popup for a Positionable object
-    * Popup items common to all positionable objects are done before
-    * and after the items that pertain only to specific Positionable
-    * types.
-    *
-    protected void showPopUp(Positionable p, MouseEvent event) {
-        if (!((JComponent)p).isVisible()) {
-            return;     // component must be showing on the screen to determine its location
-        }
-        JPopupMenu popup = new JPopupMenu();
-
-        if (p.isEditable()) {
-            // items common to all
-            if (p.doViemMenu()) {
-                popup.add(p.getNameString());
-                setPositionableMenu(p, popup);
-                if (p.isPositionable()) {
-                    setShowCoordinatesMenu(p, popup);
-                    setShowAlignmentMenu(p, popup);
-                }
-                setDisplayLevelMenu(p, popup);
-                //setHiddenMenu(p, popup);
-                popup.addSeparator();
-            }
-            //setCopyMenu(p, popup);
-
-            // items with defaults or using overrides
-            boolean popupSet = false;
-            popupSet |= p.setRotateMenu(popup);        
-            popupSet |= p.setScaleMenu(popup);        
-            if (popupSet) { 
-                popup.addSeparator();
-                popupSet = false;
-            }
-            if (event.isControlDown()) {
-                popupSet = p.setEditIconMenu(popup);    // old IconEditor        
-            } else {
-                popupSet = p.setEditItemMenu(popup);    // ItemPalette Editor        
-            }
-            if (popupSet) { 
-                popup.addSeparator();
-                popupSet = false;
-            }
-            popupSet = p.setTextEditMenu(popup);
-            popupSet |= setTextAttributes(p, popup);
-            if (popupSet) { 
-                popup.addSeparator();
-                popupSet = false;
-            }
-            p.setDisableControlMenu(popup);
-
-            // for Positionables with unique settings
-            p.showPopUp(popup);
-
-            setShowTooltipMenu(p, popup);
-            setRemoveMenu(p, popup);
-        } else {
-            p.showPopUp(popup);
-        }
-        popup.show((Component)p, p.getWidth()/2+(int)((getPaintScale()-1.0)*p.getX()),
-                    p.getHeight()/2+(int)((getPaintScale()-1.0)*p.getY()));
-    }
-*/
 /********************* convert plain track to indicator track **************/
 
     IndicatorItemPanel _trackPanel;
     IndicatorTOItemPanel _trackTOPanel;
     PositionableLabel _oldIcon;
+    JmriJFrame _convertFrame;     // must be modal dialog to halt convetIcons loop
     JDialog _convertDialog;     // must be modal dialog to halt convetIcons loop
 
     /**
     * Check if the block being edited has all its icons converted to indicator icons
     */
-    protected boolean iconsConverted() {
-        if (_selectionGroup!=null && _selectionGroup.size()>0) {
-            for (int i=0; i<_selectionGroup.size(); i++) {
-                Positionable pos = _selectionGroup.get(i);
+    protected boolean iconsConverted(java.util.List<Positionable> list) {
+        if (list!=null && list.size()>0) {
+            for (int i=0; i<list.size(); i++) {
+                Positionable pos = list.get(i);
                 if (!(pos instanceof IndicatorTrack) && !(pos instanceof PortalIcon) ) {
-                    int result = JOptionPane.showConfirmDialog(this, rbcp.getString("notIndicatorIcon"), 
+                    int result = JOptionPane.showConfirmDialog(_editor, rbcp.getString("notIndicatorIcon"), 
                                     rbcp.getString("incompleteCircuit"), JOptionPane.YES_NO_OPTION, 
                                     JOptionPane.QUESTION_MESSAGE);
                     if (result==JOptionPane.YES_OPTION) {
@@ -1031,40 +942,43 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             }
             return true;
         } else {
-            JOptionPane.showMessageDialog(this, rbcp.getString("needIcons"), 
+            JOptionPane.showMessageDialog(_editor, rbcp.getString("needIcons"), 
                             rbcp.getString("noIcons"), JOptionPane.INFORMATION_MESSAGE);
         }
         return false;
     }
 
     protected void convertIcons() {
-        // converting an icon will update the icon list.  Thus make copy array
-        java.util.List<Positionable> list = _selectionGroup;
-        if (list!=null) {
-            Positionable[] group = new Positionable[_selectionGroup.size()];
-            for (int i=0; i<list.size(); i++) {
-                group[i] = list.get(i);
+        // converting an icon will update the editor's selectionGroup list.  Thus make copy array
+    	_circuitIcons = _editor.getSelectionGroup();
+        if (_circuitIcons!=null) {
+            Positionable[] group = new Positionable[_circuitIcons.size()];
+            for (int i=0; i<_circuitIcons.size(); i++) {
+                group[i] = _circuitIcons.get(i);
             }
+            
+            _editor.setHighlightColor(_highlightColor);
             for (int i=0; i<group.length; i++) {
                 if (!(group[i] instanceof IndicatorTrack)) {
                     if (log.isDebugEnabled()) log.debug("convertIcons: #"+i+" pos= "+group[i].getClass().getName());
                     convertIcon(group[i]);
                 }
             }
-            _circuitMap.put(_currentBlock, _selectionGroup);
+            _circuitMap.put(_currentBlock, _circuitIcons);	// _circuitIcons references _editor._selectionGroup
+            _editor.setHighlightColor(_editGroupColor);
+            _editor.highlight(null);
         }
     }
 
-    protected void convertIcon(Positionable pos) {
+    private void convertIcon(Positionable pos) {
         _oldIcon = (PositionableLabel)pos;
-        ((TargetPane)getTargetPanel()).setHighlightColor(_highlightColor);
-        highlight(_oldIcon);
-        toFront();
-        repaint();
+        _editor.highlight(_oldIcon);
+        _editor.toFront();
+        _editor.repaint();
         if (pos instanceof TurnoutIcon) {
             makePalettteFrame("IndicatorTO");
-            _trackTOPanel = new IndicatorTOItemPanel(null, "IndicatorTO", null, null, this);
-            _convertDialog.add(_trackTOPanel);
+            _trackTOPanel = new IndicatorTOItemPanel(_convertFrame, "IndicatorTO", null, null, _editor);
+ //           _convertDialog.add(_trackTOPanel);
             ActionListener updateAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     convertTO();
@@ -1074,8 +988,8 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             _convertDialog.add(_trackTOPanel);
         } else {
             makePalettteFrame("IndicatorTrack");
-            _trackPanel = new IndicatorItemPanel(null, "IndicatorTrack", null, this);
-            _convertDialog.add(_trackPanel);
+            _trackPanel = new IndicatorItemPanel(_convertFrame, "IndicatorTrack", null, _editor);
+//            _convertDialog.add(_trackPanel);
             ActionListener updateAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     convertSeg();
@@ -1086,19 +1000,36 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
         }
         _convertDialog.pack();
         _convertDialog.setVisible(true);
-        repaint();
+        _editor.repaint();
     }
 
     private void makePalettteFrame(String title) {
-        makePalette();
-        _convertDialog = new JDialog(this, java.text.MessageFormat.format(
-            rb.getString("EditItem"), rb.getString(title)), true);
-        _convertDialog.setLocationRelativeTo(this);
+    	jmri.jmrit.display.palette.ItemPalette.loadIcons();
+    	_convertDialog = new JDialog(_editor, java.text.MessageFormat.format(
+        		Editor.rb.getString("EditItem"), Editor.rb.getString(title)), true);
+    	_convertFrame = new convertFrame(_convertDialog);
+
+        _convertDialog.setLocationRelativeTo(_editor);
         _convertDialog.toFront();
     }
 
+    /*
+     * gimmick to get JDialog to re-layout contents and repaint 
+     */
+    class convertFrame extends JmriJFrame {
+    	JDialog _dialog;
+    	convertFrame (JDialog dialog) {
+    		super(false, false);
+    		_dialog = dialog;
+    	}
+    	public void pack() {
+    		super.pack();
+    		_dialog.pack();
+    	}
+	}
+
     private void convertTO() {
-        IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(this);
+        IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_editor);
         t.setOccBlockHandle(new NamedBeanHandle<OBlock>(_currentBlock.getSystemName(), _currentBlock));       
         t.setTurnout( ((TurnoutIcon)_oldIcon).getNamedTurnout());
         t.setFamily(_trackTOPanel.getFamilyName());
@@ -1111,15 +1042,16 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<String, NamedIcon> ent = iter.next();
-                t.setIcon(status, ent.getKey(), ent.getValue());
+                t.setIcon(status, ent.getKey(), new NamedIcon(ent.getValue()));
             }
         }
         t.setLevel(Editor.TURNOUTS);
+        t.setScale(_oldIcon.getScale());
+        t.rotate(_oldIcon.getDegrees());
         finishConvert(t);
-        _circuitIcons = _selectionGroup;
     }
     private void convertSeg() {
-        IndicatorTrackIcon t = new IndicatorTrackIcon(this);
+        IndicatorTrackIcon t = new IndicatorTrackIcon(_editor);
         t.setOccBlockHandle(new NamedBeanHandle<OBlock>(_currentBlock.getSystemName(), _currentBlock));       
         t.setFamily(_trackPanel.getFamilyName());
 
@@ -1133,66 +1065,59 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             }
         }
         t.setLevel(Editor.TURNOUTS);
+        t.setScale(_oldIcon.getScale());
+        t.rotate(_oldIcon.getDegrees());
         finishConvert(t);
     }
 
     private void finishConvert(Positionable pos) {
-        _selectionGroup.remove(_oldIcon);
+    	_circuitIcons.remove(_oldIcon);
         _oldIcon.remove();
         pos.setLocation(_oldIcon.getLocation());
-        putItem(pos);
-        _selectionGroup.add(pos);
+        _editor.putItem(pos);
+        _circuitIcons.add(pos);
         pos.updateSize();
-        _oldIcon.remove();
 
         _oldIcon = null;
         _trackPanel = null;
         _trackTOPanel = null;
         _convertDialog.dispose();
         _convertDialog = null;
-        _highlightcomponent = null;
-        ((TargetPane)getTargetPanel()).setHighlightColor(_editGroupColor);
-        repaint();
+        _convertFrame = null;
     }
     /*************** end convert icons *******************/
 
 /**************** select - deselect track icons ************************/
 
     /**
-    * select and highlight block's icons for block editing
+    * select block's track icons for editing
     */
-    private void setSelectionGroup(OBlock block, boolean withPortals) {
-        java.util.List<Positionable> list = _circuitMap.get(block);
-        _currentSelection = null;
-        if (list!=null && list.size()>0) {
-            _selectionGroup = new ArrayList<Positionable>();
-            for (int i=0; i<list.size(); i++) {
-                if (!withPortals && list.get(i) instanceof PortalIcon) {
-                    continue;
-                }
-                _selectionGroup.add(list.get(i));
-            }
-            /*
-            java.util.List<Portal> portals = block.getPortals();
-            for (int i=0; i<portals.size(); i++) {
-                PortalIcon icon = _portalIconMap.get(portals.get(i).getName());
-                if (icon!=null) {
-                    _selectionGroup.add(icon);
-                }
-            }
-            */
-            if (log.isDebugEnabled()) log.debug("setSelectionGroup: block "+block.getDisplayName()
-                                                +" has "+ list.size() +" icons.");
-        } else {
-            _selectionGroup = null;
-            if (log.isDebugEnabled()) log.debug("setSelectionGroup: block "+block.getDisplayName()
-                                                +" has 0 icons.");
+    private ArrayList<Positionable> makeSelectionGroup(OBlock block, String status) {
+    	ArrayList<Positionable> group = new ArrayList<Positionable>();
+    	Iterator<Positionable> iter = _circuitMap.get(block).iterator();
+        while(iter.hasNext()) {
+        	group.add(iter.next());
         }
-        repaint();
+        for (int i=0; i<_portalIcons.size(); i++) {
+        	PortalIcon icon = _portalIcons.get(i);
+        	Portal port = icon.getPortal();
+            group.remove(icon);
+        	if (status!=null) {
+                if (block.equals(port.getFromBlock()) || block.equals(port.getToBlock()) ) {
+                    icon.setStatus(status);
+                   	_editor.putItem(icon);
+                }         		
+         	}
+        }
+    	_circuitIcons = _circuitMap.get(block);
+        _editor.setSelectionGroup(group);
+        return group;
     }
 
     protected boolean isTrack(Positionable pos) {
         if (pos instanceof IndicatorTrack) {
+            return true;
+        } else if (pos instanceof TurnoutIcon) {
             return true;
         } else if (pos instanceof PositionableLabel) {
             PositionableLabel pl = (PositionableLabel)pos;
@@ -1251,13 +1176,13 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                     return true;
                 }
             }
-            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
+            JOptionPane.showMessageDialog(_editor, java.text.MessageFormat.format(
                                 rbcp.getString("portalNotInCircuit"),block.getDisplayName()), 
                             rbcp.getString("badPath"), JOptionPane.WARNING_MESSAGE);
             return false;
         }
         if (!icons.contains(pos)) {
-            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
+            JOptionPane.showMessageDialog(_editor, java.text.MessageFormat.format(
                                 rbcp.getString("iconNotInCircuit"),block.getDisplayName()), 
                             rbcp.getString("badPath"), JOptionPane.WARNING_MESSAGE);
             return false;
@@ -1274,7 +1199,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             OBlock block = ((IndicatorTrack)pos).getOccBlock();
             if (block!=null) {
                 if (!block.equals(editBlock)) {
-                    int result = JOptionPane.showConfirmDialog(this, java.text.MessageFormat.format(
+                    int result = JOptionPane.showConfirmDialog(_editor, java.text.MessageFormat.format(
                                         rbcp.getString("iconBlockConflict"), 
                                         block.getDisplayName(), editBlock.getDisplayName()),
                                     rbcp.getString("whichCircuit"), JOptionPane.YES_NO_OPTION, 
@@ -1297,39 +1222,71 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
 
     /**************************** Mouse *************************/
 
+    ArrayList<Positionable> _saveSelectionGroup;
     /**
     * Keep selections when editing.  Restore what super nulls
     */
-    public void mousePressed(MouseEvent event) {
-        ArrayList<Positionable> saveSelectionGroup = _selectionGroup;
-        super.mousePressed(event);
+    protected void saveSelectionGroup(ArrayList<Positionable> selectionGroup) {
+    	_saveSelectionGroup = selectionGroup;
+    }
+    
+    protected void doMousePressed(MouseEvent event) {
         if (_editCircuitFrame!=null || _editPathsFrame!=null) {
-            _selectionGroup = saveSelectionGroup;
+        	if (_editCircuitFrame!=null) {
+        		_editCircuitFrame.toFront();
+        	} else {
+        		_editPathsFrame.toFront();
+        	}
+            _editor.setSelectionGroup(_saveSelectionGroup);
         } else if (_editPortalFrame!=null) {
-            _selectionGroup = null;
+        	_editPortalFrame.toFront();
+            _editor.setSelectionGroup(_saveSelectionGroup);
+//            _editor.setSelectionGroup(null);
         }
     }
+   
+    public boolean doMouseReleased(Positionable selection, MouseEvent event) {
+        if (_editCircuitFrame!=null || _editPathsFrame!=null) {
+        	return true;
+        } else if (_editPortalFrame!=null) {
+        	if (selection instanceof PortalIcon) {
+            	_editPortalFrame.checkPortalIconForUpdate((PortalIcon)selection);	
+        	}
+        	return true;
+        }
+        return false;
+    }
 
-    public void mouseReleased(MouseEvent event) {
-        Positionable selection = getCurrentSelection(event);
-        super.mouseReleased(event);
-        handleSelection(selection, event);
+    protected boolean doMouseClicked(Positionable selection, MouseEvent event) {
+        if (_editCircuitFrame!=null || _editPathsFrame!=null || (_editPortalFrame!=null)) {
+            if (_editPathsFrame==null) {
+//            	_editor.mouseClicked(event);
+            } else if (event.isShiftDown()) {
+            	selection.doMouseClicked(event);
+            }
+            if (!event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown()) {
+            	handleSelection(selection, event);
+            }
+            return false;
+        }
+        return true;
     }
 
     /**
     * No dragging when editing
     */
-    public void mouseDragged(MouseEvent event) {
+    public boolean doMouseDragged(Positionable selection, MouseEvent event) {
         if (_editCircuitFrame!=null || _editPathsFrame!=null) {
-            return;     // no dragging when editing
+            return true;     // no dragging when editing
         }
         if (_editPortalFrame!=null) {
-            if (!(_currentSelection instanceof PortalIcon) ||
-                    !_circuitIcons.contains(_currentSelection)) {
-                return;
+            if ((selection instanceof PortalIcon) /*&&_circuitIcons.contains(selection)*/) {
+                return false;		// OK to drag portal icon
+            } else {
+            	return true;
             }
         }
-        super.mouseDragged(event);
+        return false;
     }
 
     /***************** Overriden methods of Editor *******************/
@@ -1338,7 +1295,7 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
     * Return a List of all items whose bounding rectangle contain the mouse position.
     * ordered from top level to bottom
     * Modified to collect only track icons
-    */
+    *
     protected java.util.List <Positionable> getSelectedItems(MouseEvent event) {
         if (_editCircuitFrame==null ) { //&& _editPathsFrame==null) {
             return super.getSelectedItems(event);
@@ -1375,60 +1332,33 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
     }
 
     /*
-    * Gather all items inside _selectRect
-    *
-    protected void  makeSelectionGroup(MouseEvent event) {
-        if (_editCircuitFrame!=null) {
-            Rectangle test = new Rectangle();
-            java.util.List<Positionable> list = getContents();
-            for (int i=0; i < list.size(); i++) {
-                Positionable comp = list.get(i);
-                if (isTrack(comp)) {
-                    if (event.isShiftDown()) {
-                        if (_selectRect.intersects(comp.getBounds(test)) && 
-                                        (event.isControlDown() || comp.getDisplayLevel()>BKG)) {
-                            _selectionGroup.add(comp);
-                        }
-
-                    } else {
-                        if (_selectRect.contains(comp.getBounds(test)) && 
-                                        (event.isControlDown() || comp.getDisplayLevel()>BKG)) {
-                            _selectionGroup.add(comp);
-                        }
-                    }
-                }
-            }
-        } else if (_editPathsFrame!=null) {
-            _selectionGroup = _circuitIcons;
-        } else {
-            super.makeSelectionGroup(event);
-        }
-        if (log.isDebugEnabled()) log.debug("makeSelectionGroup: "+(_selectionGroup==null?"0":_selectionGroup.size())+" selected.");
-    }
-
-    /*
-    * For the param, selection, Add to or delete from _selectionGroup. 
+    * For the param, selection, Add to or delete from selectionGroup. 
     * If not there, add.
     * If there, delete.
     */
     private void handleSelection(Positionable selection, MouseEvent event) {
         if (_editCircuitFrame!=null) {
+        	ArrayList<Positionable> selectionGroup = _editor.getSelectionGroup();
             if (isTrack(selection)) {
-                if (_selectionGroup==null) {
-                    _selectionGroup = new ArrayList<Positionable>();
+                if (selectionGroup==null) {
+                    selectionGroup = new ArrayList<Positionable>();
                 }
-                if (log.isDebugEnabled()) log.debug("handleSelection: _selectionGroup.size()= "+_selectionGroup.size());
-                if (_selectionGroup.contains(selection)) {
-                    _selectionGroup.remove(selection);
+                if (selectionGroup.contains(selection)) {
+                    selectionGroup.remove(selection);
                 } else if (okToAdd(selection, _editCircuitFrame.getBlock())) {
-                    _selectionGroup.add(selection);
+                    selectionGroup.add(selection);
                 }
             }
-            _editCircuitFrame.updateIconList(_selectionGroup);
+            _editCircuitFrame.updateIconList(selectionGroup);
             _editCircuitFrame.toFront();
+            _editor.setSelectionGroup(selectionGroup);
         } else if (_editPathsFrame!=null) {
             if (selection instanceof IndicatorTrack || selection instanceof PortalIcon) {
                 OBlock block = _editPathsFrame.getBlock();
+                // A temporary path "TEST_PATH" is used to display the icons representing a path
+                // the OBlock has allocated TEST_PATH
+                // pathGroup collects the icons and the actual path is edited or
+                // created with a save in _editPathsFrame
                 java.util.List<Positionable> pathGroup = _editPathsFrame.getPathGroup();
                 if (!event.isShiftDown()) {
                     if (pathGroup.contains(selection)) {
@@ -1436,26 +1366,29 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
                         if (selection instanceof PortalIcon) {
                             ((PortalIcon)selection).setStatus(PortalIcon.BLOCK);
                         } else {
-                            //_selectionGroup.remove(selection);
+                        	((IndicatorTrack)selection).setStatus(Sensor.INACTIVE);
                             ((IndicatorTrack)selection).removePath(EditCircuitPaths.TEST_PATH);
                             if (log.isDebugEnabled()) log.debug("removePath TEST_PATH");
                         }
                     } else if (okPath(selection, block)) {
                         pathGroup.add(selection);
+                        // okPath() sets PortalIcons to status PortalIcon.PATH
                         if (selection instanceof IndicatorTrack) {
-                            //_selectionGroup.add(selection);
                             ((IndicatorTrack)selection).addPath(EditCircuitPaths.TEST_PATH);
-                            if (log.isDebugEnabled()) log.debug("addPath TEST_PATH");
                         }
                     } else {
                         return;
                     }
+                } else {
+                    if (selection instanceof PortalIcon) {
+                        ((PortalIcon)selection).setStatus(PortalIcon.BLOCK);
+                    }
                 }
                 int state = block.getState() | OBlock.ALLOCATED;
                 block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
-                _editPathsFrame._pathChange = true;
+                _editPathsFrame.updatePath(true);
             }
-            _highlightcomponent = null;
+    //        _editor.highlight(null);
             _editPathsFrame.toFront();
         } else if (_editPortalFrame!=null) {
             if (log.isDebugEnabled()) log.debug("selection= "+(selection==null?"null":
@@ -1463,19 +1396,18 @@ public class CircuitBuilder extends ControlPanelEditor implements DropTargetList
             if (selection instanceof PortalIcon && _circuitIcons.contains(selection)) {
                 _editPortalFrame.checkPortalIconForUpdate((PortalIcon)selection);
             }
-            _selectionGroup = null;
+   //         _editor.setSelectionGroup(null);
    //         _highlightcomponent = null;
             _editPortalFrame.toFront();
         }
     }
 
 
-    protected void modifySelectionGroup(Positionable selection, MouseEvent event) {
+    protected boolean doModifySelectionGroup(Positionable selection, MouseEvent event) {
         if (_editCircuitFrame!=null || _editPortalFrame!=null ||_editPathsFrame!=null) {
-            return;
+            return false;
         }
-        super.modifySelectionGroup(selection, event);
-        if (log.isDebugEnabled()) log.debug("modifySelectionGroup: "+(_selectionGroup==null?"0":_selectionGroup.size())+" selected.");
+        return true;
     }
 
     /**************************** static methods ************************/

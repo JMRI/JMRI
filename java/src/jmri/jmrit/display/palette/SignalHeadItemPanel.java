@@ -112,9 +112,11 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
             _updateButton.setEnabled(false);
             _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
         }
-        hideIcons();
+        if (_iconPanel.isVisible()) {
+        	showIcons();
+        }
+ //       hideIcons();
     }
-
 
     protected Hashtable<String, NamedIcon> getFilteredIconMap(Hashtable<String, NamedIcon> allIconsMap) {
         if (allIconsMap==null) {

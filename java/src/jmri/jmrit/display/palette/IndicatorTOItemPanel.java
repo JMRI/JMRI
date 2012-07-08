@@ -173,17 +173,20 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         addIcons2Panel(_iconGroupsMap);
         _iconFamilyPanel.add(_iconPanel, 0);
         _iconPanel.setVisible(true);
-        setSize(getPreferredSize());
-        validate();
+        reset();
     }
     
     protected void resetFamiliesPanel() {
         remove(_iconFamilyPanel);
         initIconFamiliesPanel();
-        add(_iconFamilyPanel, 2);
+        int n = _iconFamilyPanel.getComponentCount();
+        if (n>2) {
+            add(_iconFamilyPanel, 2);        	
+        } else {
+            add(_iconFamilyPanel, 0);
+        }
         reset();
-        validate();
-    }
+   }
 
     /**
     * Make matrix of icons - each row has a button to change icons
@@ -341,23 +344,20 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     protected void showIcons() {
-        _iconPanel.setVisible(true);
-        if (!_update) {
-            _dragIconPanel.setVisible(false);
-        }
         if (_detectPanel!=null) {
             _detectPanel.setVisible(false);
         }
         if (_tablePanel!=null) {
             _tablePanel.setVisible(false);
         }
-        _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
-//        setSize(getPreferredSize());
+        super.showIcons();
     }
 
     void createNewFamily() {
         removeIconFamiliesPanel();
-        _tablePanel.setVisible(false);
+        if (_tablePanel!=null) {
+            _tablePanel.setVisible(false);        	
+        }
         _iconGroupsMap = new Hashtable<String, Hashtable<String, NamedIcon>>();
         for (int i=0; i<STATUS_KEYS.length; i++) {
             _iconGroupsMap.put(STATUS_KEYS[i], makeNewIconMap("Turnout"));
@@ -373,10 +373,11 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         }
         _bottom1Panel.setVisible(false);
         _bottom2Panel.setVisible(true);
-        _detectPanel.setVisible(false);
+        if (_detectPanel!=null) {
+            _detectPanel.setVisible(false);        	
+        }
         add(_iconFamilyPanel, 0);
-//        reset();
-        validate();
+        reset();
     }
 
     /**

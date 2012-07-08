@@ -70,13 +70,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         JButton clearSelectionButton = new JButton(ItemPalette.rbp.getString("ClearSelection"));
         clearSelectionButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    _selectionModel.clearSelection();
-                    int size = 6;
-                    if (_family!=null) {
-                        Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
-                        size = map.size();
-                    }
-                    _selectionModel.setPositionRange(size-3);
+                	clearSelections();
                 }
         });
         clearSelectionButton.setToolTipText(ItemPalette.rbp.getString("ToolTipClearSelection"));
@@ -86,6 +80,18 @@ public class MultiSensorItemPanel extends TableItemPanel {
         _scrollPane.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
         topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
         return topPanel;
+    }
+    public void clearSelections() {
+        _selectionModel.clearSelection();
+        int size = 6;
+//        if (_family!=null) {
+//            Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
+//            size = map.size();
+//        }
+        if (_currentIconMap!=null) {
+        	size = _currentIconMap.size();
+        }
+        _selectionModel.setPositionRange(size-3);
     }
 
     protected void makeDndIconPanel(Hashtable<String, NamedIcon> iconMap, String displayKey) {
@@ -133,6 +139,17 @@ public class MultiSensorItemPanel extends TableItemPanel {
         _iconFamilyPanel.add(_multiSensorPanel);
         _iconFamilyPanel.repaint();
         updateFamiliesPanel();
+        setSelections();
+    }
+    protected void setSelections() {
+        int[] positions = _selectionModel.getPositions();
+        clearSelections();
+        int len = Math.min(positions.length, _selectionModel.getPositions().length);
+        for (int i=0; i<len; i++) {
+        	if (positions[i]>-1) {
+            	_selectionModel.setSelectionInterval(positions[i], positions[i]);        		
+        	}
+        }    	
     }
 
     protected void openEditDialog() {
@@ -144,14 +161,44 @@ public class MultiSensorItemPanel extends TableItemPanel {
         IconDialog dialog = new MultiSensorIconDialog(_itemType, null, this, null);
         dialog.sizeLocate();
     }
+    
+    /**
+    * Used by Panel Editor to make updates the icon(s)
+    * into the user's Panel.
+    */
+    public ArrayList<NamedBean> getTableSelections() {
+        return _selectionModel.getSelections();
+    }
 
-    static final String[] POSITION = {"first", "second", "third", "fourth", "fifth",
+    public int[] getPositions() {
+        return _selectionModel.getPositions();
+    }
+
+    public boolean getUpDown() {
+    	return _upDown;
+    }
+    
+    public void setSelection(NamedBean bean) {
+        int row = _model.getIndexOf(bean);
+        if (row>=0) {       	
+        	_selectionModel.setSelectionInterval(row, row);
+            _scrollPane.getVerticalScrollBar().setValue(row*ROW_HEIGHT);
+        } else {
+            valueChanged(null);
+        }
+    }
+
+    public void setUpDown(boolean upDown) {
+    	_upDown = upDown;
+    }
+    
+    public static final String[] POSITION = {"first", "second", "third", "fourth", "fifth",
                                          "sixth", "seventh", "eighth", "nineth", "tenth" };
 
     protected class MultiSensorSelectionModel extends DefaultListSelectionModel {
 
         ArrayList<NamedBean> _selections;
-        int[] _postions;
+        int[] _positions;
         int _nextPosition;
         PickListModel _tableModel;
 
@@ -164,14 +211,16 @@ public class MultiSensorItemPanel extends TableItemPanel {
         protected ArrayList<NamedBean> getSelections() {
             if (log.isDebugEnabled()) log.debug("getSelections: size= "+_selections.size()+
                                                 ", _nextPosition= "+_nextPosition);
-            if (_nextPosition < _postions.length) {
+            if (_nextPosition < _positions.length) {
                 return null;
             }
             return _selections;
         }
 
         protected int[] getPositions() {
-            return _postions;
+        	int[] positions = new int[_positions.length];
+        	System.arraycopy(_positions, 0, positions, 0, _positions.length);
+            return positions;
         }
 
         protected int getNextPosition() {
@@ -183,9 +232,9 @@ public class MultiSensorItemPanel extends TableItemPanel {
             if (size>POSITION.length) {
                 size = POSITION.length;
             }
-            _postions = new int[size];
+            _positions = new int[size];
             for (int i=0; i<size; i++) {
-                _postions[i] = -1;
+                _positions[i] = -1;
             }
             _selections = new ArrayList<NamedBean>(size);
             _nextPosition = 0;
@@ -194,8 +243,8 @@ public class MultiSensorItemPanel extends TableItemPanel {
         /*************** DefaultListSelectionModel overrides ********************/
 
         public boolean isSelectedIndex(int index) {
-            for (int i=0; i<_postions.length; i++) {
-                if (_postions[i] == index) {
+            for (int i=0; i<_positions.length; i++) {
+                if (_positions[i] == index) {
                     if (log.isDebugEnabled()) log.debug("isSelectedIndex("+index+") returned true");
                     return true;
                 }
@@ -206,15 +255,15 @@ public class MultiSensorItemPanel extends TableItemPanel {
 
         public void clearSelection() {
             if (log.isDebugEnabled()) log.debug("clearSelection()");
-            for (int i=0; i<_postions.length; i++) {
-                if (_postions[i] >= 0) {
-                    _tableModel.setValueAt(null, _postions[i], PickListModel.POSITION_COL);
-                    super.setSelectionInterval(_postions[i], _postions[i]);
+            for (int i=0; i<_positions.length; i++) {
+                if (_positions[i] >= 0) {
+                    _tableModel.setValueAt(null, _positions[i], PickListModel.POSITION_COL);
+                    super.setSelectionInterval(_positions[i], _positions[i]);
                     super.clearSelection();
-                    _postions[i] = -1;
+                    _positions[i] = -1;
                 }
             }
-            _selections = new ArrayList<NamedBean>(_postions.length);
+            _selections = new ArrayList<NamedBean>(_positions.length);
             _nextPosition = 0;
         }
 
@@ -224,7 +273,11 @@ public class MultiSensorItemPanel extends TableItemPanel {
         }
 
         public void setSelectionInterval(int row, int index1) {
-            if (_nextPosition>=_postions.length) {
+            if (_nextPosition>=_positions.length) {
+                JOptionPane.showMessageDialog(_paletteFrame, 
+                        java.text.MessageFormat.format(
+                            ItemPalette.rbp.getString("NeedIcon"), _selectionModel.getPositions().length), 
+                            ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return;
             }
             if (log.isDebugEnabled()) log.debug("setSelectionInterval("+row+", "+index1+")");
@@ -238,7 +291,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
             } else {
                 _tableModel.setValueAt(ItemPalette.rbp.getString(POSITION[_nextPosition]), row, PickListModel.POSITION_COL);
                 _selections.add(_nextPosition, bean);
-                _postions[_nextPosition] = row;
+                _positions[_nextPosition] = row;
                 _nextPosition++;
                 super.setSelectionInterval(row, row);
             }
@@ -286,6 +339,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
                 ms.addEntry(selections.get(i).getDisplayName(), new NamedIcon(iconMap.get(POSITION[i])));
             }
             _selectionModel.clearSelection();
+            ms.setFamily(_family);
             ms.setUpDown(_upDown);
             ms.setLevel(Editor.SENSORS);
             return ms;

@@ -64,6 +64,7 @@ public class IconDialog extends ItemDialog {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         if (_iconMap != null) {
+            makeAddIconButtonPanel(buttonPanel, "ToolTipAddPosition", "ToolTipDeletePosition");
             if (!isUpdate) {
             	makeAddSetButtonPanel(buttonPanel);
             }
@@ -113,6 +114,10 @@ public class IconDialog extends ItemDialog {
         _deleteButton.setToolTipText(ItemPalette.rbp.getString("ToolTipDeleteFamily"));
         panel1.add(_deleteButton);
         buttonPanel.add(panel1);
+    }
+
+    // Only multiSensor adds and deletes icons 
+    protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
     }
 
     /**

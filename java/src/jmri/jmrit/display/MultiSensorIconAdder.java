@@ -1,13 +1,16 @@
 package jmri.jmrit.display;
 
+import jmri.jmrit.catalog.CatalogTreeLeaf;
+import jmri.jmrit.catalog.CatalogTreeNode;
+import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.NamedBeanHandle;
-import jmri.NamedBean;
 import jmri.Sensor;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -24,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
+import javax.swing.JToggleButton;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.TransferHandler;
 import java.awt.datatransfer.Transferable;
@@ -51,7 +55,6 @@ public class MultiSensorIconAdder extends IconAdder {
     JRadioButton _rightleft;
 
     HashMap <String, NamedBeanHandle<Sensor>>_sensorMap = new HashMap <String, NamedBeanHandle<Sensor>>();
-    int _lastIndex = 0;
     
     public static final String NamedBeanFlavorMime = DataFlavor.javaJVMLocalObjectMimeType +
                ";class=jmri.NamedBean";
@@ -66,45 +69,45 @@ public class MultiSensorIconAdder extends IconAdder {
 
     public void reset() {
         _sensorMap = new HashMap <String, NamedBeanHandle<Sensor>>();
-        _lastIndex = 0;
         super.reset();
     }
     
     /**
-    *  Override.  First three calls MUST be 'inactive', 'inconsistent', 'unknown'.
-    * Labeling of active sensors depends on the deletes and adds, if any. 
-    *
-    public void setIcon(int index, String label, String name) {
-        String key = label;
-        if (index > 2) {
-            //make a unique name (multisensor has deletes so fix the key)
-            key = "MultiSensorPosition " +_lastIndex++; 
+    *  Build iconMap and orderArray from user's choice of defaults (override)
+    */
+    protected void makeIcons(CatalogTreeNode n) {
+        if (log.isDebugEnabled()) log.debug("makeIcons from node= "+n.toString()+", numChildren= "+
+                                            n.getChildCount()+", NumLeaves= "+n.getNumLeaves());
+        _iconMap = new HashMap <String, JToggleButton>(10);
+        _order = new ArrayList <String>();
+        ArrayList <CatalogTreeLeaf> list = n.getLeaves();
+        // adjust order of icons
+         for (int i=list.size()-1; i>=0; i--) {
+            CatalogTreeLeaf leaf = list.get(i);
+            String name = leaf.getName();
+            String path = leaf.getPath();
+            if ("BeanStateInconsistent".equals(name)) {
+                setIcon(0, name, new NamedIcon(path, path));          	
+            } else if ("BeanStateUnknown".equals(name)) {
+                setIcon(1, name, new NamedIcon(path, path));          	
+            } else if ("SensorStateInactive".equals(name)) {
+                setIcon(2, name, new NamedIcon(path, path));          	
+            } else {
+            	int k = Character.digit(name.charAt(name.length()-1), 10);
+            	setIcon(k+3, name, new NamedIcon(path, path));
+             }
         }
-
-        if (log.isDebugEnabled()) {
-            if (_order.size() > 0) {
-                log.debug("SetIcon: order size= "+_order.size()+", _lastIndex= "+_lastIndex);
-            }
-        }
-        super.setIcon(index, key, name);
-        if (log.isDebugEnabled()) log.debug(key+" inserted at "+index);
-    } */
-    protected void setIcon(int order, String label, NamedIcon icon) {
-        String key = label;
-        if (order > 2) {
-            //make a unique name (multisensor has deletes so fix the key)
-            key = "MultiSensorPosition " +_lastIndex++; 
-        }
-        super.setIcon(order, key, icon);
-        if (log.isDebugEnabled()) log.debug(key+" inserted at "+order);
-
     }
 
+    /**
+     * Only called from MultiSensorIcon popup
+     * @param icons
+     */
     void setMultiIcon(List <MultiSensorIcon.Entry> icons) {
         for (int i=0; i<icons.size(); i++) {
             MultiSensorIcon.Entry entry = icons.get(i);
-            String label = "MultiSensorPosition " +_lastIndex; 
-            super.setIcon(i+3, label, entry.icon.getURL());
+            String label = "MultiSensorPosition " + i; 
+            setIcon(i+3, label, entry.icon.getURL());
             _sensorMap.put(label, entry.namedSensor);
         }
         if (log.isDebugEnabled()) log.debug("setMultiIcon: Size: sensors= "+_sensorMap.size()+
@@ -130,25 +133,28 @@ public class MultiSensorIconAdder extends IconAdder {
                 rowPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
             }
             String key = _order.get(i);
+            if (key.equals("placeHolder")) {
+            	continue;
+            }
             JPanel p1 =new JPanel(); 
             p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
             String label = java.text.MessageFormat.format(rb.getString("MultiSensorPosition"),
-                                                   new Object[] { Integer.valueOf(i-2) }); 
+                                                   new Object[] { Integer.valueOf(cnt+1) }); 
             p1.add(new JLabel(label));
             p1.add(_iconMap.get(key));
 
             JPanel p2 =new JPanel();
             JButton delete = new JButton(rb.getString("ButtonDeleteIcon"));
             ActionListener action = new ActionListener() {
-                    int index;
+                    String key;
                     public void actionPerformed(ActionEvent a) {
-                        delete(index);
+                        delete(key);
                     }
-                    ActionListener init(int k) {
-                        index = k;
+                    ActionListener init(String k) {
+                    	key = k;
                         return this;
                     }
-            }.init(i);
+            }.init(key);
             delete.addActionListener(action);
             p2.add(delete);
 
@@ -177,9 +183,6 @@ public class MultiSensorIconAdder extends IconAdder {
             p4.add(new JLabel(name));
             p4.setMaximumSize(p4.getPreferredSize());
             p3.add(p4);
-            if (log.isDebugEnabled()) log.debug("makeIconPanel: i= "+i+" label= "+label+
-                                                ", key= "+key+", sensor = "+name);
-
             JPanel p13 =new JPanel();
             p13.setLayout(new BoxLayout(p13, BoxLayout.X_AXIS));
             p13.add(p3);
@@ -301,15 +304,15 @@ public class MultiSensorIconAdder extends IconAdder {
 
     private void addIcon() {
         int index = _order.size();
-        String name = "resources/icons/misc/X-red.gif"; //"resources/icons/USS/plate/levers/l-vertical.gif";
-        super.setIcon(index, "MultiSensorPosition " +_lastIndex++, new NamedIcon(name, name));
-        if (log.isDebugEnabled()) {
-            if (_order.size() > 0) {
-                log.debug("addIcon: order size= "+_order.size()+", _lastIndex= "+_lastIndex);
-            }
-        }
+        String path = "resources/icons/misc/X-red.gif"; //"resources/icons/USS/plate/levers/l-vertical.gif";
+        String label = "MultiSensorPosition " +(index-3);
+        super.setIcon(index, label, new NamedIcon(path, path));
         valueChanged(null);
-        makeIconPanel(_update);
+        if (!_update) {
+            _defaultIcons.addLeaf(label, path);
+            ImageIndexEditor.indexChanged(true);        	
+        }
+        makeIconPanel(!_update);
         this.invalidate();
     }
 
@@ -334,34 +337,27 @@ public class MultiSensorIconAdder extends IconAdder {
     /**
     *
     */
-    void delete(int index) {
-        String key = _order.get(index);
-        if (log.isDebugEnabled()) log.debug("delete("+index+") key= "+key+" Sizes: _iconMap= "+_iconMap.size()
-                  +", _sensorMap= "+_sensorMap.size()+", _order= "+_order.size());
+    void delete(String key) {
         _iconMap.remove(key);
         _sensorMap.remove(key);
-        _order.remove(index);
-        _lastIndex--;
-        makeIconPanel(_update);
-    }
-
-    /**
-    *  Override.  First look for a table selection to set the sensor.
-    */
-    public NamedBean getTableSelection() {
-        int row = _table.getSelectedRow();
-        if (row >= 0) {
-            NamedBean b = _pickListModel.getBeanAt(row);
-            _table.clearSelection();
-            _addButton.setEnabled(false);
-            _addButton.setToolTipText(null);
-//            makeIconMap(b);
-//            doIconPanel();
-//            this.validate();
-            if (log.isDebugEnabled()) log.debug("getTableSelection: row= "+row+", bean= "+b.getDisplayName());
-            return b;
-        } else if (log.isDebugEnabled()) log.debug("getTableSelection: row=0");
-        return null;
+        int index = _order.indexOf(key);
+        _order.remove(key);
+        if (!_update){
+            _defaultIcons.deleteLeaves(key);   	
+            //  update labels
+            for (int k=index; k<_order.size(); k++) {
+            	String label = _order.get(k);
+            	ArrayList <CatalogTreeLeaf> leaves = _defaultIcons.getLeaves(label);
+            	for (int i=0; i<leaves.size(); i++) {
+            		String path = leaves.get(i).getPath();
+                    _defaultIcons.deleteLeaves(label);
+                    _defaultIcons.addLeaf("MultiSensorPosition " + (k-3), path);
+//                    break;
+            	}
+            }      
+            ImageIndexEditor.indexChanged(true);
+        }
+        makeIconPanel(!_update);
     }
 
     /**
@@ -453,7 +449,7 @@ public class MultiSensorIconAdder extends IconAdder {
                         JPanel panel = (JPanel)target.getComponent();
                         JComponent comp = (JLabel)panel.getComponent(0);
                         if (putSensor(comp.getName(), sensor)) { 
-                            makeIconPanel(_update);
+                            makeIconPanel(!_update);
                         }
                         e.dropComplete(true);
                         if (log.isDebugEnabled()) log.debug("DropPanel.drop COMPLETED for "+

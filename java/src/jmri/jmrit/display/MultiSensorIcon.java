@@ -1,21 +1,28 @@
 package jmri.jmrit.display;
 
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.Sensor;
-//import jmri.jmrit.display.palette.TableItemPanel;
 //import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.palette.ItemPalette;
+import jmri.jmrit.display.palette.MultiSensorItemPanel;
+import jmri.jmrit.picker.PickListModel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 
 import jmri.NamedBeanHandle;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 /**
  * An icon to display a status of set of Sensors.
@@ -31,6 +38,8 @@ import java.util.ArrayList;
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
+	
+    String  _iconFamily;
 
     public MultiSensorIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -93,6 +102,12 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     }
     public NamedIcon getSensorIcon(int i) { 
         return entries.get(i).icon;
+    }
+    public String getFamily() {
+        return _iconFamily;
+    }
+    public void setFamily(String family) {
+        _iconFamily = family;
     }
     
     // display icons
@@ -187,6 +202,82 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         inconsistent.rotate(deg, this);
         displayState();
     }
+    public boolean setEditItemMenu(JPopupMenu popup) {
+        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("MultiSensor"));
+        popup.add(new javax.swing.AbstractAction(txt) {
+                public void actionPerformed(ActionEvent e) {
+                    editItem();
+                }
+            });
+        return true;
+    }
+
+    MultiSensorItemPanel _itemPanel;
+
+    protected void editItem() {
+        makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("MultiSensor")));
+        _itemPanel = new MultiSensorItemPanel(_paletteFrame, "MultiSensor", _iconFamily,
+                                       PickListModel.multiSensorPickModelInstance(), _editor);
+        ActionListener updateAction = new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                updateItem();
+            }
+        };
+        // duplicate _iconMap map with unscaled and unrotated icons
+        Hashtable<String, NamedIcon> map = new Hashtable<String, NamedIcon>();       
+        map.put("SensorStateInactive", inactive);
+        map.put("BeanStateInconsistent", inconsistent);
+        map.put("BeanStateUnknown", unknown);
+        for (int i = 0; i<entries.size(); i++) {
+        	map.put(MultiSensorItemPanel.POSITION[i], entries.get(i).icon);
+         }     	
+        _itemPanel.init(updateAction, map);
+        for (int i = 0; i<entries.size(); i++) {
+           	_itemPanel.setSelection(entries.get(i).namedSensor.getBean());
+         }     	
+        _itemPanel.setUpDown(getUpDown());
+        _paletteFrame.add(_itemPanel);
+        _paletteFrame.pack();
+        _paletteFrame.setVisible(true);
+    }
+
+    void updateItem() {
+        Hashtable <String, NamedIcon> iconMap = _itemPanel.getIconMap();
+        ArrayList<NamedBean> selections = _itemPanel.getTableSelections();
+        int[] positions = _itemPanel.getPositions();
+        if (selections==null) {
+            JOptionPane.showMessageDialog(_paletteFrame, 
+                    java.text.MessageFormat.format(
+                        ItemPalette.rbp.getString("NeedPosition"), positions.length), 
+                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (iconMap!=null) {
+            setInactiveIcon(new NamedIcon(iconMap.get("SensorStateInactive")));
+            setInconsistentIcon(new NamedIcon(iconMap.get("BeanStateInconsistent")));
+            setUnknownIcon(new NamedIcon(iconMap.get("BeanStateUnknown")));       	
+        } else {
+        	return;
+        }
+        entries = new ArrayList<Entry>(selections.size());
+        for (int i=0; i<selections.size(); i++) {
+            addEntry(selections.get(i).getDisplayName(), new NamedIcon(iconMap.get(MultiSensorItemPanel.POSITION[i])));
+        }
+        _iconFamily = _itemPanel.getFamilyName();
+        _itemPanel.clearSelections();
+        setUpDown(_itemPanel.getUpDown());
+        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(_editor);
+        _paletteFrame.dispose();
+        _paletteFrame = null;
+        _itemPanel.dispose();
+        _itemPanel = null;
+        invalidate();
+    }
+    
+    private void rotateNscale(NamedIcon oldIcon, NamedIcon newIcon) {   	
+        newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
+        newIcon.setRotation(oldIcon.getRotation(), this);
+    }
     
     public boolean setEditIconMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("MultiSensor"));
@@ -221,8 +312,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         setInconsistentIcon(iconEditor.getIcon("BeanStateInconsistent"));
         setUnknownIcon(iconEditor.getIcon("BeanStateUnknown"));
         for (int i = 0; i<entries.size(); i++) {
-            entries.get(i).namedSensor.getBean()
-                .removePropertyChangeListener(this);
+            entries.get(i).namedSensor.getBean().removePropertyChangeListener(this);
         }
         int numPositions = iconEditor.getNumIcons();
         entries = new ArrayList<Entry>(numPositions);
@@ -322,11 +412,6 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         
         // find if we want to increment or decrement
         boolean dec = false;
-/*        if (updown) {
-            if (yy > (inactive.getIconHeight()/2)) dec = true;
-        } else {
-            if (xx < (inactive.getIconWidth()/2)) dec = true;
-        }   */
         if (updown) {
             if ((yy-getY()) > maxHeight()/2) dec = true;
         } else {

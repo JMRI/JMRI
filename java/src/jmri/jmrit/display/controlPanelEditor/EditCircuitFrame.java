@@ -46,9 +46,9 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
     public EditCircuitFrame(String title, CircuitBuilder parent, OBlock block) {
         _block = block;
         setTitle(java.text.MessageFormat.format(title, _block.getDisplayName()));
+        addHelpMenu("package.jmri.jmrit.display.CircuitBuilder", true);
         _parent = parent;
         makeContentPanel();
-        _parent.setEditColors(false);
         updateContentPanel();
     }
 
@@ -129,7 +129,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         setContentPane(border);
         pack();
         if (_firstInstance) {
-            setLocationRelativeTo(_parent);
+            setLocationRelativeTo(_parent._editor);
             _firstInstance = false;
         } else {
             setLocation(_loc);
@@ -286,13 +286,13 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
                         JOptionPane.QUESTION_MESSAGE);
         if (result==JOptionPane.YES_OPTION) {
             _parent.removeBlock(_block);
-            _parent.closeCircuitFrame(null);
+            _parent.closeCircuitFrame();
             dispose();
         }
     }
 
     protected void updateContentPanel() {
-        updateIconList(_parent.getSelectionGroup());
+        updateIconList(_parent._editor.getSelectionGroup());
         String name = "";
         Sensor sensor = _block.getSensor();
         if (sensor!=null) {
@@ -361,10 +361,17 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         // check Sensors
         String sensorName = _detectorSensorName.getText();
         Sensor sensor = getSensor(sensorName);
-        _block.setSensor(sensorName);
         if (sensor==null) {
             JOptionPane.showMessageDialog(this, rbcp.getString("noDetecterSensor"), 
                             rbcp.getString("noSensor"), JOptionPane.INFORMATION_MESSAGE);
+        } else {
+        	try {
+                _block.setSensor(sensorName);        	        		
+        	} catch (Throwable t) {
+                JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(rbcp.getString("badSensorName"),
+                		sensorName, t.toString()),
+                        rbcp.getString("noSensor"), JOptionPane.INFORMATION_MESSAGE);        		
+        	}
         }
 
         String errorName = _errorSensorName.getText();
@@ -381,10 +388,8 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
             }
         }
         closePickList();
-        // check icons to be indicator type
-        _parent.iconsConverted();
         
-        _parent.closeCircuitFrame(_block);
+        _parent.checkCircuitFrame(_block);
         _loc = getLocation(_loc);
         _dim = getSize(_dim);
         dispose();

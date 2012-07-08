@@ -1,7 +1,7 @@
 package jmri.jmrit.display.controlPanelEditor.configurexml;
 
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
 import jmri.jmrit.display.configurexml.PositionableLabelXml;
 import jmri.jmrit.logix.Portal;
@@ -73,7 +73,11 @@ public class PortalIconXml extends PositionableLabelXml {
      * @param o  an Editor as an Object
      */
     public void load(Element element, Object o) {
-		Editor ed = (Editor) o;
+    	if (!(o instanceof ControlPanelEditor)) {
+            log.error("Can't load portalIcon.  Panel editor must use ControlPanelEditor.");
+            return;   		
+    	}
+    	ControlPanelEditor ed = (ControlPanelEditor) o;
         
         String fromBlk;
         try {
@@ -113,9 +117,9 @@ public class PortalIconXml extends PositionableLabelXml {
             return;
         }
     	
-        ed.putItem(l);
+        ed.putPortalIcon(l);
         // load individual item's option settings after editor has set its global settings
-        loadCommonAttributes(l, Editor.MARKERS, element);        
+        loadCommonAttributes(l, ControlPanelEditor.MARKERS, element);        
      }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PortalIconXml.class.getName());
