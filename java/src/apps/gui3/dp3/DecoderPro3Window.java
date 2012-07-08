@@ -33,11 +33,4 @@ public class DecoderPro3Window extends RosterFrame {
     public void remoteCalls(String[] args) {
         super.remoteCalls(args);
     }
-
-    @Override
-    protected void statusBar() {
-        super.statusBar();
-        JLabel ver = new JLabel("Version : " + jmri.Version.name());
-        addToStatusBox(ver, null);
-    }
 }
