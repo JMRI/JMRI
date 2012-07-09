@@ -72,7 +72,7 @@ public abstract class AppsBase {
     public AppsBase() {
         
         if (!log4JSetUp) initLog4J();
-        
+
         installConfigurationManager();
 
         installShutDownManager();
@@ -344,16 +344,20 @@ public abstract class AppsBase {
             }
         }
     }
-    
+
+    static protected boolean handlingQuit = false;
     /**
      * The application decided to quit, handle that.
      */
     static public void handleQuit() {
-        log.debug("Start handleQuit");
-        try {
-            InstanceManager.shutDownManagerInstance().shutdown();
-        } catch (Exception e) {
-            log.error("Continuing after error in handleQuit",e);
+        if (!handlingQuit) {
+            log.debug("Start handleQuit");
+            handlingQuit = true;
+            try {
+                InstanceManager.shutDownManagerInstance().shutdown();
+            } catch (Exception e) {
+                log.error("Continuing after error in handleQuit", e);
+            }
         }
     }
     
@@ -361,11 +365,14 @@ public abstract class AppsBase {
      * The application decided to restart, handle that.
      */
     static public void handleRestart() {
-        log.debug("Start handleRestart");
-        try {
-            InstanceManager.shutDownManagerInstance().restart();
-        } catch (Exception e) {
-            log.error("Continuing after error in handleRestart",e);
+        if (!handlingQuit) {
+            log.debug("Start handleRestart");
+            handlingQuit = true;
+            try {
+                InstanceManager.shutDownManagerInstance().restart();
+            } catch (Exception e) {
+                log.error("Continuing after error in handleRestart", e);
+            }
         }
     }
     
