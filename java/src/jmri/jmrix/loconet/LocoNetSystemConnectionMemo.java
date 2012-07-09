@@ -226,7 +226,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (getDisabled())
             return null;
         if (turnoutManager == null)
-            turnoutManager = new jmri.jmrix.loconet.LnTurnoutManager(getLnTrafficController(), tm, getSystemPrefix(), this);
+            turnoutManager = new jmri.jmrix.loconet.LnTurnoutManager(getLnTrafficController(), tm, getSystemPrefix());
         return turnoutManager;
     }
     
