@@ -306,12 +306,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         statusBar();
         systemsMenu();
         helpMenu(getMenu(), this);
-        if ((!p.getSimplePreferenceState(RosterFrame.class.getName() + ".hideGroups")) && !Roster.instance().getRosterGroupList().isEmpty()) {
+        if ((!p.getSimplePreferenceState(this.getClass().getName() + ".hideGroups")) && !Roster.instance().getRosterGroupList().isEmpty()) {
             hideGroupsPane(false);
         } else {
             hideGroupsPane(true);
         }
-        if (p.getSimplePreferenceState(RosterFrame.class.getName() + ".hideSummary")) {
+        if (p.getSimplePreferenceState(this.getClass().getName() + ".hideSummary")) {
             //We have to set it to display first, then we can hide it.
             hideBottomPane(false);
             hideBottomPane(true);
@@ -413,7 +413,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         rosterDetailPanel.add(locoImage, BorderLayout.WEST);
         rosterDetailPanel.add(rosterDetails(), BorderLayout.CENTER);
         rosterDetailPanel.add(bottomRight(), BorderLayout.EAST);
-        if (p.getSimplePreferenceState(RosterFrame.class.getName() + ".hideRosterImage")) {
+        if (p.getSimplePreferenceState(this.getClass().getName() + ".hideRosterImage")) {
             locoImage.setVisible(false);
             hideRosterImage = true;
         }
@@ -544,7 +544,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             rosterGroupSplitPane.setDividerLocation(groupSplitPaneLocation);
         }
         if (!Roster.instance().getRosterGroupList().isEmpty()) {
-            if (p.getSimplePreferenceState(RosterFrame.class.getName() + ".hideGroups")) {
+            if (p.getSimplePreferenceState(this.getClass().getName() + ".hideGroups")) {
                 hideGroupsPane(true);
             }
         } else {
@@ -1063,9 +1063,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     void saveWindowDetails() {
-        p.setSimplePreferenceState(RosterFrame.class.getName() + ".hideSummary", hideBottomPane);
-        p.setSimplePreferenceState(RosterFrame.class.getName() + ".hideGroups", hideGroups);
-        p.setSimplePreferenceState(RosterFrame.class.getName() + ".hideRosterImage", hideRosterImage);
+        p.setSimplePreferenceState(this.getClass().getName() + ".hideSummary", hideBottomPane);
+        p.setSimplePreferenceState(this.getClass().getName() + ".hideGroups", hideGroups);
+        p.setSimplePreferenceState(this.getClass().getName() + ".hideRosterImage", hideRosterImage);
         p.setProperty(getWindowFrameRef(), "selectedRosterGroup", groups.getSelectedRosterGroup());
         String selectedProgMode = "edit";
         if(service.isSelected())
