@@ -21,7 +21,7 @@ import jmri.Turnout;
  * it sends a LACK, indicating that the request was not forwarded on the rails.
  * In that case, this class goes into a tight loop, resending the last 
  * turnout message seen until it's received without a LACK reply.  Note
- * two things about this:
+ * three things about this:
  * <UL>
  * <LI>We provide this service for any turnout request, whether or
  * not it came from JMRI.  (This might be a problem if more than one
@@ -30,6 +30,15 @@ import jmri.Turnout;
  * the recovery.  This is a mixed bag; delaying can cause messages to get out
  * of sequence on the rails.  But not delaying takes up a lot of LocoNet 
  * bandwidth.
+ * <LI>The nature of the computer interface to LocoNet, and the time-sensitive 
+ * nature of the LocoNet arbitration process may allow a message from another 
+ * LocoNet source to sneak onto LocoNet immediately after the OPC_SW_REQ 
+ * message, before the command station can reply with OPC_LACK to the OPC_SW_REQ 
+ * request.  If this happens, the resend mechanism stops re-sending the 
+ * OPC_SW_REQ message.  In this case, the OPC_LACK message from the command 
+ * station might NOT be seen on LocoNet, which increases the difficulty of 
+ * properly coding the resend case.  This condition is not currently handled
+ * in the code.
  * </UL>
  * In the end, this implementation is OK, but not great.  An improvement would
  * be to control JMRI turnout operations centrally, so that retransmissions can
@@ -40,30 +49,40 @@ import jmri.Turnout;
  * @version         $Revision$
  */
 
-public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager implements LocoNetListener {
+public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager implements LocoNetListener, java.beans.PropertyChangeListener  {
 
     // ctor has to register for LocoNet events
-    public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller, String prefix) {
+    public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller, String prefix, LocoNetSystemConnectionMemo memo) {
         this.fastcontroller = fastcontroller;
         this.throttledcontroller = throttledcontroller;
         this.prefix = prefix;
+        trackStatusOkForSwitchCommandsToTrack = false;
+        powerManager = memo.getPowerManager();
+        powerManager.addPropertyChangeListener(this);
         
-        if (fastcontroller != null)
-            fastcontroller.addLocoNetListener(~0, this);
+        if (fastcontroller != null) {
+            fastcontroller.addLocoNetListener(~0, this); 
+            // ensure that the local view of track status is updated. (result is delayed!)
+            updateTrackPowerStatus();
+        }
         else
             log.error("No layout connection, turnout manager can't function");
     }
 
     LocoNetInterface fastcontroller;
     LocoNetInterface throttledcontroller;
-    
+    LnPowerManager powerManager;
+            
     String prefix;
+    boolean trackStatusOkForSwitchCommandsToTrack = false;
     
     public String getSystemPrefix() { return prefix; }
 
     public void dispose() {
         if (fastcontroller != null)
             fastcontroller.removeLocoNetListener(~0, this);
+        if (powerManager != null) 
+            powerManager.removePropertyChangeListener(this);
         super.dispose();
     }
 
@@ -115,7 +134,15 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
             // might have to resend, check 2nd byte
             if (lastSWREQ!=null && l.getElement(1)==0x30 && l.getElement(2)==0) {
                 // received LONG_ACK reject msg, resend
-                fastcontroller.sendLocoNetMessage(lastSWREQ);
+                if (trackStatusOkForSwitchCommandsToTrack == true) {
+                    // only fast-send the retry if track power is on or "idle" (e-stop but powered)
+                    // This is important for DCS51 because it will <OPC_LACK>(failcode) any switch
+                    // request if track is not powered.
+                    fastcontroller.sendLocoNetMessage(lastSWREQ);
+                }
+                else {
+                    if (log.isDebugEnabled()) log.debug("Aborting retry of LACK'd switch request due to no track power");
+                }
             }
             
             // clear so can't resend recursively (we'll see
@@ -124,8 +151,11 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
             return;
         }
         default:  // here we didn't find an interesting command
-            // clear resend message, indicating not to resend
-            lastSWREQ = null;
+            // Note that a message OTHER than a LONG_ACK message after a OPC_SW_REQ message will
+            // kill the switch request repeat operation.  This is not the optimal behavior,
+            // but better behavior requires more complex logic here.
+
+            lastSWREQ = null;  // clear the resend message info - the prevents resends
             return;
         }
         // reach here for loconet switch command; make sure we know about this one
@@ -144,6 +174,33 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     private int address(int a1, int a2) {
         // the "+ 1" in the following converts to throttle-visible numbering
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1);
+    }
+
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (e.getPropertyName().equals("Power")) {
+            if (powerManager.isPowerOn()) {
+                trackStatusOkForSwitchCommandsToTrack = true;
+                if (log.isDebugEnabled()) log.debug("Track Power is now ON, so retry mechanism is now "+
+                    (trackStatusOkForSwitchCommandsToTrack?"On":"Off")+
+                    ".");
+            }
+            else if (powerManager.isPowerOff()) {
+                trackStatusOkForSwitchCommandsToTrack = false;
+                if (log.isDebugEnabled()) log.debug("Track Power is now OFF, so retry mechanism is now "+
+                    (trackStatusOkForSwitchCommandsToTrack?"On":"Off")+
+                    ".");
+            }
+            else if (powerManager.isPowerUnknown()) {
+                trackStatusOkForSwitchCommandsToTrack = false;
+                if (log.isDebugEnabled()) log.debug("Track Power is now UNKNOWN, so retry mechanism is now "+
+                    (trackStatusOkForSwitchCommandsToTrack?"On":"Off")+
+                    ".");
+            }
+        }
+    }
+    
+    private void updateTrackPowerStatus() {
+        trackStatusOkForSwitchCommandsToTrack = (powerManager.isPowerOn());
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnTurnoutManager.class.getName());
