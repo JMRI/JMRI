@@ -34,11 +34,9 @@ import java.util.ArrayList;
 
 import java.util.EventObject;
 import javax.swing.*;
-import jmri.plaf.macosx.AboutHandler;
 import jmri.plaf.macosx.Application;
 import jmri.plaf.macosx.PreferencesHandler;
 import jmri.plaf.macosx.QuitHandler;
-import jmri.swing.AboutDialog;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.WindowInterface;
 
@@ -860,24 +858,14 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
      * The application decided to quit, handle that.
      */
     static public void handleQuit() {
-        log.debug("Start handleQuit");
-        try {
-            InstanceManager.shutDownManagerInstance().shutdown();
-        } catch (Exception e) {
-            log.error("Continuing after error in handleQuit",e);
-        }
+        AppsBase.handleQuit();
     }
     
     /**
      * The application decided to restart, handle that.
      */
     static public void handleRestart() {
-        log.debug("Start handleRestart");
-        try {
-            InstanceManager.shutDownManagerInstance().restart();
-        } catch (Exception e) {
-            log.error("Continuing after error in handleRestart",e);
-        }
+        AppsBase.handleQuit();
     }
 
     static boolean log4JSetUp = false;
