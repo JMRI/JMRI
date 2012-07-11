@@ -60,17 +60,19 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         super(parentFrame,  type, family, editor);
         setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
     }
-
     public void init() {
-    	Thread.yield();
-        add(instructions());
-        initIconFamiliesPanel();
-        initButtonPanel();
-        _catalog = CatalogPanel.makeDefaultCatalog();
-        add(_catalog);
-       _catalog.setVisible(false);
-        _catalog.setToolTipText(ItemPalette.rbp.getString("ToolTipDragCatalog"));
-        setSize(getPreferredSize());
+    	if (!_initialized) {
+        	Thread.yield();
+            add(instructions());
+            initIconFamiliesPanel();
+            initButtonPanel();
+            _catalog = CatalogPanel.makeDefaultCatalog();
+            add(_catalog);
+           _catalog.setVisible(false);
+            _catalog.setToolTipText(ItemPalette.rbp.getString("ToolTipDragCatalog"));
+            setSize(getPreferredSize());
+            super.init();
+    	}
     }
 
     protected JPanel instructions() {

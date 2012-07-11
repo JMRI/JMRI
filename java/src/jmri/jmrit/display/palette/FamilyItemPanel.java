@@ -48,16 +48,19 @@ public abstract class FamilyItemPanel extends ItemPanel {
     * subclasses will insert other panels
     */
     public void init() {
-    	Thread.yield();
-        _update = false;
-        _bottom1Panel = makeBottom1Panel();
-        _bottom2Panel = makeBottom2Panel();
-        initIconFamiliesPanel();
-        add(_iconFamilyPanel);
-        JPanel bottomPanel = new JPanel(new FlowLayout());
-        bottomPanel.add(_bottom1Panel);
-        bottomPanel.add(_bottom2Panel);
-        add(bottomPanel);
+       	if (!_initialized) {
+       		Thread.yield();
+            _update = false;
+            _bottom1Panel = makeBottom1Panel();
+            _bottom2Panel = makeBottom2Panel();
+            initIconFamiliesPanel();
+            add(_iconFamilyPanel);
+            JPanel bottomPanel = new JPanel(new FlowLayout());
+            bottomPanel.add(_bottom1Panel);
+            bottomPanel.add(_bottom2Panel);
+            add(bottomPanel);
+            super.init();
+       	}
     }
 
     /**

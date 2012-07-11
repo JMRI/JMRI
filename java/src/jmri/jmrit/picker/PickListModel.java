@@ -431,12 +431,6 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         MultiSensorPickModel () {
             super();
         }
-        public boolean isCellEditable(int r,int c) {
-            if (c==POSITION_COL) {
-                return true;
-            }
-            return super.isCellEditable(r, c);
-        }
         public Object getValueAt (int r, int c) {
             if (c==POSITION_COL) {
                 return _position.get(Integer.valueOf(r));
@@ -503,7 +497,6 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
             return false;
         }
     }
-
 
     class MemoryPickModel extends PickListModel {
         MemoryManager manager;
