@@ -51,6 +51,7 @@ import jmri.util.swing.XTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableCellEditor;
 import javax.swing.DefaultCellEditor;
+import jmri.jmrit.throttle.LargePowerManagerButton;
 import org.apache.log4j.Logger;
 
 /**
@@ -157,6 +158,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         if (Apps3.buttonSpace() != null) {
             getToolBar().add(Apps3.buttonSpace());
         }
+        getToolBar().add(new LargePowerManagerButton(true));
         getToolBar().add(modePanel);
     }
 
