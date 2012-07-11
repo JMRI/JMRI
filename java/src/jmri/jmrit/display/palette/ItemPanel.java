@@ -27,6 +27,7 @@ public abstract class ItemPanel extends JPanel {
     protected String    _family;
     protected Editor    _editor;
     protected boolean   _update = false;    // Editing existing icon, do not allow icon dragging. set in init()
+    protected boolean   _initialized = false;    // Has init() been run
 
     /**
     * Constructor for all table types.  When item is a bean, the itemType is the name key 
@@ -48,7 +49,9 @@ public abstract class ItemPanel extends JPanel {
      * Initializes panel for selecting a new control panel item or for updating an existing item.
      * Adds table if item is a bean.  i.e. customizes for the item type
      */
-    abstract public void init();
+    public void init() {
+    	_initialized = true;
+    }
 
     /* Methods used upon return from Icon dialogs
     * to update the panel for TableItemPanel item types.

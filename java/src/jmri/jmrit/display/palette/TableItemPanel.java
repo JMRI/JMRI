@@ -55,8 +55,10 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     * insert table
     */
     public void init() {
-        super.init();
-        add(initTablePanel(_model, _editor), 0);      // top of Panel
+    	if (!_initialized) {
+            super.init();
+            add(initTablePanel(_model, _editor), 0);      // top of Panel    		
+    	}
     }
 
     /**

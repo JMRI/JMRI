@@ -114,8 +114,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         setJMenuBar(_menuBar);
         addHelpMenu("package.jmri.jmrit.display.ControlPanelEditor", true);
-        LoadPalette p = new LoadPalette(this);
-        javax.swing.SwingUtilities.invokeLater(p);
+        _itemPalette = new ItemPalette(rb.getString("MenuItemItemPallette"), this);        		
 
         super.setTargetPanel(null, null);
         super.setTargetPanelSize(300, 300);
@@ -138,7 +137,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         JMenuItem mi = new JMenuItem(rb.getString("MenuItemItemPallette"));
         mi.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    makePalette();
+                    _itemPalette.setVisible(true);        	
                 }
             });
         mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
@@ -186,14 +185,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _warrantMenu = jmri.jmrit.logix.WarrantTableAction.makeWarrantMenu();
         if (_warrantMenu==null) {
         	_warrantMenu = new JMenu(ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle").getString("MenuWarrant"));
-           /* if (HelpUtil.initOK()) */ {
-                JMenuItem aboutItem = new JMenuItem("About Warrants");
-                HelpUtil.getGlobalHelpBroker().enableHelpOnButton(aboutItem, "package.jmri.jmrit.logix.Warrant", null);
-                _warrantMenu.add(aboutItem);
-                aboutItem = new JMenuItem("About OBlocks&Portals");
-                HelpUtil.getGlobalHelpBroker().enableHelpOnButton(aboutItem, "package.jmri.jmrit.logix.OBlockTable", null);
-                _warrantMenu.add(aboutItem);
-            }
+            JMenuItem aboutItem = new JMenuItem("About Warrants");
+            HelpUtil.getGlobalHelpBroker().enableHelpOnButton(aboutItem, "package.jmri.jmrit.logix.Warrant", null);
+            _warrantMenu.add(aboutItem);
+            aboutItem = new JMenuItem("About OBlocks&Portals");
+            HelpUtil.getGlobalHelpBroker().enableHelpOnButton(aboutItem, "package.jmri.jmrit.logix.OBlockTable", null);
+            _warrantMenu.add(aboutItem);
         }
     	_menuBar.add(_warrantMenu, 0);
     }
@@ -757,43 +754,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             super.setTitle(name);
         }
     }
-
-	JDialog _dialog; 
-	public void makePalette() {
-    	if (_itemPalette==null) {
-            _iconMenu.setEnabled(false);
-        	String title = rb.getString("MenuItemItemPallette");
-        	_dialog = new JDialog(this, title, false);
-            JPanel panel = new JPanel();
-            panel.setLayout(new BorderLayout(100,100));
-            JPanel p = new JPanel();
-            p.add(new JLabel(rbcp.getString("waitForPalette")));
-            panel.add(p);
-            _dialog.getContentPane().add(panel);
-            _dialog.setLocation(getLocation().x+200, getLocation().y+150);
-            _dialog.pack();
-            _dialog.setVisible(true);
-        }
-        else {
-            _itemPalette.setVisible(true);        	
-        }
-    }
-        
-	class LoadPalette extends Thread {
-		Editor ed;
-		LoadPalette(Editor e) {
-			ed = e;
-		}
-		public void run() {
-	        ItemPalette.loadIcons();   	
-	        _itemPalette = new ItemPalette(rb.getString("MenuItemItemPallette"), ed);        		
-	        if (_dialog!=null) {
-	        	_dialog.dispose();
-	        	_dialog = null;	        	
-	        }
-            _iconMenu.setEnabled(true);
-		}
-	}
 
     // all content loaded from file.
     public void loadComplete() {
