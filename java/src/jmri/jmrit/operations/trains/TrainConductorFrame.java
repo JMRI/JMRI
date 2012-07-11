@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
@@ -45,10 +46,11 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 
 	Train _train = null;
 	CarManager carManager = CarManager.instance();
-	TrainCommon tc = new TrainCommon();
+	TrainCommon trainCommon = new TrainCommon();
 	
 	JScrollPane pickupPane;
 	JScrollPane setoutPane;
+	JScrollPane movePane;
 
 	// labels
 	JLabel textRailRoadName = new JLabel();
@@ -77,6 +79,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	// panels
 	JPanel pPickups = new JPanel();
 	JPanel pSetouts = new JPanel();
+	JPanel pMoves = new JPanel();
 	JPanel pTrainRouteLocationComment = new JPanel();
 	JPanel pLocationComment = new JPanel();
 	
@@ -85,7 +88,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	List<RollingStock> rollingStock = new ArrayList<RollingStock>();
 	
 	// flags
-	boolean setMode = false;
+	boolean setMode = false;	// when true, cars that aren't selected can be "set"
 
 
 	public TrainConductorFrame() {
@@ -106,6 +109,10 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
       	setoutPane.setBorder(BorderFactory.createTitledBorder(rb.getString("SetOut")));
       	setoutPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
       	setoutPane.setPreferredSize(new Dimension(200, 300));
+      	
+      	movePane = new JScrollPane(pMoves);
+      	movePane.setBorder(BorderFactory.createTitledBorder(rb.getString("LocalMoves")));
+      	movePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
 	    //      Set up the panels
 				
@@ -185,6 +192,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 
        	pPickups.setLayout(new BoxLayout(pPickups,BoxLayout.Y_AXIS));
        	pSetouts.setLayout(new BoxLayout(pSetouts,BoxLayout.Y_AXIS));
+       	pMoves.setLayout(new BoxLayout(pMoves,BoxLayout.Y_AXIS));
        	pRow12.add(pickupPane);
        	pRow12.add(setoutPane);
        	
@@ -222,6 +230,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 		getContentPane().add(pRow6);
 		getContentPane().add(pRow10);
 		getContentPane().add(pRow12);
+		getContentPane().add(movePane);
 		getContentPane().add(pStatus);
 		getContentPane().add(pRow14);		
 		
@@ -345,6 +354,8 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 		if (_train != null && _train.getRoute() != null){
 			pPickups.removeAll();
 			pSetouts.removeAll();
+			pMoves.removeAll();
+			movePane.setVisible(false);	
 			RouteLocation rl = _train.getCurrentLocation();
 			if (rl != null){
 				pTrainRouteLocationComment.setVisible(!rl.getComment().equals(""));
@@ -364,29 +375,19 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 					for (int k = 0; k < carList.size(); k++) {
 						Car car = carManager.getById(carList.get(k));
 						if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
-								&& car.getRouteDestination() == rld) {
+								&& car.getRouteDestination() == rld && car.getRouteDestination() != rl) {
 							rollingStock.add(car);
 							car.addPropertyChangeListener(this);
 							if (carCheckBoxes.containsKey("p"+car.getId())){
 								if (setMode && !carCheckBoxes.get("p"+car.getId()).isSelected()){
-							      	JPanel pSet = new JPanel();
-							      	pSet.setLayout(new GridBagLayout());							      	
-									JButton carSetButton = new JButton(rb.getString("Set"));
-									carSetButton.setName(car.getId());
-									carSetButton.addActionListener(new java.awt.event.ActionListener() {
-										public void actionPerformed(java.awt.event.ActionEvent e) {
-											setCarButtonActionPerfomed(e);
-										}
-									});
-									JLabel label = new JLabel(car.toString());
-									addItem(pSet, label, 0,0);
-									addItem(pSet, carSetButton, 1,0);							
-									pPickups.add(pSet);
+									// change to set button so user can remove car from train
+									pPickups.add(addSet(car));
 								} else {
 									pPickups.add(carCheckBoxes.get("p"+car.getId()));
 								}
 							} else {
-								JCheckBox checkBox = new JCheckBox(tc.pickupCar(car));
+								JCheckBox checkBox = new JCheckBox(trainCommon.pickupCar(car));
+								setCheckBoxFont(checkBox);
 								addCheckBoxAction(checkBox);
 								pPickups.add(checkBox);
 								carCheckBoxes.put("p"+car.getId(), checkBox);
@@ -397,37 +398,52 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 				// set outs				
 				for (int j=0; j<carList.size(); j++){
 					Car car = carManager.getById(carList.get(j));
-					if (car.getRouteDestination() == rl){
+					if (car.getRouteDestination() == rl && car.getTrackName().equals("")){
 						if (!rollingStock.contains(car)){
 							rollingStock.add(car);
 							car.addPropertyChangeListener(this);
 						}
 						if (carCheckBoxes.containsKey("s"+car.getId())){
 							if (setMode && !carCheckBoxes.get("s"+car.getId()).isSelected()){
-						      	JPanel pSet = new JPanel();
-						      	pSet.setLayout(new GridBagLayout());							      	
-								JButton carSetButton = new JButton(rb.getString("Set"));
-								carSetButton.setName(car.getId());
-								carSetButton.addActionListener(new java.awt.event.ActionListener() {
-									public void actionPerformed(java.awt.event.ActionEvent e) {
-										setCarButtonActionPerfomed(e);
-									}
-								});
-								JLabel label = new JLabel(car.toString());
-								addItem(pSet, label, 0,0);
-								addItem(pSet, carSetButton, 1,0);								
-								pSetouts.add(pSet);
+								// change to set button so user can remove car from train
+								pSetouts.add(addSet(car));
 							} else {
 								pSetouts.add(carCheckBoxes.get("s"+car.getId()));
 							}
 						} else {
-							JCheckBox checkBox = new JCheckBox(tc.dropCar(car));
+							JCheckBox checkBox = new JCheckBox(trainCommon.dropCar(car));
+							setCheckBoxFont(checkBox);
 							addCheckBoxAction(checkBox);
 							pSetouts.add(checkBox);
 							carCheckBoxes.put("s"+car.getId(), checkBox);
 						}
 					}
-				}				
+				}
+				// local moves
+				for (int j=0; j<carList.size(); j++){
+					Car car = carManager.getById(carList.get(j));
+					if (car.getRouteLocation() == rl && car.getRouteDestination() == rl && !car.getTrackName().equals("")){
+						movePane.setVisible(true);
+						if (!rollingStock.contains(car)){
+							rollingStock.add(car);
+							car.addPropertyChangeListener(this);
+						}
+						if (carCheckBoxes.containsKey("m"+car.getId())){
+							if (setMode && !carCheckBoxes.get("m"+car.getId()).isSelected()){
+								// change to set button so user can remove car from train
+								pMoves.add(addSet(car));
+							} else {
+								pMoves.add(carCheckBoxes.get("m"+car.getId()));
+							}
+						} else {
+							JCheckBox checkBox = new JCheckBox(trainCommon.moveCar(car));
+							setCheckBoxFont(checkBox);
+							addCheckBoxAction(checkBox);
+							pMoves.add(checkBox);
+							carCheckBoxes.put("m"+car.getId(), checkBox);
+						}
+					}
+				}									
 				textStatus.setText(getStatus(rl));
 				check();
 			} else {
@@ -437,11 +453,36 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 			}
 			pPickups.repaint();
 			pSetouts.repaint();
+			pMoves.repaint();
 			pPickups.validate();
 			pSetouts.validate();
+			pMoves.validate();
 			selectButton.setEnabled(carCheckBoxes.size() > 0);
 			clearButton.setEnabled(carCheckBoxes.size() > 0);
 			setButtonText();
+		}
+	}
+	
+	private JPanel addSet(Car car){
+      	JPanel pSet = new JPanel();
+      	pSet.setLayout(new GridBagLayout());							      	
+		JButton carSetButton = new JButton(rb.getString("Set"));
+		carSetButton.setName(car.getId());
+		carSetButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				setCarButtonActionPerfomed(e);
+			}
+		});
+		JLabel label = new JLabel(car.toString());
+		addItem(pSet, label, 0,0);
+		addItem(pSet, carSetButton, 1,0);								
+		return pSet;
+	}
+	
+	private void setCheckBoxFont(JCheckBox checkBox){
+		if (Setup.isTabEnabled()){			
+			Font font = new Font ("Courier", Font.PLAIN, checkBox.getFont().getSize());
+			checkBox.setFont(font);
 		}
 	}
 	
@@ -512,6 +553,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 				Car car = (Car)e.getSource();
 				carCheckBoxes.remove("p"+car.getId());
 				carCheckBoxes.remove("s"+car.getId());
+				carCheckBoxes.remove("m"+car.getId());
 				log.debug("Car "+car.toString()+" removed from list");
 			}
 			update();

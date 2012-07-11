@@ -192,6 +192,18 @@ public class TrainCommon {
 		StringBuffer buf = new StringBuffer();
 		String[] format = Setup.getDropCarMessageFormat();
 		for (int i=0; i<format.length; i++){
+			//TODO the Setup.Location doesn't work correctly for the conductor window
+			// therefore we use the local true to disable it.
+			String s = getCarAttribute(car, format[i], !pickup, local);
+			buf.append(s);
+		}
+		return buf.toString();
+	}
+	
+	protected String moveCar(Car car){
+		StringBuffer buf = new StringBuffer();
+		String[] format = Setup.getLocalMessageFormat();
+		for (int i=0; i<format.length; i++){
 			String s = getCarAttribute(car, format[i], !pickup, local);
 			buf.append(s);
 		}
