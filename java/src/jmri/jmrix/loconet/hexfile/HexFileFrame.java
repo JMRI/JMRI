@@ -159,7 +159,8 @@ public class HexFileFrame extends JmriJFrame {
         port.getAdapterMemo().setLnTrafficController(packets);
 
         // do the common manager config
-        port.getAdapterMemo().configureCommandStation(true, false, "<unknown>");   // full featured by default
+        port.getAdapterMemo().configureCommandStation(true, false, "<unknown>",   // full featured by default
+                                            false, false);
         port.getAdapterMemo().configureManagers();
 
         // Install a debug programmer, replacing the existing LocoNet one

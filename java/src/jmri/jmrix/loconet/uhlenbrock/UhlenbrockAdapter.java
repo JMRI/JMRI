@@ -46,7 +46,8 @@ public void configure() {
     adaptermemo.setSlotManager(new SlotManager(packets));
     adaptermemo.setLnTrafficController(packets);
     // do the common manager config
-    adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+        adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName, 
+                                            mTurnoutNoRetry, mTurnoutExtraSpace);
     adaptermemo.configureManagers();
 
     // start operation

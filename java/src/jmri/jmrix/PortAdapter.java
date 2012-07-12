@@ -62,6 +62,8 @@ public interface PortAdapter  {
 
     public String getCurrentOption1Setting();
 
+
+
     /**         
     * Get an array of valid values for "option 2"; 
     * used to display valid options.         
@@ -85,7 +87,61 @@ public interface PortAdapter  {
     * Get current option 2 value
     */
     public String getCurrentOption2Setting();
-        
+
+
+    /**         
+    * Get an array of valid values for "option 3"; 
+    * used to display valid options.         
+    * May not be null, but may have zero entries
+    */
+    public String[] validOption3();
+
+    /**
+     * Get a String that says what Option 3 represents
+     * May be an empty string, but will not be null
+    */
+    public String option3Name();
+
+    /**
+    * Set the third port option.  Only to be used after construction, but
+    * before the openPort call
+    */
+    public void configureOption3(String value);
+
+    /**
+    * Get current option 3 value
+    */
+    public String getCurrentOption3Setting();
+
+
+    /**         
+    * Get an array of valid values for "option 4"; 
+    * used to display valid options.         
+    * May not be null, but may have zero entries
+    */
+    public String[] validOption4();
+
+    /**
+     * Get a String that says what Option 4 represents
+     * May be an empty string, but will not be null
+    */
+    public String option4Name();
+
+    /**
+    * Set the fourth port option.  Only to be used after construction, but
+    * before the openPort call
+    */
+    public void configureOption4(String value);
+
+    /**
+    * Get current option 4 value
+    */
+    public String getCurrentOption4Setting();
+
+
+
+
+  
      /**
      * Return the System Manufacturers Name
      */

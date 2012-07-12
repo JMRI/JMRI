@@ -22,7 +22,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
                                         SlotManager sm) {
         super("L", "LocoNet");
         this.lt = lt;
-        this.sm = sm;
+        setSlotManager(sm);
         register(); // registers general type
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
         
@@ -49,7 +49,10 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      */
     public SlotManager getSlotManager() { return sm; }
     private SlotManager sm;
-    public void setSlotManager(SlotManager sm){ this.sm = sm;}
+    public void setSlotManager(SlotManager sm){
+        this.sm = sm;
+        if (sm != null) sm.setThrottledTransmitter(tm, mTurnoutNoRetry);
+    }
     
     /**
      * Provides access to the TrafficController for this
@@ -77,14 +80,21 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         programmerManager = p;
     }
     
+    protected boolean mTurnoutNoRetry = false;
+    protected boolean mTurnoutExtraSpace = false;
+    
     /**
      * Configure the programming manager and "command station" objects
      * @param mCanRead
      * @param mProgPowersOff
      * @param name Command station type name
      */
-    public void configureCommandStation(boolean mCanRead, boolean mProgPowersOff, String name) {
+    public void configureCommandStation(boolean mCanRead, boolean mProgPowersOff, 
+                                        String name, boolean mTurnoutNoRetry, boolean mTurnoutExtraSpace) {
 
+        this.mTurnoutNoRetry = mTurnoutNoRetry;
+        this.mTurnoutExtraSpace = mTurnoutExtraSpace;
+        
         // loconet.SlotManager to do programming (the Programmer instance is registered
         // when the SlotManager is created)
         // set slot manager's read capability
@@ -165,7 +175,12 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      */
     public void configureManagers() {
     
-        tm = new LocoNetThrottledTransmitter(getLnTrafficController());
+        tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
+        log.debug("ThrottleTransmitted configured with :"+mTurnoutExtraSpace);
+        if (sm != null) {
+            sm.setThrottledTransmitter(tm, mTurnoutNoRetry);
+            log.debug("set turnout retry: "+mTurnoutNoRetry);
+        }
         
         InstanceManager.setPowerManager(
             getPowerManager());
@@ -226,7 +241,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (getDisabled())
             return null;
         if (turnoutManager == null)
-            turnoutManager = new jmri.jmrix.loconet.LnTurnoutManager(getLnTrafficController(), tm, getSystemPrefix());
+            turnoutManager = new jmri.jmrix.loconet.LnTurnoutManager(getLnTrafficController(), tm, getSystemPrefix(), mTurnoutNoRetry);
         return turnoutManager;
     }
     
@@ -312,7 +327,8 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             InstanceManager.deregister(clockControl, jmri.jmrix.loconet.LnClockControl.class);
         super.dispose();
     }
-    
+
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetSystemConnectionMemo.class.getName());   
 }
 
 

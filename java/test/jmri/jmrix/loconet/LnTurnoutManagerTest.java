@@ -28,7 +28,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  
 		// prepare an interface, register
 		lnis = new LocoNetInterfaceScaffold();
 		// create and register the manager object
-		l = new LnTurnoutManager(lnis, lnis, "L");
+		l = new LnTurnoutManager(lnis, lnis, "L", false);
 		jmri.InstanceManager.setTurnoutManager(l);
 	}
 
@@ -80,7 +80,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  
 
 	public void testAsAbstractFactory () {
 		// create and register the manager object
-		LnTurnoutManager l = new LnTurnoutManager(lnis, lnis, "L");
+		LnTurnoutManager l = new LnTurnoutManager(lnis, lnis, "L", false);
 		jmri.InstanceManager.setTurnoutManager(l);
 
 		// ask for a Turnout, and check type

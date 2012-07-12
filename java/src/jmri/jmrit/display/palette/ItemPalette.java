@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.io.File;
 
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -43,7 +45,7 @@ import jmri.jmrit.picker.PickListModel;
  * @author Pete Cressman  Copyright (c) 2010
  */
 
-public class ItemPalette extends JmriJFrame /* implements ListSelectionListener, ChangeListener */ {
+public class ItemPalette extends JmriJFrame implements ChangeListener  {
 
     public static final ResourceBundle rbp = ResourceBundle.getBundle("jmri.jmrit.display.palette.PaletteBundle");
     public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
@@ -322,88 +324,98 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         
         itemPanel = new TableItemPanel(this, "Sensor", null,
                                        PickListModel.sensorPickModelInstance(), editor);
-        itemPanel.init();
+//        itemPanel.init();
         _tabPane.add(new JScrollPane(itemPanel), rbp.getString("Sensor"));
         _tabIndex.put("Sensor", itemPanel);
 
         itemPanel = new SignalHeadItemPanel(this, "SignalHead", null,
                                        PickListModel.signalHeadPickModelInstance(), editor);
-        itemPanel.init();
+ //       itemPanel.init();
         _tabPane.add(new JScrollPane(itemPanel), rbp.getString("SignalHead"));
         _tabIndex.put("SignalHead", itemPanel);
 
         itemPanel = new SignalMastItemPanel(this, "SignalMast", null,
                                             PickListModel.signalMastPickModelInstance(), editor);
-        itemPanel.init();
+//        itemPanel.init();
         _tabPane.add(new JScrollPane(itemPanel), rbp.getString("SignalMast"));
         _tabIndex.put("SignalMast", itemPanel);
 
         itemPanel = new MemoryItemPanel(this, "Memory", null,
                                         PickListModel.memoryPickModelInstance(), editor);
-        itemPanel.init();
+ //       itemPanel.init();
         _tabPane.add(new JScrollPane(itemPanel), rbp.getString("Memory"));
         _tabIndex.put("Memory", itemPanel);
 
         itemPanel = new ReporterItemPanel(this, "Reporter", null,
                                           PickListModel.reporterPickModelInstance(), editor);
-        itemPanel.init();
+//        itemPanel.init();
         _tabPane.add(new JScrollPane(itemPanel), rbp.getString("Reporter"));
         _tabIndex.put("Reporter", itemPanel);
 
-        itemPanel = new TableItemPanel(this, "Light", null,
+       itemPanel = new TableItemPanel(this, "Light", null,
                                        PickListModel.lightPickModelInstance(), editor);
-        itemPanel.init();
+//        itemPanel.init();
         _tabPane.add(itemPanel, rbp.getString("Light"));
         _tabIndex.put("Light", itemPanel);
 
         itemPanel = new MultiSensorItemPanel(this, "MultiSensor", null,
                                              PickListModel.multiSensorPickModelInstance(), editor);
-        itemPanel.init();
+ //       itemPanel.init();
         _tabPane.add(new JScrollPane(itemPanel), rbp.getString("MultiSensor"));
         _tabIndex.put("MultiSensor", itemPanel);
  
         ItemPanel iconPanel = new IconItemPanel(this, "Icon", null, editor);
-        iconPanel.init();
+//        iconPanel.init();
         _tabPane.add(new JScrollPane(iconPanel), rbp.getString("Icon"));
         _tabIndex.put("Icon", itemPanel);
  
         iconPanel = new BackgroundItemPanel(this, "Background", null, editor);
-        iconPanel.init();
+//        iconPanel.init();
         _tabPane.add(new JScrollPane(iconPanel), rbp.getString("Background")); 
         _tabIndex.put("Background", itemPanel);
 
         iconPanel = new TextItemPanel(this, "Text", null, editor);
-        iconPanel.init();
+ //       iconPanel.init();
         _tabPane.add(new JScrollPane(iconPanel), rbp.getString("Text"));     
         _tabIndex.put("Text", itemPanel);
 
         iconPanel = new RPSItemPanel(this, "RPSReporter", null, editor);
-        iconPanel.init();
+//        iconPanel.init();
         _tabPane.add(new JScrollPane(iconPanel), rbp.getString("RPSReporter")); 
         _tabIndex.put("RPSReporter", itemPanel);
 
         iconPanel = new ClockItemPanel(this, "FastClock", null, editor);
-        iconPanel.init();
+//        iconPanel.init();
         _tabPane.add(new JScrollPane(iconPanel), rbp.getString("FastClock")); 
         _tabIndex.put("FastClock", itemPanel);
 
         itemPanel = new IndicatorItemPanel(this, "IndicatorTrack", null, editor);
-        itemPanel.init();
+//        itemPanel.init();
         _tabPane.add(new JScrollPane(itemPanel), rbp.getString("IndicatorTrack"));
         _tabIndex.put("IndicatorTrack", itemPanel);
 
         itemPanel = new IndicatorTOItemPanel(this, "IndicatorTO", null,
                                        PickListModel.turnoutPickModelInstance(), editor);
-        itemPanel.init();
+//        itemPanel.init();
         _tabPane.add(new JScrollPane(itemPanel), rbp.getString("IndicatorTO"));
         _tabIndex.put("IndicatorTO", itemPanel);
-
+        
+        _tabPane.addChangeListener(this);
         setLayout(new BorderLayout(5,5));
         add(_tabPane, BorderLayout.CENTER);
         setLocation(10,10);               
         pack();
 //        System.out.println("Palette built in "+ (System.currentTimeMillis()-t)+ " milliseconds.");
-   }
+    }
+    
+    public void stateChanged(ChangeEvent e) {
+//        long t = System.currentTimeMillis();
+        JTabbedPane tp = (JTabbedPane)e.getSource();
+        JScrollPane sp = (JScrollPane)tp.getSelectedComponent();
+        ItemPanel p = (ItemPanel)sp.getViewport().getView();
+    	p.init();
+//        System.out.println("Panel "+p._itemType+" built in "+ (System.currentTimeMillis()-t)+ " milliseconds.");
+    }
 
     private void makeMenus(Editor editor) {
         JMenuBar menuBar = new JMenuBar();

@@ -76,7 +76,8 @@ public class PR3Adapter extends LocoBufferAdapter {
             adaptermemo.setSlotManager(new SlotManager(packets));
             adaptermemo.setLnTrafficController(packets);
             // do the common manager config
-            adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+            adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName, 
+                                                mTurnoutNoRetry, mTurnoutExtraSpace);
             PR3SystemConnectionMemo memo = (PR3SystemConnectionMemo)adaptermemo;
             memo.configureManagersPR2();
     
@@ -105,7 +106,8 @@ public class PR3Adapter extends LocoBufferAdapter {
             adaptermemo.setSlotManager(new SlotManager(packets));
             adaptermemo.setLnTrafficController(packets);
             // do the common manager config
-            adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+            adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName, 
+                                            mTurnoutNoRetry, mTurnoutExtraSpace);
             
             PR3SystemConnectionMemo memo = (PR3SystemConnectionMemo)adaptermemo;
             memo.configureManagersMS100();

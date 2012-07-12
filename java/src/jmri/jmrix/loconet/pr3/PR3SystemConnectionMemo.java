@@ -107,7 +107,8 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
     public void configureManagersMS100() {
         mode = MS100MODE;
 
-        tm = new LocoNetThrottledTransmitter(getLnTrafficController());
+        tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
+        log.debug("ThrottleTransmitted configured with :"+mTurnoutExtraSpace);
 
         InstanceManager.setPowerManager(super.getPowerManager());
 
@@ -131,6 +132,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
         InstanceManager.deregister(this, PR3SystemConnectionMemo.class);
         super.dispose();
     }
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PR3SystemConnectionMemo.class.getName());   
 }
 
 /* @(#)PR3SystemConnectionMemo.java */

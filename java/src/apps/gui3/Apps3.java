@@ -12,6 +12,8 @@ import javax.swing.*;
 import java.util.Enumeration;
 import java.util.EventObject;
 import java.util.ResourceBundle;
+import jmri.InstanceManager;
+import jmri.ShutDownTask;
 import jmri.util.SystemType;
 
 
@@ -79,6 +81,21 @@ public abstract class Apps3 extends apps.AppsBase {
             return;
         }
         createAndDisplayFrame();
+        InstanceManager.shutDownManagerInstance().register(new ShutDownTask() {
+
+            @Override
+            public boolean execute() {
+                for (JmriJFrame frame : JmriJFrame.getFrameList()) {
+                    frame.windowClosing(null);
+                }
+                return true;
+            }
+
+            @Override
+            public String name() {
+                return "closeJmriJFrameWindows";
+            }
+        });
     }
     
         /**

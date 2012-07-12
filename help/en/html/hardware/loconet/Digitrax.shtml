@@ -280,6 +280,30 @@ PR3 instead.<br>
                 allow readback on a programming track connected directly to the
                 programming hardware.</li>
         </ul>
+    <li>JMRI can generate so much activity, particularly on large layouts or layouts
+        that use DCC accessory decoders to run signals, that it's hard for the LocoNet
+        and command station to keep up.  JMRI has various things built in to handle
+        temporary LocoNet overloads, and you should usually leave these at their default
+        settings.  But if you have problems with too many messages, notifications of 
+        rejected messages or a busy command station, or similar, there is an advanced
+        option in the JMRI preferences for Digitrax connections that might help.  It's called
+        "Turnout Processing", and it has four settings:
+        <ul>
+        <li>Normal - the default, recommended for the vast majority of layouts
+        <li>Spread - spread turnout commands to the layout out by inserted additional
+            delay between them. This slows things down, but it can prevent overrunning the
+            command station by giving it more commands through the LocoNet than 
+            can be sent over the (slower) DCC connection.
+        <li>Once Only - The command station can reject a JMRI request to send a 
+            turnout command over the DCC link.  Normally JMRI retries the request, which
+            takes a bunch more time.  If your turnout and signal hardware is connected
+            to LocoNet, not to the DCC bus, then you don't need that retry, and can 
+            select this option to suppress it.
+        <li>Both - both the extra time and the suppressed retries.
+        </ul>
+        Note that you must save preferences and restart the program to put an changes
+        to this option into effect.
+        
 </ul>
 
 <h2><a name="Support">Support</a></h2>

@@ -1053,13 +1053,18 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         antialiasingOnItem.setSelected(antialiasingOn);
 		// title item
         optionMenu.addSeparator();
-        JMenuItem titleItem = new JMenuItem(rb.getString("NewTitle")+"...");
+        JMenuItem titleItem = new JMenuItem(rb.getString("EditTitle")+"...");
         optionMenu.add(titleItem);
         titleItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     // prompt for name
-                    String newName = JOptionPane.showInputDialog(this, 
-											rb.getString("EnterTitle")+":");
+                    String newName = (String)JOptionPane.showInputDialog(getTargetFrame(), 
+                                        rb.getString("EnterTitle")+":", rb.getString("EditTitleMessageTitle"), 
+                                            JOptionPane.PLAIN_MESSAGE, null, null,layoutName);
+                    if (newName==null) return;  // cancelled
+                    if(newName.equals(layoutName)){
+                        return;
+                    }
                     if (newName==null) return;  // cancelled
                     if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(newName)){
                     	JOptionPane.showMessageDialog(null, rb.getString("CanNotRename"), rb.getString("PanelExist"),

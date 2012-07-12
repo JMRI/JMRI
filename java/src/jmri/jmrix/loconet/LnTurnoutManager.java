@@ -43,10 +43,11 @@ import jmri.Turnout;
 public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager implements LocoNetListener {
 
     // ctor has to register for LocoNet events
-    public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller, String prefix) {
+    public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller, String prefix, boolean mTurnoutNoRetry) {
         this.fastcontroller = fastcontroller;
         this.throttledcontroller = throttledcontroller;
         this.prefix = prefix;
+        this.mTurnoutNoRetry = mTurnoutNoRetry;
         
         if (fastcontroller != null)
             fastcontroller.addLocoNetListener(~0, this);
@@ -56,6 +57,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
 
     LocoNetInterface fastcontroller;
     LocoNetInterface throttledcontroller;
+    boolean mTurnoutNoRetry;
     
     String prefix;
     
@@ -113,7 +115,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         }
         case LnConstants.OPC_LONG_ACK: { 
             // might have to resend, check 2nd byte
-            if (lastSWREQ!=null && l.getElement(1)==0x30 && l.getElement(2)==0) {
+            if (lastSWREQ!=null && l.getElement(1)==0x30 && l.getElement(2)==0 & !mTurnoutNoRetry) {
                 // received LONG_ACK reject msg, resend
                 fastcontroller.sendLocoNetMessage(lastSWREQ);
             }

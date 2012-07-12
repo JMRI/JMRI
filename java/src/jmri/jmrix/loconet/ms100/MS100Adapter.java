@@ -249,7 +249,8 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         adaptermemo.setSlotManager(new SlotManager(packets));
         adaptermemo.setLnTrafficController(packets);
         // do the common manager config
-        adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+        adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName, 
+                                            mTurnoutNoRetry, mTurnoutExtraSpace);
         adaptermemo.configureManagers();
         //memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
         //memo.configureManagers();
