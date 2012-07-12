@@ -8,6 +8,7 @@ package jmri.jmrit.withrottle;
  *
  */
 
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
 import jmri.util.swing.JmriAbstractAction;
@@ -49,9 +50,16 @@ public class WiThrottleCreationAction extends JmriAbstractAction{
      * @param e The event causing the action.
      */
     public void actionPerformed(ActionEvent e) {
-    	if (UI == null){    //  Only allow one to be created
-            UI = new UserInterface();
-        }
+    	GraphicsEnvironment.getLocalGraphicsEnvironment();
+    	// create GUI, unless running in headless mode
+    	if (!GraphicsEnvironment.isHeadless()) {
+    		//start the normal GUI interface and server
+    		if (UI == null){    //  Only allow one to be created
+    			UI = new UserInterface();
+    		}
+    	} else {
+    		new FacelessServer(); // start server thread with no UI
+    	}
     }
 
     // never invoked, because we overrode actionPerformed above
