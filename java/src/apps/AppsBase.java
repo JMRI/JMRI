@@ -138,6 +138,10 @@ public abstract class AppsBase {
 
         // install preference manager
         InstanceManager.setTabbedPreferences(new apps.gui3.TabbedPreferences());
+        
+        // install the named bean handler
+        InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+
     }
 
     protected void setAndLoadPreferenceFile() {
