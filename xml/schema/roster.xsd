@@ -52,6 +52,13 @@
                 <xs:element name="locomotive"  type="LocomotiveType" minOccurs="1" maxOccurs="unbounded">
               </xs:element>
             </xs:sequence>
+            <xs:attribute name="filter" type="xs:string" use="optional">
+                <xs:annotation>
+                    <xs:documentation>
+                        The optional filter attribute is used by the RosterServlet.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
           </xs:complexType>
         </xs:element>
         
