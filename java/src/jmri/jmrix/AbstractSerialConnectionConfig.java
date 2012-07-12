@@ -81,6 +81,16 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 adapter.configureOption2((String)opt2Box.getSelectedItem());
             }
         });
+        opt3Box.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                adapter.configureOption3((String)opt3Box.getSelectedItem());
+            }
+        });
+        opt4Box.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                adapter.configureOption4((String)opt4Box.getSelectedItem());
+            }
+        });
         if(adapter.getSystemConnectionMemo()!=null){
             systemPrefixField.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -132,6 +142,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         adapter.configureBaudRate((String)baudBox.getSelectedItem());
         adapter.configureOption1((String)opt1Box.getSelectedItem());
         adapter.configureOption2((String)opt2Box.getSelectedItem());
+        adapter.configureOption3((String)opt3Box.getSelectedItem());
+        adapter.configureOption4((String)opt4Box.getSelectedItem());
         if(adapter.getSystemConnectionMemo()!=null && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())){
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
@@ -291,6 +303,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         	opt1Box.removeActionListener(opt1Box.getActionListeners()[0]);
         opt1Box.removeAllItems();
         for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
+
         opt2BoxLabel = new JLabel(adapter.option2Name());
         opt2List = adapter.validOption2();
         // need to remove ActionListener before addItem() or action event will occur
@@ -298,6 +311,22 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         	opt2Box.removeActionListener(opt2Box.getActionListeners()[0]);
         opt2Box.removeAllItems();
         for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
+
+        opt3BoxLabel = new JLabel(adapter.option3Name());
+        opt3List = adapter.validOption3();
+        // need to remove ActionListener before addItem() or action event will occur
+        if(opt3Box.getActionListeners().length >0)
+        	opt3Box.removeActionListener(opt3Box.getActionListeners()[0]);
+        opt3Box.removeAllItems();
+        for (int i=0; i<opt3List.length; i++) opt3Box.addItem(opt3List[i]);
+
+        opt4BoxLabel = new JLabel(adapter.option4Name());
+        opt4List = adapter.validOption4();
+        // need to remove ActionListener before addItem() or action event will occur
+        if(opt4Box.getActionListeners().length >0)
+        	opt4Box.removeActionListener(opt4Box.getActionListeners()[0]);
+        opt4Box.removeAllItems();
+        for (int i=0; i<opt4List.length; i++) opt4Box.addItem(opt4List[i]);
 
         if (baudList.length>1) {
             baudBox.setToolTipText("Must match the baud rate setting of your hardware");
@@ -323,6 +352,24 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         } else {
             opt2Box.setToolTipText("There are no options for this protocol");
             opt2Box.setEnabled(false);
+        }
+        if (opt3List.length>1) {
+            NUMOPTIONS++;
+            opt3Box.setToolTipText("");
+            opt3Box.setEnabled(true);
+            opt3Box.setSelectedItem(adapter.getCurrentOption3Setting());
+        } else {
+            opt3Box.setToolTipText("There are no options for this protocol");
+            opt3Box.setEnabled(false);
+        }
+        if (opt4List.length>1) {
+            NUMOPTIONS++;
+            opt4Box.setToolTipText("");
+            opt4Box.setEnabled(true);
+            opt4Box.setSelectedItem(adapter.getCurrentOption4Setting());
+        } else {
+            opt4Box.setToolTipText("There are no options for this protocol");
+            opt4Box.setEnabled(false);
         }
 
         portBoxLabel = new JLabel("Serial port: ");
@@ -350,6 +397,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         if(!isPortAdvanced()) stdrows++;
         if ((!isOptList1Advanced())&&(opt1List.length>1)) stdrows++;
         if ((!isOptList2Advanced())&&(opt2List.length>1)) stdrows++;
+        if ((!isOptList3Advanced())&&(opt3List.length>1)) stdrows++;
+        if ((!isOptList4Advanced())&&(opt4List.length>1)) stdrows++;
         if(adapter.getSystemConnectionMemo()!=null) stdrows=stdrows+2;
         if (stdrows == NUMOPTIONS){
             incAdvancedOptions=false;
@@ -362,6 +411,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             if(isPortAdvanced()) advrows++;
             if ((isOptList1Advanced())&&(opt1List.length>1)) advrows++;
             if ((isOptList2Advanced())&&(opt2List.length>1)) advrows++;
+            if ((isOptList3Advanced())&&(opt3List.length>1)) advrows++;
+            if ((isOptList4Advanced())&&(opt4List.length>1)) advrows++;
             _details.setLayout(new GridLayout(advrows,2));
             addStandardDetails(incAdvancedOptions);
             if(isPortAdvanced()){
@@ -380,6 +431,14 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             if ((isOptList2Advanced())&&(opt2List.length>1)) {
                 _details.add(opt2BoxLabel);
                 _details.add(opt2Box);
+            }
+            if ((isOptList3Advanced())&&(opt3List.length>1)) {
+                _details.add(opt3BoxLabel);
+                _details.add(opt3Box);
+            }
+            if ((isOptList4Advanced())&&(opt4List.length>1)) {
+                _details.add(opt4BoxLabel);
+                _details.add(opt4Box);
             }
         } else {
             _details.setLayout(new GridLayout(stdrows,2));
@@ -412,6 +471,14 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         if ((!isOptList2Advanced())&&(opt2List.length>1)) {
             _details.add(opt2BoxLabel);
             _details.add(opt2Box);
+        }
+        if ((!isOptList3Advanced())&&(opt3List.length>1)) {
+            _details.add(opt3BoxLabel);
+            _details.add(opt3Box);
+        }
+        if ((!isOptList4Advanced())&&(opt4List.length>1)) {
+            _details.add(opt4BoxLabel);
+            _details.add(opt4Box);
         }
         if(adapter.getSystemConnectionMemo()!=null){
             _details.add(systemPrefixLabel);

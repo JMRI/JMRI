@@ -32,15 +32,30 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
 
     abstract public void updateAdapter();
 
+    protected int NUMOPTIONS = 2;
+
     protected JComboBox opt1Box = new JComboBox();
     protected JLabel opt1BoxLabel = new JLabel();
+    protected String[] opt1List;
+    public boolean isOptList1Advanced() { return true; }
     
     protected JComboBox opt2Box = new JComboBox();
-
     protected JLabel opt2BoxLabel = new JLabel();
-    protected JCheckBox showAdvanced = new JCheckBox("Additional Connection Settings");
-    protected String[] opt1List;
     protected String[] opt2List;
+    public boolean isOptList2Advanced() { return true; }
+
+    protected JComboBox opt3Box = new JComboBox();
+    protected JLabel opt3BoxLabel = new JLabel();
+    protected String[] opt3List;
+    public boolean isOptList3Advanced() { return true; }
+
+    protected JComboBox opt4Box = new JComboBox();
+    protected JLabel opt4BoxLabel = new JLabel();
+    protected String[] opt4List;
+    public boolean isOptList4Advanced() { return true; }
+
+    protected JCheckBox showAdvanced = new JCheckBox("Additional Connection Settings");
+
     protected JLabel systemPrefixLabel = new JLabel("Connection Prefix");
     protected JLabel connectionNameLabel = new JLabel("Connection Name");
     protected JTextField systemPrefixField = new JTextField();
@@ -62,16 +77,11 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
         java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
     
 	abstract public void loadDetails(final JPanel details) ;
-
-    protected int NUMOPTIONS = 2;
     
     abstract void showAdvancedItems();
     
     abstract void addStandardDetails(boolean incAdvanced);
-    
-    public boolean isOptList1Advanced() { return true; }
-    public boolean isOptList2Advanced() { return true; }
-    
+        
     abstract public String getManufacturer();
     abstract public void setManufacturer(String manufacturer);
     

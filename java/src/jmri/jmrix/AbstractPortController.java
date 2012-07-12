@@ -81,6 +81,50 @@ abstract public class AbstractPortController implements PortAdapter {
     }
     
     /**
+     * Get an array of valid values for "option 3"; used to display valid options.
+     * May not be null, but may have zero entries
+     */
+    public String[] validOption3() { return new String[]{""}; }
+
+    /**
+     * Get a String that says what Option 3 represents
+     * May be an empty string, but will not be null
+     */
+    public String option3Name() { return ""; }
+
+    /**
+     * Set the third port option.
+     */
+    public void configureOption3(String value) { mOpt3 = value; }
+    protected String mOpt3  = null;
+    public String getCurrentOption3Setting() {
+        if (mOpt3 == null) return validOption3()[0];
+        return mOpt3;
+    }
+    
+    /**
+     * Get an array of valid values for "option 4"; used to display valid options.
+     * May not be null, but may have zero entries
+     */
+    public String[] validOption4() { return new String[]{""}; }
+
+    /**
+     * Get a String that says what Option 4 represents
+     * May be an empty string, but will not be null
+     */
+    public String option4Name() { return ""; }
+
+    /**
+     * Set the fourth port option.
+     */
+    public void configureOption4(String value) { mOpt4 = value; }
+    protected String mOpt4  = null;
+    public String getCurrentOption4Setting() {
+        if (mOpt4 == null) return validOption4()[0];
+        return mOpt4;
+    }
+    
+    /**
     * Get and set of the Manufacturer for network (TCP/IP) based
     * connections is handled by the ConnectionConfig code in each
     * connector.  this is here as we implement the serialdriveradpter.
