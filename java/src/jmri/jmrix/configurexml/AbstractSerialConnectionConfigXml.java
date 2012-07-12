@@ -17,7 +17,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
     public AbstractSerialConnectionConfigXml() {
     }
 
-    static java.util.ResourceBundle rb = 
+    static protected java.util.ResourceBundle rb = 
         java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
     
     protected SerialPortAdapter adapter;
@@ -59,6 +59,14 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
         if (adapter.getCurrentOption2Setting()!=null)
             e.setAttribute("option2", adapter.getCurrentOption2Setting());
         else e.setAttribute("option2", rb.getString("noneSelected"));
+        
+        if (adapter.getCurrentOption3Setting()!=null)
+            e.setAttribute("option3", adapter.getCurrentOption3Setting());
+        else e.setAttribute("option3", rb.getString("noneSelected"));
+        
+        if (adapter.getCurrentOption4Setting()!=null)
+            e.setAttribute("option4", adapter.getCurrentOption4Setting());
+        else e.setAttribute("option4", rb.getString("noneSelected"));
         
         if (adapter.getDisabled())
             e.setAttribute("disabled", "yes");
@@ -107,6 +115,14 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
         if (e.getAttribute("option2")!=null) {
             String option2Setting = e.getAttribute("option2").getValue();
             adapter.configureOption2(option2Setting);
+        }
+        if (e.getAttribute("option3")!=null) {
+            String option3Setting = e.getAttribute("option3").getValue();
+            adapter.configureOption3(option3Setting);
+        }
+        if (e.getAttribute("option4")!=null) {
+            String option4Setting = e.getAttribute("option4").getValue();
+            adapter.configureOption4(option4Setting);
         }
         String manufacturer;
         try { 
