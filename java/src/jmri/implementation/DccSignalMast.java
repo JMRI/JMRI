@@ -16,23 +16,15 @@ import java.util.HashMap;
 import jmri.*;
 
 /**
- * This class implements a SignalHead the maps the various appearances values to
- * aspect values in the <B>Extended Accessory Decoder Control Packet Format</B> and
- * outputs that packet to the DCC System via the generic CommandStation interface
+ * This class implements a SignalMast that use <B>Extended Accessory Decoder Control Packet Format</B>
+ * and outputs that packet to the DCC System via the generic CommandStation interface
  * <P>
- * The mapping is as follows:
- * <P>
- *    0 = DARK        <BR>
- *    1 = RED         <BR>
- *    2 = YELLOW      <BR>
- *    3 = GREEN       <BR>
- *    4 = FLASHRED    <BR>
- *    5 = FLASHYELLOW <BR>
- *    6 = FLASHGREEN  <BR>
- * <P>
- * The FLASH appearances are expected to be implemented in the decoder.
- *
- * @author Alex Shepherd Copyright (c) 2008
+ * This implementation writes out to the physical signal when
+ * it's commanded to change appearance, and updates its internal state
+ * when it hears commands from other places.
+ * <p>
+ * Based upon {@link jmri.implementation.DccSignalHead} by Alex Shepherd
+ * @author Kevin Dickerson Copyright (c) 2012
  * @version $Revision: 19173 $
  */
 public class DccSignalMast extends AbstractSignalMast {
@@ -52,12 +44,6 @@ public class DccSignalMast extends AbstractSignalMast {
     mastType = mastSubType;
     configureFromName(sys);
   }
-
-  /*public DccSignalMast( String sys, String mastSubType ) {
-    super(sys);
-    mastType = mastSubType;
-    configureFromName(sys);
-  }*/
   
   protected String mastType = "F$dsm";
   
