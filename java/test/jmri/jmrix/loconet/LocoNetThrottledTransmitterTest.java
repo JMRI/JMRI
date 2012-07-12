@@ -18,18 +18,18 @@ import java.util.concurrent.TimeUnit;
 public class LocoNetThrottledTransmitterTest extends TestCase {
 
     public void testCtorAndDispose() {
-        new LocoNetThrottledTransmitter(null).dispose();
+        new LocoNetThrottledTransmitter(null, false).dispose();
     }
 
     public void testMemoCtor() {
-        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null);
+        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null, false);
         q.new Memo(null, 100, TimeUnit.MILLISECONDS);
 
         q.dispose();
     }
 
     public void testMemoComparable() {
-        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null) {
+        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null, false) {
             long nowMSec() { return 0; }
         };
         LocoNetThrottledTransmitter.Memo m50 = q.new Memo(null, 50, TimeUnit.MILLISECONDS);
@@ -55,7 +55,7 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
     }
 
     public void testMemoGetDelay() {
-        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null) {
+        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null, false) {
             long nowMSec() { return 0; }
         };
         LocoNetThrottledTransmitter.Memo m5000 = q.new Memo(null, 5000, TimeUnit.MILLISECONDS);
@@ -81,7 +81,7 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
     }
     
     public void testThreadStartStop() {
-        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null);
+        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null, false);
         releaseFor(100);
             
         Assert.assertTrue("started", q.running);
@@ -95,7 +95,7 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
     
     public void testSendOneImmediate() {
         LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold();
-        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(s);
+        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(s, false);
 
         LocoNetMessage m1;
         
@@ -113,7 +113,7 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
     
     public void testSendOneNowOneLater() {
         LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold();
-        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(s);
+        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(s, false);
 
         LocoNetMessage m1 = new LocoNetMessage(1);
         m1.setElement(0, 0x01);  // dummy value
@@ -138,7 +138,7 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
     
     public void testAfterTimeNewMessageSentImmediately() {
         LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold();
-        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(s);
+        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(s, false);
 
         LocoNetMessage m1 = new LocoNetMessage(1);
         m1.setElement(0, 0x01);  // dummy value
