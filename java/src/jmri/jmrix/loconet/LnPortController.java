@@ -49,6 +49,8 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     protected boolean mCanRead = true;
     protected boolean mProgPowersOff = false;
     protected String commandStationName = "<unknown>";
+    protected boolean mTurnoutNoRetry = false;
+    protected boolean mTurnoutExtraSpace = false;
     
     protected String[] commandStationNames = {
                                     "DCS100 (Chief)", 
@@ -79,11 +81,18 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         }
         commandStationName = value;
     }
+    public void setTurnoutHandling(String value) {
+        if (value.equals("One Only") || value.equals("Both")) mTurnoutNoRetry = true;
+        if (value.equals("Spread") || value.equals("Both")) mTurnoutExtraSpace = true;
+        log.debug("turnout no retry: "+mTurnoutNoRetry);
+        log.debug("turnout extra space: "+mTurnoutExtraSpace);
+    }
     public void setDisabled(boolean disabled) { 
         mDisabled = disabled;
         if(adaptermemo!=null)
             adaptermemo.setDisabled(disabled);
     }
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnPortController.class.getName());
 }
 
 

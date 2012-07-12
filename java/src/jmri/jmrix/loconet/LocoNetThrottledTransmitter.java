@@ -23,11 +23,20 @@ import java.util.concurrent.TimeUnit;
  */
 public class LocoNetThrottledTransmitter implements LocoNetInterface {
 
-    public LocoNetThrottledTransmitter(LocoNetInterface controller) {
+    public LocoNetThrottledTransmitter(LocoNetInterface controller, boolean mTurnoutExtraSpace) {
         this.controller = controller;
+        this.mTurnoutExtraSpace = mTurnoutExtraSpace;
+        
+        // calculation is needed time to send on DCC:
+        // msec*nBitsInPacket*packetRepeat/bitRate*safetyFactor
+        minInterval = 1000*(18+3*10)*3/16000*2;
+
+        if (mTurnoutExtraSpace) minInterval = minInterval * 4;
         
         attachServiceThread();
     }
+    
+    boolean mTurnoutExtraSpace;
     
     /** 
      * Cease operation, no more messages can be sent
@@ -79,9 +88,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
   	}
     
     // minimum time in msec between messages
-    // calculation is needed time to send on DCC:
-    // msec*nBitsInPacket*packetRepeat/bitRate*safetyFactor
-    long minInterval = 1000*(18+3*10)*3/16000*2;
+    long minInterval;
     
     long lastSendTimeMSec = 0;
      

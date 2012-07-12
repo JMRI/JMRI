@@ -107,7 +107,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         m.setElement(9,0);
         for (int i=0; i<packet.length-1; i++) m.setElement(5+i, packet[i]&0x7F);
 
-        tc.sendLocoNetMessage(m);
+        if (throttledTransmitter != null) 
+            throttledTransmitter.sendLocoNetMessage(m);
+        else
+            tc.sendLocoNetMessage(m);
     }
 
     /**
@@ -233,12 +236,25 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     int lastMessage = -1;
 
+    LocoNetMessage immedPacket;
+    
     /**
      * Listen to the LocoNet. This is just a steering routine, which invokes
      * others for the various processing steps.
      * @param m incoming message
      */
     public void message(LocoNetMessage m) {
+        // LACK processing for resend of immediate command
+        if (!mTurnoutNoRetry && immedPacket != null && m.getOpCode() == LnConstants.OPC_LONG_ACK && m.getElement(1) == 0x6D && m.getElement(2) == 0x00) {
+            // LACK reject, resend immediately
+            tc.sendLocoNetMessage(immedPacket);  
+            immedPacket = null;
+        }
+        if (m.getOpCode() == 0xED && m.getElement(1) == 0x0B && m.getElement(2) == 0x7F )
+            immedPacket = m;
+        else
+            immedPacket = null;
+
         // slot specific message?
         int i = findSlotFromMessage(m);
         if (i != -1) {
@@ -657,6 +673,16 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     public void setCommandStationType(String value){
         commandStationType = value;
+    }
+    
+    LocoNetThrottledTransmitter throttledTransmitter = null;
+    boolean mTurnoutNoRetry = false;
+    /**
+     * Provide a ThrottledTransmitter for sending immediate packets
+     */
+    public void setThrottledTransmitter(LocoNetThrottledTransmitter value, boolean m){
+        throttledTransmitter = value;
+        mTurnoutNoRetry = m;
     }
     /**
      * Get the command station type
