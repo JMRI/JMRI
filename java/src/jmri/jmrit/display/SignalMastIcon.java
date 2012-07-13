@@ -145,6 +145,10 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             return null;
         return namedMast.getBean();
     }
+    
+    public jmri.NamedBean getNamedBean(){
+        return getSignalMast();
+    }
 
     /**
      * Get current appearance of the mast

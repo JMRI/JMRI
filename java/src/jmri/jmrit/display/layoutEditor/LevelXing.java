@@ -505,118 +505,123 @@ public class LevelXing
     /**
      * Display popup menu for information and editing
      */
-    protected void showPopUp(MouseEvent e) {
+    protected void showPopUp(MouseEvent e, boolean isEditable) {
         if (popup != null ) {
 			popup.removeAll();
 		}
 		else {
             popup = new JPopupMenu();
 		}
-		popup.add(rb.getString("LevelCrossing"));
-		boolean blockACAssigned = false;
-		boolean blockBDAssigned = false;
-		if ( (blockNameAC==null) || (blockNameAC.equals("")) ) popup.add(rb.getString("NoBlock1"));
-		else {
-			popup.add(rb.getString("Block1ID")+": "+getLayoutBlockAC().getID());
-			blockACAssigned = true;
-		}
-		if ( (blockNameBD==null) || (blockNameBD.equals("")) ) popup.add(rb.getString("NoBlock2"));
-		else {
-			popup.add(rb.getString("Block2ID")+": "+getLayoutBlockBD().getID());
-			blockBDAssigned = true;
-		}
-		popup.add(new JSeparator(JSeparator.HORIZONTAL));
-		popup.add(new AbstractAction(rb.getString("Edit")) {
-				public void actionPerformed(ActionEvent e) {
-					editLevelXing(instance);
-				}
-			});
-		popup.add(new AbstractAction(rb.getString("Remove")) {
-				public void actionPerformed(ActionEvent e) {
-					if (layoutEditor.removeLevelXing(instance)) {
-						// Returned true if user did not cancel
-						remove();
-						dispose();
-					}
-				}
-			});
-		if (blockACAssigned && blockBDAssigned) {
-			popup.add(new AbstractAction(rb.getString("SetSignals")) {
-				public void actionPerformed(ActionEvent e) {
-					if (tools == null) {
-						tools = new LayoutEditorTools(layoutEditor);
-					}
-					// bring up signals at level crossing tool dialog
-					tools.setSignalsAtLevelXingFromMenu(instance,
-						layoutEditor.signalIconEditor,layoutEditor.signalFrame);						
-				}
-			});
-		}
-
-        final String[] boundaryBetween = getBlockBoundaries();
-        boolean blockBoundaries = false;
-        if (jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
-            if(blockACAssigned && !blockBDAssigned){
-                popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
-                    public void actionPerformed(ActionEvent e) {
-                        AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockAC());
-                        routeTableAction.actionPerformed(e);
-                    }
-                });
-            } else if(!blockACAssigned && blockBDAssigned){
-                popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
-                    public void actionPerformed(ActionEvent e) {
-                        AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockBD());
-                        routeTableAction.actionPerformed(e);
-                    }
-                });
-            } else if(blockACAssigned && blockBDAssigned){
-                JMenu viewRouting = new JMenu(rb.getString("ViewBlockRouting"));
-                viewRouting.add(new AbstractAction( blockNameAC) {
-                    public void actionPerformed(ActionEvent e) {
-                        AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction( blockNameAC, getLayoutBlockAC());
-                        routeTableAction.actionPerformed(e);
-                    }
-                });
-                
-                viewRouting.add(new AbstractAction(blockNameBD) {
-                    public void actionPerformed(ActionEvent e) {
-                        AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockNameBD, getLayoutBlockBD());
-                        routeTableAction.actionPerformed(e);
-                    }
-                });
-                
-                popup.add(viewRouting);
+        if(isEditable){
+            popup.add(rb.getString("LevelCrossing"));
+            boolean blockACAssigned = false;
+            boolean blockBDAssigned = false;
+            if ( (blockNameAC==null) || (blockNameAC.equals("")) ) popup.add(rb.getString("NoBlock1"));
+            else {
+                popup.add(rb.getString("Block1ID")+": "+getLayoutBlockAC().getID());
+                blockACAssigned = true;
             }
-        }
-        
-        for (int i = 0; i<4; i++){
-            if(boundaryBetween[i]!=null)
-                blockBoundaries=true;
-        }
-        if (blockBoundaries){
-             popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
-                public void actionPerformed(ActionEvent e) {
-                    if (tools == null) {
-                        tools = new LayoutEditorTools(layoutEditor);
+            if ( (blockNameBD==null) || (blockNameBD.equals("")) ) popup.add(rb.getString("NoBlock2"));
+            else {
+                popup.add(rb.getString("Block2ID")+": "+getLayoutBlockBD().getID());
+                blockBDAssigned = true;
+            }
+            popup.add(new JSeparator(JSeparator.HORIZONTAL));
+            popup.add(new AbstractAction(rb.getString("Edit")) {
+                    public void actionPerformed(ActionEvent e) {
+                        editLevelXing(instance);
                     }
-                        
-                    tools.setSignalMastsAtLevelXingFromMenu(instance, boundaryBetween, layoutEditor.signalFrame);
-                }
-            });
-             popup.add(new AbstractAction(rb.getString("SetSensors")) {
-                public void actionPerformed(ActionEvent e) {
-                    if (tools == null) {
-                        tools = new LayoutEditorTools(layoutEditor);
+                });
+            popup.add(new AbstractAction(rb.getString("Remove")) {
+                    public void actionPerformed(ActionEvent e) {
+                        if (layoutEditor.removeLevelXing(instance)) {
+                            // Returned true if user did not cancel
+                            remove();
+                            dispose();
+                        }
                     }
-                        
-                    tools.setSensorsAtLevelXingFromMenu(instance, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
+                });
+            if (blockACAssigned && blockBDAssigned) {
+                popup.add(new AbstractAction(rb.getString("SetSignals")) {
+                    public void actionPerformed(ActionEvent e) {
+                        if (tools == null) {
+                            tools = new LayoutEditorTools(layoutEditor);
+                        }
+                        // bring up signals at level crossing tool dialog
+                        tools.setSignalsAtLevelXingFromMenu(instance,
+                            layoutEditor.signalIconEditor,layoutEditor.signalFrame);						
+                    }
+                });
+            }
+
+            final String[] boundaryBetween = getBlockBoundaries();
+            boolean blockBoundaries = false;
+            if (jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+                if(blockACAssigned && !blockBDAssigned){
+                    popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                        public void actionPerformed(ActionEvent e) {
+                            AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockAC());
+                            routeTableAction.actionPerformed(e);
+                        }
+                    });
+                } else if(!blockACAssigned && blockBDAssigned){
+                    popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                        public void actionPerformed(ActionEvent e) {
+                            AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlockBD());
+                            routeTableAction.actionPerformed(e);
+                        }
+                    });
+                } else if(blockACAssigned && blockBDAssigned){
+                    JMenu viewRouting = new JMenu(rb.getString("ViewBlockRouting"));
+                    viewRouting.add(new AbstractAction( blockNameAC) {
+                        public void actionPerformed(ActionEvent e) {
+                            AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction( blockNameAC, getLayoutBlockAC());
+                            routeTableAction.actionPerformed(e);
+                        }
+                    });
+                    
+                    viewRouting.add(new AbstractAction(blockNameBD) {
+                        public void actionPerformed(ActionEvent e) {
+                            AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockNameBD, getLayoutBlockBD());
+                            routeTableAction.actionPerformed(e);
+                        }
+                    });
+                    
+                    popup.add(viewRouting);
                 }
-            });
+            }
+            
+            for (int i = 0; i<4; i++){
+                if(boundaryBetween[i]!=null)
+                    blockBoundaries=true;
+            }
+            if (blockBoundaries){
+                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                    public void actionPerformed(ActionEvent e) {
+                        if (tools == null) {
+                            tools = new LayoutEditorTools(layoutEditor);
+                        }
+                            
+                        tools.setSignalMastsAtLevelXingFromMenu(instance, boundaryBetween, layoutEditor.signalFrame);
+                    }
+                });
+                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
+                    public void actionPerformed(ActionEvent e) {
+                        if (tools == null) {
+                            tools = new LayoutEditorTools(layoutEditor);
+                        }
+                            
+                        tools.setSensorsAtLevelXingFromMenu(instance, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
+                    }
+                });
+            }
+            
+            layoutEditor.setShowAlignmentMenu(popup);
+            popup.show(e.getComponent(), e.getX(), e.getY());
+        } else if(!viewAdditionalMenu.isEmpty()){
+            setAdditionalViewPopUpMenu(popup);
+            popup.show(e.getComponent(), e.getX(), e.getY());
         }
-        
-        layoutEditor.setShowAlignmentMenu(popup);
-		popup.show(e.getComponent(), e.getX(), e.getY());
     }
     
     public String[] getBlockBoundaries(){
@@ -965,6 +970,39 @@ public class LevelXing
             SignalMastLogic s = jmri.InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sm);
             if (s!=null)
                 s.removeConflictingLogic(sm, this);
+        }
+    }
+    
+    ArrayList<JMenuItem> editAdditionalMenu = new ArrayList<JMenuItem>(0);
+    ArrayList<JMenuItem> viewAdditionalMenu = new ArrayList<JMenuItem>(0);
+    
+    public void addEditPopUpMenu(JMenuItem menu){
+        if(!editAdditionalMenu.contains(menu)){
+            editAdditionalMenu.add(menu);
+        }
+    }
+    
+    public void addViewPopUpMenu(JMenuItem menu){
+        if(!viewAdditionalMenu.contains(menu)){
+            viewAdditionalMenu.add(menu);
+        }
+    }
+    
+    public void setAdditionalEditPopUpMenu(JPopupMenu popup){
+        if(editAdditionalMenu.isEmpty())
+            return;
+        popup.addSeparator();
+        for(JMenuItem mi:editAdditionalMenu){
+            popup.add(mi);
+        }
+    }
+    
+    public void setAdditionalViewPopUpMenu(JPopupMenu popup){
+        if(viewAdditionalMenu.isEmpty())
+            return;
+        popup.addSeparator();
+        for(JMenuItem mi:viewAdditionalMenu){
+            popup.add(mi);
         }
     }
 

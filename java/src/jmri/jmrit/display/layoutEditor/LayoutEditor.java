@@ -1065,7 +1065,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                     if(newName.equals(layoutName)){
                         return;
                     }
-                    if (newName==null) return;  // cancelled
                     if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(newName)){
                     	JOptionPane.showMessageDialog(null, rb.getString("CanNotRename"), rb.getString("PanelExist"),
                     			JOptionPane.ERROR_MESSAGE);
@@ -3382,6 +3381,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			LocoIcon lo = checkMarkers(dLoc);
 			if (lo!=null) showPopUp(lo, event);
             else {
+                if (checkSelect(dLoc, false)) {
+                    // show popup menu
+                    switch (foundPointType) {
+                        case TURNOUT_CENTER:
+                            ((LayoutTurnout)foundObject).showPopUp(event, isEditable());
+                            break;
+                        case LEVEL_XING_CENTER:
+                            ((LevelXing)foundObject).showPopUp(event, isEditable());
+                            break;
+                        case SLIP_CENTER:
+                            ((LayoutSlip)foundObject).showPopUp(event, isEditable());
+                            break;
+                        default: break;
+                    }
+                }
                 AnalogClock2Display c = checkClocks(dLoc);
                 if (c!=null){
                     showPopUp(c, event);
@@ -3392,9 +3406,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                     } else {
                         PositionableLabel im = checkLabelImages(dLoc);
                         if(im!=null){
-                            if(im instanceof MemoryIcon){
-                                showPopUp(im, event);
-                            }
+                            showPopUp(im, event);
                         }
                     }
                 }
@@ -3426,13 +3438,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 					((PositionablePoint)foundObject).showPopUp(event);
 					break;
 				case TURNOUT_CENTER:
-					((LayoutTurnout)foundObject).showPopUp(event);
+					((LayoutTurnout)foundObject).showPopUp(event, isEditable());
 					break;
 				case LEVEL_XING_CENTER:
-					((LevelXing)foundObject).showPopUp(event);
+					((LevelXing)foundObject).showPopUp(event, isEditable());
 					break;
 				case SLIP_CENTER:
-					((LayoutSlip)foundObject).showPopUp(event);
+					((LayoutSlip)foundObject).showPopUp(event, isEditable());
 					break;
 				case TURNTABLE_CENTER:
 					((LayoutTurntable)foundObject).showPopUp(event);
@@ -3545,6 +3557,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                     util.setTextOrientationMenu(popup);
                     popup.addSeparator();
                     util.propertyUtil(popup);
+                    util.setAdditionalEditPopUpMenu(popup);
                     popupSet = true;
                 }
                 if (popupSet) { 
@@ -3564,6 +3577,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             }
         } else {
             p.showPopUp(popup);
+            PositionablePopupUtil util = p.getPopupUtility();
+            if(util!=null)
+                util.setAdditionalViewPopUpMenu(popup);
         }        
         popup.show((Component)p, p.getWidth()/2+(int)((getPaintScale()-1.0)*p.getX()),
                     p.getHeight()/2+(int)((getPaintScale()-1.0)*p.getY()));
@@ -7907,6 +7923,81 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         setToolTip(tip);
     }
     
+    @Override
+    public void addToPopUpMenu(jmri.NamedBean nb, JMenuItem item, int menu){
+        if(nb==null || item==null){
+            return;
+        }
+        if(nb instanceof Sensor){
+            for(SensorIcon si:sensorList){
+                if(si.getNamedBean()==nb && si.getPopupUtility()!=null){
+                    switch(menu){
+                        case VIEWPOPUPONLY : si.getPopupUtility().addViewPopUpMenu(item); break;
+                        case EDITPOPUPONLY : si.getPopupUtility().addEditPopUpMenu(item); break;
+                        default: si.getPopupUtility().addEditPopUpMenu(item);
+                                 si.getPopupUtility().addViewPopUpMenu(item);
+                    }
+                }
+            }
+        } else if (nb instanceof SignalHead){
+            for(SignalHeadIcon si:signalList){
+                if(si.getNamedBean()==nb && si.getPopupUtility()!=null){
+                    switch(menu){
+                        case VIEWPOPUPONLY : si.getPopupUtility().addViewPopUpMenu(item); break;
+                        case EDITPOPUPONLY : si.getPopupUtility().addEditPopUpMenu(item); break;
+                        default: si.getPopupUtility().addEditPopUpMenu(item);
+                                 si.getPopupUtility().addViewPopUpMenu(item);
+                    }
+                }
+            }
+        } else if (nb instanceof SignalMast){
+            for(SignalMastIcon si:signalMastList){
+                if(si.getNamedBean()==nb && si.getPopupUtility()!=null){
+                    switch(menu){
+                        case VIEWPOPUPONLY : si.getPopupUtility().addViewPopUpMenu(item); break;
+                        case EDITPOPUPONLY : si.getPopupUtility().addEditPopUpMenu(item); break;
+                        default: si.getPopupUtility().addEditPopUpMenu(item);
+                                 si.getPopupUtility().addViewPopUpMenu(item);
+                    }
+                }
+            }
+        } else if (nb instanceof Memory){
+            for(MemoryIcon si: memoryLabelList){
+                if(si.getNamedBean()==nb && si.getPopupUtility()!=null){
+                    switch(menu){
+                        case VIEWPOPUPONLY : si.getPopupUtility().addViewPopUpMenu(item); break;
+                        case EDITPOPUPONLY : si.getPopupUtility().addEditPopUpMenu(item); break;
+                        default: si.getPopupUtility().addEditPopUpMenu(item);
+                                 si.getPopupUtility().addViewPopUpMenu(item);
+                    }
+                }
+            }
+        } else if (nb instanceof Turnout){
+            for(LayoutTurnout ti: turnoutList){
+                if(ti.getTurnout().equals(nb)){
+                    switch(menu){
+                        case VIEWPOPUPONLY : ti.addViewPopUpMenu(item); break;
+                        case EDITPOPUPONLY : ti.addEditPopUpMenu(item); break;
+                        default: ti.addEditPopUpMenu(item);
+                                 ti.addViewPopUpMenu(item);
+                    }
+                    break;
+                }
+            }
+            for(LayoutSlip ls: slipList){
+                if(ls.getTurnout()==nb||ls.getTurnoutB()==nb){
+                    switch(menu){
+                        case VIEWPOPUPONLY : ls.addViewPopUpMenu(item); break;
+                        case EDITPOPUPONLY : ls.addEditPopUpMenu(item); break;
+                        default: ls.addEditPopUpMenu(item);
+                                 ls.addViewPopUpMenu(item);
+                    }
+                    break;
+                }
+            
+            }
+        }
+    }
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutEditor.class.getName());
 }

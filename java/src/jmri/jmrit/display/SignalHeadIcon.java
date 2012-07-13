@@ -108,6 +108,10 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             return null;
         return namedHead.getBean();
     }
+    
+    public jmri.NamedBean getNamedBean(){
+        return getSignalHead();
+    }
 
     /**
     * Check that device supports the state

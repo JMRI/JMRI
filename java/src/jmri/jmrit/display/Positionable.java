@@ -162,4 +162,5 @@ public interface Positionable extends Cloneable  {
     public java.awt.Dimension getPreferredSize();
     public void invalidate();
     public void repaint();
+    public jmri.NamedBean getNamedBean();
 }

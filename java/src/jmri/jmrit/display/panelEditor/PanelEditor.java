@@ -549,7 +549,7 @@ public class PanelEditor extends Editor implements ItemListener {
             return;     // component must be showing on the screen to determine its location
         }
         JPopupMenu popup = new JPopupMenu();
-
+        PositionablePopupUtil util = p.getPopupUtility();
         if (p.isEditable()) {
             // items for all Positionables
             if (p.doViemMenu()) {
@@ -579,7 +579,6 @@ public class PanelEditor extends Editor implements ItemListener {
                 popupSet = false;
             }
             popupSet = p.setTextEditMenu(popup);
-            PositionablePopupUtil util = p.getPopupUtility();
             if (util!=null) {
                 util.setFixedTextMenu(popup);        
                 util.setTextMarginMenu(popup);        
@@ -591,6 +590,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 util.copyItem(popup);
                 popup.addSeparator();
                 util.propertyUtil(popup);
+                util.setAdditionalEditPopUpMenu(popup);
                 popupSet = true;
             }
             if (popupSet) { 
@@ -605,6 +605,9 @@ public class PanelEditor extends Editor implements ItemListener {
             setRemoveMenu(p, popup);
         } else {
             p.showPopUp(popup);
+            if (util!=null) {
+                util.setAdditionalViewPopUpMenu(popup);
+            }
         }
         popup.show((Component)p, p.getWidth()/2, p.getHeight()/2);
     }

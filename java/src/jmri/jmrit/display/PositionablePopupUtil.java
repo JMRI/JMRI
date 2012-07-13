@@ -3,6 +3,7 @@
 package jmri.jmrit.display;
 
 import java.util.ResourceBundle;
+import java.util.ArrayList;
 
 
 import java.awt.*;
@@ -629,7 +630,53 @@ public class PositionablePopupUtil {
         else r.setSelected(false);
         menu.add(r);
     }
+    
+    ArrayList<JMenuItem> editAdditionalMenu = new ArrayList<JMenuItem>(0);
+    ArrayList<JMenuItem> viewAdditionalMenu = new ArrayList<JMenuItem>(0);
+    
+    /**
+    *  Add a menu item to be displayed when the popup menu is called for
+    *  when in edit mode.
+    */
+        public void addEditPopUpMenu(JMenuItem menu){
+        if(!editAdditionalMenu.contains(menu)){
+            editAdditionalMenu.add(menu);
+        }
+    }
 
+    /**
+    *  Add a menu item to be displayed when the popup menu is called for
+    *  when in view mode.
+    */    
+    public void addViewPopUpMenu(JMenuItem menu){
+        if(!viewAdditionalMenu.contains(menu)){
+            viewAdditionalMenu.add(menu);
+        }
+    }
+    
+    /**
+    *  Add the menu items to the edit popup menu
+    */
+    public void setAdditionalEditPopUpMenu(JPopupMenu popup){
+        if(editAdditionalMenu.isEmpty())
+            return;
+        popup.addSeparator();
+        for(JMenuItem mi:editAdditionalMenu){
+            popup.add(mi);
+        }
+    }
+    
+    /**
+    *  Add the menu items to the view popup menu
+    */
+    public void setAdditionalViewPopUpMenu(JPopupMenu popup){
+        if(viewAdditionalMenu.isEmpty())
+            return;
+        popup.addSeparator();
+        for(JMenuItem mi:viewAdditionalMenu){
+            popup.add(mi);
+        }
+    }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionablePopupUtil.class.getName());
 }

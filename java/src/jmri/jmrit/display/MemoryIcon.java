@@ -144,7 +144,10 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             return null;
         }
         return namedMemory.getBean();
+    }
     
+    public jmri.NamedBean getNamedBean(){
+        return getMemory();
     }
 
     public java.util.HashMap<String, NamedIcon> getMap() { return map; }

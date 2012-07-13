@@ -2135,6 +2135,69 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             return p.getY() + (int)Math.round(deltaY/getPaintScale());
         }
     }
+    
+    
+    /**
+    * Provide a method for external code to add items in popup menus
+    */
+    
+    public void addToPopUpMenu(jmri.NamedBean nb, JMenuItem item, int menu){
+        if(nb==null || item==null){
+            return;
+        }
+        for(Positionable pos:_contents){
+            if(pos.getNamedBean()==nb && pos.getPopupUtility()!=null){
+                switch(menu){
+                    case VIEWPOPUPONLY : pos.getPopupUtility().addViewPopUpMenu(item); break;
+                    case EDITPOPUPONLY : pos.getPopupUtility().addEditPopUpMenu(item); break;
+                    default: pos.getPopupUtility().addEditPopUpMenu(item);
+                             pos.getPopupUtility().addViewPopUpMenu(item);
+                }
+                return;
+            } else if (pos instanceof SlipTurnoutIcon) {
+                if(pos.getPopupUtility()!=null){
+                    SlipTurnoutIcon sti = (SlipTurnoutIcon)pos;
+                    if(sti.getTurnout(SlipTurnoutIcon.EAST)==nb || sti.getTurnout(SlipTurnoutIcon.WEST)==nb ||
+                        sti.getTurnout(SlipTurnoutIcon.LOWEREAST)==nb || sti.getTurnout(SlipTurnoutIcon.LOWERWEST)==nb) {
+                        switch(menu){
+                            case VIEWPOPUPONLY : pos.getPopupUtility().addViewPopUpMenu(item); break;
+                            case EDITPOPUPONLY : pos.getPopupUtility().addEditPopUpMenu(item); break;
+                            default: pos.getPopupUtility().addEditPopUpMenu(item);
+                                     pos.getPopupUtility().addViewPopUpMenu(item);
+                        }
+                        return;
+                    }
+                }
+            } else if (pos instanceof MultiSensorIcon) {
+                if(pos.getPopupUtility()!=null){
+                    MultiSensorIcon msi = (MultiSensorIcon)pos;
+                    boolean match = false;
+                    for(int i = 0; i<msi.getNumEntries(); i++){
+                        if(msi.getSensorName(i).equals(nb.getUserName())){
+                            match = true;
+                            break;
+                        } else if (msi.getSensorName(i).equals(nb.getSystemName())){
+                            match = true;
+                            break;
+                        }
+                    }
+                    if(match){
+                        switch(menu){
+                            case VIEWPOPUPONLY : pos.getPopupUtility().addViewPopUpMenu(item); break;
+                            case EDITPOPUPONLY : pos.getPopupUtility().addEditPopUpMenu(item); break;
+                            default: pos.getPopupUtility().addEditPopUpMenu(item);
+                                     pos.getPopupUtility().addViewPopUpMenu(item);
+                        }
+                        return;
+                    }
+                }
+            }
+        }
+    }
+    
+    public final static int VIEWPOPUPONLY = 0x00;
+    public final static int EDITPOPUPONLY = 0x01;
+    public final static int BOTHPOPUPS = 0x02;
 
     /**
     * Relocate item

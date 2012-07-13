@@ -611,6 +611,11 @@ public class PositionableLabel extends JLabel implements Positionable {
         }
     }
     
+    /**
+    * Provides a generic method to return the bean associated with the Positionable
+    */
+    public jmri.NamedBean getNamedBean() { return null; }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableLabel.class.getName());
 
 }

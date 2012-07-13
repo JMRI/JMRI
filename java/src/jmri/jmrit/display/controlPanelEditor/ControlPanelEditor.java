@@ -1153,6 +1153,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
         JPopupMenu popup = new JPopupMenu();
 
+        PositionablePopupUtil util = p.getPopupUtility();
         if (p.isEditable()) {
             // items common to all
             if (p.doViemMenu()) {
@@ -1193,7 +1194,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 popupSet = false;
             }
             p.setDisableControlMenu(popup);
-
+            if (util!=null) {
+                util.setAdditionalEditPopUpMenu(popup);
+            }
             // for Positionables with unique settings
             p.showPopUp(popup);
 
@@ -1202,6 +1205,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             setRemoveMenu(p, popup);
         } else {
             p.showPopUp(popup);
+            if (util!=null) {
+                util.setAdditionalViewPopUpMenu(popup);
+            }
         }
         popup.show((Component)p, p.getWidth()/2+(int)((getPaintScale()-1.0)*p.getX()),
                     p.getHeight()/2+(int)((getPaintScale()-1.0)*p.getY()));

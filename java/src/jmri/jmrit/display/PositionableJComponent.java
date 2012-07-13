@@ -220,5 +220,7 @@ public class PositionableJComponent extends JComponent implements Positionable {
         return active;
     }
     
+    public jmri.NamedBean getNamedBean() { return null; }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableJComponent.class.getName());
 }

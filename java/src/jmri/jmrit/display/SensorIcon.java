@@ -187,6 +187,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         return namedSensor.getBean();
     }
     
+    public jmri.NamedBean getNamedBean(){
+        return getSensor();
+    }
+    
     public NamedBeanHandle <Sensor> getNamedSensor() {
         return namedSensor;
     }
@@ -295,6 +299,9 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                     setMomentary(momentaryItem.isSelected());
                 }
             });
+        } else {
+            if(getPopupUtility()!=null)
+                getPopupUtility().setAdditionalViewPopUpMenu(popup);
         }
         return true;
     }

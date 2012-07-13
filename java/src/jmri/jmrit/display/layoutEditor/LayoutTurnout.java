@@ -1160,228 +1160,238 @@ public class LayoutTurnout
     /**
      * Display popup menu for information and editing
      */
-    protected void showPopUp(MouseEvent e) {
+    protected void showPopUp(MouseEvent e, boolean editable) {
         if (popup != null ) {
 			popup.removeAll();
 		}
 		else {
             popup = new JPopupMenu();
 		}
-		switch (getTurnoutType()) {
-			case RH_TURNOUT:
-				popup.add(rb.getString("RHTurnout"));
-				break;
-			case LH_TURNOUT:
-				popup.add(rb.getString("LHTurnout"));
-				break;
-			case WYE_TURNOUT:
-				popup.add(rb.getString("WYETurnout"));
-				break;
-			case DOUBLE_XOVER:
-				popup.add(rb.getString("XOverTurnout"));
-				break;
-			case RH_XOVER:
-				popup.add(rb.getString("RHXOverTurnout"));
-				break;
-			case LH_XOVER:
-				popup.add(rb.getString("LHXOverTurnout"));
-				break;
-            default : break;
-		}
-		if (getTurnout()==null) popup.add(rb.getString("NoTurnout"));
-		else popup.add(rb.getString("Turnout")+": "+turnoutName);
-		// Rotate if there are no track connections
-		if ( (connectA==null) && (connectB==null) &&
-					(connectC==null) && (connectD==null) ) {
-			JMenuItem rotateItem = new JMenuItem(rb.getString("Rotate")+"...");
-			popup.add(rotateItem);
-			rotateItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-                    boolean entering = true;
-                    boolean error = false;
-					String newAngle = "";
-                    while (entering) {
-                        // prompt for rotation angle
-						error = false;
-                        newAngle = JOptionPane.showInputDialog(layoutEditor, 
-											rb.getString("EnterRotation")+" :");
-                        if (newAngle.length()<1) return;  // cancelled
-                        double rot = 0.0;
-                        try {
-                            rot = Double.parseDouble(newAngle);
-                        }
-                        catch (Exception e) {
-							JOptionPane.showMessageDialog(layoutEditor,rb.getString("Error3")+
-								" "+e,rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
-                            error = true;
-							newAngle = "";
-                        }
-                        if (!error) {
-							entering = false;
-                            if (rot!=0.0) {
-                               rotateCoords(rot);
-                               layoutEditor.redrawPanel();
-							}
+        if(editable){
+            switch (getTurnoutType()) {
+                case RH_TURNOUT:
+                    popup.add(rb.getString("RHTurnout"));
+                    break;
+                case LH_TURNOUT:
+                    popup.add(rb.getString("LHTurnout"));
+                    break;
+                case WYE_TURNOUT:
+                    popup.add(rb.getString("WYETurnout"));
+                    break;
+                case DOUBLE_XOVER:
+                    popup.add(rb.getString("XOverTurnout"));
+                    break;
+                case RH_XOVER:
+                    popup.add(rb.getString("RHXOverTurnout"));
+                    break;
+                case LH_XOVER:
+                    popup.add(rb.getString("LHXOverTurnout"));
+                    break;
+                default : break;
+            }
+            popup.add(ident);
+            if (getTurnout()==null) popup.add(rb.getString("NoTurnout"));
+            else popup.add(rb.getString("Turnout")+": "+turnoutName);
+            // Rotate if there are no track connections
+            if ( (connectA==null) && (connectB==null) &&
+                        (connectC==null) && (connectD==null) ) {
+                JMenuItem rotateItem = new JMenuItem(rb.getString("Rotate")+"...");
+                popup.add(rotateItem);
+                rotateItem.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent event) {
+                        boolean entering = true;
+                        boolean error = false;
+                        String newAngle = "";
+                        while (entering) {
+                            // prompt for rotation angle
+                            error = false;
+                            newAngle = JOptionPane.showInputDialog(layoutEditor, 
+                                                rb.getString("EnterRotation")+" :");
+                            if (newAngle.length()<1) return;  // cancelled
+                            double rot = 0.0;
+                            try {
+                                rot = Double.parseDouble(newAngle);
+                            }
+                            catch (Exception e) {
+                                JOptionPane.showMessageDialog(layoutEditor,rb.getString("Error3")+
+                                    " "+e,rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+                                error = true;
+                                newAngle = "";
+                            }
+                            if (!error) {
+                                entering = false;
+                                if (rot!=0.0) {
+                                   rotateCoords(rot);
+                                   layoutEditor.redrawPanel();
+                                }
+                            }
                         }
                     }
-                }
-            });
-		}
-		if (disableItem==null)
-			disableItem = new JCheckBoxMenuItem(rb.getString("Disabled"));
-        disableItem.setSelected(disabled);
-        popup.add(disableItem);
-        disableItem.addActionListener(new ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					disabled = disableItem.isSelected();
-				}
-			});
-        if (disableWhenOccupiedItem==null)
-            disableWhenOccupiedItem = new JCheckBoxMenuItem(rb.getString("DisabledWhenOccupied"));
-        disableWhenOccupiedItem.setSelected(disableWhenOccupied);
-        popup.add(disableWhenOccupiedItem);
-        disableWhenOccupiedItem.addActionListener(new ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					disableWhenOccupied = disableWhenOccupiedItem.isSelected();
-				}
-			});
-		if (blockName.equals("")) popup.add(rb.getString("NoBlock"));
-		else popup.add(rb.getString("Block")+": "+getLayoutBlock().getID());
-		if ( (type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER) ) {
-			// check if extra blocks have been entered
-			if (blockB!=null) popup.add(rb.getString("Block2ID")+": "+blockBName);
-			if (blockC!=null) popup.add(rb.getString("Block3ID")+": "+blockCName);
-			if (blockD!=null) popup.add(rb.getString("Block4ID")+": "+blockDName);
-		}
-        if (hidden) popup.add(rb.getString("Hidden"));
-        else popup.add(rb.getString("NotHidden"));
-		popup.add(new JSeparator(JSeparator.HORIZONTAL));
-		popup.add(new AbstractAction(rb.getString("UseSizeAsDefault")) {
-				public void actionPerformed(ActionEvent e) {
-					setUpDefaultSize();
-				}
-			});
-		popup.add(new AbstractAction(rb.getString("Edit")) {
-				public void actionPerformed(ActionEvent e) {
-					editLayoutTurnout();
-				}
-			});
-		popup.add(new AbstractAction(rb.getString("Remove")) {
-				public void actionPerformed(ActionEvent e) {
-					if (layoutEditor.removeLayoutTurnout(instance)) {
-						// Returned true if user did not cancel
-						remove();
-						dispose();
-					}
-				}
-			});
-		if (getTurnout()!=null) {
-			popup.add(new AbstractAction(rb.getString("SetSignals")) {
-				public void actionPerformed(ActionEvent e) {
-					if (tools == null) {
-						tools = new LayoutEditorTools(layoutEditor);
-					}
-					if ( (getTurnoutType()==DOUBLE_XOVER) || (getTurnoutType()==RH_XOVER) ||
-											(getTurnoutType()==LH_XOVER) ) {
-						tools.setSignalsAtXoverTurnoutFromMenu(instance,
-							layoutEditor.signalIconEditor,layoutEditor.signalFrame);
-					}
-					else if (linkType==NO_LINK) {
-						tools.setSignalsAtTurnoutFromMenu(instance,
-							layoutEditor.signalIconEditor,layoutEditor.signalFrame);
-					}
-					else if (linkType==THROAT_TO_THROAT) {
-						tools.setThroatToThroatFromMenu(instance,linkedTurnoutName,
-							layoutEditor.signalIconEditor,layoutEditor.signalFrame);
-					}
-					else if (linkType==FIRST_3_WAY) {
-						tools.set3WayFromMenu(turnoutName, linkedTurnoutName,
-							layoutEditor.signalIconEditor,layoutEditor.signalFrame);
-					}
-					else if (linkType==SECOND_3_WAY) {
-						tools.set3WayFromMenu(linkedTurnoutName, turnoutName,
-							layoutEditor.signalIconEditor,layoutEditor.signalFrame);
-					}
-				}
-			});
-		}
-        if (!blockName.equals("")){
-            final String[] boundaryBetween = getBlockBoundaries();
-            boolean blockBoundaries = false;
-            for (int i = 0; i<4; i++){
-                if(boundaryBetween[i]!=null)
-                    blockBoundaries=true;
+                });
             }
-            if (InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
-                if(blockBName.equals("") && blockCName.equals("") && blockDName.equals("")){
-                    popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
-                        public void actionPerformed(ActionEvent e) {
-                            AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
-                            routeTableAction.actionPerformed(e);
+            if (disableItem==null)
+                disableItem = new JCheckBoxMenuItem(rb.getString("Disabled"));
+            disableItem.setSelected(disabled);
+            popup.add(disableItem);
+            disableItem.addActionListener(new ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        disabled = disableItem.isSelected();
+                    }
+                });
+            if (disableWhenOccupiedItem==null)
+                disableWhenOccupiedItem = new JCheckBoxMenuItem(rb.getString("DisabledWhenOccupied"));
+            disableWhenOccupiedItem.setSelected(disableWhenOccupied);
+            popup.add(disableWhenOccupiedItem);
+            disableWhenOccupiedItem.addActionListener(new ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        disableWhenOccupied = disableWhenOccupiedItem.isSelected();
+                    }
+                });
+            if (blockName.equals("")) popup.add(rb.getString("NoBlock"));
+            else popup.add(rb.getString("Block")+": "+getLayoutBlock().getID());
+            if ( (type == DOUBLE_XOVER) || (type == RH_XOVER) || (type == LH_XOVER) ) {
+                // check if extra blocks have been entered
+                if (blockB!=null) popup.add(rb.getString("Block2ID")+": "+blockBName);
+                if (blockC!=null) popup.add(rb.getString("Block3ID")+": "+blockCName);
+                if (blockD!=null) popup.add(rb.getString("Block4ID")+": "+blockDName);
+            }
+            if (hidden) popup.add(rb.getString("Hidden"));
+            else popup.add(rb.getString("NotHidden"));
+            popup.add(new JSeparator(JSeparator.HORIZONTAL));
+            popup.add(new AbstractAction(rb.getString("UseSizeAsDefault")) {
+                    public void actionPerformed(ActionEvent e) {
+                        setUpDefaultSize();
+                    }
+                });
+            popup.add(new AbstractAction(rb.getString("Edit")) {
+                    public void actionPerformed(ActionEvent e) {
+                        editLayoutTurnout();
+                    }
+                });
+            popup.add(new AbstractAction(rb.getString("Remove")) {
+                    public void actionPerformed(ActionEvent e) {
+                        if (layoutEditor.removeLayoutTurnout(instance)) {
+                            // Returned true if user did not cancel
+                            remove();
+                            dispose();
                         }
-                    });
-                } else {
-                    JMenu viewRouting = new JMenu(rb.getString("ViewBlockRouting"));
-                    viewRouting.add(new AbstractAction(blockName) {
-                        public void actionPerformed(ActionEvent e) {
-                            AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockName, getLayoutBlock());
-                            routeTableAction.actionPerformed(e);
+                    }
+                });
+            if (getTurnout()!=null) {
+                popup.add(new AbstractAction(rb.getString("SetSignals")) {
+                    public void actionPerformed(ActionEvent e) {
+                        if (tools == null) {
+                            tools = new LayoutEditorTools(layoutEditor);
                         }
-                    });
+                        if ( (getTurnoutType()==DOUBLE_XOVER) || (getTurnoutType()==RH_XOVER) ||
+                                                (getTurnoutType()==LH_XOVER) ) {
+                            tools.setSignalsAtXoverTurnoutFromMenu(instance,
+                                layoutEditor.signalIconEditor,layoutEditor.signalFrame);
+                        }
+                        else if (linkType==NO_LINK) {
+                            tools.setSignalsAtTurnoutFromMenu(instance,
+                                layoutEditor.signalIconEditor,layoutEditor.signalFrame);
+                        }
+                        else if (linkType==THROAT_TO_THROAT) {
+                            tools.setThroatToThroatFromMenu(instance,linkedTurnoutName,
+                                layoutEditor.signalIconEditor,layoutEditor.signalFrame);
+                        }
+                        else if (linkType==FIRST_3_WAY) {
+                            tools.set3WayFromMenu(turnoutName, linkedTurnoutName,
+                                layoutEditor.signalIconEditor,layoutEditor.signalFrame);
+                        }
+                        else if (linkType==SECOND_3_WAY) {
+                            tools.set3WayFromMenu(linkedTurnoutName, turnoutName,
+                                layoutEditor.signalIconEditor,layoutEditor.signalFrame);
+                        }
+                    }
+                });
+            }
+            if (!blockName.equals("")){
+                final String[] boundaryBetween = getBlockBoundaries();
+                boolean blockBoundaries = false;
+                for (int i = 0; i<4; i++){
+                    if(boundaryBetween[i]!=null)
+                        blockBoundaries=true;
+                }
+                if (InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
                     
-                    if(!blockBName.equals("") && !blockBName.equals(blockName)){
-                        viewRouting.add(new AbstractAction(blockBName) {
+                    if(blockBName.equals("") && blockCName.equals("") && blockDName.equals("")){
+                        popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
                             public void actionPerformed(ActionEvent e) {
-                                AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockBName, getLayoutBlockB());
+                                AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
                                 routeTableAction.actionPerformed(e);
                             }
                         });
-                    }
-                    if(!blockCName.equals("") && !blockCName.equals(blockName) && !blockCName.equals(blockBName)){
-                        viewRouting.add(new AbstractAction(blockCName) {
+                    } else {
+                        JMenu viewRouting = new JMenu(rb.getString("ViewBlockRouting"));
+                        viewRouting.add(new AbstractAction(blockName) {
                             public void actionPerformed(ActionEvent e) {
-                                AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockCName, getLayoutBlockC());
+                                AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockName, getLayoutBlock());
                                 routeTableAction.actionPerformed(e);
                             }
                         });
+                        if(!blockBName.equals("") && !blockBName.equals(blockName)){
+                            viewRouting.add(new AbstractAction(blockBName) {
+                                public void actionPerformed(ActionEvent e) {
+                                    AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockBName, getLayoutBlockB());
+                                    routeTableAction.actionPerformed(e);
+                                }
+                            });
+                        }
+                        
+                        if(!blockCName.equals("") && !blockCName.equals(blockName) && !blockCName.equals(blockBName)){
+                            viewRouting.add(new AbstractAction(blockCName) {
+                                public void actionPerformed(ActionEvent e) {
+                                    AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockCName, getLayoutBlockC());
+                                    routeTableAction.actionPerformed(e);
+                                }
+                            });
+                        }
+                        
+                        if(!blockDName.equals("")  && !blockDName.equals(blockName) && !blockDName.equals(blockBName) && !blockDName.equals(blockCName)){
+                            viewRouting.add(new AbstractAction(blockDName) {
+                                public void actionPerformed(ActionEvent e) {
+                                    AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockDName, getLayoutBlockD());
+                                    routeTableAction.actionPerformed(e);
+                                }
+                            });
+                        }
+                        
+                        popup.add(viewRouting);
                     }
-                    if(!blockDName.equals("")  && !blockDName.equals(blockName) && !blockDName.equals(blockBName) && !blockDName.equals(blockCName)){
-                        viewRouting.add(new AbstractAction(blockDName) {
-                            public void actionPerformed(ActionEvent e) {
-                                AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction(blockDName, getLayoutBlockD());
-                                routeTableAction.actionPerformed(e);
+                }
+                
+                if (blockBoundaries){
+                    popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                        public void actionPerformed(ActionEvent e) {
+                            if (tools == null) {
+                                tools = new LayoutEditorTools(layoutEditor);
                             }
-                        });
-                    }
-                    popup.add(viewRouting);
+                                
+                            tools.setSignalMastsAtTurnoutFromMenu(instance,
+                            boundaryBetween);
+                        }
+                    });
+                    popup.add(new AbstractAction(rb.getString("SetSensors")) {
+                        public void actionPerformed(ActionEvent e) {
+                            if (tools == null) {
+                                tools = new LayoutEditorTools(layoutEditor);
+                            }
+                                
+                            tools.setSensorsAtTurnoutFromMenu(instance,
+                            boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
+                        }
+                    });
                 }
             }
-            
-            if (blockBoundaries){
-                popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
-                    public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
-                            
-                        tools.setSignalMastsAtTurnoutFromMenu(instance,
-                        boundaryBetween);
-                    }
-                });
-                popup.add(new AbstractAction(rb.getString("SetSensors")) {
-                    public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
-                            
-                        tools.setSensorsAtTurnoutFromMenu(instance,
-                        boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
-                    }
-                });
-            }
+            setAdditionalEditPopUpMenu(popup);
+            layoutEditor.setShowAlignmentMenu(popup);
+            popup.show(e.getComponent(), e.getX(), e.getY());
+        } else if(!viewAdditionalMenu.isEmpty()){
+            setAdditionalViewPopUpMenu(popup);
+            popup.show(e.getComponent(), e.getX(), e.getY());
         }
-        layoutEditor.setShowAlignmentMenu(popup);
-		popup.show(e.getComponent(), e.getX(), e.getY());
     }
     
     public String[] getBlockBoundaries(){
@@ -2124,6 +2134,39 @@ public class LayoutTurnout
      */
     public boolean isActive() {
         return active;
+    }
+    
+    ArrayList<JMenuItem> editAdditionalMenu = new ArrayList<JMenuItem>(0);
+    ArrayList<JMenuItem> viewAdditionalMenu = new ArrayList<JMenuItem>(0);
+    
+    public void addEditPopUpMenu(JMenuItem menu){
+        if(!editAdditionalMenu.contains(menu)){
+            editAdditionalMenu.add(menu);
+        }
+    }
+    
+    public void addViewPopUpMenu(JMenuItem menu){
+        if(!viewAdditionalMenu.contains(menu)){
+            viewAdditionalMenu.add(menu);
+        }
+    }
+    
+    public void setAdditionalEditPopUpMenu(JPopupMenu popup){
+        if(editAdditionalMenu.isEmpty())
+            return;
+        popup.addSeparator();
+        for(JMenuItem mi:editAdditionalMenu){
+            popup.add(mi);
+        }
+    }
+    
+    public void setAdditionalViewPopUpMenu(JPopupMenu popup){
+        if(viewAdditionalMenu.isEmpty())
+            return;
+        popup.addSeparator();
+        for(JMenuItem mi:viewAdditionalMenu){
+            popup.add(mi);
+        }
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutTurnout.class.getName());

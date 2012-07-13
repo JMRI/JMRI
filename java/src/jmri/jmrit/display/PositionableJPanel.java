@@ -352,6 +352,8 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         if (debug) log.debug("maxHeight= "+max+" preferred height= "+getPreferredSize().height);
         return max;
     }
+    
+    public jmri.NamedBean getNamedBean() { return null; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableJPanel.class.getName());
 }

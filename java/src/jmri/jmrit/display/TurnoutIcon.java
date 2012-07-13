@@ -109,6 +109,10 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         return namedTurnout;
     }
     
+    public jmri.NamedBean getNamedBean(){
+        return getTurnout();
+    }
+    
     /**
     * Place icon by its bean state name key found in jmri.NamedBeanBundle.properties
     * That is, by its localized bean state name
