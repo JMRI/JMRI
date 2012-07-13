@@ -107,7 +107,7 @@ public class Throttle extends AbstractThrottle
         }
         if (oldSpeed != this.speedSetting)
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
-
+        record(speed);
         // TrafficController.instance().sendMessage(m, null);
     }
 
@@ -124,7 +124,7 @@ public class Throttle extends AbstractThrottle
         return new DccLocoAddress(address, address>100);   // always short address if <100
     }
 
-    protected void throttleDispose(){ }
+    protected void throttleDispose(){ finishRecord(); }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Throttle.class.getName());

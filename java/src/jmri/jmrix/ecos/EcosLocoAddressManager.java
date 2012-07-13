@@ -192,7 +192,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 isLongAddress = true;
             jmri.DccLocoAddress la = new jmri.DccLocoAddress(getByEcosObject(objects.get(x)).getEcosLocoAddress(), isLongAddress);
             if(monitor)
-                adaptermemo.getThrottleManager().attachListener(la, this);
+                adaptermemo.getThrottleManager().attachListener(la, _re, this);
             else
                 adaptermemo.getThrottleManager().removeListener(la, this);
         }

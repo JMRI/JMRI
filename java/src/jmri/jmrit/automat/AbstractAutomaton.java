@@ -10,6 +10,7 @@ import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.Sensor;
 import jmri.Turnout;
+import jmri.BasicRosterEntry;
 import jmri.ThrottleListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -132,13 +133,18 @@ public class AbstractAutomaton implements Runnable {
      *
      * Overrides superclass method to handle local accounting.
      */
+    // The stop method on a thread has been deprecated, we need to find another way to deal with this
     @SuppressWarnings("deprecation")
     public void stop() {
         if (currentThread == null) {
             log.error("Stop with currentThread null!");
             return;
         }
-        currentThread.stop();
+        try {
+            currentThread.stop();
+        } catch (java.lang.ThreadDeath e){
+            log.error(e.toString());
+        }
         currentThread = null;
         done();
     }
@@ -611,6 +617,44 @@ public class AbstractAutomaton implements Runnable {
         return throttle;
     }
 
+    /**
+     * Obtains a DCC throttle, including waiting for the command station response.
+     * @param address
+     * @param longAddress true if this is a long address, false for a short address
+     * @return A usable throttle, or null if error
+     */
+    public DccThrottle getThrottle(BasicRosterEntry re) {
+        if (!inThread) log.warn("getThrottle invoked from invalid context");
+        throttle = null;
+        boolean ok = true;
+        ok = InstanceManager.throttleManagerInstance()
+                .requestThrottle(re,new ThrottleListener() {
+                    public void notifyThrottleFound(DccThrottle t) {
+                        throttle = t;
+                        synchronized (self) {
+                            self.notifyAll(); // should be only one thread waiting, but just in case
+                        }
+                    }
+                    public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason){
+                    }
+                });
+                
+        // check if reply is coming
+        if (!ok) {
+        	log.info("Throttle for loco "+re.getId()+" not available");
+        	return null;
+        }
+        
+        // now wait for reply from identified throttle
+        while (throttle == null) {
+            log.debug("waiting for throttle");
+            wait(10000);
+            if (throttle == null) log.warn("Still waiting for throttle "+re.getId()+"!");
+        }
+        return throttle;
+    }
+
+    
     /**
      * Write a CV on the service track, including waiting for completion.
      * @param CV Number 1 through 512

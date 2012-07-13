@@ -156,7 +156,7 @@ public class SRCPThrottle extends AbstractThrottle
         return address;
     }
 
-    protected void throttleDispose(){ }
+    protected void throttleDispose(){ finishRecord(); }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPThrottle.class.getName());

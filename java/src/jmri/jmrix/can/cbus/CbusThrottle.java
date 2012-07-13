@@ -364,6 +364,7 @@ public class CbusThrottle extends AbstractThrottle {
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001)
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
+        record(speed);
     }
 
     /**
@@ -467,7 +468,7 @@ public class CbusThrottle extends AbstractThrottle {
 
         mRefreshTimer = null;
         cs = null;
-
+        finishRecord();
      }
 
     javax.swing.Timer mRefreshTimer = null;

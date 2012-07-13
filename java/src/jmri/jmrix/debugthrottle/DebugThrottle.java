@@ -85,6 +85,7 @@ public class DebugThrottle extends AbstractThrottle
         this.speedSetting = speed;
         if (oldSpeed != this.speedSetting)
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
+        record(speed);
     }
 
     public void setIsForward(boolean forward) {
@@ -97,6 +98,7 @@ public class DebugThrottle extends AbstractThrottle
 
     protected void throttleDispose(){
         log.debug("throttleDispose() called");
+        finishRecord();
     }
 
     // initialize logging

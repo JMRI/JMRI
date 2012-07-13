@@ -50,7 +50,7 @@ import org.jdom.Element;
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
-public class RosterEntry {
+public class RosterEntry implements jmri.BasicRosterEntry{
     // members to remember all the info
     protected String _fileName = null;
 

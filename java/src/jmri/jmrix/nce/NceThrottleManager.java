@@ -55,7 +55,16 @@ public class NceThrottleManager extends AbstractThrottleManager {
     
     public int supportedSpeedModes() {
     	return(DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+    }
+    
+    public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l){
+        if (super.disposeThrottle(t, l)){
+            NceThrottle nct = (NceThrottle) t;
+            nct.throttleDispose();
+            return true;
         }
+        return false;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceThrottleManager.class.getName());
 

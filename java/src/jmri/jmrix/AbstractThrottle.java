@@ -5,6 +5,11 @@ import jmri.CommandStation;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.ThrottleListener;
+import jmri.BasicRosterEntry;
+
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -77,6 +82,7 @@ abstract public class AbstractThrottle implements DccThrottle {
                                              new Float(this.speedSetting),
                                              new Float(this.speedSetting =
                                                        speed));
+        record(speed);
    }
 
     /** direction
@@ -1096,7 +1102,66 @@ abstract public class AbstractThrottle implements DccThrottle {
      public int getSpeedStepMode() {
 	    return speedStepMode;
      }
+     
+     long durationRunning = 0;
+     long start;
    
+    protected void record(float speed){
+        if(re==null)
+            return;
+        if(speed==0){
+            stopClock();
+        } else {
+            startClock();
+        }
+    }
+    protected void startClock(){
+        if(start==0)
+            start = System.currentTimeMillis();
+    }
+    
+    void stopClock() {
+        if(start==0)
+            return;
+        long stop = System.currentTimeMillis();
+        //Set running duration in seconds
+        durationRunning = durationRunning + ((stop-start)/1000);
+        start=0;
+    }
+    
+    protected void finishRecord(){
+        log.info("finish");
+        if(re==null){
+            return;
+        }
+        stopClock();
+        String currentDurationString = re.getAttribute("OperatingDuration");
+        long currentDuration = 0;
+        try {
+            currentDuration = Long.valueOf(currentDurationString);
+        } catch (Exception e){ }
+        currentDuration = currentDuration + durationRunning;
+        re.putAttribute("OperatingDuration", ""+currentDuration);
+        Date date = new Date();
+        re.putAttribute("LastOperated", ""+date);
+        //Only store if the roster entry isn't open.
+        if(!re.isOpen())
+            re.store();
+        else
+            log.warn("Roster Entry " + re.getId() + " running time not saved as entry is already open for editing");
+        re=null;
+    }
+    
+     BasicRosterEntry re = null;
+     
+     public void setRosterEntry(BasicRosterEntry re){
+        this.re = re;
+        log.info("Roster entry set " + re.toString());
+     }
+     
+     public BasicRosterEntry getRosterEntry(){
+        return re;
+     }
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractThrottle.class.getName());
 

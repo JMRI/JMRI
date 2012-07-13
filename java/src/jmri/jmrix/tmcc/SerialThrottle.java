@@ -218,6 +218,7 @@ public class SerialThrottle extends AbstractThrottle
         SerialTrafficController.instance().sendSerialMessage(m, null);
         if (oldSpeed != this.speedSetting)
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
+        record(speed);
     }
 
     public void setIsForward(boolean forward) {
@@ -257,7 +258,7 @@ public class SerialThrottle extends AbstractThrottle
 	    speedStepMode = 32;
      }
 
-    protected void throttleDispose(){ }
+    protected void throttleDispose(){ finishRecord(); }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialThrottle.class.getName());

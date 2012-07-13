@@ -450,7 +450,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 		}
 
     	boolean requestOK =
-    		InstanceManager.throttleManagerInstance().requestThrottle(currentAddress.getNumber(), currentAddress.isLongAddress(), this);
+    		InstanceManager.throttleManagerInstance().requestThrottle(getCurrentAddress(), rosterEntry, this);
     	if (!requestOK)
     		JOptionPane.showMessageDialog(mainPanel, rb.getString("AddressInUse"));
 	}

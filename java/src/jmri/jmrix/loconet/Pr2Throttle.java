@@ -144,6 +144,7 @@ public class Pr2Throttle extends AbstractThrottle {
         writeData();
         if (oldSpeed != this.speedSetting)
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
+        record(speed);
     }
 
     /**
@@ -192,7 +193,7 @@ public class Pr2Throttle extends AbstractThrottle {
         return address;
     }
 
-    protected void throttleDispose(){ }
+    protected void throttleDispose(){ finishRecord(); }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pr2Throttle.class.getName());

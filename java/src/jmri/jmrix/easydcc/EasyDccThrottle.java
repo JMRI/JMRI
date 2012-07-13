@@ -194,6 +194,7 @@ public class EasyDccThrottle extends AbstractThrottle
 
         if (oldSpeed != this.speedSetting)
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
+        record(speed);
     }
 
     public void setIsForward(boolean forward) {
@@ -214,6 +215,7 @@ public class EasyDccThrottle extends AbstractThrottle
 
     protected void throttleDispose(){
         active=false;
+        finishRecord();
     }
 
     // initialize logging

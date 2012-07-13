@@ -120,8 +120,8 @@ public class SprogThrottle extends AbstractThrottle
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     public void setSpeedSetting(float speed) {
-	int mode = getSpeedStepMode();
-	if((mode & DccThrottle.SpeedStepMode28) != 0) {
+        int mode = getSpeedStepMode();
+        if((mode & DccThrottle.SpeedStepMode28) != 0) {
             // 28 step mode speed commands are 
             // stop, estop, stop, estop, 4, 5, ..., 31
             float oldSpeed = this.speedSetting;
@@ -173,6 +173,7 @@ public class SprogThrottle extends AbstractThrottle
             if (Math.abs(oldSpeed - this.speedSetting) > 0.0001)
                 notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
         }
+        record(speed);
     }
 
     public void setIsForward(boolean forward) {
@@ -187,7 +188,7 @@ public class SprogThrottle extends AbstractThrottle
         return new DccLocoAddress(address, SprogThrottleManager.isLongAddress(address));
     }
 
-    protected void throttleDispose(){ }
+    protected void throttleDispose(){ finishRecord(); }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogThrottle.class.getName());

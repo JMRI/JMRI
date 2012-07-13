@@ -51,32 +51,32 @@ public class XpaThrottle extends AbstractThrottle {
      */
     public void setSpeedSetting(float speed) {
         super.setSpeedSetting(speed);
-	int value = (int)((127)*speed);
+        int value = (int)((127)*speed);
         if (value>127) value = 127;    // max possible speed
-	if(this.speedvalue!=value) {
-	  XpaMessage m;
-	  if (value<0) {
-	    value = 0;        // emergency stop
-            m=XpaMessage.getEStopMsg();
+        if(this.speedvalue!=value) {
+          XpaMessage m;
+          if (value<0) {
+            value = 0;        // emergency stop
+                m=XpaMessage.getEStopMsg();
+                XpaTrafficController.instance().sendXpaMessage(m,null);
+          } else if (value==0) {
+                m=XpaMessage.getIdleMsg(address);
+                XpaTrafficController.instance().sendXpaMessage(m,null);
+              } else if (value>this.speedvalue) {
+            // Increase the speed
+                int diff=value-speedvalue;
+            m=XpaMessage.getIncSpeedMsg(this.address,diff);
             XpaTrafficController.instance().sendXpaMessage(m,null);
-	  } else if (value==0) {
-            m=XpaMessage.getIdleMsg(address);
+              } else if (value<this.speedvalue) {
+            // Increase the speed
+                int diff=speedvalue-value;
+            m=XpaMessage.getDecSpeedMsg(this.address,diff);
             XpaTrafficController.instance().sendXpaMessage(m,null);
-          } else if (value>this.speedvalue) {
-	    // Increase the speed
-            int diff=value-speedvalue;
-	    m=XpaMessage.getIncSpeedMsg(this.address,diff);
-  	    XpaTrafficController.instance().sendXpaMessage(m,null);
-          } else if (value<this.speedvalue) {
-	    // Increase the speed
-            int diff=speedvalue-value;
-	    m=XpaMessage.getDecSpeedMsg(this.address,diff);
-	    XpaTrafficController.instance().sendXpaMessage(m,null);
-	  }
+          }
         }
         this.speedSetting = speed;
-	this.speedvalue=value;
-     }
+        this.speedvalue=value;
+    }
 
     // Direction
     public void setIsForward(boolean forward) {
@@ -204,7 +204,7 @@ public class XpaThrottle extends AbstractThrottle {
         return new DccLocoAddress(address, XpaThrottleManager.isLongAddress(address));
     }
 
-    protected void throttleDispose(){ }
+    protected void throttleDispose(){ finishRecord(); }
     
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XpaThrottle.class.getName());

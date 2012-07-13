@@ -332,6 +332,8 @@ public interface Throttle {
      */
     public void dispatch(ThrottleListener l);
     
+    public void setRosterEntry(BasicRosterEntry re);
+    public BasicRosterEntry getRosterEntry();
 }
 
 

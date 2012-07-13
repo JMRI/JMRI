@@ -329,7 +329,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     protected void throttleDispose()
     {
         active=false;
-	stopStatusTimer();
+        stopStatusTimer();
+        finishRecord();
     }
     
     public int setDccAddress(int newaddress)

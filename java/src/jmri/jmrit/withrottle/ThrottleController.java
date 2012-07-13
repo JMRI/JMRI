@@ -577,7 +577,11 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
 
     protected void setAddress(int number, boolean isLong){
-        jmri.InstanceManager.throttleManagerInstance().requestThrottle(number, isLong, this);
+        if(rosterLoco!=null){
+            jmri.InstanceManager.throttleManagerInstance().requestThrottle(rosterLoco, this);
+        } else {
+            jmri.InstanceManager.throttleManagerInstance().requestThrottle(number, isLong, this);
+        }
     }
 
     public void requestEntryFromID(String id){

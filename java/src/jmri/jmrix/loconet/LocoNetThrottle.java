@@ -215,6 +215,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         }
         if (oldSpeed != this.speedSetting)
         	notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
+        record(speed);
     }
 
     /**
@@ -254,7 +255,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         mRefreshTimer = null;
         slot = null;
         network = null;
-
+        
+        finishRecord();
      }
 
     javax.swing.Timer mRefreshTimer = null;
