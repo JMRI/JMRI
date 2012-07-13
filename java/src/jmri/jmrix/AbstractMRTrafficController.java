@@ -281,8 +281,8 @@ abstract public class AbstractMRTrafficController {
         				if (mCurrentState != OKSENDMSGSTATE){
         					handleTimeout(modeMsg,l);
         				}
-        				mCurrentState = WAITMSGREPLYSTATE;
             		}
+                    mCurrentState = WAITMSGREPLYSTATE;
             	}
                     forwardToPort(m, l);
             	// reply expected?
@@ -473,7 +473,9 @@ abstract public class AbstractMRTrafficController {
      * @param offset the first byte not yet used
      */
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
-        if (! m.isBinary()) msg[offset] = 0x0d;
+        if (! m.isBinary()){
+            msg[offset] = 0x0d;
+        }
     }
 
     /**
@@ -516,10 +518,8 @@ abstract public class AbstractMRTrafficController {
         int len = m.getNumDataElements();
         for (int i=0; i< len; i++)
             msg[i+offset] = (byte) m.getElement(i);
-
         // add trailer
         addTrailerToOutput(msg, len+offset, m);
-
         // and stream the bytes
         try {
             if (ostream != null) {
