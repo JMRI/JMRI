@@ -644,7 +644,7 @@ public class PrintLocationsAction  extends AbstractAction {
 				charCount += train.getName().length() +2;
 				if( charCount > characters){
 					buf.append(newLine + "\t\t");
-					charCount = train.getName().length() +2;;
+					charCount = train.getName().length() +2;
 				}
 				buf.append(train.getName() +", ");
 			}
