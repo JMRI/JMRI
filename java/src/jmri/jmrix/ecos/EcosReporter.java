@@ -3,7 +3,6 @@
 package jmri.jmrix.ecos;
 
 import jmri.implementation.AbstractReporter;
-import jmri.Sensor;
 import jmri.IdTag;
 
 /**

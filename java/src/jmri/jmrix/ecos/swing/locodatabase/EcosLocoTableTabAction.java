@@ -3,16 +3,12 @@ package jmri.jmrix.ecos.swing.locodatabase;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import jmri.Manager;
 import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.beantable.AbstractTableTabAction;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
-
-import jmri.util.com.sun.TableSorter;
 
 public class EcosLocoTableTabAction extends AbstractTableTabAction {
     

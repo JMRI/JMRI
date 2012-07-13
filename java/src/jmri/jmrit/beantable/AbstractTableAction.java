@@ -5,23 +5,14 @@ package jmri.jmrit.beantable;
 import jmri.Manager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseAdapter;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JCheckBox;
-import javax.swing.JPopupMenu;
-import javax.swing.JCheckBoxMenuItem;
 import java.util.HashMap;
 import javax.swing.JTable;
-import javax.swing.table.TableColumn;
-import javax.swing.JTextField;
 import jmri.util.com.sun.TableSorter;
-import jmri.util.swing.XTableColumnModel;
 
 /**
  * Swing action to create and register a

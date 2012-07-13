@@ -14,7 +14,6 @@ import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxEditor;
 import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxRenderer;
 import jmri.jmrit.signalling.SignallingSourceAction;
 import jmri.util.com.sun.TableSorter;
-import java.awt.event.MouseListener;
 import jmri.util.swing.XTableColumnModel;
 
 /**

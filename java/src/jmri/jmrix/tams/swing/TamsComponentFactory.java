@@ -1,7 +1,6 @@
 package jmri.jmrix.tams.swing;
 
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
-import javax.swing.JMenu;
 /**
  * Provide access to Swing components for the Tams subsystem.
  *

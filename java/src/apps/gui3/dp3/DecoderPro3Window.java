@@ -2,7 +2,6 @@
 package apps.gui3.dp3;
 
 import java.io.File;
-import javax.swing.JLabel;
 import jmri.Application;
 import jmri.jmrit.roster.swing.RosterFrame;
 

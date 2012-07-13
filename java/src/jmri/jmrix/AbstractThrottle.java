@@ -8,9 +8,6 @@ import jmri.ThrottleListener;
 import jmri.BasicRosterEntry;
 
 import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;

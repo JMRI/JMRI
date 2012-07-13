@@ -1,7 +1,6 @@
 package jmri.jmrix.dcc4pc.swing;
 
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
-import javax.swing.JMenu;
 /**
  * Provide access to Swing components for the Ecos subsystem.
  *

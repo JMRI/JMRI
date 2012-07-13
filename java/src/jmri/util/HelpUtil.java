@@ -14,7 +14,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.Locale;
 
@@ -24,7 +23,6 @@ import javax.swing.*;
 import jmri.plaf.macosx.AboutHandler;
 import jmri.plaf.macosx.Application;
 import jmri.swing.AboutDialog;
-import jmri.util.swing.JmriAbstractAction;
 
 /**
  * Common utility methods for working with Java Help.

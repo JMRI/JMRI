@@ -11,8 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.table.TableColumn;
-import javax.swing.DefaultCellEditor;
-import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
 
@@ -28,7 +26,6 @@ import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.XTableColumnModel;
-import javax.swing.table.TableColumn;
 
 public class EcosLocoTableAction extends AbstractTableAction {
 

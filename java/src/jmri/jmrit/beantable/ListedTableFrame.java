@@ -5,8 +5,6 @@ package jmri.jmrit.beantable;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 
@@ -22,9 +20,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
 import jmri.util.com.sun.TableSorter;
-import jmri.util.swing.XTableColumnModel;
-import javax.swing.table.TableColumn;
-
 import javax.swing.*;
 
 /**

@@ -1,7 +1,6 @@
 package jmri.jmrix.ecos.swing;
 
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
-import javax.swing.JMenu;
 /**
  * Provide access to Swing components for the Ecos subsystem.
  *

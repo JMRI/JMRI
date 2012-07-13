@@ -6,7 +6,6 @@ import jmri.*;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.jmrit.beantable.AddNewHardwareDevicePanel;
 
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
