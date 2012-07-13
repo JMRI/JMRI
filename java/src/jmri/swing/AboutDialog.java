@@ -68,8 +68,8 @@ public class AboutDialog extends JDialog {
 
         log.debug("start labels");
 
-        // add listerner for Com port updates
-        ArrayList connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
+        // add listener for Com port updates
+        ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
         if (connList != null && !connList.isEmpty()) {
             for (Object conn : connList) {
                 if (!((ConnectionConfig) conn).getDisabled()) {

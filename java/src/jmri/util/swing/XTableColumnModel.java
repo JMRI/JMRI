@@ -1,5 +1,6 @@
 package jmri.util.swing;
 import javax.swing.table.*;
+
 import java.util.Vector;
 import java.util.Enumeration;
 
@@ -180,7 +181,7 @@ public class XTableColumnModel extends DefaultTableColumnModel {
      * @see	#getColumns
      */
     public int getColumnCount(boolean onlyVisible) {
-        Vector columns = (onlyVisible ? tableColumns : allTableColumns);
+        Vector<TableColumn> columns = (onlyVisible ? tableColumns : allTableColumns);
 	return columns.size();
     }
 
@@ -218,12 +219,12 @@ public class XTableColumnModel extends DefaultTableColumnModel {
 	    throw new IllegalArgumentException("Identifier is null");
 	}
 
-        Vector      columns     = (onlyVisible ? tableColumns : allTableColumns);
+        Vector<TableColumn>      columns     = (onlyVisible ? tableColumns : allTableColumns);
         int         noColumns   = columns.size();
         TableColumn column;
         
         for(int columnIndex = 0; columnIndex < noColumns; ++columnIndex) {
-	    column = (TableColumn)columns.get(columnIndex);
+	    column = columns.get(columnIndex);
 
             if(identifier.equals(column.getIdentifier()))
 		return columnIndex;
