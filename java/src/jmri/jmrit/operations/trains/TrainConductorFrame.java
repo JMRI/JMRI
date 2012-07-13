@@ -244,7 +244,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 		
 		
 		if (_train != null){
-			textTrainName.setText(_train.getName());
+			textTrainName.setText(_train.getIconName());
 			textTrainDescription.setText(_train.getDescription());
 			// show train comment box only if there's a comment
 			if (_train.getComment().equals(""))
