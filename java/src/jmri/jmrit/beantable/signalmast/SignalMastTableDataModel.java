@@ -14,6 +14,8 @@ import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxEditor;
 import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxRenderer;
 import jmri.jmrit.signalling.SignallingSourceAction;
 import jmri.util.com.sun.TableSorter;
+import java.awt.event.MouseListener;
+import jmri.util.swing.XTableColumnModel;
 
 /**
  * Data model for a SignalMastTable
@@ -170,9 +172,9 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     
     TableSorter sorter;
 
-    protected JTable makeJTable(TableSorter srtr) {
+    public JTable makeJTable(TableSorter srtr) {
         this.sorter = srtr;
-        return new JTable(sorter)  {
+        JTable table = new JTable(sorter)  {
             public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 boolean res = super.editCellAt(row, column, e);
                 java.awt.Component c = this.getEditorComponent();
@@ -229,6 +231,13 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
             Hashtable<Object, Vector<String>> boxMap = new Hashtable<Object, Vector<String>>();
             
         };
+        
+        table.getTableHeader().setReorderingAllowed(true);
+        table.setColumnModel(new XTableColumnModel());
+        table.createDefaultColumnsFromModel();
+        
+        addMouseListenerToHeader(table);
+        return table;
     }
     
     protected String getBeanType(){

@@ -4643,7 +4643,6 @@ public class LogixTableAction extends AbstractTableAction {
     }
     
     String validateEntryExitReference(String name) {
-        log.info("Still to do");
         NamedBean nb = null;
         if( name != null){
             name = name.trim();

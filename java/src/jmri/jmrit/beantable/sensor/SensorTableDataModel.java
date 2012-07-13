@@ -3,15 +3,14 @@
 package jmri.jmrit.beantable.sensor;
 
 import jmri.*;
-import jmri.util.swing.XTableColumnModel;
 
 import jmri.jmrit.beantable.BeanTableDataModel;
 import javax.swing.*;
 import javax.swing.table.TableColumn;
+import jmri.util.swing.XTableColumnModel;
 
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
-
 
 /**
  * Data model for a SensorTable
@@ -26,8 +25,6 @@ public class SensorTableDataModel extends BeanTableDataModel {
     static public final int USEGLOBALDELAY = INVERTCOL+1;
     static public final int ACTIVEDELAY = USEGLOBALDELAY+1;
     static public final int INACTIVEDELAY = ACTIVEDELAY+1;
-    
-    XTableColumnModel columnModel = new XTableColumnModel();
     
     SensorManager senManager = InstanceManager.sensorManagerInstance();
     public SensorTableDataModel() {
@@ -205,27 +202,21 @@ public class SensorTableDataModel extends BeanTableDataModel {
     
     @Override
     public void configureTable(JTable table){
-        table.setColumnModel(columnModel);
-        table.createDefaultColumnsFromModel();
-        
+        this.table = table;
+        showDebounce(false);
         super.configureTable(table);
-        
-        TableColumn column  = columnModel.getColumnByModelIndex(USEGLOBALDELAY);
-        columnModel.setColumnVisible(column, false);
-        column  = columnModel.getColumnByModelIndex(ACTIVEDELAY);
-        columnModel.setColumnVisible(column, false);
-        column  = columnModel.getColumnByModelIndex(INACTIVEDELAY);
-        columnModel.setColumnVisible(column, false);
     }
     
+    protected JTable table;
+    
     public void showDebounce(boolean show){
+        XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
         TableColumn column  = columnModel.getColumnByModelIndex(USEGLOBALDELAY);
         columnModel.setColumnVisible(column, show);
         column  = columnModel.getColumnByModelIndex(ACTIVEDELAY);
         columnModel.setColumnVisible(column, show);
         column  = columnModel.getColumnByModelIndex(INACTIVEDELAY);
         columnModel.setColumnVisible(column, show);
-    
     }
     
     protected String getClassName() { return jmri.jmrit.beantable.SensorTableAction.class.getName(); }

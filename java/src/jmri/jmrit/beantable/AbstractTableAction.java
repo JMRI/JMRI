@@ -5,15 +5,23 @@ package jmri.jmrit.beantable;
 import jmri.Manager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseAdapter;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JCheckBox;
+import javax.swing.JPopupMenu;
+import javax.swing.JCheckBoxMenuItem;
 import java.util.HashMap;
 import javax.swing.JTable;
+import javax.swing.table.TableColumn;
 import javax.swing.JTextField;
 import jmri.util.com.sun.TableSorter;
+import jmri.util.swing.XTableColumnModel;
 
 /**
  * Swing action to create and register a
@@ -57,8 +65,12 @@ abstract public class AbstractTableAction extends AbstractAction {
         // create the JTable model, with changes for specific NamedBean
         createModel();
         TableSorter sorter = new TableSorter(m);
-    	JTable dataTable = makeJTable(sorter);
+        JTable dataTable = m.makeJTable(sorter);
         sorter.setTableHeader(dataTable.getTableHeader());
+        
+        // allow reordering of the columns
+        dataTable.getTableHeader().setReorderingAllowed(true);
+        
         // create the frame
         f = new BeanTableFrame(m, helpTarget(), dataTable){
             /**
@@ -81,19 +93,6 @@ abstract public class AbstractTableAction extends AbstractAction {
         addToFrame(f);
         f.pack();
         f.setVisible(true);
-    }
-
-    protected JTable makeJTable(TableSorter sorter) {
-	    return new JTable(sorter)  {
-            public boolean editCellAt(int row, int column, java.util.EventObject e) {
-                boolean res = super.editCellAt(row, column, e);
-                java.awt.Component c = this.getEditorComponent();
-                if (c instanceof javax.swing.JTextField) {
-                    ( (JTextField) c).selectAll();
-                }
-                return res;
-            }
-        };
     }
     
     public BeanTableDataModel getTableDataModel(){
@@ -135,8 +134,9 @@ abstract public class AbstractTableAction extends AbstractAction {
     }
     
     public void dispose() {
-        if (m!=null)
+        if (m!=null){
             m.dispose();
+        }
     }
 
     /**
@@ -169,7 +169,7 @@ abstract public class AbstractTableAction extends AbstractAction {
     public void print(javax.swing.JTable.PrintMode mode, java.text.MessageFormat headerFormat, java.text.MessageFormat footerFormat){ log.error("Caught here");}
 
     protected abstract void addPressed(ActionEvent e);
-
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractTableAction.class.getName());
 }
 /* @(#)AbstractTableAction.java */

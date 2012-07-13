@@ -13,7 +13,6 @@ import jmri.TurnoutOperation;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
 import jmri.NamedBeanHandle;
-import jmri.util.swing.XTableColumnModel;
 import javax.swing.table.TableColumn;
 
 import java.awt.event.ActionEvent;
@@ -39,6 +38,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import jmri.util.JmriJFrame;
 import jmri.util.ConnectionNameFromSystemName;
+import jmri.util.swing.XTableColumnModel;
 
 /**
  * Swing action to create and register a
@@ -101,6 +101,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     private java.util.Vector<String> speedListClosed = new java.util.Vector<String>();
     private java.util.Vector<String> speedListThrown = new java.util.Vector<String>();
     protected TurnoutManager turnManager = InstanceManager.turnoutManagerInstance();
+    protected JTable table;
 
     @Override
     public void setManager(Manager man) {
@@ -119,8 +120,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     static public final int LOCKDECCOL = LOCKOPRCOL+1;
     static public final int STRAIGHTCOL = LOCKDECCOL+1;
     static public final int DIVERGCOL = STRAIGHTCOL+1;
-    
-    XTableColumnModel columnModel;
     
     /**
      * Create the JTable DataModel, along with the changes
@@ -419,22 +418,17 @@ public class TurnoutTableAction extends AbstractTableAction {
                 if (state==Turnout.CLOSED) ((Turnout)t).setCommandedState(Turnout.THROWN);
                 else ((Turnout)t).setCommandedState(Turnout.CLOSED);
             }
-            
-            JTable table;
+
             @Override
-            public void configureTable(JTable table) {
-                this.table = table;
-                columnModel = new XTableColumnModel();
-                table.setColumnModel(columnModel);
-                table.createDefaultColumnsFromModel();
+            public void configureTable(JTable tbl) {
+                table = tbl;
                 
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
                 table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
                 table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
                 setColumnToHoldButton(table,OPSEDITCOL,editButton());
-                
-                super.configureTable(table);
                 //Hide the following columns by default
+                XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
                 TableColumn column  = columnModel.getColumnByModelIndex(STRAIGHTCOL);
                 columnModel.setColumnVisible(column, false);
                 column  = columnModel.getColumnByModelIndex(DIVERGCOL);
@@ -456,7 +450,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 column  = columnModel.getColumnByModelIndex(LOCKDECCOL);
                 columnModel.setColumnVisible(column, false);
                 
-                //super.configureTable(table);
+                super.configureTable(table);
             }
             
             // update table if turnout lock or feedback changes
@@ -487,7 +481,8 @@ public class TurnoutTableAction extends AbstractTableAction {
             
             protected String getBeanType(){
                 return AbstractTableAction.rbean.getString("BeanNameTurnout");
-            }               
+            }
+            
         };  // end of custom data model
     }
     
@@ -575,42 +570,6 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
         addFrame.pack();
         addFrame.setVisible(true);
-    }
-    JTable table;
-    
-    //boolean showFeedback = false;
-    void showFeedbackChanged() {
-        boolean showFeedback = showFeedbackBox.isSelected();
-        TableColumn column  = columnModel.getColumnByModelIndex(KNOWNCOL);
-        columnModel.setColumnVisible(column, showFeedback);
-        column  = columnModel.getColumnByModelIndex(MODECOL);
-        columnModel.setColumnVisible(column, showFeedback);
-        column  = columnModel.getColumnByModelIndex(SENSOR1COL);
-        columnModel.setColumnVisible(column, showFeedback);
-        column  = columnModel.getColumnByModelIndex(SENSOR2COL);
-        columnModel.setColumnVisible(column, showFeedback);
-        column  = columnModel.getColumnByModelIndex(OPSONOFFCOL);
-        columnModel.setColumnVisible(column, showFeedback);
-        column  = columnModel.getColumnByModelIndex(OPSEDITCOL);
-        columnModel.setColumnVisible(column, showFeedback);
-    }
-    
-    //boolean showLock = false;
-    void showLockChanged() {
-        boolean showLock = showLockBox.isSelected();
-        TableColumn column  = columnModel.getColumnByModelIndex(LOCKDECCOL);
-        columnModel.setColumnVisible(column, showLock);
-        column  = columnModel.getColumnByModelIndex(LOCKOPRCOL);
-        columnModel.setColumnVisible(column, showLock);
-    }
-    
-    //boolean showTurnoutSpeed = false;
-    void showTurnoutSpeedChanged() {
-        boolean showTurnoutSpeed = showTurnoutSpeedBox.isSelected();
-        TableColumn column  = columnModel.getColumnByModelIndex(STRAIGHTCOL);
-        columnModel.setColumnVisible(column, showTurnoutSpeed);
-        column  = columnModel.getColumnByModelIndex(DIVERGCOL);
-        columnModel.setColumnVisible(column, showTurnoutSpeed);
     }
     
     /**
@@ -748,7 +707,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     	}
     }
     
-    protected class TurnoutOperationEditor extends JDialog {
+    protected static class TurnoutOperationEditor extends JDialog {
     	TurnoutOperationConfig config;
     	TurnoutOperation myOp;
     	Turnout myTurnout;
@@ -943,6 +902,42 @@ public class TurnoutTableAction extends AbstractTableAction {
                     showTurnoutSpeedChanged();
                 }
             });
+    }
+    
+    void showFeedbackChanged() {
+        boolean showFeedback = showFeedbackBox.isSelected();
+        XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
+        TableColumn column  = columnModel.getColumnByModelIndex(KNOWNCOL);
+        columnModel.setColumnVisible(column, showFeedback);
+        column  = columnModel.getColumnByModelIndex(MODECOL);
+        columnModel.setColumnVisible(column, showFeedback);
+        column  = columnModel.getColumnByModelIndex(SENSOR1COL);
+        columnModel.setColumnVisible(column, showFeedback);
+        column  = columnModel.getColumnByModelIndex(SENSOR2COL);
+        columnModel.setColumnVisible(column, showFeedback);
+        column  = columnModel.getColumnByModelIndex(OPSONOFFCOL);
+        columnModel.setColumnVisible(column, showFeedback);
+        column  = columnModel.getColumnByModelIndex(OPSEDITCOL);
+        columnModel.setColumnVisible(column, showFeedback);
+    }
+    
+    void showLockChanged() {
+        boolean showLock = showLockBox.isSelected();
+        XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
+        TableColumn column  = ((XTableColumnModel)table.getColumnModel()).getColumnByModelIndex(LOCKDECCOL);
+        columnModel.setColumnVisible(column, showLock);
+        column  = columnModel.getColumnByModelIndex(LOCKOPRCOL);
+        columnModel.setColumnVisible(column, showLock);
+    }
+    
+    //boolean showTurnoutSpeed = false;
+    public void showTurnoutSpeedChanged() {
+        boolean showTurnoutSpeed = showTurnoutSpeedBox.isSelected();
+        XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
+        TableColumn column  = ((XTableColumnModel)table.getColumnModel()).getColumnByModelIndex(STRAIGHTCOL);
+        columnModel.setColumnVisible(column, showTurnoutSpeed);
+        column  = columnModel.getColumnByModelIndex(DIVERGCOL);
+        columnModel.setColumnVisible(column, showTurnoutSpeed);
     }
     
     @Override

@@ -5,6 +5,7 @@ package jmri.jmrit.beantable;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
@@ -21,6 +22,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
 import jmri.util.com.sun.TableSorter;
+import jmri.util.swing.XTableColumnModel;
+import javax.swing.table.TableColumn;
 
 import javax.swing.*;
 
@@ -110,6 +113,7 @@ public class ListedTableFrame extends BeanTableFrame {
             } catch (Exception ex){
                 detailpanel.add(errorPanel(item.getItemString()), item.getClassAsString());
                 log.error("Error when adding " + item.getClassAsString() + " to display\n" + ex);
+                ex.printStackTrace();
                 removeItem.add(item);
             }
         }
@@ -178,19 +182,6 @@ public class ListedTableFrame extends BeanTableFrame {
                 log.error("An error occured in the goto list for " + selection);
             }
         }
-    }
-    
-    protected JTable makeJTable(TableSorter sorter) {
-        return new JTable(sorter)  {
-            public boolean editCellAt(int row, int column, java.util.EventObject e) {
-                boolean res = super.editCellAt(row, column, e);
-                java.awt.Component c = this.getEditorComponent();
-                if (c instanceof javax.swing.JTextField) {
-                    ( (JTextField) c).selectAll();
-                }            
-                return res;
-            }
-        };
     }
     
     public void addTable(String aaClass, String choice, boolean stdModel){
@@ -405,6 +396,7 @@ public class ListedTableFrame extends BeanTableFrame {
                     }
                 });
             }
+            dataModel.loadTableColumnDetails(dataTable);
         }
         
         void addPanelModel(){
@@ -413,6 +405,7 @@ public class ListedTableFrame extends BeanTableFrame {
                 dataPanel.add(bottomBox, BorderLayout.SOUTH);
            } catch ( NullPointerException e) {
                 log.error("An error occured while trying to create the table for " + itemText + " " + e.toString());
+                e.printStackTrace();
            }
         }
         
@@ -446,15 +439,16 @@ public class ListedTableFrame extends BeanTableFrame {
         }
         
         void dispose(){
-            if (dataModel != null)
+            if (dataModel != null){
+                dataModel.saveTableColumnDetails(dataTable);
                 dataModel.dispose();
+            }
             if (tableAction!=null)
                 tableAction.dispose();
             dataModel = null;
             dataTable = null;
             dataScroll = null;
         }
-        
     }
     static class tabbedTableItemList {
 

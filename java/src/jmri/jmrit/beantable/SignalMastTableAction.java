@@ -58,7 +58,7 @@ public class SignalMastTableAction extends AbstractTableAction {
         // create the JTable model, with changes for specific NamedBean
         createModel();
         TableSorter sorter = new TableSorter(m);
-    	JTable dataTable = makeJTable(sorter);
+    	JTable dataTable = m.makeJTable(sorter);
         sorter.setTableHeader(dataTable.getTableHeader());
         // create the frame
         f = new BeanTableFrame(m, helpTarget(), dataTable){

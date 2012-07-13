@@ -27,6 +27,8 @@ import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 import jmri.util.com.sun.TableSorter;
+import jmri.util.swing.XTableColumnModel;
+import javax.swing.table.TableColumn;
 
 public class EcosLocoTableAction extends AbstractTableAction {
 
@@ -53,7 +55,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
         // create the JTable model, with changes for specific NamedBean
         createModel();
         TableSorter sorter = new TableSorter(m);
-    	JTable dataTable = makeJTable(sorter);
+    	JTable dataTable = m.makeJTable(sorter);
         sorter.setTableHeader(dataTable.getTableHeader());
         // create the frame
         f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable){
@@ -81,13 +83,16 @@ public class EcosLocoTableAction extends AbstractTableAction {
     protected EcosLocoAddress getByEcosObject(String object) {return locoManager.getByEcosObject(object);}
     
     List<String> ecosObjectIdList = null;
+    JTable table;
+    
+    static public final int ADDTOROSTERCOL = 5;
+    static public final int SPEEDDIR = 6;
+    static public final int STOP = 7;
     
     protected void createModel() {
         m = new BeanTableDataModel() {
         
-            static public final int ADDTOROSTERCOL = 5;
-            static public final int SPEEDDIR = 6;
-            static public final int STOP = 7;
+
 
             //We have to set a manager first off, but this gets replaced.
             protected EcosLocoAddressManager getManager() { return locoManager;}
@@ -140,10 +145,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
             }
             @Override
             public int getColumnCount(){ 
-                if (showLocoMonitor)
-                    return STOP+1;
-                else
-                    return ADDTOROSTERCOL+1;
+                return STOP+1;
             }
             
             @Override
@@ -259,36 +261,42 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 case USERNAMECOL:
                     return new JTextField(20).getPreferredSize().width;
                 case ADDTOROSTERCOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
-                    return new JTextField(22).getPreferredSize().width;
+                    return new JTextField(12).getPreferredSize().width;
                 case STOP: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
-                    return new JTextField(22).getPreferredSize().width;
+                    return new JTextField(6).getPreferredSize().width;
                 case VALUECOL: 
                     return new JTextField(5).getPreferredSize().width;
                 case SPEEDDIR: 
-                    return new JTextField(5).getPreferredSize().width;
+                    return new JTextField(10).getPreferredSize().width;
                 default:
                     //log.warn("Unexpected column in getPreferredWidth: "+col);
                     return new JTextField(8).getPreferredSize().width;
                 }
             }
     
-            public void configureTable(JTable table) {
+            public void configureTable(JTable tbl) {
+                table = tbl;
                 table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
 				table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
                 setColumnToHoldButton(table, ADDTOROSTERCOL, 
                         new JButton("Add to Roster"));
-                if(showLocoMonitor)
-                    setColumnToHoldButton(table,STOP,stopButton());
+                /*if(showLocoMonitor)*/
+                setColumnToHoldButton(table,STOP,stopButton());
                 super.configureTable(table);
+                XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
+                TableColumn column  = columnModel.getColumnByModelIndex(SPEEDDIR);
+                columnModel.setColumnVisible(column, false);
+                column  = columnModel.getColumnByModelIndex(STOP);
+                columnModel.setColumnVisible(column, false);
             }
             public NamedBean getBySystemName(String name) { return null;}
             public NamedBean getByUserName(String name) { return null;}
             
             synchronized public void dispose() {
-                if(showLocoMonitor){
+                //if(showLocoMonitor){
                     locoManager.monitorLocos(false);
                     showLocoMonitor=false;
-                }
+                //}
                 getManager().removePropertyChangeListener(this);
                 if (ecosObjectIdList != null) {
                     for (int i = 0; i< ecosObjectIdList.size(); i++) {
@@ -372,7 +380,12 @@ public class EcosLocoTableAction extends AbstractTableAction {
     void showMonitorChanged() {
         showLocoMonitor = showMonitorLoco.isSelected();
         locoManager.monitorLocos(showLocoMonitor);
-        m.fireTableStructureChanged(); // update view
+        XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
+        TableColumn column  = columnModel.getColumnByModelIndex(SPEEDDIR);
+        columnModel.setColumnVisible(column, showLocoMonitor);
+        column  = columnModel.getColumnByModelIndex(STOP);
+        columnModel.setColumnVisible(column, showLocoMonitor);
+        //m.fireTableStructureChanged(); // update view
     }
     
     JCheckBox showMonitorLoco = new JCheckBox("Monitor Loco Speed");

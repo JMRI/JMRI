@@ -198,7 +198,7 @@ public class BlockTableAction extends AbstractTableAction {
                 else if (col==CURRENTREPCOL){
                     return Boolean.valueOf(b.isReportingCurrent());
                 }
-    			else return super.getValueAt(row, col);
+                else return super.getValueAt(row, col);
 			}    		
 
     		public void setValueAt(Object value, int row, int col) {

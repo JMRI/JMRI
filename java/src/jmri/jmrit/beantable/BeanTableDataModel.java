@@ -7,6 +7,9 @@ import jmri.NamedBean;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseAdapter;
 
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
@@ -19,10 +22,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.JCheckBoxMenuItem;
+import java.util.Enumeration;
 
 import java.util.ArrayList;
 import java.util.List;
 import jmri.util.com.sun.TableSorter;
+import jmri.util.swing.XTableColumnModel;
 
 /**
  * Table data model for display of NamedBean manager contents
@@ -41,6 +48,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
 
     static public final int NUMCOLUMN = 5;
+    
     
     public BeanTableDataModel() {
         super();
@@ -370,10 +378,10 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     public void configureTable(JTable table) {
         // allow reordering of the columns
         table.getTableHeader().setReorderingAllowed(true);
-
+        
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
+        
         // resize columns as requested
         for (int i=0; i<table.getColumnCount(); i++) {
             int width = getPreferredWidth(i);
@@ -386,6 +394,8 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         
         MouseListener popupListener = new PopupListener();
         table.addMouseListener(popupListener);
+        
+        loadTableColumnDetails(table);
         
     }
 
@@ -416,7 +426,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * @param sample Typical button, used for size
      */
     protected void setColumnToHoldButton(JTable table, int column, JButton sample) {
-        //TableColumnModel tcm = table.getColumnModel();
         // install a button renderer & editor
         ButtonRenderer buttonRenderer = new ButtonRenderer();
 		table.setDefaultRenderer(JButton.class,buttonRenderer);
@@ -550,7 +559,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         }
     }
 
-    protected JTable makeJTable(TableSorter sorter) {
+    public JTable makeJTable(TableSorter sorter) {
 	    JTable table = new JTable(sorter)  {
             public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 boolean res = super.editCellAt(row, column, e);
@@ -561,6 +570,11 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 return res;
             }
         };
+        table.getTableHeader().setReorderingAllowed(true);
+        table.setColumnModel(new XTableColumnModel());
+        table.createDefaultColumnsFromModel();
+        
+        addMouseListenerToHeader(table);
         return table;
     }
     
@@ -731,7 +745,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         JComboBox box = new JComboBox();
         List<String> nameList = getManager().getSystemNameList();
         for(int i = 0; i<nameList.size(); i++){
-            NamedBean nb = getBySystemName(nameList.get(i));
+        NamedBean nb = getBySystemName(nameList.get(i));
             //Only add items that do not have a username assigned.
             if(nb.getDisplayName().equals(nameList.get(i)))
                 box.addItem(nameList.get(i));
@@ -771,6 +785,150 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     
     }
     
+    protected void showTableHeaderPopup(MouseEvent e, JTable table){
+        JPopupMenu popupMenu = new JPopupMenu();
+        XTableColumnModel tcm = (XTableColumnModel)table.getColumnModel();
+        for (int i = 0; i < tcm.getColumnCount(false); i++) {
+            TableColumn tc = tcm.getColumnByModelIndex(i);
+            String columnName = table.getModel().getColumnName(i);
+            if(columnName!=null && !columnName.equals("")){
+                JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(table.getModel().getColumnName(i), tcm.isColumnVisible(tc));
+                menuItem.addActionListener(new headerActionListener(tc, tcm));
+                popupMenu.add(menuItem);
+            }
+            
+        }
+        popupMenu.show(e.getComponent(), e.getX(), e.getY());
+    }
+    
+    static class headerActionListener implements ActionListener {
+        TableColumn tc;
+        XTableColumnModel tcm;
+        headerActionListener(TableColumn tc, XTableColumnModel tcm){
+             this.tc = tc;
+             this.tcm = tcm;
+        }
+        
+        public void actionPerformed(ActionEvent e){
+            JCheckBoxMenuItem check = (JCheckBoxMenuItem) e.getSource();
+            //Do not allow the last column to be hidden
+            if(!check.isSelected() && tcm.getColumnCount(true)==1){
+                return;
+            }
+            tcm.setColumnVisible(tc, check.isSelected());
+        }
+    }
+    
+    protected void addMouseListenerToHeader(JTable table){
+        MouseListener mouseHeaderListener = new TableHeaderListener(table);
+        table.getTableHeader().addMouseListener(mouseHeaderListener);
+    }
+    
+    class TableHeaderListener extends MouseAdapter {
+        
+        JTable table;
+        TableHeaderListener(JTable tbl){
+            super();
+            table=tbl;
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                showTableHeaderPopup(e, table);
+            }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                showTableHeaderPopup(e, table);
+            }
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                showTableHeaderPopup(e, table);
+            }
+        }
+    }
+    
+    public void saveTableColumnDetails(JTable table){
+        saveTableColumnDetails(table, getMasterClassName());
+    }
+    
+    public void saveTableColumnDetails(JTable table, String beantableref){
+        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        XTableColumnModel tcm = (XTableColumnModel)table.getColumnModel();
+        TableSorter tmodel = ((TableSorter)table.getModel());
+        Enumeration<TableColumn> en = tcm.getColumns(false);
+        while(en.hasMoreElements()){
+            TableColumn tc = en.nextElement();
+            
+            try {
+                String columnName = (String) tc.getHeaderValue();
+                //skip empty or blank columns
+                if(columnName!=null && !columnName.equals("")){
+                    int index = tcm.getColumnIndex(tc.getIdentifier(), false);
+                    p.setTableColumnPreferences(beantableref, columnName, index, tc.getPreferredWidth(), tmodel.getSortingStatus(tc.getModelIndex()), !tcm.isColumnVisible(tc));
+                }
+            } catch (Exception e){
+                log.warn("unable to store settings for table column " + tc.getHeaderValue());
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    public void loadTableColumnDetails(JTable table){
+        loadTableColumnDetails(table, getMasterClassName());
+    }
+    
+    public void loadTableColumnDetails(JTable table, String beantableref){
+        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        //Set all the sort and width details of the table first.
+
+        //Reorder the columns first
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            String columnName = p.getTableColumnAtNum(beantableref, i);
+            if (columnName != null) {
+                int originalLocation = -1;
+                for (int j = 0; j < table.getColumnCount(); j++) {
+                    if (table.getColumnName(j).equals(columnName)) {
+                        originalLocation = j;
+                        break;
+                    }
+                }
+                if (originalLocation != -1 && (originalLocation != i)) {
+                    table.moveColumn(originalLocation, i);
+                }
+            }
+        }
+        
+        //Set column widths, sort order and hidden status
+        XTableColumnModel tcm = (XTableColumnModel)table.getColumnModel();
+        Enumeration<TableColumn> en = tcm.getColumns(false);
+        //jtable.setDefaultEditor(Object.class, new RosterCellEditor());
+        TableSorter tmodel = ((TableSorter)table.getModel());
+        while(en.hasMoreElements()){
+            TableColumn tc = en.nextElement();
+            String columnName = (String) tc.getHeaderValue();
+            if (p.getTableColumnWidth(beantableref, columnName) != -1) {
+                int width = p.getTableColumnWidth(beantableref, columnName);
+                tc.setPreferredWidth(width);
+                
+                int sort = p.getTableColumnSort(beantableref, columnName);
+                tmodel.setSortingStatus(tc.getModelIndex(), sort);
+                
+                if(p.getTableColumnHidden(beantableref, columnName)){
+                    tcm.setColumnVisible(tc, false);
+                } else {
+                    tcm.setColumnVisible(tc, true);
+                }
+
+            }
+        }
+    }
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BeanTableDataModel.class.getName());
 
 }

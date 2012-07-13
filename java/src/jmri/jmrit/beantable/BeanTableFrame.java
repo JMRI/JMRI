@@ -116,30 +116,14 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         // set preferred scrolling options
         dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
+        dataModel.loadTableColumnDetails(dataTable);
     }
 
     /**
      * Hook to allow sub-types to install more items in GUI
      */
-	void extras() {}
-	    
-    /**
-     * Hook to allow sub-typing of JTable created
-     */
-/*	protected JTable makeJTable(TableSorter sorter) {
-	    return new JTable(sorter)  {
-            public boolean editCellAt(int row, int column, java.util.EventObject e) {
-                boolean res = super.editCellAt(row, column, e);
-                java.awt.Component c = this.getEditorComponent();
-                if (c instanceof javax.swing.JTextField) {
-                    ( (JTextField) c).selectAll();
-                }            
-                return res;
-            }
-        };
-    }*/
-	    
+    void extras() {}
+    
     protected Box getBottomBox() { return bottomBox; }
     /**
      * Add a component to the bottom box. Takes care of organising glue, struts etc
@@ -156,8 +140,10 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
     }
     
     public void dispose() {
-        if (dataModel != null)
+        if (dataModel != null){
+            dataModel.saveTableColumnDetails(dataTable);
             dataModel.dispose();
+        }
         dataModel = null;
         dataTable = null;
         dataScroll = null;

@@ -71,18 +71,6 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
 
     protected ArrayList<TabbedTableItem> tabbedTableArray = new ArrayList<TabbedTableItem>();
     
-    protected JTable makeJTable(TableSorter sorter) {
-        return new JTable(sorter)  {
-            public boolean editCellAt(int row, int column, java.util.EventObject e) {
-                boolean res = super.editCellAt(row, column, e);
-                java.awt.Component c = this.getEditorComponent();
-                if (c instanceof javax.swing.JTextField) {
-                    ( (JTextField) c).selectAll();
-                }            
-                return res;
-            }
-        };
-    }
     protected void setTitle() {
         //atf.setTitle("multiple sensors");
     }
@@ -133,7 +121,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         super.dispose();
     }
    
-    protected class TabbedTableItem {
+    protected static class TabbedTableItem {
         
         AbstractTableAction tableAction;
         String itemText;
@@ -175,7 +163,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
                 tableAction.setManager(manager);
             dataModel = tableAction.getTableDataModel();
             TableSorter sorter = new TableSorter(dataModel);
-            dataTable = makeJTable(sorter);
+            dataTable = dataModel.makeJTable(sorter);
             sorter.setTableHeader(dataTable.getTableHeader());
             dataScroll	= new JScrollPane(dataTable);
             
@@ -186,6 +174,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
             } catch (java.lang.ClassCastException e) {}  // happens if not sortable table
             
             dataModel.configureTable(dataTable);
+            dataModel.loadTableColumnDetails(dataTable, dataModel.getMasterClassName()+":"+getItemString());
             
             java.awt.Dimension dataTableSize = dataTable.getPreferredSize();
             // width is right, but if table is empty, it's not high
@@ -251,8 +240,10 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         }
         
         protected void dispose(){
-            if (dataModel != null)
+            if (dataModel != null){
+                dataModel.saveTableColumnDetails(dataTable, dataModel.getMasterClassName()+":"+getItemString());
                 dataModel.dispose();
+            }
             dataModel = null;
             dataTable = null;
             dataScroll = null;

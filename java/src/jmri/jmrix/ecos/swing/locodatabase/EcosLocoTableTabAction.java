@@ -72,20 +72,6 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
         return null;
     }
     
-    @Override
-    protected JTable makeJTable(TableSorter sorter) {
-        return new JTable(sorter)  {
-            public boolean editCellAt(int row, int column, java.util.EventObject e) {
-                boolean res = super.editCellAt(row, column, e);
-                java.awt.Component c = this.getEditorComponent();
-                if (c instanceof javax.swing.JTextField) {
-                    ( (JTextField) c).selectAll();
-                }            
-                return res;
-            }
-        };
-    }
-    
     public void addToFrame(jmri.jmrit.beantable.BeanTableFrame f){
         if(tabbedTableArray.size()>1){
             super.addToFrame(f);

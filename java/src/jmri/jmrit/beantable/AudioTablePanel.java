@@ -17,6 +17,7 @@ import javax.swing.JTable;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
 import jmri.util.JTableUtil;
 import jmri.util.com.sun.TableSorter;
+import jmri.util.swing.XTableColumnModel;
 
 /**
  *
@@ -67,14 +68,20 @@ public class AudioTablePanel extends JPanel {
         listenerDataModel = listenerModel;
         listenerDataTable = JTableUtil.sortableDataModel(listenerDataModel);
         listenerDataScroll = new JScrollPane(listenerDataTable);
+        listenerDataTable.setColumnModel(new XTableColumnModel());
+        listenerDataTable.createDefaultColumnsFromModel();
 
         bufferDataModel = bufferModel;
         bufferDataTable = JTableUtil.sortableDataModel(bufferDataModel);
         bufferDataScroll = new JScrollPane(bufferDataTable);
+        bufferDataTable.setColumnModel(new XTableColumnModel());
+        bufferDataTable.createDefaultColumnsFromModel();
 
         sourceDataModel = sourceModel;
         sourceDataTable = JTableUtil.sortableDataModel(sourceDataModel);
         sourceDataScroll = new JScrollPane(sourceDataTable);
+        sourceDataTable.setColumnModel(new XTableColumnModel());
+        sourceDataTable.createDefaultColumnsFromModel();
 
         // give system name column as smarter sorter and use it initially
         try {
@@ -170,18 +177,24 @@ public class AudioTablePanel extends JPanel {
     }
 
     public void dispose() {
-        if (listenerDataModel != null)
+        if (listenerDataModel != null){
+            listenerDataModel.saveTableColumnDetails(listenerDataTable);
             listenerDataModel.dispose();
+        }
         listenerDataModel = null;
         listenerDataTable = null;
         listenerDataScroll = null;
-        if (bufferDataModel != null)
+        if (bufferDataModel != null){
+            bufferDataModel.saveTableColumnDetails(bufferDataTable);
             bufferDataModel.dispose();
+        }
         bufferDataModel = null;
         bufferDataTable = null;
         bufferDataScroll = null;
-        if (sourceDataModel != null)
+        if (sourceDataModel != null){
+            sourceDataModel.saveTableColumnDetails(sourceDataTable);
             sourceDataModel.dispose();
+        }
         sourceDataModel = null;
         sourceDataTable = null;
         sourceDataScroll = null;
