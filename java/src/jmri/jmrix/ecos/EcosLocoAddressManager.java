@@ -819,6 +819,14 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         // ask to be notified about newly created turnouts on the layout.
         EcosMessage m = new EcosMessage("request(10, view)");
         tc.sendEcosMessage(m, this);
+        if(monitorState){
+            List<String> objects = getEcosObjectList();
+            for(int x = 0; x < objects.size(); x++){
+                m = new EcosMessage("release("+getByEcosObject(objects.get(x))+", view, control)");
+                tc.sendEcosMessage(m, this);
+            }
+        
+        }
         monitorLocos(monitorState);
     }
     

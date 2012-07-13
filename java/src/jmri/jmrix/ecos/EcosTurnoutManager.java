@@ -160,9 +160,9 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                 }
                                 if ( (20000<=object) && (object<40000)){
                                     EcosMessage em = new EcosMessage("request("+object+",view)");
-                                    tc.sendEcosMessage(em, null);
+                                    tc.sendEcosMessage(em, this);
                                     em = new EcosMessage("get("+object+",state)");
-                                    tc.sendEcosMessage(em, null);
+                                    tc.sendEcosMessage(em, this);
                                 }
                             }
                         }
@@ -212,7 +212,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                             }
                             // get initial state
                             EcosMessage em = new EcosMessage("get("+ecosObjectId+",state)");
-                            tc.sendEcosMessage(em, null);
+                            tc.sendEcosMessage(em, this);
                         
                         } else if (lines[0].contains("addrext")){
                             turnoutAddressDetails(lines[1]);
@@ -269,14 +269,14 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                         _tecos.put(object, et);
                         // listen for changes
                         EcosMessage em = new EcosMessage("request("+object+",view)");
-                        tc.sendEcosMessage(em, null);
+                        tc.sendEcosMessage(em, this);
                         
                         // get initial state
                         em = new EcosMessage("get("+object+",state)");
-                        tc.sendEcosMessage(em, null);
+                        tc.sendEcosMessage(em, this);
 
                         em = new EcosMessage("get("+object+", name1, name2, name3)");
-                        tc.sendEcosMessage(em, null);
+                        tc.sendEcosMessage(em, this);
                     }
                 }
                 
@@ -332,7 +332,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
 
                 // get initial state
                 EcosMessage em = new EcosMessage("get("+object+",state)");
-                tc.sendEcosMessage(em, null);
+                tc.sendEcosMessage(em, this);
                 //Need to do some more work on routes on the ecos.
 
                 // listen for changes
@@ -341,7 +341,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
 
                 // get the name from the ecos to set as Username
                 em = new EcosMessage("get("+object+", name1, name2, name3)");
-                tc.sendEcosMessage(em, null);
+                tc.sendEcosMessage(em, this);
             }
         }
         addingTurnouts = false;
@@ -640,6 +640,14 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         view on each individual turnout*/
         EcosMessage m = new EcosMessage("request(11, view)");
         tc.sendEcosMessage(m, this);
+        for(Integer ecosObjectId: _tecos.keySet()){
+            EcosMessage em = new EcosMessage("release("+ecosObjectId+",view)");
+            tc.sendEcosMessage(em, this);
+            em = new EcosMessage("get("+ecosObjectId+",state)");
+            tc.sendEcosMessage(em, this);
+            em = new EcosMessage("request("+ecosObjectId+",view)");
+            tc.sendEcosMessage(em, this);
+        }
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosTurnoutManager.class.getName());
