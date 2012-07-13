@@ -232,6 +232,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                     default:
                         break;
                 }
+            break;
 
             case CbusConstants.CBUS_DSPD:
                 // Find a throttle corresponding to the handle
