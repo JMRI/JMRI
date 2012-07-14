@@ -114,7 +114,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                 
                                 if ((ports == 8) || (ports == 16)){
                                     Sensor s;
-                                    String sensorprefix = getSystemPrefix()+"S:"+object+":";
+                                    String sensorprefix = getSystemPrefix()+"S"+object+":";
                                     _sport.put(object, ports);
                                     //ports 1, 5, 9 13 on a ECoS detector are railcom enabled., but value in messages is returned 0, 4, 8, 12
                                     for (int j=1; j<=ports; j++){
@@ -174,7 +174,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         EcosSensor es;
         int k = 1;
         int result;
-        String sensorprefix = getSystemPrefix()+"S:"+object+":";
+        String sensorprefix = getSystemPrefix()+"S"+object+":";
         for(int port =1; port<=_sport.get(object); port++){
             result = intState & k;
             //Little work around to pad single digit address out.
