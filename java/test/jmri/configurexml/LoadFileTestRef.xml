@@ -2,9 +2,9 @@
 <?xml-stylesheet type="text/xsl" href="/xml/XSLT/panelfile-2-9-6.xsl"?>
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
-    <major>2</major>
-    <minor>99</minor>
-    <test>5</test>
+    <major>3</major>
+    <minor>1</minor>
+    <test>1</test>
     <modifier>+dev</modifier>
   </jmriversion>
   <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
