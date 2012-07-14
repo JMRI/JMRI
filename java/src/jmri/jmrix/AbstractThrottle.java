@@ -1127,7 +1127,6 @@ abstract public class AbstractThrottle implements DccThrottle {
     }
     
     protected void finishRecord(){
-        log.info("finish");
         if(re==null){
             return;
         }
@@ -1136,7 +1135,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         long currentDuration = 0;
         try {
             currentDuration = Long.valueOf(currentDurationString);
-        } catch (Exception e){ }
+        } catch (Exception e){
+            log.warn("current stored duration is not a valid number \"" + currentDurationString +" \"");
+        }
         currentDuration = currentDuration + durationRunning;
         re.putAttribute("OperatingDuration", ""+currentDuration);
         Date date = new Date();
@@ -1153,7 +1154,6 @@ abstract public class AbstractThrottle implements DccThrottle {
      
      public void setRosterEntry(BasicRosterEntry re){
         this.re = re;
-        log.info("Roster entry set " + re.toString());
      }
      
      public BasicRosterEntry getRosterEntry(){
