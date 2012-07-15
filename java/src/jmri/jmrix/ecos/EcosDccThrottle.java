@@ -389,6 +389,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             String message = "set("+this.objectNumber+", speed["+value+"])";
             EcosMessage m = new EcosMessage(message);
             tc.sendEcosMessage(m, this);
+            speedMessageSent++;
         }
         else{
             //Not sure if this performs an emergency stop or a normal one.
@@ -400,6 +401,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     }
 
     EcosTrafficController tc;
+    
+    int speedMessageSent = 0;
 
     public void setIsForward(boolean forward) {
 
@@ -483,9 +486,13 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                     if (tmpstart>0 && tmpend >0) {
                         String result = msg.substring(tmpstart+2, tmpend);
                         if (result.equals("speed")){
-                            val = msg.substring(start+1, end);
-                            Float newSpeed = new Float ( floatSpeed(Integer.parseInt(val) ) ) ;
-                            super.setSpeedSetting(newSpeed);
+                            //We only check on the last speed message sent, otherwise the software throttle keeps jumpping up and down.
+                            if(speedMessageSent==1){
+                                val = msg.substring(start+1, end);
+                                Float newSpeed = new Float ( floatSpeed(Integer.parseInt(val) ) ) ;
+                                super.setSpeedSetting(newSpeed);
+                            }
+                            speedMessageSent--;
                         }
                         else if(result.equals("stop")){
                             this.speedSetting = Float.valueOf(0).floatValue();
@@ -503,6 +510,10 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             }
             //Treat gets and events as the same.
             else if((replyType.equals("get")) || (m.isUnsolicited())){
+                if(speedMessageSent>0 && m.isUnsolicited()){
+                    //We ignore events for the throttle change if the GUI throttle is sending mutliple changings in speed.
+                    return;
+                }
                 //log.debug("The last command was accepted by the ecos");
                 for (int i =1; i<lines.length-1; i++){
                     String object = this.objectNumber;
