@@ -70,7 +70,8 @@ public class TrainBuilder extends TrainCommon{
 	Track terminateStageTrack; 	// terminate staging track (null if not staging)
 	boolean success;			// true when enough cars have been picked up from a location
 	PrintWriter buildReport;	// build report for this train
-	boolean noMoreMoves;
+	boolean noMoreMoves;		// when true there aren't any more moves for a location
+	boolean localSwitcher = false;	// when true, train is a switcher serving one location
 	
 	// managers 
 	CarManager carManager = CarManager.instance();
@@ -183,7 +184,10 @@ public class TrainBuilder extends TrainCommon{
 		if(routeList.size()> 1)
 			requested = requested/2;  // only need half as many cars to meet requests
 		addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildRouteRequest"),new Object[]{train.getRoute().getName(), Integer.toString(requested), Integer.toString(numMoves)}));
-			
+		
+		// is this train a switcher servicing only one location?
+		checkForLocalSwitcher();
+		
     	// show road names that this train will service
 		if (!train.getRoadOption().equals(Train.ALLROADS)){
 			String[] roads = train.getRoadNames();
@@ -479,6 +483,25 @@ public class TrainBuilder extends TrainCommon{
 		// now create and place train icon
 		train.moveTrainIcon(train.getTrainDepartsRouteLocation());
 		log.debug("Done building train "+train.getName());
+	}
+	
+	/**
+	 * Determines if this train is a switcher servicing one location.
+	 * Note that a switcher route can be greater than one if all locations
+	 * have the "same" name.
+	 */
+	private void checkForLocalSwitcher(){
+		localSwitcher = false;
+		// now check to see if all locations in this train's route have the same name
+		String locationName = splitString(train.getRoute().getLocationById(routeList.get(0)).getName());
+		for (int i = 0; i<routeList.size(); i++){
+			String name  = splitString(train.getRoute().getLocationById(routeList.get(i)).getName());
+			if (!locationName.equals(name))
+				return;	// not a local switcher
+		}
+		// all locations have the same name
+		localSwitcher = true;
+		addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildSwitcherRoute"),new Object[]{train.getName(), routeList.size()}));
 	}
 	
 	/**
@@ -2455,7 +2478,7 @@ public class TrainBuilder extends TrainCommon{
 						new Object[]{train.getRoute().getName(), rld.getName()}));
 			}
 			// don't move car to same location unless the route only has one location (local moves) or is passenger, caboose or car with FRED
-			if (splitString(rl.getName()).equals(splitString(rld.getName())) && routeList.size() != 1 && !car.isPassenger() && !car.isCaboose() && !car.hasFred()){
+			if (splitString(rl.getName()).equals(splitString(rld.getName())) && !localSwitcher && !car.isPassenger() && !car.isCaboose() && !car.hasFred()){
 				// allow cars to return to the same staging location if no other options (tracks) are available
 				if (Setup.isAllowReturnToStagingEnabled() && testDestination.getLocationOps() == Location.STAGING && trackSave == null){
 					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildReturnCarToStaging"),new Object[]{car.toString(), rld.getName()}));
