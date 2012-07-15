@@ -2,10 +2,10 @@
 
 package jmri.jmris.simpleserver;
 
-import java.io.*;
-
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import jmri.PowerManager;
-
 import jmri.jmris.AbstractPowerServer;
 
 /**
@@ -37,7 +37,7 @@ public class SimplePowerServer extends AbstractPowerServer {
         } else if (Status==PowerManager.OFF){
 		output.writeBytes("POWER OFF\n");
         } else {
-               // power unknown
+               output.writeBytes("POWER UNKNOWN\n");
         }
      }
 
