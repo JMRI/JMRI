@@ -865,7 +865,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
      * The application decided to restart, handle that.
      */
     static public void handleRestart() {
-        AppsBase.handleQuit();
+        AppsBase.handleRestart();
     }
 
     static boolean log4JSetUp = false;
