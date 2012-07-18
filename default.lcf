@@ -80,8 +80,8 @@ log4j.category.org.eclipse.jetty=WARN
 #
 # log4j.category.jmri=DEBUG
 # log4j.category.jmri.jmrit.beantable.LogixTableAction=DEBUG
-# log4j.category.jmri.jmrit.dsplay=DEBUG
-# log4j.category.jmri.jmrit.dsplay.IndicatorTurnoutIcon=DEBUG
+# log4j.category.jmri.jmrit.display=DEBUG
+# log4j.category.jmri.jmrit.display.IndicatorTurnoutIcon=DEBUG
 # log4j.category.jmri.jmrit.logix=DEBUG
 # log4j.category.jmri.jmrit.logix.OBlock=DEBUG
 # log4j.category.jmri.jmrit.logix.Warrant=DEBUG
