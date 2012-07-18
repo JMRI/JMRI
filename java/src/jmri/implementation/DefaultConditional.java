@@ -184,6 +184,8 @@ public class DefaultConditional extends AbstractNamedBean
     * and if the state has changed, will trigger all its actions.
     */
 	public int calculate (boolean enabled, PropertyChangeEvent evt) {
+        if (log.isTraceEnabled()) log.trace("calculate starts for "+getSystemName());
+	    
 		// check if  there are no state variables
 		if (_variableList.size()==0) {
 			// if there are no state variables, no state can be calculated
@@ -230,7 +232,9 @@ public class DefaultConditional extends AbstractNamedBean
                     log.error(getDisplayName()+" parseCalculation error antecedent= "+_antecedent+ ", ex= " + je);
                 }
                 break;
-            default : break;
+            default : 
+                log.warn("Conditional "+getSystemName()+" fell through switch in calculate");
+                break;
         }
 		int newState = FALSE;
         if (log.isDebugEnabled()) log.debug("Conditional \""+getUserName()+"\" ("+getSystemName()+") has calculated its state to be "+
@@ -239,16 +243,21 @@ public class DefaultConditional extends AbstractNamedBean
                   result+". current state is "+_currentState+".  enabled= "+enabled);
         }
 		if (result) newState = TRUE;
+		
+		if (log.isTraceEnabled()) log.trace("   enabled starts at "+enabled);
+
         if (enabled) {
             if (evt != null) {
                 // check if the current listener wants to (NOT) trigger actions
                 enabled = wantsToTrigger(evt);
+                if (log.isTraceEnabled()) log.trace("   wantsToTrigger sets enabled to "+enabled);
             }
         }       
         if (_triggerActionsOnChange) {
         	// pre 1/15/2011 on change only behavior
             if (newState == _currentState) {
             	enabled = false;
+                if (log.isTraceEnabled()) log.trace("   _triggerActionsOnChange sets enabled to false");
     		}      	
         }
         setState(newState);
@@ -530,6 +539,7 @@ public class DefaultConditional extends AbstractNamedBean
     // it's unfortunate that this is such a huge method, because these annotation
     // have to apply to more than 500 lines of code - jake
 	private void takeActionIfNeeded() {
+        if (log.isTraceEnabled()) log.trace("takeActionIfNeeded starts for "+getSystemName());
         int actionCount = 0;
         int actionNeeded = 0;
         int act = 0;
@@ -542,6 +552,7 @@ public class DefaultConditional extends AbstractNamedBean
             ConditionalAction action = _actionList.get(i);
             int neededAction = actionNeeded; 
             int option = action.getOption();
+            if (log.isTraceEnabled()) log.trace(" takeActionIfNeeded considers action "+i+" with currentState: "+currentState+" and option: "+option);
 			if ( ((currentState==TRUE) && (option==ACTION_OPTION_ON_CHANGE_TO_TRUE)) ||
 				((currentState==FALSE) && (option==ACTION_OPTION_ON_CHANGE_TO_FALSE)) ||
 					(option==ACTION_OPTION_ON_CHANGE) ) {
@@ -1211,7 +1222,9 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
 						}
 						break;
-                    default : break;
+                    default : 
+                        log.warn("takeActionIfNeeded drops through switch statement for action "+i+" of "+getSystemName());
+                        break;
 				}
 			}
             if (PARKS_DEBUG) { System.out.println("Global state= "+_currentState+" Local state= "+currentState+
@@ -1229,8 +1242,9 @@ public class DefaultConditional extends AbstractNamedBean
                 new ErrorDialog(errorList, this);
             }
         }
-        if (log.isDebugEnabled()) log.debug("Conditional \""+getUserName()+"\" ("+getSystemName()+") has taken "+actionCount
-                  +" actions of "+actionNeeded+" actions needed on change to "+currentState);
+        if (log.isDebugEnabled()) log.debug("Conditional \""+getUserName()+"\" ("+getSystemName()+" has "+_actionList.size()+
+                                             " actions and has executed "+actionCount
+                  +" actions of "+actionNeeded+" actions needed on state change to "+currentState);
         if (PARKS_DEBUG) { System.out.println("Conditional \""+getUserName()+"\" ("+getSystemName()+" has "+_actionList.size()+
                                              " actions and has executed "+actionCount
                   +" actions of "+actionNeeded+" actions needed on state change to "+currentState);
