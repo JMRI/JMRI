@@ -122,6 +122,24 @@ public interface Sensor extends NamedBean {
     * Does this sensor use the default timers for 
     */
     public boolean useDefaultTimerSettings();
+    
+    /**
+     * Some sensor boards also serve the function of being able to report
+     * back train identities via such methods as RailCom.
+     * The setting and creation of the reporter against the sensor should be
+     * done when the sensor is created.  This information is not saved.
+     * <p>
+     * returns null if there is no direct reporter.
+     */
+    public void setReporter(Reporter re);
+    
+        
+    /**
+     * Retrieve the reporter assocated with this sensor if there is one.
+     * <p>
+     * returns null if there is no direct reporter.
+     */
+    public Reporter getReporter();
 }
 
 

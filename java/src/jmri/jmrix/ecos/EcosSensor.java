@@ -16,7 +16,7 @@ import jmri.implementation.AbstractSensor;
  */
 public class EcosSensor extends AbstractSensor {
 
-    final static String prefix = "US";
+    //final static String prefix = "US";
 
     int objectNumber = 0;
 
@@ -34,7 +34,6 @@ public class EcosSensor extends AbstractSensor {
     
     void setObjectNumber(int o) { 
         objectNumber = o;
-
     }
 
     public void requestUpdateFromLayout(){ }
@@ -43,12 +42,6 @@ public class EcosSensor extends AbstractSensor {
     static int[] modeValues = null;
         
     public int getObject() { return objectNumber; }
-
-    EcosReporter reporter = null;
-    
-    public void setReporter(EcosReporter er){
-        reporter = er;
-    }
  
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosSensor.class.getName());
 }

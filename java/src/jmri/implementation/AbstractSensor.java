@@ -3,6 +3,7 @@
 package jmri.implementation;
 
 import jmri.Sensor;
+import jmri.Reporter;
 
 /**
  * Abstract class providing the basic logic of the Sensor interface
@@ -243,6 +244,25 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     // internal data members
     protected int _knownState     = UNKNOWN;
     protected int _rawState       = UNKNOWN;
+    
+    Reporter reporter = null;
+    
+    /**
+     * Some sensor boards also serve the function of being able to report
+     * back train identities via such methods as RailCom.
+     * The setting and creation of the reporter against the sensor should be
+     * done when the sensor is created.  This information is not saved.
+     * <p>
+     * returns null if there is no direct reporter.
+     */
+    public void setReporter(Reporter er){
+        if(reporter!=null && reporter!=er)
+            reporter = er;
+    }
+    
+    public Reporter getReporter(){
+        return reporter;
+    }
 
 }
 
