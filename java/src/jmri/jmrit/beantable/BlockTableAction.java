@@ -253,6 +253,15 @@ public class BlockTableAction extends AbstractTableAction {
                 else if (col==SENSORCOL){
                     String strSensor = (String)((JComboBox)value).getSelectedItem();
                     b.setSensor(strSensor);
+                    if(b.getSensor()!=null && b.getSensor().getReporter()!=null){
+                        String msg = java.text.MessageFormat.format(rb
+                                .getString("BlockAssignReporter"), new Object[] { b.getSensor().getDisplayName(), b.getSensor().getReporter().getDisplayName() });
+                        if(JOptionPane.showConfirmDialog(addFrame,
+                                                             msg,rb.getString("BlockAssignReporterTitle"),
+                                                             JOptionPane.YES_NO_OPTION)==0)
+                            b.setReporter(b.getSensor().getReporter());
+                    }
+                    fireTableRowsUpdated(row,row);
                     return;
                 }
                 else if (col==CURRENTREPCOL){

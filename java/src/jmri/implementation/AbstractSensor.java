@@ -256,8 +256,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      * returns null if there is no direct reporter.
      */
     public void setReporter(Reporter er){
-        if(reporter!=null && reporter!=er)
-            reporter = er;
+        reporter = er;
     }
     
     public Reporter getReporter(){
