@@ -734,6 +734,14 @@
         </antcall>
     </target>
 
+    <target name="jmrifaceless"
+            depends="debug"
+            description="build and run build and run JmriFaceless app">
+        <antcall target="-run-jmri-application">
+            <param name="application.classname" value="apps.JmriFaceless"/>
+            <param name="antargline" value="JmriFacelessConfig3.xml"/>
+        </antcall>
+    </target>
 
     <!-- end of application startup targets -->
 
@@ -1243,6 +1251,7 @@
                 <exclude name="JMRI/cornwall"/>
                 <exclude name="JMRI/DecoderPro3"/>
                 <exclude name="JMRI/RXTXuninstall.sh"/>
+                <exclude name="JMRI/JmriFaceless"/>
             </tarfileset>
             <tarfileset  dir="${dist.linux}" filemode="755">
                 <include name="JMRI/DecoderPro"/>
@@ -1256,6 +1265,7 @@
                 <include name="JMRI/cornwall"/>
                 <include name="JMRI/DecoderPro3"/>
                 <include name="JMRI/RXTXuninstall.sh"/>
+                <include name="JMRI/JmriFaceless"/>
             </tarfileset>
         </tar>
     </target>
@@ -1332,6 +1342,7 @@
         <make-startup-script script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
         <make-startup-script script.name="cornwall"      script.class="apps.cornwall.CornwallRR"/>
         <make-startup-script script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
+        <make-startup-script script.name="JmriFaceless"   script.class="apps.JmriFaceless"/>
     </target>
 
     <target name="startup-scripts-macosx"
