@@ -18,6 +18,9 @@ public class SimpleClockAction extends AbstractAction {
  	public SimpleClockAction(String s) {
     	super(s);
      }
+ 	public SimpleClockAction() {
+    	super("Fast Clock Setup");
+     }
      
      public void actionPerformed(ActionEvent e) {
          
