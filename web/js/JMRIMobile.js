@@ -140,13 +140,14 @@ var $processResponse = function($returnedData, $success, $xhr) {
 						//add the menu item _inside_ footer on each page
 						$("#footer").append("<a data-role='button' href='#type-" + $type + "' data-mini='true' data-inline='true' data-theme='b'>" + $type +"</a>");
 
-						//render the changes to settings page, and then the new page
 //						$("#settings").page();
-						$("#settings").trigger("create");
+//						$("#settings").trigger("create");
+						//render the changes to the new page
 						$("#type-" + $type).page();
-						$("#type-" + $type).trigger("create");
+//						$("#type-" + $type).trigger("create");
 
-						//copy footer from settings to all pages
+						//(re)format footer, then copy to all pages
+						$("div#footer").trigger("create");
 						$("div#footer").html($("div#settings div#footer").html());
 					}  //end of adding new page
 

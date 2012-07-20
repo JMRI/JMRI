@@ -6,13 +6,13 @@
 <title>JMRI Mobile</title>
 <link rel='stylesheet' href='css/JMRIMobile.css' />
 
-<link href="css/jquery.mobile-1.1.0.min.css" rel="stylesheet" type="text/css" />
+<link href="css/jquery.mobile-1.1.1.min.css" rel="stylesheet" type="text/css" />
 <script src="js/jquery-1.7.1.min.js"></script>
 
 <script type='text/javascript' src='js/JMRIMobile.js'></script>
 <script type='text/javascript' src='js/jquery.tmpl.min.js'></script>
 
-<script type='text/javascript' src="js/jquery.mobile-1.1.0.min.js"></script>
+<script type='text/javascript' src="js/jquery.mobile-1.1.1.min.js"></script>
 
 <!-- Generic jquery templates for list items ==========================================-->
 <script id='genItemTemplate' type='text/html'>
@@ -90,7 +90,8 @@
 <body>
 
 	<div data-role='page' id='settings' data-url='settings' data-theme='b'>
-		<div data-role='header' id='header' data-id='header' data-position='fixed'>
+		<div data-role='header' id='header' data-id='header'
+			data-position='fixed'>
 			<h1>Settings - JMRI Mobile</h1>
 			<a id='homelink' href='JMRIMobile.html' data-role='button'
 				data-icon='home' data-position='right' rel='external'></a>
@@ -99,24 +100,53 @@
 		<div data-role='content' data-theme='b'>
 			<div>
 				<a href='/' rel='external'><img src='/dist/resources/logo.gif'
-					style='float: right;' width=160px height=135px alt='JMRI logo'> </a>
+					style='float: right;' width=160px height=135px alt='JMRI logo'>
+				</a>
 				<h2>JMRI Mobile</h2>
-				This is an alpha version of a browser-based UI for controlling a layout with JMRI.
+				This is an alpha version of a browser-based UI for controlling a
+				layout with JMRI.
 			</div>
-			<div id='includes' data-role="fieldcontain" class="ui-field-contain ui-body ui-br" >
-					<fieldset data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-vertical" >
-					<div role="heading">Include in app?:</div>
-					<div class="ui-controlgroup-controls">
-						<input type="checkbox" name="include-power"   id="include-power" /> <label for="include-power">Power</label> 
-						<input type="checkbox" name="include-turnout" id="include-turnout" /> <label for="include-turnout">Turnouts</label> 
-						<input type="checkbox" name="include-route" id="include-route" /> <label for="include-route">Routes</label>
-						<input type="checkbox" name="include-sensor" id="include-sensor" /> <label for="include-sensor">Sensors</label> 
-						<input type="checkbox" name="include-roster" id="include-roster" /> <label for="include-roster">Roster</label> 
-						<input type="checkbox" name="include-frame" id="include-frame"	 /> <label for="include-frame">Frames</label>
-						<input type="checkbox" name="include-memory" id="include-memory"  /> <label for="include-memory">Memory Variables</label> 
-						<input type="checkbox" name="include-metadata" id="include-metadata" /> <label for="include-metadata">Metadata</label>
+			<div id="includes" data-role="fieldcontain"
+				class="ui-field-contain ui-body ui-br">
+				<fieldset data-role="controlgroup"
+					class="ui-corner-all ui-controlgroup ui-controlgroup-vertical">
+					<div role="heading" class="ui-controlgroup-label">Include in
+						app?:</div>
+					<div class="ui-controlgroup-controls ui-corner-all">
+						<div>
+							<input type="checkbox" name="include-power" id="include-power"><label
+								for="include-power">Power</label>
+						</div>
+						<div>
+							<input type="checkbox" name="include-turnout"
+								id="include-turnout"><label for="include-turnout">Turnouts</label>
+						</div>
+						<div>
+							<input type="checkbox" name="include-route" id="include-route"><label
+								for="include-route">Routes</label>
+						</div>
+						<div>
+							<input type="checkbox" name="include-sensor" id="include-sensor"><label
+								for="include-sensor">Sensors</label>
+						</div>
+						<div>
+							<input type="checkbox" name="include-roster" id="include-roster"><label
+								for="include-roster">Roster</label>
+						</div>
+						<div>
+							<input type="checkbox" name="include-frame" id="include-frame"><label
+								for="include-frame">Frames</label>
+						</div>
+						<div>
+							<input type="checkbox" name="include-memory" id="include-memory"><label
+								for="include-memory">Memory Variables</label>
+						</div>
+						<div>
+							<input type="checkbox" name="include-metadata"
+								id="include-metadata"><label for="include-metadata">Metadata</label>
+						</div>
 					</div>
-					</fieldset>
+				</fieldset>
 			</div>
 			<div>
 				The screens are currently formatted for a mobile (phone-sized), but
@@ -131,8 +161,10 @@
 			</div>
 		</div>
 
-		<div id='footer' class='ui-bar' data-role='footer' data-id='footer' data-position='fixed'>
-			<a data-role='button' href='#settings' data-mini='true' data-inline='true' data-theme='b'>Settings</a>
+		<div id='footer' class='ui-bar' data-role='footer' data-id='footer'
+			data-position='fixed'>
+			<a data-role='button' href='#settings' data-mini='true'
+				data-inline='true' data-theme='b'>Settings</a>
 		</div>
 	</div>
 
