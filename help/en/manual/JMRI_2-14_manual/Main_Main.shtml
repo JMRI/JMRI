@@ -31,7 +31,7 @@
 <hr>
 <p align="left">When you start Decoder Pro, the DecoderPro  window is displayed. All of the JMRI functions can be accessed via the menu bar on the DecoderPro&reg; window, additional menus are added when functions are selected, example below with added operations menu(selected on operations setup window), which is also in the tools menu.</p>
 <p align="center"><img src="images/Splash_Screen.png" width="496" height="282" alt="splash"></p>
-<p align="left">After initial setup of preferences, you may have added buttons at the bottom of the screen to open various tools that you may want to use. These buttons will vary to match your preferences, I have setup buttons for New Throttle, Power Control and Monitor Loconet.</p>
+<p align="left">After initial setup of preferences, you may have added buttons at the bottom of the screen to open various tools that you may want to use. These buttons will vary to match your preferences, I have setup buttons for <strong>New Throttle</strong>, <strong>Power Control</strong> and <strong>Monitor Loconet</strong>.</p>
 <p align="center"><img src="images/Splash_Screen01.png" width="490" height="304" alt="splash"></p>
 <p align="left"><a href="Main_Menu.shtml"><strong>Menu Bar</strong></a></p>
 <p align="left">Contains  the menus that allows you to access all the features and tools in JMRI</p>
