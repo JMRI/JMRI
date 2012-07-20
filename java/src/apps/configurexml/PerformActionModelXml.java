@@ -67,13 +67,13 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
             log.error("Could not find specified class: "+className);
             result = false;
         } catch (IllegalAccessException ex2) {
-            log.error("Unexpected access exception: "+ex2);
+            log.error("Unexpected access exception", ex2);
             result = false;
         } catch (InstantiationException ex3) {
-            log.error("Could not instantiate specified class: "+className);
+            log.error("Could not instantiate specified class: "+className, ex3);
             result = false;
         } catch (Exception ex4) {
-            log.error("Error while performing startup action: "+ex4);
+            log.error("Error while performing startup action", ex4);
             ex4.printStackTrace();
             result = false;
         }
