@@ -32,9 +32,9 @@
 <hr>
 <h4>Getting Started on a decoder definition</h4>
 <p>In this part of the manual we will  introduce you to the process of creating a file to describe a new decoder. You  might benefit from reading the other sections of the DecoderPro user guide to  get background information, especially the XML introduction 
-<a href="../html/apps/DecoderPro/IntroXML.shtml" target="_blank">Intro to XML  files</a> 
+<a href="http://jmri.org/releases/releases/2.13.1/help/en/html/apps/DecoderPro/IntroXML.shtm" target="_blank">Intro to XML  files</a> 
 and the section on what the configuration files contain 
-<a href="../html/apps/DecoderPro/Files.shtml" target="_blank">Configuration  files</a> .</p>
+<a href="http://jmri.org/releases/releases/2.13.1/help/en/html/apps/DecoderPro/Files.shtml" target="_blank">Configuration  files</a> .</p>
 <p>The easiest way to create a configuration  file is to modify an existing one, so that you can follow the format.&nbsp; The decoder definition is configured per the 
 <a href="http://jmri.sourceforge.net/xml/DTD/" target="_blank">decoder-config.dtd.</a> (most of you will not be interested in this dtd, if you are open in a text editor).</p>
 <p>To get started, locate a decoder definition XML file that is close to the new decoder that you would like to define. .&nbsp; If you don&rsquo;t know what is &ldquo;close&rdquo;, well don&rsquo;t sweat it.&nbsp; Let&rsquo;s just move on to looking at a definition  file and you&rsquo;ll get a feel about what we&rsquo;re talking about.</p>

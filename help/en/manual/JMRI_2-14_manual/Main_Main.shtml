@@ -31,9 +31,10 @@
 <hr>
 <p align="left">When you start Decoder Pro, the DecoderPro  window is displayed. All of the JMRI functions can be accessed via the menu bar on the DecoderPro&reg; window, additional menus are added when functions are selected, example below with added operations menu(selected on operations setup window), which is also in the tools menu.</p>
 <p align="center"><img src="images/Splash_Screen.png" width="496" height="282" alt="splash"></p>
-<p align="center"><img src="images/Splash_Screen01.png" width="496" height="308" alt="splash screen"></p>
+<p align="left">After initial setup of preferences, you may have added buttons at the bottom of the screen to open various tools that you may want to use. These buttons will vary to match your preferences, I have setup buttons for New Throttle, Power Control and Monitor Loconet.</p>
+<p align="center"><img src="images/Splash_Screen01.png" width="496" height="308" alt="splas01"></p>
 <p align="left"><a href="Main_Menu.shtml"><strong>Menu Bar</strong></a></p>
-<p align="left">Provides access to the menus that allow you to access all the features of JMRI/</p>
+<p align="left">Contains  the menus that allows you to access all the features and tools in JMRI</p>
 <p align="left">DecoderPro&reg; icon and DecoderPro version information is displayed. The version of Java installed and in use is also shown</p>
 <p align="left"><strong>
   <input type="button" name="button" id="button" value="Service Mode (Programming Track) Programmer"> 
@@ -45,7 +46,7 @@ Provides access to the <a href="Basic_Programming.shtml#OpsMode"><strong>Operati
 <input type="button" name="button3" id="button3" value="Help">
 </strong></a>Opens the Help Window<br>
 <input type="button" name="button4" id="button4" value="Quit">
-Exists the program, with confirmation dialog.</p>
+Exits the program, with confirmation dialog.</p>
 <p>The buttons shown at the bottom of the window are not JMRI defaults, but instead are setup in your <strong>preference </strong>to open each time you start DecoderPro&reg;. The following are samples that could be set in your preferences. (Shown are for a Digitrax LocoNet system)
 <p><strong>
   <input type="button" name="button5" id="button5" value="New Throttle...">

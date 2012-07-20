@@ -89,8 +89,8 @@ DecoderPro main window that allows access to some of the PanelPro functions.</p>
 <h4><a name="PanelEditor"></a> Panel and Panel Editor</h4>
 <table width="90%" border="0" align="center" cellpadding="1" cellspacing="1">
   <tr>
-    <td align="left" valign="top"><input type="image" name="panel" id="panel" src="images/Main_PanelMenu_01.png"></td>
-    <td align="left" valign="top"><input type="image" name="Panel Editor" id="Panel Editor" src="images/Main_PanelMenu_02.png"></td>
+    <td align="left" valign="top"><img src="images/Main_PanelMenu_01.png" width="305" height="339" alt="panel"></td>
+    <td align="left" valign="top"><img src="images/Main_PanelMenu_02.png" width="342" height="389" alt="panel"></td>
   </tr>
 </table>
 <div>

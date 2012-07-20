@@ -174,7 +174,7 @@
 <h3>Start Mini Web Server</h3>
 <blockquote>
   <p>Starts a Web Server on your computer. You can access the Index.shtml page using the URL displayed in the dialog.</p>
-  <p>The <a href="../html/web/index.shtml">JMRI mini web server </a>is meant to be a quick and easy  way for model railroaders, not Masters of the Web,   to get a web connection to JMRI up and running.</p>
+  <p>The <a href="http://jmri.org/help/en/html/web/index.shtml">JMRI mini web server </a>is meant to be a quick and easy  way for model railroaders, not Masters of the Web,   to get a web connection to JMRI up and running.</p>
 </blockquote>
 <p align="center"><img src="images/Main_Debug03.png" width="428" height="70" alt="mini server"></p>
 <hr>

@@ -41,12 +41,11 @@
   <br>
   </li>
   <li>Click on <strong>Add new  </strong>on left side of the screen as shown<br>
-    .<img src="images/Dcode07.png" width="747" height="407" alt="Submit"><br>
+    .<img src="images/Dcode07.png" width="799" height="389" alt="decode"><br>
     <br>
   </li>
-  <li>On the new page that comes up, enter something in the following fields:<br>
-    <img src="images/Dcode08.png" width="922" height="546" alt="submit form">
-<ol type="a">
+  <li>On the new page that comes up (shown above), enter something in the following fields:<br>
+    <ol type="a">
       <li>Select the <strong>Category: </strong>XML files from 
         <select name="select" size="1" id="select">
           <option>XML file</option>

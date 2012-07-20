@@ -118,7 +118,7 @@
   <li><strong><a href="Ops_Start.shtml">Operations</a> <img src="images/arrow.gif" width="20" height="9" alt="aroww"></strong>(on menu bar only if checked in the Operations Settings)
     <ul>
       <li><a href="Ops_Settings.shtml">Settings</a></li>
-      <li><a href="Ops_Locations.shtml">Location</a></li>
+      <li><a href="Ops_Locations.shtml">Locations</a></li>
       <li><a href="Ops_Cars.shtml">Cars</a></li>
       <li><a href="Ops_Engines.shtml">Locomotives</a></li>
       <li><a href="Ops_Routes.shtml">Routes</a></li>
@@ -164,7 +164,7 @@
 <p><strong><a href="Ops_Start.shtml">Operations</a> <img src="images/arrow.gif" width="20" height="9" alt="aroww"></strong>(on menu bar only if checked in the Operations Settings) </p>
 <ul>
   <li><a href="Ops_Settings.shtml">Settings</a></li>
-  <li><a href="Ops_Locations.shtml">Location</a></li>
+  <li><a href="Ops_Locations.shtml">Locations</a></li>
   <li><a href="Ops_Cars.shtml">Cars</a></li>
   <li><a href="Ops_Engines.shtml">Locomotives</a></li>
   <li><a href="Ops_Routes.shtml">Routes</a></li>
