@@ -82,7 +82,7 @@ public abstract class AppsBase {
          * Once all the preferences have been loaded we can initial the
          * preferences doing it in a thread at this stage means we can let it
          * work in the background if the file doesn't exist then we do not
-         * initilise it
+         * initialize it
          */
         if (preferenceFileExists) {
             r = new Runnable() {
@@ -167,7 +167,7 @@ public abstract class AppsBase {
         try {
             ((jmri.configurexml.ConfigXmlManager) InstanceManager.configureManagerInstance()).setPrefsLocation(file);
             configOK = InstanceManager.configureManagerInstance().load(file);
-            log.debug("end load config file, OK=" + configOK);
+            if (log.isDebugEnabled()) log.debug("end load config file "+ file.getName() +", OK=" + configOK);
         } catch (Exception e) {
             configOK = false;
         }
@@ -195,14 +195,14 @@ public abstract class AppsBase {
     //abstract protected void addToActionModel();
     private boolean doDeferredLoad(File file) {
         boolean result;
-        log.debug("start deferred load from config");
+        if (log.isDebugEnabled()) log.debug("start deferred load from config file " + file.getName());
         try {
             result = InstanceManager.configureManagerInstance().loadDeferred(file);
         } catch (JmriException e) {
             log.error("Unhandled problem loading deferred configuration: " + e);
             result = false;
         }
-        log.debug("end deferred load from config file, OK=" + result);
+        if (log.isDebugEnabled()) log.debug("end deferred load from config file "+ file.getName() +", OK=" + result);
         return result;
     }
 
@@ -271,6 +271,7 @@ public abstract class AppsBase {
             }
         }
         setJmriSystemProperty("configFilename", def);
+        log.debug("Config file set to: " + def);
     }
 
     // We will use the value stored in the system property 

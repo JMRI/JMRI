@@ -1,5 +1,7 @@
 package jmri.jmrix.loconet.hexfile.configurexml;
 
+import java.awt.GraphicsEnvironment;
+
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.loconet.hexfile.ConnectionConfig;
@@ -75,21 +77,29 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * @return true if successful
       */
     public boolean load(Element e) {
-        getInstance();
+        jmri.jmrix.loconet.hexfile.HexFileFrame f = null;
+        jmri.jmrix.loconet.hexfile.HexFileServer hfs = null;
+    	
+    	getInstance();
         // hex file has no options in the XML
 
-        // start the "connection"
-        jmri.jmrix.loconet.hexfile.HexFileFrame f
-                = new jmri.jmrix.loconet.hexfile.HexFileFrame();
-        f.setAdapter((LnHexFilePort)adapter);
-        try {
-            f.initComponents();
-        } catch (Exception ex) {
-            //log.error("starting HexFileFrame exception: "+ex.toString());
+        GraphicsEnvironment.getLocalGraphicsEnvironment();
+        // create GUI, unless running in headless mode
+        if (!GraphicsEnvironment.isHeadless()) {
+        	f = new jmri.jmrix.loconet.hexfile.HexFileFrame();
+        	f.setAdapter((LnHexFilePort)adapter);
+            try {
+                f.initComponents();
+            } catch (Exception ex) {
+                //log.error("starting HexFileFrame exception: "+ex.toString());
+            }
+            f.pack();
+            f.setVisible(true);
+        } else {  // create and configure the headless server 
+        	hfs = new jmri.jmrix.loconet.hexfile.HexFileServer();
+        	hfs.setAdapter((LnHexFilePort)adapter);
         }
-        f.pack();
-        f.setVisible(true);
-        //adapter = f.getAdapter();
+
         if (e.getAttribute("option1")!=null) {
             String option1Setting = e.getAttribute("option1").getValue();
             adapter.configureOption1(option1Setting);
@@ -133,10 +143,16 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         // register, so can be picked up
         register();
         if (adapter.getDisabled()){
-            f.setVisible(false);
+        	if (!GraphicsEnvironment.isHeadless()) {
+        		f.setVisible(false);
+        	}
             return true;
         }
-        f.configure();
+        if (!GraphicsEnvironment.isHeadless()) {
+        	f.configure();
+        } else {
+        	hfs.configure();
+        }
         return true;
     }
 
