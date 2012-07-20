@@ -125,9 +125,9 @@
                 </xsl:if>
             </td>
             <td class="image">
-                <xsl:if test="(@imageFilePath != '__noIcon.jpg') and (@imageFilePath != '')">
+                <xsl:if test="(@imageFilePath != '__noImage.jpg') and (@imageFilePath != '')">
                     <xsl:element name="img">
-                        <xsl:attribute name="src">/roster/<xsl:value-of select="@id" />/icon?maxHeight=40</xsl:attribute>
+                        <xsl:attribute name="src">/roster/<xsl:value-of select="@id" />/image?maxHeight=40</xsl:attribute>
                         <xsl:attribute name="height">40</xsl:attribute>
                         <xsl:attribute name="alt"><xsl:value-of select="@id" /></xsl:attribute>
                         <xsl:attribute name="title">Click to open throttle</xsl:attribute>
