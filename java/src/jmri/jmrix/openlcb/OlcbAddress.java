@@ -96,7 +96,7 @@ public class OlcbAddress {
     }
   
     public CanMessage makeMessage() {
-        CanMessage c = new CanMessage(aFrame, 0x18ADF000);
+        CanMessage c = new CanMessage(aFrame, 0x195B4000);
         c.setExtended(true);
         return c;
     }
@@ -113,7 +113,7 @@ public class OlcbAddress {
         }
         // check for event message type
         if (! r.isExtended()) return false;        
-        if ( (r.getHeader() & 0x1FFFF000) != 0x18ADF000) return false;
+        if ( (r.getHeader() & 0x1FFFF000) != 0x195B4000) return false;
         return true;
     }
     
@@ -125,7 +125,7 @@ public class OlcbAddress {
         }
         // check for event message type
         if (! r.isExtended()) return false;
-        if ( (r.getHeader() & 0x1FFFF000) != 0x18ADF000) return false;
+        if ( (r.getHeader() & 0x1FFFF000) != 0x195B4000) return false;
         return true;
     }
     

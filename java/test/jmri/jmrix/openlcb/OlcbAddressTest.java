@@ -48,7 +48,7 @@ public class OlcbAddressTest extends TestCase {
                               0x9A,0xBC,0xDE,0xF0});
         assertTrue(! new OlcbAddress("x123456789ABCDEF0").match(c));
         c.setExtended(true);
-        c.setHeader(0x18adf000);
+        c.setHeader(0x195B4000);
         assertTrue(new OlcbAddress("x123456789ABCDEF0").match(c));
         
         c = new CanReply(
@@ -56,7 +56,7 @@ public class OlcbAddressTest extends TestCase {
                               0x9A,0x0B,0x0E,0x00});
         assertTrue(! new OlcbAddress("1.34.5.0.9A.B.E.0").match(c));
         c.setExtended(true);
-        c.setHeader(0x18adf000);
+        c.setHeader(0x195B4000);
         assertTrue(new OlcbAddress("1.34.5.0.9A.B.E.0").match(c));
     }
     
@@ -64,7 +64,7 @@ public class OlcbAddressTest extends TestCase {
         CanMessage c = new CanMessage(
                     new int[]{0x12,0x34,0x56,0x78,
                               0x9A,0xBC,0xDE,0xF0},
-                    0x18adf000);
+                    0x195B4123);
         assertTrue(! new OlcbAddress("x123456789ABCDEF0").match(c));
         c.setExtended(true);
         
@@ -73,7 +73,7 @@ public class OlcbAddressTest extends TestCase {
         c = new CanMessage(
                     new int[]{0x01,0x34,0x05,0x00,
                               0x9A,0x0B,0x0E,0x00},
-                    0x18adf000);
+                    0x195B4123);
         assertTrue(! new OlcbAddress("1.34.5.0.9A.B.E.0").match(c));
         c.setExtended(true);
         assertTrue(new OlcbAddress("1.34.5.0.9A.B.E.0").match(c));

@@ -19,8 +19,8 @@ public class CanConverterTest extends TestCase {
 
     public void testCtors() {
         // mostly tests libraries, etc.
-        new CanMessage(0x182df000);
-        new CanMessage(2, 0x182df000);
+        new CanMessage(0x195B4000);
+        new CanMessage(2, 0x195B4000);
         new CanMessage(new int[]{1,2,3,4,5,6,7,8}, 0x182df000);
         new CanReply();
         new CanReply(2);
