@@ -72,11 +72,14 @@ Second, we build the release branch:
 
 ( ) Start the release by copying the current HEAD onto a new SVN "release branch"
 
+    ant make-test-release-branch
+
+    (You need to have provided both userid and password in the local.properties file, or it will
+    silently hang; if you don't want to put them in local.properties, you can use this from
+
     ant -Dsourceforge.userid='you' -Dsourceforge.password='password' make-test-release-branch
 
-    (Yes, you probably do have to provide both userid and password, or it will
-    silently hang) (if you have them provided in the local.properties file, see
-    above, you don't need to provide them here) 
+    instead)  
     (alternately, change the svnSetting element in build.xml to:
         <svnSetting
         id="svn.settings"
@@ -84,6 +87,7 @@ Second, we build the release branch:
         svnkit="false"/>
     to have it use your default command line setup; note that this doesn't include
     user name and password)
+    (messages like "Missing 'javahl' dependencies on the classpath !" are normal)
     
     This will do (more or less) the following actions:
 
