@@ -41,7 +41,7 @@ AppleJavaExtensions.jar
  Used for building only, not at runtime
 
 openlcb.jar
-    0.5.1 from http://openlcb.org/trunk/prototypes/java
+    0.6.1 from http://openlcb.org/trunk/prototypes/java
 
 jlfgr-1_0.jar 
     icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
