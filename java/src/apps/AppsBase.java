@@ -159,7 +159,7 @@ public abstract class AppsBase {
         if (!file.exists()) {
             preferenceFileExists = false;
             configOK = false;
-            log.info("No pre-existing preferences settings");
+            log.info("No pre-existing config file found, searched for '" + file.getPath() + "'");
             ((jmri.configurexml.ConfigXmlManager) InstanceManager.configureManagerInstance()).setPrefsLocation(file);
             return;
         }

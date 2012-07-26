@@ -91,6 +91,7 @@ public abstract class XmlFile {
      */
     public Element rootFromFile(File file) throws org.jdom.JDOMException, java.io.IOException {
         Element e;
+        if (log.isDebugEnabled()) log.debug("reading xml from file: " + file.getPath());
         try {
             InputStream stream = new BufferedInputStream(new FileInputStream(file));
             return getRootViaURI(verify, stream);

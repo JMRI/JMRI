@@ -133,7 +133,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         cm.setPrefsLocation(file);
         // load config file if it exists
         if (file.exists()) {
-            log.debug("start load config file");
+            if (log.isDebugEnabled()) log.debug("start load config file " + file.getPath());
             try {
                 configOK = InstanceManager.configureManagerInstance().load(file, true);
             } catch (JmriException e) {
@@ -142,7 +142,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             }
             log.debug("end load config file, OK="+configOK);
         } else {  
-            log.info("No saved preferences, will open preferences window");
+            log.info("No saved preferences, will open preferences window.  Searched for " + file.getPath());
             configOK = false;
         }
         

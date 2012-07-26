@@ -535,15 +535,16 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 Element item = items.get(i);
                 if (item.getAttribute("class") == null) {
                     // this is an element that we're not meant to read
+                	if (log.isDebugEnabled()) log.debug("skipping " + item);
                     continue;
                 }
                 String adapterName = item.getAttribute("class").getValue();
-                log.debug("attempt to get adapter "+adapterName);
+                if (log.isDebugEnabled()) log.debug("attempt to get adapter "+adapterName + " for " + item);
                 XmlAdapter adapter = null;
                 
                 adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
                 int order = adapter.loadOrder();
-                log.debug("add element "+ item + " to load list with order id of " + order);
+                if (log.isDebugEnabled()) log.debug("add "+ item + " to load list with order id of " + order);
                 loadlist.put(item, order);
             }
             
@@ -556,7 +557,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             for (int i=0; i<l.size(); i++) {
                 Element item = l.get(i).getKey();
                 String adapterName = item.getAttribute("class").getValue();
-                log.debug("load via "+adapterName);
+                if (log.isDebugEnabled()) log.debug("load " + item + " via "+adapterName);
                 XmlAdapter adapter = null;
                 try {
                     adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
@@ -568,10 +569,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     if (adapter.loadDeferred() && registerDeferred) {
                         // register in the list for deferred load
                         loadDeferredList.add(item);
-                        log.debug("deferred load registered for " + adapterName);
+                        if (log.isDebugEnabled()) log.debug("deferred load registered for " + item + " "  + adapterName);
                     } else {
                         boolean loadStatus = adapter.load(item);
-                        log.debug("load status for "+adapterName+" is "+loadStatus);
+                        if (log.isDebugEnabled()) log.debug("load status for " + item + " " +adapterName+" is "+loadStatus);
                     
                         // if any adaptor load fails, then the entire load has failed
                         if (!loadStatus)
