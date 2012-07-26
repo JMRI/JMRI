@@ -212,7 +212,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         return _status;
     }
 
-    public void propertyChange(java.beans.PropertyChangeEvent evt) {
+	public void propertyChange(java.beans.PropertyChangeEvent evt) {
 		if (log.isDebugEnabled())
 			log.debug("property change: " + getNameString() + " property " + evt.getPropertyName() + " is now "
 					+ evt.getNewValue()+" from "+evt.getSource().getClass().getName());

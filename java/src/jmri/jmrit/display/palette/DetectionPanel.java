@@ -206,7 +206,7 @@ public class DetectionPanel extends JPanel {
         if (_pathBoxes!=null) {
             for (int i=0; i<_pathBoxes.size(); i++) {
                 if ( _pathBoxes.get(i).isSelected()) {
-                    paths.add(_pathBoxes.get(i).getName());
+                    paths.add(_pathBoxes.get(i).getName().trim());
                 }
             }
         }
@@ -220,7 +220,7 @@ public class DetectionPanel extends JPanel {
         }
         for (int k=0; k<iconPath.size(); k++) {
             for (int i=0; i<_pathBoxes.size(); i++) {
-                String name = _pathBoxes.get(i).getName();
+                String name = _pathBoxes.get(i).getName().trim();
                 if (iconPath.get(k).equals(name) ) {
                     _pathBoxes.get(i).setSelected(true);
                 }
@@ -256,7 +256,7 @@ public class DetectionPanel extends JPanel {
         }
     }
 
-    protected void makePathList(OBlock block) {
+    private void makePathList(OBlock block) {
         _blockPathPanel.remove(_checkBoxPanel);
         _checkBoxPanel = new JPanel();
         _checkBoxPanel.setLayout(new BoxLayout(_checkBoxPanel, BoxLayout.Y_AXIS));
@@ -267,16 +267,23 @@ public class DetectionPanel extends JPanel {
         List<Path> paths = _block.getPaths();
         for (int i=0; i<paths.size(); i++) {
             String name = ((OPath)paths.get(i)).getName();
+            if (name.length()<25){
+                char[] ca = new char[25];
+                for (int j=0; j<name.length(); j++ ) {
+                	ca[j] = name.charAt(j);            	
+                }
+                for (int j=name.length(); j<25; j++ ) {
+                	ca[j] = ' ';            	
+                }
+                name = new String(ca);
+            }
             JCheckBox box = new JCheckBox(name);
             box.setName(name);
             _pathBoxes.add(box);
             _checkBoxPanel.add(box);
         }
-        int width = Math.max(200, _blockPathPanel.getPreferredSize().width);
-        _checkBoxPanel.setMinimumSize(new java.awt.Dimension(width, _checkBoxPanel.getPreferredSize().height));
         _blockPathPanel.add(_checkBoxPanel, 1);
         _blockPathPanel.setVisible(true);
-        _blockPathPanel.validate();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DetectionPanel.class.getName());
