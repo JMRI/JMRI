@@ -37,7 +37,8 @@ open the program in the usual manner for your operating system, windows will sho
 <p><img src="images/DesktopIcons.png" width="223" height="79" alt="desktop icons"> 
 <p>Double click on the icon for the program to open, in this case we will open DecoderPro&reg;
 <p>This dialog will appear briefly as the progam is loading.
-<p><img src="images/StartDialog.png" width="170" height="167" alt="Start dialog">
+<p>
+  <img src="images/StartDialog.png" width="170" height="167" alt="Start dialog">
 <p>You should
   see this or a similar opening screen displayed after program starts:
   

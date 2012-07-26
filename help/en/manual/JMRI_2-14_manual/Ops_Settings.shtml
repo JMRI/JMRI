@@ -66,10 +66,10 @@
     </p>
     <li><strong>Reset Databases</strong></li>
 	    
-    <p>Opens the <strong>Reset operations? </strong>dialog box</p>
-    <p><img src="images/Ops_Setting04.png" width="445" height="122" alt="reset"></p>
+    <p>Opens the <strong>Reset Databases </strong>dialog box</p>
+    <p><img src="images/Ops_Setting04.png" width="445" height="122" alt="reset database"></p>
   </ul>
-  <h3>Operations</h3>
+<h3>Operations</h3>
   <ul>
     <li><strong>Settings</strong>
       <blockquote>

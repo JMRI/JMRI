@@ -33,7 +33,7 @@
 <p>The <strong>Options</strong> window is opened from the <strong>Trains</strong> window <strong>Tools</strong> menu.</p>
 <table width="90%" border="0" cellspacing="1" cellpadding="2">
   <tr>
-    <td width="57%" valign="top"><img src="images/Ops_Trains_BuildOptions.png" width="400" height="500" alt="build options"></td>
+    <td width="57%" valign="top"><img src="images/Ops_TrainsOptions.png" width="460" height="672"></td>
     <td width="43%" valign="top"><p>Standard JMRI&reg; <strong>Window</strong> and <strong>Help</strong> menus</p>
     <p><strong>Build Options</strong><br>
       <input name="radio" type="radio" id="radio" value="radio" checked>
@@ -45,7 +45,9 @@
       Agressive builds makes the car's track space available as soon a a car is scheduled for pick up.<br>
       <br>
 Note that once you've built a train, the build option can not be changed until all trains are terminated or reset.</p>
+    <p><strong>Switcher Service</strong></p>
     <p>Next set of options control local car movements. Normally, it is beter not to allow a car to move from one spur directly to another spur in the same location.</p>
+    <p><strong>Staging</strong></p>
     <p>
       <input name="checkbox2" type="checkbox" id="checkbox2" checked>
       <strong>Enable Type, Road and Load Restrictions into Staging</strong><br>
@@ -54,11 +56,17 @@ Note that once you've built a train, the build option can not be changed until a
       <input type="checkbox" name="checkbox3" id="checkbox3">
       <strong>Prompt for Departure Track from Staging</strong><br>
     If selected the program ask you which track should depart from staging during the train build. Note that the program will only prompt you if there are two or more trains available in staging that meet the train's requirements.</p>
-    <p><strong>Car Routing Options</strong><br>
+    <p>
+      <input type="checkbox" name="checkbox4" id="checkbox4">
+      <strong>Prompt for Arrival Track into Staging</strong><br>
+      If selected the program ask you which track should be used for arrival to staging during the train build. Note that the program will only prompt you if there are two or more trains available in staging that meet the train's requirements.</p>
+    <p><strong>Car Routing Options<br>
+    </strong><br>
       <input name="checkbox" type="checkbox" id="checkbox" checked>
       <strong>Enable Car Routing</strong><br>
       When enabled, the program will use multiple trains to deliver a car to its final destination. It is recommended that you leave this option enabled. When enabled , you can use <strong><a href="Ops_schedule.shtml">Schedule</a></strong> to deliver a car to a specific location.</p>
-    <p><strong>Logging Options</strong><br>
+<p><strong>Logging Options<br>
+</strong><br>
       You can have the progrm log your locomotive, car, or train movement to a file by selecting the appropriate check boxes. The program creates a new directory &quot;logger&quot; in the operations directory. For each day's sessioon the program will create a new file (.csv) using the day's date.</p>
     <p> <strong>Options</strong><br>
       Allow you to create your own custom manifest using .csv file. Import into a program like Excel to create a manifest to your liking.</p>

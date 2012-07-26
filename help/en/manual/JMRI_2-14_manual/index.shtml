@@ -21,8 +21,8 @@
 <div id="mainContent">
 
 <a NAME="Top"></a>
-<h1>JMRI&reg; v2.14 </h1>
-<h4>Updated In Work x/x/2012</h4>
+<h1>JMRI&reg; v2.14.1 </h1>
+<h4>Updated 7/26/2012</h4>
 <p>&nbsp;
 </p>
 <p><strong>JMRI&reg; is a Java-based cross-platform application for model railroaders. JMRI&reg; contains applications for:</strong></p>
@@ -50,7 +50,7 @@ Controlling&nbsp;  lighting and sound in the room, and so forth. (SoundPro&reg;)
 <div align="right">
 <h2>Download Print version of Manual (pdf format)
 </h2>
-<p><a href="../pdf/jmri_Man_2_14.pdf"><strong>Manual version 2.14</strong></a></div>
+<p><a href="../pdf/jmri_Man_2_14.pdf"><strong>Manual version 2.14.1</strong></a></div>
 
 <h1>Table of Contents</h1>
 <h4><a name="Installing"></a>Installing JMRI</h4>
@@ -493,8 +493,8 @@ are best submitted to the
     </p></td>
   </tr>
   <tr>
-    <td align="left" valign="top">2.14</td>
-    <td align="left" valign="top">x/x/2012</td>
+    <td align="left" valign="top">2.14.1</td>
+    <td align="left" valign="top">7/26/2012</td>
     <td align="left" valign="top">Dale A.Tripp<br>
       Bruce Shanks</td>
     <td align="left" valign="top">Updated from JMRI 2.12</td>
