@@ -188,12 +188,6 @@ public class TrainManifest extends TrainCommon {
 						else
 							buf.append(cars +" "+rb.getString("cars")+", ");
 						String s = train.getTrainLength(rl)+" "+Setup.getLengthUnit().toLowerCase()+", "+train.getTrainWeight(rl)+" "+rb.getString("tons");
-						/*
-						if (buf.length()+s.length()>lineLength(Setup.getManifestOrientation())){
-							newLine(fileOut, buf.toString());
-							buf = new StringBuffer();
-						}
-						*/
 						buf.append(s);
 						newLine(fileOut, buf.toString());
 						newWork = false;

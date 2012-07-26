@@ -106,7 +106,7 @@ public class TrainCommon {
 	}
 	
 	protected void pickUpCar(PrintWriter file, Car car, StringBuffer buf, String[] format, String orientation){
-		if (car.getRouteLocation().equals(car.getRouteDestination()))
+		if (splitString(car.getRouteLocation().getName()).equals(splitString(car.getRouteDestination().getName())))
 			return; // print nothing local move, see dropCar
 		for (int i=0; i<format.length; i++){
 			String s = getCarAttribute(car, format[i], pickup, !local);
@@ -139,7 +139,7 @@ public class TrainCommon {
 		String[] format = Setup.getDropCarMessageFormat();
 		boolean local = false;
 		// local move?
-		if (car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null){
+		if (splitString(car.getRouteLocation().getName()).equals(splitString(car.getRouteDestination().getName())) && car.getTrack()!=null){
 			buf = new StringBuffer(Setup.getLocalPrefix());
 			format = Setup.getLocalMessageFormat();
 			local = true;
@@ -153,7 +153,7 @@ public class TrainCommon {
 	 */	
 	protected void truncatedDropCar(PrintWriter file, Car car){
 		// local move?
-		if (car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null)
+		if (splitString(car.getRouteLocation().getName()).equals(splitString(car.getRouteDestination().getName())) && car.getTrack()!=null)
 			return; 	// yes
 		dropCar(file, car, new StringBuffer(Setup.getDropCarPrefix()), Setup.getTruncatedSetoutManifestMessageFormat(), false, Setup.getManifestOrientation());
 	}
@@ -166,7 +166,7 @@ public class TrainCommon {
 		String[] format = Setup.getSwitchListDropCarMessageFormat();
 		boolean local = false;
 		// local move?
-		if (car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null){
+		if (splitString(car.getRouteLocation().getName()).equals(splitString(car.getRouteDestination().getName())) && car.getTrack()!=null){
 			buf = new StringBuffer(Setup.getSwitchListLocalPrefix());
 			format = Setup.getSwitchListLocalMessageFormat();
 			local = true;
