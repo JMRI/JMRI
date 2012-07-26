@@ -215,6 +215,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     private void clearListSelection() {
         _portalList.clearSelection();
         _portalName.setText(null);
+        _parent._editor.highlight(null);
     }
 
     public void valueChanged(ListSelectionEvent e) {
@@ -244,7 +245,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     /**
     * Is location of icon reasonable? if so, add it
     */
-    protected boolean checkPortalIcon(PortalIcon icon) {
+    private boolean checkPortalIcon(PortalIcon icon) {
     	String msg = testPortalIcon(icon);
     	if (msg!=null) {
             JOptionPane.showMessageDialog(this, msg, 
@@ -460,7 +461,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
     }
 
     protected void closingEvent() {
-        checkPortalIcons();
+//        checkPortalIcons();
         _parent.closePortalFrame(_homeBlock);
         _loc = getLocation(_loc);
         _dim = getSize(_dim);

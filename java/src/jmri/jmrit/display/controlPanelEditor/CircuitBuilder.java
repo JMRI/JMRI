@@ -581,6 +581,7 @@ public class CircuitBuilder  {
     }
 
     private boolean doAddAction() {
+    	boolean retOK = false;
         String sysname = _sysNameBox.getText();
         if (sysname != null && sysname.length() > 1) {
             String uname = _userNameBox.getText();
@@ -589,7 +590,7 @@ public class CircuitBuilder  {
             }
             _currentBlock = InstanceManager.oBlockManagerInstance().createNewOBlock(sysname, uname);
             if (_currentBlock!=null) {
-                return true;
+            	retOK = true;
             } else {
                 int result = JOptionPane.showConfirmDialog(_editor, java.text.MessageFormat.format(
                                 rbcp.getString("blockExists"), sysname), 
@@ -598,16 +599,20 @@ public class CircuitBuilder  {
                 if (result==JOptionPane.YES_OPTION) {
                     _currentBlock = InstanceManager.oBlockManagerInstance().getBySystemName(sysname);
                     if (_currentBlock==null) {
-                        return false;
+                    	retOK = false;
                     }
                     checkCircuits();
                     _editor.setSelectionGroup(_circuitMap.get(_currentBlock));
                     _editCircuitFrame = new EditCircuitFrame(rbcp.getString("OpenCircuitItem"), this, _currentBlock);
-                    return true;
+                    retOK = true;
                 }            }
         }
         _currentBlock = null;
-        return false;
+        if (!retOK) {
+            JOptionPane.showMessageDialog(_editor, rbcp.getString("createOBlock"), 
+                    rbcp.getString("NeedDataTitle"), JOptionPane.INFORMATION_MESSAGE);
+        }
+        return retOK;
     }
 
     private boolean doOpenAction() {
@@ -1231,18 +1236,16 @@ public class CircuitBuilder  {
     }
     
     protected void doMousePressed(MouseEvent event) {
-        if (_editCircuitFrame!=null || _editPathsFrame!=null) {
-        	if (_editCircuitFrame!=null) {
-        		_editCircuitFrame.toFront();
-        	} else {
-        		_editPathsFrame.toFront();
-        	}
+    	if (_editCircuitFrame!=null) {
+    		_editCircuitFrame.toFront();
             _editor.setSelectionGroup(_saveSelectionGroup);
-        } else if (_editPortalFrame!=null) {
-        	_editPortalFrame.toFront();
+    	} else if (_editPathsFrame!=null) {
+    		_editPathsFrame.toFront();
             _editor.setSelectionGroup(_saveSelectionGroup);
-//            _editor.setSelectionGroup(null);
-        }
+    	} else if (_editPortalFrame!=null) {
+    		_editPortalFrame.toFront();
+            _editor.setSelectionGroup(_saveSelectionGroup);
+    	}
     }
    
     public boolean doMouseReleased(Positionable selection, MouseEvent event) {
@@ -1259,9 +1262,7 @@ public class CircuitBuilder  {
 
     protected boolean doMouseClicked(Positionable selection, MouseEvent event) {
         if (_editCircuitFrame!=null || _editPathsFrame!=null || (_editPortalFrame!=null)) {
-            if (_editPathsFrame==null) {
-//            	_editor.mouseClicked(event);
-            } else if (event.isShiftDown()) {
+            if (_editPathsFrame!=null && event.isShiftDown()) {
             	selection.doMouseClicked(event);
             }
             if (!event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown()) {
@@ -1388,16 +1389,15 @@ public class CircuitBuilder  {
                 block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
                 _editPathsFrame.updatePath(true);
             }
-    //        _editor.highlight(null);
-            _editPathsFrame.toFront();
+             _editPathsFrame.toFront();
         } else if (_editPortalFrame!=null) {
             if (log.isDebugEnabled()) log.debug("selection= "+(selection==null?"null":
                                                             selection.getClass().getName()));
             if (selection instanceof PortalIcon && _circuitIcons.contains(selection)) {
                 _editPortalFrame.checkPortalIconForUpdate((PortalIcon)selection);
+                //_editor.getSelectionGroup().add(selection);
+                _editor.highlight(getPortalIconMap().get(((PortalIcon)selection).getName()));
             }
-   //         _editor.setSelectionGroup(null);
-   //         _highlightcomponent = null;
             _editPortalFrame.toFront();
         }
     }
