@@ -500,16 +500,17 @@ public class CoordinateEdit extends JmriJFrame {
 
     public void initRotate() {
         PositionableLabel pLabel = (PositionableLabel)pl;
-        oldX = ((NamedIcon)pLabel.getIcon()).getDegrees();
+        oldX = pLabel.getDegrees();
 
         textX = new javax.swing.JLabel();
-		textX.setText(java.text.MessageFormat.format(rb.getString("Angle"),((NamedIcon)pLabel.getIcon()).getDegrees()));
+        int deg = oldX;
+		textX.setText(java.text.MessageFormat.format(rb.getString("Angle"), deg));
 		textX.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(0,-360,360,1);
         spinX = new javax.swing.JSpinner(model);
 //        spinX.setValue(Integer.valueOf(((NamedIcon)pLabel.getIcon()).getDegrees()));
-        spinX.setValue(0);
+        spinX.setValue(deg);
         spinX.setToolTipText(rb.getString("enterDegrees"));
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
@@ -546,6 +547,7 @@ public class CoordinateEdit extends JmriJFrame {
         spinX = new javax.swing.JSpinner(model);
         if (log.isDebugEnabled()) { log.debug("scale%= "+(int)Math.round(oldD*100));
         }
+        spinX.setValue((int)Math.round(oldD*100));
         spinX.setToolTipText(rb.getString("enterScale"));
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
