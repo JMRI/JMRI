@@ -62,7 +62,7 @@ public class TrainBuilder extends TrainCommon{
 	List<String> routeList;		// list of locations from departure to termination served by this train
 	Hashtable<String, Integer> numOfBlocks;	//Number of blocks of cars departing staging. 
 	int moves;					// the number of pick up car moves for a location
-	double maxWeight = 0;			// the maximum weight of cars in train
+	double maxWeight = 0;		// the maximum weight of cars in train
 	int reqNumOfMoves;			// the requested number of car moves for a location
 	Location departLocation;	// train departs this location
 	Track departStageTrack;		// departure staging track (null if not staging)	
@@ -71,7 +71,7 @@ public class TrainBuilder extends TrainCommon{
 	boolean success;			// true when enough cars have been picked up from a location
 	PrintWriter buildReport;	// build report for this train
 	boolean noMoreMoves;		// when true there aren't any more moves for a location
-	boolean localSwitcher = false;	// when true, train is a switcher serving one location
+	boolean localSwitcher;		// when true, train is a switcher serving one location
 	
 	// managers 
 	CarManager carManager = CarManager.instance();
@@ -1381,7 +1381,8 @@ public class TrainBuilder extends TrainCommon{
 				}
 			}
 			findDestinationsForCarsFromLocation(rl, routeIndex, false);
-			// perform a second pass if aggressive and there are requested moves		
+			// perform a another pass if aggressive and there are requested moves
+			// this will perform local moves at this location, services off spot tracks
 			if (Setup.isBuildAggressive() && saveReqMoves != reqNumOfMoves){
 				findDestinationsForCarsFromLocation(rl, routeIndex, true);
 			}
@@ -2564,7 +2565,7 @@ public class TrainBuilder extends TrainCommon{
 							&& (!status.startsWith(Track.LENGTH))	// can't generate load for spur that is full
 							&& testTrack.getLocType().equals(Track.SIDING) 
 							&& !testTrack.getScheduleId().equals("")
-							&& car.getTrack().isAddLoadsEnabled() 
+							&& (car.getTrack().isAddLoadsEnabled() || car.getTrack().isAddLoadsEnabledAnySiding()) // both options checked for cabooses and cars with FRED
 							&& car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())){
 						// can we use this track?
 						if (!testTrack.isSpaceAvailable(car)){
