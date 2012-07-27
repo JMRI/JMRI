@@ -321,9 +321,12 @@ public class NamedIcon extends ImageIcon {
             int h = (int)Math.ceil(_scale*getIconHeight());
             transformImage(w, h, _transformS, comp);
         }
-        int degree = 90*mRotation;
+         int degree = 90*mRotation;
         mRotation=0;
         degree += deg;
+        while (degree<-90) {
+        	degree +=360;
+        }
         degree = degree%360;
         double rad = degree*Math.PI/180.0;
         double w = getIconWidth();
