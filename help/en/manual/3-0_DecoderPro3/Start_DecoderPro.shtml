@@ -35,11 +35,9 @@
   Once you have downloaded the JMRI software and installed it, simply
 open the program in the usual manner for your operating system. An icon for DecoderPro3&reg; should be installed on your Desktop.<br>
 <img src="images/decoderpro3_icon.png" width="88" height="64" alt="icon">
-<p>DecoderPro3&reg; may be opened by one of two methods, double click on the Desktop icon and the DecoderPro3&reg; initial screen as shown below will be displayed on completion of startup. 
+<p>DecoderPro3&reg; may be opened by  double click on the Desktop icon and the DecoderPro3&reg; initial screen as shown below will be displayed on completion of startup with no roster entries.
 <p><img src="images/start_dp3_main.png" width="900" height="232" alt="DP3 start">
-<p>DecoderPro3 may also be started from within DecoderPro From the File menu.:
-  
-<h1><img src="images/Splash_Screen.png" width="496" height="308" alt="splash"></h1>
+<p>DecoderPro3 will open showing your roster entries if you already have established a roster of locomotives.<h1><img src="images/Splash_Screen_dp3.png" width="800" height="387" alt="DP3 splash"></h1>
 
 <p>
 It may take a while for this screen to come up, especially on older

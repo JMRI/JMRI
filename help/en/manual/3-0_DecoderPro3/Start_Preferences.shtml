@@ -47,7 +47,7 @@ run the program.)
 <p>The Preferences window provides  access to the basic  configuration information to connect your computer to your DCC system.&nbsp; You will be using that system to  actually&nbsp; program and operate  trains equipped with DCC decoders. 
 An important concept to keep in mind is that JMRI is  nothing more than a very smart throttle.&nbsp;  If you can do something with your throttle you can probably do it faster  and easier with JMRI.&nbsp; However, if your  system can&rsquo;t do what you want, either because your system is not connected  properly (it&rsquo;s broken) or the system manufacturer did not incorporate that  capability, then JMRI will not be able to do it either.&nbsp; In the latter case JMRI will probably give  you an error message or have the command &ldquo;greyed out&rdquo; to help you identify why  it can&rsquo;t accomplish your request.
 <p>The window is split into two panes, on the left side is a list of   preference groups that may be set. Clicking on one of the items opens   the options that may be set in the right side pane. No selection have been made
-<h1><img src="images/Preferences.png" width="753" height="432" alt="Preferences"></h1>
+<h1><img src="images/Preferences.png" width="755" height="432" alt="preference"></h1>
 
 <p><a name="Top"></a>
 
@@ -89,7 +89,7 @@ An important concept to keep in mind is that JMRI is  nothing more than a very s
     <td align="left" valign="top">Allows you to set up a Wi Throttle settings</td>
   </tr>
   <tr>
-    <td align="left" valign="top"><strong><a href="#MiniServer">MiniServer</a></strong></td>
+    <td align="left" valign="top"><strong><a href="#MiniServer">Web Server</a></strong></td>
     <td align="left" valign="top">Sets up the Decoder Pro&reg; miniServer</td>
   </tr>
 </table>
@@ -101,7 +101,7 @@ An important concept to keep in mind is that JMRI is  nothing more than a very s
 </table>
 <h3><a name="Connections"></a>Connections Pane (TABS are configured to the system your selected)</h3>
 <p>Now select Connections and connection options display in right pane. After saved and restarted, the TAB will read LocoNet. This the set up for Digitrax Chief system with PR3 interface.</p>
-<p><img src="images/Preferences2.png" width="641" height="433" alt="preferences"></p>
+<p><img src="images/Preferences2.png" width="672" height="445" alt="preference"></p>
 <table width="80%" border="1" align="center" cellpadding="2" cellspacing="1">
   <tr>
     <td width="21%">System manufacturer:</td>
@@ -135,9 +135,6 @@ Additional Connection Settings, if checked: <img src="images/Preferences3.png" w
 <p>
   <input type="submit" name="button2" id="button2" value="Disable  Connection">
 will disable all the connection settings.</p>
-<p> 
-  <input type="submit" name="button" id="button" value="Delete Connection">
-will delete all the connection settings. </p>
 <p><strong><a href="#Top">Top</a></strong></p>
 <h3><a name="Defaults"></a>Defaults Pane</h3>
 <p><img src="images/Preferences4.png" width="668" height="445" alt="preferences"></p>
@@ -236,12 +233,11 @@ removes the item from the Start Up sequence. All of the panes are of the same fo
 <p><img src="images/Preferences_local.png" width="657" height="300" alt="locale"></p>
 <p>Drop-down list to select your location and language</p>
 <h4>Console TAB</h4>
-<p><img src="images/Preferences_Console.png" width="654" height="452" alt="console"></p>
+<p><img src="images/Preferences_Console.png" width="673" height="444" alt="console"></p>
 <p>Display settings for the JMRI system console.</p>
 <p><strong><a href="#Top">Top</a></strong></p>
 <h3><a name="Messages"></a>Messages Panes</h3>
 <p>TABS and selections can be used to set how and when messages are displayed.</p>
-<p><img border="0" src="Start_Preferences_SNAGHTML5c45623.PNG" width="650" height="235"></p>
 <p><strong><a href="#Top">Top</a></strong></p>
 <h3><a name="Roster"></a>Roster Panes</h3>
 <h4>Programmer TAB</h4>
@@ -257,12 +253,12 @@ removes the item from the Start Up sequence. All of the panes are of the same fo
 <p><strong><a href="#Top">Top</a></strong></p>
 <h3><a name="WiThrottle"></a>WiThrottle Pane</h3>
 <p>This pane allows WiThottle users to customize the setup.</p>
-<p><img src="images/Preferences_Wi.png" width="662" height="450" alt="Wi Throttle"></p>
+<p><img src="images/Preferences_Wi.png" width="669" height="446"></p>
 <p><strong><a href="#Top">Top</a></strong></p>
-<h2><a name="MiniServer"></a>MinServer Pane</h2>
+<h2><a name="MiniServer"></a>Web Server Pane</h2>
 <p>Use this pane to setup MinServer if you are using it.</p>
 <p>Ajax is now in use for smoother image refresh and clicking. For older browser you may want to unselect Ajax.</p>
-<p><img src="images/Preferences_miniServer.png" width="668" height="455" alt="miniServer"></p>
+<p><img src="images/Preferences_miniServer.png" width="680" height="446" alt="web server"></p>
 <p><strong><a href="#Top">Top</a></strong></p>
 <h2 align="center">Before you exit the preferences, Click on          
   <input type="submit" name="button8" id="button8" value="Save">
