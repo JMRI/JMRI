@@ -955,6 +955,15 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 if(!sensorDebounceActiveField.getText().trim().equals(""))
                     getOccupancySensor().setSensorDebounceGoingActiveTimer(Long.parseLong(sensorDebounceActiveField.getText().trim()));
             }
+            if(getOccupancySensor().getReporter()!=null && block!=null){
+                String msg = java.text.MessageFormat.format(rb
+                        .getString("BlockAssignReporter"), new Object[] { getOccupancySensor().getDisplayName(), getOccupancySensor().getReporter().getDisplayName() });
+                if(JOptionPane.showConfirmDialog(editLayoutBlockFrame,
+                                                     msg,rb.getString("BlockAssignReporterTitle"),
+                                                     JOptionPane.YES_NO_OPTION)==0)
+                    block.setReporter(getOccupancySensor().getReporter());
+            
+            }
         }
 		// check if occupied sense changed
 		int k = senseBox.getSelectedIndex();
@@ -2015,6 +2024,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     * seperately.
     */
     //Was public
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DLS_DEAD_LOCAL_STORE")
     void addThroughPath(Block srcBlock, Block dstBlock, LayoutEditor panel){
         //Reset connectivity flag.
         layoutConnectivity = true;
