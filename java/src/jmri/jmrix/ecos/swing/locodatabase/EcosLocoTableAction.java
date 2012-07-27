@@ -75,6 +75,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
         adaptermemo = memo;
         locoManager = adaptermemo.getLocoAddressManager();
         rosterAttribute = adaptermemo.getPreferenceManager().getRosterAttribute();
+        
     }
     
     protected EcosLocoAddress getByEcosObject(String object) {return locoManager.getByEcosObject(object);}
@@ -433,6 +434,9 @@ public class EcosLocoTableAction extends AbstractTableAction {
     }
 
     protected void setTitle() {
+        if(adaptermemo!=null){
+            f.setTitle(adaptermemo.getUserName() + " Loco Table");
+        }
         f.setTitle("Ecos Loco Table");
     }
 

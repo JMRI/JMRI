@@ -118,6 +118,13 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
     public void message(EcosMessage m) {
         // messages are ignored
     }
+    
+    public String getTitle() {
+        if(memo!=null){
+            return memo.getUserName() + " info";
+        }
+        return "ECOS info"; 
+    }
    
     /**
      * Nested class to create one of these using old-style defaults

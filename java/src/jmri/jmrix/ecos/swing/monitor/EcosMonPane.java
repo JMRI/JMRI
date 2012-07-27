@@ -21,12 +21,15 @@ public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListe
     }
     
     public String getHelpTarget() { return null; }
-    public String getTitle() { 
+    public String getTitle() {
+        if(memo!=null){
+            return memo.getUserName() + " Command Monitor";
+        }
         return "ECOS Command Monitor"; 
     }
 
     public void dispose() {
-        // disconnect from the LnTrafficController
+        // disconnect from the ECosTrafficController
         memo.getTrafficController().removeEcosListener(this);
         // and unwind swing
         super.dispose();

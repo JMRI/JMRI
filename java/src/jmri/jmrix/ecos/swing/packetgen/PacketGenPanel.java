@@ -53,7 +53,10 @@ public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements E
     }
     
     public String getHelpTarget() { return "package.jmri.jmrix.ecos.swing.packetgen.PacketGenFrame"; }
-    public String getTitle() { 
+    public String getTitle() {
+        if(memo!=null){
+            return "Send " + memo.getUserName() + " command";
+        }
         return "Send ECOS command"; 
     }
     
