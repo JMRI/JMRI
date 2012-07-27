@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: zoo $) 2009 -->
+<!-- $Id: Programmer_Multi_Decoder.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<title>Multi-Decoder Control</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>DecoderPro3&reg; Main Window</h1>
+<h1>Multi-Decoder Control</h1>
+
+<div align=right>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<p>The <strong>Multi-Programmer Control </strong>provides a convenient way to program CV's when you have more than one decoder installed in a locomotive. For example, if you have separate decoders to control the motor and provide sound, and they both use the same CV locations, programming one decoder would change the settings on the other, usually an undesired feature.</p>
+<p>This control uses CV15 and CV16 to control writing and reading CV values. Prior to installation of the decoders into the locomotive, each one would have a separate and specific value programmed into CV16</p>
+<p>Recommended values:</p>
+<ul>
+  <li>motor decoder value of 1</li>
+  <li>sound decoder value of 2</li>
+  <li>function only decoder value of 3</li>
+  <li>other uses values of 4 thru 7</li>
+</ul>
+<p>Decoders should ship with the value of 0 in both CV15 and CV16, You can only perform a read or write operation on the decoder if CV15 and CV16 are the same value. In effect, CV16 is a lock and CV15 is the key. Once the decoder is locked  in this way, the ONLY CV that can be programmed is CV15 (you do need to be able  to unlock it).&nbsp; </p>
+<p><br>
+  So now you have two  decoders with the same address (both of them locked) and you want to unlock one  of them. The Multi Decoder Control is the tool for that.</p>
+<table width="90%" border="1" cellspacing="1" cellpadding="1">
+  <tr>
+    <td width="41%" align="center" valign="middle"><img src="images/Main_Multi-Decoder_Control.png" alt="Multi-Prorammer" width="260" height="600" border="4"></td>
+    <td width="59%" align="left" valign="top"><p>If you followed the  recommended values we talked about above, then you know what the un-lock number  is. The <strong>ID number</strong> buttons  numbered 0 thru 6 let you select the value to be entered into CV15 that  will unlock the decoder with the corresponding number in its  lock (CV16).</p>
+<p>DecoderPro then reads back the value in CV16 to confirm that the decoder has successfully unlocked.</p>
+<p>Once you are done with  your programming the tool can again be used to insert a zero into CV15, thereby  locking this decoder.</p>
+<p>The<strong> Legacy</strong> button writes a 7 to CV15, which is a special case. Many decoders, especially older models, do not have this locking mechanism present. In some cases, specifically a Digitrax FX3 or later decoder and an early SoundTraxx decoder, it's possible to emulate the lock using sequential writing of the CVs. Clicking the <strong>Legacy </strong>button activates this procedure. Unfortunately, it's not an entirely reliable method.</p>
+<p>But, what if you didn&rsquo;t follow the recommendations? The<strong> Search</strong> button sequentially works through the possible values and marks values found to be present.&nbsp; If you&rsquo;re dealing with a single decoder to  unlock, than you&rsquo;re home free.&nbsp; If we&rsquo;re  talking about multiple decoders with the same address we&rsquo;re probably going to  get more than one value marked.&nbsp; It&rsquo;s up  to you to figure which is which. One way is by changing the address of one and  then testing to see what action changed with the new address.</p>
+    <p><strong>Search</strong> button sequentially works through the possible addresses and marking those decoder addresses that are found to be present.</p>
+    <p><strong>Reset</strong> button looks for possible combinations to unlock a decoder that has been inadvertently locked. <span class="ACCENT">Only use this option if you have just one decoder in the locomotive. If you have more than one , it will unlock all of them, which may cause confusion later.</span></p>
+    <p><strong>Init DH163 + SoundTraxx</strong> button configures the <strong>Legacy</strong> mode discussed above.</p>
+    <p>Status message are displayed below the buttons, shows <strong>idle</strong> when no action is occurring.</p>
+    <p>At the bottom of the window you can select the Programming Mode. Any mode not supported by your command station will be grayed out.</p>
+    <p>If you select the <strong> Ops</strong> mode, which programs on the main track, you need to enter the address of the decoder (locomotive) that you are programming. Your DCC system may require you to check the <strong>Long address </strong>check box if the address is a long address. </p>
+    </td>
+  </tr>
+</table>
+
+<hr>
+
+<div align=right>
+<p><a href="index.shtml#Mzin">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

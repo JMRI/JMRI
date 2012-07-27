@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Programmer_Start.shtml 18120 2011-08-07 11:49:22Z dat7719 $ -->
+<title>Using DecoderPro</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<div align="center"><a NAME="Top"></a>
+  <img SRC="images/Logo.gif" ALT="JMRI DecoderPro Logo" BORDER=10 height=117 width=163 vspace="15">
+  
+</div>
+<h1>Using DecoderPro&reg;</h1>
+<h1><a NAME="Setting Up"></a>What are the Programming
+Modes?</h1>
+
+<div align=right>
+<p><a href="Programmer_Setup.shtml"> Previous | </a><a href="Basic_Start.shtml">Next</a></p>
+<p><a href="index.shtml#Basic Programmer">Back to Index</a></p>
+</div>
+
+
+<hr>
+
+<h2>&nbsp;</h2>
+<p>Prior to using the programmer you  need to have completed the previous section (<a href="Start_DCC.shtml">Getting Started</a>), have your computer connected to  your command station/booster with the required interface device for your DCC  system, you are now ready to actually program a decoder that has been installed  in your locomotive.</p>
+<p><br>
+  On opening DecoderPro, the main  page will be displayed: </p>
+<div align="center"><img src="images/Splash_Screen01.png" width="496" height="308" alt="splash"></div>
+<p>There are four buttons near the  bottom, the first one  which is:</p>
+<p><b>
+  <input type="submit" name="button" id="button" value="Service Mode (Programming Track) Programmer">
+ <a href="Programmer_ServiceMode.shtml">Service Mode</a> (programming track) Programmer</b> -We will start with this button to program your  locomotive on the dedicated programming track. <strong>Note: </strong>not all systems may support this option.</p>
+<p><b>
+  <input type="submit" name="button2" id="button2" value="Operations Mode(Main Track) Programmer">
+  <a href="Programmer_OpsMode.shtml">Operations Mode</a> (Main Track) Programmer</b> - 
+  or  <strong>Programming on the main(POM)</strong>.&nbsp; This  lets you program a specific decoder on the layout, even while it is 
+  operating.
+</p>
+<p>
+  <input type="submit" name="button3" id="button3" value="Help">
+  - Accesses the help files</p>
+<p>
+  <input type="submit" name="button4" id="button4" value="Quit">
+  - Exits the program. 
+</p>
+<p> <a name="ServiceMode"></a>Click on <b>
+  <input type="submit" name="button5" id="button5" value="Service Mode (Programming Track) Programmer">
+</b>and the <strong>Service Mode Programmer  (Programming Track)Programmer Setup </strong>window opens </p>
+<div align="center"><img src="images/Set_Up.png" width="555" height="566" alt="Set up"></div>
+<p>The first item at the top of the service mode programmer  pane is a selection for the mode used to program your decoders.&nbsp; This is a legacy to the olden times and  rather technical, but fortunately DecoderPro has matured to the point that it  is quite good at selecting the best mode for you.&nbsp; It uses the selection of command station from  your Preferences selections, combined with the decoder manufacturer and type  selections (which we&rsquo;ll get to real soon now).&nbsp;  Just accept what&rsquo;s there as a good start.&nbsp; And, fear not, for each pane in the  programmer has a button which can be used to change programming mode if you  have a problem.&nbsp; For further details on  programming mode <a href="Basic_Mode.shtml"><strong>click here</strong></a>.</p>
+<p>Now let&rsquo;s  determine the type of decoder that&rsquo;s  installed in the locomotive that you would like to program. </p>
+<p>The decoder identification is entered by using the  selections in the middle of the page.&nbsp;</p>
+<p>Since we want to know what type of decoder is in the locomotive, we  can either look up what was listed when it was entered in the roster stored in this  computer, or we can ask it what it&rsquo;s manufacturer and firmware version are.
+  &nbsp;
+The first is method is <strong>
+<input type="button" name="button6" id="button6" value="Ident">
+,</strong> and the other is <strong>
+<input type="button" name="button7" id="button7" value="Read type from decoder">
+.</strong>&nbsp; You can use one or the other, but  they are mutually exclusive.</p>
+<p><strong>IDENT </strong>is used to identify a locomotive that is already  stored in your computer&rsquo;s roster file.&nbsp;  You can use the drop down arrow to display a listing of locomotives in  your roster, and then select the desired locomotive from the list.&nbsp;  An alternative is to be lazy and click the<strong> 
+  <input type="button" name="Ident" id="Ident" value="Ident">
+</strong>.&nbsp; The program will then query the locomotive to  get it&rsquo;s address which is linked to the roster entry.&nbsp; The Decoder Pro roster entry includes the  decoder type used when it programmed the locomotive.&nbsp; If it gets a valid address, but there is no  roster entry with that address, then you will get an error message.</p>
+<p><strong>READ TYPE </strong>is the other method located in the center of  the page.&nbsp; If you click on 
+  <input type="button" name="button8" id="button8" value="Read type from decoder">
+, the system will query the decoder to get the manufacturer and  firmware version number.&nbsp; From this  information it will highlight all the decoders which are known to match.&nbsp; There may be several, usually with differences in  the physical shape and size to fit in a particular locomotive&rsquo;s shell, or a few  more &ldquo;bells and whistles&rdquo;.&nbsp;&nbsp;&nbsp; When  confronted with a large selection, you can either remove the shell to try to  read information printed on the decoder itself, or just select one of the ones with  the fewest letters in the model number.&nbsp;  (Letters are often used to separate the shape differences which have no  bearing on the electronic functions of the decoder.)&nbsp;Just be aware that some functions  that Decoder Pro allows you to  program may not be fully operable.</p>
+
+<p>As noted above, these methods  will work only with command  stations which are capable of reading back the contents of CV&rsquo;s, and the process does  take some time.&nbsp;Many lower end and/or older systems and decoders do not provide readback capability.&nbsp;&nbsp;  If the command station cannot read CV&rsquo;s from the programming track, you  will have to select the decoder manually by using the large selection box in  the middle of the page.&nbsp; With it you can  select the manufacturer, family and specific model of the decoder.&nbsp; This manual method may be the best and  fastest way if you know for sure &ldquo;What&rsquo;s in there&rdquo;.</p>
+
+<p>If you have a decoder that doesn&rsquo;t appear in the listing,  you may want to check to be sure that you are using the most up to date version  of Decoder Pro, because manufacturers are adding models almost faster than the  team can enter the new decoder definitions into the files.&nbsp; You can choose a manufacturer's version which  is as close as you can find, or if you&rsquo;re only interested in basic programming  functions, use the NMRA&copy; decoder which  is a generic file of the CV&rsquo;s contained in their standards.</p>
+
+<p>The last item on  this pane is the Programmer Format entry.&nbsp;  It is preset by your Preferences entry, but you can select other  programmers using the drop down arrow. &nbsp;For now use the <strong>Basic </strong>programmer, because  you won&rsquo;t be able to do much damage if you make mistakes.&nbsp; We&rsquo;ll get into the other programmers later  on.</p>
+<p>Once you have  selected a decoder, or Decoder Pro has done it for you, the <strong>
+  <input type="button" name="button9" id="button9" value="Open Programmer">
+</strong>will become activated and you&rsquo;ll be able to move on with Service Mode  Programming.&nbsp; </p>
+
+<p>When you are on the <strong>Setup Pane</strong> and click on the <strong>Open Programmer</strong> button, the selected Programmer  window will open. All programmers, Basic, Comprehensive and Advanced, open to the Roster  Entry pane.</p>
+
+<p>Now lets open the<strong><a href="Basic_Start.shtml">Basic Programmer</a></strong>, which is now completely set-up with a decoder and the Basic  programmer is selected.</p>
+
+
+<div align=right>
+  <p><a href="Programmer_Setup.shtml">Previous | </a><a href="Basic_Start.shtml">Next</a></p>
+  <p><a href="index.shtml#Basic Programmer">Back to Index</a><a href="index.shtml#Basic Programmer"></a> </p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

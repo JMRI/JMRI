@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: zoo $) 2009, 2010 -->
+<!-- $Id: Comp_SoundLevels.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<title>Comprehensive Programmer - Sound Levels Pane</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+<h1>DecoderPro3&copy; Comprehensive Programmer</h1>
+<h1>Sound Levels Pane</h1>
+
+<div align=right>
+<p><a href="Comp_SoundFX.shtml"> Previous | </a>
+  <a href="Comp_GlobalCVs.shtml">Next </a>
+<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
+</div>
+
+<hr>
+<p>
+Here are the controls for the relative volume levels and timing nuances
+of the sound decoder. Again, this is an example of one implementation.
+See your decoder documentation and the specific decoder programmer for
+details applicable to your equipment. Above all, don't be afraid to play
+with these settings and those in the <a href="Comp_SoundFX.shtml"><strong>Sound</strong></a> pane until you get sound
+you like. It's much easier to do here than it is to try to program these
+using a throttle!
+And  even easier, if you are using the <a href="Programmer_OpsMode.shtml"><strong>Ops Mode option </strong></a>to program the unit when it&rsquo;s  running on the track.&nbsp; If you &ldquo;write changes&rdquo; after  doing your selection change, you&rsquo;ll get instant feedback of&nbsp; how the sound has changed. 
+<h1><img src="images/Comp_10_Sound_Levels.png" width="922" height="737" alt="Sound Level pane"></h1>
+
+<p>
+<hr>
+
+<div align=right>
+<p><a href="Comp_GlobalCVs.shtml"></a>
+  <a href="Comp_SoundFX.shtml">Previous | </a> <a href="Comp_GlobalCVs.shtml">Next </a>
+<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

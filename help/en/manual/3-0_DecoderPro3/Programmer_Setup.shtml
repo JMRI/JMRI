@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Programmer_Setup.shtml 18120 2011-08-07 11:49:22Z dat7719 $ -->
+<title>Using DecoderPro</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>Using DecoderPro3&reg;</h1>
+<h1><a NAME="Setting Up"></a>How do I set up to program
+a decoder?</h1>
+
+<div align=right>
+<p><a href="Basic_Start.shtml">Next</a></p>
+<p><a href="index.shtml">Back to Index</a></p>
+</div>
+
+
+<hr>
+<p>Prior to using the programmer you  need to have completed the previous section (<a href="Start_DCC.shtml">Getting Started</a>), have your computer connected to  your command station/booster with the required interface device for your DCC  system, you are now ready to actually program a decoder that has been installed  in your locomotive.</p>
+<p><br>
+  On your initial opening DecoderPro3, the main  page will be displayed: (After preferences are set) The list of locomotives programmed by DecoderPro3 will be blank until you add a locomotive. From then on when it is opened a list of all the locomotives whose decoders you have previously programmed in DecoderPro3 or classic DecoderPro will be listed.</p>
+<p>DecoderPro3 provides access to the JMRI tools required to program DCC decoders. If you are an advanced user, using PanelPro to run your layout, then you may start PanelPro and then from the File menu start DecoderPro3.</p>
+<p>If you already have roster entries and you want to start programming in <strong><a href="Comp_Setup_Roster.shtml">Comprehensive Programmer</a></strong>, double-click on the roster entry.</p>
+<p>DecoderPro3 by its self may program DCC decoders and also use the other JMRI tools to manually operte your trains from the computer interface. These include throttle control and power control of your layout if your DCC system allows them..</p>
+<p>The DecoderPro3 window is divided into five main section from top to bottom.</p>
+<div align="center"><img src="images/start_dp_main01.png" width="1107" height="493" alt="dp main"></div>
+<p>1. <strong><a href="dp3_menubar.html">The Menu Bar</a></strong>.<br>
+2. <strong><a href="dp3_toobar.shtml">The Tool Bar</a></strong><br>
+3. <a href="dp3_rosterTable.shtml"><strong>The Roster Table</strong></a> a list of all the decoders in your roster that are part of the active roster group. To set-up a roster group in addition to the default group of <strong>All Entries</strong> see <strong><a href="dp3_settings_rosterGroups.html">Settings for Roster groups.</a></strong>.<br>
+4.<strong><a href="dp3_decoderInfo.shtml"> The Decoder Information Area</a></strong>.  Show information about any selected locomotive in the roster list.<br>
+5. A status bar that reports information about DecoderPro3 operation including errors.</p>
+<p>Anywhere in the roster table  you may right-click and a context menu will be displayed.<img src="images/dp3_main_contextMenu.png" width="825" height="314" alt="context menu"></p>
+<table width="90%" border="0" cellspacing="1" cellpadding="2">
+  <tr>
+    <td width="26%">Program</td>
+    <td width="74%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td rowspan="3" valign="top">Programmer type <img src="images/arrow.gif" width="20" height="9"></td>
+    <td><input name="radio" type="radio" id="radio" value="radio" checked>
+    <a href="Programmer_ServiceMode.shtml">Programming Track</a></td>
+  </tr>
+  <tr>
+    <td><input type="radio" name="radio2" id="radio2" value="radio2">
+    <a href="Programmer_OpsMode.shtml">Programming on Main</a></td>
+  </tr>
+  <tr>
+    <td><input type="radio" name="radio3" id="radio3" value="radio3">
+      Edit (Allows you to edit roster without making changes to program)</td>
+  </tr>
+  <tr>
+    <td>Labels and Media</td>
+    <td>Opens programming page to select either Labels TAB or Roster Media TAB</td>
+  </tr>
+  <tr>
+    <td>Throttle</td>
+    <td>Opens JMRI Throttle</td>
+  </tr>
+  <tr>
+    <td>Duplicate</td>
+    <td>Duplicates the selected roster entry to use for same type of locomotive.</td>
+  </tr>
+  <tr>
+    <td>Delete</td>
+    <td>Deletes roster entry.</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>At this time we have no entries in the Roster list of locomotives. We will now add our first locomotive to the list.</p>
+<h4><strong><a name="newLoco"></a>Adding New Locomotive</strong></h4>
+<p>On the Tool Bar is an icon labeled<strong> New Loco</strong>, click on the icon and the <strong>Create New Loco </strong>window opens. Click on the Service Mode radio button on the bottom of the screen.&nbsp; Place a locomotive (with the decoder installed) on the Programming Track (Service Mode), click on Read type from decoder button (mid right side)<br>
+<img src="images/dp3_createnewloco.png" width="556" height="594" alt="create new loco"></p>
+<p>As in the screen below several possible decoders will probably be highlighted. This happens because the decoders are electrically the same but are packaged differently to fit the locomotives that they are used in. If you know which decoder is in use, then select that one. If not, in most cases any of the highlighted decoders will work, and you should select the one with the least letters at the end, since  letters are often used to denote locomotive specific variations.</p>
+<p>I know that this decoder is DN143IP plug-in version for a Burlington Zepher in nscale. So I will select that decoder.</p>
+<p><img src="images/dp3_createnewloco_type.png" width="556" height="594" alt="decoder type"></p>
+<p>Note that we have selected a decoder, which is highlighted. Also the<strong> Open Programmer</strong> button is activated to allow us to enter the programmer and the Pr<strong>ogrammer format</strong>: is <strong>Basic</strong>.</p>
+<p><img src="images/dp3_createnewloco_decoder.png" width="556" height="594" alt="decoder select"></p>
+<p>Click on the Open Programmer button and the<strong> Roster Entry</strong> Pane will open for the Basic Programmer. Go to the next page</p>
+<div align=right>
+  <p><a href="Basic_Start.shtml">Next</a></p>
+  <p><a href="index.shtml">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

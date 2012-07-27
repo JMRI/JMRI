@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009, 2010 -->
+<!-- $Id: Basic_BasicPane.shtml 18120 2011-08-07 11:49:22Z dat7719 $ -->
+<title>Basic Programming</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+<h1>The Basic Programmer</h1>
+<h1>Basic Pane</h1>
+
+<div align=right>
+  <p><a href="Basic_Start.shtml"> Previous | </a><a href="Comp_Setup_Roster.shtml">Next</a></p>
+<p><a href="index.shtml#Basic Programmer">Back to Index</a></p>
+</div>
+
+
+<hr>
+<p>You may have noticed that at the  top of the window are Two tabs: <strong>Roster Entry</strong> and <strong>Basic</strong>.  We have completed the <strong>Roster Entry</strong> pane of the Program window, now,  click on the <strong>Basic</strong> tab to change panes to continue with programming your  decoder. The Basic pane will be displayed and look similar to the following illustration: 
+Many panes in the programmer contain decoder dependent features,  as a result what you see may not exactly agree with what you see here.  Only those variables that your decoder can implement will be shown. </p>
+<div align="center"><img src="images/Basic_Program.png" width="636" height="556" alt="Basic pane"></div>
+<p>You will see three options you can change, highlighted in  yellow: </p>
+<ol> 
+<li>The decoder address (should be unique among your  locomotives, unless you are operating as a set) often the locomotive number is used.</li>
+  <li>Two radio buttons that let you toggle between 2 digit  (one byte, normal) or 4 digit <br>
+(two byte, extended) addressing </li>
+
+ <li> Analog operation (enables the decoder running under  regular DC voltage/analog <br>
+control) </li>
+</ol>
+<p>The yellow highlighting indicates  these options are &quot;probable&quot; settings and have not been 
+confirmed from the decoder. Settings that have been changed by the user and  have not 
+been written back to the decoder appear in a orange color. </p>
+<p>Color Codes used in the programming panes.</p>
+<DL>
+  <DT STYLE="color:orange; background:#DDD;">Edited</DT>
+  <DD>You've changed this value, or it contains default
+    values from the decoder file.  This is shown as orange, since the
+    value differs from what's in the decoder.
+  <DT STYLE="color:yellow; background:#DDD;">From File</DT>
+  <DD>The field contains values read from a
+    locomotive file.  This is shown as yellow, since we're not
+    certain that the file agrees with the decoder contents.
+  <DT STYLE="color:white; background:#DDD;">Read</DT>
+  <DD>The value shown has been read from the decoder.
+    This is shown as white to indicate that the value is trustworthy.
+  <DT STYLE="color:white; background:#DDD;">Stored</DT>
+  <DD>The value show has been written to the decoder.
+    This is also shown as white.
+  <DT STYLE="color:red; background:#DDD;">Unknown</DT>
+  <DD>If something goes wrong with the read or write process,
+    we might have a completely untrustworthy result.  This results in
+    the variable's state being marked as UNKNOWN and shown as red.
+</DL>
+<p>You will see  examples of <br>
+  this throughout the manual. </p>
+<a name="Read Data"></a>
+To read the actual settings  for these options (and  IF your system and installed decoder will allow readback of decoder values), click  on the  <strong>
+<input type="button" name="button" id="button" value="Read full sheet">
+</strong>. The individual settings  will turn red while they are in the process of 
+  being read (clever, eh?), and will turn white once the  values have been read successfully 
+  from the decoder. Once again, Decoder Pro must play  &quot;Twenty Questions&quot; to get this 
+information, and sometimes even has to ask a couple of  times. 
+  <p> Be patient, especially with older computers. At the very  bottom of the pane (where it says  &quot;idle&quot;) you will see a running account of  exactly what DecoderPro is doing, for example, the 
+  specific CV being read. </p>
+<p> Again, the
+  <input type="button" name="button2" id="button2" value="Read full sheet"><strong> </strong>and <strong>
+  <input type="button" name="button3" id="button3" value="Read all sheets">
+  </strong>functions are  dependant on your command station. If 
+  your system does not have the capability to read CVs,  then these buttons will not be 
+  available. </p>
+<p><a name="Enter/Edit data"></a>If you wish to change the address  of the locomotive, type in the new address. To turn on or off 4 digit  addressing, select the desired radio button. .&nbsp;  Be sure that the address  type agrees with the number of characters in the address. &nbsp;</p>
+<p>To enable Analog (old style DC, some vendors refer to this as dual mode)  Operation select the appropriate entry from the drop-down list. </p>
+<p> When you are finished, click on 
+  <input type="button" name="button4" id="button4" value="Write full sheet">
+to  write the new values in the decoder. </p>
+  <p><a name="Write Data"></a>Writing usually takes much less time than reading,  because the value   can be sent directly.     As the write operation proceeds, the data will change  from yellow to   white. If there is     difficulty writing to the decoder, the data will change  to red. The   software will automatically   keep trying until the write operation is successful. In some instances   the  system will &ldquo;time-out&rdquo; after a certain number of tries without an    acknowledgement from the decoder.&nbsp; This  does not necessarily mean that   the values have not been written, just that the  program has not   received an acknowledgement.&nbsp;  This can be due to &nbsp;the locomotive    moving and getting on dirty track so that it can&rsquo;t pulse back, or   possibly  because the command station or decoder cannot read back.&nbsp; Try   moving the loco and try again.&nbsp; If it is a command station or decoder    read-back issue, try the loco on the mainline and see if the programming   was  successful. </p>
+  <p><a name="Save Data"></a>
+  To finish this &quot;basic&quot; programming of a  decoder, click once more on the <strong>Roster Entry</strong> tab, You will see that the  address field has now been filled in, so  you can now 
+  click on the <strong>
+  <input type="button" name="button5" id="button5" value="Save to roster">
+</strong>. Your new decoder  settings have now been written not only 
+  to the decoder, but also saved to a computer file where  they may be recalled in the future. . </p>
+<a name="Do More"></a>
+But you  say...&quot;I want to change more than what's shown on the Basic decoder pane.&quot; Well&hellip; there are other programmers that  are available.&nbsp; But&hellip; first we need to  look at the various options.&nbsp; In  fact there are so many options the programmers had to use a slider to get them  all to show.&nbsp; Here are the option  windows.&nbsp; Don&rsquo;t panic&hellip;.Most are of no use  to the average user.
+<p align="center"><img src="images/Basic_programmers.png" width="568" height="341" alt="Basic Programmers"><br>
+</p>
+<p><strong>Comprehensive </strong>and Advanced are the only other programmers &quot;<strong><em>Normal Users</em>&quot; </strong>will ever need, because it  is, well&hellip;<strong>Comprehensive</strong> and the <strong>Advanced</strong> adds features that are optional..&nbsp; So why all the  others?</p>
+<p>First of all eliminate the Manufacturer  specific programmers (unless of course you have a <strong>Zimo</strong> or <strong>ESU</strong> system).&nbsp; </p>
+<p>We can also eliminate the <strong>Tutorial</strong> and <strong>Custom</strong> programmers. They were put in to show folks that want to <strong>write their own</strong>&nbsp; programmer (not you right?) 
+all the possible ways to gather input and to have a common  starting point in the roster pane. 
+Now if you wish to pursue writing a custom programmer go to this 
+<a href="../html/apps/DecoderPro/Programmer.shtml" target="_blank"><strong>site</strong></a>.</p>
+<p>If you have need for a special situation programmer  you might want to look at <strong>Sample Club</strong> or <strong>TrainShowBasic</strong> to see what panes can  be taken out of Comprehensive to make an intermediate complexity, special  purpose programmer.&nbsp; Again, how to do this  is a subject for another manual.</p>
+<p>And that leaves us with the <strong>Advanced</strong> and <strong>Registers</strong> programmers.&nbsp; The <strong>Advanced</strong> programmer has a couple of  sophisticated features added on top of the <strong>Comprehensive</strong> programmer and a name  was needed.&nbsp; Well, why not call it  <strong>Advanced</strong>? We&rsquo;ll cover the additional features once we get through with  <strong>Comprehensive</strong>.<br>
+  So what about the  <strong>Registers</strong> programmer?&nbsp; If you have an old or  bargain basement decoder that only programs using registers, then of course  you&rsquo;ll be interested in <strong>Registers.</strong><br>
+So now we&rsquo;ve narrowed our &ldquo;real&rdquo; choices down to&nbsp;<strong>Advanced</strong>, <strong>Basic</strong> and <strong>Comprehensive</strong>. Since we&rsquo;ve already  covered <strong>Basic</strong>, let's explore the <a href="Comp_Setup_Roster.shtml">Comprehensive Programmer</a>! </p>
+<div align="right">
+  <p><a href="Basic_Start.shtml">Previous | </a><a href="Comp_Setup_Roster.shtml">Next</a><a href="Comp_Setup_Roster.shtml"></a></p>
+<p><a href="index.shtml#Basic Programmer">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
