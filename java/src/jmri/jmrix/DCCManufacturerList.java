@@ -33,6 +33,7 @@ public class DCCManufacturerList {
     public static final String LIONEL = "Lionel TMCC";
     public static final String MAPLE = "Maple Systems";
     public static final String MERG = "MERG";
+    public static final String MARKLIN = "Marklin";
     public static final String NAC = "NAC Services";
     public static final String OAK = "Oak Tree Systems";
     public static final String OPENLCB = "OpenLCB";
@@ -70,6 +71,7 @@ public class DCCManufacturerList {
           LENZ,
           LIONEL,
           MAPLE,
+          MARKLIN,
           MERG,
           NCE,
           NAC,
@@ -113,6 +115,7 @@ public class DCCManufacturerList {
         if(System.equals(LIONEL)) { return new jmri.jmrix.tmcc.SerialConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(MAPLE)) { return new jmri.jmrix.maple.SerialConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(MERG)) { return new jmri.jmrix.merg.MergConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(MARKLIN)) { return new jmri.jmrix.marklin.MarklinConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(NAC)) { return new jmri.jmrix.rps.RpsConnectionTypeList().getAvailableProtocolClasses();   }
         if(System.equals(NCE)) { return new jmri.jmrix.nce.NceConnectionTypeList().getAvailableProtocolClasses();   }
         if(System.equals(OAK)) { return new jmri.jmrix.oaktree.SerialConnectionTypeList().getAvailableProtocolClasses(); }
