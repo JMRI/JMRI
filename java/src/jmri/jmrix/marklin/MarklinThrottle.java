@@ -42,14 +42,12 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         this.isForward    = true;
         
         tc.addMarklinListener(this);
-        //tc.sendMarklinMessage(MarklinMessage.getQryLocoSpeed(getCANAddress()), this);
-        //tc.sendMarklinMessage(MarklinMessage.getQryLocoDirection(getCANAddress()), this);
+        tc.sendMarklinMessage(MarklinMessage.getQryLocoSpeed(getCANAddress()), this);
+        tc.sendMarklinMessage(MarklinMessage.getQryLocoDirection(getCANAddress()), this);
         for(int i=0; i<=28; i++){
-            //tc.sendMarklinMessage(MarklinMessage.getQryLocoFunction(getCANAddress(), i), this);
+            tc.sendMarklinMessage(MarklinMessage.getQryLocoFunction(getCANAddress(), i), this);
         }
-        //reply(new MarklinReply(new int[] {0x00/*&0xff*/,0x09/*&0xff*/, 0xCB/*&0xff*/, 0x36/*&0xff*/, 0x06/*&0xff*/, 0x00/*&0xff*/, 0x00/*&0xff*/, 0xC0/*&0xff*/, 0x09/*&0xff*/, 0x01/*&0xff*/, 0x2D/*&0xff*/, 0x00/*&0xff*/, 0x00/*&0xff*/}));
-        reply(new MarklinReply(new int[] {0x0, 0x9, 0xcb, 0x36, 0x4, 0x0, 0x0, 0x0, 0x9, 0x0, 0x0, 0x0, 0x0}));
-        //reply(new MarklinReply(new int[] {0x0, 0x8, 0xb7, 0x48, 0x6, 0x0, 0x0, 0xc0, 0x9, 0x1, 0x2, 0x0, 0x0}));
+
     }
     
     /**
