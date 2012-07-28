@@ -1387,6 +1387,9 @@ public class TrainBuilder extends TrainCommon{
 				findDestinationsForCarsFromLocation(rl, routeIndex, true);
 			}
 			
+			// we might have freed up space at a spur that has an alternate track
+			redirectCarsFromAlternateTrack(rl);
+			
 			if (routeIndex == 0)
 				checkDepartureForStaging(percent);	// report ASAP that the build has failed
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildStatusMsg"),new Object[]{(success? rb.getString("Success"): rb.getString("Partial")),
@@ -2025,7 +2028,7 @@ public class TrainBuilder extends TrainCommon{
 	 */
 	private void findNextDestinationForCarLoad(Car car) throws BuildFailedException{
 		//log.debug("Car ("+car.toString()+ ") has load ("+car.getLoad()+") without a destination");
-		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchForSiding"),new Object[]{car.toString(), car.getLoad()}));
+		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchForSiding"),new Object[]{car.toString(), car.getLoad(), car.getLocationName()+", "+car.getTrackName()}));
 		List<Track> tracks = locationManager.getTracks(Track.SIDING);
 		log.debug("Found "+tracks.size()+" spurs");
 		for (int i=0; i<tracks.size(); i++){
@@ -2760,6 +2763,34 @@ public class TrainBuilder extends TrainCommon{
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildUnableNewLoad"), new Object[]{car.toString()}));
 		return false;
+	}
+	
+	/**
+	 * Checks to see if cars that are already in the train can be redirected from the alternate track to
+	 * the spur that really wants the car.  Fixes the issue of having cars placed at the alternate when
+	 * the spur's cars get pulled by this train, but cars were sent to the alternate because the spur was
+	 * full at the time it was tested.
+	 * @param rl
+	 */
+	private void redirectCarsFromAlternateTrack(RouteLocation rl){
+		if (!Setup.isBuildAggressive())
+			return;
+		List<String> cars = carManager.getByTrainDestinationList(train);
+		for (int i=0; i<cars.size(); i++) {
+			Car car = carManager.getById(cars.get(i));
+			// does the car have a next destination and the destination is this one?
+			if (car.getNextDestination() == null || car.getNextDestTrack() == null || !car.getNextDestinationName().equals(rl.getName()) || car.getRouteDestination() != rl)
+				continue;
+			log.debug("Car ("+car.toString()+") destination track ("+car.getDestinationTrackName()+") has next destination track ("+car.getNextDestTrackName()+") location ("+rl.getName()+")");
+			if (car.testDestination(car.getNextDestination(), car.getNextDestTrack()).equals(Track.OKAY)){
+				Track alternate = car.getNextDestTrack().getAlternativeTrack();
+				if (alternate != null && alternate.getLocType().equals(Track.YARD) && car.getDestinationTrack() == alternate){
+					log.debug("Car ("+car.toString()+") alternate track ("+car.getDestinationTrackName()+") can be redirected to next destination track ("+car.getNextDestTrackName()+")");
+					addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildRedirectFromAlternate"), new Object[]{car.getNextDestTrackName(), car.toString(), car.getDestinationTrackName()}));
+					car.setDestination(car.getNextDestination(), car.getNextDestTrack());
+				}
+			}			
+		}		
 	}
 
 	private void buildFailed(BuildFailedException e){

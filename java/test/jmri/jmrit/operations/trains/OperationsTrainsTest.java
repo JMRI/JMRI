@@ -5628,7 +5628,7 @@ public class OperationsTrainsTest extends TestCase {
 		// check destinations
 		Assert.assertEquals("c1 destination 3", "Harvard Yard 1", c1.getDestinationTrackName());
 		Assert.assertEquals("c2 destination 3", "", c2.getDestinationTrackName());
-		Assert.assertEquals("c3 destination 3", "Arlington Alternate Track", c3.getDestinationTrackName());
+		Assert.assertEquals("c3 destination 3", "Arlington Siding", c3.getDestinationTrackName());
 		Assert.assertEquals("c4 destination 3", "Harvard Yard 1", c4.getDestinationTrackName());
 		
 		Assert.assertEquals("c5 destination 3", "", c5.getDestinationTrackName());
@@ -5638,7 +5638,7 @@ public class OperationsTrainsTest extends TestCase {
 		
 		Assert.assertEquals("c9 destination 3", "Arlington Alternate Track", c9.getDestinationTrackName());
 		Assert.assertEquals("c10 destination 3", "Boston Yard 1", c10.getDestinationTrackName());
-		Assert.assertEquals("c11 destination 3", "Arlington Siding", c11.getDestinationTrackName());
+		Assert.assertEquals("c11 destination 3", "Arlington Alternate Track", c11.getDestinationTrackName());
 
 		Assert.assertEquals("e1 destination 3", "", e1.getDestinationTrackName());
 		Assert.assertEquals("e2 destination 3", "", e2.getDestinationTrackName());
@@ -5650,14 +5650,14 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("e8 destination 3", "Harvard Yard 1", e8.getDestinationTrackName());
 		
 		// check that cars on alternate track are sent to Arlington Siding
-		Assert.assertEquals("next dest Arlingtion", loc2, c3.getNextDestination());
-		Assert.assertEquals("next dest track Arlingtion Siding", loc2trk1, c3.getNextDestTrack());
+		Assert.assertEquals("next dest null", null, c3.getNextDestination());
+		Assert.assertEquals("next dest track null", null, c3.getNextDestTrack());
 		Assert.assertEquals("next dest Arlingtion", loc2, c8.getNextDestination());
 		Assert.assertEquals("next dest track Arlingtion Siding", loc2trk1, c8.getNextDestTrack());
 		Assert.assertEquals("next dest Arlingtion", loc2, c9.getNextDestination());
 		Assert.assertEquals("next dest track Arlingtion Siding", loc2trk1, c9.getNextDestTrack());
-		Assert.assertEquals("next dest null", null, c11.getNextDestination());
-		Assert.assertEquals("next dest track null", null, c11.getNextDestTrack());
+		Assert.assertEquals("next dest New Arlington", loc2, c11.getNextDestination());
+		Assert.assertEquals("next dest track null", loc2trk1, c11.getNextDestTrack());
 		
 		// test train move to a an exact location
 		Assert.assertFalse("Old Harvard is not part of this trains route", train2.moveToNextLocation("Old Harvard"));
@@ -5687,17 +5687,17 @@ public class OperationsTrainsTest extends TestCase {
 		// check car locations
 		Assert.assertEquals("c1 location", "Harvard Yard 1", c1.getTrackName());
 		Assert.assertEquals("c2 location", "Harvard Yard 2", c2.getTrackName());
-		Assert.assertEquals("c3 location", "Arlington Alternate Track", c3.getTrackName());
+		Assert.assertEquals("c3 location", "Westford Yard 2", c3.getTrackName());
 		Assert.assertEquals("c4 location", "Boston Yard 2", c4.getTrackName());
 		
 		Assert.assertEquals("c5 location", "Harvard Yard 2", c5.getTrackName());
 		Assert.assertEquals("c6 location", "Westford Yard 1", c6.getTrackName());
 		Assert.assertEquals("c7 location", "Harvard Yard 1", c7.getTrackName());
-		Assert.assertEquals("c8 location", "Arlington Siding", c8.getTrackName());
+		Assert.assertEquals("c8 location", "Arlington Yard 1", c8.getTrackName());
 		
-		Assert.assertEquals("c9 location", "Arlington Alternate Track", c9.getTrackName());
+		Assert.assertEquals("c9 location", "Arlington Siding", c9.getTrackName());
 		Assert.assertEquals("c10 location", "Chelmsford Yard 1", c10.getTrackName());
-		Assert.assertEquals("c11 location", "Westford Yard 2", c11.getTrackName());
+		Assert.assertEquals("c11 location", "Arlington Alternate Track", c11.getTrackName());
 
 		Assert.assertEquals("e1 location", "Harvard Yard 2", e1.getTrackName());
 		Assert.assertEquals("e2 location", "Harvard Yard 2", e2.getTrackName());
