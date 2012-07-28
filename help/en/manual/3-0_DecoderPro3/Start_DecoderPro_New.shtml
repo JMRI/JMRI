@@ -34,11 +34,8 @@
   For First Time or totally new Install. Once you have downloaded the JMRI software and installed it, simply
 open the program in the usual manner for your operating system. An icon for DecoderPro3&reg; should be installed on your Desktop.<br>
 <img src="images/decoderpro3_icon.png" width="88" height="64" alt="icon">
-<p>DecoderPro3&reg; may be opened by one of two methods, double click on the Desktop icon and the DecoderPro3&reg; initial screen as shown below will be displayed on completion of startup.
-<p>DecoderPro3 may also be started from within DecoderPro From the File menu.:
-  
-<h1><img src="images/Splash_Screen.png" width="496" height="308" alt="splash"></h1>
-<p>First time install start screen</p>
+<p>DecoderPro3&reg; may be opened by  double click on the Desktop icon and the DecoderPro3&reg; initial screen as shown below will be displayed on completion of startup for a brand new install with no settings stored in your computer..
+<p>First time install start screen
 <p><img src="images/newUser_01.png" width="710" height="410" alt="new"></p>
 <p>Press the 
   <input type="button" name="Button" id="button" value="Next&gt;"> 
@@ -63,7 +60,7 @@ to continue</p>
   <input type="button" name="button3" id="button4" value="Finish">
 </p>
 <p>DecoderPro3&reg; main window is displayed with instructions for Getting Started</p>
-<p><img src="images/newUser_08.png" width="899" height="527" alt="main"></p>
+<p><img src="images/newUser_08.png" width="900" height="527" alt="new start"></p>
 <p>You may want to set up the other preferences at this time, if so go to  <a href="Start_Preferences.shtml">Preferences</a> screen will  come up that allows  you to set up the system for your particular configuration.&nbsp;&nbsp; &nbsp;</p>
 <hr>
 <div align=right>
