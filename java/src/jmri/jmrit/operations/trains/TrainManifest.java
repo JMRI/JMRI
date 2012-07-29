@@ -145,7 +145,7 @@ public class TrainManifest extends TrainCommon {
 							pickupCars(fileOut, carList, car, rl, rld);
 						// use truncated format if there's a switch list
 						else if (Setup.isTruncateManifestEnabled() && location.isSwitchListEnabled())
-							pickUpCar(fileOut, car, new StringBuffer(Setup.getPickupCarPrefix()), Setup.getTruncatedPickupManifestMessageFormat(), Setup.getManifestOrientation());
+							pickUpCarTruncated(fileOut, car);
 						else 
 							pickUpCar(fileOut, car);
 						cars++;
@@ -214,7 +214,7 @@ public class TrainManifest extends TrainCommon {
 			previousRouteLocationName = routeLocationName;
 		}
 		// Are there any cars that need to be found?
-		getCarsLocationUnknown(fileOut);
+		addCarsLocationUnknown(fileOut);
 		
 		fileOut.flush();
 		fileOut.close();

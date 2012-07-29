@@ -186,7 +186,8 @@ public class TrainBuilder extends TrainCommon{
 		addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildRouteRequest"),new Object[]{train.getRoute().getName(), Integer.toString(requested), Integer.toString(numMoves)}));
 		
 		// is this train a switcher servicing only one location?
-		checkForLocalSwitcher();
+		localSwitcher = train.isLocal();
+		//checkForLocalSwitcher();
 		
     	// show road names that this train will service
 		if (!train.getRoadOption().equals(Train.ALLROADS)){
@@ -485,24 +486,24 @@ public class TrainBuilder extends TrainCommon{
 		log.debug("Done building train "+train.getName());
 	}
 	
-	/**
-	 * Determines if this train is a switcher servicing one location.
-	 * Note that a switcher route can be greater than one if all locations
-	 * have the "same" name.
-	 */
-	private void checkForLocalSwitcher(){
-		localSwitcher = false;
-		// now check to see if all locations in this train's route have the same name
-		String locationName = splitString(train.getRoute().getLocationById(routeList.get(0)).getName());
-		for (int i = 0; i<routeList.size(); i++){
-			String name  = splitString(train.getRoute().getLocationById(routeList.get(i)).getName());
-			if (!locationName.equals(name))
-				return;	// not a local switcher
-		}
-		// all locations have the same name
-		localSwitcher = true;
-		addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildSwitcherRoute"),new Object[]{train.getName(), routeList.size()}));
-	}
+//	/**
+//	 * Determines if this train is a switcher servicing one location.
+//	 * Note that a switcher route can be greater than one if all locations
+//	 * have the "same" name.
+//	 */
+//	private void checkForLocalSwitcher(){
+//		localSwitcher = false;
+//		// now check to see if all locations in this train's route have the same name
+//		String locationName = splitString(train.getRoute().getLocationById(routeList.get(0)).getName());
+//		for (int i = 0; i<routeList.size(); i++){
+//			String name  = splitString(train.getRoute().getLocationById(routeList.get(i)).getName());
+//			if (!locationName.equals(name))
+//				return;	// not a local switcher
+//		}
+//		// all locations have the same name
+//		localSwitcher = true;
+//		addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildSwitcherRoute"),new Object[]{train.getName(), routeList.size()}));
+//	}
 	
 	/**
 	 * Ask which staging track the train is to depart on.

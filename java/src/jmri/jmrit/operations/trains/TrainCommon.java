@@ -98,6 +98,15 @@ public class TrainCommon {
 		pickUpCar(file, car, new StringBuffer(Setup.getPickupCarPrefix()), Setup.getPickupCarMessageFormat(), Setup.getManifestOrientation());
 	}
 	
+	/**
+	 * Adds the car's pick up string to the output file using the truncated manifest format
+	 * @param file
+	 * @param car
+	 */
+	protected void pickUpCarTruncated(PrintWriter file, Car car){
+		pickUpCar(file, car, new StringBuffer(Setup.getPickupCarPrefix()), Setup.getTruncatedPickupManifestMessageFormat(), Setup.getManifestOrientation());
+	}
+	
 	/*
 	 * Adds the car's pick up string to the output file using the switch list format
 	 */
@@ -106,7 +115,7 @@ public class TrainCommon {
 	}
 	
 	protected void pickUpCar(PrintWriter file, Car car, StringBuffer buf, String[] format, String orientation){
-		if (car.getRouteLocation().equals(car.getRouteDestination()))
+		if (islocalMove(car))
 			return; // print nothing local move, see dropCar
 		for (int i=0; i<format.length; i++){
 			String s = getCarAttribute(car, format[i], pickup, !local);
@@ -139,7 +148,7 @@ public class TrainCommon {
 		String[] format = Setup.getDropCarMessageFormat();
 		boolean local = false;
 		// local move?
-		if (car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null){
+		if (islocalMove(car)) {
 			buf = new StringBuffer(Setup.getLocalPrefix());
 			format = Setup.getLocalMessageFormat();
 			local = true;
@@ -149,12 +158,12 @@ public class TrainCommon {
 	
 	/*
 	 * Adds the car's set out string to the output file using the truncated manifest format.
-	 * Does not print out local moves
+	 * Does not print out local moves.  Local moves are shown on the switch list for that location.
 	 */	
 	protected void truncatedDropCar(PrintWriter file, Car car){
 		// local move?
-		if (car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null)
-			return; 	// yes
+		if (islocalMove(car))
+			return; 	// yes, don't print local moves on train manifest
 		dropCar(file, car, new StringBuffer(Setup.getDropCarPrefix()), Setup.getTruncatedSetoutManifestMessageFormat(), false, Setup.getManifestOrientation());
 	}
 	
@@ -166,7 +175,7 @@ public class TrainCommon {
 		String[] format = Setup.getSwitchListDropCarMessageFormat();
 		boolean local = false;
 		// local move?
-		if (car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null){
+		if (islocalMove(car)){
 			buf = new StringBuffer(Setup.getSwitchListLocalPrefix());
 			format = Setup.getSwitchListLocalMessageFormat();
 			local = true;
@@ -236,6 +245,22 @@ public class TrainCommon {
 		}
 	}
 	
+	/**
+	 * Used to determine if car is a local move
+	 * @param car
+	 * @return
+	 */
+	protected boolean islocalMove(Car car){
+		if (car.getRouteLocation().equals(car.getRouteDestination()) 
+				&& car.getTrack() != null)
+			return true;
+		if (car.getTrain() != null && car.getTrain().isLocal() 
+				&& splitString(car.getRouteLocation().getName()).equals(splitString(car.getRouteDestination().getName()))
+				&& car.getTrack() != null)
+			return true;
+		return false;
+	}
+	
 	// writes string to console and file
 	protected void addLine (PrintWriter file, String string){
 		if(log.isDebugEnabled()){
@@ -291,7 +316,7 @@ public class TrainCommon {
 		return parsedName;
 	}
 	
-	protected void getCarsLocationUnknown(PrintWriter file){
+	protected void addCarsLocationUnknown(PrintWriter file){
 		CarManager cManager = CarManager.instance();
 		List<String> cars = cManager.getCarsLocationUnknown();
 		if (cars.size() == 0)
@@ -448,7 +473,6 @@ public class TrainCommon {
 	
 	protected int lineLength(String orientation){
 		// page size has been adjusted to account for margins of .5
-		// Dimension pagesize = new Dimension(612,792);
 		Dimension pagesize = new Dimension(540,792);	// Portrait
 		if (orientation.equals(Setup.LANDSCAPE))
 			pagesize = new Dimension(720,612);
@@ -458,7 +482,6 @@ public class TrainCommon {
 		Font font = new Font("Monospaced", Font.PLAIN, Setup.getFontSize());
 		Frame frame = new Frame();
 		FontMetrics metrics = frame.getFontMetrics(font);
-
 		int charwidth = metrics.charWidth('m');
 
 		// compute lines and columns within margins

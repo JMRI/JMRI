@@ -658,6 +658,20 @@ public class Train implements java.beans.PropertyChangeListener {
 	public boolean isTrainInRoute() {
 		return getCurrentLocationName() != "" && getTrainDepartsRouteLocation() != getCurrentLocation();
 	}
+	
+	public boolean isLocal() {
+		String departureName = TrainCommon.splitString(getTrainDepartsName());
+		Route route = getRoute();
+		if (route != null) {
+			List<String> routeList = route.getLocationsBySequenceList();
+			for (int i = 0; i<routeList.size(); i++){
+				String name  = TrainCommon.splitString(route.getLocationById(routeList.get(i)).getName());
+				if (!departureName.equals(name))
+					return false;	// not a local switcher
+			}
+		}
+		return true;
+	}
 
 	List<String> _skipLocationsList = new ArrayList<String>();
 
