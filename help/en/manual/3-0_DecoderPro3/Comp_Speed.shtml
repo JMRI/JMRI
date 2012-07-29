@@ -32,15 +32,16 @@
 
 <hr>
 <p>The <strong>Speed Control pane</strong> looks very complicated, but it can be one of
-the most significant in improving the performance of your locomotive fleet.
-<h1><img src="images/Speed_Table_Main.png" width="919" height="799" alt="Speed pane"></h1>
+the most significant in improving the performance of your locomotive fleet. Remember if you use Speed Table TAB this TAB is not used.
+<h1><img src="images/Speed_Table_Main.png" width="804" height="386" alt="speed"></h1>
 
 <p>Let's look first at the top of the pane: You now have the option of using Basic Speed Control (this pane) or Speed Table to control your locomotive's speed.  Use the tabs at the top of the screen to select  the method you wish to use and then click the button in the top center for the  page to select that method of speed control.&nbsp;  Whichever one you select last with the button will be the method used  for speed control.
 <p>Now back to Basic Speed Control Pane.
 We see the
-<strong> Vstart, Vmid, Vhigh</strong> radio buttons.
+<strong> Start Voltage(0-255) </strong>slider to set the start voltage.
   What appears in the body of this panel is dependent  on what is available from your decoder manufacturer.&nbsp; Most have something similar to what is shown,  but the Soundtraxx Tsunami series is very limited.&nbsp; We&rsquo;ll show you a way around this limitation  when we get to the Speed Table screen.
   <p>Three important CVs are programmed in this pane Vstart, Vmid and Vhigh. They work together to make a very basic three point speed table. On some decoders these settings may be labeled differently and all three may not be available.  Decoder Pro will show the correct options for your selected decoder.  
+  <p>Possible setting that can appear on this TAB.
 <p>
 <b>Vstart</b>(<strong>Start Voltage</strong>) is the voltage at the first speed step. If your locomotive
 didn't start moving until there were three volts on the track with analog

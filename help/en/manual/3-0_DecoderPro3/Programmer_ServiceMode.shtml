@@ -29,9 +29,11 @@
 
 
 <hr>
-<b>Service Mode (programming track) Programmer</b> - 
-    Select to program the locomotive on the dedicated programming track.  (Probably because the Locomotive has to be taken to the  servicing track to be programmed).&nbsp; Not all command  stations support a dedicated programming track, and some brands  will shut down the mainline power when in programming mode (not pleasant when you have  an ops session in progress.
-    <blockquote>
+<p>The <strong>Service Mode Programmer</strong> is opened using the <strong>New Loco</strong> icon in the DecoderPro&reg; <strong>Tool Bar</strong>.</p>
+<p><b>Service Mode (programming track) Programmer</b> - 
+  Select to program the locomotive on the dedicated programming track.  (Probably because the Locomotive has to be taken to the  servicing track to be programmed).&nbsp; Not all command  stations support a dedicated programming track, and some brands  will shut down the mainline power when in programming mode (not pleasant when you have  an ops session in progress.
+</p>
+<blockquote>
   <p><strong>Reading  your Decoder On the programming track:</strong><br>
     <br>
 To obtain  information from the decoder on the programming track we rely on the ability of  the decoder to respond to a query, what is known as <strong>Readback. </strong>Most  decoders cannot talk to send information back to the command station.&nbsp;  They just respond to instructions, so special instructions were developed which  allow the Command Station &nbsp;to determine  the contents of the decoder's memories <br>

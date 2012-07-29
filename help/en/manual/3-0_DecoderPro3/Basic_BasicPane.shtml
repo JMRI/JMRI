@@ -51,7 +51,7 @@ control) Enable Analog Operation with caution, as some       decoders will jump 
 confirmed from the decoder. Settings that have been changed by the user and  have not 
 been written back to the decoder appear in a orange color. You will see  examples of <br>
 this throughout the manual. </p>
-<a name="Read Data"></a>
+<a name="ReadData" id="ReadData"></a>
 To read the actual settings  for these options (and  IF your system and installed decoder will allow readback of decoder values), click  on the  <strong>
 <input type="button" name="button" id="button" value="Read full sheet">
 </strong>. The individual settings  will turn red while they are in the process of 
@@ -66,12 +66,12 @@ information, and sometimes even has to ask a couple of  times.
   </strong>functions are  dependant on your command station. If 
   your system does not have the capability to read CVs,  then these buttons will not be 
   available. </p>
-<p><a name="Enter/Edit data"></a>If you wish to change the address  of the locomotive, type in the new address. To turn on or off 4 digit  addressing, select the desired radio button. .&nbsp;  Be sure that the address  type agrees with the number of characters in the address.&nbsp;</p>
+<p><a name="EnterEditData" id="EnterEditData"></a>If you wish to change the address  of the locomotive, type in the new address. To turn on or off 4 digit  addressing, select the desired radio button. .&nbsp;  Be sure that the address  type agrees with the number of characters in the address.&nbsp;</p>
 <p> When you are finished, click on 
   <input type="button" name="button4" id="button4" value="Write full sheet">
 to  write the new values in the decoder. </p>
-  <p><a name="Write Data"></a>Writing usually takes much less time than reading,  because the value   can be sent directly.     As the write operation proceeds, the data will change  from yellow to   white. If there is     difficulty writing to the decoder, the data will change  to red. The   software will automatically   keep trying until the write operation is successful. In some instances   the  system will &ldquo;time-out&rdquo; after a certain number of tries without an    acknowledgement from the decoder.&nbsp; This  does not necessarily mean that   the values have not been written, just that the  program has not   received an acknowledgement.&nbsp;  This can be due to &nbsp;the locomotive    moving and getting on dirty track so that it can&rsquo;t pulse back, or   possibly  because the command station or decoder cannot read back.&nbsp; Try   moving the loco and try again.&nbsp; If it is a command station or decoder    read-back issue, try the loco on the mainline and see if the programming   was  successful. </p>
-  <p><a name="Save Data"></a>
+  <p><a name="WriteData" id="WriteData"></a>Writing usually takes much less time than reading,  because the value   can be sent directly.     As the write operation proceeds, the data will change  from yellow to   white. If there is     difficulty writing to the decoder, the data will change  to red. The   software will automatically   keep trying until the write operation is successful. In some instances   the  system will &ldquo;time-out&rdquo; after a certain number of tries without an    acknowledgement from the decoder.&nbsp; This  does not necessarily mean that   the values have not been written, just that the  program has not   received an acknowledgement.&nbsp;  This can be due to &nbsp;the locomotive    moving and getting on dirty track so that it can&rsquo;t pulse back, or   possibly  because the command station or decoder cannot read back.&nbsp; Try   moving the loco and try again.&nbsp; If it is a command station or decoder    read-back issue, try the loco on the mainline and see if the programming   was  successful. </p>
+  <p><a name="SaveData" id="SaveData"></a>
   To finish this &quot;basic&quot; programming of a  decoder, click once more on the <strong>Roster Entry</strong> tab, You will see that the  address field has now been filled in, so  you can now 
   click on the <strong>
   <input type="button" name="button5" id="button5" value="Save to roster">
@@ -83,7 +83,7 @@ to  write the new values in the decoder. </p>
 <p> Now that we have entered the Roster data and set thedesired address, lets return to DecoderPro3 Main window by closing the Programming window.</p>
 <p>Notice that we now have a list of all the locomotives programmed so far that are in our roster.</p>
 <p><img src="images/Main_01b_main.png" width="999" height="388" alt="main page"></p>
-<p>What we&rsquo;ve done so far is what is available  in the Basic mode of programming in DecoderPro 3. Which is basicallly put Locomotive in the roster and assign an address.&nbsp; A good place to start for new folks or at a  club.&nbsp; It&rsquo;s hard to go wrong, but you can  change the loco address and add it the roster, which are the two most often  needed actions with programming. <br>
+<p><a name="DoMore"></a>What we&rsquo;ve done so far is what is available  in the Basic mode of programming in DecoderPro3. Which is basicallly put Locomotive in the roster and assign an address.&nbsp; A good place to start for new folks or at a  club.&nbsp; It&rsquo;s hard to go wrong, but you can  change the loco address and add it the roster, which are the two most often  needed actions with programming. <br>
   <br>
   The classic DecoderPro offered a number of  modes, most of which were often redundant and confusing showing how the user  could edit the underlying file to make special application programming modes. The  Comprehensive Programmer was the most popular for a long time until Advanced  came along with added features.&nbsp; So now they&rsquo;ve  been combined in DecoderPro3. Thus the Comprehensive Programmer  with added Advanced features is the only other programmer that DecoderPro3 offers. <br>
   Since we&rsquo;ve already covered <strong>Basic</strong>,  let's explore the DecoderPro3 <a href="Comp_Setup_Roster.shtml">Comprehensive  Programmer</a>! </p>

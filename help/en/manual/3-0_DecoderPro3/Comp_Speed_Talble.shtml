@@ -32,11 +32,11 @@
 
 <hr>
 <p>The <strong>Speed Table</strong> allows you to fine-tune the throttle response of your  locomotive. You might opt to match all of your locomotives so they run at the  same speed for the same throttle setting, or you might want to set the table up  so that your locomotive runs at the actual scale speed indicated by the  throttle. Or maybe you have someone in your operating group that likes to  switch the yard at Mach 2.5, and you want to slow them down a bit. There are a  lot of ways to use this feature. (This feature may vary by manufacturer and  decoder series) 
-<p> You  now have the option of using <strong>Speed Table </strong>(this pane) which if selected  and written to the decoder will replace the <a href="Comp_Speed.shtml"><strong>Basic Speed Control</strong></a> to set your locomotive's  speed control mode. Which ever one you select last and write to your decoder  will be the method used for speed control. To select the use of speed tables, the <strong>Use Table</strong> radio button is selected at the top of the pane, and in the case of  Soundtraxx and QSI decoders, the drop down selection box must be used.&nbsp; See the discussion at the end of this section  for an example. 
+Some decoders may only have preset curves that you can select.<p> You  now have the option of using <strong>Speed Table </strong>(this pane) which if selected  and written to the decoder will replace the <a href="Comp_Speed.shtml"><strong>Basic Speed Control</strong></a> to set your locomotive's  speed control mode. Which ever one you select last and write to your decoder  will be the method used for speed control. To select the use of speed tables, the <strong>Use Table</strong> radio button is selected at the top of the pane, and in the case of  Soundtraxx and QSI decoders, the drop down selection box must be used.&nbsp; See the discussion at the end of this section  for an example. 
 <p>The default speed table for most decoders is a straight line from zero on the left to maximum on the right.  The <b>
     <input type="button" name="button" id="button" value="Force Straight">
 </b>  below the table duplicates that in the table..
-<h1><img src="images/Speed_Table_Straight.png" width="922" height="797" alt="straight speed table"></h1>
+<h1><img src="images/Speed_Table_Straight.png" width="804" height="701" alt="speed table"></h1>
 <p align="center"><strong>Straight Line Speed Curve</strong></p>
 <p>As you can see, you have both  numbers and sliders to work with. Changing either a number or slider will make the other change to  match it. If you are CV  inquisitive, you can use the tool tip to advantage.&nbsp; By hovering over any of the sliders, the tool  tip will reveal the CV  to which you are pointing . 
 <p>The <strong>

@@ -35,7 +35,7 @@
 </div>
 
 <hr>
-<p>The Simple Programmer allows you to read or write CV values in DCC decoders one  at a time. </p>
+<p>The <strong>Simple Programmer</strong> is opened from the Main Page of DecoderPro3&reg; <strong>Action </strong>menu. The Simple Programmer allows you to read or write CV values in DCC decoders one  at a time. </p>
 <p align="center"><img src="images/Main_SingleCVProgram.png" alt="Simple Programmer" width="241" height="335" border="4"></p>
 <p>Prior to reading a CV value you should enter the CV Number (address) into the <strong>CV Number</strong> text box. If writing a CV value you should enter the CV Number and then a value in the <strong>Value </strong>text box. You may enter the value as Decimal or Hexadecimal depending upon the option selected in <strong>Value is:</strong> area.</p>
 <p>On the left side of the window you can select the Programming Mode. Any mode not supported by your command station will be grayed out.</p>

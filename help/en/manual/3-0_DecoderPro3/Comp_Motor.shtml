@@ -33,13 +33,10 @@ DecoderPro&reg; Comprehensive Programmer
 <hr>
 <p>Motor  control is divided into three separate panes.&nbsp;  The<strong> Motor Control pane</strong> deals with CV&rsquo;s for simulating locomotive weight or  inertia.&nbsp; The <a href="Comp_Speed.shtml" target="_parent"><strong>Basic Speed Control pane</strong></a><a href="Comp_Basic.shtml" target="_parent"></a> deals with basic  motor control CV&rsquo;s and the third <a href="Comp_Speed_Talble.shtml" target="_parent"><strong>Speed Table pane</strong></a><a href="Comp_Speed.shtml" target="_parent"></a> covers those dealing with the Speed Table  method of controlling the motor.&nbsp; These  last two  methods of motor control  are mutually exclusive.&nbsp; The selection is made with a radio button at  the top of each of those two panes.&nbsp; The  default selection is Basic Speed Control.
 <p><strong>The  Motor Pane </strong></p>
-<h1><img src="images/Comp_03_Motor.png" width="820" height="596" alt="MOTOR"></h1>
+<h1><img src="images/Comp_03_Motor.png" width="804" height="478" alt="motor"></h1>
 
 <p>The contents of the  Motor pane will vary significantly between different brands and models of decoders.  In the  case of the  decoder shown in the illustration:</p>
 
-<p>  <strong>Kick start </strong>is an extra burst of power at the first speed  step to help start balky motors. 
-  Compare this to the &quot;Minimum voltage&quot; CV we'll  see in the <a href="Comp_Speed.shtml" target="_parent"><strong>Basic Speed Control</strong></a>pane, which is a sustained 
-  increased level of power. Between the two it is quite  possible to tune a decent quality locomotive so that it creeps at less than a tie a minute.</p>
 <p><strong>Acceleration Rate</strong> and <strong>Deceleration  Rate </strong> help simulate a  locomotive under load - but don't 
 use them unless you have very clean track, because an  interruption of power can make a 
 locomotive stop and cycle through the acceleration curve  again!  On the latest Tsunami Diesel sound decoders the firmware has been changed. The  decoder now returns to the last speed setting before the power interruption but it has no knowledge of where it was in the acceleration curve.&nbsp; So if you  have been in the habit of using lots of momentum and setting speed to maximum  to get the sound of a notch 8 motor, be aware that if the loco loses power for  just an instant from a dirt spot on the rails, it will resume at the top speed  step and appear to be running away. </p>

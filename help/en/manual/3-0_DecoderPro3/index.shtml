@@ -87,13 +87,13 @@ The Basic Programmer</h4>
   <li><a href="Basic_Start.shtml">Entering locomotives in
     the "Roster"</a></li>
   <li><a href="Basic_BasicPane.shtml">The basic programmer</a></li>
-  <li><a href="Basic_BasicPane.shtml">Reading the data from the decoder</a></li>
-  <li><a href="Basic_BasicPane.shtml">Entering and editing new
+  <li><a href="Basic_BasicPane.shtml#ReadData">Reading the data from the decoder</a></li>
+  <li><a href="Basic_BasicPane.shtml#EnterEditData">Entering and editing new
     data</a></li>
-  <li><a href="Basic_BasicPane.shtml">Writing the new data to the
+  <li><a href="Basic_BasicPane.shtml#WriteData">Writing the new data to the
     decoder</a></li>
-  <li><a href="Basic_BasicPane.shtml">Saving the new data to a file</a></li>
-  <li><a href="Basic_BasicPane.shtml#Do More">What if I need to do more?</a></li>
+  <li><a href="Basic_BasicPane.shtml#SaveData">Saving the new data to a file</a></li>
+  <li><a href="Basic_BasicPane.shtml#DoMore">What if I need to do more?</a></li>
 </ul>
 <h4>
 <a NAME="Advanced Programmer"></a>The Comprehensive Programmer</h4>

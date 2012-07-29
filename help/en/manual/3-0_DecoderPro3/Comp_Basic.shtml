@@ -36,7 +36,7 @@
 <p>
 One of the first things you will notice about the expanded Basic Pane
 in the Comprehensive Programmer is that there are a lot more options than
-you found in the Basic Programmer.</p>
+you found in the Basic Programmer. Now use the Read full sheet button to read the values that the locomotive is programmed to. Now you can determine if you want to change any values.</p>
 <p align="center"><img src="images/Extended_Basic_Program_Roster.png" width="828" height="602" alt="Extended Basix"></p>
 <p>
 Select 2 or 4 digit <b>addressing</b> radio button to select which mode of addressing you wish to be active</p>
@@ -67,7 +67,7 @@ The top row operates <span class="ACCENT"><strong>ONLY</strong></span> on the cu
      <li><b>Read changes on sheet</b> - an "Oops!" button that lets you recover data from the decoder if you've changed it accidentally on the computer (and don't remember what the values were!), but only if       you haven&rsquo;t written it yet.
      <li><b>Write changes on sheet</b> - faster than writing all the data on the sheet, and ideal for tweaking changes in <b>Ops mode</b>, programming on the main track.
   <li><b>Read full sheet</b> - read all data in this pane from the decoder.
-     <li><b>Write full sheet</b> - writes all data in this pane to the decoder.
+     Note this may take a great deal of time, depending upon the speed of your computer and the controller station in use.<li><b>Write full sheet</b> - writes all data in this pane to the decoder.
 </ol>
 
 <p>The second row of buttons  performs essentially the same functions, but on the <strong>entire range </strong>of CVs for the  decoder. This allows you to read all CVs, for example, or to make a series of  changes across several panes,  and when done then write them all to the decoder. Again, you have the  option of reading/writing only the changed data, or all data. </p>
