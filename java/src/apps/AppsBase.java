@@ -371,4 +371,7 @@ public abstract class AppsBase {
             }
         }
     }
+
+    abstract public String getAppName();
+
 }

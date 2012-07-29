@@ -52,6 +52,11 @@ public class JmriFaceless extends apps.AppsBase {
         app.postInit();
         
     }
+
+    @Override
+    public String getAppName() {
+        return "JmriFaceless";
+    }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriFaceless.class.getName());
 }

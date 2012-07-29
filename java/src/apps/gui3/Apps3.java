@@ -139,8 +139,6 @@ public abstract class Apps3 extends apps.AppsBase {
 
     abstract protected void createMainFrame();
     
-    abstract public String getAppName();
-    
     public void createAndDisplayFrame(){
         createMainFrame();
         
