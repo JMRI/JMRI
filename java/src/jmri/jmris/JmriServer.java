@@ -1,12 +1,12 @@
 // JmriServer.java
 package jmri.jmris;
 
-import java.net.*;
-import java.io.*;
-//import java.lang.*;
-import java.util.Vector;
-
-// imports for ZeroConf.
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
 import jmri.util.zeroconf.ZeroConfService;
 
 /**
@@ -21,7 +21,7 @@ public class JmriServer {
     protected ServerSocket connectSocket;
     protected ZeroConfService service;
     private Thread listenThread = null;
-    private Vector<clientListener> connectedClientThreads = new Vector<clientListener>();
+    private ArrayList<clientListener> connectedClientThreads = new ArrayList<clientListener>();
     private static JmriServer _instance = null;
 
     public synchronized static JmriServer instance() {
@@ -54,7 +54,7 @@ public class JmriServer {
     // Add a new client
     private synchronized void addClient(clientListener client) {
         if (!connectedClientThreads.contains(client)) {
-            connectedClientThreads.addElement(client);
+            connectedClientThreads.add(client);
             client.start();
         }
     }
@@ -62,7 +62,8 @@ public class JmriServer {
     //Remove a client
     private synchronized void removeClient(clientListener client) {
         if (connectedClientThreads.contains(client)) {
-            connectedClientThreads.removeElement(client);
+            client.stop();
+            connectedClientThreads.remove(client);
         }
     }
 
@@ -81,9 +82,8 @@ public class JmriServer {
         service.publish();
     }
 
-    @SuppressWarnings("deprecation")
     public void stop() {
-        listenThread.stop();
+        listenThread = null;
         service.stop();
     }
 
@@ -154,11 +154,15 @@ public class JmriServer {
             clientThread.start();
         }
 
+        public void stop() {
+            clientThread = null;
+        }
+
         public void run() {
             // handle a client.
             try {
                 handleClient(inStream, outStream);
-            } catch (IOException e1) {
+            } catch (IOException ex) {
                 // When we get an IO exception here, we're done
                 if (log.isDebugEnabled()) {
                     log.debug("Server Exiting");
@@ -166,7 +170,7 @@ public class JmriServer {
                 // Unregister with the server
                 removeClient(this);
                 return;
-            } catch (java.lang.NullPointerException e2) {
+            } catch (java.lang.NullPointerException ex) {
                 // When we get an IO exception here, we're done with this client
                 if (log.isDebugEnabled()) {
                     log.debug("Client Disconnect");

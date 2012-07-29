@@ -1,13 +1,13 @@
 // SimpleServer.java
 package jmri.jmris.simpleserver;
 
-import jmri.jmris.*;
-
-import java.io.*;
-
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ResourceBundle;
-
 import jmri.InstanceManager;
+import jmri.jmris.JmriServer;
 
 /**
  * This is an implementation of a simple server for JMRI.
@@ -32,7 +32,7 @@ public class SimpleServer extends JmriServer {
 
     // Create a new server using the default port
     public SimpleServer() {
-        super(java.lang.Integer.parseInt(rb.getString("SimpleServerPort")));
+        this(java.lang.Integer.parseInt(rb.getString("SimpleServerPort")));
     }
 
     public SimpleServer(int port) {
@@ -40,7 +40,7 @@ public class SimpleServer extends JmriServer {
     }
 
     // Handle communication to a client through inStream and outStream
-    @SuppressWarnings("deprecation")
+    @Override
     public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
         java.util.Scanner inputScanner = new java.util.Scanner(new InputStreamReader(inStream));
 
