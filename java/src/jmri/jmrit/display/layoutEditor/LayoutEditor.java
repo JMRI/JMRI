@@ -226,14 +226,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     private Color[] textColors = new Color[13];
     private Color[] backgroundColors = new Color[13];
 	private Color[] turnoutCircleColors = new Color[14];
-	private int[] turnoutCircleSizes = new int[4];
+	private int[] turnoutCircleSizes = new int[8];
 	private JRadioButtonMenuItem[] trackColorMenuItems = new JRadioButtonMenuItem[13];
 	private JRadioButtonMenuItem[] trackOccupiedColorMenuItems = new JRadioButtonMenuItem[13];
 	private JRadioButtonMenuItem[] trackAlternativeColorMenuItems = new JRadioButtonMenuItem[13];
     private JRadioButtonMenuItem[] backgroundColorMenuItems = new JRadioButtonMenuItem[13];
     private JRadioButtonMenuItem[] textColorMenuItems = new JRadioButtonMenuItem[13];
 	private JRadioButtonMenuItem[] turnoutCircleColorMenuItems = new JRadioButtonMenuItem[14];
-	private JRadioButtonMenuItem[] turnoutCircleSizeMenuItems = new JRadioButtonMenuItem[4];
+	private JRadioButtonMenuItem[] turnoutCircleSizeMenuItems = new JRadioButtonMenuItem[8];
 	private int trackColorCount = 0;
 	private int trackOccupiedColorCount = 0;
 	private int trackAlternativeColorCount = 0;
@@ -1264,6 +1264,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "2", 2);
 		addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "3", 3);
 		addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "4", 4);
+		addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "5", 5);
+		addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "6", 6);
+		addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "7", 7);
+		addTurnoutCircleSizeMenuEntry(turnoutCircleSizeMenu, "8", 8);
         turnoutOptionsMenu.add(turnoutCircleSizeMenu);
         
         // enable drawing of unselected leg (helps when diverging angle is small)
