@@ -5,7 +5,10 @@ import com.apple.eawt.AppEvent.AboutEvent;
 import com.apple.eawt.AppEvent.PreferencesEvent;
 import com.apple.eawt.AppEvent.QuitEvent;
 import com.apple.eawt.ApplicationEvent;
+import com.apple.eawt.FullScreenListener;
+import com.apple.eawt.FullScreenUtilities;
 import com.apple.eawt.QuitResponse;
+import java.awt.Window;
 import jmri.util.SystemType;
 
 /**
@@ -25,17 +28,17 @@ import jmri.util.SystemType;
  * <p>
  * This wrapper currently provides incomplete support for the Apple
  * {@link com.apple.eawt.Application} class, as it only provides support for
- * those integration aspects that were implemented in JMRI 2.12.
+ * those integration aspects that were implemented in JMRI 3.1.
  *
  * @author rhwood
  * @see com.apple.eawt.Application
  */
 public class Application {
-    
+
     private static Application sharedApplication = null;
     private com.apple.eawt.Application application = null;
     private ApplicationListener legacyListener = null;
-    
+
     public static Application getApplication() {
         if (!SystemType.isMacOSX()) {
             return null;
@@ -45,7 +48,7 @@ public class Application {
         }
         return sharedApplication;
     }
-    
+
     private Application() {
         if (application == null) {
             application = com.apple.eawt.Application.getApplication();
@@ -56,7 +59,6 @@ public class Application {
         try {
             if (handler != null) {
                 application.setAboutHandler(new com.apple.eawt.AboutHandler() {
-
                     @Override
                     public void handleAbout(AboutEvent ae) {
                         handler.handleAbout(ae);
@@ -75,7 +77,6 @@ public class Application {
         try {
             if (handler != null) {
                 application.setPreferencesHandler(new com.apple.eawt.PreferencesHandler() {
-
                     @Override
                     public void handlePreferences(PreferencesEvent pe) {
                         handler.handlePreferences(pe);
@@ -89,12 +90,44 @@ public class Application {
             legacyListener.setPreferencesHandler(handler);
         }
     }
-    
+
+    public static void setWindowCanFullScreen(Window window, boolean state) {
+        if (SystemType.isMacOSX()) {
+            try {
+                FullScreenUtilities.setWindowCanFullScreen(window, state);
+            } catch (java.lang.NoClassDefFoundError ex) {
+                // this simply means that the OS X version is too old to implement this
+                // so we ignore it
+            }
+        }
+    }
+
+    public static void addFullScreenListenerTo(Window window, FullScreenListener listener) {
+        if (SystemType.isMacOSX()) {
+            try {
+                FullScreenUtilities.addFullScreenListenerTo(window, listener);
+            } catch (java.lang.NoClassDefFoundError ex) {
+                // this simply means that the OS X version is too old to implement this
+                // so we ignore it
+            }
+        }
+    }
+
+    public static void removeFullScreenListenerFrom(Window window, FullScreenListener listener) {
+        if (SystemType.isMacOSX()) {
+            try {
+               FullScreenUtilities.removeFullScreenListenerFrom(window, listener);
+            } catch (java.lang.NoClassDefFoundError ex) {
+                // this simply means that the OS X version is too old to implement this
+                // so we ignore it
+            }
+        }
+    }
+
     public void setQuitHandler(final QuitHandler handler) {
         try {
             if (handler != null) {
                 application.setQuitHandler(new com.apple.eawt.QuitHandler() {
-
                     @Override
                     public void handleQuitRequestWith(QuitEvent qe, QuitResponse qr) {
                         if (handler.handleQuitRequest(qe)) {
@@ -123,6 +156,7 @@ public class Application {
 
     // Support Java 1.5
     private class ApplicationListener implements com.apple.eawt.ApplicationListener {
+
         private QuitHandler quitHandler = null;
         private AboutHandler aboutHandler = null;
         private PreferencesHandler preferencesHandler = null;
@@ -191,6 +225,5 @@ public class Application {
         public void handleReOpenApplication(ApplicationEvent ae) {
             // Do not take any special activity if a user opens the application
         }
-
     }
 }
