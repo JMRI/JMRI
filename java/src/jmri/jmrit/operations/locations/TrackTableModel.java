@@ -5,24 +5,24 @@ package jmri.jmrit.operations.locations;
 import java.beans.*;
 
 import javax.swing.*;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumnModel;
-
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.setup.Control;
+import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
 /**
  * Table Model for edit of tracks used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2011
+ * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012
  * @version   $Revision$
  */
-public class TrackTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
+public class TrackTableModel extends AbstractTableModel implements PropertyChangeListener {
 
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
     
@@ -46,8 +46,9 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     protected static final int ENGINESCOLUMN = 6;
     protected static final int PICKUPSCOLUMN = 7;
     protected static final int DROPSCOLUMN = 8;
-    protected static final int EDITPOOLCOLUMN = 9;
-    protected static final int EDITCOLUMN = 10;
+    protected static final int POOLCOLUMN = 9;
+    protected static final int PLANPICKUPCOLUMN = 10;
+    protected static final int EDITCOLUMN = 11;
     
     protected static final int HIGHESTCOLUMN = EDITCOLUMN+1;
 
@@ -95,10 +96,10 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
 	}
 	
 	private void initTable(){
-		// Install the button handlers
-		TableColumnModel tcm = _table.getColumnModel();
-		ButtonRenderer buttonRenderer = new ButtonRenderer();
-		TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
+		// Use XTableColumnModel so we can control which columns are visible
+		XTableColumnModel tcm = new XTableColumnModel();
+		_table.setColumnModel(tcm);
+		_table.createDefaultColumnsFromModel();
 
 		// set column preferred widths
 		tcm.getColumn(IDCOLUMN).setPreferredWidth(40);
@@ -110,23 +111,29 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
 		tcm.getColumn(CARSCOLUMN).setPreferredWidth(60);
 		tcm.getColumn(PICKUPSCOLUMN).setPreferredWidth(Math.max(60, new JLabel(getColumnName(PICKUPSCOLUMN)).getPreferredSize().width+10));
 		tcm.getColumn(DROPSCOLUMN).setPreferredWidth(Math.max(60, new JLabel(getColumnName(DROPSCOLUMN)).getPreferredSize().width+10));
-		tcm.getColumn(EDITPOOLCOLUMN).setPreferredWidth(70);
-		if (_showPoolColumn){
-			tcm.getColumn(EDITCOLUMN).setPreferredWidth(70);
-			tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
-			tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
-		} else {
-			tcm.getColumn(EDITPOOLCOLUMN).setCellRenderer(buttonRenderer);
-			tcm.getColumn(EDITPOOLCOLUMN).setCellEditor(buttonEditor);
-		}
+		tcm.getColumn(POOLCOLUMN).setPreferredWidth(70);
+		tcm.getColumn(PLANPICKUPCOLUMN).setPreferredWidth(70);
+		tcm.getColumn(EDITCOLUMN).setPreferredWidth(70);
+		tcm.getColumn(EDITCOLUMN).setCellRenderer(new ButtonRenderer());
+		tcm.getColumn(EDITCOLUMN).setCellEditor(new ButtonEditor(new JButton()));
+
+		setColumnsVisible();
+	}
+	
+	protected void setColumnsVisible(){
+		XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
+		// don't show planned pick ups unless there are some
+		TableColumn column  = tcm.getColumnByModelIndex(PLANPICKUPCOLUMN);
+		tcm.setColumnVisible(column, _location.hasPlannedPickups());
+		// don't show pool column if there aren't any pools
+		column  = tcm.getColumnByModelIndex(POOLCOLUMN);
+		tcm.setColumnVisible(column, _location.hasPools());
 	}
     
     public int getRowCount(){ return tracksList.size(); }
 
     public int getColumnCount(){ 
-    	if (_showPoolColumn)
-    		return HIGHESTCOLUMN;
-    	return HIGHESTCOLUMN-1;	// show one less column
+    	return HIGHESTCOLUMN;
     }
 
     public String getColumnName(int col){
@@ -140,10 +147,8 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
         case CARSCOLUMN: return rb.getString("Cars");
         case PICKUPSCOLUMN: return rb.getString("Pickup");
         case DROPSCOLUMN: return rb.getString("Drop");
-        case EDITPOOLCOLUMN: 
-        	if(_showPoolColumn) 
-        		return rb.getString("Pool");
-        	return "";
+        case POOLCOLUMN: return rb.getString("Pool");
+        case PLANPICKUPCOLUMN: return rb.getString("PlanPickUp");
         case EDITCOLUMN: return "";		//edit column
         default: return "unknown";
         }
@@ -160,10 +165,8 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
         case CARSCOLUMN: return String.class;
         case PICKUPSCOLUMN: return String.class;
         case DROPSCOLUMN: return String.class;
-        case EDITPOOLCOLUMN: 
-        	if(_showPoolColumn) 
-        		return String.class;
-        	return JButton.class;
+        case POOLCOLUMN: return String.class;
+        case PLANPICKUPCOLUMN: return String.class;
         case EDITCOLUMN: return JButton.class;
         default: return null;
         }
@@ -171,10 +174,6 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
 
     public boolean isCellEditable(int row, int col){
         switch (col) {
-        case EDITPOOLCOLUMN: 
-        	if(_showPoolColumn) 
-        		return false;
-        	return true;
         case EDITCOLUMN: 
         	return true;
         default: 
@@ -207,10 +206,11 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
         case CARSCOLUMN: return Integer.toString(track.getNumberCars());
         case PICKUPSCOLUMN: return Integer.toString(track.getPickupRS());
         case DROPSCOLUMN: return Integer.toString(track.getDropRS());
-        case EDITPOOLCOLUMN: 
-        	if(_showPoolColumn) 
-        		return track.getPoolName();
-        	return rb.getString("Edit");
+        case POOLCOLUMN: return track.getPoolName();
+        case PLANPICKUPCOLUMN: 
+        	if (track.getIgnoreUsedLengthPercentage() > 0)
+        		return track.getIgnoreUsedLengthPercentage()+"%";
+        	return "";
         case EDITCOLUMN: return rb.getString("Edit");
         default: return "unknown "+col;
         }
@@ -218,11 +218,6 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
 
     public void setValueAt(Object value, int row, int col){
         switch (col) {
-        case EDITPOOLCOLUMN:
-        	if(_showPoolColumn) 
-        		break;
-        	editTrack(row);
-        	break;
         case EDITCOLUMN: editTrack(row);
         	break;
         default:
@@ -255,8 +250,9 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     		fireTableDataChanged();
     	}
     	if (e.getSource().getClass().equals(Track.class) 
-    			&& e.getPropertyName().equals(Track.POOL_CHANGED_PROPERTY)){
-    		updateList();
+    			&& (e.getPropertyName().equals(Track.POOL_CHANGED_PROPERTY))
+    			|| e.getPropertyName().equals(Track.PLANNEDPICKUPS_CHANGED_PROPERTY)){
+    		setColumnsVisible();
     	}
     }
     

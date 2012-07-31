@@ -136,6 +136,7 @@ public class Track {
 	public static final String TRACK_TYPE_CHANGED_PROPERTY = "trackType";
 	public static final String LOADS_CHANGED_PROPERTY = "TrackLoads";
 	public static final String POOL_CHANGED_PROPERTY = "TrackPool";
+	public static final String PLANNEDPICKUPS_CHANGED_PROPERTY = "PlannedPickUps";
 	
 	public Track(String id, String name, String type, Location location){
 		log.debug("New track " + name + " " + id);
@@ -342,7 +343,7 @@ public class Track {
 		int old = _ignoreUsedLengthPercentage;
 		_ignoreUsedLengthPercentage = percentage;
 		if (old != percentage)
-			setDirtyAndFirePropertyChange("ignoreUsedLengthPercentage", Integer.toString(old), Integer.toString(percentage));
+			setDirtyAndFirePropertyChange(PLANNEDPICKUPS_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(percentage));
 	}
 	
 	public int getIgnoreUsedLengthPercentage(){

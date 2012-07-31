@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 /**
  * Frame for user edit of location
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012
  * @version $Revision$
  */
 
@@ -31,16 +31,16 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 	
 	YardTableModel yardModel = new YardTableModel();
-	javax.swing.JTable yardTable = new javax.swing.JTable(yardModel);
+	JTable yardTable = new JTable(yardModel);
 	JScrollPane yardPane;
 	SidingTableModel sidingModel = new SidingTableModel();
-	javax.swing.JTable sidingTable = new javax.swing.JTable(sidingModel);
+	JTable sidingTable = new JTable(sidingModel);
 	JScrollPane sidingPane;
 	InterchangeTableModel interchangeModel = new InterchangeTableModel();
-	javax.swing.JTable interchangeTable = new javax.swing.JTable(interchangeModel);
+	JTable interchangeTable = new JTable(interchangeModel);
 	JScrollPane interchangePane;
 	StagingTableModel stagingModel = new StagingTableModel();
-	javax.swing.JTable stagingTable = new javax.swing.JTable(stagingModel);
+	JTable stagingTable = new JTable(stagingModel);
 	JScrollPane stagingPane;
 	
 	LocationManager manager;

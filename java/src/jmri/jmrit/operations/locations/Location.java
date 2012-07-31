@@ -731,7 +731,7 @@ public class Location implements java.beans.PropertyChangeListener {
     public Pool getPoolByName(String name) {
     	Pool pool;
     	Enumeration<Pool> en =_poolHashTable.elements();
-    	for (int i = 0; i < _poolHashTable.size(); i++){
+    	while (en.hasMoreElements()) {
     		pool = en.nextElement(); 
     		if (pool.getName().equals(name))
     			return pool;
@@ -766,7 +766,7 @@ public class Location implements java.beans.PropertyChangeListener {
     public List<Pool> getPoolsByNameList(){
     	List<Pool> pools = new ArrayList<Pool>();
     	Enumeration<Pool> en =_poolHashTable.elements();
-    	for (int i = 0; i < _poolHashTable.size(); i++){
+    	while (en.hasMoreElements()) {
     		pools.add(en.nextElement());
     	}
     	return pools;
@@ -778,6 +778,20 @@ public class Location implements java.beans.PropertyChangeListener {
      */
     public boolean hasPools(){
     	return _poolHashTable.size()>0;
+    }
+    
+    /**
+     * Used to determine if there are any planned pickups at this location.
+     * @return True if there are planned pickups
+     */
+    public boolean hasPlannedPickups(){
+       	List<String> tracks = getTrackIdsByIdList();
+    	for (int i=0; i<tracks.size(); i++){
+    		Track track = getTrackById(tracks.get(i));
+    		if (track.getIgnoreUsedLengthPercentage()>0)
+    			return true;
+    	}
+    	return false;
     }
   	    
     public void dispose(){
