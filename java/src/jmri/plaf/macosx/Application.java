@@ -85,7 +85,7 @@ public class Application {
             // so we ignore it
         }
     }
-
+/*
     public static void setWindowCanFullScreen(Window window, boolean state) {
         if (SystemType.isMacOSX()) {
             try {
@@ -118,7 +118,7 @@ public class Application {
             }
         }
     }
-
+*/
     public void setQuitHandler(final QuitHandler handler) {
         try {
             if (handler != null) {
