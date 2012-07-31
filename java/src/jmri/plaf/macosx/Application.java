@@ -4,10 +4,7 @@ package jmri.plaf.macosx;
 import com.apple.eawt.AppEvent.AboutEvent;
 import com.apple.eawt.AppEvent.PreferencesEvent;
 import com.apple.eawt.AppEvent.QuitEvent;
-import com.apple.eawt.FullScreenListener;
-import com.apple.eawt.FullScreenUtilities;
 import com.apple.eawt.QuitResponse;
-import java.awt.Window;
 import jmri.util.SystemType;
 
 /**
