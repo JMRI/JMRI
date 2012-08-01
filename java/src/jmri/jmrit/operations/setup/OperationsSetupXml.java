@@ -28,6 +28,18 @@ public class OperationsSetupXml extends OperationsXml {
 			// create and load
 			_instance = new OperationsSetupXml();
 			_instance.load();
+			
+			// Do an AutoBackup after we have read in the SetupXml to know if
+			// they are enabled or not.
+			if (Setup.isAutoBackupEnabled()) {
+				try {
+					AutoBackup backup = new AutoBackup();
+					backup.autoBackup();
+				} catch (Exception ex) {
+					log.debug("Auto backup after enabling Auto Backup flag.", ex);
+				}
+			}
+
 		}
 		if (Control.showInstance && log.isDebugEnabled()) log.debug("OperationsSetupXml returns instance "+_instance);
 		return _instance;

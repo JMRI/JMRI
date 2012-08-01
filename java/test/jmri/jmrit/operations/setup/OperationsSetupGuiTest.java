@@ -2,7 +2,6 @@
 
 package jmri.jmrit.operations.setup;
 
-import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
@@ -187,31 +186,6 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		f.dispose();
 	}
 	
-	public void testBackupFileCreation(){
-		String dirName = XmlFile.prefsDir()+OperationsSetupXml.getOperationsDirectoryName()+ File.separator + "backups";
-		
-		File dir = new File(dirName);		
-		Assert.assertNotNull("backup directory exists", dir);
-		
-		String[] backupDirectoryNames = dir.list();
-		Assert.assertTrue("There should be at least one directory", backupDirectoryNames.length>0);
-		
-		for (int i = 0; i < backupDirectoryNames.length; i++) {
-			File backDir = new File(dirName + File.separator + backupDirectoryNames[i]);
-			Assert.assertNotNull("backup directory", backDir);
-			// delete file names
-			String[] backupFileNames = backDir.list();
-			Assert.assertEquals("There should be 6 files", 6, backupFileNames.length);
-			for (int j = 0; j < backupFileNames.length; j++) {
-				File file = new File(dirName + File.separator + backupDirectoryNames[i] + File.separator +  backupFileNames[j]);
-				Assert.assertNotNull("operations backup file", file);
-				Assert.assertTrue("delete file", file.delete());
-			}
-			// now delete the directory
-			Assert.assertTrue("delete backup directory", backDir.delete());
-		}
-		Assert.assertTrue("delete directory", dir.delete());
-	}
 
 	
 	// Ensure minimal setup for log4J
@@ -248,6 +222,7 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(OperationsSetupGuiTest.class);
+		suite.addTestSuite(OperationsBackupGuiTest.class);
 		return suite;
 	}
 

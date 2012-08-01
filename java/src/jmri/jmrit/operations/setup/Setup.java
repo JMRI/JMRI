@@ -290,9 +290,16 @@ public class Setup {
 	}
 	
 	public static void setAutoBackupEnabled(boolean enabled){
+		// Do an autoBackup only if we are changing the setting from false to
+		// true.
+		if (enabled && !autoBackup)
+			try {
+				new AutoBackup().autoBackup();
+			} catch (Exception ex) {
+				log.debug("Autobackup after setting AutoBackup flag true", ex);
+			}
+
 		autoBackup = enabled;
-		if (enabled)
-			new Backup().autoBackup();
 	}
 	
 	public static boolean isValueEnabled(){

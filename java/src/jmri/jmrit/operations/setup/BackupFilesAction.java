@@ -13,40 +13,47 @@ import javax.swing.JOptionPane;
 import jmri.jmrit.operations.OperationsXml;
 
 /**
- * Swing action to backup operation files to a
- * directory selected by the user.
+ * Swing action to backup operation files to a directory selected by the user.
  * 
  * @author Daniel Boudreau Copyright (C) 2011
+ * @author Gregory Madsen Copyright (C) 2012
  * @version $Revision$
  */
 public class BackupFilesAction extends AbstractAction {
-	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 
-    public BackupFilesAction(String s) {
-    	super(s);
-    }
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+			.getLogger(BackupFilesAction.class.getName());
 
-    public void actionPerformed(ActionEvent e) {
-    	backUp();
-    }
-    
-    private void backUp(){
+	static final ResourceBundle rb = ResourceBundle
+			.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
+
+	public BackupFilesAction(String s) {
+		super(s);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		backUp();
+	}
+
+	private void backUp() {
 		// check to see if files are dirty
-		if (OperationsXml.areFilesDirty()){
-			if(JOptionPane.showConfirmDialog(null, rb.getString("OperationsFilesModified"),
-					rb.getString("SaveOperationFiles"), JOptionPane.YES_NO_OPTION)== JOptionPane.YES_OPTION) {
+		if (OperationsXml.areFilesDirty()) {
+			if (JOptionPane.showConfirmDialog(null,
+					rb.getString("OperationsFilesModified"),
+					rb.getString("SaveOperationFiles"),
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				OperationsXml.save();
 			}
-		}	
-        Backup backup = new Backup();
-		// get file to write to
-		JFileChooser fc = new JFileChooser(backup.getBackupDirectoryName());
+		}
+		BackupBase backup = new DefaultBackup();
+
+		// get directory to write to
+		JFileChooser fc = new JFileChooser(backup.getBackupRoot());
 		fc.addChoosableFileFilter(new fileFilter());
-		
-		File fs = new File (backup.getDirectoryName());
+
+		File fs = new File(backup.suggestBackupSetName());
 		fc.setSelectedFile(fs);
-		
+
 		int retVal = fc.showSaveDialog(null);
 		if (retVal != JFileChooser.APPROVE_OPTION)
 			return; // Canceled
@@ -54,12 +61,17 @@ public class BackupFilesAction extends AbstractAction {
 			return; // Canceled
 
 		File directory = fc.getSelectedFile();
-		backup.backupFiles(directory);
-    }
-    
+
+		// Fix this later....... UGH!!
+		try {
+			backup.backupFilesToDirectory(directory);
+		} catch (Exception ex) {
+		}
+	}
+
 	private static class fileFilter extends javax.swing.filechooser.FileFilter {
-		
-		public boolean accept(File f){
+
+		public boolean accept(File f) {
 			if (f.isDirectory())
 				return true;
 			String name = f.getName();
@@ -68,14 +80,12 @@ public class BackupFilesAction extends AbstractAction {
 			else
 				return false;
 		}
-		
+
 		public String getDescription() {
 			return rb.getString("BackupFolders");
 		}
 	}
-    
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(BackupFilesAction.class.getName());
+
 }
 
 /* @(#)BackupFilesAction.java */

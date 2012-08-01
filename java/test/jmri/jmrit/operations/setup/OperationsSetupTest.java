@@ -588,6 +588,8 @@ public class OperationsSetupTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(OperationsSetupTest.class);
+		suite.addTestSuite(OperationsBackupTest.class);
+
 		return suite;
 	}
 
