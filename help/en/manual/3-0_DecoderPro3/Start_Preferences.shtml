@@ -35,7 +35,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 <p><a href="index.shtml#Getting Started">Back to Index</a> </div>
 
 <hr>
-<p>From the Edit menu in DecoderPro3 select Preferences option:</p>
+<p>From the Edit menu in DecoderPro3 select <strong>Preferences</strong> option:</p>
 <p><img src="images/preferences_menu.png" width="275" height="252" alt="prefernces menu"></p>
 <p>
   (This window may open automatically the first time you

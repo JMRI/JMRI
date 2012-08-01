@@ -29,7 +29,11 @@
 
 
 <hr>
-<p>The <strong>Service Mode Programmer</strong> is opened using the <strong>New Loco</strong> icon in the DecoderPro&reg; <strong>Tool Bar</strong>.</p>
+<p>The <strong>Service Mode Programmer</strong> is opened using the <strong>New Loco</strong> icon in the DecoderPro&reg; <strong>Tool Bar</strong> or by selecting locomotive from your roster and selecting 
+  <input name="radio" type="radio" id="radio" value="radio" checked>
+<strong>Programming Track </strong>and pressing <strong>Program </strong>button.</p>
+<p>An alternate method is by right clicking on a locomotive in your roster and selecting <strong>Programming Track</strong> and <strong>Program</strong> from context menu.</p>
+<p>Double clicking on a locomotive in the roster will open the <strong>Programming Track</strong> Programmer.</p>
 <p><b>Service Mode (programming track) Programmer</b> - 
   Select to program the locomotive on the dedicated programming track.  (Probably because the Locomotive has to be taken to the  servicing track to be programmed).&nbsp; Not all command  stations support a dedicated programming track, and some brands  will shut down the mainline power when in programming mode (not pleasant when you have  an ops session in progress.
 </p>

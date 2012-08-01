@@ -34,9 +34,9 @@
 
 <hr>
 <p>
-One of the first things you will notice about the expanded Basic Pane
-in the Comprehensive Programmer is that there are a lot more options than
-you found in the Basic Programmer. Now use the Read full sheet button to read the values that the locomotive is programmed to. Now you can determine if you want to change any values.</p>
+One of the first things you will notice about the expanded <strong>Basic</strong> Pane
+in the <strong>Comprehensive Programmer</strong> is that there are a lot more options than
+you found in the <strong>Basic Programmer</strong>. Now use the Read full sheet button to read the values that the locomotive is programmed to. Now you can determine if you want to change any values.</p>
 <p align="center"><img src="images/Extended_Basic_Program_Roster.png" width="828" height="602" alt="Extended Basix"></p>
 <p>
 Select 2 or 4 digit <b>addressing</b> radio button to select which mode of addressing you wish to be active</p>

@@ -33,10 +33,14 @@
 
 
 <hr>
+<p>Select locomotive from roster, select 
+  <input name="radio" type="radio" id="radio" value="radio" checked>
+  <strong>  Programming On Main
+</strong> and press <strong>Program</strong>.</p>
 <p><b>Operations Mode (Main Track) Programmer</b> - 
     or  <strong>Programming on the main(POM)</strong>.&nbsp; Opens the <strong>Operations Mode (Main Track)</strong> windowThis  lets you program a specific decoder on the layout, even while it is 
 operating. However, because it addresses a specific  decoder address, some  decoders will not allow you to change the  decoder's address using this method!</p>
-<p><img src="images/Ops_Mode_setup.png" alt="Ops Mode setup window" border="5" class="BOXIT"></p>
+<p><img src="images/Ops_Mode_setup.png" width="268" height="155" alt="ops mode"></p>
 <p>Some  command stations will only &quot;broadcast&quot; programming commands,  which can mean every locomotive on 
        the layout gets the same programming! The same is true if  you try to program a loco with address zero (or forget to enter an address when  you start). &nbsp;If in doubt, check  your documentation. </p>
 <blockquote>  
