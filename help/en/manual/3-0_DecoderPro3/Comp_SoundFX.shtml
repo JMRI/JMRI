@@ -16,8 +16,6 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
-<!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
 <a NAME="Top"></a>
@@ -31,16 +29,17 @@
 </div>
 
 <hr>
+<p>This pane will only be displayed for Sound decoders.
 <p>Several manufacturers now offer  decoders  that include sound  functions. This pane is designed to control those CVs. The screen
-shot below is  from a programmer for SoundTraxx  steam sound decoders.
-There are also diesel sound decoders available.
+  shot below is  from a programmer for Tsunami OEM FP-45 sound decoder.
+  There are also steam sound decoders available.
 <p>
 These sounds can be coordinated with the mechanism of the locomotive,
 and appropriate sounds can be triggered from the function keys of the throttle.
 Others can be set to be triggered at startup or to run in the background.
 <p>This  pane allows for the selection of sound effects from sound decoders, and the <a href="Comp_SoundLevels.shtml"><strong>Sound Levels Pane</strong></a> allows for setting   the loudness levels of those sounds when they play back.&nbsp;
 
-<h1><img src="images/Comp_09_Sound.png" width="921" height="736" alt="Sound pane"></h1>
+<h1><img src="images/Comp_09_Sound.png" width="852" height="503" alt="sound pane"></h1>
 
 <p>For specific function options,  see your decoder documentation and the programmer for the specific decoder. &nbsp;Sometimes (depending on the volunteer that wrote the decoder definition  file) there are &ldquo;tool tips&rdquo; that appear if you hover over a selection entry  box.
 <p>Here are is a sampling of sound functions on  some other decoders: 

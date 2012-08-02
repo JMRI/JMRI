@@ -31,9 +31,11 @@
 </div>
 
 <hr>
-<p>As  discussed in the <a href="Comp_Basic.shtml"><strong>Expanded Basic Pane</strong></a>, some decoders allow operation on Analog  or Conventional DC layouts.&nbsp;  At the discretion of the manufacturer, some of the non-motor responses  may be changeable by setting CV&rsquo;s in the decoder.&nbsp; This pane is where you would set these  values.&nbsp; Typical would be whether any of  the various functions (such as lights and bell) would be on or off when in DC  mode. Consult your decoders manual for options available.<h1><img src="images/AnalogModeFunctions.png" width="914" height="798" alt="Analog pane"></h1>
-<p>This is a more complex pane used with the Diesel Tsunami 750 OEM
-<p><img src="images/AnalogModeFunctions01.png" width="900" height="309" alt="analog pane">
+<p>As  discussed in the <a href="Comp_Basic.shtml"><strong>Expanded Basic Pane</strong></a>, some decoders allow operation on Analog  or Conventional DC layouts.&nbsp;  At the discretion of the manufacturer, some of the non-motor responses  may be changeable by setting CV&rsquo;s in the decoder.&nbsp; This pane is where you would set these  values.&nbsp; Typical would be whether any of  the various functions (such as lights and bell) would be on or off when in DC  mode. Consult your decoders manual for options available.
+<p>Some decoders are Analog Controls pane are simple and others such as the FP-45 are complicated.
+<h1><img src="images/AnalogModeFunctions.png" width="935" height="405" alt="analog functions"></h1>
+<p>
+<p>
 <hr>
 
 <div align=right>

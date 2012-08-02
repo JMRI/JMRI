@@ -41,8 +41,10 @@ which allows them to report their location and engine number back to the
 Loconet.
 <p>There  may be one or several of these panes, depending on how complex the decoder  programming is and the style of the person who wrote the definition file for  your particular decoder.
 
-<h1><img src="images/Comp_08_Advanced.png" width="923" height="800" alt="Advanced pane"></h1>
-<p>
+<p>Simple Advanced pane for Digitrax decoder.
+<h1><img src="images/Comp_08_Advanced.png" width="787" height="308" alt="advance pane"></h1>
+<p>Complex Advanced pane for Tsunami OEM of the FP-45 decoder.
+<p><img src="images/Comp_08b_Advanced.png" width="1000" height="348" alt="advanced pane">
 <hr>
 
 <div align=right>
