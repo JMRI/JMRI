@@ -35,9 +35,9 @@ import java.util.ResourceBundle;
     /**
      * Access to current selected command station mode
      */
-    public String getMode() {
+    /*public String getMode() {
         return opt2Box.getSelectedItem().toString();
-    }
+    }*/
     
     public boolean isPortAdvanced() { return false; }
     public boolean isOptList1Advanced() { return false; }

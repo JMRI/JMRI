@@ -45,22 +45,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         }
         if (adapter.getManufacturer()!=null)
             e.setAttribute("manufacturer", adapter.getManufacturer());
-
-        if (adapter.getCurrentOption1Setting()!=null)
-            e.setAttribute("option1", adapter.getCurrentOption1Setting());
-        else e.setAttribute("option1", rb.getString("noneSelected"));
-
-        if (adapter.getCurrentOption2Setting()!=null)
-            e.setAttribute("option2", adapter.getCurrentOption2Setting());
-        else e.setAttribute("option2", rb.getString("noneSelected"));
-        
-        if (adapter.getCurrentOption3Setting()!=null)
-            e.setAttribute("option3", adapter.getCurrentOption3Setting());
-        else e.setAttribute("option3", rb.getString("noneSelected"));
-        
-        if (adapter.getCurrentOption4Setting()!=null)
-            e.setAttribute("option4", adapter.getCurrentOption4Setting());
-        else e.setAttribute("option4", rb.getString("noneSelected"));
+        saveOptions(e, adapter);
         
         if (adapter.getDisabled())
             e.setAttribute("disabled", "yes");
@@ -116,6 +101,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             String option4Setting = e.getAttribute("option4").getValue();
             adapter.configureOption4(option4Setting);
         }
+        loadOptions(e.getChild("options"), adapter);
         String manufacturer;
         try { 
             manufacturer = e.getAttribute("manufacturer").getValue();
@@ -143,14 +129,14 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         // register, so can be picked up
         register();
         if (adapter.getDisabled()){
-        	if (!GraphicsEnvironment.isHeadless()) {
+        	if (!GraphicsEnvironment.isHeadless() && f!=null) {
         		f.setVisible(false);
         	}
             return true;
         }
-        if (!GraphicsEnvironment.isHeadless()) {
+        if (!GraphicsEnvironment.isHeadless() && f!=null) {
         	f.configure();
-        } else {
+        } else if (hfs!=null){
         	hfs.configure();
         }
         return true;

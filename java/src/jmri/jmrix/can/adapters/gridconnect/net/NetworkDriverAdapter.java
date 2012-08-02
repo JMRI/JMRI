@@ -23,6 +23,8 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
     
     public NetworkDriverAdapter() {
         super();
+        option1Name = "Gateway";
+        options.put(option1Name, new Option(option1Name, "Gateway", new String[]{"Pass All", "Filtering"}));
         adaptermemo = new jmri.jmrix.can.CanSystemConnectionMemo();
         adaptermemo.setUserName("OpenLCB");
         setManufacturer(jmri.jmrix.DCCManufacturerList.OPENLCB);
@@ -33,14 +35,6 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
      * station connected to this port
      */
     public void configure() {
-    	// set the command options, Note that the NetworkDriver uses
-    	// the second option for EPROM revision
-        if (getCurrentOption1Setting().equals(validOption1()[0])) {
-        	//
-        } else {
-            // setting binary mode
-            //
-        }
 
         // Register the CAN traffic controller being used for this connection
         TrafficController tc = new GcTrafficController();
@@ -55,36 +49,12 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
 
         // do central protocol-specific configuration    
         adaptermemo.configureManagers();
-
     }
 
     public boolean status() {return opened;}
 
-    /**
-     * Option 2 is various filters
-     */
-    public String[] validOption1() { return new String[]{"Pass All", "Filtering"}; }
-
-    /**
-     * Get a String that says what Option 1 represents
-     * May be an empty string, but will not be null
-     */
-    public String option1Name() { return "Gateway: "; }
-
-    /**
-     * Set the binary vs ASCII command set option.
-     */
-    public void configureOption1(String value) { mOpt1 = value; }
-
-    public String getCurrentOption1Setting() {
-        if (mOpt1 == null) return validOption1()[1];
-        return mOpt1;
-    }
-
     // private control members
     private boolean opened = false;
-
-    //Socket socket;
     
     public Vector<String> getPortNames() {
         log.error("Unexpected call to getPortNames");

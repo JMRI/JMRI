@@ -20,6 +20,7 @@ public class PR2Adapter extends LocoBufferAdapter {
 
     public PR2Adapter() {
         super();
+        options.remove(option2Name);
         /*As this extends the locobuffer, we need to remove the SystemConnectionMemo,
         that it has created and replace it with our own. dispose has to be done to
         the registered connection details.*/
@@ -47,7 +48,7 @@ public class PR2Adapter extends LocoBufferAdapter {
 
         // configure flow control to always on
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; 
-        if (mOpt1.equals(validOption1[1]))
+        if (options.get(1).getCurrent().equals(validOption1[1]))
             flow = SerialPort.FLOWCONTROL_NONE;
         activeSerialPort.setFlowControlMode(flow);
         log.debug("Found flow control "+activeSerialPort.getFlowControlMode()
@@ -101,18 +102,18 @@ public class PR2Adapter extends LocoBufferAdapter {
     /**
      * Option 1 controls flow control option
      */
-    public String option1Name() { return "PR2 connection uses "; }
-    public String[] validOption1() { return new String[]{"hardware flow control (recommended)", "no flow control"}; }
+    /*public String option1Name() { return "PR2 connection uses "; }
+    public String[] validOption1() { return new String[]{"hardware flow control (recommended)", "no flow control"}; }*/
     // meanings are assigned to these above, so make sure the order is consistent
 
     /**
      * The PR2 is itself a command station, so fix that choice
      * by providing just the one option
      */
-    public String[] validOption2() { 
+    /*public String[] validOption2() { 
         String[] retval = {"PR2"}; 
         return retval;
-    }
+    }*/
     
     public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
     

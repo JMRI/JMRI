@@ -31,6 +31,12 @@ import gnu.io.SerialPort;
  */
 public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
+    public SerialAdapter(){
+        super();
+        option1Name = "Protocol";
+        options.put(option1Name, new Option(option1Name, "Protocol", validOptions1));
+    }
+    
     transient SerialPort activeSerialPort = null;
 
     public synchronized String openPort(String portName, String appName)  {
@@ -181,25 +187,15 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
 	protected String [] validSpeeds = new String[]{"115,200 baud"};
 	protected int [] validSpeedValues = new int[]{115200};
 
-    public String[] validOption1() { return new String[]{"Version 1", "Version 2"}; }
-
-    /**
-     * Get a String that says what Option 1 represents
-     * May be an empty string, but will not be null
-     */
-    public String option1Name() { return "Protocol"; }
+    String[] validOptions1 = new String[]{"Version 1", "Version 2"};
 
     /**
      * Set the second port option.
      */
     public void configureOption1(String value) { 
-        mOpt1 = value;
-        if (value.equals(validOption1()[0])) version = 1;
-        else if (value.equals(validOption1()[1])) version = 2;
-    }
-    public String getCurrentOption1Setting() {
-        if (mOpt1 == null) return validOption1()[0];
-        return mOpt1;
+        options.get(option1Name).configure(value);
+        if (value.equals(validOptions1[0])) version = 1;
+        else if (value.equals(validOptions1[1])) version = 2;
     }
 
     // private control members

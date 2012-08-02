@@ -227,6 +227,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
                  jmri.InstanceManager.tabbedPreferencesInstance().init();
             } catch (Exception ex) {
                 log.error("Error in trying to setup preferences " + ex.toString());
+                ex.printStackTrace();
             }
           }
         };
@@ -520,8 +521,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         devMenu.add(new jmri.jmrit.automat.SampleAutomatonAction( "Sample automaton 1"));
         devMenu.add(new jmri.jmrit.automat.SampleAutomaton2Action("Sample automaton 2"));
         devMenu.add(new jmri.jmrit.automat.SampleAutomaton3Action("Sample automaton 3"));
-        devMenu.add(new JSeparator());
-        devMenu.add(new jmri.jmrix.serialsensor.SerialSensorAction("Serial port sensors"));
+        //devMenu.add(new JSeparator());
+        //devMenu.add(new jmri.jmrix.serialsensor.SerialSensorAction("Serial port sensors"));
     }
 
 

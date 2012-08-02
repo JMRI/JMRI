@@ -290,29 +290,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     }
 
     /**
-     * Since option 1 is not used for this, return an array with one empty element
-     */
-    public String[] validOption1() { return new String[]{""}; }
-
-    /**
-     * Option 1 not used, so return a null string.
-     */
-    public String option1Name() { return ""; }
-
-    /**
-     * Get an array of valid values for "option 2"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
-    public String[] validOption2() { return commandStationNames; }
-
-    /**
-     * Get a String that says what Option 2 represents
-     * May be an empty string, but will not be null
-     */
-    public String option2Name() { return "Command station type: "; }
-
-    /**
      * Set the second port option.  Only to be used after construction, but
      * before the openPort call
      */

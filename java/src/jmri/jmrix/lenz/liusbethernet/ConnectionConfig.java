@@ -48,6 +48,6 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
 	portFieldLabel.setText("Communication Port");
 	portField.setText(String.valueOf(adapter.getPort()));
 	portField.setEnabled(false); // we can't change this now.
-	opt1Box.setEnabled(false); // we can't change this now.
+	//opt1Box.setEnabled(false); // we can't change this now.
     }
 }

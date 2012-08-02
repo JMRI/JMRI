@@ -32,6 +32,8 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 
     public Mx1Adapter(){
         super();
+        option1Name = "FlowControl";
+        options.put(option1Name, new Option(option1Name, "MX-1 connection uses : ", validOption1));
         adaptermemo = new Mx1SystemConnectionMemo();
     }
 
@@ -231,7 +233,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 
 		// find and configure flow control
 		int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
-		if (selectedOption1.equals(validOption1[1]))
+		if (options.get(option1Name).getCurrent().equals(validOption1[1]))
 			flow = 0;
 		activeSerialPort.setFlowControlMode(flow);
 	}
@@ -245,20 +247,13 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 		return validSpeeds;
 	}
 
-    /**
-     * Option 1 controls flow control option
-     */
-    public String option1Name() { return "MX-1 connection uses "; }
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
-    public String[] validOption1() { return validOption1; }
-
     protected String [] validSpeeds = new String[]{"1,200 baud", "2,400 baud", "4,800 baud",
     "9,600 baud", "19,200 baud", "38,400 baud"};
     protected int [] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200, 38400};
 
     // meanings are assigned to these above, so make sure the order is consistent
     protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
-    protected String selectedOption1=validOption1[0];
+    //protected String selectedOption1=validOption1[0];
 
     private boolean opened = false;
     InputStream serialStream = null;

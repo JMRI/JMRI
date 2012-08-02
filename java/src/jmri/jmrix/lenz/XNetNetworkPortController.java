@@ -47,7 +47,7 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
         {
           log.debug("adapter memo null");
           return null;
-	}
+        }
     }
 
     public void dispose(){

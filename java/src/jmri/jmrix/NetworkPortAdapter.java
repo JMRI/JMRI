@@ -38,48 +38,4 @@ public interface NetworkPortAdapter extends PortAdapter {
     public void setHostName(String hostname);
     
     public String getHostName();
-
-	/**
-	 * Get an array of valid values for "option 1"; used to display valid options.
-	 * May not be null, but may have zero entries
-	 */
-	public String[] validOption1();
-
-	/**
-	 * Get a String that says what Option 1 represents
-	 * May be an empty string, but will not be null
-	 */
-	public String option1Name();
-
-	/**
-	 * Set the first port option.  Only to be used after construction, but
-	 * before the openPort call
-	 */
-	public void configureOption1(String value);
-
-    public String getCurrentOption1Setting();
-
-	/**
-	 * Get an array of valid values for "option 2"; used to display valid options.
-	 * May not be null, but may have zero entries
-	 */
-	public String[] validOption2();
-
-	/**
-	 * Get a String that says what Option 2 represents
-	 * May be an empty string, but will not be null
-	 */
-	public String option2Name();
-
-	/**
-	 * Set the second port option.  Only to be used after construction, but
-	 * before the openPort call
-	 */
-	public void configureOption2(String value);
-
-    /**
-     * Get current option 2 value
-     */
-    public String getCurrentOption2Setting();                           
-    
 }

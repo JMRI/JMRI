@@ -246,25 +246,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         selectedSpeed = rate;
         super.configureBaudRate(rate);
     }
-
-    String[] stdOption1Values = new String[]{""};
-
-    /**
-     * Option 1 is not used for anything
-     */
-    public String[] validOption1() { return new String[]{""}; }
-    String opt1CurrentValue = null;
-
-    /**
-     * Option 1 not used, so return a null string.
-     */
-    public String option1Name() { return ""; }
-
-    /**
-     * The first port option isn't used, so just ignore this call.
-     */
-    public void configureOption1(String value) {}
-
+    
     protected String [] validSpeeds = new String[]{"38,400 baud"};
     protected int [] validSpeedValues = new int[]{38400};
     protected String selectedSpeed=validSpeeds[0];

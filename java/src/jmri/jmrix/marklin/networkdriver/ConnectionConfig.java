@@ -34,9 +34,9 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
     /**
      * Access to current selected command station mode
      */
-    public String getMode() {
+    /*public String getMode() {
         return opt2Box.getSelectedItem().toString();
-    }
+    }*/
     
     protected void setInstance() {
         if (adapter==null){

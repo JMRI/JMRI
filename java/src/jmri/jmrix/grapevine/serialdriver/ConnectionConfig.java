@@ -29,21 +29,14 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super();
     }
 	
+    JButton b = new JButton("Configure nodes");
+    
     public void loadDetails(JPanel details) {
-    	// have to embed the usual one in a new JPanel
-    	
-    	JPanel p = new JPanel();
-        super.loadDetails(p);
-
-		details.setLayout(new BoxLayout(details,BoxLayout.Y_AXIS));
-		details.add(p);
-
-		// add another button
-		JButton b = new JButton("Configure nodes");
-
-		details.add(b);
-						
-		b.addActionListener(new NodeConfigAction());		
+        
+        b.addActionListener(new NodeConfigAction());
+        if(!additionalItems.contains(b))
+            additionalItems.add(b);
+        super.loadDetails(details);
         
     }
     public String name() { return "Grapevine (ProTrak) Layout Bus"; }

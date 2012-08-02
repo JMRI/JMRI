@@ -42,10 +42,12 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
 
 
 	public XnTcpAdapter(){
-	   super();
-	   m_HostName=DEFAULT_IP_ADDRESS;
-	   m_port=DEFAULT_TCP_PORT;
-        }
+        super();
+        option1Name = "XnTcpInterface";
+        options.put(option1Name, new Option(option1Name, "XnTcp Interface:", getInterfaces()));
+        m_HostName=DEFAULT_IP_ADDRESS;
+        m_port=DEFAULT_TCP_PORT;
+    }
 
 	
 	// Internal class, used to keep track of IP and port number
@@ -58,31 +60,16 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
 			portNumber = p;
 		}
 	}
-
-    /**
-     * Get a String that says what Option 1 represents
-     * May be an empty string, but will not be null
-     */
-        @Override
-    public String option1Name() { return "XnTcp Interface: "; }
-
-    /**
-     * Get an array of valid values for "option 1"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    @Override
-    public String[] validOption1() { 
-	Vector<String> v = getInterfaceNames();
-	String a[]=new String[v.size()+1];
-        for (int i=0; i<v.size(); i++) 
-             a[i+1]=v.elementAt(i); 
-	a[0]="Manual";
-	return a;
+    
+    String[] getInterfaces(){
+        Vector<String> v = getInterfaceNames();
+        String a[]=new String[v.size()+1];
+            for (int i=0; i<v.size(); i++) 
+                 a[i+1]=v.elementAt(i); 
+        a[0]="Manual";
+        return a;
+    
     }
-
-
-
-
 	
 	public Vector<String> getInterfaceNames() {
 		// Return the list of XnTcp interfaces connected to the LAN
@@ -96,7 +83,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
 		// Connect to the choosen XPressNet/TCP interface
 		int ind;
 		// Retrieve XnTcp interface name from Option1
-		if(getCurrentOption1Setting() != null) outName = getCurrentOption1Setting();
+		if(getOptionState(option1Name) != null) outName = getOptionState(option1Name);
 		// Did user manually provide IP number and port?
 		if(outName.equals("Manual")) {
 			// Yes - retrieve IP number and port

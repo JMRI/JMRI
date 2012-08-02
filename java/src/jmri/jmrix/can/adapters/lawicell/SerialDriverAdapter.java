@@ -27,6 +27,8 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     
     public SerialDriverAdapter() {
         super();
+        option1Name = "Protocol";
+        options.put(option1Name, new Option(option1Name, "Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
         adaptermemo = new jmri.jmrix.can.CanSystemConnectionMemo();
     }
 
@@ -115,7 +117,6 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
         // Register the CAN traffic controller being used for this connection
         TrafficController tc = new LawicellTrafficController();
         adaptermemo.setTrafficController(tc);
-        //LawicellTrafficController.instance();
         
         // Now connect to the traffic controller
         log.debug("Connecting port");
@@ -129,8 +130,7 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
         tc.sendCanMessage(m, null);
 
         // do central protocol-specific configuration    
-        //jmri.jmrix.can.ConfigurationManager.configure(mOpt1);
-        adaptermemo.setProtocol(mOpt1);
+        adaptermemo.setProtocol(options.get(option1Name).getCurrent());
         
         adaptermemo.configureManagers();
     }
@@ -176,36 +176,9 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     protected String [] validSpeeds = new String[]{"57,600", "115,200", "230,400", "250,000", "333,333", "460,800", "500,000"};
     protected int [] validSpeedValues = new int[]{57600, 115200, 230400, 250000, 333333, 460800, 500000};
     
-    /**
-     * Option 1 is CAN-based protocol
-     */
-    public String[] validOption1() { return jmri.jmrix.can.ConfigurationManager.getSystemOptions(); }
-        
-    /**
-     * Get a String that says what Option 1 represents
-     * May be an empty string, but will not be null
-     */
-    public String option1Name() { return "Connection Protocol"; }
-
-    /**
-     * Set the CAN protocol option.
-     */
-    public void configureOption1(String value) { mOpt1 = value; }
-
-    public String getCurrentOption1Setting() {
-        if (mOpt1 == null) return validOption1()[0];
-        return mOpt1;
-    }
-
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-    
-    
-    /*String manufacturerName = jmri.jmrix.DCCManufacturerList.MERG;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }*/
     
     public void dispose(){
         if (adaptermemo!=null)

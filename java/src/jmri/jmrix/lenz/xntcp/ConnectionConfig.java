@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JComboBox;
 
 import jmri.jmrix.JmrixConfigPane;
 
@@ -66,7 +67,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
 		@Override
     public String getInfo() {
 // GT 2.14 retrieving adapter name from CurrentOption1Setting, since Opt1Box now returns null
-		String x = adapter.getCurrentOption1Setting();
+		String x = adapter.getOptionState("XnTcpInterface");
         if (x==null)  return JmrixConfigPane.NONE;
 		if (x.equals("Manual")) {
 			x = "";
@@ -87,103 +88,27 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
 		@Override
     public void loadDetails(final JPanel d) {
 		super.loadDetails(d);
-		opt1Box.addActionListener(new ActionListener() {
+		/*opt1Box.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				enableInput();
 			}
-		});
+		});*/
+        if(options.get("XnTcpInterface").getComponent() instanceof JComboBox){
+            ((JComboBox)options.get("XnTcpInterface").getComponent()).addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    enableInput();
+                }
+            });
+        }
 	}
-
     protected void showAdvancedItems(){
-        _details.removeAll();
-        int stdrows = 1;
-        boolean incAdvancedOptions=true;
-        if(!isPortAdvanced()) stdrows++;
-        if(!isHostNameAdvanced()) stdrows++;
-        if ((!isOptList1Advanced())&&(opt1List.length>=1)) stdrows++;
-        if ((!isOptList2Advanced())&&(opt2List.length>1)) stdrows++;
-        if(adapter.getSystemConnectionMemo()!=null) stdrows=stdrows+2;
-        if (stdrows == NUMOPTIONS){
-            incAdvancedOptions=false;
-        } else{
-            stdrows++;
-        }
-        if (showAdvanced.isSelected()) {
-            int advrows = stdrows;
-            if(isPortAdvanced()) advrows++;
-            if(isHostNameAdvanced()) advrows++;
-            if ((isOptList1Advanced())&&(opt1List.length>=1)) advrows++;
-            if ((isOptList2Advanced())&&(opt2List.length>1)) advrows++;
-            _details.setLayout(new GridLayout(advrows,2));
-            addStandardDetails(incAdvancedOptions);
-
-            if(isHostNameAdvanced()){
-                _details.add(hostNameFieldLabel);
-                _details.add(hostNameField);
-            }
-
-            if(isPortAdvanced()){
-                _details.add(portFieldLabel);
-                _details.add(portField);
-            }
-            if ((isOptList1Advanced())&&(opt1List.length>=1)) {
-                _details.add(opt1BoxLabel = new JLabel(adapter.option1Name()));
-                _details.add(opt1Box);
-            }
-            if ((isOptList2Advanced())&&(opt2List.length>1)) {
-                _details.add(opt2BoxLabel = new JLabel(adapter.option2Name()));
-                _details.add(opt2Box);
-            }
-        } else {
-            _details.setLayout(new GridLayout(stdrows,2));
-            addStandardDetails(incAdvancedOptions);
-        }
-        _details.validate();
-        if (_details.getTopLevelAncestor()!=null){
-            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).getPreferredSize());
-            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).pack();
-        }
+        super.showAdvancedItems();
         enableInput();
         _details.repaint();
     }
 	
-    @Override
-    protected void addStandardDetails(boolean incAdvanced){
-        if(!isHostNameAdvanced()){
-            _details.add(hostNameFieldLabel);
-            _details.add(hostNameField);
-        }
-
-        if(!isPortAdvanced()){
-            _details.add(portFieldLabel);
-            _details.add(portField);
-        }
-
-        if ((!isOptList1Advanced())&&(opt1List.length>=1)){
-            _details.add(opt1BoxLabel = new JLabel(adapter.option1Name()));
-            _details.add(opt1Box);
-        }
-
-        if ((!isOptList2Advanced())&&(opt2List.length>1)) {
-            _details.add(opt2BoxLabel);
-            _details.add(opt2Box);
-        }
-        if(adapter.getSystemConnectionMemo()!=null){
-            _details.add(systemPrefixLabel);
-            _details.add(systemPrefixField);
-            _details.add(connectionNameLabel);
-            _details.add(connectionNameField);
-        }
-
-        if (incAdvanced){
-            _details.add(new JLabel(" "));
-            _details.add(showAdvanced);
-        }
-    }
-
-
 	private void enableInput() {
-		String choice = (String)opt1Box.getSelectedItem();
+		String choice = options.get("XnTcpInterface").getItem();
 //GT 2.14 - Added test for null, now returned by opt1Box at startup (somewhere the initialization is missing)
 		if(choice != null) {
 			manualInput = choice.equals("Manual");

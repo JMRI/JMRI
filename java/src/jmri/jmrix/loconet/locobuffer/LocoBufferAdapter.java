@@ -28,6 +28,12 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
     public LocoBufferAdapter() {
         super();
+        option1Name = "FlowControl";
+        option2Name = "CommandStation";
+        option3Name = "TurnoutHandle";
+        options.put(option1Name, new Option(option1Name, "Connection uses:", validOption1));
+        options.put(option2Name, new Option(option2Name, "Command station type:", commandStationNames, false));
+        options.put(option3Name, new Option(option3Name, "Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
         adaptermemo = new LocoNetSystemConnectionMemo();
     }
 
@@ -251,7 +257,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
-        if (mOpt1.equals(validOption1[1]))
+        if (options.get(option1Name).getCurrent().equals(validOption1[1]))
             flow = SerialPort.FLOWCONTROL_NONE;
         activeSerialPort.setFlowControlMode(flow);
         log.debug("Found flow control "+activeSerialPort.getFlowControlMode()
@@ -277,58 +283,6 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         return validSpeedValues;
     }
 
-    /**
-     * Option 1 controls flow control option
-     */
-    public String option1Name() { return "Connection uses: "; }
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
-    public String[] validOption1() { return validOption1; }
-
-    /**
-     * Get an array of valid values for "option 2"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
-    public String[] validOption2() { return commandStationNames; }
-
-    /**
-     * Get a String that says what Option 2 represents
-     * May be an empty string, but will not be null
-     */
-    public String option2Name() { return "Command station type: "; }
-
-    /**
-     * Set the second port option.  Only to be used after construction, but
-     * before the openPort call
-     */
-    public void configureOption2(String value) {
-        super.configureOption2(value);
-    	log.debug("configureOption2: "+value);
-        setCommandStationType(value);
-    }
-
-    /**
-     * Get an array of valid values for "option 3"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
-    public String[] validOption3() { return new String[]{"Normal", "Spread", "One Only", "Both"}; }
-
-    /**
-     * Get a String that says what Option 3 represents
-     * May be an empty string, but will not be null
-     */
-    public String option3Name() { return "Turnout command handling: "; }
-
-    /**
-     * Set the third port option.  Only to be used after construction, but
-     * before the openPort call
-     */
-    public void configureOption3(String value) {
-        super.configureOption3(value);
-    	log.debug("configureOption3: "+value);
-        setTurnoutHandling(value);
-    }
 
     protected String [] validSpeeds = new String[]{"19,200 baud (J1 on 1&2)", "57,600 baud (J1 on 2&3)"};
     protected int [] validSpeedValues = new int[]{19200, 57600};

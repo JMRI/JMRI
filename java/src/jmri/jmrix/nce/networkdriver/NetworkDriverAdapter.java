@@ -19,6 +19,8 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
 
     public NetworkDriverAdapter() {
         super();
+        option2Name = "Eprom";
+        options.put(option2Name, new Option(option2Name, "Command Station EPROM", new String[]{"2004 or earlier", "2006 or later"}));
         adaptermemo = new NceSystemConnectionMemo();
         setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
     }
@@ -39,7 +41,7 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
                
     	// set the command options, Note that the NetworkDriver uses
     	// the second option for EPROM revision
-        if (getCurrentOption2Setting().equals(validOption2()[0])) {
+        if (getOptionState(option2Name).equals(getOptionChoices(option2Name)[0])) {
         	adaptermemo.configureCommandStation(NceTrafficController.OPTION_2004);
         } else {
             // setting binary mode
@@ -51,37 +53,8 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
         adaptermemo.configureManagers();
         
         jmri.jmrix.nce.ActiveFlag.setActive();
-
     }
 
-    /**
-     * Option 2 is binary vs ASCII command set.
-     */
-    public String[] validOption2() { return new String[]{"2004 or earlier", "2006 or later"}; }
-
-    /**
-     * Get a String that says what Option 2 represents
-     * May be an empty string, but will not be null
-     */
-    public String option2Name() { return "Command Station EPROM"; }
-
-    /**
-     * Set the binary vs ASCII command set option.
-     */
-    public void configureOption2(String value) { mOpt2 = value; }
-    private String mOpt2 = null;
-    public String getCurrentOption2Setting() {
-        if (mOpt2 == null) return validOption2()[1];
-        return mOpt2;
-    }
-
-//    static public NetworkDriverAdapter instance() {
-//        if (mInstance == null) {
-//            mInstance = new NetworkDriverAdapter();
-//        }
-//        return mInstance;
-//    }
-//    static NetworkDriverAdapter mInstance = null;
     
     public void dispose(){
         if (adaptermemo!=null)

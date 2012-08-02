@@ -34,6 +34,8 @@ public class UsbDriverAdapter extends NcePortController {
     
     public UsbDriverAdapter() {
         super();
+        option1Name = "System";
+        options.put(option1Name, new Option(option1Name, "System:", option1Values, false));
         adaptermemo = new NceSystemConnectionMemo();
     }
 
@@ -108,6 +110,7 @@ public class UsbDriverAdapter extends NcePortController {
 
     }
 
+    String[] option1Values = new String[]{"PowerCab", "Smart Booster SB3", "Power Pro"};
     /**
      * set up all of the other objects to operate with an NCE command
      * station connected to this port
@@ -121,9 +124,9 @@ public class UsbDriverAdapter extends NcePortController {
         adaptermemo.configureCommandStation(NceTrafficController.OPTION_2006);
         
         //set the system the USB is connected to
-        if (getCurrentOption1Setting().equals(validOption1()[0])) {
+        if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[0])) {
                 adaptermemo.setNceUSB(NceTrafficController.USB_SYSTEM_POWERCAB);
-        } else if (getCurrentOption1Setting().equals(validOption1()[1])) {
+        } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) {
                 adaptermemo.setNceUSB(NceTrafficController.USB_SYSTEM_SB3);
         } else{
                 adaptermemo.setNceUSB(NceTrafficController.USB_SYSTEM_POWERHOUSE);
@@ -169,38 +172,9 @@ public class UsbDriverAdapter extends NcePortController {
 	private String [] validSpeeds = new String[]{"9,600 baud", "19,200 baud"};
 	private int [] validSpeedValues = new int[]{9600, 19200};
 
-    /**
-     * Option 1 system type.
-     */
-    public String[] validOption1() { return new String[]{"PowerCab", "Smart Booster SB3", "Power Pro"}; }
-
-    /**
-     * Get a String that says what Option 1 represents
-     * May be an empty string, but will not be null
-     */
-    public String option1Name() { return "System:"; }
-
-    /**
-     * Set the system type.
-     */
-    public void configureOption1(String value) { mOpt1 = value; }
-    private String mOpt1 = null;
-    public String getCurrentOption1Setting() {
-        if (mOpt1 == null) return validOption1()[0];
-        return mOpt1;
-    }
-
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-
-//    static public UsbDriverAdapter instance() {
-//        if (mInstance == null){
-//            mInstance = new UsbDriverAdapter();
-//        }
-//        return mInstance;
-//    }
-//    static UsbDriverAdapter mInstance = null;
     
     public void dispose(){
         if (adaptermemo!=null)

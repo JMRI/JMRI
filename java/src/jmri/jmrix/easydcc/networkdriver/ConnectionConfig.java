@@ -26,9 +26,9 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
 
     public String name() { return "EasyDCC via network"; }
 
-    public String getMode() {
+    /*public String getMode() {
         return opt2Box.getSelectedItem().toString();
-    }
+    }*/
 
     /**
      * Reimplement this method to show the connected host,

@@ -12,7 +12,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @version $Revision$
  */
-abstract public class AbstractNetworkConnectionConfigXml extends AbstractXmlAdapter {
+abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnectionConfigXml {
 
     public AbstractNetworkConnectionConfigXml() {
     }
@@ -53,26 +53,11 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractXmlAdap
         if (adapter.getPort()!=0)
             e.setAttribute("port", ""+adapter.getPort());
         else e.setAttribute("port", rb.getString("noneSelected"));
-
-        if (adapter.getCurrentOption1Setting()!=null)
-            e.setAttribute("option1", adapter.getCurrentOption1Setting());
-        else e.setAttribute("option1", rb.getString("noneSelected"));
-
-        if (adapter.getCurrentOption2Setting()!=null)
-            e.setAttribute("option2", adapter.getCurrentOption2Setting());
-        else e.setAttribute("option2", rb.getString("noneSelected"));
-        
-        if (adapter.getCurrentOption3Setting()!=null)
-            e.setAttribute("option3", adapter.getCurrentOption3Setting());
-        else e.setAttribute("option3", rb.getString("noneSelected"));
-        
-        if (adapter.getCurrentOption4Setting()!=null)
-            e.setAttribute("option4", adapter.getCurrentOption4Setting());
-        else e.setAttribute("option4", rb.getString("noneSelected"));
         
         if (adapter.getDisabled())
             e.setAttribute("disabled", "yes");
         else e.setAttribute("disabled", "no");
+        saveOptions(e, adapter);
 
         e.setAttribute("class", this.getClass().getName());
 
@@ -128,6 +113,9 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractXmlAdap
             String option4Setting = e.getAttribute("option4").getValue();
             adapter.configureOption4(option4Setting);
         }
+        
+        loadOptions(e.getChild("options"), adapter);
+        
         String manufacturer;
         try { 
             manufacturer = e.getAttribute("manufacturer").getValue();

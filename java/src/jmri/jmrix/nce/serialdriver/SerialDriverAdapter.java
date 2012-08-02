@@ -32,6 +32,8 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
     
     public SerialDriverAdapter() {
         super();
+        option1Name = "Eprom";
+        options.put(option1Name, new Option(option1Name, "Command Station EPROM", new String[]{"2004 or earlier", "2006 or later"}));
         setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
         adaptermemo = new NceSystemConnectionMemo();
     }
@@ -116,7 +118,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         adaptermemo.setNceTrafficController(tc);
         tc.setAdapterMemo(adaptermemo);     
              
-        if (getCurrentOption1Setting().equals(validOption1()[0])) {
+        if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[0])) {
             adaptermemo.configureCommandStation(NceTrafficController.OPTION_2004);
         } else {
             // setting binary mode
@@ -164,39 +166,9 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 	private String [] validSpeeds = new String[]{"9,600 baud", "19,200 baud"};
 	private int [] validSpeedValues = new int[]{9600, 19200};
 
-    /**
-     * Option 1 is binary vs ASCII command set.
-     */
-    public String[] validOption1() { return new String[]{"2004 or earlier", "2006 or later"}; }
-
-    /**
-     * Get a String that says what Option 1 represents
-     * May be an empty string, but will not be null
-     */
-    public String option1Name() { return "Command Station EPROM"; }
-
-    /**
-     * Set the binary vs ASCII command set option.
-     */
-    public void configureOption1(String value) { mOpt1 = value; }
-    private String mOpt1 = null;
-    public String getCurrentOption1Setting() {
-        if (mOpt1 == null) return validOption1()[1];
-        return mOpt1;
-    }
-    
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-
-//    static public SerialDriverAdapter instance() {
-//        if (mInstance == null){
-//            mInstance = new SerialDriverAdapter();
-//        }
-//        return mInstance;
-//    }
-//    
-//    static SerialDriverAdapter mInstance = null;
     
     public void dispose(){
         if (adaptermemo!=null)

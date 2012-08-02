@@ -2,8 +2,12 @@ package jmri.jmrix.configurexml;
 
 import jmri.configurexml.*;
 import jmri.jmrix.SerialPortAdapter;
+import jmri.jmrix.PortAdapter;
+import jmri.jmrix.AbstractPortController;
 
 import org.jdom.Element;
+import java.util.Hashtable;
+import java.util.List;
 
 /**
  * Abstract base (and partial implementation) for
@@ -46,20 +50,15 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
             e.setAttribute("speed", adapter.getCurrentBaudRate());
         else e.setAttribute("speed", rb.getString("noneSelected"));
 
-        if (adapter.getCurrentOption1Setting()!=null)
-            e.setAttribute("option1", adapter.getCurrentOption1Setting());
-        else e.setAttribute("option1", rb.getString("noneSelected"));
-
-        if (adapter.getCurrentOption2Setting()!=null)
-            e.setAttribute("option2", adapter.getCurrentOption2Setting());
-        else e.setAttribute("option2", rb.getString("noneSelected"));
-
+        saveOptions(e, adapter);
+        
         e.setAttribute("class", this.getClass().getName());
 
         extendElement(e);
 
         return e;
     }
+
 
     /**
      * Customizable method if you need to add anything more
@@ -89,6 +88,7 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
             String option2Setting = e.getAttribute("option2").getValue();
             adapter.configureOption2(option2Setting);
         }
+        loadOptions(e.getChild("options"), adapter);
         String manufacturer;
         try { 
             manufacturer = e.getAttribute("manufacturer").getValue();
@@ -122,6 +122,27 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
         return result;
     }
 
+    protected void saveOptions(Element e, PortAdapter adapter){
+        Element element = new Element("options");
+        Hashtable<String, AbstractPortController.Option> options = ((AbstractPortController)adapter).getOptionList();
+        for(String i:options.keySet()){
+            Element elem = new Element("option");
+            elem.addContent(new Element("name").addContent(options.get(i).getName()));
+            elem.addContent(new Element("value").addContent(options.get(i).getCurrent()));
+            element.addContent(elem);
+        }
+        e.addContent(element);
+    }
+    
+    protected void loadOptions(Element e, PortAdapter adapter){
+        if(e==null)
+            return;
+        @SuppressWarnings("unchecked")
+        List<Element> optionList = e.getChildren("option");
+        for (Element so : optionList) {
+            ((AbstractPortController)adapter).setOptionState(so.getChild("name").getText(), so.getChild("value").getText());
+        }
+    }
     /**
      * Customizable method if you need to add anything more
      * @param e Element being created, update as needed

@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
 import java.util.Map.Entry;
+import java.util.Hashtable;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -43,6 +44,9 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     /**
      * Ctor for an object being created during load process
      */
+    public AbstractSerialConnectionConfig(jmri.jmrix.PortAdapter p){
+        this((jmri.jmrix.SerialPortAdapter)p);
+    }
     public AbstractSerialConnectionConfig(jmri.jmrix.SerialPortAdapter p){
         adapter = p;
         addToActionList();
@@ -71,26 +75,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 p.addComboBoxLastSelection(adapter.getClass().getName()+".baud", (String) baudBox.getSelectedItem());
             }
         });
-        opt1Box.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                adapter.configureOption1((String)opt1Box.getSelectedItem());
-            }
-        });
-        opt2Box.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                adapter.configureOption2((String)opt2Box.getSelectedItem());
-            }
-        });
-        opt3Box.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                adapter.configureOption3((String)opt3Box.getSelectedItem());
-            }
-        });
-        opt4Box.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                adapter.configureOption4((String)opt4Box.getSelectedItem());
-            }
-        });
+
         if(adapter.getSystemConnectionMemo()!=null){
             systemPrefixField.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -134,16 +119,28 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             public void focusLost(FocusEvent e){}
         
         });
+        
+        for(String i:options.keySet()){
+            final String item = i;
+            if(options.get(i).getComponent() instanceof JComboBox){
+                ((JComboBox)options.get(i).getComponent()).addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        adapter.setOptionState(item, options.get(item).getItem());
+                    }
+                });
+            }
+        }
+
         init = true;
     }
 
     public void updateAdapter(){
         adapter.setPort(PortNameMapper.getPortFromName((String)portBox.getSelectedItem()));
         adapter.configureBaudRate((String)baudBox.getSelectedItem());
-        adapter.configureOption1((String)opt1Box.getSelectedItem());
-        adapter.configureOption2((String)opt2Box.getSelectedItem());
-        adapter.configureOption3((String)opt3Box.getSelectedItem());
-        adapter.configureOption4((String)opt4Box.getSelectedItem());
+        for(String i:options.keySet()){
+            adapter.setOptionState(i, options.get(i).getItem());
+        }
+
         if(adapter.getSystemConnectionMemo()!=null && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())){
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
@@ -151,7 +148,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
 
     jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-    //protected ComboBoxRenderer portBoxRenderer = new ComboBoxRenderer();
     protected JComboBox portBox = new JComboBox();
     protected JLabel portBoxLabel;
     protected JComboBox baudBox = new JComboBox();
@@ -260,7 +256,17 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     public void loadDetails(final JPanel details) {
         _details = details;
         setInstance();
-
+        if(!init){
+            //Build up list of options
+            Hashtable<String, AbstractPortController.Option> adapterOptions = ((AbstractPortController)adapter).getOptionList();
+            options = new Hashtable<String, Option>();
+            for(String i:adapterOptions.keySet()){
+                JComboBox opt = new JComboBox(adapterOptions.get(i).getOptions());
+                opt.setSelectedItem(adapterOptions.get(i).getCurrent());
+                options.put(i, new Option(adapterOptions.get(i).getDisplayText(), opt, adapterOptions.get(i).isAdvanced()));
+            }
+        }
+        
         try {
             v = getPortNames();
     	    if (log.isDebugEnabled()) {
@@ -294,39 +300,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     											+baudBox.getItemAt(0));        
         for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
     	if (log.isDebugEnabled()) log.debug("after reload, "+baudBox.getItemCount()+" items, first is "
-    											+baudBox.getItemAt(0));        
-    	
-        opt1List = adapter.validOption1();
-        opt1BoxLabel = new JLabel(adapter.option1Name());
-        // need to remove ActionListener before addItem() or action event will occur
-        if(opt1Box.getActionListeners().length >0)
-        	opt1Box.removeActionListener(opt1Box.getActionListeners()[0]);
-        opt1Box.removeAllItems();
-        for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
-
-        opt2BoxLabel = new JLabel(adapter.option2Name());
-        opt2List = adapter.validOption2();
-        // need to remove ActionListener before addItem() or action event will occur
-        if(opt2Box.getActionListeners().length >0)
-        	opt2Box.removeActionListener(opt2Box.getActionListeners()[0]);
-        opt2Box.removeAllItems();
-        for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
-
-        opt3BoxLabel = new JLabel(adapter.option3Name());
-        opt3List = adapter.validOption3();
-        // need to remove ActionListener before addItem() or action event will occur
-        if(opt3Box.getActionListeners().length >0)
-        	opt3Box.removeActionListener(opt3Box.getActionListeners()[0]);
-        opt3Box.removeAllItems();
-        for (int i=0; i<opt3List.length; i++) opt3Box.addItem(opt3List[i]);
-
-        opt4BoxLabel = new JLabel(adapter.option4Name());
-        opt4List = adapter.validOption4();
-        // need to remove ActionListener before addItem() or action event will occur
-        if(opt4Box.getActionListeners().length >0)
-        	opt4Box.removeActionListener(opt4Box.getActionListeners()[0]);
-        opt4Box.removeAllItems();
-        for (int i=0; i<opt4List.length; i++) opt4Box.addItem(opt4List[i]);
+    											+baudBox.getItemAt(0));
 
         if (baudList.length>1) {
             baudBox.setToolTipText("Must match the baud rate setting of your hardware");
@@ -335,42 +309,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             baudBox.setToolTipText("The baud rate is fixed for this protocol");
             baudBox.setEnabled(false);
         }
-        if (opt1List.length>1) {
-            NUMOPTIONS++;
-            opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
-            opt1Box.setEnabled(true);
-            opt1Box.setSelectedItem(adapter.getCurrentOption1Setting());
-        } else {
-            opt1Box.setToolTipText("There are no options for this protocol");
-            opt1Box.setEnabled(false);
-        }
-        if (opt2List.length>1) {
-            NUMOPTIONS++;
-            opt2Box.setToolTipText("");
-            opt2Box.setEnabled(true);
-            opt2Box.setSelectedItem(adapter.getCurrentOption2Setting());
-        } else {
-            opt2Box.setToolTipText("There are no options for this protocol");
-            opt2Box.setEnabled(false);
-        }
-        if (opt3List.length>1) {
-            NUMOPTIONS++;
-            opt3Box.setToolTipText("");
-            opt3Box.setEnabled(true);
-            opt3Box.setSelectedItem(adapter.getCurrentOption3Setting());
-        } else {
-            opt3Box.setToolTipText("There are no options for this protocol");
-            opt3Box.setEnabled(false);
-        }
-        if (opt4List.length>1) {
-            NUMOPTIONS++;
-            opt4Box.setToolTipText("");
-            opt4Box.setEnabled(true);
-            opt4Box.setSelectedItem(adapter.getCurrentOption4Setting());
-        } else {
-            opt4Box.setToolTipText("There are no options for this protocol");
-            opt4Box.setEnabled(false);
-        }
+        
+        NUMOPTIONS = NUMOPTIONS+options.size();
 
         portBoxLabel = new JLabel("Serial port: ");
         
@@ -388,62 +328,80 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         init = false;		// need to reload action listeners
         checkInitDone();
     }
-    
+        
     protected void showAdvancedItems(){
         _details.removeAll();
+        cL.anchor = GridBagConstraints.EAST;
+        cL.insets = new Insets(2, 5, 0, 5);
+        cR.insets = new Insets(2, 0, 0, 5);
+        cR.anchor = GridBagConstraints.WEST;
+        cR.gridx = 1;
+        cL.gridx = 0;
+        int i = 0;
         int stdrows = 0;
         boolean incAdvancedOptions=true;
         if(!isBaudAdvanced()) stdrows++;
         if(!isPortAdvanced()) stdrows++;
-        if ((!isOptList1Advanced())&&(opt1List.length>1)) stdrows++;
-        if ((!isOptList2Advanced())&&(opt2List.length>1)) stdrows++;
-        if ((!isOptList3Advanced())&&(opt3List.length>1)) stdrows++;
-        if ((!isOptList4Advanced())&&(opt4List.length>1)) stdrows++;
+        for(String item:options.keySet()){
+            if(!options.get(item).isAdvanced())
+                stdrows++;
+        
+        }
+
         if(adapter.getSystemConnectionMemo()!=null) stdrows=stdrows+2;
         if (stdrows == NUMOPTIONS){
             incAdvancedOptions=false;
-        } else{
-            stdrows++;
         }
+        _details.setLayout(gbLayout);
+
         if (showAdvanced.isSelected()) {
-            int advrows = stdrows;
-            if(isBaudAdvanced()) advrows++;
-            if(isPortAdvanced()) advrows++;
-            if ((isOptList1Advanced())&&(opt1List.length>1)) advrows++;
-            if ((isOptList2Advanced())&&(opt2List.length>1)) advrows++;
-            if ((isOptList3Advanced())&&(opt3List.length>1)) advrows++;
-            if ((isOptList4Advanced())&&(opt4List.length>1)) advrows++;
-            _details.setLayout(new GridLayout(advrows,2));
-            addStandardDetails(incAdvancedOptions);
+            
+            //_details.setLayout(new GridLayout(0,2));
+            i = addStandardDetails(incAdvancedOptions, i);
             if(isPortAdvanced()){
+                cR.gridy = i;
+                cL.gridy = i;
+                gbLayout.setConstraints(portBoxLabel, cL);
+                gbLayout.setConstraints(portBox, cR);
+                
+                //panel.add(row1Label);
                 _details.add(portBoxLabel);
                 _details.add(portBox);
+                i++;
             }
             
             if(isBaudAdvanced()){
+                cR.gridy = i;
+                cL.gridy = i;
+                gbLayout.setConstraints(baudBoxLabel, cL);
+                gbLayout.setConstraints(baudBox, cR);
                 _details.add(baudBoxLabel);
                 _details.add(baudBox);
+                i++;
             }
-            if ((isOptList1Advanced())&&(opt1List.length>1)) {
-                _details.add(opt1BoxLabel);
-                _details.add(opt1Box);
-            }
-            if ((isOptList2Advanced())&&(opt2List.length>1)) {
-                _details.add(opt2BoxLabel);
-                _details.add(opt2Box);
-            }
-            if ((isOptList3Advanced())&&(opt3List.length>1)) {
-                _details.add(opt3BoxLabel);
-                _details.add(opt3Box);
-            }
-            if ((isOptList4Advanced())&&(opt4List.length>1)) {
-                _details.add(opt4BoxLabel);
-                _details.add(opt4Box);
+            for(String item:options.keySet()){
+                if(options.get(item).isAdvanced()){
+                    cR.gridy = i;
+                    cL.gridy = i;
+                    gbLayout.setConstraints(options.get(item).getLabel(), cL);
+                    gbLayout.setConstraints(options.get(item).getComponent(), cR);
+                    _details.add(options.get(item).getLabel());
+                    _details.add(options.get(item).getComponent());
+                    i++;
+                }
             }
         } else {
-            _details.setLayout(new GridLayout(stdrows,2));
-            addStandardDetails(incAdvancedOptions);
+            //_details.setLayout(new GridLayout(0,2));
+            i = addStandardDetails(incAdvancedOptions, i);
         }
+        cL.gridwidth=2;
+        for(JComponent item: additionalItems){
+            cL.gridy = i;
+            gbLayout.setConstraints(item, cL);
+            _details.add(item);
+            i++;
+        }
+        cL.gridwidth=1;
         _details.validate();
         if (_details.getTopLevelAncestor()!=null){
             ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).getPreferredSize());
@@ -452,44 +410,71 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         _details.repaint();
     }
     
-    protected void addStandardDetails(boolean incAdvanced){
+    protected int addStandardDetails(boolean incAdvanced, int i){
         if(!isPortAdvanced()){
+            cR.gridy = i;
+            cL.gridy = i;
+            gbLayout.setConstraints(portBoxLabel, cL);
+            gbLayout.setConstraints(portBox, cR);
             _details.add(portBoxLabel);
             _details.add(portBox);
+            i++;
         }
         
         if(!isBaudAdvanced()){
+            cR.gridy = i;
+            cL.gridy = i;
+            gbLayout.setConstraints(baudBoxLabel, cL);
+            gbLayout.setConstraints(baudBox, cR);
             _details.add(baudBoxLabel);
             _details.add(baudBox);
+            i++;
         }
         
-        if ((!isOptList1Advanced())&&(opt1List.length>1)){
-            _details.add(opt1BoxLabel);
-            _details.add(opt1Box);
+        for(String item:options.keySet()){
+            if(!options.get(item).isAdvanced()){
+                cR.gridy = i;
+                cL.gridy = i;
+                gbLayout.setConstraints(options.get(item).getLabel(), cL);
+                gbLayout.setConstraints(options.get(item).getComponent(), cR);
+                _details.add(options.get(item).getLabel());
+                _details.add(options.get(item).getComponent());
+                i++;
+            }
         }
-        
-        if ((!isOptList2Advanced())&&(opt2List.length>1)) {
-            _details.add(opt2BoxLabel);
-            _details.add(opt2Box);
-        }
-        if ((!isOptList3Advanced())&&(opt3List.length>1)) {
-            _details.add(opt3BoxLabel);
-            _details.add(opt3Box);
-        }
-        if ((!isOptList4Advanced())&&(opt4List.length>1)) {
-            _details.add(opt4BoxLabel);
-            _details.add(opt4Box);
-        }
+
         if(adapter.getSystemConnectionMemo()!=null){
+            cR.gridy = i;
+            cL.gridy = i;
+            gbLayout.setConstraints(systemPrefixLabel, cL);
+            gbLayout.setConstraints(systemPrefixField, cR);
             _details.add(systemPrefixLabel);
             _details.add(systemPrefixField);
+            i++;
+            cR.gridy = i;
+            cL.gridy = i;
+            gbLayout.setConstraints(connectionNameLabel, cL);
+            gbLayout.setConstraints(connectionNameField, cR);
             _details.add(connectionNameLabel);
             _details.add(connectionNameField);
+            i++;
         }
         if (incAdvanced){
-            _details.add(new JLabel(" "));
+            cL.gridwidth=2;
+            cL.gridy = i;
+            cR.gridy = i;
+            gbLayout.setConstraints(showAdvanced, cL);
             _details.add(showAdvanced);
+            cL.gridwidth=1;
+            i++;
         }
+        _details.validate();
+        /*if (_details.getTopLevelAncestor()!=null){
+            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).getPreferredSize());
+            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).pack();
+        }
+        _details.repaint();*/
+        return i;
     }
     
     public boolean isPortAdvanced() { return false; }

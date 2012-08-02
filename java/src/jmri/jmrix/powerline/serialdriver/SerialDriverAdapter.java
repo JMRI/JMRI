@@ -31,6 +31,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     public SerialDriverAdapter() {
         super();
+        option1Name = "Adapter";
+        options.put(option1Name, new Option(option1Name, "Adapter", stdOption1Values));
     }
 
     @Override
@@ -186,7 +188,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     public void configure() {
         SerialTrafficController tc = null; 
         // set up the system connection first
-        String opt1 = getCurrentOption1Setting();
+        String opt1 = getOptionState(option1Name);
         if (opt1.equals("CM11")) {
             // create a CM11 port controller
         	adaptermemo = new jmri.jmrix.powerline.cm11.SpecificSystemConnectionMemo();
@@ -218,7 +220,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         // declare up
         jmri.jmrix.powerline.ActiveFlag.setActive();
     }
-
+    
     // base class methods for the SerialPortController interface
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -227,7 +229,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         }
         return new DataInputStream(serialStream);
     }
-
+    
     public DataOutputStream getOutputStream() {
         if (!opened) log.error("getOutputStream called before load(), stream not available");
         try {
@@ -238,9 +240,11 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
      	}
      	return null;
     }
-
+    
     public boolean status() {return opened;}
-
+    
+    String[] stdOption1Values = new String[]{"CM11", "CP290", "Insteon 2412S"}; 
+    
     /**
      * Local method to do specific port configuration
      */
@@ -249,7 +253,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         int baud = 4800;  // default, but also defaulted in the initial value of selectedSpeed
         
         // check for specific port type
-        String opt1 = getCurrentOption1Setting();
+        String opt1 = getOptionState(option1Name);
         if (opt1.equals("CM11")) {
             // leave as 4800 baud
         } else if (opt1.equals("CP290")) { 
@@ -288,37 +292,11 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         selectedSpeed = rate;
         super.configureBaudRate(rate);
     }
-
-    String[] stdOption1Values = new String[]{"CM11", "CP290", "Insteon 2412S"}; 
-
-    /**
-     * Option 1 is not used for anything
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP")
-    public String[] validOption1() { return stdOption1Values; }
-
-    /**
-     * Option 1 not used, so return a null string.
-     */
-    public String option1Name() { return "Adapter"; }
-
     
     protected String [] validSpeeds = new String[]{"(automatic)"};
     protected int [] validSpeedValues = new int[]{4800};
     protected String selectedSpeed=validSpeeds[0];
-
-    /**
-     * Get an array of valid values for "option 2"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    public String[] validOption2() { return new String[]{""}; }
-
-    /**
-     * Get a String that says what Option 2 represents
-     * May be an empty string, but will not be null
-     */
-    public String option2Name() { return ""; }
-
+    
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;

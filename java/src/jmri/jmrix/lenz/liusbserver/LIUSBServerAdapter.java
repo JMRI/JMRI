@@ -52,7 +52,9 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         private Thread bcastThread;
 
         public LIUSBServerAdapter(){
-	    super();
+            super();
+            option1Name = "BroadcastPort";
+            options.put(option1Name, new Option(option1Name, "Broadcast Port", new String[]{String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT),""}));
         }
 
     synchronized public String openPort(String portName, String appName)  {
@@ -99,24 +101,6 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
          }
    
          public boolean status() {return (pout!=null && pin!=null);}
-    
-
-    /**
-     * Get an array of valid values for "option 1"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-     @Override
-     public String [] validOption1(){ return new String[]{String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT),""};
-        }
-
-    /**
-     * Get a String that says what Option 1 represents
-     * May be an empty string, but will not be null
-     */
-     @Override
-    public String option1Name() { return "Broadcast Port"; }
-
-
 
 	/**
 	 * set up all of the other objects to operate with a LIUSB Server 

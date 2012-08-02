@@ -177,29 +177,6 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
         return new String[]{"9,600 bps"};
     }
 
-    /**
-     * Since option 1 is not used for this, return an array with just a single string
-     */
-    public String[] validOption1() { return new String[]{""}; }
-
-    /**
-     * Option 1 not used, so return a null string.
-     */
-    public String option1Name() { return ""; }
-
-
-    /**
-     * Get an array of valid values for "option 2"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    public String[] validOption2() { return new String[]{""}; }
-
-    /**
-     * Get a String that says what Option 2 represents
-     * May be an empty string, but will not be null
-     */
-    public String option2Name() { return ""; }
-
     private boolean opened = false;
     InputStream serialStream = null;
 
@@ -212,9 +189,6 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     }
     static SerialDriverAdapter mInstance = null;
     
-        //The following needs to be enabled once systemconnectionmemo has been correctly implemented
-    //public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
-
     public void dispose(){
         if(adaptermemo!=null){
             adaptermemo.dispose();

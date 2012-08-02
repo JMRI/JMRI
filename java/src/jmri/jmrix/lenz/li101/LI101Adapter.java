@@ -30,6 +30,12 @@ import jmri.util.SerialUtil;
 
 public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
+    public LI101Adapter(){
+        super();
+        option1Name = "FlowControl";
+        options.put(option1Name, new Option(option1Name, "LI101 connection uses : ", validOption1));
+    }
+    
     SerialPort activeSerialPort = null;
     
     private boolean OutputBufferEmpty = true;
@@ -260,11 +266,11 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
         activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
         
         // find and configure flow control
-        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for mOpt1
-        if (!mOpt1.equals(validOption1[0]))
+        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for options.get(option1Name).getCurrent()
+        if (!options.get(option1Name).getCurrent().equals(validOption1[0]))
             flow = 0;
         activeSerialPort.setFlowControlMode(flow);
-        if (mOpt2.equals(validOption2[0]))
+        if (options.get(option2Name).getCurrent().equals(validOption2[0]))
             checkBuffer = true;
     }
     
@@ -277,13 +283,6 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
     public String[] validBaudRates() {
         return validSpeeds;
     }
-    
-    /**
-     * Option 1 controls flow control option
-     */
-    public String option1Name() { return "LI101 connection uses "; }
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
-    public String[] validOption1() { return validOption1; }
     
     protected String [] validSpeeds = new String[]{"19,200 baud","38,400 baud","57,600 baud","115,200 baud"};
     protected int [] validSpeedValues = new int[]{19200,38400,57600,115200};

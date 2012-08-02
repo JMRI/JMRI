@@ -27,6 +27,8 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
 
     public SerialDriverAdapter() {
         super();
+        option1Name = "Programmer";
+        options.put(option1Name, new Option(option1Name, "Programmer : ", validOption1()));
         setManufacturer(jmri.jmrix.DCCManufacturerList.DCC4PC);
         adaptermemo = new Dcc4PcSystemConnectionMemo();
     }
@@ -100,7 +102,6 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
     /**
      * Option 1 controls the connection used for programming
      */
-    public String option1Name() { return "Programmer : "; }
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption1() { 
         List<Object> connList = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
@@ -125,12 +126,6 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
         }
     }
     
-
-    /*@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
-    public String[] validOption2() { 
-        return new String[]{"Yes", "No"};
-    }*/
-
     /**
      * Get a String that says what Option 2 represents
      * May be an empty string, but will not be null
@@ -200,7 +195,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
         // connect to the traffic controller
         Dcc4PcTrafficController control = new Dcc4PcTrafficController();
         adaptermemo.setDcc4PcTrafficController(control);
-        adaptermemo.setDefaultProgrammer(mOpt1);
+        adaptermemo.setDefaultProgrammer(options.get(option1Name).getCurrent());
         control.connectPort(this);
         adaptermemo.configureManagers();
         

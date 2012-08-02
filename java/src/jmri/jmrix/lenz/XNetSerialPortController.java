@@ -16,8 +16,10 @@ import java.io.DataOutputStream;
 public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerialPortController implements XNetPortController {
 
     public XNetSerialPortController(){
-       super();
-       adaptermemo = new XNetSystemConnectionMemo();
+        super();
+        //option2Name = "Buffer";
+        //options.put(option2Name, new Option(option2Name, "Check Buffer : ", validOption2));
+        adaptermemo = new XNetSystemConnectionMemo();
     }
 
     // base class. Implementations will provide InputStream and OutputStream
@@ -49,10 +51,10 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
 
     /* Option 2 is not currently used with RxTx 2.0.  In the past, it
        was used for the "check buffer status when sending" If this is still set        in a configuration file, we need to handle it, but we are not writing it        to new configuration files. */
-    public String getCurrentOption2Setting() {
-        if(mOpt2==null) return("no");
-        else return mOpt2;
-    }
+    /*public String getCurrentOption2Setting() {
+        if(options.get(option2Name).getCurrent()==null) return("no");
+        else return options.get(option2Name).getCurrent();
+    }*/
 
     protected String [] validOption2 = new String[]{"yes", "no"};
     protected boolean checkBuffer = false;

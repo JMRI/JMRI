@@ -51,33 +51,31 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         // Add an extra ActionListener to make option 2
         // dependant on option 1 choice
 
-        opt1Box.addActionListener(new ActionListener() {
+        /*opt1Box.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 enableOpt2(opt1Box.getSelectedItem());
             }
-        });
+        });*/
 
-        opt1Box.setToolTipText("Choose RFID reader type");
+        //opt1Box.setToolTipText("Choose RFID reader type");
 
-        enableOpt2(opt1Box.getSelectedItem());
+        //enableOpt2(opt1Box.getSelectedItem());
     }
 
-    private void enableOpt2(Object o) {
+    /*private void enableOpt2(Object o) {
         boolean enable = o.equals("MERG Concentrator");
         opt2BoxLabel.setEnabled(enable);
         opt2Box.setEnabled(enable);
         opt2Box.setToolTipText(enable?
             "Choose RFID concentrator range setting":
             "Range setting not applicable for selected RFID reader type");
-    }
+    }*/
 
     public String name() { return "RFID Device Connection"; }
 
-    @Override
-    public boolean isOptList1Advanced() { return false; }
+    //public boolean isOptList1Advanced() { return false; }
 
-    @Override
-    public boolean isOptList2Advanced() { return false; }
+    //public boolean isOptList2Advanced() { return false; }
     
     protected void setInstance() {
         if (adapter==null)

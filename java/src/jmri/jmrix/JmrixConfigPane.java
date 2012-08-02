@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.Enumeration;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -110,16 +111,6 @@ public class JmrixConfigPane extends JPanel {
         }
         
         dispose(retval);
-        /*if (retval.ccCurrent!=null) {
-            try {
-                retval.ccCurrent.dispose();
-            } catch (Exception ex){
-                log.error("Error Occured while disposing connection " + ex.toString());
-            }
-        }
-        InstanceManager.configureManagerInstance().deregister(retval);
-        InstanceManager.configureManagerInstance().deregister(retval.ccCurrent);
-        configPaneTable.remove(Integer.valueOf(index));*/
     }
     
     public static void dispose(JmrixConfigPane confPane){
@@ -187,11 +178,11 @@ public class JmrixConfigPane extends JPanel {
     private JmrixConfigPane(ConnectionConfig original) {
     
         ccCurrent = original;
-    
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        setLayout(new BorderLayout());
 
         manuBox.addItem(NONE_SELECTED);
-        //manuBox.setModel(new javax.swing.DefaultComboBoxModel(jmri.jmrix.DCCManufacturerList.getSystemNames()))
+
         int n=1;
         manufactureNameList = jmri.jmrix.DCCManufacturerList.getSystemNames();
         for (int i=0; i<manufactureNameList.length; i++) {
@@ -210,7 +201,6 @@ public class JmrixConfigPane extends JPanel {
                 updateComboConnection();
             }
         });
-
         
         // get the list of ConnectionConfig items into a selection box
         classConnectionNameList = jmri.jmrix.DCCManufacturerList.getConnectionList((String)manuBox.getSelectedItem());
@@ -235,9 +225,7 @@ public class JmrixConfigPane extends JPanel {
                         modeBox.setSelectedItem(config.name());
                         if (classConnectionNameList.length==1){
                             modeBox.setSelectedIndex(1);
-                        } /*else if (p.getComboBoxLastSelection((String) manuBox.getSelectedItem())!=null){
-                            modeBox.setSelectedItem(p.getComboBoxLastSelection((String) manuBox.getSelectedItem()));
-                        }*/
+                        }
                     } else {
                         Class<?> cl = Class.forName(classConnectionNameList[i]);
                         config = (ConnectionConfig)cl.newInstance();
@@ -272,13 +260,14 @@ public class JmrixConfigPane extends JPanel {
         JPanel connectionPanel = new JPanel();
         connectionPanel.setBorder(BorderFactory.createTitledBorder("System connection:"));
         connectionPanel.add(modeBox);
-        add(manufacturerPanel);
-        add(connectionPanel);
+        JPanel initialPanel = new JPanel();
+        initialPanel.setLayout(new BoxLayout(initialPanel, BoxLayout.Y_AXIS));
+        initialPanel.add(manufacturerPanel);
+        initialPanel.add(connectionPanel);
+        add(initialPanel, BorderLayout.NORTH);
         details.setBorder(BorderFactory.createTitledBorder("Settings:"));
-        add(details);
-        //add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-
-        //updateComboConnection();
+        add(details, BorderLayout.CENTER);
+        
         selection();  // first time through, pretend we've selected a value
         			  // to load the rest of the GUI
     }

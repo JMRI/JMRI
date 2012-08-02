@@ -29,6 +29,12 @@ import jmri.util.SerialUtil;
 
 public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
     
+    public EliteAdapter(){
+        super();
+        option1Name = "FlowControl";
+        options.put(option1Name, new Option(option1Name, "Elite connection uses : ", validOption1));
+    }
+    
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
     
@@ -263,10 +269,10 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         int flow = 0;  // no flow control is first in the elite setup,
         // since it doesn't seem to work with flow
         // control enabled.
-        if (!mOpt1.equals(validOption1[0]))
+        if (!options.get(option1Name).getCurrent().equals(validOption1[0]))
             flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         activeSerialPort.setFlowControlMode(flow);
-        if (!mOpt2.equals(validOption2[0]))
+        if (!options.get(option2Name).getCurrent().equals(validOption2[0]))
             CheckBuffer = false;    
     }
     
@@ -283,9 +289,9 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
     /**
      * Option 1 controls flow control option
      */
-    public String option1Name() { return "Elite connection uses "; }
+    /*public String option1Name() { return "Elite connection uses "; }
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
-    public String[] validOption1() { return validOption1; }
+    public String[] validOption1() { return validOption1; }*/
     
     protected String [] validSpeeds = new String[]{"9,600 baud","19,200 baud","38,400 baud","57,600 baud","115,200 baud"};
     protected int [] validSpeedValues = new int[]{9600,19200,38400,57600,115200};

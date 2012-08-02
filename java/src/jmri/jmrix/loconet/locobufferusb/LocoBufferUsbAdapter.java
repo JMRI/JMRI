@@ -17,6 +17,7 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
 
     public LocoBufferUsbAdapter() {
         super();
+        options.remove(option1Name);
     }
 
     /**
@@ -57,16 +58,6 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
     public int[] validBaudNumber() {
         return new int[]{57600};
     }
-
-    /**
-     * Since option 1 is not used for this, return an array with one empty element
-     */
-    public String[] validOption1() { return new String[]{""}; }
-
-    /**
-     * Option 1 not used, so return a null string.
-     */
-    public String option1Name() { return ""; }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoBufferUsbAdapter.class.getName());
 }

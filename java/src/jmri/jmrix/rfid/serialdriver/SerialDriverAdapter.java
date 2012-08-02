@@ -30,7 +30,10 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
 
     public SerialDriverAdapter() {
         super();
-//        adapterMemo = new RfidSystemConnectionMemo();
+        option1Name = "Adapter";
+        option2Name = "Concentrator-Range";
+        options.put(option1Name, new Option(option1Name, "Adapter:", new String[]{"Generic Stand-alone", "MERG Concentrator"}, false));
+        options.put(option2Name, new Option(option2Name, "Concentrator range:", new String[]{"A-H","I-P"}, false));
     }
 
     @Override
@@ -186,7 +189,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     public void configure() {
         RfidTrafficController control = null;
         // set up the system connection first
-        String opt1 = getCurrentOption1Setting();
+        String opt1 = getOptionState(option1Name);
         if (opt1.equals("Generic Stand-alone")) {
             // create a Generic Stand-alone port controller
             log.debug("Create Generic Standalone SpecificTrafficController");
@@ -196,7 +199,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             // create a MERG Concentrator port controller
             log.debug("Create MERG Concentrator SpecificTrafficController");
             adapterMemo = new jmri.jmrix.rfid.merg.concentrator.SpecificSystemConnectionMemo();
-            control = new jmri.jmrix.rfid.merg.concentrator.SpecificTrafficController(adapterMemo, getCurrentOption2Setting());
+            control = new jmri.jmrix.rfid.merg.concentrator.SpecificTrafficController(adapterMemo, getOptionState(option2Name));
         } else {
             // no connection at all - warn
             log.warn("protocol option "+opt1+" defaults to Generic Stand-alone");
@@ -274,60 +277,15 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         selectedSpeed = rate;
         super.configureBaudRate(rate);
     }
-
-    String[] stdOption1Values = new String[]{"Generic Stand-alone", "MERG Concentrator"};
-
-    /**
-     * Option 1 is not used for anything
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP")
-    @Override
-    public String[] validOption1() { return stdOption1Values; }
-
-    /**
-     * Option 1 not used, so return a null string.
-     */
-    @Override
-    public String option1Name() { return "Adapter"; }
-
     
     protected String [] validSpeeds = new String[]{"(automatic)"};
     protected int [] validSpeedValues = new int[]{9600};
     protected String selectedSpeed=validSpeeds[0];
-
-    /**
-     * Get an array of valid values for "option 2"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    @Override
-    public String[] validOption2() { return new String[]{"A-H","I-P"}; }
-
-    /**
-     * Get a String that says what Option 2 represents
-     * May be an empty string, but will not be null
-     */
-    @Override
-    public String option2Name() { return "Concentrator range"; }
-
-    @Override
-    public String getCurrentOption2Setting() {
-        if (mOpt1 == null)
-            return null;
-        if (mOpt1.equals("MERG Concentrator"))
-            return super.getCurrentOption2Setting();
-        return null;
-    }
-
+    
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-
-//    static public SerialDriverAdapter instance() {
-//        if (mInstance == null) mInstance = new SerialDriverAdapter();
-//        return mInstance;
-//    }
-//    static SerialDriverAdapter mInstance = null;
-
+    
     String manufacturerName = jmri.jmrix.DCCManufacturerList.RFID;
     
     @Override

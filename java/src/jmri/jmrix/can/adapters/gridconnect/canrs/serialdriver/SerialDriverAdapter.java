@@ -21,6 +21,12 @@ import jmri.jmrix.SystemConnectionMemo;
  */
 public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.jmrix.SerialPortAdapter {
 
+    public SerialDriverAdapter(){
+        super();
+        option2Name = "CANID";
+        options.put(option2Name, new Option(option2Name, "CAN ID for CAN-USB", new String[]{"127", "126", "125", "124", "123", "122", "121", "120"}));
+    
+    }
     /**
      * set up all of the other objects to operate with a CAN RS adapter
      * connected to this port
@@ -30,7 +36,7 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
         // Register the CAN traffic controller being used for this connection
         TrafficController tc = new MergTrafficController();
         try {
-            tc.setCanId(Integer.parseInt(getCurrentOption2Setting()));
+            tc.setCanId(Integer.parseInt(getOptionState(option2Name)));
         } catch (Exception e) {
             log.error("Cannot parse CAN ID - check your preference settings "+e);
             log.error("Now using default CAN ID");
@@ -42,24 +48,13 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
         log.debug("Connecting port");
         tc.connectPort(this);
 
-        adaptermemo.setProtocol(mOpt1);
+        adaptermemo.setProtocol(options.get(option1Name).getCurrent());
 
         // do central protocol-specific configuration    
-        //jmri.jmrix.can.ConfigurationManager.configure(mOpt1);
+        //jmri.jmrix.can.ConfigurationManager.configure(options.get(option1Name).getCurrent());
         adaptermemo.configureManagers();
 
     }
-
-    /**
-     * Option 2 is CAN identifier to be used by adapter
-     */
-    public String[] validOption2() { return new String[]{"127", "126", "125", "124", "123", "122", "121", "120"}; }
-
-    /**
-     * Get a String that says what Option 2 represents
-     * May be an empty string, but will not be null
-     */
-    public String option2Name() { return "CAN ID for CAN-USB"; }
     
     public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
         

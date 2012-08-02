@@ -54,12 +54,12 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     public boolean load(Element e) throws Exception {
         boolean result = true;
         // start the "connection"
-        jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter adapter = 
+        /*jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter adapter = 
                         new jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter();
                         String errCode = adapter.openPort("localhost","LIUSBServer");
                         if (errCode == null)    {
                                 adapter.configure();
-                }
+                }*/
         // register, so can be picked up
         getInstance();
         register();
@@ -68,7 +68,14 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     @Override
     protected void getInstance() {
-        if(adapter == null) adapter=new LIUSBServerAdapter();
+        if(adapter == null){ //adapter=new LIUSBServerAdapter();
+            adapter =  new LIUSBServerAdapter();
+            String errCode = ((LIUSBServerAdapter)adapter).openPort("localhost","LIUSBServer");
+            if (errCode == null)    {
+                adapter.configure();
+            }
+        
+        }
     }
 
     @Override

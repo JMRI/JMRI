@@ -5,6 +5,9 @@ package jmri.jmrix;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
+import java.util.Hashtable;
+
+
 /**
  * Provide an abstract base for *PortController classes.
  * <P>
@@ -33,95 +36,123 @@ abstract public class AbstractPortController implements PortAdapter {
     
     protected void setOpened() {opened = true; }
     protected void setClosed() {opened = false; }
+    
+    protected String option1Name = "1";
+    protected String option2Name = "2";
+    protected String option3Name = "3";
+    protected String option4Name = "4";
 
     abstract public String getCurrentPortName();
     
-    /**
-     * Get an array of valid values for "option 1"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    public String[] validOption1() { return new String[]{""}; }
-
-    /**
-     * Get a String that says what Option 1 represents
-     * May be an empty string, but will not be null
-     */
-    public String option1Name() { return ""; }
-
-    /**
-     * Set the second port option.
-     */
-    public void configureOption1(String value) { mOpt1 = value; }
-    protected String mOpt1 = null;
-    public String getCurrentOption1Setting() {
-        if (mOpt1 == null) return validOption1()[0];
-        return mOpt1;
+    public void configureOption1(String value) { 
+        if(options.containsKey(option1Name)){
+            options.get(option1Name).configure(value);
+        }
     }
 
-    /**
-     * Get an array of valid values for "option 2"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    public String[] validOption2() { return new String[]{""}; }
-
-    /**
-     * Get a String that says what Option 2 represents
-     * May be an empty string, but will not be null
-     */
-    public String option2Name() { return ""; }
-
-    /**
-     * Set the second port option.
-     */
-    public void configureOption2(String value) { mOpt2 = value; }
-    protected String mOpt2  = null;
-    public String getCurrentOption2Setting() {
-        if (mOpt2 == null) return validOption2()[0];
-        return mOpt2;
+    public void configureOption2(String value) { 
+        if(options.containsKey(option2Name)){
+            options.get(option2Name).configure(value);
+        }
     }
     
-    /**
-     * Get an array of valid values for "option 3"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    public String[] validOption3() { return new String[]{""}; }
+    public void configureOption3(String value) { 
+        if(options.containsKey(option3Name)){
+            options.get(option3Name).configure(value);
+        }
+    }
 
-    /**
-     * Get a String that says what Option 3 represents
-     * May be an empty string, but will not be null
-     */
-    public String option3Name() { return ""; }
+    public void configureOption4(String value) { 
+        if(options.containsKey(option4Name)){
+            options.get(option4Name).configure(value);
+        }
+    }
 
-    /**
-     * Set the third port option.
-     */
-    public void configureOption3(String value) { mOpt3 = value; }
-    protected String mOpt3  = null;
-    public String getCurrentOption3Setting() {
-        if (mOpt3 == null) return validOption3()[0];
-        return mOpt3;
+    public String getOption1Name(){
+        return option1Name;
     }
     
-    /**
-     * Get an array of valid values for "option 4"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    public String[] validOption4() { return new String[]{""}; }
+    public String getOption2Name(){
+        return option2Name;
+    }
+    
+    public String getOption3Name(){
+        return option3Name;
+    }
 
-    /**
-     * Get a String that says what Option 4 represents
-     * May be an empty string, but will not be null
-     */
-    public String option4Name() { return ""; }
-
-    /**
-     * Set the fourth port option.
-     */
-    public void configureOption4(String value) { mOpt4 = value; }
-    protected String mOpt4  = null;
-    public String getCurrentOption4Setting() {
-        if (mOpt4 == null) return validOption4()[0];
-        return mOpt4;
+    public String getOption4Name(){
+        return option4Name;
+    }
+    
+    public Hashtable<String, Option> getOptionList(){
+        return options;
+    }
+    
+    public void setOptionState(String option, String value){
+        if(options.containsKey(option)){
+            options.get(option).configure(value);
+        }
+    }
+    
+    public String getOptionState(String option){
+        if(options.containsKey(option)){
+            return options.get(option).getCurrent();
+        }
+        return null;
+    }
+    
+    public String[] getOptionChoices(String option){
+        if(options.containsKey(option)){
+            return options.get(option).getOptions();
+        }
+        return null;
+    }
+    
+    protected Hashtable<String, Option> options = new Hashtable<String, Option>();
+    
+    static public class Option{
+        
+        String currentValue = null;
+        String name;
+        String displayText;
+        String[] options;
+        Boolean advancedOption = true;
+        
+        public Option(String name, String displayText, String[] options, boolean advanced){
+            this(name, displayText, options);
+            this.advancedOption = advanced;
+        }
+        
+        public Option(String name, String displayText, String[] options){
+            this.name = name;
+            this.displayText = displayText;
+            this.options = options;
+        }
+        
+        public void configure(String value){
+            currentValue = value;
+        }
+        
+        public String getCurrent(){
+            if(currentValue==null) return options[0];
+            return currentValue;
+        }
+        
+        public String[] getOptions(){
+            return options;
+        }
+        
+        public String getName(){
+            return name;
+        }
+        
+        public String getDisplayText(){
+            return name;
+        }
+        
+        public boolean isAdvanced() {
+            return advancedOption;
+        }
     }
     
     /**

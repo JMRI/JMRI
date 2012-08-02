@@ -40,8 +40,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         adapter = ((ConnectionConfig) o).getAdapter();
         Element e = new Element("connection");
 
-        if (adapter.getCurrentOption1Setting()!=null)
-            e.setAttribute("option1", adapter.getCurrentOption1Setting());
         if (adapter.getCurrentPortName()!=null)
             e.setAttribute("port", adapter.getCurrentPortName());
         else e.setAttribute("port", rb.getString("noneSelected"));
@@ -54,6 +52,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         if (adapter.getDisabled())
             e.setAttribute("disabled", "yes");
         else e.setAttribute("disabled", "no");
+        
+        saveOptions(e, adapter);
+        
         e.setAttribute("class", this.getClass().getName());
 
         return e;
@@ -99,6 +100,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                     else if (yesno.equals("yes")) adapter.setDisabled(true);
                 }
         }
+        loadOptions(e.getChild("options"), adapter);
         // register, so can be picked up next time
         register();
         

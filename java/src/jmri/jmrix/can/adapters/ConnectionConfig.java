@@ -5,6 +5,7 @@ package jmri.jmrix.can.adapters;
 import java.util.ResourceBundle;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
 import jmri.jmrix.can.ConfigurationManager;
 
 /**
@@ -38,8 +39,8 @@ abstract public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnect
         super.checkInitDone();
 
         updateUserNameField();
-        
-        opt1Box.addActionListener(new ActionListener() {
+
+        ((JComboBox)options.get("Protocol").getComponent()).addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 updateUserNameField();
             }
@@ -47,7 +48,7 @@ abstract public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnect
     }
 
     void updateUserNameField() {
-        String selection = (String)opt1Box.getSelectedItem();
+        String selection = options.get("Protocol").getItem();
         String newUserName = "MERG";
         if(ConfigurationManager.OPENLCB.equals(selection)){
             newUserName = "OpenLCB";

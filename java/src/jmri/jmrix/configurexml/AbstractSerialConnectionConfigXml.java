@@ -2,8 +2,11 @@ package jmri.jmrix.configurexml;
 
 import jmri.configurexml.*;
 import jmri.jmrix.SerialPortAdapter;
+import jmri.jmrix.AbstractPortController;
 
 import org.jdom.Element;
+import java.util.Hashtable;
+import java.util.List;
 
 /**
  * Abstract base (and partial implementation) for
@@ -12,7 +15,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @version $Revision$
  */
-abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapter {
+abstract public class AbstractSerialConnectionConfigXml extends AbstractConnectionConfigXml {
 
     public AbstractSerialConnectionConfigXml() {
     }
@@ -51,22 +54,8 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
         if (adapter.getCurrentBaudRate()!=null)
             e.setAttribute("speed", adapter.getCurrentBaudRate());
         else e.setAttribute("speed", rb.getString("noneSelected"));
-
-        if (adapter.getCurrentOption1Setting()!=null)
-            e.setAttribute("option1", adapter.getCurrentOption1Setting());
-        else e.setAttribute("option1", rb.getString("noneSelected"));
-
-        if (adapter.getCurrentOption2Setting()!=null)
-            e.setAttribute("option2", adapter.getCurrentOption2Setting());
-        else e.setAttribute("option2", rb.getString("noneSelected"));
         
-        if (adapter.getCurrentOption3Setting()!=null)
-            e.setAttribute("option3", adapter.getCurrentOption3Setting());
-        else e.setAttribute("option3", rb.getString("noneSelected"));
-        
-        if (adapter.getCurrentOption4Setting()!=null)
-            e.setAttribute("option4", adapter.getCurrentOption4Setting());
-        else e.setAttribute("option4", rb.getString("noneSelected"));
+        saveOptions(e, adapter);
         
         if (adapter.getDisabled())
             e.setAttribute("disabled", "yes");
@@ -78,7 +67,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
 
         return e;
     }
-
+    
     /**
      * Customizable method if you need to add anything more
      * @param e Element being created, update as needed
@@ -98,16 +87,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
         adapter.setPort(portName);
         String baudRate = e.getAttribute("speed").getValue();
         adapter.configureBaudRate(baudRate);
-                //We can only set the userName and systemPrefix, after the configure has been done.
-        /*if (adapter.getSystemConnectionMemo()!=null){
-            if (e.getAttribute("userName")!=null){
-                adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
-            }
 
-            if (e.getAttribute("systemPrefix")!=null) {
-                adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
-            }
-        }*/
         if (e.getAttribute("option1")!=null) {
             String option1Setting = e.getAttribute("option1").getValue();
             adapter.configureOption1(option1Setting);
@@ -124,6 +104,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
             String option4Setting = e.getAttribute("option4").getValue();
             adapter.configureOption4(option4Setting);
         }
+        loadOptions(e.getChild("options"), adapter);
         String manufacturer;
         try { 
             manufacturer = e.getAttribute("manufacturer").getValue();

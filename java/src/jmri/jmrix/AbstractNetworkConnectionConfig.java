@@ -3,6 +3,9 @@
 package jmri.jmrix;
 
 import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
@@ -16,6 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JComboBox;
+import java.util.Hashtable;
 
 /**
  * Abstract base class for common implementation of the ConnectionConfig
@@ -28,6 +33,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     /**
      * Ctor for an object being created during load process
      */
+
     public AbstractNetworkConnectionConfig(jmri.jmrix.NetworkPortAdapter p){
         adapter = p;
     }
@@ -83,26 +89,17 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             public void keyTyped(KeyEvent keyEvent) {
             }
         });
-        opt1Box.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                adapter.configureOption1((String)opt1Box.getSelectedItem());
+        
+        for(String i:options.keySet()){
+            final String item = i;
+            if(options.get(i).getComponent() instanceof JComboBox){
+                ((JComboBox)options.get(i).getComponent()).addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        adapter.setOptionState(item, options.get(item).getItem());
+                    }
+                });
             }
-        });
-        opt2Box.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                adapter.configureOption2((String)opt2Box.getSelectedItem());
-            }
-        });
-        opt3Box.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                adapter.configureOption3((String)opt3Box.getSelectedItem());
-            }
-        });
-        opt4Box.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                adapter.configureOption4((String)opt4Box.getSelectedItem());
-            }
-        });
+        }
 
         if(adapter.getSystemConnectionMemo()!=null){
             systemPrefixField.addActionListener(new ActionListener() {
@@ -145,10 +142,9 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     public void updateAdapter(){
         adapter.setHostName(hostNameField.getText());
         adapter.setPort(Integer.parseInt(portField.getText()));
-        adapter.configureOption1((String)opt1Box.getSelectedItem());
-        adapter.configureOption2((String)opt2Box.getSelectedItem());
-        adapter.configureOption3((String)opt3Box.getSelectedItem());
-        adapter.configureOption4((String)opt4Box.getSelectedItem());
+        for(String i:options.keySet()){
+            adapter.setOptionState(i, options.get(i).getItem());
+        }
         if(adapter.getSystemConnectionMemo()!=null && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())){
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
@@ -156,9 +152,9 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     }
 
     jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-    protected JTextField hostNameField = new JTextField();
+    protected JTextField hostNameField = new JTextField(15);
     protected JLabel hostNameFieldLabel;
-    protected JTextField portField = new JTextField();
+    protected JTextField portField = new JTextField(10);
     protected JLabel portFieldLabel;
     protected jmri.jmrix.NetworkPortAdapter adapter = null;
 
@@ -173,13 +169,20 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     public String getInfo() {
         return adapter.getCurrentPortName();
     }
-
-    //static java.util.ResourceBundle rb = 
-        //java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
     
     public void loadDetails(final JPanel details) {
     	_details = details;
         setInstance();
+        if(!init){
+            //Build up list of options
+            Hashtable<String, AbstractPortController.Option> adapterOptions = ((AbstractPortController)adapter).getOptionList();
+            options = new Hashtable<String, Option>();
+            for(String i:adapterOptions.keySet()){
+                JComboBox opt = new JComboBox(adapterOptions.get(i).getOptions());
+                opt.setSelectedItem(adapterOptions.get(i).getCurrent());
+                options.put(i, new Option(adapterOptions.get(i).getDisplayText(), opt, adapterOptions.get(i).isAdvanced()));
+            }
+        }
 
         if(hostNameField.getActionListeners().length >0)
         	hostNameField.removeActionListener(hostNameField.getActionListeners()[0]);
@@ -189,77 +192,10 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
             NUMOPTIONS=NUMOPTIONS+2;
         }
-        opt1List = adapter.validOption1();
-        opt1BoxLabel = new JLabel(adapter.option1Name());
-        opt1Box.removeAllItems();
-        // need to remove ActionListener before addItem() or action event will occur
-        if(opt1Box.getActionListeners().length >0)
-        	opt1Box.removeActionListener(opt1Box.getActionListeners()[0]);
-        for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
-        
-        opt2List = adapter.validOption2();
-        opt2BoxLabel = new JLabel(adapter.option2Name());
-        opt2Box.removeAllItems();
-        // need to remove ActionListener before addItem() or action event will occur
-        if(opt2Box.getActionListeners().length >0)
-        	opt2Box.removeActionListener(opt2Box.getActionListeners()[0]);
-        for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
-
-        opt3List = adapter.validOption3();
-        opt3BoxLabel = new JLabel(adapter.option3Name());
-        opt3Box.removeAllItems();
-        // need to remove ActionListener before addItem() or action event will occur
-        if(opt3Box.getActionListeners().length >0)
-        	opt3Box.removeActionListener(opt3Box.getActionListeners()[0]);
-        for (int i=0; i<opt3List.length; i++) opt3Box.addItem(opt3List[i]);
-
-        opt4List = adapter.validOption4();
-        opt4BoxLabel = new JLabel(adapter.option4Name());
-        opt4Box.removeAllItems();
-        // need to remove ActionListener before addItem() or action event will occur
-        if(opt4Box.getActionListeners().length >0)
-        	opt4Box.removeActionListener(opt4Box.getActionListeners()[0]);
-        for (int i=0; i<opt4List.length; i++) opt4Box.addItem(opt4List[i]);
+        NUMOPTIONS = NUMOPTIONS+options.size();
 
         portField.setToolTipText("Port address setting of the TCP Connection");
         portField.setEnabled(true);
-
-        if (opt1List.length>1) {
-            NUMOPTIONS++;
-            opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
-            opt1Box.setEnabled(true);
-            opt1Box.setSelectedItem(adapter.getCurrentOption1Setting());
-        } else {
-            opt1Box.setToolTipText("There are no options for this protocol");
-            opt1Box.setEnabled(false);
-        }
-        if (opt2List.length>1) {
-            NUMOPTIONS++;
-            opt2Box.setToolTipText("");
-            opt2Box.setEnabled(true);
-            opt2Box.setSelectedItem(adapter.getCurrentOption2Setting());
-        } else {
-            opt2Box.setToolTipText("There are no options for this protocol");
-            opt2Box.setEnabled(false);
-        }
-        if (opt3List.length>1) {
-            NUMOPTIONS++;
-            opt3Box.setToolTipText("");
-            opt3Box.setEnabled(true);
-            opt3Box.setSelectedItem(adapter.getCurrentOption3Setting());
-        } else {
-            opt3Box.setToolTipText("There are no options for this protocol");
-            opt3Box.setEnabled(false);
-        }
-        if (opt4List.length>1) {
-            NUMOPTIONS++;
-            opt4Box.setToolTipText("");
-            opt4Box.setEnabled(true);
-            opt4Box.setSelectedItem(adapter.getCurrentOption4Setting());
-        } else {
-            opt4Box.setToolTipText("There are no options for this protocol");
-            opt4Box.setEnabled(false);
-        }
         
         hostNameField.setText(adapter.getHostName());
         hostNameFieldLabel = new JLabel("IP Address: ");
@@ -286,58 +222,59 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         
     protected void showAdvancedItems(){
         _details.removeAll();
+        cL.anchor = GridBagConstraints.EAST;
+        cL.insets = new Insets(2, 5, 0, 5);
+        cR.insets = new Insets(2, 0, 0, 5);
+        cR.anchor = GridBagConstraints.WEST;
+        cR.gridx = 1;
+        cL.gridx = 0;
+        int i = 0;
         int stdrows = 0;
         boolean incAdvancedOptions=true;
         if(!isPortAdvanced()) stdrows++;
         if(!isHostNameAdvanced()) stdrows++;
-        if ((!isOptList1Advanced())&&(opt1List.length>1)) stdrows++;
-        if ((!isOptList2Advanced())&&(opt2List.length>1)) stdrows++;
-        if ((!isOptList3Advanced())&&(opt3List.length>1)) stdrows++;
-        if ((!isOptList4Advanced())&&(opt4List.length>1)) stdrows++;
+        for(String item:options.keySet()){
+            if(!options.get(item).isAdvanced())
+                stdrows++;
+        }
         if(adapter.getSystemConnectionMemo()!=null) stdrows=stdrows+2;
         if (stdrows == NUMOPTIONS){
             incAdvancedOptions=false;
-        } else{
-            stdrows++;
         }
+        _details.setLayout(gbLayout);
+        i = addStandardDetails(incAdvancedOptions, i);
         if (showAdvanced.isSelected()) {
-            int advrows = stdrows;
-            if(isPortAdvanced()) advrows++;
-            if(isHostNameAdvanced()) advrows++;
-            if ((isOptList1Advanced())&&(opt1List.length>1)) advrows++;
-            if ((isOptList2Advanced())&&(opt2List.length>1)) advrows++;
-            if ((isOptList3Advanced())&&(opt3List.length>1)) advrows++;
-            if ((isOptList4Advanced())&&(opt4List.length>1)) advrows++;
-            _details.setLayout(new GridLayout(advrows,2));
-            addStandardDetails(incAdvancedOptions);
             if(isHostNameAdvanced()){
+                cR.gridy = i;
+                cL.gridy = i;
+                gbLayout.setConstraints(hostNameFieldLabel, cL);
+                gbLayout.setConstraints(hostNameField, cR);
                 _details.add(hostNameFieldLabel);
                 _details.add(hostNameField);
+                i++;
             }
             
             if(isPortAdvanced()){
+                cR.gridy = i;
+                cL.gridy = i;
+                gbLayout.setConstraints(portFieldLabel, cL);
+                gbLayout.setConstraints(portField, cR);
                 _details.add(portFieldLabel);
                 _details.add(portField);
+                i++;
             }
-            if ((isOptList1Advanced())&&(opt1List.length>1)) {
-                _details.add(opt1BoxLabel);
-                _details.add(opt1Box);
+            for(String item:options.keySet()){
+                if(options.get(item).isAdvanced()){
+                    cR.gridy = i;
+                    cL.gridy = i;
+                    gbLayout.setConstraints(options.get(item).getLabel(), cL);
+                    gbLayout.setConstraints(options.get(item).getComponent(), cR);
+                    _details.add(options.get(item).getLabel());
+                    _details.add(options.get(item).getComponent());
+                    i++;
+                }
             }
-            if ((isOptList2Advanced())&&(opt2List.length>1)) {
-                _details.add(opt2BoxLabel);
-                _details.add(opt2Box);
-            }
-            if ((isOptList3Advanced())&&(opt3List.length>1)) {
-                _details.add(opt3BoxLabel);
-                _details.add(opt3Box);
-            }
-            if ((isOptList4Advanced())&&(opt4List.length>1)) {
-                _details.add(opt4BoxLabel);
-                _details.add(opt4Box);
-            }
-        } else {
-            _details.setLayout(new GridLayout(stdrows,2));
-            addStandardDetails(incAdvancedOptions);
+
         }
         _details.validate();
         if (_details.getTopLevelAncestor()!=null){
@@ -347,45 +284,65 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         _details.repaint();
     }
     
-    protected void addStandardDetails(boolean incAdvanced){
+    protected int addStandardDetails(boolean incAdvanced, int i){
         if(!isHostNameAdvanced()){
+            cR.gridy = i;
+            cL.gridy = i;
+            gbLayout.setConstraints(hostNameFieldLabel, cL);
+            gbLayout.setConstraints(hostNameField, cR);
             _details.add(hostNameFieldLabel);
             _details.add(hostNameField);
+            i++;
         }
         
         if(!isPortAdvanced()){
+            cR.gridy = i;
+            cL.gridy = i;
+            gbLayout.setConstraints(portFieldLabel, cL);
+            gbLayout.setConstraints(portField, cR);
             _details.add(portFieldLabel);
             _details.add(portField);
+            i++;
         }
         
-        if ((!isOptList1Advanced())&&(opt1List.length>1)){
-            _details.add(opt1BoxLabel);
-            _details.add(opt1Box);
+        for(String item:options.keySet()){
+            if(!options.get(item).isAdvanced()){
+                cR.gridy = i;
+                cL.gridy = i;
+                gbLayout.setConstraints(options.get(item).getLabel(), cL);
+                gbLayout.setConstraints(options.get(item).getComponent(), cR);
+                _details.add(options.get(item).getLabel());
+                _details.add(options.get(item).getComponent());
+                i++;
+            }
         }
-        if ((!isOptList2Advanced())&&(opt2List.length>1)) {
-            _details.add(opt2BoxLabel);
-            _details.add(opt2Box);
-        }
-        if ((!isOptList3Advanced())&&(opt3List.length>1)) {
-            _details.add(opt3BoxLabel);
-            _details.add(opt3Box);
-        }
-        if ((!isOptList4Advanced())&&(opt4List.length>1)) {
-            _details.add(opt4BoxLabel);
-            _details.add(opt4Box);
-        }
-
+        
         if(adapter.getSystemConnectionMemo()!=null){
+            cR.gridy = i;
+            cL.gridy = i;
+            gbLayout.setConstraints(systemPrefixLabel, cL);
+            gbLayout.setConstraints(systemPrefixField, cR);
             _details.add(systemPrefixLabel);
             _details.add(systemPrefixField);
+            i++;
+            cR.gridy = i;
+            cL.gridy = i;
+            gbLayout.setConstraints(connectionNameLabel, cL);
+            gbLayout.setConstraints(connectionNameField, cR);
             _details.add(connectionNameLabel);
             _details.add(connectionNameField);
+            i++;
         }
         if (incAdvanced){
-            _details.add(new JLabel(" "));
+            cL.gridwidth=2;
+            cL.gridy = i;
+            cR.gridy = i;
+            gbLayout.setConstraints(showAdvanced, cL);
             _details.add(showAdvanced);
+            cL.gridwidth=1;
+            i++;
         }
-
+        return i;
     }
     
     public boolean isHostNameAdvanced() { return false; }

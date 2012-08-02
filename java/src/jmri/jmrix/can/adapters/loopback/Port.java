@@ -17,6 +17,8 @@ import jmri.jmrix.SystemConnectionMemo;
 public class Port extends AbstractSerialPortController {
 
     public Port() {
+        option1Name = "Protocol";
+        options.put(option1Name, new Option(option1Name, "Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
         mPort="(None)";
         adaptermemo = new jmri.jmrix.can.CanSystemConnectionMemo();
     }
@@ -27,36 +29,14 @@ public class Port extends AbstractSerialPortController {
         adaptermemo.setTrafficController(new LoopbackTrafficController());
 
         // do central protocol-specific configuration    
-        adaptermemo.setProtocol(mOpt1);
+        adaptermemo.setProtocol(options.get(option1Name).getCurrent());
         
         adaptermemo.configureManagers();
 
     }
     
     protected jmri.jmrix.can.CanSystemConnectionMemo adaptermemo;
-
-    /**
-     * Option 1 is CAN-based protocol
-     */
-    public String[] validOption1() { return jmri.jmrix.can.ConfigurationManager.getSystemOptions(); }
-        
-    /**
-     * Get a String that says what Option 1 represents
-     * May be an empty string, but will not be null
-     */
-    public String option1Name() { return "Connection Protocol"; }
-
-    /**
-     * Set the CAN protocol option.
-     */
-    public void configureOption1(String value) { mOpt1 = value; }
-
-    public String getCurrentOption1Setting() {
-        log.debug("getCurrentOption1Setting "+mOpt1+" "+ this);
-        if (mOpt1 == null) return validOption1()[0];
-        return mOpt1;
-    }
-
+    
     // check that this object is ready to operate
     public boolean status() { return true; }
     

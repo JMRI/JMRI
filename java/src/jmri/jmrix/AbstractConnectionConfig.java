@@ -7,6 +7,11 @@ import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JComponent;
+import java.util.Hashtable;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.util.ArrayList;
 
 import jmri.UserPreferencesManager;
 import jmri.InstanceManager;
@@ -33,37 +38,66 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
     abstract public void updateAdapter();
 
     protected int NUMOPTIONS = 2;
-
-    protected JComboBox opt1Box = new JComboBox();
-    protected JLabel opt1BoxLabel = new JLabel();
-    protected String[] opt1List;
-    public boolean isOptList1Advanced() { return true; }
     
-    protected JComboBox opt2Box = new JComboBox();
-    protected JLabel opt2BoxLabel = new JLabel();
-    protected String[] opt2List;
-    public boolean isOptList2Advanced() { return true; }
-
-    protected JComboBox opt3Box = new JComboBox();
-    protected JLabel opt3BoxLabel = new JLabel();
-    protected String[] opt3List;
-    public boolean isOptList3Advanced() { return true; }
-
-    protected JComboBox opt4Box = new JComboBox();
-    protected JLabel opt4BoxLabel = new JLabel();
-    protected String[] opt4List;
-    public boolean isOptList4Advanced() { return true; }
-
     protected JCheckBox showAdvanced = new JCheckBox("Additional Connection Settings");
 
     protected JLabel systemPrefixLabel = new JLabel("Connection Prefix");
     protected JLabel connectionNameLabel = new JLabel("Connection Name");
-    protected JTextField systemPrefixField = new JTextField();
-    protected JTextField connectionNameField = new JTextField();
+    protected JTextField systemPrefixField = new JTextField(10);
+    protected JTextField connectionNameField = new JTextField(15);
     protected String systemPrefix;
     protected String connectionName;
     
     protected JPanel _details;
+    
+    protected Hashtable<String, Option> options = new Hashtable<String, Option>();
+    
+    protected static class Option {
+        
+        String optionName;
+        JComponent optionSelection;
+        Boolean advanced = true;
+        JLabel label = null;
+        
+        Option(String name, JComponent optionSelection, Boolean advanced){
+            this.optionName = name;
+            this.optionSelection = optionSelection;
+            this.advanced = advanced;
+        }
+        
+        protected String getName(){
+            return optionName;
+        }
+        
+        protected JLabel getLabel(){
+            if(label == null)
+                label = new JLabel(getName(), JLabel.LEFT);
+            return label;
+        }
+        
+        public JComponent getComponent(){
+            return optionSelection;
+        }
+        
+        protected Boolean isAdvanced(){
+            return advanced;
+        }
+        
+        protected void setAdvanced(Boolean boo){
+            advanced = boo;
+        }
+        
+        public String getItem(){
+            if(optionSelection instanceof JComboBox){
+                return (String)((JComboBox)optionSelection).getSelectedItem();
+            } else if (optionSelection instanceof JTextField){
+                return ((JTextField)optionSelection).getText();
+            }
+            return null;
+        }
+        
+    }
+    
     //protected jmri.jmrix.PortAdapter adapter = null;
     /**
      * Load the adapter with an appropriate object
@@ -72,15 +106,21 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
     abstract protected void setInstance();
 
     abstract public String getInfo();
+    
+    protected ArrayList<JComponent> additionalItems = new ArrayList<JComponent>(0);
 
     static java.util.ResourceBundle rb = 
         java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
     
 	abstract public void loadDetails(final JPanel details) ;
     
+    GridBagLayout gbLayout = new GridBagLayout();
+    GridBagConstraints cL = new GridBagConstraints();
+    GridBagConstraints cR = new GridBagConstraints();
+    
     abstract void showAdvancedItems();
     
-    abstract void addStandardDetails(boolean incAdvanced);
+    abstract int addStandardDetails(boolean incAdvanced, int i);
         
     abstract public String getManufacturer();
     abstract public void setManufacturer(String manufacturer);

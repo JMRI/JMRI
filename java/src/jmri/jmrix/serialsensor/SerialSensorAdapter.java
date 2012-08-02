@@ -176,39 +176,6 @@ public class SerialSensorAdapter extends AbstractSerialPortController
      */
     public void configureBaudRate(String rate) {}
 
-    /**
-     * Since option 1 is not used for this, return an array with just a single string
-     */
-    public String[] validOption1() { return new String[]{""}; }
-
-    /**
-     * Option 1 not used, so return a null string.
-     */
-    public String option1Name() { return ""; }
-
-    /**
-     * The first port option isn't used, so just ignore this call.
-     */
-    public void configureOption1(String value) {}
-
-    /**
-     * Get an array of valid values for "option 2"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    public String[] validOption2() { return new String[]{""}; }
-
-    /**
-     * Get a String that says what Option 2 represents
-     * May be an empty string, but will not be null
-     */
-    public String option2Name() { return ""; }
-
-    /**
-     * Set the second port option.  Only to be used after construction, but
-     * before the openPort call
-     */
-    public void configureOption2(String value) {}
-
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;

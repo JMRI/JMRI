@@ -44,14 +44,13 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
     protected void setInstance() { if(adapter==null) adapter = new LIUSBServerAdapter(); }
 
     public void loadDetails(JPanel details) {
-     	super.loadDetails(details);
+        super.loadDetails(details);
         hostNameField.setText(LIUSBServerAdapter.DEFAULT_IP_ADDRESS);
-	hostNameField.setEnabled(false); // we can't change this now.
-	portFieldLabel.setText("Communication Port");
-	portField.setText(String.valueOf(LIUSBServerAdapter.COMMUNICATION_TCP_PORT));
-	portField.setEnabled(false); // we can't change this now.
-	opt1Box.setEnabled(false); // we can't change this now.
-	
+        hostNameField.setEnabled(false); // we can't change this now.
+        portFieldLabel.setText("Communication Port");
+        portField.setText(String.valueOf(LIUSBServerAdapter.COMMUNICATION_TCP_PORT));
+        portField.setEnabled(false); // we can't change this now.
+        options.get(adapter.getOption1Name()).getComponent().setEnabled(false); // we can't change this now.
     }
 
         protected JTextField bcastPortField = new JTextField(String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT));

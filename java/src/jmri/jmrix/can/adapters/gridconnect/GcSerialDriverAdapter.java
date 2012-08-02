@@ -28,6 +28,8 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
     
     public GcSerialDriverAdapter() {
         super();
+        option1Name = "Protocol";
+        options.put(option1Name, new Option(option1Name, "Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
         adaptermemo = new jmri.jmrix.can.CanSystemConnectionMemo();
     }
 
@@ -122,10 +124,10 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
         log.debug("Connecting port");
         tc.connectPort(this);
         
-        adaptermemo.setProtocol(mOpt1);
+        adaptermemo.setProtocol(options.get(option1Name).getCurrent());
 
         // do central protocol-specific configuration    
-        //jmri.jmrix.can.ConfigurationManager.configure(mOpt1);
+        //jmri.jmrix.can.ConfigurationManager.configure(options.get(option1Name).getCurrent());
         adaptermemo.configureManagers();
 
     }
@@ -170,37 +172,6 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
         return new int[]{57600, 115200, 230400, 250000, 333333, 460800, 500000};
     }
     
-    /**
-     * Option 1 is CAN-based protocol
-     */
-    public String[] validOption1() { return jmri.jmrix.can.ConfigurationManager.getSystemOptions(); }
-    
-    /**
-     * Get a String that says what Option 1 represents
-     * May be an empty string, but will not be null
-     */
-    public String option1Name() { return "Connection Protocol"; }
-
-    /**
-     * Set the CAN protocol option.
-     */
-    public void configureOption1(String value) { mOpt1 = value; }
-    public String getCurrentOption1Setting() {
-        if (mOpt1 == null) return validOption1()[0];
-        return mOpt1;
-    }
-
-    /**
-     * Option 2 
-     */
-    public String[] validOption2() { return new String[]{""}; }
-    public String option2Name() { return "Option 2"; }
-    public void configureOption2(String value) { mOpt2 = value; }
-    public String getCurrentOption2Setting() {
-        if (mOpt2 == null) return validOption2()[0];
-        return mOpt2;
-    }
-   
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;

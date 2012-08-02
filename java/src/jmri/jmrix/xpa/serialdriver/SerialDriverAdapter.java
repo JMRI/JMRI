@@ -28,6 +28,12 @@ import gnu.io.SerialPort;
  */
 public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix.SerialPortAdapter {
 
+    public SerialDriverAdapter(){
+        super();
+        option1Name = "ModemInitString";
+        options.put(option1Name, new Option(option1Name, "Modem Initilization String : ", new String[]{"ATX0E0"}));
+    }
+
     SerialPort activeSerialPort = null;
 
     public String openPort(String portName, String appName)  {
@@ -155,30 +161,6 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
     public String[] validBaudRates() {
         return new String[]{"9,600 bps"};
     }
-
-    /**
-     * Option 1 contains the initilization string
-     */
-    public String[] validOption1() { return new String[]{"ATX0E0"}; 
-    }
-
-    /**
-     * Option 1 is the Initilization String
-     */
-    public String option1Name() { return "Modem Initilization String"; }
-
-
-    /**
-     * Get an array of valid values for "option 2"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    public String[] validOption2() { return new String[]{""}; }
-
-    /**
-     * Get a String that says what Option 2 represents
-     * May be an empty string, but will not be null
-     */
-    public String option2Name() { return ""; }
 
     private boolean opened = false;
     InputStream serialStream = null;

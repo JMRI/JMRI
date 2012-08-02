@@ -107,37 +107,7 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
         selectedSpeed = rate;
         super.configureBaudRate(rate);
     }
-
-    String[] stdOption1Values = new String[]{""};
-
-    /**
-     * Option 1 is not used for anything
-     */
-    public String[] validOption1() { return new String[]{""}; }
-    String opt1CurrentValue = null;
-
-    /**
-     * Option 1 not used, so return a null string.
-     */
-    public String option1Name() { return ""; }
-
-    /**
-     * The first port option isn't used, so just ignore this call.
-     */
-    public void configureOption1(String value) {}
-
-    /**
-     * Get an array of valid values for "option 2"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    public String[] validOption2() { return new String[]{""}; }
-
-    /**
-     * Get a String that says what Option 2 represents
-     * May be an empty string, but will not be null
-     */
-    public String option2Name() { return ""; }
-
+    
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;

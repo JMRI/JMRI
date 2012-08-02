@@ -70,50 +70,6 @@ public void configure() {
     public int[] validBaudNumber() {
         return validSpeedValues;
     }
-
-    /**
-     * Get an array of valid values for "option 1"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    public String[] validOption1() { return new String[]{""}; }
-
-    /**
-     * Get a String that says what Option 1 represents
-     * May be an empty string, but will not be null
-     */
-    public String option1Name() { return ""; }
-
-    /**
-     * Set the second port option.
-     */
-    public void configureOption1(String value) { mOpt1 = value; }
-
-    public String getCurrentOption1Setting() {
-        if (mOpt1 == null) return validOption1()[0];
-        return mOpt1;
-    }
-
-    /**
-     * Get an array of valid values for "option 2"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    public String[] validOption2() { return new String[]{""}; }
-
-    /**
-     * Get a String that says what Option 2 represents
-     * May be an empty string, but will not be null
-     */
-    public String option2Name() { return ""; }
-
-    /**
-     * Set the second port option.
-     */
-    public void configureOption2(String value) { mOpt2 = value; }
-    
-    public String getCurrentOption2Setting() {
-        if (mOpt2 == null) return validOption2()[0];
-        return mOpt2;
-    }
     
     public boolean okToSend() {
         return true;

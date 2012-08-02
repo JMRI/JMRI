@@ -11,6 +11,9 @@ import java.awt.event.FocusListener;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import javax.swing.JOptionPane;
+import javax.swing.JComboBox;
+
+import java.util.Hashtable;
 
 import java.awt.Color;
 
@@ -54,27 +57,6 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     	if (log.isDebugEnabled()) log.debug("init called for "+name());
         if (init) return;
 
-        opt1Box.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                adapter.configureOption1((String)opt1Box.getSelectedItem());
-            }
-        });
-        opt2Box.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                adapter.configureOption2((String)opt2Box.getSelectedItem());
-            }
-        });
-        opt3Box.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                adapter.configureOption3((String)opt3Box.getSelectedItem());
-            }
-        });
-        opt4Box.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                adapter.configureOption4((String)opt4Box.getSelectedItem());
-            }
-        });
-
         if(adapter.getSystemConnectionMemo()!=null){
             systemPrefixField.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -110,15 +92,25 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
                 }
                 public void focusGained(FocusEvent e){ }
             });
+            for(String i:options.keySet()){
+                final String item = i;
+                if(options.get(i).getComponent() instanceof JComboBox){
+                    ((JComboBox)options.get(i).getComponent()).addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            adapter.setOptionState(item, options.get(item).getItem());
+                        }
+                    });
+                }
+            }
+
         }
         init = true;
     }
 
     public void updateAdapter(){
-        adapter.configureOption1((String)opt1Box.getSelectedItem());
-        adapter.configureOption2((String)opt2Box.getSelectedItem());
-        adapter.configureOption3((String)opt3Box.getSelectedItem());
-        adapter.configureOption4((String)opt4Box.getSelectedItem());
+        for(String i:options.keySet()){
+            adapter.setOptionState(i, options.get(i).getItem());
+        }
 
         if(!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())){
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
@@ -153,72 +145,22 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
 	public void loadDetails(final JPanel details) {
         _details = details;
         setInstance();
+        if(!init){
+            //Build up list of options
+            Hashtable<String, AbstractPortController.Option> adapterOptions = ((AbstractPortController)adapter).getOptionList();
+            options = new Hashtable<String, Option>();
+            for(String i:adapterOptions.keySet()){
+                JComboBox opt = new JComboBox(adapterOptions.get(i).getOptions());
+                opt.setSelectedItem(adapterOptions.get(i).getCurrent());
+                options.put(i, new Option(adapterOptions.get(i).getDisplayText(), opt, adapterOptions.get(i).isAdvanced()));
+            }
+        }
 
         if(adapter.getSystemConnectionMemo()!=null){
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
-    	
-        opt1List = adapter.validOption1();
-        opt1Box.removeAllItems();
-        // need to remove ActionListener before addItem() or action event will occur
-        if(opt1Box.getActionListeners().length >0)
-        	opt1Box.removeActionListener(opt1Box.getActionListeners()[0]);
-        for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
-
-        opt2List = adapter.validOption2();
-        opt2Box.removeAllItems();
-        // need to remove ActionListener before addItem() or action event will occur
-        if(opt2Box.getActionListeners().length >0)
-        	opt2Box.removeActionListener(opt2Box.getActionListeners()[0]);
-        for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
-
-        opt3List = adapter.validOption3();
-        opt3Box.removeAllItems();
-        // need to remove ActionListener before addItem() or action event will occur
-        if(opt3Box.getActionListeners().length >0)
-        	opt3Box.removeActionListener(opt3Box.getActionListeners()[0]);
-        for (int i=0; i<opt3List.length; i++) opt3Box.addItem(opt3List[i]);
-
-        opt4List = adapter.validOption4();
-        opt4Box.removeAllItems();
-        // need to remove ActionListener before addItem() or action event will occur
-        if(opt4Box.getActionListeners().length >0)
-        	opt4Box.removeActionListener(opt4Box.getActionListeners()[0]);
-        for (int i=0; i<opt4List.length; i++) opt4Box.addItem(opt2List[i]);
-
-        if (opt1List.length>1) {
-            opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
-            opt1Box.setEnabled(true);
-            opt1Box.setSelectedItem(adapter.getCurrentOption1Setting());
-        } else {
-            opt1Box.setToolTipText("There are no options for this protocol");
-            opt1Box.setEnabled(false);
-        }
-        if (opt2List.length>1) {
-            opt2Box.setToolTipText("");
-            opt2Box.setEnabled(true);
-            opt2Box.setSelectedItem(adapter.getCurrentOption2Setting());
-        } else {
-            opt2Box.setToolTipText("There are no options for this protocol");
-            opt2Box.setEnabled(false);
-        }
-        if (opt3List.length>1) {
-            opt3Box.setToolTipText("");
-            opt3Box.setEnabled(true);
-            opt3Box.setSelectedItem(adapter.getCurrentOption3Setting());
-        } else {
-            opt3Box.setToolTipText("There are no options for this protocol");
-            opt3Box.setEnabled(false);
-        }
-        if (opt4List.length>1) {
-            opt4Box.setToolTipText("");
-            opt4Box.setEnabled(true);
-            opt4Box.setSelectedItem(adapter.getCurrentOption4Setting());
-        } else {
-            opt4Box.setToolTipText("There are no options for this protocol");
-            opt4Box.setEnabled(false);
-        }
+        NUMOPTIONS = NUMOPTIONS+options.size();
     
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
@@ -237,29 +179,20 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         _details.removeAll();
         _details.setLayout(new GridLayout(0,2));	// 0 = any number of rows
         boolean incAdvancedOptions=false;
-        if ((isOptList1Advanced())&&(opt1List.length>1)) incAdvancedOptions=true;
-        if ((isOptList2Advanced())&&(opt2List.length>1)) incAdvancedOptions=true;
-        if ((isOptList3Advanced())&&(opt3List.length>1)) incAdvancedOptions=true;
-        if ((isOptList4Advanced())&&(opt4List.length>1)) incAdvancedOptions=true;
-        addStandardDetails(incAdvancedOptions);
+        for(String i:options.keySet()){
+            if(options.get(i).isAdvanced())
+                incAdvancedOptions=true;
+        }
+
+        addStandardDetails(incAdvancedOptions, 0);
         
         if (showAdvanced.isSelected()) {
-            if ((isOptList1Advanced())&&(opt1List.length>1)) {
-                _details.add(opt1BoxLabel = new JLabel(adapter.option1Name()));
-                _details.add(opt1Box);
+            for(String item:options.keySet()){
+                if(options.get(item).isAdvanced()){
+                    _details.add(options.get(item).getLabel());
+                    _details.add(options.get(item).getComponent());
+                }
             }
-            if ((isOptList2Advanced())&&(opt2List.length>1)) {
-                _details.add(opt2BoxLabel = new JLabel(adapter.option2Name()));
-                _details.add(opt2Box);
-            }           
-            if ((isOptList3Advanced())&&(opt3List.length>1)) {
-                _details.add(opt3BoxLabel = new JLabel(adapter.option3Name()));
-                _details.add(opt3Box);
-            }           
-            if ((isOptList4Advanced())&&(opt4List.length>1)) {
-                _details.add(opt4BoxLabel = new JLabel(adapter.option4Name()));
-                _details.add(opt4Box);
-            }           
         }
         _details.validate();
         if (_details.getTopLevelAncestor()!=null){
@@ -269,25 +202,12 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         _details.repaint();
     }
     
-    protected void addStandardDetails(boolean incAdvanced){
-        if ((!isOptList1Advanced())&&(opt1List.length>1)){
-            _details.add(opt1BoxLabel);
-            _details.add(opt1Box);
-        }
-        
-        if ((!isOptList2Advanced())&&(opt2List.length>1)) {
-            _details.add(opt2BoxLabel);
-            _details.add(opt2Box);
-        }
-
-        if ((!isOptList3Advanced())&&(opt3List.length>1)) {
-            _details.add(opt3BoxLabel);
-            _details.add(opt3Box);
-        }
-        
-        if ((!isOptList4Advanced())&&(opt4List.length>1)) {
-            _details.add(opt4BoxLabel);
-            _details.add(opt4Box);
+    protected int addStandardDetails(boolean incAdvanced, int i){
+        for(String item:options.keySet()){
+            if(!options.get(item).isAdvanced()){
+                _details.add(options.get(item).getLabel());
+                _details.add(options.get(item).getComponent());
+            }
         }
         
         if(adapter.getSystemConnectionMemo()!=null){
@@ -300,6 +220,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
             _details.add(new JLabel(" "));
             _details.add(showAdvanced);
         }
+        return i;
     }
 
     public String getManufacturer() { return adapter.getManufacturer(); }
