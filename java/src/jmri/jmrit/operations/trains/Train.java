@@ -429,7 +429,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (hours < 10)
 			h = "0"+h;
 		if (minutes < 10)
-			return d+h+":0"+minutes;
+			return d+h+":0"+minutes+am_pm;
 		return d+h+":"+minutes+am_pm;
 	}
 	
