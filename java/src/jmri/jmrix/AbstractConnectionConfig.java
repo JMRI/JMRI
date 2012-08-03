@@ -69,7 +69,7 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
             return optionName;
         }
         
-        protected JLabel getLabel(){
+        public JLabel getLabel(){
             if(label == null)
                 label = new JLabel(getName(), JLabel.LEFT);
             return label;
@@ -97,8 +97,7 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
         }
         
     }
-    
-    //protected jmri.jmrix.PortAdapter adapter = null;
+
     /**
      * Load the adapter with an appropriate object
      * <i>unless</I> its already been set.

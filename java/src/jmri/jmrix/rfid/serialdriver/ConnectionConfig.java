@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JComboBox;
 
 /**
  * Definition of objects to handle configuring a layout connection
@@ -33,49 +34,29 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 	
     @Override
     public void loadDetails(JPanel details) {
-        // have to embed the usual one in a new JPanel
-
-        JPanel p = new JPanel();
-        super.loadDetails(p);
-
-        details.setLayout(new BoxLayout(details,BoxLayout.Y_AXIS));
-        details.add(p);
-
-        // add another button
-        //JButton b = new JButton("Configure nodes");
-
-        //details.add(b);
+        super.loadDetails(details);
         
-        //b.addActionListener(new NodeConfigAction());
-
-        // Add an extra ActionListener to make option 2
-        // dependant on option 1 choice
-
-        /*opt1Box.addActionListener(new ActionListener() {
+        //Add a listener to the combo box
+        ((JComboBox)options.get(adapter.getOption1Name()).getComponent()).addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                enableOpt2(opt1Box.getSelectedItem());
+                enableOpt2(options.get(adapter.getOption1Name()).getItem());
             }
-        });*/
+        });
+        
+        enableOpt2(options.get(adapter.getOption1Name()).getItem());
 
-        //opt1Box.setToolTipText("Choose RFID reader type");
-
-        //enableOpt2(opt1Box.getSelectedItem());
     }
 
-    /*private void enableOpt2(Object o) {
+    private void enableOpt2(Object o) {
         boolean enable = o.equals("MERG Concentrator");
-        opt2BoxLabel.setEnabled(enable);
-        opt2Box.setEnabled(enable);
-        opt2Box.setToolTipText(enable?
+        options.get(adapter.getOption2Name()).getLabel().setEnabled(enable);
+        options.get(adapter.getOption2Name()).getComponent().setEnabled(enable);
+        options.get(adapter.getOption2Name()).getComponent().setToolTipText(enable?
             "Choose RFID concentrator range setting":
             "Range setting not applicable for selected RFID reader type");
-    }*/
+    }
 
     public String name() { return "RFID Device Connection"; }
-
-    //public boolean isOptList1Advanced() { return false; }
-
-    //public boolean isOptList2Advanced() { return false; }
     
     protected void setInstance() {
         if (adapter==null)

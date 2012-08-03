@@ -222,7 +222,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         
     protected void showAdvancedItems(){
         _details.removeAll();
-        cL.anchor = GridBagConstraints.EAST;
+        cL.anchor = GridBagConstraints.WEST;
         cL.insets = new Insets(2, 5, 0, 5);
         cR.insets = new Insets(2, 0, 0, 5);
         cR.anchor = GridBagConstraints.WEST;
