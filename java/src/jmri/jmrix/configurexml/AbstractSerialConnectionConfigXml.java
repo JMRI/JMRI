@@ -2,11 +2,8 @@ package jmri.jmrix.configurexml;
 
 import jmri.configurexml.*;
 import jmri.jmrix.SerialPortAdapter;
-import jmri.jmrix.AbstractPortController;
 
 import org.jdom.Element;
-import java.util.Hashtable;
-import java.util.List;
 
 /**
  * Abstract base (and partial implementation) for

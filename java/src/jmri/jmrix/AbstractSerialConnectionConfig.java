@@ -258,12 +258,12 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         setInstance();
         if(!init){
             //Build up list of options
-            Hashtable<String, AbstractPortController.Option> adapterOptions = ((AbstractPortController)adapter).getOptionList();
+            String[] optionsAvailable = adapter.getOptions();
             options = new Hashtable<String, Option>();
-            for(String i:adapterOptions.keySet()){
-                JComboBox opt = new JComboBox(adapterOptions.get(i).getOptions());
-                opt.setSelectedItem(adapterOptions.get(i).getCurrent());
-                options.put(i, new Option(adapterOptions.get(i).getDisplayText(), opt, adapterOptions.get(i).isAdvanced()));
+            for(String i:optionsAvailable){
+                JComboBox opt = new JComboBox(adapter.getOptionChoices(i));
+                opt.setSelectedItem(adapter.getOptionState(i));
+                options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
             }
         }
         
@@ -331,7 +331,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         
     protected void showAdvancedItems(){
         _details.removeAll();
-        cL.anchor = GridBagConstraints.EAST;
+        cL.anchor = GridBagConstraints.WEST;
         cL.insets = new Insets(2, 5, 0, 5);
         cR.insets = new Insets(2, 0, 0, 5);
         cR.anchor = GridBagConstraints.WEST;
@@ -345,7 +345,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         for(String item:options.keySet()){
             if(!options.get(item).isAdvanced())
                 stdrows++;
-        
         }
 
         if(adapter.getSystemConnectionMemo()!=null) stdrows=stdrows+2;
@@ -353,11 +352,9 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             incAdvancedOptions=false;
         }
         _details.setLayout(gbLayout);
-
+        i = addStandardDetails(incAdvancedOptions, i);
         if (showAdvanced.isSelected()) {
-            
-            //_details.setLayout(new GridLayout(0,2));
-            i = addStandardDetails(incAdvancedOptions, i);
+
             if(isPortAdvanced()){
                 cR.gridy = i;
                 cL.gridy = i;
@@ -390,9 +387,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                     i++;
                 }
             }
-        } else {
-            //_details.setLayout(new GridLayout(0,2));
-            i = addStandardDetails(incAdvancedOptions, i);
         }
         cL.gridwidth=2;
         for(JComponent item: additionalItems){
@@ -402,12 +396,12 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             i++;
         }
         cL.gridwidth=1;
-        _details.validate();
-        if (_details.getTopLevelAncestor()!=null){
-            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).getPreferredSize());
-            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).pack();
+        
+        if (_details.getParent()!=null && _details.getParent() instanceof javax.swing.JViewport){
+            javax.swing.JViewport vp = (javax.swing.JViewport)_details.getParent();
+            vp.validate();
+            vp.repaint();
         }
-        _details.repaint();
     }
     
     protected int addStandardDetails(boolean incAdvanced, int i){
@@ -431,50 +425,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             i++;
         }
         
-        for(String item:options.keySet()){
-            if(!options.get(item).isAdvanced()){
-                cR.gridy = i;
-                cL.gridy = i;
-                gbLayout.setConstraints(options.get(item).getLabel(), cL);
-                gbLayout.setConstraints(options.get(item).getComponent(), cR);
-                _details.add(options.get(item).getLabel());
-                _details.add(options.get(item).getComponent());
-                i++;
-            }
-        }
-
-        if(adapter.getSystemConnectionMemo()!=null){
-            cR.gridy = i;
-            cL.gridy = i;
-            gbLayout.setConstraints(systemPrefixLabel, cL);
-            gbLayout.setConstraints(systemPrefixField, cR);
-            _details.add(systemPrefixLabel);
-            _details.add(systemPrefixField);
-            i++;
-            cR.gridy = i;
-            cL.gridy = i;
-            gbLayout.setConstraints(connectionNameLabel, cL);
-            gbLayout.setConstraints(connectionNameField, cR);
-            _details.add(connectionNameLabel);
-            _details.add(connectionNameField);
-            i++;
-        }
-        if (incAdvanced){
-            cL.gridwidth=2;
-            cL.gridy = i;
-            cR.gridy = i;
-            gbLayout.setConstraints(showAdvanced, cL);
-            _details.add(showAdvanced);
-            cL.gridwidth=1;
-            i++;
-        }
-        _details.validate();
-        /*if (_details.getTopLevelAncestor()!=null){
-            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).getPreferredSize());
-            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).pack();
-        }
-        _details.repaint();*/
-        return i;
+        return addStandardDetails(adapter, incAdvanced, i);
     }
     
     public boolean isPortAdvanced() { return false; }

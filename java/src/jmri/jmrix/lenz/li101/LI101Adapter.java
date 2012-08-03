@@ -33,7 +33,7 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
     public LI101Adapter(){
         super();
         option1Name = "FlowControl";
-        options.put(option1Name, new Option(option1Name, "LI101 connection uses : ", validOption1));
+        options.put(option1Name, new Option("LI101 connection uses : ", validOption1));
     }
     
     SerialPort activeSerialPort = null;
@@ -266,11 +266,11 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
         activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
         
         // find and configure flow control
-        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for options.get(option1Name).getCurrent()
-        if (!options.get(option1Name).getCurrent().equals(validOption1[0]))
+        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
+        if (!getOptionState(option1Name).equals(validOption1[0]))
             flow = 0;
         activeSerialPort.setFlowControlMode(flow);
-        if (options.get(option2Name).getCurrent().equals(validOption2[0]))
+        if (getOptionState(option2Name).equals(validOption2[0]))
             checkBuffer = true;
     }
     

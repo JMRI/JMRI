@@ -32,7 +32,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
     public EliteAdapter(){
         super();
         option1Name = "FlowControl";
-        options.put(option1Name, new Option(option1Name, "Elite connection uses : ", validOption1));
+        options.put(option1Name, new Option("Elite connection uses : ", validOption1));
     }
     
     Vector<String> portNameVector = null;
@@ -269,10 +269,10 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         int flow = 0;  // no flow control is first in the elite setup,
         // since it doesn't seem to work with flow
         // control enabled.
-        if (!options.get(option1Name).getCurrent().equals(validOption1[0]))
+        if (!getOptionState(option1Name).equals(validOption1[0]))
             flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         activeSerialPort.setFlowControlMode(flow);
-        if (!options.get(option2Name).getCurrent().equals(validOption2[0]))
+        if (!getOptionState(option2Name).equals(validOption2[0]))
             CheckBuffer = false;    
     }
     

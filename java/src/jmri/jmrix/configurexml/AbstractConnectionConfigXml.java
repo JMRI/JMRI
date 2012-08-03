@@ -3,10 +3,8 @@ package jmri.jmrix.configurexml;
 import jmri.configurexml.*;
 import jmri.jmrix.SerialPortAdapter;
 import jmri.jmrix.PortAdapter;
-import jmri.jmrix.AbstractPortController;
 
 import org.jdom.Element;
-import java.util.Hashtable;
 import java.util.List;
 
 /**
@@ -124,11 +122,18 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
 
     protected void saveOptions(Element e, PortAdapter adapter){
         Element element = new Element("options");
-        Hashtable<String, AbstractPortController.Option> options = ((AbstractPortController)adapter).getOptionList();
+        String[] options = adapter.getOptions();
+        /*Hashtable<String, AbstractPortController.Option> options = ((AbstractPortController)adapter).getOptionList();
         for(String i:options.keySet()){
             Element elem = new Element("option");
             elem.addContent(new Element("name").addContent(options.get(i).getName()));
             elem.addContent(new Element("value").addContent(options.get(i).getCurrent()));
+            element.addContent(elem);
+        }*/
+        for(String i:options){
+            Element elem = new Element("option");
+            elem.addContent(new Element("name").addContent(i));
+            elem.addContent(new Element("value").addContent(adapter.getOptionState(i)));
             element.addContent(elem);
         }
         e.addContent(element);
@@ -140,7 +145,7 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
         @SuppressWarnings("unchecked")
         List<Element> optionList = e.getChildren("option");
         for (Element so : optionList) {
-            ((AbstractPortController)adapter).setOptionState(so.getChild("name").getText(), so.getChild("value").getText());
+            adapter.setOptionState(so.getChild("name").getText(), so.getChild("value").getText());
         }
     }
     /**

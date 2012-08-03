@@ -3,7 +3,6 @@
 package jmri.jmrix.acela.serialdriver;
 
 import javax.swing.JButton;
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import jmri.jmrix.acela.nodeconfig.NodeConfigAction;
 

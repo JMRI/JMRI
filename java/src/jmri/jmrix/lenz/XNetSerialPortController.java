@@ -18,7 +18,7 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     public XNetSerialPortController(){
         super();
         //option2Name = "Buffer";
-        //options.put(option2Name, new Option(option2Name, "Check Buffer : ", validOption2));
+        //options.put(option2Name, new Option("Check Buffer : ", validOption2));
         adaptermemo = new XNetSystemConnectionMemo();
     }
 
@@ -52,8 +52,8 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     /* Option 2 is not currently used with RxTx 2.0.  In the past, it
        was used for the "check buffer status when sending" If this is still set        in a configuration file, we need to handle it, but we are not writing it        to new configuration files. */
     /*public String getCurrentOption2Setting() {
-        if(options.get(option2Name).getCurrent()==null) return("no");
-        else return options.get(option2Name).getCurrent();
+        if(getOptionState(option2Name)==null) return("no");
+        else return getOptionState(option2Name);
     }*/
 
     protected String [] validOption2 = new String[]{"yes", "no"};

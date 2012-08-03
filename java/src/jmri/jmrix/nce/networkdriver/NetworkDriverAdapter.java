@@ -20,7 +20,7 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
     public NetworkDriverAdapter() {
         super();
         option2Name = "Eprom";
-        options.put(option2Name, new Option(option2Name, "Command Station EPROM", new String[]{"2004 or earlier", "2006 or later"}));
+        options.put(option2Name, new Option("Command Station EPROM", new String[]{"2004 or earlier", "2006 or later"}));
         adaptermemo = new NceSystemConnectionMemo();
         setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
     }

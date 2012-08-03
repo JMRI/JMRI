@@ -32,8 +32,8 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         super();
         option1Name = "Adapter";
         option2Name = "Concentrator-Range";
-        options.put(option1Name, new Option(option1Name, "Adapter:", new String[]{"Generic Stand-alone", "MERG Concentrator"}, false));
-        options.put(option2Name, new Option(option2Name, "Concentrator range:", new String[]{"A-H","I-P"}, false));
+        options.put(option1Name, new Option("Adapter:", new String[]{"Generic Stand-alone", "MERG Concentrator"}, false));
+        options.put(option2Name, new Option("Concentrator range:", new String[]{"A-H","I-P"}, false));
     }
 
     @Override

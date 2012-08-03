@@ -33,7 +33,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
     public SerialDriverAdapter() {
         super();
         option1Name = "Eprom";
-        options.put(option1Name, new Option(option1Name, "Command Station EPROM", new String[]{"2004 or earlier", "2006 or later"}));
+        options.put(option1Name, new Option("Command Station EPROM", new String[]{"2004 or earlier", "2006 or later"}));
         setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
         adaptermemo = new NceSystemConnectionMemo();
     }

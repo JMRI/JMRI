@@ -2,11 +2,9 @@
 
 package jmri.jmrix.lenz.xntcp;
 
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -88,11 +86,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
 		@Override
     public void loadDetails(final JPanel d) {
 		super.loadDetails(d);
-		/*opt1Box.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				enableInput();
-			}
-		});*/
+
         if(options.get("XnTcpInterface").getComponent() instanceof JComboBox){
             ((JComboBox)options.get("XnTcpInterface").getComponent()).addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {

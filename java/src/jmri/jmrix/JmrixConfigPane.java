@@ -11,8 +11,8 @@ import javax.swing.BorderFactory;
 import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /**
  * Provide GUI to configure communications links.
@@ -265,8 +265,10 @@ public class JmrixConfigPane extends JPanel {
         initialPanel.add(manufacturerPanel);
         initialPanel.add(connectionPanel);
         add(initialPanel, BorderLayout.NORTH);
-        details.setBorder(BorderFactory.createTitledBorder("Settings:"));
-        add(details, BorderLayout.CENTER);
+        
+        JScrollPane scroll = new JScrollPane(details);
+        scroll.setBorder(BorderFactory.createTitledBorder("Settings:"));
+        add(scroll, BorderLayout.CENTER);
         
         selection();  // first time through, pretend we've selected a value
         			  // to load the rest of the GUI
@@ -333,7 +335,6 @@ public class JmrixConfigPane extends JPanel {
             }
         }
         validate();
-        if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
         
         repaint();
     }

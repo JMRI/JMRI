@@ -35,6 +35,20 @@
         </xs:appinfo>
     </xs:annotation>
     <xs:sequence>
+    <xs:element name="options" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="option" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+              <xs:sequence>
+                <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1" />
+                <xs:element name="value" type="xs:string" minOccurs="1" maxOccurs="1" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element> 
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="node" minOccurs="0" maxOccurs="unbounded">
         <xs:complexType>
           <xs:sequence>
@@ -68,13 +82,17 @@
           <xs:attribute name="defaultCSProtocol" type="xs:token"/>
           <xs:attribute name="defaultCSLocoDescription" type="xs:string"/>
           <xs:attribute name="locoMaster" type="xs:string"/>
+          <xs:attribute name="ecosRosterAttribute" type="xs:string"/>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
     <xs:attribute name="port" type="xs:string"/>
     <xs:attribute name="speed" type="xs:string"/>
+    <xs:attribute name="address" type="xs:string"/>
     <xs:attribute name="option1" type="xs:string"/>
     <xs:attribute name="option2" type="xs:string"/>
+    <xs:attribute name="option3" type="xs:string"/>
+    <xs:attribute name="option4" type="xs:string"/>
     <xs:attribute name="manufacturer" type="xs:string"/>
     <xs:attribute name="disabled" type="xs:string"/>
     <xs:attribute name="userName" type="xs:string"/>

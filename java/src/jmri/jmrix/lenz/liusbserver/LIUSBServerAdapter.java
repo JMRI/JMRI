@@ -54,7 +54,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         public LIUSBServerAdapter(){
             super();
             option1Name = "BroadcastPort";
-            options.put(option1Name, new Option(option1Name, "Broadcast Port", new String[]{String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT),""}));
+            options.put(option1Name, new Option("Broadcast Port", new String[]{String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT),""}));
         }
 
     synchronized public String openPort(String portName, String appName)  {

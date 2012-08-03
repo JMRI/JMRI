@@ -58,6 +58,7 @@ public class TabbedPreferences extends AppConfigBase {
     ArrayList<preferencesCatItems> preferencesArray = new ArrayList<preferencesCatItems>();
     JPanel buttonpanel;
     JList list;
+    JButton save;
     JScrollPane listScroller;
     int initalisationState = 0x00;
     
@@ -114,7 +115,6 @@ public class TabbedPreferences extends AppConfigBase {
         buttonpanel = new JPanel();
         buttonpanel.setLayout(new BoxLayout(buttonpanel,BoxLayout.Y_AXIS));
         buttonpanel.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 3));
-        buttonpanel.add(listScroller);
         
         detailpanel = new JPanel();
         detailpanel.setLayout(new CardLayout());
@@ -124,7 +124,7 @@ public class TabbedPreferences extends AppConfigBase {
         items.add(0, gui);
         
         ImageIcon saveIcon = new ImageIcon("resources"+File.separator+"icons"+File.separator+"misc" + File.separator+ "gui3" + File.separator+"SaveIcon.png");
-        JButton save = new JButton(rb.getString("ButtonSave"), saveIcon);
+        save = new JButton(rb.getString("ButtonSave"), saveIcon);
         save.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     invokeSaveOptions();
@@ -218,7 +218,6 @@ public class TabbedPreferences extends AppConfigBase {
         add(new JSeparator(JSeparator.VERTICAL));
         add(detailpanel);
         
-        buttonpanel.add(save);
         list.setSelectedIndex(0);
         selection(preferencesArray.get(0).getPrefItem());
         initalisationState = INITIALISED;
@@ -319,9 +318,7 @@ public class TabbedPreferences extends AppConfigBase {
           Object value = UIManager.get (key);
           
           if (value instanceof javax.swing.plaf.FontUIResource){
-            //System.out.println(key);
             f = UIManager.getFont(key).deriveFont(Font.PLAIN, size);
-            //System.out.println(f.getName() + " " + f.getFontName() + " " + f.getFamily());
             UIManager.put (key, f);
           }
         }
@@ -423,7 +420,7 @@ public class TabbedPreferences extends AppConfigBase {
     }
     
     void updateJList(){
-        buttonpanel.remove(listScroller);
+        buttonpanel.removeAll();
         if (list.getListSelectionListeners().length>0){
             list.removeListSelectionListener(list.getListSelectionListeners()[0]);
         }
@@ -439,14 +436,14 @@ public class TabbedPreferences extends AppConfigBase {
                 selection(item.getPrefItem());
             }
         });
-        buttonpanel.add(listScroller);    
+        buttonpanel.add(listScroller);
+        buttonpanel.add(save);
     }
     
     void addConnection(int tabPosition, final JmrixConfigPane configPane){
         JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
-        p.add(configPane);
-        p.add(Box.createVerticalGlue());
+        p.setLayout(new BorderLayout());
+        p.add(configPane, BorderLayout.CENTER);
         
         JButton tabCloseButton = new JButton(deleteConnectionIcon);
         tabCloseButton.setPreferredSize(deleteConnectionButtonSize);
@@ -464,7 +461,7 @@ public class TabbedPreferences extends AppConfigBase {
             }
         });
         c.add(disable);
-        p.add(c);
+        p.add(c, BorderLayout.SOUTH);
         String title;
 
         if (configPane.getConnectionName()!=null){

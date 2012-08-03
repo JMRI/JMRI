@@ -32,15 +32,15 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
     }
     
     protected final UserPreferencesManager pref = InstanceManager.getDefault(UserPreferencesManager.class);
-
+    
     abstract void checkInitDone();
-
+    
     abstract public void updateAdapter();
-
+    
     protected int NUMOPTIONS = 2;
     
     protected JCheckBox showAdvanced = new JCheckBox("Additional Connection Settings");
-
+    
     protected JLabel systemPrefixLabel = new JLabel("Connection Prefix");
     protected JLabel connectionNameLabel = new JLabel("Connection Name");
     protected JTextField systemPrefixField = new JTextField(10);
@@ -54,24 +54,24 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
     
     protected static class Option {
         
-        String optionName;
+        String optionDisplayName;
         JComponent optionSelection;
         Boolean advanced = true;
         JLabel label = null;
         
         Option(String name, JComponent optionSelection, Boolean advanced){
-            this.optionName = name;
+            this.optionDisplayName = name;
             this.optionSelection = optionSelection;
             this.advanced = advanced;
         }
         
-        protected String getName(){
-            return optionName;
+        protected String getDisplayName(){
+            return optionDisplayName;
         }
         
         public JLabel getLabel(){
             if(label == null)
-                label = new JLabel(getName(), JLabel.LEFT);
+                label = new JLabel(getDisplayName(), JLabel.LEFT);
             return label;
         }
         
@@ -95,7 +95,6 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
             }
             return null;
         }
-        
     }
 
     /**
@@ -103,11 +102,11 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
      * <i>unless</I> its already been set.
      */
     abstract protected void setInstance();
-
+    
     abstract public String getInfo();
     
     protected ArrayList<JComponent> additionalItems = new ArrayList<JComponent>(0);
-
+    
     static java.util.ResourceBundle rb = 
         java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
     
@@ -119,17 +118,55 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
     
     abstract void showAdvancedItems();
     
-    abstract int addStandardDetails(boolean incAdvanced, int i);
+    protected int addStandardDetails(PortAdapter adapter, boolean incAdvanced, int i){
+        for(String item:options.keySet()){
+            if(!options.get(item).isAdvanced()){
+                cR.gridy = i;
+                cL.gridy = i;
+                gbLayout.setConstraints(options.get(item).getLabel(), cL);
+                gbLayout.setConstraints(options.get(item).getComponent(), cR);
+                _details.add(options.get(item).getLabel());
+                _details.add(options.get(item).getComponent());
+                i++;
+            }
+        }
+        
+        if(adapter.getSystemConnectionMemo()!=null){
+            cR.gridy = i;
+            cL.gridy = i;
+            gbLayout.setConstraints(systemPrefixLabel, cL);
+            gbLayout.setConstraints(systemPrefixField, cR);
+            _details.add(systemPrefixLabel);
+            _details.add(systemPrefixField);
+            i++;
+            cR.gridy = i;
+            cL.gridy = i;
+            gbLayout.setConstraints(connectionNameLabel, cL);
+            gbLayout.setConstraints(connectionNameField, cR);
+            _details.add(connectionNameLabel);
+            _details.add(connectionNameField);
+            i++;
+        }
+        if (incAdvanced){
+            cL.gridwidth=2;
+            cL.gridy = i;
+            cR.gridy = i;
+            gbLayout.setConstraints(showAdvanced, cL);
+            _details.add(showAdvanced);
+            cL.gridwidth=1;
+            i++;
+        }
+        return i;
+    }
         
     abstract public String getManufacturer();
     abstract public void setManufacturer(String manufacturer);
     
     abstract public String getConnectionName();
-
+    
     abstract public boolean getDisabled();
     abstract public void setDisabled(boolean disable);
-
-     static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractConnectionConfig.class.getName());
-
+    
+    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractConnectionConfig.class.getName());
+    
 }
-

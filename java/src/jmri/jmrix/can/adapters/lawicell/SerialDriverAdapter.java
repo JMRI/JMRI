@@ -28,7 +28,7 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     public SerialDriverAdapter() {
         super();
         option1Name = "Protocol";
-        options.put(option1Name, new Option(option1Name, "Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
+        options.put(option1Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
         adaptermemo = new jmri.jmrix.can.CanSystemConnectionMemo();
     }
 
@@ -130,7 +130,7 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
         tc.sendCanMessage(m, null);
 
         // do central protocol-specific configuration    
-        adaptermemo.setProtocol(options.get(option1Name).getCurrent());
+        adaptermemo.setProtocol(getOptionState(option1Name));
         
         adaptermemo.configureManagers();
     }

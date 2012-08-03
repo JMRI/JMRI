@@ -2,9 +2,7 @@
 
 package jmri.jmrix;
 
-import java.awt.GridLayout;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,11 +13,13 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.Color;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import java.util.Hashtable;
 
 /**
@@ -175,12 +175,13 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         setInstance();
         if(!init){
             //Build up list of options
-            Hashtable<String, AbstractPortController.Option> adapterOptions = ((AbstractPortController)adapter).getOptionList();
+            //Hashtable<String, AbstractPortController.Option> adapterOptions = ((AbstractPortController)adapter).getOptionList();
+            String[] optionsAvailable = adapter.getOptions();
             options = new Hashtable<String, Option>();
-            for(String i:adapterOptions.keySet()){
-                JComboBox opt = new JComboBox(adapterOptions.get(i).getOptions());
-                opt.setSelectedItem(adapterOptions.get(i).getCurrent());
-                options.put(i, new Option(adapterOptions.get(i).getDisplayText(), opt, adapterOptions.get(i).isAdvanced()));
+            for(String i:optionsAvailable){
+                JComboBox opt = new JComboBox(adapter.getOptionChoices(i));
+                opt.setSelectedItem(adapter.getOptionState(i));
+                options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
             }
         }
 
@@ -274,14 +275,20 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                     i++;
                 }
             }
-
         }
-        _details.validate();
-        if (_details.getTopLevelAncestor()!=null){
-            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).getPreferredSize());
-            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).pack();
+        cL.gridwidth=2;
+        for(JComponent item: additionalItems){
+            cL.gridy = i;
+            gbLayout.setConstraints(item, cL);
+            _details.add(item);
+            i++;
         }
-        _details.repaint();
+        cL.gridwidth=1;
+        if (_details.getParent()!=null && _details.getParent() instanceof javax.swing.JViewport){
+            javax.swing.JViewport vp = (javax.swing.JViewport)_details.getParent();
+            vp.validate();
+            vp.repaint();
+        }
     }
     
     protected int addStandardDetails(boolean incAdvanced, int i){
@@ -304,45 +311,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             _details.add(portField);
             i++;
         }
-        
-        for(String item:options.keySet()){
-            if(!options.get(item).isAdvanced()){
-                cR.gridy = i;
-                cL.gridy = i;
-                gbLayout.setConstraints(options.get(item).getLabel(), cL);
-                gbLayout.setConstraints(options.get(item).getComponent(), cR);
-                _details.add(options.get(item).getLabel());
-                _details.add(options.get(item).getComponent());
-                i++;
-            }
-        }
-        
-        if(adapter.getSystemConnectionMemo()!=null){
-            cR.gridy = i;
-            cL.gridy = i;
-            gbLayout.setConstraints(systemPrefixLabel, cL);
-            gbLayout.setConstraints(systemPrefixField, cR);
-            _details.add(systemPrefixLabel);
-            _details.add(systemPrefixField);
-            i++;
-            cR.gridy = i;
-            cL.gridy = i;
-            gbLayout.setConstraints(connectionNameLabel, cL);
-            gbLayout.setConstraints(connectionNameField, cR);
-            _details.add(connectionNameLabel);
-            _details.add(connectionNameField);
-            i++;
-        }
-        if (incAdvanced){
-            cL.gridwidth=2;
-            cL.gridy = i;
-            cR.gridy = i;
-            gbLayout.setConstraints(showAdvanced, cL);
-            _details.add(showAdvanced);
-            cL.gridwidth=1;
-            i++;
-        }
-        return i;
+        return addStandardDetails(adapter, incAdvanced, i);
     }
     
     public boolean isHostNameAdvanced() { return false; }

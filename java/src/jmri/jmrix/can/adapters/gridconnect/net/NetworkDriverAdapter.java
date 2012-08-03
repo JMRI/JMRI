@@ -24,7 +24,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
     public NetworkDriverAdapter() {
         super();
         option1Name = "Gateway";
-        options.put(option1Name, new Option(option1Name, "Gateway", new String[]{"Pass All", "Filtering"}));
+        options.put(option1Name, new Option("Gateway", new String[]{"Pass All", "Filtering"}));
         adaptermemo = new jmri.jmrix.can.CanSystemConnectionMemo();
         adaptermemo.setUserName("OpenLCB");
         setManufacturer(jmri.jmrix.DCCManufacturerList.OPENLCB);

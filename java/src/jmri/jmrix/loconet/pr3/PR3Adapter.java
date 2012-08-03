@@ -47,7 +47,7 @@ public class PR3Adapter extends LocoBufferAdapter {
 
         // configure flow control to always on
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; 
-        if (options.get(option1Name).getCurrent().equals(validOption1[1]))
+        if (getOptionState(option1Name).equals(validOption1[1]))
             flow = SerialPort.FLOWCONTROL_NONE;
         activeSerialPort.setFlowControlMode(flow);
         log.debug("Found flow control "+activeSerialPort.getFlowControlMode()

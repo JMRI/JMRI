@@ -31,9 +31,9 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         option1Name = "FlowControl";
         option2Name = "CommandStation";
         option3Name = "TurnoutHandle";
-        options.put(option1Name, new Option(option1Name, "Connection uses:", validOption1));
-        options.put(option2Name, new Option(option2Name, "Command station type:", commandStationNames, false));
-        options.put(option3Name, new Option(option3Name, "Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
+        options.put(option1Name, new Option("Connection uses:", validOption1));
+        options.put(option2Name, new Option("Command station type:", commandStationNames, false));
+        options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
         adaptermemo = new LocoNetSystemConnectionMemo();
     }
 
@@ -257,7 +257,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
-        if (options.get(option1Name).getCurrent().equals(validOption1[1]))
+        if (getOptionState(option1Name).equals(validOption1[1]))
             flow = SerialPort.FLOWCONTROL_NONE;
         activeSerialPort.setFlowControlMode(flow);
         log.debug("Found flow control "+activeSerialPort.getFlowControlMode()

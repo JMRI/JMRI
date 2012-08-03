@@ -32,7 +32,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     public SerialDriverAdapter() {
         super();
         option1Name = "Adapter";
-        options.put(option1Name, new Option(option1Name, "Adapter", stdOption1Values));
+        options.put(option1Name, new Option("Adapter", stdOption1Values));
     }
 
     @Override

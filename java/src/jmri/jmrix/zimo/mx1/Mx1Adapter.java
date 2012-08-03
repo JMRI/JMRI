@@ -33,7 +33,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     public Mx1Adapter(){
         super();
         option1Name = "FlowControl";
-        options.put(option1Name, new Option(option1Name, "MX-1 connection uses : ", validOption1));
+        options.put(option1Name, new Option("MX-1 connection uses : ", validOption1));
         adaptermemo = new Mx1SystemConnectionMemo();
     }
 
@@ -233,7 +233,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 
 		// find and configure flow control
 		int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
-		if (options.get(option1Name).getCurrent().equals(validOption1[1]))
+		if (getOptionState(option1Name).equals(validOption1[1]))
 			flow = 0;
 		activeSerialPort.setFlowControlMode(flow);
 	}

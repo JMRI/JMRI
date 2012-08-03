@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.border.BevelBorder;
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -66,6 +67,7 @@ public class FirstTimeStartUpWizard {
         int imageWidth = img.getIconWidth();
         minHelpFieldDim = new Dimension(imageWidth,20);
         maxHelpFieldDim = new Dimension((imageWidth+20),350);
+        helpPanel.setPreferredSize(maxHelpFieldDim);
         helpPanel.setMaximumSize(maxHelpFieldDim);
         helpPanel.setLayout(
              new BoxLayout( helpPanel, BoxLayout.Y_AXIS ) );
@@ -99,7 +101,7 @@ public class FirstTimeStartUpWizard {
     JPanel entryPanel = new JPanel();
     JPanel helpPanel = new JPanel();
     
-    JPanel createEntryPanel(){
+    JComponent createEntryPanel(){
         createScreens();
         for(int i = 0; i<wizPage.size();i++){
             entryPanel.add(wizPage.get(i).getPanel());
@@ -123,6 +125,7 @@ public class FirstTimeStartUpWizard {
         JPanel p2 = new JPanel();
         p2.setLayout(new FlowLayout());
         p2.add(new JLabel(/*rb.getString("LabelDefaultOwner")*/"Default Owner"));
+        
         owner.setText(RosterEntry.getDefaultOwner());
         if(owner.getText().equals("")){
             owner.setText(System.getProperty("user.name"));
@@ -134,10 +137,6 @@ public class FirstTimeStartUpWizard {
     }
     
     void setConnection(){
-        JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-        p.setPreferredSize(new Dimension(450, 275));
-        p.add(JmrixConfigPane.instance(0));
 
         JPanel h = new JPanel();
         h.setLayout(new BoxLayout(h, BoxLayout.Y_AXIS));
@@ -151,28 +150,23 @@ public class FirstTimeStartUpWizard {
         text.setMinimumSize(minHelpFieldDim);
         text.setMaximumSize(maxHelpFieldDim);
         h.add(text);
-        //h.add(
-        wizPage.add(new WizardPage(p, h, "Select your DCC Connection"));
+
+        wizPage.add(new WizardPage(JmrixConfigPane.instance(0), h, "Select your DCC Connection"));
     }
     
     void firstWelcome(){
         JPanel p = new JPanel();
-        p.setPreferredSize(defaultInfoSize);
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.add(formatText("Welcome to JMRI's " + app.getAppName() + "<p><br>This little wizard will help to guide you through setting up " + app.getAppName() + " for the first time"));
         
         wizPage.add(new WizardPage(p, new JPanel(),"Welcome to JMRI StartUp Wizard"));
     }
     
-    Dimension defaultInfoSize = new Dimension(450,400);
-    
-    //Dimension minFieldDim = new Dimension(350,20);
     Dimension minHelpFieldDim = new Dimension(160,20);
-    Dimension maxHelpFieldDim = new Dimension(160,400);
+    Dimension maxHelpFieldDim = new Dimension(160,300);
     
     void finishAndConnect(){
         JPanel p = new JPanel();
-        p.setPreferredSize(defaultInfoSize);
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.add(formatText("Configuration is now all complete, press finish below to connect to your system and start using " + app.getAppName() + "\n\nIf at any time you need to change your settings, you can find the preference setting under the Edit Menu"));
         wizPage.add(new WizardPage(p, new JPanel(), "Finish and Connect"));
@@ -355,13 +349,14 @@ public class FirstTimeStartUpWizard {
     }
     
     static class WizardPage{
-    
-        JPanel panel;
+        static Dimension defaultInfoSize = new Dimension(500,300);
+        JComponent panel;
         JPanel helpDetails = new JPanel();
         String headerText = "";
         
-        WizardPage(JPanel mainPanel, JPanel helpDetails, String headerText){
+        WizardPage(JComponent mainPanel, JPanel helpDetails, String headerText){
             this.panel = mainPanel;
+            this.panel.setPreferredSize(defaultInfoSize);
             if(helpDetails!=null){
                 this.helpDetails = helpDetails;
                 this.helpDetails.setLayout(
@@ -373,7 +368,7 @@ public class FirstTimeStartUpWizard {
             this.headerText = headerText;
         }
         
-        JPanel getPanel(){
+        JComponent getPanel(){
             return panel;
         }
         

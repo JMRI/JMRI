@@ -35,7 +35,7 @@ public class UsbDriverAdapter extends NcePortController {
     public UsbDriverAdapter() {
         super();
         option1Name = "System";
-        options.put(option1Name, new Option(option1Name, "System:", option1Values, false));
+        options.put(option1Name, new Option("System:", option1Values, false));
         adaptermemo = new NceSystemConnectionMemo();
     }
 

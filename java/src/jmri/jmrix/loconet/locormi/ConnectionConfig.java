@@ -62,9 +62,10 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     }
     
     public void loadDetails(JPanel details) {
-        details.setLayout(new BoxLayout(details, BoxLayout.X_AXIS));
+        //details.setLayout(new BoxLayout(details, BoxLayout.X_AXIS));
         details.add(new JLabel("Server hostname:"));
-        host = new JTextField(hostName);
+        host = new JTextField(20);
+        host.setText(hostName);
         details.add(host);
     }
     

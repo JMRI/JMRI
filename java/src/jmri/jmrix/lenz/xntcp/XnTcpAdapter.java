@@ -44,7 +44,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
 	public XnTcpAdapter(){
         super();
         option1Name = "XnTcpInterface";
-        options.put(option1Name, new Option(option1Name, "XnTcp Interface:", getInterfaces()));
+        options.put(option1Name, new Option("XnTcp Interface:", getInterfaces()));
         m_HostName=DEFAULT_IP_ADDRESS;
         m_port=DEFAULT_TCP_PORT;
     }

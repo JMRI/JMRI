@@ -2,23 +2,22 @@
 
 package jmri.jmrix;
 
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+
+import javax.swing.JPanel;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 
 import java.util.Hashtable;
-
-import java.awt.Color;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 /**
  * Abstract base class for common implementation of the Simulator ConnectionConfig
@@ -146,13 +145,12 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         _details = details;
         setInstance();
         if(!init){
-            //Build up list of options
-            Hashtable<String, AbstractPortController.Option> adapterOptions = ((AbstractPortController)adapter).getOptionList();
+            String[] optionsAvailable = adapter.getOptions();
             options = new Hashtable<String, Option>();
-            for(String i:adapterOptions.keySet()){
-                JComboBox opt = new JComboBox(adapterOptions.get(i).getOptions());
-                opt.setSelectedItem(adapterOptions.get(i).getCurrent());
-                options.put(i, new Option(adapterOptions.get(i).getDisplayText(), opt, adapterOptions.get(i).isAdvanced()));
+            for(String i:optionsAvailable){
+                JComboBox opt = new JComboBox(adapter.getOptionChoices(i));
+                opt.setSelectedItem(adapter.getOptionState(i));
+                options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
             }
         }
 
@@ -177,52 +175,51 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     
     protected void showAdvancedItems(){
         _details.removeAll();
-        _details.setLayout(new GridLayout(0,2));	// 0 = any number of rows
+        cL.anchor = GridBagConstraints.WEST;
+        cL.insets = new Insets(2, 5, 0, 5);
+        cR.insets = new Insets(2, 0, 0, 5);
+        cR.anchor = GridBagConstraints.WEST;
+        cR.gridx = 1;
+        cL.gridx = 0;
+        _details.setLayout(gbLayout);
+        int i = 0;
+        
         boolean incAdvancedOptions=false;
-        for(String i:options.keySet()){
-            if(options.get(i).isAdvanced())
+        for(String item:options.keySet()){
+            if(options.get(item).isAdvanced())
                 incAdvancedOptions=true;
         }
-
-        addStandardDetails(incAdvancedOptions, 0);
+        
+        i = addStandardDetails(adapter, incAdvancedOptions, i);
         
         if (showAdvanced.isSelected()) {
             for(String item:options.keySet()){
                 if(options.get(item).isAdvanced()){
+                    cR.gridy = i;
+                    cL.gridy = i;
+                    gbLayout.setConstraints(options.get(item).getLabel(), cL);
+                    gbLayout.setConstraints(options.get(item).getComponent(), cR);
                     _details.add(options.get(item).getLabel());
                     _details.add(options.get(item).getComponent());
+                    i++;
                 }
             }
         }
-        _details.validate();
-        if (_details.getTopLevelAncestor()!=null){
-            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).getPreferredSize());
-            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).pack();
+        cL.gridwidth=2;
+        for(JComponent item: additionalItems){
+            cL.gridy = i;
+            gbLayout.setConstraints(item, cL);
+            _details.add(item);
+            i++;
         }
-        _details.repaint();
+        cL.gridwidth=1;
+        if (_details.getParent()!=null && _details.getParent() instanceof javax.swing.JViewport){
+            javax.swing.JViewport vp = (javax.swing.JViewport)_details.getParent();
+            vp.validate();
+            vp.repaint();
+        }
     }
     
-    protected int addStandardDetails(boolean incAdvanced, int i){
-        for(String item:options.keySet()){
-            if(!options.get(item).isAdvanced()){
-                _details.add(options.get(item).getLabel());
-                _details.add(options.get(item).getComponent());
-            }
-        }
-        
-        if(adapter.getSystemConnectionMemo()!=null){
-            _details.add(systemPrefixLabel);
-            _details.add(systemPrefixField);
-            _details.add(connectionNameLabel);
-            _details.add(connectionNameField);
-        }
-        if (incAdvanced){
-            _details.add(new JLabel(" "));
-            _details.add(showAdvanced);
-        }
-        return i;
-    }
-
     public String getManufacturer() { return adapter.getManufacturer(); }
     public void setManufacturer(String manufacturer) { adapter.setManufacturer(manufacturer); }
     

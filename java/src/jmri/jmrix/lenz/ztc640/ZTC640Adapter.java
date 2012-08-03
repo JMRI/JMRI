@@ -33,7 +33,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
     public ZTC640Adapter(){
         super();
         option1Name = "FlowControl";
-        options.put(option1Name, new Option(option1Name, "ZTC640 connection uses : ", validOption1));
+        options.put(option1Name, new Option("ZTC640 connection uses : ", validOption1));
     }
     SerialPort activeSerialPort = null;
     
@@ -262,11 +262,11 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
         
         // find and configure flow control
-        int flow = 0; // default, but also deftaul for options.get(option1Name).getCurrent()
-        if (!options.get(option1Name).getCurrent().equals(validOption1[0]))
+        int flow = 0; // default, but also deftaul for getOptionState(option1Name)
+        if (!getOptionState(option1Name).equals(validOption1[0]))
             flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         activeSerialPort.setFlowControlMode(flow);
-        if (options.get(option2Name).getCurrent().equals(validOption2[0]))
+        if (getOptionState(option2Name).equals(validOption2[0]))
             checkBuffer = true;
     }
     

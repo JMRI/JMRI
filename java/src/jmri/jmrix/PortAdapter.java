@@ -73,6 +73,12 @@ public interface PortAdapter  {
     */
     public void configureOption4(String value);
     
+    public String[] getOptions();
+    
+    public boolean isOptionAdvanced(String option);
+    
+    public String getOptionDisplayName(String option);
+    
     public void setOptionState(String option, String value);
     
     public String getOptionState(String option);

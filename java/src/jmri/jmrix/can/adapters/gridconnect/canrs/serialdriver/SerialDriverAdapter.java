@@ -24,7 +24,7 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
     public SerialDriverAdapter(){
         super();
         option2Name = "CANID";
-        options.put(option2Name, new Option(option2Name, "CAN ID for CAN-USB", new String[]{"127", "126", "125", "124", "123", "122", "121", "120"}));
+        options.put(option2Name, new Option("CAN ID for CAN-USB", new String[]{"127", "126", "125", "124", "123", "122", "121", "120"}));
     
     }
     /**
@@ -48,10 +48,10 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
         log.debug("Connecting port");
         tc.connectPort(this);
 
-        adaptermemo.setProtocol(options.get(option1Name).getCurrent());
+        adaptermemo.setProtocol(getOptionState(option1Name));
 
         // do central protocol-specific configuration    
-        //jmri.jmrix.can.ConfigurationManager.configure(options.get(option1Name).getCurrent());
+        //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
         adaptermemo.configureManagers();
 
     }

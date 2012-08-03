@@ -29,7 +29,7 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
     public GcSerialDriverAdapter() {
         super();
         option1Name = "Protocol";
-        options.put(option1Name, new Option(option1Name, "Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
+        options.put(option1Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
         adaptermemo = new jmri.jmrix.can.CanSystemConnectionMemo();
     }
 
@@ -124,10 +124,10 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
         log.debug("Connecting port");
         tc.connectPort(this);
         
-        adaptermemo.setProtocol(options.get(option1Name).getCurrent());
+        adaptermemo.setProtocol(getOptionState(option1Name));
 
         // do central protocol-specific configuration    
-        //jmri.jmrix.can.ConfigurationManager.configure(options.get(option1Name).getCurrent());
+        //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
         adaptermemo.configureManagers();
 
     }

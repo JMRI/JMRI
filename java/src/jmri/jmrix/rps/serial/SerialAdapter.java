@@ -34,7 +34,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
     public SerialAdapter(){
         super();
         option1Name = "Protocol";
-        options.put(option1Name, new Option(option1Name, "Protocol", validOptions1));
+        options.put(option1Name, new Option("Protocol", validOptions1));
     }
     
     transient SerialPort activeSerialPort = null;
@@ -193,7 +193,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
      * Set the second port option.
      */
     public void configureOption1(String value) { 
-        options.get(option1Name).configure(value);
+        setOptionState(option1Name, value);
         if (value.equals(validOptions1[0])) version = 1;
         else if (value.equals(validOptions1[1])) version = 2;
     }

@@ -28,7 +28,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
     public SerialDriverAdapter() {
         super();
         option1Name = "Programmer";
-        options.put(option1Name, new Option(option1Name, "Programmer : ", validOption1()));
+        options.put(option1Name, new Option("Programmer : ", validOption1()));
         setManufacturer(jmri.jmrix.DCCManufacturerList.DCC4PC);
         adaptermemo = new Dcc4PcSystemConnectionMemo();
     }
@@ -195,7 +195,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
         // connect to the traffic controller
         Dcc4PcTrafficController control = new Dcc4PcTrafficController();
         adaptermemo.setDcc4PcTrafficController(control);
-        adaptermemo.setDefaultProgrammer(options.get(option1Name).getCurrent());
+        adaptermemo.setDefaultProgrammer(getOptionState(option1Name));
         control.connectPort(this);
         adaptermemo.configureManagers();
         

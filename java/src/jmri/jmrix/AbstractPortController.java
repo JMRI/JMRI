@@ -6,7 +6,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 import java.util.Hashtable;
-
+import java.util.Enumeration;
 
 /**
  * Provide an abstract base for *PortController classes.
@@ -37,13 +37,16 @@ abstract public class AbstractPortController implements PortAdapter {
     protected void setOpened() {opened = true; }
     protected void setClosed() {opened = false; }
     
+    //These are to support the old legacy files.
     protected String option1Name = "1";
     protected String option2Name = "2";
     protected String option3Name = "3";
     protected String option4Name = "4";
 
     abstract public String getCurrentPortName();
-    
+    /*
+        The next set of configureOptions are to support the old configuration files.
+    */
     public void configureOption1(String value) { 
         if(options.containsKey(option1Name)){
             options.get(option1Name).configure(value);
@@ -68,6 +71,9 @@ abstract public class AbstractPortController implements PortAdapter {
         }
     }
 
+        /*
+        The next set of getOption Names are to support legacy configuration files
+    */
     public String getOption1Name(){
         return option1Name;
     }
@@ -83,17 +89,35 @@ abstract public class AbstractPortController implements PortAdapter {
     public String getOption4Name(){
         return option4Name;
     }
+
+    /**
+    * Get a list of all the options configured against this adapter.
+    */
+    public String[] getOptions(){
+        String[] arr = new String[options.size()];
+        Enumeration<String> en = options.keys();
+        int i=0;
+        while (en.hasMoreElements()) {
+            arr[i] = en.nextElement();
+            i++;
+        }
+        java.util.Arrays.sort(arr);
+        return arr;
     
-    public Hashtable<String, Option> getOptionList(){
-        return options;
     }
-    
+
+    /**
+    * Set the value of an option
+    */
     public void setOptionState(String option, String value){
         if(options.containsKey(option)){
             options.get(option).configure(value);
         }
     }
     
+    /**
+    *  Get the value of a specific option
+    */
     public String getOptionState(String option){
         if(options.containsKey(option)){
             return options.get(option).getCurrent();
@@ -101,6 +125,9 @@ abstract public class AbstractPortController implements PortAdapter {
         return null;
     }
     
+    /**
+    *   return a list of the various choices allowed with an option.
+    */
     public String[] getOptionChoices(String option){
         if(options.containsKey(option)){
             return options.get(option).getOptions();
@@ -108,49 +135,57 @@ abstract public class AbstractPortController implements PortAdapter {
         return null;
     }
     
+    public String getOptionDisplayName(String option){
+        if(options.containsKey(option)){
+            return options.get(option).getDisplayText();
+        }
+        return null;
+    }
+    
+    public boolean isOptionAdvanced(String option){
+        if(options.containsKey(option)){
+            return options.get(option).isAdvanced();
+        }
+        return false;
+    }
+    
     protected Hashtable<String, Option> options = new Hashtable<String, Option>();
     
-    static public class Option{
+    static protected class Option {
         
         String currentValue = null;
-        String name;
         String displayText;
         String[] options;
         Boolean advancedOption = true;
         
-        public Option(String name, String displayText, String[] options, boolean advanced){
-            this(name, displayText, options);
+        public Option(String displayText, String[] options, boolean advanced){
+            this(displayText, options);
             this.advancedOption = advanced;
         }
         
-        public Option(String name, String displayText, String[] options){
-            this.name = name;
+        public Option(String displayText, String[] options){
             this.displayText = displayText;
             this.options = options;
         }
         
-        public void configure(String value){
+        void configure(String value){
             currentValue = value;
         }
         
-        public String getCurrent(){
+        String getCurrent(){
             if(currentValue==null) return options[0];
             return currentValue;
         }
         
-        public String[] getOptions(){
+        String[] getOptions(){
             return options;
         }
         
-        public String getName(){
-            return name;
+        String getDisplayText(){
+            return displayText;
         }
         
-        public String getDisplayText(){
-            return name;
-        }
-        
-        public boolean isAdvanced() {
+        boolean isAdvanced() {
             return advancedOption;
         }
     }
