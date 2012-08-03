@@ -119,7 +119,7 @@ The Basic Programmer</h4>
 <ul>
   <li><a href="dp3_Main_Main.shtml"><strong>Main Window</strong></a>
     <ul>
-      <li><strong><a href="dp3_menubar.html">Menubar</a></strong></li>
+      <li><strong><a href="dp3_menubar.shtml">Menubar</a></strong></li>
       <li><strong><a href="dp3_toobar.shtml">Toolbar</a></strong></li>
       <li><strong><a href="dp3_rosterTable.shtml">Roster Table</a></strong></li>
       <li><strong><a href="dp3_decoderInfo.shtml">Decoder Information</a></strong></li>

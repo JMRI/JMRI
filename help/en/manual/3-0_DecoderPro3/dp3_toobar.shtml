@@ -34,28 +34,28 @@ DecoderPro&reg; Main Window
 <p><img src="images/dp3_toolbar.png" width="900" height="115" alt="toolbar"></p>
 <table width="90%" border="1" cellspacing="1" cellpadding="2">
   <tr>
-    <td width="35%"><img src="images/dp3_toolbar_help.png" width="37" height="31" alt="help"></td>
-    <td width="65%">Dispays the Help file for the DecoderPro&reg; window</td>
+    <td width="35%"><img src="images/dp3_toolbar_newloco.png" width="105" height="43" alt="new loco button"></td>
+    <td width="65%">Opens the <strong><a href="Programmer_Setup.shtml">create new loco</a></strong> window</td>
   </tr>
   <tr>
-    <td><img src="images/dp3_toolbar_newloco.png" width="93" height="34" alt="new loco"></td>
-    <td>Opens the <strong><a href="Programmer_Setup.shtml">create new loco</a></strong> window</td>
+    <td><img src="images/dp3_toolbar_identify.png" width="91" height="48" alt="identify button"></td>
+    <td>Attempts to Identify the locomotive if it is in the roster.</td>
   </tr>
   <tr>
-    <td><img src="images/dp3_toolbar_identify.png" width="78" height="33" alt="identify"></td>
-    <td>Attempts to Identify the locomotive in the roster.</td>
+    <td><img src="images/dp3_toolbar_help.png" width="71" height="47" alt="help button"></td>
+    <td>Dispays the Help file for the DecoderPro&reg; window</td>
   </tr>
   <tr>
-    <td><img src="images/dp3_toolbar_newThrottle.png" width="120" height="30" alt="throttle"></td>
+    <td><strong><a href="dp3_Main_Throttle.shtml"><img src="images/dp3_toolbar_newThrottle.png" width="120" height="30" alt="throttle"></a></strong></td>
     <td>Opens new <strong><a href="dp3_Main_Throttle.shtml">Throttle </a>or other buttons added by<a href="Start_Preferences.shtml"> preferences.</a></strong></td>
+  </tr>
+  <tr>
+    <td><img src="images/dp3_toolbar_Power.png" width="69" height="49" alt="power control"></td>
+    <td>Controls Track power if your command station supports this feature.</td>
   </tr>
   <tr>
     <td><img src="images/dp3_toolbar_programMode.png" width="232" height="28" alt="programming mode"></td>
     <td>Drop down list allows you to select Progamming Mode</td>
-  </tr>
-  <tr>
-    <td><img src="images/dp3_RosterGroup.png" width="215" height="35" alt="Roster group"></td>
-    <td>Drop down list of valid <strong><a href="dp3_settings_rosterGroups.html">Roster Groups</a></strong> , Will not display if their are no Roster Groups</td>
   </tr>
 </table>
 <p>&nbsp;</p>
