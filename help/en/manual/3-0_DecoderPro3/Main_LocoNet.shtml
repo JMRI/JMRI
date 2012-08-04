@@ -25,7 +25,7 @@
 <h1>LocoNet Menu </h1>
 
 <div align=right>
-<p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+<p><a href="index.shtml">Back to Index</a></p>
 </div>
 
 <hr>
@@ -43,7 +43,7 @@
 <p><strong>Configure LocoIO</strong></p>
 <p>Opens the <a href="#LocoIOProgrammer">Configure LocoIO </a>window.</p>
 <p><strong><a name="PM4"></a>Configure PM4</strong>/PM42 </p>
-<p>Opens the <a href="#PM4">Configure PM4/PM42</a> window.</p>
+<p>Opens the <a href="#PM4Programmer">Configure PM4/PM42</a> window.</p>
 <p><strong><a name="SE8C"></a>Configure SE8C</strong></p>
 <p>Opens the <a href="#SE8CProgrammer">Configure SE3C</a> window.</p>
 <p><strong><a name="DS64"></a>Configure DS64</strong></p>
@@ -57,6 +57,10 @@
   <input type="submit" name="button6" id="button6" value="Set"> 
   the LocoNet ID <strong>Value:</strong></p>
 <p><img src="images/Main_Loconet08.png" width="245" height="145" alt="loconet if"></p>
+<p><strong>Configure Duplex Group</strong></p>
+<p>Provides dialog to configure duplex Radio system<br>
+  <img src="images/Loconet_DuplexGroup.png" width="478" height="406" alt="duplex group"><br>
+</p>
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
 <p><strong>Send Throttle Messages</strong></p>
 <p>Opens <strong>Throttle message</strong> prompt with limited capabiltiy to send messages to handheld throttle.</p>
@@ -281,7 +285,7 @@ Because of the way the DS64 board works, this tool can't change  the basic addre
 <hr>
 
 <div align=right>
-<p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+<p><a href="index.shtml">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->

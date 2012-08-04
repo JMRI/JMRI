@@ -33,7 +33,7 @@ DecoderPro&reg; Main Window
 <hr>
 <table width="95%" border="1" align="center" cellpadding="2" cellspacing="1">
   <tr>
-    <td width="59%" valign="top"><img src="images/decoder_info.png" width="399" height="248" alt="decoder info"></td>
+    <td width="59%" valign="top"><img src="images/decoder_info.png" width="362" height="244" alt="decoder info"></td>
     <td width="41%" valign="top">Displays the information about the current decoder selected.</td>
   </tr>
   <tr>

@@ -29,7 +29,7 @@
 </div>
 
 <hr>
-<p>The Roster Media Pane is opened from the DecoderPro3 main window, then select the Roster Media TAB.</p>
+<p>The Roster Media Pane is opened from the DecoderPro3 button in main window or from the Action menu, then select the Roster Media TAB.</p>
 <p>The Roster Media Pane allows you to add a main image and an icon to the engines roster. The main image may be used for Throttle background image if selected in the Throttle preferences. The icon image is used in the Throttle list and various roster combo boxes.</p>
 <p>The icon  is the  image that will appear in the Decoder Information part of the DecoderPro3  initial screen, once you have selected a locomotive from the list. The icon will also display in the icon column of the Locomotive Roster List.</p>
 <p align="center"><img src="images/Adv_04_RosterMedia.png" width="916" height="768" alt="roster media"></p>

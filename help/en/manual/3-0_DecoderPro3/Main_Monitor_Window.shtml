@@ -18,7 +18,6 @@ DecoderPro&reg; Main Window
 
 <body>
 <!--#include virtual="/Header" -->
-
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
@@ -26,7 +25,6 @@ DecoderPro&reg; Main Window
 <h1>Communications Monitor Window</h1>
 
 <div align=right>
-<p><a href="Main_Menu.shtml#System">Back </a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
@@ -60,7 +58,6 @@ DecoderPro&reg; Main Window
 <hr>
 
 <div align=right>
-<p><a href="Main_Menu.shtml#System">Back </a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 

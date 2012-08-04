@@ -31,10 +31,37 @@ DecoderPro&reg; Main Window
 </div>
 
 <hr>
-<p>The Roster Table in the main body of DecoderPro3&reg; displays all of the locomotives in your roster or selected roster groups.</p>
+<p>The Roster Table in the main body of DecoderPro3&reg; displays all of the locomotives in your roster or selected roster groups.<br>
+<strong>SORT </strong>by any column by clicking on the column header. Roster above is sorted by DCC addresses.</p>
 <p><img src="images/dp3_rosterTable.png" width="900" height="401" alt="roster table"></p>
-<p>This table may be sorted by any column by clicking on the colum header. This table presently is sorted by DCC address. If you want to edit a roster entry, then highlight the loco and select the task to perform, either from the menu or the decoder information area buttons.</p>
-<p>&nbsp;</p>
+<p>Hide/show any column by right clicking anywhere in the Roster header and checking columns to be displayed and unchecking columns to hide.</p>
+<p><img src="images/dp3_rosterTable01.png" width="737" height="292" alt="hide/show column"></p>
+<p>With columns hidden.<br>
+  <br>
+<img src="images/dp3_rosterTable02.png" width="711" height="310" alt="roster table hide"></p>
+<p>Selecting Actions using Context menu (Right Click ) on locomotive selected. Select the action you would like to perform.</p>
+<p><img src="images/dp3_rosterTable03.png" width="584" height="309" alt="table context"></p>
+<p>Double Click on Selected locomotive and Programming Window will open.</p>
+<p>Editing column of a Roster Entry in the table. select locomotive then click on column that you want to edit. Type your change.</p>
+<p>The following columns may be edited.<br>
+ID Col<br>
+Road Name<br>
+Road Number<br>
+Manufacturer<br>
+Model<br>
+Owner
+<br>
+</p>
+<table width="90%" border="0" cellspacing="1" cellpadding="2">
+  <tr>
+    <td><img src="images/dp3_rosterTableEditCol.png" width="300" height="195" alt="edit col"></td>
+    <td><img src="images/dp3_rosterTableEditCol01.png" width="378" height="223" alt="edit col"></td>
+  </tr>
+</table>
+<p><strong>Column sequence</strong> may be modified and Saved. Just Drag and Drop the column header to the desired position.</p>
+<p><strong>Column Width </strong>may be changed by grabbing the divider between the column until the double headed arrow shows and move the arrows to the desired column width.</p>
+<p>You may use the same technique to resize panes or the main window.<br>
+</p>
 <hr>
 
 <div align=right>
