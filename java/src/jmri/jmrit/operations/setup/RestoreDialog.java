@@ -230,16 +230,14 @@ public class RestoreDialog extends JDialog {
 			// BackupSet instead of a simple string. Later.
 			backup.restoreFilesFromSetName(setName);
 
-			// now clear dirty bit
-			// This really needs to be cleaned up so that we don't swallow the
-			// exception.
-			// It seems that in normal operation the exception is thrown. Not
-			// sure why just yet.
+			// now deregister shut down task
+			// If Trains window was opened, then task is active
+			// otherwise it is normal to not have the task running
 			try {
 				jmri.InstanceManager.shutDownManagerInstance().deregister(
 						TrainsTableFrame.trainDirtyTask);
 			} catch (Exception ex) {
-				log.debug("trying to deregister Train Dirty Task", ex);
+				log.debug("Unable to deregister Train Dirty Task");
 			}
 
 			JOptionPane.showMessageDialog(this,
