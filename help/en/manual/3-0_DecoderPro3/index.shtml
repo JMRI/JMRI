@@ -22,7 +22,7 @@
 <a NAME="Top"></a>
 <h1>DecoderPro3&reg; Version 3.0</h1>
 
-<h3>In Work 7/28//2012</h3>
+<h3>Revised 8/4/2012</h3>
 
 <p>&nbsp;
 </p>
@@ -38,7 +38,7 @@ DecoderPro3
 <div align="right">
 <h2>Download Print version of Manual (pdf format)
 </h2>
-<p><strong>manual version 2.xx</strong></div>
+<p><strong>manual version 3.0</strong></div>
 
 <h1>Table of Contents</h1>
 <h4><a name="Installing"></a>Installing JMRI</h4>
@@ -187,8 +187,10 @@ are best submitted to the
   </tr>
   <tr>
     <td align="left" valign="top">3.0</td>
-    <td align="left" valign="top">x/x/2012</td>
-    <td align="left" valign="top">Dale A. Tripp</td>
+    <td align="left" valign="top">8/4/2012</td>
+    <td align="left" valign="top"><p>Dale A. Tripp<br>
+      Bruce Shanks
+    </p></td>
     <td align="left" valign="top">Update to version 3.0</td>
   </tr>
 </table>
