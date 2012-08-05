@@ -40,7 +40,7 @@ Modes?</h1>
 <p>Prior to using the programmer you  need to have completed the previous section (<a href="Start_DCC.shtml">Getting Started</a>), have your computer connected to  your command station/booster with the required interface device for your DCC  system, you are now ready to actually program a decoder that has been installed  in your locomotive.</p>
 <p><br>
   On opening DecoderPro, the main  page will be displayed: </p>
-<div align="center"><img src="images/Splash_Screen01.png" width="496" height="308" alt="splash"></div>
+<div align="center"><img src="images/Splash_Screen.png" width="496" height="308" alt="splash"></div>
 <p>There are four buttons near the  bottom, the first one  which is:</p>
 <p><b>
   <input type="submit" name="button" id="button" value="Service Mode (Programming Track) Programmer">
@@ -69,12 +69,16 @@ Modes?</h1>
   &nbsp;
 The first is method is <strong>
 <input type="button" name="button6" id="button6" value="Ident">
-,</strong> and the other is <strong>
-<input type="button" name="button7" id="button7" value="Read type from decoder">
-.</strong>&nbsp; You can use one or the other, but  they are mutually exclusive.</p>
-<p><strong>IDENT </strong>is used to identify a locomotive that is already  stored in your computer&rsquo;s roster file.&nbsp;  You can use the drop down arrow to display a listing of locomotives in  your roster, and then select the desired locomotive from the list.&nbsp;  An alternative is to be lazy and click the<strong> 
+,</strong> </p>
+<p><img src="images/Basic_Ident.png" width="556" height="440" alt="ident"></p>
+<p>The Ident button was clicked and the locomotive was located on the   programming track, in this case an Athearn N Scale FP-45 locomotive with   OEM Tsunami Sound decoder which is the Roster.</p>
+<p><strong>IDENT </strong>is used to identify a locomotive that is already  stored in your computer&rsquo;s roster file.&nbsp;  You can use the drop down arrow to display a listing of locomotives in  your roster, and then select the desired locomotive from the list.&nbsp;  An alternative is to be lazy and click the<strong>
   <input type="button" name="Ident" id="Ident" value="Ident">
 </strong>.&nbsp; The program will then query the locomotive to  get it&rsquo;s address which is linked to the roster entry.&nbsp; The Decoder Pro roster entry includes the  decoder type used when it programmed the locomotive.&nbsp; If it gets a valid address, but there is no  roster entry with that address, then you will get an error message.</p>
+<p>and the other is <strong>
+  <input type="button" name="button7" id="button7" value="Read type from decoder">
+.</strong>&nbsp; You can use one or the other, but  they are mutually exclusive.</p>
+<p><img src="images/Basic_ReadType.png" width="556" height="440" alt="Read Type"></p>
 <p><strong>READ TYPE </strong>is the other method located in the center of  the page.&nbsp; If you click on 
   <input type="button" name="button8" id="button8" value="Read type from decoder">
 , the system will query the decoder to get the manufacturer and  firmware version number.&nbsp; From this  information it will highlight all the decoders which are known to match.&nbsp; There may be several, usually with differences in  the physical shape and size to fit in a particular locomotive&rsquo;s shell, or a few  more &ldquo;bells and whistles&rdquo;.&nbsp;&nbsp;&nbsp; When  confronted with a large selection, you can either remove the shell to try to  read information printed on the decoder itself, or just select one of the ones with  the fewest letters in the model number.&nbsp;  (Letters are often used to separate the shape differences which have no  bearing on the electronic functions of the decoder.)&nbsp;Just be aware that some functions  that Decoder Pro allows you to  program may not be fully operable.</p>

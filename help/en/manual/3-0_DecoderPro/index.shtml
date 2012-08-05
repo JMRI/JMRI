@@ -21,22 +21,20 @@
 <div id="mainContent">
 
 <a NAME="Top"></a>
-<h1>JMRI&reg; v2.99.1 Test Version</h1>
+<h1>JMRI&reg; v3.0 Manual</h1>
 <h1>&nbsp;</h1>
-<h3>In work 1/9/2012</h3>
-
-<p>&nbsp;
-</p>
+<h3>In work 8/4/2012</h3>
+<p>&nbsp;</p>
 <p><strong>JMRI is a Java-based cross-platform application for model railroaders. JMRi contains applications for:</strong></p>
 <p><strong>The programming of Digital
-Command Control (DCC) decoders, (DecoderPro&reg;).<br>
-Programming decoders and using throttle run trains, DecoderPro 3&reg;</strong><strong><br>
-  Drawing computer based panels for depicting a  model railroad&nbsp;  layout , (PanelPro&reg;
-  ).<br>
-  Controlling the layout , (Layout Editor).<br>
-  Creating train manifests for duplicating railroad  operations, Operations<br>
-  Controlling the signals on the layout<br>
-Controlling&nbsp;  lighting and sound in the room, and so forth. (SoundPro&reg;)</strong></p>
+  Command Control (DCC) decoders, (DecoderPro&reg;).<br>
+  Programming decoders and using throttle run trains, DecoderPro3&reg;</strong><strong><br>
+    Drawing computer based panels for depicting a  model railroad&nbsp;  layout , (PanelPro&reg;
+    ).<br>
+    Controlling the layout , (Layout Editor).<br>
+    Creating train manifests for duplicating railroad  operations, Operations<br>
+    Controlling the signals on the layout<br>
+    Controlling&nbsp;  lighting and sound in the room, and so forth. (SoundPro&reg;)</strong></p>
 <p>All this capability is contained in one program (JMRI) which has  several &ldquo;start-up&rdquo; screens for the various applications. </p>
 <p>&nbsp;</p>
 
@@ -52,9 +50,8 @@ Controlling&nbsp;  lighting and sound in the room, and so forth. (SoundPro&reg;)
 <div align="right">
 <h2>Download Print version of Manual (pdf format)
 </h2>
-<p><strong><a href="pdf/DecoderProManual_2_4.pdf" target="_blank">manual version 2.4</a></strong>
-<p><strong><a href="pdf/DecoderPro Man 2.8.pdf" target="_blank">manual version 2.8</a></strong>
-<p><a href="pdf/jmri_Man_2_12.pdf" target="_blank"><strong>manual version 2.12</strong></a></div>
+<p>
+<p><a href="file:///G|/JMRI_Repository/pdf/jmri_Man_3_0.pdf" target="_blank"><strong>manual version 3.0</strong></a></div>
 
 <h1>Table of Contents</h1>
 <h4><a name="Installing"></a>Installing JMRI</h4>
@@ -476,26 +473,39 @@ are best submitted to the
     <td align="left" valign="top">1/15/2010</td>
     <td align="left" valign="top">Dale A. Tripp Bruce Shanks</td>
     <td>Updated to JMRI 2.8<br>
-      Expanded Table of Contents with additiona direct links
-      <br>
+      Expanded Table of Contents with additiona direct links <br>
       Updated Comprehensive Programmer, moved Function Label pane to Advanced Programmer<br>
       added Advanced Programmer features, including Roster Media pane<br>
       Added Roster Group feature<br>
       Updated decoder definition submission process<br>
-    Added Operations section</td>
+      Added Operations section</td>
   </tr>
   <tr>
     <td align="left" valign="top">2.12</td>
     <td align="left" valign="top">9/15/2011</td>
     <td align="left" valign="top">Dale A. Tripp<br>
       Bruce Shanks<br>
-      Walter Thompson     <br></td>
+      Walter Thompson <br></td>
     <td align="left" valign="top"><p>Updated to JMRI 2.12<br>
-    Installation information added<br>
-    Contents updated to current functions
-    </p></td>
+      Installation information added<br>
+      Contents updated to current functions </p></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">2.14.1</td>
+    <td align="left" valign="top">7/26/2012</td>
+    <td align="left" valign="top">Dale A. Tripp<br>
+      Bruce Shanks</td>
+    <td align="left" valign="top">Updated from JMRI 2.12</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">3.0</td>
+    <td align="left" valign="top">x/x/2012</td>
+    <td align="left" valign="top">Dale A. Tripp<br>
+      Bruce Shanks</td>
+    <td align="left" valign="top">Updated from JMRI 2.14.1</td>
   </tr>
 </table>
+<p>
 <hr>
 <div align=right>Go to the
 <a href="http://groups.yahoo.com/group/jmriusers/">

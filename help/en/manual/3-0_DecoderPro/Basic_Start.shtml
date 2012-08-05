@@ -37,7 +37,7 @@
 A <b>roster</b> is a  database of all locomotives that your installation
 of DecoderPro&reg; has programmed. It includes the information seen in the screen
 below:
-<div align="center"><img src="images/Basic_Roster.png" width="652" height="601" alt="basic roster"></div>
+<div align="center"><img src="images/Basic_Roster.png" width="642" height="557" alt="basic roster"></div>
 <p>Most of these fields are self-explanatory.  However, note that the first field (<strong>ID</strong>) becomes the 
 file name in the Roster for the locomotive you are programming. Set up a  schema to identify your locomotive to its decoder program. i.e. Mfr, Loco Type, and &nbsp;Address (Kato_SD40-2_5645). Spaces in the ID field will be  changed to underscores (_) when the file is written.&nbsp; In a club environment, often the ID begins  with the owner&rsquo;s name, or  member number. This way the Roster (which is sorted alphabetically) will keep  all of an owner's locomotives listed together. </p>
 

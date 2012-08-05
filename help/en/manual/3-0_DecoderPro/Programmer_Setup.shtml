@@ -36,7 +36,7 @@ a decoder?</h1>
 <p>Prior to using the programmer you  need to have completed the previous section (<a href="Start_DCC.shtml">Getting Started</a>), have your computer connected to  your command station/booster with the required interface device for your DCC  system, you are now ready to actually program a decoder that has been installed  in your locomotive.</p>
 <p><br>
   On opening DecoderPro, the main  page will be displayed: (After preferences are set)</p>
-<div align="center"><img src="images/Splash_Screen01.png" width="496" height="308" alt="splash"></div>
+<div align="center"><img src="images/Splash_Screen.png" width="496" height="308" alt="splash"></div>
 <p>There are four buttons near the  bottom, the first two of which are: </p>
 <p><b><a href="Programmer_ServiceMode.shtml">
 <input type="button" name="button" id="button" value="Service Mode (Programming Track) Programmer">
