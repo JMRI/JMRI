@@ -47,7 +47,7 @@ of the CV listings.</p>
 You may <b>Read</b> or <b>Write</b> individual CVs using the buttons
 in their row. On this page, a <b>Read sheet</b> or <b>Write sheet</b> operation
 is the same as a <b>Read all</b> or <b>Write all</b>. <span class="ACCENT">Again, a reminder: you can only read CVs if your command station has that capability.</span>
-<p align="center"><img src="images/Comp_11_CV.png" width="932" height="667" alt="cvs">
+<p align="center"><img src="images/Comp_11_CV.png" width="923" height="799" alt="CVs">
 <p>
   One thing to keep in mind about the <b>CV</b> listing on this pane - anything you can do here you can do from one of the other panes in Decoder Pro, without having to know the <b>CV</b> number or how to compile the values to get the desired effect. This pane is meant for advanced users of DCC used to crunching the numbers themselves. Those new to DCC can safely ignore this panel without losing any capability at all.
 <p>

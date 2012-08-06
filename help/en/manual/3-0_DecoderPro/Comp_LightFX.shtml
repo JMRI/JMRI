@@ -31,8 +31,7 @@
 </div>
 
 <hr>
-<p>
-This pane provides for control of some of the most "gee-whiz" functions
+<p>This pane provides for control of some of the most "gee-whiz" functions
 on the decoder. While fine-tuning the motor is important, and speed tables
 help add to the realism of operation, everyone notices the lights - especially
 when they change intensity, flicker, flash, or fade. They attract even
@@ -41,8 +40,8 @@ as the locomotive approached the crossing suddenly begin flashing alternately,
 then return to a steady glow; or when a locomotive pulls into a siding,
 stops, and dims its headlight for the approaching train.
 All  these effects are possible with the right decoder and proper set-up, and set-up  is what DecderPro is all about. 
-<p>Note: FP45 Tsunami decoder does not allow you to program the lights, We are using a Digitrax decoder for Kato F7A, which has full FX lighting capability.
-<p align="center"><img src="images/Comp_06_Lights.png" width="920" height="799" alt="Lights FX">
+<p>Every Manufacturer and decoder family handles the lighting in a unique manner, so there are many versions of this pane.
+<p align="center"><img src="file:///G|/JMRI_Repository/3-0_DecoderPro3/images/Comp_06_Lights.png" width="918" height="799" alt="lights">
 <p>
 The specific effects available differ widely between manufacturers,
 and even between different "families" of decoders from the same maker.
@@ -68,14 +67,16 @@ function key. Since the <b>F2</b> key is non-latching (think of it as a
 momentary contact switch) that normally turns off when it is released. By
 raising the value of this CV you can make them stay on for up to 30 seconds
 from a single momentary activation.
-<p align="center"><img src="images/Comp_06A_Lights.png" width="920" height="799" alt="lights FX">
-<p>
-The other lighting effects are highly variable between decoders. Check
-your specific decoder documentation for what the decoder is supposed to
-be capable of doing, and have fun playing with them. They are the most visually
-satisfying of all the capabilities of the decoders!
+<p align="center"><img src="images/Comp_06A_Lights.png" width="923" height="800" alt="lights">
+<p>Sound decoders such as the Tsunami in our OEM FP-45 has an extremely complicated Lighting progam pane.
+<p><img src="images/Comp_06B_Lights.png" width="1000" height="537" alt="lightds">
+<p>Note that some of the lighting functions can be tied to a sound function which is unique to sound decoders. Sound decoders have many more functions than normal motor control decoders.
+<p>The other lighting effects are highly variable between decoders. Check
+  your specific decoder documentation for what the decoder is supposed to
+  be capable of doing, and have fun playing with them. They are the most visually
+  satisfying of all the capabilities of the decoders!
 <p>Even if the function and effect are available, you may have to add the lighting to your locomotive in order to be able to use that function, such as adding ditch lights, beacons, etc.
-
+  
 <p>
 <hr>
 <div align=right>

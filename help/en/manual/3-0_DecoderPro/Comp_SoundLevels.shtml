@@ -31,16 +31,15 @@
 </div>
 
 <hr>
-<p>
-Here are the controls for the relative volume levels and timing nuances
+<p>Here are the controls for the relative volume levels and timing nuances
 of the sound decoder. Again, this is an example of one implementation.
 See your decoder documentation and the specific decoder programmer for
 details applicable to your equipment. Above all, don't be afraid to play
 with these settings and those in the <a href="Comp_SoundFX.shtml"><strong>Sound</strong></a> pane until you get sound
 you like. It's much easier to do here than it is to try to program these
 using a throttle!
-And  even easier, if you are using the Ops Mode option to program the unit when it&rsquo;s  running on the track.&nbsp; If you &ldquo;write changes&rdquo;after  doing your selection change, you&rsquo;ll get instant feedback of&nbsp; how the sound has changed. 
-<h1><img src="images/Comp_10_Sound_Levels.png" width="932" height="636" alt="Sound levels"></h1>
+And  even easier, if you are using the <a href="Programmer_OpsMode.shtml"><strong>Ops Mode option </strong></a>to program the unit when it&rsquo;s  running on the track.&nbsp; If you &ldquo;write changes&rdquo; after  doing your selection change, you&rsquo;ll get instant feedback of&nbsp; how the sound has changed. 
+<h1><img src="images/Comp_10_Sound_Levels.png" width="852" height="637" alt="sound levels"></h1>
 
 <p>
 <hr>

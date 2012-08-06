@@ -40,7 +40,7 @@ and appropriate sounds can be triggered from the function keys of the throttle.
 Others can be set to be triggered at startup or to run in the background.
 <p>This  pane allows for the selection of sound effects from sound decoders, and the <a href="Comp_SoundLevels.shtml"><strong>Sound Levels Pane</strong></a> allows for setting   the loudness levels of those sounds when they play back.&nbsp;
 
-<h1><img src="images/Comp_09_Sound.png" width="900" height="492" alt="sound pane"></h1>
+<h1><img src="images/Comp_09_Sound.png" width="852" height="503" alt="sound"></h1>
 
 <p>For specific function options,  see your decoder documentation and the programmer for the specific decoder. &nbsp;Sometimes (depending on the volunteer that wrote the decoder definition  file) there are &ldquo;tool tips&rdquo; that appear if you hover over a selection entry  box.
 <p>Here are is a sampling of sound functions on  some other decoders: 

@@ -37,7 +37,7 @@ the realm of the DCC standard. While items like <b>Transponding</b> may eventual
 
 This pane will be manufacturer dependent and decoder family dependent<h1><img src="images/Comp_12_Manufacturer.png" width="920" height="510" alt="mfr"></h1>
 
-<p align="center"><img src="images/Comp_12A_Manufacturer.png" width="932" height="667" alt="mfr">
+<p align="center"><img src="images/Comp_12A_Manufacturer.png" width="922" height="739" alt="manufacturer">
 <p>These items will, by definition, vary greatly between manufacturers.
   Once again, your best resource is the documentation for the specific decoder
   you are programming and this pane in the programmer for that decoder.
