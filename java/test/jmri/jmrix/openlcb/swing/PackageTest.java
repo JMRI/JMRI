@@ -1,13 +1,13 @@
 // PackageTest.java
 
-package jmri.jmrix.openlcb;
+package jmri.jmrix.openlcb.swing;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.jmrix.openlcb.swing package.
+ * Tests for the jmri.jmrix.openlcb package.
  * @author      Bob Jacobsen  Copyright 2009, 2012
  * @version   $Revision$
  */
@@ -31,16 +31,10 @@ public class PackageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.openlcb.PackageTest");
+        TestSuite suite = new TestSuite("jmri.jmrix.openlcb.swing.PackageTest");
 
-        suite.addTest(CanConverterTest.suite());
-        suite.addTest(OlcbAddressTest.suite());
-        suite.addTest(OlcbSensorManagerTest.suite());
-        suite.addTest(OlcbSensorTest.suite());
-        suite.addTest(OlcbTurnoutManagerTest.suite());
-        suite.addTest(OlcbTurnoutTest.suite());
-
-        suite.addTest(jmri.jmrix.openlcb.swing.PackageTest.suite());
+        suite.addTest(jmri.jmrix.openlcb.swing.tie.PackageTest.suite());
+        suite.addTest(jmri.jmrix.openlcb.swing.monitor.PackageTest.suite());
         
         return suite;
     }

@@ -1,46 +1,39 @@
-// PackageTest.java
+// PackageDemo.java
 
-package jmri.jmrix.openlcb;
+package jmri.jmrix.openlcb.swing.tie;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.jmrix.openlcb.swing package.
+ * Tests for the jmri.jmrix.openlcb package.
  * @author      Bob Jacobsen  Copyright 2009, 2012
  * @version   $Revision$
  */
-public class PackageTest extends TestCase {
+public class PackageDemo extends TestCase {
 
     public void testDefinitions() {
     }
     
     // from here down is testing infrastructure
 
-    public PackageTest(String s) {
+    public PackageDemo(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
         apps.tests.AllTest.initLogging();
-        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
+        String[] testCaseName = {"-noloading", PackageDemo.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.openlcb.PackageTest");
+        TestSuite suite = new TestSuite("jmri.jmrix.openlcb.tie.PackageDemo");
 
-        suite.addTest(CanConverterTest.suite());
-        suite.addTest(OlcbAddressTest.suite());
-        suite.addTest(OlcbSensorManagerTest.suite());
-        suite.addTest(OlcbSensorTest.suite());
-        suite.addTest(OlcbTurnoutManagerTest.suite());
-        suite.addTest(OlcbTurnoutTest.suite());
-
-        suite.addTest(jmri.jmrix.openlcb.swing.PackageTest.suite());
+        suite.addTest(TieToolFrameDemo.suite());
         
         return suite;
     }
