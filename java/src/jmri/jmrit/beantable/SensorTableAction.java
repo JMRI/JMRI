@@ -78,10 +78,10 @@ public class SensorTableAction extends AbstractTableAction {
     
     JmriJFrame addFrame = null;
 
-    JTextField sysName = new JTextField(10);
-    JTextField userName = new JTextField(20);
+    JTextField sysName = new JTextField(40);
+    JTextField userName = new JTextField(40);
     JComboBox prefixBox = new JComboBox();
-    JTextField numberToAdd = new JTextField(10);
+    JTextField numberToAdd = new JTextField(5);
     JCheckBox range = new JCheckBox("Add a range");
     JLabel sysNameLabel = new JLabel("Hardware Address");
     JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
