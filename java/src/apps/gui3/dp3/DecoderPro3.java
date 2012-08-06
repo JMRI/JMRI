@@ -27,6 +27,10 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
     private static File toolbarFile = null;
     private static String applicationName = "DecoderPro 3";
 
+    public DecoderPro3(String[] args) {
+        super(applicationName, "DecoderPro3xml", args);
+    }
+    
     public synchronized static File getMenuFile() {
         if (menuFile == null) {
             menuFile = new File("dp3/Gui3Menus.xml");
@@ -91,24 +95,16 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
 
     // Main entry point
     public static void main(String args[]) {
-        // do processing needed immediately, before
-        // we attempt anything else
-        preInit(applicationName);
-        setConfigFilename("DecoderProConfig3.xml", args);
-
-        // create the program object
-        DecoderPro3 app = new DecoderPro3();
-        // do final post initialization processing
-        app.postInit();
-
+        DecoderPro3 app = new DecoderPro3(args);
+        app.start();
     }
 
     /**
      * Final actions before releasing control of app to user
      */
     @Override
-    protected void postInit() {
-        super.postInit();
+    protected void start() {
+        super.start();
 
         if ((!configOK) || (!configDeferredLoadOK)) {
             if (preferenceFileExists) {
@@ -135,9 +131,5 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         jmri.InstanceManager.tabbedPreferencesInstance().disablePreferenceItem("STARTUP", "apps.PerformFilePanel");
     }
 
-    @Override
-    public String getAppName() {
-        return applicationName;
-    }
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderPro3.class.getName());
 }

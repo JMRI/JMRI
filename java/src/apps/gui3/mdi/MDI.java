@@ -5,6 +5,7 @@ package apps.gui3.mdi;
 import jmri.util.swing.mdi.MdiMainFrame;
 import java.io.File;
 import java.util.ResourceBundle;
+import jmri.Application;
 
 /**
  * The JMRI application for developing the 3rd GUI
@@ -28,34 +29,24 @@ import java.util.ResourceBundle;
  */
 public class MDI extends apps.gui3.Apps3 {
 
+    public MDI(String[] args) {
+        super("JMRI GUI3 Demo", null, args);
+        this.start();
+    }
+
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                                                     justification="only one application at a time")
     protected void createMainFrame() {
         // create and populate main window
-        nameString = "JMRI GUI3 Demo";
-        mainFrame = new MdiMainFrame(nameString, 
+        mainFrame = new MdiMainFrame(Application.getApplicationName(),
                 new File("xml/config/apps/demo/Gui3LeftTree.xml"), 
     	        new File("xml/config/apps/demo/Gui3Menus.xml"), 
     	        new File("xml/config/apps/demo/Gui3MainToolBar.xml"));
     }
     
-    static String nameString = "JMRI program";
-    
-    public String getAppName() { return nameString; }
-    
     // Main entry point
     public static void main(String args[]) {
-
-        // do processing needed immediately, before
-        // we attempt anything else
-        preInit(nameString);
-        
-        // create the program object
-        MDI app = new MDI();
-        
-        // do final post initialization processing
-        app.postInit();
-        
+        MDI app = new MDI(args);
     }
     
     protected ResourceBundle getActionModelResourceBundle(){

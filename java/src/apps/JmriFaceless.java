@@ -35,28 +35,15 @@ public class JmriFaceless extends apps.AppsBase {
 		System.setProperty("java.awt.headless", "true");
 	}
 
+    public JmriFaceless(String[] args) {
+        super("JmriFaceless", "JmriFacelessConfig3.xml", args);
+        this.start();
+    }
+
 	// Main entry point
     public static void main(String args[]) {
-
-        // do processing needed immediately, before
-        // we attempt anything else
-        preInit("JmriFaceless");
-        
-        // set default filename, or will be set from args (if passed)
-        setConfigFilename("JmriFacelessConfig3.xml", args);
-        
-        // create the program object
-        JmriFaceless app = new JmriFaceless();
-        
-        // do final post initialization processing
-        app.postInit();
-        
+        JmriFaceless app = new JmriFaceless(args);
     }
 
-    @Override
-    public String getAppName() {
-        return "JmriFaceless";
-    }
-    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriFaceless.class.getName());
 }

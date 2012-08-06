@@ -1,13 +1,27 @@
 // AppsBase.java
 package apps;
 
+import apps.gui3.TabbedPreferences;
 import java.io.File;
 import java.util.Enumeration;
 import javax.swing.SwingUtilities;
 import jmri.Application;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.NamedBeanHandleManager;
+import jmri.UserPreferencesManager;
+import jmri.configurexml.ConfigXmlManager;
+import jmri.configurexml.swing.DialogErrorHandler;
+import jmri.implementation.AbstractShutDownTask;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.display.layoutEditor.BlockValueFile;
+import jmri.jmrit.revhistory.FileHistory;
+import jmri.managers.DefaultShutDownManager;
+import jmri.managers.DefaultUserMessagePreferences;
+import jmri.util.Log4JUtil;
+import jmri.util.exceptionhandler.AwtHandler;
+import jmri.util.exceptionhandler.UncaughtExceptionHandler;
+import org.apache.log4j.Logger;
 
 /**
  * Base class for the core of JMRI applications. <p> This provides a non-GUI
@@ -24,15 +38,15 @@ public abstract class AppsBase {
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_PKGPROTECT",
     justification = "not a library pattern")
-    protected final static String nameString = "JMRI Base";
     private final static String configFilename = "/JmriConfig3.xml";
     protected boolean configOK;
     protected boolean configDeferredLoadOK;
     protected boolean preferenceFileExists;
     static protected boolean handlingQuit = false;
     static boolean log4JSetUp = false;
+    static boolean preInit = false;
     private static final String jmriLog = "****** JMRI log *******";
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AppsBase.class.getName());
+    static Logger log = Logger.getLogger(AppsBase.class.getName());
 
     /**
      * Initial actions before frame is created, invoked in the applications
@@ -46,23 +60,29 @@ public abstract class AppsBase {
         try {
             Application.setApplicationName(applicationName);
         } catch (IllegalAccessException ex) {
-            log.info("Unable to set application name");
+            log.error("Unable to set application name");
         } catch (IllegalArgumentException ex) {
-            log.info("Unable to set application name");
+            log.error("Unable to set application name");
         }
 
         //jmri.util.Log4JUtil.initLog4J();
-        log.info(jmri.util.Log4JUtil.startupInfo(applicationName));
+        log.info(Log4JUtil.startupInfo(applicationName));
+
+        preInit = true;
     }
 
     /**
-     * Create and initialize the application object. <p> Expects initialization
-     * from preInit() to already be done.
+     * Create and initialize the application object.
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SC_START_IN_CTOR",
     justification = "The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
-    public AppsBase() {
+    public AppsBase(String applicationName, String configFileDef, String[] args) {
 
+        if (!preInit) {
+            preInit(applicationName);
+            setConfigFilename(configFileDef, args);
+        }
+        
         if (!log4JSetUp) {
             initLog4J();
         }
@@ -120,27 +140,27 @@ public abstract class AppsBase {
         cm.setPrefsLocation(new File(getConfigFileName()));
         log.debug("config manager installed");
         // Install Config Manager error handler
-        jmri.configurexml.ConfigXmlManager.setErrorHandler(new jmri.configurexml.swing.DialogErrorHandler());
+        ConfigXmlManager.setErrorHandler(new DialogErrorHandler());
     }
 
     protected void installManagers() {
         // Install a history manager
-        InstanceManager.store(new jmri.jmrit.revhistory.FileHistory(), jmri.jmrit.revhistory.FileHistory.class);
+        InstanceManager.store(new FileHistory(), FileHistory.class);
         // record startup
-        InstanceManager.getDefault(jmri.jmrit.revhistory.FileHistory.class).addOperation("app", nameString, null);
+        InstanceManager.getDefault(FileHistory.class).addOperation("app", Application.getApplicationName(), null);
 
         // Install a user preferences manager
-        InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
+        InstanceManager.store(DefaultUserMessagePreferences.getInstance(), UserPreferencesManager.class);
 
         // install the abstract action model that allows items to be added to the, both 
         // CreateButton and Perform Action Model use a common Abstract class
-        InstanceManager.store(new apps.CreateButtonModel(), apps.CreateButtonModel.class);
+        InstanceManager.store(new CreateButtonModel(), CreateButtonModel.class);
 
         // install preference manager
-        InstanceManager.setTabbedPreferences(new apps.gui3.TabbedPreferences());
+        InstanceManager.setTabbedPreferences(new TabbedPreferences());
         
         // install the named bean handler
-        InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+        InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
 
     }
 
@@ -160,12 +180,12 @@ public abstract class AppsBase {
             preferenceFileExists = false;
             configOK = false;
             log.info("No pre-existing config file found, searched for '" + file.getPath() + "'");
-            ((jmri.configurexml.ConfigXmlManager) InstanceManager.configureManagerInstance()).setPrefsLocation(file);
+            ((ConfigXmlManager) InstanceManager.configureManagerInstance()).setPrefsLocation(file);
             return;
         }
         preferenceFileExists = true;
         try {
-            ((jmri.configurexml.ConfigXmlManager) InstanceManager.configureManagerInstance()).setPrefsLocation(file);
+            ((ConfigXmlManager) InstanceManager.configureManagerInstance()).setPrefsLocation(file);
             configOK = InstanceManager.configureManagerInstance().load(file);
             if (log.isDebugEnabled()) log.debug("end load config file "+ file.getName() +", OK=" + configOK);
         } catch (Exception e) {
@@ -208,20 +228,20 @@ public abstract class AppsBase {
 
     protected void installShutDownManager() {
         InstanceManager.setShutDownManager(
-                new jmri.managers.DefaultShutDownManager());
+                new DefaultShutDownManager());
     }
 
     protected void addDefaultShutDownTasks() {
         // add the default shutdown task to save blocks
         // as a special case, register a ShutDownTask to write out blocks
         InstanceManager.shutDownManagerInstance().
-                register(new jmri.implementation.AbstractShutDownTask("Writing Blocks") {
+                register(new AbstractShutDownTask("Writing Blocks") {
 
             public boolean execute() {
                 // Save block values prior to exit, if necessary
                 log.debug("Start writing block info");
                 try {
-                    new jmri.jmrit.display.layoutEditor.BlockValueFile().writeBlockValues();
+                    new BlockValueFile().writeBlockValues();
                 } //catch (org.jdom.JDOMException jde) { log.error("Exception writing blocks: "+jde); }
                 catch (java.io.IOException ioe) {
                     log.error("Exception writing blocks: " + ioe);
@@ -237,7 +257,7 @@ public abstract class AppsBase {
      * Final actions before releasing control of app to user, invoked explicitly
      * after object has been constructed, e.g. in main().
      */
-    protected void postInit() {
+    protected void start() {
         log.debug("main initialization done");
     }
 
@@ -270,8 +290,10 @@ public abstract class AppsBase {
                 log.debug("Config file was specified as: " + arg);
             }
         }
-        setJmriSystemProperty("configFilename", def);
-        log.debug("Config file set to: " + def);
+        if (def != null) {
+            setJmriSystemProperty("configFilename", def);
+            log.debug("Config file set to: " + def);
+        }
     }
 
     // We will use the value stored in the system property 
@@ -322,15 +344,15 @@ public abstract class AppsBase {
             log.error("Exception starting logging: " + e);
         }
         // install default exception handlers
-        System.setProperty("sun.awt.exception.handler", jmri.util.exceptionhandler.AwtHandler.class.getName());
-        Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
+        System.setProperty("sun.awt.exception.handler", AwtHandler.class.getName());
+        Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
 
         // first log entry
         log.info(jmriLog);
 
         // now indicate logging locations
         @SuppressWarnings("unchecked")
-        Enumeration<org.apache.log4j.Logger> e = org.apache.log4j.Logger.getRootLogger().getAllAppenders();
+        Enumeration<Logger> e = Logger.getRootLogger().getAllAppenders();
 
         while (e.hasMoreElements()) {
             org.apache.log4j.Appender a = (org.apache.log4j.Appender) e.nextElement();
@@ -371,7 +393,4 @@ public abstract class AppsBase {
             }
         }
     }
-
-    abstract public String getAppName();
-
 }

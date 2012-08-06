@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.io.File;
 import java.util.Locale;
 import java.util.HashMap;
+import jmri.Application;
 
 import jmri.jmrix.JmrixConfigPane;
 import jmri.jmrit.roster.RosterEntry;
@@ -157,7 +158,7 @@ public class FirstTimeStartUpWizard {
     void firstWelcome(){
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-        p.add(formatText("Welcome to JMRI's " + app.getAppName() + "<p><br>This little wizard will help to guide you through setting up " + app.getAppName() + " for the first time"));
+        p.add(formatText("Welcome to JMRI's " + Application.getApplicationName() + "<p><br>This little wizard will help to guide you through setting up " + Application.getApplicationName() + " for the first time"));
         
         wizPage.add(new WizardPage(p, new JPanel(),"Welcome to JMRI StartUp Wizard"));
     }
@@ -168,7 +169,7 @@ public class FirstTimeStartUpWizard {
     void finishAndConnect(){
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-        p.add(formatText("Configuration is now all complete, press finish below to connect to your system and start using " + app.getAppName() + "\n\nIf at any time you need to change your settings, you can find the preference setting under the Edit Menu"));
+        p.add(formatText("Configuration is now all complete, press finish below to connect to your system and start using " + Application.getApplicationName() + "\n\nIf at any time you need to change your settings, you can find the preference setting under the Edit Menu"));
         wizPage.add(new WizardPage(p, new JPanel(), "Finish and Connect"));
     }
     

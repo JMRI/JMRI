@@ -2,19 +2,28 @@
 
 package apps.gui3;
 
+import apps.AppsBase;
+import apps.CreateButtonModel;
 import apps.SplashWindow;
 import apps.SystemConsole;
-import jmri.util.JmriJFrame;
-
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
 import java.util.Enumeration;
 import java.util.EventObject;
 import java.util.ResourceBundle;
+import javax.help.SwingHelpUtilities;
+import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
+import jmri.plaf.macosx.AboutHandler;
+import jmri.plaf.macosx.PreferencesHandler;
+import jmri.plaf.macosx.QuitHandler;
+import jmri.swing.AboutDialog;
+import jmri.util.HelpUtil;
+import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
+import jmri.util.swing.FontComboUtil;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -32,7 +41,7 @@ import jmri.util.SystemType;
  * @author	Bob Jacobsen   Copyright 2009, 2010
  * @version $Revision$
  */
-public abstract class Apps3 extends apps.AppsBase {
+public abstract class Apps3 extends AppsBase {
 
 
     /**
@@ -41,9 +50,7 @@ public abstract class Apps3 extends apps.AppsBase {
      * applications main() routine.
      */
     static public void preInit(String applicationName) {
-        nameString = applicationName;
-        
-        apps.AppsBase.preInit(applicationName);
+        AppsBase.preInit(applicationName);
         
         // Initialise system console
         // Put this here rather than in apps.AppsBase as this is only relevant
@@ -61,9 +68,9 @@ public abstract class Apps3 extends apps.AppsBase {
      *<p>
      * Expects initialization from preInit() to already be done.
      */
-    public Apps3() {
+    public Apps3(String applicationName, String configFileDef, String[] args) {
         // pre-GUI work
-        super();
+        super(applicationName, configFileDef, args);
 
         // Prepare font lists
         prepareFontLists();
@@ -75,7 +82,7 @@ public abstract class Apps3 extends apps.AppsBase {
             initMacOSXMenus();
         }
         if(((!configOK) || (!configDeferredLoadOK)) && (!preferenceFileExists)){
-            apps.gui3.FirstTimeStartUpWizardAction prefsAction = new apps.gui3.FirstTimeStartUpWizardAction("Start Up Wizard");
+            FirstTimeStartUpWizardAction prefsAction = new FirstTimeStartUpWizardAction("Start Up Wizard");
             prefsAction.setApp(this);
             prefsAction.actionPerformed(null);
             return;
@@ -126,13 +133,13 @@ public abstract class Apps3 extends apps.AppsBase {
         try {
 
             // initialize help system
-            jmri.util.HelpUtil.initOK();
+            HelpUtil.initOK();
             
             // tell help to use default browser for external types
-            javax.help.SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
+            SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
     
             // help items are set in the various Tree/Menu/Toolbar constructors        
-        } catch (java.lang.Throwable e3) {
+        } catch (Throwable e3) {
             log.error("Unexpected error creating help: "+e3);
         }
     }
@@ -150,7 +157,7 @@ public abstract class Apps3 extends apps.AppsBase {
     abstract protected ResourceBundle getActionModelResourceBundle();
     
     protected void addToActionModel(){
-        apps.CreateButtonModel bm = jmri.InstanceManager.getDefault(apps.CreateButtonModel.class);
+        CreateButtonModel bm = InstanceManager.getDefault(apps.CreateButtonModel.class);
         ResourceBundle rb = getActionModelResourceBundle();
         if (rb==null || bm==null)
             return;
@@ -182,9 +189,9 @@ public abstract class Apps3 extends apps.AppsBase {
     /**
      * Final actions before releasing control of app to user
      */
-    protected void postInit() {
+    protected void start() {
         // TODO: splash(false);
-        super.postInit();
+        super.start();
         splash(false);
     }
     
@@ -193,7 +200,7 @@ public abstract class Apps3 extends apps.AppsBase {
     }
     
     static SplashWindow sp = null;
-    static java.awt.event.AWTEventListener debugListener = null;
+    static AWTEventListener debugListener = null;
     static boolean debugFired = false;
     static boolean debugmsg = false;
     
@@ -201,16 +208,17 @@ public abstract class Apps3 extends apps.AppsBase {
         if (debugListener == null && debug) {
             // set a global listener for debug options
             debugFired = false;
-            debugListener = new java.awt.event.AWTEventListener() {
+            debugListener = new AWTEventListener() {
 
-                public void eventDispatched(java.awt.AWTEvent e) {
+                @Override
+                public void eventDispatched(AWTEvent e) {
                     if (!debugFired) {
                         /*We set the debugmsg flag on the first instance of the user pressing any button
                         and the if the debugFired hasn't been set, this allows us to ensure that we don't
                         miss the user pressing F8, while we are checking*/
                         debugmsg = true;
                         if (e.getID() == KeyEvent.KEY_PRESSED) {
-                            if (((java.awt.event.KeyEvent) e).getKeyCode() == 119) {
+                            if (((KeyEvent) e).getKeyCode() == 119) {
                                 startupDebug();
                             }
                         } else {
@@ -219,8 +227,8 @@ public abstract class Apps3 extends apps.AppsBase {
                     }
                 }
             };
-            java.awt.Toolkit.getDefaultToolkit().addAWTEventListener(debugListener,
-                    java.awt.AWTEvent.KEY_EVENT_MASK);
+            Toolkit.getDefaultToolkit().addAWTEventListener(debugListener,
+                    AWTEvent.KEY_EVENT_MASK);
         }
 
         // bring up splash window for startup
@@ -231,7 +239,7 @@ public abstract class Apps3 extends apps.AppsBase {
         sp.setVisible(show);
         if (!show) {
             sp.dispose();
-            java.awt.Toolkit.getDefaultToolkit().removeAWTEventListener(debugListener);
+            Toolkit.getDefaultToolkit().removeAWTEventListener(debugListener);
             debugListener = null;
             sp = null;
         }
@@ -252,22 +260,12 @@ public abstract class Apps3 extends apps.AppsBase {
         debugmsg=false;
     }
     
-    static String nameString = "JMRI program";
-    
-    static public String startupInfo(String program) {
-        setApplication(program);
-        nameString = (program+" version "+jmri.Version.name()
-                +" starts under Java "+System.getProperty("java.version","<unknown>")
-                +" at "+(new java.util.Date()));
-        return nameString;
-    }
-    
     private void prepareFontLists() {
         // Prepare font lists
         new Thread(new Runnable() {
             public void run() {
                 log.debug("Prepare font lists...");
-                jmri.util.swing.FontComboUtil.prepareFontLists();
+                FontComboUtil.prepareFontLists();
                 log.debug("...Font lists built");
             }
         }).start();
@@ -275,21 +273,21 @@ public abstract class Apps3 extends apps.AppsBase {
 
     protected void initMacOSXMenus() {
         jmri.plaf.macosx.Application macApp = jmri.plaf.macosx.Application.getApplication();
-        macApp.setAboutHandler(new jmri.plaf.macosx.AboutHandler() {
+        macApp.setAboutHandler(new AboutHandler() {
 
             @Override
             public void handleAbout(EventObject eo) {
-                new jmri.swing.AboutDialog(null, true).setVisible(true);
+                new AboutDialog(null, true).setVisible(true);
             }
         });
-        macApp.setPreferencesHandler(new jmri.plaf.macosx.PreferencesHandler() {
+        macApp.setPreferencesHandler(new PreferencesHandler() {
 
             @Override
             public void handlePreferences(EventObject eo) {
-                new apps.gui3.TabbedPreferencesAction("Preferences").actionPerformed();
+                new TabbedPreferencesAction("Preferences").actionPerformed();
             }
         });
-        macApp.setQuitHandler(new jmri.plaf.macosx.QuitHandler() {
+        macApp.setQuitHandler(new QuitHandler() {
 
             @Override
             public boolean handleQuitRequest(EventObject eo) {
@@ -299,18 +297,7 @@ public abstract class Apps3 extends apps.AppsBase {
         });
     }
 
-    protected static void setApplication(String name) {
-        try {
-            // Enable access to name field
-            jmri.Application.setApplicationName(name);
-        } catch (IllegalArgumentException ex) {
-            log.warn("Unable to set application name " + ex);
-        } catch (IllegalAccessException ex) {
-            log.warn("Unable to set application name " + ex);
-        }
-    }
-
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Apps3.class.getName());
+    static Logger log = Logger.getLogger(Apps3.class.getName());
     
 }
 
