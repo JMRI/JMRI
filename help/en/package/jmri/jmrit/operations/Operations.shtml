@@ -716,27 +716,33 @@ print options.  You can change the comment if desired, and press "Save" to keep 
 
    <H3>Switch List Options</H3>
 
-   There are three options for adjusting the switch lists to your liking. The first checkbox option when
-   selected tells the program to print all trains that visit a location, even if the train doesn't
-   have any work. If you deselect this option, then the program only prints out trains that have
-   work at that location.
+   There are three options for adjusting the switch lists to your liking. The first checkbox option
+   when selected tells the program to print all trains that visit a location, even if the train
+   doesn't have any work. If you deselect this option, then the program only prints out trains that
+   have work at that location.
 
    <P>The next option when selected causes the program to print a train's switch list on a new
     page for each train. This way your operators when completing the work for a train, can simply
     discard the paperwork for that train. This mode is also useful if you have more than one
     operator working a location, this way they can easily hand out the work by train.</P>
 
-   <P>The last option is whether you want your switch lists in real time or consolidation
-    mode. Normally you would generate your switch lists in real time. In this mode the switch list
-    for a location shows the work planned for trains that are built and not yet terminated. However,
-    if you have a small layout, you might have to build and terminate a few trains in order to
-    generate enough work for your operators. If you use switch lists in real time you have to print
-    them out before you terminate your trains. Now if there isn't much work your switch list is
-    going to be pretty short. By deselecting the "Real Time" checkbox you can consolidate several
-    small switch lists in to one larger one. Use this mode if you want to save paper, otherwise
-    don't bother, as it can be difficult to use. It's a bit complicated, so here's the order you
-    need to do things:
-   
+   <P>The last option is whether you want your switch lists in real time or consolidation mode.
+    Normally you would generate your switch lists in real time. In this mode the switch list for a
+    location shows the work planned for trains that are built and not yet terminated.</P>
+
+   <P>If you only want to print out work for new trains, then deselect the real time option.
+    Once you've printed out the switch list for a location, when new work is created by building
+    trains, the old work for older trains is deleted. Note that you can use preview to see what work
+    a location has, but until you print it, new work will be added to the whatever work is currently
+    scheduled. So please understand that preview and print work differently in consolidation mode.</P>
+   <P>Another use for consolidation mode is to create large switch lists for a location by
+    building and terminating several trains. For example, if you have a small layout, you might have
+    to build and terminate quite a few trains in order to generate enough work for your operators.
+    If you use switch lists in real time you have to print them out before you terminate your
+    trains. Now if there isn't much work your switch list is going to be pretty short. By
+    deselecting the "Real Time" checkbox you can consolidate several small switch lists in to one
+    larger one. Use this mode if you want to save paper, otherwise don't bother, as it can be
+    difficult to use. It's a bit complicated, so here's the order you need to do things:</P>
    <uL>
     <li>In the "Print Options" window, deselect the "Real Time" checkbox and press "Save".
     <li>Then build the trains you want consolidated switch lists for, then</li>
