@@ -9,7 +9,9 @@ import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
 import jmri.jmrit.operations.ExceptionDisplayFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.UnexpectedExceptionContext;
+import jmri.jmrit.operations.trains.TrainsTableFrame;
 
 import apps.Apps;
 
@@ -30,6 +32,17 @@ public class ResetAction extends AbstractAction {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		// check to see if files are dirty
+		if (OperationsXml.areFilesDirty()) {
+			if (JOptionPane
+					.showConfirmDialog(
+							null,
+							"Operations files have been modified, do you want to save them?",
+							"Save operation files?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				OperationsXml.save();
+			}
+		}
+
 		int results = JOptionPane.showConfirmDialog(null,
 				rb.getString("AreYouSureDeleteAll"),
 				rb.getString("ResetOperations"), JOptionPane.OK_CANCEL_OPTION);
@@ -52,6 +65,18 @@ public class ResetAction extends AbstractAction {
 		try {
 			// now delete the operations files
 			backup.deleteOperationsFiles();
+
+			// now deregister shut down task
+			// If Trains window was opened, then task is active
+			// otherwise it is normal to not have the task running
+			try {
+				if (TrainsTableFrame.trainDirtyTask != null) {
+					jmri.InstanceManager.shutDownManagerInstance().deregister(
+							TrainsTableFrame.trainDirtyTask);
+				}
+			} catch (Exception ex) {
+				log.debug("Unable to deregister Train Dirty Task");
+			}
 
 			JOptionPane.showMessageDialog(null,
 					rb.getString("YouMustRestartAfterReset"),

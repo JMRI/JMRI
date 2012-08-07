@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import jmri.jmrit.operations.ExceptionContext;
 import jmri.jmrit.operations.ExceptionDisplayFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.trains.TrainsTableFrame;
 import apps.Apps;
 
@@ -37,6 +38,18 @@ public class RestoreFilesAction extends AbstractAction {
 	private void restore() {
 		// This method can restore files from any directory selected by the File
 		// Chooser.
+
+		// check to see if files are dirty
+		if (OperationsXml.areFilesDirty()) {
+			if (JOptionPane
+					.showConfirmDialog(
+							null,
+							"Operations files have been modified, do you want to save them?",
+							"Save operation files?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				OperationsXml.save();
+			}
+		}
+
 		// first backup the users data in case they forgot
 		BackupBase backup = new DefaultBackup();
 
@@ -70,11 +83,11 @@ public class RestoreFilesAction extends AbstractAction {
 					"You must restart JMRI to complete the restore operation",
 					"Restore successful!", JOptionPane.INFORMATION_MESSAGE);
 
-			// now clear dirty bit
-			// Need to fix this as it seems to always throw an exception.
 			try {
-				jmri.InstanceManager.shutDownManagerInstance().deregister(
-						TrainsTableFrame.trainDirtyTask);
+				if (TrainsTableFrame.trainDirtyTask != null) {
+					jmri.InstanceManager.shutDownManagerInstance().deregister(
+							TrainsTableFrame.trainDirtyTask);
+				}
 			} catch (IllegalArgumentException e) {
 				log.debug(
 						"Trying to deregister Train Dirty Task after Operations files restore",

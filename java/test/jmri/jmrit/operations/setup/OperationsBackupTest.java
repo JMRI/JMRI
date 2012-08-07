@@ -64,15 +64,15 @@ public class OperationsBackupTest extends TestCase {
 
 	private String[] regularBackupSetFileNames;
 
-	public String[] getRegularBackupSetFileNames() {
-		return regularBackupSetFileNames;
-	}
+	// public String[] getRegularBackupSetFileNames() {
+	// return regularBackupSetFileNames;
+	// }
 
-	private String[] testBackupSetFileNames;
-
-	public String[] getTestBackupSetFileNames() {
-		return testBackupSetFileNames;
-	}
+	// private String[] testBackupSetFileNames;
+	//
+	// public String[] getTestBackupSetFileNames() {
+	// return testBackupSetFileNames;
+	// }
 
 	public OperationsBackupTest(String s) {
 		super(s);
@@ -100,12 +100,13 @@ public class OperationsBackupTest extends TestCase {
 		BackupBase backup = new DefaultBackup();
 		regularBackupSetFileNames = backup.getBackupSetFileNames();
 
-		testBackupSetFileNames = new String[regularBackupSetFileNames.length];
-
-		for (int i = 0; i < regularBackupSetFileNames.length; i++) {
-			testBackupSetFileNames[i] = "NEW_TEST_"
-					+ regularBackupSetFileNames[i];
-		}
+		// testBackupSetFileNames = new
+		// String[regularBackupSetFileNames.length];
+		//
+		// for (int i = 0; i < regularBackupSetFileNames.length; i++) {
+		// testBackupSetFileNames[i] = "NEW_TEST_"
+		// + regularBackupSetFileNames[i];
+		// }
 	}
 
 	// Main entry point
@@ -179,7 +180,7 @@ public class OperationsBackupTest extends TestCase {
 		if (!defaultBackupRoot.exists())
 			defaultBackupRoot.mkdirs();
 
-		for (String name : testBackupSetFileNames) {
+		for (String name : regularBackupSetFileNames) {
 			createDummyXmlFile(operationsRoot, name);
 		}
 	}
@@ -231,7 +232,7 @@ public class OperationsBackupTest extends TestCase {
 			String dstSet) {
 		// Defaults to the test file names
 		verifyBackupSetAgainst(srcDir, srcSet, dstDir, dstSet,
-				testBackupSetFileNames);
+				regularBackupSetFileNames);
 	}
 
 	public void verifyBackupSetAgainst(File srcDir, String srcSet, File dstDir,
@@ -250,6 +251,16 @@ public class OperationsBackupTest extends TestCase {
 		for (String fileName : fileNames) {
 			verifyDstFileEqualsScrFile(fileName, srcDir, dstDir);
 		}
+	}
+
+	private void verifyBackupFileCount(File dir, String setName,
+			int expectedCount) {
+		// Verifies if the actual number of files in the destination directory equals
+		// the expected count.
+		dir = new File(dir, setName);
+		int actualCount = dir.list().length;
+
+		assertEquals(expectedCount, actualCount);
 	}
 
 	private void verifyDstFileEqualsScrFile(String fileName, File srcDir,
@@ -283,7 +294,7 @@ public class OperationsBackupTest extends TestCase {
 
 	// Make sure that we are working with the exact set of file names that we
 	// expect.
-	public void testGetBackupSetFileNames() throws IOException {
+	public void testGetBackupSetFileNames() {
 		BackupBase backup = new DefaultBackup();
 		String[] names = backup.getBackupSetFileNames();
 
@@ -295,23 +306,20 @@ public class OperationsBackupTest extends TestCase {
 		Assert.assertEquals("OperationsLocationRoster.xml", names[3]);
 		Assert.assertEquals("OperationsRouteRoster.xml", names[4]);
 		Assert.assertEquals("OperationsTrainRoster.xml", names[5]);
-		int i = 41;
-		if (i == 42)
-			throw new IOException();
 	}
 
-	public void testTestBackupSetFileNames() {
-		String[] names = testBackupSetFileNames;
-
-		Assert.assertEquals("Test Backup set file name count", 6, names.length);
-
-		Assert.assertEquals("NEW_TEST_Operations.xml", names[0]);
-		Assert.assertEquals("NEW_TEST_OperationsCarRoster.xml", names[1]);
-		Assert.assertEquals("NEW_TEST_OperationsEngineRoster.xml", names[2]);
-		Assert.assertEquals("NEW_TEST_OperationsLocationRoster.xml", names[3]);
-		Assert.assertEquals("NEW_TEST_OperationsRouteRoster.xml", names[4]);
-		Assert.assertEquals("NEW_TEST_OperationsTrainRoster.xml", names[5]);
-	}
+	// public void testTestBackupSetFileNames() {
+	// String[] names = testBackupSetFileNames;
+	//
+	// Assert.assertEquals("Test Backup set file name count", 6, names.length);
+	//
+	// Assert.assertEquals("NEW_TEST_Operations.xml", names[0]);
+	// Assert.assertEquals("NEW_TEST_OperationsCarRoster.xml", names[1]);
+	// Assert.assertEquals("NEW_TEST_OperationsEngineRoster.xml", names[2]);
+	// Assert.assertEquals("NEW_TEST_OperationsLocationRoster.xml", names[3]);
+	// Assert.assertEquals("NEW_TEST_OperationsRouteRoster.xml", names[4]);
+	// Assert.assertEquals("NEW_TEST_OperationsTrainRoster.xml", names[5]);
+	// }
 
 	public void testTestFilesCreated() {
 		// Make sure we can create our test files correctly
@@ -325,6 +333,12 @@ public class OperationsBackupTest extends TestCase {
 
 		// and the test files
 		verifyBackupSetAgainst(operationsRoot, "", operationsRoot, "");
+
+		// and the getSourceFileCount method as well
+		BackupBase backup = new DefaultBackup();
+		int count = backup.getSourceFileCount(operationsRoot);
+		assertEquals("Test source file count", 6, count);
+
 	}
 
 	public void testBasicCopyBackupSet() throws IOException {
@@ -344,6 +358,83 @@ public class OperationsBackupTest extends TestCase {
 
 		// Check that they got there
 		verifyBackupSetAgainst(operationsRoot, "", defaultBackupRoot, setName);
+
+		// And that we have the right count of files
+		verifyBackupFileCount(defaultBackupRoot, setName,
+				backup.getBackupSetFileNames().length);
+	}
+
+	public void testBasicCopyBackupSetWithNoFiles() throws IOException {
+		// Test copying with none of the files in the source, representing the
+		// state after a Reset() operation.
+		BackupBase backup = new DefaultBackup();
+		String setName = "NEW Test Backup Set 02";
+		File setDir = new File(defaultBackupRoot, setName);
+
+		deleteTestFiles();
+		int count = backup.getSourceFileCount(operationsRoot);
+		assertEquals("SHould be zero files after delete()", 0, count);
+		
+		backup.copyBackupSet(operationsRoot, setDir);
+
+		// Should just return without creating the dest dir or throwing an
+		// exception.
+		Boolean exists = existsFile(defaultBackupRoot, setName);
+		assertFalse(exists);
+
+	}
+
+	// private void createDummyXmlFile(File dir, String name) throws IOException
+	// {
+
+	public void testBasicCopyBackupSetWithMissingFiles() throws IOException {
+		// Test copying with only some of the files in the source. This is a
+		// problem.
+		BackupBase backup = new DefaultBackup();
+		String setName = "NEW Test Backup Set 03";
+		File setDir = new File(defaultBackupRoot, setName);
+
+		// Clear out any files, and create just one
+		deleteTestFiles();
+		createDummyXmlFile(operationsRoot, regularBackupSetFileNames[0]);
+		
+		try {
+			backup.copyBackupSet(operationsRoot, setDir);
+
+			// Should not get here
+			fail("Exception should be thrown when source files are missing.");
+
+		} catch (IOException ex) {
+			// Should throw an exception, and the destination dir should not
+			// exist.
+			Boolean exists = existsFile(defaultBackupRoot, setName);
+			assertFalse(exists);
+		}
+
+	}
+
+	public void testBasicCopyBackupSetWithExtraFiles() throws IOException {
+		// Test copying with all of the Operations files, plus some extra files.
+		// SHould only copy the Operations files.
+		BackupBase backup = new DefaultBackup();
+		String setName = "NEW Test Backup Set 04";
+		File setDir = new File(defaultBackupRoot, setName);
+
+		// Enable this only after we decide how to handle extra files.
+		// Throw in an extra file in the source to test of we only copy the
+		// files we want.
+		createDummyXmlFile(operationsRoot, "This is an EXTRA file.xml");
+		createDummyXmlFile(operationsRoot, "This is NOT an xml file.txt");
+
+		backup.copyBackupSet(operationsRoot, setDir);
+
+		// Check that they got there
+		verifyBackupSetAgainst(operationsRoot, "", defaultBackupRoot, setName);
+
+		// And that we have the right count of files, skipping the extra Xml
+		// file
+		verifyBackupFileCount(defaultBackupRoot, setName,
+				backup.getBackupSetFileNames().length);
 	}
 
 	public void testBackupToSpecificDirectory() throws IOException {
@@ -403,7 +494,7 @@ public class OperationsBackupTest extends TestCase {
 		BackupBase backup = new DefaultBackup();
 
 		// Now you see them...
-		for (String name : testBackupSetFileNames) {
+		for (String name : regularBackupSetFileNames) {
 			// Make sure each file does exist
 			Assert.assertTrue(name + " file should exist",
 					existsFile(operationsRoot, name));
@@ -412,7 +503,7 @@ public class OperationsBackupTest extends TestCase {
 		backup.deleteOperationsFiles();
 
 		// and now you don't....
-		for (String name : testBackupSetFileNames) {
+		for (String name : regularBackupSetFileNames) {
 			// Make sure each file does NOT exist
 			Assert.assertFalse(name + " file should not exist",
 					existsFile(operationsRoot, name));

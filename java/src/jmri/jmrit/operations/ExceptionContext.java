@@ -71,21 +71,24 @@ public class ExceptionContext {
 	 */
 	public String getStackTraceAsString(int maxLevels) {
 		String eol = System.getProperty("line.separator");
-		String result = ""; // There must be a better way using some sort of a
-							// string builder class, later.....
+		StringBuilder sb = new StringBuilder();
 
 		StackTraceElement[] stElements = _exception.getStackTrace();
 
 		int limit = Math.min(maxLevels, stElements.length);
 		for (int i = 0; i < limit; i++) {
-			result = result + " at " + stElements[i].toString() + eol;
+			sb.append(" at ");
+			sb.append(stElements[i].toString());
+			sb.append(eol);
 		}
 
 		// If there are more levels than included, add a note to the end
 		if (stElements.length > limit) {
-			result = result + " plus " + (stElements.length - limit) + " more.";
+			sb.append(" plus ");
+			sb.append(stElements.length - limit);
+			sb.append(" more.");
 		}
-		return result;
+		return sb.toString();
 	}
 
 	public String getStackTraceString() {

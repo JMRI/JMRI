@@ -196,8 +196,7 @@ public abstract class BackupBase {
 	 * directory. Usually used to copy to or from a backup location. Creates the
 	 * destination directory if it does not exist.
 	 * 
-	 * This should probably be improved to copy specific named files rather than
-	 * just all .XML files.
+	 * Only copies files that are included in the list of Operations files.
 	 * 
 	 * @param directory
 	 * @return true if successful, false if not.
@@ -213,17 +212,21 @@ public abstract class BackupBase {
 			throw new IOException("Backup Set source directory: "
 					+ sourceDir.getAbsolutePath() + " does not exist");
 
-		// This should probably use a defined list of names.
-		String[] operationFileNames = sourceDir.list();
+		// See how many Operations files we have. If they are all there, carry
+		// on, if there are none, just return, any other number is an error.
 
-		// check for at least 6 operation files
-		// This really should check that all expected files are present.
-		if (operationFileNames.length < 6) {
-			log.error("Only " + operationFileNames.length
-					+ " files found in directory "
+		int sourceCount = getSourceFileCount(sourceDir);
+
+		if (sourceCount == 0) {
+			log.debug("No source files found in " + sourceDir.getAbsolutePath() + ", so skipping copy.");
+			return;
+		}
+
+		if (sourceCount != _backupSetFileNames.length) {
+			log.error("Only " + sourceCount + " file(s) found in directory "
 					+ sourceDir.getAbsolutePath());
-			throw new IOException("Only " + operationFileNames.length
-					+ " files found in directory "
+			throw new IOException("Only " + sourceCount
+					+ " file(s) found in directory "
 					+ sourceDir.getAbsolutePath());
 		}
 
@@ -241,39 +244,42 @@ public abstract class BackupBase {
 			}
 		}
 
-		// TODO check for the correct operation file names
-		int fileCount = 0;
-		String fileName = null;
+		// Just copy the specific Operations files, now that we know they are
+		// all there.
+		for (String name : _backupSetFileNames) {
+			log.debug("copying file: " + name);
 
-		for (int i = 0; i < operationFileNames.length; i++) {
-			fileName = operationFileNames[i];
-
-			// skip non-xml files
-			if (!fileName.toUpperCase().endsWith(".XML"))
-				continue;
-
-			log.debug("copying file: " + fileName);
-
-			fileCount++;
-
-			File src = new File(sourceDir, fileName);
-			File dst = new File(destDir, fileName);
+			File src = new File(sourceDir, name);
+			File dst = new File(destDir, name);
 
 			FileHelper.copy(src.getAbsolutePath(), dst.getAbsolutePath(), true);
 		}
 
-		// This needs to be improved to only copy the specific Operations file
-		// names.
-		if (fileCount < 6)
-			throw new IOException("The number of Files copied from "
-					+ sourceDir.getAbsolutePath() + " was " + fileCount
-					+ ", but should have been 6");
-
-		// Throw the test exception, if we have one.
+		// Throw a test exception, if we have one.
 		if (testException != null) {
 			testException.fillInStackTrace();
 			throw testException;
 		}
+	}
+
+	/**
+	 * Checks to see how many of the Operations files are present in the source
+	 * directory.
+	 * 
+	 * @return
+	 */
+	public int getSourceFileCount(File sourceDir) {
+		int count = 0;
+		Boolean exists;
+
+		for (String name : _backupSetFileNames) {
+			exists = new File(sourceDir, name).exists();
+			if (exists) {
+				count++;
+			}
+		}
+
+		return count;
 	}
 
 	/**

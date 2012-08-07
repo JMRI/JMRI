@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
 
 import jmri.jmrit.operations.ExceptionContext;
 import jmri.jmrit.operations.ExceptionDisplayFrame;
+import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.trains.TrainsTableFrame;
 
 import apps.Apps;
 
@@ -33,6 +35,17 @@ public class LoadDemoAction extends AbstractAction {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		// check to see if files are dirty
+		if (OperationsXml.areFilesDirty()) {
+			if (JOptionPane
+					.showConfirmDialog(
+							null,
+							"Operations files have been modified, do you want to save them?",
+							"Save operation files?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				OperationsXml.save();
+			}
+		}
+
 		int results = JOptionPane.showConfirmDialog(null,
 				"Are you sure you want to load the demo operation files?",
 				"Load Demo Files", JOptionPane.OK_CANCEL_OPTION);
@@ -50,6 +63,18 @@ public class LoadDemoAction extends AbstractAction {
 
 		try {
 			backup.loadDemoFiles();
+
+			// now deregister shut down task
+			// If Trains window was opened, then task is active
+			// otherwise it is normal to not have the task running
+			try {
+				if (TrainsTableFrame.trainDirtyTask != null) {
+					jmri.InstanceManager.shutDownManagerInstance().deregister(
+							TrainsTableFrame.trainDirtyTask);
+				}
+			} catch (Exception ex) {
+				log.debug("Unable to deregister Train Dirty Task");
+			}
 
 			JOptionPane
 					.showMessageDialog(

@@ -12,7 +12,7 @@ public class UnexpectedExceptionContext extends ExceptionContext {
 	@Override
 	public String getTitle() {
 		return super.getTitle() + " (Unexpected)";
-	};
+	}
 
 	public UnexpectedExceptionContext(Exception ex, String operation) {
 		super(

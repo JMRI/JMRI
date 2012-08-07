@@ -27,6 +27,7 @@ import java.awt.Color;
 
 import jmri.jmrit.operations.ExceptionContext;
 import jmri.jmrit.operations.ExceptionDisplayFrame;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.UnexpectedExceptionContext;
 import jmri.jmrit.operations.trains.TrainsTableFrame;
 import java.awt.event.ItemListener;
@@ -215,6 +216,17 @@ public class RestoreDialog extends JDialog {
 	protected void do_restoreButton_actionPerformed(ActionEvent e) {
 		log.debug("restore button activated");
 
+		// check to see if files are dirty
+		if (OperationsXml.areFilesDirty()) {
+			if (JOptionPane
+					.showConfirmDialog(
+							this,
+							"Operations files have been modified, do you want to save them?",
+							"Save operation files?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				OperationsXml.save();
+			}
+		}
+
 		// first backup the users data in case they forgot
 		try {
 			AutoBackup auto = new AutoBackup();
@@ -234,8 +246,10 @@ public class RestoreDialog extends JDialog {
 			// If Trains window was opened, then task is active
 			// otherwise it is normal to not have the task running
 			try {
-				jmri.InstanceManager.shutDownManagerInstance().deregister(
-						TrainsTableFrame.trainDirtyTask);
+				if (TrainsTableFrame.trainDirtyTask != null) {
+					jmri.InstanceManager.shutDownManagerInstance().deregister(
+							TrainsTableFrame.trainDirtyTask);
+				}
 			} catch (Exception ex) {
 				log.debug("Unable to deregister Train Dirty Task");
 			}
