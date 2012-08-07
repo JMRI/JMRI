@@ -20,7 +20,7 @@ import jmri.InstanceManager;
 public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public MarklinSystemConnectionMemo(MarklinTrafficController et) {
-        super("CS", "CS2");
+        super("MC", "Marklin-CS2");
         this.et = et;
         et.setAdapterMemo(this);
         register();
@@ -30,7 +30,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
     
     public MarklinSystemConnectionMemo() {
-        super("CS", "CS2");
+        super("MC", "Marklin-CS2");
         register(); // registers general type
         InstanceManager.store(this, MarklinSystemConnectionMemo.class); // also register as specific type
         //Needs to be implemented
@@ -68,10 +68,10 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         throttleManager = new jmri.jmrix.marklin.MarklinThrottleManager(this);
         jmri.InstanceManager.setThrottleManager(throttleManager);
 
-        /*sensorManager = new jmri.jmrix.marklin.MarklinSensorManager(this);
+        sensorManager = new jmri.jmrix.marklin.MarklinSensorManager(this);
         jmri.InstanceManager.setSensorManager(sensorManager);
         
-        reporterManager = new jmri.jmrix.marklin.MarklinReporterManager(this);
+        /*reporterManager = new jmri.jmrix.marklin.MarklinReporterManager(this);
         jmri.InstanceManager.setReporterManager(reporterManager);*/
         
     }
@@ -80,7 +80,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         return ResourceBundle.getBundle("jmri.jmrix.marklin.MarklinActionListBundle");
     }
 
-    /*private MarklinSensorManager sensorManager;*/
+    private MarklinSensorManager sensorManager;
     private MarklinTurnoutManager turnoutManager;
     /*private MarklinLocoAddressManager locoManager;
     private MarklinPreferences prefManager;*/
@@ -90,8 +90,8 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     
     /*public MarklinLocoAddressManager getLocoAddressManager() { return locoManager; }*/
     public MarklinTurnoutManager getTurnoutManager() { return turnoutManager; }
-    /*public MarklinSensorManager getSensorManager() { return sensorManager; }
-    public MarklinPreferences getPreferenceManager() { return prefManager; }*/
+    public MarklinSensorManager getSensorManager() { return sensorManager; }
+    /*public MarklinPreferences getPreferenceManager() { return prefManager; }*/
     public MarklinThrottleManager getThrottleManager() { return throttleManager; }
     public MarklinPowerManager getPowerManager() { return powerManager; }
     //public MarklinReporterManager getReporterManager() { return reporterManager; }
@@ -106,8 +106,8 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             return true;
         if (type.equals(jmri.PowerManager.class))
             return true;
-        /*if (type.equals(jmri.SensorManager.class))
-            return true;*/
+        if (type.equals(jmri.SensorManager.class))
+            return true;
         if (type.equals(jmri.TurnoutManager.class))
             return true;
         /*if (type.equals(jmri.ReporterManager.class))
@@ -123,8 +123,8 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             return (T)getThrottleManager();
         if (T.equals(jmri.PowerManager.class))
             return (T)getPowerManager();
-        /*if (T.equals(jmri.SensorManager.class))
-            return (T)getSensorManager();*/
+        if (T.equals(jmri.SensorManager.class))
+            return (T)getSensorManager();
         if (T.equals(jmri.TurnoutManager.class))
             return (T)getTurnoutManager();
         /*if (T.equals(jmri.ReporterManager.class))
@@ -134,10 +134,10 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     
     @Override
     public void dispose(){
-        /*if(sensorManager!=null){
+        if(sensorManager!=null){
             sensorManager.dispose();
             sensorManager=null;
-        }*/
+        }
         if(turnoutManager!=null){
             turnoutManager.dispose();
             turnoutManager=null;

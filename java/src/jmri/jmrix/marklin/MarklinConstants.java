@@ -110,6 +110,8 @@ public final class MarklinConstants {
     public final static int LOCOSPEED = 0x04;
     public final static int LOCODIRECTION = 0x05;
     public final static int LOCOFUNCTION = 0x06;
+    
+    public final static int S88EVENT = 0x11;
 }
 
 

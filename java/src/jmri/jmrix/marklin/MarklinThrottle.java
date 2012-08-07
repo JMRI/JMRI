@@ -167,7 +167,6 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     }
     
     public void message(MarklinMessage m) {
-        //System.out.println("Ecos message - "+ m);
         // messages are ignored
     }
     
@@ -199,19 +198,26 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
             }
             if(m.getCommand()==MarklinConstants.LOCODIRECTION){
                 if (log.isDebugEnabled()) log.debug("Loco Direction " + m.getElement(9));
+                //The CS2 sets the speed of the loco to Zero when changing direction, however it doesn't appear to broadcast it out.
                 switch(m.getElement(9)){
                     case 0x00   :  return; //No change
                     case 0x01   :  if(!isForward){
+                                        speedSetting=0.0f;
+                                        super.setSpeedSetting(speedSetting);
                                         notifyPropertyChangeListener("IsForward", isForward, true);
                                         isForward = true;
                                    }
                                    return;
                     case 0x02   :  if(isForward){
+                                        speedSetting=0.0f;
+                                        super.setSpeedSetting(speedSetting);
                                         notifyPropertyChangeListener("IsForward", isForward, false);
                                         isForward = false;
                                    }
                                    return;
-                    case 0x03   :  notifyPropertyChangeListener("Isforward", isForward, !isForward);
+                    case 0x03   :  speedSetting=0.0f;
+                                   super.setSpeedSetting(speedSetting);
+                                   notifyPropertyChangeListener("Isforward", isForward, !isForward);
                                    isForward = !isForward;
                                    return;
                     default : log.error("No Match Found for loco direction " + m.getElement(9)); return;

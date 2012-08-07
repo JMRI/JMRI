@@ -110,7 +110,7 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
         addr = (addr<<8) + (getElement(MarklinConstants.CANADDRESSBYTE4));
         return addr;
     }
-    
+
     public int getPriority(){
         return (getElement(0)>>4);
     }
