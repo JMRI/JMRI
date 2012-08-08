@@ -116,6 +116,12 @@
 <blockquote>
   <p>Loads the Throttle that you saved as the default</p>
 </blockquote>
+<ul>
+  <li><strong>Start WiThrottle</strong></li>
+</ul>
+<blockquote>
+  <p><img src="images/Main_Throttle_Wi.png" width="331" height="271" alt="Wi Throttle"></p>
+</blockquote>
 <h3><a name="Consist"></a><span class="style1"><a href="Main_ConsistControl.shtml">Consisting Tool..</a>.</span></h3>
 <blockquote>
   <p>Opens the Consist Control window.</p>
@@ -167,14 +173,14 @@
   <li><strong>Settings</strong></li>
   <li><strong>Locations</strong></li>
   <li><strong>Cars</strong></li>
-  <li><strong>Engines</strong></li>
+  <li><strong>Locomotives</strong></li>
   <li><strong>Routes</strong></li>
   <li><strong>Trains</strong></li>
 </ul>
-<h3>Start Mini Web Server</h3>
+<h3>Start JMRI Web Server</h3>
 <blockquote>
   <p>Starts a Web Server on your computer. You can access the Index.shtml page using the URL displayed in the dialog.</p>
-  <p>The <a href="http://jmri.org/help/en/html/web/index.shtml">JMRI mini web server </a>is meant to be a quick and easy  way for model railroaders, not Masters of the Web,   to get a web connection to JMRI up and running.</p>
+  <p>The <a href="http://jmri.org/help/en/html/web/index.shtml">JMRI  web server </a>is meant to be a quick and easy  way for model railroaders, not Masters of the Web,   to get a web connection to JMRI up and running.</p>
 </blockquote>
 <p align="center"><img src="images/Main_Debug03.png" width="428" height="70" alt="mini server"></p>
 <hr>

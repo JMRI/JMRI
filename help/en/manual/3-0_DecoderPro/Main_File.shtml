@@ -30,14 +30,12 @@
 </div>
 
 <hr>
-<h4 class="style1">Decoder Pro 3&reg;</h4>
-<p>Opens the, new in this version of JMRI, DecoderPro3 program which is optimized to program locomotives and maintain roster.</p>
 <h4 class="style1">Print Decoder Definitions...  </h4>
 <p>Opens your computer Print dialog to print the installed decoder definitions. The complete list may be more than 25 printed pages. The format is shown below.</p>
 <p align="center"><img src="images/Main_file_01.png" width="724" height="707" alt="decoder printout"></p>
 <h4><span class="style1">Print Preview Decoder Definitions..</span>. </h4>
 <p>Opens your computer  Preview window opens. A list of all the Decoder Definitions installed in DecoderPro will be displayed. You then can decide whether to print the pages.</p>
-<p align="center"><img src="images/Main_file_02.png" width="672" height="601" alt="decoder preview"></p>
+<p align="center"><img src="images/Main_file_02.png" width="673" height="667" alt="print decoders preview"></p>
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
 <h4 class="style1">Quit </h4>
 <p>Closes DecoderPro and all associated functions, same as clicking on the Quit button</p>

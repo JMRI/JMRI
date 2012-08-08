@@ -30,10 +30,9 @@
 
 <hr>
 <p wrap="">All of the JMRI functions can be accessed via the menu bar on the DecoderPro&reg; window.</p>
-<p><img src="images/Main_05_MenuBar.png" width="503" height="135" alt="menu bar"></p>
+<p><img src="images/Main_05_MenuBar.png" width="505" height="100" alt="menu bar"></p>
 <h4><a href="Main_File.shtml">File</a></h4>
 <ul>
-  <li>Decoder Pro3</li>
   <li>Print Decoder Definitions...</li>
   <li>Print Preview Decoder Definitions...
     <br>
@@ -64,14 +63,14 @@
   </li>
   <li><strong>Throttles <img src="images/arrow.gif" width="20" height="9" alt="arrow"></strong>
     <ul>
-      <li>New Throttle</li>
-      <li>Throttles List Window<br>
-      <img src="images/separator.png" width="340" height="4"></li>
-      <li>Save Throttles Layout...</li>
-      <li>Open Throttles Layout...<br>
-      <img src="images/separator.png" alt="" width="340" height="4"></li>
-      <li>Save as Default Throttles Layout</li>
-      <li>Load Default Throttles Layout<br>
+      <li><strong>New Throttle</strong></li>
+      <li><strong>Throttles List Window<br>
+      <img src="images/separator.png" width="340" height="4"></strong></li>
+      <li><strong>Save Throttles Layout...</strong></li>
+      <li><strong>Open Throttles Layout...<br>
+      <img src="images/separator.png" alt="" width="340" height="4"></strong></li>
+      <li><strong>Save as Default Throttles Layout</strong></li>
+      <li><strong>Load Default Throttles Layout</strong><br>
       <img src="images/separator.png" alt="" width="340" height="4"></li>
       <li>Start WiThrottle</li>
     </ul>
@@ -79,10 +78,10 @@
   <li><strong>Consisting Tool...</strong></li>
   <li><strong>Clocks <img src="images/arrow.gif" width="20" height="9" alt="arrow"></strong>
     <ul>
-      <li>Setup Fast Clock...</li>
-      <li>Nixie Clock</li>
-      <li>LCD Clock</li>
-      <li>Analog Clock</li>
+      <li><strong>Setup Fast Clock...</strong></li>
+      <li><strong>Nixie Clock</strong></li>
+      <li><strong>LCD Clock</strong></li>
+      <li><strong>Analog Clock</strong></li>
     </ul>
   </li>
 </ul>
@@ -126,12 +125,13 @@
     </ul>
     <p><img src="images/separator.png" alt="" width="340" height="4"></p>
     <ul>
-      <li>Start Mini Web Server </li>
+      <li><strong>Start JMRI Web Server </strong></li>
     </ul>
   </li>
 </ul>
 <h4><a href="Main_Roster.shtml">Roster</a></h4>
 <ul>
+  <li><strong>Roster</strong> (opens DecoderPro3)</li>
   <li><strong>Create Entry...</strong></li>
   <li><strong>Edit Entry...</strong></li>
   <li><strong>Copy Entry...</strong></li>
@@ -149,11 +149,10 @@
     <img src="images/arrow.gif" width="20" height="9" alt="arrow">
   <ul>
     <li>Create Roster Group      </li>
-    <li>Set Active Roster Group</li>
     <li>Delete Roster Group</li>
     <li>Table Association</li>
-    <li>Associate Roster Entry to Group</li>
-    <li>Disassociation of Roster Entry to Group</li>
+    <li>Add Roster Entry to Group</li>
+    <li>Remove Roster Entry from Group</li>
     </ul>
   <p><img src="images/separator.png" alt="" width="340" height="4"></p>
   </li>
@@ -252,7 +251,7 @@
   <p><img src="images/separator.png" alt="" width="340" height="4"></p>
 </blockquote>
 <ul>
-  <li><a href="../html/web/index.shtml">Start Mini Web Server</a></li>
+  <li><a href="../html/web/index.shtml">Start JMRI Web Server</a></li>
 </ul>
 <blockquote>
   <p><img src="images/separator.png" alt="" width="340" height="4"></p>
@@ -287,6 +286,7 @@
   <li><strong>Context....</strong></li>
   <li><strong>System Console...</strong></li>
   <li><strong>Upload Debugging Info...</strong></li>
+  <li><strong>About DecoderPro</strong></li>
 </ul>
 <hr>
 

@@ -32,7 +32,7 @@
 <p align="left">When you start Decoder Pro, the DecoderPro  window is displayed. All of the JMRI functions can be accessed via the menu bar on the DecoderPro&reg; window, additional menus are added when functions are selected, example below with added operations menu(selected on operations setup window), which is also in the tools menu.</p>
 <p align="center"><img src="images/Splash_Screen.png" width="496" height="282" alt="splash"></p>
 <p align="left">After initial setup of preferences, you may have added buttons at the bottom of the screen to open various tools that you may want to use. These buttons will vary to match your preferences, I have setup buttons for <strong>New Throttle</strong>, <strong>Power Control</strong> and <strong>Monitor Loconet</strong>.</p>
-<p align="center"><img src="images/Splash_Screen01.png" width="490" height="304" alt="splash"></p>
+<p align="center"><img src="images/Splash_Screen01.png" width="496" height="308" alt="splash"></p>
 <p align="left"><a href="Main_Menu.shtml"><strong>Menu Bar</strong></a></p>
 <p align="left">Contains  the menus that allows you to access all the features and tools in JMRI</p>
 <p align="left">DecoderPro&reg; icon and DecoderPro version information is displayed. The version of Java installed and in use is also shown</p>
@@ -51,7 +51,7 @@ Exits the program, with confirmation dialog.</p>
 <p><strong>
   <input type="button" name="button5" id="button5" value="New Throttle...">
 </strong>Opens a throttle window which provides a tool to control your trains, you may open more than one throttle and position on the computer screen
-<p align="center"><img src="images/Main_02_Thottle.png" width="501" height="544" alt="throttle">
+<p align="center"><img src="images/Main_02_Thottle.png" width="511" height="529" alt="Throttle">
 <p><strong>
     <input type="button" name="button6" id="button6" value="Monitor LocoNet">
 </strong>Opens the Monitor LocoNet window that allows you to monitor the commands and responses on the LocoNet.
