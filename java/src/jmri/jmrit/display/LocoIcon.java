@@ -87,6 +87,7 @@ public class LocoIcon extends PositionableLabel {
         }
         popup.add(makeLocoIconMenu());
         if (isEditable()) {
+            getEditor().setShowAlignmentMenu(this, popup);
             getEditor().setShowCoordinatesMenu(this, popup);
         } else {
             if (entry==null) {
