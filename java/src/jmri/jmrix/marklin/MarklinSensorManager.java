@@ -72,8 +72,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
             log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
             throw new JmriException("Hardware Address passed should be past in the form 'Module:port'");
         }
-        int board = 0;
-        int port = 0;
+
         //Address format passed is in the form of board:channel or T:turnout address
         int seperator = curAddress.indexOf(":");
         try {
@@ -88,18 +87,73 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
             log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
             throw new JmriException("Port Address passed should be a number");
         }
+        
+        if(port==0 || port>16){
+            log.error("Port number must be between 1 and 16");
+            throw new JmriException("Port number must be between 1 and 16");
+        }
         StringBuilder sb = new StringBuilder();
         sb.append(getSystemPrefix());
         sb.append("S");
         sb.append(board);
         sb.append(":");
         //Little work around to pad single digit address out.
-        if (port<10)
-            sb.append("0");
-        sb.append(port);
-
+        padPortNumber(port, sb);
         return sb.toString();
+    }
     
+    int board = 0;
+    int port = 0;
+    
+    public String getNextValidAddress(String curAddress, String prefix){
+
+        String tmpSName = "";
+
+        try {
+            tmpSName = createSystemName(curAddress, prefix);
+        } catch (JmriException ex) {
+            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+            showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+            return null;
+        }
+        
+        //Check to determine if the systemName is in use, return null if it is,
+        //otherwise return the next valid address.
+        Sensor s = getBySystemName(tmpSName);
+        if(s!=null){
+            port++;
+            while(port<17){
+                try{
+                    tmpSName = createSystemName(board+":"+port, prefix);
+                } catch (Exception e){}
+                s = getBySystemName(tmpSName);
+                if(s==null){
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(board);
+                    sb.append(":");
+                    //Little work around to pad single digit address out.
+                    padPortNumber(port, sb);
+                    return sb.toString();
+                }
+                port++;
+            }
+            return null;
+        } else {
+            StringBuilder sb = new StringBuilder();
+            sb.append(board);
+            sb.append(":");
+            //Little work around to pad single digit address out.
+            padPortNumber(port, sb);
+            return sb.toString();
+        }
+        
+    }
+    
+    void padPortNumber (int portNo, StringBuilder sb){
+        if (port<10){
+            sb.append("0");
+        }
+        sb.append(port);
     }
 
     // to listen for status changes from Marklin system
@@ -175,9 +229,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                 StringBuilder sb = new StringBuilder();
                 sb.append(sensorprefix);
                 //Little work around to pad single digit address out.
-                if (port<10)
-                    sb.append("0");
-                sb.append(port);
+                padPortNumber(port, sb);
                 ms = (MarklinSensor)provideSensor(sb.toString());
             }
             if(ms!=null){
