@@ -48,6 +48,8 @@ public abstract class BackupBase {
 			"OperationsLocationRoster.xml", "OperationsRouteRoster.xml",
 			"OperationsTrainRoster.xml" };
 
+	private String _demoPanelFileName = "Operations Demo Panel.xml";
+
 	public String[] getBackupSetFileNames() {
 		return _backupSetFileNames;
 	}
@@ -218,7 +220,8 @@ public abstract class BackupBase {
 		int sourceCount = getSourceFileCount(sourceDir);
 
 		if (sourceCount == 0) {
-			log.debug("No source files found in " + sourceDir.getAbsolutePath() + ", so skipping copy.");
+			log.debug("No source files found in " + sourceDir.getAbsolutePath()
+					+ ", so skipping copy.");
 			return;
 		}
 
@@ -288,8 +291,17 @@ public abstract class BackupBase {
 	 * @throws Exception
 	 */
 	public void loadDemoFiles() throws IOException {
-		copyBackupSet(new File(XmlFile.xmlDir(), "demoOperations"),
-				_operationsRoot);
+		File fromDir = new File(XmlFile.xmlDir(), "demoOperations");
+		copyBackupSet(fromDir, _operationsRoot);
+
+		// and the demo panel file
+		log.debug("copying file: " + _demoPanelFileName);
+
+		File src = new File(fromDir, _demoPanelFileName);
+		File dst = new File(_operationsRoot, _demoPanelFileName);
+
+		FileHelper.copy(src.getAbsolutePath(), dst.getAbsolutePath(), true);
+
 	}
 
 	/**

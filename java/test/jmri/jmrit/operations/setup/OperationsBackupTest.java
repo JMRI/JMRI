@@ -522,6 +522,10 @@ public class OperationsBackupTest extends TestCase {
 
 		verifyBackupSetAgainst(new File(XmlFile.xmlDir(), "demoOperations"),
 				"", operationsRoot, "", regularBackupSetFileNames);
+		
+		// Also need to make sure we copied over the demo panel file
+		verifyBackupSetAgainst(new File(XmlFile.xmlDir(), "demoOperations"),
+				"", operationsRoot, "", new String[] {"Operations Demo Panel.xml"});
 	}
 
 	// Now tests of the DefaultBackup class.....
