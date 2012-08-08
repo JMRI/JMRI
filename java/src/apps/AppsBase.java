@@ -42,7 +42,6 @@ public abstract class AppsBase {
     protected boolean configOK;
     protected boolean configDeferredLoadOK;
     protected boolean preferenceFileExists;
-    static protected boolean handlingQuit = false;
     static boolean log4JSetUp = false;
     static boolean preInit = false;
     private static final String jmriLog = "****** JMRI log *******";
@@ -368,14 +367,11 @@ public abstract class AppsBase {
      * The application decided to quit, handle that.
      */
     static public void handleQuit() {
-        if (!handlingQuit) {
-            log.debug("Start handleQuit");
-            handlingQuit = true;
-            try {
-                InstanceManager.shutDownManagerInstance().shutdown();
-            } catch (Exception e) {
-                log.error("Continuing after error in handleQuit", e);
-            }
+        log.debug("Start handleQuit");
+        try {
+            InstanceManager.shutDownManagerInstance().shutdown();
+        } catch (Exception e) {
+            log.error("Continuing after error in handleQuit", e);
         }
     }
 
@@ -383,14 +379,11 @@ public abstract class AppsBase {
      * The application decided to restart, handle that.
      */
     static public void handleRestart() {
-        if (!handlingQuit) {
-            log.debug("Start handleRestart");
-            handlingQuit = true;
-            try {
-                InstanceManager.shutDownManagerInstance().restart();
-            } catch (Exception e) {
-                log.error("Continuing after error in handleRestart", e);
-            }
+        log.debug("Start handleRestart");
+        try {
+            InstanceManager.shutDownManagerInstance().restart();
+        } catch (Exception e) {
+            log.error("Continuing after error in handleRestart", e);
         }
     }
 }

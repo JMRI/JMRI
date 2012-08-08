@@ -2,10 +2,9 @@
 
 package jmri.managers;
 
+import java.util.ArrayList;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
-
-import java.util.ArrayList;
 
 /**
  * Manage tasks to be completed when the
@@ -34,11 +33,14 @@ import java.util.ArrayList;
  */
 public class DefaultShutDownManager implements ShutDownManager {
 
+    static protected boolean shuttingDown = false;
+
     public DefaultShutDownManager() {}
     
     /**
      * Register a task object for later execution.
      */
+    @Override
     public void register(ShutDownTask s) {
         if (!tasks.contains(s)) {
             tasks.add(s);
@@ -51,6 +53,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      * Deregister a task object.  
      * @throws IllegalArgumentException if task object not currently registered
      */
+    @Override
     public void deregister(ShutDownTask s) {
         if (tasks.contains(s)) {
             tasks.remove(s);
@@ -67,6 +70,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      * in which case the program should continue to operate.
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DM_EXIT") // OK to directly exit standalone main
+    @Override
     public void shutdown() {
         shutdown(0);
     }
@@ -83,6 +87,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      * restart the java program.
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DM_EXIT") // OK to directly exit standalone main
+    @Override
     public void restart() {
         shutdown(100);
     }
@@ -99,11 +104,15 @@ public class DefaultShutDownManager implements ShutDownManager {
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DM_EXIT") // OK to directly exit standalone main
     protected void shutdown(int status) {
+        if (shuttingDown) {
+            return; // do not run recursively
+        }
+        shuttingDown = true;
         for (int i = tasks.size()-1; i>=0; i--) {
             try {
                 ShutDownTask t = tasks.get(i);
-                boolean ok = t.execute();
-                if (!ok) {
+                shuttingDown = t.execute(); // if a task aborts the shutdown, stop shutting down
+                if (!shuttingDown) {
                     log.info("Program termination aborted by "+t.name());
                     return;  // abort early
                 }
