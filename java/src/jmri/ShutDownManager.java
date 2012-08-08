@@ -52,9 +52,11 @@ public interface ShutDownManager {
      * Run the shutdown tasks, and
      * then terminate the program with status 100 if not aborted.
      * Does not return under normal circumstances.
-     * Does return if the shutdown was aborted by the user,
+     * Does return False if the shutdown was aborted by the user,
      * in which case the program should continue to operate.
-     * @return status of shutdown attempt (used only in OS X)
+     * <b>NOTE</b> If the OS X application->quit menu item is used, this
+     * must return false to abort the shutdown.
+     * @return boolean which should be False
      */
     public Boolean restart();
 
@@ -62,9 +64,11 @@ public interface ShutDownManager {
      * Run the shutdown tasks, and
      * then terminate the program with status 0 if not aborted.
      * Does not return under normal circumstances.
-     * Does return if the shutdown was aborted by the user,
+     * Does return False if the shutdown was aborted by the user,
      * in which case the program should continue to operate.
-     * @return status of shutdown attempt (used only in OS X)
+     * <b>NOTE</b> If the OS X application->quit menu item is used, this
+     * must return false to abort the shutdown.
+     * @return boolean which should be False
      */
     public Boolean shutdown();
 }
