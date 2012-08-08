@@ -69,12 +69,13 @@ public class RestoreFilesAction extends AbstractAction {
 
 		try {
 			autoBackup.autoBackup();
-		} catch (Exception ex) {
-			// Needs to be fixed after autobackup upgraded....
-			log.debug("Autobackup before restore from directory", ex);
-		}
+			// } catch (Exception ex) {
+			// // Needs to be fixed after autobackup upgraded....
+			// log.debug("Autobackup before restore from directory", ex);
+			// }
+			//
+			// try {
 
-		try {
 			File directory = fc.getSelectedFile();
 
 			backup.restoreFilesFromDirectory(directory);

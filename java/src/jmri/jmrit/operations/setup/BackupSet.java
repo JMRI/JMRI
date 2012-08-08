@@ -44,14 +44,19 @@ public class BackupSet {
 		// This is NOT a general purpose method, as it only handles directories
 		// with only files and no sub directories.
 		// This probably needs to handle failures. delete() returns false if it fails.
+		Boolean ok;
 		for (File f : dir.listFiles()) {
 			// Delete files first
 			if (f.isFile()) {
-				f.delete();
+				ok = f.delete();
+				if (!ok)
+					throw new RuntimeException("Failed to delete file: " + f.getAbsolutePath());
 			}
 		}
 
-		dir.delete();
+		ok = dir.delete();
+		if (!ok)
+			throw new RuntimeException("Failed to delete directory: " + dir.getAbsolutePath());
 	}
 
 

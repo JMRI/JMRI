@@ -57,6 +57,8 @@ public abstract class BackupBase {
 	/**
 	 * Creates a BackupBase instance and initializes the Operations root
 	 * directory to its normal value.
+	 * 
+	 * @throws IOException
 	 */
 	protected BackupBase(String rootName) {
 		// A root directory name for the backups must be supplied, which will be
@@ -70,8 +72,13 @@ public abstract class BackupBase {
 		_backupRoot = new File(_operationsRoot, rootName);
 
 		// Make sure it exists
-		if (!_backupRoot.exists())
-			_backupRoot.mkdirs();
+		if (!_backupRoot.exists()) {
+			Boolean ok = _backupRoot.mkdirs();
+			if (!ok) {
+				throw new RuntimeException("Unable to make directory: "
+						+ _backupRoot.getAbsolutePath());
+			}
+		}
 
 		// We maybe want to check if it failed and throw an exception.
 	}
@@ -423,25 +430,42 @@ public abstract class BackupBase {
 				}
 			}
 
-			InputStream source = new FileInputStream(sourceFileName);
-			OutputStream dest = new FileOutputStream(destFileName);
+			InputStream source = null;
+			OutputStream dest = null;
 
-			byte[] buffer = new byte[1024];
+			try {
+				source = new FileInputStream(sourceFileName);
+				dest = new FileOutputStream(destFileName);
 
-			int len;
+				byte[] buffer = new byte[1024];
 
-			while ((len = source.read(buffer)) > 0) {
-				dest.write(buffer, 0, len);
+				int len;
+
+				while ((len = source.read(buffer)) > 0) {
+					dest.write(buffer, 0, len);
+				}
+			} catch (Exception ex) {
+				String msg = String.format("Error copying file: %s to: %s",
+						sourceFileName, destFileName);
+				throw new IOException(msg, ex);
+
+			} finally {
+				if (source != null)
+					source.close();
+
+				if (dest != null)
+					dest.close();
 			}
-
-			source.close();
-			dest.close();
 
 			// Now update the last modified time to equal the source file.
 			File src = new File(sourceFileName);
 			File dst = new File(destFileName);
 
-			dst.setLastModified(src.lastModified());
+			Boolean ok = dst.setLastModified(src.lastModified());
+			if (!ok)
+				throw new RuntimeException(
+						"Failed to set modified time on file: "
+								+ dst.getAbsolutePath());
 		}
 	}
 

@@ -389,7 +389,7 @@ public class OperationsBackupTest extends TestCase {
 
 	public void testBasicCopyBackupSetWithMissingFiles() throws IOException {
 		// Test copying with only some of the files in the source. This is a
-		// problem.
+		// problem and shoudl throw an exception.
 		BackupBase backup = new DefaultBackup();
 		String setName = "NEW Test Backup Set 03";
 		File setDir = new File(defaultBackupRoot, setName);
@@ -721,6 +721,17 @@ public class OperationsBackupTest extends TestCase {
 
 		// Check that they got there
 		verifyBackupSetAgainst(operationsRoot, "", autoBackupRoot, setName);
+	}
+	
+	public void testAutoBackupAfterResetWithNoFiles() throws IOException{
+		// Should not cause a problem if there are no files to autobackup.
+		AutoBackup backup = new AutoBackup();
+
+		backup.deleteOperationsFiles();
+		
+		// Now try to back up nothing.
+		String setName = backup.suggestBackupSetName();
+		backup.autoBackup();
 	}
 
 	public void testSuggestedAutoBackupName() throws IOException {

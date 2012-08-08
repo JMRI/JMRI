@@ -231,11 +231,12 @@ public class RestoreDialog extends JDialog {
 		try {
 			AutoBackup auto = new AutoBackup();
 			auto.autoBackup();
-		} catch (Exception ex) {
-			log.debug("Autobackup before restore Operations files", ex);
-		}
+			// } catch (Exception ex) {
+			// log.debug("Autobackup before restore Operations files", ex);
+			// }
+			//
+			// try {
 
-		try {
 			setName = ((BackupSet) comboBox.getSelectedItem()).getSetName();
 
 			// The restore method should probably be overloaded to accept a

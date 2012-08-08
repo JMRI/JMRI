@@ -56,12 +56,7 @@ public class LoadDemoAction extends AbstractAction {
 
 		try {
 			backup.autoBackup();
-		} catch (Exception ex) {
-			// Don't like eating this exception, but have to until the
-			// autobackup is smarter and skips with no files to backup.
-		}
 
-		try {
 			backup.loadDemoFiles();
 
 			// now deregister shut down task
