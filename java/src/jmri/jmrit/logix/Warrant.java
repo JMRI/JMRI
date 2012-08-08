@@ -49,6 +49,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private boolean _routeSet;          // all Blocks of _orders have paths set for route
     private OBlock  _stoppingBlock;     // Block allocated to another warrant or a rouge train
     private NamedBean _stoppingSignal;  // Signal stopping train movement
+    private DccThrottle _throttle;
 
     // Throttle modes
     public static final int MODE_NONE 	= 0;
@@ -445,6 +446,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         String msg = null;
         int oldMode = _runMode;
         if (mode == MODE_NONE) {
+        	if (_throttle != null) {
+        		_throttle.release(this);
+        		_throttle = null;
+        	}
             if (_stoppingSignal!=null) {
                 _stoppingSignal.removePropertyChangeListener(this);
             }
@@ -587,6 +592,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             log.warn("notifyThrottleFound: null throttle(?)!");
             return; 
         }
+        _throttle = throttle;
+
         if(log.isDebugEnabled()) {
            log.debug("notifyThrottleFound address= " +throttle.getLocoAddress().toString()+" _runMode= "+_runMode);
         }
@@ -604,6 +611,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
 
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+        log.error("notifyFailedThrottleRequest address= " +address.toString()+" _runMode= "+_runMode+
+        		" due to "+reason);
     }
 
     /**

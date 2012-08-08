@@ -299,12 +299,10 @@ public class NamedIcon extends ImageIcon {
 
     public void scale(double scale, Component comp) {
         setImage(mDefaultImage);
-        _transformS = new AffineTransform();
         int w = (int)Math.ceil(scale*getIconWidth());
         int h = (int)Math.ceil(scale*getIconHeight());
-        AffineTransform t = AffineTransform.getScaleInstance(scale, scale);
-        transformImage(w, h, t, comp);
-        _transformS.preConcatenate(t);
+        _transformS = AffineTransform.getScaleInstance(scale, scale);
+        transformImage(w, h, _transformS, comp);
         _scale = scale;
         if(_deg!=0) {
         	rotate(_deg, comp);
@@ -314,19 +312,14 @@ public class NamedIcon extends ImageIcon {
     /**
     * Rotate from anchor point (upper left corner) and shift into place
     */
-    public void rotate(int deg, Component comp) {
+    public void rotate(int degree, Component comp) {
         setImage(mDefaultImage);
         if (_scale!=1.0) {
             int w = (int)Math.ceil(_scale*getIconWidth());
             int h = (int)Math.ceil(_scale*getIconHeight());
             transformImage(w, h, _transformS, comp);
         }
-         int degree = 90*mRotation;
         mRotation=0;
-        degree += deg;
-        while (degree<-90) {
-        	degree +=360;
-        }
         degree = degree%360;
         double rad = degree*Math.PI/180.0;
         double w = getIconWidth();
@@ -334,11 +327,11 @@ public class NamedIcon extends ImageIcon {
         int width = (int)Math.ceil(Math.abs(h*Math.sin(rad)) + Math.abs(w*Math.cos(rad)));
         int heigth = (int)Math.ceil(Math.abs(h*Math.cos(rad)) + Math.abs(w*Math.sin(rad)));
         AffineTransform t = null;
-        if (0<=degree && degree<90) {
+        if (0<=degree && degree<90 || -360<degree && degree<=-270){
             t = AffineTransform.getTranslateInstance(h*Math.sin(rad), 0.0);
-        } else if (90<=degree && degree<180) {
+        } else if (90<=degree && degree<180 || -270<degree && degree<=-180) {
             t = AffineTransform.getTranslateInstance(h*Math.sin(rad)-w*Math.cos(rad), -h*Math.cos(rad));
-        } else if (180<=degree && degree<270) {
+        } else if (180<=degree && degree<270 || -180<degree && degree<=-90) {
             t = AffineTransform.getTranslateInstance(-w*Math.cos(rad), -w*Math.sin(rad)-h*Math.cos(rad));
         } else /*if (270<=degree && degree<360)*/ {
             t = AffineTransform.getTranslateInstance(0.0, -w*Math.sin(rad));

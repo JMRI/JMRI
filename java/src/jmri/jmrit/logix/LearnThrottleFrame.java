@@ -335,6 +335,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         //setButtonForward(isForward);
     }
     protected void stopRunTrain() {
+    	_warrantFrame.setThrottleCommand("Speed", "-1.0");
         _warrantFrame.stopRunTrain();
     }
     
