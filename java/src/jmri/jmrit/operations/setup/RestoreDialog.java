@@ -287,6 +287,9 @@ public class RestoreDialog extends JDialog {
 	private void loadComboBox() {
 		// Get the Backup Sets from the currently selected backup store.
 		// Called after the radio button selection has changed
+		
+		// Disable the Restore button in case there is nothing loaded into the ComboBox
+		restoreButton.setEnabled(false);
 
 		comboBox.removeAllItems();
 
