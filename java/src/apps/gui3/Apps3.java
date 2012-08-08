@@ -291,8 +291,7 @@ public abstract class Apps3 extends AppsBase {
 
             @Override
             public boolean handleQuitRequest(EventObject eo) {
-                handleQuit();
-                return true;
+                return handleQuit();
             }
         });
     }

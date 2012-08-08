@@ -358,8 +358,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             Application.getApplication().setQuitHandler(new QuitHandler() {
 
                 public boolean handleQuitRequest(EventObject eo) {
-                    handleQuit();
-                    return true;
+                    return handleQuit();
                 }
             });
         }
@@ -858,15 +857,15 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     /**
      * The application decided to quit, handle that.
      */
-    static public void handleQuit() {
-        AppsBase.handleQuit();
+    static public Boolean handleQuit() {
+        return AppsBase.handleQuit();
     }
     
     /**
      * The application decided to restart, handle that.
      */
-    static public void handleRestart() {
-        AppsBase.handleRestart();
+    static public Boolean handleRestart() {
+        return AppsBase.handleRestart();
     }
 
     static boolean log4JSetUp = false;

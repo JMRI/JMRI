@@ -366,24 +366,26 @@ public abstract class AppsBase {
     /**
      * The application decided to quit, handle that.
      */
-    static public void handleQuit() {
+    static public Boolean handleQuit() {
         log.debug("Start handleQuit");
         try {
-            InstanceManager.shutDownManagerInstance().shutdown();
+            return InstanceManager.shutDownManagerInstance().shutdown();
         } catch (Exception e) {
             log.error("Continuing after error in handleQuit", e);
         }
+        return false;
     }
 
     /**
      * The application decided to restart, handle that.
      */
-    static public void handleRestart() {
+    static public Boolean handleRestart() {
         log.debug("Start handleRestart");
         try {
-            InstanceManager.shutDownManagerInstance().restart();
+            return InstanceManager.shutDownManagerInstance().restart();
         } catch (Exception e) {
             log.error("Continuing after error in handleRestart", e);
         }
+        return false;
     }
 }

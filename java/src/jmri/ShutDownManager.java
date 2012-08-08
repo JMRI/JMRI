@@ -54,8 +54,9 @@ public interface ShutDownManager {
      * Does not return under normal circumstances.
      * Does return if the shutdown was aborted by the user,
      * in which case the program should continue to operate.
+     * @return status of shutdown attempt (used only in OS X)
      */
-    public void restart();
+    public Boolean restart();
 
     /**
      * Run the shutdown tasks, and
@@ -63,8 +64,9 @@ public interface ShutDownManager {
      * Does not return under normal circumstances.
      * Does return if the shutdown was aborted by the user,
      * in which case the program should continue to operate.
+     * @return status of shutdown attempt (used only in OS X)
      */
-    public void shutdown();
+    public Boolean shutdown();
 }
 
 /* @(#)ShutDownManager.java */

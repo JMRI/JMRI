@@ -71,8 +71,8 @@ public class DefaultShutDownManager implements ShutDownManager {
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DM_EXIT") // OK to directly exit standalone main
     @Override
-    public void shutdown() {
-        shutdown(0);
+    public Boolean shutdown() {
+        return shutdown(0);
     }
 
     /**
@@ -88,8 +88,8 @@ public class DefaultShutDownManager implements ShutDownManager {
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DM_EXIT") // OK to directly exit standalone main
     @Override
-    public void restart() {
-        shutdown(100);
+    public Boolean restart() {
+        return shutdown(100);
     }
 
 
@@ -103,28 +103,28 @@ public class DefaultShutDownManager implements ShutDownManager {
      * @param status Integer status returned on program exit
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DM_EXIT") // OK to directly exit standalone main
-    protected void shutdown(int status) {
-        if (shuttingDown) {
-            return; // do not run recursively
-        }
-        shuttingDown = true;
-        for (int i = tasks.size()-1; i>=0; i--) {
-            try {
-                ShutDownTask t = tasks.get(i);
-                shuttingDown = t.execute(); // if a task aborts the shutdown, stop shutting down
-                if (!shuttingDown) {
-                    log.info("Program termination aborted by "+t.name());
-                    return;  // abort early
+    protected Boolean shutdown(int status) {
+        if (!shuttingDown) {
+            shuttingDown = true;
+            for (int i = tasks.size() - 1; i >= 0; i--) {
+                try {
+                    ShutDownTask t = tasks.get(i);
+                    shuttingDown = t.execute(); // if a task aborts the shutdown, stop shutting down
+                    if (!shuttingDown) {
+                        log.info("Program termination aborted by " + t.name());
+                        return false;  // abort early
+                    }
+                } catch (Throwable e) {
+                    log.error("Error during processing of ShutDownTask " + i + ": " + e);
                 }
-            } catch (Throwable e) {
-                log.error("Error during processing of ShutDownTask "+i+": "+e);
             }
+
+            // success
+            log.info("Normal termination complete");
+            // and now terminate forcefully
+            System.exit(status);
         }
-        
-        // success
-        log.info("Normal termination complete");
-        // and now terminate forcefully
-        System.exit(status);
+        return false;
     }
 
     ArrayList<ShutDownTask> tasks = new ArrayList<ShutDownTask>();
