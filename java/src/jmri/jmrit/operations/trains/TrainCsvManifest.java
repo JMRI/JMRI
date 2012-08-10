@@ -12,6 +12,7 @@ import java.util.List;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -143,7 +144,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
 						fileOutCsvCar(fileOut, car, PC);
 						cars++;
 						newWork = true;
-						if (car.getLoad().equals(CarLoads.instance().getDefaultEmptyName()))
+						if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))
 							emptyCars++;
 					}
 				}
@@ -155,7 +156,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
 					fileOutCsvCar(fileOut, car, SC);
 					cars--;
 					newWork = true;
-					if (car.getLoad().equals(CarLoads.instance().getDefaultEmptyName()))
+					if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))
 						emptyCars--;
 				}
 			}
