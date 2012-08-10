@@ -4,6 +4,7 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -26,6 +27,9 @@ public class RestoreFilesAction extends AbstractAction {
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 			.getLogger(RestoreFilesAction.class.getName());
+	
+	static ResourceBundle rb = ResourceBundle
+			.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 
 	public RestoreFilesAction(String s) {
 		super(s);
@@ -44,8 +48,9 @@ public class RestoreFilesAction extends AbstractAction {
 			if (JOptionPane
 					.showConfirmDialog(
 							null,
-							"Operations files have been modified, do you want to save them?",
-							"Save operation files?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+							rb.getString("OperationsFilesModified"),
+							rb.getString("SaveOperationFiles"),
+							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				OperationsXml.save();
 			}
 		}
@@ -69,30 +74,25 @@ public class RestoreFilesAction extends AbstractAction {
 
 		try {
 			autoBackup.autoBackup();
-			// } catch (Exception ex) {
-			// // Needs to be fixed after autobackup upgraded....
-			// log.debug("Autobackup before restore from directory", ex);
-			// }
-			//
-			// try {
 
 			File directory = fc.getSelectedFile();
 
 			backup.restoreFilesFromDirectory(directory);
 
 			JOptionPane.showMessageDialog(null,
-					"You must restart JMRI to complete the restore operation",
-					"Restore successful!", JOptionPane.INFORMATION_MESSAGE);
+					rb.getString("YouMustRestartAfterReset"),
+					rb.getString("ResetSuccessful"), JOptionPane.INFORMATION_MESSAGE);
 
+			// now deregister shut down task
+			// If Trains window was opened, then task is active
+			// otherwise it is normal to not have the task running
 			try {
 				if (TrainsTableFrame.trainDirtyTask != null) {
 					jmri.InstanceManager.shutDownManagerInstance().deregister(
 							TrainsTableFrame.trainDirtyTask);
 				}
 			} catch (IllegalArgumentException e) {
-				log.debug(
-						"Trying to deregister Train Dirty Task after Operations files restore",
-						e);
+				log.debug("Trying to deregister Train Dirty Task after Operations files restore");
 			}
 
 			Apps.handleRestart();
@@ -118,7 +118,7 @@ public class RestoreFilesAction extends AbstractAction {
 		}
 
 		public String getDescription() {
-			return "Backup Folders";
+			return rb.getString("BackupFolders");
 		}
 	}
 

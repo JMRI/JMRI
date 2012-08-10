@@ -33,11 +33,15 @@ import jmri.jmrit.operations.trains.TrainsTableFrame;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class RestoreDialog extends JDialog {
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 			.getLogger(RestoreDialog.class.getName());
+	
+	static ResourceBundle rb = ResourceBundle
+			.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 
 	private JPanel mainPanel;
 	private JPanel contentPanel;
@@ -221,8 +225,9 @@ public class RestoreDialog extends JDialog {
 			if (JOptionPane
 					.showConfirmDialog(
 							this,
-							"Operations files have been modified, do you want to save them?",
-							"Save operation files?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+							rb.getString("OperationsFilesModified"),
+							rb.getString("SaveOperationFiles"),
+							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				OperationsXml.save();
 			}
 		}

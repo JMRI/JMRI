@@ -34,11 +34,10 @@ public class ResetAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		// check to see if files are dirty
 		if (OperationsXml.areFilesDirty()) {
-			if (JOptionPane
-					.showConfirmDialog(
-							null,
-							"Operations files have been modified, do you want to save them?",
-							"Save operation files?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(null,
+					rb.getString("OperationsFilesModified"),
+					rb.getString("SaveOperationFiles"),
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				OperationsXml.save();
 			}
 		}
@@ -54,20 +53,7 @@ public class ResetAction extends AbstractAction {
 		try {
 			backup.autoBackup();
 			
-			// } catch (Exception ex) {
-			// log.debug("Autobackup before Operations Reset", ex);
-			// // I really don't like to eat this exception, but it can be
-			// thrown
-			// // when there are no files to backup, such as after a previous
-			// // reset.
-			// // This should be fixed with a smarter auto backup that does
-			// nothing
-			// // if there are no files.
-			// }
-			//
-			// try {
 			// now delete the operations files
-
 			backup.deleteOperationsFiles();
 
 			// now deregister shut down task

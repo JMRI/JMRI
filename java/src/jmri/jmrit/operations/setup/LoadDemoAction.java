@@ -40,15 +40,16 @@ public class LoadDemoAction extends AbstractAction {
 			if (JOptionPane
 					.showConfirmDialog(
 							null,
-							"Operations files have been modified, do you want to save them?",
-							"Save operation files?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+							rb.getString("OperationsFilesModified"),
+							rb.getString("SaveOperationFiles"),
+							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				OperationsXml.save();
 			}
 		}
 
 		int results = JOptionPane.showConfirmDialog(null,
-				"Are you sure you want to load the demo operation files?",
-				"Load Demo Files", JOptionPane.OK_CANCEL_OPTION);
+				rb.getString("AreYouSureDemoFiles"),
+				rb.getString("LoadDemo"), JOptionPane.OK_CANCEL_OPTION);
 		if (results != JOptionPane.OK_OPTION)
 			return;
 

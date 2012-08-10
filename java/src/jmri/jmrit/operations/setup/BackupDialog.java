@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import java.awt.Insets;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ResourceBundle;
 
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
@@ -32,6 +33,9 @@ public class BackupDialog extends JDialog {
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 			.getLogger(BackupDialog.class.getName());
+	
+	static ResourceBundle rb = ResourceBundle
+			.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 
 	private final JPanel contentPanel = new JPanel();
 	private JLabel captionLabel;
@@ -185,8 +189,8 @@ public class BackupDialog extends JDialog {
 				if (JOptionPane
 						.showConfirmDialog(
 								this,
-								"Operations files have been modified, do you want to save them?",
-								"Save operation files?",
+								rb.getString("OperationsFilesModified"),
+								rb.getString("SaveOperationFiles"),
 								JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					OperationsXml.save();
 				}
@@ -195,9 +199,9 @@ public class BackupDialog extends JDialog {
 			// check to see if directory already exists
 			if (backup.checkIfBackupSetExists(setName)) {
 				int result = JOptionPane.showConfirmDialog(this, MessageFormat
-						.format("Directory {0} already exists, overwrite it?",
+						.format(rb.getString("DirectoryAreadyExists"),
 								new Object[] { setName }),
-						"Overwrite backup directory?",
+								rb.getString("OverwriteBackupDirectory"),
 						JOptionPane.OK_CANCEL_OPTION);
 
 				if (result != JOptionPane.OK_OPTION) {

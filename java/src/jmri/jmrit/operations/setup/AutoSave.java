@@ -38,12 +38,14 @@ public class AutoSave {
 			if (!Setup.isAutoSaveEnabled())
 				break;
 			if (OperationsXml.areFilesDirty()){
-				log.debug("Detected dirty files");
+				log.debug("Detected dirty operation files");
 				try {
 					wait(60000);	// wait another minute before saving
 				} catch (InterruptedException e) {}
-				OperationsXml.save();
-				log.info("Operations files automatically saved");
+				if (OperationsXml.areFilesDirty()){
+					OperationsXml.save();
+					log.info("Operation files automatically saved");
+				}
 			}
 		}
 		autoSave = null;	// done
