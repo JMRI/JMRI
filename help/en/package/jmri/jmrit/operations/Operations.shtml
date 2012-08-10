@@ -1153,25 +1153,25 @@ custom loads.</P>
 
 <P>You can access this useful tool from the Schedules window.  It allows you to select a car type, and then
 any load that you've created for the that type of car.  The window then shows which schedules by location are receiving
-or shipping that specific car load.</P>  
-   
-<A	NAME="Interchange"></A>
-<H3>Classification/Interchange Tracks</H3>
+or shipping that specific car load.</P>
 
-   If you want the program to force the exchange of cars between trains you need to define a
-   classification/interchange track. The program uses the term "Interchange" to loosely define a
-   track that can be used for classification, the movement of cars within the same railroad, and
-   an interchange, the movement of cars between railroads. Cars dropped off to an interchange track by a
-   train on a given route will not be picked up by any train using that route. Another train with a
-   different route is required to pick up the cars. For example, you might have a branch line that
-   picks up and set out cars from a terminal. By defining the track as a interchange, once the
-   branch line train delivers the cars, they will remain there until the main line train stops to
-   service the terminal's interchange track.
+   <A NAME="Interchange"></A>
+   <H3>Classification/Interchange Tracks</H3>
 
-   <P>The car's load status does not change when placed at an interchange track.</P>
+   The easiest way to create the exchange of cars between trains is to use a
+   classification/interchange track. A classification/interchange track can be used for
+   classification, the movement of cars within the same railroad, and an interchange, the movement
+   of cars between railroads. Cars dropped off to a classification/interchange track by a train on a
+   given route will not be picked up by any train using that route. Another train with a different
+   route is required to pick up the cars. For example, you might have a branch line that picks up
+   and set out cars from a terminal. By defining the track as a classification/interchange track,
+   once the branch line train delivers the cars, they will remain there until the main line train
+   stops to service the classification/interchange track.
 
-   <P>If you want more control on how your interchange track will operate, you can optionally
-    specify a train or route to pick up or set out cars at an interchange track.</P>
+   <P>The car's load status does not change when placed at a classification/interchange track.</P>
+
+   <P>If you want more control on how your classification/interchange track will operate, you
+    can optionally specify which trains or routes can pick up or set out cars.</P>
 
    <A NAME="CreateClassificationYard"></A>
    <H3>How to Create a Classification Yard</H3>
