@@ -524,6 +524,8 @@ public class TrainBuilder extends TrainCommon{
 		if (validTrackIds.size()>1){
 			Track selected = (Track)JOptionPane.showInputDialog(null, rb.getString("SelectDepartureTrack"), rb.getString("TrainDepartingStaging"), 
 					JOptionPane.QUESTION_MESSAGE, null, tracks, null);
+			if (selected != null)
+				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildUserSelectedDeparture"),new Object[]{selected.getName(), selected.getLocation().getName()}));
 			return selected;
 		} else if (validTrackIds.size() == 1)
 			return (Track)tracks[0];
@@ -550,6 +552,8 @@ public class TrainBuilder extends TrainCommon{
 		if (validTrackIds.size()>1){
 			Track selected = (Track)JOptionPane.showInputDialog(null, rb.getString("SelectArrivalTrack"), rb.getString("TrainTerminatingStaging"), 
 					JOptionPane.QUESTION_MESSAGE, null, tracks, null);
+			if (selected != null)
+				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildUserSelectedArrival"),new Object[]{selected.getName(), selected.getLocation().getName()}));
 			return selected;
 		} else if (validTrackIds.size() == 1)
 			return (Track)tracks[0];
@@ -1908,6 +1912,7 @@ public class TrainBuilder extends TrainCommon{
 			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingNoCarFRED"),new Object[]{departStageTrack.getName(), train.getCabooseRoad()}));
 			return false;
 		}
+		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildTrainCanDepartTrack"),new Object[]{train.getName(), departStageTrack.getName()}));		
 		return true;
 	}
 
@@ -1933,10 +1938,13 @@ public class TrainBuilder extends TrainCommon{
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingNotTrain"),new Object[]{terminateStageTrack.getName()}));
 			return false;
 		} else if (!terminateStageTrack.getDropOption ().equals(Track.ANY)){
+			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildTrainCanTerminateTrack"),new Object[]{train.getName(), terminateStageTrack.getName()}));		
 			return true;	// train can drop to this track, ignore other track restrictions
 		}
-		if (!Setup.isTrainIntoStagingCheckEnabled())
+		if (!Setup.isTrainIntoStagingCheckEnabled()) {
+			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildTrainCanTerminateTrack"),new Object[]{train.getName(), terminateStageTrack.getName()}));
 			return true;
+		}
 		addLine(buildReport, FIVE,rb.getString("buildOptionRestrictStaging"));
 		// check go see if location/track will accept the train's car and engine types
 		String[] types = train.getTypeNames();
@@ -2019,6 +2027,7 @@ public class TrainBuilder extends TrainCommon{
 				}
 			}
 		}
+		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildTrainCanTerminateTrack"),new Object[]{train.getName(), terminateStageTrack.getName()}));
 		return true;	
 	}
 	
