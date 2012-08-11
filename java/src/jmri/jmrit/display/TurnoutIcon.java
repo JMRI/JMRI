@@ -421,10 +421,15 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
             log.error("No turnout connection, can't process click");
             return;
         }
-        if (getTurnout().getKnownState()==jmri.Turnout.CLOSED)
+        if (getTurnout().getKnownState()==jmri.Turnout.CLOSED)  // if clear known state, set to opposite
             getTurnout().setCommandedState(jmri.Turnout.THROWN);
-        else
+        else if (getTurnout().getKnownState()==jmri.Turnout.THROWN)
             getTurnout().setCommandedState(jmri.Turnout.CLOSED);
+            
+        else if (getTurnout().getCommandedState()==jmri.Turnout.CLOSED)
+            getTurnout().setCommandedState(jmri.Turnout.THROWN);  // otherwise, set to opposite of current commanded state if known
+        else
+            getTurnout().setCommandedState(jmri.Turnout.CLOSED);  // just forc closed.
     }
 
     public void dispose() {
