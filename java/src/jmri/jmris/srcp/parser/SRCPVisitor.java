@@ -2,6 +2,7 @@
 
 package jmri.jmris.srcp.parser;
 
+import java.io.IOException;
 import jmri.InstanceManager;
 
 /* This class provides an interface between the JavaTree/JavaCC 
@@ -81,6 +82,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
        try {
        ((jmri.jmris.ServiceHandler)data).getPowerServer().parseStatus(
                   ((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
+       } catch(java.io.IOException ie) {
        } catch(jmri.JmriException je) {
              // We shouldn't have any errors here.
              // If we do, something is horibly wrong.
