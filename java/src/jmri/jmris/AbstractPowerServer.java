@@ -2,11 +2,12 @@
 
 package jmri.jmris;
 
-import java.io.*;
-
+import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
+import org.apache.log4j.Logger;
 
 /**
  * Abstract interface between the JMRI power manager and a 
@@ -15,7 +16,7 @@ import jmri.PowerManager;
  * @version         $Revision$
  */
 
-abstract public class AbstractPowerServer implements java.beans.PropertyChangeListener {
+abstract public class AbstractPowerServer implements PropertyChangeListener {
 
    public AbstractPowerServer(){
 
@@ -102,8 +103,8 @@ abstract public class AbstractPowerServer implements java.beans.PropertyChangeLi
 
      abstract public void sendStatus(int Status) throws IOException; 
      abstract public void sendErrorStatus() throws IOException;
-     abstract public void parseStatus(String statusString) throws jmri.JmriException;
+     abstract public void parseStatus(String statusString) throws JmriException, IOException;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractPowerServer.class.getName());
+    static Logger log = Logger.getLogger(AbstractPowerServer.class.getName());
 
 }
