@@ -39,6 +39,12 @@ in terms of OpenLCB "events".
 You can directly operate the OpenLCB network
 via the 
 <a href="../../../package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml">send frame tool</a>.
+For browsing and setting configuration, see the 
+<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">node configuration browser tool</a>.
+<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png">
+    <img src="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png"
+         width="128" height="149" align="right"
+         alt="Configuration Tool window"></a>
 
 <p>
 See also the 
