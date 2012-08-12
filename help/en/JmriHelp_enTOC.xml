@@ -35,6 +35,8 @@
 
   <tocitem text="OakTree Systems " target="html.hardware.oaktree.OakTree"/>
 
+  <tocitem text="OpenLCB " target="html.hardware.openlcb.index"/>
+
   <tocitem text="Powerline (X10) " target="html.hardware.powerline.index"/>
 
   <tocitem text="QSI " target="html.hardware.qsi.index"/>
@@ -483,6 +485,12 @@
    <tocitem text="DCC Packet Analyzer " target="package.jmri.jmrix.nce.analyzer.NcePacketMonitorFrame"/>
 
    <tocitem text="Monitor Clock " target="package.jmri.jmrix.nce.clockmon.ClockMonFrame"/>
+
+  </tocitem>
+  <tocitem text="OpenLCB " target="html.hardware.openlcb.index">
+   <tocitem text="Names " target="html.hardware.openlcb.Names"/>
+
+   <tocitem text="Configure Nodes " target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"/>
 
   </tocitem>
   <tocitem text="RPS Positioning System " target="html.hardware.rps.index">

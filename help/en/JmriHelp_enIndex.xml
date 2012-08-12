@@ -155,6 +155,8 @@
 
   <indexitem text="Oak Tree Systems " target="html.hardware.oaktree.OakTree"/>
 
+  <indexitem text="OpenLCB " target="html.hardware.openlcb.index"/>
+
   <indexitem text="QSI " target="html.hardware.qsi.index"/>
 
   <indexitem text="RPS Position System " target="html.hardware.rps.index"/>
@@ -252,6 +254,10 @@
 
  <indexitem text="Names " target="html.doc.Technical.Names"/>
 
+ <indexitem text="OpenLCB " target="html.hardware.openlcb.index">
+  <indexitem text="Configure Nodes " target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"/>
+
+ </indexitem>
  <indexitem text="Operations " target="package.jmri.jmrit.operations.Operations">
   <indexitem text="Cars " target="package.jmri.jmrit.operations.Operations_Cars"/>
 

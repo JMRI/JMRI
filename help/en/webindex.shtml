@@ -478,6 +478,12 @@
 
   
 <li>
+<a href="html/hardware/openlcb/index.shtml">OpenLCB </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="html/hardware/qsi/index.shtml">QSI </a>
 <ul></ul>
 </li>
@@ -766,6 +772,19 @@
 <ul></ul>
 </li>
 
+ 
+<li>
+<a href="html/hardware/openlcb/index.shtml">OpenLCB </a>
+<ul>
+  
+<li>
+<a href="package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">Configure Nodes </a>
+<ul></ul>
+</li>
+
+ 
+</ul>
+</li>
  
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml">Operations </a>

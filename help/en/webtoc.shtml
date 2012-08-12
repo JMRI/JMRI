@@ -117,6 +117,12 @@
 
   
 <li>
+<a href="html/hardware/openlcb/index.shtml">OpenLCB </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="html/hardware/powerline/index.shtml">Powerline (X10) </a>
 <ul></ul>
 </li>
@@ -1480,6 +1486,25 @@
    
 <li>
 <a href="package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml">Monitor Clock </a>
+<ul></ul>
+</li>
+
+  
+</ul>
+</li>
+  
+<li>
+<a href="html/hardware/openlcb/index.shtml">OpenLCB </a>
+<ul>
+   
+<li>
+<a href="html/hardware/openlcb/Names.shtml">Names </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">Configure Nodes </a>
 <ul></ul>
 </li>
 
