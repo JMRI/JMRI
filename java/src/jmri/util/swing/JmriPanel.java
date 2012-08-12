@@ -41,8 +41,13 @@ public class JmriPanel extends JPanel {
     /**
      * Provide a help target string which an enclosing
      * frame can provide as a help reference.
+     *<p>
+     * This automatically provides a reference to the usual
+     * place for JMRI window-specific help pages that are named
+     * for the implementing class, but note this is a Pane class,
+     * not a Frame class.
      */
-    public String getHelpTarget() { return "Acknowledgements.shtml"; }
+    public String getHelpTarget() { return "package."+this.getClass().getName(); }
 
     /**
      * Provide a recommended title for an enclosing frame.
