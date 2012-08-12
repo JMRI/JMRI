@@ -33,14 +33,14 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
      * Get an array of valid baud rates.
      */
     public String[] validBaudRates() {
-        return new String[]{"57,600", "115,200", "230,400", "250,000", "288,000", "333,333", "460,800", "500,000"};
+        return new String[]{"57,600", "115,200", "230,400", "250,000", "288,000", "333,333", "460,800"};
     }
     
     /**
      * And the corresponding values.
      */
     public int[] validBaudValues() {
-        return new int[]{57600, 115200, 230400, 250000, 288000, 333333, 460800, 500000};
+        return new int[]{57600, 115200, 230400, 250000, 288000, 333333, 460800};
     }
     
     public String openPort(String portName, String appName)  {
@@ -48,6 +48,7 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
             String retval = super.openPort(portName, appName);
             activeSerialPort.setSerialPortParams(activeSerialPort.getBaudRate(), SerialPort.DATABITS_8, SerialPort.STOPBITS_2, SerialPort.PARITY_NONE );
             activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_XONXOFF_OUT);
+            activeSerialPort.setFlowControlMode(SerialPort.FLOWCONTROL_XONXOFF_IN);
             return retval;
         } catch (gnu.io.UnsupportedCommOperationException e) {
             log.error("error configuring port", e);
