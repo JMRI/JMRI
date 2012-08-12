@@ -22,14 +22,14 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
      * Get an array of valid baud rates.
      */
     public String[] validBaudRates() {
-        return new String[]{"57,600", "115,200", "230,400", "250,000", "288,000", "333,333", "460,800", "500,000"};
+        return new String[]{"57,600", "115,200", "230,400", "250,000", "288,000", "333,333", "460,800"};
     }
     
     /**
      * And the corresponding values.
      */
     public int[] validBaudValues() {
-        return new int[]{57600, 115200, 230400, 250000, 288000, 333333, 460800, 500000};
+        return new int[]{57600, 115200, 230400, 250000, 288000, 333333, 460800};
     }
     
     public void dispose(){
