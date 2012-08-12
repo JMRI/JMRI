@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: OpenLcbCanSendFrame.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!-- Copyright Bob Jacobsen 2008 -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI OpenLCB: Browse Configuration
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI OpenLCB">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>OpenLCB: Browse Configuration</H1>
+    
+The "Configure Nodes" OpenLCB tool lets you
+directly see the nodes on your OpenLCB network and do
+some back manipulations on them. It works with your
+OpenLCB installation to gather the information you
+need as you run the tool; there are no local configuration
+files in your computer.
+
+<table>
+<tr><td>When you first open the tool window, it shows a tree
+of accessible OpenLCB nodes.  For most installations, this is
+just the list of what's attached via a CAN adapter.
+</td><td>
+<a href="StartWindow.png">
+    <img src="StartWindow.png"
+         width="113" height="71"
+         alt="Starting image"></a>
+
+</td></tr><tr><td>
+You can click to open each node and see more about it.
+</td><td>
+<a href="OpenNodeInfo.png">
+    <img src="OpenNodeInfo.png"
+         width="112" height="120"
+         alt="After click to open"></a>
+
+</td></tr><tr><td>
+Opening the "Supported Protocols" item, for example, will show 
+you the capabilities of that particular node.
+</td><td>
+<a href="OpenProtocol.png">
+    <img src="OpenProtocol.png"
+         width="159" height="179"
+         alt="After open protocols"></a>
+
+</td></tr><tr><td>
+If you click on the "CDI" item, for Configuration Description Information, 
+you'll get a DecoderPro-like configuration tool for the node.  Note that this
+is entirely taken from the OpenLCB node itself. There's no need to find a 
+decoder configuration file, select the right board type, etc.
+</td><td>
+<a href="StartConfigWindow.png">
+    <img src="StartConfigWindow.png"
+         width="254" height="406"
+         alt="Initial configuration window"></a>
+</td></tr><tr><td>
+You can fill that out and click "Write" to configure the node.
+The top few fields are used to give it a user-chosen name and description, 
+so you can remember this node later.  You can set the events that correspond
+to different inputs and outputs, and even give those user-convenient names.
+That's all stored permanently in the node.
+</td><td>
+<a href="FilledOutConfigWindow.png">
+    <img src="FilledOutConfigWindow.png"
+         width="254" height="406"
+         alt="Filled-out configuration window"></a>
+</td></tr><tr><td>
+After a restart, that information then shows in configuration tree
+to help you recognize your nodes.
+</td><td>
+<a href="NodeWithID.png">
+    <img src="NodeWithID.png"
+         width="128" height="149"
+         alt="Filled-out configuration window"></a>
+</td></tr>
+</table>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+
