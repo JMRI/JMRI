@@ -125,6 +125,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     protected void register() {
         InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        log.info("CAN Simulator Started");     
     }
 
     // initialize logging
