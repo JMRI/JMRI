@@ -122,8 +122,8 @@ then
 
             if [ "$ARCH" = "armv6l" ]
             then
-              # Will separate this out later but is OK for now
-              ARCH="armv5"
+              # currently contains hard-float versions, may need work for others
+              ARCH="armv61"
             fi
 
 	    if [ -d "${SYSLIBPATH}/$ARCH" ]
