@@ -10,6 +10,8 @@ import jmri.util.table.ButtonRenderer;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseAdapter;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
@@ -603,7 +605,15 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         final int rowindex = tmodel.modelIndex(row);
         
         JPopupMenu popupMenu = new JPopupMenu();
-        JMenuItem menuItem = new JMenuItem(AbstractTableAction.rb.getString("Rename"));
+        JMenuItem menuItem = new JMenuItem(AbstractTableAction.rb.getString("CopyName"));
+        menuItem.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                copyName(rowindex, 0);
+            }
+        });
+        popupMenu.add(menuItem);
+        
+        menuItem = new JMenuItem(AbstractTableAction.rb.getString("Rename"));
         menuItem.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 renameBean(rowindex, 0);
@@ -652,10 +662,18 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     
     jmri.NamedBeanHandleManager nbMan = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     
+    public void copyName(int row, int column){
+        NamedBean nBean = getBySystemName(sysNameList.get(row));
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        StringSelection name = new StringSelection(nBean.getUserName());
+        clipboard.setContents(name, null);
+    }
+    
     public void renameBean(int row, int column){
         NamedBean nBean = getBySystemName(sysNameList.get(row));
         String oldName = nBean.getUserName();
         JTextField _newName = new JTextField(20);
+        _newName.setText(oldName);
         Object[] renameBeanOption = {"Cancel", "OK", _newName};
         int retval = JOptionPane.showOptionDialog(null,
                                                   "Rename UserName From " + oldName, "Rename " + getBeanType(),
