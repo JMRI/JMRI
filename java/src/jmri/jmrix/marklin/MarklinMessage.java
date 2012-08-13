@@ -29,6 +29,8 @@ Can Message Bytes 0 to 3 are the address bytes, with byte 0 High, byte 3 low
 */
 
 public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
+
+    static int MY_UID = 0x12345678;
 	
     MarklinMessage(){
         _dataChars = new int[13];
