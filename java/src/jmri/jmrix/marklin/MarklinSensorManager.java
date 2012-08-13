@@ -179,9 +179,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     StringBuilder sb = new StringBuilder();
                     sb.append(sensorprefix);
                     //Little work around to pad single digit address out.
-                    if (contact<10)
-                        sb.append("0");
-                    sb.append(contact);
+                    padPortNumber(contact, sb);
                     if(log.isDebugEnabled()) log.debug("New sensor added " + contact + " : " + sb.toString());
                     ms = (MarklinSensor)provideSensor(sb.toString());
                 }

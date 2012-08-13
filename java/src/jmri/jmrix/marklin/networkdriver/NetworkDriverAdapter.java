@@ -30,7 +30,7 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
         allowConnectionRecovery = true;
         mManufacturer = jmri.jmrix.DCCManufacturerList.MARKLIN;
         adaptermemo = new jmri.jmrix.marklin.MarklinSystemConnectionMemo();
-        m_port=15730;
+        m_port=15731;
     }
     
     @Override //ports are fixed and not user set

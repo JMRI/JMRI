@@ -28,6 +28,17 @@ package jmri;
 
 public interface LocoAddress {
 
+    public int getNumber();
+
+    public int getProtocol();
+
+    final static public int DCC = 0x01;
+    final static public int DCC_SHORT = 0x02;
+    final static public int DCC_LONG = 0x04;
+    final static public int SELECTRIX = 0x06;
+    final static public int MOTOROLA = 0x08;
+    final static public int MFX = 0x10;
+
 }
 
 

@@ -6,10 +6,12 @@ import javax.swing.JTextField;
 import javax.swing.BoxLayout;
 
 import jmri.DccLocoAddress;
+import jmri.LocoAddress;
 import jmri.InstanceManager;
 import jmri.ThrottleManager;
 
 import java.util.ResourceBundle;
+import java.util.ArrayList;
 
 import java.awt.Font;
 import java.awt.event.ComponentAdapter;
@@ -42,11 +44,18 @@ public class DccLocoAddressSelector extends JPanel
     public DccLocoAddressSelector() {
         super();
         if (rb == null) rb = ResourceBundle.getBundle("jmri.jmrit.DccLocoAddressSelectorBundle");
-        box = new JComboBox(
-            new String[]{rb.getString("ComboItemNone"), 
-                         rb.getString("ComboItemShort"),
-                         rb.getString("ComboItemLong")});
-        
+        if ((InstanceManager.throttleManagerInstance() !=null) 
+                && !InstanceManager.throttleManagerInstance().addressTypeUnique()){
+//            int[] addressTypes = InstanceManager.throttleManagerInstance().getAddressIntTypes();
+            box = new JComboBox(InstanceManager.throttleManagerInstance().getAddressTypes());
+            //box = new JComboBox(InstanceManager.throttleManagerInstance().getAddressTypes());
+        } else {
+            box = new JComboBox(
+                new String[]{rb.getString("ComboItemShort"),
+                             rb.getString("ComboItemLong")});
+        }
+        box.insertItemAt(rb.getString("ComboItemNone"), 0);
+        box.setSelectedIndex(0);
         text = new JTextField();
         text.setColumns(4);
         text.setToolTipText(rb.getString("TooltipTextFieldEnabled"));
@@ -75,16 +84,20 @@ public class DccLocoAddressSelector extends JPanel
         
         int num = Integer.parseInt(text.getText());
         setMode(num);
-        boolean isLong = false;
-        if (box.getSelectedIndex() == 2) isLong = true;
-        return new DccLocoAddress(num,isLong);
+        int protocol = LocoAddress.DCC;
+        if(InstanceManager.throttleManagerInstance()!=null){
+            protocol = InstanceManager.throttleManagerInstance().getProtocolFromString((String)box.getSelectedItem());
+        }
+        return new DccLocoAddress(num,protocol);
     }
 
     public void setAddress(DccLocoAddress a) {
         if (a!=null) {
             text.setText(""+a.getNumber());
-            if (a.isLongAddress()) box.setSelectedIndex(2);
-            else box.setSelectedIndex(1);
+            if(InstanceManager.throttleManagerInstance()!=null){
+                box.setSelectedItem(InstanceManager.throttleManagerInstance().getAddressTypeString(a.getProtocol()));
+                //protocol = InstanceManager.throttleManagerInstance().getProtocolFromString((String)box.getSelectedItem());
+            }
         }
     }
     
@@ -235,24 +248,38 @@ public class DccLocoAddressSelector extends JPanel
         return box;
     }     
     
-    
+    //This is only required for DCC when selecting between short and long address
     protected void setMode(int address) {
     
         // IAre we locked, and is there a throttle manager?
         ThrottleManager tf = InstanceManager.throttleManagerInstance();
         if (locked && tf != null) {
-            // yes, lets make some checks of required modes
-            
-            // if it has to be long, handle that
-            if (tf.canBeLongAddress(address) && !tf.canBeShortAddress(address)) {
-                box.setSelectedIndex(2);
-                return;
+            boolean dcclongshort = false;
+            for(int i: tf.getAddressIntTypes()){
+                if(i==LocoAddress.DCC_SHORT){
+                    for(int j:tf.getAddressIntTypes()){
+                        if(j==LocoAddress.DCC_LONG){
+                            dcclongshort=true;
+                        }
+                    }
+                }
             }
-        
-            // if it has to be short, handle that
-            if (!tf.canBeLongAddress(address) && tf.canBeShortAddress(address)) {
-                box.setSelectedIndex(1);
-                return;
+
+            //Only check if the throttle manager specifically supports dcc long and dcc short
+            if(dcclongshort){
+                // yes, lets make some checks of required modes
+
+                // if it has to be long, handle that
+                if (tf.canBeLongAddress(address) && !tf.canBeShortAddress(address)) {
+                    box.setSelectedItem(tf.getAddressTypeString(LocoAddress.DCC_LONG));
+                    return;
+                }
+
+                // if it has to be short, handle that
+                if (!tf.canBeLongAddress(address) && tf.canBeShortAddress(address)) {
+                   box.setSelectedItem(tf.getAddressTypeString(LocoAddress.DCC_SHORT));
+                    return;
+                }
             }
         }
         
@@ -261,7 +288,7 @@ public class DccLocoAddressSelector extends JPanel
         // now we're in the "could be either" place; leave selection if possible
         switch (box.getSelectedIndex()) {
             case 0:
-                { // well, now we've got a problem; no clue, so guess short
+                { // well, now we've got a problem; no clue, so guess short or even set to the first available protocol
                     box.setSelectedIndex(1);
                     return;
                 }

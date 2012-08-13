@@ -22,12 +22,19 @@ public class DccLocoAddress implements LocoAddress {
 
 	public DccLocoAddress(int number, boolean isLong) {
 		this.number = number;
-		this.isLong = isLong;
+        protocol = LocoAddress.DCC_SHORT;
+        if(isLong)
+            protocol = LocoAddress.DCC_LONG;
 	}
+    
+    public DccLocoAddress(int number, int protocol){
+        this.number = number;
+        this.protocol = protocol;
+    }
 	
 	public DccLocoAddress(DccLocoAddress l) {
 		this.number = l.number;
-		this.isLong = l.isLong;
+        this.protocol = l.protocol;
 	}
 
     public boolean equals(Object a) {
@@ -35,26 +42,47 @@ public class DccLocoAddress implements LocoAddress {
         try {
             DccLocoAddress other = (DccLocoAddress) a;
             if (this.number != other.number) return false;
-            if (this.isLong != other.isLong) return false;
+            if (this.protocol != other.protocol) return false;
             return true;
         } catch (Exception e) { return false; }
     }
     
     public int hashCode() {
-        if (isLong) return 20000+number;
-        else return number;
+        switch(protocol){
+            case LocoAddress.DCC_SHORT : return number;
+            case LocoAddress.DCC_LONG : return 20000+number;
+            case LocoAddress.SELECTRIX: return 30000+number;
+            case LocoAddress.MOTOROLA: return 40000+number;
+            default: return number;
+        }
     }
     
     public String toString() {
-        if (isLong) return ""+number+"(L)";
-        else return ""+number+"(S)";
+        switch(protocol){
+            case LocoAddress.DCC_SHORT : return ""+number+"(S)";
+            case LocoAddress.DCC_LONG : return ""+number+"(L)";
+            case LocoAddress.SELECTRIX: return ""+number+"(SX)";
+            case LocoAddress.MOTOROLA: return ""+number+"(MM)";
+            default: return ""+number+"(D)";
+        }
+        /*if (isLong) return ""+number+"(L)";
+        else return ""+number+"(S)";*/
     }
     
-	public boolean isLongAddress() { return isLong; }
-	public int getNumber() { return number; }
+	public boolean isLongAddress() { 
+        if(protocol==LocoAddress.DCC_LONG) return true;
+        return false;
+    }
+    
+    public int getProtocol() {
+        return protocol;
+    }
+    
+    public int getNumber() { return number; }
 	
     private int number;
-    private boolean isLong;
+    private int protocol = LocoAddress.DCC;
+
 }
 
 

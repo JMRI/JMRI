@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ResourceBundle;
 
 /**
  * Abstract implementation of a ThrottleManager.
@@ -39,6 +40,64 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             return adapterMemo.getUserName();
         return userName;
     }
+    
+    protected static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ThrottleBundle");
+    
+    public String[] getAddressTypes(){
+        return new String[]{rb.getString("ComboItemShort"),
+                         rb.getString("ComboItemLong")};
+    }
+
+    public String getAddressTypeString(int prot){
+        switch(prot){
+            case LocoAddress.DCC_SHORT: return rb.getString("ComboItemShort");
+            case LocoAddress.DCC_LONG: return rb.getString("ComboItemLong");
+            default: return rb.getString("ComboItemShort");
+        }
+    }
+
+    public int[] getAddressIntTypes(){
+        return new int[]{LocoAddress.DCC_SHORT, LocoAddress.DCC_LONG};
+    }
+
+    public int getProtocolFromString(String selection){
+        int val = LocoAddress.DCC;
+        if(selection.equals(rb.getString("ComboItemNone"))){
+            val = LocoAddress.DCC;
+        } else if (selection.equals(rb.getString("ComboItemShort"))){
+            val = LocoAddress.DCC_SHORT;
+        } else if (selection.equals(rb.getString("ComboItemLong"))){
+            val = LocoAddress.DCC_LONG;
+        } else {
+            log.error("Protocol '" + selection + "' is unknown so will default to dcc");
+        }
+        return val;
+    }
+    
+    /*public String getMode(int address){
+        if (canBeLongAddress(address) && !canBeShortAddress(address)) {
+            return rb.getString("ComboItemLong");
+        }
+        
+        // if it has to be short, handle that
+        if (!canBeLongAddress(address) && canBeShortAddress(address)) {
+            return rb.getString("ComboItemShort");
+        }
+        return rb.getString("ComboItemShort");
+    }*/
+    
+    /*public int getMode(int address){
+        if (canBeLongAddress(address) && !canBeShortAddress(address)) {
+            return 2;
+        }
+        
+        // if it has to be short, handle that
+        if (!canBeLongAddress(address) && canBeShortAddress(address)) {
+            return 1;
+        }
+        return 1;
+    }*/
+    
 	/**
 	 * throttleListeners is indexed by the address, and
 	 * contains as elements an ArrayList of ThrottleListener
@@ -421,8 +480,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             }
         }
         if (addressThrottles.containsKey(la)){
-            if(addressThrottles.get(la).getUseCount()>0)
+            if(addressThrottles.get(la).getUseCount()>0){
                 return true;
+            }
         }
         return false;
     }

@@ -145,9 +145,39 @@ public interface ThrottleManager {
     
     /**
      * Are there not any ambiguous addresses (short vs long) on this system?
+     * This is also used to indicate systems that support multi-protocol decoders
      */
     public boolean addressTypeUnique();
 
+    /**
+    * This returns a list of the different protocols that are supported by the 
+    * system, to include short vs long or DCC vs Selectrix vs Motorola
+    */
+    public String[] getAddressTypes();
+
+    /**
+    * return a string value for a given int protocol value
+    */
+    public String getAddressTypeString(int prot);
+
+	/**
+     * returns an Integer list of different protocols that are supported by 
+     * system, to include short vs long or DCC vs Selectrix vs Motorola
+     */
+    public int[] getAddressIntTypes();
+
+    /**
+     * Get the integer value representing a protocol
+     * @param selection
+     * @return the integer value of the protocol
+     */
+    public int getProtocolFromString(String selection);
+    
+   /**
+    * The string provided in the getAddressTypes of a protocol for a given address
+    */
+   // public int getMode(int address);
+    
     /**
      * What speed modes are supported by this system?                       
      * value should be xor of possible modes specifed in the throttle

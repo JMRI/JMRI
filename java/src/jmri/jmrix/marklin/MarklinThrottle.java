@@ -17,7 +17,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     /**
      * Constructor.
      */
-    public MarklinThrottle(MarklinSystemConnectionMemo memo, DccLocoAddress address)
+    public MarklinThrottle(MarklinSystemConnectionMemo memo, LocoAddress address)
     {
         super(memo);
         super.speedIncrement = MARKLIN_SPEED_PROTOCOL_INCREMENT;
@@ -47,6 +47,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         for(int i=0; i<=28; i++){
             tc.sendMarklinMessage(MarklinMessage.getQryLocoFunction(getCANAddress(), i), this);
         }
+        //log.info("Address is " + address.getNumber() + " Protocol is " + address.getProtocol());
 
     }
     
@@ -154,7 +155,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
             notifyPropertyChangeListener("IsForward", old, isForward );
     }
 
-    private DccLocoAddress address;
+    private LocoAddress address;
     
     MarklinTrafficController tc;
     
@@ -174,23 +175,6 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     
     public void reply(MarklinReply m) {
         if(m.getPriority()==MarklinConstants.PRIO_1 && m.getCommand()>=MarklinConstants.MANCOMMANDSTART && m.getCommand()<=MarklinConstants.MANCOMMANDEND ){
-            if(protocol==UNKNOWN){
-                if(m.getAddress()==(MarklinConstants.DCCSTART + address.getNumber())){
-                    log.debug("Protocol set to DCC");
-                    protocol=DCC;
-                } else if (m.getAddress()==(MarklinConstants.SX2START + address.getNumber())){
-                    log.debug("Protocol set to SX");
-                    protocol=SFX;
-                } else if(m.getAddress()==address.getNumber()) {
-                    log.debug("Protocol set to Motor");
-                    protocol=MM2;
-                } else if (log.isDebugEnabled()){
-                    log.debug("Not for us " + m.getAddress()+ " " + getCANAddress());
-                    return;
-                } else {
-                    return;
-                }
-            }
             if(m.getAddress()!=getCANAddress()){
                 if (log.isDebugEnabled())
                     log.debug("Addressed packet is not for us " + m.getAddress() + " " + getCANAddress());
@@ -388,18 +372,12 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         }
     }
     
-    final static int UNKNOWN = MarklinConstants.PROTOCOL_UNKNOWN;
-    final static int DCC = MarklinConstants.PROTOCOL_DCC;
-    final static int MM2 = MarklinConstants.PROTOCOL_MM2;
-    final static int SFX = MarklinConstants.PROTOCOL_SX;
-    
-    int protocol = UNKNOWN;
-    
     int getCANAddress(){
-        switch(protocol){
-            case DCC : return MarklinConstants.DCCSTART + address.getNumber();
-            case MM2 : return address.getNumber(); 
-            case SFX : return MarklinConstants.SX2START + address.getNumber();
+        switch(address.getProtocol()){
+            case LocoAddress.DCC : return MarklinConstants.DCCSTART + address.getNumber();
+            case LocoAddress.MOTOROLA : return address.getNumber();
+            case LocoAddress.SELECTRIX : return MarklinConstants.SX2START + address.getNumber();
+            case LocoAddress.MFX : return MarklinConstants.MFXSTART + address.getNumber();
             default  : return MarklinConstants.DCCSTART + address.getNumber();
         }
     }

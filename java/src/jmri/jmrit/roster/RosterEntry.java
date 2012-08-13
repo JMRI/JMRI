@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import jmri.DccLocoAddress;
+import jmri.LocoAddress;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
@@ -61,7 +62,8 @@ public class RosterEntry implements jmri.BasicRosterEntry{
     protected String _owner = _defaultOwner;
     protected String _model = "";
     protected String _dccAddress = "3";
-    protected boolean _isLongAddress = false;
+    //protected boolean _isLongAddress = false;
+    protected int _protocol = LocoAddress.DCC_SHORT;
     protected String _comment = "";
     protected String _decoderModel = "";
     protected String _decoderFamily = "";
@@ -114,7 +116,7 @@ public class RosterEntry implements jmri.BasicRosterEntry{
         _mfg =          pEntry._mfg;
         _model =        pEntry._model;
         _dccAddress =   pEntry._dccAddress;
-        _isLongAddress = pEntry._isLongAddress;
+        _protocol = pEntry._protocol;
         _comment =      pEntry._comment;
         _decoderModel = pEntry._decoderModel;
         _decoderFamily = pEntry._decoderFamily;
@@ -241,12 +243,32 @@ public class RosterEntry implements jmri.BasicRosterEntry{
     }
     public String getDccAddress() { return _dccAddress; }
 
-    public void   setLongAddress(boolean b) {
-        Boolean old = Boolean.valueOf(_isLongAddress);
-        _isLongAddress = b;
+    public void setLongAddress(boolean b) {
+        Boolean old = false;
+        if(_protocol==LocoAddress.DCC_LONG)
+                old = true;
+        if(b)
+            _protocol=LocoAddress.DCC_LONG;
+        else
+            _protocol=LocoAddress.DCC_SHORT;
         firePropertyChange("longaddress", old, Boolean.valueOf(b));
     }
-    public boolean isLongAddress() { return _isLongAddress; }
+
+    public boolean isLongAddress() { 
+        if(_protocol==LocoAddress.DCC_LONG)
+            return true;
+        return false;
+    }
+
+    public void setProtocol(int protocol){
+        int old = _protocol;
+        _protocol = protocol;
+        firePropertyChange("protocol", old, _protocol);
+    }
+
+    public int getProtocol(){
+        return _protocol;
+    }
 
     public void   setComment(String s) {
         String old = _comment;
@@ -372,10 +394,10 @@ public class RosterEntry implements jmri.BasicRosterEntry{
             DccLocoAddress la = (DccLocoAddress)((new jmri.configurexml.LocoAddressXml()).getAddress(e3));
             if (la!=null) {
                 _dccAddress = ""+la.getNumber();
-                _isLongAddress = la.isLongAddress();
+                _protocol = la.getProtocol();
             } else {
                 _dccAddress = "";
-                _isLongAddress = false;
+                _protocol = LocoAddress.DCC_SHORT;
             }
         } else {// Did not find "locoaddress" element carrying the short/long, probably
                 // because this is an older-format file, so try to use system default.
@@ -389,15 +411,15 @@ public class RosterEntry implements jmri.BasicRosterEntry{
             } catch (NumberFormatException e2) { address = 3;}  // ignore, accepting the default value
             if (tf!=null && tf.canBeLongAddress(address) && !tf.canBeShortAddress(address)) {
                 // if it has to be long, handle that
-                _isLongAddress = true;
+                _protocol = LocoAddress.DCC_LONG;
             } else if (tf!=null && !tf.canBeLongAddress(address) && tf.canBeShortAddress(address)) {
                 // if it has to be short, handle that
-                _isLongAddress = false;
+                _protocol = LocoAddress.DCC_SHORT;
             } else {
                 // else guess short address
                 // These people should resave their roster, so we'll warn them
                 warnShortLong(_id);
-                _isLongAddress = false;
+                _protocol = LocoAddress.DCC_SHORT;
 
             }
         }        
@@ -620,7 +642,7 @@ public class RosterEntry implements jmri.BasicRosterEntry{
         if (_dccAddress.equals("")) {
             e.addContent( (new jmri.configurexml.LocoAddressXml()).store(null));  // store a null address
         } else {
-            e.addContent( (new jmri.configurexml.LocoAddressXml()).store(new DccLocoAddress(Integer.parseInt(_dccAddress), _isLongAddress)));
+            e.addContent( (new jmri.configurexml.LocoAddressXml()).store(new DccLocoAddress(Integer.parseInt(_dccAddress), isLongAddress())));
         }
 
         if (functionLabels!=null) {

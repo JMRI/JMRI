@@ -511,7 +511,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         internalAdjust=true;
     	//Translate the speed sent in to the max allowed by any set speed limit
     	speedSlider.setValue(java.lang.Math.round(speed/speedIncrement));
-    			
+    	log.info("Speed increment " + speedIncrement);
         if (log.isDebugEnabled()) log.debug("SpeedSlider value: "+speedSlider.getValue());
         // Spinner Speed should be the raw integer speed value
         if(speedSpinner!=null)

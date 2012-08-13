@@ -2,7 +2,7 @@
 
 package jmri.jmrix.marklin.networkdriver;
 
-//import javax.swing.*;
+import javax.swing.JPanel;
 
 
 
@@ -27,6 +27,12 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
      */
     public ConnectionConfig() {
         super();
+    }
+
+    @Override
+    public void loadDetails(final JPanel details) {
+        super.loadDetails(details);
+        portField.setEnabled(false);
     }
     
     public String name() { return "CS2 via network"; }
