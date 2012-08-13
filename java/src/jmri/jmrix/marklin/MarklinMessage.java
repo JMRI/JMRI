@@ -205,13 +205,16 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
     
     static public MarklinMessage sensorPollMessage(int module){
         MarklinMessage m = new MarklinMessage();
-        m.setElement(0, MarklinConstants.FEECOMMANDSTART&0xFF);
-        m.setElement(1, 0x00&0xFF);
+        m.setElement(0, (MarklinConstants.FEECOMMANDSTART>>7)&0xFF);
+        m.setElement(1, (MarklinConstants.FEECOMMANDSTART<<1)&0xFF);
         m.setElement(2, MarklinConstants.HASHBYTE1&0xFF);
         m.setElement(3, MarklinConstants.HASHBYTE2&0xFF);
         m.setElement(4, 0x05&0xFF); //five bytes;
-        //5, 6, 7, 8 Address but this is a global command
-        m.setElement(9, module&0xFF); //Turn main on 0x01
+        m.setElement(MarklinConstants.CANADDRESSBYTE1, (MY_UID>>24)&0xFF);
+        m.setElement(MarklinConstants.CANADDRESSBYTE2, (MY_UID>>16)&0xFF);
+        m.setElement(MarklinConstants.CANADDRESSBYTE3, (MY_UID>>8)&0xFF);
+        m.setElement(MarklinConstants.CANADDRESSBYTE4, (MY_UID)&0xFF);
+        m.setElement(9, module&0xFF);
         return m;
     }
 
