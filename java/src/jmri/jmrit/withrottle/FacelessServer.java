@@ -72,7 +72,7 @@ public class FacelessServer implements DeviceListener, DeviceManager {
         while (isListen){ //Create DeviceServer threads
             DeviceServer device;
             try{
-                log.debug("Creating new DeviceServer(socket), waiting for connection...");
+                log.info("Creating new WiThrottle DeviceServer(socket) on port " + port + ", waiting for incoming connection...");
                 device = new DeviceServer(socket.accept(), this);  //blocks here until a connection is made
 
                 Thread t = new Thread(device);
@@ -124,26 +124,7 @@ public class FacelessServer implements DeviceListener, DeviceManager {
         }
     }
 
-//	Clear out the deviceList array and close each device thread
-    private void stopDevices(){
-        DeviceServer device;
-        int cnt = 0;
-        if (deviceList.size()>0) do{
-            device = deviceList.get(0);
-            if (device != null){
-            	device.closeThrottles(); //Tell device to stop its throttles, 
-                device.closeSocket();   //close its sockets
-                                        //close() will throw read error and it will be caught
-                                        //and drop the thread.
-                cnt++;
-                if (cnt>200){
-                    break;
-                }
-            }
-        }while (!deviceList.isEmpty());
-        deviceList.clear();
-    }
-    public String getSelectedRosterGroup() {
+public String getSelectedRosterGroup() {
 //        return rosterGroupSelector.getSelectedRosterGroup();
     	return null;
     }

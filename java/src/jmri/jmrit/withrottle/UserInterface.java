@@ -297,7 +297,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         while (isListen){ //Create DeviceServer threads
             DeviceServer device;
             try{
-                log.debug("Creating new DeviceServer(socket), waiting for connection...");
+                log.info("Creating new WiThrottle DeviceServer(socket) on port " + port + ", waiting for incoming connection...");
                 device = new DeviceServer(socket.accept(), this);  //blocks here until a connection is made
 
                 Thread t = new Thread(device);
