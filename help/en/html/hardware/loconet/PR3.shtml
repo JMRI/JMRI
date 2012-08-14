@@ -31,12 +31,8 @@ JMRI Hardware Guide: Connecting to a Digitrax PR3
 
 
 <a href="http://digitrax.com/prd_compint_pr3.php">
-<img src="http://digitrax.com/images/pr3.jpg" align="right" width="200" height="179" alt="PR3 picture"/>
+<img src="http://www.digitrax.com/static/apps/products/computer-control/pr3/images/PR3_jpg_350x900_q85.jpg" width="175" height="175" align="right" alt="PR3 picture"/>
 </a><br/>
-
-<em>Support for the Digitrax PR3 was first available in 
-<A href="http://jmri.sf.net/releasenotes/jmri2.1.6.shtml">JMRI 2.1.6</a>,
-released May 31, 2008.</em><p>
 
 The Digitrax PR3 can be used as either a standalone
 decoder programmer much like the PR2, or as an 
