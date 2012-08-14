@@ -23,7 +23,7 @@ import jmri.jmrix.ConnectionConfig;
 public class AboutDialog extends JDialog {
 
     ConnectionConfig[] connection = {null, null, null, null};
-    protected static ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
+    final protected static ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
 
     // this should probably be changed to a JmriAbstractAction that opens a JOptionPane with the contents and an OK button instead.
     public AboutDialog(JFrame frame, boolean modal) {

@@ -17,7 +17,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
     public AbstractNetworkConnectionConfigXml() {
     }
 
-    static protected java.util.ResourceBundle rb = 
+    final static protected java.util.ResourceBundle rb = 
         java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
     
     protected NetworkPortAdapter adapter;

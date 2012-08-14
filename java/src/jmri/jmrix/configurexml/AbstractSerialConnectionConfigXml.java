@@ -17,7 +17,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
     public AbstractSerialConnectionConfigXml() {
     }
 
-    static protected java.util.ResourceBundle rb = 
+    final static protected java.util.ResourceBundle rb = 
         java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
     
     protected SerialPortAdapter adapter;
