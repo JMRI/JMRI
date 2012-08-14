@@ -41,7 +41,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         return userName;
     }
     
-    protected static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ThrottleBundle");
+    final protected static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ThrottleBundle");
     
     public String[] getAddressTypes(){
         return new String[]{rb.getString("ComboItemShort"),
