@@ -75,7 +75,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                 if (node == null) return;
 
                 if (node.getUserObject() instanceof NodeTreeRep.SelectionKey) {
-                    ((NodeTreeRep.SelectionKey)node.getUserObject()).select((DefaultMutableTreeNode)node);
+                    ((NodeTreeRep.SelectionKey)node.getUserObject()).select(node);
                 }
             }
         });
