@@ -117,7 +117,7 @@ public class LnPowerManager
      * can use the resulting OPC_SL_RD_DATA message to update its view of the
      * current track status.
      */
-    class LnTrackStatusUpdateThread extends Thread {
+    static class LnTrackStatusUpdateThread extends Thread {
 
         private LnTrafficController tc;
 
