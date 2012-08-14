@@ -20,6 +20,9 @@ public class MonitorFrameTest extends TestCase {
     String testRaw;
     
     public void testFormatMsg() throws Exception {
+        // skip if headless, as requires display to show
+        if (System.getProperty("jmri.headlesstest","false").equals("true")) return;
+                
         TrafficControllerScaffold tcs = new TrafficControllerScaffold();
 
         MonitorPane f = new MonitorPane(){
@@ -31,13 +34,6 @@ public class MonitorFrameTest extends TestCase {
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcs);
         f.initComponents(memo);
-        
-        /*MonitorFrame f = new MonitorFrame(){
-            public void nextLine(String s1, String s2) {
-                testFormatted = s1;
-                testRaw = s2;
-            }
-        };*/
         
         jmri.jmrix.can.CanMessage msg 
             = new jmri.jmrix.can.CanMessage(
@@ -53,6 +49,9 @@ public class MonitorFrameTest extends TestCase {
     
     public void testFormatReply() throws Exception {
     
+        // skip if headless, as requires display to show
+        if (System.getProperty("jmri.headlesstest","false").equals("true")) return;
+        
         TrafficControllerScaffold tcs = new TrafficControllerScaffold();
 
         MonitorPane f = new MonitorPane(){
@@ -64,13 +63,6 @@ public class MonitorFrameTest extends TestCase {
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcs);
         f.initComponents(memo);
-        
-        /*MonitorFrame f = new MonitorFrame(){
-            public void nextLine(String s1, String s2) {
-                testFormatted = s1;
-                testRaw = s2;
-            }
-        };*/
         
         jmri.jmrix.can.CanReply msg 
             = new jmri.jmrix.can.CanReply(

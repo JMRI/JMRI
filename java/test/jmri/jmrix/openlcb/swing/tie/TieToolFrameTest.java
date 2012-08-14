@@ -15,9 +15,14 @@ import junit.framework.TestSuite;
 public class TieToolFrameTest extends TestCase {
 
     public void testCreateAndShow() throws Exception {
+
+        // skip if headless, as requires display to show
+        if (System.getProperty("jmri.headlesstest","false").equals("true")) return;
+
         jmri.util.JmriJFrame f = new TieToolFrame();
         f.initComponents();
         f.pack();
+        
         f.setVisible(true);
         
         // close frame
