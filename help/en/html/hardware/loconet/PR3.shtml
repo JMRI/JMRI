@@ -185,7 +185,21 @@ Other decoders, including decoders from other manufacturers, may
 draw enough motor current to trip the PR3 internal circuit breakers.
 This will cause JMRI to mark track power as "off". Just wait a couple
 seconds and turn the track power back on to recover.
-	  
+
+<h4>Using the PR3 with Non-Digitrax Decoders</h4>
+
+To implement that "neutral mode" described above, the PR3 automatically
+writes CV128 to 0 or 1.  This happens when a JMRI throttle is used to
+run the locomotive on the PR3 programming track, and there's nothing
+JMRI can do to prevent it.  Unfortunately, this can interfere with the 
+CV programming on some non-Digitrax decoders.  For example, it will set
+the "Master Volume" CV128 on some Soundtraxx decoders to a very low volume.
+<p>
+If you are using the PR3 with a decoder that uses CV128 for something, 
+you should either not use a JMRI throttle to run the locomotive on the
+PR3 programming track, or remember to rewrite CV128 with the right value 
+just before removing the locomotive from the track.
+
 
 <!--#include virtual="/Footer" -->
 </body>
