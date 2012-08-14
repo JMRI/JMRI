@@ -48,7 +48,6 @@ public class MonitorFrameTest extends TestCase {
     }
     
     public void testFormatReply() throws Exception {
-    
         // skip if headless, as requires display to show
         if (System.getProperty("jmri.headlesstest","false").equals("true")) return;
         
@@ -98,6 +97,9 @@ public class MonitorFrameTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void setUp() { 
+        jmri.util.JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.setUp(); 
+    }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 }
