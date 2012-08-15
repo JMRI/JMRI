@@ -1,2 +1,9 @@
    US&S Artwork based on images from Mike Burgett of Control Train Components.
    These files were contributed by Dick Bronson.
+   
+   xxx-blink-web.gif  icons for web use provided by Robin Becker. 
+   These icons have minimum frame delays of 60 ms for compatibility with all 
+   web browsers (and may also be used for JMRI internal panels). 
+   They also use the same full-on frame as xxx-on.gif and same full-off frame 
+   as xxx-off.gif, so they appear consistent when going between steady and 
+   blinking.
