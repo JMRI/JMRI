@@ -28,6 +28,13 @@
         <a class='ui-link-inherit' href='/frame/${name}.html' target='${safeName}'>${userName}</a>
     </li>
 </script>
+<script id='panelItemTemplate' type='text/html'>
+    <li id='name-${safeName}' data-sort='${name}'>
+        <a class='ui-link-inherit' href='/panel/${name}' target='${safeName}'>
+			<div class='userName float-left'><small><em>${name}</em></small><br />${userName}</div>
+		</a>
+    </li>
+</script>
 <script id='rosterItemTemplate' type='text/html'>
     <li class='ui-li-has-thumb' id='name-${safeName}' data-sort='${name}'>
       <a  class='ui-link-inherit' href='/web/inControl.html?locoaddress=${dccAddress}&loconame=${name}' target='${safeName}'>
@@ -78,6 +85,22 @@
     <div data-role='content'>
        <ul class='frame-list listview' data-role='listview' data-filter='true'></ul>
        <div class='helpText'>Click on frame name to open a new clickable window for the selected frame.  Note: not all frames are useful via this method.</div>
+    </div>
+    <div id='footer' class='ui-bar' data-role='footer' data-id='footer' data-position='fixed'>
+      <a data-role='button' href='#settings' data-inline='true' data-mini='true'>Settings</a>
+    </div>
+  </div>
+</script>
+<script id='panelPageTemplate' type='text/html'>
+  <div id='type-${type}' data-url='type-${type}' data-role='page' data-theme='b'>
+    <div data-role='header' data-id='header' data-position='fixed'>
+      <h1>${type} - JMRI Mobile</h1>
+      <a id='homelink' href='JMRIMobile.html' data-role='button' data-icon='home' data-position='right' rel='external'></a>
+      <div class='errorMessage'></div>    
+    </div>
+    <div data-role='content'>
+       <ul class='panel-list listview' data-role='listview' data-filter='true'></ul>
+       <div class='helpText'>Click on panel name to open a new window showing the xml defn of the selected frame.</div>
     </div>
     <div id='footer' class='ui-bar' data-role='footer' data-id='footer' data-position='fixed'>
       <a data-role='button' href='#settings' data-inline='true' data-mini='true'>Settings</a>
@@ -144,6 +167,10 @@
 						<div>
 							<input type="checkbox" name="include-metadata"
 								id="include-metadata"><label for="include-metadata">Metadata</label>
+						</div>
+						<div>
+							<input type="checkbox" name="include-panel" id="include-panel"><label
+								for="include-panel">Panels</label>
 						</div>
 					</div>
 				</fieldset>

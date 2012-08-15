@@ -240,10 +240,16 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     if (frame.getAllowInFrameServlet()) {
                         String title = ((JmriJFrame) ((Editor)frame).getTargetPanel().getTopLevelAncestor()).getTitle();
                         if (!title.equals("") && !disallowedFrames.contains(title)) {
-                            Element n = new Element("panel");
-                            n.setAttribute("name", "ControlPanel/" + title.replaceAll(" ", "%20"));
-                            n.setAttribute("userName", title);
-                            n.setAttribute("type", "Control Panel");
+                            Element n = new Element((useAttributes) ? "panel" : "item");
+                            if (useAttributes) {
+                            	n.setAttribute("name", "ControlPanel/" + title.replaceAll(" ", "%20"));
+                            	n.setAttribute("userName", title);
+                            	n.setAttribute("type", "Control Panel");
+                            } else {
+                                n.addContent(new Element("type").addContent("panel"));
+                                n.addContent(new Element("name").addContent("ControlPanel/" + title.replaceAll(" ", "%20")));
+                                n.addContent(new Element("userName").addContent(title));
+                            }
                             e.addContent(n);
                         }
                     }
@@ -253,10 +259,16 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     if (frame.getAllowInFrameServlet()) {
                         String title = ((JmriJFrame) ((Editor)frame).getTargetPanel().getTopLevelAncestor()).getTitle();
                         if (!title.equals("") && !disallowedFrames.contains(title)) {
-                            Element n = new Element("panel");
-                            n.setAttribute("name", "Panel/" + title.replaceAll(" ", "%20"));
-                            n.setAttribute("userName", title);
-                            n.setAttribute("type", "Panel");
+                            Element n = new Element((useAttributes) ? "panel" : "item");
+                            if (useAttributes) {
+                            	n.setAttribute("name", "Panel/" + title.replaceAll(" ", "%20"));
+                            	n.setAttribute("userName", title);
+                            	n.setAttribute("type", "Panel");
+                            } else {
+                                n.addContent(new Element("type").addContent("panel"));
+                                n.addContent(new Element("name").addContent("Panel/" + title.replaceAll(" ", "%20")));
+                                n.addContent(new Element("userName").addContent(title));
+                            }
                             e.addContent(n);
                         }
                     }
@@ -266,10 +278,16 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     if (frame.getAllowInFrameServlet()) {
                         String title = ((JmriJFrame) ((Editor)frame).getTargetPanel().getTopLevelAncestor()).getTitle();
                         if (!title.equals("") && !disallowedFrames.contains(title)) {
-                            Element n = new Element("panel");
-                            n.setAttribute("name", "Layout/" + title.replaceAll(" ", "%20"));
-                            n.setAttribute("userName", title);
-                            n.setAttribute("type", "Layout");
+                            Element n = new Element((useAttributes) ? "panel" : "item");
+                            if (useAttributes) {
+                            	n.setAttribute("name", "Layout/" + title.replaceAll(" ", "%20"));
+                            	n.setAttribute("userName", title);
+                            	n.setAttribute("type", "Layout");
+                            } else {
+                                n.addContent(new Element("type").addContent("panel"));
+                                n.addContent(new Element("name").addContent("Layout/" + title.replaceAll(" ", "%20")));
+                                n.addContent(new Element("userName").addContent(title));
+                            }
                             e.addContent(n);
                         }
                     }

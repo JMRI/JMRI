@@ -105,7 +105,7 @@ var $processResponse = function($returnedData, $success, $xhr) {
 				var $type = $currentItem.type;  //shortcut since this is used so many times
 
 				//remove non-monitorable from xml
-				if ($type == 'roster' || $type == 'frame' || $type == 'metadata') {
+				if ($type == 'roster' || $type == 'frame' || $type == 'metadata' || $type == 'panel' || $type == 'layout') {
 					$(this).remove();
 				}
 
@@ -270,7 +270,7 @@ function $getXMLListCommands($includeMonitorables) {
 	var $cmdStr = '';
 	$.each($('#includes input:checkbox:checked'),function(i,e){
 		var $t = $(e).attr("id").substring(8);
-		if ($includeMonitorables || ($t != 'roster' && $t != 'frame' ))  {
+		if ($includeMonitorables || ($t != 'roster' && $t != 'frame' && $t != 'panel' && $t != 'layout'))  {
 			// add each checked value to list
 			$cmdStr += '<list><type>' + $t  + '</type></list>';  //drop "include-" from string
 		}
