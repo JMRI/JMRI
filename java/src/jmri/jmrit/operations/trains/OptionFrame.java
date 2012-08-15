@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -47,6 +48,7 @@ public class OptionFrame extends OperationsFrame{
 	// radio buttons		
     
     // check boxes
+	JCheckBox ShowTimesCheckBox = new JCheckBox(rb.getString("ShowTimes"));
 	
 	// text fields
 	JTextField railroadNameTextField = new JTextField(35);
@@ -76,7 +78,7 @@ public class OptionFrame extends OperationsFrame{
 		pOptionName.setLayout(new GridBagLayout());
 		JScrollPane pOptionNamePane = new JScrollPane(pOptionName);
 		pOptionNamePane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutRailRoadName")));
-		addItemWidth (pOptionName, railroadNameTextField, 3, 1, 1);
+		addItem (pOptionName, railroadNameTextField, 0, 0);
 		
 		// manifest logo
 		JPanel pOptionLogo = new JPanel();
@@ -89,6 +91,13 @@ public class OptionFrame extends OperationsFrame{
 		addItemWidth (pOptionLogo, logoURL, 6, 1, 21);
 		updateLogoButtons();
 		
+		// Checkboxes
+		JPanel pCheckboxes = new JPanel();
+		pCheckboxes.setLayout(new GridBagLayout());
+		JScrollPane pCheckboxesPane = new JScrollPane(pCheckboxes);
+		pCheckboxesPane.setBorder(BorderFactory.createTitledBorder(""));
+		addItem (pCheckboxes, ShowTimesCheckBox, 0, 0);
+		
 		// row 11
 		JPanel pControl = new JPanel();
 		pControl.setLayout(new GridBagLayout());
@@ -96,6 +105,7 @@ public class OptionFrame extends OperationsFrame{
 		
 		getContentPane().add(pOptionNamePane);
 		getContentPane().add(pOptionLogoPane);
+		getContentPane().add(pCheckboxesPane);
 		getContentPane().add(pControl);
 
 		// setup buttons
@@ -105,15 +115,18 @@ public class OptionFrame extends OperationsFrame{
 		
 		// load fields
 		if (_train != null){
-			railroadNameTextField.setText(_train.getRailroadName());	
+			railroadNameTextField.setText(_train.getRailroadName());
+			ShowTimesCheckBox.setSelected(_train.isShowArrivalAndDepartureTimesEnabled());
 		}
 
 		//	build menu		
 		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainOptions", true);
 
 		pack();
-		if (getWidth()<300)
-			setSize(getWidth()+50, getHeight()+25);	// pad out a bit
+		if (getWidth()<400 )
+			setSize(400, getHeight());
+		if (getHeight()<300 )
+			setSize(getWidth(), 300);
 		setVisible(true);
 	}
 	
@@ -166,8 +179,10 @@ public class OptionFrame extends OperationsFrame{
 			updateLogoButtons();
 		}
 		if (ae.getSource() == saveButton){
-			if (_train != null)
+			if (_train != null){
 				_train.setRailroadName(railroadNameTextField.getText());
+				_train.setShowArrivalAndDepartureTimes(ShowTimesCheckBox.isSelected());
+			}
 			OperationsXml.save();
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();

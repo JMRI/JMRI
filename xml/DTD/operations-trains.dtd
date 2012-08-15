@@ -87,6 +87,7 @@
 <!ATTLIST train buildFailed			(true | false) "false">
 <!ATTLIST train printed				(true | false) "false">
 <!ATTLIST train modified			(true | false) "false">
+<!ATTLIST train showTimes			(true | false) "true">
 <!ATTLIST train switchListStatus	CDATA #IMPLIED>
 <!ATTLIST train status				CDATA #IMPLIED>
 <!ATTLIST train current				CDATA #IMPLIED>

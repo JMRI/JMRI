@@ -89,6 +89,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected List<String> _terminationScripts = new ArrayList<String>(); // list of script pathnames to run when train is terminated
 	protected String _railroadName ="";		// optional railroad name for this train
 	protected String _logoURL ="";			// optional manifest logo for this train
+	protected boolean _showTimes = true;	// when true, show arrival and departure times for this train
 	protected Engine _leadEngine = null; 	// lead engine for icon
 	protected String _switchListStatus = UNKNOWN;		//print switch list status
 	protected String _comment = "";
@@ -1841,6 +1842,18 @@ public class Train implements java.beans.PropertyChangeListener {
 		_logoURL = pathName;
 	}
 	
+	public boolean isShowArrivalAndDepartureTimesEnabled(){
+		return _showTimes;
+	}
+	
+	public void setShowArrivalAndDepartureTimes(boolean enable){
+		boolean old = _showTimes;
+		_showTimes = enable;
+		if (old != enable){
+			setDirtyAndFirePropertyChange("showArrivalAndDepartureTimes", old?"true":"false", enable?"true":"false");
+		}
+	}
+	
 	public boolean isSendCarsToTerminalEnabled(){
 		return _sendToTerminal;
 	}
@@ -2691,6 +2704,9 @@ public class Train implements java.beans.PropertyChangeListener {
         		setManifestLogoURL(a.getValue());
         	}
     	}
+        if ((a = e.getAttribute("showTimes")) != null)
+        	_showTimes = a.getValue().equals("true");
+        
     	addPropertyChangeListerners();
     }
     
@@ -2778,6 +2794,7 @@ public class Train implements java.beans.PropertyChangeListener {
         	e.setAttribute("leadEngine", getLeadEngine().getId());
         e.setAttribute("status", getStatus());
         e.setAttribute("comment", getComment());
+        e.setAttribute("showTimes", isShowArrivalAndDepartureTimesEnabled()?"true":"false");
         // build list of car types for this train
         String[] types = getTypeNames();
         //  Old way of saving car types
@@ -2903,6 +2920,7 @@ public class Train implements java.beans.PropertyChangeListener {
         	l.setAttribute("name", getManifestLogoURL());
         	e.addContent(l);
         }
+        
         if (getSecondLegOptions() != Train.NONE){
         	e.setAttribute("leg2Options", Integer.toString(getSecondLegOptions()));
         	e.setAttribute("leg2Engines", getSecondLegNumberEngines());

@@ -96,7 +96,9 @@ public class TrainManifest extends TrainCommon {
 						newLine(fileOut);
 					newWork = true;
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
-					if (r == 0){
+					if (!train.isShowArrivalAndDepartureTimesEnabled()){
+						newLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName);
+					} else if (r == 0){
 						newLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
 								+", "+rb.getString("departureTime")+" "+train.getFormatedDepartureTime());
 					} else if (!rl.getDepartureTime().equals("")){
@@ -109,7 +111,7 @@ public class TrainManifest extends TrainCommon {
 						newLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName);
 					}
 					// add route comment
-					if (!rl.getComment().equals(""))
+					if (!rl.getComment().trim().equals(""))
 						newLine(fileOut, rl.getComment());
 				}
 				// add location comment
@@ -201,10 +203,12 @@ public class TrainManifest extends TrainCommon {
 							if (rl.getComment().trim().length()>0)
 								s = s +", "+rl.getComment();
 						}
-						if (r == 0)
-							s = s +", "+rb.getString("departureTime")+" "+train.getDepartureTime();
-						else if (!rl.getDepartureTime().equals(""))
-							s = s +", "+rb.getString("departureTime")+" "+rl.getFormatedDepartureTime();				
+						if (train.isShowArrivalAndDepartureTimesEnabled()){
+							if (r == 0)
+								s = s +", "+rb.getString("departureTime")+" "+train.getDepartureTime();
+							else if (!rl.getDepartureTime().equals(""))
+								s = s +", "+rb.getString("departureTime")+" "+rl.getFormatedDepartureTime();
+						}
 						newLine(fileOut, s);
 					}
 				}
