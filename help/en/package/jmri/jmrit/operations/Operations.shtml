@@ -2122,8 +2122,9 @@ trains is also created each time the "Save Train" button is pressed.
 <H3>Train Options</H3>
 
 You can optionally have a unique railroad name and logo for each train
-in your roster. Use the "Edit Train-&gt;Tools-&gt;Options" to enter your
-train's railroad name and logo. 
+in your roster.  You can also decide if your manifests show the train's
+arrival and departure times. Use the "Edit Train-&gt;Tools-&gt;Options" to 
+set these options.
 
 <A NAME="TrainBuildOptions"></A>
 <H3> Train Build Options</H3>
