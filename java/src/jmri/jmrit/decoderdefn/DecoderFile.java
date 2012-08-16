@@ -175,6 +175,7 @@ public class DecoderFile extends XmlFile {
     private void setSupportedProtocols(){
         protocols = new ArrayList<Integer>();
         if(_element.getChild("protocols")!=null){
+            @SuppressWarnings("unchecked")
             List<Element> protocolList = _element.getChild("protocols").getChildren("protocol");
             for(Element e: protocolList){
                 if(e.getText().equals("DCC"))

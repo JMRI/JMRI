@@ -313,7 +313,7 @@ public class DccLocoAddressSelector extends JPanel
         }
     }
     
-    final static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.DccLocoAddressSelectorBundle");;
+    final static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.DccLocoAddressSelectorBundle");
         
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DccLocoAddressSelector.class.getName());
 }

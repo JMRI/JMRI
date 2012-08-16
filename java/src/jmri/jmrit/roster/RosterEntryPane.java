@@ -130,7 +130,6 @@ public class RosterEntryPane extends javax.swing.JPanel  {
                             if(protocoltypes.contains(i))
                                 protocols.add(tm.getAddressTypeString(i));
                         }
-                        String []strArray = new String[3];
                         addrSel = new DccLocoAddressSelector(protocols.toArray(new String[protocols.size()]));
                         DccLocoAddress tempAddr = new DccLocoAddress(
                             Integer.parseInt(r.getDccAddress()), r.getProtocol());
@@ -409,12 +408,13 @@ public class RosterEntryPane extends javax.swing.JPanel  {
     }
     public void setDccAddressLong(boolean m) {
         DccLocoAddress addr = addrSel.getAddress();
-        //If the protocol is already set to something other than DCC, then do not try to configure it as DCC long or short.
-        if(addr.getProtocol()>LocoAddress.DCC_LONG)
-            return;
-        
         int n = 0;
-        if (addr!=null) n = addr.getNumber();
+        if(addr!=null){
+            //If the protocol is already set to something other than DCC, then do not try to configure it as DCC long or short.
+            if(addr.getProtocol()>LocoAddress.DCC_LONG)
+                return;
+            n = addr.getNumber();
+        }
         addrSel.setAddress(new DccLocoAddress(n, m));
     }
 

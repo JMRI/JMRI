@@ -50,7 +50,7 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
         sorter.setTableHeader(dataTable.getTableHeader());        
         dataScroll	= new JScrollPane(dataTable);
 
-        TableColumn tc = columnModel.getColumnByModelIndex(dataModel.PROTOCOL);
+        TableColumn tc = columnModel.getColumnByModelIndex(RosterTableModel.PROTOCOL);
         columnModel.setColumnVisible(tc, false);
         // set initial sort
         TableSorter tmodel = ((TableSorter)dataTable.getModel());
