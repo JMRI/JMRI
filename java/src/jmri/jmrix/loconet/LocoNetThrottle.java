@@ -496,29 +496,31 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 speedIncrement=SPEED_STEP_14_INCREMENT;
                 log.debug("14 speed step change");
                 status=status&((~LnConstants.DEC_MODE_MASK)|
-                                LnConstants.STAT1_SL_SPDEX)|
-                                LnConstants.DEC_MODE_14;
+                                LnConstants.STAT1_SL_SPDEX)
+                             | LnConstants.DEC_MODE_14;
         }
         else if(Mode==DccThrottle.SpeedStepMode28Mot) {
                 speedIncrement=SPEED_STEP_28_INCREMENT;
                 log.debug("28-Tristate speed step change");
                 status=status&((~LnConstants.DEC_MODE_MASK)|
-                                LnConstants.STAT1_SL_SPDEX)|
-                                LnConstants.DEC_MODE_28TRI;
+                                LnConstants.STAT1_SL_SPDEX)
+                             | LnConstants.DEC_MODE_28TRI;
              }
         else if(Mode==DccThrottle.SpeedStepMode28) {
                 speedIncrement=SPEED_STEP_28_INCREMENT;
                 log.debug("28 speed step change");
                 status=status&((~LnConstants.DEC_MODE_MASK)|
-                                LnConstants.STAT1_SL_SPDEX)|
-                                LnConstants.DEC_MODE_28;
+                                LnConstants.STAT1_SL_SPDEX)
+                             | LnConstants.DEC_MODE_28;         // DEC_MODE_28 has a zero value, here for documentation
+                                                                // but it unfortunately shows a INT_VACUOUS_BIT_OPERATION
+                                                                // in Findbugs
              }
         else { // default to 128 speed step mode
                 speedIncrement=SPEED_STEP_128_INCREMENT;
                 log.debug("128 speed step change");
                 status=status&((~LnConstants.DEC_MODE_MASK)|
-                                LnConstants.STAT1_SL_SPDEX)|
-                                LnConstants.DEC_MODE_128;
+                                LnConstants.STAT1_SL_SPDEX)
+                             | LnConstants.DEC_MODE_128;
              }
         if(log.isDebugEnabled()) 
               log.debug("New Slot Mode: " +LnConstants.DEC_MODE(status));
