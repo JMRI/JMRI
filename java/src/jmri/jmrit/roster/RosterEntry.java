@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.ImageIcon;
@@ -254,7 +255,7 @@ public class RosterEntry implements jmri.BasicRosterEntry{
         firePropertyChange("longaddress", old, Boolean.valueOf(b));
     }
 
-    public boolean isLongAddress() { 
+    public boolean isLongAddress() {
         if(_protocol==LocoAddress.DCC_LONG)
             return true;
         return false;
@@ -268,6 +269,22 @@ public class RosterEntry implements jmri.BasicRosterEntry{
 
     public int getProtocol(){
         return _protocol;
+    }
+    
+    public String getProtocolAsString(){
+        String protocol;
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
+        switch(_protocol){
+            case(LocoAddress.DCC_SHORT) : protocol = rb.getString("ProtocolDCC_Short"); break;
+            case(LocoAddress.DCC_LONG) : protocol = rb.getString("ProtocolDCC_Long"); break;
+            case(LocoAddress.DCC) : protocol = rb.getString("ProtocolDCC"); break;
+            case(LocoAddress.SELECTRIX) : protocol = rb.getString("ProtocolSelectrix"); break;
+            case(LocoAddress.MOTOROLA) : protocol = rb.getString("ProtocolMotorola"); break;
+            case(LocoAddress.MFX) : protocol = rb.getString("ProtocolMFX"); break;
+            case(LocoAddress.M4) : protocol = rb.getString("ProtocolM4"); break;
+            default : protocol = rb.getString("ProtocolDCC_Short");
+        }
+        return protocol;
     }
 
     public void   setComment(String s) {
@@ -306,7 +323,7 @@ public class RosterEntry implements jmri.BasicRosterEntry{
             log.error("Illegal format for DCC address roster entry: \""+getId()+"\" value: \""+getDccAddress()+"\"");
             n = 0;
         }
-        return new DccLocoAddress(n,isLongAddress());
+        return new DccLocoAddress(n,_protocol);
     }
 
     public void setImagePath(String s) {
@@ -379,6 +396,7 @@ public class RosterEntry implements jmri.BasicRosterEntry{
         if ((a = e.getAttribute("mfg")) != null )  _mfg = a.getValue();
         if ((a = e.getAttribute("model")) != null )  _model = a.getValue();
         if ((a = e.getAttribute("dccAddress")) != null )  _dccAddress = a.getValue();
+        
         // file path were saved without default xml config path 
         if ((a = e.getAttribute("imageFilePath")) != null )  _imageFilePath = XmlFile.resourcesDir()+a.getValue();
         if ((a = e.getAttribute("iconFilePath")) != null )  _iconFilePath = XmlFile.resourcesDir()+a.getValue();
@@ -614,6 +632,7 @@ public class RosterEntry implements jmri.BasicRosterEntry{
         e.setAttribute("owner",getOwner());
         e.setAttribute("model",getModel());
         e.setAttribute("dccAddress",getDccAddress());
+        //e.setAttribute("protocol",""+getProtocol());
         e.setAttribute("comment",getComment());
         e.setAttribute("maxSpeed", (Integer.valueOf(getMaxSpeedPCT()).toString()));
         // file path are saved without default xml config path
@@ -642,7 +661,7 @@ public class RosterEntry implements jmri.BasicRosterEntry{
         if (_dccAddress.equals("")) {
             e.addContent( (new jmri.configurexml.LocoAddressXml()).store(null));  // store a null address
         } else {
-            e.addContent( (new jmri.configurexml.LocoAddressXml()).store(new DccLocoAddress(Integer.parseInt(_dccAddress), isLongAddress())));
+            e.addContent( (new jmri.configurexml.LocoAddressXml()).store(new DccLocoAddress(Integer.parseInt(_dccAddress), _protocol)));
         }
 
         if (functionLabels!=null) {

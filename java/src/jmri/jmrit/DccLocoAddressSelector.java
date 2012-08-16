@@ -43,23 +43,31 @@ public class DccLocoAddressSelector extends JPanel
     
     public DccLocoAddressSelector() {
         super();
-        if (rb == null) rb = ResourceBundle.getBundle("jmri.jmrit.DccLocoAddressSelectorBundle");
         if ((InstanceManager.throttleManagerInstance() !=null) 
                 && !InstanceManager.throttleManagerInstance().addressTypeUnique()){
-//            int[] addressTypes = InstanceManager.throttleManagerInstance().getAddressIntTypes();
-            box = new JComboBox(InstanceManager.throttleManagerInstance().getAddressTypes());
-            //box = new JComboBox(InstanceManager.throttleManagerInstance().getAddressTypes());
+            configureBox(InstanceManager.throttleManagerInstance().getAddressTypes());
         } else {
-            box = new JComboBox(
+            configureBox(
                 new String[]{rb.getString("ComboItemShort"),
                              rb.getString("ComboItemLong")});
         }
+
+    }
+    
+    public DccLocoAddressSelector(String[] protocols){
+        super();
+        configureBox(protocols);
+    }
+    
+    void configureBox(String[] protocols){
+        box = new JComboBox(protocols);
         box.insertItemAt(rb.getString("ComboItemNone"), 0);
         box.setSelectedIndex(0);
         text = new JTextField();
         text.setColumns(4);
         text.setToolTipText(rb.getString("TooltipTextFieldEnabled"));
         box.setToolTipText(rb.getString("TooltipComboBoxEnabled"));
+    
     }
     
     public void setLocked(boolean l) {
@@ -84,7 +92,7 @@ public class DccLocoAddressSelector extends JPanel
         
         int num = Integer.parseInt(text.getText());
         setMode(num);
-        int protocol = LocoAddress.DCC;
+        int protocol = LocoAddress.DCC_SHORT;
         if(InstanceManager.throttleManagerInstance()!=null){
             protocol = InstanceManager.throttleManagerInstance().getProtocolFromString((String)box.getSelectedItem());
         }
@@ -96,7 +104,6 @@ public class DccLocoAddressSelector extends JPanel
             text.setText(""+a.getNumber());
             if(InstanceManager.throttleManagerInstance()!=null){
                 box.setSelectedItem(InstanceManager.throttleManagerInstance().getAddressTypeString(a.getProtocol()));
-                //protocol = InstanceManager.throttleManagerInstance().getProtocolFromString((String)box.getSelectedItem());
             }
         }
     }
@@ -213,6 +220,14 @@ public class DccLocoAddressSelector extends JPanel
        } 
     }
     
+    public void setEnabledProtocol(boolean e) {
+        box.setEnabled(e);
+        if(e)
+            box.setToolTipText(rb.getString("TooltipComboBoxEnabled"));
+        else
+            box.setToolTipText(rb.getString("TooltipComboBoxDisabled"));
+    }
+    
     /*
      * Get the text field for entering the number as a separate
      * component.  
@@ -298,7 +313,7 @@ public class DccLocoAddressSelector extends JPanel
         }
     }
     
-    static ResourceBundle rb = null;
+    final static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.DccLocoAddressSelectorBundle");;
         
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DccLocoAddressSelector.class.getName());
 }

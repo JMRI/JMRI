@@ -4,6 +4,7 @@ package jmri.jmrit.decoderdefn;
 
 import java.io.*;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Iterator;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.VariableTableModel;
@@ -161,6 +162,33 @@ public class DecoderFile extends XmlFile {
     // static service methods - extract info from a given Element
     public static String getMfgName(Element decoderElement) {
         return decoderElement.getChild("family").getAttribute("mfg").getValue();
+    }
+    
+    ArrayList<Integer> protocols = null;
+    
+    public Integer[] getSupportedProtocols(){
+        if(protocols==null)
+            setSupportedProtocols();
+        return protocols.toArray(new Integer[protocols.size()]);
+    }
+    
+    private void setSupportedProtocols(){
+        protocols = new ArrayList<Integer>();
+        if(_element.getChild("protocols")!=null){
+            List<Element> protocolList = _element.getChild("protocols").getChildren("protocol");
+            for(Element e: protocolList){
+                if(e.getText().equals("DCC"))
+                    protocols.add(jmri.LocoAddress.DCC);
+                else if (e.getText().equals("Selectrix"))
+                    protocols.add(jmri.LocoAddress.SELECTRIX);
+                else if (e.getText().equals("Motorola"))
+                    protocols.add(jmri.LocoAddress.MOTOROLA);
+                else if (e.getText().equals("MFX"))
+                    protocols.add(jmri.LocoAddress.MFX);
+                else if (e.getText().equals("M4"))
+                    protocols.add(jmri.LocoAddress.M4);
+            }
+        }
     }
 
     boolean isProductIDok(Element e) {

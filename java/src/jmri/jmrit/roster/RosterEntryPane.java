@@ -3,7 +3,11 @@
 package jmri.jmrit.roster;
 
 import jmri.jmrit.DccLocoAddressSelector;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.DccLocoAddress;
+import jmri.LocoAddress;
+import jmri.InstanceManager;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -25,6 +29,8 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Display and edit a RosterEntry.
@@ -61,8 +67,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
     JLabel decoderFamily 	= new JLabel();
     JTextArea decoderComment	= new JTextArea(3,30);
     JScrollPane decoderCommentScroller = new JScrollPane(decoderComment,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-
-
+    
     Component pane = null;
     RosterEntry re = null;
 
@@ -79,7 +84,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         } else {
             // non-null address, so load
             DccLocoAddress tempAddr = new DccLocoAddress(
-                Integer.parseInt(r.getDccAddress()), r.isLongAddress());
+                Integer.parseInt(r.getDccAddress()), r.getProtocol());
             addrSel.setAddress(tempAddr);
         }
         
@@ -94,6 +99,50 @@ public class RosterEntryPane extends javax.swing.JPanel  {
 
         addrSel.setEnabled(false);
         addrSel.setLocked(false);
+        
+        if ((InstanceManager.throttleManagerInstance() !=null) 
+            && !InstanceManager.throttleManagerInstance().addressTypeUnique()){
+            // This goes through to find common protocols between the command station and the decoder
+            // and will set the selection box list to match those that are common.
+            jmri.ThrottleManager tm = InstanceManager.throttleManagerInstance();
+            List<Integer> protocoltypes = new ArrayList<Integer>();
+            for (int prot : tm.getAddressIntTypes()) {
+                protocoltypes.add(prot);
+            }
+
+            if(!protocoltypes.contains(LocoAddress.DCC_LONG) && !protocoltypes.contains(LocoAddress.DCC_SHORT)){
+                //Multi protocol systems so far are not worried about dcc long vs dcc short
+                List<DecoderFile> l = DecoderIndexFile.instance().matchingDecoderList(null, r.getDecoderFamily(), null, null, null,r.getDecoderModel());
+                if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches");
+                if (l.size() == 0) {
+                    log.debug("Loco uses "+decoderFamily+" "+decoderModel+" decoder, but no such decoder defined");
+                    // fall back to use just the decoder name, not family
+                    l = DecoderIndexFile.instance().matchingDecoderList(null, null, null, null, null, r.getDecoderModel());
+                    if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches without family key");
+                }
+                DecoderFile d=null;
+                if (l.size() > 0) {
+                    d = l.get(0);
+                    if(d!=null && d.getSupportedProtocols().length>0){
+                        ArrayList<String> protocols = new ArrayList<String>(d.getSupportedProtocols().length);
+                        
+                        for(Integer i:d.getSupportedProtocols()){
+                            if(protocoltypes.contains(i))
+                                protocols.add(tm.getAddressTypeString(i));
+                        }
+                        String []strArray = new String[3];
+                        addrSel = new DccLocoAddressSelector(protocols.toArray(new String[protocols.size()]));
+                        DccLocoAddress tempAddr = new DccLocoAddress(
+                            Integer.parseInt(r.getDccAddress()), r.getProtocol());
+                        addrSel.setAddress(tempAddr);
+                        addrSel.setEnabled(false);
+                        addrSel.setLocked(false);
+                        addrSel.setEnabledProtocol(true);
+                    }
+                }
+            }
+        }
+        
         JPanel selPanel = addrSel.getCombinedJPanel();
         selPanel.setToolTipText(rb.getString("ToolTipDccAddress"));
         decoderModel.setToolTipText(rb.getString("ToolTipDecoderModel"));
@@ -290,8 +339,9 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         if (a==null) {
             if (!r.getDccAddress().equals("")) return true;
         } else {
+            
+            if(r.getProtocol()!=a.getProtocol()) return true;
             if (! r.getDccAddress().equals(""+a.getNumber()) ) return true;
-            if (!r.isLongAddress()==(a.isLongAddress()) ) return true;
         }
         return false;
     }
@@ -324,7 +374,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         DccLocoAddress a = addrSel.getAddress();
         if (a != null) {
             r.setDccAddress(""+a.getNumber());
-            r.setLongAddress(a.isLongAddress());
+            r.setProtocol(a.getProtocol());
         }
         r.setComment(comment.getText());
         
@@ -354,12 +404,15 @@ public class RosterEntryPane extends javax.swing.JPanel  {
     
     public void setDccAddress(String a) {
         DccLocoAddress addr = addrSel.getAddress();
-        boolean m = true;
-        if (addr!=null) m = addr.isLongAddress();
-        addrSel.setAddress(new DccLocoAddress(Integer.parseInt(a), m));
+        int protocol = addr.getProtocol();
+        addrSel.setAddress(new DccLocoAddress(Integer.parseInt(a), protocol));
     }
-    public void setDccAddressLong(boolean m) { 
+    public void setDccAddressLong(boolean m) {
         DccLocoAddress addr = addrSel.getAddress();
+        //If the protocol is already set to something other than DCC, then do not try to configure it as DCC long or short.
+        if(addr.getProtocol()>LocoAddress.DCC_LONG)
+            return;
+        
         int n = 0;
         if (addr!=null) n = addr.getNumber();
         addrSel.setAddress(new DccLocoAddress(n, m));

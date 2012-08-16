@@ -35,8 +35,9 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
     static final int MODELCOL = 7;
     static final int OWNERCOL = 8;
     static final int DATEUPDATECOL = 9;
+    public static final int PROTOCOL = 10;
 
-    static final int NUMCOL = 9+1;
+    static final int NUMCOL = 10+1;
     
     private String rosterGroup = null;
     
@@ -84,6 +85,7 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
         case ICONCOL:       return rb.getString("FieldIcon");
         case OWNERCOL:      return rb.getString("FieldOwner");
         case DATEUPDATECOL: return rb.getString("FieldDateUpdated");
+        case PROTOCOL:      return rb.getString("FieldProtocol");
         default:            return "<UNKNOWN>";
         }
     }
@@ -101,6 +103,7 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
     @Override
     public boolean isCellEditable(int row, int col) {
         if (col == ADDRESSCOL) return false;
+        if (col == PROTOCOL) return false;
         if (col == DECODERCOL) return false;
         if (col == ICONCOL) return false;
         if (col == DATEUPDATECOL) return false;
@@ -136,13 +139,14 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel imple
         case IDCOL:         return re.getId();
         case ADDRESSCOL:    return Integer.valueOf(re.getDccLocoAddress().getNumber());
         case DECODERCOL:    return re.getDecoderModel();
-        case MODELCOL: return re.getModel();
+        case MODELCOL:      return re.getModel();
         case ROADNAMECOL:   return re.getRoadName();
         case ROADNUMBERCOL: return re.getRoadNumber();
         case MFGCOL:        return re.getMfg();
         case ICONCOL:       return getIcon(re);
         case OWNERCOL:      return re.getOwner();
         case DATEUPDATECOL: return re.getDateUpdated();
+        case PROTOCOL:      return re.getProtocolAsString();
         default:            return "<UNKNOWN>";
         }
     }

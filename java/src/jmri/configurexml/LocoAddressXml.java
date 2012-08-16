@@ -24,11 +24,30 @@ public class LocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
         LocoAddress p = (LocoAddress)o;
 
         Element element = new Element("locoaddress");
-
-        // include contents
+        
+        // include contents, we shall also store the old format for backward compatability
         DccLocoAddressXml adapter = new DccLocoAddressXml();
         
         element.addContent(adapter.store(p));
+        
+        if (p!=null) {
+            element.addContent(new Element("number").addContent(""+p.getNumber()));
+            String protocol = null;
+            switch(p.getProtocol()){
+                case(LocoAddress.DCC_SHORT) : protocol = "dcc_short"; break;
+                case(LocoAddress.DCC_LONG) : protocol = "dcc_long"; break;
+                case(LocoAddress.DCC) : protocol = "dcc"; break;
+                case(LocoAddress.SELECTRIX) : protocol = "selectrix"; break;
+                case(LocoAddress.MOTOROLA) : protocol = "motorola"; break;
+                case(LocoAddress.MFX) : protocol = "mfx"; break;
+                case(LocoAddress.M4) : protocol = "m4"; break;
+                default : protocol = "dcc";
+            }
+            element.addContent(new Element("protocol").addContent(protocol));
+        } else {
+            element.addContent(new Element("number").addContent(""));
+            element.addContent(new Element("protocol").addContent(""));
+        }
 
         return element;
     }
@@ -39,8 +58,31 @@ public class LocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
     }
     
     public LocoAddress getAddress(Element element) {
-        DccLocoAddressXml adapter = new DccLocoAddressXml();
-        return adapter.getAddress(element.getChild("dcclocoaddress"));
+        if(element.getChild("number")==null){
+            DccLocoAddressXml adapter = new DccLocoAddressXml();
+            return adapter.getAddress(element.getChild("dcclocoaddress"));
+        }
+        int addr = Integer.parseInt(element.getChild("number").getText());
+        String protocol = element.getChild("protocol").getText();
+        int prot = 0x00;
+        if(protocol.equals("dcc_short")){
+            prot = LocoAddress.DCC_SHORT;
+        } else if (protocol.equals("dcc_long")){
+            prot = LocoAddress.DCC_LONG;
+        } else if (protocol.equals("dcc")){
+            prot = LocoAddress.DCC;
+        } else if (protocol.equals("selectrix")){
+            prot = LocoAddress.SELECTRIX;
+        } else if (protocol.equals("motorola")){
+            prot = LocoAddress.MOTOROLA;
+        } else if (protocol.equals("mfx")){
+            prot = LocoAddress.MFX;
+        } else if (protocol.equals("m4")){
+            prot = LocoAddress.M4;
+        } else {
+            prot = LocoAddress.DCC;
+        }
+        return new jmri.DccLocoAddress(addr, prot);
     }
 
     public void load(Element element, Object o) {

@@ -149,6 +149,20 @@
           <xs:attribute name="longaddress" type="yesNoType" use="required"/>
         </xs:complexType>
       </xs:element>
+      <xs:element name="number" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="protocol" minOccurs="0" maxOccurs="1">
+          <xs:simpleType>
+            <xs:restriction base="xs:token" >
+              <xs:enumeration value="dcc"/>
+              <xs:enumeration value="dcc_long"/>
+              <xs:enumeration value="dcc_short"/>
+              <xs:enumeration value="selectrix"/>
+              <xs:enumeration value="motorola"/>
+              <xs:enumeration value="mfx"/>
+              <xs:enumeration value="m4"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
     </xs:sequence></xs:complexType>
     
   <xs:complexType name="AttributePairsType"><xs:sequence>

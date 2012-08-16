@@ -152,6 +152,23 @@
                 <xs:attribute name="comment" type="xs:string" />
               </xs:complexType>
             </xs:element>
+            <xs:element name="protocols" minOccurs="0" maxOccurs="1" >
+              <xs:complexType>
+              <xs:sequence>
+                <xs:element name="protocol" minOccurs="1" maxOccurs="unbounded">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:token" >
+                      <xs:enumeration value="DCC"/>
+                      <xs:enumeration value="Selectrix"/>
+                      <xs:enumeration value="Motorola"/>
+                      <xs:enumeration value="MFX"/>
+                      <xs:enumeration value="M4"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
           </xs:sequence>
           <xs:attribute name="model" type="xs:string" use="required"/>
           <xs:attribute name="options" type="xs:string" />

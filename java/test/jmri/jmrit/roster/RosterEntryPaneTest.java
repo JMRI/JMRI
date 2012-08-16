@@ -28,8 +28,13 @@ public class RosterEntryPaneTest extends TestCase {
                         .setAttribute("family","91")
                         .setAttribute("model","33")
                         )
-            ; // end create element
-
+            .addContent(new org.jdom.Element("locoaddress")
+                        .addContent(new org.jdom.Element("number").addContent("1234"))
+                        //As there is no throttle manager available all protocols default to dcc short
+                        .addContent(new org.jdom.Element("protocol").addContent("dcc_short"))
+                        
+                        );
+                        
         rOld = new RosterEntry(eOld){
                       protected void warnShortLong(String s){}
         };
@@ -44,12 +49,7 @@ public class RosterEntryPaneTest extends TestCase {
                         .setAttribute("family","91")
                         .setAttribute("model","33")
                         )
-            .addContent(new org.jdom.Element("locoaddress")
-                .addContent(new org.jdom.Element("dcclocoaddress")
-                        .setAttribute("number","12")
-                        .setAttribute("longaddress","yes")
-                        )
-                )
+
             ; // end create element
 
         rNew = new RosterEntry(eNew){
@@ -110,7 +110,6 @@ public class RosterEntryPaneTest extends TestCase {
     public void testGuiChanged3() {
 
         RosterEntryPane p = new RosterEntryPane(rNew);
-        
         // copy to a new entry
                 
         // check for unchanged
@@ -124,7 +123,6 @@ public class RosterEntryPaneTest extends TestCase {
 
     public void testGuiChanged4() {
         RosterEntryPane p = new RosterEntryPane(rNew);
-        
         // copy to a new entry
                 
         // check for unchanged
@@ -138,7 +136,6 @@ public class RosterEntryPaneTest extends TestCase {
 
     public void testGuiChanged5() {
         RosterEntryPane p = new RosterEntryPane(rNew);
-        
         // copy to a new entry
                 
         // check for unchanged

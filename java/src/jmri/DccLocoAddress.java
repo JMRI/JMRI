@@ -53,6 +53,8 @@ public class DccLocoAddress implements LocoAddress {
             case LocoAddress.DCC_LONG : return 20000+number;
             case LocoAddress.SELECTRIX: return 30000+number;
             case LocoAddress.MOTOROLA: return 40000+number;
+            case LocoAddress.MFX: return 50000+number;
+            case LocoAddress.M4: return 60000+number;
             default: return number;
         }
     }
@@ -63,15 +65,16 @@ public class DccLocoAddress implements LocoAddress {
             case LocoAddress.DCC_LONG : return ""+number+"(L)";
             case LocoAddress.SELECTRIX: return ""+number+"(SX)";
             case LocoAddress.MOTOROLA: return ""+number+"(MM)";
+            case LocoAddress.M4: return ""+number+"(M4)";
+            case LocoAddress.MFX: return ""+number+"(MFX)";
             default: return ""+number+"(D)";
         }
-        /*if (isLong) return ""+number+"(L)";
-        else return ""+number+"(S)";*/
     }
     
 	public boolean isLongAddress() { 
-        if(protocol==LocoAddress.DCC_LONG) return true;
-        return false;
+        if(protocol==DCC_SHORT)
+            return false;
+        return true;
     }
     
     public int getProtocol() {
