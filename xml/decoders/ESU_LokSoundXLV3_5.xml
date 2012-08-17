@@ -32,6 +32,10 @@
         <output name="7" label="AUX 5" maxcurrent="600mA"/>
         <output name="8" label="AUX 6" maxcurrent="600mA"/>
         <size length="51" width="40" height="14" units="mm"/>
+        <protocols>
+            <protocol>DCC</protocol>
+            <protocol>Motorola</protocol>
+        </protocols>
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Light</functionlabel>

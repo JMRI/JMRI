@@ -37,6 +37,10 @@
         <output name="3" label="AUX 1" maxcurrent="250mA"/>
         <output name="4" label="AUX 2" maxcurrent="250mA"/>
         <size length="30" width="15.5" height="6.5" units="mm"/>
+        <protocols>
+            <protocol>DCC</protocol>
+            <protocol>Motorola</protocol>
+        </protocols>
       </model>
       <model model="LokSound Version 3.5 (21 pin)" numOuts="6" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
         <output name="1" label="Front lights" maxcurrent="250mA"/>
@@ -45,6 +49,10 @@
         <output name="4" label="AUX 2" maxcurrent="250mA"/>
         <output name="5" label="AUX 3" maxcurrent="250mA"/>
         <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <protocols>
+            <protocol>DCC</protocol>
+            <protocol>Motorola</protocol>
+        </protocols>
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Light</functionlabel>

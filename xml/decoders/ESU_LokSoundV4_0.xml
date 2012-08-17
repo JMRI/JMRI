@@ -63,6 +63,11 @@
         <output name="39" label="SS23"/>
         <output name="40" label="SS24"/>
         <size length="30.5" width="15.5" height="5.5" units="mm"/>
+        <protocols>
+            <protocol>DCC</protocol>
+            <protocol>Selectrix</protocol>
+            <protocol>Motorola</protocol>
+        </protocols>
       </model>        
       <model model="LokSound V4.0 21MTC" numOuts="40" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="54499">
         <output name="1" label="Headlight" maxcurrent="250mA"/>
@@ -106,6 +111,11 @@
         <output name="39" label="SS23"/>
         <output name="40" label="SS24"/>
         <size length="30.5" width="15.5" height="5.5" units="mm"/>
+        <protocols>
+            <protocol>DCC</protocol>
+            <protocol>Selectrix</protocol>
+            <protocol>Motorola</protocol>
+        </protocols>
       </model>        
       <model model="LokSound Micro V4.0 NEM651" numOuts="40" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="54800">
         <output name="1" label="Headlight" maxcurrent="150mA"/>
@@ -149,6 +159,11 @@
         <output name="39" label="SS23"/>
         <output name="40" label="SS24"/>
         <size length="25.3" width="10.6" height="3.8" units="mm"/>
+        <protocols>
+            <protocol>DCC</protocol>
+            <protocol>Selectrix</protocol>
+            <protocol>Motorola</protocol>
+        </protocols>
       </model>        
       <model model="LokSound Micro V4.0 NEM652" numOuts="40" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="54899">
         <output name="1" label="Headlight" maxcurrent="150mA"/>
@@ -192,6 +207,11 @@
         <output name="39" label="SS23"/>
         <output name="40" label="SS24"/>
         <size length="25.3" width="10.6" height="3.8" units="mm"/>
+        <protocols>
+            <protocol>DCC</protocol>
+            <protocol>Selectrix</protocol>
+            <protocol>Motorola</protocol>
+        </protocols>
       </model>        
       <model model="LokSound Micro V4.0 Next18" numOuts="40" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="54898">
         <output name="1" label="Headlight" maxcurrent="150mA"/>
@@ -235,6 +255,11 @@
         <output name="39" label="SS23"/>
         <output name="40" label="SS24"/>
         <size length="25.3" width="10.6" height="3.8" units="mm"/>
+        <protocols>
+            <protocol>DCC</protocol>
+            <protocol>Selectrix</protocol>
+            <protocol>Motorola</protocol>
+        </protocols>
       </model>        
       <functionlabels>
         <functionlabel num="0" lockable="true">Light</functionlabel>
