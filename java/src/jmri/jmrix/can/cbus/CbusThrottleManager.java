@@ -135,7 +135,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                     throttleRequestTimer.stop();
                     throttle = new CbusThrottle((CanSystemConnectionMemo) adapterMemo, rcvdDccAddr, handle);
                     // Initialise throttle from PLOC data to allow taking over moving trains
-                    throttle.CbusThrottleInit(m.getElement(4), m.getElement(5), m.getElement(6), m.getElement(7));
+                    throttle.throttleInit(m.getElement(4), m.getElement(5), m.getElement(6), m.getElement(7));
                     notifyThrottleKnown(throttle, rcvdDccAddr);
                     softThrottles.put(handle, throttle);
                     _handleExpected = false;
