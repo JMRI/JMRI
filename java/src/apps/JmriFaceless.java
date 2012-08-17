@@ -42,7 +42,7 @@ public class JmriFaceless extends apps.AppsBase {
 
 	// Main entry point
     public static void main(String args[]) {
-        JmriFaceless app = new JmriFaceless(args);
+        new JmriFaceless(args);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriFaceless.class.getName());

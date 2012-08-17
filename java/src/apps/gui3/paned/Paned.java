@@ -46,7 +46,7 @@ public class Paned extends apps.gui3.Apps3 {
     
     // Main entry point
     public static void main(String args[]) {
-        Paned app = new Paned(args);
+        new Paned(args);
     }
     
     protected ResourceBundle getActionModelResourceBundle(){
