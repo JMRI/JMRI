@@ -40,7 +40,7 @@ public class WebServerAction extends JmriAbstractAction {
         }
     }
 
-    class ServerThread extends Thread {
+    static class ServerThread extends Thread {
 
         @Override
         public void run() {

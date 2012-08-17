@@ -1021,7 +1021,7 @@ public class CircuitBuilder  {
     /*
      * gimmick to get JDialog to re-layout contents and repaint 
      */
-    class convertFrame extends JmriJFrame {
+    static class convertFrame extends JmriJFrame {
     	JDialog _dialog;
     	convertFrame (JDialog dialog) {
     		super(false, false);
