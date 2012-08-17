@@ -33,7 +33,7 @@ import jmri.ShutDownTask;
  */
 public class DefaultShutDownManager implements ShutDownManager {
 
-    static protected boolean shuttingDown = false;
+    static boolean shuttingDown = false;
 
     public DefaultShutDownManager() {}
     
