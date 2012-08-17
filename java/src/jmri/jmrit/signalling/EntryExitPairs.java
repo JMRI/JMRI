@@ -717,8 +717,8 @@ public class EntryExitPairs implements jmri.Manager{
             int entryExitType = SETUPTURNOUTSONLY;//SETUPSIGNALMASTLOGIC;
             boolean enabled = true;
             boolean activeEntryExit = false;
-            ArrayList<LayoutBlock> routeDetails = new ArrayList<LayoutBlock>();
-            LayoutBlock destination;
+            transient ArrayList<LayoutBlock> routeDetails = new ArrayList<LayoutBlock>();
+            transient LayoutBlock destination;
             boolean disposed = false;
             String uniqueId = null;
             
