@@ -26,8 +26,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	// Train frame attributes
 	private String _trainAction = TrainsTableFrame.MOVE;	// Trains frame table button action
 	private boolean _buildMessages = true;	// when true, show build messages
-	private boolean _buildReport = false;		// when true, print/preview build reports
+	private boolean _buildReport = false;	// when true, print/preview build reports
 	private boolean _printPreview = false;	// when true, preview train manifest
+	private boolean _openFile = false;		// when true, open CSV file manifest
 	
 	// Train frame table column widths (12), starts with Time column and ends with Edit
 	private int[] _tableColumnWidths = {50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 90, 70};
@@ -42,6 +43,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	// property changes
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "TrainsListLength";
 	public static final String PRINTPREVIEW_CHANGED_PROPERTY = "TrainsPrintPreview";
+	public static final String OPEN_FILE_CHANGED_PROPERTY = "TrainsOpenFile";
 	public static final String TRAIN_ACTION_CHANGED_PROPERTY = "TrainsAction";
 	public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId";
 	
@@ -89,6 +91,20 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	boolean old = _buildReport;
     	_buildReport = enable;
     	firePropertyChange("BuildReportEnabled", enable, old);
+    }
+    
+    /**
+     * 
+     * @return true if print preview is enabled
+     */
+    public boolean isOpenFileEnabled(){
+    	return _openFile;
+    }
+    
+    public void setOpenFileEnabled(boolean enable){
+    	boolean old = _openFile;
+    	_openFile = enable;
+    	firePropertyChange(OPEN_FILE_CHANGED_PROPERTY, old?"true":"false", enable?"true":"false");
     }
     
     /**
@@ -580,6 +596,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     			_buildReport = a.getValue().equals("true");
     		if ((a = e.getAttribute("printPreview")) != null)
     			_printPreview = a.getValue().equals("true");
+    		if ((a = e.getAttribute("openFile")) != null)
+    			_openFile = a.getValue().equals("true");
        		if ((a = e.getAttribute("trainAction")) != null)
     			_trainAction = a.getValue();
        		
@@ -647,6 +665,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         e.setAttribute("buildMessages", isBuildMessagesEnabled()?"true":"false");
         e.setAttribute("buildReport", isBuildReportEnabled()?"true":"false");
         e.setAttribute("printPreview", isPrintPreviewEnabled()?"true":"false");
+        e.setAttribute("openFile", isOpenFileEnabled()?"true":"false");
         e.setAttribute("trainAction", getTrainsFrameTrainAction());
         values.addContent(e);
         // now save train schedule options

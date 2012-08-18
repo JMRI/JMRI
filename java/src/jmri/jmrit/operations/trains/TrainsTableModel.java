@@ -276,7 +276,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         case STATUSCOLUMN: return train.getStatus();
         case BUILDCOLUMN: {
         	if (train.isBuilt())
-        		if (manager.isPrintPreviewEnabled())
+        		if (manager.isOpenFileEnabled())
+        			return rb.getString("OpenFile");
+        		else if (manager.isPrintPreviewEnabled())
         			return rb.getString("Preview");
         		else if (train.isPrinted())
         			return rb.getString("Printed");
@@ -326,15 +328,18 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
     
     private synchronized void buildTrain (int row){
-     	Train train = manager.getTrainById(sysList.get(row));
-     	if (!train.isBuilt()){
-     		train.build();
-     	// print
-     	} else {
-     		if (manager.isBuildReportEnabled())
-     			train.printBuildReport();
-     		train.printManifestIfBuilt();
-     	}
+    	Train train = manager.getTrainById(sysList.get(row));
+    	if (!train.isBuilt()){
+    		train.build();
+    	// print or open file
+    	} else {
+    		if (manager.isBuildReportEnabled())
+    			train.printBuildReport();
+    		if (manager.isOpenFileEnabled())
+    			train.openFile();
+    		else
+    			train.printManifestIfBuilt();
+    	}
     }
     
     // one of four buttons: Report, Move, Conductor or Terminate
@@ -392,6 +397,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
        	}
     	if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||
     			e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY) ||
+    			e.getPropertyName().equals(TrainManager.OPEN_FILE_CHANGED_PROPERTY) ||
     			e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY) ||
     			e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY) ||
     			(e.getPropertyName().equals(Train.BUILD_CHANGED_PROPERTY) && !isShowAll())){

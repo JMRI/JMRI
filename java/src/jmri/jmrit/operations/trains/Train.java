@@ -2096,6 +2096,21 @@ public class Train implements java.beans.PropertyChangeListener {
 		return true;
 	}
 	
+	public boolean openFile(){
+		if (isModified()){
+			new TrainManifest(this);
+			if (Setup.isGenerateCsvManifestEnabled())
+				new TrainCsvManifest(this);
+		}		
+		File file = TrainManagerXml.instance().getTrainCsvManifestFile(getName());
+		if (!file.exists()){
+			log.warn("CSV manifest file missing for train "+getName());
+			return false;
+		}
+		TrainUtilities.openDesktop(file);
+		return true;
+	}
+	
 	private void setPrinted (boolean printed){
 		boolean old = _printed;
 		_printed = printed;

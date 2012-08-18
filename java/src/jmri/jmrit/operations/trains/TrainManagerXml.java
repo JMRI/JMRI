@@ -190,6 +190,12 @@ public class TrainManagerXml extends OperationsXml {
     	return XmlFile.prefsDir()+OperationsXml.getOperationsDirectoryName()+File.separator+"manifests"+File.separator+ManifestFileName+name+fileType;
     }
     
+    public File getTrainCsvManifestFile(String name) {
+    	File file = new File(defaultCsvManifestFilename(name));
+    	return file;
+    }
+     
+    
     public File createTrainCsvManifestFile(String name) {
     	return createFile(defaultCsvManifestFilename(name), false);	// don't backup
     }

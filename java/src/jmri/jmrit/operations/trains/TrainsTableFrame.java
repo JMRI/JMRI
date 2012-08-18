@@ -34,6 +34,7 @@ import jmri.jmrit.operations.setup.AutoSave;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OptionAction;
 import jmri.jmrit.operations.setup.PrintOptionAction;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.com.sun.TableSorter;
 
 /**
@@ -85,6 +86,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	JButton addButton = new JButton(rb.getString("Add"));
 	JButton buildButton = new JButton(rb.getString("Build"));
 	JButton printButton = new JButton(rb.getString("Print"));
+	JButton openFileButton = new JButton(rb.getString("OpenFile"));
 	JButton printSwitchButton = new JButton(rb.getString("SwitchLists"));
 	JButton terminateButton = new JButton(rb.getString("Terminate"));
 	JButton saveButton = new JButton(rb.getString("SaveBuilds"));
@@ -93,6 +95,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	JCheckBox buildMsgBox = new JCheckBox(rb.getString("BuildMessages"));
 	JCheckBox buildReportBox = new JCheckBox(rb.getString("BuildReport"));
 	JCheckBox printPreviewBox = new JCheckBox(rb.getString("Preview"));
+	JCheckBox openFileBox = new JCheckBox(rb.getString("OpenFile"));
 	JCheckBox showAllBox = new JCheckBox(rb.getString("ShowAllTrains"));
 
     public TrainsTableFrame() {
@@ -132,6 +135,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
        	messages.add(buildMsgBox);
        	messages.add(buildReportBox);
        	messages.add(printPreviewBox);
+       	messages.add(openFileBox);
     	
     	JPanel action = new JPanel();
     	action.setBorder(BorderFactory.createTitledBorder(rb.getString("Action")));
@@ -148,11 +152,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     	addButton.setToolTipText(rb.getString("AddTrain"));
 		buildButton.setToolTipText(rb.getString("BuildSelectedTip"));
 		printSwitchButton.setToolTipText(rb.getString("PreviewPrintSwitchLists"));
+		
 		terminateButton.setToolTipText(rb.getString("TerminateSelectedTip"));
 		saveButton.setToolTipText(rb.getString("SaveBuildsTip"));
-		
+		openFileButton.setToolTipText(rb.getString("OpenFileButtonTip"));
 		buildMsgBox.setToolTipText(rb.getString("BuildMessagesTip"));
 		printPreviewBox.setToolTipText(rb.getString("PreviewTip"));
+		openFileBox.setToolTipText(rb.getString("OpenFileTip"));
 		showAllBox.setToolTipText(rb.getString("ShowAllTrainsTip"));
 		
 		moveRB.setToolTipText(rb.getString("MoveTip"));
@@ -165,6 +171,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		cp2.add(addButton);
 		cp2.add(buildButton);
 		cp2.add(printButton);
+		cp2.add(openFileButton);
 		cp2.add(printSwitchButton);
 		cp2.add(terminateButton);
 		cp2.add(saveButton);
@@ -188,6 +195,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		addButtonAction(addButton);
 		addButtonAction(buildButton);
 		addButtonAction(printButton);
+		addButtonAction(openFileButton);
 		addButtonAction(printSwitchButton);
 		addButtonAction(terminateButton);
 		addButtonAction(saveButton);
@@ -214,11 +222,18 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		buildMsgBox.setSelected(trainManager.isBuildMessagesEnabled());
     	buildReportBox.setSelected(trainManager.isBuildReportEnabled());
     	printPreviewBox.setSelected(trainManager.isPrintPreviewEnabled());
+    	openFileBox.setSelected(trainManager.isOpenFileEnabled());
     	showAllBox.setSelected(trainsModel.isShowAll());
+    	
+    	// show open files only if create csv is enabled
+    	openFileBox.setVisible(Setup.isGenerateCsvManifestEnabled());
+    	openFileButton.setVisible(Setup.isGenerateCsvManifestEnabled());
+    	
     	addCheckBoxAction(buildMsgBox);
 		addCheckBoxAction(buildReportBox);
 		addCheckBoxAction(printPreviewBox);
 		addCheckBoxAction(showAllBox);
+		addCheckBoxAction(openFileBox);
 		
 		// Set the button text to Print or Preview
 		setPrintButtonText();
@@ -306,6 +321,22 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 							MessageFormat.format(rb.getString("NeedToBuildBeforePrinting"),new Object[]{train.getName(), (trainManager.isPrintPreviewEnabled()?rb.getString("preview"):rb.getString("print"))}),
 							MessageFormat.format(rb.getString("CanNotPrintManifest"),new Object[]{trainManager.isPrintPreviewEnabled()?rb.getString("preview"):rb.getString("print")}),
 							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+		if (ae.getSource() == openFileButton){
+			List<String> trains = getSortByList();
+			for (int i=0; i<trains.size(); i++){
+				Train train = trainManager.getTrainById(trains.get(i));
+				if (train.isBuildEnabled()){
+					if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()){
+						JOptionPane.showMessageDialog(null, 
+								MessageFormat.format(rb.getString("NeedToBuildBeforeOpenFile"),new Object[]{train.getName(), (trainManager.isPrintPreviewEnabled()?rb.getString("preview"):rb.getString("print"))}),
+								MessageFormat.format(rb.getString("CanNotPrintManifest"),new Object[]{trainManager.isPrintPreviewEnabled()?rb.getString("preview"):rb.getString("print")}),
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						train.openFile();
+					}
 				}
 			}
 		}
@@ -420,6 +451,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		if (ae.getSource() == printPreviewBox){
 			trainManager.setPrintPreviewEnabled(printPreviewBox.isSelected());
 			setPrintButtonText();	// set the button text for Print or Preview
+		}
+		if (ae.getSource() == openFileBox){
+			trainManager.setOpenFileEnabled(openFileBox.isSelected());
 		}
 		if (ae.getSource() == showAllBox){
 			trainsModel.setShowAll(showAllBox.isSelected());			
