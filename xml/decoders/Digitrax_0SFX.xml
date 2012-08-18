@@ -112,25 +112,6 @@
 	<size length="1.05" width="0.67" height="0.25" units="inches" />
       </model>
 
-      <model model="Con-cor Zephyr - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1645" comment="SDH164D">
-	<output name="1" label="F0F Pad" connection="solder" /> 
-	<output name="2" label="F0R Pad" connection="solder" /> 
-	<output name="3" label="F1 Pad" connection="solder" /> 
-	<output name="4" label="F2 Pad" connection="solder" /> 
-	<output name="5" label="F3 Pad" connection="solder" /> 
-	<output name="6" label="F4 Pad" connection="solder" /> 
-	<size length="1.05" width="0.67" height="0.25" units="inches" />
-      </model>
-      
-      <model model="Con-cor Zephyr - N" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1446" comment="SDN144PS">
-	<output name="1" label="F0F Pad" connection="plug" /> 
-	<output name="2" label="F0R Pad" connection="plug" /> 
-	<output name="3" label="F1 Pad" connection="plug" /> 
-	<output name="4" label="F2 Pad" connection="plug" /> 			
-	<size length="1.05" width="0.67" height="0.25" units="inches" />
-      </model>
-      
-      
       <model model="EVO GE Diesel" numOuts="12" numFns="14" lowVersionID="16" highVersionID="49" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" productID="1041" comment="SDH104T1">
         <output name="1" label="F0F Pad" connection="solder"/>
         <output name="2" label="F0R Pad" connection="solder"/>
@@ -423,22 +404,6 @@
       
 <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>      
       
-<!-- The following code sets the Con-con Zephyr N scale decoder to defaults as programmed by Con-cor, not Digitrax  -->
-      
-  <variable label="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="0" include="1446">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
-  </variable>
-
-  <variable label="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3" default="1" include="1446">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
-  </variable>
-      
       <variable label="Forward light F0F effect generated" CV="49" mask="XXXXVVVV" item="Function F0F effect generated">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Forward light F0F effect generated</label>
@@ -460,14 +425,6 @@
         <label>Function 1 effect generated</label>
       </variable>
       <variable label="Function 1 behavior" CV="51" mask="VVVVXXXX" minOut="3">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
-        <label>Function 1 behavior</label>
-      </variable>
-      <variable label="Function 1 effect generated" CV="51" mask="XXXXVVVV" default="2" minOut="3" include="1446">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
-        <label>Function 1 effect generated</label>
-      </variable>
-      <variable label="Function 1 behavior" CV="51" mask="VVVVXXXX"  default="2" minOut="3" include="1446">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Function 1 behavior</label>
       </variable>
@@ -547,16 +504,7 @@
    	   </enumVal>
            <label>Steam/Diesel Option</label>           
    	</variable>
-   	
-   	<variable label="Locomotive Sound Option" CV="60" default="0" item="Sound Option 1" include="1446,1645">
-              <enumVal>
-   		<enumChoice choice="Diesel (CV60=0)"/>
-   		<enumChoice choice="Diesel (CV60=1)"/>
-   	   </enumVal>
-           <label>Steam/Diesel Option</label>           
-   	</variable>
-   	
-   	
+   	   	
    	<variable label="Locomotive Sound Option" CV="60" item="Sound Option 1" include="1442">
               <enumVal>
    		<enumChoice choice="E8"/>
@@ -688,18 +636,6 @@
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Function 3 behavior</label>
       </variable>
-
-<!-- The following code sets the Con-con Zephyr HO scale decoder to defaults as programmed by Con-cor, not Digitrax  -->
-
-      <variable label="Function 3 effect generated" CV="113" mask="XXXXVVVV" default="2" minOut="5" include="1645">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
-        <label>Function 3 effect generated</label>
-      </variable>
-      <variable label="Function 3 behavior" CV="113" mask="VVVVXXXX" default="2" minOut="5" include="1645">
-        <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
-        <label>Function 3 behavior</label>
-      </variable>
-      
       
       <variable label="Function 4 effect generated" CV="114" mask="XXXXVVVV" minOut="6">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
@@ -730,11 +666,11 @@
         <decVal/>
         <label>Notch Rate</label>
       </variable>
-      <variable label="Steam Chuff/CAM Config" CV="133" tooltip="CV 133" item="Sound Setting 14" default="63"  include="1441,1641">
+      <variable label="Steam Chuff/CAM Config" CV="133" tooltip="CV 133" item="Sound Setting 15" default="63"  include="1441,1641">
 	<decVal max="128"/>
         <label>Steam Chuff/CAM Config</label>			
       </variable>
-      <variable label="Steam Gear Ratio Trim" CV="134" tooltip="CV 134" item="Sound Setting 15" default="32"  include="1441,1641">
+      <variable label="Steam Gear Ratio Trim" CV="134" tooltip="CV 134" item="Sound Setting 16" default="32"  include="1441,1641">
 	<decVal max="128"/>
         <label>Steam Gear Ratio Trim</label>			
       </variable>
@@ -758,24 +694,28 @@
         <decVal max="64"/>
         <label>Air Features Volume</label>
       </variable>
-      <variable label="Misc Volumes (reserved)" CV="145" tooltip="CV 145" item="Sound Setting 8" default="15">
+      <variable label="Dynamic Brake Volume" CV="144" tooltip="CV 144" item="Sound Setting 8" default="55">
+        <decVal max="64"/>
+        <label>Dynamic Brake Volume</label>
+      </variable>
+      <variable label="Misc Volumes (reserved)" CV="145" tooltip="CV 145" item="Sound Setting 9" default="15">
         <decVal max="64"/>
         <label>Misc Volumes (reserved)</label>
       </variable>
-      <variable label="Bell Ring Rate" CV="146" tooltip="CV 146" item="Sound Setting 9" comment="24msec counts" default="9">
+      <variable label="Bell Ring Rate" CV="146" tooltip="CV 146" item="Sound Setting 10" comment="24msec counts" default="9">
         <decVal max="100"/>
         <label>Bell Ring Rate</label>
         <comment>24msec counts</comment>
       </variable>
-      <variable label="Air Drier Rate" CV="147"  tooltip="CV 147" item="Sound Setting 10" default="50">
+      <variable label="Air Drier Rate" CV="147"  tooltip="CV 147" item="Sound Setting 11" default="50">
         <decVal max="64"/>
         <label>Air Drier Rate</label>
       </variable>
-      <variable label="Compressor Run/Popoff Rate" CV="148" tooltip="CV 148" item="Sound Setting 11" default="30">
+      <variable label="Compressor Run/Popoff Rate" CV="148" tooltip="CV 148" item="Sound Setting 12" default="30">
         <decVal/>
         <label>Compressor Run/Popoff Rate</label>
       </variable>
-      <variable label="Compressor On Time" CV="149" tooltip="CV 149" item="Sound Setting 12"  default="20">
+      <variable label="Compressor On Time" CV="149" tooltip="CV 149" item="Sound Setting 13"  default="20">
         <decVal/>
         <label>Compressor On Time</label>
       </variable>
@@ -828,7 +768,7 @@
 
 
 
-      <variable label="Horn Selector" CV="150" item="Sound Option 2" include="1041,1042,1043,1044,1441,1442,1446,1645,1641,1642,1643,1644">
+      <variable label="Horn Selector" CV="150" item="Sound Option 2" include="1041,1042,1043,1044,1441,1442,1641,1642,1643,1644">
         <enumVal>
           <enumChoice choice="Standard Horn">
             <choice>Standard Horn</choice>
@@ -866,7 +806,7 @@
 	<decVal/>
         <label>Sound Project ID</label>			
       </variable>
-      <variable label="Sound Project ID" CV="153" default="5" include="1441,1446,1645,1641">
+      <variable label="Sound Project ID" CV="153" default="5" include="1441,1641">
 	<decVal/>
         <label>Sound Project ID</label>			
       </variable>
@@ -886,7 +826,7 @@
 	<decVal/>
         <label>Sound Project ID</label>			
       </variable>      
-      <variable label="Steam Blowdown/Safety Volume" CV="154" tooltip="CV 154" item="Sound Setting 13" default="60" include="1441,1641">
+      <variable label="Steam Blowdown/Safety Volume" CV="154" tooltip="CV 154" item="Sound Setting 14" default="60" include="1441,1641">
 	<decVal max="64"/>
         <label>Steam Blowdown/Safety Volume</label>			
       </variable>
@@ -904,11 +844,6 @@
         </enumVal>
         <label>Notching Mode</label>
       </variable>
-      
-      <variable label="Horn Delay Rate" CV="156" item="Sound Setting 16" default="10" include="1446,1645">
-	<decVal/>
-        <label>Horn Delay Rate</label>			
-      </variable>      
       
     </variables>
     <resets>
