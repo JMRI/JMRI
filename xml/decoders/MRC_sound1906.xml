@@ -14,7 +14,9 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20110128"/>
-<!-- made from the MRC_1634 file by Bill Chown -->
+  <version author="John Crellin  " version="2" lastUpdated="20120801"/>
+<!-- version 1 made from the MRC_1634 file by Bill Chown -->
+<!-- version 2 Modified to add BEMF and fix 2 sound variables -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2">
       <model model="Genset Diesel Sound 1906" numOuts="7" numFns="30" maxTotalCurrent="1.5A" >
@@ -382,15 +384,20 @@
         <decVal max="255"/>
         <label>User ID #2</label>
       </variable>
-      <variable label="Coupling Fire Volume" CV="113" item="Sound Setting 12" default="12" comment="Range 0-15">
-        <decVal max="3"/>
-        <label>Coupling Fire Volume</label>
-        <comment>Range 0-15</comment>
+      <variable label="Back EMF load control proportional gain Kp" CV="113" item="Back EMF Load Control proportional gain Kp" default="20" comment="Range 0-31">
+        <decVal max="31"/>
+        <label>Back EMF Load Control proportional gain Kp</label>
+        <comment>Range 0-31</comment>
       </variable>
-      <variable label="Brake Release Volume" CV="114" item="Sound Setting 14" default="12" comment="Range 0-15">
-        <decVal max="15"/>
-        <label>Brake Release Volume</label>
-        <comment>Range 0-15</comment>
+      <variable label="Back EMF load control integral gain Ki" CV="114" item="Back EMF Load Control integral gain Ki" default="10" comment="Range 0-31">
+        <decVal max="31"/>
+        <label>Back EMF Load Control integral gain Ki</label>
+        <comment>Range 0-31</comment>
+      </variable>
+      <variable label="Back EMF load control intensity (0=off)" CV="124" item="Back EMF load control intensity (0=off)" default="160" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>Back EMF load control intensity (0=off)</label>
+        <comment>Range 0-255</comment>
       </variable>
       <variable label="Auto Brake Squeal" item="Sound Option 5" CV="115" default="1">
         <enumVal>
@@ -433,4 +440,12 @@
       <factReset label="Reset All CVs" CV="125" default="1"/>
     </resets>
   </decoder>
+  <pane name="MRC">
+    <column>
+      <display item="Back EMF load control proportional gain Kp"/>
+      <display item="Back EMF load control integral gain Ki"/>
+      <display item="Back EMF load control intensity (0=off)"/>
+    </column>
+    <name>MRC</name>
+  </pane>
 </decoder-config>
