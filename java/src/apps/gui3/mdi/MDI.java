@@ -46,7 +46,7 @@ public class MDI extends apps.gui3.Apps3 {
     
     // Main entry point
     public static void main(String args[]) {
-        MDI app = new MDI(args);
+        new MDI(args);
     }
     
     protected ResourceBundle getActionModelResourceBundle(){

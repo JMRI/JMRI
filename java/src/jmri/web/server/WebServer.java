@@ -170,7 +170,7 @@ public final class WebServer implements LifeCycle.Listener {
         log.debug("Web Server stopped");
     }
 
-    private class ServerThread extends Thread {
+    static private class ServerThread extends Thread {
 
         private Server server;
 

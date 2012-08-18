@@ -179,16 +179,14 @@ public class ControlPanelPropertyEditor extends JDialog
 	/**
 	 * Save the user-modified properties back to the FunctionButton.
 	 */
-	private void saveProperties()
-	{
-		if (isDataValid())
-		{
-			control.setSpeedController(_displaySlider);
-			control.setTrackSlider(trackBox.isSelected());
-			control.setSwitchSliderFunction(functionSwitchSlider.getText());
-			finishEdit();
-		}
-	}
+    private void saveProperties() {
+        if (isDataValid()) {
+            control.setTrackSlider(trackBox.isSelected());
+            control.setSwitchSliderFunction(functionSwitchSlider.getText());
+            control.setSpeedController(_displaySlider);
+            finishEdit();
+        }
+    }
 
 	/**
 	 * Finish the editing process. Hide the dialog.

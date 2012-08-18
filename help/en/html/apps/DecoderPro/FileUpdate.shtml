@@ -51,7 +51,9 @@ you can directly install the definition.
 
 <ul>
 <li>Select the "Import Decoder URL" item from the "Debug" menu.
-<li>You'll be prompted for the URL. Enter it, and click OK.
+<li>Copy the URL address.
+<li>Select the "Import Decoder URL" item from the "Debug" menu.
+<li>You'll be prompted for the URL. Enter it, or paste it in and click OK.
 </ul>
 
 Unless there are errors, the file will be copied onto your local computer

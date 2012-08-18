@@ -23,6 +23,7 @@
 <!ATTLIST trainOptions buildReport		(true | false) "false">
 <!ATTLIST trainOptions printPreview 	(true | false) "false">
 <!ATTLIST trainOptions buildMessages 	(true | false) "true">
+<!ATTLIST trainOptions openFile		 	(true | false) "false">
 <!ATTLIST trainOptions trainAction		CDATA #IMPLIED>
 
 <!ATTLIST trainScheduleOptions activeId		CDATA #IMPLIED>

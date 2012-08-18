@@ -154,6 +154,15 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         switch (col) {
         case ESTOPCOLUMN:
         case DISPCOLUMN:
+        case F0COLUMN:
+        case F1COLUMN:
+        case F2COLUMN:
+        case F3COLUMN:
+        case F4COLUMN:
+        case F5COLUMN:
+        case F6COLUMN:
+        case F7COLUMN:
+        case F8COLUMN:    
             return true;
         default:
             return false;
@@ -314,6 +323,64 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             msg.setOpCode(LnConstants.OPC_LOCO_SPD);
             msg.setElement(1, s.getSlot());
             msg.setElement(2, 1);       // 1 here is estop
+            memo.getLnTrafficController().sendLocoNetMessage(msg);
+            fireTableRowsUpdated(row,row);
+        }
+        else if ((col == F0COLUMN) ||
+                 (col == F1COLUMN) ||
+                 (col == F2COLUMN) ||
+                 (col == F3COLUMN) ||
+                 (col == F4COLUMN) ) {
+            log.debug("F0-F4 change requested "+row);
+            LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
+            if (s == null) {
+                log.error("slot pointer was null for slot row: "+row+" col: "+col);
+                return;
+            }
+            boolean tempF0 = (col == F0COLUMN) ? !s.isF0() : s.isF0();
+            boolean tempF1 = (col == F1COLUMN) ? !s.isF1() : s.isF1();
+            boolean tempF2 = (col == F2COLUMN) ? !s.isF2() : s.isF2();
+            boolean tempF3 = (col == F3COLUMN) ? !s.isF3() : s.isF3();
+            boolean tempF4 = (col == F4COLUMN) ? !s.isF4() : s.isF4();
+            
+            int new_dirf = ((s.isForward() ? 0 : LnConstants.DIRF_DIR) |
+                        (tempF0 ? LnConstants.DIRF_F0 : 0) |
+                        (tempF1 ? LnConstants.DIRF_F1 : 0) |
+                        (tempF2 ? LnConstants.DIRF_F2 : 0) |
+                        (tempF3 ? LnConstants.DIRF_F3 : 0) |
+                        (tempF4 ? LnConstants.DIRF_F4 : 0));
+            
+            LocoNetMessage msg = new LocoNetMessage(4);
+            msg.setOpCode(LnConstants.OPC_LOCO_DIRF);
+            msg.setElement(1, s.getSlot());
+            msg.setElement(2, new_dirf);       // 1 here is estop
+            memo.getLnTrafficController().sendLocoNetMessage(msg);
+            fireTableRowsUpdated(row,row);
+        }
+        else if ((col == F5COLUMN) ||
+                 (col == F6COLUMN) ||
+                 (col == F7COLUMN) ||
+                 (col == F8COLUMN) ) {
+            log.debug("F5-F8 change requested "+row);
+            LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
+            if (s == null) {
+                log.error("slot pointer was null for slot row: "+row+" col: "+col);
+                return;
+            }
+            
+            boolean tempF5 = (col == F5COLUMN) ? !s.isF5() : s.isF5();
+            boolean tempF6 = (col == F6COLUMN) ? !s.isF6() : s.isF6();
+            boolean tempF7 = (col == F7COLUMN) ? !s.isF7() : s.isF7();
+            boolean tempF8 = (col == F8COLUMN) ? !s.isF8() : s.isF8();
+            
+            int new_snd = ((tempF8 ? LnConstants.SND_F8 : 0) |
+                           (tempF7 ? LnConstants.SND_F7 : 0) |
+                           (tempF6 ? LnConstants.SND_F6 : 0) |
+                           (tempF5 ? LnConstants.SND_F5 : 0));
+            LocoNetMessage msg = new LocoNetMessage(4);
+            msg.setOpCode(LnConstants.OPC_LOCO_SND);
+            msg.setElement(1, s.getSlot());
+            msg.setElement(2, new_snd);       // 1 here is estop
             memo.getLnTrafficController().sendLocoNetMessage(msg);
             fireTableRowsUpdated(row,row);
         }

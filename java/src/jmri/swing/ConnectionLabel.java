@@ -19,7 +19,7 @@ import jmri.jmrix.JmrixConfigPane;
 public final class ConnectionLabel extends JLabel implements PropertyChangeListener {
 
     ConnectionConfig connection;
-    protected static ResourceBundle appsBundle = ResourceBundle.getBundle("apps.AppsBundle");
+    final protected static ResourceBundle appsBundle = ResourceBundle.getBundle("apps.AppsBundle");
 
     public ConnectionLabel(ConnectionConfig connection) {
         super();

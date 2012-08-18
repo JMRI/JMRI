@@ -18,11 +18,13 @@
   <version author="Michael Mosher" version="3" lastUpdated="20111231"/>
   <version author="Michael Mosher" version="4" lastUpdated="20120216"/>
   <version author="Michael Mosher" version="5" lastUpdated="20120619"/>
+  <version author="Michael Mosher" version="6" lastUpdated="20120727"/>
 <!-- version 1 - Created from Ver 7 file -->
 <!-- version 2 - Add diesel & electric -->
 <!-- version 3 - fix bug in balance CV -->
 <!-- version 4 - fix bug in CV115.76.0 -->
 <!-- version 5 - Add models 1102,1106,1107,1108,1110,1111; add cv 52.50,57,58,59,60,61,62,64,65; remove cv 55.xx.15,16-->
+<!-- version 6 - Fix bug with two byte varables, reorder CV56.254.xx-->
   <decoder>
     <family name="QSI Ver. 8" mfg="QSIndustries" lowVersionID="8">
       <model model="Titan Diesel" numFns="14" numOuts="0" productID="1100">
@@ -2201,6 +2203,12 @@
       <ivariable label="Speed Step 1 Delay" CVname="56.6" CV="56" PI="6" default="1" item="CV56.6">
         <indexedVal />
       </ivariable>
+      <ivariable label="SMPH-BEMF Ratio Low Byte" CVname="56.7.0" CV="56" PI="7" SI="0" >
+        <indexedVal/>
+      </ivariable>
+      <ivariable label="SMPH-BEMF Ratio High Byte" CVname="56.7.1" CV="56" PI="7" SI="1" >
+        <indexedVal/>
+      </ivariable>
       <ivariable label="SMPH-BEMF Ratio" CVname="56.7.0" CV="56" PI="7" SI="0" >
         <indexedPairVal highCVname="56.7.1"/>
       </ivariable>
@@ -2255,9 +2263,25 @@
         <indexedPairVal highCVname="56.24.1"/>
       </ivariable>
 -->
+      <ivariable label="Locomotive Scale low byte" CVname="56.25.0" CV="56" PI="25" SI="0" 
+		include="3100,4100" >
+        <indexedVal/>
+      </ivariable>
+      <ivariable label="Locomotive Scale high byte" CVname="56.25.1" CV="56" PI="25" SI="1" 
+		include="3100,4100" >
+        <indexedVal/>
+      </ivariable>
       <ivariable label="Locomotive Scale" CVname="56.25.0" CV="56" PI="25" SI="0" 
 		include="3100,4100" >
         <indexedPairVal highCVname="56.25.1" />
+      </ivariable>
+      <ivariable label="Scale Wheel Diameter low byte" CVname="56.26.0" CV="56" PI="26" SI="0" 
+		include="3100,4100" >
+        <indexedVal/>
+      </ivariable>
+      <ivariable label="Scale Wheel Diameter high byte" CVname="56.26.1" CV="56" PI="26" SI="1" 
+		include="3100,4100" >
+        <indexedVal/>
       </ivariable>
       <ivariable label="Scale Wheel Diameter" CVname="56.26.0" CV="56" PI="26" SI="0" 
 		include="3100,4100" >
@@ -2282,18 +2306,6 @@
       <ivariable label="Product Model Low Byte" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="yes" item="CV56.254.5">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Sound Set Number Low Byte" CVname="56.254.14" CV="56" PI="254" SI="14" readOnly="yes" item="CV56.254.14" >
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Sound Set Number High Byte" CVname="56.254.15" CV="56" PI="254" SI="15" readOnly="yes" item="CV56.254.15" >
-        <indexedVal/>
-      </ivariable>
-      <ivariable label="Hardware Profile" CVname="56.254.3" CV="56" PI="254" SI="3" readOnly="yes" item="Hardware Profile">
-        <indexedPairVal highCVname="56.254.2" />
-      </ivariable>
-      <ivariable label="Product Model" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="yes" item="Product Number">
-        <indexedPairVal highCVname="56.254.4" />
-      </ivariable>
       <ivariable label="Firmware Build" CVname="56.254.8" CV="56" PI="254" SI="8" readOnly="yes" item="CV56.254.8">
         <indexedVal/>
       </ivariable>
@@ -2306,8 +2318,11 @@
       <ivariable label="Firmware Build Date.Year" CVname="56.254.12" CV="56" PI="254" SI="12" readOnly="yes" item="CV56.254.12">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Sound Set Number" CVname="56.254.14" CV="56" PI="254" SI="14" readOnly="yes" >
-        <indexedPairVal highCVname="56.254.15" />
+      <ivariable label="Sound Set Number Low Byte" CVname="56.254.14" CV="56" PI="254" SI="14" readOnly="yes" item="CV56.254.14" >
+        <indexedVal/>
+      </ivariable>
+      <ivariable label="Sound Set Number High Byte" CVname="56.254.15" CV="56" PI="254" SI="15" readOnly="yes" item="CV56.254.15" >
+        <indexedVal/>
       </ivariable>
       <ivariable label="Firmware Modified Date.Month" CVname="56.254.16" CV="56" PI="254" SI="16" readOnly="yes" item="CV56.254.16" >
         <indexedVal/>
@@ -2317,6 +2332,15 @@
       </ivariable>
       <ivariable label="Firmware Modified Date.Year" CVname="56.254.18" CV="56" PI="254" SI="18" readOnly="yes" item="CV56.254.18" >
         <indexedVal/>
+      </ivariable>
+      <ivariable label="Hardware Profile" CVname="56.254.3" CV="56" PI="254" SI="3" readOnly="yes" item="Hardware Profile">
+        <indexedPairVal highCVname="56.254.2" />
+      </ivariable>
+      <ivariable label="Product Model" CVname="56.254.5" CV="56" PI="254" SI="5" readOnly="yes" item="Product Number">
+        <indexedPairVal highCVname="56.254.4" />
+      </ivariable>
+      <ivariable label="Sound Set Number" CVname="56.254.14" CV="56" PI="254" SI="14" readOnly="yes" >
+        <indexedPairVal highCVname="56.254.15" />
       </ivariable>
 <!-- CV 56.255 Play Build Information (for ops mode) -->
       <ivariable label="Play Product Identifier" CVname="56.255_0" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" item="CV56.255_0" default="0">

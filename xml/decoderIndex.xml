@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20120712-1712-jake on Thu Jul 12 10:12:26 PDT 2012 $Id$-->
-  <decoderIndex version="238">
+  <!--Written by JMRI version 20120818-2134-jake on Sat Aug 18 14:34:17 PDT 2012 $Id$-->
+  <decoderIndex version="240">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -999,22 +999,6 @@
           <output name="6" label="F4 Pad" connection="solder" />
           <size length="1.05" width="0.67" height="0.25" units="inches" />
         </model>
-        <model model="Con-cor Zephyr - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1645" comment="SDH164D">
-          <output name="1" label="F0F Pad" connection="solder" />
-          <output name="2" label="F0R Pad" connection="solder" />
-          <output name="3" label="F1 Pad" connection="solder" />
-          <output name="4" label="F2 Pad" connection="solder" />
-          <output name="5" label="F3 Pad" connection="solder" />
-          <output name="6" label="F4 Pad" connection="solder" />
-          <size length="1.05" width="0.67" height="0.25" units="inches" />
-        </model>
-        <model model="Con-cor Zephyr - N" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1446" comment="SDN144PS">
-          <output name="1" label="F0F Pad" connection="plug" />
-          <output name="2" label="F0R Pad" connection="plug" />
-          <output name="3" label="F1 Pad" connection="plug" />
-          <output name="4" label="F2 Pad" connection="plug" />
-          <size length="1.05" width="0.67" height="0.25" units="inches" />
-        </model>
         <model model="EVO GE Diesel" numOuts="12" numFns="14" lowVersionID="16" highVersionID="49" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" productID="1041" comment="SDH104T1">
           <output name="1" label="F0F Pad" connection="solder" />
           <output name="2" label="F0R Pad" connection="solder" />
@@ -1068,6 +1052,33 @@
           <output name="5" label="org" connection="solder" />
           <output name="6" label="gry" connection="solder" />
           <size length="1.22" width="0.66" height="0.25" units="inches" />
+        </model>
+      </family>
+      <family name="Digitrax/Con-cor Sound" mfg="Digitrax" file="Digitrax_1SFX.xml">
+        <model model="Con-cor MP54" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1646" comment="SDH164D">
+          <output name="1" label="F0F Pad" connection="solder" />
+          <output name="2" label="F0R Pad" connection="solder" />
+          <output name="3" label="F1 Pad" connection="solder" />
+          <output name="4" label="F2 Pad" connection="solder" />
+          <output name="5" label="F3 Pad" connection="solder" />
+          <output name="6" label="F4 Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="Con-cor Zephyr - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1645" comment="SDH164D">
+          <output name="1" label="F0F Pad" connection="solder" />
+          <output name="2" label="F0R Pad" connection="solder" />
+          <output name="3" label="F1 Pad" connection="solder" />
+          <output name="4" label="F2 Pad" connection="solder" />
+          <output name="5" label="F3 Pad" connection="solder" />
+          <output name="6" label="F4 Pad" connection="solder" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="Con-cor Zephyr - N" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1446" comment="SDN144PS">
+          <output name="1" label="F0F Pad" connection="plug" />
+          <output name="2" label="F0R Pad" connection="plug" />
+          <output name="3" label="F1 Pad" connection="plug" />
+          <output name="4" label="F2 Pad" connection="plug" />
+          <size length="1.05" width="0.67" height="0.25" units="inches" />
         </model>
       </family>
       <family name="Premium FX with BEMF" mfg="Digitrax" lowVersionID="240" highVersionID="250" file="Digitrax_1x2.xml">
@@ -1195,6 +1206,11 @@
           <output name="1" label="Front light" maxcurrent="140 mA" connection="wire" />
           <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire" />
           <size length="13.5" width="9" height="3.0" units="mm" />
+          <protocols>
+            <protocol>DCC</protocol>
+            <protocol>Selectrix</protocol>
+            <protocol>Motorola</protocol>
+          </protocols>
         </model>
         <model model="LokPilot micro DCC 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall">
           <output name="1" label="Front light" maxcurrent="140 mA" connection="wire" />
@@ -1207,6 +1223,11 @@
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
           <size length="23.5" width="15.5" height="5.5" units="mm" />
+          <protocols>
+            <protocol>DCC</protocol>
+            <protocol>Selectrix</protocol>
+            <protocol>Motorola</protocol>
+          </protocols>
         </model>
         <model model="LokPilot DCC 3.0" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire" />
@@ -1221,6 +1242,10 @@
           <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
           <size length="23.5" width="15.5" height="5.5" units="mm" />
+          <protocols>
+            <protocol>MFX</protocol>
+            <protocol>Motorola</protocol>
+          </protocols>
         </model>
         <model model="LokPilot XL 3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other">
           <output name="1" label="Front light" maxcurrent="600 mA" connection="other" />
@@ -1232,6 +1257,10 @@
           <output name="7" label="   AUX5    " maxcurrent="600 mA" connection="other" />
           <output name="8" label="   AUX6    " maxcurrent="600 mA" connection="other" />
           <size length="64" width="25" height="11.5" units="mm" />
+          <protocols>
+            <protocol>DCC</protocol>
+            <protocol>Motorola</protocol>
+          </protocols>
         </model>
         <model model="LokPilot Fx 3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire" />
@@ -1241,6 +1270,10 @@
           <output name="5" label="   AUX3    " maxcurrent="250 mA" connection="wire" />
           <output name="6" label="   AUX4    " maxcurrent="250 mA" connection="wire" />
           <size length="17.5" width="15.5" height="5.5" units="mm" />
+          <protocols>
+            <protocol>DCC</protocol>
+            <protocol>Motorola</protocol>
+          </protocols>
         </model>
       </family>
       <family name="ESU LokPilot Basic 1.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255" file="ESU_LokPilotBasic1.0.xml">
@@ -1288,6 +1321,11 @@
           <output name="15" label="Shift" />
           <size length="21.3" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, NEM 652, 21MTC, Plux12, wires" -->
+          <protocols>
+            <protocol>DCC</protocol>
+            <protocol>Selectrix</protocol>
+            <protocol>Motorola</protocol>
+          </protocols>
         </model>
         <model model="LokPilot DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
           <output name="1" label="Headlight" maxcurrent="250mA" />
@@ -1326,6 +1364,11 @@
           <output name="15" label="Shift" />
           <size length="10.5" width="5.8" height="2.8" units="mm" />
           <!-- connector="NEM651, NEM 652, Next18" -->
+          <protocols>
+            <protocol>DCC</protocol>
+            <protocol>Selectrix</protocol>
+            <protocol>Motorola</protocol>
+          </protocols>
         </model>
         <model model="LokPilot Micro DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes">
           <output name="1" label="Headlight" maxcurrent="150mA" />
@@ -1383,6 +1426,10 @@
           <output name="3" label="AUX 1" maxcurrent="250mA" />
           <output name="4" label="AUX 2" maxcurrent="250mA" />
           <size length="30" width="15.5" height="6.5" units="mm" />
+          <protocols>
+            <protocol>DCC</protocol>
+            <protocol>Motorola</protocol>
+          </protocols>
         </model>
         <model model="LokSound Version 3.5 (21 pin)" numOuts="6" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
           <output name="1" label="Front lights" maxcurrent="250mA" />
@@ -1391,6 +1438,10 @@
           <output name="4" label="AUX 2" maxcurrent="250mA" />
           <output name="5" label="AUX 3" maxcurrent="250mA" />
           <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <protocols>
+            <protocol>DCC</protocol>
+            <protocol>Motorola</protocol>
+          </protocols>
         </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Light</functionlabel>
@@ -1668,6 +1719,10 @@
           <output name="7" label="AUX 5" maxcurrent="600mA" />
           <output name="8" label="AUX 6" maxcurrent="600mA" />
           <size length="51" width="40" height="14" units="mm" />
+          <protocols>
+            <protocol>DCC</protocol>
+            <protocol>Motorola</protocol>
+          </protocols>
         </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Light</functionlabel>
@@ -2855,6 +2910,42 @@
           <functionlabel num="28" lockable="true">Ditch Lights Flash</functionlabel>
         </functionlabels>
       </family>
+      <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2" file="MRC_sound1905.xml">
+        <model model="HO Guage DC DCC Diesel Sound Decoder 1905" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
+          <size length="90" width="17.2" height="8.2" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Air Release</functionlabel>
+          <functionlabel num="4" lockable="true">Coupling</functionlabel>
+          <functionlabel num="5" lockable="true">Brake release/Squeal</functionlabel>
+          <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
+          <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
+          <functionlabel num="9" lockable="true">Cooling Fan/Notch Up</functionlabel>
+          <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+          <functionlabel num="11" lockable="true">Air Compressor</functionlabel>
+          <functionlabel num="12" lockable="true">Prime MoverType</functionlabel>
+          <functionlabel num="13" lockable="true">Air release</functionlabel>
+          <functionlabel num="14" lockable="true">Flange Noise</functionlabel>
+          <functionlabel num="15" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="16" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="17" lockable="true">Flange Noise</functionlabel>
+          <functionlabel num="18" lockable="true">Bell Type</functionlabel>
+          <functionlabel num="19" lockable="true">Horn Type</functionlabel>
+          <functionlabel num="20" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="21" lockable="true">Bell Volume</functionlabel>
+          <functionlabel num="22" lockable="true">Horn Volume</functionlabel>
+          <functionlabel num="23" lockable="true">Prime Mover Volume</functionlabel>
+          <functionlabel num="24" lockable="true">Coupling</functionlabel>
+          <functionlabel num="25" lockable="true">Air Releease</functionlabel>
+          <functionlabel num="26" lockable="true">Flange Noise</functionlabel>
+          <functionlabel num="27" lockable="true">Air Hose Firing</functionlabel>
+          <functionlabel num="28" lockable="true">Air Release</functionlabel>
+        </functionlabels>
+      </family>
       <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2" file="MRC_sound1906.xml">
         <model model="Genset Diesel Sound 1906" numOuts="7" numFns="30" maxTotalCurrent="1.5A">
           <size length="73" width="17.6" height="8.4" units="mm" />
@@ -2889,6 +2980,42 @@
           <functionlabel num="26" lockable="true">Flange Noise</functionlabel>
           <functionlabel num="27" lockable="true">Sand Drop</functionlabel>
           <functionlabel num="28" lockable="true">Ditch Lights Flash</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2" file="MRC_sound1910.xml">
+        <model model="HO Gauge Diesel - 16 Bit 1910" numOuts="7" numFns="30" maxTotalCurrent="1.0A">
+          <size length="73" width="17.6" height="8.4" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Ditch Lights</functionlabel>
+          <functionlabel num="4" lockable="true">Coupling1</functionlabel>
+          <functionlabel num="5" lockable="true">Brake release/Squeal</functionlabel>
+          <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
+          <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
+          <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
+          <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+          <functionlabel num="11" lockable="true">Traction Air Compressor</functionlabel>
+          <functionlabel num="12" lockable="true">Prime Mover Type</functionlabel>
+          <functionlabel num="13" lockable="true">Master Volume Decrease</functionlabel>
+          <functionlabel num="14" lockable="true">Master Volume Increase</functionlabel>
+          <functionlabel num="15" lockable="true">Air Compressor</functionlabel>
+          <functionlabel num="16" lockable="true">Flange Squeal</functionlabel>
+          <functionlabel num="17" lockable="true">Air Release</functionlabel>
+          <functionlabel num="18" lockable="true">Bell Type</functionlabel>
+          <functionlabel num="19" lockable="true">Horn Type</functionlabel>
+          <functionlabel num="20" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="21" lockable="true">Bell Volume</functionlabel>
+          <functionlabel num="22" lockable="true">Horn Volume</functionlabel>
+          <functionlabel num="23" lockable="true">Diesel Rumble Volume</functionlabel>
+          <functionlabel num="24" lockable="true">Safety Valve Pop</functionlabel>
+          <functionlabel num="25" lockable="true">Air Release</functionlabel>
+          <functionlabel num="26" lockable="true">Flange Noise</functionlabel>
+          <functionlabel num="27" lockable="true">Sand Drop</functionlabel>
+          <functionlabel num="28" lockable="true">Air Release</functionlabel>
         </functionlabels>
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_soundbrilliance1630.xml">

@@ -271,12 +271,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         _itemPanel = null;
         invalidate();
     }
-    
-    private void rotateNscale(NamedIcon oldIcon, NamedIcon newIcon) {   	
-        newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
-        newIcon.setRotation(oldIcon.getRotation(), this);
-    }
-    
+        
     public boolean setEditIconMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("MultiSensor"));
         popup.add(new AbstractAction(txt) {

@@ -22,7 +22,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
     private static final ImageIcon bckIcon = new ImageIcon("resources/icons/throttles/down-green.png");
     private static final ImageIcon estopIcon = new ImageIcon("resources/icons/throttles/estop24.png");
     private static final RosterIconFactory iconFactory =  new RosterIconFactory(32);
-    public static int height = 42;
+    final static int height = 42;
 
     public Component getTableCellRendererComponent(JTable jtable, Object value, boolean bln, boolean bln1, int i, int i1) {
         JPanel retPanel = new JPanel();

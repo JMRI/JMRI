@@ -99,7 +99,7 @@ public class CbusThrottle extends AbstractThrottle {
      * @param f5f8
      * @param f9f12
      */
-    public void CbusThrottleInit(int speed, int f0f4, int f5f8, int f9f12) {
+    public void throttleInit(int speed, int f0f4, int f5f8, int f9f12) {
 
         log.debug("Setting throttle initial values");
 
