@@ -168,7 +168,7 @@ public class IndexedVariableValue extends VariableValue
             }
             b.setSize(b.getWidth(),28);
             Hashtable<Integer,JLabel> labelTable = new Hashtable<Integer,JLabel>();
-            labelTable.put( Integer.valueOf( 0 ), new JLabel("Off") );
+            labelTable.put( Integer.valueOf( 0 ), new JLabel("0%") );
             if ( _maxVal == 63 ) {   // this if for the QSI mute level, not very universal, needs work
                 labelTable.put( Integer.valueOf( _maxVal/2 ), new JLabel("25%") );
                 labelTable.put( Integer.valueOf( _maxVal ), new JLabel("50%") );
