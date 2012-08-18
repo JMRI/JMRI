@@ -1,6 +1,7 @@
 package jmri.jmrit.throttle;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -127,76 +128,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     /**
      *  Constructor.
      */
-    public ControlPanel()
-    {
-        speedSlider = new JSlider(0, intSpeedSteps);
-        speedSlider.setValue(0);
-        speedSlider.setFocusable(false);
-	
-	    // add mouse-wheel support
-        speedSlider.addMouseWheelListener(new MouseWheelListener() {
-          public void mouseWheelMoved(MouseWheelEvent e) {
-            if(e.getWheelRotation() > 0) 
-            	/* Andrew Berridge added for loops */
-            	for (int i = 0; i < e.getScrollAmount(); i++) decelerate1();
-            else
-            	for (int i = 0; i < e.getScrollAmount(); i++) accelerate1();
-          }
-        });
-	    
-        speedSliderContinuous = new JSlider(-intSpeedSteps, intSpeedSteps);
-        speedSliderContinuous.setValue(0);
-        speedSliderContinuous.setFocusable(false);
-	
-	// add mouse-wheel support
-        speedSliderContinuous.addMouseWheelListener(new MouseWheelListener() {
-          public void mouseWheelMoved(MouseWheelEvent e) {
-            if(e.getWheelRotation() > 0) 
-            	/* Andrew Berridge added for loops */
-            	for (int i = 0; i < e.getScrollAmount(); i++) decelerate1();
-            else
-            	for (int i = 0; i < e.getScrollAmount(); i++) accelerate1();
-          }
-        });
-        
-        speedSpinner = new JSpinner();
-
-        speedSpinnerModel = new SpinnerNumberModel(0, 0, intSpeedSteps, 1);
-        speedSpinner.setModel(speedSpinnerModel);
-        speedSpinner.setFocusable(false);
-
-        SpeedStep128Button = new JRadioButton(rb.getString("Button128SS"));
-        SpeedStep28Button = new JRadioButton(rb.getString("Button28SS"));
-        SpeedStep27Button = new JRadioButton(rb.getString("Button27SS"));
-        SpeedStep14Button= new JRadioButton(rb.getString("Button14SS"));
-        
-        forwardButton = new JRadioButton();
-        if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
-        		&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
-        	forwardButton.setBorderPainted(false);
-        	forwardButton.setContentAreaFilled(false);
-        	forwardButton.setText(null);
-        	forwardButton.setIcon(new ImageIcon("resources/icons/throttles/up-red.png"));
-        	forwardButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/up-green.png"));
-        	forwardButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
-        	forwardButton.setToolTipText(rb.getString("ButtonForward"));
-        } else
-        	forwardButton.setText(rb.getString("ButtonForward"));
-        
-        reverseButton = new JRadioButton();
-        if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
-        		&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
-        	reverseButton.setBorderPainted(false);
-        	reverseButton.setContentAreaFilled(false);
-        	reverseButton.setText(null);
-        	reverseButton.setIcon(new ImageIcon("resources/icons/throttles/down-red.png"));
-        	reverseButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/down-green.png"));
-        	reverseButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
-        	reverseButton.setToolTipText(rb.getString("ButtonReverse"));
-        } else
-        	reverseButton.setText(rb.getString("ButtonReverse"));
-        
-        propertiesPopup = new JPopupMenu();
+    public ControlPanel() {
         initGUI();
     }
 
@@ -513,13 +445,17 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     	speedSlider.setValue(java.lang.Math.round(speed/speedIncrement));
         if (log.isDebugEnabled()) log.debug("SpeedSlider value: "+speedSlider.getValue());
         // Spinner Speed should be the raw integer speed value
-        if(speedSpinner!=null)
+        if(speedSpinner!=null) {
             speedSpinnerModel.setValue(Integer.valueOf(speedSlider.getValue()));
-        if (speedSliderContinuous!=null)
-      	  if (forwardButton.isSelected())
-      		  speedSliderContinuous.setValue(((Integer)speedSlider.getValue()).intValue());
-      	  else
-      		  speedSliderContinuous.setValue(-((Integer)speedSlider.getValue()).intValue());
+        }
+        if (speedSliderContinuous!=null) {
+            if (forwardButton.isSelected()) {
+                speedSliderContinuous.setValue(((Integer)speedSlider.getValue()).intValue());
+            }
+            else {
+                speedSliderContinuous.setValue(-((Integer)speedSlider.getValue()).intValue());
+            }
+        }
         internalAdjust=false;
     }
 
@@ -542,9 +478,88 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         
         speedControlPanel = new JPanel();
         speedControlPanel.setLayout(new BoxLayout(speedControlPanel,BoxLayout.X_AXIS));
+        speedControlPanel.setOpaque(false);
         mainPanel.add(speedControlPanel,BorderLayout.CENTER);
         sliderPanel = new JPanel();
         sliderPanel.setLayout(new GridBagLayout());
+        sliderPanel.setOpaque(false);
+
+        speedSlider = new JSlider(0, intSpeedSteps);
+        speedSlider.setOpaque(false);
+        speedSlider.setValue(0);
+        speedSlider.setFocusable(false);
+	
+	// add mouse-wheel support
+        speedSlider.addMouseWheelListener(new MouseWheelListener() {
+            @Override
+          public void mouseWheelMoved(MouseWheelEvent e) {
+            if(e.getWheelRotation() > 0) {
+                  for (int i = 0; i < e.getScrollAmount(); i++) decelerate1();
+              }
+            else {
+                  for (int i = 0; i < e.getScrollAmount(); i++) accelerate1();
+              }
+          }
+        });
+	    
+        speedSliderContinuous = new JSlider(-intSpeedSteps, intSpeedSteps);
+        speedSliderContinuous.setValue(0);
+        speedSliderContinuous.setOpaque(false);
+        speedSliderContinuous.setFocusable(false);
+	
+	// add mouse-wheel support
+        speedSliderContinuous.addMouseWheelListener(new MouseWheelListener() {
+            @Override
+          public void mouseWheelMoved(MouseWheelEvent e) {
+            if(e.getWheelRotation() > 0) {
+                  for (int i = 0; i < e.getScrollAmount(); i++) decelerate1();
+              }
+            else {
+                  for (int i = 0; i < e.getScrollAmount(); i++) accelerate1();
+              }
+          }
+        });
+        
+        speedSpinner = new JSpinner();
+
+        speedSpinnerModel = new SpinnerNumberModel(0, 0, intSpeedSteps, 1);
+        speedSpinner.setModel(speedSpinnerModel);
+        speedSpinner.setFocusable(false);
+
+        SpeedStep128Button = new JRadioButton(rb.getString("Button128SS"));
+        SpeedStep28Button = new JRadioButton(rb.getString("Button28SS"));
+        SpeedStep27Button = new JRadioButton(rb.getString("Button27SS"));
+        SpeedStep14Button= new JRadioButton(rb.getString("Button14SS"));
+        
+        forwardButton = new JRadioButton();
+        if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
+        		&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
+        	forwardButton.setBorderPainted(false);
+        	forwardButton.setContentAreaFilled(false);
+        	forwardButton.setText(null);
+        	forwardButton.setIcon(new ImageIcon("resources/icons/throttles/up-red.png"));
+        	forwardButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/up-green.png"));
+        	forwardButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
+        	forwardButton.setToolTipText(rb.getString("ButtonForward"));
+        } else {
+            forwardButton.setText(rb.getString("ButtonForward"));
+        }
+        
+        reverseButton = new JRadioButton();
+        if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
+        		&& jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
+        	reverseButton.setBorderPainted(false);
+        	reverseButton.setContentAreaFilled(false);
+        	reverseButton.setText(null);
+        	reverseButton.setIcon(new ImageIcon("resources/icons/throttles/down-red.png"));
+        	reverseButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/down-green.png"));
+        	reverseButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
+        	reverseButton.setToolTipText(rb.getString("ButtonReverse"));
+        } else {
+            reverseButton.setText(rb.getString("ButtonReverse"));
+        }
+    
+        propertiesPopup = new JPopupMenu();
         
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.anchor = GridBagConstraints.CENTER;
@@ -1120,12 +1135,17 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             boolean Forward=((Boolean) e.getNewValue()).booleanValue();
             setIsForward(Forward);
         } else if (e.getPropertyName().equals(switchSliderFunction)) {
-        	if ((Boolean)e.getNewValue())
-        		setSpeedController(SLIDERDISPLAYCONTINUOUS);
-        	else
-        		setSpeedController(SLIDERDISPLAY);
+            if ((Boolean) e.getNewValue()) { // switch only if displaying sliders
+                if (_displaySlider == SLIDERDISPLAY) {
+                    setSpeedController(SLIDERDISPLAYCONTINUOUS);
+                }
+            } else {
+                if (_displaySlider == SLIDERDISPLAYCONTINUOUS) {
+                    setSpeedController(SLIDERDISPLAY);
+                }
+            }
         }
-        log.debug("Property change event received "+e.getPropertyName() +" / "+e.getNewValue());
+        if (log.isDebugEnabled()) log.debug("Property change event received "+e.getPropertyName() +" / "+e.getNewValue());
     }
     
     /**
