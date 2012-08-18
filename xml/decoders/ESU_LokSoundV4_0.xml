@@ -16,9 +16,11 @@
 <!-- ver1 new file -->
 <!-- ver2 Added CV16, fixed CV 474.3, fixed light effect type, moved some var to other panes -->
 <!-- ver3 fixed CV293.0 bug -->
+<!-- ver4 fixed CV249 bug, added CVs 47,48,51,122,123,129,130,133,250,255 -->
   <version author="Michael Mosher" version="1" lastUpdated="20110505"/>
   <version author="Michael Mosher" version="2" lastUpdated="20110523"/>
   <version author="Michael Mosher" version="3" lastUpdated="20120223"/>
+  <version author="Dave Heap" version="4" lastUpdated="20120721"/>
   <decoder>
     <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
       <model model="LokSound V4.0 NEM652" numOuts="40" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="54400">
@@ -63,11 +65,6 @@
         <output name="39" label="SS23"/>
         <output name="40" label="SS24"/>
         <size length="30.5" width="15.5" height="5.5" units="mm"/>
-        <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Selectrix</protocol>
-            <protocol>Motorola</protocol>
-        </protocols>
       </model>        
       <model model="LokSound V4.0 21MTC" numOuts="40" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="54499">
         <output name="1" label="Headlight" maxcurrent="250mA"/>
@@ -111,11 +108,6 @@
         <output name="39" label="SS23"/>
         <output name="40" label="SS24"/>
         <size length="30.5" width="15.5" height="5.5" units="mm"/>
-        <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Selectrix</protocol>
-            <protocol>Motorola</protocol>
-        </protocols>
       </model>        
       <model model="LokSound Micro V4.0 NEM651" numOuts="40" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="54800">
         <output name="1" label="Headlight" maxcurrent="150mA"/>
@@ -159,11 +151,6 @@
         <output name="39" label="SS23"/>
         <output name="40" label="SS24"/>
         <size length="25.3" width="10.6" height="3.8" units="mm"/>
-        <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Selectrix</protocol>
-            <protocol>Motorola</protocol>
-        </protocols>
       </model>        
       <model model="LokSound Micro V4.0 NEM652" numOuts="40" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="54899">
         <output name="1" label="Headlight" maxcurrent="150mA"/>
@@ -207,11 +194,6 @@
         <output name="39" label="SS23"/>
         <output name="40" label="SS24"/>
         <size length="25.3" width="10.6" height="3.8" units="mm"/>
-        <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Selectrix</protocol>
-            <protocol>Motorola</protocol>
-        </protocols>
       </model>        
       <model model="LokSound Micro V4.0 Next18" numOuts="40" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="54898">
         <output name="1" label="Headlight" maxcurrent="150mA"/>
@@ -255,11 +237,6 @@
         <output name="39" label="SS23"/>
         <output name="40" label="SS24"/>
         <size length="25.3" width="10.6" height="3.8" units="mm"/>
-        <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Selectrix</protocol>
-            <protocol>Motorola</protocol>
-        </protocols>
       </model>        
       <functionlabels>
         <functionlabel num="0" lockable="true">Light</functionlabel>
@@ -618,6 +595,26 @@
         </enumVal>
         <label>Addressing Mode</label>
       </variable>
+      <variable label="DCC protocol active" CV="47" mask="XXXXXXXV" default="1" item="Advanced Group 2 Option 17">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>DCC protocol active</label>
+      </variable>
+      <variable label="M4 protocol active" CV="47" mask="XXXXXXVX" default="0" item="Advanced Group 2 Option 18">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>M4 protocol active</label>
+      </variable>
+      <variable label="Motorola protocol active protocol active" CV="47" mask="XXXXXVXX" default="1" item="Advanced Group 2 Option 19">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Motorola protocol active protocol active</label>
+      </variable>
+      <variable label="Selectrix protocol active protocol active" CV="47" mask="XXXXVXXX" default="1" item="Advanced Group 2 Option 20">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Selectrix protocol active protocol active</label>
+      </variable>
+      <variable label="Language selection" CV="48" mask="XXXXVVVV" item="Advanced Group 1 Option 6" tooltip="CV16" default="0">
+        <decVal max="15"/>
+        <label>Language selection</label>
+      </variable>
       <variable label="BEMF" CV="49" mask="XXXXXXXV" default="1" item="EMF Enable">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>BEMF</label>
@@ -661,9 +658,13 @@
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>DC Analog Mode</label>
       </variable>
-      <variable label="BEMF Slow Speed Amplifier" CV="52" default="32" item="EMF Option 4">
+      <variable label="BEMF Parameter 'I' Slow" CV="51" default="0" item="EMF Option 4">
         <decVal/>
-        <label>BEMF Slow Speed Amplifier</label>
+        <label>BEMF Parameter 'I' Slow</label>
+      </variable>
+      <variable label="BEMF Parameter 'K' Slow" CV="52" default="32" item="Motor Option 1">
+        <decVal/>
+        <label>BEMF Parameter 'K' Slow</label>
       </variable>
       <variable label="BEMF Reference Voltage" CV="53" default="140" item="EMF Control Reference">
         <decVal/>
@@ -677,32 +678,32 @@
         <decVal/>
         <label>BEMF Parameter 'I'</label>
       </variable>
-      <variable label="BEMF Dynamic Drive Control'" CV="56" default="255" item="EMF Option 3">
+      <variable label="BEMF Dynamic Drive Control" CV="56" default="255" item="EMF Option 3">
         <decVal/>
         <label>BEMF Dynamic Drive Control'</label>
       </variable>
-      <variable label="Time between 2 chuffs @ speed step 1" CV="57" default="143" item="Sound Group 3 Option 6"
+      <variable label="Time between 2 chuffs @ speed step 1" CV="57" default="143" item="Sound Group 3 Option 5"
 			tooltip="Set to zero for cam input">
         <decVal/>
         <label>Time between 2 chuffs @ speed step 1</label>
       </variable>
-      <variable label="Rate of decrease in time between 2 chuffs" CV="58" default="43" item="Sound Group 3 Option 7">
+      <variable label="Rate of decrease in time between 2 chuffs" CV="58" default="43" item="Sound Group 3 Option 6">
         <decVal/>
         <label>Rate of decrease in time between 2 chuffs</label>
       </variable>
-      <variable label="Sound Speed Minimum" CV="59" default="128" item="Sound Group 3 Option 2">
+      <variable label="Sound Speed Minimum" CV="59" default="128" item="Sound Group 3 Option 1">
         <decVal/>
         <label>Sound Speed Minimum</label>
       </variable>
-      <variable label="Sound Speed Maxium" CV="60" default="160" item="Sound Group 3 Option 3">
+      <variable label="Sound Speed Maxium" CV="60" default="160" item="Sound Group 3 Option 2">
         <decVal/>
         <label>Sound Speed Maxium</label>
       </variable>
-      <variable label="Random Sound - Shortest Interval" CV="61" default="120" tooltip="Unit is 0.25 seconds" item="Sound Group 3 Option 4">
+      <variable label="Random Sound - Shortest Interval" CV="61" default="120" tooltip="Unit is 0.25 seconds" item="Sound Group 3 Option 3">
         <decVal/>
         <label>Random Sound - Shortest Interval</label>
       </variable>
-      <variable label="Random Sound - Longest Interval" CV="62" default="200" tooltip="Unit is 0.25 seconds" item="Sound Group 3 Option 5">
+      <variable label="Random Sound - Longest Interval" CV="62" default="200" tooltip="Unit is 0.25 seconds" item="Sound Group 3 Option 4">
         <decVal/>
         <label>Random Sound - Longest Interval</label>
       </variable>
@@ -742,19 +743,33 @@
         <decVal/>
         <label>Power Fail Bypass</label>
       </variable>
+      <variable label="Store Function State" CV="122" mask="XXXXXXXV" default="1" item="Advanced Group 1 Option 4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Store Function State</label>
+        <label xml:lang="fr">Sauvegarde fonction</label>
+      </variable>
+      <variable label="Store Current Speed Setting" CV="122" mask="XXXXXXVX" default="1"  item="Advanced Group 1 Option 5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Store Current Speed Setting</label>
+        <label xml:lang="fr">Sauvegarde vitesse actuelle</label>
+      </variable>
+      <variable label="ABC Mode slow speed" CV="123" default="100" item="Advanced Group 1 Option 7">
+        <decVal/>
+        <label>ABC Mode slow speed</label>
+      </variable>
       <variable label="Driving Direction when Shifting" CV="124" mask="XXXXXXXV" default="0" item="Advanced Group 2 Option 15">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Driving Direction when Shifting</label>
       </variable>
-      <variable label="Decoder Lock" CV="124" mask="XXXXXXVX" default="0" item="Advanced Group 1 Option 10">
+      <variable label="Decoder Lock" CV="124" mask="XXXXXXVX" default="0" item="Advanced Group 1 Option 11">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Decoder Lock</label>
       </variable>
-      <variable label="C-Sinus" CV="124" mask="XXXXXVXX" default="0" item="Advanced Group 2 Option 17">
+      <variable label="C-Sinus" CV="124" mask="XXXXXVXX" default="0" item="Advanced Group 2 Option 16">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>C-Sinus</label>
       </variable>
-      <variable label="Prime Mover Startup Delay" CV="124" mask="XXXXVXXX" default="1" item="Sound Group 1 Control">
+    <variable label="Prime Mover Startup Delay" CV="124" mask="XXXXVXXX" default="1" item="Sound Group 1 Control">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Prime Mover Startup Delay</label>
       </variable>
@@ -778,6 +793,14 @@
         <decVal/>
         <label>Maximum Speed in AC mode</label>
       </variable>
+      <variable label="Analog Mode Motor Hysteresis" CV="129" default="15" item="Advanced Group 1 Option 9">
+        <decVal/>
+        <label>Analog Mode Motor Hysteresis</label>
+      </variable>
+      <variable label="Analog Mode Function Hysteresis" CV="130" default="5" item="Advanced Group 1 Option 10">
+        <decVal/>
+        <label>Analog Mode Function Hysteresis</label>
+      </variable>
       <variable label="Diesel Manual Notching Offset" CV="131" default="50" item="Sound Group 4 Option 3">
         <decVal/>
         <label>Diesel Manual Notching Offset</label>
@@ -785,6 +808,14 @@
       <variable label="Grade Crossing Hold Time" CV="132" default="80" item="Global lighting option 2">
         <decVal/>
         <label>Grade Crossing Hold Time</label>
+      </variable>
+      <variable label="Faded Sound Volume" CV="133" default="128" item="Sound Setting 29">
+        <decVal/>
+        <label>Faded Sound Volume</label>
+      </variable>
+      <variable label="ABC detection threshold" CV="134" mask="XXVVVVVV" default="12" item="Advanced Group 1 Option 8">
+        <decVal min="4" max="32"/>
+        <label>ABC detection threshold</label>
       </variable>
       <variable label="Auto Decoupling Speed" CV="246" default="0" item="Global lighting option 3">
         <decVal/>
@@ -798,17 +829,25 @@
         <decVal/>
         <label>Auto Decoupling Remove Time</label>
       </variable>
-      <variable label="Min Steam Chuff Distance" CV="248" default="0" item="Sound Group 3 Option 8">
+      <variable label="Min Steam Chuff Distance" CV="249" default="0" item="Sound Group 3 Option 7">
         <decVal/>
         <label>Min Steam Chuff Distance</label>
+      </variable>
+      <variable label="Secondary Steam Chuff Trigger" CV="250" default="0" item="Sound Group 3 Option 8">
+        <decVal/>
+        <label>Secondary Steam Chuff Trigger</label>
       </variable>
       <variable label="Constant Brake Mode - Brake Rate" CV="253" default="0" item="Advanced Group 1 Option 1">
         <decVal/>
         <label>Constant Brake Mode - Brake Rate</label>
       </variable>
-      <variable label="Constant Brake Mode - Brake Distance" CV="254" default="0" item="Advanced Group 1 Option 2">
+      <variable label="Constant Brake Mode - Brake Distance Forward" CV="254" default="0" item="Advanced Group 1 Option 2">
         <decVal/>
-        <label>Constant Brake Mode - Brake Distance</label>
+        <label>Constant Brake Mode - Brake Distance Forward</label>
+      </variable>
+      <variable label="Constant Brake Mode - Brake Distance Backward" CV="255" default="0" item="Advanced Group 1 Option 3">
+        <decVal/>
+        <label>Constant Brake Mode - Brake Distance Backward</label>
       </variable>
 <!-- Indexed variables -->
       <constant label="PICV" default="32" comment="CV used for Primary Index"/>
