@@ -61,7 +61,7 @@
 					<display item="CV56.9" layout="above" format="hslider"/>
 				</row>
 				<label label=" "/>
-				<display item="CV56.7.0" />
+				<display item="SMPH-BEMF Ratio" />
 				<display item="Wheel Diameter" />
 				<display item="Locomotive Scale" />
 				<display item="Scale Wheel Diameter" />
