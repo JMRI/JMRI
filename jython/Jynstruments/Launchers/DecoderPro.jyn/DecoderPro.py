@@ -10,7 +10,7 @@ class DecoderPro(Jynstrument):
     
     def init(self):
         jbNew = JButton( PaneOpsProgAction() )
-        jbNew.setIcon( NamedIcon("resources/DecoderPro.gif","resources/DecoderPro.gif") )
+        jbNew.setIcon( NamedIcon("resources/decoderpro.gif","resources/decoderpro.gif") )
         jbNew.addMouseListener(self.getMouseListeners()[0]) # In order to get the popupmenu on the button too
         jbNew.setToolTipText( jbNew.getText() )
         jbNew.setText( None )
