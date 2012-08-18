@@ -150,7 +150,7 @@
 	<LI>Glen Colbert, who contributed the MRC AD370 decoder definition
 	<LI>Bob Coleman added the CTI Acela support and did a huge
 	amount of work on the operations code tests.
-    <LI>John Crellin contributed a new and improved
+    <LI>John Crellin contributed numerous new and improved
     decoder definitions for MRC decoders and the Kato FL11.
     <li>Peter Cressman provided a major improvement to Logix, improved
     Sensor Groups, fixed some problems in Routes,
@@ -425,6 +425,7 @@
 	<li>John Stewart, who provided a decoder definition for the Lenz Plus 2010 decoder.
 <a name="T"></A>
 	<LI>Francois Taburet, who provided the French translation for DecoderPro
+    <li>Clint Taylor added code to allow function buttons to work within the loconet slot manager.
 	<li>Giorgio Terdina, who provided the code for the Roco multiMaus and
         for JMRI to connect to his <a href="http://www.terdina.net/rails/">XnTcp adapter</a>,
         wrote the 
