@@ -46,6 +46,7 @@ public class LocoNetTest extends TestCase {
         suite.addTest(new TestSuite(LnTrafficControllerTest.class));
         suite.addTest(new TestSuite(LnTrafficRouterTest.class));
         suite.addTest(new TestSuite(LnPacketizerTest.class));
+        suite.addTest(new TestSuite(LocoNetThrottleTest.class));
         suite.addTest(LnPowerManagerTest.suite());
         suite.addTest(LnTurnoutTest.suite());
         suite.addTest(LnTurnoutManagerTest.suite());
@@ -53,6 +54,7 @@ public class LocoNetTest extends TestCase {
         suite.addTest(LnSensorTest.suite());
         suite.addTest(LnSensorAddressTest.suite());
         suite.addTest(LnSensorManagerTest.suite());
+
 
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
             suite.addTest(jmri.jmrix.loconet.locoio.LocoIOTest.suite());

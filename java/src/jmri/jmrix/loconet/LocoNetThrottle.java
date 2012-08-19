@@ -193,6 +193,16 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void setSpeedSetting(float speed)
     {
+        if( LnConstants.CONSIST_MID==slot.consistStatus()||
+           LnConstants.CONSIST_SUB==slot.consistStatus() )
+        {
+           // Digitrax slots use the same memory location to store the
+           // speed AND the slot to which a locomotive is consisted.
+           // if the locomotive is either a CONSIST_MID or a CONSIST_SUB,
+           // we need to ignore the request to change the speed
+           if(log.isDebugEnabled()) log.debug("Attempt to change speed on locomoitve " + getLocoAddress() + " which is a " + LnConstants.CONSIST_STAT(slot.consistStatus())); 
+           return;
+        }
     	float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         if (speed<0) this.speedSetting = -1.f;
