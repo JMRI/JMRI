@@ -770,10 +770,20 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         tc.sendEcosMessage(ms, this);
     }
     
+    //Converts the int value of the protocol to the ESU protocol string
+    private String protocol(int protocol){
+        switch(protocol){
+            case LocoAddress.MOTOROLA: return "MM28";
+            case LocoAddress.SELECTRIX: return "SX28";
+            case LocoAddress.MFX: return "MMFKT";
+            default: return "DCC128";
+        }
+    }
+    
     private void createEcosLoco() {
         objEcosLoco.setEcosDescription("Created By JMRI");
-        objEcosLoco.setProtocol("DCC128");
-        String message = "create(10, addr[" + objEcosLoco.getEcosLocoAddress() + "], name[\"Created By JMRI\"], protocol[DCC128], append)";
+        objEcosLoco.setProtocol(protocol(address.getProtocol()));
+        String message = "create(10, addr[" + objEcosLoco.getEcosLocoAddress() + "], name[\"Created By JMRI\"], protocol[" + objEcosLoco.getProtocol() + "], append)";
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
     }

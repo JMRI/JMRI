@@ -72,7 +72,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         if(p.getForceControlFromEcos()==0x01) ecosPrefElem.setAttribute("forceControlFromCS", "no");
         else if (p.getForceControlFromEcos()==0x02) ecosPrefElem.setAttribute("forceControlCS", "yes");
         
-        if(!p.getDefaultEcosProtocol().equals("DCC128")) ecosPrefElem.setAttribute("defaultCSProtocol", p.getDefaultEcosProtocol());
+        //if(!p.getDefaultEcosProtocol().equals("DCC128")) ecosPrefElem.setAttribute("defaultCSProtocol", p.getDefaultEcosProtocol());
         if(p.getEcosLocoDescription()!=null){
             if(!p.getEcosLocoDescription().equals(""))
                 ecosPrefElem.setAttribute("defaultCSLocoDescription",p.getEcosLocoDescription());
@@ -173,9 +173,9 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
                     else if (yesno.equals("no")) p.setAdhocLocoFromEcos(0x01);
                 }
             }
-            if (ecosPref.get(i).getAttribute("defaultCSProtocol") != null){
+            /*if (ecosPref.get(i).getAttribute("defaultCSProtocol") != null){
                 p.setDefaultEcosProtocol(ecosPref.get(i).getAttribute("defaultCSProtocol").getValue());
-            }
+            }*/
             if (ecosPref.get(i).getAttribute("defaultCSLocoDescription") != null){
                 p.setEcosLocoDescription(ecosPref.get(i).getAttribute("defaultCSLocoDescription").getValue());
             }

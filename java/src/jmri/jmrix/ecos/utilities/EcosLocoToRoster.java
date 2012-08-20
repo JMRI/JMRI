@@ -2,6 +2,7 @@ package jmri.jmrix.ecos.utilities;
 
 import java.util.Enumeration;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import jmri.jmrix.ecos.*;
 import jmri.jmrit.roster.RosterEntry;
@@ -83,7 +84,7 @@ public class EcosLocoToRoster implements EcosListener {
                         public void run() {
                             final JDialog dialog = new JDialog();
                             dialog.setTitle("Add Roster Entry From JMRI?");
-                            dialog.setLocationRelativeTo(null);
+                            //dialog.setLocationRelativeTo(null);
                             dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
                             JPanel container = new JPanel();
                             container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
@@ -115,7 +116,7 @@ public class EcosLocoToRoster implements EcosListener {
                                     ecosObject.doNotAddToRoster();
                                     waitingForComplete=true;
                                     if(remember.isSelected()){
-                                        suppressFurtherAdditions = false;
+                                        suppressFurtherAdditions = true;
                                         p.setAddLocoToJMRI(EcosPreferences.NO);
                                     }
                                     dialog.dispose();
@@ -136,6 +137,16 @@ public class EcosLocoToRoster implements EcosListener {
                             container.setAlignmentY(Component.CENTER_ALIGNMENT);
                             dialog.getContentPane().add(container);
                             dialog.pack();
+                            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+         
+                            int w = dialog.getSize().width;
+                            int h = dialog.getSize().height;
+                            int x = (dim.width-w)/2;
+                            int y = (dim.height-h)/2;
+                             
+                            // Move the window
+                            dialog.setLocation(x, y);
+                            
                             dialog.setModal(true);
                             dialog.setVisible(true);
                         }
@@ -363,7 +374,6 @@ public class EcosLocoToRoster implements EcosListener {
         
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
         
-        frame.setLocationRelativeTo(null);
         frame.getContentPane().add( topPanel);
         frame.pack();
         frame.setVisible(true);
@@ -375,6 +385,14 @@ public class EcosLocoToRoster implements EcosListener {
         
         frame.setAlwaysOnTop(true);
         frame.setAlwaysOnTop(false);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+         
+        int w = frame.getSize().width;
+        int h = frame.getSize().height;
+        int x = (dim.width-w)/2;
+        int y = (dim.height-h)/2;
+        
+        frame.setLocation(x, y);
         frame.setVisible( true );
 
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -427,6 +445,18 @@ public class EcosLocoToRoster implements EcosListener {
         re.setDecoderComment("");    
         re.putAttribute(adaptermemo.getPreferenceManager().getRosterAttribute(), _ecosObject);
         re.ensureFilenameExists();
+        if(pDecoderFile.getSupportedProtocols().length>0){
+            List<Integer> protocols = new ArrayList<Integer>(Arrays.asList(pDecoderFile.getSupportedProtocols()));
+            if((ecosLoco.getProtocol().startsWith("DCC")) && protocols.contains(jmri.LocoAddress.DCC)){
+                re.setProtocol(jmri.LocoAddress.DCC);
+            } else if (ecosLoco.getProtocol().equals("MMFKT") && protocols.contains(jmri.LocoAddress.MFX)){
+                re.setProtocol(jmri.LocoAddress.MFX);
+            } else if (ecosLoco.getProtocol().startsWith("MM") && protocols.contains(jmri.LocoAddress.MOTOROLA)){
+                re.setProtocol(jmri.LocoAddress.MOTOROLA);
+            } else if (ecosLoco.getProtocol().equals("SX32") && protocols.contains(jmri.LocoAddress.SELECTRIX)){
+                re.setProtocol(jmri.LocoAddress.SELECTRIX);
+            }
+        }
         
         mProgrammer   = null;
         cvModel       = new CvTableModel(progStatus, mProgrammer);
@@ -438,15 +468,7 @@ public class EcosLocoToRoster implements EcosListener {
         filename = "programmers"+File.separator+"Basic.xml";
         loadProgrammerFile(re);
         loadDecoderFile(pDecoderFile, re);
-        if(ecosLoco.getEcosLocoAddress()<=128){
-            variableModel.findVar("Short Address").setIntValue(ecosLoco.getEcosLocoAddress());
-            variableModel.findVar("Address Format").setIntValue(1);
-            re.setLongAddress(false);
-        } else {
-            variableModel.findVar("Extended Address").setIntValue(ecosLoco.getEcosLocoAddress());
-            variableModel.findVar("Address Format").setIntValue(1);
-            re.setLongAddress(true);
-        }
+
         variableModel.findVar("Speed Step Mode").setIntValue(0);
         if (ecosLoco.getProtocol().equals("DCC128"))
             variableModel.findVar("Speed Step Mode").setIntValue(1);

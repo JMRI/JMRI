@@ -28,8 +28,16 @@ public class RosterToEcos implements EcosListener{
         ep = adaptermemo.getPreferenceManager();
         _re = re;
 		objEcosLocoManager = adaptermemo.getLocoAddressManager();
+        
+        String protocol = "";
+        switch(re.getProtocol()){
+            case jmri.LocoAddress.MOTOROLA: protocol = "MM28";
+            case jmri.LocoAddress.SELECTRIX: protocol = "SX28";
+            case jmri.LocoAddress.MFX: protocol = "MMFKT";
+            default: protocol = "DCC128";
+        }
 
-        String message = "create(10, addr[" + _re.getDccAddress() + "], name[\""+ description() +"\"], protocol["+ ep.getDefaultEcosProtocol()+"], append)";
+        String message = "create(10, addr[" + _re.getDccAddress() + "], name[\""+ description() +"\"], protocol["+ protocol +"], append)";
 
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
@@ -84,7 +92,12 @@ public class RosterToEcos implements EcosListener{
                         objEcosLoco.setRosterId(_re.getId());
                         objEcosLoco.setEcosDescription(description());
                         objEcosLoco.setEcosLocoAddress(Integer.parseInt(_re.getDccAddress()));
-                        objEcosLoco.setProtocol(ep.getDefaultEcosProtocol());
+                        switch(_re.getProtocol()){
+                            case jmri.LocoAddress.MOTOROLA: objEcosLoco.setProtocol("MM28");
+                            case jmri.LocoAddress.SELECTRIX: objEcosLoco.setProtocol("SX28");
+                            case jmri.LocoAddress.MFX: objEcosLoco.setProtocol("MMFKT");
+                            default: objEcosLoco.setProtocol("DCC128");
+                        }
                         _re.writeFile(null, null, null);
                         jmri.jmrit.roster.Roster.writeRosterFile();
                         objEcosLocoManager.register(objEcosLoco);

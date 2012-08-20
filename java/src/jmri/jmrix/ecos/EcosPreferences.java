@@ -207,7 +207,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/{
     * Currently not implemented.
     */
 
-    private String _defaultecosprotocol = "DCC128";
+    /*private String _defaultecosprotocol = "DCC128";
 
     public String getDefaultEcosProtocol(){
         return _defaultecosprotocol;
@@ -216,7 +216,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/{
     public void setDefaultEcosProtocol(String boo){
         _defaultecosprotocol = boo;
         changeMade();
-    }
+    }*/
 
     /**
     * Stores the users preferance for deleting a loco from the roster should it,

@@ -45,7 +45,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
     ButtonGroup _locoEcosControl;
     ButtonGroup _locoControl;
     JCheckBox _rememberAdhocLocosEcos;
-    JComboBox _defaultProtocol;
+    //JComboBox _defaultProtocol;
     EcosPreferences ep;
     boolean updateButtonPressed=false;
     
@@ -122,7 +122,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         } else {
             _locoControlNormal.setSelected(true);
         }
-        setEcosProtocolType(_defaultProtocol, ep.getDefaultEcosProtocol());
+        //setEcosProtocolType(_defaultProtocol, ep.getDefaultEcosProtocol());
     }
     
     private JPanel turnoutTab(){
@@ -337,7 +337,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         locoEcosControlGroup.add(_forceControlLocoEcosAlways);
         locoEcosControlGroup.setAlignmentX(Component.CENTER_ALIGNMENT);
         throttletabpanel.add(locoEcosControlGroup);
-        throttletabpanel.add(new JSeparator(SwingConstants.HORIZONTAL));
+        /*throttletabpanel.add(new JSeparator(SwingConstants.HORIZONTAL));
         
         JPanel _defaultprotocolpanel = new JPanel();
 
@@ -345,10 +345,10 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         _defaultprotocolpanel.add(_defaultprotocolLabel);
         _defaultProtocol = new JComboBox();
         initializeEcosProtocolCombo(_defaultProtocol);
-        //if (ep.getLocoMaster()!=0x00)
+        if (ep.getLocoMaster()!=0x00)
         setEcosProtocolType(_defaultProtocol, ep.getDefaultEcosProtocol());
-        _defaultprotocolpanel.add(_defaultProtocol);
-        throttletabpanel.add(_defaultprotocolpanel);
+        defaultprotocolpanel.add(_defaultProtocol);
+        throttletabpanel.add(_defaultprotocolpanel);*/
         throttletabpanel.add(new JSeparator(SwingConstants.HORIZONTAL));
         _locoControl = new ButtonGroup();
         _locoControlNormal = new JRadioButton("Always gracefully gain control");
@@ -386,7 +386,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         ep.setRemoveTurnoutsFromEcos(getChoiceType(_removeTurnoutsEcos));
         //ep.setAddTurnoutsToEcos(getChoiceType(_addTurnoutsEcos));
         ep.setLocoMaster(getMasterControlType(_masterControl));
-        ep.setDefaultEcosProtocol(getEcosProtocol(_defaultProtocol));
+        //ep.setDefaultEcosProtocol(getEcosProtocol(_defaultProtocol));
         ep.setEcosLocoDescription(_ecosDescription.getText());
         ep.setRosterAttribute(_ecosAttSufText.getText());
         
