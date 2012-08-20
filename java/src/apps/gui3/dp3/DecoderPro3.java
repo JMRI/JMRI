@@ -28,7 +28,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
     private static String applicationName = "DecoderPro 3";
 
     public DecoderPro3(String[] args) {
-        super(applicationName, "DecoderPro3xml", args);
+        super(applicationName, "DecoderProConfig3.xml", args);
     }
     
     public synchronized static File getMenuFile() {
