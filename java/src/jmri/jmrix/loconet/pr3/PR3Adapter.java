@@ -20,6 +20,10 @@ public class PR3Adapter extends LocoBufferAdapter {
 
     public PR3Adapter() {
         super();
+        
+        options.remove(option2Name);
+        options.put(option2Name, new Option("Command station type:", commandStationOptions(), false));
+        
         /*As this extends the locobuffer, we need to remove the SystemConnectionMemo,
         that it has created and replace it with our own. dispose has to be done to
         the registered connection details.*/
@@ -149,7 +153,7 @@ public class PR3Adapter extends LocoBufferAdapter {
     /**
      * The PR3 can be used in numerous modes, so handle that
      */
-    public String[] validOption2() {
+    public String[] commandStationOptions() {
         String[] retval = new String[commandStationNames.length+2];
         retval[0] = "PR3 standalone programmer";
         for (int i=0; i<commandStationNames.length; i++) {
