@@ -451,28 +451,28 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
     }
 
 
-    String[] ecosProtocolTypes = {"DCC14","DCC28", "DCC128", "MM14", "MM27", "MM28", "SX32", "MMFKT"};
-    int numProtocolTypes = 8;  // number of entries in the above arrays
+   // String[] ecosProtocolTypes = {"DCC14","DCC28", "DCC128", "MM14", "MM27", "MM28", "SX32", "MMFKT"};
+   // int numProtocolTypes = 8;  // number of entries in the above arrays
 
-    private void initializeEcosProtocolCombo(JComboBox protocolCombo) {
+    /*private void initializeEcosProtocolCombo(JComboBox protocolCombo) {
 		protocolCombo.removeAllItems();
 		for (int i = 0;i<numProtocolTypes;i++) {
 			protocolCombo.addItem(ecosProtocolTypes[i]);
 		}
-	}
-    private void setEcosProtocolType(JComboBox masterBox, String protocol){
+	}*/
+    /*private void setEcosProtocolType(JComboBox masterBox, String protocol){
         for (int i = 0;i<numProtocolTypes;i++) {
 			if (protocol.equals(ecosProtocolTypes[i])) {
 				masterBox.setSelectedIndex(i);
 				return;
 			}
 		}
-    }
+    }*/
 
-    private String getEcosProtocol(JComboBox masterBox){
+    /*private String getEcosProtocol(JComboBox masterBox){
         return ecosProtocolTypes[masterBox.getSelectedIndex()];
 
-    }
+    }*/
 }
 
 

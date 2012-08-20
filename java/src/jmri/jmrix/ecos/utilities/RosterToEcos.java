@@ -31,9 +31,9 @@ public class RosterToEcos implements EcosListener{
         
         String protocol = "";
         switch(re.getProtocol()){
-            case jmri.LocoAddress.MOTOROLA: protocol = "MM28";
-            case jmri.LocoAddress.SELECTRIX: protocol = "SX28";
-            case jmri.LocoAddress.MFX: protocol = "MMFKT";
+            case jmri.LocoAddress.MOTOROLA: protocol = "MM28"; break;
+            case jmri.LocoAddress.SELECTRIX: protocol = "SX28"; break;
+            case jmri.LocoAddress.MFX: protocol = "MMFKT"; break;
             default: protocol = "DCC128";
         }
 
@@ -93,9 +93,9 @@ public class RosterToEcos implements EcosListener{
                         objEcosLoco.setEcosDescription(description());
                         objEcosLoco.setEcosLocoAddress(Integer.parseInt(_re.getDccAddress()));
                         switch(_re.getProtocol()){
-                            case jmri.LocoAddress.MOTOROLA: objEcosLoco.setProtocol("MM28");
-                            case jmri.LocoAddress.SELECTRIX: objEcosLoco.setProtocol("SX28");
-                            case jmri.LocoAddress.MFX: objEcosLoco.setProtocol("MMFKT");
+                            case jmri.LocoAddress.MOTOROLA: objEcosLoco.setProtocol("MM28"); break;
+                            case jmri.LocoAddress.SELECTRIX: objEcosLoco.setProtocol("SX28"); break;
+                            case jmri.LocoAddress.MFX: objEcosLoco.setProtocol("MMFKT"); break;
                             default: objEcosLoco.setProtocol("DCC128");
                         }
                         _re.writeFile(null, null, null);
