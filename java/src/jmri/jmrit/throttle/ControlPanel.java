@@ -1390,6 +1390,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         if ((addressPanel!=null) && (addressPanel.getRosterEntry() != null) && (addressPanel.getRosterEntry().getShuntingFunction() != null)) {
         	prevShuntingFn = getSwitchSliderFunction();
         	setSwitchSliderFunction(addressPanel.getRosterEntry().getShuntingFunction());
+        } else {
+            setSwitchSliderFunction(switchSliderFunction); // reset slider 
         }	
 	}
 
@@ -1408,7 +1410,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 		switchSliderFunction = fn;
                 if ((switchSliderFunction==null) || (switchSliderFunction.length()==0))
                     return;
-		if (throttle != null) { // Update UI depending on function state
+		if ((throttle != null) && (_displaySlider != STEPDISPLAY)){ // Update UI depending on function state
 			try {
 				java.lang.reflect.Method getter = throttle.getClass().getMethod("get" + switchSliderFunction, (Class[]) null);
 				if (getter!=null) {
