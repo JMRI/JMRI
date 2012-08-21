@@ -115,9 +115,9 @@ public final class WebServer implements LifeCycle.Listener {
      */
     public static String URIforPortablePath(String path) {
         if (path.startsWith(FileUtil.PREFERENCES)) {
-            return path.replaceFirst(FileUtil.PREFERENCES, "http://" + getLocalAddress() + ":" + WebServerManager.getWebServerPreferences().getPort() + "/prefs/");
+            return path.replaceFirst(FileUtil.PREFERENCES, "/prefs/");
         } else if (path.startsWith(FileUtil.PROGRAM)) {
-            return path.replaceFirst(FileUtil.PROGRAM, "http://" + getLocalAddress() + ":" + WebServerManager.getWebServerPreferences().getPort() + "/dist/");
+            return path.replaceFirst(FileUtil.PROGRAM, "/dist/");
         } else {
             return null;
         }
