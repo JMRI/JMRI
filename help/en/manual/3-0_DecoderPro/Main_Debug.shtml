@@ -123,10 +123,10 @@
   <p>Opens a <a href="Main_Throttle.shtml">Throttle </a>window that is designed to work with <a href="../html/hardware/raildriver/index.shtml">Rail Driver</a>.</p>
 </blockquote>
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
-<p><strong>Start Mini Web Server</strong></p>
+<p><strong>Start JMRI Web Server</strong></p>
 <blockquote>
   <p>Starts a Web Server on your computer. You can access the Index.shtml page using the URL displayed in the dialog.</p>
-  <p>The <a href="../html/web/index.shtml">JMRI mini web server </a>is meant to be a quick and easy  way for model railroaders, not Masters of the Web,   to get a web connection to JMRI up and running.</p>
+  <p>The <a href="http://jmri.org/help/en/html/web/MiniServer.shtml">JMRI web server </a>is meant to be a quick and easy  way for model railroaders, not Masters of the Web,   to get a web connection to JMRI up and running.</p>
 </blockquote>
 <p align="center"><img src="images/Main_Debug03.png" width="428" height="70" alt="mini server"></p>
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>

@@ -57,9 +57,13 @@
 <p>Opens the <strong>Upload Debugging Info</strong> Window
 <p><img src="images/Main_Help_04.png" width="577" height="311" alt="help">
 <hr>
-
+<p><strong>About Decoder Pro</strong></p>
+<p>Opens the Credits and Version Window.</p>
+<p><img src="images/Main_Help_05.png" width="242" height="299" alt="About"></p>
+<hr>
+<p>&nbsp;</p>
 <div align=right>
-<p><a href="Main_Window.shtml">Previous</a></p>
+  <p><a href="Main_Window.shtml">Previous</a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 

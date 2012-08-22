@@ -220,11 +220,12 @@ The Basic Programmer</h4>
           <li><a href="Ops_Trains.shtml">Trains</a></li>
         </ul>
       </li>
+      <li><strong>Start JMRI Web Server</strong></li>
     </ul>
   </li>
-  <li></li>
   <li><a href="Main_Roster.shtml">Roster Menu</a>
     <ul>
+      <li>Roster (DecoderPro3)</li>
       <li><a href="Main_Roster.shtml#CreateRoster">Create Entry...</a></li>
       <li><a href="Main_Roster.shtml#EditRoster">Edit Entry...</a></li>
       <li>Copy Entry...</li>
@@ -238,8 +239,8 @@ The Basic Programmer</h4>
           <li>Create Roster Group</li>
           <li>Delete Roster Group</li>
           <li>Table Association</li>
-          <li>Associate Roster Entry to Group</li>
-          <li>Disassociation of Roster Entry to Group</li>
+          <li>Add Roster Entry to Group</li>
+          <li>Remove  Roster Entry from Group</li>
         </ul>
       </li>
       <li>Export Complete Roster...</li>
@@ -254,10 +255,25 @@ The Basic Programmer</h4>
           <li><a href="Main_Panels.shtml#LayoutEditor">Layout Editor</a></li>
         </ul>
       </li>
-      <li>Load Panels...</li>
-      <li>Store Panels...</li>
+      <li>Open Panels...</li>
+      <li>Save Panels...</li>
       <li>Show History</li>
-      <li>Show Panel <img src="images/arrow.gif" width="20" height="9" alt="arrow"></li>
+      <li>Show Panel <img src="images/arrow.gif" width="20" height="9" alt="arrow">
+        <ul>
+          <li>
+            <input type="checkbox" name="checkbox4" id="checkbox4">
+          Panel </li>
+          <li>
+            <input type="checkbox" name="checkbox5" id="checkbox5">
+          Panel 2</li>
+          <li>
+            <input type="checkbox" name="checkbox6" id="checkbox6">
+          Control Panel</li>
+          <li>
+            <input type="checkbox" name="checkbox7" id="checkbox7">
+          My Layout</li>
+        </ul>
+      </li>
       <li>Run Script...</li>
       <li><a href="/Main_Panels.shtml#ThreadMonitor">Thread Monitor</a></li>
       <li>Script Output</li>
@@ -284,19 +300,82 @@ The Basic Programmer</h4>
         <ul>
           <li><strong>Tools</strong>
             <ul>
-              <li>Print</li>
-              <li>Preview</li>
               <li><a href="Ops_schedule.shtml">Schedules</a></li>
               <li><a href="Ops_Locations_byCar.shtml">Modify Locations by Car Type</a></li>
               <li><a href="Ops_Cars.shtml">Show Cars</a>          </li>
+              <li>Print</li>
+              <li>Preview</li>
             </ul>
           </li>
         </ul>
       </li>
-      <li><a href="Ops_Cars.shtml">Cars</a></li>
-      <li><a href="Ops_Engines.shtml">Locomotives</a></li>
-      <li><a href="Ops_Routes.shtml">Routes</a></li>
-      <li><a href="Ops_Trains.shtml">Trains</a></li>
+      <li><a href="Ops_Cars.shtml">Cars</a>
+        <ul>
+          <li><strong>Tools</strong>
+            <ul>
+              <li>Roster <img src="images/arrow.gif" width="20" height="9" alt="arrow">
+                <ul>
+                  <li>Import from file</li>
+                  <li>Export to file</li>
+                  <li>Delete All Cars</li>
+                  <li>Print</li>
+                  <li>Preview</li>
+                </ul>
+              </li>
+              <li><a href="Ops_Locations_byCar.shtml">Modify Locations by Car Type</a></li>
+              <li><a href="Ops_Locations_Modify_Trains.shtml">Modify Trains by Car Type</a></li>
+              <li><a href="Ops_Locations_setCars.shtml">Set Cars</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="Ops_Engines.shtml">Locomotives</a>
+        <ul>
+          <li><strong>Tools</strong>
+<ul>
+              <li>Roster <img src="images/arrow.gif" width="20" height="9" alt="arrow">
+                <ul>
+                  <li>Import from JMRI Roster</li>
+                  <li>Import from file</li>
+                  <li>Export to file</li>
+                  <li>Delete All Locomotives</li>
+                  <li>Print</li>
+                  <li>Preview</li>
+                </ul>
+              </li>
+              <li>Synchonize with NCE Consists</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="Ops_Routes.shtml">Routes</a>
+        <ul>
+          <li><strong>Tools</strong>
+            <ul>
+              <li>Copy Routes</li>
+              <li>Set Train Icon Coordinates</li>
+              <li>Print</li>
+              <li>Preview</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="Ops_Trains.shtml">Trains</a>
+        <ul>
+          <li><strong>Tools</strong>
+            <ul>
+              <li><a href="Ops_Trains_BuildOptions.shtml">Build Options</a></li>
+              <li><a href="Ops_PrintOptions.shtml">Print Options</a></li>
+              <li><a href="Ops_TrainsModify.shtml">Modify Trains by Car Type</a></li>
+              <li>Timetable</li>
+              <li>Copy Train</li>
+              <li>Scripts</li>
+              <li>Print</li>
+              <li>Preview</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
     </ul>
   </li>
   <li><a href="Main_Menu.shtml#System">System dependent menu </a>
@@ -349,7 +428,7 @@ The Basic Programmer</h4>
           <li>USB Input Control</li>
           <li>USB Device Viewer</li>
           <li>RailDriver Throttle</li>
-          <li>Start Mini Web Server</li>
+          <li>Start JMRI Web Server</li>
           <li>Start Wi Throttle</li>
     </ul>
   </li>
@@ -379,6 +458,7 @@ The Basic Programmer</h4>
           <li>Context....</li>
           <li>System Console...</li>
           <li>Upload Debugging info...</li>
+          <li>About DecoderPro</li>
     </ul>
 </li>
 </ul>
