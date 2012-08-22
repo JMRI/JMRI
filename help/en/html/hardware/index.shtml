@@ -282,6 +282,7 @@
 	    <dt class="im">
 	    </dt>
 	    <dt>TAMS</dt>
+        <a href="http://www.tams-online.de/"><img src="images/tams_logo.gif" width="48" height="20" alt="TAMS"></a>
 	    <dd><p class="dl">Configure connection to 
 		<a href="tams/index.shtml">TAMS</a> Master Control command station.</p>
 		<p>&nbsp;</p>
