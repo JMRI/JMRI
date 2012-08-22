@@ -199,7 +199,12 @@
 		<p>Maple Systems touch panel</p>
 	        <p class="dl">Configure: <a href="maple/index.shtml">connection via serial link</a></p>
 	    </dd>
-
+	    <dt>Marklin</dt>
+        <a href="http:/www.marklin.com/"><img src="images/marklin_logo.gif" width="101" height="22" alt="TAMS"></a>
+	    <dd><p class="dl">Configure connection to 
+		<a href="marklin/index.shtml">CS2</a> Command Station 2.</p>
+        <a href="ecos/index.shtml">CS</a> Command Station - Reloaded see ESU ECoS</p>
+	    </dd>
 
 	    <dt class="im"><a href="http://www.merg.org.uk/">
 	    <img src="http://www.merg.org.uk/images/logo1m.gif" alt="MERG logo" height="45" width="100"></a></dt>
