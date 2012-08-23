@@ -24,6 +24,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Container;
 import java.awt.BorderLayout;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -516,6 +518,10 @@ public class EntryExitPairs implements jmri.Manager{
     
     class Source {
     
+        JMenu entryExitPopUp = null;
+        JMenuItem clear = null;
+        JMenuItem cancel = null;
+    
         NamedBean sourceObject = null;
         NamedBean sourceSignal = null;
         jmri.SignalMastLogic sml;
@@ -552,6 +558,65 @@ public class EntryExitPairs implements jmri.Manager{
             point.setSource(this);
             sourceSignal = getSignalFromPoint(point);
             pd = point;
+            createPopUpMenu();
+        }
+        
+        void createPopUpMenu(){
+            if(entryExitPopUp!=null)
+                return;
+            entryExitPopUp = new JMenu("Entry Exit");
+            JMenuItem editClear = new JMenuItem("Clear Route");
+            editClear.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    cancelClearInterlockFromSource(CLEARROUTE);
+                }
+            });
+            entryExitPopUp.add(editClear);
+            JMenuItem editCancel = new JMenuItem("Cancel Route");
+            editCancel.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) { 
+                    cancelClearInterlockFromSource(CANCELROUTE);
+                }
+            });
+            entryExitPopUp.add(editCancel);
+            
+            clear = new JMenuItem("Clear Route");
+            clear.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    cancelClearInterlockFromSource(CLEARROUTE);
+                }
+            });
+
+            cancel = new JMenuItem("Cancel Route");
+            cancel.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) { 
+                    cancelClearInterlockFromSource(CANCELROUTE);
+                }
+            });
+            
+            pd.getPanel().addToPopUpMenu(pd.getSensor(), entryExitPopUp, jmri.jmrit.display.Editor.EDITPOPUPONLY);
+            pd.getPanel().addToPopUpMenu(pd.getSensor(), clear, jmri.jmrit.display.Editor.VIEWPOPUPONLY);
+            pd.getPanel().addToPopUpMenu(pd.getSensor(), cancel, jmri.jmrit.display.Editor.VIEWPOPUPONLY);
+            setMenuEnabled(false);
+        }
+        
+        void cancelClearInterlockFromSource(int cancelClear){
+            for(DestinationPoints dp:pointToDest.values()){
+                if(dp.isActive()){
+                    dp.cancelClearInterlock(cancelClear);
+                }
+            }
+        }
+        
+        void setMenuEnabled(boolean boo){
+            if (entryExitPopUp!=null)
+                entryExitPopUp.setEnabled(boo);
+            if (clear!=null)
+                clear.setEnabled(boo);
+            if (cancel!=null)
+                cancel.setEnabled(boo);
+            
+        
         }
         
         PointDetails getPoint(){
@@ -606,7 +671,6 @@ public class EntryExitPairs implements jmri.Manager{
         
         boolean isDestinationValid(PointDetails destPoint){
             return pointToDest.containsKey(destPoint);
-                
         }
         
         boolean getUniDirection(Object dest, LayoutEditor panel){
@@ -1058,8 +1122,11 @@ public class EntryExitPairs implements jmri.Manager{
                         } catch (RuntimeException ex) {
                             log.error("An error occured while setting the route");
                             ex.printStackTrace();
+                            setNXButtonState(pd, NXBUTTONINACTIVE);
+                            setNXButtonState(point, NXBUTTONINACTIVE);
                         }
                         getPoint().getPanel().getGlassPane().setVisible(false);
+                        setMenuEnabled(true);
                     }
                 };
                 Thread thrMain = new Thread(setRouteRun, "Entry Exit Set Route");
@@ -1152,7 +1219,7 @@ public class EntryExitPairs implements jmri.Manager{
                     getPoint().getPanel().getGlassPane().setVisible(false);
                     return;
                 }
-                
+                setMenuEnabled(false);
                 if (sourceSignal instanceof SignalMast){
                     SignalMast mast = (SignalMast) sourceSignal;
                     mast.setAspect(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER));
@@ -1193,9 +1260,9 @@ public class EntryExitPairs implements jmri.Manager{
                             routeDetails.get(0).getBlock().getSensor().setState(Sensor.ACTIVE);
                             getStart().getBlock().getSensor().setState(Sensor.INACTIVE);
                         } catch (java.lang.NullPointerException e){
-                            log.error(e);
+                            log.error("error in clear route A " + e);
                         } catch (JmriException e){
-                            log.error(e);
+                            log.error("error in clear route A " + e);
                         }
                         if (log.isDebugEnabled()){ 
                             log.debug(mUserName + "  Going to clear routeDetails down " + routeDetails.size());
@@ -1216,9 +1283,10 @@ public class EntryExitPairs implements jmri.Manager{
                                     routeDetails.get(i-1).getOccupancySensor().setState(Sensor.INACTIVE); //was getBlock().getSensor()
                                     routeDetails.get(i-1).getBlock().goingInactive();
                                 } catch (java.lang.NullPointerException e){
-                                    log.error(e);
+                                    log.error("error in clear route b " + e);
+                                    e.printStackTrace();
                                 } catch (JmriException e){
-                                    log.error(e);
+                                    log.error("error in clear route b " + e);
                                 }
                             }
                             try{
@@ -1228,11 +1296,11 @@ public class EntryExitPairs implements jmri.Manager{
                                 if (log.isDebugEnabled()) log.debug(mUserName + " out of loop Set inactive " + routeDetails.get(routeDetails.size()-2).getUserName() + " " + routeDetails.get(routeDetails.size()-2).getBlock().getSystemName());
                                 routeDetails.get(routeDetails.size()-2).getOccupancySensor().setState(Sensor.INACTIVE);
                             } catch (java.lang.NullPointerException e){
-                                log.error(e);
+                                log.error("error in clear route c " +e);
                             } catch (java.lang.ArrayIndexOutOfBoundsException e){
-                                log.error(e);
+                                log.error("error in clear route c " +e);
                             }   catch (JmriException e){
-                                log.error(e);
+                                log.error("error in clear route c " +e);
                             }
                         }
                     }

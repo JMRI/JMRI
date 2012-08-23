@@ -672,7 +672,6 @@ public class PositionablePopupUtil {
     public void setAdditionalViewPopUpMenu(JPopupMenu popup){
         if(viewAdditionalMenu.isEmpty())
             return;
-        popup.addSeparator();
         for(JMenuItem mi:viewAdditionalMenu){
             popup.add(mi);
         }
