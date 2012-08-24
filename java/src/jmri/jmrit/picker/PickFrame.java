@@ -30,7 +30,6 @@ public class PickFrame extends JmriJFrame {
                                     
             };
         setContentPane(new PickPanel(models));
-        setLocation(0,100);
         setVisible(true);
         pack();
     }
