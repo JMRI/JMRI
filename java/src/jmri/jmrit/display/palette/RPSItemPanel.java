@@ -32,19 +32,21 @@ public class RPSItemPanel extends FamilyItemPanel {
     }
 
     public void init() {
-        JPanel blurb = new JPanel();
-        blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
-        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("AddToPanel")));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("DragIconPanel")));
-        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(java.text.MessageFormat.format(ItemPalette.rbp.getString("ToAddDeleteModify"), 
-                                                       ItemPalette.rbp.getString("ButtonEditIcons"))));
-        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        JPanel panel = new JPanel();
-        panel.add(blurb);
-        add(panel);
-        super.init();
+    	if (!_initialized) {
+            JPanel blurb = new JPanel();
+            blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
+            blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+            blurb.add(new JLabel(ItemPalette.rbp.getString("AddToPanel")));
+            blurb.add(new JLabel(ItemPalette.rbp.getString("DragIconPanel")));
+            blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+            blurb.add(new JLabel(java.text.MessageFormat.format(ItemPalette.rbp.getString("ToAddDeleteModify"), 
+                                                           ItemPalette.rbp.getString("ButtonEditIcons"))));
+            blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+            JPanel panel = new JPanel();
+            panel.add(blurb);
+            add(panel);
+            super.init();
+    	}
     }
 
     protected void makeDndIconPanel(Hashtable<String, NamedIcon> iconMap, String displayKey) {

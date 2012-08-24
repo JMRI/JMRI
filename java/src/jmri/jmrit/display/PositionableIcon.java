@@ -62,24 +62,22 @@ public class PositionableIcon extends PositionableLabel {
     }
 
     public int maxHeight() {
-        if ((_iconMap==null) || (!_icon)) {
-            return super.maxHeight();
-        }
-        int max = 0;
-        Iterator<NamedIcon> iter = _iconMap.values().iterator();
-        while (iter.hasNext()) {
-            max = Math.max(iter.next().getIconHeight(), max);
+        int max = super.maxHeight();
+        if (_iconMap!=null) {
+            Iterator<NamedIcon> iter = _iconMap.values().iterator();
+            while (iter.hasNext()) {
+                max = Math.max(iter.next().getIconHeight(), max);
+            }        	
         }
         return max;
     }
     public int maxWidth() {
-        if ((_iconMap==null) || (!_icon)) {
-            return super.maxWidth();
-        }
-        int max = 0;
-        Iterator<NamedIcon> iter = _iconMap.values().iterator();
-        while (iter.hasNext()) {
-            max = Math.max(iter.next().getIconWidth(), max);
+        int max = super.maxWidth();
+        if (_iconMap!=null) {
+            Iterator<NamedIcon> iter = _iconMap.values().iterator();
+            while (iter.hasNext()) {
+                max = Math.max(iter.next().getIconWidth(), max);
+            }        	
         }
         return max;
     }
@@ -109,7 +107,11 @@ public class PositionableIcon extends PositionableLabel {
     }
 
     public void rotate(int deg) {
-        _rotate = deg%360;
+    	setDegrees(deg);
+    	if (_text && !_icon) {
+        	super.rotate(deg);
+        	return;
+    	}
         if (_iconMap==null) {
             return;
         }
@@ -117,7 +119,7 @@ public class PositionableIcon extends PositionableLabel {
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
             entry.getValue().rotate(deg, this);
-        }
+        }        	
         updateSize();
     }
 

@@ -383,10 +383,10 @@ public class IndicatorTrackIcon extends PositionableIcon
         }
         _trackPanel.init(updateAction, map);
         if (namedOccSensor!=null) {
-            _trackPanel.setOccDetector(namedOccSensor.getName());
+            _trackPanel.setOccDetector(namedOccSensor.getBean().getDisplayName());
         }
         if (namedOccBlock!=null) {
-            _trackPanel.setOccDetector(namedOccBlock.getName());
+            _trackPanel.setOccDetector(namedOccBlock.getBean().getDisplayName());
         }
         _trackPanel.setShowTrainName(_showTrain);
         _trackPanel.setPaths(_paths);

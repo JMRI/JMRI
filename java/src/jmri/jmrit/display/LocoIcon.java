@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
@@ -31,6 +32,9 @@ public class LocoIcon extends PositionableLabel {
     public static final String RED = "Red";
     public static final String BLUE = "Blue";
     public static final String YELLOW = "Yellow";
+    
+    private int _dockX = 0;
+    private int _dockY = 0;
 	
 	public LocoIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -55,7 +59,11 @@ public class LocoIcon extends PositionableLabel {
 
     public Positionable finishClone(Positionable p) {
         LocoIcon pos = (LocoIcon)p;
-        pos.setRosterEntry(getRosterEntry());
+        if (entry!=null) {
+            pos.setRosterEntry(getRosterEntry());       	
+        } else {
+        	pos.setText(getText());
+        }
         return super.finishClone(pos);
     }
 
@@ -89,10 +97,15 @@ public class LocoIcon extends PositionableLabel {
         if (isEditable()) {
             getEditor().setShowAlignmentMenu(this, popup);
             getEditor().setShowCoordinatesMenu(this, popup);
+            popup.add(makeDockingMenu());
+            popup.add(makeDockMenu());
+            getPopupUtility().setTextFontMenu(popup);
         } else {
+        	setRotateMenu(popup);
             if (entry==null) {
                 setTextEditMenu(popup);
             }
+            popup.add(makeDockMenu());
             getPopupUtility().setTextFontMenu(popup);
             getEditor().setRemoveMenu(this, popup);
         }
@@ -177,6 +190,54 @@ public class LocoIcon extends PositionableLabel {
     
     public RosterEntry getRosterEntry (){
     	return entry;
+    }
+    
+    protected JMenuItem makeDockingMenu() {
+    	JMenuItem dockingMenu = new JMenuItem(rb.getString("setDockingLocation"));
+    	dockingMenu.addActionListener(new ActionListener() {
+    		Editor ed;
+    		LocoIcon loco;
+    		ActionListener init(Editor e, LocoIcon l) {
+    			ed = e;
+    			loco =l;
+    			return this;
+    		}
+            public void actionPerformed(ActionEvent e) {
+            	ed.setSelectionsDockingLocation(loco); 
+            }
+        }.init(getEditor(), this));
+	return dockingMenu;
+}
+    public void setDockingLocation(int x, int y) {
+       	_dockX = x;
+       	_dockY = y;
+    }
+    
+    public int getDockX() {
+    	return _dockX;
+    }
+    public int getDockY() {
+    	return _dockY;
+    }
+    
+    public void dock() {
+    	setLocation(_dockX, _dockY);
+    }
+
+    protected JMenuItem makeDockMenu() {
+    	JMenuItem dockMenu = new JMenuItem(rb.getString("dockIcon"));
+    	dockMenu.addActionListener(new ActionListener() {
+    		Editor ed;
+    		LocoIcon loco;
+    		ActionListener init(Editor e, LocoIcon l) {
+    			ed = e;
+    			loco =l;
+    			return this;
+    		}
+           public void actionPerformed(ActionEvent e) {
+            	ed.dockSelections(loco); }
+        }.init(getEditor(), this));
+    	return dockMenu;
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIcon.class.getName());

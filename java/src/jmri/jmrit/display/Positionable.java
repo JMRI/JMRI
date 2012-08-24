@@ -103,6 +103,7 @@ public interface Positionable extends Cloneable  {
     public double getScale();
     public void rotate(int deg);
     public int getDegrees();
+    public boolean getSaveOpaque();		// for rotated text
 
     public void remove();
 

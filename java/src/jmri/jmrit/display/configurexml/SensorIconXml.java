@@ -203,8 +203,6 @@ public class SensorIconXml extends PositionableLabelXml {
             }
         }
         
-        loadTextInfo(l, element);
-        
         Attribute a = element.getAttribute("momentary");
         if ( (a!=null) && a.getValue().equals("true"))
             l.setMomentary(true);
@@ -212,6 +210,8 @@ public class SensorIconXml extends PositionableLabelXml {
             l.setMomentary(false);
         
         l.setSensor(name);
+        
+        loadTextInfo(l, element);
         ed.putItem(l);
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.SENSORS, element);
@@ -249,15 +249,15 @@ public class SensorIconXml extends PositionableLabelXml {
     }
     
     void loadTextInfo(SensorIcon l, Element element){
-        if (element.getAttribute("text")!=null) {
-            l.setText(element.getAttribute("text").getValue());
-        }
         super.loadTextInfo(l, element);
 
         loadSensorTextState("Active", l, element);
         loadSensorTextState("InActive", l, element);
         loadSensorTextState("Unknown", l, element);
         loadSensorTextState("Inconsistent", l, element);
+        if (element.getAttribute("text")!=null) {
+            l.setText(element.getAttribute("text").getValue());
+        }
     }
     
     @SuppressWarnings("unchecked")

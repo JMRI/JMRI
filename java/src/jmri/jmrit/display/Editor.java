@@ -2320,16 +2320,16 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
     }
 
-    protected boolean setTextAttributes(Positionable p, JPopupMenu popup) {
+    protected boolean setTextAttributes(PositionableLabel p, JPopupMenu popup) {
         if (p.getPopupUtility()==null) {
             return false;
         }
         popup.add(new AbstractAction(rb.getString("TextAttributes")){
-            Positionable comp;
+        	PositionableLabel comp;
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 new TextAttrDialog(comp);
             }
-            AbstractAction init(Positionable pos) {
+            AbstractAction init(PositionableLabel pos) {
                 comp = pos;
                 return this;
             }
@@ -2338,9 +2338,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 	
     class TextAttrDialog extends JDialog {
-        Positionable _pos;
+    	PositionableLabel _pos;
         jmri.jmrit.display.palette.DecoratorPanel _decorator;
-        TextAttrDialog(Positionable p) {
+        TextAttrDialog(PositionableLabel p) {
             super(_targetFrame, rb.getString("TextAttributes"), true);
             _pos = p;
             JPanel panel = new JPanel();
@@ -2361,8 +2361,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             doneButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
-                        setAttributes(util, _pos);
-                        setSelectionsAttributes(util, _pos);
+                        _pos.setText(_decorator.getText());
+                        setAttributes(util, _pos, _decorator.isOpaque());
+                        setSelectionsAttributes(util, _pos, _decorator.isOpaque());
                         dispose();
                     }
             });
@@ -2379,15 +2380,29 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
     }
     
-    protected void setAttributes(PositionablePopupUtil newUtil, Positionable pos) {
+    protected void setAttributes(PositionablePopupUtil newUtil, PositionableLabel pos, boolean isOpaque) {
+		pos.saveOpaque(isOpaque);
         pos.setPopupUtility(newUtil.clone(pos));
+		pos.setOpaque(isOpaque);
+        int deg = pos.getDegrees();
+        if (deg!=0) {
+            pos.rotate(0);
+    		pos.setOpaque(isOpaque);
+            pos.rotate(deg);        	
+        }
+		PositionablePopupUtil u = pos.getPopupUtility();
+		u.setMargin(u.getMargin());
+		pos.updateSize();
     }
 
-    protected void setSelectionsAttributes(PositionablePopupUtil util, Positionable p) { 
-        if (_selectionGroup!=null && _selectionGroup.contains(p)) {
+    protected void setSelectionsAttributes(PositionablePopupUtil util, Positionable pos, boolean isOpaque) { 
+        if (_selectionGroup!=null && _selectionGroup.contains(pos)) {
             for (int i=0; i<_selectionGroup.size(); i++) {
-                setAttributes(util, _selectionGroup.get(i));
-            }
+            	Positionable p = _selectionGroup.get(i);
+            	if ( p instanceof PositionableLabel ) {
+                    setAttributes(util, (PositionableLabel)p, isOpaque);           		
+            	}
+             }
         }
     }
 
@@ -2437,6 +2452,34 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         } else {
             p.rotate(k);
         }
+    }
+        
+    protected void setSelectionsDockingLocation(Positionable p) {
+        if (_selectionGroup!=null && _selectionGroup.contains(p)) {
+            for (int i=0; i<_selectionGroup.size(); i++) {
+            	Positionable pos = _selectionGroup.get(i);
+            	if (pos instanceof LocoIcon) {
+            		((LocoIcon)pos).setDockingLocation(pos.getX(), pos.getY());
+            	}
+            }
+        }
+        else if (p instanceof LocoIcon) {
+        		((LocoIcon)p).setDockingLocation(p.getX(), p.getY());
+        }
+    }
+        
+    protected void dockSelections(Positionable p) {
+        if (_selectionGroup!=null && _selectionGroup.contains(p)) {
+            for (int i=0; i<_selectionGroup.size(); i++) {
+            	Positionable pos = _selectionGroup.get(i);
+            	if (pos instanceof LocoIcon) {
+            		((LocoIcon)pos).dock();
+            	}
+            }
+        }
+        else if (p instanceof LocoIcon) {
+        		((LocoIcon)p).dock();
+        	}       	
     }
         
     protected boolean showAlignPopup(Positionable p) {

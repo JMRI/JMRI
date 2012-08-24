@@ -74,11 +74,7 @@ public class PositionablePopupUtil {
             util.setFont(util.getFont().deriveFont(getFontStyle()));
             util.setFontSize(getFontSize());
             util.setOrientation(getOrientation());
-            if (_parent.isOpaque()) {
-                util.setBackgroundColor(getBackground());
-            } else {
-                util.setBackgroundColor(null);
-            }
+            util.setBackgroundColor(getBackground());
             util.setForeground(getForeground());
         }
         return util;
@@ -180,7 +176,9 @@ public class PositionablePopupUtil {
             borderMargin = BorderFactory.createEmptyBorder(m, m, m, m);
             //_parent.setBorder(BorderFactory.createEmptyBorder(m, m, m, m));
         }
-        _parent.setBorder(new CompoundBorder(outlineBorder, borderMargin));
+        if (_showBorder) {
+            _parent.setBorder(new CompoundBorder(outlineBorder, borderMargin));        	
+        }
         _parent.updateSize();
     }
 
@@ -217,6 +215,19 @@ public class PositionablePopupUtil {
         }
         _parent.updateSize();
     }
+    
+    private boolean _showBorder = true;
+    public void setBorder(boolean set) {
+    	_showBorder = set;
+    	if (set) {
+            if(borderColor!=null){
+                outlineBorder = new LineBorder(borderColor, borderSize);
+                _parent.setBorder(new CompoundBorder(outlineBorder, borderMargin));
+             }
+    	} else {
+            _parent.setBorder(null);
+    	}
+    }
 
     public int getBorderSize() {
         return borderSize;
@@ -224,7 +235,7 @@ public class PositionablePopupUtil {
 
     public void setBorderColor(Color border){
         borderColor = border;
-        if(borderColor!=null){
+        if(borderColor!=null && _showBorder){
             outlineBorder = new LineBorder(borderColor, borderSize);
             _parent.setBorder(new CompoundBorder(outlineBorder, borderMargin));
         }
@@ -262,7 +273,7 @@ public class PositionablePopupUtil {
     }
 
     public Color getBackground() {
-        return _textComponent.getBackground();
+    	return _textComponent.getBackground();
     }
 
     protected JMenu makeFontSizeMenu() {

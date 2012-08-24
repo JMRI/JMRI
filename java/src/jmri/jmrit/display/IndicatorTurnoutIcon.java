@@ -512,10 +512,10 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         _TOPanel.initUpdate(updateAction, iconMaps);
         _TOPanel.setSelection(getTurnout());
         if (namedOccSensor!=null) {
-            _TOPanel.setOccDetector(namedOccSensor.getName());
+            _TOPanel.setOccDetector(namedOccSensor.getBean().getDisplayName());
         }
         if (namedOccBlock!=null) {
-            _TOPanel.setOccDetector(namedOccBlock.getName());
+            _TOPanel.setOccDetector(namedOccBlock.getBean().getDisplayName());
         }
         _TOPanel.setShowTrainName(_showTrain);
         _TOPanel.setPaths(_paths);

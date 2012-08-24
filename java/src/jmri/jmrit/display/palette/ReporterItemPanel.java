@@ -28,10 +28,12 @@ public class ReporterItemPanel extends TableItemPanel {
     }
 
     public void init() {
-        add(initTablePanel(_model, _editor));        // NORTH Panel
-        initIconFamiliesPanel();
-        add(_iconFamilyPanel);
-    }
+    	if (!_initialized) {
+            add(initTablePanel(_model, _editor));        // NORTH Panel
+            initIconFamiliesPanel();
+            add(_iconFamilyPanel);
+         	}
+   }
 
     protected JPanel instructions() {
         JPanel blurb = new JPanel();

@@ -126,6 +126,9 @@ public class PositionableJComponent extends JComponent implements Positionable {
     public int getDegrees() {
         return 0;
     }
+    public boolean getSaveOpaque() {
+    	return isOpaque();
+    }
 
     public String getNameString() {
         return getName();

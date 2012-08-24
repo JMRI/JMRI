@@ -33,9 +33,11 @@ public class LocoIconXml extends PositionableLabelXml {
         storeCommonAttributes(p, element);
 
         // include contents
-        element.setAttribute("text", p.getText());
+        if (p.getUnRotatedText()!=null) element.setAttribute("text", p.getUnRotatedText());
         storeTextInfo(p, element);
         element.setAttribute("icon", "yes");
+        element.setAttribute("dockX", ""+p.getDockX());
+        element.setAttribute("dockY", ""+p.getDockY());
         element.addContent(storeIcon("icon", (NamedIcon)p.getIcon()));
         RosterEntry entry = p.getRosterEntry();
         if (entry != null)
@@ -87,6 +89,15 @@ public class LocoIconXml extends PositionableLabelXml {
             }
     	}
     	l.updateIcon(icon);
+    	
+        try {
+            int x = element.getAttribute("dockX").getIntValue();
+            int y = element.getAttribute("dockY").getIntValue();
+            l.setDockingLocation(x, y);
+ //           l.dock();
+		} catch (Exception e) {
+			log.warn("failed to get docking location= "+e);
+		}
     	
         String rosterId = null;
 		try{

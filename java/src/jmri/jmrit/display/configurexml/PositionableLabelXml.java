@@ -39,7 +39,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         storeCommonAttributes(p, element);
 
         if (p.isText()) {
-            if (p.getText()!=null) element.setAttribute("text", p.getText());
+            if (p.getUnRotatedText()!=null) element.setAttribute("text", p.getUnRotatedText());
             storeTextInfo(p, element);
         }
         
@@ -70,7 +70,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             element.setAttribute("green", ""+util.getForeground().getGreen());
             element.setAttribute("blue", ""+util.getForeground().getBlue());
         }
-        if(p.isOpaque()){
+        if(p.isOpaque() || p.getSaveOpaque()){
             element.setAttribute("redBack", ""+util.getBackground().getRed());
             element.setAttribute("greenBack", ""+util.getBackground().getGreen());
             element.setAttribute("blueBack", ""+util.getBackground().getBlue());
@@ -127,11 +127,15 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         element.setAttribute("positionable", p.isPositionable()?"true":"false");
         element.setAttribute("showtooltip", p.showTooltip()?"true":"false");        
         element.setAttribute("editable", p.isEditable()?"true":"false");        
+        element.setAttribute("degrees", String.valueOf(p.getDegrees()));
         ToolTip tip = p.getTooltip();
         String txt = tip.getText();
         if (txt!=null) {
             Element elem = new Element("toolTip").addContent(txt);
             element.addContent(elem);
+        }        
+        if (p.getDegrees()!=0) {
+        	element.setAttribute("degrees", ""+p.getDegrees());
         }
     }
 
@@ -392,7 +396,16 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             l.setEditable(true);
         else
             l.setEditable(false);
-
+        
+        try {
+            a = element.getAttribute("degrees");
+            if(a!=null) {
+                l.rotate(a.getIntValue());
+            }
+        } catch (DataConversionException ex) {
+            log.warn("invalid 'degrees' value (non integer)");
+        }
+        
         Element elem = element.getChild("toolTip");
         if (elem!=null) {
             ToolTip tip = l.getTooltip();

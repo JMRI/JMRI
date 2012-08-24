@@ -39,9 +39,11 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     * insert panels for detection and train id
     */
     public void init() {
-        super.init();
-        _detectPanel= new DetectionPanel(this);
-        add(_detectPanel, 0);
+    	if (!_initialized) {
+            super.init();
+            _detectPanel= new DetectionPanel(this);
+            add(_detectPanel, 0);
+    	}
     }
 
     /**

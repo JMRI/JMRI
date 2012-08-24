@@ -6,8 +6,13 @@ import java.awt.Font;
 
 //import java.awt.event.ActionListener;
 //import java.awt.event.ActionEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
@@ -55,6 +60,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
 
     JRadioButton _foregrndButton = new JRadioButton(ItemPalette.rbp.getString("fontColor"));
     JRadioButton _backgrndButton = new JRadioButton(ItemPalette.rbp.getString("backColor"));
+    JRadioButton _transparentButton = new JRadioButton(ItemPalette.rbp.getString("transparentBack"));
     JRadioButton _borderButton = new JRadioButton(ItemPalette.rbp.getString("borderColor"));
 
     public static final int BORDER = 1;
@@ -69,19 +75,13 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
 
     JColorChooser _chooser;
     JPanel _preview;
-    Positionable _item;
-    PositionableLabel _sample;
+    PositionableLabel _item;	// copy of Positionable being edited
+    boolean _isOpaque;			// transfer opaqueness from decorator label here to panel label being edited
 
     Editor _editor;
     public DecoratorPanel(Editor editor) {
         _editor = editor;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    }
-
-    public void setText(String text) {
-        if (_sample!=null) {
-            _sample.setText(text);
-        }
     }
 
     static class AJComboBox extends JComboBox {
@@ -123,17 +123,36 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
 
         _preview = new JPanel();
         _preview.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1)));
+        String text = "";
         if (pos==null) {
-            _sample = new DragDecoratorLabel(ItemPalette.rbp.getString("sample"), _editor);
-            _sample.setSize(_sample.getPreferredSize().width, _sample.getPreferredSize().height);
-            _sample.setDisplayLevel(Editor.LABELS);
-            _sample.setVisible(true);
-            _preview.add(_sample);
+        	_item = new DragDecoratorLabel(ItemPalette.rbp.getString("sample"), _editor);
+         	_item.setDisplayLevel(Editor.LABELS);
+        	_item.setVisible(true);
         } else {
-            _item = pos.deepClone();
+            _item = (PositionableLabel)pos.deepClone();
+            _isOpaque = _item.getSaveOpaque();
+        	_item.rotate(0);
+        	PositionablePopupUtil u = _item.getPopupUtility();
+        	u.setMargin(u.getMargin());
             _item.setVisible(true);
-            _preview.add((JComponent)_item);
-        }
+            text = _item.getUnRotatedText();
+         }
+        _preview.add(_item);
+       JTextField textField = new JTextField(text, 25);
+        textField.addKeyListener(new KeyListener() {
+            public void keyTyped(KeyEvent E) { }
+            public void keyPressed(KeyEvent E){ }
+            public void keyReleased(KeyEvent E) { 
+              JTextField tmp = (JTextField) E.getSource();
+              _item.setText(tmp.getText());
+ //             preview();
+            }
+          });
+        JPanel panel = new JPanel();
+        panel.add(new JLabel(ItemPalette.rbp.getString("editText")));
+        panel.add(textField);
+        add(panel);
+     
         PositionablePopupUtil util = getPositionablePopupUtil();
         JPanel fontPanel = new JPanel();
         _fontSizeBox = new AJComboBox(FONTSIZE, SIZE);
@@ -187,19 +206,32 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         colorPanel.add(_foregrndButton);
         group.add(_backgrndButton);
         colorPanel.add(_backgrndButton);
-        group.add(_borderButton);
+        group.add(_transparentButton);
         colorPanel.add(_borderButton);
         _foregrndButton.setSelected(true);
         add(colorPanel);
 
+        colorPanel = new JPanel();
+        _transparentButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+            	if (_transparentButton.isSelected()) {
+            		PositionablePopupUtil util = getPositionablePopupUtil();
+        			util.setBackgroundColor(_item.getBackground());
+        			_item.setOpaque(false);
+            		util.setBackgroundColor(null);
+                	_isOpaque = false;
+                } else {
+                	_isOpaque = true;
+                }
+            }
+        });
+        colorPanel.add(_transparentButton);
+        group.add(_borderButton);
+        add(colorPanel);
+       
         _chooser = new JColorChooser(_editor.getTargetPanel().getBackground());
         _chooser.getSelectionModel().addChangeListener(this);
         _chooser.setPreviewPanel(_preview);
-        if (_sample==null) {
-            _preview.setSize(4*_item.getPreferredSize().width, 3*_item.getPreferredSize().height);
-        } else {
-            _preview.setSize(4*_sample.getPreferredSize().width, 3*_sample.getPreferredSize().height);
-        }
         _preview.setBackground(_editor.getTargetPanel().getBackground());
         add(_chooser);
 
@@ -229,6 +261,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 util.setForeground(_chooser.getColor());
             } else if (_backgrndButton.isSelected()) {
                 util.setBackgroundColor(_chooser.getColor());
+            	_isOpaque = true;
             } else if (_borderButton.isSelected()) {
                 util.setBorderColor(_chooser.getColor());
             }
@@ -236,13 +269,15 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     }
 
     public PositionablePopupUtil getPositionablePopupUtil() {
-        PositionablePopupUtil util;
-        if (_sample==null) {
-            util = _item.getPopupUtility();
-        } else {
-            util = _sample.getPopupUtility();
-        }
-        return util;
+        return _item.getPopupUtility();
+    }
+
+    public String getText() {
+        return _item.getText();
+    }
+    
+    public boolean isOpaque() {
+    	return _isOpaque;
     }
 
     public void itemStateChanged(ItemEvent e) {   
@@ -270,12 +305,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                             style = (Font.BOLD | Font.ITALIC);
                             break;
                     }
-                    if (_sample==null) {
-                        util.setFontStyle(style);
-                    } else {
-                        _sample.setFont(jmri.util.FontUtil.deriveFont(_sample.getFont(), style));
-                        _sample.updateSize();
-                    }
+                    util.setFontStyle(style);
+//                	_item.setFont(jmri.util.FontUtil.deriveFont(_item.getFont(), style));
+//                	_item.updateSize();
                     break;
                 case JUST:
                     int just = 0;
@@ -345,7 +377,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
-            return _sample.deepClone();
+            return _item.deepClone();
         }
     }
 

@@ -120,10 +120,14 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             if (_iconMap==null) {
                 makeIconMap();
             }
-            displayState(sensorState());
+ //           displayState(sensorState());
             getSensor().addPropertyChangeListener(this, s.getName(), "SensorIcon on Panel " + _editor.getName());
             setName(namedSensor.getName());  // Swing name for e.g. tests
         }
+        setAttributes();
+    }
+    
+    private void setAttributes() {
         if (isText()) {
             if (namedSensor!=null){
                 if (getSensor().getUserName()!=null)
@@ -358,7 +362,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             if (icon!=null) {
                 super.setIcon(icon);
             }
-        } else if ((isText())) {
+        } else if (isText()) {
             switch (state) {
                 case Sensor.UNKNOWN:
                     super.setText(unknownText);
@@ -381,6 +385,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                     getPopupUtility().setForeground(textColorInconsistent);
                     break;
             }
+            rotate(getDegrees());
         }
 
         updateSize();
@@ -515,6 +520,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     @Override
     public void setText(String s) {
+        setOpaque(false);
+       if (super._rotateText && !_icon) {
+        	return;
+        }
         _text = (s!=null && s.length()>0);
         super.setText(s);
         updateSize();
@@ -605,84 +614,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
         return clone;
     }
-    
-    @Override
-    public int maxWidthTrue() {
-        int max = 0;
-        if (_popupUtil!=null && _popupUtil.getFixedWidth()!=0) {
-            max = _popupUtil.getFixedWidth();
-            max += _popupUtil.getBorderSize()*2;
-            if (max < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
-                _popupUtil.setFixedWidth(PositionablePopupUtil.MIN_SIZE);
-                max = PositionablePopupUtil.MIN_SIZE;
-            }
-        } else {
-            if(_text && getText()!=null) {
-                if (getText().trim().length()==0) {
-                    // show width of 1 blank character
-                    if (getFont()!=null) {
-                        max = getFontMetrics(getFont()).stringWidth("0");
-                    }
-                } else {
-                    max = getFontMetrics(getFont()).stringWidth(getText());
-                }
-            }
-            if(_icon && _namedIcon!=null) {
-                max = Math.max(_namedIcon.getIconWidth(), max);
-            }
-            if (_popupUtil!=null) {
-                max += _popupUtil.getMargin()*2;
-                max += _popupUtil.getBorderSize()*2;
-            }
-            if (max < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
-                max = PositionablePopupUtil.MIN_SIZE;
-            }
-        }
-        if (debug) log.debug("maxWidth= "+max+" preferred width= "+getPreferredSize().width);
-        if (_iconMap!=null && _iconMap.size()>0) {
-            Iterator<NamedIcon> iter = _iconMap.values().iterator();
-            while (iter.hasNext()) {
-                max = Math.max(iter.next().getIconWidth(), max);
-            }
-        }
-        return max;
-    }
-
-    @Override
-    public int maxHeightTrue() {
-        int max = 0;
-        if (_popupUtil!=null && _popupUtil.getFixedHeight()!=0) {
-            max = _popupUtil.getFixedHeight();
-            max += _popupUtil.getBorderSize()*2;
-            if (max < PositionablePopupUtil.MIN_SIZE) {   // don't let item disappear
-                _popupUtil.setFixedHeight(PositionablePopupUtil.MIN_SIZE);
-            }
-        } else {
-            //if(_text) {
-            if(_text && getText()!=null && getFont()!=null) {
-                max = getFontMetrics(getFont()).getHeight();
-            }
-            if(_icon && _namedIcon!=null) {
-                max = Math.max(_namedIcon.getIconHeight(), max);
-            }
-            if (_popupUtil!=null) {
-                max += _popupUtil.getMargin()*2;
-                max += _popupUtil.getBorderSize()*2;
-            }
-            if (max < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
-                max = PositionablePopupUtil.MIN_SIZE;
-            }
-        }
-        if (debug) log.debug("maxHeight= "+max+" preferred height= "+getPreferredSize().height);
-        if (_iconMap!=null && _iconMap.size()>0) {
-            Iterator<NamedIcon> iter = _iconMap.values().iterator();
-            while (iter.hasNext()) {
-                max = Math.max(iter.next().getIconHeight(), max);
-            }
-        }
-        return max;
-    }
-
     // The code below here is from the layoutsensoricon.
 
     Color textColorActive = Color.black;
@@ -830,19 +761,25 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     void changeLayoutSensorType(){
-        NamedBeanHandle <Sensor> handle = getNamedSensor();
+//        NamedBeanHandle <Sensor> handle = getNamedSensor();
         if (isIcon()) {
             _icon = false;
             _text = true;
             setIcon(null);
-            setOriginalText(getText());
+            setOriginalText(getUnRotatedText());
+            setSuperText(null);
         } else if (isText()) {
             _icon = true;
-            _text = false;
-            //setText(null);
-            setText(getOriginalText());
+            _text = (originalText!=null && originalText.length()>0);
+            setSuperText(getOriginalText());
         }
-        setSensor(handle);
+        _namedIcon = null;
+        setAttributes();
+        if (_icon) {
+            setOpaque(false);        	
+        }
+//        setSensor(handle);
+        rotate(getDegrees());
     }
     
     int flashStateOn = -1;

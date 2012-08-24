@@ -1188,7 +1188,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 popupSet = false;
             }
             popupSet = p.setTextEditMenu(popup);
-            popupSet |= setTextAttributes(p, popup);
+            if (p instanceof PositionableLabel) {
+            	PositionableLabel pl = (PositionableLabel)p;
+            	if (!pl.isIcon()) {
+                    popupSet |= setTextAttributes(pl, popup);            	            		
+            	}
+            }
             if (popupSet) { 
                 popup.addSeparator();
                 popupSet = false;

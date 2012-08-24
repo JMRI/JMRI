@@ -126,6 +126,13 @@ public class NamedIcon extends ImageIcon {
      * Return the URL of this icon
      */
     public String getURL() { return mURL; }
+    
+    /**
+     * Set URL of original icon image
+     */
+    public void setURL(String url) {
+    	mURL = url;    	
+    }
 
     /**
      * Return the 0-3 number of 90-degree rotations needed to
@@ -154,6 +161,10 @@ public class NamedIcon extends ImageIcon {
     private String mName=null;
     private String mURL=null;
     private Image mDefaultImage;
+/*    
+    public Image getOriginalImage() {
+    	return mDefaultImage;
+    }*/
 
     /**
      * Valid values are <UL>

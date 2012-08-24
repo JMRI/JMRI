@@ -29,7 +29,7 @@ import jmri.util.JmriJFrame;
  *  modify border size
  *  modify margin size
  *  modify fixed size
- *  modify rotation degress
+ *  modify rotation degrees
  *  modify scaling
  *  modify text labels
  *  modify zoom scaling
@@ -574,19 +574,16 @@ public class CoordinateEdit extends JmriJFrame {
 
     public void initText() {
         PositionableLabel pLabel = (PositionableLabel)pl;
-        oldStr = pLabel.getText();
+        oldStr = pLabel.getUnRotatedText();
         textX = new javax.swing.JLabel();
 		textX.setText("Text= ");
 		textX.setVisible(true);
 
         xTextField = new javax.swing.JTextField(15);
-		xTextField.setText(pLabel.getText());
+		xTextField.setText(pLabel.getUnRotatedText());
 		xTextField.setToolTipText("Enter Text");
-//		xTextField.setMaximumSize(new Dimension(1000, xTextField.getPreferredSize().height));
-//				xTextField.getMaximumSize().width+100, xTextField.getPreferredSize().height));
 
-		getContentPane().setLayout(new GridBagLayout());
-		
+		getContentPane().setLayout(new GridBagLayout());		
 		addTextItems();
 
 		okButton.addActionListener(new java.awt.event.ActionListener() {

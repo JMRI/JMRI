@@ -125,6 +125,9 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     public int getDegrees() {
         return 0;
     }
+    public boolean getSaveOpaque() {
+    	return isOpaque();
+    }
 
     public String getNameString() {
         return getName();

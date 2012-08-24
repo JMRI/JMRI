@@ -36,9 +36,12 @@ public class BackgroundItemPanel extends IconItemPanel {
     }
 
     public void init() {
-        super.init();
-        add(initBottomPanel(), 2);
-        setSize(getPreferredSize());
+    	if (!_initialized) {
+    		Thread.yield();
+    		super.init();
+    		add(initBottomPanel(), 2);
+    		setSize(getPreferredSize());
+    	}
     }
 
     protected JPanel instructions() {
