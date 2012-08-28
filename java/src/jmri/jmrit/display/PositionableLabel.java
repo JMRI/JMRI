@@ -200,7 +200,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         }
         pos.setOpaque(isOpaque());
         pos._saveOpaque = _saveOpaque;
-        if (_namedIcon!=null) {
+        if (_icon && _namedIcon!=null) {
         	pos._namedIcon = cloneIcon(_namedIcon, pos);
             pos.setIcon(pos._namedIcon);
             pos.updateSize();
@@ -725,7 +725,11 @@ public class PositionableLabel extends JLabel implements Positionable {
     public void setDegrees(int deg) {
     	_degrees = deg;
     }
+    
     public int getDegrees() {
+    	if (_icon && _namedIcon!=null) {
+    		return _namedIcon.getDegrees();
+    	}
         return _degrees;
     }
     

@@ -41,6 +41,14 @@ public class PositionableIcon extends PositionableLabel {
         _control = true;
         setPopupUtility(null);
     }
+    
+    public Positionable finishClone(Positionable p) {
+    	PositionableIcon pos = (PositionableIcon)p;
+        pos._iconFamily = _iconFamily;
+        pos._scale = _scale;
+        pos._rotate = _rotate;
+        return super.finishClone(pos);
+    }
 
     /**
     * Get icon by its bean state name key found in jmri.NamedBeanBundle.properties
@@ -81,6 +89,9 @@ public class PositionableIcon extends PositionableLabel {
         }
         return max;
     }
+    
+    public void displayState(int state) {
+    }
 
     /******** popup AbstractAction method overrides *********/
 
@@ -105,12 +116,26 @@ public class PositionableIcon extends PositionableLabel {
         }
         updateSize();
     }
+    
+    public int getDegrees() {
+    	if (_text) {
+            return super.getDegrees();    		
+    	}
+        if (_iconMap!=null) {
+            Iterator<NamedIcon> it = _iconMap.values().iterator();
+            if (it.hasNext()) {
+                return it.next().getDegrees();
+            }        	
+        }
+        return super.getDegrees();
+    }
+    
 
     public void rotate(int deg) {
+    	_rotate = deg%360;
     	setDegrees(deg);
     	if (_text && !_icon) {
         	super.rotate(deg);
-        	return;
     	}
         if (_iconMap==null) {
             return;

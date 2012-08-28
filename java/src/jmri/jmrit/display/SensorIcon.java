@@ -74,7 +74,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     @Override
     public Positionable deepClone() {
-        SensorIcon pos = new SensorIcon(_editor);
+    	SensorIcon pos = new SensorIcon(_editor);
         return finishClone(pos);
     }
 
@@ -82,8 +82,25 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     public Positionable finishClone(Positionable p) {
         SensorIcon pos = (SensorIcon)p;
         pos.setSensor(getNamedSensor().getName());
+        pos.makeIconMap();
         pos._iconMap = cloneMap(_iconMap, pos);
         pos.setMomentary(getMomentary());
+        pos.originalText = originalText;
+        pos.setText(getText());
+        pos.setIcon(null);
+        pos._namedIcon = null;
+        pos.activeText = activeText;
+        pos.inactiveText = inactiveText;
+        pos.inconsistentText = inconsistentText;
+        pos.unknownText = unknownText;
+        pos.textColorInconsistent = textColorInconsistent;
+        pos.textColorUnknown = textColorUnknown;
+        pos.textColorInActive = textColorInActive;
+        pos.textColorActive = textColorActive;
+        pos.backgroundColorInActive = backgroundColorInActive;
+        pos.backgroundColorActive = backgroundColorActive;
+        pos.backgroundColorUnknown = backgroundColorUnknown;
+        pos.backgroundColorInconsistent = backgroundColorInconsistent;
         return super.finishClone(pos);
     }
 
@@ -608,7 +625,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 Entry<Integer, NamedIcon> entry = it.next();
                 clone.put(entry.getKey(), cloneIcon(entry.getValue(), pos));
                 if (pos!=null) {
-                    pos.setIcon(_state2nameMap.get(entry.getKey()), _iconMap.get(entry.getKey()));
+                    pos.setIcon(pos._state2nameMap.get(entry.getKey()), _iconMap.get(entry.getKey()));
                 }
             }
         }
@@ -768,18 +785,22 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             setIcon(null);
             setOriginalText(getUnRotatedText());
             setSuperText(null);
+            setOpaque(true);        	
         } else if (isText()) {
             _icon = true;
             _text = (originalText!=null && originalText.length()>0);
             setSuperText(getOriginalText());
-        }
-        _namedIcon = null;
-        setAttributes();
-        if (_icon) {
             setOpaque(false);        	
         }
+        _namedIcon = null;
+        displayState(sensorState());
+//        setAttributes();
 //        setSensor(handle);
-        rotate(getDegrees());
+        int deg = getDegrees();
+        rotate(deg);
+        if (deg!=0 && _text && !_icon) {
+            setSuperText(null);        	
+        }
     }
     
     int flashStateOn = -1;

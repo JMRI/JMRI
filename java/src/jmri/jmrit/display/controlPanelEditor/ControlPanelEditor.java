@@ -51,7 +51,7 @@ import jmri.util.HelpUtil;
  * 
  */
 
-public class ControlPanelEditor extends Editor implements DropTargetListener, ClipboardOwner {
+public class ControlPanelEditor extends Editor implements DropTargetListener, ClipboardOwner, KeyListener {
 
     public boolean _debug;
     protected JMenuBar _menuBar;
@@ -129,6 +129,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         InstanceManager.configureManagerInstance().registerUser(this);
         pack();
         setVisible(true);
+        addKeyListener(this);
     }
 
     protected void makeIconMenu() {
@@ -500,6 +501,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                             pos.updateSize();
                             pos.setVisible(true);
                             _selectionGroup.add(pos);
+                            if (pos instanceof PositionableIcon) {
+                            	jmri.NamedBean bean = pos.getNamedBean();
+                            	if (bean!=null) {
+                                	((PositionableIcon)pos).displayState(bean.getState());                            		
+                            	}
+                            }
                             if (_debug) log.debug("Paste Added at ("+pos.getLocation().x+", "+pos.getLocation().y+")");
                         }
                     }
@@ -833,6 +840,42 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
         return null;
     }
+    
+    /*********** KeyListener *********/
+    public void keyTyped(KeyEvent e) {
+    }
+    public void keyPressed(KeyEvent e) {
+    	if (_selectionGroup==null) {
+    		return;
+    	}
+        int x = 0;
+        int y = 0;
+        switch (e.getKeyCode()){
+        	case KeyEvent.VK_UP: 
+        	case KeyEvent.VK_KP_UP: 
+            	y=-1;
+                break;
+            case KeyEvent.VK_DOWN: 
+            case KeyEvent.VK_KP_DOWN: 
+            	y=1;
+                break;
+            case KeyEvent.VK_LEFT: 
+            case KeyEvent.VK_KP_LEFT: 
+            	x=-1;
+                break;
+            case KeyEvent.VK_RIGHT: 
+            case KeyEvent.VK_KP_RIGHT: 
+            	x=1;
+                break;
+        }
+        for (int i=0; i<_selectionGroup.size(); i++){
+            moveItem(_selectionGroup.get(i), x, y);
+        }
+        repaint();
+    }
+    public void keyReleased(KeyEvent e) {}
+    
+    /*********** Mouse ***************/
 
     public void mousePressed(MouseEvent event) {
         setToolTip(null); // ends tooltip if displayed
@@ -1098,7 +1141,14 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     void pasteItems() {
         if (_selectionGroup!=null) {
             for (int i=0; i<_selectionGroup.size(); i++) {
-                putItem(_selectionGroup.get(i));
+            	Positionable pos = _selectionGroup.get(i);
+                if (pos instanceof PositionableIcon) {
+                	jmri.NamedBean bean = pos.getNamedBean();
+                	if (bean!=null) {
+                    	((PositionableIcon)pos).displayState(bean.getState());                            		
+                	}
+                }
+                putItem(pos);
                 if (_debug) log.debug("Add "+_selectionGroup.get(i).getNameString());
             }
         }

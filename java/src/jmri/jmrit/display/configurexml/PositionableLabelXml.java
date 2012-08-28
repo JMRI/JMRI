@@ -127,7 +127,6 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         element.setAttribute("positionable", p.isPositionable()?"true":"false");
         element.setAttribute("showtooltip", p.showTooltip()?"true":"false");        
         element.setAttribute("editable", p.isEditable()?"true":"false");        
-        element.setAttribute("degrees", String.valueOf(p.getDegrees()));
         ToolTip tip = p.getTooltip();
         String txt = tip.getText();
         if (txt!=null) {
@@ -344,6 +343,16 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             util.setOrientation(a.getValue());
         else
             util.setOrientation("horizontal");
+        
+        try {
+            a = element.getAttribute("degrees");
+            if(a!=null) {
+                l.rotate(a.getIntValue());
+            }
+        } catch (DataConversionException ex) {
+            log.warn("invalid 'degrees' value (non integer)");
+        }
+        
     }
 
 	public void loadCommonAttributes(Positionable l, int defaultLevel, Element element) {
@@ -396,15 +405,6 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             l.setEditable(true);
         else
             l.setEditable(false);
-        
-        try {
-            a = element.getAttribute("degrees");
-            if(a!=null) {
-                l.rotate(a.getIntValue());
-            }
-        } catch (DataConversionException ex) {
-            log.warn("invalid 'degrees' value (non integer)");
-        }
         
         Element elem = element.getChild("toolTip");
         if (elem!=null) {

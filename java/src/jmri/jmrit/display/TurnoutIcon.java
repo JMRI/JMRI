@@ -32,7 +32,7 @@ import java.util.Map.Entry;
  * @version $Revision$
  */
 
-public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
+public class TurnoutIcon extends PositionableIcon implements java.beans.PropertyChangeListener {
 
     protected Hashtable <Integer, NamedIcon> _iconMap;          // state int to icon
     protected Hashtable <String, Integer> _name2stateMap;       // name to state
@@ -57,6 +57,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         pos.setTurnout(getNamedTurnout().getName());
         pos._iconMap = cloneMap(_iconMap, pos);
         pos.setTristate(getTristate());
+        pos._iconFamily = _iconFamily;
         return super.finishClone(pos);
     }
 
@@ -276,7 +277,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     /**
 	 * Drive the current state of the display from the state of the turnout.
 	 */
-    void displayState(int state) {
+    public void displayState(int state) {
         if (getNamedTurnout() == null) {
             log.debug("Display state "+state+", disconnected");
         } else {

@@ -364,6 +364,13 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
     
     public String useIconSet() { return useIconSet; }
+
+    /**
+     * Set display of ClipBoard copied or duplicated mast
+     */
+    public void displayState(int s) {
+    	displayState(mastState());
+    }
     
     /**
      * Drive the current state of the display from the state of the

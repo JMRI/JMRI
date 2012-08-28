@@ -104,7 +104,6 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
                 pos._paths.add(_paths.get(i));
             }
         }
-        pos._iconFamily = _iconFamily;
         pos._showTrain = _showTrain;
         return super.finishClone(pos);
     }
@@ -335,7 +334,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     /**
 	 * Drive the current state of the display from the state of the turnout and status of track.
 	 */
-    void displayState(int state) {
+    public void displayState(int state) {
         if (_loco!=null) {
             _loco.remove();
         }
