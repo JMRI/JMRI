@@ -112,7 +112,9 @@ public class MemoryIconXml extends PositionableLabelXml {
         } else {
             name = attr.getValue();
         }
-
+        
+        loadTextInfo(l, element);
+        
         Memory m = jmri.InstanceManager.memoryManagerInstance().getMemory(name);
         if (m!=null) {
             l.setMemory(name);
@@ -120,8 +122,6 @@ public class MemoryIconXml extends PositionableLabelXml {
             log.error("Memory named '"+attr.getValue()+"' not found.");
             ed.loadFailed();
         }
-        
-        loadTextInfo(l, element);
         
         Attribute a = element.getAttribute("selectable");
         if (a!=null && a.getValue().equals("yes")) l.setSelectable(true);
