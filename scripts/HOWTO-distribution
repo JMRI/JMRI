@@ -163,13 +163,14 @@ Final release steps:
 
     (SourceForge may have disabled CURL in their shell servers, in which
     case do this somewhere else with good connectivity)
+    (If you use a browser to download instead of curl, make sure the .tgz wasn't auto-expanded)
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o archive.zip "http://builds.jmri.org/jenkins/job/Test%20Release%202.13.5/lastSuccessfulBuild/artifact/jmri/dist/release/*zip*/release.zip"
+    curl -o archive.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.1.2/ws/jmri/dist/release/*zip*/release.zip"
     unzip archive.zip
     cd archive/jmri/dist/release
-    scp JMRI.2.13.5-* user,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
+    scp JMRI.3.1.2-* user,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
     (clean up and logout)
 
     Wait until the downloads have propagated to the mirrors; check
