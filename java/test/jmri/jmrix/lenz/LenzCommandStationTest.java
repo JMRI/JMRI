@@ -20,6 +20,56 @@ public class LenzCommandStationTest extends TestCase {
         Assert.assertNotNull(c);
     }
 
+    public void testVersion() {
+        // test setting the command station version from an XNetReply
+        LenzCommandStation c = new LenzCommandStation();
+        XNetReply r=new XNetReply();
+        // test a version that is BCD
+        r.setElement(0,0x63);
+        r.setElement(1,0x21);
+        r.setElement(2,0x36); // version 3.6
+        r.setElement(3,0x00); 
+        r.setElement(4,0x74);
+        c.setCommandStationSoftwareVersion(r);
+        Assert.assertEquals(3.6f,c.getCommandStationSoftwareVersion());
+        // test a version that is not BCD
+        r.setElement(0,0x63);
+        r.setElement(1,0x21);
+        r.setElement(2,0x8D); // version 8.13
+        r.setElement(3,0x00); 
+        r.setElement(4,0xCF);
+        c.setCommandStationSoftwareVersion(r);
+        Assert.assertEquals(8.13f,c.getCommandStationSoftwareVersion());
+    }
+
+    public void testType() {
+        // test setting the command station type from an XNetReply
+        LenzCommandStation c = new LenzCommandStation();
+        XNetReply r=new XNetReply();
+        r.setElement(0,0x63);
+        r.setElement(1,0x21);
+        r.setElement(2,0x36); 
+        r.setElement(3,0x00); // type is LZV100
+        r.setElement(4,0x74);
+        c.setCommandStationType(r);
+        Assert.assertEquals(0,c.getCommandStationType());
+        r.setElement(0,0x63);
+        r.setElement(1,0x21);
+        r.setElement(2,0x36);
+        r.setElement(3,0x01); // type is LH200 
+        r.setElement(4,0x75);
+        c.setCommandStationType(r);
+        Assert.assertEquals(1,c.getCommandStationType());
+        r.setElement(0,0x63);
+        r.setElement(1,0x21);
+        r.setElement(2,0x36);
+        r.setElement(3,0x02); // type is Compact 
+        r.setElement(4,0x76);
+        c.setCommandStationType(r);
+        Assert.assertEquals(2,c.getCommandStationType());
+    }
+
+
 	// from here down is testing infrastructure
 
 	public LenzCommandStationTest(String s) {

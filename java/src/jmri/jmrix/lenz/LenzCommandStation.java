@@ -76,7 +76,14 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.Com
               // This is the Command Station Software Version Response
               if(l.getElement(1)==XNetConstants.CS_SOFTWARE_VERSION)
               {
-                cmdStationSoftwareVersion=(l.getElementBCD(2).floatValue())/10;
+                try{
+                   cmdStationSoftwareVersion=(l.getElementBCD(2).floatValue())/10;
+                } catch (java.lang.NumberFormatException nfe) {
+                   // the number was not in BCD format as expected.
+                   // the upper nibble is the major version and the lower 
+                   // nibble is the minor version.
+                   cmdStationSoftwareVersion=((l.getElement(2)&0xf0)>>4)+(l.getElement(2)&0x0f)/100.0f;
+                }
                 cmdStationSoftwareVersionBCD=l.getElement(2);
               }
        }
