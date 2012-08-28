@@ -272,8 +272,8 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         if (!getOptionState(option1Name).equals(validOption1[0]))
             flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         activeSerialPort.setFlowControlMode(flow);
-        if (!getOptionState(option2Name).equals(validOption2[0]))
-            CheckBuffer = false;    
+        /*if (!getOptionState(option2Name).equals(validOption2[0]))
+            CheckBuffer = false;*/
     }
     
     

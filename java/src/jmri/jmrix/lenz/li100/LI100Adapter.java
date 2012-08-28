@@ -268,8 +268,8 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         if (!getOptionState(option1Name).equals(validOption1[0]))
             flow = 0;
         activeSerialPort.setFlowControlMode(flow);
-        if (getOptionState(option2Name).equals(validOption2[0]))
-            checkBuffer = true;
+        /*if (getOptionState(option2Name).equals(validOption2[0]))
+            checkBuffer = true;*/
     }
     
     
