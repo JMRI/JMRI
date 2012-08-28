@@ -33,6 +33,12 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
     SerialPort activeSerialPort = null;
     
     private boolean OutputBufferEmpty = true;
+
+    public LI100Adapter(){
+        super();
+        option1Name = "FlowControl";
+        options.put(option1Name, new Option("LI100F connection uses : ", validOption1));
+    }
     
     public String openPort(String portName, String appName)  {
         // open the port in XPressNet mode, check ability to set moderators
