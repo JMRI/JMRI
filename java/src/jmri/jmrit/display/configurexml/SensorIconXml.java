@@ -54,8 +54,10 @@ public class SensorIconXml extends PositionableLabelXml {
             String s = p.getOriginalText();
             if (s!=null && s.length()>0) {
                 element.setAttribute("text", s);
+            } else if (p.isText()){
+            	element.setAttribute("text", "");
             } else {
-                return;
+            	return;
             }
         } else {
             element.setAttribute("text", p.getText());
