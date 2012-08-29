@@ -17,12 +17,14 @@ import jmri.util.*;
 public class BlockTableActionTest extends jmri.util.SwingTestCase {
 
     public void testCreate() {
+        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         BlockTableAction ba = new BlockTableAction();
         assertNotNull("BlockTableAction is null!", ba);
         TestHelper.disposeWindow(ba.f, this);
     }
 
     public void testInvoke() {
+        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         BlockTableAction ba = new BlockTableAction();
         ba.actionPerformed(null);
         

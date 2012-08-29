@@ -18,6 +18,7 @@ public class BeanTableTest extends TestCase {
     }
 
     public void testExecute() {
+        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         new MemoryTableAction().actionPerformed(null);
     }
     

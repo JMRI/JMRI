@@ -17,6 +17,7 @@ public class RouteTableActionTest extends TestCase {
 
     public void testCreate() {
         new RouteTableAction();
+        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
     }
 
     public void testInvoke() {

@@ -58,6 +58,11 @@ public class BlockTableAction extends AbstractTableAction {
 		inchBox.setSelected(true);
 		centimeterBox.setSelected(false);
         
+        if(jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).getPreferenceState(getClassName(), "LengthUnitMetric")){
+            inchBox.setSelected(false);
+            centimeterBox.setSelected(true);
+        }
+        
         defaultBlockSpeedText = ("Use Global " + jmri.InstanceManager.blockManagerInstance().getDefaultSpeed());
         speedList.add(defaultBlockSpeedText);
         java.util.Vector<String> _speedMap = jmri.implementation.SignalSpeedMap.getMap().getValidSpeedNames();
@@ -687,7 +692,12 @@ public class BlockTableAction extends AbstractTableAction {
             InstanceManager.blockManagerInstance().savePathInfo(false);
             log.info("Requested not to save path information via Block Menu.");
         }
-
+    }
+    
+    @Override
+    public void dispose() {
+    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceState(getClassName(), "LengthUnitMetric",centimeterBox.isSelected());
+        super.dispose();
     }
 
     public String getClassDescription() { return rb.getString("TitleBlockTable"); }
