@@ -19,7 +19,7 @@
 # or
 # *) Copy and rename this script.
 #
-# If you rename the script to e.g. JmriNew, it will use "JmriNewConfig2.xml"
+# If you rename the script to e.g. JmriNew, it will use "JmriNewConfig.xml"
 # as it's configuration file.  You can then set and save the preferences for
 # the next time you rerun the script.
 #
