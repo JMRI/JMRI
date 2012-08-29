@@ -730,7 +730,6 @@ public class OperationsBackupTest extends TestCase {
 		backup.deleteOperationsFiles();
 		
 		// Now try to back up nothing.
-		String setName = backup.suggestBackupSetName();
 		backup.autoBackup();
 	}
 

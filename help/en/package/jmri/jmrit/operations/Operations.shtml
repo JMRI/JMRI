@@ -65,7 +65,9 @@ of tools and can be found under the main menu heading
     <LI><A HREF="#QuickStartHelp">Quick Start Help</A></LI>
     <LI><A HREF="#Settings">Settings</A>
      <UL>
-      <LI><A HREF="#BackupRestore">Backup and Restore</A></LI>
+      <LI><A HREF="#Backup">Backup</A></LI>
+      <LI><A HREF="#Restore">Restore</A></LI>
+      <LI><A HREF="#ResetDatabases">Reset Databases</A></LI>
       <LI><A HREF="#SettingsOptions">Options</A></LI>
      </UL></LI>
     <LI><A HREF="#PrintOptions">Print Options</A></LI>
@@ -389,29 +391,69 @@ store the setting in a file called "Operations.xml". You can find this
 file in your JMRI directory in a folder called "operations". The program
 will also create a backup file each time you press the save button. 
 
-<A	NAME="BackupRestore"></A>
-<H3>Backup and Restore</H3>
+<A	NAME="Backup"></A>
+<H3>Backup</H3>
 
-The "Backup" button will store a copy of the operation files. The
-"Restore" button will prompt you to select which set of backup files you
-wish to use to recover your operation files. You must quit and restart
-JMRI to complete the restoration of the operation files.
+<p>Copies of the operations files can be made to provide backups for both error 
+recovery and for archiving. The data files used for operations is a set of six 
+files and they are referred to as a "Backup Set". The program has two places that 
+it uses to store these backup sets, referred to as the "Automatic Backup Store" and 
+the "Regular Backup Store". These are stored under the JMRI "operations" directory in 
+your home directory as "autobackups" and "backups". The purpose of the automatic backups 
+is to make a copy of the files for "safe keeping" before changes are made to the main 
+operations files. This way, if anything gets messed up, there is a copy of the last 
+known good data that can easily be restored to undo the damage. In normal operation, 
+an automatic backup is made each time the program starts (if the "Auto Backup" setting 
+is checked on the Settings page), and right before a Restore, Reset Databases, or Load 
+Demo Files operation is done.</p>
 
-<P>When you press the "Backup" button the program creates a new
-directory in operations called "backups", and then stores the operation
-files in a directory that is based on the day you pressed the "Backup"
-button. For example, if today was November 21, 2008, the program will
-create a backup directory named "2008_11_21".  You can also rename the
-directory to whatever name you want. This would be useful if you had
-more than one railroad that you wanted to manage.</P>
+<p>Regular backups are done only when the user requests it by either clicking the "Backup" 
+button on the Settings page, or by selecting the "Backup" option on the Tools menu of the 
+Operations Settings page. The Backup button will copy the files to the Regular Backup 
+Store under the user's JMRI home directory as described above, while the Backup menu 
+option will allow the user to specify any directory. This can be useful when making an 
+archive copy that you want to move somewhere else for safekeeping.</p>
 
+<p>All backup sets have a default name based on the date the backup was done, plus a 
+sequence number, but this name can be changed to anything the user wants for Regular Backups. It is recommended 
+that the names of backup sets made for archive purposes be given a meaningful name, especially 
+if you are managing data for more than one railroad. For example, if today is August 29, 2012, 
+the program will create a backup directory named "2012_08_29_00".</p>
+
+
+<A	NAME="Restore"></A>
+<H3>Restore</H3>
+
+<p>Note that restoring a Backup Set will overwrite the current operations files, 
+therefore an Automatic Backup is done just before the restore copies the files, "just in case".</p>
+	 
+<p>Backup Sets can be restored from either the Automatic Store or the Regular Store using the 
+"Restore" button on the Settings page. Alternatively, the "Restore" menu option on the 
+Tools menu of the Operations Settings page allows you to navigate to any directory, 
+and would be used to restore an archived Backup Set.</p>
+
+<img src="images/RestoreDialog.png">
+
+<p>The date and time that the Backup Set was made is displayed along with the set name 
+to help distinguish the correct Backup Set.</p>
+
+<p>You must quit and restart JMRI to complete the restoration of the operation files. </p>
+
+
+<A	NAME="ResetDatabases"></A>
 <H3>Reset Databases</H3>
 
-To reset the operation databases to their original defaults, use the
-Operations-&gt;Settings-&gt;Tools menu and select "Reset Databases". The "Reset Database"
-option will make a backup copy of the current operation files before
-deleting them. The results will be that the settings, cars, locomotives,
-locations, and trains databases will be purged.
+<p>To reset the operation databases and remove them, use the "Reset Databases" 
+option on the Tools menu of the Operations Settings page. 
+An automatic backup copy of the current operation files will be made before 
+deleting the main files. The results will be that the settings, cars, locomotives, 
+locations, and trains databases will be purged. Note that after this is done and 
+JMRI restarts, the "Operations" menu item on the main menu will no longer be visible, 
+as there are no operations files to load. If you want to once again use the 
+operations feature, you can either load the demo files or restore a previous backup. 
+To do this, open the Operations Settings page by selecting the "Settings" 
+option on the Tools->Operations menu of the main page. From there you can 
+do either a restore or a load of the demo files in the usual way.</p>
 
 <A NAME="SettingsOptions"></A>
 <H2>Options</H2>
