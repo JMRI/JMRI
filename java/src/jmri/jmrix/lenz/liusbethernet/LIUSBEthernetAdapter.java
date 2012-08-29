@@ -9,6 +9,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
 
 import java.io.*;
 
+import jmri.util.zeroconf.ZeroConfClient;
 
 /**
  * Provide access to XPressNet via a the Lenz LIUSBEthernet.
@@ -42,6 +43,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
             if(log.isDebugEnabled()) log.debug("Constructor Called");
             setHostName(DEFAULT_IP_ADDRESS);
             setPort(COMMUNICATION_TCP_PORT);
+            new ZeroConfClient().startServiceListener("*.local.");  
         }
 
 

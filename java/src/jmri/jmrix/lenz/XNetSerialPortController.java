@@ -4,6 +4,8 @@ package jmri.jmrix.lenz;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import gnu.io.SerialPort;
+
 
 /**
  * Abstract base for classes representing a XNet communications port
@@ -14,6 +16,10 @@ import java.io.DataOutputStream;
  * @version			$Revision$
  */
 public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerialPortController implements XNetPortController {
+
+    protected SerialPort activeSerialPort = null;
+
+    private boolean OutputBufferEmpty = true;
 
     public XNetSerialPortController(){
         super();
@@ -35,18 +41,45 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
      * of configuration, not transient hardware status.
      */
     public abstract boolean status();
+
     
     /**
-     * Can the port accept additional characters?  This might
+     * Can the port accept additional characters?  
+     * The state of CTS determines this, as there seems to
+     * be no way to check the number of queued bytes and buffer length.
+     * This might
      * go false for short intervals, but it might also stick
      * off if something goes wrong.
      */
-    public abstract boolean okToSend();
+    public boolean okToSend(){
+       if((activeSerialPort.getFlowControlMode() & SerialPort.FLOWCONTROL_RTSCTS_OUT) == SerialPort.FLOWCONTROL_RTSCTS_OUT) {
+            if(checkBuffer) {
+                log.debug("CTS: " + activeSerialPort.isCTS() + " Buffer Empty: " + OutputBufferEmpty);
+                return (activeSerialPort.isCTS() && OutputBufferEmpty);
+            } else {
+                log.debug("CTS: " + activeSerialPort.isCTS());
+                return (activeSerialPort.isCTS());
+            }
+        }
+      else {
+            if(checkBuffer) {
+                log.debug("Buffer Empty: " + OutputBufferEmpty);
+                return (OutputBufferEmpty);
+            } else {
+                log.debug("No Flow Control or Buffer Check");
+                return(true);
+            }
+        }
+    }
     
     /**
-     * We need a way to say if the output buffer is empty or not
-     */
-    public abstract void setOutputBufferEmpty(boolean s);
+     * we need a way to say if the output buffer is empty or full
+     * this should only be set to false by external processes
+     **/
+    synchronized public void setOutputBufferEmpty(boolean s)
+    {
+        OutputBufferEmpty = s;
+    }
    
 
     /* Option 2 is not currently used with RxTx 2.0.  In the past, it
@@ -57,7 +90,10 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     }*/
 
     protected String [] validOption2 = new String[]{"yes", "no"};
-    protected boolean checkBuffer = false;
+    private boolean checkBuffer = false;
+
+    /* Allow derived classes to set the private checkBuffer value */
+    protected void setCheckBuffer(boolean b) { checkBuffer = b; }
 
     protected XNetSystemConnectionMemo adaptermemo = null;
 

@@ -34,10 +34,6 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
         options.put(option1Name, new Option("LIUSB connection uses : ", validOption1));
     }
     
-    SerialPort activeSerialPort = null;
-    
-    private boolean OutputBufferEmpty = true;
-    
     public String openPort(String portName, String appName)  {
         // open the port in XPressNet mode, check ability to set moderators
         try {
@@ -167,44 +163,6 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
     }
     
     /**
-     * we need a way to say if the output buffer is empty or full
-     * this should only be set to false by external processes
-     **/         
-    synchronized public void setOutputBufferEmpty(boolean s)
-    {
-        OutputBufferEmpty = s;
-    }
-    
-    /**
-     * Can the port accept additional characters?
-     * The state of CTS determines this, as there seems to
-     * be no way to check the number of queued bytes and buffer length.
-     * This might
-     * go false for short intervals, but it might also stick
-     * off if something goes wrong.
-     */
-    public boolean okToSend() {
-        if((activeSerialPort.getFlowControlMode() & SerialPort.FLOWCONTROL_RTSCTS_OUT) == SerialPort.FLOWCONTROL_RTSCTS_OUT) {
-            if(checkBuffer) {
-                log.debug("CTS: " + activeSerialPort.isCTS() + " Buffer Empty: " + OutputBufferEmpty);
-                return (activeSerialPort.isCTS() && OutputBufferEmpty);
-            } else {
-                log.debug("CTS: " + activeSerialPort.isCTS());
-                return (activeSerialPort.isCTS());
-            }
-        }
-        else {
-            if(checkBuffer) {
-                log.debug("Buffer Empty: " + OutputBufferEmpty);
-                return (OutputBufferEmpty);
-            } else {
-                log.debug("No Flow Control or Buffer Check");
-                return(true);
-            }
-        }
-    }
-    
-    /**
      * set up all of the other objects to operate with a LIUSB
      * connected to this port
      */
@@ -268,8 +226,8 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
         if (!getOptionState(option1Name).equals(validOption1[0]))
             flow = 0;
         activeSerialPort.setFlowControlMode(flow);
-        if (getOptionState(option2Name).equals(validOption2[0]))
-            checkBuffer = true;
+        //if (getOptionState(option2Name).equals(validOption2[0]))
+        //    checkBuffer = true;
     }
     
     

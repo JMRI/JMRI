@@ -33,14 +33,13 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         super();
         option1Name = "FlowControl";
         options.put(option1Name, new Option("Elite connection uses : ", validOption1));
+        option2Name = "Buffer";
+        options.put(option2Name, new Option("Check Buffer : ", validOption2));
+        setCheckBuffer(true); // default to true for elite
     }
     
     Vector<String> portNameVector = null;
-    SerialPort activeSerialPort = null;
-    
-    private boolean OutputBufferEmpty = true;
-    private boolean CheckBuffer = true;
-    
+
     public String openPort(String portName, String appName)  {
         // open the port in XPressNet mode, check ability to set moderators
         try {
@@ -167,44 +166,6 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         }
         
         return null; // normal operation
-    }
-    
-    /**
-     * we need a way to say if the output buffer is empty or full
-     * this should only be set to false by external processes
-     **/         
-    synchronized public void setOutputBufferEmpty(boolean s)
-    {
-        OutputBufferEmpty = s;
-    }
-    
-    /**
-     * Can the port accept additional characters?
-     * The state of CTS determines this, as there seems to
-     * be no way to check the number of queued bytes and buffer length.
-     * This might
-     * go false for short intervals, but it might also stick
-     * off if something goes wrong.
-     */
-    public boolean okToSend() {
-        if((activeSerialPort.getFlowControlMode() & SerialPort.FLOWCONTROL_RTSCTS_OUT) == SerialPort.FLOWCONTROL_RTSCTS_OUT) {
-            if(CheckBuffer) {
-                log.debug("CTS: " + activeSerialPort.isCTS() + " Buffer Empty: " + OutputBufferEmpty);
-                return (activeSerialPort.isCTS() && OutputBufferEmpty);
-            } else {
-                log.debug("CTS: " + activeSerialPort.isCTS());
-                return (activeSerialPort.isCTS());
-            }
-        }
-        else {
-            if(CheckBuffer) {
-                log.debug("Buffer Empty: " + OutputBufferEmpty);
-                return (OutputBufferEmpty);
-            } else {
-                log.debug("No Flow Control or Buffer Check");
-                return(true);
-            }
-        }
     }
     
     /**

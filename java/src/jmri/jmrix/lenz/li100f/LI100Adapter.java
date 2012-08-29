@@ -30,10 +30,6 @@ import jmri.util.SerialUtil;
 
 public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
-    SerialPort activeSerialPort = null;
-    
-    private boolean OutputBufferEmpty = true;
-
     public LI100Adapter(){
         super();
         option1Name = "FlowControl";
@@ -166,44 +162,6 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         }
         
         return null; // normal operation
-    }
-    
-    /**
-     * we need a way to say if the output buffer is empty or full
-     * this should only be set to false by external processes
-     **/         
-    synchronized public void setOutputBufferEmpty(boolean s)
-    {
-        OutputBufferEmpty = s;
-    }
-    
-    /**
-     * Can the port accept additional characters?
-     * The state of CTS determines this, as there seems to
-     * be no way to check the number of queued bytes and buffer length.
-     * This might
-     * go false for short intervals, but it might also stick
-     * off if something goes wrong.
-     */
-    public boolean okToSend() {
-        if((activeSerialPort.getFlowControlMode() & SerialPort.FLOWCONTROL_RTSCTS_OUT) == SerialPort.FLOWCONTROL_RTSCTS_OUT) {
-            if(checkBuffer) {
-                log.debug("CTS: " + activeSerialPort.isCTS() + " Buffer Empty: " + OutputBufferEmpty);
-                return (activeSerialPort.isCTS() && OutputBufferEmpty);
-            } else {
-                log.debug("CTS: " + activeSerialPort.isCTS());
-                return (activeSerialPort.isCTS());
-            }
-        }
-        else {
-            if(checkBuffer) {
-                log.debug("Buffer Empty: " + OutputBufferEmpty);
-                return (OutputBufferEmpty);
-            } else {
-                log.debug("No Flow Control or Buffer Check");
-                return(true);
-            }
-        }
     }
     
     /**
