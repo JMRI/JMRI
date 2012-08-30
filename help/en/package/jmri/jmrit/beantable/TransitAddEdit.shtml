@@ -34,12 +34,19 @@ To add a new Transit, follow this procedure:
 the Transit Table, and click the <b>Add...</b> button at the bottom of the 
 table to bring up the Add/Edit Transit window.</p>
 <img src="TransitAddFrame.jpg" height="550" width="770">
-<li><p>Enter a <b>System Name</b>, according to the JMRI convention. Since Transits 
-are internal objects, the first letter should be "I" (for internal). The second 
-letter should be "Z" to indicate a Transit. This is usually followed by a 
-number, but the program will accept any numeric or alphabetic characters. The 
-system name must be different from the System Name of other Transits.</p>
-</li>
+<li><p>Do either:</p>
+<ul>
+	<li>Allow the program to automatically generate a <b>System Name</b> for you.
+	The created name will be IZnn, where nn is the next available number.</li>
+	<li>Uncheck <b>Automatically Generate System Name</b>, and enter a <b>System Name</b>,
+	according to the JMRI convention. Since Transits are internal objects, the first 
+	letter should be "I" (for internal). The second letter should be "Z" to indicate a 
+	Transit. This is usually followed by a number, but the program will accept any 
+	numeric or alphabetic characters. The system name must be different from the System 
+	Name of other Transits.  If the name you enter does not begin with "IZ", the program
+	will insert an "IZ" ahead of whatever you enter, so you can simply enter a number if 
+	you prefer. </li>
+</ul>
 <li><p>Enter a <b>User Name</b>. Any string of characters that is different 
 from the User Name of other Transits will be accepted, but it's 
 wise to use a string that describes the intended use of the Transit.</p>
