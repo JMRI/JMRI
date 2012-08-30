@@ -230,18 +230,20 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             }
             NamedBean nBean = getBySystemName(sysNameList.get(row));
             nBean.setUserName((String) value);
-            String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-                .getString("UpdateToUserName"),
-                new Object[] { getBeanType(),value,sysNameList.get(row) });
-            int optionPane = JOptionPane.showConfirmDialog(null,
-                msg, AbstractTableAction.rb.getString("UpdateToUserNameTitle"), 
-                JOptionPane.YES_NO_OPTION);
-            if(optionPane == JOptionPane.YES_OPTION){
-                //This will update the bean reference from the systemName to the userName
-                try{
-                    nbMan.updateBeanFromSystemToUser(nBean);
-                } catch (jmri.JmriException ex) {
-                    //We should never get an exception here as we already check that the username is not valid
+            if(nbMan.inUse(sysNameList.get(row), nBean)){
+                String msg = java.text.MessageFormat.format(AbstractTableAction.rb
+                    .getString("UpdateToUserName"),
+                    new Object[] { getBeanType(),value,sysNameList.get(row) });
+                int optionPane = JOptionPane.showConfirmDialog(null,
+                    msg, AbstractTableAction.rb.getString("UpdateToUserNameTitle"), 
+                    JOptionPane.YES_NO_OPTION);
+                if(optionPane == JOptionPane.YES_OPTION){
+                    //This will update the bean reference from the systemName to the userName
+                    try{
+                        nbMan.updateBeanFromSystemToUser(nBean);
+                    } catch (jmri.JmriException ex) {
+                        //We should never get an exception here as we already check that the username is not valid
+                    }
                 }
             }
             fireTableRowsUpdated(row, row);
