@@ -21,9 +21,8 @@
 //TODO: "wide-screen" version that shows multiple "pages" at once, for use on wider browsers
 //TODO: add edit of memory variable values
 //TODO: support addition of memory variables, maybe turnouts?
-//TODO: (long-term) read panel xml and "draw" panels on page
 //TODO: set static parms as defaults in ajaxSetup()
-//TODO: fix momentary rounded corners on Settings options when refreshing
+//TODO: fix rounded corners on Settings options when refreshing
 //TODO: page refresh isn't called when adding new function on Android browser (intermittent)
 //TODO: fix pageloadingmsg to display message
 
@@ -56,7 +55,7 @@ var $sendXMLIOList = function($commandstr){
 			$processResponse($r, $s, $x); //handle returned data
 		},
 		async: true,
-		timeout: 15000,  //refresh every 15 seconds to (hopefully) avoid device timeout
+		timeout: 150000,  //TODO: rethink this, maybe send a dummy change?
 		dataType: 'xml' //<--dataType
 	});
 };

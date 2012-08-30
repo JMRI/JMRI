@@ -6,6 +6,7 @@ var $XmlIO = new function() {
 
     var railroad = null;
     var framesTbody = null;
+    var panelsTbody = null;
 
     this.get = function(command, parameters, successHandler) {
         $.get("/xmlio/" + command, parameters, successHandler, "xml");
@@ -41,6 +42,22 @@ var $XmlIO = new function() {
             });
         } else {
             $(element).html(framesTbody);
+        }
+    }
+
+    this.getPanelsTbody = function(element) {
+        if (!panelsTbody) {
+            this.get("list", {type: "panel"}, function panelSuccess(data, status, response) {
+                $(data).find("panel").each(function(){
+                	var $t = $(this).attr("name").split("/");
+                	panelsTbody += "<tr><td><a href='/web/showPanel.html?name=" + $(this).attr("name") + "'>" + $(this).attr("userName") + "</a></td>";
+                	panelsTbody += "<td>" + $t[0] + "</td>";
+                	panelsTbody += "<td><a href='/panel/" + $(this).attr("name") + "' target=_new >XML</a></td></tr>";
+                });
+                $(element).html(panelsTbody);
+            });
+        } else {
+            $(element).html(panelsTbody);
         }
     }
 
