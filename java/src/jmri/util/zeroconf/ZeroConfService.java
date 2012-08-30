@@ -258,7 +258,7 @@ public class ZeroConfService {
     }
 
     /* return the JmDNS handler */
-    private static JmDNS jmdns() {
+    static JmDNS jmdns() {  // package protected, so we only have one.
     	if (_jmdns == null) {
 			if (log.isDebugEnabled()) {
 				log.debug("JmDNS version: " + JmDNS.VERSION);
