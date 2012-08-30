@@ -509,8 +509,10 @@ public class TransitTableAction extends AbstractTableAction {
 		else {
 			// setup for create window
             _autoSystemName.setVisible(true);
+            _autoSystemName.setEnabled(true);
             autoSystemName();
 			create.setVisible(true);
+			create.setEnabled(true);
 			update.setVisible(false);
 			sysName.setVisible(true);
 			sysNameFixed.setVisible(false);
@@ -1300,15 +1302,15 @@ public class TransitTableAction extends AbstractTableAction {
     
     private void autoSystemName(){
         if (_autoSystemName.isSelected()){
-            create.setEnabled(true);
+//            create.setEnabled(true);
             sysName.setEnabled(false);
             sysNameLabel.setEnabled(false);
         }
         else {
-            if (sysName.getText().length() > 0)
-                create.setEnabled(true);
-            else
-                create.setEnabled(false);
+//            if (sysName.getText().length() > 0)
+//                create.setEnabled(true);
+//            else
+//                create.setEnabled(false);
             sysName.setEnabled(true);  
             sysNameLabel.setEnabled(true);            
         }
