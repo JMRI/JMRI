@@ -40,14 +40,15 @@ public class OperationsXml extends XmlFile {
 		}
 	}
 	
-    protected File createFile(String fullPatnName, boolean backupFile) {
+    protected File createFile(String fullPathName, boolean backupFile) {
     	if(backupFile)
-    		makeBackupFile(fullPatnName);
+    		makeBackupFile(fullPathName);
 		File file = null;
 		try {
-			if (!checkFile(fullPatnName)) {
+			if (!checkFile(fullPathName)) {
+				log.debug("File "+fullPathName+ " does not exist, creating it");
 				// The file does not exist, create it before writing
-				file = new File(fullPatnName);
+				file = new File(fullPathName);
 				File parentDir = file.getParentFile();
 				if (!parentDir.exists()){
 					if (!parentDir.mkdir())
@@ -56,7 +57,7 @@ public class OperationsXml extends XmlFile {
 				if (file.createNewFile())
 					log.debug("File created");
 			} else {
-				file = new File(fullPatnName);
+				file = new File(fullPathName);
 			}
 		} catch (Exception e) {
 			log.error("Exception while creating operations file, may not be complete: "+ e);

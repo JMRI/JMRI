@@ -1393,7 +1393,7 @@ public class TrainBuilder extends TrainCommon{
 			}
 			
 			// we might have freed up space at a spur that has an alternate track
-			redirectCarsFromAlternateTrack(rl);
+			redirectCarsFromAlternateTrack();
 			
 			if (routeIndex == 0)
 				checkDepartureForStaging(percent);	// report ASAP that the build has failed
@@ -2782,16 +2782,16 @@ public class TrainBuilder extends TrainCommon{
 	 * full at the time it was tested.
 	 * @param rl
 	 */
-	private void redirectCarsFromAlternateTrack(RouteLocation rl){
+	private void redirectCarsFromAlternateTrack(){
 		if (!Setup.isBuildAggressive())
 			return;
 		List<String> cars = carManager.getByTrainDestinationList(train);
 		for (int i=0; i<cars.size(); i++) {
 			Car car = carManager.getById(cars.get(i));
 			// does the car have a next destination and the destination is this one?
-			if (car.getNextDestination() == null || car.getNextDestTrack() == null || !car.getNextDestinationName().equals(rl.getName()) || car.getRouteDestination() != rl)
+			if (car.getNextDestination() == null || car.getNextDestTrack() == null || !car.getNextDestinationName().equals(car.getDestinationName()))
 				continue;
-			log.debug("Car ("+car.toString()+") destination track ("+car.getDestinationTrackName()+") has next destination track ("+car.getNextDestTrackName()+") location ("+rl.getName()+")");
+			log.debug("Car ("+car.toString()+") destination track ("+car.getDestinationTrackName()+") has next destination track ("+car.getNextDestTrackName()+") location ("+car.getDestinationName()+")");
 			if (car.testDestination(car.getNextDestination(), car.getNextDestTrack()).equals(Track.OKAY)){
 				Track alternate = car.getNextDestTrack().getAlternativeTrack();
 				if (alternate != null && alternate.getLocType().equals(Track.YARD) && car.getDestinationTrack() == alternate){
