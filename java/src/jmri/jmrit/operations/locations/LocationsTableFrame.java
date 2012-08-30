@@ -108,7 +108,7 @@ public class LocationsTableFrame extends OperationsFrame {
     }
     
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
-		log.debug("radio button actived");
+		log.debug("radio button activated");
 		if (ae.getSource() == sortByName){
 			sortByName.setSelected(true);
 			sortById.setSelected(false);
@@ -123,7 +123,7 @@ public class LocationsTableFrame extends OperationsFrame {
     
 	// add button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-//		log.debug("location button actived");
+//		log.debug("location button activated");
 		if (ae.getSource() == addButton){
 			LocationEditFrame f = new LocationEditFrame();
 			f.initComponents(null);

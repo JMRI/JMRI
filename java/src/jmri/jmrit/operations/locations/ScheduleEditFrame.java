@@ -201,7 +201,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	// Save, Delete, Add 
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == addTypeButton){
-			log.debug("schedule add location button actived");
+			log.debug("schedule add location button activated");
 			if (typeBox.getSelectedItem() != null){
 				if (typeBox.getSelectedItem().equals(""))
 					return;
@@ -209,7 +209,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 			}
 		}
 		if (ae.getSource() == saveScheduleButton){
-			log.debug("schedule save button actived");
+			log.debug("schedule save button activated");
 			Schedule schedule = manager.getScheduleByName(scheduleNameTextField.getText());
 			if (_schedule == null && schedule == null){
 				saveNewSchedule();
@@ -224,7 +224,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 				dispose();
 		}
 		if (ae.getSource() == deleteScheduleButton){
-			log.debug("schedule delete button actived");
+			log.debug("schedule delete button activated");
 			if (JOptionPane.showConfirmDialog(this,
 					MessageFormat.format(rb.getString("DoYouWantToDeleteSchedule"),new Object[]{scheduleNameTextField.getText()}), rb.getString("DeleteSchedule?"),
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION){

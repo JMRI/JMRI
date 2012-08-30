@@ -132,7 +132,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
  
 	// add, delete, or replace button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-		log.debug("edit frame button actived");
+		log.debug("edit frame button activated");
 		if (ae.getSource() == addButton){
 			String addItem = addTextBox.getText();
 			if (addItem.equals(""))

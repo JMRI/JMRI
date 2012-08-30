@@ -86,7 +86,7 @@ public class RouteCopyFrame extends OperationsFrame {
     
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == copyButton){
-			log.debug("copy route button actived");
+			log.debug("copy route button activated");
 			if (!checkName())
 				return;
 

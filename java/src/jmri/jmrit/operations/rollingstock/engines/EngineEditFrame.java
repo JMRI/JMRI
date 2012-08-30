@@ -432,7 +432,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 				dispose();
 		}
 		if (ae.getSource() == deleteButton){
-			log.debug("engine delete button actived");
+			log.debug("engine delete button activated");
 			if (_engine != null
 					&& _engine.getRoad().equals(roadComboBox.getSelectedItem().toString())
 					&& _engine.getNumber().equals(roadNumberTextField.getText())) {

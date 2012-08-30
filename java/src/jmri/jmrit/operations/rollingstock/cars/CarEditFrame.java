@@ -493,7 +493,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 				dispose();
 		}
 		if (ae.getSource() == deleteButton){
-			log.debug("car delete button actived");
+			log.debug("car delete button activated");
 			if (_car != null
 					&& _car.getRoad().equals(roadComboBox.getSelectedItem().toString())
 					&& _car.getNumber().equals(roadNumberTextField.getText())) {

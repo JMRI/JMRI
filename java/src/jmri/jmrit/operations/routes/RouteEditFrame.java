@@ -199,7 +199,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	// Save, Delete, Add 
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == addLocationButton){
-			log.debug("route add location button actived");
+			log.debug("route add location button activated");
 			if (locationBox.getSelectedItem() != null){
 				if (locationBox.getSelectedItem().equals(""))
 					return;
@@ -207,7 +207,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 			}
 		}
 		if (ae.getSource() == saveRouteButton){
-			log.debug("route save button actived");
+			log.debug("route save button activated");
 			Route route = manager.getRouteByName(routeNameTextField.getText());
 			if (_route == null && route == null){
 				saveNewRoute();
@@ -222,7 +222,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 				dispose();
 		}
 		if (ae.getSource() == deleteRouteButton){
-			log.debug("route delete button actived");
+			log.debug("route delete button activated");
 			if (JOptionPane.showConfirmDialog(this,
 					MessageFormat.format(rb.getString("AreYouSure?"),new Object[]{routeNameTextField.getText()}), rb.getString("DeleteRoute?"),
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION){

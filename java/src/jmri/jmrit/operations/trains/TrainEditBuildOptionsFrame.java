@@ -474,7 +474,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (_train != null){
 			if (ae.getSource() == saveTrainButton){
-				log.debug("train save button actived");
+				log.debug("train save button activated");
 				saveTrain();
 			}
 			if (ae.getSource() == addRoadButton){

@@ -418,7 +418,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	// Save, Delete, Add 
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveTrainButton){
-			log.debug("train save button actived");
+			log.debug("train save button activated");
 			Train train = manager.getTrainByName(trainNameTextField.getText());
 			if (_train == null && train == null){
 				saveNewTrain();
@@ -433,7 +433,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				dispose();
 		}
 		if (ae.getSource() == deleteTrainButton){
-			log.debug("train delete button actived");
+			log.debug("train delete button activated");
 			Train train = manager.getTrainByName(trainNameTextField.getText());
 			if (train == null)
 				return;

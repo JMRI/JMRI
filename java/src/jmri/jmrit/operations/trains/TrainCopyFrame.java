@@ -82,7 +82,7 @@ public class TrainCopyFrame extends OperationsFrame {
     
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == copyButton){
-			log.debug("copy train button actived");
+			log.debug("copy train button activated");
 			if (!checkName())
 				return;
 

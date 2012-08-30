@@ -350,7 +350,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	// Save, Delete, Add 
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveTrackButton){
-			log.debug("track save button actived");
+			log.debug("track save button activated");
 			if (_track != null){
 				if (!checkUserInputs(_track))
 					return;
@@ -362,7 +362,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				dispose();
 		}
 		if (ae.getSource() == deleteTrackButton){
-			log.debug("track delete button actived");
+			log.debug("track delete button activated");
 			if (_track != null){
 				int rs = _track.getNumberRS();
 				if (rs > 0){

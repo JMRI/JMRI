@@ -276,7 +276,7 @@ public class TrainScriptFrame extends OperationsFrame {
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (_train != null){
 			if (ae.getSource() == addBuildScriptButton){
-				log.debug("train add build script button actived");
+				log.debug("train add build script button activated");
 				File f = selectFile();
 				if (f != null){
 					_train.addBuildScript(FileUtil.getPortableFilename(f));
@@ -285,7 +285,7 @@ public class TrainScriptFrame extends OperationsFrame {
 				}
 			}
 			if (ae.getSource() == addAfterBuildScriptButton){
-				log.debug("train add after build script button actived");
+				log.debug("train add after build script button activated");
 				File f = selectFile();
 				if (f != null){
 					_train.addAfterBuildScript(FileUtil.getPortableFilename(f));
@@ -294,7 +294,7 @@ public class TrainScriptFrame extends OperationsFrame {
 				}
 			}
 			if (ae.getSource() == addMoveScriptButton){
-				log.debug("train add move script button actived");
+				log.debug("train add move script button activated");
 				File f = selectFile();
 				if (f != null){
 					_train.addMoveScript(FileUtil.getPortableFilename(f));
@@ -303,7 +303,7 @@ public class TrainScriptFrame extends OperationsFrame {
 				}
 			}
 			if (ae.getSource() == addTerminationScriptButton){
-				log.debug("train add termination script button actived");
+				log.debug("train add termination script button activated");
 				File f = selectFile();
 				if (f != null){
 					_train.addTerminationScript(FileUtil.getPortableFilename(f));
@@ -324,7 +324,7 @@ public class TrainScriptFrame extends OperationsFrame {
 				runScripts(_train.getTerminationScripts());
 			}
 			if (ae.getSource() == saveTrainButton){
-				log.debug("train save button actived");
+				log.debug("train save button activated");
 				OperationsXml.save();
 				if (Setup.isCloseWindowOnSaveEnabled())
 					dispose();
@@ -335,7 +335,7 @@ public class TrainScriptFrame extends OperationsFrame {
 	public void buttonActionRemoveBuildScript(java.awt.event.ActionEvent ae){
 		if (_train != null){
 			JButton rb = (JButton)ae.getSource();
-			log.debug("remove build script button actived "+rb.getName());
+			log.debug("remove build script button activated "+rb.getName());
 			_train.deleteBuildScript(rb.getName());
 			updateBuildScriptPanel();
 			packFrame();
@@ -345,7 +345,7 @@ public class TrainScriptFrame extends OperationsFrame {
 	public void buttonActionRemoveAfterBuildScript(java.awt.event.ActionEvent ae){
 		if (_train != null){
 			JButton rb = (JButton)ae.getSource();
-			log.debug("remove after build script button actived "+rb.getName());
+			log.debug("remove after build script button activated "+rb.getName());
 			_train.deleteAfterBuildScript(rb.getName());
 			updateAfterBuildScriptPanel();
 			packFrame();
@@ -355,7 +355,7 @@ public class TrainScriptFrame extends OperationsFrame {
 	public void buttonActionRemoveMoveScript(java.awt.event.ActionEvent ae){
 		if (_train != null){
 			JButton rb = (JButton)ae.getSource();
-			log.debug("remove move script button actived "+rb.getName());
+			log.debug("remove move script button activated "+rb.getName());
 			_train.deleteMoveScript(rb.getName());
 			updateMoveScriptPanel();
 			packFrame();
@@ -365,7 +365,7 @@ public class TrainScriptFrame extends OperationsFrame {
 	public void buttonActionRemoveTerminationScript(java.awt.event.ActionEvent ae){
 		if (_train != null){
 			JButton rb = (JButton)ae.getSource();
-			log.debug("remove termination script button actived "+rb.getName());
+			log.debug("remove termination script button activated "+rb.getName());
 			_train.deleteTerminationScript(rb.getName());
 			updateTerminationScriptPanel();
 			packFrame();

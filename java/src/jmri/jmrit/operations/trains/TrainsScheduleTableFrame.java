@@ -173,7 +173,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     }
     
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
-		log.debug("radio button actived");
+		log.debug("radio button activated");
 		if (ae.getSource() == sortByName){
 			trainsScheduleModel.setSort(trainsScheduleModel.SORTBYNAME);
 		} else if (ae.getSource() == sortByTime){

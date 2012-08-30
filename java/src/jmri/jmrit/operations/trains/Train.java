@@ -2667,10 +2667,20 @@ public class Train implements java.beans.PropertyChangeListener {
     			_end2Leg = _route.getLocationById(a.getValue());
     		if ((a = e.getAttribute("leg3End")) != null) 		
     			_leg3End = _route.getLocationById(a.getValue());
-        	if ((a = e.getAttribute("departureTrack")) != null)
-        		_departureTrack = LocationManager.instance().getLocationByName(getTrainDepartsName()).getTrackById(a.getValue());
-        	if ((a = e.getAttribute("terminationTrack")) != null)
-        		_terminationTrack = LocationManager.instance().getLocationByName(getTrainTerminatesName()).getTrackById(a.getValue());
+    		if ((a = e.getAttribute("departureTrack")) != null) {
+    			Location location = LocationManager.instance().getLocationByName(getTrainDepartsName());
+    			if (location != null)
+    				_departureTrack = location.getTrackById(a.getValue());
+    			else
+    				log.error("Departure location not found for track "+a.getValue());
+    		}
+    		if ((a = e.getAttribute("terminationTrack")) != null) {
+    			Location location = LocationManager.instance().getLocationByName(getTrainTerminatesName());
+    			if (location != null)
+    				_terminationTrack = location.getTrackById(a.getValue());
+       			else
+    				log.error("Termiation location not found for track "+a.getValue());
+    		}
     	}
 
     	// check for scripts

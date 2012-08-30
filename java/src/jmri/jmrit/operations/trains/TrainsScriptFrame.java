@@ -157,7 +157,7 @@ public class TrainsScriptFrame extends OperationsFrame {
 	// Save train, add scripts buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == addStartUpScriptButton){
-			log.debug("train add move script button actived");
+			log.debug("train add move script button activated");
 			File f = selectFile();
 			if (f != null){
 				manager.addStartUpScript(FileUtil.getPortableFilename(f));
@@ -166,7 +166,7 @@ public class TrainsScriptFrame extends OperationsFrame {
 			}
 		}
 		if (ae.getSource() == addShutDownScriptButton){
-			log.debug("train add termination script button actived");
+			log.debug("train add termination script button activated");
 			File f = selectFile();
 			if (f != null){
 				manager.addShutDownScript(FileUtil.getPortableFilename(f));
@@ -181,14 +181,14 @@ public class TrainsScriptFrame extends OperationsFrame {
 			runScripts(manager.getShutDownScripts());				
 		}
 		if (ae.getSource() == saveButton){
-			log.debug("train save button actived");
+			log.debug("train save button activated");
 			OperationsXml.save();
 		}
 	}
 	
 	public void buttonActionRemoveStartUpScript(java.awt.event.ActionEvent ae){
 		JButton rb = (JButton)ae.getSource();
-		log.debug("remove move script button actived "+rb.getName());
+		log.debug("remove move script button activated "+rb.getName());
 		manager.deleteStartUpScript(rb.getName());
 		updateStartUpScriptPanel();
 		packFrame();
@@ -196,7 +196,7 @@ public class TrainsScriptFrame extends OperationsFrame {
 	
 	public void buttonActionRemoveShutDownScript(java.awt.event.ActionEvent ae){
 		JButton rb = (JButton)ae.getSource();
-		log.debug("remove termination script button actived "+rb.getName());
+		log.debug("remove termination script button activated "+rb.getName());
 		manager.deleteShutDownScript(rb.getName());
 		updateShutDownScriptPanel();
 		packFrame();

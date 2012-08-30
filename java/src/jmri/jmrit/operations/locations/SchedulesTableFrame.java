@@ -96,7 +96,7 @@ public class SchedulesTableFrame extends OperationsFrame {
     }
     
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
-		log.debug("radio button actived");
+		log.debug("radio button activated");
 		if (ae.getSource() == sortByName){
 			sortByName.setSelected(true);
 			sortById.setSelected(false);

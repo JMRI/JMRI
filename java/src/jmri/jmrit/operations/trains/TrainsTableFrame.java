@@ -271,7 +271,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     }
     
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
-		log.debug("radio button actived");
+		log.debug("radio button activated");
 		if (ae.getSource() == showId){
 			trainsModel.setSort(trainsModel.SORTBYID);
 		}

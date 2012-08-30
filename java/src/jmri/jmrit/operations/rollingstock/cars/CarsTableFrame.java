@@ -241,7 +241,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     }
     
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
-		log.debug("radio button actived");
+		log.debug("radio button activated");
 		if (ae.getSource() == sortByNumber){
 			carsModel.setSort(carsModel.SORTBYNUMBER);
 		}

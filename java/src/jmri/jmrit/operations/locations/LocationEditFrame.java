@@ -317,7 +317,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		}
 
 		if (ae.getSource() == saveLocationButton){
-			log.debug("location save button actived");
+			log.debug("location save button activated");
 			Location l = manager.getLocationByName(locationNameTextField.getText());
 			if (_location == null && l == null){
 				saveNewLocation();
@@ -332,7 +332,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			}
 		}
 		if (ae.getSource() == deleteLocationButton){
-			log.debug("location delete button actived");
+			log.debug("location delete button activated");
 			Location l = manager.getLocationByName(locationNameTextField.getText());
 			if (l == null)
 				return;
