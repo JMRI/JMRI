@@ -222,7 +222,11 @@ public abstract class BackupBase {
 					+ sourceDir.getAbsolutePath() + " does not exist");
 
 		// See how many Operations files we have. If they are all there, carry
-		// on, if there are none, just return, any other number is an error.
+		// on, if there are none, just return, any other number MAY be an error,
+		// so just log it.
+		// We can't throw an exception, as this CAN be a valid state.
+		// There is no way to tell if a missing file is an error or not the way
+		// the files are created.
 
 		int sourceCount = getSourceFileCount(sourceDir);
 
@@ -233,11 +237,12 @@ public abstract class BackupBase {
 		}
 
 		if (sourceCount != _backupSetFileNames.length) {
-			log.error("Only " + sourceCount + " file(s) found in directory "
-					+ sourceDir.getAbsolutePath());
-			throw new IOException("Only " + sourceCount
+			log.error("WARNING: Only " + sourceCount
 					+ " file(s) found in directory "
 					+ sourceDir.getAbsolutePath());
+			// throw new IOException("Only " + sourceCount
+			// + " file(s) found in directory "
+			// + sourceDir.getAbsolutePath());
 		}
 
 		// Ensure destination directory exists
@@ -260,9 +265,16 @@ public abstract class BackupBase {
 			log.debug("copying file: " + name);
 
 			File src = new File(sourceDir, name);
-			File dst = new File(destDir, name);
 
-			FileHelper.copy(src.getAbsolutePath(), dst.getAbsolutePath(), true);
+			if (src.exists()) {
+				File dst = new File(destDir, name);
+
+				FileHelper.copy(src.getAbsolutePath(), dst.getAbsolutePath(), true);
+			}
+			else{
+				log.debug("Source file: " + src.getAbsolutePath() + " does not exist, and is not copied.");
+			}
+		
 		}
 
 		// Throw a test exception, if we have one.

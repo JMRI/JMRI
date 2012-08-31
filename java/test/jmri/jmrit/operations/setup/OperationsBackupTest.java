@@ -255,7 +255,8 @@ public class OperationsBackupTest extends TestCase {
 
 	private void verifyBackupFileCount(File dir, String setName,
 			int expectedCount) {
-		// Verifies if the actual number of files in the destination directory equals
+		// Verifies if the actual number of files in the destination directory
+		// equals
 		// the expected count.
 		dir = new File(dir, setName);
 		int actualCount = dir.list().length;
@@ -374,7 +375,7 @@ public class OperationsBackupTest extends TestCase {
 		deleteTestFiles();
 		int count = backup.getSourceFileCount(operationsRoot);
 		assertEquals("SHould be zero files after delete()", 0, count);
-		
+
 		backup.copyBackupSet(operationsRoot, setDir);
 
 		// Should just return without creating the dest dir or throwing an
@@ -388,8 +389,8 @@ public class OperationsBackupTest extends TestCase {
 	// {
 
 	public void testBasicCopyBackupSetWithMissingFiles() throws IOException {
-		// Test copying with only some of the files in the source. This is a
-		// problem and shoudl throw an exception.
+		// Test copying with only some of the files in the source. This MAY be
+		// a valid state, so no exception should be thrown.
 		BackupBase backup = new DefaultBackup();
 		String setName = "NEW Test Backup Set 03";
 		File setDir = new File(defaultBackupRoot, setName);
@@ -397,20 +398,12 @@ public class OperationsBackupTest extends TestCase {
 		// Clear out any files, and create just one
 		deleteTestFiles();
 		createDummyXmlFile(operationsRoot, regularBackupSetFileNames[0]);
-		
-		try {
-			backup.copyBackupSet(operationsRoot, setDir);
 
-			// Should not get here
-			fail("Exception should be thrown when source files are missing.");
+		backup.copyBackupSet(operationsRoot, setDir);
 
-		} catch (IOException ex) {
-			// Should throw an exception, and the destination dir should not
-			// exist.
-			Boolean exists = existsFile(defaultBackupRoot, setName);
-			assertFalse(exists);
-		}
-
+		// Should NOT throw an exception, and the destination dir should exist.
+		Boolean exists = existsFile(defaultBackupRoot, setName);
+		assertTrue(exists);
 	}
 
 	public void testBasicCopyBackupSetWithExtraFiles() throws IOException {
@@ -522,10 +515,11 @@ public class OperationsBackupTest extends TestCase {
 
 		verifyBackupSetAgainst(new File(XmlFile.xmlDir(), "demoOperations"),
 				"", operationsRoot, "", regularBackupSetFileNames);
-		
+
 		// Also need to make sure we copied over the demo panel file
 		verifyBackupSetAgainst(new File(XmlFile.xmlDir(), "demoOperations"),
-				"", operationsRoot, "", new String[] {"Operations Demo Panel.xml"});
+				"", operationsRoot, "",
+				new String[] { "Operations Demo Panel.xml" });
 	}
 
 	// Now tests of the DefaultBackup class.....
@@ -722,13 +716,13 @@ public class OperationsBackupTest extends TestCase {
 		// Check that they got there
 		verifyBackupSetAgainst(operationsRoot, "", autoBackupRoot, setName);
 	}
-	
-	public void testAutoBackupAfterResetWithNoFiles() throws IOException{
+
+	public void testAutoBackupAfterResetWithNoFiles() throws IOException {
 		// Should not cause a problem if there are no files to autobackup.
 		AutoBackup backup = new AutoBackup();
 
 		backup.deleteOperationsFiles();
-		
+
 		// Now try to back up nothing.
 		backup.autoBackup();
 	}
