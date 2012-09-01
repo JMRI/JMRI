@@ -937,6 +937,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         }
         _circuitBuilder.doMousePressed(event);
+        _shapeDrawer.doMousePressed(event);
         _targetPanel.repaint(); // needed for ToolTip
     }
 
@@ -949,6 +950,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             mouseDragged(event);
         }
         Positionable selection = getCurrentSelection(event);
+        if (_shapeDrawer.doMouseReleased(selection, event)) {
+        	return;
+        }
 
         if ((event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) && !_dragging) {
             if (selection!=null) {
@@ -1005,6 +1009,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (_debug) log.debug("mouseClicked at ("+event.getX()+","+event.getY()+")");
 
         Positionable selection = getCurrentSelection(event);
+        if (_shapeDrawer.doMouseClicked(selection, event)) {
+        	return;
+        }
 
         if (event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) {
             if (selection!=null) {
@@ -1026,7 +1033,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         //if (_debug) log.debug("mouseDragged at ("+event.getX()+","+event.getY()+")"); 
         setToolTip(null); // ends tooltip if displayed
         
+        _dragging = true;
+        _lastX = event.getX();
+        _lastY = event.getY();
         if (_circuitBuilder.doMouseDragged(_currentSelection, event) ) {
+        	return;
+        }
+        if (_shapeDrawer.doMouseDragged(_currentSelection, event) ) {
         	return;
         }
         if (!event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown() && (isEditable() || _currentSelection instanceof LocoIcon)) {
@@ -1078,9 +1091,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
             }
         }
-        _dragging = true;
-        _lastX = event.getX();
-        _lastY = event.getY();
         _targetPanel.repaint(); // needed for ToolTip
     }
 

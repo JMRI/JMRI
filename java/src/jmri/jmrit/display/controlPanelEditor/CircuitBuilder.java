@@ -29,8 +29,8 @@ import jmri.util.JmriJFrame;
 /**
  * <P>
  * @author  Pete Cressman Copyright: Copyright (c) 2011
-  * @version $Revision: 21062 $
-* 
+ * @version $Revision: 21062 $
+ * 
  */
 
 public class CircuitBuilder  {

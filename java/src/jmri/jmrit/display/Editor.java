@@ -480,15 +480,25 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
         private Color _highlightColor = new Color(204, 207, 88);
         private Color _selectGroupColor = new Color(204, 207, 88);
+        private Color _selectRectColor = Color.red;
+        private Stroke _selectRectStroke = DASHED_LINE;
         public void setHighlightColor(Color color) {
              _highlightColor = color;
         }
         public void setSelectGroupColor(Color color) {
             _selectGroupColor = color;
         }
+        public void setSelectRectColor(Color color) {
+        	_selectRectColor = color;
+       }
+        public void setSelectRectStroke(Stroke stroke) {
+        	_selectRectStroke = stroke;
+       }
         public void setDefaultColors() {
             _highlightColor = new Color(204, 207, 88);
             _selectGroupColor = new Color(204, 207, 88);
+            _selectRectColor = Color.red;
+            _selectRectStroke = DASHED_LINE;
         }
 
         public void paint(Graphics g) {
@@ -500,8 +510,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             Color color = g2d.getColor();
             if (_selectRect != null) {
                 //Draw a rectangle on top of the image.
-                g2d.setStroke(DASHED_LINE);
-                g2d.setColor(Color.red);
+                g2d.setStroke(_selectRectStroke);
+                g2d.setColor(_selectRectColor);
                 g.drawRect(_selectRect.x, _selectRect.y, _selectRect.width, _selectRect.height);
             }
             if (_selectionGroup!=null){
@@ -2542,7 +2552,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
     }
 
-    protected void drawSelectRect(int x, int y) {
+    public void drawSelectRect(int x, int y) {
         int aX = getAnchorX();
         int aY = getAnchorY();
         int w = x - aX;
