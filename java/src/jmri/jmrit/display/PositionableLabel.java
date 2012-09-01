@@ -362,6 +362,10 @@ public class PositionableLabel extends JLabel implements Positionable {
 
 	public boolean isBackground() { return (_displayLevel == Editor.BKG);
     }
+	
+	public boolean isRotated() {
+		return _rotateText;
+	}
 
     public void updateIcon(NamedIcon s){
         _namedIcon = s;

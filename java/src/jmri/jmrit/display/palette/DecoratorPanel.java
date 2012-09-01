@@ -89,7 +89,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     AJSpinner _heightSpin;
 
     JColorChooser _chooser;
-    PositionableLabel _item;	// copy of Positionable being edited
+    Positionable _item;		// copy of PositionableLabel being edited
+//    PositionableJPanel _itemPanel;	// copy of PositionableJPanel being edited
+    private PositionablePopupUtil _util;
     boolean _isOpaque;			// transfer opaqueness from decorator label here to panel label being edited
     private Hashtable <String, PositionableLabel> _sample = null;
     private ButtonGroup _buttonGroup;
@@ -162,54 +164,64 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
        _buttonGroup = new ButtonGroup();
         if (pos==null) {
         	_item = new PositionableLabel("crap", null);
+        	_util = _item.getPopupUtility();
         } else {
-            _item = (PositionableLabel)pos.deepClone();
-            _isOpaque = _item.getSaveOpaque();
-        	_item.rotate(0);
-        	PositionablePopupUtil u = _item.getPopupUtility();
-//        	u.setMargin(u.getMargin());
-//            _item.setVisible(true);
-            text = _item.getUnRotatedText();
-            _item.setText(_item.getUnRotatedText());
+        	if (pos instanceof PositionableLabel) {
+                _item = (PositionableLabel)pos.deepClone();
+                _isOpaque = _item.getSaveOpaque();
+            	_item.rotate(0);
+            	PositionablePopupUtil u = _item.getPopupUtility();
+//            	u.setMargin(u.getMargin());
+//                _item.setVisible(true);
+                text = ((PositionableLabel)_item).getUnRotatedText();
+//                _item.setText(_item.getUnRotatedText());
+                _util = _item.getPopupUtility();
+        	} else if (pos instanceof PositionableJPanel) {
+                _item = (PositionableJPanel)pos.deepClone();
+                _util = _item.getPopupUtility();        		
+        	} else {
+        		log.error("class "+pos.getClass().getName()+" can have its text attributes edited.");
+        	}
          }
-        PositionablePopupUtil util = getPositionablePopupUtil();
         samplePanel.add(Box.createHorizontalStrut(STRUT));
-        if (_item instanceof SensorIcon && !_item.isIcon() && _item.isText()) {
-            SensorIcon si = (SensorIcon)_item;
-            PositionableLabel sample = new PositionableLabel(si.getActiveText(), _item.getEditor());
-            sample.setForeground(si.getTextActive());
-            sample.setBackground(si.getBackgroundActive());
-            sample.setPopupUtility(util);
-            _sample.put("Active", sample);
-            samplePanel.add(sample);
-            samplePanel.add(Box.createHorizontalStrut(STRUT));
-            this.add(makeTextPanel("Active", sample, ACTIVE_FONT));
-            
-            sample = new PositionableLabel(si.getInactiveText(), _editor);
-            sample.setForeground(si.getTextInActive());
-            sample.setBackground(si.getBackgroundInActive());
-            sample.setPopupUtility(util);
-            _sample.put("InActive", sample);
-            samplePanel.add(sample);
-            samplePanel.add(Box.createHorizontalStrut(STRUT));
-            this.add(makeTextPanel("InActive", sample, INACTIVE_FONT));
-            
-            sample = new PositionableLabel(si.getUnknownText(), _editor);
-            sample.setForeground(si.getTextUnknown());
-            sample.setBackground(si.getBackgroundUnknown());
-            sample.setPopupUtility(util);
-            _sample.put("Unknown", sample);
-            samplePanel.add(sample);
-            samplePanel.add(Box.createHorizontalStrut(STRUT));
-            this.add(makeTextPanel("Unknown", sample, UNKOWN_FONT));
-            
-            sample = new PositionableLabel(si.getInconsistentText(), _editor);
-            sample.setForeground(si.getTextInconsistent());
-            sample.setBackground(si.getBackgroundInconsistent());
-            sample.setPopupUtility(util);
-            _sample.put("Inconsistent", sample);
-            samplePanel.add(sample);
-            this.add(makeTextPanel("Inconsistent", sample, INCONSISTENT_FONT));
+        if (_item instanceof SensorIcon) {
+        	SensorIcon si = (SensorIcon)_item;
+        	if (!si.isIcon() && si.isText()) {
+                PositionableLabel sample = new PositionableLabel(si.getActiveText(), _item.getEditor());
+                sample.setForeground(si.getTextActive());
+                sample.setBackground(si.getBackgroundActive());
+                sample.setPopupUtility(_util);
+                _sample.put("Active", sample);
+                samplePanel.add(sample);
+                samplePanel.add(Box.createHorizontalStrut(STRUT));
+                this.add(makeTextPanel("Active", sample, ACTIVE_FONT));
+                
+                sample = new PositionableLabel(si.getInactiveText(), _editor);
+                sample.setForeground(si.getTextInActive());
+                sample.setBackground(si.getBackgroundInActive());
+                sample.setPopupUtility(_util);
+                _sample.put("InActive", sample);
+                samplePanel.add(sample);
+                samplePanel.add(Box.createHorizontalStrut(STRUT));
+                this.add(makeTextPanel("InActive", sample, INACTIVE_FONT));
+                
+                sample = new PositionableLabel(si.getUnknownText(), _editor);
+                sample.setForeground(si.getTextUnknown());
+                sample.setBackground(si.getBackgroundUnknown());
+                sample.setPopupUtility(_util);
+                _sample.put("Unknown", sample);
+                samplePanel.add(sample);
+                samplePanel.add(Box.createHorizontalStrut(STRUT));
+                this.add(makeTextPanel("Unknown", sample, UNKOWN_FONT));
+                
+                sample = new PositionableLabel(si.getInconsistentText(), _editor);
+                sample.setForeground(si.getTextInconsistent());
+                sample.setBackground(si.getBackgroundInconsistent());
+                sample.setPopupUtility(_util);
+                _sample.put("Inconsistent", sample);
+                samplePanel.add(sample);
+                this.add(makeTextPanel("Inconsistent", sample, INCONSISTENT_FONT));
+        	} 
         } else {
         	PositionableLabel sample;
         	if (pos==null) {
@@ -220,7 +232,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         	}
             sample.setForeground(_item.getForeground());
             sample.setBackground(_item.getBackground());
-            sample.setPopupUtility(util);
+            sample.setPopupUtility(_util);
             _sample.put("Text", sample);
             samplePanel.add(sample);
             this.add(makeTextPanel("Text", sample, TEXT_FONT));
@@ -232,7 +244,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         fontPanel.add(makeBoxPanel("fontSize", _fontSizeBox));
         int row = 4;
         for (int i=0; i<FONTSIZE.length; i++) {
-            if (util.getFontSize()==Integer.parseInt(FONTSIZE[i])) {
+            if (_util.getFontSize()==Integer.parseInt(FONTSIZE[i])) {
                 row = i;
                 break;
             }
@@ -241,11 +253,11 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
 
         _fontStyleBox = new AJComboBox(STYLES, STYLE);
         fontPanel.add(makeBoxPanel("fontStyle", _fontStyleBox));
-        _fontStyleBox.setSelectedIndex(util.getFont().getStyle());
+        _fontStyleBox.setSelectedIndex(_util.getFont().getStyle());
 
         _fontJustBox = new AJComboBox(JUSTIFICATION, JUST);
         fontPanel.add(makeBoxPanel("justification", _fontJustBox));
-        switch (util.getJustification()){
+        switch (_util.getJustification()){
             case PositionablePopupUtil.LEFT:     row = 0;
                             break;
             case PositionablePopupUtil.RIGHT:    row = 2;
@@ -259,16 +271,16 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         
 
         JPanel sizePanel = new JPanel();
-        SpinnerNumberModel model = new SpinnerNumberModel(util.getBorderSize(),0,100,1);
+        SpinnerNumberModel model = new SpinnerNumberModel(_util.getBorderSize(),0,100,1);
         _borderSpin = new AJSpinner(model, BORDER);
         sizePanel.add(makeSpinPanel("borderSize", _borderSpin));
-        model = new SpinnerNumberModel(util.getMargin(),0,100,1);
+        model = new SpinnerNumberModel(_util.getMargin(),0,100,1);
         _marginSpin = new AJSpinner(model, MARGIN);
         sizePanel.add(makeSpinPanel("marginSize", _marginSpin));
-        model = new SpinnerNumberModel(util.getFixedWidth(),0,1000,1);
+        model = new SpinnerNumberModel(_util.getFixedWidth(),0,1000,1);
         _widthSpin = new AJSpinner(model, FWIDTH);
         sizePanel.add(makeSpinPanel("fixedWidth", _widthSpin));
-        model = new SpinnerNumberModel(util.getFixedHeight(),0,1000,1);
+        model = new SpinnerNumberModel(_util.getFixedHeight(),0,1000,1);
         _heightSpin = new AJSpinner(model, FHEIGHT);
         sizePanel.add(makeSpinPanel("fixedHeight", _heightSpin));
         this.add(sizePanel);
@@ -280,7 +292,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         	JRadioButton button ;
             public void actionPerformed(ActionEvent a) {
              	if (button.isSelected()) {
-        			_item.setOpaque(false);
+//       			_item.setOpaque(false);
 //            		util.setBackgroundColor(null);
                 	_isOpaque = false;
                 	updateSamples();
@@ -467,11 +479,11 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     }
 
     public PositionablePopupUtil getPositionablePopupUtil() {
-        return _item.getPopupUtility();
+        return _util;
     }
 
-    public void getText(PositionableLabel pos) {
-    	if (pos instanceof SensorIcon && pos.isText()) {
+    public void getText(Positionable pos) {
+    	if (pos instanceof SensorIcon && ((SensorIcon)pos).isText()) {
     		SensorIcon icon = (SensorIcon)pos;
     		PositionableLabel sample = _sample.get("Active");
     		icon.setActiveText(sample.getText());   		
@@ -492,8 +504,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     		icon.setInconsistentText(sample.getText());   		
     		icon.setBackgroundInconsistent(sample.getBackground());
     		icon.setTextInconsistent(sample.getForeground());
-    	} else {
-    		pos.setText(_sample.get("Text").getText());
+    	} else if (pos instanceof PositionableLabel){
+    		((PositionableLabel)pos).setText(_sample.get("Text").getText());
     	}
     }
     

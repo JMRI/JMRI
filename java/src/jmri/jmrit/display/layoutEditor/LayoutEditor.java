@@ -3136,7 +3136,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                    double y = s.getY();
                    double w = 10.0;
                    double h = 5.0;
-                   if (s.isIcon()) {
+                   if (s.isIcon() || s.isRotated()) {
                            w = s.maxWidth();
                            h = s.maxHeight();
                    }

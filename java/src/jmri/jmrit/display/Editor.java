@@ -2330,16 +2330,16 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
     }
 
-    protected boolean setTextAttributes(PositionableLabel p, JPopupMenu popup) {
+    protected boolean setTextAttributes(Positionable p, JPopupMenu popup) {
         if (p.getPopupUtility()==null) {
             return false;
         }
         popup.add(new AbstractAction(rb.getString("TextAttributes")){
-        	PositionableLabel comp;
+        	Positionable comp;
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 new TextAttrDialog(comp);
             }
-            AbstractAction init(PositionableLabel pos) {
+            AbstractAction init(Positionable pos) {
                 comp = pos;
                 return this;
             }
@@ -2348,9 +2348,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 	
     class TextAttrDialog extends JDialog {
-    	PositionableLabel _pos;
+    	Positionable _pos;
         jmri.jmrit.display.palette.DecoratorPanel _decorator;
-        TextAttrDialog(PositionableLabel p) {
+        TextAttrDialog(Positionable p) {
             super(_targetFrame, rb.getString("TextAttributes"), true);
             _pos = p;
             JPanel panel = new JPanel();
@@ -2390,26 +2390,32 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
     }
     
-    protected void setAttributes(PositionablePopupUtil newUtil, PositionableLabel pos, boolean isOpaque) {
-    	if (!pos.isText() || (pos.isText() && pos.isIcon())) {
-    		return;
+    protected void setAttributes(PositionablePopupUtil newUtil, Positionable p, boolean isOpaque) {
+    	if (p instanceof PositionableLabel) {
+    		PositionableLabel pos = (PositionableLabel)p;
+        	if (!pos.isText() || (pos.isText() && pos.isIcon())) {
+        		return;
+        	} else {
+                pos.setPopupUtility(newUtil.clone(pos));
+        		pos.setOpaque(isOpaque);
+        		pos.saveOpaque(isOpaque);
+                int deg = pos.getDegrees();
+                if (deg!=0) {
+                    pos.rotate(0);
+            		pos.setOpaque(isOpaque);
+                    pos.rotate(deg);        	
+                }        		
+        	}
     	}
-		pos.saveOpaque(isOpaque);
-        pos.setPopupUtility(newUtil.clone(pos));
-		pos.setOpaque(isOpaque);
-        int deg = pos.getDegrees();
-        if (deg!=0) {
-            pos.rotate(0);
-    		pos.setOpaque(isOpaque);
-            pos.rotate(deg);        	
-        }
+        p.setPopupUtility(newUtil.clone(p));
+		p.setOpaque(isOpaque);
 //		PositionablePopupUtil u = pos.getPopupUtility();
 //		u.setMargin(u.getMargin());
-		pos.updateSize();
-        if (pos instanceof PositionableIcon) {
-        	jmri.NamedBean bean = pos.getNamedBean();
+		p.updateSize();
+        if (p instanceof PositionableIcon) {
+        	jmri.NamedBean bean = p.getNamedBean();
         	if (bean!=null) {
-            	((PositionableIcon)pos).displayState(bean.getState());                            		
+            	((PositionableIcon)p).displayState(bean.getState());                            		
         	}
         }
     }

@@ -1272,6 +1272,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             	if (!pl.isIcon()) {
                     popupSet |= setTextAttributes(pl, popup);            	            		
             	}
+            } else if (p instanceof PositionableJPanel) {
+                popupSet |= setTextAttributes(p, popup);            	            		            	
             }
             if (popupSet) { 
                 popup.addSeparator();
