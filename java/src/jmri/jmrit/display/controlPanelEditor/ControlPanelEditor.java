@@ -48,6 +48,7 @@ import jmri.util.HelpUtil;
  * DnD implemented at JDK 1.2 for backward compatibility
  * <P>
  * @author  Pete Cressman Copyright: Copyright (c) 2009, 2010, 2011
+ * @version $Revision: 21062 $
  * 
  */
 
@@ -64,7 +65,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private JMenu _markerMenu;
     private JMenu _warrantMenu;
     private JMenu _circuitMenu;
+    private JMenu _drawMenu;
     private CircuitBuilder _circuitBuilder;
+    private ShapeDrawer _shapeDrawer;
     private ItemPalette _itemPalette;
 
     private JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(rb.getString("CheckBoxGlobalFlags"));
@@ -103,6 +106,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         setUseGlobalFlag(false);
         _menuBar = new JMenuBar();
         _circuitBuilder = new CircuitBuilder(this);
+        _shapeDrawer = new ShapeDrawer(this);
+        makeDrawMenu();
         makeCircuitMenu();
         makeIconMenu();
         makeZoomMenu();
@@ -155,6 +160,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _menuBar.add(_circuitMenu, 0);
     }
 
+    protected void makeDrawMenu() {
+    	if (_drawMenu==null) {
+    		_drawMenu = _shapeDrawer.makeMenu();
+    	}
+        _menuBar.add(_drawMenu, 0);
+    }
 
     protected void makeZoomMenu() {
         _zoomMenu = new JMenu(rb.getString("MenuZoom"));
@@ -584,6 +595,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
             
             
+            if (_drawMenu==null) {
+            	makeDrawMenu();
+            } else {
+                _menuBar.add(_drawMenu, 0);
+            }            
             if (_circuitMenu==null) {
             	makeCircuitMenu();
             } else {
@@ -637,6 +653,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
             if (_circuitMenu!=null) {
         		_menuBar.remove(_circuitMenu);
+            }
+            if (_drawMenu!=null) {
+        		_menuBar.remove(_drawMenu);
             }
     		if (jmri.InstanceManager.oBlockManagerInstance().getSystemNameList().size() > 1) {
     			makeWarrantMenu();
@@ -882,6 +901,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (_debug) log.debug("mousePressed at ("+event.getX()+","+event.getY()+") _dragging="+_dragging);
                             //  " _selectionGroup= "+(_selectionGroup==null?"null":_selectionGroup.size()));
         _circuitBuilder.saveSelectionGroup(_selectionGroup);
+        _shapeDrawer.saveSelectionGroup(_selectionGroup);
         _anchorX = event.getX();
         _anchorY = event.getY();
         _lastX = _anchorX;

@@ -29,7 +29,8 @@ import jmri.util.JmriJFrame;
 /**
  * <P>
  * @author  Pete Cressman Copyright: Copyright (c) 2011
- * 
+  * @version $Revision: 21062 $
+* 
  */
 
 public class CircuitBuilder  {
@@ -1290,48 +1291,6 @@ public class CircuitBuilder  {
         return false;
     }
 
-    /***************** Overriden methods of Editor *******************/
-    
-    /**
-    * Return a List of all items whose bounding rectangle contain the mouse position.
-    * ordered from top level to bottom
-    * Modified to collect only track icons
-    *
-    protected java.util.List <Positionable> getSelectedItems(MouseEvent event) {
-        if (_editCircuitFrame==null ) { //&& _editPathsFrame==null) {
-            return super.getSelectedItems(event);
-        }
-        double x = event.getX();
-        double y = event.getY();
-        Rectangle rect = new Rectangle();
-        ArrayList <Positionable> selections = new ArrayList <Positionable>();
-        for (int i=0; i<_contents.size(); i++) {
-            Positionable p = _contents.get(i);
-            if (isTrack(p)) {
-                rect= p.getBounds(rect);
-                Rectangle2D.Double rect2D = new Rectangle2D.Double(rect.x*_paintScale,
-                                                                   rect.y*_paintScale,
-                                                                   rect.width*_paintScale,
-                                                                   rect.height*_paintScale);
-                if (rect2D.contains(x, y) && (p.getDisplayLevel()>BKG || event.isControlDown())) {
-                    boolean added =false;
-                    int level = p.getDisplayLevel();
-                    for (int k=0; k<selections.size(); k++) {
-                        if (level >= selections.get(k).getDisplayLevel()) {
-                            selections.add(k, p);
-                            added = true;       // OK to lie in the case of background icon
-                            break;
-                        }
-                    }
-                    if (!added) {
-                        selections.add(p);
-                    }
-                }
-            }
-        }
-        return selections;
-    }
-
     /*
     * For the param, selection, Add to or delete from selectionGroup. 
     * If not there, add.
@@ -1400,14 +1359,6 @@ public class CircuitBuilder  {
             }
             _editPortalFrame.toFront();
         }
-    }
-
-
-    protected boolean doModifySelectionGroup(Positionable selection, MouseEvent event) {
-        if (_editCircuitFrame!=null || _editPortalFrame!=null ||_editPathsFrame!=null) {
-            return false;
-        }
-        return true;
     }
 
     /**************************** static methods ************************/

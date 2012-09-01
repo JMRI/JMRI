@@ -2074,13 +2074,13 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                     }
                     break;
                 case COMMAND_COLUMN:
-                    String cmd = null;
-                    if ((String)value == null){
-                        msg = rb.getString("badCommand");
+                    String cmd = ((String)value);
+                    if (cmd == null || cmd.length()==0){
+                        msg = java.text.MessageFormat.format(
+                                rb.getString("nullValue"), rb.getString("CommandCol")); 
                         break;
-                    } else {
-                        cmd = ((String)value).trim().toUpperCase();
                     }
+                    cmd = cmd.trim().toUpperCase();
                     if ("SPEED".equals(cmd) || "SPEEDSTEP".equals(cmd) || "FORWARD".equals(cmd)) {
                         ts.setCommand((String)value);
                     } else if (cmd.startsWith("F")) {
@@ -2110,12 +2110,18 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                     } else if ("SENSOR".equals(cmd)) {
                         ts.setCommand((String)value);
                     } else {
-                        msg = rb.getString("badCommand");
+                        msg = java.text.MessageFormat.format(
+                                rb.getString("badCommand"), (String)value); 
                     }
                     break;
                 case VALUE_COLUMN:
+                    if (value == null || ((String)value).length()==0){
+                        msg = java.text.MessageFormat.format(
+                                rb.getString("nullValue"), rb.getString("ValueCol")); 
+                        break;
+                    }
                     cmd = ts.getCommand().toUpperCase();
-                    if ("SPEED".equals(cmd)) {
+                     if ("SPEED".equals(cmd)) {
                         try {
                             float speed = Float.parseFloat((String)value);
                             if (speed < 0.0f || 1.0f < speed) {
@@ -2175,12 +2181,27 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                         } else {
                             msg = rb.getString("badSensorCommand");
                         }
-                    } else {
-                        msg = rb.getString("badCommand");
-                    }
-                    if (msg!=null) {
-                        JOptionPane.showMessageDialog(null, msg,
-                        rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                    } else if ("NOOP".equals(cmd)) {
+                    	String val = (String)value;
+                        ts.setValue((String)value);                    		
+                    	if (rb.getString("Mark").toUpperCase().equals(val.toUpperCase())) {
+                    		String name = ts.getBlockName();
+                    		if (name==null) {
+                                JOptionPane.showMessageDialog(null, rb.getString("needBlockName"),
+                                        rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);                    			
+                    		} else {
+                                OBlock block = InstanceManager.oBlockManagerInstance().provideOBlock(name);
+                                if (block != null && getIndexOfBlock(block) >= 0) {
+                                    ts.setBlockName((String)value);
+                                } else {
+                                    msg = java.text.MessageFormat.format(
+                                            rb.getString("BlockNotInRoute"), (String)value); 
+                                }                    			
+                    		}
+                    	} else {
+                            msg = java.text.MessageFormat.format(
+                                    rb.getString("badValue"), (String)value, ts.getCommand());                    		
+                    	}
                     }
                     break;
                 case BLOCK_COLUMN:

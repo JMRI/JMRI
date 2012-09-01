@@ -2231,8 +2231,8 @@ public class LogixTableAction extends AbstractTableAction {
 		}
         _curVariableRowNumber = row;
         _curVariable = _variableList.get(row);
-        _editVariableFrame = new JmriJFrame(rbx.getString("TitleEditVariable"), false, false);
-        _editVariableFrame.setLocation(10, 100);
+        _editVariableFrame = new JmriJFrame(rbx.getString("TitleEditVariable"), true, true);
+//        _editVariableFrame.setLocation(10, 100);
         JPanel topPanel = makeTopPanel(_editVariableFrame, "TitleAntecedentPhrase", 500, 160);
 
         Box panel1 = Box.createHorizontalBox();
@@ -2364,8 +2364,8 @@ public class LogixTableAction extends AbstractTableAction {
 		}
         _curActionRowNumber = row;
         _curAction = _actionList.get(row);
-        _editActionFrame = new JmriJFrame(rbx.getString("TitleEditAction"), false, false);
-        _editActionFrame.setLocation(10, 300);
+        _editActionFrame = new JmriJFrame(rbx.getString("TitleEditAction"), true, true);
+//        _editActionFrame.setLocation(10, 300);
         JPanel topPanel = makeTopPanel(_editActionFrame, "TitleConsequentPhrase", 600, 160);
 
         Box panel1 = Box.createHorizontalBox();

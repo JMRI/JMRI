@@ -2361,7 +2361,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             doneButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
-                        _pos.setText(_decorator.getText());
+                        _decorator.getText(_pos);
                         setAttributes(util, _pos, _decorator.isOpaque());
                         setSelectionsAttributes(util, _pos, _decorator.isOpaque());
                         dispose();
@@ -2381,6 +2381,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
     
     protected void setAttributes(PositionablePopupUtil newUtil, PositionableLabel pos, boolean isOpaque) {
+    	if (!pos.isText() || (pos.isText() && pos.isIcon())) {
+    		return;
+    	}
 		pos.saveOpaque(isOpaque);
         pos.setPopupUtility(newUtil.clone(pos));
 		pos.setOpaque(isOpaque);
@@ -2390,9 +2393,15 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     		pos.setOpaque(isOpaque);
             pos.rotate(deg);        	
         }
-		PositionablePopupUtil u = pos.getPopupUtility();
-		u.setMargin(u.getMargin());
+//		PositionablePopupUtil u = pos.getPopupUtility();
+//		u.setMargin(u.getMargin());
 		pos.updateSize();
+        if (pos instanceof PositionableIcon) {
+        	jmri.NamedBean bean = pos.getNamedBean();
+        	if (bean!=null) {
+            	((PositionableIcon)pos).displayState(bean.getState());                            		
+        	}
+        }
     }
 
     protected void setSelectionsAttributes(PositionablePopupUtil util, Positionable pos, boolean isOpaque) { 
