@@ -116,14 +116,16 @@ class textmanager:
                 # print ('NonTrans read...')
             else:
                 fullfilename = filelistitem
-                corename , ext = os.path.splitext(fullfilename)
-                filepath = self.dm.getdirectorystring(filelistitem)
-                # cpfile = open(filelistitem,'rU',errors='replace')
-                cpfile = open(filelistitem,'rU')
-                temp = singlefile(fullfilename, filepath, [], corename, [], cpfile.readlines())
-                cpfile.close()
-                self.Defaults.append(temp)
-                # print ('Default file ' + filelistitem +  ' read...')
+                #print ('Reading default file ' + filelistitem +  ' ...')
+                if not filelistitem.strip().startswith("."):
+                    corename , ext = os.path.splitext(fullfilename)
+                    filepath = self.dm.getdirectorystring(filelistitem)
+                    # cpfile = open(filelistitem,'rU',errors='replace')
+                    cpfile = open(filelistitem,'rU')
+                    temp = singlefile(fullfilename, filepath, [], corename, [], cpfile.readlines())
+                    cpfile.close()
+                    self.Defaults.append(temp)
+                    # print ('Default file ' + filelistitem +  ' read...')
                 
     def isDefaults(self, corename, seachstring):
         """

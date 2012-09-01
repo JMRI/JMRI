@@ -83,7 +83,7 @@ class Mainframe_Translation(Tkinter.Frame):
             self.Import["state"] = Tkinter.NORMAL
             self.Init["state"] = Tkinter.DISABLED
             self.statustext.set("Done!")
-        except Property_File_Error, e:
+        except Property_File_Error as e:
             self.statustext.set(str(e.filename + ": " + str(e.linenum)))
         self.update()
         
@@ -126,7 +126,7 @@ class Mainframe_Translation(Tkinter.Frame):
             self.Init["state"] = Tkinter.DISABLED
             self.Import["state"] = Tkinter.NORMAL
             self.statustext.set("Done!")
-        except Property_File_Error, e:
+        except Property_File_Error as e:
             self.statustext.set(str(e.filename + ": " + str(e.linenum)))
         self.update()
         
