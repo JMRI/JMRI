@@ -1,5 +1,8 @@
 // TieToolFrame.java
 
+// For historical reasons, this refers to Events as Ties.
+// That really has to change sometime soon
+
 package jmri.jmrix.openlcb.swing.tie;
 
 import java.awt.*;
@@ -41,7 +44,7 @@ public class TieToolFrame extends jmri.util.JmriJFrame {
         TieTablePane tiePane = new TieTablePane();
         tiePane.initComponents();
         Border tieBorder = BorderFactory.createEtchedBorder();
-        Border tieTitled = BorderFactory.createTitledBorder(tieBorder,"Ties");
+        Border tieTitled = BorderFactory.createTitledBorder(tieBorder,"Events");
         tiePane.setBorder(tieTitled);
         
         JSplitPane upperSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, producerPane, consumerPane);
@@ -67,7 +70,7 @@ public class TieToolFrame extends jmri.util.JmriJFrame {
         // fileMenu.add(...);
         setJMenuBar(menuBar);
 
-        addHelpMenu("package.jmri.jmrix.maple.assignment.ListFrame", true);
+        addHelpMenu("package.jmri.jmrix.openlcb.swing.tie.TieToolFrame", true);
 
         // pack for display
         pack();
