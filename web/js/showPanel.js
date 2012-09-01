@@ -3,10 +3,16 @@
  *    Retrieves panel xml and attempts to build panel client-side from the xml, including
  *    click functions.  Sends and listens for changes to panel elements using the xmlio server.
  *    If no parm passed, will list links to available panels.
+ *  Approach:  Read xml and create widget objects with all needed attributes.  There are 3 "widgetFamily"s:
+ *    text, icon and drawn.  States are handled by naming members iconX, textX, styleX where X is the state.
+ *    CSS classes are used throughout to attach events to correct widgets, as well as control appearance.
+ *    The xmlio element name is used to send changes to xmlio server and to process changes made elsewhere.
+ *    Drawn widgets will be handled using a "canvas" layer.
  *  
- *  TODO: rearrange/refactor code to handle various widget types better (maybe a basetype like image|text|drawing?)
+ *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
  *  TODO: add heartbeat with error message (with retry button)
- *  TODO: handle text-based and overlay elements
+ *  TODO: handle backgroundColor "widget"
+ *  TODO: handle more attributes of text (both base and states)
  *  TODO: handle "drawn" elements (for layouteditor)
  *  TODO: handle multisensors, other widgets correctly
  *  TODO: find correct font or adjust size for text labels
@@ -15,6 +21,7 @@
  *  TODO: figure out what "hidden=yes" is supposed to do
  *  TODO: verify that assuming same rotation and scale for all icons in a "set" is OK
  *  TODO: deal with mouseleave, mouseout, touchout, etc.
+ *  TODO: handle overlay (both?) widgets
  *   
  **********************************************************************************************/
 
@@ -41,11 +48,11 @@ var $processResponse = function($returnedData, $success, $xhr) {
 	//remove whitespace
 	$xml.xmlClean();
 
+	//get the panel-level values from the xml
 	var $panel = $xml.find('panel');
 	$($panel[0].attributes).each(function() {
 		$gPanel[this.name] = this.value;
 	});
-	
 	$('div#panelArea').width($gPanel.width);
 	$('div#panelArea').height($gPanel.height);
 
@@ -58,20 +65,9 @@ var $processResponse = function($returnedData, $success, $xhr) {
 					$widget[this.name] = this.value;
 				});
 				//default various css attributes to not-set, then set in later code as needed
-				var $clickable = "";  
 				var $hoverText = "";  
-				var $elementName = "";  
-				var $momentary = "";  
-				var $hidden = "";
+//				var $rotation = 0;
 
-				var $rotation = 0;
-				
-				var $drawThis = false; //flag to continue into drawing portion of code
-				
-				if ($widget.momentary == "true") {
-					$momentary = "momentary";
-				}
-				
 				//add and normalize the various type-unique values, from the various spots they are stored
 				//  icons named based on states returned from xmlio server, 
 				//    1=unknown, 2=active/closed, 4=inactive/thrown, 8=inconsistent
@@ -79,14 +75,20 @@ var $processResponse = function($returnedData, $success, $xhr) {
 				$widget['element']  =	""; //default to no xmlio type (avoid undefined)
 				$widget['scale']  =	"1.0"; //default to no scale
 				$widget['id'] = "spWidget_" + $gUnique();//set id to a unique value (since same element can be in multiple widgets)
-				if ($widget.text == undefined) {  //add image icon to panel
+				$widget['widgetFamily'] = $getWidgetFamily($widget);
+				$widget['classes'] = $widget.widgetType + " " + $widget.widgetFamily + " rotatable ";
+				if ($widget.momentary == "true") {
+					$widget.classes += "momentary ";
+				}
+				//set specific values in widget
+				switch ($widget.widgetFamily) {
+				case "icon" :
 					switch ($widget.widgetType) {
 					case "positionablelabel" :
 						$widget['icon1'] = 		$(this).find('icon').attr('url');
-						$rotation = 			$(this).find('icon').find('rotation').text();
+						var $rotation = 		$(this).find('icon').find('rotation').text();
 						$widget['degrees'] = 	($(this).find('icon').attr('degrees') * 1) + ($rotation * 90);
 						$widget['scale'] = 		$(this).find('icon').attr('scale');
-						$drawThis =		 		true;
 						break;
 					case "turnouticon" :
 						$widget['name']  =		$widget.turnout; //normalize name
@@ -95,11 +97,12 @@ var $processResponse = function($returnedData, $success, $xhr) {
 						$widget['icon2'] =  	$(this).find('icons').find('closed').attr('url');
 						$widget['icon4'] =  	$(this).find('icons').find('thrown').attr('url');
 						$widget['icon8'] =		$(this).find('icons').find('inconsistent').attr('url');
-						$rotation = 			$(this).find('icons').find('unknown').find('rotation').text();
+						var $rotation = 		$(this).find('icons').find('unknown').find('rotation').text();
 						$widget['degrees'] = 	($(this).find('icons').find('unknown').attr('degrees') * 1) + ($rotation * 90);
 						$widget['scale'] = 		$(this).find('icons').find('unknown').attr('scale');
-						$clickable =			"clickable";
-						$drawThis =		 		true;
+						if ($widget.forcecontroloff != "true") {
+							$widget.classes += 		$widget.element + " clickable ";
+						}
 						break;
 					case "sensoricon" :
 					case "multisensoricon" :
@@ -109,73 +112,102 @@ var $processResponse = function($returnedData, $success, $xhr) {
 						$widget['icon2'] =  	$(this).find('active').attr('url');
 						$widget['icon4'] =  	$(this).find('inactive').attr('url');
 						$widget['icon8'] =		$(this).find('inconsistent').attr('url');
-						$rotation = 			$(this).find('unknown').find('rotation').text();
+						var $rotation = 		$(this).find('unknown').find('rotation').text();
 						$widget['degrees'] = 	($(this).find('unknown').attr('degrees') * 1) + ($rotation * 90);
 						$widget['scale'] = 		$(this).find('unknown').attr('scale');
-						$clickable =			"clickable";
-						$drawThis =		 		true;
+						if ($widget.forcecontroloff != "true") {
+							$widget.classes += 		$widget.element + " clickable ";
+						}
 						break;
+					}
+					$widget['safeName'] = $safeName($widget.name);  //add a "safe" version of name for use as class
+
+					if ($widget.name) { //if name available, use it as hover text
+						$hoverText = " title='"+$widget.name+"' alt='"+$widget.name+"'";
+					}
+
+					//add the image to the panel area, with appropriate css classes and id (skip any unsupported)
+					if ($widget.icon1 != undefined) {
+						$("div#panelArea").append("<img id=" + $widget.id +
+								" class='" + $widget.classes +
+								"' src='" + $widget["icon"+$widget['state']] + "' " + $hoverText + "/>");
+					}
+
+					$preloadWidgetImages($widget);
+					$gWidgets[$widget.id] = $widget; //store widget in persistent array
+					$setWidgetPosition($("div#panelArea>#"+$widget.id));
+
+					break;
+				case "text" :
+//					$widget['element']  =	""; //no xmlio type for this
+					switch ($widget.widgetType) {
+					case "sensoricon" :
+						$widget['name']  =		$widget.sensor; //normalize name
+						$widget['element']  =	"sensor"; //what JMRI calls this
+						$widget['text1'] = 		$(this).find('unknownText').attr('text');
+						$widget['text2'] =  	$(this).find('activeText').attr('text');
+						$widget['text4'] =  	$(this).find('inactiveText').attr('text');
+						$widget['text8'] =		$(this).find('inconsistentText').attr('text');
+						if ($widget.name != undefined && $widget.forcecontroloff != "true") {
+							$widget.classes += 		$widget.element + " clickable ";
+						}
+						break;
+					}
+					$widget['safeName'] = $safeName($widget.name);
+					$("div#panelArea").append("<div id=" + $widget.id + " class='"+$widget.classes+"'>" + $widget.text + "</div>");
+					$widget['styles'] = $("div#panelArea>#"+$widget.id).css('cssText');  //NOTE: must start with current css
+					if ($widget.red != undefined) {
+						$widget.styles += ";color:rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ") ";
+					}
+					if ($widget.backRed != undefined) {
+						$widget.styles += ";background-color:rgb(" + $widget.backRed + "," + $widget.backGreen + "," + $widget.backBlue + ") ";
+					}
+					if ($widget.size != undefined) {
+						$widget.styles += ";font-size:" + $widget.size + "px ";
+					}
+					if ($widget.styles != undefined) {
+						switch ($widget.style) { //set font based on style attrib from xml
+						case "1":
+							$widget.styles += ";font:bold ";
+							break;
+						case "2":
+							$widget.styles += ";font:italic ";
+							break;
+						case "3":
+							$widget.styles += ";font:bold italic ";
+							break;
+						}
+					}
+					$("div#panelArea>#"+$widget.id).css('cssText', $widget.styles); //apply style string to widget
+					$gWidgets[$widget.id] = $widget; //store widget in persistent array
+					$setWidgetPosition($("div#panelArea>#"+$widget.id));
+					break;
+				case "drawn" :
+					switch ($widget.widgetType) {
 					case "positionablepoint" :
-						//just store these points in persistent variable
+						//just store these points in persistent variable for use when drawing tracksegments and layoutturnouts
 						$gPoints[$widget.ident] = $widget;
 						break;
 					case "tracksegment" :
 						//draw the line
-						
 						break;
-					default:
-						//list unsupported widgets
-						$("div#logArea").append("<br />Unsupported: " + $widget.widgetType + ":"); 
-						$(this.attributes).each(function(){
-							$("div#logArea").append(" " + this.name);
-						});
-						$("div#logArea").append(" | ");
-						$(this.childNodes).each(function(){
-							$("div#logArea").append(" " + this.nodeName);
-						});
+					case "backgroundColor" :
+						break;
 					}
-					if ($drawThis) {
-
-						//if "Disable" checked, remove clickable class from widget
-						if ($widget.forcecontroloff == "true") {
-							$clickable = "";
-						}
-
-						$widget['safeName'] = $safeName($widget.name);  //add a "safe" version of name for use as class
-
-						if ($widget.name) { //if name available, use it as hover text
-							$hoverText = " title='"+$widget.name+"' alt='"+$widget.name+"'";
-						}
-
-						//add the image to the panel area, with appropriate css classes and id (skip any unsupported)
-						if ($widget.icon1 != undefined) {
-							$("div#panelArea").append("<img id=" + $widget.id +
-									" class='" + $widget.widgetType + " rotatable " + $clickable + " " + $widget.element + " " + $momentary +
-									"' src='" + $widget["icon"+$widget['state']] + "' " + $hoverText + "/>");
-						}
-					} //drawThis
-				} else { //add text icon to panel
-					$widget['element']  =	""; //no xmlio type for this
-					$widget['safeName'] = $safeName($widget.name);
-					$("div#panelArea").append("<div id=" + $widget.id + " class='"+$widget.widgetType+"'>" + $widget.text + "</div>");
-					var $color = "rgb(" + $widget.red + "," + $widget.blue + "," + $widget.green + ")";
-					$("div#panelArea>#"+$widget.id).css({color:$color,fontSize:$widget.size}); //set text color and font-size
-					$drawThis =		 		true;
+					break;
+				default:
+					//log any unsupported widgets
+					$("div#logArea").append("<br />Unsupported: " + $widget.widgetType + ":"); 
+					$(this.attributes).each(function(){
+						$("div#logArea").append(" " + this.name);
+					});
+					$("div#logArea").append(" | ");
+					$(this.childNodes).each(function(){
+						$("div#logArea").append(" " + this.nodeName);
+					});
+					break;
 				}
 
-				if ($drawThis) {
-
-					//if widget is known to jmri, store it in persistent array for later use
-//					if ($widget.name != undefined) {
-						$gWidgets[$widget.id] = $widget;
-//					}
-
-					$preloadWidgetImages($widget);
-					
-					$setWidgetPosition($("div#panelArea>#"+$widget.id));
-
-				} //end of drawThis
-				
 			}  //end of function
 	);  //end of each
 
@@ -209,68 +241,61 @@ var $processResponse = function($returnedData, $success, $xhr) {
 	$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');
 
 };    	
-
-//preload all images referred to by the widget
-var $preloadWidgetImages = function($widget) {
-	if ($widget['icon1'] != undefined) $("<img src='" + $widget['icon1'] + "'/>");
-	if ($widget['icon2'] != undefined) $("<img src='" + $widget['icon2'] + "'/>");
-	if ($widget['icon4'] != undefined) $("<img src='" + $widget['icon4'] + "'/>");
-	if ($widget['icon8'] != undefined) $("<img src='" + $widget['icon8'] + "'/>");
-};    	
-
 //place widget in correct position, rotation, z-index and scale.
 var $setWidgetPosition = function(e) {
-	
+
 	var $id = e.attr('id');
 	var $widget = $gWidgets[$id];  //look up the widget and get its panel properties
 
-	
-	//TODO: yeah, I know this won't work right if the image hasn't downloaded yet, hit Refresh for now.....
-	var $height = e.height() * $widget.scale;
-	var $width =  e.width()  * $widget.scale;
+	if ($widget != undefined) {  //don't bother if widget not found
 
-//	console.log("processing " + $widget.id + " height=" + $height + " width=" + $width);
-	
-	//if image is not loaded yet, set callback to do this again when it is loaded
-	if ($height == 0) {
-//		console.log("delaying positioning of " + $widget.id);
-		e.load(function(){
-			$setWidgetPosition($(this));
-		});
-	} else {
-		//calculate x and y adjustment needed to keep upper left of bounding box in the same spot
-		//  adapted to match JMRI's NamedIcon.rotate().  Note: transform-origin set in .html file
-		var tx = 0.0;
-		var ty = 0.0;
+		//TODO: yeah, I know this won't work right if the image hasn't downloaded yet, hit Refresh for now.....
+		var $height = e.height() * $widget.scale;
+		var $width =  e.width()  * $widget.scale;
 
-		if ($widget.degrees != undefined && $widget.degrees != 0 && $height > 0) {
-			var $rad = $widget.degrees*Math.PI/180.0;
+//		console.log("processing " + $widget.id + " height=" + $height + " width=" + $width);
 
-			if (0<=$widget.degrees && $widget.degrees<90 || -360<$widget.degrees && $widget.degrees<=-270){
-				tx = $height*Math.sin($rad);
-				ty = 0.0;
-			} else if (90<=$widget.degrees && $widget.degrees<180 || -270<$widget.degrees && $widget.degrees<=-180) {
-				tx = $height*Math.sin($rad)-$width*Math.cos($rad);
-				ty = -$height*Math.cos($rad);
-			} else if (180<=$widget.degrees && $widget.degrees<270 || -180<$widget.degrees && $widget.degrees<=-90) {
-				tx = -$width*Math.cos($rad);
-				ty = -$width*Math.sin($rad)-$height*Math.cos($rad);
-			} else /*if (270<=$widget.degrees && $widget.degrees<360)*/ {
-				tx = 0.0;
-				ty = -$width*Math.sin($rad);
+		//if image is not loaded yet, set callback to do this again when it is loaded
+		if ($height == 0) {
+//			console.log("delaying positioning of " + $widget.id);
+			e.load(function(){
+				$setWidgetPosition($(this));
+			});
+		} else {
+			//calculate x and y adjustment needed to keep upper left of bounding box in the same spot
+			//  adapted to match JMRI's NamedIcon.rotate().  Note: transform-origin set in .html file
+			var tx = 0.0;
+			var ty = 0.0;
+
+			if ($widget.degrees != undefined && $widget.degrees != 0 && $height > 0) {
+				var $rad = $widget.degrees*Math.PI/180.0;
+
+				if (0<=$widget.degrees && $widget.degrees<90 || -360<$widget.degrees && $widget.degrees<=-270){
+					tx = $height*Math.sin($rad);
+					ty = 0.0;
+				} else if (90<=$widget.degrees && $widget.degrees<180 || -270<$widget.degrees && $widget.degrees<=-180) {
+					tx = $height*Math.sin($rad)-$width*Math.cos($rad);
+					ty = -$height*Math.cos($rad);
+				} else if (180<=$widget.degrees && $widget.degrees<270 || -180<$widget.degrees && $widget.degrees<=-90) {
+					tx = -$width*Math.cos($rad);
+					ty = -$width*Math.sin($rad)-$height*Math.cos($rad);
+				} else /*if (270<=$widget.degrees && $widget.degrees<360)*/ {
+					tx = 0.0;
+					ty = -$width*Math.sin($rad);
+				}
 			}
-		}
-		//position widget to adjusted position, set z-index, then set rotation
-		e.css({position:'absolute',left:(parseInt($widget.x)+tx)+'px',top:(parseInt($widget.y)+ty)+'px',zIndex:$widget.level});
-		if ($widget.degrees != undefined && $widget.degrees != 0){
-			var $rot = "rotate("+$widget.degrees+"deg)";
-			e.css({MozTransform:$rot,WebkitTransform:$rot,msTransform:$rot});
-		}
-		//set new height and width if scale specified 
-		if ($widget.scale != 1 && $height > 0){
-			e.css({height:$height+'px',width:$width+'px'});
-		}
-	} //if height == 0
+			//position widget to adjusted position, set z-index, then set rotation
+			e.css({position:'absolute',left:(parseInt($widget.x)+tx)+'px',top:(parseInt($widget.y)+ty)+'px',zIndex:$widget.level});
+			if ($widget.degrees != undefined && $widget.degrees != 0){
+				var $rot = "rotate("+$widget.degrees+"deg)";
+				e.css({MozTransform:$rot,WebkitTransform:$rot,msTransform:$rot});
+			}
+			//set new height and width if scale specified 
+			if ($widget.scale != 1 && $height > 0){
+				e.css({height:$height+'px',width:$width+'px'});
+			}
+		} //if height == 0
+	}
 };
 
 //set new value for all widgets having specified type and element name
@@ -284,10 +309,18 @@ var $setElementState = function($element, $name, $newState) {
 
 //set new value for widget, showing proper icon
 var $setWidgetState = function($id, $newState) {
-	if ($gWidgets[$id].state != $newState) {  //don't bother if already this value
-		console.log( "setting " + $id + " for " + $gWidgets[$id].element + " " + $gWidgets[$id].name + " --> " + $newState);
-		$('img#'+$id).attr('src', $gWidgets[$id]["icon"+$newState]);  //set image src to next state's image
-		$gWidgets[$id].state = $newState;  //update the changed widget
+	var $widget = $gWidgets[$id];
+	if ($widget.state != $newState) {  //don't bother if already this value
+		console.log( "setting " + $id + " for " + $widget.element + " " + $widget.name + " --> " + $newState);
+		switch ($widget.widgetFamily) {
+		case "icon" :
+			$('img#'+$id).attr('src', $widget["icon"+$newState]);  //set image src to next state's image
+			break;
+		case "text" :
+			$('div#'+$id).text($widget["text"+$newState]);  //set to new state's text
+			break;
+		}
+		$gWidgets[$id].state = $newState;  //update the changed widget back to persistent var
 	}
 };
 
@@ -460,28 +493,83 @@ var $requestPanelXML = function($panelName){
 	});
 };
 
+//preload all images referred to by the widget
+var $preloadWidgetImages = function($widget) {
+	if ($widget['icon1'] != undefined) $("<img src='" + $widget['icon1'] + "'/>");
+	if ($widget['icon2'] != undefined) $("<img src='" + $widget['icon2'] + "'/>");
+	if ($widget['icon4'] != undefined) $("<img src='" + $widget['icon4'] + "'/>");
+	if ($widget['icon8'] != undefined) $("<img src='" + $widget['icon8'] + "'/>");
+};    	
+
+//determine widget "family" for broadly grouping behaviors
+//note: not-yet-supported widgets are commented out here so as to return undefined
+var $getWidgetFamily = function($widget) {
+
+	if ($widget.text != undefined) {
+		return "text";
+	}
+	switch ($widget.widgetType) {
+	case "memoryicon" :
+//	case "reportericon" :
+		return "text";
+		break;
+	case "positionablelabel" :
+	case "turnouticon" :
+	case "sensoricon" :
+	case "multisensoricon" :
+//	case "signalheadicon" :
+//	case "signalmasticon" :
+		return "icon";
+		break;
+	case "tracksegment" :
+	case "layoutturnout" :
+	case "tracksegment" :
+	case "positionablepoint" :
+	case "backgroundColor" :
+//	case "fastclock" :
+		return "drawn";
+		break;
+	};
+	
+	return; //unrecognized widget returns undefined
+};    	
+
+
 
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 $(document).ready(function() {
 	
-	
-	var $is_touch_device = 'ontouchstart' in document.documentElement;
-	if ($is_touch_device) {
-		console.log("touch events enabled");
-		DOWNEVENT = 'touchstart';
-		UPEVENT   = 'touchend';
-	} else {
-		console.log("mouse events enabled");
-		DOWNEVENT = 'mousedown';
-		UPEVENT   = 'mouseup';
-	}
-	
 	//if panelname not passed in, show list of available panels
 	var $panelName = getParameterByName('name');
 	if ($panelName == undefined) {
-		$showPanelList();
+        $showPanelList();
 	} else {
-		//include name of panel in page title
+		//set up events based on browser's support for touch events
+		var $is_touch_device = 'ontouchstart' in document.documentElement;
+		if ($is_touch_device) {
+			console.log("touch events enabled");
+			DOWNEVENT = 'touchstart';
+			UPEVENT   = 'touchend';
+		} else {
+			console.log("mouse events enabled");
+			DOWNEVENT = 'mousedown';
+			UPEVENT   = 'mouseup';
+		}
+		
+/*		var canvas = document.getElementById("panelCanvas");  
+        var ctx = canvas.getContext("2d");  
+//        ctx.strokeRect(10, 10, 400, 400);
+        ctx.fillStyle = "rgb(255, 0, 0)"; 
+        ctx.beginPath();  
+        ctx.moveTo(50, 5);  
+        ctx.lineTo(5, 250);  
+        ctx.lineTo(250, 250);  
+        ctx.closePath();  
+        ctx.fill();  
+        ctx.strokeStyle = "lightgray";
+        ctx.strokeRect(50, 50, 100, 100);  
+*/
+        //include name of panel in page title
 		$(document).attr('title', 'Show JMRI Panel: ' + $panelName);
 		//add a link to the panel xml
 		$("div#panelFooter").append("&nbsp;<a href='/panel/" + $panelName + "' target=_new>[Panel XML]</a>");
