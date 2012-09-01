@@ -1032,9 +1032,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         //if (_debug) log.debug("mouseDragged at ("+event.getX()+","+event.getY()+")"); 
         setToolTip(null); // ends tooltip if displayed
         
-        _dragging = true;
-        _lastX = event.getX();
-        _lastY = event.getY();
         if (_circuitBuilder.doMouseDragged(_currentSelection, event) ) {
         	return;
         }
@@ -1090,6 +1087,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
             }
         }
+        _dragging = true;
+        _lastX = event.getX();
+        _lastY = event.getY();
         _targetPanel.repaint(); // needed for ToolTip
     }
 
