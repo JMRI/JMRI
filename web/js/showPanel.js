@@ -11,17 +11,14 @@
  *  
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
  *  TODO: add heartbeat with error message (with retry button)
- *  TODO: handle backgroundColor "widget"
- *  TODO: handle more attributes of text (both base and states)
  *  TODO: handle "drawn" elements (for layouteditor)
  *  TODO: handle multisensors, other widgets correctly
- *  TODO: find correct font or adjust size for text labels
  *  TODO: diagnose and correct the small position issues visible with footscray
- *  TODO: if no elements found, don't send list to xmlio server
  *  TODO: figure out what "hidden=yes" is supposed to do
  *  TODO: verify that assuming same rotation and scale for all icons in a "set" is OK
  *  TODO: deal with mouseleave, mouseout, touchout, etc.
  *  TODO: handle overlay (both?) widgets
+ *  TODO: if no elements found, don't send list to xmlio server
  *   
  **********************************************************************************************/
 
@@ -144,10 +141,16 @@ var $processResponse = function($returnedData, $success, $xhr) {
 					case "sensoricon" :
 						$widget['name']  =		$widget.sensor; //normalize name
 						$widget['element']  =	"sensor"; //what JMRI calls this
+						//set each state's text
 						$widget['text1'] = 		$(this).find('unknownText').attr('text');
 						$widget['text2'] =  	$(this).find('activeText').attr('text');
 						$widget['text4'] =  	$(this).find('inactiveText').attr('text');
 						$widget['text8'] =		$(this).find('inconsistentText').attr('text');
+						//set each state's css attribute array (text color, etc.)
+						$widget['css1'] = 		$getTextCSSFromObj($getObjFromXML($(this).find('unknownText')[0]));
+						$widget['css2'] = 		$getTextCSSFromObj($getObjFromXML($(this).find('activeText')[0]));
+						$widget['css4'] = 		$getTextCSSFromObj($getObjFromXML($(this).find('inactiveText')[0]));
+						$widget['css8'] = 		$getTextCSSFromObj($getObjFromXML($(this).find('inconsistentText')[0]));
 						if ($widget.name != undefined && $widget.forcecontroloff != "true") {
 							$widget.classes += 		$widget.element + " clickable ";
 						}
@@ -155,32 +158,13 @@ var $processResponse = function($returnedData, $success, $xhr) {
 					}
 					$widget['safeName'] = $safeName($widget.name);
 					$("div#panelArea").append("<div id=" + $widget.id + " class='"+$widget.classes+"'>" + $widget.text + "</div>");
-					$widget['styles'] = $("div#panelArea>#"+$widget.id).css('cssText');  //NOTE: must start with current css
-					if ($widget.red != undefined) {
-						$widget.styles += ";color:rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ") ";
-					}
-					if ($widget.backRed != undefined) {
-						$widget.styles += ";background-color:rgb(" + $widget.backRed + "," + $widget.backGreen + "," + $widget.backBlue + ") ";
-					}
-					if ($widget.size != undefined) {
-						$widget.styles += ";font-size:" + $widget.size + "px ";
-					}
-					if ($widget.styles != undefined) {
-						switch ($widget.style) { //set font based on style attrib from xml
-						case "1":
-							$widget.styles += ";font:bold ";
-							break;
-						case "2":
-							$widget.styles += ";font:italic ";
-							break;
-						case "3":
-							$widget.styles += ";font:bold italic ";
-							break;
-						}
-					}
-					$("div#panelArea>#"+$widget.id).css('cssText', $widget.styles); //apply style string to widget
+
+					$widget['styles'] = $getTextCSSFromObj($widget);
+					$("div#panelArea>#"+$widget.id).css( $widget.styles ); //apply style array to widget
+
 					$gWidgets[$widget.id] = $widget; //store widget in persistent array
 					$setWidgetPosition($("div#panelArea>#"+$widget.id));
+
 					break;
 				case "drawn" :
 					switch ($widget.widgetType) {
@@ -191,7 +175,8 @@ var $processResponse = function($returnedData, $success, $xhr) {
 					case "tracksegment" :
 						//draw the line
 						break;
-					case "backgroundColor" :
+					case "backgroundColor" :  //set background color of the panel itself
+						$('div#panelArea').css({"background-color" : "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ")"});
 						break;
 					}
 					break;
@@ -241,6 +226,68 @@ var $processResponse = function($returnedData, $success, $xhr) {
 	$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');
 
 };    	
+
+//set object attributes from xml attributes, returning object 
+var $getObjFromXML = function(e){
+	var $widget = {};
+	$(e.attributes).each(function() {
+		$widget[this.name] = this.value;
+	});
+	return $widget;
+};    	
+
+//build and return CSS array from attributes passed in
+//  turn off unspecified elements to return to page defaults
+var $getTextCSSFromObj = function($widget){
+	var $retCSS = {};
+	$retCSS['color'] = '';
+	$retCSS['background-color'] = '';
+	$retCSS['font-size'] = '';
+	$retCSS['font-weight'] = '';
+	$retCSS['font-style'] = '';
+	$retCSS['margin'] = '';
+	$retCSS['border-width'] = '';
+	$retCSS['border-color'] = '';
+	$retCSS['border-style'] = '';
+	if ($widget.red != undefined) {
+		$retCSS['color'] = "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ") ";
+	}
+	if ($widget.redBack != undefined) {
+		$retCSS['background-color'] = "rgb(" + $widget.redBack + "," + $widget.greenBack + "," + $widget.blueBack + ") ";
+	}
+	if ($widget.size != undefined) {
+		$retCSS['font-size'] = $widget.size + "px ";
+	}
+	if ($widget.margin != undefined) {
+		$retCSS['padding'] = $widget.margin + "px ";
+	}
+	if ($widget.borderSize != undefined) {
+		$retCSS['border-width'] = $widget.borderSize + "px ";
+	}
+	if ($widget.redBorder != undefined) {
+		$retCSS['border-color'] = "rgb(" + $widget.redBorder + "," + $widget.greenBorder + "," + $widget.blueBorder + ") ";;
+		$retCSS['border-style'] = 'solid';
+	}
+	if ($widget.style != undefined) {
+		switch ($widget.style) { //set font based on style attrib from xml
+		case "1":
+			$retCSS['font-weight'] = 'bold';
+			break;
+		case "2":
+			$retCSS['font-style'] = 'italic';
+			break;
+		case "3":
+			$retCSS['font-weight'] = 'bold';
+			$retCSS['font-style'] = 'italic';
+			break;
+		}
+	}
+
+    return $retCSS;
+};
+
+
+
 //place widget in correct position, rotation, z-index and scale.
 var $setWidgetPosition = function(e) {
 
@@ -249,15 +296,12 @@ var $setWidgetPosition = function(e) {
 
 	if ($widget != undefined) {  //don't bother if widget not found
 
-		//TODO: yeah, I know this won't work right if the image hasn't downloaded yet, hit Refresh for now.....
 		var $height = e.height() * $widget.scale;
 		var $width =  e.width()  * $widget.scale;
 
-//		console.log("processing " + $widget.id + " height=" + $height + " width=" + $width);
-
 		//if image is not loaded yet, set callback to do this again when it is loaded
+		//TODO: firefox returns a height for the alt text, so this doesn't work right
 		if ($height == 0) {
-//			console.log("delaying positioning of " + $widget.id);
 			e.load(function(){
 				$setWidgetPosition($(this));
 			});
@@ -314,10 +358,11 @@ var $setWidgetState = function($id, $newState) {
 		console.log( "setting " + $id + " for " + $widget.element + " " + $widget.name + " --> " + $newState);
 		switch ($widget.widgetFamily) {
 		case "icon" :
-			$('img#'+$id).attr('src', $widget["icon"+$newState]);  //set image src to next state's image
+			$('img#'+$id).attr('src', $widget['icon'+$newState]);  //set image src to next state's image
 			break;
 		case "text" :
-			$('div#'+$id).text($widget["text"+$newState]);  //set to new state's text
+			$('div#'+$id).text($widget['text'+$newState]);  //set text to new state's text
+			$('div#'+$id).css($widget['css'+$newState]); //set css to new state's css
 			break;
 		}
 		$gWidgets[$id].state = $newState;  //update the changed widget back to persistent var
