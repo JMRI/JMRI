@@ -23,6 +23,7 @@ import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.cdi.jdom.CdiMemConfigReader;
 import org.openlcb.cdi.swing.CdiPanel;
 import org.openlcb.swing.networktree.*;
+import org.openlcb.swing.memconfig.*;
 
 /**
  * Frame displaying tree of OpenLCB nodes
@@ -59,7 +60,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                 (MimicNodeStore)memo.get(MimicNodeStore.class),
                 (Connection)memo.get(Connection.class),
                 (NodeID)memo.get(NodeID.class),
-                new CdiLoader(
+                new ActionLoader(
                         (MimicNodeStore)memo.get(MimicNodeStore.class),
                         (MemoryConfigurationService)memo.get(MemoryConfigurationService.class)
                 )
@@ -116,10 +117,10 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetworkTreePane.class.getName());
 
     /**
-     * Nested class to open CDI window when proper tree element is picked
+     * Nested class to open specific windows when proper tree element is picked
      */
-    class CdiLoader extends NodeTreeRep.SelectionKeyLoader {
-        CdiLoader(MimicNodeStore store, MemoryConfigurationService mcs) {
+    class ActionLoader extends NodeTreeRep.SelectionKeyLoader {
+        ActionLoader(MimicNodeStore store, MemoryConfigurationService mcs) {
             this.store = store;
             this.mcs = mcs;
         }
@@ -134,6 +135,36 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                 }
             };
         }
+
+        public NodeTreeRep.SelectionKey configurationKey(String name, NodeID node) {
+            return new NodeTreeRep.SelectionKey(name, node) {
+                public void select(DefaultMutableTreeNode rep) {
+                    openConfigurePane(node);
+                }
+            };
+        }
+
+        void openConfigurePane(NodeID node) {
+            {
+                JmriJFrame f = new JmriJFrame();
+                f.setTitle("Configuration Capabilities "+node);
+                MemConfigDescriptionPane mc = new MemConfigDescriptionPane(node, store, mcs);
+                f.add(mc);
+                mc.initComponents();
+                f.pack();
+                f.setVisible(true);
+            }
+            {
+                JmriJFrame f = new JmriJFrame();
+                f.setTitle("Configuration R/W Tool "+node);
+                MemConfigReadWritePane mc = new MemConfigReadWritePane(node, store, mcs);
+                f.add(mc);
+                mc.initComponents();
+                f.pack();
+                f.setVisible(true);
+            }
+        }
+
         public void openCdiPane(final NodeID destNode) {
     
             CdiMemConfigReader cmcr = new CdiMemConfigReader(destNode, store, mcs);
