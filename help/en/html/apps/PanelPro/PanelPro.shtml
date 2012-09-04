@@ -81,22 +81,30 @@ the Panel Background, or the icons to attach to active elements (switches,
 levers, track state, signals, etc.) which are then placed on the Panel.
 
 <p>
+<a href="http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif">
+    <img src="http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif" align="right" height="216" width="313">
+</a>
 Many people use both, with the Layout Editor creating schematic panels
 to handle the actual configuration for signals and Panel Editor providing
-exactly the appearance desired.
-<p>
-Rodney Black's <a href="http://home.comcast.net/~kb0oys/">CATS</a>
-application is another tool for creating modern-style control panels.
+exactly the appearance desired. For example, 
+Bob Bucklew has prepared a three part 
+<a href="http://www.quaker-valley.com/CTC/JMRI_Panel_Tutorial.html ">tutorial</a>
+that describes how Panel Pro and Layout Editor can be used together.
+
 
 <p>
 Please see our
 <a href="http://jmri.sf.net/community/examples/Gallery.shtml">gallery page</a>
-for example of how model railroaders have used this on their own layouts.
+for examples of how model railroaders have used this on their own layouts.
 There's also an example of using PanelPro for
 <a href="http://jmri.sf.net/community/examples/Modules.shtml">modular layouts</a>.
 
+<p>
+Rodney Black's <a href="http://home.comcast.net/~kb0oys/">CATS</a>
+application is another tool for creating modern-style control panels.
+
+
 <h2>The Panel Editor</h2>
-<IMG SRC="../../../images/PiecedPanel.gif" ALT="Screen shot of panel" WIDTH="292" HEIGHT="107" HSPACE="0" VSPACE="0">
 <A href="../../../images/CornwallPanelLit.gif"><IMG src="../../../images/CornwallPanelLit.gif" ALT="screen shot of Cornwall panel" WIDTH="333" HEIGHT="200" HSPACE="0" VSPACE="0"></A>
 
 <BR>
