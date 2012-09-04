@@ -252,13 +252,13 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			     (m.getElement(0)==XNetConstants.CS_INFO && 
                 	   (m.getElement(1)==XNetConstants.BC_SERVICE_MODE_ENTRY ||
 		            m.getElement(1)==XNetConstants.PROG_CS_READY )) ) {
-					stopTimer();
-					
-					if(!getCanRead()) {  
-					    // should not read this, as shouldn't be attempting CV read if not supported, but still...
-						if (log.isDebugEnabled()) log.debug("CV reading not supported, exiting REQUESTSENT state");
-						progState = NOTPROGRAMMING;
-						notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+					if(!getCanRead()) { 
+                                         // on systems like the Roco MultiMaus 
+                                         // (which does not support reading)
+                                         // let a timeout occur so the system
+                                         // has time to write data to the 
+                                         // decoder
+                                                restartTimer(SHORT_TIMEOUT);
 						return;
 					}
 				    
@@ -424,14 +424,18 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 	/**
 	 * Internal routine to handle a timeout
 	 */
+        @Override
 	synchronized protected void timeout() {
 		if (progState != NOTPROGRAMMING) {
 			// we're programming, time to stop
 			if (log.isDebugEnabled()) log.debug("timeout!");
 			// perhaps no loco present? Fail back to end of programming
 			progState = NOTPROGRAMMING;
-			notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
-		}
+                        if (getCanRead())
+			   notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
+                        else 
+			   notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+		}  
 	}
 
 	// internal method to notify of the final result

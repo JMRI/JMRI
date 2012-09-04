@@ -196,26 +196,28 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
       * enterProgMode(); has to be available, even though it doesn't do 
       * anything on lenz
       */
+    @Override
     protected AbstractMRMessage enterProgMode() { return null; }
 
     /**
       * enterNormalMode() returns the value of getExitProgModeMsg();
       */
+    @Override
     protected AbstractMRMessage enterNormalMode() { 
 		return XNetMessage.getExitProgModeMsg();
 	}
 
     /**
-      * enterNormalMode() returns the value of getExitProgModeMsg();
+      * programmerIdle() checks to see if the programmer associated with
+      * this interface is idle or not.
       */
+    @Override
     protected boolean programmerIdle() {
-          
-          if(mMemo.getProgrammerManager().getGlobalProgrammer() instanceof
-             jmri.jmrix.lenz.XNetProgrammer )
+          if(mMemo==null ) return true;
 	  return !(((jmri.jmrix.lenz.XNetProgrammer)mMemo.getProgrammerManager().getGlobalProgrammer()).programmerBusy());
-          else return true;
 	}
 
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) { 
            int len = (((XNetReply)msg).getElement(0)&0x0f)+2;  // opCode+Nbytes+ECC
            log.debug("Message Length " +len +" Current Size " +msg.getNumDataElements());

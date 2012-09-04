@@ -178,14 +178,14 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
 		            m.getElement(1)==XNetConstants.PROG_CS_READY )) ) {
 			       stopTimer();
 
-					if(!getCanRead()) {  
-                        // should not read here if cant read, because read shouldnt be invoked, but still attempt to handle
-					    if (log.isDebugEnabled()) log.debug("CV reading not supported, exiting REQUESTSENT state");
-			                        progState = RETURNSENT;
-						_error = jmri.ProgListener.OK;
-			                        controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),
-						this);
-     						return;
+					if(!getCanRead()) { 
+                                         // on systems like the Roco MultiMaus
+                                         // (which does not support reading)
+                                         // let a timeout occur so the system
+                                         // has time to write data to the
+                                         // decoder
+                                                restartTimer(SHORT_TIMEOUT);
+                                                return; 
 					}
 
 			       // here ready to request the results
@@ -355,6 +355,33 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
  	// listen for the messages to the LI100/LI101
     	synchronized public void message(XNetMessage l) {
     	}
+
+        /**
+         * Internal routine to handle a timeout
+         */
+        @Override
+        synchronized protected void timeout() {
+                // if a timeout occurs, and we are not 
+                // finished programming, we need to exit
+                // service mode.
+                if (progState != NOTPROGRAMMING) {
+                        // we're programming, time to stop
+                        if (log.isDebugEnabled()) log.debug("timeout!");
+
+                        progState = RETURNSENT;
+                        if(!getCanRead())
+                           _error = jmri.ProgListener.OK;  //MultiMaus etc.
+                        else
+                           // perhaps no loco present?
+                           _error=jmri.ProgListener.FailedTimeout;
+                                                
+                        controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),
+                                                this);
+                } 
+        }
+
+
+
 
    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LI100XNetProgrammer.class.getName());
 
