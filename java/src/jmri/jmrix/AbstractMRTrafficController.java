@@ -282,7 +282,10 @@ abstract public class AbstractMRTrafficController {
         					handleTimeout(modeMsg,l);
         				}
             		}
-                    mCurrentState = WAITMSGREPLYSTATE;
+                        else {
+                                mCurrentMode=m.getNeededMode();
+                                mCurrentState = WAITMSGREPLYSTATE;
+                        }
             	}
                     forwardToPort(m, l);
             	// reply expected?
@@ -305,8 +308,11 @@ abstract public class AbstractMRTrafficController {
                 } // just continue to the next message from here
             } else {
                 // nothing to do
-            	if (mCurrentState!=IDLESTATE) log.debug("Setting IDLESTATE");
-            	mCurrentState =IDLESTATE;
+            	if (mCurrentState!=IDLESTATE) {
+                      log.debug("Setting IDLESTATE");
+                      log.debug("Current Mode " +mCurrentMode);
+            	      mCurrentState =IDLESTATE;
+                }
             	// wait for something to send
                 if (mWaitBeforePoll > waitTimePoll || mCurrentMode == PROGRAMINGMODE){
                 	try {
@@ -332,6 +338,7 @@ abstract public class AbstractMRTrafficController {
                 	}
                 }
                 // went around with nothing to do; leave programming state if in it
+                if(mCurrentMode == PROGRAMINGMODE) log.error("Timeout - in service mode");
                 if (mCurrentState == POLLSTATE && mCurrentMode == PROGRAMINGMODE && programmerIdle() ) {
                 	log.debug("timeout causes leaving programming mode");
                 	mCurrentState = WAITREPLYINNORMMODESTATE;
