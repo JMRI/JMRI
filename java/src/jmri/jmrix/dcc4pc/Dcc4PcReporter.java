@@ -47,7 +47,7 @@ import jmri.RailCom;
     }
 
     // data members
-    RailComPacket[] rcPacket = new RailComPacket[3];
+    transient RailComPacket[] rcPacket = new RailComPacket[3];
     
     void setPacket(int[] arraytemp, int dcc_addr_type, int dcc_addr, int cvNumber, int speed, int packetTypeCmd){
         if(log.isDebugEnabled())
