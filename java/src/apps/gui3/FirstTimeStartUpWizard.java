@@ -357,14 +357,16 @@ public class FirstTimeStartUpWizard {
         
         WizardPage(JComponent mainPanel, JPanel helpDetails, String headerText){
             this.panel = mainPanel;
-            this.panel.setPreferredSize(defaultInfoSize);
+            
             if(helpDetails!=null){
                 this.helpDetails = helpDetails;
                 this.helpDetails.setLayout(
                     new BoxLayout( this.helpDetails, BoxLayout.Y_AXIS ) );
             }
-            if(this.panel!=null)
+            if(this.panel!=null){
+                this.panel.setPreferredSize(defaultInfoSize);
                 this.panel.setVisible(false);
+            }
             this.helpDetails.setVisible(false);
             this.headerText = headerText;
         }

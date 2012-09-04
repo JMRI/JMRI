@@ -104,7 +104,11 @@ public class MarklinMon {
             addr=addr-MarklinConstants.DCCSTART;
             sb.append(" to DCC Address " + addr);
         }
-        sb.append("\nCAN Message " + r.getCanData());
+        //StringBuffer buf = new StringBuffer();
+        sb.append("0x" + Integer.toHexString(r.getCanData()[0]));
+        for (int i=1; i<r.getCanData().length; i++) {
+            sb.append(", 0x" + Integer.toHexString(r.getCanData()[i]));
+        }
         
         return sb.toString();
     }

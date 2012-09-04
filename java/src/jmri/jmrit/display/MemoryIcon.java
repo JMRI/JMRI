@@ -539,8 +539,10 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 for (RosterEntry roster : REs) {
                     addRosterToMemory(roster);
                 }
-            } catch(Exception e){
-            
+            } catch(java.awt.datatransfer.UnsupportedFlavorException e){
+                log.error(e);
+            } catch (java.io.IOException e){
+                log.error(e);
             }
             return true;
         }

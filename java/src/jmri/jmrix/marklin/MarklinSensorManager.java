@@ -125,7 +125,9 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
             while(port<17){
                 try{
                     tmpSName = createSystemName(board+":"+port, prefix);
-                } catch (Exception e){}
+                } catch (Exception e){
+                    log.error("Error creating system name for " + board + ":" + port);
+                }
                 s = getBySystemName(tmpSName);
                 if(s==null){
                     StringBuilder sb = new StringBuilder();
