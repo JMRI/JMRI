@@ -11,7 +11,8 @@
  *  
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
  *  TODO: add heartbeat with error message (with retry button)
- *  TODO: handle "drawn" elements (for layouteditor)
+ *  TODO: handle layoutturnouts, track widths and colors
+ *  TODO: determine proper "level" for canvas layer
  *  TODO: handle multisensors, other widgets correctly
  *  TODO: diagnose and correct the small position issues visible with footscray
  *  TODO: figure out what "hidden=yes" is supposed to do
@@ -25,8 +26,9 @@
 //persistent (global) variables
 var $gWidgets = {};  //array of all widget objects, key=CSSId
 var $gPanel = {}; 	//store overall panel info
-var $gPoints = {}; 	//array of all points, key=PointName (used for layoutEditor panels)
+var $gPts = {}; 	//array of all points, key=PointName (used for layoutEditor panels)
 var $gXHR;  	//persistent variable to allow aborting of superseded connections
+var $gCtx;  //persistent context of canvas layer   
 var DOWNEVENT;  //either mousedown or touchstart, based on device
 var UPEVENT;    //either mouseup or touchend, based on device
 
@@ -52,8 +54,19 @@ var $processResponse = function($returnedData, $success, $xhr) {
 	});
 	$('div#panelArea').width($gPanel.width);
 	$('div#panelArea').height($gPanel.height);
+	
+	//insert the canvas layer and set up context used by layouteditor "drawn" objects 
+	if ($gPanel.paneltype == "LayoutPanel") {
+		$('div#panelArea').before("<canvas id='panelCanvas' width=" + $gPanel.width + "px height=" + 
+				$gPanel.height +"px style='position:absolute;z-index:2;'>");
+		var canvas = document.getElementById("panelCanvas");  
+		$gCtx = canvas.getContext("2d");  
+		$gCtx.strokeStyle = $gPanel.defaulttrackcolor;
+		$gCtx.lineWidth = $gPanel.sidetrackwidth;
+	}
 
-	$panel.contents().each( //process all widgets in the panel xml
+	//process all widgets in the panel xml, drawing them on screen, and building persistent arrays
+	$panel.contents().each( 
 			function() {
 				//convert attributes to an object array
 				var $widget = new Array();
@@ -63,7 +76,6 @@ var $processResponse = function($returnedData, $success, $xhr) {
 				});
 				//default various css attributes to not-set, then set in later code as needed
 				var $hoverText = "";  
-//				var $rotation = 0;
 
 				//add and normalize the various type-unique values, from the various spots they are stored
 				//  icons named based on states returned from xmlio server, 
@@ -136,7 +148,6 @@ var $processResponse = function($returnedData, $success, $xhr) {
 
 					break;
 				case "text" :
-//					$widget['element']  =	""; //no xmlio type for this
 					switch ($widget.widgetType) {
 					case "sensoricon" :
 						$widget['name']  =		$widget.sensor; //normalize name
@@ -170,10 +181,30 @@ var $processResponse = function($returnedData, $success, $xhr) {
 					switch ($widget.widgetType) {
 					case "positionablepoint" :
 						//just store these points in persistent variable for use when drawing tracksegments and layoutturnouts
-						$gPoints[$widget.ident] = $widget;
+						$gPts[$widget.ident] = $widget;
+						break;
+					case "layoutturnout" :
+						//store the points in persistent variable for use when drawing tracksegments and layoutturnouts
+						var $t = {};
+						$t['ident'] = $widget.ident;
+						$t['x'] = $widget.xcen;
+						$t['y'] = $widget.ycen;
+						$gPts[$widget.ident] = $t;
 						break;
 					case "tracksegment" :
-						//draw the line
+						var $pt1 = $gPts[$widget.connect1name];
+						var $pt2 = $gPts[$widget.connect2name];
+						if ($widget.angle == undefined) {
+							//draw straight line
+							$gCtx.beginPath();  
+							$gCtx.moveTo($pt1.x, $pt1.y);  
+							$gCtx.lineTo($pt2.x, $pt2.y);  
+							$gCtx.closePath();  
+							$gCtx.stroke();  
+						} else {
+							//draw curved line
+							drawArc($pt1.x, $pt1.y, $pt2.x, $pt2.y, $widget.angle)
+						}
 						break;
 					case "backgroundColor" :  //set background color of the panel itself
 						$('div#panelArea').css({"background-color" : "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ")"});
@@ -181,7 +212,7 @@ var $processResponse = function($returnedData, $success, $xhr) {
 					}
 					break;
 				default:
-					//log any unsupported widgets
+					//log any unsupported widgets, showing childnodes for info
 					$("div#logArea").append("<br />Unsupported: " + $widget.widgetType + ":"); 
 					$(this.attributes).each(function(){
 						$("div#logArea").append(" " + this.name);
@@ -192,7 +223,6 @@ var $processResponse = function($returnedData, $success, $xhr) {
 					});
 					break;
 				}
-
 			}  //end of function
 	);  //end of each
 
@@ -227,6 +257,50 @@ var $processResponse = function($returnedData, $success, $xhr) {
 
 };    	
 
+//draw a Circle
+function drawCircle(ptx, pty, radius) {
+    $gCtx.beginPath();
+    $gCtx.arc(ptx, pty, radius, 0, 2*Math.PI, false);
+    $gCtx.stroke();
+};    	
+
+//drawArc, passing in values from xml
+function drawArc(pt1x, pt1y, pt2x, pt2y, angle) {
+
+    var halfAngle = (angle/2) * Math.PI / 180; //in radians
+    var chord; //in pixels
+    var a;
+    var o;
+    var radius;  //in pixels
+    // Compute arc's chord
+    a = pt2x - pt1x;
+    o = pt2y - pt1y;
+    chord=Math.sqrt(((a*a)+(o*o)));
+
+    if (chord > 0.0) {  //don't bother if no length
+        radius = (chord/2)/(Math.sin(halfAngle));
+        // Circle
+        var startRad = Math.atan2(a, o) - halfAngle;
+//        if(t.getCircle()){
+            // Circle - Compute center
+        var cx = ((pt2x * 1.0) - Math.cos(startRad) * radius);  
+        var cy = ((pt2y * 1.0) + Math.sin(startRad) * radius);
+
+        var startAngle 	= Math.atan2(pt1y-cy, pt1x-cx);
+        var endAngle 	= Math.atan2(pt2y-cy, pt2x-cx);
+        var counterClockwise = false;
+
+        //draw some debug circles
+//        drawCircle(cx,cy,3);
+//        drawCircle(pt1x,pt1y,3);
+//        drawCircle(pt2x,pt2y,3);
+
+        $gCtx.beginPath();
+        $gCtx.arc(cx, cy, radius, startAngle, endAngle, counterClockwise);
+        $gCtx.stroke();
+    }
+}
+
 //set object attributes from xml attributes, returning object 
 var $getObjFromXML = function(e){
 	var $widget = {};
@@ -237,18 +311,10 @@ var $getObjFromXML = function(e){
 };    	
 
 //build and return CSS array from attributes passed in
-//  turn off unspecified elements to return to page defaults
 var $getTextCSSFromObj = function($widget){
 	var $retCSS = {};
-	$retCSS['color'] = '';
+	$retCSS['color'] = '';  //only clear attributes 
 	$retCSS['background-color'] = '';
-	$retCSS['font-size'] = '';
-	$retCSS['font-weight'] = '';
-	$retCSS['font-style'] = '';
-	$retCSS['margin'] = '';
-	$retCSS['border-width'] = '';
-	$retCSS['border-color'] = '';
-	$retCSS['border-style'] = '';
 	if ($widget.red != undefined) {
 		$retCSS['color'] = "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ") ";
 	}
@@ -601,19 +667,6 @@ $(document).ready(function() {
 			UPEVENT   = 'mouseup';
 		}
 		
-/*		var canvas = document.getElementById("panelCanvas");  
-        var ctx = canvas.getContext("2d");  
-//        ctx.strokeRect(10, 10, 400, 400);
-        ctx.fillStyle = "rgb(255, 0, 0)"; 
-        ctx.beginPath();  
-        ctx.moveTo(50, 5);  
-        ctx.lineTo(5, 250);  
-        ctx.lineTo(250, 250);  
-        ctx.closePath();  
-        ctx.fill();  
-        ctx.strokeStyle = "lightgray";
-        ctx.strokeRect(50, 50, 100, 100);  
-*/
         //include name of panel in page title
 		$(document).attr('title', 'Show JMRI Panel: ' + $panelName);
 		//add a link to the panel xml
