@@ -39,7 +39,7 @@ public class OpenLcbMenu extends JMenu {
     }
     
         Item[] panelItems = new Item[] {
-            new Item("MenuItemConsole", "jmri.jmrix.openlcb.swing.monitor.MonitorPane"),
+            new Item("MenuItemTrafficMonitor", "jmri.jmrix.openlcb.swing.monitor.MonitorPane"),
             new Item("MenuItemSendFrame",   "jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane"),
             new Item("MenuItemConfigNodes", "jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"),
         };
