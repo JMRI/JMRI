@@ -325,6 +325,9 @@ request to the LI101 */
 public final static int LI101_REQUEST_ADDRESS = 0x01;
 public final static int LI101_REQUEST_BAUD = 0x02;
 
+/* The following are error messages sent by the LIUSB (version 3.6) */
+public final static int LIUSB_WRONG_SYNTAX = 0x0A;
+
 }
 
 

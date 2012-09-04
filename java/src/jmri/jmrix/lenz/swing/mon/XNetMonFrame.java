@@ -79,6 +79,9 @@ import jmri.jmrix.lenz.XNetConstants;
 		  case XNetConstants.LI_MESSAGE_RESPONSE_BUFFER_OVERFLOW:
 					text="Buffer Overflow in interface";
 					break;
+		  case XNetConstants.LIUSB_WRONG_SYNTAX:
+					text="Wrong Message Syntax";
+					break;
 		  default:
 			text = l.toString();
 		  }
