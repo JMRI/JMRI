@@ -5,14 +5,12 @@ package jmri.jmrit.beantable;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
-import jmri.Sensor;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;
 import jmri.TurnoutOperation;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
-import jmri.NamedBeanHandle;
 import javax.swing.table.TableColumn;
 
 import java.awt.event.ActionEvent;
@@ -39,6 +37,7 @@ import javax.swing.JPanel;
 import jmri.util.JmriJFrame;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.swing.XTableColumnModel;
+import jmri.util.swing.JmriBeanComboBox;
 
 /**
  * Swing action to create and register a
@@ -165,8 +164,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                 else if (col==LOCKCOL) return Boolean.class;
                 else if (col==KNOWNCOL) return String.class;
                 else if (col==MODECOL) return JComboBox.class;
-                else if (col==SENSOR1COL) return String.class;
-                else if (col==SENSOR2COL) return String.class;
+                else if (col==SENSOR1COL) return JComboBox.class;
+                else if (col==SENSOR2COL) return JComboBox.class;
                 else if (col==OPSONOFFCOL) return JComboBox.class;
                 else if (col==OPSEDITCOL) return JButton.class;
                 else if (col==LOCKOPRCOL)  return JComboBox.class;
@@ -251,13 +250,23 @@ public class TurnoutTableAction extends AbstractTableAction {
                     });
                     return c;
                 } else if (col==SENSOR1COL ) {
-                    NamedBeanHandle<Sensor> s = t.getFirstNamedSensor();
-                    if (s!=null) return s.getName();
-                    else return "";
+                    JmriBeanComboBox c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(),t.getFirstSensor(), JmriBeanComboBox.DISPLAYNAME);
+                    c.setFirstItemBlank(true);
+                    c.addActionListener(new ActionListener(){
+                        public void actionPerformed(ActionEvent e) {
+                            comboBoxAction(e);
+                        }
+                    });
+                    return c;
                 } else if (col==SENSOR2COL ) {
-                    NamedBeanHandle<Sensor> s = t.getSecondNamedSensor();
-                    if (s!=null) return s.getName();
-                    else return "";
+                    JmriBeanComboBox c = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(),t.getSecondSensor(), JmriBeanComboBox.DISPLAYNAME);
+                    c.setFirstItemBlank(true);
+                    c.addActionListener(new ActionListener(){
+                        public void actionPerformed(ActionEvent e) {
+                            comboBoxAction(e);
+                        }
+                    });
+                    return c;
                 } else if (col==OPSONOFFCOL ) {
                     return makeAutomationBox(t);
                 } else if (col==OPSEDITCOL ) {
@@ -331,16 +340,14 @@ public class TurnoutTableAction extends AbstractTableAction {
                     String modeName = (String)((JComboBox)value).getSelectedItem();
                     t.setFeedbackMode(modeName);
                 } else if (col==SENSOR1COL ) {
-                    String sname = (String)value;
                     try {
-                        t.provideFirstFeedbackSensor(sname);
+                        t.provideFirstFeedbackSensor(((JmriBeanComboBox)value).getSelectedDisplayName());
                     } catch (jmri.JmriException e) {
                         JOptionPane.showMessageDialog(null, e.toString());
                     }
                 } else if (col==SENSOR2COL ) {
-                    String sname = (String)value;
                     try {
-                        t.provideSecondFeedbackSensor(sname);
+                        t.provideSecondFeedbackSensor(((JmriBeanComboBox)value).getSelectedDisplayName());
                     } catch (jmri.JmriException e) {
                         JOptionPane.showMessageDialog(null, e.toString());
                     }
