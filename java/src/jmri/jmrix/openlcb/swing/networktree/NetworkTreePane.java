@@ -3,6 +3,7 @@
 package jmri.jmrix.openlcb.swing.networktree;
 
 import java.awt.*;
+import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.tree.*;
@@ -165,6 +166,8 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
             }
         }
 
+        java.util.ArrayList<JButton> readList = new java.util.ArrayList<JButton>();
+        
         public void openCdiPane(final NodeID destNode) {
     
             CdiMemConfigReader cmcr = new CdiMemConfigReader(destNode, store, mcs);
@@ -182,6 +185,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                     // create an object to add "New Sensor" buttons
                     CdiPanel.GuiItemFactory factory = new CdiPanel.GuiItemFactory(){
                         public JButton handleReadButton(JButton button) {
+                            readList.add(button);
                             return button;
                         }
                         public JButton handleWriteButton(JButton button) {
@@ -271,7 +275,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                      };
                     
                     m.initComponents(accessor, factory);
-    
+                        
                     try {
                         m.loadCDI(
                              new org.openlcb.cdi.jdom.JdomCdiRep(
@@ -280,6 +284,28 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                          );
                     } catch (Exception e) { log.error("caught exception while parsing CDI", e);}
                     
+                    JButton b = new JButton("Read All");
+                    m.add(b);
+                    b.addActionListener(new java.awt.event.ActionListener() {
+                        @Override
+                        public void actionPerformed(java.awt.event.ActionEvent e) {
+                            int delay = 0; //milliseconds
+                            for (final JButton b : readList) {
+                                
+                                ActionListener taskPerformer = new ActionListener() {
+                                    public void actionPerformed(ActionEvent evt) {
+                                        target.doClick();
+                                    }
+                                    JButton target = b;
+                                };
+                                Timer t = new Timer(delay, taskPerformer);
+                                t.setRepeats(false);
+                                t.start();
+                                delay = delay + 250;
+                            }
+                        }
+                    });
+
                     f.add( scrollPane );
             
                     f.pack();
