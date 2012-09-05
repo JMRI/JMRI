@@ -15,6 +15,8 @@ import jmri.Section;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Timebase;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 import jmri.ThrottleListener;
 
 /**
@@ -156,7 +158,16 @@ public class AutoActiveTrain implements ThrottleListener {
 		}
 		// request a throttle for automatic operation, throttle returned via callback below
 		boolean ok = true;
-        ok = InstanceManager.throttleManagerInstance().requestThrottle(_address,this); 
+        if(_activeTrain.getTrainSource()==ActiveTrain.ROSTER){
+            RosterEntry re = Roster.instance().getEntryForId(_activeTrain.getTrainName());
+            if (re!=null)
+                ok = InstanceManager.throttleManagerInstance().requestThrottle(re,this);
+            else 
+                ok = InstanceManager.throttleManagerInstance().requestThrottle(_address,this);
+        }
+        else {
+            ok = InstanceManager.throttleManagerInstance().requestThrottle(_address,this);
+        }
 		if (!ok) {
 			log.warn("Throttle for locomotive address "+_address+" could not be setup.");
 			_activeTrain.setMode(ActiveTrain.DISPATCHED);
