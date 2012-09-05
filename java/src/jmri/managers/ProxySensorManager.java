@@ -108,7 +108,6 @@ public class ProxySensorManager extends AbstractProxyManager
         for (int i=0; i<nMgrs(); i++) {
             if ( prefix.equals(
                     ((SensorManager)getMgr(i)).getSystemPrefix()) ) {
-                //System.out.println((TurnoutManager)getMgr(i))
                 try {
                     return ((SensorManager)getMgr(i)).createSystemName(curAddress, prefix);
                 } catch (jmri.JmriException ex) {

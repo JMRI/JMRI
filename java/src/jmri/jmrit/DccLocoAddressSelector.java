@@ -11,7 +11,6 @@ import jmri.InstanceManager;
 import jmri.ThrottleManager;
 
 import java.util.ResourceBundle;
-import java.util.ArrayList;
 
 import java.awt.Font;
 import java.awt.event.ComponentAdapter;

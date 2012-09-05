@@ -30,7 +30,6 @@ import javax.swing.SpinnerNumberModel;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Display and edit a RosterEntry.

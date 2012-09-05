@@ -2,7 +2,6 @@
 
 package jmri.jmris.srcp.parser;
 
-import java.io.IOException;
 import jmri.InstanceManager;
 
 /* This class provides an interface between the JavaTree/JavaCC 

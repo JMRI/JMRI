@@ -2,7 +2,6 @@
 
 package jmri.jmrix.loconet.locormi;
 
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;

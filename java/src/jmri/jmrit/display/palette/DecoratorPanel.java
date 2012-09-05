@@ -365,7 +365,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         int bor = util.getBorderSize();
         Border outlineBorder;
         if (bor==0) {
-        	outlineBorder = BorderFactory.createEmptyBorder(0, 0, 0, 0);;
+        	outlineBorder = BorderFactory.createEmptyBorder(0, 0, 0, 0);
         }else {
         	outlineBorder = new LineBorder(util.getBorderColor(), bor);           	
         }

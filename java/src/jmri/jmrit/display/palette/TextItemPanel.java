@@ -1,13 +1,13 @@
 package jmri.jmrit.display.palette;
 
 //import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
+//import java.awt.event.ActionEvent;
 
-import java.awt.datatransfer.Transferable; 
+//import java.awt.datatransfer.Transferable; 
 
 import javax.swing.BoxLayout;
-import javax.swing.TransferHandler;
+//import javax.swing.TransferHandler;
 
 
 //import java.util.Hashtable;

@@ -1,7 +1,6 @@
 package jmri.jmrix.marklin;
 
 import jmri.LocoAddress;
-import jmri.DccLocoAddress;
 
 import jmri.jmrix.AbstractThrottle;
 

@@ -10,7 +10,7 @@ import javax.swing.event.ChangeListener;
 
 import javax.swing.*;
 
-import jmri.jmrit.catalog.NamedIcon;
+//import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
 
 /**
