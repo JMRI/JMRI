@@ -49,6 +49,8 @@ import jmri.RailCom;
     // data members
     transient RailComPacket[] rcPacket = new RailComPacket[3];
     
+    private static final long serialVersionUID = 120905L;
+    
     void setPacket(int[] arraytemp, int dcc_addr_type, int dcc_addr, int cvNumber, int speed, int packetTypeCmd){
         if(log.isDebugEnabled())
             log.debug(getDisplayName() + " dcc_addr " + dcc_addr + " " + cvNumber + " " + speed);
