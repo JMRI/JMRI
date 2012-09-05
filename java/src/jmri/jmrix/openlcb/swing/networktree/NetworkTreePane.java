@@ -179,6 +179,82 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                     Dimension minScrollerDim = new Dimension(800,12);
                     scrollPane.setMinimumSize(minScrollerDim);
                     
+                    // create an object to add "New Sensor" buttons
+                    CdiPanel.GuiItemFactory factory = new CdiPanel.GuiItemFactory(){
+                        public JButton handleReadButton(JButton button) {
+                            return button;
+                        }
+                        public JButton handleWriteButton(JButton button) {
+                            return button;
+                        }
+                        public void handleGroupPaneStart(JPanel pane) {
+                            System.out.println("Start "+pane);
+                            this.pane = pane;
+                            evt1 = null;
+                            evt2 = null;
+                            desc = null;
+                            return;
+                        }
+                        public void handleGroupPaneEnd(JPanel pane) {
+                            System.out.println("End   "+pane);
+                            if (pane!=null && evt1 != null && evt2 != null && desc != null) {
+                                JPanel p = new JPanel();
+                                p.setLayout(new FlowLayout());
+                                p.setAlignmentX(-1.0f);
+                                pane.add(p);
+                                JButton button = new JButton("Make Sensor");
+                                p.add(button);
+                                button.addActionListener(new java.awt.event.ActionListener() {
+                                    @Override
+                                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                                        jmri.Sensor sensor = jmri.InstanceManager.sensorManagerInstance()
+                                            .provideSensor("MS"+mevt1.getText()+";"+mevt2.getText());
+                                        if (mdesc.getText().length() > 0) sensor.setUserName(mdesc.getText());
+                                        log.info("make sensor MS"+mevt1.getText()+";"+mevt2.getText()+" ["+mdesc.getText()+"]");
+                                    }
+                                    JTextField mdesc = desc;
+                                    JFormattedTextField mevt1 = evt1;
+                                    JFormattedTextField mevt2 = evt2;                                    
+                                });
+                                button = new JButton("Make Turnout");
+                                p.add(button);
+                                button.addActionListener(new java.awt.event.ActionListener() {
+                                    @Override
+                                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                                        jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance()
+                                            .provideTurnout("MT"+mevt1.getText()+";"+mevt2.getText());
+                                        if (mdesc.getText().length() > 0) turnout.setUserName(mdesc.getText());
+                                        log.info("make turnout MT"+mevt1.getText()+";"+mevt2.getText()+" ["+mdesc.getText()+"]");
+                                    }
+                                    JTextField mdesc = desc;
+                                    JFormattedTextField mevt1 = evt1;
+                                    JFormattedTextField mevt2 = evt2;                                    
+                                });
+
+                                pane = null;
+                                evt1 = null;
+                                evt2 = null;
+                                desc = null;
+                            }
+                            return;
+                        }
+                        public JFormattedTextField handleEventIdTextField(JFormattedTextField field) {
+                            System.out.println("Evt  ");
+                            if (evt1 == null) evt1 = field;
+                            else if (evt2 == null) evt2 = field;
+                            else pane = null;  // flag too many
+                            return field;
+                        }
+                        public JTextField handleStringValue(JTextField value) {
+                            System.out.println("Text  ");
+                            desc = value;
+                            return value;
+                        }
+                        JPanel pane = null;
+                        JTextField desc = null;
+                        JFormattedTextField evt1 = null;
+                        JFormattedTextField evt2 = null;
+                    };
                     // create an adapter for reading and writing
                     CdiPanel.ReadWriteAccess accessor = new CdiPanel.ReadWriteAccess(){
                         public void doWrite(long address, int space, byte[] data) {
@@ -194,7 +270,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                         }
                      };
                     
-                    m.initComponents(accessor);
+                    m.initComponents(accessor, factory);
     
                     try {
                         m.loadCDI(
