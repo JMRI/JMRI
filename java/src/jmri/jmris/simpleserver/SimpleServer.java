@@ -40,7 +40,8 @@ public class SimpleServer extends JmriServer {
     }
 
     public SimpleServer(int port) {
-        super(port);
+    	super(port);
+        log.info("JMRI SimpleServer started on port " + port);
     }
 
     // Handle communication to a client through inStream and outStream

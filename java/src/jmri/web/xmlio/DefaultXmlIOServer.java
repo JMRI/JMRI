@@ -482,51 +482,61 @@ public class DefaultXmlIOServer implements XmlIOServer {
     }
     
     void addListenerToTurnout(String name, Element item, DeferredRead dr) {
-        Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
+    	if (log.isDebugEnabled()) log.debug("adding Listener To Turnout " + name);
+    	Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
         b.addPropertyChangeListener(dr);
     }
     
     void addListenerToMemory(String name, Element item, DeferredRead dr) {
+    	if (log.isDebugEnabled()) log.debug("adding Listener To Memory " + name);
         Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
         b.addPropertyChangeListener(dr);
     }
     
     void addListenerToRoute(String name, Element item, DeferredRead dr) {
+    	if (log.isDebugEnabled()) log.debug("adding Listener To Route " + name);
         Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
         b.addPropertyChangeListener(dr);
     }
     
     void addListenerToSensor(String name, Element item, DeferredRead dr) {
+    	if (log.isDebugEnabled()) log.debug("adding Listener To Sensor " + name);
         Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
         b.addPropertyChangeListener(dr);
     }
     
     void addListenerToPower(String name, Element item, DeferredRead dr) {
+    	if (log.isDebugEnabled()) log.debug("adding Listener To Power " + name);
         PowerManager b = InstanceManager.powerManagerInstance();
         b.addPropertyChangeListener(dr);
     }
     
     void removeListenerFromTurnout(String name, Element item, DeferredRead dr) {
+    	if (log.isDebugEnabled()) log.debug("removing Listener From Turnout " + name);
         Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
         b.removePropertyChangeListener(dr);
     }
     
     void removeListenerFromMemory(String name, Element item, DeferredRead dr) {
+    	if (log.isDebugEnabled()) log.debug("removing Listener From Memory " + name);
         Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
         b.removePropertyChangeListener(dr);
     }
     
     void removeListenerFromRoute(String name, Element item, DeferredRead dr) {
+    	if (log.isDebugEnabled()) log.debug("removing Listener From Route " + name);
         Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
         b.removePropertyChangeListener(dr);
     }
     
     void removeListenerFromSensor(String name, Element item, DeferredRead dr) {
+    	if (log.isDebugEnabled()) log.debug("remove Listener from Sensor " + name);
         Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
         b.removePropertyChangeListener(dr);
     }
     
     void removeListenerFromPower(String name, Element item, DeferredRead dr) {
+    	if (log.isDebugEnabled()) log.debug("removing Listener From Power " + name);
         PowerManager b = InstanceManager.powerManagerInstance();
         b.removePropertyChangeListener(dr);
     }
@@ -1308,16 +1318,17 @@ public class DefaultXmlIOServer implements XmlIOServer {
             
             // found change, pull listeners and return
             @SuppressWarnings("unchecked")
-            List<Element> items = request.getChildren("item");
-    
+            List<Element> items = request.getChildren();
             for (Element item : items) {
-                String type = item.getAttributeValue("type");
+                String type = item.getName();
                 String name = item.getAttributeValue("name");
-                if (type == null) {
+                useAttributes = (!type.equals("item"));
+                if (!useAttributes) {
                     type = item.getChild("type").getText();
                     name = item.getChild("name").getText();
+                } else if (name == null) {
+                    name = "";
                 }
-                
                 if (type.equals("turnout")) removeListenerFromTurnout(name, item, this);
                 else if (type.equals("memory")) removeListenerFromMemory(name, item, this);
                 else if (type.equals("sensor")) removeListenerFromSensor(name, item, this);

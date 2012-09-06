@@ -43,7 +43,7 @@ public class SimpleSensorServer extends AbstractSensorServer {
      }
 
      public void sendErrorStatus(String sensorName) throws IOException {
- 	output.writeBytes("TURNOUT ERROR\n");
+ 	output.writeBytes("SENSOR ERROR\n");
      }
 
      public void parseStatus(String statusString) throws jmri.JmriException,java.io.IOException {
