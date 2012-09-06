@@ -4,15 +4,20 @@
  *    click functions.  Sends and listens for changes to panel elements using the xmlio server.
  *    If no parm passed, will list links to available panels.
  *  Approach:  Read xml and create widget objects with all needed attributes.  There are 3 "widgetFamily"s:
- *    text, icon and drawn.  States are handled by naming members iconX, textX, styleX where X is the state.
+ *    text, icon and drawn.  States are handled by naming members iconX, textX, cssX where X is the state.
  *    CSS classes are used throughout to attach events to correct widgets, as well as control appearance.
  *    The xmlio element name is used to send changes to xmlio server and to process changes made elsewhere.
- *    Drawn widgets will be handled using a "canvas" layer.
- *  
+ *    Drawn widgets are handled using a javascript "canvas" layer.
+ *  Loop: 	1) request panel and process the returned panel xml.
+ *  		2) send list of current states to server and wait for changes
+ *  		3) receive change? set related widget states and go back to 2)
+ *  		4) browser user clicks on widget? send "set state" command and go to 3)
+ *  		5) error? go back to 2) 
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
- *  TODO: add heartbeat with error message (with retry button)
+ *  TODO: add error message and stop heartbeat on change failure, add retry button
  *  TODO: handle layoutturnouts, track widths and colors
- *  TODO: determine proper "level" for canvas layer
+ *  TODO: handle drawn ellipse
+ *  TODO: determine proper level (z-index) for canvas layer
  *  TODO: handle multisensors, other widgets correctly
  *  TODO: diagnose and correct the small position issues visible with footscray
  *  TODO: figure out what "hidden=yes" is supposed to do
@@ -24,10 +29,12 @@
  **********************************************************************************************/
 
 //persistent (global) variables
+var $gTimeout = 45; //timeout in seconds
 var $gWidgets = {};  //array of all widget objects, key=CSSId
 var $gPanel = {}; 	//store overall panel info
 var $gPts = {}; 	//array of all points, key=PointName (used for layoutEditor panels)
-var $gXHR;  	//persistent variable to allow aborting of superseded connections
+var $gXHRList;  	//persistent variable to allow aborting of superseded "list" connections
+var $gXHRChg;	  	//persistent variable to allow aborting of superseded "change" connections
 var $gCtx;  //persistent context of canvas layer   
 var DOWNEVENT;  //either mousedown or touchstart, based on device
 var UPEVENT;    //either mouseup or touchend, based on device
@@ -40,7 +47,7 @@ var THROWN =  		'4';
 var INCONSISTENT = 	'8';
 
 //process the response returned for the requestPanelXML command
-var $processResponse = function($returnedData, $success, $xhr) {
+var $processPanelXML = function($returnedData, $success, $xhr) {
 
 	var $xml = $($returnedData);  //jQuery-ize returned data for easier access
 
@@ -89,7 +96,7 @@ var $processResponse = function($returnedData, $success, $xhr) {
 				if ($widget.momentary == "true") {
 					$widget.classes += "momentary ";
 				}
-				//set specific values in widget
+				//set additional values in this widget
 				switch ($widget.widgetFamily) {
 				case "icon" :
 					switch ($widget.widgetType) {
@@ -203,7 +210,9 @@ var $processResponse = function($returnedData, $success, $xhr) {
 							$gCtx.stroke();  
 						} else {
 							//draw curved line
-							drawArc($pt1.x, $pt1.y, $pt2.x, $pt2.y, $widget.angle)
+					        $gCtx.beginPath();
+							$drawArc($pt1.x, $pt1.y, $pt2.x, $pt2.y, $widget.angle)
+					        $gCtx.stroke();
 						}
 						break;
 					case "backgroundColor" :  //set background color of the panel itself
@@ -247,8 +256,9 @@ var $processResponse = function($returnedData, $success, $xhr) {
 	//add a dummy sensor widget for use as heartbeat
 	$widget = new Array();
 	$widget['element'] = "sensor";
-	$widget['name'] = "ISXmlIOHeartbeat";  //internal sensor, will be created if not there
+	$widget['name'] = "ISXMLIOHEARTBEAT";  //internal sensor, will be created if not there
 	$widget['id'] 	= $widget['name'];
+	$widget['safeName']	= $widget['name'];
 	$widget['state'] = UNKNOWN;
 	$gWidgets[$widget.id] = $widget;
 
@@ -258,46 +268,35 @@ var $processResponse = function($returnedData, $success, $xhr) {
 };    	
 
 //draw a Circle
-function drawCircle(ptx, pty, radius) {
+function $drawCircle(ptx, pty, radius) {
     $gCtx.beginPath();
     $gCtx.arc(ptx, pty, radius, 0, 2*Math.PI, false);
     $gCtx.stroke();
 };    	
 
 //drawArc, passing in values from xml
-function drawArc(pt1x, pt1y, pt2x, pt2y, angle) {
-
-    var halfAngle = (angle/2) * Math.PI / 180; //in radians
-    var chord; //in pixels
-    var a;
-    var o;
-    var radius;  //in pixels
+function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees) {
     // Compute arc's chord
-    a = pt2x - pt1x;
-    o = pt2y - pt1y;
-    chord=Math.sqrt(((a*a)+(o*o)));
+    var a = pt2x - pt1x;
+    var o = pt2y - pt1y;
+    var chord=Math.sqrt(((a*a)+(o*o))); //in pixels
 
     if (chord > 0.0) {  //don't bother if no length
-        radius = (chord/2)/(Math.sin(halfAngle));
+        var halfAngle = (degrees/2) * Math.PI / 180; //in radians
+        var radius = (chord/2)/(Math.sin(halfAngle));  //in pixels
         // Circle
-        var startRad = Math.atan2(a, o) - halfAngle;
+        var startRad = Math.atan2(a, o) - halfAngle; //in radians
 //        if(t.getCircle()){
-            // Circle - Compute center
+        // calculate center of circle
         var cx = ((pt2x * 1.0) - Math.cos(startRad) * radius);  
         var cy = ((pt2y * 1.0) + Math.sin(startRad) * radius);
 
-        var startAngle 	= Math.atan2(pt1y-cy, pt1x-cx);
-        var endAngle 	= Math.atan2(pt2y-cy, pt2x-cx);
+        //calculate start and end angle
+        var startAngle 	= Math.atan2(pt1y-cy, pt1x-cx); //in radians
+        var endAngle 	= Math.atan2(pt2y-cy, pt2x-cx); //in radians
         var counterClockwise = false;
 
-        //draw some debug circles
-//        drawCircle(cx,cy,3);
-//        drawCircle(pt1x,pt1y,3);
-//        drawCircle(pt2x,pt2y,3);
-
-        $gCtx.beginPath();
         $gCtx.arc(cx, cy, radius, startAngle, endAngle, counterClockwise);
-        $gCtx.stroke();
     }
 }
 
@@ -410,6 +409,7 @@ var $setWidgetPosition = function(e) {
 
 //set new value for all widgets having specified type and element name
 var $setElementState = function($element, $name, $newState) {
+//	console.log( "setting " + $element + " " + $name + " --> " + $newState);
 	jQuery.each($gWidgets, function($id, $widget) {
 		if ($widget.element == $element && $widget.safeName == $name) {
 			$setWidgetState($id, $newState);
@@ -471,18 +471,20 @@ var $getXMLStateList = function(){
     return $retXml;
 };
 
-//send a command to the server, and setup callback to process the response (used for lists)
+//send the list of current values to the server, and setup callback to process the response (will stall and wait for changes)
 var $sendXMLIOList = function($commandstr){
 	console.log( "sending a list");
-	if ($gXHR) {
-		$gXHR.abort();
+	if ($gXHRList != undefined && $gXHRList.readyState != 4) {  
+//	if ($gXHRList) {  
+		console.log( "aborting active list connection");
+		$gXHRList.abort();
 	}
-	$gXHR = $.ajax({ 
+	$gXHRList = $.ajax({ 
 		type: 'POST',
 		url:  '/xmlio/',
 		data: $commandstr,
 		success: function($r, $s, $x){
-			console.log( "receiving a list");
+			console.log( "processing returned list");
 			var $r = $($r);
 			$r.xmlClean();
 			$r.find("xmlio").children().each(function(){
@@ -491,20 +493,22 @@ var $sendXMLIOList = function($commandstr){
 			});
 			//send current xml states to xmlio server, will "stall" and wait for changes if matched
 			$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');
+			endAndStartTimer();
 		},
 		async: true,
-		timeout: 150000,  //TODO: rethink this, maybe by sending a dummy change?
+		timeout: $gTimeout * 3 * 1000,  //triple the time timeout
 		dataType: 'xml' //<--dataType
 	});
 };
 
-//send a command to the server, and ignore the response (used for change commands)
+//send a "set value" command to the server, and process the returned value
 var $sendXMLIOChg = function($commandstr){
-//    console.log( "sending a change request");
-	if ($gXHR) {
-		$gXHR.abort();
+	console.log( "sending a change");
+	if ($gXHRChg != undefined && $gXHRChg.readyState != 4) {  
+		console.log( "aborting active change connection");
+		$gXHRChg.abort();
 	}
-	$gXHR = $.ajax({ 
+	$gXHRChg = $.ajax({ 
 		type: 'POST',
 		url:  '/xmlio/',
 		data: $commandstr,
@@ -516,7 +520,8 @@ var $sendXMLIOChg = function($commandstr){
 				console.log("rcvd change "+this.nodeName+" "+$(this).attr('name')+" --> "+$(this).attr('value'));
 				$setElementState(this.nodeName, $safeName($(this).attr('name')), $(this).attr('value'));
 				//send current xml states to xmlio server, will "stall" and wait for changes if matched
-				$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');
+				$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');  //TODO: remove this once multi-session fixed
+				endAndStartTimer();
 			});
 		},
 		async: true,
@@ -593,7 +598,7 @@ var $requestPanelXML = function($panelName){
 		type: 'GET',
 		url:  '/panel/' + $panelName, //request proper url
 		success: function($r, $s, $x){
-			$processResponse($r, $s, $x); //handle returned data
+			$processPanelXML($r, $s, $x); //handle returned data
 		},
 		error: function($r, $s, $message){
 			$('div#logArea').append("ERROR: " + $message + " sts=" + $s);
@@ -632,7 +637,6 @@ var $getWidgetFamily = function($widget) {
 //	case "signalmasticon" :
 		return "icon";
 		break;
-	case "tracksegment" :
 	case "layoutturnout" :
 	case "tracksegment" :
 	case "positionablepoint" :
@@ -645,6 +649,17 @@ var $getWidgetFamily = function($widget) {
 	return; //unrecognized widget returns undefined
 };    	
 
+var timer;
+function endAndStartTimer() {
+  window.clearTimeout(timer);
+  timer = window.setTimeout(function(){
+//	  console.log("timer fired");
+	  var $nextState = $getNextState($gWidgets["ISXMLIOHEARTBEAT"].state);
+	  $gWidgets["ISXMLIOHEARTBEAT"].state = $nextState; 
+	  $sendElementChange("sensor", "ISXMLIOHEARTBEAT", $nextState)
+	  endAndStartTimer(); //repeat
+  	}, $gTimeout * 1000); 
+}
 
 
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
@@ -674,6 +689,8 @@ $(document).ready(function() {
 
 		//request actual xml of panel, and process it on return
 		$requestPanelXML($panelName);
+		
+		endAndStartTimer();
 	}
 	
 });
