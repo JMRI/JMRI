@@ -86,7 +86,7 @@ public class TrafficControllerScaffold extends TrafficController {
     public int numListeners() {
         return cmdListeners.size();
     }
-
+    
 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrafficControllerScaffold.class.getName());
 
 }
