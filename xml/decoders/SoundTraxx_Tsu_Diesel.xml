@@ -25,6 +25,7 @@
   <version author="Jack Shall lcrr@bellsouth.net" version="9" lastUpdated="20110303"/>
   <version author="Jack Shall lcrr@bellsouth.net" version="10" lastUpdated="20110818"/>
   <version author="Jack Shall lcrr@bellsouth.net" version="11" lastUpdated="20111023"/>
+  <version author="Jack Shall lcrr@bellsouth.net" version="12" lastUpdated="20120824"/>
 
 <!-- This file contains the Tsunami definitions for ALL of the internal combustion engine locomotives	-->
 
@@ -61,6 +62,7 @@
 <!-- version 11	Added new TSU-1000 series decoder: GE FDL-16 (Dual Motors) (827124).  Modified a	-->
 <!-- 			few of the control labels for the Gas Turbine definition to help clarify the intent	-->
 <!-- 			of these controls.  Slight rearrangement of Sound controls to improve clarity.		-->
+<!-- version 12	Added new GN1000 series decoder: EMD 645 (Non-Turbo) (828058)						-->
 
 
 <!-- Decoder Model information follows -->
@@ -863,6 +865,22 @@
       </model>
       <model model="TSU-GN1000 EMD 645" numOuts="4" numFns="14" connector="other"
 		productID="828051" comment="Model 828051">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+	  <model model="TSU-GN1000 EMD 645 (Non-Turbo)" numOuts="4" numFns="14" connector="other"
+		productID="828058" comment="Model 828058">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -4298,7 +4316,7 @@
 
       <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9"
 			comment="Show these horns for the models (productID) listed below"
-			include="827002,827102,827107,827109,827117,828026,828038,828041,828046,828048,828051,828056,828057,828061,828062,828063,828064"
+			include="827002,827102,827107,827109,827117,828026,828038,828041,828046,828048,828051,828056,828057,828058,828061,828062,828063,828064"
 			tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Wabco E2">
@@ -4356,7 +4374,7 @@
 
       <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0"
 			comment="Show these horns for the models (productID) listed below"
-			include="827002,827102,827107,827109,827117,828026,828038,828041,828046,828048,828051,828056,828057,828061,828062,828063,828064"
+			include="827002,827102,827107,827109,827117,828026,828038,828041,828046,828048,828051,828056,828057,828058,828061,828062,828063,828064"
 			tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
         <enumVal>
           <enumChoice choice="Short Horn">
