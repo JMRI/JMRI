@@ -38,6 +38,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_AllowCarsToReturnToStaging" url="package/jmri/jmrit/operations/Operations.shtml#AllowCarsToReturnToStaging"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_Backup" url="package/jmri/jmrit/operations/Operations.shtml#Backup"/>
+
 <mapID target="manual.JMRI_2-14_manual.Ops_ImportCarsFile_Top" url="manual/JMRI_2-14_manual/Ops_ImportCarsFile.shtml#Top"/>
 
 <mapID target="manual.JMRI_2-14_manual.Start_Preferences_StartUp" url="manual/JMRI_2-14_manual/Start_Preferences.shtml#StartUp"/>
@@ -107,6 +109,8 @@
 <mapID target="html.tools.throttle.ThrottleChapter4_Merging" url="html/tools/throttle/ThrottleChapter4.shtml#Merging"/>
 
 <mapID target="manual.JMRI_2-12_Manual.Dcode_Start" url="manual/JMRI_2-12_Manual/Dcode_Start.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_Restore" url="package/jmri/jmrit/operations/Operations.shtml#Restore"/>
 
 <mapID target="manual.3-0_DecoderPro3.Throttle_Toolbar" url="manual/3-0_DecoderPro3/Throttle.shtml#Toolbar"/>
 
@@ -523,6 +527,8 @@
 <mapID target="manual.3-0_DecoderPro3.Main_RPS_Speed" url="manual/3-0_DecoderPro3/Main_RPS.shtml#Speed"/>
 
 <mapID target="manual.3-0_DecoderPro3.Comp_Motor" url="manual/3-0_DecoderPro3/Comp_Motor.shtml"/>
+
+<mapID target="html.hardware.marklin.index" url="html/hardware/marklin/index.shtml"/>
 
 <mapID target="manual.JMRI_2-14_manual.Adv_RosterMedia_Top" url="manual/JMRI_2-14_manual/Adv_RosterMedia.shtml#Top"/>
 
@@ -2004,6 +2010,8 @@
 
 <mapID target="manual.JMRI_2-12_Manual.Ops_TrainsModify_PrintTop" url="manual/JMRI_2-12_Manual/Ops_TrainsModify.shtml#PrintTop"/>
 
+<mapID target="manual.3-0_DecoderPro.Main_Roster_OpenDP3Roster" url="manual/3-0_DecoderPro/Main_Roster.shtml#OpenDP3Roster"/>
+
 <mapID target="manual.JMRI_2-12_Manual.Main_Throttle_MenuBar" url="manual/JMRI_2-12_Manual/Main_Throttle.shtml#MenuBar"/>
 
 <mapID target="html.hardware.loconet.Digitrax_Programmer" url="html/hardware/loconet/Digitrax.shtml#Programmer"/>
@@ -2085,6 +2093,8 @@
 <mapID target="package.jmri.jmrix.rps.trackingpanel.RpsTrackingFrame" url="package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml"/>
 
 <mapID target="manual.JMRI_2-12_Manual.Main_Roster" url="manual/JMRI_2-12_Manual/Main_Roster.shtml"/>
+
+<mapID target="manual.3-0_DecoderPro.Main_Roster_roster" url="manual/3-0_DecoderPro/Main_Roster.shtml#roster"/>
 
 <mapID target="html.doc.Technical.Swing" url="html/doc/Technical/Swing.shtml"/>
 
@@ -2770,6 +2780,8 @@
 
 <mapID target="html.doc.Technical.FindBugs" url="html/doc/Technical/FindBugs.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_ResetDatabases" url="package/jmri/jmrit/operations/Operations.shtml#ResetDatabases"/>
+
 <mapID target="package.jmri.jmrix.ecos.swing.statusframe.StatusFrame" url="package/jmri/jmrix/ecos/swing/statusframe/StatusFrame.shtml"/>
 
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_GroupIdField" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#GroupIdField"/>
@@ -3157,8 +3169,6 @@
 <mapID target="manual.DP3_2-14_manual.Start_Preferences_Defaults" url="manual/DP3_2-14_manual/Start_Preferences.shtml#Defaults"/>
 
 <mapID target="manual.DP3_2-14_manual.Main_LocoNet_Clock" url="manual/DP3_2-14_manual/Main_LocoNet.shtml#Clock"/>
-
-<mapID target="manual.3-0_DecoderPro.index_index" url="manual/3-0_DecoderPro/index.shtml#index"/>
 
 <mapID target="html.doc.Technical.XmlEditors" url="html/doc/Technical/XmlEditors.shtml"/>
 
@@ -3834,8 +3844,6 @@
 
 <mapID target="package.jmri.jmrit.withrottle.UserInterface" url="package/jmri/jmrit/withrottle/UserInterface.shtml"/>
 
-<mapID target="package.jmri.jmrit.operations.Operations_BackupRestore" url="package/jmri/jmrit/operations/Operations.shtml#BackupRestore"/>
-
 <mapID target="manual.3-0_DecoderPro.Simple_Programmer" url="manual/3-0_DecoderPro/Simple_Programmer.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations" url="package/jmri/jmrit/operations/Operations.shtml"/>
@@ -4164,6 +4172,8 @@
 
 <mapID target="manual.DP3_2-14_manual.images.dp3_toolbar_programMode" url="manual/DP3_2-14_manual/images/dp3_toolbar_programMode.png"/>
 
+<mapID target="html.hardware.images.marklin_logo" url="html/hardware/images/marklin_logo.gif"/>
+
 <mapID target="manual.JMRI_2-12_Manual.images.arrow" url="manual/JMRI_2-12_Manual/images/arrow.gif"/>
 
 <mapID target="manual.3-0_DecoderPro.images.arrow" url="manual/3-0_DecoderPro/images/arrow.gif"/>
@@ -4242,17 +4252,19 @@
 
 <mapID target="html.tools.signaling.ldt.output6_html_6f691e17" url="html/tools/signaling/ldt/output6_html_6f691e17.png"/>
 
-<mapID target="html.tools.signaling.ldt.output1_html_m140dd523" url="html/tools/signaling/ldt/output1_html_m140dd523.png"/>
+<mapID target="manual.DP3_2-14_manual.images.btn_throttle_labels" url="manual/DP3_2-14_manual/images/btn_throttle_labels.png"/>
 
 <mapID target="html.tools.signaling.ldt.output3_html_11be9e7b" url="html/tools/signaling/ldt/output3_html_11be9e7b.png"/>
 
-<mapID target="manual.DP3_2-14_manual.images.btn_throttle_labels" url="manual/DP3_2-14_manual/images/btn_throttle_labels.png"/>
+<mapID target="html.tools.signaling.ldt.output1_html_m140dd523" url="html/tools/signaling/ldt/output1_html_m140dd523.png"/>
 
 <mapID target="html.tools.throttle.images.spacer" url="html/tools/throttle/images/spacer.gif"/>
 
 <mapID target="html.tools.signaling.ldt.output1_html_m4f5f2ce4" url="html/tools/signaling/ldt/output1_html_m4f5f2ce4.png"/>
 
 <mapID target="manual.3-0_DecoderPro3.images.btn_throttle_labels" url="manual/3-0_DecoderPro3/images/btn_throttle_labels.png"/>
+
+<mapID target="html.hardware.images.tams_logo" url="html/hardware/images/tams_logo.gif"/>
 
 <mapID target="html.tools.signaling.ldt.output1_html_4a835f8c" url="html/tools/signaling/ldt/output1_html_4a835f8c.png"/>
 
