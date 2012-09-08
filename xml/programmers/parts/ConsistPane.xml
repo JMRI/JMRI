@@ -16,6 +16,8 @@
                 <display item="Consist Deceleration Adjustment" tooltip="Sets additional deceleration rate information"/>
                 <display item="Consist Deceleration Adjustment Sign" tooltip="Determines whether value is added to or subtracted from loco base deceleration rate"/>
                 <display item="Consist Adjustments Active" tooltip="Enables the consist adjustments"/>
+                <display item="Consist Option 1" />
+                <display item="Consist Option 2" />
             </column>
         </row>
 		<label label=" "/>

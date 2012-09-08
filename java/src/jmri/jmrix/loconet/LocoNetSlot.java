@@ -46,6 +46,7 @@ public class LocoNetSlot {
     // slot status
     // possible values are LOCO_IN_USE, LOCO_IDLE, LOCO_COMMON, LOCO_FREE
     public int slotStatus() 	{ return stat&LnConstants.LOCOSTAT_MASK; }
+    public int ss2()            { return ss2; }
 
     // consist status
     // possible values are CONSIST_MID, CONSIST_TOP, CONSIST_SUB, CONSIST_NO

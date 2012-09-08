@@ -163,7 +163,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case F6COLUMN:
         case F7COLUMN:
         case F8COLUMN:    
-            return true;
+            // system slots to be marked Readonly
+            return (Integer.valueOf(slotNum(row)) >= 120) ? false : true;
         default:
             return false;
         }
@@ -481,8 +482,19 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     // methods to communicate with SlotManager
     public synchronized void notifyChangedSlot(LocoNetSlot s) {
         // update model from this slot
+        int slotNum = s.getSlot();
+        int slotStatus2;
 
-        int slotNum = -1;
+        if (slotNum == LnConstants.CFG_SLOT) {
+            slotStatus2 = s.ss2() & 0x78; // Bit 3-6 of SS2 contains SW36-39 of the CFG_SLOT
+            if (slotStatus2 > 0)  {  
+                memo.getSlotManager().update();
+            }
+        }
+        else {
+            slotNum = -1;
+        }
+        
         if (_allSlots) {        // this will be row until we show only active slots
           slotNum=s.getSlot();  // and we are displaying the System slots otherwise
           if( !_systemSlots )   // we need to subtract 1 as slot 0 will not be displayed

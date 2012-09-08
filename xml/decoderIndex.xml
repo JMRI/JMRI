@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20120818-2134-jake on Sat Aug 18 14:34:17 PDT 2012 $Id$-->
-  <decoderIndex version="240">
+  <!--Written by JMRI version 20120908-1722-jake on Sat Sep 08 10:22:46 PDT 2012 $Id$-->
+  <decoderIndex version="242">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -3373,6 +3373,9 @@
       <family name="MTH HO PS3" mfg="Mikes Train House" file="MTH.xml">
         <model model="MTH HO PS3" />
       </family>
+      <family name="MTH HO Expanded PS3" mfg="Mikes Train House" file="MTH_Expanded.xml">
+        <model model="MTH HO Expanded PS3" lowVersionID="1" />
+      </family>
       <family name="Champex-Linden" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_CL_63000.xml">
         <model model="Sound Module 63000" lowVersionID="10" highVersionID="39" maxInputVolts="24 V" numOuts="0" numFns="0" formFactor="G" connector="other" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
@@ -6270,6 +6273,21 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-GN1000 EMD 645" numOuts="4" numFns="14" connector="other" productID="828051" comment="Model 828051">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="TSU-GN1000 EMD 645 (Non-Turbo)" numOuts="4" numFns="14" connector="other" productID="828058" comment="Model 828058">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
