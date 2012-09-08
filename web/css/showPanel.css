@@ -1,0 +1,47 @@
+/* stylesheet for specific needs of showPanel.html */
+
+body {
+	font-family: sans-serif;
+}
+.rotatable {
+	-moz-transform-origin: 0% 0%;
+	-webkit-transform-origin: 0% 0%;
+	-o-transform-origin: 0% 0%;
+	-ms-transform-origin: 0% 0%;
+	transform-origin: 0% 0%;
+}
+.clickable:hover {
+  cursor: pointer;
+  border: solid 1px lightGray;
+  margin: -1px;
+}
+.hidden {
+  display: none;
+}
+.locoicon {
+  min-width:  60px;
+  min-height: 20px;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+  background-repeat:no-repeat;
+}
+div#panelFooter {
+	margin: 8px;
+}
+
+div#panelFooter a {
+	padding: 8px 8px 4px 8px;
+	font-style: italic;
+	text-decoration: none;
+}
+
+div#panelFooter a:hover {
+	text-decoration: underline;
+}
+
+div#panelFooter span.info {
+	font-size: 80%;
+	font-style: italic;
+}
+
