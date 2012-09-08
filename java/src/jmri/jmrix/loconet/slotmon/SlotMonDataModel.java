@@ -163,7 +163,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case F6COLUMN:
         case F7COLUMN:
         case F8COLUMN:    
-            return true;
+            // system slots to be marked Readonly
+            return (Integer.valueOf(slotNum(row)) >= 120) ? false : true;
         default:
             return false;
         }
