@@ -655,18 +655,10 @@ public class LogixTableAction extends AbstractTableAction {
     
     void autoSystemName(){
         if (_autoSystemName.isSelected()){
-            if (create!=null)
-                create.setEnabled(true);
             _systemName.setEnabled(false);
             _sysNameLabel.setEnabled(false);
         }
         else {
-            if (create!=null){
-                if (_systemName.getText().length() > 0)
-                   create.setEnabled(true);
-                else
-                   create.setEnabled(false);
-            }
             _systemName.setEnabled(true);  
             _sysNameLabel.setEnabled(true);
         }
