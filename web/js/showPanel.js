@@ -2,12 +2,13 @@
  *  showPanel - Draw JMRI panels on browser screen
  *    Retrieves panel xml and attempts to build panel client-side from the xml, including
  *    click functions.  Sends and listens for changes to panel elements using the xmlio server.
- *    If no parm passed, will list links to available panels.
- *  Approach:  Read xml and create widget objects with all needed attributes.  There are 3 "widgetFamily"s:
- *    text, icon and drawn.  States are handled by naming members iconX, textX, cssX where X is the state.
+ *    If no parm passed, page will list links to available panels.
+ *  Approach:  Read panel's xml and create widget objects with all needed attributes.  There are 
+ *    3 "widgetFamily"s: text, icon and drawn.  States are handled by naming members 
+ *    iconX, textX, cssX where X is the state.
  *    CSS classes are used throughout to attach events to correct widgets, as well as control appearance.
  *    The xmlio element name is used to send changes to xmlio server and to process changes made elsewhere.
- *    Drawn widgets are handled using a javascript "canvas" layer.
+ *    Drawn widgets are handled by drawing directly on the javascript "canvas" layer.
  *  Loop: 	1) request panel and process the returned panel xml.
  *  		2) send list of current states to server and wait for changes
  *  		3) receive change? set related widget states and go back to 2)
@@ -15,7 +16,8 @@
  *  		5) error? go back to 2) 
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
  *  TODO: add error message and stop heartbeat on change failure, add retry button
- *  TODO: handle layoutturnouts, track widths and colors
+ *  TODO: handle more exotic layoutturnouts, such as crossovers
+ *  TODO: handle main vs. side vs. dashed track
  *  TODO: handle drawn ellipse
  *  TODO: determine proper level (z-index) for canvas layer
  *  TODO: handle multisensors, other widgets correctly
@@ -23,7 +25,6 @@
  *  TODO: figure out what "hidden=yes" is supposed to do
  *  TODO: verify that assuming same rotation and scale for all icons in a "set" is OK
  *  TODO: deal with mouseleave, mouseout, touchout, etc.
- *  TODO: handle overlay (both?) widgets
  *  TODO: if no elements found, don't send list to xmlio server
  *   
  **********************************************************************************************/
@@ -32,19 +33,24 @@
 var $gTimeout = 120; //timeout in seconds
 var $gWidgets = {};  //array of all widget objects, key=CSSId
 var $gPanel = {}; 	//store overall panel info
-var $gPts = {}; 	//array of all points, key=PointName (used for layoutEditor panels)
+var $gPts = {}; 	//array of all points, key="pointname.pointtype" (used for layoutEditor panels)
 var $gXHRList;  	//persistent variable to allow aborting of superseded "list" connections
 var $gXHRChg;	  	//persistent variable to allow aborting of superseded "change" connections
 var $gCtx;  //persistent context of canvas layer   
 var DOWNEVENT;  //either mousedown or touchstart, based on device
 var UPEVENT;    //either mouseup or touchend, based on device
 
+var SIZE = 3;  //default factor for circles
 var UNKNOWN = 		'1';  //constants to match JMRI state names
 var ACTIVE =  		'2';
 var CLOSED =  		'2';
 var INACTIVE= 		'4';
 var THROWN =  		'4';
 var INCONSISTENT = 	'8';
+var PT_CEN = ".1";  //named constants for point types
+var PT_A = ".2";
+var PT_B = ".3";
+var PT_C = ".4";
 
 //process the response returned for the requestPanelXML command
 var $processPanelXML = function($returnedData, $success, $xhr) {
@@ -70,6 +76,9 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 		$gCtx = canvas.getContext("2d");  
 		$gCtx.strokeStyle = $gPanel.defaulttrackcolor;
 		$gCtx.lineWidth = $gPanel.sidetrackwidth;
+		
+		//set background color from panel attribute
+		$('div#panelArea').css({backgroundColor: $gPanel.backgroundcolor});
 	}
 
 	//process all widgets in the panel xml, drawing them on screen, and building persistent arrays
@@ -152,7 +161,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
             if ($widget.text != undefined) {
 					    $("div#panelArea").append("<div id=" + $widget.id + "overlay class='overlay'>" + $widget.text + "</div>");
 					    $("div#panelArea>#"+$widget.id+"overlay").css({position:'absolute',left:$widget.x+'px',top:$widget.y+'px',zIndex:($widget.level-1)});
-            }
+            } 
 					}
 
 					$preloadWidgetImages($widget);
@@ -200,30 +209,50 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 					switch ($widget.widgetType) {
 					case "positionablepoint" :
 						//just store these points in persistent variable for use when drawing tracksegments and layoutturnouts
-						$gPts[$widget.ident] = $widget;
+						//id is ident plus ".type", e.g. "A4.2"
+						$gPts[$widget.ident+"."+$widget.type] = $widget;
 						break;
 					case "layoutturnout" :
-						//store the points in persistent variable for use when drawing tracksegments and layoutturnouts
-						var $t = {};
-						$t['ident'] = $widget.ident;
-						$t['x'] = $widget.xcen;
-						$t['y'] = $widget.ycen;
-						$gPts[$widget.ident] = $t;
+						$widget['name']  =		$widget.turnoutname; //normalize name
+						$widget['safeName'] = 	$safeName($widget.name);  //add a "safe" version of name for use as class
+						$widget['element']  =	"turnout"; //what JMRI calls this
+						//store widget in persistent array
+						$gWidgets[$widget.id] = $widget; 
+						//also store the turnout's 3 end points for other connections
+						var $t = [];
+						$t['ident'] = $widget.ident +PT_B;  //store B endpoint
+						$t['x'] = $widget.xb * 1.0;
+						$t['y'] = $widget.yb * 1.0;
+						$gPts[$t.ident] = $t;
+						var $t = [];
+						$t['ident'] = $widget.ident +PT_C;  //store C endpoint
+						$t['x'] = $widget.xc * 1.0;
+						$t['y'] = $widget.yc * 1.0;
+						$gPts[$t.ident] = $t;
+						var $t = [];
+						$t['ident'] = $widget.ident +PT_A;  //calculate and store A endpoint (mirror of B)
+						$t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
+						$t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
+						$gPts[$t.ident] = $t;
+						//draw the turnout
+						$drawTurnout($widget);  
 						break;
 					case "tracksegment" :
-						var $pt1 = $gPts[$widget.connect1name];
-						var $pt2 = $gPts[$widget.connect2name];
+						var $pt1 = $gPts[$widget.connect1name+"."+$widget.type1];
+						if ($pt1 == undefined) break;
+						var $pt2 = $gPts[$widget.connect2name+"."+$widget.type2];
+						if ($pt2 == undefined) break;
 						if ($widget.angle == undefined) {
-							//draw straight line
-							$gCtx.beginPath();  
-							$gCtx.moveTo($pt1.x, $pt1.y);  
-							$gCtx.lineTo($pt2.x, $pt2.y);  
-							$gCtx.closePath();  
-							$gCtx.stroke();  
+							//draw straight line between the points
+							$drawLine($pt1.x, $pt1.y, $pt2.x, $pt2.y)
 						} else {
-							//draw curved line
+							//draw curved line 
 					        $gCtx.beginPath();
-							$drawArc($pt1.x, $pt1.y, $pt2.x, $pt2.y, $widget.angle)
+					        if ($widget.flip == "yes") {
+								$drawArc($pt2.x, $pt2.y, $pt1.x, $pt1.y, $widget.angle)
+					        } else {
+					        	$drawArc($pt1.x, $pt1.y, $pt2.x, $pt2.y, $widget.angle)
+					        }
 					        $gCtx.stroke();
 						}
 						break;
@@ -280,10 +309,49 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 };    	
 
 //draw a Circle
-function $drawCircle(ptx, pty, radius) {
-    $gCtx.beginPath();
-    $gCtx.arc(ptx, pty, radius, 0, 2*Math.PI, false);
-    $gCtx.stroke();
+function $drawCircle($ptx, $pty, $radius, $color) {
+	var $savLineWidth = $gCtx.lineWidth;
+	var $savStrokeStyle = $gCtx.strokeStyle;
+	$gCtx.lineWidth = 1; //very thin
+	if ($color != undefined)  $gCtx.strokeStyle = $color;
+	$gCtx.beginPath();
+	$gCtx.arc($ptx, $pty, $radius, 0, 2*Math.PI, false);
+	$gCtx.stroke();
+	// put color and widths back to default
+	$gCtx.lineWidth = $savLineWidth;    
+	$gCtx.strokeStyle = $savStrokeStyle;    
+};
+
+//draw a Turnout (pass in widget)
+function $drawTurnout($widget) {
+	  $drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $gPanel.turnoutcirclecolor);
+	  $drawLine($gPts[$widget.ident+PT_A].x, $gPts[$widget.ident+PT_A].y, $widget.xcen, $widget.ycen); //A to center (incoming)
+	  
+	  //draw both legs background color, to "erase" old setting
+	  $drawLine($widget.xcen, $widget.ycen, $gPts[$widget.ident+PT_B].x, $gPts[$widget.ident+PT_B].y, $gPanel.backgroundcolor); //center to B (straight leg)
+	  $drawLine($widget.xcen, $widget.ycen, $gPts[$widget.ident+PT_C].x, $gPts[$widget.ident+PT_C].y, $gPanel.backgroundcolor); //center to C (diverging leg)
+	  
+	  //if closed or thrown, draw the selected leg in the default track color
+	  if ($widget.state == CLOSED || $widget.state == THROWN) {
+		  if ($widget.state == $widget.continuing) {
+			  $drawLine($widget.xcen, $widget.ycen, $gPts[$widget.ident+PT_B].x, $gPts[$widget.ident+PT_B].y); //center to B (straight leg)
+		  } else {
+			  $drawLine($widget.xcen, $widget.ycen, $gPts[$widget.ident+PT_C].x, $gPts[$widget.ident+PT_C].y); //center to C (diverging leg)
+		  }
+	  }
+};    	
+
+//drawLine, passing in values from xml
+function $drawLine($pt1x, $pt1y, $pt2x, $pt2y, $color) {
+	var $savStrokeStyle = $gCtx.strokeStyle;
+	if ($color != undefined)  $gCtx.strokeStyle = $color;
+	$gCtx.beginPath();  
+	$gCtx.moveTo($pt1x, $pt1y);  
+	$gCtx.lineTo($pt2x, $pt2y);  
+	$gCtx.closePath();  
+	$gCtx.stroke();  
+	// put color back to default
+	$gCtx.strokeStyle = $savStrokeStyle;    
 };    	
 
 //drawArc, passing in values from xml
@@ -434,6 +502,7 @@ var $setWidgetState = function($id, $newState) {
 	var $widget = $gWidgets[$id];
 	if ($widget.state != $newState) {  //don't bother if already this value
 		if (window.console) console.log( "setting " + $id + " for " + $widget.element + " " + $widget.name + " --> " + $newState);
+		$widget.state = $newState;  
 		switch ($widget.widgetFamily) {
 		case "icon" :
 			$('img#'+$id).attr('src', $widget['icon'+$newState]);  //set image src to next state's image
@@ -441,6 +510,11 @@ var $setWidgetState = function($id, $newState) {
 		case "text" :
 			$('div#'+$id).text($widget['text'+$newState]);  //set text to new state's text
 			$('div#'+$id).css($widget['css'+$newState]); //set css to new state's css
+			break;
+		case "drawn" :
+			if ($widget.widgetType == "layoutturnout") {
+				$drawTurnout($widget);
+			}
 			break;
 		}
 		$gWidgets[$id].state = $newState;  //update the changed widget back to persistent var
@@ -485,9 +559,9 @@ var $getXMLStateList = function(){
 
 //send the list of current values to the server, and setup callback to process the response (will stall and wait for changes)
 var $sendXMLIOList = function($commandstr){
+//	if (window.console) console.log( "sending a list: " + $commandstr);
 	if (window.console) console.log( "sending a list");
 	if ($gXHRList != undefined && $gXHRList.readyState != 4) {  
-//	if ($gXHRList) {  
 		if (window.console) console.log( "aborting active list connection");
 		$gXHRList.abort();
 	}
