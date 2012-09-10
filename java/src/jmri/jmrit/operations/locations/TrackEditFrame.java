@@ -675,7 +675,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			return false;
 		}
 		// track length can not be less than than the sum of used and reserved length
-		if (trackLength < track.getUsedLength() + track.getReserved()){
+		if (trackLength != track.getLength() && trackLength < track.getUsedLength() + track.getReserved()){
 			log.error("Track length can not be less than used and reserved");
 			JOptionPane.showMessageDialog(this,
 					rb.getString("TrackMustBeGreater"), rb.getString("ErrorTrackLength"),
