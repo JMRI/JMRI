@@ -24,9 +24,12 @@
 <h1> 
 JMRI: TAMs Support
 </h1>
-JMRI can connect to a TAMS Master Control command station using the built in serial interface.
+JMRI can connect to a TAMS MasterControl command station using the built in USB and/or serial interface.<br>
+The USB interface comes with drivers to emulate a serial port.<br>
+The USB port works under Linux and Windows - both have been tested.<br>
+Both USB and serial interface can be used at the same time.<br>
 <p>
-The TAMs MC uses the Marklin p50x protocol.
+The TAMS MC uses the (Uhlenbrock/Märklin) P50X protocol.
 <p>
 <b>This interface is still under development if you find any issues then please raise a issue on the yahoo group</b>
 <p>
@@ -35,7 +38,8 @@ To configure the connection:
 <li>Open the JMRI "Preferences" under the "Edit" menu,
 <li>Select "TAMS" as the manufacuturer, then connection type,
 <li>Select the appropriate serial interface.
-<li>The baud rate configured in the MC by default is 57600.
+<li>The baud rate configured in the MC on the USB port is fixed at 57600 bps (8n1: 8bit, no parity, 1 stop bit).
+<li>On the serial port the default speed is set at 2400 bps. This can be changed on the MC in the usual steps between 1200 and 57600 bps
 <li>Click "Save".
 </ul>
 

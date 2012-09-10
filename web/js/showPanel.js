@@ -29,7 +29,7 @@
  **********************************************************************************************/
 
 //persistent (global) variables
-var $gTimeout = 45; //timeout in seconds
+var $gTimeout = 120; //timeout in seconds
 var $gWidgets = {};  //array of all widget objects, key=CSSId
 var $gPanel = {}; 	//store overall panel info
 var $gPts = {}; 	//array of all points, key=PointName (used for layoutEditor panels)
@@ -147,6 +147,12 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$("div#panelArea").append("<img id=" + $widget.id +
 								" class='" + $widget.classes +
 								"' src='" + $widget["icon"+$widget['state']] + "' " + $hoverText + "/>");
+            
+            //also add in overlay text if specified  (append "overlay" to id to keep them unique)
+            if ($widget.text != undefined) {
+					    $("div#panelArea").append("<div id=" + $widget.id + "overlay class='overlay'>" + $widget.text + "</div>");
+					    $("div#panelArea>#"+$widget.id+"overlay").css({position:'absolute',left:$widget.x+'px',top:$widget.y+'px',zIndex:($widget.level-1)});
+            }
 					}
 
 					$preloadWidgetImages($widget);
@@ -155,6 +161,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 
 					break;
 				case "text" :
+					$widget['styles'] = $getTextCSSFromObj($widget);
 					switch ($widget.widgetType) {
 					case "sensoricon" :
 						$widget['name']  =		$widget.sensor; //normalize name
@@ -173,11 +180,16 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 							$widget.classes += 		$widget.element + " clickable ";
 						}
 						break;
+
+					case "locoicon" :
+						//also set the background icon for this one (additional css in .html file)
+						$widget['icon1'] = 		$(this).find('icon').attr('url');
+						$widget.styles['background-image'] = "url('" + $widget.icon1 + "')";
+						break;
 					}
 					$widget['safeName'] = $safeName($widget.name);
+					//put the text element on the page
 					$("div#panelArea").append("<div id=" + $widget.id + " class='"+$widget.classes+"'>" + $widget.text + "</div>");
-
-					$widget['styles'] = $getTextCSSFromObj($widget);
 					$("div#panelArea>#"+$widget.id).css( $widget.styles ); //apply style array to widget
 
 					$gWidgets[$widget.id] = $widget; //store widget in persistent array
@@ -409,7 +421,7 @@ var $setWidgetPosition = function(e) {
 
 //set new value for all widgets having specified type and element name
 var $setElementState = function($element, $name, $newState) {
-//	console.log( "setting " + $element + " " + $name + " --> " + $newState);
+//	if (window.console) console.log( "setting " + $element + " " + $name + " --> " + $newState);
 	jQuery.each($gWidgets, function($id, $widget) {
 		if ($widget.element == $element && $widget.safeName == $name) {
 			$setWidgetState($id, $newState);
@@ -421,7 +433,7 @@ var $setElementState = function($element, $name, $newState) {
 var $setWidgetState = function($id, $newState) {
 	var $widget = $gWidgets[$id];
 	if ($widget.state != $newState) {  //don't bother if already this value
-		console.log( "setting " + $id + " for " + $widget.element + " " + $widget.name + " --> " + $newState);
+		if (window.console) console.log( "setting " + $id + " for " + $widget.element + " " + $widget.name + " --> " + $newState);
 		switch ($widget.widgetFamily) {
 		case "icon" :
 			$('img#'+$id).attr('src', $widget['icon'+$newState]);  //set image src to next state's image
@@ -455,7 +467,7 @@ var $safeName = function($name){
 
 //send request for state change 
 var $sendElementChange = function($element, $name, $nextState){
-	console.log("sending " + $element + " " + $name + " --> " + $nextState);
+	if (window.console) console.log("sending " + $element + " " + $name + " --> " + $nextState);
 	var $commandstr = "<xmlio><" + $element + " name='" + $name + "' set='" + $nextState +"'/></xmlio>";
 	$sendXMLIOChg($commandstr);
 };
@@ -473,10 +485,10 @@ var $getXMLStateList = function(){
 
 //send the list of current values to the server, and setup callback to process the response (will stall and wait for changes)
 var $sendXMLIOList = function($commandstr){
-	console.log( "sending a list");
+	if (window.console) console.log( "sending a list");
 	if ($gXHRList != undefined && $gXHRList.readyState != 4) {  
 //	if ($gXHRList) {  
-		console.log( "aborting active list connection");
+		if (window.console) console.log( "aborting active list connection");
 		$gXHRList.abort();
 	}
 	$gXHRList = $.ajax({ 
@@ -484,11 +496,11 @@ var $sendXMLIOList = function($commandstr){
 		url:  '/xmlio/',
 		data: $commandstr,
 		success: function($r, $s, $x){
-			console.log( "processing returned list");
+			if (window.console) console.log( "processing returned list");
 			var $r = $($r);
 			$r.xmlClean();
 			$r.find("xmlio").children().each(function(){
-//				console.log("set type="+this.nodeName+" name="+$(this).attr('name')+" to value="+$(this).attr('value'));
+//				if (window.console) console.log("set type="+this.nodeName+" name="+$(this).attr('name')+" to value="+$(this).attr('value'));
 				$setElementState(this.nodeName, $safeName($(this).attr('name')), $(this).attr('value'));
 			});
 			//send current xml states to xmlio server, will "stall" and wait for changes if matched
@@ -503,9 +515,9 @@ var $sendXMLIOList = function($commandstr){
 
 //send a "set value" command to the server, and process the returned value
 var $sendXMLIOChg = function($commandstr){
-	console.log( "sending a change");
+	if (window.console) console.log( "sending a change");
 	if ($gXHRChg != undefined && $gXHRChg.readyState != 4) {  
-		console.log( "aborting active change connection");
+		if (window.console) console.log( "aborting active change connection");
 		$gXHRChg.abort();
 	}
 	$gXHRChg = $.ajax({ 
@@ -513,11 +525,11 @@ var $sendXMLIOChg = function($commandstr){
 		url:  '/xmlio/',
 		data: $commandstr,
 		success: function($r, $s, $x){
-//		    console.log( "rcving a change request");
+//		    if (window.console) console.log( "rcving a change request");
 			var $r = $($r);
 			$r.xmlClean();
 			$r.find("xmlio").children().each(function(){
-				console.log("rcvd change "+this.nodeName+" "+$(this).attr('name')+" --> "+$(this).attr('value'));
+				if (window.console) console.log("rcvd change "+this.nodeName+" "+$(this).attr('name')+" --> "+$(this).attr('value'));
 				$setElementState(this.nodeName, $safeName($(this).attr('name')), $(this).attr('value'));
 				//send current xml states to xmlio server, will "stall" and wait for changes if matched
 				$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');  //TODO: remove this once multi-session fixed
@@ -533,10 +545,10 @@ var $sendXMLIOChg = function($commandstr){
 //handle ajax errors, excluding abort, but including timeout, by resending the list
 $(document).ajaxError(function(event,xhr,opt, exception){
 	if (xhr.statusText !="abort") {
-		console.log("AJAX error: " + xhr.statusText + ", retrying....");
+		if (window.console) console.log("AJAX error: " + xhr.statusText + ", retrying....");
 		$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');
 //	} else {
-//		console.log("AJAX Error requesting " + opt.url + ", status= " + xhr.status + " " + xhr.statusText+ " exception=" + exception);
+//		if (window.console) console.log("AJAX Error requesting " + opt.url + ", status= " + xhr.status + " " + xhr.statusText+ " exception=" + exception);
 	}
 });
 
@@ -621,11 +633,15 @@ var $preloadWidgetImages = function($widget) {
 //note: not-yet-supported widgets are commented out here so as to return undefined
 var $getWidgetFamily = function($widget) {
 
-	if ($widget.text != undefined) {
-		return "text";
+	if ($widget.widgetType== "positionablelabel" && $widget.text != undefined) {
+		return "text";  //special case to distinguish text vs. icon labels
+	}
+	if ($widget.widgetType== "sensoricon" && $widget.icon == "no") {
+		return "text";  //special case to distinguish text vs. icon labels
 	}
 	switch ($widget.widgetType) {
 	case "memoryicon" :
+	case "locoicon" :
 //	case "reportericon" :
 		return "text";
 		break;
@@ -653,7 +669,7 @@ var timer;
 function endAndStartTimer() {
   window.clearTimeout(timer);
   timer = window.setTimeout(function(){
-//	  console.log("timer fired");
+//	  if (window.console) console.log("timer fired");
 	  var $nextState = $getNextState($gWidgets["ISXMLIOHEARTBEAT"].state);
 	  $gWidgets["ISXMLIOHEARTBEAT"].state = $nextState; 
 	  $sendElementChange("sensor", "ISXMLIOHEARTBEAT", $nextState)
@@ -673,11 +689,11 @@ $(document).ready(function() {
 		//set up events based on browser's support for touch events
 		var $is_touch_device = 'ontouchstart' in document.documentElement;
 		if ($is_touch_device) {
-			console.log("touch events enabled");
+			if (window.console) console.log("touch events enabled");
 			DOWNEVENT = 'touchstart';
 			UPEVENT   = 'touchend';
 		} else {
-			console.log("mouse events enabled");
+			if (window.console) console.log("mouse events enabled");
 			DOWNEVENT = 'mousedown';
 			UPEVENT   = 'mouseup';
 		}

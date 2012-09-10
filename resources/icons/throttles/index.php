@@ -8,8 +8,11 @@
 
 
 <?php
+// find showIcons directory
+$name = getcwd();
+$n = strrpos($name, "/resources");
 
-require("../../showIcons.php");
+require(substr($name,0,$n+strlen("/resources"))."/showIcons.php");
 
 showSubdirs();
 showFiles();
