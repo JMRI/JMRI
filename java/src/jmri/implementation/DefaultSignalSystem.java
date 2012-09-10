@@ -117,6 +117,37 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
         throw new NoSuchMethodError();
     }
     
+    float maximumLineSpeed = 0.0f;
+    
+    public float getMaximumLineSpeed(){
+        if(maximumLineSpeed == 0.0f){
+            for(String as:aspects.keySet()){
+                String speed = (String)getProperty(as, "speed");
+                if(speed!=null){
+                    float aspectSpeed = 0.0f;
+                    try {
+                        aspectSpeed = new Float(speed);
+                    }catch (NumberFormatException nx) {
+                        try{
+                            aspectSpeed = jmri.implementation.SignalSpeedMap.getMap().getSpeed(speed);
+                        } catch (Exception ex){
+                            //Considered Normal if the speed does not appear in the map
+                        }
+                    }
+                    if(aspectSpeed>maximumLineSpeed){
+                        maximumLineSpeed=aspectSpeed;
+                    }
+                }
+                
+            }
+        }
+        if(maximumLineSpeed ==0.0f){
+            //no speeds configured so will use the default.
+            maximumLineSpeed = jmri.implementation.SignalSpeedMap.getMap().getSpeed("Maximum");
+        }
+        return maximumLineSpeed;
+    }
+    
     protected java.util.Hashtable<String, Hashtable<String, Object>> aspects
             = new jmri.util.OrderedHashtable<String, Hashtable<String, Object>>();
 

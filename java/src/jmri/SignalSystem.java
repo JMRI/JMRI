@@ -74,6 +74,8 @@ public interface SignalSystem extends NamedBean {
     public boolean checkAspect(String aspect);
 
     public String getAspect(Object obj, String key);
+    
+    public float getMaximumLineSpeed();
         
 }
 
