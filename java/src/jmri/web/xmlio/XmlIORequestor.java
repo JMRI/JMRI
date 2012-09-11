@@ -8,7 +8,8 @@ import org.jdom.*;
  * Interface received a delayed response to a monitoring request.
  *
  * <p>
- * There is no guarantee as to on which thread this takes place.
+ * There is no guarantee as to on which thread this takes place, so we 
+ *   pass thread in with the monitor reply.
  *
  * <hr>
  * This file is part of JMRI.
@@ -33,7 +34,7 @@ public interface XmlIORequestor {
     /**
      * Call back with the result of a XmlIOServer.monitorRequest(Element)
      */
-    public void monitorReply(Element e);
+    public void monitorReply(Element e, Thread thread);
 
 }
 

@@ -41,8 +41,10 @@ public interface XmlIOServer {
      * The incoming Element may be modified and returned as the reply.
      * The return to the XmlIORequestor may be immediate, before this
      * method returns.
+     * @param host 
+     * @param thread 
      */
-    public void monitorRequest(Element e, XmlIORequestor r) throws JmriException;
+    public void monitorRequest(Element e, XmlIORequestor r, String client, Thread thread) throws JmriException;
 
 }
 

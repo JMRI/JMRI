@@ -28,7 +28,7 @@ import org.jdom.output.XMLOutputter;
 public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
 
     static XmlIOFactory factory = null;
-    Thread thread = null;
+//    Thread thread = null;
     static ResourceBundle htmlStrings = ResourceBundle.getBundle("jmri.web.server.Html");
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XmlIOServlet.class.getName());
 
@@ -43,7 +43,7 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
                 e.setAttribute(parameter, request.getParameter(parameter));
             }
             doc.getRootElement().addContent(e);
-            this.doXmlIO(response, doc);
+            this.doXmlIO(request, response, doc);
         } else {
             response.sendRedirect("/help/en/html/web/XMLIO.shtml");
         }
@@ -55,13 +55,13 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
         SAXBuilder builder = XmlFile.getBuilder(false);
         try {
             Document doc = builder.build(request.getInputStream());
-            this.doXmlIO(response, doc);
+            this.doXmlIO(request, response, doc);
         } catch (JDOMException e1) {
             log.error("JDOMException on input: " + e1, e1);
         }
     }
 
-    protected void doXmlIO(HttpServletResponse response, Document doc) throws ServletException, IOException {
+    protected void doXmlIO(HttpServletRequest request, HttpServletResponse response, Document doc) throws ServletException, IOException {
         XMLOutputter fmt = new XMLOutputter(org.jdom.output.Format.getPrettyFormat());
 
         Element root = doc.getRootElement();
@@ -87,23 +87,24 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
                 break;
             }
         }
+    	String client = request.getRemoteHost()+":"+request.getRemotePort();
         try {
             if (immediate) {
-                log.debug("immediate reply");
+                if (log.isDebugEnabled()) log.debug("immediate reply to "+client);
                 srv.immediateRequest(root);  // modifies 'doc' in place
             } else {
-                thread = Thread.currentThread();
-                srv.monitorRequest(root, this);
-                log.debug("stalling thread, waiting for reply");
+            	Thread thread = Thread.currentThread();
+            	if (log.isDebugEnabled()) log.debug("stalling thread, waiting to reply to " + client);
+                srv.monitorRequest(root, this, client, thread);
 
                 try {
                     //Thread.sleep(10000000000000L);  // really long
                     Thread.sleep(300000);  // not quite so long (5 minutes)
-                    log.debug("Thread sleep completed.");
+                    if (log.isDebugEnabled()) log.debug("Thread sleep completed for " + client);
                 } catch (InterruptedException e) {
-                    log.debug("Thread sleep interrupted");
+                	if (log.isDebugEnabled()) log.debug("Thread sleep interrupted for " + client);
                 }
-                log.debug("thread resumes and replies");
+                if (log.isDebugEnabled()) log.debug("thread resumes and replies to " + client);
             }
         } catch (jmri.JmriException e1) {
             log.error("JmriException while creating reply: " + e1, e1);
@@ -116,7 +117,8 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
     }
 
     @Override
-    public void monitorReply(Element e) {
-        thread.interrupt();
+    public void monitorReply(Element e, Thread thread) {
+    	if (log.isDebugEnabled()) log.debug("Interrupting thread " + thread.getName() + " (" + thread.getState() + ")");
+    	thread.interrupt();
     }
 }

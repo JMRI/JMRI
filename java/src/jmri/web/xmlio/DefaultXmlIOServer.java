@@ -377,19 +377,21 @@ public class DefaultXmlIOServer implements XmlIOServer {
     }
 
     @Override
-    public void monitorRequest(Element e, XmlIORequestor r) throws JmriException {
+    public void monitorRequest(Element e, XmlIORequestor r, String client, Thread thread) throws JmriException {
         
         // check for differences now
         if (checkValues(e)) {
 
             // differences found, now process the read and return  
-            sendMonitorReply(e, r);
+            sendMonitorReply(e, r, client, thread);
             return;
         }
         // No differences, have to wait.
         DeferredRead dr = new DeferredRead();
         dr.request = e;
         dr.requestor = r;
+        dr.client = client;
+        dr.thread = thread;
         
         @SuppressWarnings("unchecked")
         List<Element> items = e.getChildren();
@@ -418,7 +420,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
 
     }
 
-    void sendMonitorReply(Element e, XmlIORequestor r) {
+    void sendMonitorReply(Element e, XmlIORequestor r, String client, Thread thread) {
+    	if (log.isDebugEnabled()) log.debug("entering sendMonitorReply for " + client);
         @SuppressWarnings("unchecked")
         List<Element> items = e.getChildren();
         
@@ -445,7 +448,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             }
         }
         
-        r.monitorReply(e);
+        r.monitorReply(e, thread);
     }
     
     boolean checkValues(Element e) {
@@ -482,61 +485,61 @@ public class DefaultXmlIOServer implements XmlIOServer {
     }
     
     void addListenerToTurnout(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("adding Listener To Turnout " + name);
+    	if (log.isDebugEnabled()) log.debug("adding Listener To Turnout " + name + " for " + dr.client);
     	Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
         b.addPropertyChangeListener(dr);
     }
     
     void addListenerToMemory(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("adding Listener To Memory " + name);
+    	if (log.isDebugEnabled()) log.debug("adding Listener To Memory " + name + " for " + dr.client);
         Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
         b.addPropertyChangeListener(dr);
     }
     
     void addListenerToRoute(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("adding Listener To Route " + name);
+    	if (log.isDebugEnabled()) log.debug("adding Listener To Route " + name + " for " + dr.client);
         Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
         b.addPropertyChangeListener(dr);
     }
     
     void addListenerToSensor(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("adding Listener To Sensor " + name);
+    	if (log.isDebugEnabled()) log.debug("adding Listener To Sensor " + name + " for " + dr.client);
         Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
         b.addPropertyChangeListener(dr);
     }
     
     void addListenerToPower(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("adding Listener To Power " + name);
+    	if (log.isDebugEnabled()) log.debug("adding Listener To Power " + name + " for " + dr.client);
         PowerManager b = InstanceManager.powerManagerInstance();
         b.addPropertyChangeListener(dr);
     }
     
     void removeListenerFromTurnout(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("removing Listener From Turnout " + name);
+    	if (log.isDebugEnabled()) log.debug("removing Listener From Turnout " + name + " for " + dr.client);
         Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
         b.removePropertyChangeListener(dr);
     }
     
     void removeListenerFromMemory(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("removing Listener From Memory " + name);
+    	if (log.isDebugEnabled()) log.debug("removing Listener From Memory " + name + " for " + dr.client);
         Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
         b.removePropertyChangeListener(dr);
     }
     
     void removeListenerFromRoute(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("removing Listener From Route " + name);
+    	if (log.isDebugEnabled()) log.debug("removing Listener From Route " + name + " for " + dr.client);
         Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
         b.removePropertyChangeListener(dr);
     }
     
     void removeListenerFromSensor(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("remove Listener from Sensor " + name);
+    	if (log.isDebugEnabled()) log.debug("removing Listener from Sensor " + name + " for " + dr.client);
         Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
         b.removePropertyChangeListener(dr);
     }
     
     void removeListenerFromPower(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("removing Listener From Power " + name);
+    	if (log.isDebugEnabled()) log.debug("removing Listener From Power " + name + " for " + dr.client);
         PowerManager b = InstanceManager.powerManagerInstance();
         b.removePropertyChangeListener(dr);
     }
@@ -1307,8 +1310,10 @@ public class DefaultXmlIOServer implements XmlIOServer {
     
     // class for firing off requests to handle a deferred read
     class DeferredRead implements java.beans.PropertyChangeListener {
-        Element request;
+        public Thread thread;
+		Element request;
         XmlIORequestor requestor;
+        String client;
         
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -1337,7 +1342,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 else log.warn("Unexpected type: "+type);
             }
             
-            sendMonitorReply(request, requestor);
+            sendMonitorReply(request, requestor, client, thread);
             
         }
     }
