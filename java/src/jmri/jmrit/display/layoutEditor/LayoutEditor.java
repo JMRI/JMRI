@@ -2217,7 +2217,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				//final String desiredName = name;
 				final Color desiredColor = color;
 				public void actionPerformed(ActionEvent e) { 
-					if (defaultBackgroundColor!=desiredColor) {
+					if (!defaultBackgroundColor.equals(desiredColor)) {
 						defaultBackgroundColor = desiredColor;
                         setBackgroundColor(desiredColor);
 						setDirty(true);
@@ -2228,7 +2228,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
         r.addActionListener(a);
         backgroundColorButtonGroup.add(r);
-        if (defaultBackgroundColor == color) r.setSelected(true);
+        if (defaultBackgroundColor.equals(color)) r.setSelected(true);
         else r.setSelected(false);
         menu.add(r);
 		backgroundColorMenuItems[backgroundColorCount] = r;
@@ -2241,7 +2241,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				//final String desiredName = name;
 				final Color desiredColor = color;
 				public void actionPerformed(ActionEvent e) { 
-					if (defaultTrackColor!=desiredColor) {
+					if (!defaultTrackColor.equals(desiredColor)) {
 						defaultTrackColor = desiredColor;
 						setDirty(true);
 						repaint();
@@ -2251,7 +2251,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
         r.addActionListener(a);
         trackColorButtonGroup.add(r);
-        if (defaultTrackColor == color) r.setSelected(true);
+        if (defaultTrackColor.equals(color)) r.setSelected(true);
         else r.setSelected(false);
         menu.add(r);
 		trackColorMenuItems[trackColorCount] = r;
@@ -2264,7 +2264,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				//final String desiredName = name;
 				final Color desiredColor = color;
 				public void actionPerformed(ActionEvent e) { 
-					if (defaultOccupiedTrackColor!=desiredColor) {
+					if (!defaultOccupiedTrackColor.equals(desiredColor)) {
 						defaultOccupiedTrackColor = desiredColor;
 						setDirty(true);
 						repaint();
@@ -2274,7 +2274,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
         r.addActionListener(a);
         trackOccupiedColorButtonGroup.add(r);
-        if (defaultOccupiedTrackColor == color) r.setSelected(true);
+        if (defaultOccupiedTrackColor.equals(color)) r.setSelected(true);
         else r.setSelected(false);
         menu.add(r);
 		trackOccupiedColorMenuItems[trackOccupiedColorCount] = r;
@@ -2287,7 +2287,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				//final String desiredName = name;
 				final Color desiredColor = color;
 				public void actionPerformed(ActionEvent e) { 
-					if (defaultAlternativeTrackColor!=desiredColor) {
+					if (!defaultAlternativeTrackColor.equals(desiredColor)) {
 						defaultAlternativeTrackColor = desiredColor;
 						setDirty(true);
 						repaint();
@@ -2297,7 +2297,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
         r.addActionListener(a);
         trackAlternativeColorButtonGroup.add(r);
-        if (defaultAlternativeTrackColor == color) r.setSelected(true);
+        if (defaultAlternativeTrackColor.equals(color)) r.setSelected(true);
         else r.setSelected(false);
         menu.add(r);
 		trackAlternativeColorMenuItems[trackAlternativeColorCount] = r;
@@ -2307,19 +2307,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     
 	protected void setOptionMenuTrackColor() {
 		for (int i = 0;i<trackColorCount;i++) {
-			if (trackColors[i] == defaultTrackColor) 
+			if (trackColors[i].equals(defaultTrackColor)) 
 				trackColorMenuItems[i].setSelected(true);
 			else 
 				trackColorMenuItems[i].setSelected(false);
 		}	
         for (int i = 0;i<trackOccupiedColorCount;i++) {
-			if (trackOccupiedColors[i] == defaultOccupiedTrackColor) 
+			if (trackOccupiedColors[i].equals(defaultOccupiedTrackColor)) 
 				trackOccupiedColorMenuItems[i].setSelected(true);
 			else 
 				trackOccupiedColorMenuItems[i].setSelected(false);
 		}
         for (int i = 0;i<trackAlternativeColorCount;i++) {
-			if (trackAlternativeColors[i] == defaultAlternativeTrackColor) 
+			if (trackAlternativeColors[i].equals(defaultAlternativeTrackColor)) 
 				trackAlternativeColorMenuItems[i].setSelected(true);
 			else 
 				trackAlternativeColorMenuItems[i].setSelected(false);
@@ -2331,7 +2331,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				//final String desiredName = name;
 				final Color desiredColor = color;
 				public void actionPerformed(ActionEvent e) { 
-					if (defaultTextColor!=desiredColor) {
+					if (!defaultTextColor.equals(desiredColor)) {
 						defaultTextColor = desiredColor;
 						setDirty(true);
 						repaint();
@@ -2341,7 +2341,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
         r.addActionListener(a);
         textColorButtonGroup.add(r);
-        if (defaultTextColor == color) r.setSelected(true);
+        if (defaultTextColor.equals(color)) r.setSelected(true);
         else r.setSelected(false);
         menu.add(r);
 		textColorMenuItems[textColorCount] = r;
@@ -2353,17 +2353,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         ActionListener a = new ActionListener() {
 				final Color desiredColor = color;
 				public void actionPerformed(ActionEvent e) { 
-					if (turnoutCircleColor!=desiredColor) {
-						turnoutCircleColor = desiredColor;
-						setDirty(true);
-						repaint();
-					}
+					turnoutCircleColor = desiredColor;
+					setDirty(true);
+					repaint();
 				}
 			};
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
         r.addActionListener(a);
         turnoutCircleColorButtonGroup.add(r);
-        if (turnoutCircleColor == color) r.setSelected(true);
+        if (turnoutCircleColor.equals(color)) r.setSelected(true);
         else r.setSelected(false);
         menu.add(r);
         turnoutCircleColorMenuItems[turnoutCircleColorCount] = r;
@@ -2395,7 +2393,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 
     protected void setOptionMenuTurnoutCircleColor() {
 		for (int i = 0;i<turnoutCircleColorCount;i++) {
-			if (turnoutCircleColors[i] == turnoutCircleColor) 
+			if (turnoutCircleColors[i] == null && turnoutCircleColor == null)
+				turnoutCircleColorMenuItems[i].setSelected(true);
+			else if (turnoutCircleColors[i] != null && turnoutCircleColors[i].equals(turnoutCircleColor)) 
 				turnoutCircleColorMenuItems[i].setSelected(true);
 			else 
 				turnoutCircleColorMenuItems[i].setSelected(false);
@@ -2414,10 +2414,19 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 
 	protected void setOptionMenuTextColor() {
 		for (int i = 0;i<textColorCount;i++) {
-			if (textColors[i] == defaultTextColor) 
+			if (textColors[i].equals(defaultTextColor)) 
 				textColorMenuItems[i].setSelected(true);
 			else 
 				textColorMenuItems[i].setSelected(false);
+		}	
+	}    
+    
+	protected void setOptionMenuBackgroundColor() {
+		for (int i = 0;i<backgroundColorCount;i++) {
+			if (backgroundColors[i].equals(defaultBackgroundColor)) 
+				backgroundColorMenuItems[i].setSelected(true);
+			else 
+				backgroundColorMenuItems[i].setSelected(false);
 		}	
 	}    
     
@@ -6115,6 +6124,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		defaultTextColor = stringToColor(color);
 		setOptionMenuTextColor();
 	}
+	public void setDefaultBackgroundColor(String color) {
+		defaultBackgroundColor = stringToColor(color);
+		setOptionMenuBackgroundColor();
+	}
 	public void setXScale(double xSc) {xScale = xSc;}
 	public void setYScale(double ySc) {yScale = ySc;}
 	public void setLayoutName(String name) {layoutName = name;}
@@ -6270,20 +6283,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	
 	// utility routines
 	public static String colorToString(Color color) {
-		if(color == Color.black) return "black";
-		else if (color == Color.darkGray) return "darkGray";
-		else if (color == Color.gray) return "gray";
-		else if (color == Color.lightGray) return "lightGray";
-		else if (color == Color.white) return "white";
-		else if (color == Color.red) return "red";
-		else if (color == Color.pink) return "pink";
-		else if (color == Color.orange) return "orange";
-		else if (color == Color.yellow) return "yellow";
-		else if (color == Color.green) return "green";
-		else if (color == Color.blue) return "blue";
-		else if (color == Color.magenta) return "magenta";
-		else if (color == Color.cyan) return "cyan";
-		else if (color == null) return "track";
+		if (color == null) return "track";
+		else if (color.equals(Color.black)) return "black";
+		else if (color.equals(Color.darkGray)) return "darkGray";
+		else if (color.equals(Color.gray)) return "gray";
+		else if (color.equals(Color.lightGray)) return "lightGray";
+		else if (color.equals(Color.white)) return "white";
+		else if (color.equals(Color.red)) return "red";
+		else if (color.equals(Color.pink)) return "pink";
+		else if (color.equals(Color.orange)) return "orange";
+		else if (color.equals(Color.yellow)) return "yellow";
+		else if (color.equals(Color.green)) return "green";
+		else if (color.equals(Color.blue)) return "blue";
+		else if (color.equals(Color.magenta)) return "magenta";
+		else if (color.equals(Color.cyan)) return "cyan";
 		log.error ("unknown color sent to colorToString");
 		return "black";
 	}

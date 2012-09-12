@@ -468,6 +468,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             int red = element.getAttribute("redBackground").getIntValue();
             int blue = element.getAttribute("blueBackground").getIntValue();
             int green = element.getAttribute("greenBackground").getIntValue();
+            panel.setDefaultBackgroundColor(LayoutEditor.colorToString(new Color(red, green, blue)));
             panel.setBackgroundColor(new Color(red, green, blue));
         } catch ( org.jdom.DataConversionException e) {
             log.warn("Could not parse color attributes!");
