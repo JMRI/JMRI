@@ -45,3 +45,9 @@ div#panelFooter span.info {
 	font-style: italic;
 }
 
+div.MemoryInputIconXml, div.MemorySpinnerIconXml {
+	paddinxg: 1px 1em 1px 1em;
+	border:  solid black 1px;
+	min-width: 4em;
+	text-align: center;
+}

@@ -18,6 +18,7 @@
  *  TODO: add error message and stop heartbeat on change failure, add retry button
  *  TODO: handle more exotic layoutturnouts, such as crossovers
  *  TODO: handle main vs. side vs. dashed track
+ *  TODO: address color differences between java panel and javascript panel (e.g. darkGray)
  *  TODO: handle drawn ellipse
  *  TODO: determine proper level (z-index) for canvas layer
  *  TODO: handle multisensors, other widgets correctly
@@ -26,6 +27,7 @@
  *  TODO: verify that assuming same rotation and scale for all icons in a "set" is OK
  *  TODO: deal with mouseleave, mouseout, touchout, etc.
  *  TODO: if no elements found, don't send list to xmlio server
+ *  TODO: remove duplicates from list before sending
  *   
  **********************************************************************************************/
 
@@ -101,7 +103,12 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 				$widget['scale']  =	"1.0"; //default to no scale
 				$widget['id'] = "spWidget_" + $gUnique();//set id to a unique value (since same element can be in multiple widgets)
 				$widget['widgetFamily'] = $getWidgetFamily($widget);
-				$widget['classes'] = $widget.widgetType + " " + $widget.widgetFamily + " rotatable ";
+				var $jc = "";
+				if ($widget.class != undefined) {
+					var $ta = $widget.class.split('.'); //get last part of java class name for a css class
+					$jc = $ta[$ta.length - 1];
+				}
+				$widget['classes'] = $widget.widgetType + " " + $widget.widgetFamily + " rotatable " + $jc;
 				if ($widget.momentary == "true") {
 					$widget.classes += "momentary ";
 				}
@@ -117,7 +124,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						break;
 					case "turnouticon" :
 						$widget['name']  =		$widget.turnout; //normalize name
-						$widget['element']  =	"turnout"; //what JMRI calls this
+						$widget['element']  =	"turnout"; //what xmlio server calls this
 						$widget['icon1'] = 		$(this).find('icons').find('unknown').attr('url');
 						$widget['icon2'] =  	$(this).find('icons').find('closed').attr('url');
 						$widget['icon4'] =  	$(this).find('icons').find('thrown').attr('url');
@@ -130,9 +137,22 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						}
 						break;
 					case "sensoricon" :
-					case "multisensoricon" :
 						$widget['name']  =		$widget.sensor; //normalize name
-						$widget['element']  =	"sensor"; //what JMRI calls this
+						$widget['element']  =	"sensor"; //what xmlio server calls this
+						$widget['icon1'] = 		$(this).find('unknown').attr('url');
+						$widget['icon2'] =  	$(this).find('active').attr('url');
+						$widget['icon4'] =  	$(this).find('inactive').attr('url');
+						$widget['icon8'] =		$(this).find('inconsistent').attr('url');
+						var $rotation = 		$(this).find('unknown').find('rotation').text();
+						$widget['degrees'] = 	($(this).find('unknown').attr('degrees') * 1) + ($rotation * 90);
+						$widget['scale'] = 		$(this).find('unknown').attr('scale');
+						if ($widget.forcecontroloff != "true") {
+							$widget.classes += 		$widget.element + " clickable ";
+						}
+						break;
+					case "multisensoricon" :
+						$widget['name'] =  		$(this).find('active').attr('sensor'); //get first active name
+						$widget['element']  =	"sensor"; //what xmlio server calls this
 						$widget['icon1'] = 		$(this).find('unknown').attr('url');
 						$widget['icon2'] =  	$(this).find('active').attr('url');
 						$widget['icon4'] =  	$(this).find('inactive').attr('url');
@@ -145,7 +165,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						}
 						break;
 					}
-					$widget['safeName'] = $safeName($widget.name);  //add a "safe" version of name for use as class
+					$widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
 
 					if ($widget.name) { //if name available, use it as hover text
 						$hoverText = " title='"+$widget.name+"' alt='"+$widget.name+"'";
@@ -156,25 +176,24 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$("div#panelArea").append("<img id=" + $widget.id +
 								" class='" + $widget.classes +
 								"' src='" + $widget["icon"+$widget['state']] + "' " + $hoverText + "/>");
-            
-            //also add in overlay text if specified  (append "overlay" to id to keep them unique)
-            if ($widget.text != undefined) {
-					    $("div#panelArea").append("<div id=" + $widget.id + "overlay class='overlay'>" + $widget.text + "</div>");
-					    $("div#panelArea>#"+$widget.id+"overlay").css({position:'absolute',left:$widget.x+'px',top:$widget.y+'px',zIndex:($widget.level-1)});
-            } 
-					}
 
+						//also add in overlay text if specified  (append "overlay" to id to keep them unique)
+						if ($widget.text != undefined) {
+							$("div#panelArea").append("<div id=" + $widget.id + "overlay class='overlay'>" + $widget.text + "</div>");
+							$("div#panelArea>#"+$widget.id+"overlay").css({position:'absolute',left:$widget.x+'px',top:$widget.y+'px',zIndex:($widget.level-1)});
+						} 
+					}
 					$preloadWidgetImages($widget);
 					$gWidgets[$widget.id] = $widget; //store widget in persistent array
 					$setWidgetPosition($("div#panelArea>#"+$widget.id));
-
 					break;
+
 				case "text" :
 					$widget['styles'] = $getTextCSSFromObj($widget);
 					switch ($widget.widgetType) {
 					case "sensoricon" :
 						$widget['name']  =		$widget.sensor; //normalize name
-						$widget['element']  =	"sensor"; //what JMRI calls this
+						$widget['element']  =	"sensor"; //what xmlio server calls this
 						//set each state's text
 						$widget['text1'] = 		$(this).find('unknownText').attr('text');
 						$widget['text2'] =  	$(this).find('activeText').attr('text');
@@ -189,11 +208,15 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 							$widget.classes += 		$widget.element + " clickable ";
 						}
 						break;
-
 					case "locoicon" :
 						//also set the background icon for this one (additional css in .html file)
 						$widget['icon1'] = 		$(this).find('icon').attr('url');
 						$widget.styles['background-image'] = "url('" + $widget.icon1 + "')";
+						break;
+					case "memoryicon" :
+						$widget['name']  =		$widget.memory; //normalize name
+						$widget['element']  =	"memory"; //what xmlio server calls this
+						$widget['text']  =		$widget.memory; //use name for initial text
 						break;
 					}
 					$widget['safeName'] = $safeName($widget.name);
@@ -203,8 +226,8 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 
 					$gWidgets[$widget.id] = $widget; //store widget in persistent array
 					$setWidgetPosition($("div#panelArea>#"+$widget.id));
-
 					break;
+
 				case "drawn" :
 					switch ($widget.widgetType) {
 					case "positionablepoint" :
@@ -214,8 +237,11 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						break;
 					case "layoutturnout" :
 						$widget['name']  =		$widget.turnoutname; //normalize name
-						$widget['safeName'] = 	$safeName($widget.name);  //add a "safe" version of name for use as class
-						$widget['element']  =	"turnout"; //what JMRI calls this
+						$widget['safeName'] = 	$safeName($widget.name);  //add a html-safe version of name
+						$widget['element']  =	"turnout"; //what xmlio server calls this
+						$widget['x']  		=	$widget.xcen; //normalize x,y 
+						$widget['y']  		=	$widget.ycen;
+						$widget.classes 	+= 	$widget.element + " clickable ";
 						//store widget in persistent array
 						$gWidgets[$widget.id] = $widget; 
 						//also store the turnout's 3 end points for other connections
@@ -236,6 +262,14 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$gPts[$t.ident] = $t;
 						//draw the turnout
 						$drawTurnout($widget);  
+						//add an empty, but clickable, div to the panel and position it over the turnout circle
+						$hoverText = " title='"+$widget.name+"' alt='"+$widget.name+"'";
+						$("div#panelArea").append("<div id=" + $widget.id + " class='"+$widget.classes+"' "+ $hoverText +"></div>");
+						var $cr = $gPanel.turnoutcirclesize * SIZE;  //turnout circle radius
+						var $cd = $cr * 2;
+						$("div#panelArea>#"+$widget.id).css(
+								{position:'absolute',left:($widget.x-$cr)+'px',top:($widget.y-$cr)+'px',zIndex:3,
+									width:$cd+'px', height:$cd+'px'});
 						break;
 					case "tracksegment" :
 						var $pt1 = $gPts[$widget.connect1name+"."+$widget.type1];
@@ -247,13 +281,13 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 							$drawLine($pt1.x, $pt1.y, $pt2.x, $pt2.y)
 						} else {
 							//draw curved line 
-					        $gCtx.beginPath();
-					        if ($widget.flip == "yes") {
+							$gCtx.beginPath();
+							if ($widget.flip == "yes") {
 								$drawArc($pt2.x, $pt2.y, $pt1.x, $pt1.y, $widget.angle)
-					        } else {
-					        	$drawArc($pt1.x, $pt1.y, $pt2.x, $pt2.y, $widget.angle)
-					        }
-					        $gCtx.stroke();
+							} else {
+								$drawArc($pt1.x, $pt1.y, $pt2.x, $pt2.y, $widget.angle)
+							}
+							$gCtx.stroke();
 						}
 						break;
 					case "backgroundColor" :  //set background color of the panel itself
@@ -262,7 +296,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 					}
 					break;
 				default:
-					//log any unsupported widgets, showing childnodes for info
+					//log any unsupported widgets, listing childnodes as info
 					$("div#logArea").append("<br />Unsupported: " + $widget.widgetType + ":"); 
 					$(this.attributes).each(function(){
 						$("div#logArea").append(" " + this.name);
@@ -324,21 +358,23 @@ function $drawCircle($ptx, $pty, $radius, $color) {
 
 //draw a Turnout (pass in widget)
 function $drawTurnout($widget) {
-	  $drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $gPanel.turnoutcirclecolor);
-	  $drawLine($gPts[$widget.ident+PT_A].x, $gPts[$widget.ident+PT_A].y, $widget.xcen, $widget.ycen); //A to center (incoming)
-	  
-	  //draw both legs background color, to "erase" old setting
-	  $drawLine($widget.xcen, $widget.ycen, $gPts[$widget.ident+PT_B].x, $gPts[$widget.ident+PT_B].y, $gPanel.backgroundcolor); //center to B (straight leg)
-	  $drawLine($widget.xcen, $widget.ycen, $gPts[$widget.ident+PT_C].x, $gPts[$widget.ident+PT_C].y, $gPanel.backgroundcolor); //center to C (diverging leg)
-	  
-	  //if closed or thrown, draw the selected leg in the default track color
-	  if ($widget.state == CLOSED || $widget.state == THROWN) {
-		  if ($widget.state == $widget.continuing) {
-			  $drawLine($widget.xcen, $widget.ycen, $gPts[$widget.ident+PT_B].x, $gPts[$widget.ident+PT_B].y); //center to B (straight leg)
-		  } else {
-			  $drawLine($widget.xcen, $widget.ycen, $gPts[$widget.ident+PT_C].x, $gPts[$widget.ident+PT_C].y); //center to C (diverging leg)
-		  }
-	  }
+	if ($gPanel.turnoutcircles == "yes") {
+		$drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $gPanel.turnoutcirclecolor);
+	}
+	$drawLine($gPts[$widget.ident+PT_A].x, $gPts[$widget.ident+PT_A].y, $widget.xcen, $widget.ycen); //A to center (incoming)
+
+	//draw both legs background color, to "erase" old setting
+	$drawLine($widget.xcen, $widget.ycen, $gPts[$widget.ident+PT_B].x, $gPts[$widget.ident+PT_B].y, $gPanel.backgroundcolor); //center to B (straight leg)
+	$drawLine($widget.xcen, $widget.ycen, $gPts[$widget.ident+PT_C].x, $gPts[$widget.ident+PT_C].y, $gPanel.backgroundcolor); //center to C (diverging leg)
+
+	//if closed or thrown, draw the selected leg in the default track color
+	if ($widget.state == CLOSED || $widget.state == THROWN) {
+		if ($widget.state == $widget.continuing) {
+			$drawLine($widget.xcen, $widget.ycen, $gPts[$widget.ident+PT_B].x, $gPts[$widget.ident+PT_B].y); //center to B (straight leg)
+		} else {
+			$drawLine($widget.xcen, $widget.ycen, $gPts[$widget.ident+PT_C].x, $gPts[$widget.ident+PT_C].y); //center to C (diverging leg)
+		}
+	}
 };    	
 
 //drawLine, passing in values from xml
@@ -508,8 +544,16 @@ var $setWidgetState = function($id, $newState) {
 			$('img#'+$id).attr('src', $widget['icon'+$newState]);  //set image src to next state's image
 			break;
 		case "text" :
-			$('div#'+$id).text($widget['text'+$newState]);  //set text to new state's text
-			$('div#'+$id).css($widget['css'+$newState]); //set css to new state's css
+			if ($widget.element == "memory") {
+				$('div#'+$id).text($newState);  //set memory to new value from server
+			} else {
+				if ($widget['text'+$newState] != undefined) {
+					$('div#'+$id).text($widget['text'+$newState]);  //set text to new state's text
+				}
+				if ($widget['css'+$newState] != undefined) {
+					$('div#'+$id).css($widget['css'+$newState]); //set css to new state's css
+				}
+			}
 			break;
 		case "drawn" :
 			if ($widget.widgetType == "layoutturnout") {

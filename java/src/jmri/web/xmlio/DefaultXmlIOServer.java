@@ -421,7 +421,6 @@ public class DefaultXmlIOServer implements XmlIOServer {
     }
 
     void sendMonitorReply(Element e, XmlIORequestor r, String client, Thread thread) {
-    	if (log.isDebugEnabled()) log.debug("entering sendMonitorReply for " + client);
         @SuppressWarnings("unchecked")
         List<Element> items = e.getChildren();
         
