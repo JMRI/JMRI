@@ -20,12 +20,19 @@ function showSubdirs() {
     
     echo '<a href="..">Up one level</a><p>';
     
+    $list = array();
+    
     while (false !== ($entry = $d->read())) {
        if (is_dir($entry) && substr($entry,0,1) != '.') {
-         echo '<img src="http://jmri.org/icons/folder.gif"> <a href="'.$entry.'">'.$entry.'</a></td><p>'."\n";
+         $list[] = $entry;
        }
     }
     $d->close();
+
+    sort($list);
+    foreach ($list as $entry) {
+        echo '<img src="http://jmri.org/icons/folder.gif"> <a href="'.$entry.'">'.$entry.'</a></td><p>'."\n";
+    }
 }
 
 function showFiles() {
@@ -33,14 +40,21 @@ function showFiles() {
     echo "<h2>Icons</h2>\n";
     echo '<table border="1">';
     
+    $list = array();
+
     $d = dir(".");
     while (false !== ($entry = $d->read())) {
        if (endswith($entry, ".gif") || endswith($entry, ".jpg") || endswith($entry, ".png")) {
-        echo '<tr><td>'.$entry.' </td><td bgcolor="#C0C0C0"><a href="'.$entry.'"><img src="'.$entry.'"></a></td>'."\n";
+         $list[] = $entry;
        }
     }
     $d->close();
     
+    sort($list);
+    foreach ($list as $entry) {
+        echo '<tr><td>'.$entry.' </td><td bgcolor="#C0C0C0"><a href="'.$entry.'"><img src="'.$entry.'"></a></td>'."\n";
+    }
+
     echo "</table>\n";
 }
 
