@@ -152,7 +152,9 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         
         int delay = 0;
         try {
-            delay = Integer.parseInt(map.getProperty(aspect, "delay"));
+            if(map.getProperty(aspect, "delay")!=null){
+                delay = Integer.parseInt(map.getProperty(aspect, "delay"));
+            }
         } catch (Exception e){
             log.debug("No delay set");
             //can be considered normal if does not exists or is invalid

@@ -743,7 +743,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         return destList.get(destination).getMinimumSpeed();
     }
 
-    boolean inWait = false;
+    volatile boolean inWait = false;
     Thread thr = null;
     
     /* 
@@ -784,9 +784,11 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
      * Evaluates the destinatin signal mast appearance and sets ours accordingly
      */
     void setMastAppearance(){
-        if(inWait){
-            log.error("Set SignalMast Appearance called while still in wait");
-            return;
+        synchronized(this){
+            if(inWait){
+                log.error("Set SignalMast Appearance called while still in wait");
+                return;
+            }
         }
         log.debug("Set Signal Appearances");
         if(getSourceMast().getHeld()){
