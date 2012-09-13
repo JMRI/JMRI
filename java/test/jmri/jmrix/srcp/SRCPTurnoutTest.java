@@ -16,7 +16,7 @@ import java.io.StringReader;
  * Description:	tests for the jmri.jmrix.srcp.SRCPTurnout class
  *
  * @author	Bob Jacobsen
- * @version $Revision: 19890 $
+ * @version $Revision$
  */
 public class SRCPTurnoutTest extends TestCase {
 
