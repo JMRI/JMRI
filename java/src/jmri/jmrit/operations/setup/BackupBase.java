@@ -457,10 +457,13 @@ public abstract class BackupBase {
 					dest.write(buffer, 0, len);
 				}
 			} catch (Exception ex) {
+				if (source != null)
+					source.close();
+				if (dest != null)
+					dest.close();
 				String msg = String.format("Error copying file: %s to: %s",
 						sourceFileName, destFileName);
 				throw new IOException(msg, ex);
-
 			}
 
 			source.close();
