@@ -45,66 +45,64 @@ abstract public class AbstractSensorServer {
 
 	
     public void setSensorActive(java.lang.String sensorName) {
-                Sensor sensor = null;
-		// load address from sensorAddrTextField
-		try {
-			addSensorToList(sensorName);
-			sensor= InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-			if (sensor == null) {
-				log.error("Sensor " + sensorName
-						+ " is not available");
-			} else {
+    	Sensor sensor = null;
+    	// load address from sensorAddrTextField
+    	try {
+    		addSensorToList(sensorName);
+    		sensor= InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+    		if (sensor == null) {
+    			log.error("Sensor " + sensorName
+    					+ " is not available");
+    		} else {
+    			if(sensor.getKnownState()!=jmri.Sensor.ACTIVE) {
+    				// set state to ACTIVE
+        			if (log.isDebugEnabled()) log.debug("changing sensor '" + sensorName + "' to Active ("+sensor.getKnownState()+"->" +jmri.Sensor.ACTIVE+")");
+    				sensor.setKnownState(jmri.Sensor.ACTIVE);
+    			} else {
+    				// just notify the client.
+        			if (log.isDebugEnabled()) log.debug("not changing sensor '" + sensorName + "', already Active ("+sensor.getKnownState()+")");
+    				try {
+    					sendStatus(sensorName,jmri.Sensor.ACTIVE);
+    				} catch(java.io.IOException ie) {
+    					log.error("Error Sending Status");
+    				}
+    			}
+    		}
+    	} catch (Exception ex) {
+    		log.error("set sensor active, exception: "
+    				+ ex.toString());
+    	}
+    }
 
-				if (log.isDebugEnabled())
-					log.debug("about to set sensor Active");
-		                if(sensor.getKnownState()!=jmri.Sensor.INACTIVE)
- 		                {  // set state to ACTIVE
-				    sensor.setKnownState(jmri.Sensor.ACTIVE);
-                                } else {
-                                  // just notify the client.
-                                  try {
-                                     sendStatus(sensorName,jmri.Sensor.ACTIVE);
-                                  } catch(java.io.IOException ie) {
-                                     log.error("Error Sending Status");
-                                  }
-                                }
-			}
-		} catch (Exception ex) {
-			log.error("set sensor active, exception: "
-							+ ex.toString());
-		}
-	}
+    public void setSensorInactive(java.lang.String sensorName) {
+    	Sensor sensor = null;
+    	try {
+    		addSensorToList(sensorName);
+    		sensor= InstanceManager.sensorManagerInstance().provideSensor(sensorName); 
 
-        public void setSensorInactive(java.lang.String sensorName) {
-                Sensor sensor = null;
-		// load address from sensorAddrTextField
-		try {
-                        addSensorToList(sensorName);
-                        sensor= InstanceManager.sensorManagerInstance().provideSensor(sensorName); 
-
-			if (sensor== null) {
-				log.error("Sensor " + sensorName
-						+ " is not available");
-			} else {
-				if (log.isDebugEnabled())
-					log.debug("about to set sensor INACTIVE ");
-		                if(sensor.getKnownState()!=jmri.Sensor.INACTIVE)
- 		                {  // set state to INACTIVE
-				   sensor.setKnownState(jmri.Sensor.INACTIVE);
-                                } else {
-                                  // just notify the client.
-                                  try {
-                                     sendStatus(sensorName,jmri.Sensor.INACTIVE);
-                                  } catch(java.io.IOException ie) {
-                                     log.error("Error Sending Status");
-                                  }
-                                }
-			}
-		} catch (Exception ex) {
-			log.error("set sensor inactive, exception: "
-							+ ex.toString());
-		}
-	}
+    		if (sensor== null) {
+    			log.error("Sensor " + sensorName
+    					+ " is not available");
+    		} else {
+    			if(sensor.getKnownState()!=jmri.Sensor.INACTIVE) {
+    				// set state to INACTIVE
+        			if (log.isDebugEnabled()) log.debug("changing sensor '" + sensorName + "' to InActive ("+sensor.getKnownState()+"->" +jmri.Sensor.INACTIVE+")");
+    				sensor.setKnownState(jmri.Sensor.INACTIVE);
+    			} else {
+    				// just notify the client.
+        			if (log.isDebugEnabled()) log.debug("not changing sensor '" + sensorName + "', already InActive ("+sensor.getKnownState()+")");
+    				try {
+    					sendStatus(sensorName,jmri.Sensor.INACTIVE);
+    				} catch(java.io.IOException ie) {
+    					log.error("Error Sending Status");
+    				}
+    			}
+    		}
+    	} catch (Exception ex) {
+    		log.error("set sensor inactive, exception: "
+    				+ ex.toString());
+    	}
+    }
 
     class SensorListener implements java.beans.PropertyChangeListener {
 
