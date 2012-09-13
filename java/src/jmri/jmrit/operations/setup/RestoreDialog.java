@@ -236,11 +236,9 @@ public class RestoreDialog extends JDialog {
 		try {
 			AutoBackup auto = new AutoBackup();
 			auto.autoBackup();
-			// } catch (Exception ex) {
-			// log.debug("Autobackup before restore Operations files", ex);
-			// }
-			//
-			// try {
+
+			// now delete the current operations files in case the restore isn't a full set of files
+			backup.deleteOperationsFiles();
 
 			setName = ((BackupSet) comboBox.getSelectedItem()).getSetName();
 
@@ -261,8 +259,9 @@ public class RestoreDialog extends JDialog {
 			}
 
 			JOptionPane.showMessageDialog(this,
-					"You must restart JMRI to complete the restore operation",
-					"Restore successful!", JOptionPane.INFORMATION_MESSAGE);
+					rb.getString("YouMustRestartAfterRestore"),
+					rb.getString("RestoreSuccessful"),
+					JOptionPane.INFORMATION_MESSAGE);
 			dispose();
 
 			Apps.handleRestart();

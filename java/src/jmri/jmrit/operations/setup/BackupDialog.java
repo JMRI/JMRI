@@ -45,7 +45,7 @@ public class BackupDialog extends JDialog {
 	private JButton backupButton;
 	private JButton helpButton;
 
-	private BackupBase backup;
+	private DefaultBackup backup;
 
 	/**
 	 * Create the dialog.

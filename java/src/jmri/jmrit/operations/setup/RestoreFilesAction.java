@@ -76,12 +76,15 @@ public class RestoreFilesAction extends AbstractAction {
 			autoBackup.autoBackup();
 
 			File directory = fc.getSelectedFile();
+			
+			// now delete the current operations files in case the restore isn't a full set of files
+			backup.deleteOperationsFiles();
 
 			backup.restoreFilesFromDirectory(directory);
 
 			JOptionPane.showMessageDialog(null,
-					rb.getString("YouMustRestartAfterReset"),
-					rb.getString("ResetSuccessful"), JOptionPane.INFORMATION_MESSAGE);
+					rb.getString("YouMustRestartAfterRestore"),
+					rb.getString("RestoreSuccessful"), JOptionPane.INFORMATION_MESSAGE);
 
 			// now deregister shut down task
 			// If Trains window was opened, then task is active

@@ -75,8 +75,8 @@ public class LoadDemoAction extends AbstractAction {
 			JOptionPane
 					.showMessageDialog(
 							null,
-							"You must restart JMRI to complete the load demo operation",
-							"Demo load successful!",
+							rb.getString("YouMustRestartAfterLoadDemo"),
+							rb.getString("LoadDemoSuccessful"),
 							JOptionPane.INFORMATION_MESSAGE);
 
 			Apps.handleRestart();

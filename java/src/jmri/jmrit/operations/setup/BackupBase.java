@@ -51,7 +51,7 @@ public abstract class BackupBase {
 	private String _demoPanelFileName = "Operations Demo Panel.xml";
 
 	public String[] getBackupSetFileNames() {
-		return _backupSetFileNames;
+		return _backupSetFileNames.clone();
 	}
 
 	/**
@@ -237,7 +237,7 @@ public abstract class BackupBase {
 		}
 
 		if (sourceCount != _backupSetFileNames.length) {
-			log.error("WARNING: Only " + sourceCount
+			log.warn("Only " + sourceCount
 					+ " file(s) found in directory "
 					+ sourceDir.getAbsolutePath());
 			// throw new IOException("Only " + sourceCount
@@ -461,13 +461,10 @@ public abstract class BackupBase {
 						sourceFileName, destFileName);
 				throw new IOException(msg, ex);
 
-			} finally {
-				if (source != null)
-					source.close();
-
-				if (dest != null)
-					dest.close();
 			}
+
+			source.close();
+			dest.close();
 
 			// Now update the last modified time to equal the source file.
 			File src = new File(sourceFileName);

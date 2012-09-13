@@ -36,7 +36,7 @@ public class ManageBackupsDialog extends JDialog {
 
 	private DefaultListModel model;
 
-	private BackupBase backup;
+	private AutoBackup backup;
 	private Component horizontalGlue;
 	private Component horizontalStrut;
 	private Component horizontalStrut_1;
