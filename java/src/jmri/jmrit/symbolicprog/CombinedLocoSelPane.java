@@ -476,7 +476,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         RosterEntry re = new RosterEntry();
         re.setDecoderFamily(decoderFile.getFamily());
         re.setDecoderModel(decoderFile.getModel());
-        re.setId("<new loco>");
+        re.setId(jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("LabelNewDecoder"));
         // note that we're leaving the filename null
         // add the new roster entry to the in-memory roster
         Roster.instance().addEntry(re);

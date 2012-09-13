@@ -405,6 +405,8 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
         doc.addContent(0,p);
         
+        String newLocoString = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("LabelNewDecoder");
+        
         //Check the Comment and Decoder Comment fields for line breaks and
         //convert them to a processor directive for storage in XML
         //Note: this is also done in the LocoFile.java class to do
@@ -419,36 +421,39 @@ public class Roster extends XmlFile implements RosterGroupSelector {
             //directives so they can be stored in the xml file and converted
             //back when the file is read.
             RosterEntry r = _list.get(i);
-            String tempComment = r.getComment();
-            String xmlComment = "";
+            if(!r.getId().equals(newLocoString)){
+                String tempComment = r.getComment();
+                String xmlComment = "";
 
-            //transfer tempComment to xmlComment one character at a time, except
-            //when \n is found.  In that case, insert <?p?>
-            for (int k = 0; k < tempComment.length(); k++) {
-                if (tempComment.startsWith("\n", k)) {
-                    xmlComment = xmlComment + "<?p?>";
+                //transfer tempComment to xmlComment one character at a time, except
+                //when \n is found.  In that case, insert <?p?>
+                for (int k = 0; k < tempComment.length(); k++) {
+                    if (tempComment.startsWith("\n", k)) {
+                        xmlComment = xmlComment + "<?p?>";
+                    }
+                    else {
+                        xmlComment = xmlComment + tempComment.substring(k, k + 1);
+                    }
                 }
-                else {
-                    xmlComment = xmlComment + tempComment.substring(k, k + 1);
+                r.setComment(xmlComment);
+
+                //Now do the same thing for the decoderComment field
+                String tempDecoderComment = r.getDecoderComment();
+                String xmlDecoderComment = "";
+
+                for (int k = 0; k < tempDecoderComment.length(); k++) {
+                    if (tempDecoderComment.startsWith("\n", k)) {
+                        xmlDecoderComment = xmlDecoderComment + "<?p?>";
+                    }
+                    else {
+                        xmlDecoderComment = xmlDecoderComment +
+                            tempDecoderComment.substring(k, k + 1);
+                    }
                 }
+                r.setDecoderComment(xmlDecoderComment);
+            } else {
+                log.info("skip unsaved roster entry with default name " + r.getId());
             }
-            r.setComment(xmlComment);
-
-            //Now do the same thing for the decoderComment field
-            String tempDecoderComment = r.getDecoderComment();
-            String xmlDecoderComment = "";
-
-            for (int k = 0; k < tempDecoderComment.length(); k++) {
-                if (tempDecoderComment.startsWith("\n", k)) {
-                    xmlDecoderComment = xmlDecoderComment + "<?p?>";
-                }
-                else {
-                    xmlDecoderComment = xmlDecoderComment +
-                        tempDecoderComment.substring(k, k + 1);
-                }
-            }
-            r.setDecoderComment(xmlDecoderComment);
-
         }
         //All Comments and Decoder Comment line feeds have been changed to processor directives
 
@@ -458,7 +463,11 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         root.addContent(values = new Element("roster"));
         // add entries
         for (int i=0; i<numEntries(); i++) {
-            values.addContent(_list.get(i).store());
+            if(!_list.get(i).getId().equals(newLocoString)){
+                values.addContent(_list.get(i).store());
+            } else {
+                log.info("skip unsaved roster entry with default name " + _list.get(i).getId());
+            }
         }
         
         if(_rosterGroupList.size()>=1){
@@ -481,35 +490,38 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         //other parts of the program (e.g. in copying a roster)
         for (int i=0; i<numEntries(); i++){
             RosterEntry r = _list.get(i);
-            String xmlComment = r.getComment();
-            String tempComment = "";
+            if(!r.getId().equals(newLocoString)){
+                String xmlComment = r.getComment();
+                String tempComment = "";
 
-            for (int k = 0; k < xmlComment.length(); k++) {
-                if (xmlComment.startsWith("<?p?>", k)) {
-                    tempComment = tempComment + "\n";
-                    k = k + 4;
+                for (int k = 0; k < xmlComment.length(); k++) {
+                    if (xmlComment.startsWith("<?p?>", k)) {
+                        tempComment = tempComment + "\n";
+                        k = k + 4;
+                    }
+                    else {
+                        tempComment = tempComment + xmlComment.substring(k, k + 1);
+                    }
                 }
-                else {
-                    tempComment = tempComment + xmlComment.substring(k, k + 1);
+                r.setComment(tempComment);
+
+                String xmlDecoderComment = r.getDecoderComment();
+                String tempDecoderComment = "";
+
+                for (int k = 0; k < xmlDecoderComment.length(); k++) {
+                    if (xmlDecoderComment.startsWith("<?p?>", k)) {
+                        tempDecoderComment = tempDecoderComment + "\n";
+                        k = k + 4;
+                    }
+                    else {
+                        tempDecoderComment = tempDecoderComment +
+                            xmlDecoderComment.substring(k, k + 1);
+                    }
                 }
+                r.setDecoderComment(tempDecoderComment);
+            } else {
+                log.info("skip unsaved roster entry with default name " + r.getId());
             }
-            r.setComment(tempComment);
-
-            String xmlDecoderComment = r.getDecoderComment();
-            String tempDecoderComment = "";
-
-            for (int k = 0; k < xmlDecoderComment.length(); k++) {
-                if (xmlDecoderComment.startsWith("<?p?>", k)) {
-                    tempDecoderComment = tempDecoderComment + "\n";
-                    k = k + 4;
-                }
-                else {
-                    tempDecoderComment = tempDecoderComment +
-                        xmlDecoderComment.substring(k, k + 1);
-                }
-            }
-            r.setDecoderComment(tempDecoderComment);
-
         }
 
         // done - roster now stored, so can't be dirty
