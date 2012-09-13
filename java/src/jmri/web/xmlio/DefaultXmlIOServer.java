@@ -53,7 +53,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
 
         // first, process any "list" elements
     	//  roster, frame, and metadata are immediate only
-    	//  power, turnout, sensor, memory and route can be monitored for changes, pass current values to begin
+    	//  power, turnout, sensor, signalhead, memory and route can be monitored for changes, pass current values to begin
         @SuppressWarnings("unchecked")
         List<Element> lists = new ArrayList<Element>(e.getChildren("list"));
         for (Element list : lists) {
@@ -147,6 +147,25 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     n.addContent(new Element("userName").addContent(t.getUserName()));
                     n.addContent(new Element("comment").addContent(t.getComment()));
                     n.addContent(new Element("inverted").addContent(Boolean.valueOf(t.getInverted()).toString()));
+                    }
+                    e.addContent(n);
+                }            
+            } else if (type.equals("signalhead")) {
+                // add an element for each sensor
+                SignalHeadManager m = InstanceManager.signalHeadManagerInstance();
+                List<String> names = m.getSystemNameList();
+                for (String name : names) {
+                    SignalHead t = m.getSignalHead(name);
+                    Element n = new Element((useAttributes) ? "signalHead" : "item");
+                    if (useAttributes) {
+                        n.setAttribute("name", name);
+                        if (t.getUserName() != null) n.setAttribute("userName", t.getUserName());
+                        if (t.getComment() != null) n.setAttribute("comment", t.getComment());
+                    } else {
+                    n.addContent(new Element("type").addContent("signalhead"));
+                    n.addContent(new Element("name").addContent(name));
+                    n.addContent(new Element("userName").addContent(t.getUserName()));
+                    n.addContent(new Element("comment").addContent(t.getComment()));
                     }
                     e.addContent(n);
                 }            
@@ -353,6 +372,9 @@ public class DefaultXmlIOServer implements XmlIOServer {
             } else if (type.equals("sensor")) {
                 immediateWriteSensor(name, item);
                 immediateReadSensor(name, item);
+            } else if (type.equals("signalhead")) {
+                immediateWriteSignalHead(name, item);
+                immediateReadSignalHead(name, item);
             } else if (type.equals("power")) {
                 immediateWritePower(name, item);
                 immediateReadPower(name, item);
@@ -411,6 +433,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             else if (type.equals("memory")) addListenerToMemory(name, item, dr);
             else if (type.equals("route")) addListenerToRoute(name, item, dr);
             else if (type.equals("sensor")) addListenerToSensor(name, item, dr);
+            else if (type.equals("signalhead")) addListenerToSignalHead(name, item, dr);
             else if (type.equals("power")) addListenerToPower(name, item, dr);
             else log.warn("Unexpected type: " + type);
         }
@@ -439,6 +462,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 if (type.equals("turnout")) immediateReadTurnout(name, item);
                 else if (type.equals("memory")) immediateReadMemory(name, item);
                 else if (type.equals("sensor")) immediateReadSensor(name, item);
+                else if (type.equals("signalhead")) immediateReadSignalHead(name, item);
                 else if (type.equals("route")) immediateReadRoute(name, item);
                 else if (type.equals("power")) immediateReadPower(name, item);
                 else if (type.equals("metadata")) immediateReadMetadata(name, item);
@@ -472,6 +496,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 if (type.equals("turnout")) changed |= monitorProcessTurnout(name, item);
                 else if (type.equals("memory")) changed |= monitorProcessMemory(name, item);
                 else if (type.equals("sensor")) changed |= monitorProcessSensor(name, item);
+                else if (type.equals("signalhead")) changed |= monitorProcessSignalHead(name, item);
                 else if (type.equals("route")) changed |= monitorProcessRoute(name, item);
                 else if (type.equals("power")) changed |= monitorProcessPower(name, item);
                 else if (type.equals("metadata")) changed = true;
@@ -507,6 +532,12 @@ public class DefaultXmlIOServer implements XmlIOServer {
         b.addPropertyChangeListener(dr);
     }
     
+    void addListenerToSignalHead(String name, Element item, DeferredRead dr) {
+    	if (log.isDebugEnabled()) log.debug("adding Listener To SignalHead " + name + " for " + dr.client);
+        SignalHead b = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+        b.addPropertyChangeListener(dr);
+    }
+    
     void addListenerToPower(String name, Element item, DeferredRead dr) {
     	if (log.isDebugEnabled()) log.debug("adding Listener To Power " + name + " for " + dr.client);
         PowerManager b = InstanceManager.powerManagerInstance();
@@ -534,6 +565,12 @@ public class DefaultXmlIOServer implements XmlIOServer {
     void removeListenerFromSensor(String name, Element item, DeferredRead dr) {
     	if (log.isDebugEnabled()) log.debug("removing Listener from Sensor " + name + " for " + dr.client);
         Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
+        b.removePropertyChangeListener(dr);
+    }
+    
+    void removeListenerFromSignalHead(String name, Element item, DeferredRead dr) {
+    	if (log.isDebugEnabled()) log.debug("removing Listener from SignalHead " + name + " for " + dr.client);
+        SignalHead b = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
         b.removePropertyChangeListener(dr);
     }
     
@@ -601,6 +638,25 @@ public class DefaultXmlIOServer implements XmlIOServer {
      */
     boolean monitorProcessSensor(String name, Element item) {
         Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
+
+        // check for value element, which means compare
+        if (item.getAttributeValue("value") != null) {
+            return (b.getState() != Integer.parseInt(item.getAttributeValue("value")));
+        } else {
+        Element v = item.getChild("value");
+        if (v!=null) {
+            int state = Integer.parseInt(v.getText());
+            return  (b.getState() != state);
+        }
+        }
+        return false;  // no difference
+    }
+    
+    /**
+     * Return true if there is a difference
+     */
+    boolean monitorProcessSignalHead(String name, Element item) {
+        SignalHead b = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
 
         // check for value element, which means compare
         if (item.getAttributeValue("value") != null) {
@@ -686,21 +742,39 @@ public class DefaultXmlIOServer implements XmlIOServer {
     }
 
     void immediateWriteSensor(String name, Element item) throws JmriException {
-        // get sensor
-        Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
+    	// get sensor
+    	Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
 
-        // check for set element, which means write
-        if (item.getAttributeValue("set") != null) {
-            b.setState(Integer.parseInt(item.getAttributeValue("set")));
-            item.removeAttribute("set");
-        } else {
-        Element v = item.getChild("set");
-        if (v!=null) {
-            int state = Integer.parseInt(v.getText());
-            b.setState(state);
-            item.removeContent(v);
-        }
+    	// check for set element, which means write
+    	if (item.getAttributeValue("set") != null) {
+    		b.setState(Integer.parseInt(item.getAttributeValue("set")));
+    		item.removeAttribute("set");
+    	} else {
+    		Element v = item.getChild("set");
+    		if (v!=null) {
+    			int state = Integer.parseInt(v.getText());
+    			b.setState(state);
+    			item.removeContent(v);
+    		}
+    	}
     }
+    
+    void immediateWriteSignalHead(String name, Element item) throws JmriException {
+    	// get signalhead
+    	SignalHead b = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+
+    	// check for set element, which means write
+    	if (item.getAttributeValue("set") != null) {
+    		b.setState(Integer.parseInt(item.getAttributeValue("set")));
+    		item.removeAttribute("set");
+    	} else {
+    		Element v = item.getChild("set");
+    		if (v!=null) {
+    			int state = Integer.parseInt(v.getText());
+    			b.setState(state);
+    			item.removeContent(v);
+    		}
+    	}
     }
     
     void immediateWriteRoute(String name, Element item) throws JmriException {
@@ -824,22 +898,39 @@ public class DefaultXmlIOServer implements XmlIOServer {
     }
     
     void immediateReadSensor(String name, Element item) {
-        // get sensor
-        Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
+    	// get sensor
+    	Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
 
-        if (useAttributes) {
-            item.setAttribute("value", Integer.toString(b.getState()));
-        } else {
-        Element v = item.getChild("value");
+    	if (useAttributes) {
+    		item.setAttribute("value", Integer.toString(b.getState()));
+    	} else {
+    		Element v = item.getChild("value");
 
-        // Start read: ensure value element
-        if (v == null) item.addContent(v = new Element("value"));
-        
-        // set result
-        v.setText(""+b.getState());
-    }
+    		// Start read: ensure value element
+    		if (v == null) item.addContent(v = new Element("value"));
+
+    		// set result
+    		v.setText(""+b.getState());
+    	}
     }
     
+    void immediateReadSignalHead(String name, Element item) {
+    	// get signalhead
+    	SignalHead b = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+
+    	if (useAttributes) {
+    		item.setAttribute("value", Integer.toString(b.getState()));
+    	} else {
+    		Element v = item.getChild("value");
+
+    		// Start read: ensure value element
+    		if (v == null) item.addContent(v = new Element("value"));
+
+    		// set result
+    		v.setText(""+b.getState());
+    	}
+    }
+
     void immediateReadPower(String name, Element item) throws JmriException {
         // get power manager
         PowerManager b = InstanceManager.powerManagerInstance();
@@ -1336,6 +1427,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 if (type.equals("turnout")) removeListenerFromTurnout(name, item, this);
                 else if (type.equals("memory")) removeListenerFromMemory(name, item, this);
                 else if (type.equals("sensor")) removeListenerFromSensor(name, item, this);
+                else if (type.equals("signalhead")) removeListenerFromSignalHead(name, item, this);
                 else if (type.equals("route")) removeListenerFromRoute(name, item, this);
                 else if (type.equals("power")) removeListenerFromPower(name, item, this);
                 else log.warn("Unexpected type: "+type);

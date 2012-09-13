@@ -22,6 +22,7 @@
  *  TODO: handle drawn ellipse
  *  TODO: determine proper level (z-index) for canvas layer
  *  TODO: handle multisensors, other widgets correctly
+ *  TODO: fix getNextState() to handle multi-state widgets (like signalheads)
  *  TODO: diagnose and correct the small position issues visible with footscray
  *  TODO: figure out what "hidden=yes" is supposed to do
  *  TODO: verify that assuming same rotation and scale for all icons in a "set" is OK
@@ -53,6 +54,15 @@ var PT_CEN = ".1";  //named constants for point types
 var PT_A = ".2";
 var PT_B = ".3";
 var PT_C = ".4";
+var DARK        = 0x00;
+var RED         = 0x01;
+var FLASHRED    = 0x02;
+var YELLOW      = 0x04;
+var FLASHYELLOW = 0x08;
+var GREEN       = 0x10;
+var FLASHGREEN  = 0x20;
+var LUNAR       = 0x40;
+var FLASHLUNAR  = 0x80;
 
 //process the response returned for the requestPanelXML command
 var $processPanelXML = function($returnedData, $success, $xhr) {
@@ -116,6 +126,11 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 				switch ($widget.widgetFamily) {
 				case "icon" :
 					switch ($widget.widgetType) {
+					case "fastclock" :
+						$widget['icon1'] = 		"/resources/clock2.gif";
+						$widget['scale'] = 		$(this).attr('scale');
+						$widget['level'] =		10;  //not included in xml
+						break;
 					case "positionablelabel" :
 						$widget['icon1'] = 		$(this).find('icon').attr('url');
 						var $rotation = 		$(this).find('icon').find('rotation').text();
@@ -146,6 +161,23 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						var $rotation = 		$(this).find('unknown').find('rotation').text();
 						$widget['degrees'] = 	($(this).find('unknown').attr('degrees') * 1) + ($rotation * 90);
 						$widget['scale'] = 		$(this).find('unknown').attr('scale');
+						if ($widget.forcecontroloff != "true") {
+							$widget.classes += 		$widget.element + " clickable ";
+						}
+						break;
+					case "signalheadicon" :
+						$widget['name']  =		$widget.signalhead; //normalize name
+						$widget['element']  =	"signalhead"; //what xmlio server calls this
+						$widget['icon' + DARK] 	=	$(this).find('icons').find('dark').attr('url');
+						$widget['icon' + RED] =  	$(this).find('icons').find('red').attr('url');
+						$widget['icon' + YELLOW] = $(this).find('icons').find('yellow').attr('url');
+						$widget['icon' + GREEN] =	$(this).find('icons').find('green').attr('url');
+						$widget['icon' + FLASHRED] =	$(this).find('icons').find('flashred').attr('url');
+						$widget['icon' + FLASHYELLOW] =	$(this).find('icons').find('flashyellow').attr('url');
+						$widget['icon' + FLASHGREEN] =	$(this).find('icons').find('flashgreen').attr('url');
+						var $rotation = 		$(this).find('icons').find('dark').find('rotation').text();
+						$widget['degrees'] = 	($(this).find('icons').find('dark').attr('degrees') * 1) + ($rotation * 90);
+						$widget['scale'] = 		$(this).find('icons').find('dark').attr('scale');
 						if ($widget.forcecontroloff != "true") {
 							$widget.classes += 		$widget.element + " clickable ";
 						}
@@ -767,15 +799,15 @@ var $getWidgetFamily = function($widget) {
 	case "turnouticon" :
 	case "sensoricon" :
 	case "multisensoricon" :
-//	case "signalheadicon" :
-//	case "signalmasticon" :
+	case "fastclock" :
+	case "signalheadicon" :
+	case "signalmasticon" :
 		return "icon";
 		break;
 	case "layoutturnout" :
 	case "tracksegment" :
 	case "positionablepoint" :
 	case "backgroundColor" :
-//	case "fastclock" :
 		return "drawn";
 		break;
 	};
