@@ -43,6 +43,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         
         // create our NodeID
         getOurNodeID();
+        
         // create JMRI objects
         InstanceManager.setSensorManager(
             getSensorManager());
@@ -50,6 +51,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         InstanceManager.setTurnoutManager(
             getTurnoutManager());
         
+        InstanceManager.setThrottleManager(
+            getThrottleManager());
+
         // do the connections
         tc = adapterMemo.getTrafficController();
         
@@ -91,6 +95,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     public boolean provides(Class<?> type) {
         if (adapterMemo.getDisabled())
             return false;
+        if (type.equals(jmri.ThrottleManager.class))
+            return true;
         if (type.equals(jmri.SensorManager.class))
             return true;
         if (type.equals(jmri.TurnoutManager.class))
@@ -105,6 +111,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return true;
         if (type.equals(MemoryConfigurationService.class))
             return true;
+        if (type.equals(DatagramService.class))
+            return true;
         if (type.equals(NodeID.class))
             return true;
         return false; // nothing, by default
@@ -114,6 +122,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     public <T> T get(Class<?> T) {
         if (adapterMemo.getDisabled())
             return null;
+        if (T.equals(jmri.ThrottleManager.class))
+            return (T)getThrottleManager();
         if (T.equals(jmri.SensorManager.class))
             return (T)getSensorManager();
         if (T.equals(jmri.TurnoutManager.class))
@@ -128,9 +138,21 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return (T)connection;
         if (T.equals(MemoryConfigurationService.class))
             return (T)mcs;
+        if (T.equals(DatagramService.class))
+            return (T)dcs;
         if (T.equals(NodeID.class))
             return (T)nodeID;
         return null; // nothing, by default
+    }
+    
+    protected OlcbThrottleManager throttleManager;
+    
+    public OlcbThrottleManager getThrottleManager() { 
+        if (adapterMemo.getDisabled())
+            return null;
+        if (throttleManager == null)
+            throttleManager = new OlcbThrottleManager(adapterMemo, this);
+        return throttleManager;
     }
     
     protected OlcbTurnoutManager turnoutManager;

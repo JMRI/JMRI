@@ -39,6 +39,8 @@ public class PackageTest extends TestCase {
         suite.addTest(OlcbSensorTest.suite());
         suite.addTest(OlcbTurnoutManagerTest.suite());
         suite.addTest(OlcbTurnoutTest.suite());
+        suite.addTest(OlcbThrottleTest.suite());
+        suite.addTest(OlcbThrottleManagerTest.suite());
 
         suite.addTest(jmri.jmrix.openlcb.swing.PackageTest.suite());
         
