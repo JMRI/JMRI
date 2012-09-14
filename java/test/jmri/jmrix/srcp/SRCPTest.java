@@ -34,9 +34,13 @@ public class SRCPTest extends TestCase {
         suite.addTest(new TestSuite(SRCPTrafficControllerTest.class));
         suite.addTest(new TestSuite(SRCPSystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(SRCPCommandStationTest.class));
+        suite.addTest(new TestSuite(SRCPTurnoutManagerTest.class));
         suite.addTest(new TestSuite(SRCPTurnoutTest.class));
+        suite.addTest(new TestSuite(SRCPSensorManagerTest.class));
         suite.addTest(new TestSuite(SRCPSensorTest.class));
+        suite.addTest(new TestSuite(SRCPThrottleManagerTest.class));
         suite.addTest(new TestSuite(SRCPThrottleTest.class));
+        suite.addTest(new TestSuite(SRCPPowerManagerTest.class));
         suite.addTest(jmri.jmrix.srcp.parser.SRCPClientParserTests.suite());
 
         return suite;
