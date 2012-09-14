@@ -36,8 +36,8 @@ public class DebugThrottle extends AbstractThrottle
         this.f10           = false;
         this.f11           = false;
         this.f12           = false;
-        this.address      = address;
         this.isForward    = true;
+
         this.address      = address;
     }
 
