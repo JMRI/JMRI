@@ -30,8 +30,10 @@ public class SRCPTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.srcp.SRCPTest");  // no tests in this class itself
         suite.addTest(new TestSuite(SRCPReplyTest.class));
+        suite.addTest(new TestSuite(SRCPMessageTest.class));
         suite.addTest(new TestSuite(SRCPTrafficControllerTest.class));
         suite.addTest(new TestSuite(SRCPSystemConnectionMemoTest.class));
+        suite.addTest(new TestSuite(SRCPCommandStationTest.class));
         suite.addTest(new TestSuite(SRCPTurnoutTest.class));
         suite.addTest(new TestSuite(SRCPSensorTest.class));
         suite.addTest(new TestSuite(SRCPThrottleTest.class));
