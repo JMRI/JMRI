@@ -29,6 +29,8 @@ abstract public class SerialLightManager extends AbstractLightManager {
      */
     public String getSystemPrefix() { return tc.getAdapterMemo().getSystemPrefix(); }
     
+    public boolean allowMultipleAdditions(String systemName) { return false;  }
+    
     /**
      * Method to create a new Light based on the system name
      * Returns null if the system name is not in a valid format

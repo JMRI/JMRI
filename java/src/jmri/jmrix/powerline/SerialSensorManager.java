@@ -77,21 +77,13 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
      */
     abstract public void reply(SerialReply r);
         
-    public boolean allowMultipleAdditions(String systemName) { return true;  }
+    public boolean allowMultipleAdditions(String systemName) { return false;  }
     
     public String getNextValidAddress(String curAddress, String prefix){
         
-        String tmpSName = "";
-        try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (jmri.JmriException ex) {
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
-            return null;
-        }
         //If the hardware address past does not already exist then this can
         //be considered the next valid address.
-        Sensor s = getBySystemName(tmpSName);
+        Sensor s = getBySystemName(prefix + typeLetter() + curAddress);
         if(s==null){
             return curAddress;
         }
