@@ -1794,7 +1794,7 @@ public class TrainBuilder extends TrainCommon{
 			return false;
 		}
 		if (departStageTrack.getNumberEngines()>0){
-			List<String> engs = engineManager.getByIdList();
+			List<String> engs = engineManager.getList();
 			for (int i=0; i<engs.size(); i++){
 				Engine eng = engineManager.getById(engs.get(i));
 				if (eng.getTrack() == departStageTrack){

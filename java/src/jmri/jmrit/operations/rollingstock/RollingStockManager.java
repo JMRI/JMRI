@@ -133,6 +133,19 @@ public class RollingStockManager {
     	firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_hashTable.size()));
     }
     
+    /**
+     * Returns a list (no order) of RollingStock ids.
+     * @return list of RollingStock
+     */
+    public List<String> getList() {
+    	Enumeration<String> en = _hashTable.keys();
+        List<String> out = new ArrayList<String>();     
+        while (en.hasMoreElements()) {
+            out.add( en.nextElement());
+        }
+        return out;
+    }
+    
    /**
      * Sort by rolling stock id
      * @return list of RollingStock ids ordered by id
@@ -318,51 +331,8 @@ public class RollingStockManager {
      * @return list of RollingStock ids ordered by RollingStock moves
      */
     public List<String> getByMovesList() {
-    	return getByIntList(getByIdList(), BY_MOVES);
+    	return getByIntList(getList(), BY_MOVES);
     }
-    /*
-    public List<String> getByMovesList() {
-    	// get random order of RollingStock ids
-    	Enumeration<String> en = _hashTable.keys();
-    	List<String> sortIn = new ArrayList<String>();
-        while (en.hasMoreElements()) {
-        	sortIn.add(en.nextElement());
-        }
-
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-    	int inMoves = 0;
-    	int outMoves = 0;
-     	boolean rsAdded = false;
-
-    	for (int i=0; i<sortIn.size(); i++){
-    		rsAdded = false;
-    		inMoves = getById (sortIn.get(i)).getMoves();
-    		int start = 0;
-    		// page to improve performance.
-      		int divisor = out.size()/pageSize;
-      		for (int k=divisor; k>0; k--){
-      			outMoves = getById(out.get((out.size()-1)*k/divisor)).getMoves();
-      			if (inMoves>=outMoves){
-      				start = (out.size()-1)*k/divisor;
-      				break;
-      			}
-      		}
-      		for (int j=start; j<out.size(); j++ ){
-					outMoves = getById(out.get(j)).getMoves();
-					if (inMoves < outMoves) {
-						out.add(j, sortIn.get(i));
-						rsAdded = true;
-						break;
-					}
-				}
-     		if (!rsAdded){
-    			out.add(sortIn.get(i));
-    		}
-    	}
-    	return out;
-    }
-    */
 
     /**
      * Sort by when rolling stock was built

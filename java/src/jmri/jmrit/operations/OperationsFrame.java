@@ -20,6 +20,7 @@ import jmri.UserPreferencesManager;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.com.sun.TableSorter;
+import jmri.util.swing.XTableColumnModel;
 
 
 /**
@@ -210,8 +211,26 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		} catch (Exception e) {
 			log.debug("table "+tableref+" doesn't use sorter");
 		} 
+		
+		// is the table using XTableColumnModel?  If so, there can be hidden columns.
+		if (sorter != null && sorter.getColumnCount() != table.getColumnCount()) {
+			log.debug("Sort column count: "+sorter.getColumnCount()+" table column count: "+table.getColumnCount()+" XTableColumnModel in use");
+			XTableColumnModel tcm = (XTableColumnModel) table.getColumnModel();
+			int j=0;
+			for (int i = 0; i <sorter.getColumnCount(); i++) {
+				int sortStatus = sorter.getSortingStatus(i);
+				int width = tcm.getColumnByModelIndex(i).getPreferredWidth();
+				boolean visible = tcm.isColumnVisible(tcm.getColumnByModelIndex(i));
+				p.setTableColumnPreferences(tableref, sorter.getColumnName(i), i, width, sortStatus, !visible);
+				log.debug("Column "+i+" table name: "+table.getColumnName(j)+", sorter name: "+sorter.getColumnName(i));
+				//if (!table.getColumnName(j).equals(sorter.getColumnName(i)))
+					//log.debug("Column "+i+" table name: "+table.getColumnName(j)+" sorter name: "+sorter.getColumnName(i));
+				if (visible)
+					j++;
+			}
+		} 
 
-		for (int i = 0; i <table.getColumnCount(); i++) {
+		else for (int i = 0; i <table.getColumnCount(); i++) {
 			int sortStatus = 0;
 			if (sorter != null)
 				sortStatus = sorter.getSortingStatus(i);

@@ -330,7 +330,7 @@ public class CarManager extends RollingStockManager{
      * @param newLoadName new load name
      */
 	public void replaceLoad(String type, String oldLoadName, String newLoadName){
-		List<String> cars = getByIdList();
+		List<String> cars = getList();
 		for (int i = 0; i < cars.size(); i++) {
 			Car car = getById(cars.get(i));
 			if (car.getType().equals(type) && car.getLoad().equals(oldLoadName))

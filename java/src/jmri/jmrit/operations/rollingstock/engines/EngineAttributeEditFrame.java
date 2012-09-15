@@ -239,7 +239,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 	}
 	
 	private void replaceItem (String oldItem, String newItem){
-		List<String> engines = manager.getByIdList();
+		List<String> engines = manager.getList();
 		for (int i=0; i<engines.size(); i++){
 			Engine engine = manager.getById(engines.get(i));
 			if(_comboboxName == EngineEditFrame.MODEL){

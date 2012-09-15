@@ -109,7 +109,7 @@ public class CarManagerXml extends OperationsXml {
 	        
 	        root.addContent(values = new Element("cars"));
 	        // add entries
-	        List<String> carList = manager.getByIdList();
+	        List<String> carList = manager.getList();
 	        for (int i=0; i<carList.size(); i++) {
 	        	Car c = manager.getById(carList.get(i));
 	        	c.setComment(convertToXmlComment(c.getComment()));
@@ -211,7 +211,7 @@ public class CarManagerXml extends OperationsXml {
 
             //Scan the object to check the Comment and Decoder Comment fields for
             //any <?p?> processor directives and change them to back \n characters
-            List<String> carList = manager.getByIdList();
+            List<String> carList = manager.getList();
             for (int i = 0; i < carList.size(); i++) {
                 //Get a RosterEntry object for this index
 	        	Car c = manager.getById(carList.get(i));

@@ -194,7 +194,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 		if (Setup.isCarLoggerEnabled() && !carLog){
 			log.debug("Rolling Stock Logger adding car listerners");
 			carLog = true;
-			List<String> cars = CarManager.instance().getByIdList();
+			List<String> cars = CarManager.instance().getList();
 			for (int i=0; i<cars.size(); i++){
 				Car car = CarManager.instance().getById(cars.get(i));
 				if (car != null)
@@ -209,7 +209,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 		if (Setup.isEngineLoggerEnabled() && !engLog){
 			engLog = true;
 			log.debug("Rolling Stock Logger adding engine listerners");
-			List<String>engines = EngineManager.instance().getByIdList();
+			List<String>engines = EngineManager.instance().getList();
 			for (int i=0; i<engines.size(); i++){
 				Engine engine = EngineManager.instance().getById(engines.get(i));
 				if (engine != null)
@@ -223,7 +223,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 	private void removeCarListeners(){
 		if (carLog){
 			log.debug("Rolling Stock Logger removing car listerners");
-			List<String> cars = CarManager.instance().getByIdList();
+			List<String> cars = CarManager.instance().getList();
 			for (int i=0; i<cars.size(); i++){
 				Car car = CarManager.instance().getById(cars.get(i));
 				if (car != null)
@@ -237,7 +237,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 	private void removeEngineListeners(){
 		if (engLog){
 			log.debug("Rolling Stock Logger removing engine listerners");
-			List<String> engines = EngineManager.instance().getByIdList();
+			List<String> engines = EngineManager.instance().getList();
 			for (int i=0; i<engines.size(); i++){
 				Engine engine = EngineManager.instance().getById(engines.get(i));
 				if (engine != null)
