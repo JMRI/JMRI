@@ -193,7 +193,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                         }
                         public void handleGroupPaneStart(JPanel pane) {
                             System.out.println("Start "+pane);
-                            this.pane = pane;
+                            this.gpane = pane;
                             evt1 = null;
                             evt2 = null;
                             desc = null;
@@ -201,7 +201,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                         }
                         public void handleGroupPaneEnd(JPanel pane) {
                             System.out.println("End   "+pane);
-                            if (pane!=null && evt1 != null && evt2 != null && desc != null) {
+                            if (gpane!=null && evt1 != null && evt2 != null && desc != null) {
                                 JPanel p = new JPanel();
                                 p.setLayout(new FlowLayout());
                                 p.setAlignmentX(-1.0f);
@@ -235,7 +235,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                                     JFormattedTextField mevt2 = evt2;                                    
                                 });
 
-                                pane = null;
+                                gpane = null;
                                 evt1 = null;
                                 evt2 = null;
                                 desc = null;
@@ -246,7 +246,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                             System.out.println("Evt  ");
                             if (evt1 == null) evt1 = field;
                             else if (evt2 == null) evt2 = field;
-                            else pane = null;  // flag too many
+                            else gpane = null;  // flag too many
                             return field;
                         }
                         public JTextField handleStringValue(JTextField value) {
@@ -254,7 +254,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                             desc = value;
                             return value;
                         }
-                        JPanel pane = null;
+                        JPanel gpane = null;
                         JTextField desc = null;
                         JFormattedTextField evt1 = null;
                         JFormattedTextField evt2 = null;

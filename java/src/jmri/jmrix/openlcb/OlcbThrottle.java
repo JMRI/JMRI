@@ -118,6 +118,190 @@ public class OlcbThrottle extends AbstractThrottle
             notifyPropertyChangeListener("IsForward", old, isForward );
     }
 
+    // functions - note that we use the naming for DCC, though that's not the implication;
+    // see also DccThrottle interface
+    public void setF0(boolean f0) {
+    	boolean old = this.f0;
+        this.f0 = f0;
+        doSetFunction(0, "F0", old, this.f0 );
+    }
+
+    public void setF1(boolean f1) {
+    	boolean old = this.f1;
+        this.f1 = f1;
+        doSetFunction(1, "F1", old, this.f1 );
+    }
+
+    public void setF2(boolean f2) {
+    	boolean old = this.f2;
+        this.f2 = f2;
+        doSetFunction(2, "F2", old, this.f2 );
+    }
+
+    public void setF3(boolean f3) {
+    	boolean old = this.f3;
+        this.f3 = f3;
+        doSetFunction(3, "F3", old, this.f3 );
+    }
+
+    public void setF4(boolean f4) {
+    	boolean old = this.f4;
+        this.f4 = f4;
+        doSetFunction(4,"F4", old, this.f4 );
+    }
+
+    public void setF5(boolean f5) {
+    	boolean old = this.f5;
+        this.f5 = f5;
+        doSetFunction(5, "F5", old, this.f5 );
+    }
+
+    public void setF6(boolean f6) {
+    	boolean old = this.f6;
+        this.f6 = f6;
+        doSetFunction(6, "F6", old, this.f6 );
+    }
+
+    public void setF7(boolean f7) {
+    	boolean old = this.f7;
+        this.f7 = f7;
+        doSetFunction(7, "F7", old, this.f7 );
+    }
+
+    public void setF8(boolean f8) {
+    	boolean old = this.f8;
+        this.f8 = f8;
+        doSetFunction(8, "F8", old, this.f8 );
+    }
+
+    public void setF9(boolean f9) {
+    	boolean old = this.f9;
+        this.f9 = f9;
+        doSetFunction(9, "F9", old, this.f9 );
+    }
+
+    public void setF10(boolean f10) {
+    	boolean old = this.f10;
+        this.f10 = f10;
+        doSetFunction(10, "F10", old, this.f10 );
+    }
+
+    public void setF11(boolean f11) {
+    	boolean old = this.f11;
+        this.f11 = f11;
+        doSetFunction(11, "F11", old, this.f11 );
+    }
+
+    public void setF12(boolean f12) {
+    	boolean old = this.f12;
+        this.f12 = f12;
+        doSetFunction(12, "F12", old, this.f12 );
+    }
+    
+    public void setF13(boolean f13) {
+    	boolean old = this.f13;
+        this.f13 = f13;
+        doSetFunction(13, "F13", old, this.f13 );
+    }
+    
+    public void setF14(boolean f14) {
+    	boolean old = this.f14;
+        this.f14 = f14;
+        doSetFunction(14, "F14", old, this.f14 );
+    }
+    
+    public void setF15(boolean f15) {
+    	boolean old = this.f15;
+        this.f15 = f15;
+        doSetFunction(15, "F15", old, this.f15 );
+    }
+    
+    public void setF16(boolean f16) {
+    	boolean old = this.f16;
+        this.f16 = f16;
+        doSetFunction(16, "F16", old, this.f16 );
+    }
+    
+    public void setF17(boolean f17) {
+    	boolean old = this.f17;
+        this.f17 = f17;
+        doSetFunction(17, "F17", old, this.f17 );
+    }
+    
+    public void setF18(boolean f18) {
+    	boolean old = this.f18;
+        this.f18 = f18;
+        doSetFunction(18, "F18", old, this.f18 );
+    }
+    
+    public void setF19(boolean f19) {
+    	boolean old = this.f19;
+        this.f19 = f19;
+        doSetFunction(19, "F19", old, this.f19 );
+    }
+    
+    public void setF20(boolean f20) {
+    	boolean old = this.f20;
+        this.f20 = f20;
+        doSetFunction(20, "F20", old, this.f20 );
+    }
+    
+    public void setF21(boolean f21) {
+    	boolean old = this.f21;
+        this.f21 = f21;
+        doSetFunction(21, "F21", old, this.f21 );
+    }
+    
+    public void setF22(boolean f22) {
+    	boolean old = this.f22;
+        this.f22 = f22;
+        doSetFunction(22, "F22", old, this.f22 );
+    }
+    
+    public void setF23(boolean f23) {
+    	boolean old = this.f23;
+        this.f23 = f23;
+        doSetFunction(23, "F23", old, this.f23 );
+    }
+    
+    public void setF24(boolean f24) {
+    	boolean old = this.f24;
+        this.f24 = f24;
+        doSetFunction(24, "F24", old, this.f24 );
+    }
+    
+    public void setF25(boolean f25) {
+    	boolean old = this.f25;
+        this.f25 = f25;
+        doSetFunction(25, "F25", old, this.f25 );
+    }
+    
+    public void setF26(boolean f26) {
+    	boolean old = this.f26;
+        this.f26 = f26;
+        doSetFunction(26, "F26", old, this.f26 );
+    }
+    
+    public void setF27(boolean f27) {
+    	boolean old = this.f27;
+        this.f27 = f27;
+        doSetFunction(27, "F27", old, this.f27 );
+    }
+    
+    public void setF28(boolean f28) {
+    	boolean old = this.f28;
+        this.f28 = f28;
+        doSetFunction(28, "F28", old, this.f28 );
+    }
+
+    protected void doSetFunction(int n, String name, boolean oldValue, boolean newValue) {
+        // send to OpenLCB
+        oti.setFunction(n, (newValue ? 1 : 0));
+        
+        if (oldValue != newValue)
+        	notifyPropertyChangeListener(name, oldValue, newValue );
+    }
+    
     protected void throttleDispose(){
         log.debug("throttleDispose() called");
         finishRecord();
