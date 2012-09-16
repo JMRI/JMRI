@@ -1618,6 +1618,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                                           _throttleCommands, _runBlind.isSelected());
         }
         if (msg!=null) {
+        	_warrant.deAllocate();
             JOptionPane.showMessageDialog(this, msg,
                                 rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             // learnThrottle will be disposed by _warrant.setRunMode(Warrant.MODE_NONE, null, null, null);
@@ -1627,8 +1628,11 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     }
 
     protected void stopRunTrain() {
-        _warrant.setRunMode(Warrant.MODE_NONE, null, null, null, false);
+        String msg = _warrant.setRunMode(Warrant.MODE_NONE, null, null, null, false);
         _warrant.removePropertyChangeListener(this);
+        if (msg!=null) {
+        	_warrant.deAllocate();
+        }
         if (_learnThrottle!=null) {
             _learnThrottle.dispose();
             _learnThrottle = null;

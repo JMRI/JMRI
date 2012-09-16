@@ -25,6 +25,7 @@ import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.operations.trains.TrainIcon;
 import jmri.jmrit.picker.PickListModel;
+import jmri.jmrit.display.controlPanelEditor.shape.PositionableShape;
 
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.util.JmriJFrame;
@@ -988,7 +989,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     * Add a checkbox to set visibility of the Positionable item
     */
     public void setHiddenMenu(Positionable p, JPopupMenu popup) {
-        if (p.getDisplayLevel() == BKG) {
+        if (p.getDisplayLevel() == BKG || p instanceof PositionableShape) {
             return;
         }
         JCheckBoxMenuItem hideItem = new JCheckBoxMenuItem(rb.getString("SetHidden"));
@@ -1240,6 +1241,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (!_contents.add(l)) {
             log.error("Unable to add "+l.getNameString()+" to _contents");
         }
+        Component[] comps = _targetPanel.getComponentsInLayer(Editor.MARKERS);
         if (_debug) log.debug("putItem "+l.getNameString()+" to _contents. level= "+l.getDisplayLevel());
     }
     
@@ -2237,6 +2239,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         ArrayList <Positionable> selections = new ArrayList <Positionable>();
         for (int i=0; i<_contents.size(); i++) {
             Positionable p = _contents.get(i);
+            if (p instanceof PositionableShape && !event.isShiftDown()) {
+            	continue;
+            }
             rect= p.getBounds(rect);
             //if (_debug && !_dragging) log.debug("getSelectedItems: rect= ("+rect.x+","+rect.y+
             //                      ") width= "+rect.width+", height= "+rect.height+
@@ -2277,6 +2282,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (event.isShiftDown()) {
             for (int i=0; i < list.size(); i++) {
                 Positionable comp = list.get(i);
+                if (comp instanceof PositionableShape && !event.isShiftDown()) {
+                	continue;
+                }
                 if (_selectRect.intersects(comp.getBounds(test)) && 
                                 (event.isControlDown() || comp.getDisplayLevel()>BKG)) {
                     _selectionGroup.add(comp);
@@ -2289,6 +2297,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         } else {
             for (int i=0; i < list.size(); i++) {
                 Positionable comp = list.get(i);
+                if (comp instanceof PositionableShape && !event.isShiftDown()) {
+                	continue;
+                }
                 if (_selectRect.contains(comp.getBounds(test)) && 
                                 (event.isControlDown() || comp.getDisplayLevel()>BKG)) {
                     _selectionGroup.add(comp);
@@ -2321,7 +2332,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             if (_selectionGroup.contains(selection)) {
                 removed = _selectionGroup.remove(selection);
             } else {
-                _selectionGroup.add(selection);
+                if (event.isShiftDown() || !(selection instanceof PositionableShape)) {
+                    _selectionGroup.add(selection);
+                }
             }
         }
         if (_debug) {
@@ -2556,6 +2569,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 comp.setLocation(comp.getX(), ave);
             }
         }
+    }
+    
+    public Rectangle getSelectRect() {
+    	return _selectRect;
     }
 
     public void drawSelectRect(int x, int y) {

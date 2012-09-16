@@ -43,7 +43,10 @@
   
 <!-- map speed names to ratios used in throttle settings                            -->
 <!-- speed names may be put into aspect.xml files to indicate speed for the aspect  -->
-<!-- These speeds are emforced at the entrance to a block                           -->
+<!-- Each speed name is a "speed notch" and additional notch names can be added -   -->
+<!-- however the names must match those in the "appearanceSpeeds" table below for   -->
+<!-- signal Heads and those used in "aspects.xml" file for Signal Masts.            -->
+<!-- These speeds are enforced at the entrance to a block                           -->
   <aspectSpeeds>
     <Maximum>125</Maximum>
     <Normal>100</Normal>
@@ -55,9 +58,9 @@
   </aspectSpeeds>
 
 <!-- speeds associated with SignalHead appearances for heads NOT used in SignalMasts  -->
-<!-- Appearance names aree those listed in jmri.implementation.DefaultSignalHead      -->
+<!-- Appearance names are those listed in jmri.implementation.DefaultSignalHead       -->
 <!-- speed names must agree with the names in the above "speeds" elements             --> 
-<!-- These speeds are emforced at the entrance to a block                             -->
+<!-- These speeds are enforced at the entrance to a block                             -->
   <appearanceSpeeds>
     <SignalHeadStateRed>Stop</SignalHeadStateRed>
     <SignalHeadStateFlashingRed>Restricted</SignalHeadStateFlashingRed>

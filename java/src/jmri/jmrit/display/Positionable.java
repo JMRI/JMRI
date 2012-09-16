@@ -128,6 +128,7 @@ public interface Positionable extends Cloneable  {
     */
     public PositionablePopupUtil getPopupUtility();
     public void setPopupUtility(PositionablePopupUtil tu);
+    public jmri.NamedBean getNamedBean();
 
     // Mouse-handling events.  See
     // Editor class for more information on how these are used.
@@ -163,5 +164,4 @@ public interface Positionable extends Cloneable  {
     public java.awt.Dimension getPreferredSize();
     public void invalidate();
     public void repaint();
-    public jmri.NamedBean getNamedBean();
 }

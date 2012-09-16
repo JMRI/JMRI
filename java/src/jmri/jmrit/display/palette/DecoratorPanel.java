@@ -315,7 +315,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     
     private JPanel makeTextPanel(String caption, JLabel sample, int state) {
     	JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createTitledBorder(caption));
+        panel.setBorder(BorderFactory.createTitledBorder(ItemPalette.rbp.getString(caption)));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
         JTextField textField = new JTextField(sample.getText(), 25);
@@ -342,6 +342,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
        
     	return panel;
     }
+    
     private AJRadioButton makeButton(AJRadioButton button) {
         button.addActionListener(new ActionListener() {
         	AJRadioButton button ;

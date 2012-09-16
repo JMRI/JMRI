@@ -932,6 +932,9 @@ public class WarrantTableAction extends AbstractAction {
                             } 
                         }
                         msg = w.runAutoTrain(true);
+                        if (msg!=null) {
+                        	w.deAllocate();
+                        }
                         if (log.isDebugEnabled()) log.debug("w.runAutoTrain= "+msg);
                     } else {
                         msg = java.text.MessageFormat.format(
@@ -968,6 +971,9 @@ public class WarrantTableAction extends AbstractAction {
                             } 
                         }
                         msg = w.runAutoTrain(false);
+                        if (msg!=null) {
+                        	w.deAllocate();
+                        }
                         if (log.isDebugEnabled()) log.debug("w.runManualTrain= "+msg);
                     } else {
                         msg = java.text.MessageFormat.format(

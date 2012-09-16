@@ -499,8 +499,7 @@ public class CoordinateEdit extends JmriJFrame {
 	}
 
     public void initRotate() {
-        PositionableLabel pLabel = (PositionableLabel)pl;
-        oldX = pLabel.getDegrees();
+        oldX = pl.getDegrees();
 
         textX = new javax.swing.JLabel();
         int deg = oldX;
