@@ -57,7 +57,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     JTextField srcAliasField = new JTextField(4);
     NodeSelector nodeSelector;
     JTextField sendEventField = new JTextField("02 03 04 05 06 07 00 01 ");
-    JTextField dstAliasField = new JTextField(4);
     JTextField datagramContentsField = new JTextField("20 61 00 00 00 00 08");
     JTextField configNumberField = new JTextField("40");
     JTextField configAddressField = new JTextField("000000");
@@ -164,8 +163,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.setLayout(new FlowLayout());
         pane2.add(new JLabel("Src Node alias:"));
         pane2.add(srcAliasField);
-        pane2.add(new JLabel("Dest Node alias: "));
-        pane2.add(dstAliasField);
         add(pane2);
         
         pane2 = new JPanel();
@@ -184,28 +181,28 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         
         // send OpenLCB messages
         add(new JSeparator());
-        add(new JLabel("Send OpenLCB message:"));
-
+        add(addLineLabel("Send OpenLCB global message:"));
+        
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
         add(pane2);
-        b = new JButton("Send Verify Nodes");
+        b = new JButton("Send Verify Nodes Global");
         b.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
-                        sendVerifyNode(e);
+                        sendVerifyNodeGlobal(e);
                     }
                 });
         pane2.add(b); 
-        b = new JButton("Send Request Events");
+        b = new JButton("Send Verify Node Global with NodeID");
         b.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
-                        sendRequestEvents(e);
+                        sendVerifyNodeGlobalID(e);
                     }
                 });
         pane2.add(b); 
-        pane2.add(new JLabel("Node: "));
-        pane2.add(nodeSelector);
 
+        add(new JSeparator());
+        add(addLineLabel("Send OpenLCB event message:"));
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
         add(pane2);
@@ -233,6 +230,19 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.add(new JLabel("Event ID (8 bytes):"));
         pane2.add(sendEventField);
 
+        add(new JSeparator());
+        add(addLineLabel("Send OpenLCB addressed message to:", nodeSelector));
+        pane2 = new JPanel();
+        pane2.setLayout(new FlowLayout());
+        add(pane2);
+        b = new JButton("Send Request Events");
+        b.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        sendRequestEvents(e);
+                    }
+                });
+        pane2.add(b); 
+
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
         add(pane2);
@@ -255,7 +265,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         
         // send OpenLCB Configuration message
         add(new JSeparator());
-        add(new JLabel("Send OpenLCB Configuration Command:"));
+        add(addLineLabel("Send OpenLCB Configuration Command:"));
 
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
@@ -312,6 +322,27 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         return "Send CAN Frames and OpenLCB Messages";
     }
     
+    JComponent addLineLabel(String text) {
+        return addLineLabel(text, null);
+    }
+    JComponent addLineLabel(String text, JComponent c) {
+        JLabel lab = new JLabel(text);
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+        if (c!=null) {
+            //JPanel p2 = new JPanel();
+            //p2.setLayout(new FlowLayout());
+            p.add(lab);
+            p.add(c);
+            //p.add(p2);
+        } else {
+            p.add(lab);
+        }
+        p.add(Box.createHorizontalGlue());
+        //lab.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        return p;
+    }
+    
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         CanMessage m = createPacket(packetTextField.getText());
         log.debug("sendButtonActionPerformed: "+m);
@@ -334,7 +365,12 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         return new EventID(jmri.util.StringUtil.bytesFromHexString(sendEventField.getText()));
     }
 
-    public void sendVerifyNode(java.awt.event.ActionEvent e) {
+    public void sendVerifyNodeGlobal(java.awt.event.ActionEvent e) {
+        Message m  = new VerifyNodeIDNumberMessage(srcNodeID);
+        connection.put(m, null);
+    }
+
+    public void sendVerifyNodeGlobalID(java.awt.event.ActionEvent e) {
         Message m  = new VerifyNodeIDNumberMessage(srcNodeID, destNodeID());
         connection.put(m, null);
     }
