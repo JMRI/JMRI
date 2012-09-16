@@ -335,7 +335,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     public void sendVerifyNode(java.awt.event.ActionEvent e) {
-        Message m  = new VerifyNodeIDNumberMessage(srcNodeID);
+        Message m  = new VerifyNodeIDNumberMessage(srcNodeID, destNodeID());
         connection.put(m, null);
     }
 
