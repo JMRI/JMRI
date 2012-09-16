@@ -1844,6 +1844,10 @@ public class TrainBuilder extends TrainCommon{
 			for (int i=0; i<cars.size(); i++){
 				Car car = carManager.getById(cars.get(i));
 				if (car.getTrack() == departStageTrack){
+					// ignore non-lead cars in kernels
+					if (car.getKernel() != null && !car.getKernel().isLead(car)){
+						continue; // ignore non-lead cars
+					}
 					// has car been assigned to another train?
 					if (car.getRouteLocation() != null){
 						log.debug("Car "+car.toString()+" has route location "+car.getRouteLocation().getName());
