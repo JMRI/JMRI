@@ -3,8 +3,11 @@ package jmri.web.servlet.panel;
 import java.awt.Color;
 import java.util.List;
 
+import jmri.InstanceManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 import org.jdom.Document;
@@ -32,7 +35,6 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         }
         try {
             LayoutEditor editor = (LayoutEditor) getEditor(name);
-
             Element panel = new Element("panel");
 
             panel.setAttribute("name", name);
@@ -92,6 +94,41 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
     				}
     			}
             }				
+
+    		// include LayoutBlocks
+            LayoutBlockManager tm = InstanceManager.layoutBlockManagerInstance();
+            java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
+            num = 0;
+            while (iter.hasNext()) {
+                String sname = iter.next();
+                if (sname==null) log.error("System name null during LayoutBlock store");
+                LayoutBlock b = tm.getBySystemName(sname);
+                if (b.getUseCount()>0) {
+                    // save only those LayoutBlocks that are in use--skip abandoned ones
+                    Element elem = new Element("layoutblock").setAttribute("systemname", sname);
+                    if (b.getUserName() != "") {
+                        elem.setAttribute("username", b.getUserName());
+                    }
+                    if (b.getOccupancySensorName() != "") {
+                        elem.setAttribute("occupancysensor", b.getOccupancySensorName());
+                    }
+                    elem.setAttribute("occupiedsense", ""+b.getOccupiedSense());
+                    elem.setAttribute("trackcolor", LayoutBlock.colorToString(b.getBlockTrackColor()));
+                    elem.setAttribute("occupiedcolor", LayoutBlock.colorToString(b.getBlockOccupiedColor()));
+                    elem.setAttribute("extracolor", LayoutBlock.colorToString(b.getBlockExtraColor()));
+                    if (b.getMemoryName() != "") {
+                        elem.setAttribute("memory", b.getMemoryName());
+                    }
+                    if(!b.useDefaultMetric()){
+                        elem.addContent(new Element("metric").addContent(""+b.getBlockMetric()));
+                    }
+                    //add to the panel xml
+                    if (elem!=null) panel.addContent(elem);
+                    num++;
+                }
+    		}
+            if (log.isDebugEnabled()) log.debug("N layoutblock elements: "+num);
+
 
     		// include LayoutTurnouts
     		num = editor.turnoutList.size();
@@ -165,6 +202,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
     			}
             }		
 
+            //write out formatted document
             Document doc = new Document(panel);
             XMLOutputter out = new XMLOutputter(Format.getPrettyFormat());
 

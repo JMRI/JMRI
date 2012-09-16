@@ -15,7 +15,7 @@ body {
   border: solid 1px lightGray;
   margin: -1px;
 }
-.hidden {
+.positionablelabel.hidden {
   display: none;
 }
 .locoicon {

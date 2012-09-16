@@ -14,21 +14,23 @@
  *  		3) receive change? set related widget states and go back to 2)
  *  		4) browser user clicks on widget? send "set state" command and go to 3)
  *  		5) error? go back to 2) 
+ *  TODO: handle multisensors, other widgets correctly
+ *  TODO: move occupiedsensor state to widget from block, to allow skipping of unchanged
+ *  TODO: handle dashed track
+ *  TODO: if no elements found, don't send list to xmlio server (prevent looping)
+ *  TODO: handle drawn ellipse, levelxing (for LMRC APB)
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
  *  TODO: add error message and stop heartbeat on change failure, add retry button
- *  TODO: handle more exotic layoutturnouts, such as crossovers
- *  TODO: handle main vs. side vs. dashed track
- *  TODO: address color differences between java panel and javascript panel (e.g. darkGray)
- *  TODO: handle drawn ellipse
+ *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
  *  TODO: determine proper level (z-index) for canvas layer
- *  TODO: handle multisensors, other widgets correctly
- *  TODO: fix getNextState() to handle multi-state widgets (like signalheads)
+ *  TODO: fix getNextState() to handle clicking multi-state widgets (like signalheads)
  *  TODO: diagnose and correct the small position issues visible with footscray
- *  TODO: figure out what "hidden=yes" is supposed to do
  *  TODO: verify that assuming same rotation and scale for all icons in a "set" is OK
  *  TODO: deal with mouseleave, mouseout, touchout, etc.
- *  TODO: if no elements found, don't send list to xmlio server
  *  TODO: remove duplicates from list before sending
+ *  TODO: handle really exotic layoutturnouts, such as double-crossovers
+ *  TODO: handle turnoutdrawunselectedleg = "yes"
+ *  TODO: store all tracksegments (mainline) before main loop (cross-dependencies, turnout to tracksegment) 
  *   
  **********************************************************************************************/
 
@@ -37,6 +39,7 @@ var $gTimeout = 120; //timeout in seconds
 var $gWidgets = {};  //array of all widget objects, key=CSSId
 var $gPanel = {}; 	//store overall panel info
 var $gPts = {}; 	//array of all points, key="pointname.pointtype" (used for layoutEditor panels)
+var $gBlks = {}; 	//array of all blocks, key="pointname.pointtype" (used for layoutEditor panels)
 var $gXHRList;  	//persistent variable to allow aborting of superseded "list" connections
 var $gXHRChg;	  	//persistent variable to allow aborting of superseded "change" connections
 var $gCtx;  //persistent context of canvas layer   
@@ -54,7 +57,8 @@ var PT_CEN = ".1";  //named constants for point types
 var PT_A = ".2";
 var PT_B = ".3";
 var PT_C = ".4";
-var DARK        = 0x00;
+var PT_D = ".5";
+var DARK        = 0x00;  //named constants for signalhead states
 var RED         = 0x01;
 var FLASHRED    = 0x02;
 var YELLOW      = 0x04;
@@ -63,6 +67,14 @@ var GREEN       = 0x10;
 var FLASHGREEN  = 0x20;
 var LUNAR       = 0x40;
 var FLASHLUNAR  = 0x80;
+var RH_TURNOUT = 1; //named constants for turnout types
+var LH_TURNOUT = 2;
+var WYE_TURNOUT = 3;
+var DOUBLE_XOVER = 4;
+var RH_XOVER = 5;
+var LH_XOVER = 6;
+var SINGLE_SLIP = 7;
+var DOUBLE_SLIP = 8;
 
 //process the response returned for the requestPanelXML command
 var $processPanelXML = function($returnedData, $success, $xhr) {
@@ -80,7 +92,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 	$('div#panelArea').width($gPanel.width);
 	$('div#panelArea').height($gPanel.height);
 	
-	//insert the canvas layer and set up context used by layouteditor "drawn" objects 
+	//insert the canvas layer and set up context used by layouteditor "drawn" objects, set some defaults 
 	if ($gPanel.paneltype == "LayoutPanel") {
 		$('div#panelArea').before("<canvas id='panelCanvas' width=" + $gPanel.width + "px height=" + 
 				$gPanel.height +"px style='position:absolute;z-index:2;'>");
@@ -120,7 +132,10 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 				}
 				$widget['classes'] = $widget.widgetType + " " + $widget.widgetFamily + " rotatable " + $jc;
 				if ($widget.momentary == "true") {
-					$widget.classes += "momentary ";
+					$widget.classes += " momentary ";
+				}
+				if ($widget.hidden == "yes") {
+					$widget.classes += " hidden ";
 				}
 				//set additional values in this widget
 				switch ($widget.widgetFamily) {
@@ -266,6 +281,15 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						//just store these points in persistent variable for use when drawing tracksegments and layoutturnouts
 						//id is ident plus ".type", e.g. "A4.2"
 						$gPts[$widget.ident+"."+$widget.type] = $widget;
+						if ($widget.ident.substring(0,2) == "EB") {  //End bumpers use wrong type, so also store type 1
+							$gPts[$widget.ident+".1"] = $widget;
+						}
+						break;
+					case "layoutblock" :
+						$widget['state'] = UNKNOWN;  //add a state member for this block
+						//store these blocks in a persistent var
+						//id is username
+						$gBlks[$widget.username] = $widget;
 						break;
 					case "layoutturnout" :
 						$widget['name']  =		$widget.turnoutname; //normalize name
@@ -274,24 +298,14 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$widget['x']  		=	$widget.xcen; //normalize x,y 
 						$widget['y']  		=	$widget.ycen;
 						$widget.classes 	+= 	$widget.element + " clickable ";
+						//set widget occupancysensor from block to speed affected changes later
+						if ($gBlks[$widget.blockname] != undefined) {
+							$widget['occupancysensor'] = $gBlks[$widget.blockname].occupancysensor; 
+						}
 						//store widget in persistent array
 						$gWidgets[$widget.id] = $widget; 
 						//also store the turnout's 3 end points for other connections
-						var $t = [];
-						$t['ident'] = $widget.ident +PT_B;  //store B endpoint
-						$t['x'] = $widget.xb * 1.0;
-						$t['y'] = $widget.yb * 1.0;
-						$gPts[$t.ident] = $t;
-						var $t = [];
-						$t['ident'] = $widget.ident +PT_C;  //store C endpoint
-						$t['x'] = $widget.xc * 1.0;
-						$t['y'] = $widget.yc * 1.0;
-						$gPts[$t.ident] = $t;
-						var $t = [];
-						$t['ident'] = $widget.ident +PT_A;  //calculate and store A endpoint (mirror of B)
-						$t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
-						$t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
-						$gPts[$t.ident] = $t;
+						$storeTurnoutPoints($widget);  
 						//draw the turnout
 						$drawTurnout($widget);  
 						//add an empty, but clickable, div to the panel and position it over the turnout circle
@@ -304,23 +318,15 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 									width:$cd+'px', height:$cd+'px'});
 						break;
 					case "tracksegment" :
-						var $pt1 = $gPts[$widget.connect1name+"."+$widget.type1];
-						if ($pt1 == undefined) break;
-						var $pt2 = $gPts[$widget.connect2name+"."+$widget.type2];
-						if ($pt2 == undefined) break;
-						if ($widget.angle == undefined) {
-							//draw straight line between the points
-							$drawLine($pt1.x, $pt1.y, $pt2.x, $pt2.y)
-						} else {
-							//draw curved line 
-							$gCtx.beginPath();
-							if ($widget.flip == "yes") {
-								$drawArc($pt2.x, $pt2.y, $pt1.x, $pt1.y, $widget.angle)
-							} else {
-								$drawArc($pt1.x, $pt1.y, $pt2.x, $pt2.y, $widget.angle)
-							}
-							$gCtx.stroke();
+						//set widget occupancysensor from block to speed affected changes later
+						if ($gBlks[$widget.blockname] != undefined) {
+							$widget['occupancysensor'] = $gBlks[$widget.blockname].occupancysensor; 
 						}
+						//store this widget in persistent array, with ident as key
+						$widget['id'] = $widget.ident; 
+						$gWidgets[$widget.id] = $widget;
+						//draw the tracksegment
+						$drawTrackSegment($widget);
 						break;
 					case "backgroundColor" :  //set background color of the panel itself
 						$('div#panelArea').css({"background-color" : "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ")"});
@@ -374,12 +380,12 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 
 };    	
 
-//draw a Circle
-function $drawCircle($ptx, $pty, $radius, $color) {
-	var $savLineWidth = $gCtx.lineWidth;
+//draw a Circle (color and width are optional)
+function $drawCircle($ptx, $pty, $radius, $color, $width) {
 	var $savStrokeStyle = $gCtx.strokeStyle;
-	$gCtx.lineWidth = 1; //very thin
+	var $savLineWidth = $gCtx.lineWidth;
 	if ($color != undefined)  $gCtx.strokeStyle = $color;
+	if ($width != undefined)  $gCtx.lineWidth = $width;
 	$gCtx.beginPath();
 	$gCtx.arc($ptx, $pty, $radius, 0, 2*Math.PI, false);
 	$gCtx.stroke();
@@ -388,53 +394,200 @@ function $drawCircle($ptx, $pty, $radius, $color) {
 	$gCtx.strokeStyle = $savStrokeStyle;    
 };
 
+//draw a Tracksegment (pass in widget)
+function $drawTrackSegment($widget) {
+	//get the endpoints by name
+	var $pt1 = $gPts[$widget.connect1name+"."+$widget.type1];
+	if ($pt1 == undefined) {
+		if (window.console) console.log("can't draw tracksegment "+$widget.connect1name+"."+$widget.type1+" undefined (1)");
+		return;
+	}
+	var $pt2 = $gPts[$widget.connect2name+"."+$widget.type2];
+	if ($pt2 == undefined) {
+		if (window.console) console.log("can't draw tracksegment "+$widget.connect2name+"."+$widget.type2+" undefined (2)");
+		return;
+	}
+	
+	//	set trackcolor based on block occupancy state
+	var $color = $gPanel.defaulttrackcolor;
+	var $blk = $gBlks[$widget.blockname];
+	if ($blk != undefined) {
+		if ($blk.occupiedsense == $blk.state) { //set the color based on occupancy state
+			$color = $blk.occupiedcolor;
+		} else {
+			$color = $blk.trackcolor;
+		}
+	}
+
+	var $width = $gPanel.sidetrackwidth;
+	if ($widget.mainline == "yes") {
+		$width = $gPanel.mainlinetrackwidth;
+	}
+	if ($widget.angle == undefined) {
+		//draw straight line between the points
+		$drawLine($pt1.x, $pt1.y, $pt2.x, $pt2.y, $color, $width);
+	} else {
+		//draw curved line 
+		if ($widget.flip == "yes") {
+			$drawArc($pt2.x, $pt2.y, $pt1.x, $pt1.y, $widget.angle, $color, $width);
+		} else {
+			$drawArc($pt1.x, $pt1.y, $pt2.x, $pt2.y, $widget.angle, $color, $width);
+		}
+	}
+
+};
+
 //draw a Turnout (pass in widget)
 function $drawTurnout($widget) {
-	if ($gPanel.turnoutcircles == "yes") {
-		$drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $gPanel.turnoutcirclecolor);
-	}
-	$drawLine($gPts[$widget.ident+PT_A].x, $gPts[$widget.ident+PT_A].y, $widget.xcen, $widget.ycen); //A to center (incoming)
-
-	//draw both legs background color, to "erase" old setting
-	$drawLine($widget.xcen, $widget.ycen, $gPts[$widget.ident+PT_B].x, $gPts[$widget.ident+PT_B].y, $gPanel.backgroundcolor); //center to B (straight leg)
-	$drawLine($widget.xcen, $widget.ycen, $gPts[$widget.ident+PT_C].x, $gPts[$widget.ident+PT_C].y, $gPanel.backgroundcolor); //center to C (diverging leg)
-
-	//if closed or thrown, draw the selected leg in the default track color
-	if ($widget.state == CLOSED || $widget.state == THROWN) {
-		if ($widget.state == $widget.continuing) {
-			$drawLine($widget.xcen, $widget.ycen, $gPts[$widget.ident+PT_B].x, $gPts[$widget.ident+PT_B].y); //center to B (straight leg)
-		} else {
-			$drawLine($widget.xcen, $widget.ycen, $gPts[$widget.ident+PT_C].x, $gPts[$widget.ident+PT_C].y); //center to C (diverging leg)
+	var $width = $gPanel.sidetrackwidth;
+	 //set turnout width same as the A track
+	if ($gWidgets[$widget.connectaname] !=undefined) {
+		if ($gWidgets[$widget.connectaname].mainline == "yes") {
+			$width = $gPanel.mainlinetrackwidth; 
 		}
+	} else {
+//		if (window.console) console.log("could not get trackwidth of "+$widget.connectaname+" for "+$widget.name);
+	}
+	if ($gPanel.turnoutcircles == "yes") {
+		$drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $gPanel.turnoutcirclecolor, 1);
+	}
+	var cenx = $widget.xcen;
+	var ceny = $widget.ycen
+	var ax = $gPts[$widget.ident+PT_A].x;
+	var ay = $gPts[$widget.ident+PT_A].y;
+	var bx = $gPts[$widget.ident+PT_B].x;
+	var by = $gPts[$widget.ident+PT_B].y;
+	var abx = ax+((bx-ax)*0.5); // midpoint AB
+	var aby = ay+((by-ay)*0.5);
+	var cx = $gPts[$widget.ident+PT_C].x;
+	var cy = $gPts[$widget.ident+PT_C].y;
+	var dx, dy, dcx, dcy;
+	if ($gPts[$widget.ident+PT_D] != undefined) {
+		dx = $gPts[$widget.ident+PT_D].x;
+		dy = $gPts[$widget.ident+PT_D].y;
+		dcx = dx+((cx-dx)*0.5); // midpoint DC
+		dcy = dy+((cy-dy)*0.5);
+	}
+	var erase = $gPanel.backgroundcolor;
+	
+	//	set trackcolor based on block occupancy state
+	var $color = $gPanel.defaulttrackcolor;
+	var $blk = $gBlks[$widget.blockname];
+	if ($blk != undefined) {
+		if ($blk.occupiedsense == $blk.state) { //set the color based on occupancy state
+			$color = $blk.occupiedcolor;
+		} else {
+			$color = $blk.trackcolor;
+		}
+	}
+
+	//turnout A--B
+	//         \-C
+	if ($widget.type==LH_TURNOUT||$widget.type==RH_TURNOUT||$widget.type==WYE_TURNOUT) {
+		$drawLine(ax, ay, cenx, ceny, $color, $width); //A to center (incoming)
+		$drawLine(cenx, ceny, bx, by, erase, $width); //erase center to B (straight leg)
+		$drawLine(cenx, ceny, cx, cy, erase, $width); //erase center to C (diverging leg)
+		//if closed or thrown, draw the selected leg in the default track color
+		if ($widget.state == CLOSED || $widget.state == THROWN) {
+			if ($widget.state == $widget.continuing) {
+				$drawLine(cenx, ceny, bx, by, $color, $width); //center to B (straight leg)
+			} else {
+				$drawLine(cenx, ceny, cx, cy, $color, $width); //center to C (diverging leg)
+			}
+		}
+	// xover A--B
+	//       D--C
+	} else if ($widget.type==LH_XOVER||$widget.type==RH_XOVER) {
+		if ($widget.state == CLOSED || $widget.state == THROWN) {
+			$drawLine(ax, ay, bx, by, erase, $width); //erase A to B
+			$drawLine(dx, dy, cx, cy, erase, $width); //erase D to C
+			$drawLine(abx, aby, dcx, dcy, erase, $width); //erase midAB to midDC
+			$drawLine(abx, aby, dcx, dcy, erase, $width); //erase midAB to midDC
+			if ($widget.state == $widget.continuing) {
+				$drawLine(ax, ay, bx, by, $color, $width); //A to B
+				$drawLine(dx, dy, cx, cy, $color, $width); //D to C
+			} else {
+				if ($widget.type==RH_XOVER) {
+					$drawLine(ax, ay, abx, aby, $color, $width); //A to midAB
+					$drawLine(abx, aby, dcx, dcy, $color, $width); //midAB to midDC
+					$drawLine(dcx, dcy, cx, cy, $color, $width); //midDC to C
+				} else {  //LH_XOVER
+					$drawLine(bx, by, abx, aby, $color, $width); //B to midAB
+					$drawLine(abx, aby, dcx, dcy, $color, $width); //midAB to midDC
+					$drawLine(dcx, dcy, dx, dy, $color, $width); //midDC to D
+				}
+			}
+		}
+	}
+};
+
+//store the various points defined with a Turnout (pass in widget)
+//   see jmri.jmrit.display.layoutEditor.LayoutTurnout for background
+function $storeTurnoutPoints($widget) {
+	var $t = [];
+	$t['ident'] = $widget.ident+PT_B;  //store B endpoint
+	$t['x'] = $widget.xb * 1.0;
+	$t['y'] = $widget.yb * 1.0;
+	$gPts[$t.ident] = $t;
+	var $t = [];
+	$t['ident'] = $widget.ident+PT_C;  //store C endpoint
+	$t['x'] = $widget.xc * 1.0;
+	$t['y'] = $widget.yc * 1.0;
+	$gPts[$t.ident] = $t;
+	var $t = [];
+	if ($widget.type==LH_TURNOUT||$widget.type==RH_TURNOUT||$widget.type==WYE_TURNOUT) {
+		$t['ident'] = $widget.ident+PT_A;  //calculate and store A endpoint (mirror of B for these)
+		$t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
+		$t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
+		$gPts[$t.ident] = $t;
+		var $t = [];
+	} else if ($widget.type==LH_XOVER||$widget.type==RH_XOVER||$widget.type==WYE_XOVER) {
+		$t['ident'] = $widget.ident+PT_A;  //calculate and store A endpoint (mirror of C for these)
+		$t['x'] = $widget.xcen - ($widget.xc - $widget.xcen);
+		$t['y'] = $widget.ycen - ($widget.yc - $widget.ycen);
+		$gPts[$t.ident] = $t;
+		var $t = [];
+		$t['ident'] = $widget.ident+PT_D;  //calculate and store D endpoint (mirror of B for these)
+		$t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
+		$t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
+		$gPts[$t.ident] = $t;
 	}
 };    	
 
 //drawLine, passing in values from xml
-function $drawLine($pt1x, $pt1y, $pt2x, $pt2y, $color) {
+function $drawLine($pt1x, $pt1y, $pt2x, $pt2y, $color, $width) {
+	var $savLineWidth = $gCtx.lineWidth;
 	var $savStrokeStyle = $gCtx.strokeStyle;
 	if ($color != undefined)  $gCtx.strokeStyle = $color;
+	if ($width != undefined)  $gCtx.lineWidth = $width;
 	$gCtx.beginPath();  
 	$gCtx.moveTo($pt1x, $pt1y);  
 	$gCtx.lineTo($pt2x, $pt2y);  
 	$gCtx.closePath();  
 	$gCtx.stroke();  
-	// put color back to default
+	// put color and width back to default
 	$gCtx.strokeStyle = $savStrokeStyle;    
+	$gCtx.lineWidth = $savLineWidth;    
 };    	
 
 //drawArc, passing in values from xml
-function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees) {
+function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees, $color, $width) {
     // Compute arc's chord
     var a = pt2x - pt1x;
     var o = pt2y - pt1y;
     var chord=Math.sqrt(((a*a)+(o*o))); //in pixels
 
     if (chord > 0.0) {  //don't bother if no length
-        var halfAngle = (degrees/2) * Math.PI / 180; //in radians
+    	//save track settings for restore
+    	var $savLineWidth = $gCtx.lineWidth;
+    	var $savStrokeStyle = $gCtx.strokeStyle;
+    	if ($color != undefined)  $gCtx.strokeStyle = $color;
+    	if ($width != undefined)  $gCtx.lineWidth = $width;
+
+    	var halfAngle = (degrees/2) * Math.PI / 180; //in radians
         var radius = (chord/2)/(Math.sin(halfAngle));  //in pixels
         // Circle
         var startRad = Math.atan2(a, o) - halfAngle; //in radians
-//        if(t.getCircle()){
         // calculate center of circle
         var cx = ((pt2x * 1.0) - Math.cos(startRad) * radius);  
         var cy = ((pt2y * 1.0) + Math.sin(startRad) * radius);
@@ -444,7 +597,12 @@ function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees) {
         var endAngle 	= Math.atan2(pt2y-cy, pt2x-cx); //in radians
         var counterClockwise = false;
 
+		$gCtx.beginPath();
         $gCtx.arc(cx, cy, radius, startAngle, endAngle, counterClockwise);
+		$gCtx.stroke();
+    	// put color and width back to default
+    	$gCtx.strokeStyle = $savStrokeStyle;    
+    	$gCtx.lineWidth = $savLineWidth;    
     }
 }
 
@@ -558,14 +716,30 @@ var $setWidgetPosition = function(e) {
 //set new value for all widgets having specified type and element name
 var $setElementState = function($element, $name, $newState) {
 //	if (window.console) console.log( "setting " + $element + " " + $name + " --> " + $newState);
+	//loop thru widgets, setting all matches
 	jQuery.each($gWidgets, function($id, $widget) {
-		if ($widget.element == $element && $widget.safeName == $name) {
+		//make the change if widget matches, and not already this value
+		if ($widget.element == $element && $widget.safeName == $name && $widget.state != $newState) {
 			$setWidgetState($id, $newState);
 		}
+		//if sensor and changed, also check widget's occupancy sensor and redraw widget's color if matched 
+		if ($element == 'sensor' && $widget.occupancysensor == $name) {
+//			if (window.console) console.log( "setting widget "+$id +" for block sensor " + $widget.occupancysensor );
+			$gBlks[$widget.blockname].state = $newState; //set the block to the newstate first
+			switch ($widget.widgetType) {
+			case 'layoutturnout' :
+				$drawTurnout($widget);
+				break;
+			case 'tracksegment' :
+				$drawTrackSegment($widget);
+				break;
+			}
+		}
+
 	});
 };
 
-//set new value for widget, showing proper icon
+//set new value for widget, showing proper icon, return widgets changed
 var $setWidgetState = function($id, $newState) {
 	var $widget = $gWidgets[$id];
 	if ($widget.state != $newState) {  //don't bother if already this value
@@ -577,7 +751,7 @@ var $setWidgetState = function($id, $newState) {
 			break;
 		case "text" :
 			if ($widget.element == "memory") {
-				$('div#'+$id).text($newState);  //set memory to new value from server
+				$('div#'+$id).text($newState);  //set memory text to new value from server
 			} else {
 				if ($widget['text'+$newState] != undefined) {
 					$('div#'+$id).text($widget['text'+$newState]);  //set text to new state's text
@@ -801,13 +975,14 @@ var $getWidgetFamily = function($widget) {
 	case "multisensoricon" :
 	case "fastclock" :
 	case "signalheadicon" :
-	case "signalmasticon" :
+//	case "signalmasticon" :
 		return "icon";
 		break;
 	case "layoutturnout" :
 	case "tracksegment" :
 	case "positionablepoint" :
 	case "backgroundColor" :
+	case "layoutblock" :
 		return "drawn";
 		break;
 	};
