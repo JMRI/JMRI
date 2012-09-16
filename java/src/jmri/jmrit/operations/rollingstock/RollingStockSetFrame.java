@@ -470,7 +470,18 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 								MessageFormat.format(getRb().getString("rsCanNotLocMsg"), new Object[]{rs.toString(), status}),
 								getRb().getString("rsCanNotLoc"),
 								JOptionPane.ERROR_MESSAGE);
-						return false;
+						// does the user want to force the rolling stock to this track?
+						int results = JOptionPane.showOptionDialog(this, 
+								MessageFormat.format(getRb().getString("rsForce"), new Object[]{rs.toString(), (Track)trackLocationBox.getSelectedItem()}),
+								MessageFormat.format(getRb().getString("rsOverride"), new Object[]{status}),
+								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+						if (results == JOptionPane.YES_OPTION) {
+							log.debug("Force rolling stock to track");
+							rs.setLocation((Location) locationBox.getSelectedItem(),
+									(Track)trackLocationBox.getSelectedItem(), true);
+						} else {
+							return false;
+						}
 					}
 				}
 			}
