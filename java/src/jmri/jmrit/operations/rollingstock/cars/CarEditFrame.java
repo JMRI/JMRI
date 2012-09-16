@@ -750,6 +750,16 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 								MessageFormat.format(rb.getString("rsCanNotLocMsg"), new Object[]{_car.toString(), status}), 
 								rb.getString("rsCanNotLoc"),
 								JOptionPane.ERROR_MESSAGE);
+						// does the user want to force the rolling stock to this track?
+						int results = JOptionPane.showOptionDialog(this, 
+								MessageFormat.format(rb.getString("rsForce"), new Object[]{_car.toString(), (Track)trackLocationBox.getSelectedItem()}),
+								MessageFormat.format(rb.getString("rsOverride"), new Object[]{status}),
+								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+						if (results == JOptionPane.YES_OPTION) {
+							log.debug("Force rolling stock to track");
+							_car.setLocation((Location) locationBox.getSelectedItem(),
+									(Track)trackLocationBox.getSelectedItem(), true);
+						}
 					}
 				}
 			}
