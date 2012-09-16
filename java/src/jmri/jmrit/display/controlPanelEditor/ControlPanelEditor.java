@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 import javax.swing.*;
 
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.HelpUtil;
@@ -67,7 +68,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private JMenu _circuitMenu;
     private JMenu _drawMenu;
     private CircuitBuilder _circuitBuilder;
-//    private ShapeDrawer _shapeDrawer;
+    private ShapeDrawer _shapeDrawer;
     private ItemPalette _itemPalette;
 
     private JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(rb.getString("CheckBoxGlobalFlags"));
@@ -106,8 +107,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         setUseGlobalFlag(false);
         _menuBar = new JMenuBar();
         _circuitBuilder = new CircuitBuilder(this);
-//        _shapeDrawer = new ShapeDrawer(this);
-//        makeDrawMenu();
+        _shapeDrawer = new ShapeDrawer(this);
+        makeDrawMenu();
         makeCircuitMenu();
         makeIconMenu();
         makeZoomMenu();
@@ -159,14 +160,14 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     	}
         _menuBar.add(_circuitMenu, 0);
     }
-/*
+
     protected void makeDrawMenu() {
     	if (_drawMenu==null) {
     		_drawMenu = _shapeDrawer.makeMenu();
     	}
         _menuBar.add(_drawMenu, 0);
     }
-*/
+
     protected void makeZoomMenu() {
         _zoomMenu = new JMenu(rb.getString("MenuZoom"));
         _menuBar.add(_zoomMenu, 0);
@@ -593,12 +594,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (_warrantMenu!=null) {
         		_menuBar.remove(_warrantMenu);
             }           
-/*            
             if (_drawMenu==null) {
             	makeDrawMenu();
             } else {
                 _menuBar.add(_drawMenu, 0);
-            } */           
+            }          
             if (_circuitMenu==null) {
             	makeCircuitMenu();
             } else {
@@ -900,11 +900,16 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (_debug) log.debug("mousePressed at ("+event.getX()+","+event.getY()+") _dragging="+_dragging);
                             //  " _selectionGroup= "+(_selectionGroup==null?"null":_selectionGroup.size()));
         _circuitBuilder.saveSelectionGroup(_selectionGroup);
-//        _shapeDrawer.saveSelectionGroup(_selectionGroup);
         _anchorX = event.getX();
         _anchorY = event.getY();
         _lastX = _anchorX;
         _lastY = _anchorY;
+
+        if (_shapeDrawer.doMousePressed(event)) {
+        	_selectionGroup = null;
+        	_currentSelection = null;
+        	return;
+        }
         _currentSelection = getCurrentSelection(event);
 
         if (!event.isPopupTrigger()&& !event.isMetaDown() && !event.isAltDown()) {
@@ -936,7 +941,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         }
         _circuitBuilder.doMousePressed(event);
-//        _shapeDrawer.doMousePressed(event);
         _targetPanel.repaint(); // needed for ToolTip
     }
 
@@ -949,9 +953,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             mouseDragged(event);
         }
         Positionable selection = getCurrentSelection(event);
-//        if (_shapeDrawer.doMouseReleased(selection, event)) {
-//        	return;
-//       }
 
         if ((event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) && !_dragging) {
             if (selection!=null) {
@@ -968,6 +969,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
             // when dragging, don't change selection group
             if (isEditable()) {
+                if (_shapeDrawer.doMouseReleased(selection, event)) {
+                	_selectRect = null;
+                }
                 if (selection!=null && !_circuitBuilder.doMouseReleased(selection, event)) {
                 	if (!_dragging) {
                     	modifySelectionGroup(selection, event);
@@ -1008,9 +1012,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (_debug) log.debug("mouseClicked at ("+event.getX()+","+event.getY()+")");
 
         Positionable selection = getCurrentSelection(event);
-//        if (_shapeDrawer.doMouseClicked(selection, event)) {
-//        	return;
-//        }
+        if (_shapeDrawer.doMouseClicked(selection, event)) {
+        	return;
+        }
 
         if (event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) {
             if (selection!=null) {
@@ -1019,7 +1023,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         } else {
             if (selection!=null) {
-                if (_circuitBuilder.doMouseClicked(selection, event) && 
+                if (!_circuitBuilder.doMouseClicked(selection, event) && 
                 		!event.isControlDown() && !event.isShiftDown() ) {
                     selection.doMouseClicked(event);
                 }
@@ -1035,9 +1039,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (_circuitBuilder.doMouseDragged(_currentSelection, event) ) {
         	return;
         }
-//        if (_shapeDrawer.doMouseDragged(_currentSelection, event) ) {
-//        	return;
-//        }
         if (!event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown() && (isEditable() || _currentSelection instanceof LocoIcon)) {
             moveIt:
             if (_currentSelection!=null && getFlag(OPTION_POSITION, _currentSelection.isPositionable())) {
@@ -1082,7 +1083,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                     }
                 }
             } else {
-                if (isEditable() && _selectionGroup==null) {
+                if ((isEditable() && _selectionGroup==null) || _shapeDrawer.doMouseDragged(_currentSelection, event)) {
                     drawSelectRect(event.getX(), event.getY());
                 }
             }
@@ -1310,7 +1311,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _fileMenu.setEnabled(false);
     }
     
-    protected void resetEditor() {
+    public void resetEditor() {
     	// enable menus
     	_warrantMenu.setEnabled(true);
         _iconMenu.setEnabled(true);
@@ -1324,17 +1325,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         targetPane.setDefaultColors();
         setSelectionGroup(null);
     }
-    
-    protected void setHighlightColor(Color color) {
-        TargetPane targetPane = (TargetPane)getTargetPanel();
-        targetPane.setHighlightColor(color);
-    }
-    
-    protected void setSelectionGroupColor(Color color) {
-        TargetPane targetPane = (TargetPane)getTargetPanel();
-        targetPane.setSelectGroupColor(color);
-    }
-    
+
     protected void highlight(Positionable pos) {
     	if (pos==null) {
     		_highlightcomponent = null;
@@ -1345,9 +1336,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     	repaint();
     }
    
-    protected void setSelectionGroup(ArrayList<Positionable> group) {
+    public void setSelectionGroup(ArrayList<Positionable> group) {
     	_highlightcomponent = null;
-//        _currentSelection = null;		need non-null for Portal dragging
+//        _currentSelection = null;		need non-null for Portal dragging in CircuitBuilder
     	_selectionGroup = group;
     	repaint();
     }

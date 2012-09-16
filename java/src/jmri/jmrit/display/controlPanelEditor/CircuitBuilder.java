@@ -5,6 +5,7 @@ import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 
 import jmri.jmrit.display.*;
+import jmri.jmrit.display.Editor.TargetPane;
 import jmri.jmrit.display.palette.IndicatorItemPanel;
 import jmri.jmrit.display.palette.IndicatorTOItemPanel;
 import jmri.jmrit.picker.PickListModel;
@@ -327,8 +328,9 @@ public class CircuitBuilder  {
                     checkCircuits();
                 	_editor.setSelectionGroup(null);
                     _editor.disableMenus();
-                    _editor.setSelectionGroupColor(_editGroupColor);
-                    _editor.setHighlightColor(_editGroupColor);
+                    TargetPane targetPane = (TargetPane)_editor.getTargetPanel();
+                    targetPane.setSelectGroupColor(_editGroupColor);
+                    targetPane.setHighlightColor(_editGroupColor);
                     _editCircuitFrame = new EditCircuitFrame(rbcp.getString("newCircuitItem"), this, _currentBlock);
                 }
             }
@@ -342,8 +344,9 @@ public class CircuitBuilder  {
                  checkCircuits();
                  makeSelectionGroup(_currentBlock, null);
                 _editor.disableMenus();
-                _editor.setSelectionGroupColor(_editGroupColor);
-                _editor.setHighlightColor(_editGroupColor);
+                TargetPane targetPane = (TargetPane)_editor.getTargetPanel();
+                targetPane.setSelectGroupColor(_editGroupColor);
+                targetPane.setHighlightColor(_editGroupColor);
                 _editCircuitFrame = new EditCircuitFrame(rbcp.getString("OpenCircuitItem"), this, _currentBlock);
             }
         }
@@ -370,8 +373,9 @@ public class CircuitBuilder  {
                 if (iconsConverted(_circuitMap.get(_currentBlock))) {
                     makeSelectionGroup(_currentBlock, PortalIcon.BLOCK);
                 	_editor.disableMenus();
-                    _editor.setSelectionGroupColor(_editGroupColor);
-                    _editor.setHighlightColor(_highlightColor);
+                    TargetPane targetPane = (TargetPane)_editor.getTargetPanel();
+                    targetPane.setSelectGroupColor(_editGroupColor);
+                    targetPane.setHighlightColor(_highlightColor);
                    _editPortalFrame = new EditPortalFrame(rbcp.getString("OpenPortalTitle"), this, _currentBlock);
                 }
             }
@@ -389,8 +393,9 @@ public class CircuitBuilder  {
                 if (iconsConverted(_circuitMap.get(_currentBlock))) {
                     makeSelectionGroup(_currentBlock, PortalIcon.BLOCK);
                 	_editor.disableMenus();
-                    _editor.setSelectionGroupColor(_editGroupColor);
-                    _editor.setHighlightColor(_highlightColor);
+                    TargetPane targetPane = (TargetPane)_editor.getTargetPanel();
+                    targetPane.setSelectGroupColor(_editGroupColor);
+                    targetPane.setHighlightColor(_highlightColor);
                    _editPortalFrame = new EditPortalFrame(rbcp.getString("OpenPortalTitle"), this, _currentBlock);
                 }
             }
@@ -410,8 +415,9 @@ public class CircuitBuilder  {
                     // A temporary path "TEST_PATH" is used to display the icons representing a path
                     _currentBlock.allocate(EditCircuitPaths.TEST_PATH);
                     _editor.disableMenus();
-                    _editor.setSelectionGroupColor(_editGroupColor);
-                    _editor.setHighlightColor(_editGroupColor);
+                    TargetPane targetPane = (TargetPane)_editor.getTargetPanel();
+                    targetPane.setSelectGroupColor(_editGroupColor);
+                    targetPane.setHighlightColor(_editGroupColor);
                     _editPathsFrame = new EditCircuitPaths(rbcp.getString("OpenPathTitle"), this, _currentBlock);
                 }
             }
@@ -962,8 +968,9 @@ public class CircuitBuilder  {
             for (int i=0; i<_circuitIcons.size(); i++) {
                 group[i] = _circuitIcons.get(i);
             }
-            
-            _editor.setHighlightColor(_highlightColor);
+            TargetPane targetPane = (TargetPane)_editor.getTargetPanel();
+           
+            targetPane.setHighlightColor(_highlightColor);
             for (int i=0; i<group.length; i++) {
                 if (!(group[i] instanceof IndicatorTrack)) {
                     if (log.isDebugEnabled()) log.debug("convertIcons: #"+i+" pos= "+group[i].getClass().getName());
@@ -971,7 +978,7 @@ public class CircuitBuilder  {
                 }
             }
             _circuitMap.put(_currentBlock, _circuitIcons);	// _circuitIcons references _editor._selectionGroup
-            _editor.setHighlightColor(_editGroupColor);
+            targetPane.setHighlightColor(_editGroupColor);
             _editor.highlight(null);
         }
     }
@@ -1269,9 +1276,9 @@ public class CircuitBuilder  {
             if (!event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown()) {
             	handleSelection(selection, event);
             }
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     /**
