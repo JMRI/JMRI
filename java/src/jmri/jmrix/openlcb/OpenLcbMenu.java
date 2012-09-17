@@ -42,6 +42,7 @@ public class OpenLcbMenu extends JMenu {
             new Item("MenuItemTrafficMonitor", "jmri.jmrix.openlcb.swing.monitor.MonitorPane"),
             new Item("MenuItemSendFrame",   "jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane"),
             new Item("MenuItemConfigNodes", "jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"),
+            new Item("MenuItemStartHub", "jmri.jmrix.openlcb.swing.hub.HubPane"),
         };
     
     static class Item {
