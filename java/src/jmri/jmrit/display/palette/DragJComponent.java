@@ -1,11 +1,15 @@
 // DragJComponent.java
 package jmri.jmrit.display.palette;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import java.awt.Color;
 import java.awt.datatransfer.Transferable; 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.dnd.*;
+
+import jmri.jmrit.display.Editor;
 
 /**
  * Gives a JComponent the capability to Drag and Drop 
@@ -33,6 +37,14 @@ import java.awt.dnd.*;
      DataFlavor _dataFlavor;
      public DragJComponent(DataFlavor flavor) {
          super();
+         String borderName = ItemPalette.convertText("dragToPanel");
+         setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
+                                                          borderName));
+         int width = Math.max(100, getPreferredSize().width);
+         int height = Math.max(65, getPreferredSize().height);
+         setPreferredSize(new java.awt.Dimension(width, height));
+         setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+//         setBorder(new javax.swing.border.EmptyBorder(12,5,12,5));
          DragSource dragSource = DragSource.getDefaultDragSource();
          dragSource.createDefaultDragGestureRecognizer(this,
                      DnDConstants.ACTION_COPY, this);

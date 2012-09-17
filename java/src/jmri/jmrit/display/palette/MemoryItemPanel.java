@@ -127,9 +127,11 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
     }
     private JPanel makeDragIcon(JComponent mem, Type type) {
         JPanel panel = new JPanel();
+        /*
         String borderName = ItemPalette.convertText("dragToPanel");
         panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
                                                          borderName));
+                                                         */
         JPanel comp;
         try {
             comp = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR), type);
@@ -141,9 +143,11 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         comp.add(mem);
         panel.add(comp);
         panel.validate();
+        /*
         int width = Math.max(100, panel.getPreferredSize().width);
         panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
         panel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+        */
         return panel;
     }
 
