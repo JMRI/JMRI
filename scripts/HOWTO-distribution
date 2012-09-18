@@ -54,6 +54,9 @@ First, we merge in as much tentative content as possible to the SVN trunk.
     pages by doing invoking ant (no argument needed).
 
     ant
+    
+    Check the version number into the top help page on the branch (one place):
+    bbedit help/en/index.html
 
     Run the program and make sure help works.
 
@@ -114,6 +117,10 @@ Second, we build the release branch:
 
 
     ( to merge a single later change: svn merge -c <changeset#> ^/trunk/jmri )
+    
+    ( ) Edit the new version number into the top help page on the branch (one place):
+    bbedit help/en/index.html
+
 
 ================================================================================
 Third, we do any necessary release-specific updates.
@@ -122,9 +129,6 @@ Third, we do any necessary release-specific updates.
 ( ) Create the _next_ release note, so that people will document new (overlapping)
     changes there.
     
-( ) Edit the version number into the top help page on the branch (one place):
-    bbedit help/en/index.html
-
 ( ) run "ant alltests"; make sure they all pass
 
 ( ) run "ant decoderpro"; check for no startup errors, right version, help index present and working OK.
@@ -167,10 +171,10 @@ Final release steps:
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o archive.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.1.2/ws/jmri/dist/release/*zip*/release.zip"
+    curl -o archive.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.1.3/ws/jmri/dist/release/*zip*/release.zip"
     unzip archive.zip
     cd archive/jmri/dist/release
-    scp JMRI.3.1.2-* user,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
+    scp JMRI.3.1.3-* user,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
     (clean up and logout)
 
     Wait until the downloads have propagated to the mirrors; check
