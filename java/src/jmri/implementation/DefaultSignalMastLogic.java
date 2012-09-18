@@ -489,6 +489,26 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         destList.get(destination).setSensors(sensors);
     }
 
+    public void addSensor(String sensorName, int state, SignalMast destination){
+        if(!destList.containsKey(destination))
+            return;
+        Sensor sen = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+        if(sen!=null){
+            NamedBeanHandle<Sensor> namedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sen);
+            destList.get(destination).addSensor(namedSensor, state);
+        }
+    }
+    
+    public void removeSensor(String sensorName, SignalMast destination){
+        if(!destList.containsKey(destination))
+            return;
+        Sensor sen = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+        if(sen!=null){
+            NamedBeanHandle<Sensor> namedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sen);
+            destList.get(destination).removeSensor(namedSensor);
+        }
+    }
+
     public ArrayList<Block> getBlocks(SignalMast destination){
         if(!destList.containsKey(destination)){
             return new ArrayList<Block>();
@@ -1339,6 +1359,22 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             }
             firePropertyChange("sensors", null, this.destination);
             this.sensors = sensors;
+        }
+
+        void addSensor(NamedBeanHandle<Sensor> sen, int state){
+            if(sensors.containsKey(sen))
+                return;
+            sen.getBean().addPropertyChangeListener(propertySensorListener);
+            sensors.put(sen, state);
+            firePropertyChange("sensors", null, this.destination);
+        }
+        
+        void removeSensor(NamedBeanHandle<Sensor> sen){
+            if(!sensors.containsKey(sen))
+                return;
+            sen.getBean().removePropertyChangeListener(propertySensorListener);
+            sensors.remove(sen);
+            firePropertyChange("sensors", null, this.destination);
         }
 
         ArrayList<Block> getBlocks(){

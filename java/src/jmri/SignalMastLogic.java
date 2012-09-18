@@ -261,6 +261,16 @@ public interface SignalMastLogic {
     public void setSensors(Hashtable<NamedBeanHandle<Sensor>, Integer> sensors, SignalMast destination);
     
     /**
+	 * Add an individual sensor and its state to the logic
+     */
+    public void addSensor(String sensorName, int state, SignalMast destination);
+    
+    /**
+	 * Remove an individual sensor from the logic
+     */    
+    public void removeSensor(String sensorName, SignalMast destination);
+    
+    /**
      * Use this to determine if the signalmast logic is stored in the panel file
      * and if all the information is stored.
      * @param store
