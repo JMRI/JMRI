@@ -1840,7 +1840,7 @@ public class TrainBuilder extends TrainCommon{
 		boolean foundCaboose = false;
 		boolean foundFRED = false;
 		if (departStageTrack.getNumberCars()>0){
-			List<String> cars = carManager.getByIdList();
+			List<String> cars = carManager.getList();
 			for (int i=0; i<cars.size(); i++){
 				Car car = carManager.getById(cars.get(i));
 				if (car.getTrack() == departStageTrack){

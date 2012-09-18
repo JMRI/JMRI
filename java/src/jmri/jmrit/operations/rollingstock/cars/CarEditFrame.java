@@ -649,7 +649,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					MessageFormat.format(rb.getString("carModifyAllType"), new Object[]{_car.getType()}),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				// go through the entire list and change the caboose setting for all cars of this type
-				List<String> cars = carManager.getByIdList();
+				List<String> cars = carManager.getList();
 				for (int i=0; i<cars.size(); i++){
 					Car c = carManager.getById(cars.get(i));
 					if (c.getType().equals(_car.getType()))
@@ -665,7 +665,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					MessageFormat.format(rb.getString("carModifyAllType"), new Object[]{_car.getType()}),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				// go through the entire list and change the utility for all cars of this type
-				List<String> cars = carManager.getByIdList();
+				List<String> cars = carManager.getList();
 				for (int i=0; i<cars.size(); i++){
 					Car c = carManager.getById(cars.get(i));
 					if (c.getType().equals(_car.getType()))
@@ -681,7 +681,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					MessageFormat.format(rb.getString("carModifyAllType"), new Object[]{_car.getType()}),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				// go through the entire list and change the hazardous setting for all cars of this type
-				List<String> cars = carManager.getByIdList();
+				List<String> cars = carManager.getList();
 				for (int i=0; i<cars.size(); i++){
 					Car c = carManager.getById(cars.get(i));
 					if (c.getType().equals(_car.getType()))

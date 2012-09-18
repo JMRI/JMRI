@@ -376,7 +376,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		int number = 0;
 		String item = (String)comboBox.getSelectedItem();
 		log.debug("Selected item "+item);
-		List<String> cars = manager.getByIdList();
+		List<String> cars = manager.getList();
 		for (int i=0; i<cars.size(); i++){
 			Car car = manager.getById(cars.get(i));
 
@@ -410,7 +410,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		if (number == 0 && deleteUnused){
 			//need to check if an engine is using the road name
 			if(_comboboxName == CarEditFrame.ROAD){
-				List<String> engines = EngineManager.instance().getByIdList();
+				List<String> engines = EngineManager.instance().getList();
 				for (int i=0; i<engines.size(); i++){
 					Engine engine = EngineManager.instance().getById(engines.get(i));
 					if (engine.getRoad().equals(item)){

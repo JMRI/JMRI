@@ -318,7 +318,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		int number = 0;
 		String item = (String)comboBox.getSelectedItem();
 		CarManager manager = CarManager.instance();
-		List<String> cars = manager.getByIdList();
+		List<String> cars = manager.getList();
 		for (int i=0; i<cars.size(); i++){
 			Car car = manager.getById(cars.get(i));
 			if (car.getLoad().equals(item))
