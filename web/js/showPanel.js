@@ -9,18 +9,18 @@
  *    CSS classes are used throughout to attach events to correct widgets, as well as control appearance.
  *    The xmlio element name is used to send changes to xmlio server and to process changes made elsewhere.
  *    Drawn widgets are handled by drawing directly on the javascript "canvas" layer.
- *  Loop: 	1) request panel and process the returned panel xml.
+ *  Loop: 	1) request panel and process the returned panel xml, placing/drawing widgets on panel, and saving info as needed
  *  		2) send list of current states to server and wait for changes
- *  		3) receive change? set related widget states and go back to 2)
+ *  		3) receive change? set related widget(s) states, redraw widget(s), and go back to 2)
  *  		4) browser user clicks on widget? send "set state" command and go to 3)
  *  		5) error? go back to 2) 
- *  TODO: handle multisensors, other widgets correctly
+ *  TODO: handle click on multisensor
  *  TODO: move occupiedsensor state to widget from block, to allow skipping of unchanged
- *  TODO: handle dashed track
+ *  TODO: draw dashed track
+ *  TODO: add error message and stop heartbeat on change failure, add retry button
  *  TODO: if no elements found, don't send list to xmlio server (prevent looping)
  *  TODO: handle drawn ellipse, levelxing (for LMRC APB)
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
- *  TODO: add error message and stop heartbeat on change failure, add retry button
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
  *  TODO: determine proper level (z-index) for canvas layer
  *  TODO: fix getNextState() to handle clicking multi-state widgets (like signalheads)
@@ -30,6 +30,7 @@
  *  TODO: remove duplicates from list before sending
  *  TODO: handle really exotic layoutturnouts, such as double-crossovers
  *  TODO: handle turnoutdrawunselectedleg = "yes"
+ *  TODO: make turnout occupancy work like LE panels (more than just checking A)
  *  TODO: store all tracksegments (mainline) before main loop (cross-dependencies, turnout to tracksegment) 
  *   
  **********************************************************************************************/
@@ -198,41 +199,36 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						}
 						break;
 					case "multisensoricon" :
-						$widget['name'] =  		$(this).find('active').attr('sensor'); //get first active name
+						//create multiple widgets, 1st with all images, stack others with non-active states set to a clear image
 						$widget['element']  =	"sensor"; //what xmlio server calls this
 						$widget['icon1'] = 		$(this).find('unknown').attr('url');
-						$widget['icon2'] =  	$(this).find('active').attr('url');
 						$widget['icon4'] =  	$(this).find('inactive').attr('url');
 						$widget['icon8'] =		$(this).find('inconsistent').attr('url');
 						var $rotation = 		$(this).find('unknown').find('rotation').text();
 						$widget['degrees'] = 	($(this).find('unknown').attr('degrees') * 1) + ($rotation * 90);
 						$widget['scale'] = 		$(this).find('unknown').attr('scale');
-						if ($widget.forcecontroloff != "true") {
-							$widget.classes += 		$widget.element + " clickable ";
-						}
+						var actives = $(this).find('active'); //get array of actives used by this multisensor
+						actives.each(function(i, item) {  //loop thru array
+							$widget.name 	 = $(item).attr('sensor');
+							$widget['icon2'] = 	$(item).attr('url');
+							if (actives.size() > 1) { //only save widget and make a new one if more than one active found
+								$preloadWidgetImages($widget); //start loading all images
+								$widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
+								$gWidgets[$widget.id] = $widget; //store widget in persistent array
+								$drawIcon($widget); //actually place and position the widget on the panel
+								$widget = jQuery.extend(true, {}, $widget); //get a new copy of widget
+								$widget['id'] = "spWidget_" + $gUnique(); 	  	 // set new id
+								$widget['icon1'] = 	"/web/images/transparent_1x1.png";
+								$widget['icon4'] =  "/web/images/transparent_1x1.png"; //set non-actives to transparent image 
+								$widget['icon8'] =	"/web/images/transparent_1x1.png";
+							}
+						});
 						break;
 					}
+					$preloadWidgetImages($widget); //start loading all images
 					$widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
-
-					if ($widget.name) { //if name available, use it as hover text
-						$hoverText = " title='"+$widget.name+"' alt='"+$widget.name+"'";
-					}
-
-					//add the image to the panel area, with appropriate css classes and id (skip any unsupported)
-					if ($widget.icon1 != undefined) {
-						$("div#panelArea").append("<img id=" + $widget.id +
-								" class='" + $widget.classes +
-								"' src='" + $widget["icon"+$widget['state']] + "' " + $hoverText + "/>");
-
-						//also add in overlay text if specified  (append "overlay" to id to keep them unique)
-						if ($widget.text != undefined) {
-							$("div#panelArea").append("<div id=" + $widget.id + "overlay class='overlay'>" + $widget.text + "</div>");
-							$("div#panelArea>#"+$widget.id+"overlay").css({position:'absolute',left:$widget.x+'px',top:$widget.y+'px',zIndex:($widget.level-1)});
-						} 
-					}
-					$preloadWidgetImages($widget);
 					$gWidgets[$widget.id] = $widget; //store widget in persistent array
-					$setWidgetPosition($("div#panelArea>#"+$widget.id));
+					$drawIcon($widget); //actually place and position the widget on the panel
 					break;
 
 				case "text" :
@@ -258,7 +254,12 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 					case "locoicon" :
 						//also set the background icon for this one (additional css in .html file)
 						$widget['icon1'] = 		$(this).find('icon').attr('url');
-						$widget.styles['background-image'] = "url('" + $widget.icon1 + "')";
+						$widget.styles['background-image'] 	= "url('" + $widget.icon1 + "')";
+						$widget['scale'] = 		$(this).find('icon').attr('scale');
+						if ($widget.scale != 1.0) {
+							$widget.styles['background-size']	= $widget.scale * 100 + "%";
+							$widget.styles['line-height']	= $widget.scale * 20 + "px";  //center vertically
+						}
 						break;
 					case "memoryicon" :
 						$widget['name']  =		$widget.memory; //normalize name
@@ -267,11 +268,10 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						break;
 					}
 					$widget['safeName'] = $safeName($widget.name);
+					$gWidgets[$widget.id] = $widget; //store widget in persistent array
 					//put the text element on the page
 					$("div#panelArea").append("<div id=" + $widget.id + " class='"+$widget.classes+"'>" + $widget.text + "</div>");
 					$("div#panelArea>#"+$widget.id).css( $widget.styles ); //apply style array to widget
-
-					$gWidgets[$widget.id] = $widget; //store widget in persistent array
 					$setWidgetPosition($("div#panelArea>#"+$widget.id));
 					break;
 
@@ -434,6 +434,28 @@ function $drawTrackSegment($widget) {
 			$drawArc($pt1.x, $pt1.y, $pt2.x, $pt2.y, $widget.angle, $color, $width);
 		}
 	}
+};
+
+//draw an icon-type widget (pass in widget)
+function $drawIcon($widget) {
+	var $hoverText = "";  
+	if ($widget.name) { //if name available, use it as hover text
+		$hoverText = " title='"+$widget.name+"' alt='"+$widget.name+"'";
+	}
+
+	//add the image to the panel area, with appropriate css classes and id (skip any unsupported)
+	if ($widget.icon1 != undefined) {
+		$("div#panelArea").append("<img id=" + $widget.id +
+				" class='" + $widget.classes +
+				"' src='" + $widget["icon"+$widget['state']] + "' " + $hoverText + "/>");
+
+		//also add in overlay text if specified  (append "overlay" to id to keep them unique)
+		if ($widget.text != undefined) {
+			$("div#panelArea").append("<div id=" + $widget.id + "overlay class='overlay'>" + $widget.text + "</div>");
+			$("div#panelArea>#"+$widget.id+"overlay").css({position:'absolute',left:$widget.x+'px',top:$widget.y+'px',zIndex:($widget.level-1)});
+		} 
+	}
+	$setWidgetPosition($("div#panelArea>#"+$widget.id));
 
 };
 
@@ -719,12 +741,11 @@ var $setElementState = function($element, $name, $newState) {
 	//loop thru widgets, setting all matches
 	jQuery.each($gWidgets, function($id, $widget) {
 		//make the change if widget matches, and not already this value
-		if ($widget.element == $element && $widget.safeName == $name && $widget.state != $newState) {
+		if ($widget.element == $element && $widget.name == $name && $widget.state != $newState) {
 			$setWidgetState($id, $newState);
 		}
 		//if sensor and changed, also check widget's occupancy sensor and redraw widget's color if matched 
 		if ($element == 'sensor' && $widget.occupancysensor == $name) {
-//			if (window.console) console.log( "setting widget "+$id +" for block sensor " + $widget.occupancysensor );
 			$gBlks[$widget.blockname].state = $newState; //set the block to the newstate first
 			switch ($widget.widgetType) {
 			case 'layoutturnout' :
@@ -800,8 +821,12 @@ var $sendElementChange = function($element, $name, $nextState){
 var $getXMLStateList = function(){
 	var $retXml = "";
 	jQuery.each($gWidgets, function($id, $widget) {
-		if ($widget.name != undefined) { 
+		if ($widget.name != undefined) { //add each element to the list 
 			$retXml += "<" + $widget.element + " name='" + $widget.name + "' value='" + $widget.state +"'/>";
+//		} else if ($widget.names != undefined) { //special case for multisensors
+//			jQuery.each($widget.names, function(i, n) {
+//				$retXml += "<" + $widget.element + " name='" + n + "' value='" + $widget.state +"'/>";
+//			}
 		}
 	});
     return $retXml;
@@ -825,7 +850,8 @@ var $sendXMLIOList = function($commandstr){
 			$r.xmlClean();
 			$r.find("xmlio").children().each(function(){
 //				if (window.console) console.log("set type="+this.nodeName+" name="+$(this).attr('name')+" to value="+$(this).attr('value'));
-				$setElementState(this.nodeName, $safeName($(this).attr('name')), $(this).attr('value'));
+//				$setElementState(this.nodeName, $safeName($(this).attr('name')), $(this).attr('value'));
+				$setElementState(this.nodeName, $(this).attr('name'), $(this).attr('value'));
 			});
 			//send current xml states to xmlio server, will "stall" and wait for changes if matched
 			$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');
@@ -854,7 +880,8 @@ var $sendXMLIOChg = function($commandstr){
 			$r.xmlClean();
 			$r.find("xmlio").children().each(function(){
 				if (window.console) console.log("rcvd change "+this.nodeName+" "+$(this).attr('name')+" --> "+$(this).attr('value'));
-				$setElementState(this.nodeName, $safeName($(this).attr('name')), $(this).attr('value'));
+//				$setElementState(this.nodeName, $safeName($(this).attr('name')), $(this).attr('value'));
+				$setElementState(this.nodeName, $(this).attr('name'), $(this).attr('value'));
 				//send current xml states to xmlio server, will "stall" and wait for changes if matched
 				$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');  //TODO: remove this once multi-session fixed
 				endAndStartTimer();

@@ -15,15 +15,17 @@ body {
   border: solid 1px lightGray;
   margin: -1px;
 }
-.positionablelabel.hidden {
+.positionablelabel.text.hidden {
   display: none;
 }
 .locoicon {
   min-width:  60px;
+  width:  60px;
   min-height: 20px;
   line-height: 20px;
-  text-align: center;
-  vertical-align: middle;
+/*  text-align: center;
+  vertical-align: middle; */
+  padding-left: 6px;
   background-repeat:no-repeat;
 }
 div#panelFooter {
