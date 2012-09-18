@@ -184,7 +184,27 @@ public class SRCPTokenizerTest extends TestCase {
            Token t = stm.getNextToken();
            assertTrue("Wrong token kind for RESET",SRCPParserConstants.RESET == t.kind);
         }
-
+       public void testTokenizeCV() {
+           String cmd = "CV\n\r";
+           SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
+           SRCPParserTokenManager stm = new SRCPParserTokenManager(cs);
+           Token t = stm.getNextToken();
+           assertTrue("Wrong token kind for CV",SRCPParserConstants.CV == t.kind);
+        }
+       public void testTokenizeCVBIT() {
+           String cmd = "CVBIT\n\r";
+           SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
+           SRCPParserTokenManager stm = new SRCPParserTokenManager(cs);
+           Token t = stm.getNextToken();
+           assertTrue("Wrong token kind for CVBIT",SRCPParserConstants.CVBIT == t.kind);
+        }
+       public void testTokenizeREG() {
+           String cmd = "REG\n\r";
+           SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
+           SRCPParserTokenManager stm = new SRCPParserTokenManager(cs);
+           Token t = stm.getNextToken();
+           assertTrue("Wrong token kind for REG",SRCPParserConstants.REG == t.kind);
+        }
 
         // error condition.
         public void testTokenizeFailure() {

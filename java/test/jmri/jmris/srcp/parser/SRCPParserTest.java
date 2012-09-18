@@ -175,6 +175,30 @@ public class SRCPParserTest extends TestCase {
            assertFalse(exceptionOccured);
        }
 
+       public void testSetCVValue(){
+           boolean exceptionOccured = false;
+           String code = "SET 1 SM 0 CV 1 1\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
+       public void testGetCVValue(){
+           boolean exceptionOccured = false;
+           String code = "GET 1 SM 0 CV 1\n\r";
+           SRCPParser p = new SRCPParser(new StringReader(code));
+           try {
+             p.command();
+           } catch(ParseException pe) {
+             exceptionOccured = true;
+           }
+           assertFalse(exceptionOccured);
+       }
+
         // Main entry point
         static public void main(String[] args) {
                 String[] testCaseName = {SRCPParserTest.class.getName()};
