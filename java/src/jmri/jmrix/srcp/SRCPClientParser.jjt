@@ -108,6 +108,11 @@ TOKEN :
 
 | < COMMAND: <C><O><M><M><A><N><D>>
 
+//programming modes
+| <CVBIT: <C><V><B><I><T>>
+| <CV: <C><V>>
+| <REG: <R><E><G>>
+
 | <#A:["a","A"]>
 | <#B:["b","B"]>
 | <#C:["c","C"]>
@@ -201,6 +206,17 @@ SimpleNode commandresponse():{SimpleNode s;}
     return jjtThis;
   }
 }
+
+SimpleNode cvno():{SimpleNode s;}
+{
+  ( s=nonzeroaddress())
+  {
+    log.debug("CV Number Production "+ s.jjtGetValue());
+    jjtThis.jjtSetValue(s.jjtGetValue());
+    return jjtThis;
+  }
+}
+
 
 SimpleNode bus():{SimpleNode s;}
 {
@@ -506,5 +522,36 @@ SimpleNode timeout():{Token t;}
      log.debug("Timeout Production ");
      return jjtThis;
   }
+}
+
+// service mode programming modes
+
+SimpleNode progmode():{SimpleNode s;}
+{
+  // programming mode has 3 possibilities
+  ( s=cvbit() | s=cv() | s=reg() )
+  {
+     log.debug("Programming Mode Production ");
+     return jjtThis;
+  }
+}
+
+
+SimpleNode cv():{}
+{
+  <CV>
+  {return jjtThis;}
+}
+
+SimpleNode cvbit():{}
+{
+  <CVBIT>
+  {return jjtThis;}
+}
+
+SimpleNode reg():{}
+{
+  <REG>
+  {return jjtThis;}
 }
 

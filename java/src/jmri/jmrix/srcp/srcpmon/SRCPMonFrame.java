@@ -35,10 +35,12 @@ public class SRCPMonFrame extends jmri.jmrix.AbstractMonFrame implements SRCPLis
 		nextLine("cmd: "+l.toString(), "");
 	}
 	public synchronized void reply(SRCPReply l) {  // receive a reply message and log it
-		nextLine("rep: "+l.toString(), "");
+          nextLine("cmd: "+l.toString(), "");
 	}
 	public synchronized void reply(jmri.jmrix.srcp.parser.SimpleNode n) {  // receive a reply message and log it
-		nextLine("rep: "+n.toString(), "");
+          if(log.isDebugEnabled())
+             log.debug("reply called with simpleNode " + n.jjtGetValue());
+          reply(new SRCPReply(n));
 	}
 
    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPMonFrame.class.getName());

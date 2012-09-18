@@ -207,6 +207,34 @@ public class SRCPClientVisitor implements jmri.jmrix.srcp.parser.SRCPClientParse
     return node.childrenAccept(this,data);
   }
 
+  public Object visit(ASTcvno node, Object data)
+  {
+    log.debug("CV Number " +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+  public Object visit(ASTprogmode node, Object data)
+  {
+    log.debug("Programming Mode Production" +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+  public Object visit(ASTcv node, Object data)
+  {
+    log.debug("CV Programming Mode " +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+  public Object visit(ASTcvbit node, Object data)
+  {
+    log.debug("CVBIT Programming Mode " +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+  public Object visit(ASTreg node, Object data)
+  {
+    log.debug("REG Programming Mode " +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+
+
+
   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPClientVisitor.class.getName());
 
 }

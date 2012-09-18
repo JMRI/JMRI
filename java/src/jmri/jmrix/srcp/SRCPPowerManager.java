@@ -82,11 +82,9 @@ public class SRCPPowerManager implements PowerManager, SRCPListener {
 
 	// to listen for status changes from SRCP system
 	public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {
-		if (waiting) {
-			power = onReply;
-			firePropertyChange("Power", null, null);
-		}
-		waiting = false;
+            if(log.isDebugEnabled())
+               log.debug("reply called with simpleNode " + n.jjtGetValue());
+            reply(new SRCPReply(n));
         }
 
 	public void message(SRCPMessage m) {
@@ -100,6 +98,9 @@ public class SRCPPowerManager implements PowerManager, SRCPListener {
 			onReply = PowerManager.ON;
 		}
 	}
+
+
+        static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPPowerManager.class.getName());
 
 }
 

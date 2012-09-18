@@ -16,13 +16,16 @@ import java.beans.PropertyChangeEvent;
  */
 public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
 
-    public SRCPProgrammer() {
+    protected SRCPSystemConnectionMemo _memo=null;
+
+    public SRCPProgrammer(SRCPSystemConnectionMemo memo) {
+        _memo=memo;
         // need a longer LONG_TIMEOUT
         LONG_TIMEOUT=180000;
     }
 
     // handle mode
-    protected int _mode = Programmer.PAGEMODE;
+    protected int _mode = Programmer.DIRECTBYTEMODE;
 
     /**
      * Switch to a new programming mode.  Note that SRCP can only
@@ -38,7 +41,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
             notifyPropertyChange("Mode", _mode, mode);
             _mode = mode;
         }
-        if (_mode != Programmer.PAGEMODE && _mode != Programmer.REGISTERMODE) {
+        if (_mode != Programmer.DIRECTBYTEMODE && _mode != Programmer.REGISTERMODE) {
             // attempt to switch to unsupported mode, switch back to previous
             _mode = oldMode;
             notifyPropertyChange("Mode", mode, _mode);
@@ -50,7 +53,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
      * @return True if paged or register mode
      */
     public boolean hasMode(int mode) {
-        if ( mode == Programmer.PAGEMODE ||
+        if ( mode == Programmer.DIRECTBYTEMODE ||
              mode == Programmer.REGISTERMODE ) {
             log.debug("hasMode request on mode "+mode+" returns true");
             return true;
@@ -107,8 +110,8 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
             startLongTimer();
 
             // write
-            if (getMode() == Programmer.PAGEMODE)
-                m = SRCPMessage.getWritePagedCV(_cv, _val);
+            if (getMode() == Programmer.DIRECTBYTEMODE)
+                m = SRCPMessage.getWriteDirectCV(_cv, _val);
             else
                 m = SRCPMessage.getWriteRegister(registerFromCV(_cv), _val);
             // format and send the write message
@@ -134,8 +137,8 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
             // start the error timer
             startLongTimer();
 	    
-            if (getMode() == Programmer.PAGEMODE)
-                m = SRCPMessage.getConfirmPagedCV(_cv, _confirmVal);
+            if (getMode() == Programmer.DIRECTBYTEMODE)
+                m = SRCPMessage.getConfirmDirectCV(_cv, _confirmVal);
             else
                 m = SRCPMessage.getConfirmRegister(registerFromCV(_cv), _confirmVal);
 
@@ -165,8 +168,8 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
 
             // format and send the write message
 
-            if (getMode() == Programmer.PAGEMODE)
-                m = SRCPMessage.getReadPagedCV(_cv);
+            if (getMode() == Programmer.DIRECTBYTEMODE)
+                m = SRCPMessage.getReadDirectCV(_cv);
             else
                 m = SRCPMessage.getReadRegister(registerFromCV(_cv));
 
@@ -235,6 +238,10 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     }
 
     synchronized public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {
+       if(log.isDebugEnabled())
+          log.debug("reply called with simpleNode " + n.jjtGetValue());
+       //if(n.jjtGetChild(3).getClass()==jmri.jmrix.srcp.parser.ASTsm.class)
+          reply(new SRCPReply(n));
     }
 
     /**
@@ -276,7 +283,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     protected SRCPTrafficController controller() {
         // connect the first time
         if (_controller == null) {
-            _controller = SRCPTrafficController.instance();
+            _controller = _memo.getTrafficController();
         }
         return _controller;
     }

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.srcp;
 
+import java.util.Vector;
+
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -83,12 +85,10 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 		  else
 			e=parser.inforesponse();
 		  
-		  SRCPReply msg=new SRCPReply(e);
-
                   // forward the message to the registered recipients,
                   // which includes the communications monitor
                   // return a notification via the Swing event queue to ensure proper thread
-                  Runnable r = newRcvNotifier(msg, mLastSender, this);
+                  Runnable r = new SRCPRcvNotifier(e, mLastSender, this);
                   try {
                      javax.swing.SwingUtilities.invokeAndWait(r);
                   } catch (Exception ex) {
@@ -101,8 +101,12 @@ public class SRCPTrafficController extends AbstractMRTrafficController
 
                   SRCPClientVisitor v = new SRCPClientVisitor();
                   e.jjtAccept(v,_memo);
+          
+          // we need to re-write the switch below so that it uses the 
+          // SimpleNode values instead of the reply message.            
+          SRCPReply msg=new SRCPReply(e);
 
-if (!msg.isUnsolicited()) {
+          if (!msg.isUnsolicited()) {
             // effect on transmit:
             switch (mCurrentState) {
             case WAITMSGREPLYSTATE: {
@@ -227,6 +231,13 @@ if (!msg.isUnsolicited()) {
         ((SRCPListener)client).reply((SRCPReply)m);
     }
 
+    /**
+     * Forward a SRCPReply to all registered SRCPInterface listeners.
+     */
+    protected void forwardReply(AbstractMRListener client, SimpleNode n) {
+        ((SRCPListener)client).reply(n);
+    }
+
     public void setSensorManager(jmri.SensorManager m) { }
     protected AbstractMRMessage pollMessage() {
 		return null;
@@ -276,6 +287,63 @@ if (!msg.isUnsolicited()) {
         if (msg.getElement(index) == 0x0A) return true;
         else return false;
     }
+
+    /**
+     * Forward a "Reply" from layout to registered listeners.
+     *
+     * @param r Reply to be forwarded intact
+     * @param dest One (optional) listener to be skipped, usually
+     *              because it's the originating object.
+     */
+    @SuppressWarnings("unchecked")
+        protected void notifyReply(SimpleNode r, AbstractMRListener dest) {
+        // make a copy of the listener vector to synchronized (not needed for transmit?)
+        Vector<AbstractMRListener> v;
+        synchronized(this) {
+            v = (Vector<AbstractMRListener>) cmdListeners.clone();
+        }
+        // forward to all listeners
+        int cnt = v.size();
+        for (int i=0; i < cnt; i++) {
+            AbstractMRListener client = v.elementAt(i);
+            if (log.isDebugEnabled()) log.debug("notify client: "+client);
+            try {
+                //skip dest for now, we'll send the message to there last.
+        if(dest!=client)
+                    forwardReply(client, r);
+            }
+            catch (Exception ex) {
+                log.warn("notify: During reply dispatch to "+client+"\nException "+ex);
+                ex.printStackTrace();
+            }
+        // forward to the last listener who send a message
+        // this is done _second_ so monitoring can have already stored the reply
+        // before a response is sent
+        if (dest != null) forwardReply(dest, r);
+
+        }
+    }
+
+    /**
+     * Internal class to remember the Reply object and destination
+     * listener with a reply is received.
+     */
+    protected static class SRCPRcvNotifier implements Runnable {
+        SimpleNode e;
+        SRCPListener mDest;
+        SRCPTrafficController mTC;
+        SRCPRcvNotifier(SimpleNode n, AbstractMRListener pDest,
+                    AbstractMRTrafficController pTC) {
+            e=n;
+            mDest = (SRCPListener) pDest;
+            mTC = (SRCPTrafficController) pTC;
+        }
+         public void run() {
+            log.debug("Delayed rcv notify starts");
+            mTC.notifyReply(e, mDest);
+        }
+    } // SRCPRcvNotifier
+
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPTrafficController.class.getName());
 }

@@ -158,23 +158,45 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public SRCPMessage getReadPagedCV(int cv) {
-	String msg = "GET 1 SM -1 CV " + cv + "\n";
+    static public SRCPMessage getReadDirectCV(int cv) {
+	String msg = "GET 1 SM 0 CV " + cv + "\n";
 	SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
         return m;
     }
 
-    static public SRCPMessage getConfirmPagedCV(int cv, int val) {
-	String msg = "VERIFY 1 SM -1 CV " + cv + " " + val + "\n";
+    static public SRCPMessage getConfirmDirectCV(int cv, int val) {
+	String msg = "VERIFY 1 SM 0 CV " + cv + " " + val + "\n";
 	SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
         return m;
     
     }
 
-    static public SRCPMessage getWritePagedCV(int cv, int val) {
-	String msg = "SET 1 SM -1 CV " + cv + " " + val + "\n";
+    static public SRCPMessage getWriteDirectCV(int cv, int val) {
+	String msg = "SET 1 SM 0 CV " + cv + " " + val + "\n";
+	SRCPMessage m = new SRCPMessage(msg);
+        m.setTimeout(LONG_TIMEOUT);
+        return m;
+    }
+
+    static public SRCPMessage getReadDirectBitCV(int cv,int bit) {
+	String msg = "GET 1 SM 0 CVBIT " + cv + " " + bit +"\n";
+	SRCPMessage m = new SRCPMessage(msg);
+        m.setTimeout(LONG_TIMEOUT);
+        return m;
+    }
+
+    static public SRCPMessage getConfirmDirectBitCV(int cv, int bit, int val) {
+	String msg = "VERIFY 1 SM 0 CV " + cv + " " + bit + " " + val + "\n";
+	SRCPMessage m = new SRCPMessage(msg);
+        m.setTimeout(LONG_TIMEOUT);
+        return m;
+    
+    }
+
+    static public SRCPMessage getWriteDirectBitCV(int cv, int bit, int val) {
+	String msg = "SET 1 SM 0 CV " + cv + " " + bit + " " + val + "\n";
 	SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
         return m;
@@ -182,7 +204,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
     static public SRCPMessage getReadRegister(int reg) {
         if (reg>8) log.error("register number too large: "+reg);
-	String msg = "GET 1 SM -1 REG " + reg + "\n";
+	String msg = "GET 1 SM 0 REG " + reg + "\n";
 	SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
         return m;
@@ -190,7 +212,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
     static public SRCPMessage getConfirmRegister(int reg, int val) {
         if (reg>8) log.error("register number too large: "+reg);
-	String msg = "VERIFY 1 SM -1 REG " + reg + " " + val + "\n";
+	String msg = "VERIFY 1 SM 0 REG " + reg + " " + val + "\n";
 	SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
         return m;
@@ -198,7 +220,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
     static public SRCPMessage getWriteRegister(int reg, int val) {
         if (reg>8) log.error("register number too large: "+reg);
-	String msg = "SET 1 SM -1 REG " + reg + " " + val + "\n";
+	String msg = "SET 1 SM 0 REG " + reg + " " + val + "\n";
 	SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
         return m;

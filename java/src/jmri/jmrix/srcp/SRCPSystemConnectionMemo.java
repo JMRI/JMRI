@@ -60,7 +60,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      */
     public void configureManagers() {
     
-        setProgrammerManager(new SRCPProgrammerManager(new SRCPProgrammer(), this));
+        setProgrammerManager(new SRCPProgrammerManager(new SRCPProgrammer(this), this));
     
         jmri.InstanceManager.setProgrammerManager(getProgrammerManager());
      

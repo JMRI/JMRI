@@ -18,8 +18,10 @@ public class SRCPOpsModeProgrammer extends SRCPProgrammer  {
 
     int mAddress;
     boolean mLongAddr;
-    public SRCPOpsModeProgrammer(int pAddress, boolean pLongAddr) {
 
+    public SRCPOpsModeProgrammer(int pAddress, boolean pLongAddr,
+           SRCPSystemConnectionMemo memo) {
+        super(memo);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
     }

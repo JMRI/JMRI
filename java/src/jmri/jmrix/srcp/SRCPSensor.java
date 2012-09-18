@@ -98,6 +98,9 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
         }
 
         public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {	
+           if(log.isDebugEnabled())
+              log.debug("reply called with simpleNode " + n.jjtGetValue());
+           reply(new SRCPReply(n));
         }
 
         public void message(SRCPMessage m) {
