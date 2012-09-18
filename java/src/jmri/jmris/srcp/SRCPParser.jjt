@@ -97,6 +97,11 @@ TOKEN :
 | < INFO: <I><N><F><O>>
 | < COMMAND: <C><O><M><M><A><N><D>>
 
+//programming modes
+| <CVBIT: <C><V><B><I><T>>
+| <CV: <C><V>> 
+| <REG: <R><E><G>> 
+
 // commands 
 | < GET: <G><E><T> >
 | < SET: <S><E><T> >
@@ -194,6 +199,26 @@ SimpleNode address():{SimpleNode s;}
   }
 }
 
+SimpleNode value():{SimpleNode s;}
+{
+  (s=zeroaddress() | s=nonzeroaddress())
+  {
+    log.debug("Value Production "+ s.jjtGetValue());
+    jjtThis.jjtSetValue(s.jjtGetValue());
+    return jjtThis;
+  }
+}
+
+SimpleNode cvno():{SimpleNode s;}
+{
+  ( s=nonzeroaddress())
+  {
+    log.debug("CV Number Production "+ s.jjtGetValue());
+    jjtThis.jjtSetValue(s.jjtGetValue());
+    return jjtThis;
+  }
+}
+
 SimpleNode zeroaddress():{Token t;}
 {
   t=<ZEROADDR>
@@ -252,7 +277,7 @@ SimpleNode get():{}
   <GET> bus() ( fb() address() | 
                 ga() address() port() | 
                 gl() address() | 
-                sm() address() | 
+                sm() address() progmode() cvno() | 
                 time() | 
                 power() | 
                 server() | 
@@ -269,7 +294,7 @@ SimpleNode get():{}
 SimpleNode set():{}
 {
   <SET> ( ( bus() ( gl() | 
-                sm() | 
+                sm() address() progmode() cvno() value() | 
                 ga() address() port() zeroone() (delay()|timeout()) | 
                 fb() address() zeroone()| 
                 time() | 
@@ -352,10 +377,13 @@ SimpleNode gl():{}
   {return jjtThis;}
 }
 
-SimpleNode sm():{}
+SimpleNode sm():{Token t;}
 {
-  <SM>
-  {return jjtThis;}
+  t=<SM> 
+  {
+     jjtThis.jjtSetValue(t.image);
+     return jjtThis;
+  }
 }
 
 SimpleNode ga():{Token t;}
@@ -473,5 +501,36 @@ SimpleNode timeout():{Token t;}
      log.debug("Timeout Production ");
      return jjtThis;
   }
+}
+
+// service mode programming modes
+
+SimpleNode progmode():{SimpleNode s;}
+{
+  // programming mode has 3 possibilities
+  ( s=cvbit() | s=cv() | s=reg() )
+  {
+     log.debug("Programming Mode Production ");
+     return jjtThis;
+  }
+}
+
+
+SimpleNode cv():{}
+{
+  <CV>
+  {return jjtThis;}
+}
+
+SimpleNode cvbit():{}
+{
+  <CVBIT>
+  {return jjtThis;}
+}
+
+SimpleNode reg():{}
+{
+  <REG>
+  {return jjtThis;}
 }
 

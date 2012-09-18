@@ -72,6 +72,7 @@ public class JmriSRCPServer extends JmriServer{
         sh.setPowerServer(new JmriSRCPPowerServer(outStream));
         sh.setTurnoutServer(new JmriSRCPTurnoutServer(inStream,outStream));
         sh.setSensorServer(new JmriSRCPSensorServer(inStream,outStream));
+        sh.setProgrammerServer(new JmriSRCPProgrammerServer(outStream));
 
           // Start by sending a welcome message
           outStream.writeBytes("SRCP 0.8.3\n\r");

@@ -17,6 +17,7 @@ public class ServiceHandler {
      private AbstractLightServer lightServer = null;
      private AbstractTurnoutServer turnoutServer = null;
      private AbstractSensorServer sensorServer = null;
+     private AbstractProgrammerServer programmerServer = null;
 
      /*
       *  set the powerServer instance
@@ -96,6 +97,26 @@ public class ServiceHandler {
      public AbstractSensorServer getSensorServer()
      {
           return sensorServer;
+     }
+
+    /*
+      *  set the programmerServer instance
+      *  @param ps is an instance of an AbstractProgrammerServer 
+      *            derived class.
+      */
+     public void setProgrammerServer(AbstractProgrammerServer ps)
+     {
+          programmerServer = ps;
+     }
+
+     /*
+      *  get the programmerServer instance
+      *  @return an instance of an AbstractProgrammerServer 
+      *            derived class.
+      */
+     public AbstractProgrammerServer getProgrammerServer()
+     {
+          return programmerServer;
      }
 
 }

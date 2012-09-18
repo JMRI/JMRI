@@ -69,6 +69,28 @@ public class SRCPVisitor implements SRCPParserVisitor {
        } catch(java.io.IOException ie) {
        }
     }
+    else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("SM"))
+    {
+      // This is a Service Mode read request.
+      int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
+      int address = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
+      int modeno=jmri.Programmer.REGISTERMODE;
+      if(node.jjtGetChild(3).getClass()==ASTcv.class)
+         modeno=jmri.Programmer.DIRECTBYTEMODE;
+      else if(node.jjtGetChild(3).getClass()==ASTcvbit.class)
+         modeno=jmri.Programmer.DIRECTBITMODE;
+     
+      int cv = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(4)).jjtGetValue()));
+       //try {
+       ((jmri.jmris.srcp.JmriSRCPProgrammerServer)((jmri.jmris.ServiceHandler)data).getProgrammerServer()).readCV(modeno,cv);
+       //} catch(java.io.IOException ie) {
+       //}
+       
+    }
+    else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("GL"))
+    {
+      // This is a Generic Loco request
+    }
     return data;
   }
 
@@ -113,6 +135,29 @@ public class SRCPVisitor implements SRCPParserVisitor {
              // If we do, something is horibly wrong.
        } catch(java.io.IOException ie) {
        }
+    }
+    else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("SM"))
+    {
+      // This is a Service Mode write request
+      int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
+      int address = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
+      int modeno=jmri.Programmer.REGISTERMODE;
+      if(node.jjtGetChild(3).getClass()==ASTcv.class)
+         modeno=jmri.Programmer.DIRECTBYTEMODE;
+      else if(node.jjtGetChild(3).getClass()==ASTcvbit.class)
+         modeno=jmri.Programmer.DIRECTBITMODE;
+      int cv = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(4)).jjtGetValue()));
+      int value = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(5)).jjtGetValue()));
+     
+       //try {
+       ((jmri.jmris.srcp.JmriSRCPProgrammerServer)((jmri.jmris.ServiceHandler)data).getProgrammerServer()).writeCV(modeno,cv,value);
+       //} catch(java.io.IOException ie) {
+       //}
+       
+    }
+    else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("GL"))
+    {
+      // This is a Generic Loco request
     }
     return data;
   }
@@ -208,6 +253,11 @@ public class SRCPVisitor implements SRCPParserVisitor {
     log.debug("Received Address " + node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
+  public Object visit(ASTvalue node, Object data)
+  {
+    log.debug("Received Value " + node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
   public Object visit(ASTzeroaddress node, Object data)
   {
     log.debug("Received Address " + node.jjtGetValue() );
@@ -261,6 +311,31 @@ public class SRCPVisitor implements SRCPParserVisitor {
   public Object visit(ASTconnectionmode node, Object data)
   {
     log.debug("Connection Mode " +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+  public Object visit(ASTcvno node, Object data)
+  {
+    log.debug("CV Number " +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+  public Object visit(ASTprogmode node, Object data)
+  {
+    log.debug("Programming Mode Production" +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+  public Object visit(ASTcv node, Object data)
+  {
+    log.debug("CV Programming Mode " +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+  public Object visit(ASTcvbit node, Object data)
+  {
+    log.debug("CVBIT Programming Mode " +node.jjtGetValue() );
+    return node.childrenAccept(this,data);
+  }
+  public Object visit(ASTreg node, Object data)
+  {
+    log.debug("REG Programming Mode " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
 
