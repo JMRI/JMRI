@@ -115,7 +115,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         }
         case LnConstants.OPC_LONG_ACK: { 
             // might have to resend, check 2nd byte
-            if (lastSWREQ!=null && l.getElement(1)==0x30 && l.getElement(2)==0 & !mTurnoutNoRetry) {
+            if (lastSWREQ!=null && l.getElement(1)==0x30 && l.getElement(2)==0 && !mTurnoutNoRetry) {
                 // received LONG_ACK reject msg, resend
                 fastcontroller.sendLocoNetMessage(lastSWREQ);
             }
