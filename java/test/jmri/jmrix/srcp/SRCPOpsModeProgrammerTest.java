@@ -21,7 +21,12 @@ import java.io.StringReader;
 public class SRCPOpsModeProgrammerTest extends TestCase {
 
     public void testCtor() {
-        SRCPOpsModeProgrammer s = new SRCPOpsModeProgrammer(1,true);
+        SRCPSystemConnectionMemo sm=new SRCPSystemConnectionMemo(new SRCPTrafficController(){
+          @Override
+          public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
+           }
+        });
+        SRCPOpsModeProgrammer s = new SRCPOpsModeProgrammer(1,true,sm);
         Assert.assertNotNull(s);
     }
 

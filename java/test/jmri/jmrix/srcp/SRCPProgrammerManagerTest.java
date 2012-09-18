@@ -26,7 +26,7 @@ public class SRCPProgrammerManagerTest extends TestCase {
           public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
            }
         });
-        SRCPProgrammerManager s = new SRCPProgrammerManager(new SRCPProgrammer(),sm);
+        SRCPProgrammerManager s = new SRCPProgrammerManager(new SRCPProgrammer(sm),sm);
         Assert.assertNotNull(s);
     }
 
