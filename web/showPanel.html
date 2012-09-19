@@ -11,7 +11,14 @@
   <script src="/js/jquery-1.7.1.min.js"></script>
   <script type='text/javascript' src='/js/showPanel.js'></script>
 </head>
-<div id='panelArea'></div>
+<div id="workingMessage" class="modal">
+  <img src='/web/images/ajax-loader.gif'>
+  <div id="messageText"></div>
+<a class="reload" onClick="window.location.reload()" href="#">[Reload Panel]</a>&nbsp;&nbsp;
+<a class="home" href="/">[Home]</a>&nbsp;&nbsp;<a class="list" href="?">[List]</a>
+</div>
+<div id='panelArea'>
+</div>
 <div id="panelFooter">
   <a class="home" href="/">[Home]</a>&nbsp;<a class="list" href="?">[List]</a>
 </div>

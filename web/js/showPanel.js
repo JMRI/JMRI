@@ -14,16 +14,15 @@
  *  		3) receive change? set related widget(s) states, redraw widget(s), and go back to 2)
  *  		4) browser user clicks on widget? send "set state" command and go to 3)
  *  		5) error? go back to 2) 
- *  TODO: handle click on multisensor
- *  TODO: move occupiedsensor state to widget from block, to allow skipping of unchanged
- *  TODO: draw dashed track
  *  TODO: add error message and stop heartbeat on change failure, add retry button
  *  TODO: if no elements found, don't send list to xmlio server (prevent looping)
+ *  TODO: move occupiedsensor state to widget from block, to allow skipping of unchanged
  *  TODO: handle drawn ellipse, levelxing (for LMRC APB)
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
  *  TODO: determine proper level (z-index) for canvas layer
  *  TODO: fix getNextState() to handle clicking multi-state widgets (like signalheads)
+ *  TODO: handle segmented click on multisensor and enable
  *  TODO: diagnose and correct the small position issues visible with footscray
  *  TODO: verify that assuming same rotation and scale for all icons in a "set" is OK
  *  TODO: deal with mouseleave, mouseout, touchout, etc.
@@ -32,18 +31,20 @@
  *  TODO: handle turnoutdrawunselectedleg = "yes"
  *  TODO: make turnout occupancy work like LE panels (more than just checking A)
  *  TODO: store all tracksegments (mainline) before main loop (cross-dependencies, turnout to tracksegment) 
+ *  TODO: draw dashed curves
  *   
  **********************************************************************************************/
 
 //persistent (global) variables
-var $gTimeout = 120; //timeout in seconds
+var $gTimeout = 15; //timeout in seconds
 var $gWidgets = {};  //array of all widget objects, key=CSSId
 var $gPanel = {}; 	//store overall panel info
 var $gPts = {}; 	//array of all points, key="pointname.pointtype" (used for layoutEditor panels)
-var $gBlks = {}; 	//array of all blocks, key="pointname.pointtype" (used for layoutEditor panels)
+var $gBlks = {}; 	//array of all blocks, key="blockname" (used for layoutEditor panels)
 var $gXHRList;  	//persistent variable to allow aborting of superseded "list" connections
 var $gXHRChg;	  	//persistent variable to allow aborting of superseded "change" connections
 var $gCtx;  //persistent context of canvas layer   
+var $gDashArray = [12,12]; //on,off of dashed lines
 var DOWNEVENT;  //either mousedown or touchstart, based on device
 var UPEVENT;    //either mouseup or touchend, based on device
 
@@ -80,6 +81,8 @@ var DOUBLE_SLIP = 8;
 //process the response returned for the requestPanelXML command
 var $processPanelXML = function($returnedData, $success, $xhr) {
 
+	$('div#messageText').text("rendering panel from xml, please wait...");
+	$('div#workingMessage').show();
 	var $xml = $($returnedData);  //jQuery-ize returned data for easier access
 
 	//remove whitespace
@@ -92,6 +95,8 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 	});
 	$('div#panelArea').width($gPanel.width);
 	$('div#panelArea').height($gPanel.height);
+	$('div#workingMessage').width($gPanel.width);
+	$('div#workingMessage').height($gPanel.height);
 	
 	//insert the canvas layer and set up context used by layouteditor "drawn" objects, set some defaults 
 	if ($gPanel.paneltype == "LayoutPanel") {
@@ -375,6 +380,8 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 	$widget['state'] = UNKNOWN;
 	$gWidgets[$widget.id] = $widget;
 
+	$('div#workingMessage').hide();
+
 	//send initial states to xmlio server
 	$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');
 
@@ -425,7 +432,11 @@ function $drawTrackSegment($widget) {
 	}
 	if ($widget.angle == undefined) {
 		//draw straight line between the points
-		$drawLine($pt1.x, $pt1.y, $pt2.x, $pt2.y, $color, $width);
+		if ($widget.dashed == "yes") {
+			$drawDashedLine($pt1.x, $pt1.y, $pt2.x, $pt2.y,  $color, $width, $gDashArray);	
+		} else {
+			$drawLine($pt1.x, $pt1.y, $pt2.x, $pt2.y, $color, $width);
+		}
 	} else {
 		//draw curved line 
 		if ($widget.flip == "yes") {
@@ -435,7 +446,45 @@ function $drawTrackSegment($widget) {
 		}
 	}
 };
+//drawLine, passing in values from xml
+function $drawDashedLine($pt1x, $pt1y, $pt2x, $pt2y, $color, $width, dashArray) {
+	var $savLineWidth = $gCtx.lineWidth;
+	var $savStrokeStyle = $gCtx.strokeStyle;
+	if ($color != undefined)  $gCtx.strokeStyle = $color;
+	if ($width != undefined)  $gCtx.lineWidth = $width;
+	$gCtx.beginPath();  
+	$gCtx.dashedLine($pt1x, $pt1y, $pt2x, $pt2y, dashArray);  
+	$gCtx.closePath();  
+	$gCtx.stroke();  
+	// put color and width back to default
+	$gCtx.strokeStyle = $savStrokeStyle;    
+	$gCtx.lineWidth = $savLineWidth;    
+};    	
 
+//dashed line code copied from: http://stackoverflow.com/questions/4576724/dotted-stroke-in-canvas
+var CP = window.CanvasRenderingContext2D && CanvasRenderingContext2D.prototype;
+if (CP.lineTo) {
+    CP.dashedLine = function(x, y, x2, y2, da) {
+        if (!da) da = [10,5];
+        this.save();
+        var dx = (x2-x), dy = (y2-y);
+        var len = Math.sqrt(dx*dx + dy*dy);
+        var rot = Math.atan2(dy, dx);
+        this.translate(x, y);
+        this.moveTo(0, 0);
+        this.rotate(rot);       
+        var dc = da.length;
+        var di = 0, draw = true;
+        x = 0;
+        while (len > x) {
+            x += da[di++ % dc];
+            if (x > len) x = len;
+            draw ? this.lineTo(x, 0): this.moveTo(x, 0);
+            draw = !draw;
+        }       
+        this.restore();
+    }
+}
 //draw an icon-type widget (pass in widget)
 function $drawIcon($widget) {
 	var $hoverText = "";  
@@ -551,24 +600,24 @@ function $storeTurnoutPoints($widget) {
 	$t['x'] = $widget.xb * 1.0;
 	$t['y'] = $widget.yb * 1.0;
 	$gPts[$t.ident] = $t;
-	var $t = [];
+	$t = [];
 	$t['ident'] = $widget.ident+PT_C;  //store C endpoint
 	$t['x'] = $widget.xc * 1.0;
 	$t['y'] = $widget.yc * 1.0;
 	$gPts[$t.ident] = $t;
-	var $t = [];
 	if ($widget.type==LH_TURNOUT||$widget.type==RH_TURNOUT||$widget.type==WYE_TURNOUT) {
+		$t = [];
 		$t['ident'] = $widget.ident+PT_A;  //calculate and store A endpoint (mirror of B for these)
 		$t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
 		$t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
 		$gPts[$t.ident] = $t;
-		var $t = [];
 	} else if ($widget.type==LH_XOVER||$widget.type==RH_XOVER||$widget.type==WYE_XOVER) {
+		$t = [];
 		$t['ident'] = $widget.ident+PT_A;  //calculate and store A endpoint (mirror of C for these)
 		$t['x'] = $widget.xcen - ($widget.xc - $widget.xcen);
 		$t['y'] = $widget.ycen - ($widget.yc - $widget.ycen);
 		$gPts[$t.ident] = $t;
-		var $t = [];
+		$t = [];
 		$t['ident'] = $widget.ident+PT_D;  //calculate and store D endpoint (mirror of B for these)
 		$t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
 		$t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
@@ -845,6 +894,7 @@ var $sendXMLIOList = function($commandstr){
 		url:  '/xmlio/',
 		data: $commandstr,
 		success: function($r, $s, $x){
+			$('div#workingMessage').hide();
 			if (window.console) console.log( "processing returned list");
 			var $r = $($r);
 			$r.xmlClean();
@@ -879,6 +929,7 @@ var $sendXMLIOChg = function($commandstr){
 			var $r = $($r);
 			$r.xmlClean();
 			$r.find("xmlio").children().each(function(){
+				$('div#workingMessage').hide();
 				if (window.console) console.log("rcvd change "+this.nodeName+" "+$(this).attr('name')+" --> "+$(this).attr('value'));
 //				$setElementState(this.nodeName, $safeName($(this).attr('name')), $(this).attr('value'));
 				$setElementState(this.nodeName, $(this).attr('name'), $(this).attr('value'));
@@ -893,13 +944,13 @@ var $sendXMLIOChg = function($commandstr){
 	});
 };
 
-//handle ajax errors, excluding abort, but including timeout, by resending the list
+//show all ajax errors except for abort (this is expected)
 $(document).ajaxError(function(event,xhr,opt, exception){
 	if (xhr.statusText !="abort") {
-		if (window.console) console.log("AJAX error: " + xhr.statusText + ", retrying....");
-		$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');
-//	} else {
-//		if (window.console) console.log("AJAX Error requesting " + opt.url + ", status= " + xhr.status + " " + xhr.statusText+ " exception=" + exception);
+		var $msg = "AJAX Error requesting " + opt.url + ", status= " + xhr.status + " " + xhr.statusText;
+		$('div#messageText').text($msg);
+		$('div#workingMessage').show();
+		if (window.console) console.log($msg);
 	}
 });
 
@@ -947,15 +998,17 @@ var $showPanelList = function($panelName){
             $h += "</table>";
             $('div#panelArea').html($h); //put table on page
 		},
-		error: function($r, $s, $message){
-			$('div#logArea').append("ERROR: " + $message + " sts=" + $s);
-		},
+//		error: function($r, $s, $message){
+//			$('div#logArea').append("ERROR: " + $message + " sts=" + $s);
+//		},
 		dataType: 'xml' //<--dataType
 	});
 };
 
 //request the panel xml from the server, and setup callback to process the response
 var $requestPanelXML = function($panelName){
+	$('div#messageText').text("requesting panel xml from JMRI, please wait...");
+	$('div#workingMessage').show();
 
 	$.ajax({
 		type: 'GET',
@@ -963,9 +1016,9 @@ var $requestPanelXML = function($panelName){
 		success: function($r, $s, $x){
 			$processPanelXML($r, $s, $x); //handle returned data
 		},
-		error: function($r, $s, $message){
-			$('div#logArea').append("ERROR: " + $message + " sts=" + $s);
-		},
+//		error: function($r, $s, $message){
+//			$('div#logArea').append("ERROR: " + $message + " sts=" + $s);
+//		},
 		async: true,
 		timeout: 5000,  
 		dataType: 'xml' //<--dataType
@@ -1017,22 +1070,23 @@ var $getWidgetFamily = function($widget) {
 	return; //unrecognized widget returns undefined
 };    	
 
-var timer;
+var timer;  //persistent var used by this function
 function endAndStartTimer() {
-  window.clearTimeout(timer);
-  timer = window.setTimeout(function(){
-//	  if (window.console) console.log("timer fired");
-	  var $nextState = $getNextState($gWidgets["ISXMLIOHEARTBEAT"].state);
-	  $gWidgets["ISXMLIOHEARTBEAT"].state = $nextState; 
-	  $sendElementChange("sensor", "ISXMLIOHEARTBEAT", $nextState)
-	  endAndStartTimer(); //repeat
-  	}, $gTimeout * 1000); 
+	window.clearTimeout(timer);
+	if ($gWidgets["ISXMLIOHEARTBEAT"] != undefined) { //don't bother if widgets not loaded
+		timer = window.setTimeout(function(){
+//			if (window.console) console.log("timer fired");
+			var $nextState = $getNextState($gWidgets["ISXMLIOHEARTBEAT"].state);
+			$gWidgets["ISXMLIOHEARTBEAT"].state = $nextState; 
+			$sendElementChange("sensor", "ISXMLIOHEARTBEAT", $nextState)
+			endAndStartTimer(); //repeat
+		}, $gTimeout * 1000);
+	}
 }
-
 
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 $(document).ready(function() {
-	
+
 	//if panelname not passed in, show list of available panels
 	var $panelName = getParameterByName('name');
 	if ($panelName == undefined) {
