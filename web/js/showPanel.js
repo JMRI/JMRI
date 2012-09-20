@@ -15,7 +15,7 @@
  *  		4) browser user clicks on widget? send "set state" command and go to 3)
  *  		5) error? go back to 2) 
  *  TODO: move occupiedsensor state to widget from block, to allow skipping of unchanged
- *  TODO: handle drawn ellipse, levelxing (for LMRC APB)
+ *  TODO: handle drawn ellipse (see LMRC APB)
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
  *  TODO: determine proper level (z-index) for canvas layer
@@ -28,7 +28,7 @@
  *  TODO: remove duplicates from list before sending, only build list once
  *  TODO: handle really exotic layoutturnouts, such as double-crossovers
  *  TODO: handle turnoutdrawunselectedleg = "yes"
- *  TODO: make turnout occupancy work like LE panels (more than just checking A)
+ *  TODO: make turnout, levelXing occupancy work like LE panels (more than just checking A)
  *  TODO: store all tracksegments (mainline) before main loop (cross-dependencies, turnout to tracksegment) 
  *  TODO: draw dashed curves
  *  TODO: figure out "secondary" turnout control (crossovers in WCL)
@@ -379,6 +379,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 	$('.clickable:not(.momentary)').bind(DOWNEVENT, function(e) {
 	    var $newState = $getNextState($gWidgets[this.id].state);  //determine next state from current state
 //		$setWidgetState(this.id, $newState);
+		$setWidgetState(this.id, UNKNOWN);
 		$sendElementChange($gWidgets[this.id].element, $gWidgets[this.id].name, $newState);  //send new value to xmlio server
 	});
 	
@@ -402,11 +403,10 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 	$widget['state'] = UNKNOWN;
 	$gWidgets[$widget.id] = $widget;
 
+	$drawAllWidgets(); //draw all the widgets once more, to address some bidrectional dependencies in the xml
 	$('div#workingMessage').hide();
-
-	//send initial states to xmlio server
-	$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');
-
+	$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>'); //send initial states to xmlio server
+	endAndStartTimer(); //initiate the heartbeat timer
 };    	
 
 //draw a Circle (color and width are optional)
@@ -1169,6 +1169,24 @@ function endAndStartTimer() {
 	}
 }
 
+//redraw all "drawn" elements to overcome some bidirectional dependencies in the xml
+var $drawAllWidgets = function() {
+	//loop thru widgets, setting all matches
+	jQuery.each($gWidgets, function($id, $widget) {
+		switch ($widget.widgetType) {
+		case 'layoutturnout' :
+			$drawTurnout($widget);
+			break;
+		case 'tracksegment' :
+			$drawTrackSegment($widget);
+			break;
+		case 'levelxing' :
+			$drawLevelXing($widget);
+			break;
+		}
+	});
+};
+
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 $(document).ready(function() {
 
@@ -1197,7 +1215,6 @@ $(document).ready(function() {
 		//request actual xml of panel, and process it on return
 		$requestPanelXML($panelName);
 		
-		endAndStartTimer();
 	}
 	
 });
