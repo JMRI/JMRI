@@ -130,6 +130,20 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
             if (log.isDebugEnabled()) log.debug("N layoutblock elements: "+num);
 
 
+    		// include LevelXings
+    		num = editor.xingList.size();
+            if (log.isDebugEnabled()) log.debug("N levelxing elements: "+num);
+    		if (num>0) {
+    			for (int i=0; i<num; i++) {
+    				Object sub = editor.xingList.get(i);
+    				try {
+    					Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+    					if (e!=null) panel.addContent(e);
+    				} catch (Exception e) {
+    					log.error("Error storing panel levelxing element: "+e); 
+    				}
+    			}
+            }
     		// include LayoutTurnouts
     		num = editor.turnoutList.size();
             if (log.isDebugEnabled()) log.debug("N layoutturnout elements: "+num);
@@ -159,20 +173,6 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
     				}
     			}
             }		
-    		// include LevelXings
-    		num = editor.xingList.size();
-            if (log.isDebugEnabled()) log.debug("N levelxing elements: "+num);
-    		if (num>0) {
-    			for (int i=0; i<num; i++) {
-    				Object sub = editor.xingList.get(i);
-    				try {
-    					Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-    					if (e!=null) panel.addContent(e);
-    				} catch (Exception e) {
-    					log.error("Error storing panel levelxing element: "+e); 
-    				}
-    			}
-            }
     		// include LayoutSlips
     		num = editor.slipList.size();
             if (log.isDebugEnabled()) log.debug("N layoutSlip elements: "+num);

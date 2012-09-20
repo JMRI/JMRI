@@ -14,8 +14,6 @@
  *  		3) receive change? set related widget(s) states, redraw widget(s), and go back to 2)
  *  		4) browser user clicks on widget? send "set state" command and go to 3)
  *  		5) error? go back to 2) 
- *  TODO: add error message and stop heartbeat on change failure, add retry button
- *  TODO: if no elements found, don't send list to xmlio server (prevent looping)
  *  TODO: move occupiedsensor state to widget from block, to allow skipping of unchanged
  *  TODO: handle drawn ellipse, levelxing (for LMRC APB)
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
@@ -24,19 +22,21 @@
  *  TODO: fix getNextState() to handle clicking multi-state widgets (like signalheads)
  *  TODO: handle segmented click on multisensor and enable
  *  TODO: diagnose and correct the small position issues visible with footscray
+ *  TODO: diagnose and correct the hover dislocation on images (or turn it off)
  *  TODO: verify that assuming same rotation and scale for all icons in a "set" is OK
- *  TODO: deal with mouseleave, mouseout, touchout, etc.
- *  TODO: remove duplicates from list before sending
+ *  TODO: deal with mouseleave, mouseout, touchout, etc. Slide off Stop button on rb1 for example.
+ *  TODO: remove duplicates from list before sending, only build list once
  *  TODO: handle really exotic layoutturnouts, such as double-crossovers
  *  TODO: handle turnoutdrawunselectedleg = "yes"
  *  TODO: make turnout occupancy work like LE panels (more than just checking A)
  *  TODO: store all tracksegments (mainline) before main loop (cross-dependencies, turnout to tracksegment) 
  *  TODO: draw dashed curves
+ *  TODO: figure out "secondary" turnout control (crossovers in WCL)
  *   
  **********************************************************************************************/
 
 //persistent (global) variables
-var $gTimeout = 15; //timeout in seconds
+var $gTimeout = 45; //timeout in seconds
 var $gWidgets = {};  //array of all widget objects, key=CSSId
 var $gPanel = {}; 	//store overall panel info
 var $gPts = {}; 	//array of all points, key="pointname.pointtype" (used for layoutEditor panels)
@@ -60,6 +60,11 @@ var PT_A = ".2";
 var PT_B = ".3";
 var PT_C = ".4";
 var PT_D = ".5";
+var LEVEL_XING_A = ".6";  
+var LEVEL_XING_B = ".7";
+var LEVEL_XING_C = ".8";
+var LEVEL_XING_D = ".9";
+
 var DARK        = 0x00;  //named constants for signalhead states
 var RED         = 0x01;
 var FLASHRED    = 0x02;
@@ -302,7 +307,9 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$widget['element']  =	"turnout"; //what xmlio server calls this
 						$widget['x']  		=	$widget.xcen; //normalize x,y 
 						$widget['y']  		=	$widget.ycen;
-						$widget.classes 	+= 	$widget.element + " clickable ";
+						if ($widget.name != undefined) { //make it clickable (unless no turnout assigned)
+							$widget.classes	+= 	$widget.element + " clickable ";
+						}
 						//set widget occupancysensor from block to speed affected changes later
 						if ($gBlks[$widget.blockname] != undefined) {
 							$widget['occupancysensor'] = $gBlks[$widget.blockname].occupancysensor; 
@@ -333,6 +340,21 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						//draw the tracksegment
 						$drawTrackSegment($widget);
 						break;
+					case "levelxing" :
+						$widget['x']  		=	$widget.xcen; //normalize x,y 
+						$widget['y']  		=	$widget.ycen;
+						//set widget occupancysensor from block to speed affected changes later
+						//TODO: handle BD block
+						if ($gBlks[$widget.blocknameac] != undefined) {
+							$widget['occupancysensor'] = $gBlks[$widget.blocknameac].occupancysensor; 
+						}
+						//store widget in persistent array
+						$gWidgets[$widget.id] = $widget; 
+						//also store the turnout's 3 end points for other connections
+						$storeLevelXingPoints($widget);  
+						//draw the turnout
+						$drawLevelXing($widget);  
+						break;
 					case "backgroundColor" :  //set background color of the panel itself
 						$('div#panelArea').css({"background-color" : "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ")"});
 						break;
@@ -356,18 +378,18 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 	//hook up mousedown state toggle function to non-momentary clickable widgets
 	$('.clickable:not(.momentary)').bind(DOWNEVENT, function(e) {
 	    var $newState = $getNextState($gWidgets[this.id].state);  //determine next state from current state
-		$setWidgetState(this.id, $newState);
+//		$setWidgetState(this.id, $newState);
 		$sendElementChange($gWidgets[this.id].element, $gWidgets[this.id].name, $newState);  //send new value to xmlio server
 	});
 	
 	//momentary widgets always go active on mousedown, and inactive on mouseup
 	$('.clickable.momentary').bind(DOWNEVENT, function(e) {
 	    var $newState = ACTIVE; 
-		$setWidgetState(this.id, $newState);
+//		$setWidgetState(this.id, $newState);
 		$sendElementChange($gWidgets[this.id].element, $gWidgets[this.id].name, $newState);  //send new value to xmlio server
 	}).bind(UPEVENT, function(e) {
 	    var $newState = INACTIVE; 
-		$setWidgetState(this.id, $newState);
+//		$setWidgetState(this.id, $newState);
 		$sendElementChange($gWidgets[this.id].element, $gWidgets[this.id].name, $newState);  //send new value to xmlio server
 	});
 	
@@ -485,6 +507,7 @@ if (CP.lineTo) {
         this.restore();
     }
 }
+
 //draw an icon-type widget (pass in widget)
 function $drawIcon($widget) {
 	var $hoverText = "";  
@@ -505,7 +528,48 @@ function $drawIcon($widget) {
 		} 
 	}
 	$setWidgetPosition($("div#panelArea>#"+$widget.id));
+};
 
+//draw a LevelXing (pass in widget)
+function $drawLevelXing($widget) {
+	var $width = $gPanel.sidetrackwidth;
+	 //set levelxing width same as the A track
+	if ($gWidgets[$widget.connectaname] !=undefined) {
+		if ($gWidgets[$widget.connectaname].mainline == "yes") {
+			$width = $gPanel.mainlinetrackwidth; 
+		}
+	} else {
+		if (window.console) console.log("could not get trackwidth of "+$widget.connectaname+" for "+$widget.name);
+	}
+	if ($gPanel.turnoutcircles == "yes") {
+		$drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $gPanel.turnoutcirclecolor, 1);
+	}
+	//	set trackcolor based on block occupancy state of AC block
+	var $color = $gPanel.defaulttrackcolor;
+	var $blk = $gBlks[$widget.blocknameac];
+	if ($blk != undefined) {
+		if ($blk.occupiedsense == $blk.state) { //set the color based on occupancy state
+			$color = $blk.occupiedcolor;
+		} else {
+			$color = $blk.trackcolor;
+		}
+	}
+	var cenx = $widget.xcen;
+	var ceny = $widget.ycen
+	var ax = $gPts[$widget.ident+LEVEL_XING_A].x;  //retrieve the points
+	var ay = $gPts[$widget.ident+LEVEL_XING_A].y;
+	var bx = $gPts[$widget.ident+LEVEL_XING_B].x;
+	var by = $gPts[$widget.ident+LEVEL_XING_B].y;
+	var cx = $gPts[$widget.ident+LEVEL_XING_C].x;
+	var cy = $gPts[$widget.ident+LEVEL_XING_C].y;
+	var	dx = $gPts[$widget.ident+LEVEL_XING_D].x;
+	var	dy = $gPts[$widget.ident+LEVEL_XING_D].y;
+
+	//levelxing   A
+	//          D-+-B
+	//            C
+	$drawLine(ax, ay, cx, cy, $color, $width); //A to B
+	$drawLine(dx, dy, bx, by, $color, $width); //D to B
 };
 
 //draw a Turnout (pass in widget)
@@ -517,7 +581,7 @@ function $drawTurnout($widget) {
 			$width = $gPanel.mainlinetrackwidth; 
 		}
 	} else {
-//		if (window.console) console.log("could not get trackwidth of "+$widget.connectaname+" for "+$widget.name);
+		if (window.console) console.log("could not get trackwidth of "+$widget.connectaname+" for "+$widget.name);
 	}
 	if ($gPanel.turnoutcircles == "yes") {
 		$drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $gPanel.turnoutcirclecolor, 1);
@@ -556,15 +620,18 @@ function $drawTurnout($widget) {
 	//         \-C
 	if ($widget.type==LH_TURNOUT||$widget.type==RH_TURNOUT||$widget.type==WYE_TURNOUT) {
 		$drawLine(ax, ay, cenx, ceny, $color, $width); //A to center (incoming)
-		$drawLine(cenx, ceny, bx, by, erase, $width); //erase center to B (straight leg)
-		$drawLine(cenx, ceny, cx, cy, erase, $width); //erase center to C (diverging leg)
-		//if closed or thrown, draw the selected leg in the default track color
+		//if closed or thrown, draw the selected leg in the default track color and erase the other one
 		if ($widget.state == CLOSED || $widget.state == THROWN) {
 			if ($widget.state == $widget.continuing) {
+				$drawLine(cenx, ceny, cx, cy, erase, $width); //erase center to C (diverging leg)
 				$drawLine(cenx, ceny, bx, by, $color, $width); //center to B (straight leg)
 			} else {
+				$drawLine(cenx, ceny, bx, by, erase, $width); //erase center to B (straight leg)
 				$drawLine(cenx, ceny, cx, cy, $color, $width); //center to C (diverging leg)
 			}
+		} else {  //if undefined, draw both legs
+			$drawLine(cenx, ceny, bx, by, $color, $width); //center to B (straight leg)
+			$drawLine(cenx, ceny, cx, cy, $color, $width); //center to C (diverging leg)
 		}
 	// xover A--B
 	//       D--C
@@ -593,36 +660,61 @@ function $drawTurnout($widget) {
 };
 
 //store the various points defined with a Turnout (pass in widget)
-//   see jmri.jmrit.display.layoutEditor.LayoutTurnout for background
+//see jmri.jmrit.display.layoutEditor.LayoutTurnout.java for background
 function $storeTurnoutPoints($widget) {
+var $t = [];
+$t['ident'] = $widget.ident+PT_B;  //store B endpoint
+$t['x'] = $widget.xb * 1.0;
+$t['y'] = $widget.yb * 1.0;
+$gPts[$t.ident] = $t;
+$t = [];
+$t['ident'] = $widget.ident+PT_C;  //store C endpoint
+$t['x'] = $widget.xc * 1.0;
+$t['y'] = $widget.yc * 1.0;
+$gPts[$t.ident] = $t;
+if ($widget.type==LH_TURNOUT||$widget.type==RH_TURNOUT||$widget.type==WYE_TURNOUT) {
+	$t = [];
+	$t['ident'] = $widget.ident+PT_A;  //calculate and store A endpoint (mirror of B for these)
+	$t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
+	$t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
+	$gPts[$t.ident] = $t;
+} else if ($widget.type==LH_XOVER||$widget.type==RH_XOVER||$widget.type==WYE_XOVER) {
+	$t = [];
+	$t['ident'] = $widget.ident+PT_A;  //calculate and store A endpoint (mirror of C for these)
+	$t['x'] = $widget.xcen - ($widget.xc - $widget.xcen);
+	$t['y'] = $widget.ycen - ($widget.yc - $widget.ycen);
+	$gPts[$t.ident] = $t;
+	$t = [];
+	$t['ident'] = $widget.ident+PT_D;  //calculate and store D endpoint (mirror of B for these)
+	$t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
+	$t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
+	$gPts[$t.ident] = $t;
+}
+};    	
+
+//store the various points defined with a LevelXing (pass in widget)
+//see jmri.jmrit.display.layoutEditor.LevelXing.java for background
+function $storeLevelXingPoints($widget) {
 	var $t = [];
-	$t['ident'] = $widget.ident+PT_B;  //store B endpoint
+	$t['ident'] = $widget.ident+LEVEL_XING_A;  //store A endpoint
+	$t['x'] = $widget.xa * 1.0;
+	$t['y'] = $widget.ya * 1.0;
+	$gPts[$t.ident] = $t;
+	$t = [];
+	$t['ident'] = $widget.ident+LEVEL_XING_B;  //store B endpoint
 	$t['x'] = $widget.xb * 1.0;
 	$t['y'] = $widget.yb * 1.0;
 	$gPts[$t.ident] = $t;
 	$t = [];
-	$t['ident'] = $widget.ident+PT_C;  //store C endpoint
-	$t['x'] = $widget.xc * 1.0;
-	$t['y'] = $widget.yc * 1.0;
+	$t['ident'] = $widget.ident+LEVEL_XING_C;  //calculate and store A endpoint (mirror of A for these)
+	$t['x'] = $widget.xcen - ($widget.xa - $widget.xcen);
+	$t['y'] = $widget.ycen - ($widget.ya - $widget.ycen);
 	$gPts[$t.ident] = $t;
-	if ($widget.type==LH_TURNOUT||$widget.type==RH_TURNOUT||$widget.type==WYE_TURNOUT) {
-		$t = [];
-		$t['ident'] = $widget.ident+PT_A;  //calculate and store A endpoint (mirror of B for these)
-		$t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
-		$t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
-		$gPts[$t.ident] = $t;
-	} else if ($widget.type==LH_XOVER||$widget.type==RH_XOVER||$widget.type==WYE_XOVER) {
-		$t = [];
-		$t['ident'] = $widget.ident+PT_A;  //calculate and store A endpoint (mirror of C for these)
-		$t['x'] = $widget.xcen - ($widget.xc - $widget.xcen);
-		$t['y'] = $widget.ycen - ($widget.yc - $widget.ycen);
-		$gPts[$t.ident] = $t;
-		$t = [];
-		$t['ident'] = $widget.ident+PT_D;  //calculate and store D endpoint (mirror of B for these)
-		$t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
-		$t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
-		$gPts[$t.ident] = $t;
-	}
+	$t = [];
+	$t['ident'] = $widget.ident+LEVEL_XING_D;  //calculate and store D endpoint (mirror of B for these)
+	$t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
+	$t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
+	$gPts[$t.ident] = $t;
 };    	
 
 //drawLine, passing in values from xml
@@ -895,17 +987,16 @@ var $sendXMLIOList = function($commandstr){
 		data: $commandstr,
 		success: function($r, $s, $x){
 			$('div#workingMessage').hide();
+			endAndStartTimer();
 			if (window.console) console.log( "processing returned list");
 			var $r = $($r);
 			$r.xmlClean();
 			$r.find("xmlio").children().each(function(){
 //				if (window.console) console.log("set type="+this.nodeName+" name="+$(this).attr('name')+" to value="+$(this).attr('value'));
-//				$setElementState(this.nodeName, $safeName($(this).attr('name')), $(this).attr('value'));
 				$setElementState(this.nodeName, $(this).attr('name'), $(this).attr('value'));
 			});
 			//send current xml states to xmlio server, will "stall" and wait for changes if matched
 			$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');
-			endAndStartTimer();
 		},
 		async: true,
 		timeout: $gTimeout * 3 * 1000,  //triple the time timeout
@@ -926,16 +1017,15 @@ var $sendXMLIOChg = function($commandstr){
 		data: $commandstr,
 		success: function($r, $s, $x){
 //		    if (window.console) console.log( "rcving a change request");
+			endAndStartTimer();
 			var $r = $($r);
 			$r.xmlClean();
 			$r.find("xmlio").children().each(function(){
 				$('div#workingMessage').hide();
 				if (window.console) console.log("rcvd change "+this.nodeName+" "+$(this).attr('name')+" --> "+$(this).attr('value'));
-//				$setElementState(this.nodeName, $safeName($(this).attr('name')), $(this).attr('value'));
 				$setElementState(this.nodeName, $(this).attr('name'), $(this).attr('value'));
 				//send current xml states to xmlio server, will "stall" and wait for changes if matched
 				$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');  //TODO: remove this once multi-session fixed
-				endAndStartTimer();
 			});
 		},
 		async: true,
@@ -998,9 +1088,6 @@ var $showPanelList = function($panelName){
             $h += "</table>";
             $('div#panelArea').html($h); //put table on page
 		},
-//		error: function($r, $s, $message){
-//			$('div#logArea').append("ERROR: " + $message + " sts=" + $s);
-//		},
 		dataType: 'xml' //<--dataType
 	});
 };
@@ -1016,9 +1103,6 @@ var $requestPanelXML = function($panelName){
 		success: function($r, $s, $x){
 			$processPanelXML($r, $s, $x); //handle returned data
 		},
-//		error: function($r, $s, $message){
-//			$('div#logArea').append("ERROR: " + $message + " sts=" + $s);
-//		},
 		async: true,
 		timeout: 5000,  
 		dataType: 'xml' //<--dataType
@@ -1063,6 +1147,7 @@ var $getWidgetFamily = function($widget) {
 	case "positionablepoint" :
 	case "backgroundColor" :
 	case "layoutblock" :
+	case "levelxing" :
 		return "drawn";
 		break;
 	};
