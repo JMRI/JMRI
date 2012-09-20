@@ -275,7 +275,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 }
                 frames = JmriJFrame.getFrameList(PanelEditor.class);
                 for (JmriJFrame frame : frames) {
-                    if (frame.getAllowInFrameServlet()) {
+                    if (frame.getAllowInFrameServlet() && !(LayoutEditor.class.isInstance(frame))) {  //skip LayoutEditor panels, as they will be added next
                         String title = ((JmriJFrame) ((Editor)frame).getTargetPanel().getTopLevelAncestor()).getTitle();
                         if (!title.equals("") && !disallowedFrames.contains(title)) {
                             Element n = new Element((useAttributes) ? "panel" : "item");
