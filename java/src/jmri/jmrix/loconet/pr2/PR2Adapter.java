@@ -63,6 +63,9 @@ public class PR2Adapter extends LocoBufferAdapter {
      * functionality there, so the code is basically copied.
      */
     public void configure() {
+    
+        setCommandStationType(getOptionState(option2Name));
+        setTurnoutHandling(getOptionState(option3Name));
         // connect to a packetizing traffic controller
         // that does echoing
         jmri.jmrix.loconet.pr2.LnPr2Packetizer packets = new jmri.jmrix.loconet.pr2.LnPr2Packetizer();

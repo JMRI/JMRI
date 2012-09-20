@@ -27,6 +27,9 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
      * connected via this class.
      */
     public void configure() {
+    
+        setCommandStationType(getOptionState(option2Name));
+        setTurnoutHandling(getOptionState(option3Name));
         // connect to a packetizing traffic controller
         LnOverTcpPacketizer packets = new LnOverTcpPacketizer();
         packets.connectPort(this);
@@ -50,19 +53,6 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
 
     // private control members
     private boolean opened = false;
-    
-    /**
-     * Get an array of valid values for "option 2"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    /*@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
-    public String[] validOption1() { return commandStationNames; }*/
-
-    /**
-     * Get a String that says what Option 2 represents
-     * May be an empty string, but will not be null
-     */
-    //public String option1Name() { return "Command station type: "; }
     
     public void configureOption1(String value) {
         super.configureOption1(value);

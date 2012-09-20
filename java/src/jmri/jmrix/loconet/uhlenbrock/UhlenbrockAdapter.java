@@ -36,6 +36,9 @@ public class UhlenbrockAdapter extends LocoBufferAdapter {
  * connected to this port.
  */
 public void configure() {
+    
+    setCommandStationType(getOptionState(option2Name));
+    setTurnoutHandling(getOptionState(option3Name));
     // connect to a packetizing traffic controller
     IBLnPacketizer packets = new IBLnPacketizer();
     packets.connectPort(this);

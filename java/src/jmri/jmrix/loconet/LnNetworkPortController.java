@@ -66,19 +66,6 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     }
 
     /**
-     * Get an array of valid values for "option 3"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
-    public String[] validOption3() { return new String[]{"Normal", "Spread", "One Only", "Both"}; }
-
-    /**
-     * Get a String that says what Option 3 represents
-     * May be an empty string, but will not be null
-     */
-    public String option3Name() { return "Turnout command handling: "; }
-
-    /**
      * Set the third port option.  Only to be used after construction, but
      * before the openPort call
      */

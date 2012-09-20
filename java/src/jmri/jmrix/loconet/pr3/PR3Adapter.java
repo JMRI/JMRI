@@ -66,7 +66,8 @@ public class PR3Adapter extends LocoBufferAdapter {
      * functionality there, so the code is basically copied.
      */
     public void configure() {
-
+        setCommandStationType(getOptionState(option2Name));
+        setTurnoutHandling(getOptionState(option3Name));
         if (commandStationName.startsWith("PR3")) {
             // PR3 case
             // connect to a packetizing traffic controller

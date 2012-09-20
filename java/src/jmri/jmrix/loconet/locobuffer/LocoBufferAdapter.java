@@ -199,6 +199,9 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      * connected to this port.
      */
     public void configure() {
+    
+        setCommandStationType(getOptionState(option2Name));
+        setTurnoutHandling(getOptionState(option3Name));
         // connect to a packetizing traffic controller
         LnPacketizer packets = new LnPacketizer();
         packets.connectPort(this);
