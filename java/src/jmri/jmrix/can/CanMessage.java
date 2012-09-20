@@ -81,6 +81,20 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
         for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
     }
     
+    // copy type
+    @SuppressWarnings("null")
+	public  CanMessage(CanReply m) {
+        if (m == null)
+            log.error("copy ctor of null message");
+        _header = m._header;
+        _isExtended = m._isExtended;
+        _isRtr = m._isRtr;
+        setBinary(true);
+        _nDataChars = m.getNumDataElements();
+        _dataChars = new int[_nDataChars];
+        for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m.getElement(i);
+    }
+
     /**
      * Hash on the header
      */
@@ -134,10 +148,10 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     public boolean isRtr() { return _isRtr; }
     public void setRtr(boolean b) { _isRtr = b; }
     
-    // contents (private)
-    private int _header;
-    private boolean _isExtended;
-    private boolean _isRtr;
+    // contents (package access)
+    int _header;
+    boolean _isExtended;
+    boolean _isRtr;
         
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CanMessage.class.getName());
 }

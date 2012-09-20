@@ -62,6 +62,21 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
             _dataChars[i] = m._dataChars[i];
     }
     
+    // copy type
+    @SuppressWarnings("null")
+	public  CanReply(CanMessage m) {
+        if (m == null)
+            log.error("copy ctor of null message");
+        _header = m._header;
+        _isExtended = m._isExtended;
+        _isRtr = m._isRtr;
+        _nDataChars = m.getNumDataElements();
+        setBinary(true);
+        _dataChars = new int[_nDataChars];
+        for (int i = 0; i<_nDataChars; i++)
+            _dataChars[i] = m.getElement(i);
+    }
+    
     /**
      * Hash on the header
      */
@@ -114,10 +129,10 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     public boolean isRtr() { return _isRtr; }
     public void setRtr(boolean b) { _isRtr = b; }
     
-    // contents (private)
-    private int _header;
-    private boolean _isExtended;
-    private boolean _isRtr;
+    // contents (package access)
+    int _header;
+    boolean _isExtended;
+    boolean _isRtr;
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CanReply.class.getName());
 }
