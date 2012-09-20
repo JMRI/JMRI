@@ -165,7 +165,8 @@ abstract public class AbstractPortController implements PortAdapter {
         
         public Option(String displayText, String[] options){
             this.displayText = displayText;
-            this.options = options;
+            this.options = new String[options.length];
+            System.arraycopy( options, 0, this.options, 0, options.length );
         }
         
         void configure(String value){
