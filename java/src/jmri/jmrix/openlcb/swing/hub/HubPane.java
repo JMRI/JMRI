@@ -15,6 +15,8 @@ import jmri.jmrix.can.swing.CanPanelInterface;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.adapters.gridconnect.GridConnectMessage;
+import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
 
 import org.openlcb.MimicNodeStore;
 import org.openlcb.Connection;
@@ -30,14 +32,33 @@ import org.openlcb.hub.*;
 
 public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, CanPanelInterface {
 
+    String nextLine; 
     public HubPane() {
         super();
-        hub = new Hub();
+        hub = new Hub() {
+            public void notifyOwner(String line) {
+                nextLine = line;
+                SwingUtilities.invokeLater(
+                    new Runnable() {
+                        String message = nextLine;
+                        public void run() {
+                            try {
+                              label.setText(message);
+                            } catch (Exception x) {
+                              x.printStackTrace();
+                            }
+                        } 
+                    }
+                );
+            }
+        };
     }
 
     CanSystemConnectionMemo memo;
     
     Hub hub;
+    
+    JLabel label = new JLabel("                                                 ");
     
     public void initContext(Object context) {
         if (context instanceof CanSystemConnectionMemo ) {
@@ -53,7 +74,8 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         // add GUI components
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
 
-        add(new JLabel("Port: "+hub.PORT));
+        add(new JLabel("Port: "+hub.getPort()));
+        add(label);
         
         startHubThread();
     }
@@ -65,6 +87,30 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
             }
         };
         t.setDaemon(true);
+        
+        // add forwarder
+        hub.addForwarder(new Hub.Forwarding() {
+            public void forward(Hub.Memo m) {
+                if (m.source == null) return;  // was from this
+                // process and forward m.line;
+                GridConnectReply msg = new GridConnectReply();
+                byte[] bytes = m.line.getBytes();
+                for (int i = 0; i<m.line.length(); i++) {
+                    msg.setElement(i, bytes[i]);
+                }
+                CanReply r = msg.createReply();
+                
+                CanMessage result = new CanMessage(r.getNumDataElements(), r.getHeader());
+                for (int i = 0; i<r.getNumDataElements(); i++) {
+                    result.setElement(i, r.getElement(i));
+                }
+                result.setExtended(r.isExtended());
+                
+                memo.getTrafficController().sendCanMessage(result, null);
+                
+            }
+        });
+        
         t.start();
     }
        
@@ -80,9 +126,15 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
     }
 
     public synchronized void message(CanMessage l) {  // receive a message and log it
+        log.debug("message :"+l);
+        GridConnectMessage gm = new GridConnectMessage(l);
+        hub.putLine(gm.toString());
     }
 
     public synchronized void reply(CanReply l) {  // receive a reply and log it
+        log.debug("reply :"+l);
+        GridConnectMessage gm = new GridConnectMessage(new CanMessage(l));
+        hub.putLine(gm.toString());
     }
     
     /**
