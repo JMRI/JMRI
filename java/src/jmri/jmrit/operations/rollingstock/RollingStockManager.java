@@ -133,6 +133,14 @@ public class RollingStockManager {
     	firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_hashTable.size()));
     }
     
+    public void resetMoves(){
+    	Enumeration<String> en = _hashTable.keys();
+       	while (en.hasMoreElements()) { 
+    		RollingStock rs = getById(en.nextElement());
+    		rs.setMoves(0);
+    	}
+    }
+    
     /**
      * Returns a list (no order) of RollingStock ids.
      * @return list of RollingStock

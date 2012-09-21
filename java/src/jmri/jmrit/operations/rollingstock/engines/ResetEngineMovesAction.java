@@ -1,4 +1,4 @@
-// DeleteEngineRosterAction.java
+// ResetEngineMovesAction.java
 
 package jmri.jmrit.operations.rollingstock.engines;
 import java.awt.Component;
@@ -10,35 +10,32 @@ import javax.swing.JOptionPane;
 
 
 /**
- * This routine will remove all engines from the operation database.
+ * This routine will reset the move count for all engines in the operation database.
  * 
- * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision$
+ * @author Dan Boudreau Copyright (C) 2012
+ * @version $Revision: 17977 $
  */
 
 
-public class DeleteEngineRosterAction extends AbstractAction {
+public class ResetEngineMovesAction extends AbstractAction {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 	
 	EngineManager manager = EngineManager.instance();
 	
-    public DeleteEngineRosterAction(String actionName, Component frame) {
+    public ResetEngineMovesAction(String actionName, Component frame) {
         super(actionName);
     }
 	
 	public void actionPerformed(ActionEvent ae) {
 		if (JOptionPane.showConfirmDialog(null,
-				rb.getString("engineSureDelete"), rb.getString("engineDeleteAll"),
+				rb.getString("engineSureResetMoves"), rb.getString("engineResetMovesAll"),
 				JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-			log.debug("removing all engines from roster");
-			manager.deleteAll();
+			log.debug("Reset moves for all engines in roster");
+			manager.resetMoves();
 		}
 	}
 
-
-
-
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(DeleteEngineRosterAction.class.getName());
+	.getLogger(ResetEngineMovesAction.class.getName());
 }
