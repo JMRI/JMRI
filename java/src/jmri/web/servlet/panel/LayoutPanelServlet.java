@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.List;
 
 import jmri.InstanceManager;
+import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
@@ -98,6 +100,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
     		// include LayoutBlocks
             LayoutBlockManager tm = InstanceManager.layoutBlockManagerInstance();
             java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
+            SensorManager sm = InstanceManager.sensorManagerInstance();
             num = 0;
             while (iter.hasNext()) {
                 String sname = iter.next();
@@ -109,8 +112,12 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                     if (b.getUserName() != "") {
                         elem.setAttribute("username", b.getUserName());
                     }
+                    //don't send invalid sensors
                     if (b.getOccupancySensorName() != "") {
-                        elem.setAttribute("occupancysensor", b.getOccupancySensorName());
+                        Sensor s = sm.getSensor(b.getOccupancySensorName());
+                        if (s != null) {
+                        	elem.setAttribute("occupancysensor", s.getDisplayName()); //send username if set, systemname otherwise
+                        }
                     }
                     elem.setAttribute("occupiedsense", ""+b.getOccupiedSense());
                     elem.setAttribute("trackcolor", LayoutBlock.colorToString(b.getBlockTrackColor()));

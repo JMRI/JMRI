@@ -62,9 +62,19 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
     }
 
     protected void doXmlIO(HttpServletRequest request, HttpServletResponse response, Document doc) throws ServletException, IOException {
-        XMLOutputter fmt = new XMLOutputter(org.jdom.output.Format.getPrettyFormat());
+        XMLOutputter fmt = new XMLOutputter(org.jdom.output.Format.getCompactFormat());
 
-        Element root = doc.getRootElement();
+    	String client = request.getRemoteHost()+":"+request.getRemotePort();
+
+    	Element root = doc.getRootElement();
+
+    	if (log.isDebugEnabled()) {
+    		String s = "received "+root.getContentSize()+" elements from "+client;
+    		if (root.getContentSize() < 4) { //append actual xml to debug if only a "few" els
+    			s += " " + fmt.outputString(root.getContent());
+    		}
+    		log.debug(s);
+    	}
 
         // start processing reply
         if (factory == null) {
@@ -87,11 +97,16 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
                 break;
             }
         }
-    	String client = request.getRemoteHost()+":"+request.getRemotePort();
         try {
             if (immediate) {
-                if (log.isDebugEnabled()) log.debug("immediate reply to "+client);
                 srv.immediateRequest(root);  // modifies 'doc' in place
+                if (log.isDebugEnabled()) {
+                	String s = "immediate reply "+root.getContentSize()+" elements to "+client;
+                	if (root.getContentSize() < 4) { //append actual xml to debug if only a "few" els
+                		s += " " + fmt.outputString(root.getContent());
+                	}
+                	log.debug(s);
+                }
             } else {
             	Thread thread = Thread.currentThread();
             	if (log.isDebugEnabled()) log.debug("stalling thread, waiting to reply to " + client);
@@ -104,7 +119,7 @@ public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
                 } catch (InterruptedException e) {
                 	if (log.isDebugEnabled()) log.debug("Thread sleep interrupted for " + client);
                 }
-                if (log.isDebugEnabled()) log.debug("thread resumes and replies to " + client);
+                if (log.isDebugEnabled()) log.debug("thread resumes and replies "+doc.getRootElement().getContentSize()+" elements to "+client);
             }
         } catch (jmri.JmriException e1) {
             log.error("JmriException while creating reply: " + e1, e1);
