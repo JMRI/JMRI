@@ -16,22 +16,21 @@
  *  		5) error? go back to 2) 
  *  TODO: move occupiedsensor state to widget from block, to allow skipping of unchanged
  *  TODO: handle drawn ellipse (see LMRC APB)
+ *  TODO: fix getNextState() to handle clicking multi-state widgets (like signalheads)
+ *  TODO: handle segmented click on multisensor and enable
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
  *  TODO: determine proper level (z-index) for canvas layer
- *  TODO: fix getNextState() to handle clicking multi-state widgets (like signalheads)
- *  TODO: handle segmented click on multisensor and enable
  *  TODO: diagnose and correct the small position issues visible with footscray
  *  TODO: diagnose and correct the hover dislocation on images (or turn it off)
  *  TODO: verify that assuming same rotation and scale for all icons in a "set" is OK
  *  TODO: deal with mouseleave, mouseout, touchout, etc. Slide off Stop button on rb1 for example.
- *  TODO: remove duplicates from list before sending, only build list once
  *  TODO: handle really exotic layoutturnouts, such as double-crossovers
  *  TODO: handle turnoutdrawunselectedleg = "yes"
  *  TODO: make turnout, levelXing occupancy work like LE panels (more than just checking A)
- *  TODO: store all tracksegments (mainline) before main loop (cross-dependencies, turnout to tracksegment) 
  *  TODO: draw dashed curves
  *  TODO: figure out "secondary" turnout control (crossovers in WCL)
+ *  TODO: figure out FireFox issue using size of alt text for rotation of unloaded images, and remove $drawAllIconWidgets()
  *   
  **********************************************************************************************/
 
@@ -134,6 +133,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 				$widget['state'] = UNKNOWN; //initial state is unknown
 				$widget['element']  =	""; //default to no xmlio type (avoid undefined)
 				$widget['scale']  =	"1.0"; //default to no scale
+				$widget['degrees']  =	0.00; //default to no rotation
 				$widget['id'] = "spWidget_" + $gUnique();//set id to a unique value (since same element can be in multiple widgets)
 				$widget['widgetFamily'] = $getWidgetFamily($widget);
 				var $jc = "";
@@ -314,12 +314,9 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						if ($gBlks[$widget.blockname] != undefined) {
 							$widget['occupancysensor'] = $gBlks[$widget.blockname].occupancysensor; 
 						}
-						//store widget in persistent array
-						$gWidgets[$widget.id] = $widget; 
-						//also store the turnout's 3 end points for other connections
-						$storeTurnoutPoints($widget);  
-						//draw the turnout
-						$drawTurnout($widget);  
+						$gWidgets[$widget.id] = $widget; //store widget in persistent array 
+						$storeTurnoutPoints($widget); //also store the turnout's 3 end points for other connections  
+						$drawTurnout($widget); //draw the turnout  
 						//add an empty, but clickable, div to the panel and position it over the turnout circle
 						$hoverText = " title='"+$widget.name+"' alt='"+$widget.name+"'";
 						$("div#panelArea").append("<div id=" + $widget.id + " class='"+$widget.classes+"' "+ $hoverText +"></div>");
@@ -346,6 +343,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						//set widget occupancysensor from block to speed affected changes later
 						//TODO: handle BD block
 						if ($gBlks[$widget.blocknameac] != undefined) {
+							$widget['blockname'] = $widget.blocknameac; //normalize blockname 
 							$widget['occupancysensor'] = $gBlks[$widget.blocknameac].occupancysensor; 
 						}
 						//store widget in persistent array
@@ -378,19 +376,15 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 	//hook up mousedown state toggle function to non-momentary clickable widgets
 	$('.clickable:not(.momentary)').bind(DOWNEVENT, function(e) {
 	    var $newState = $getNextState($gWidgets[this.id].state);  //determine next state from current state
-//		$setWidgetState(this.id, $newState);
-		$setWidgetState(this.id, UNKNOWN);
 		$sendElementChange($gWidgets[this.id].element, $gWidgets[this.id].name, $newState);  //send new value to xmlio server
 	});
 	
-	//momentary widgets always go active on mousedown, and inactive on mouseup
+	//momentary widgets always go active on mousedown, and inactive on mouseup, current state is ignored
 	$('.clickable.momentary').bind(DOWNEVENT, function(e) {
 	    var $newState = ACTIVE; 
-//		$setWidgetState(this.id, $newState);
 		$sendElementChange($gWidgets[this.id].element, $gWidgets[this.id].name, $newState);  //send new value to xmlio server
 	}).bind(UPEVENT, function(e) {
 	    var $newState = INACTIVE; 
-//		$setWidgetState(this.id, $newState);
 		$sendElementChange($gWidgets[this.id].element, $gWidgets[this.id].name, $newState);  //send new value to xmlio server
 	});
 	
@@ -403,10 +397,14 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 	$widget['state'] = UNKNOWN;
 	$gWidgets[$widget.id] = $widget;
 
-	$drawAllWidgets(); //draw all the widgets once more, to address some bidrectional dependencies in the xml
+	$drawAllDrawnWidgets(); //draw all the widgets once more, to address some bidrectional dependencies in the xml
 	$('div#workingMessage').hide();
 	$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>'); //send initial states to xmlio server
 	endAndStartTimer(); //initiate the heartbeat timer
+//	window.setTimeout(function(){  //wait three seconds and then redraw icon widgets, to (hopefully) give them a chance to load
+//		$drawAllIconWidgets();  //TODO: not working, as non-FF browsers will scale objects _again_
+//	}, 3000);
+
 };    	
 
 //draw a Circle (color and width are optional)
@@ -820,9 +818,7 @@ var $getTextCSSFromObj = function($widget){
     return $retCSS;
 };
 
-
-
-//place widget in correct position, rotation, z-index and scale.
+//place widget in correct position, rotation, z-index and scale. (pass in dom element, to simplify calling from e.load())
 var $setWidgetPosition = function(e) {
 
 	var $id = e.attr('id');
@@ -833,9 +829,9 @@ var $setWidgetPosition = function(e) {
 		var $height = e.height() * $widget.scale;
 		var $width =  e.width()  * $widget.scale;
 
-		//if image is not loaded yet, set callback to do this again when it is loaded
+		//if image needs rotating or scaling, but is not loaded yet, set callback to do this again when it is loaded
 		//TODO: firefox returns a height for the alt text, so this doesn't work right
-		if ($height == 0) {
+		if (e.is("img") && $height == 0 && ($widget.degrees != 0 || $widget.scale != 1.0)) {
 			e.load(function(){
 				$setWidgetPosition($(this));
 			});
@@ -845,7 +841,7 @@ var $setWidgetPosition = function(e) {
 			var tx = 0.0;
 			var ty = 0.0;
 
-			if ($widget.degrees != undefined && $widget.degrees != 0 && $height > 0) {
+			if ( $height > 0 && ($widget.degrees != 0 || $widget.scale != 1.0)) { //only do this if needed
 				var $rad = $widget.degrees*Math.PI/180.0;
 
 				if (0<=$widget.degrees && $widget.degrees<90 || -360<$widget.degrees && $widget.degrees<=-270){
@@ -960,14 +956,18 @@ var $sendElementChange = function($element, $name, $nextState){
 
 //build xml for current state values for all jmri elements, to be sent to xmlio server to wait on changes 
 var $getXMLStateList = function(){
+	var $ela = []; //element array to check for already sent
 	var $retXml = "";
 	jQuery.each($gWidgets, function($id, $widget) {
-		if ($widget.name != undefined) { //add each element to the list 
+		var $elkey = $widget.element + '.' + $widget.name;
+		if ($widget.element != undefined && $widget.name != undefined && $ela[$elkey] == undefined) { //add each valid new element to the monitored list 
 			$retXml += "<" + $widget.element + " name='" + $widget.name + "' value='" + $widget.state +"'/>";
-//		} else if ($widget.names != undefined) { //special case for multisensors
-//			jQuery.each($widget.names, function(i, n) {
-//				$retXml += "<" + $widget.element + " name='" + n + "' value='" + $widget.state +"'/>";
-//			}
+			$ela[$elkey] = $elkey; //mark as already in list
+		}
+		$elkey = 'sensor.' + $widget.name;
+		if ($widget.occupancysensor != undefined && $ela[$elkey] == undefined) { //also add each new occupancy sensor to the monitored list 
+			$retXml += "<sensor name='" + $widget.occupancysensor + "' value='" + $gBlks[$widget.blockname].state +"'/>";
+			$ela[$elkey] = $elkey; //mark as already in list
 		}
 	});
     return $retXml;
@@ -1170,8 +1170,8 @@ function endAndStartTimer() {
 }
 
 //redraw all "drawn" elements to overcome some bidirectional dependencies in the xml
-var $drawAllWidgets = function() {
-	//loop thru widgets, setting all matches
+var $drawAllDrawnWidgets = function() {
+	//loop thru widgets, redrawing each visible widget by proper method
 	jQuery.each($gWidgets, function($id, $widget) {
 		switch ($widget.widgetType) {
 		case 'layoutturnout' :
@@ -1184,6 +1184,18 @@ var $drawAllWidgets = function() {
 			$drawLevelXing($widget);
 			break;
 		}
+	});
+};
+
+//redraw all "icon" elements.  Called after a delay to allow loading of images.
+var $drawAllIconWidgets = function() {
+	//loop thru widgets, repositioning each icon widget
+	jQuery.each($gWidgets, function($id, $widget) {
+			switch ($widget.widgetFamily) {
+			case 'icon' :
+				$setWidgetPosition($("div#panelArea>#"+$widget.id));
+				break;
+			}
 	});
 };
 
