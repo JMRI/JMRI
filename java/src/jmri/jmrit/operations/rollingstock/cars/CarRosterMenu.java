@@ -15,7 +15,7 @@ import javax.swing.JMenu;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
  * @author  Dennis Miller  Copyright (C) 2005
- * @author Daniel Boudreau Copyright (C) 2007
+ * @author Daniel Boudreau Copyright (C) 2007, 2012
  * @version	$Revision$
  *
  */
@@ -63,6 +63,8 @@ public class CarRosterMenu extends JMenu {
         exportAction.setEnabled(false);
         AbstractAction deleteAction = new DeleteCarRosterAction(rb.getString("MenuItemDelete"), pWho);
         deleteAction.setEnabled(false);
+        AbstractAction resetMovesAction = new ResetCarMovesAction(rb.getString("MenuItemResetMoves"), pWho);
+        resetMovesAction.setEnabled(false);
 
         // Need a frame here, but are not passed one
         Frame newFrame = new Frame();
@@ -73,6 +75,7 @@ public class CarRosterMenu extends JMenu {
         add(importAction);
         add(exportAction);
         add(deleteAction);
+        add(resetMovesAction);
         add(printAction);
         add(previewAction);
 
@@ -82,6 +85,7 @@ public class CarRosterMenu extends JMenu {
                 importAction.setEnabled(true);
                 exportAction.setEnabled(true);
                 deleteAction.setEnabled(true);
+                resetMovesAction.setEnabled(true);
                 printAction.setEnabled(true);
                 previewAction.setEnabled(true);
                 break;
