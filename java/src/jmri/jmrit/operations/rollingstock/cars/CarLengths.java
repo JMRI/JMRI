@@ -77,7 +77,15 @@ public class CarLengths implements java.beans.PropertyChangeListener {
        	try{
     		jmri.util.StringUtil.numberSort(lengths);
     	} catch (NumberFormatException e){
-    		log.error("Car lengths not numeric");
+       		log.error("Car lengths are not all numeric, list:");
+    		for (int i=0; i<lengths.length; i++){
+    			try{
+    				Integer.parseInt(lengths[i]);
+    				log.error("Car length "+i+" = "+lengths[i]);
+    			} catch ( NumberFormatException ee){
+    				log.error("Car length "+i+" = "+lengths[i]+" is not a valid number!");
+    			}
+    		}
     	}
  		for (int i=0; i<lengths.length; i++)
 			if (!list.contains(lengths[i]))

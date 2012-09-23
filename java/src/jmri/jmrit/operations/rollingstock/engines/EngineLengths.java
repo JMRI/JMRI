@@ -63,11 +63,17 @@ public class EngineLengths {
     	try{
     		jmri.util.StringUtil.numberSort(lengths);
     	} catch (NumberFormatException e){
-    		log.error("Locomotive lengths not numeric");
-    		for (int i=0; i<lengths.length; i++)
-    			log.error("Loco length "+i+" "+lengths[i]);
+    		log.error("Locomotive lengths are not all numeric, list:");
+    		for (int i=0; i<lengths.length; i++){
+    			try{
+    				Integer.parseInt(lengths[i]);
+    				log.error("Loco length "+i+" = "+lengths[i]);
+    			} catch ( NumberFormatException ee){
+    				log.error("Loco length "+i+" = "+lengths[i]+" is not a valid number!");
+    			}
+    		}
     	}
- 		for (int i=0; i<lengths.length; i++)
+    	for (int i=0; i<lengths.length; i++)
  			if (!list.contains(lengths[i]))
  				list.add(lengths[i]);
     }
