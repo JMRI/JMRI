@@ -2784,13 +2784,14 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         // build list of locations that this train skips
         // old format
-        // TODO remove backward compatible save
-        String[] locationIds = getTrainSkipsLocations();
-        StringBuffer buf = new StringBuffer();
-        for (int i=0; i<locationIds.length; i++){
-        	buf.append(locationIds[i]+"%%");
+        if (Control.backwardCompatible){
+        	String[] locationIds = getTrainSkipsLocations();
+        	StringBuffer buf = new StringBuffer();
+        	for (int i=0; i<locationIds.length; i++){
+        		buf.append(locationIds[i]+"%%");
+        	}
+        	e.setAttribute("skip", buf.toString());
         }
-        e.setAttribute("skip", buf.toString());        
         if (getCurrentLocation() != null)
         	e.setAttribute("current", getCurrentLocation().getId());
         if (getDepartureTrack() != null)
@@ -2823,14 +2824,15 @@ public class Train implements java.beans.PropertyChangeListener {
         // build list of car types for this train
         String[] types = getTypeNames();
         //  Old way of saving car types
-        // TODO remove backward compatible save
-        buf = new StringBuffer();
-        for (int i=0; i<types.length; i++){
-       		// remove types that have been deleted by user
-    		if (CarTypes.instance().containsName(types[i]) || EngineTypes.instance().containsName(types[i]))
-    			buf.append(types[i]+"%%");
+        if (Control.backwardCompatible){
+        	StringBuffer buf = new StringBuffer();
+        	for (int i=0; i<types.length; i++){
+        		// remove types that have been deleted by user
+        		if (CarTypes.instance().containsName(types[i]) || EngineTypes.instance().containsName(types[i]))
+        			buf.append(types[i]+"%%");
+        	}
+        	e.setAttribute("carTypes", buf.toString());
         }
-        e.setAttribute("carTypes", buf.toString());
         // new way of saving car types
         Element eTypes = new Element("types");
         for (int i=0; i<types.length; i++){
@@ -2851,11 +2853,13 @@ public class Train implements java.beans.PropertyChangeListener {
         if (!getRoadOption().equals(ALLROADS)){
         	String[] roads = getRoadNames();
         	// old way of saving road names
-        	buf = new StringBuffer();
-        	for (int i=0; i<roads.length; i++){
-        		buf.append(roads[i]+"%%");
+        	if (Control.backwardCompatible){
+        		StringBuffer buf = new StringBuffer();
+        		for (int i=0; i<roads.length; i++){
+        			buf.append(roads[i]+"%%");
+        		}
+        		e.setAttribute("carRoads", buf.toString());
         	}
-        	e.setAttribute("carRoads", buf.toString());
         	// new way of saving road names
         	Element eRoads = new Element("carRoads");
            	for (int i=0; i<roads.length; i++){
@@ -2869,11 +2873,13 @@ public class Train implements java.beans.PropertyChangeListener {
         if (!getLoadOption().equals(ALLLOADS)){
         	String[] loads = getLoadNames();
         	// old way of saving car loads
-        	buf = new StringBuffer();
-        	for (int i=0; i<loads.length; i++){
-        		buf.append(loads[i]+"%%");
+        	if (Control.backwardCompatible){
+        		StringBuffer buf = new StringBuffer();
+        		for (int i=0; i<loads.length; i++){
+        			buf.append(loads[i]+"%%");
+        		}
+        		e.setAttribute("carLoads", buf.toString());
         	}
-        	e.setAttribute("carLoads", buf.toString());
         	// new way of saving car loads
            	Element eLoads = new Element("carLoads");
            	for (int i=0; i<loads.length; i++){
@@ -2887,11 +2893,13 @@ public class Train implements java.beans.PropertyChangeListener {
         if (!getOwnerOption().equals(ALLOWNERS)){
         	String[] owners = getOwnerNames();
         	// old way of saving car owners
-        	buf = new StringBuffer();
-        	for (int i=0; i<owners.length; i++){
-        		buf.append(owners[i]+"%%");
+        	if (Control.backwardCompatible){
+        		StringBuffer buf = new StringBuffer();
+        		for (int i=0; i<owners.length; i++){
+        			buf.append(owners[i]+"%%");
+        		}
+        		e.setAttribute("carOwners", buf.toString());
         	}
-        	e.setAttribute("carOwners", buf.toString());
         	// new way of saving car owners
            	Element eOwners = new Element("carOwners");
            	for (int i=0; i<owners.length; i++){

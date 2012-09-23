@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.setup;
 
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
@@ -67,11 +68,20 @@ public class Control {
 	// Route name maximum string length
 	public static int max_len_string_route_name = 25;
 	
+	// Backward compatibility for xml saves (pre 2013 releases)
+	// TODO turn backward compatibility to false in 2013
+	public static boolean backwardCompatible = true;
+	
     // must synchronize changes with operation-config.dtd
     public static Element store(){
     	Element values;
     	Element length;
     	Element e = new Element("control");
+    	// backward compatibility
+    	e.addContent(values = new Element("backwardCompatibility"));
+    	// TODO Enable saving the compatibility attribute in 2013
+    	//values.setAttribute("saveUsingPre_2013_Format", backwardCompatible?"true":"false");
+    	// maximum string lengths
     	e.addContent(values = new Element("maximumStringLengths"));
     	values.addContent(length = new Element("max_len_string_attibute"));
     	length.setAttribute("length", Integer.toString(max_len_string_attibute));  	
@@ -100,9 +110,16 @@ public class Control {
     	Element control = e.getChild("control");
         if (control == null)
         	return;
+        Element backwardCompatibility = control.getChild("backwardCompatibility");
+        if (backwardCompatibility != null){
+        	Attribute format;
+            if ((format = backwardCompatibility.getAttribute("saveUsingPre_2013_Format")) != null){
+            	backwardCompatible = format.getValue().equals("true");
+            }
+        }
         Element maximumStringLengths = control.getChild("maximumStringLengths");
         if (maximumStringLengths != null){
-            org.jdom.Attribute length;
+            Attribute length;
             if ((maximumStringLengths.getChild("max_len_string_attibute") != null) && 
             		(length = maximumStringLengths.getChild("max_len_string_attibute").getAttribute("length"))!= null){
             	max_len_string_attibute = Integer.parseInt(length.getValue());
