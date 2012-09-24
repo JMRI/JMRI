@@ -282,10 +282,7 @@ abstract public class AbstractMRTrafficController {
         					handleTimeout(modeMsg,l);
         				}
             		}
-                        else {
-                                mCurrentMode=m.getNeededMode();
-                                mCurrentState = WAITMSGREPLYSTATE;
-                        }
+                    mCurrentState = WAITMSGREPLYSTATE;
             	}
                     forwardToPort(m, l);
             	// reply expected?
@@ -308,11 +305,8 @@ abstract public class AbstractMRTrafficController {
                 } // just continue to the next message from here
             } else {
                 // nothing to do
-            	if (mCurrentState!=IDLESTATE) {
-                      log.debug("Setting IDLESTATE");
-                      log.debug("Current Mode " +mCurrentMode);
-            	      mCurrentState =IDLESTATE;
-                }
+            	if (mCurrentState!=IDLESTATE) log.debug("Setting IDLESTATE");
+            	mCurrentState =IDLESTATE;
             	// wait for something to send
                 if (mWaitBeforePoll > waitTimePoll || mCurrentMode == PROGRAMINGMODE){
                 	try {
