@@ -258,20 +258,20 @@ abstract public class AbstractMRTrafficController {
             		if (m.getNeededMode() == PROGRAMINGMODE ) {
             			// change state to programming mode and send message
             			modeMsg = enterProgMode();
-            			mCurrentState = WAITREPLYINPROGMODESTATE;
-            			log.debug("Enter Programming Mode");
             			if(modeMsg!=null) {
-                                            forwardToPort(modeMsg, null);
+                            mCurrentState = WAITREPLYINPROGMODESTATE;
+                            log.debug("Enter Programming Mode");
+                            forwardToPort(modeMsg, null);
             				// wait for reply
             				transmitWait(m.getTimeout(), WAITREPLYINPROGMODESTATE, "enter programming mode interrupted");
             			}
             		} else { 
             			// change state to normal and send message
             			modeMsg = enterNormalMode();
-            			mCurrentState = WAITREPLYINNORMMODESTATE;
-            			log.debug("Enter Normal Mode");
             			if(modeMsg!=null) {
-                                            forwardToPort(modeMsg, null);
+                            mCurrentState = WAITREPLYINNORMMODESTATE;
+                            log.debug("Enter Normal Mode");
+                            forwardToPort(modeMsg, null);
             				// wait for reply
             				transmitWait(m.getTimeout(), WAITREPLYINNORMMODESTATE, "enter normal mode interrupted");
             			}
@@ -281,8 +281,8 @@ abstract public class AbstractMRTrafficController {
         				if (mCurrentState != OKSENDMSGSTATE){
         					handleTimeout(modeMsg,l);
         				}
+                        mCurrentState = WAITMSGREPLYSTATE;
             		}
-                    mCurrentState = WAITMSGREPLYSTATE;
             	}
                     forwardToPort(m, l);
             	// reply expected?
@@ -305,8 +305,11 @@ abstract public class AbstractMRTrafficController {
                 } // just continue to the next message from here
             } else {
                 // nothing to do
-            	if (mCurrentState!=IDLESTATE) log.debug("Setting IDLESTATE");
-            	mCurrentState =IDLESTATE;
+            	if (mCurrentState!=IDLESTATE) {
+                      log.debug("Setting IDLESTATE");
+                      log.debug("Current Mode " +mCurrentMode);
+            	      mCurrentState =IDLESTATE;
+                }
             	// wait for something to send
                 if (mWaitBeforePoll > waitTimePoll || mCurrentMode == PROGRAMINGMODE){
                 	try {
