@@ -1,6 +1,6 @@
 /**********************************************************************************************
  *  showPanel - Draw JMRI panels on browser screen
- *    Retrieves panel xml and attempts to build panel client-side from the xml, including
+ *    Retrieves panel xml from JMRI and builds panel client-side from that xml, including
  *    click functions.  Sends and listens for changes to panel elements using the xmlio server.
  *    If no parm passed, page will list links to available panels.
  *  Approach:  Read panel's xml and create widget objects with all needed attributes.  There are 
@@ -14,10 +14,12 @@
  *  		3) receive change? set related widget(s) states, redraw widget(s), and go back to 2)
  *  		4) browser user clicks on widget? send "set state" command and go to 3)
  *  		5) error? go back to 2) 
- *  TODO: move occupiedsensor state to widget from block, to allow skipping of unchanged
+ *  
+ *  TODO: handle turnoutdrawunselectedleg = "yes"
  *  TODO: handle drawn ellipse (see LMRC APB)
- *  TODO: fix getNextState() to handle clicking multi-state widgets (like signalheads)
+ *  TODO: figure out "held" state on signalheads (see LMRC APB)
  *  TODO: handle segmented click on multisensor and enable
+ *  TODO: move occupiedsensor state to widget from block, to allow skipping of unchanged
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
  *  TODO: determine proper level (z-index) for canvas layer
@@ -26,28 +28,24 @@
  *  TODO: verify that assuming same rotation and scale for all icons in a "set" is OK
  *  TODO: deal with mouseleave, mouseout, touchout, etc. Slide off Stop button on rb1 for example.
  *  TODO: handle really exotic layoutturnouts, such as double-crossovers
- *  TODO: handle turnoutdrawunselectedleg = "yes"
  *  TODO: make turnout, levelXing occupancy work like LE panels (more than just checking A)
  *  TODO: draw dashed curves
- *  TODO: figure out "secondary" turnout control (crossovers in WCL)
- *  TODO: figure out FireFox issue using size of alt text for rotation of unloaded images, and remove $drawAllIconWidgets()
+ *  TODO: figure out FireFox issue using size of alt text for rotation of unloaded images
  *   
  **********************************************************************************************/
 
 //persistent (global) variables
-var $gTimeout = 45; //timeout in seconds
-var $gWidgets = {};  //array of all widget objects, key=CSSId
+var $gTimeout = 45; //heartbeat timeout in seconds
+var $gWidgets = {}; //array of all widget objects, key=CSSId
 var $gPanel = {}; 	//store overall panel info
 var $gPts = {}; 	//array of all points, key="pointname.pointtype" (used for layoutEditor panels)
 var $gBlks = {}; 	//array of all blocks, key="blockname" (used for layoutEditor panels)
 var $gXHRList;  	//persistent variable to allow aborting of superseded "list" connections
-var $gXHRChg;	  	//persistent variable to allow aborting of superseded "change" connections
-var $gCtx;  //persistent context of canvas layer   
+var $gCtx;  		//persistent context of canvas layer   
 var $gDashArray = [12,12]; //on,off of dashed lines
-var DOWNEVENT;  //either mousedown or touchstart, based on device
-var UPEVENT;    //either mouseup or touchend, based on device
-
-var SIZE = 3;  //default factor for circles
+var DOWNEVENT;  	//either mousedown or touchstart, based on device
+var UPEVENT;    	//either mouseup or touchend, based on device
+var SIZE = 3;  		//default factor for circles
 var UNKNOWN = 		'1';  //constants to match JMRI state names
 var ACTIVE =  		'2';
 var CLOSED =  		'2';
@@ -129,7 +127,6 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 
 				//add and normalize the various type-unique values, from the various spots they are stored
 				//  icons named based on states returned from xmlio server, 
-				//    1=unknown, 2=active/closed, 4=inactive/thrown, 8=inconsistent
 				$widget['state'] = UNKNOWN; //initial state is unknown
 				$widget['element']  =	""; //default to no xmlio type (avoid undefined)
 				$widget['scale']  =	"1.0"; //default to no scale
@@ -196,11 +193,16 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$widget['element']  =	"signalhead"; //what xmlio server calls this
 						$widget['icon' + DARK] 	=	$(this).find('icons').find('dark').attr('url');
 						$widget['icon' + RED] =  	$(this).find('icons').find('red').attr('url');
-						$widget['icon' + YELLOW] = $(this).find('icons').find('yellow').attr('url');
-						$widget['icon' + GREEN] =	$(this).find('icons').find('green').attr('url');
+						if ($widget['icon' + RED] == undefined) { //look for held if no red
+							$widget['icon' + RED] =  	$(this).find('icons').find('held').attr('url');
+						}
+						$widget['icon' + YELLOW] 	=   $(this).find('icons').find('yellow').attr('url');
+						$widget['icon' + GREEN] 	=	$(this).find('icons').find('green').attr('url');
 						$widget['icon' + FLASHRED] =	$(this).find('icons').find('flashred').attr('url');
 						$widget['icon' + FLASHYELLOW] =	$(this).find('icons').find('flashyellow').attr('url');
 						$widget['icon' + FLASHGREEN] =	$(this).find('icons').find('flashgreen').attr('url');
+						$widget['icon' + LUNAR] 	=	$(this).find('icons').find('lunar').attr('url');
+						$widget['icon' + FLASHLUNAR] =	$(this).find('icons').find('lunar').attr('url');
 						var $rotation = 		$(this).find('icons').find('dark').find('rotation').text();
 						$widget['degrees'] = 	($(this).find('icons').find('dark').attr('degrees') * 1) + ($rotation * 90);
 						$widget['scale'] = 		$(this).find('icons').find('dark').attr('scale');
@@ -374,10 +376,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 	);  //end of each
 
 	//hook up mousedown state toggle function to non-momentary clickable widgets
-	$('.clickable:not(.momentary)').bind(DOWNEVENT, function(e) {
-	    var $newState = $getNextState($gWidgets[this.id].state);  //determine next state from current state
-		$sendElementChange($gWidgets[this.id].element, $gWidgets[this.id].name, $newState);  //send new value to xmlio server
-	});
+	$('.clickable:not(.momentary)').bind(DOWNEVENT, $handleClick);
 	
 	//momentary widgets always go active on mousedown, and inactive on mouseup, current state is ignored
 	$('.clickable.momentary').bind(DOWNEVENT, function(e) {
@@ -406,6 +405,16 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 //	}, 3000);
 
 };    	
+
+//perform regular click-handling, bound to click event for clickable, non-momentary widgets.
+function $handleClick(e) {
+	var $widget = $gWidgets[this.id];
+    var $newState = $getNextState($widget);  //determine next state from current state
+	$sendElementChange($widget.element, $widget.name, $newState);  //send new value to xmlio server
+	if ($widget.secondturnoutname != undefined) {  //TODO: put this in a more logical place?
+		$sendElementChange($widget.element, $widget.secondturnoutname, $newState);  //also send 2nd turnout
+	}
+};
 
 //draw a Circle (color and width are optional)
 function $drawCircle($ptx, $pty, $radius, $color, $width) {
@@ -834,6 +843,7 @@ var $setWidgetPosition = function(e) {
 		if (e.is("img") && $height == 0 && ($widget.degrees != 0 || $widget.scale != 1.0)) {
 			e.load(function(){
 				$setWidgetPosition($(this));
+				e.unbind('load');  //only do this once
 			});
 		} else {
 			//calculate x and y adjustment needed to keep upper left of bounding box in the same spot
@@ -1006,17 +1016,11 @@ var $sendXMLIOList = function($commandstr){
 
 //send a "set value" command to the server, and process the returned value
 var $sendXMLIOChg = function($commandstr){
-	if (window.console) console.log( "sending a change");
-	if ($gXHRChg != undefined && $gXHRChg.readyState != 4) {  
-		if (window.console) console.log( "aborting active change connection");
-		$gXHRChg.abort();
-	}
-	$gXHRChg = $.ajax({ 
-		type: 'POST',
+	$.ajax({ 
+			type: 'POST',
 		url:  '/xmlio/',
 		data: $commandstr,
 		success: function($r, $s, $x){
-//		    if (window.console) console.log( "rcving a change request");
 			endAndStartTimer();
 			var $r = $($r);
 			$r.xmlClean();
@@ -1024,8 +1028,6 @@ var $sendXMLIOChg = function($commandstr){
 				$('div#workingMessage').hide();
 				if (window.console) console.log("rcvd change "+this.nodeName+" "+$(this).attr('name')+" --> "+$(this).attr('value'));
 				$setElementState(this.nodeName, $(this).attr('name'), $(this).attr('value'));
-				//send current xml states to xmlio server, will "stall" and wait for changes if matched
-				$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');  //TODO: remove this once multi-session fixed
 			});
 		},
 		async: true,
@@ -1057,9 +1059,51 @@ jQuery.fn.xmlClean = function() {
 		}
 	}).remove();
 }
-//handle the toggling of the next state
-var $getNextState = function($state){
-	var $nextState = ($state == ACTIVE ? INACTIVE : ACTIVE);
+//handle the toggling (or whatever) of the "next" state for the passed-in widget
+var $getNextState = function($widget){
+	var $nextState;
+	if ($widget.widgetType == 'signalheadicon') { //special case for signalheadicons
+        switch ($widget.clickmode * 1) {          //   logic based on SignaHeadIcon.java
+        case 0 :
+            switch ($widget.state * 1) {  // (* 1 is to insure numeric comparisons)
+            case RED:
+            case FLASHRED:
+                $nextState = YELLOW;
+                break;
+            case YELLOW:
+            case FLASHYELLOW:
+            	$nextState = GREEN;
+                break;
+            default: //also catches GREEN and FLASHGREEN
+            	$nextState = RED;
+                break;
+            }
+        case 1 :
+//            getSignalHead().setLit(!getSignalHead().getLit());
+            break;
+        case 2 : 
+//            getSignalHead().setHeld(!getSignalHead().getHeld());
+            break;
+        case 3: //loop through all iconX and get "next one"
+        	var $firstState;
+        	var $currentState;
+        	for (k in $widget) {
+        		var s = k.substr(4); //strip off the state of current icon var
+        		if (k.indexOf('icon') == 0 && $widget[k] != undefined ) { //valid value, name starts with 'icon'
+        			if ($firstState == undefined) $firstState = s;  //remember the first state (for last one)
+        			if ($currentState != undefined && $nextState == undefined) $nextState = s; //last one was the current, so this one must be next
+        			if (s == $widget.state) $currentState = s;
+            		if (window.console) console.log('key: ' + k + " first="+ $firstState);
+        		}
+        	};
+        	if ($nextState == undefined) $nextState = $firstState;  //if still not set, start over
+        } //end of switch 
+
+	} else {  //start with INACTIVE, then toggle to ACTIVE and back
+		$nextState = ($widget.state == ACTIVE ? INACTIVE : ACTIVE);
+	}
+
+	if ($nextState == undefined) $nextState = $widget.state;  //default to no change
 	return $nextState;
 };
 
@@ -1111,10 +1155,14 @@ var $requestPanelXML = function($panelName){
 
 //preload all images referred to by the widget
 var $preloadWidgetImages = function($widget) {
-	if ($widget['icon1'] != undefined) $("<img src='" + $widget['icon1'] + "'/>");
-	if ($widget['icon2'] != undefined) $("<img src='" + $widget['icon2'] + "'/>");
-	if ($widget['icon4'] != undefined) $("<img src='" + $widget['icon4'] + "'/>");
-	if ($widget['icon8'] != undefined) $("<img src='" + $widget['icon8'] + "'/>");
+	if ($widget['icon1']  != undefined) $("<img src='" + $widget['icon1']  + "'/>");
+	if ($widget['icon2']  != undefined) $("<img src='" + $widget['icon2']  + "'/>");
+	if ($widget['icon4']  != undefined) $("<img src='" + $widget['icon4']  + "'/>");
+	if ($widget['icon8']  != undefined) $("<img src='" + $widget['icon8']  + "'/>");
+	if ($widget['icon16'] != undefined) $("<img src='" + $widget['icon16'] + "'/>");
+	if ($widget['icon32'] != undefined) $("<img src='" + $widget['icon32'] + "'/>");
+	if ($widget['icon64'] != undefined) $("<img src='" + $widget['icon64'] + "'/>");
+	if ($widget['icon128']!= undefined) $("<img src='" + $widget['icon128']+ "'/>");
 };    	
 
 //determine widget "family" for broadly grouping behaviors
@@ -1161,7 +1209,7 @@ function endAndStartTimer() {
 	if ($gWidgets["ISXMLIOHEARTBEAT"] != undefined) { //don't bother if widgets not loaded
 		timer = window.setTimeout(function(){
 //			if (window.console) console.log("timer fired");
-			var $nextState = $getNextState($gWidgets["ISXMLIOHEARTBEAT"].state);
+			var $nextState = $getNextState($gWidgets["ISXMLIOHEARTBEAT"]);
 			$gWidgets["ISXMLIOHEARTBEAT"].state = $nextState; 
 			$sendElementChange("sensor", "ISXMLIOHEARTBEAT", $nextState)
 			endAndStartTimer(); //repeat

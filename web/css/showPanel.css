@@ -15,8 +15,10 @@ body {
   border: solid 1px lightGray;
   margin: -1px;
 }
-.positionablelabel.text.hidden {
-  display: none;
+.positionablelabel.text.hidden,
+.sensoricon.hidden,
+.signalheadicon.hidden {
+	display: none;
 }
 .locoicon {
   min-width:  60px;

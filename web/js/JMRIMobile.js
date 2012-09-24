@@ -228,7 +228,7 @@ var $getValueText = function($type, $value){
 		} else {
 			return '<img src="/web/images/PowerGrey.png">';
 		}
-	} else if ($type == 'memory' || ($type == 'metadata')) {
+	} else if ($type == 'memory' || $type == 'metadata' || $type == 'signalhead' ) {
 		return $value;
 	}
 	return '???';

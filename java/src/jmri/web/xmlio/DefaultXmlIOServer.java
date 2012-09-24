@@ -657,6 +657,10 @@ public class DefaultXmlIOServer implements XmlIOServer {
      */
     boolean monitorProcessSignalHead(String name, Element item) {
         SignalHead b = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+        if (b == null) {
+        	log.warn("SignalHead " + name + " not found, skipping.");
+        	return false;
+        }
 
         // check for value element, which means compare
         if (item.getAttributeValue("value") != null) {

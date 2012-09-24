@@ -82,7 +82,7 @@ public class ControlPanelServlet extends AbstractPanelServlet {
 
             return out.outputString(doc);
         } catch (NullPointerException ex) {
-            log.warn("Requested panel [" + name + "] does not exist.", ex);
+            log.warn("Requested ControlPanel [" + name + "] does not exist.");
             return "ERROR Requested panel [" + name + "] does not exist.";
         }
     }

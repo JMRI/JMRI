@@ -215,7 +215,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
 
             return out.outputString(doc);
         } catch (NullPointerException ex) {
-            log.warn("Requested panel [" + name + "] does not exist.", ex);
+            log.warn("Requested Layout panel [" + name + "] does not exist.");
             return "ERROR Requested panel [" + name + "] does not exist.";
         }
     }
