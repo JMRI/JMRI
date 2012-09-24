@@ -8,6 +8,7 @@ import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.SignalHead;
+import jmri.SignalMast;
 import jmri.EntryPoint;
 import jmri.jmrit.blockboss.BlockBossLogic;
 
@@ -840,6 +841,26 @@ public class ConnectivityUtil
 					return true;
 				else return false;
 			}
+            else if (t.getTurnoutType()==LayoutTurnout.SINGLE_SLIP || t.getTurnoutType()==LayoutTurnout.DOUBLE_SLIP){
+                if ((t.getSignalA1Name()!=null) && (!t.getSignalA1Name().equals("")) &&
+                     (t.getSignalA2Name()!=null) && (!t.getSignalA2Name().equals("")) &&
+                       (t.getSignalB1Name()!=null) && (!t.getSignalB1Name().equals("")) &&
+                        (t.getSignalC1Name()!=null) && (!t.getSignalC1Name().equals("")) &&
+                         (t.getSignalD1Name()!=null) && (!t.getSignalD1Name().equals("")) &&
+                          (t.getSignalD2Name()!=null) && (!t.getSignalD2Name().equals(""))) {
+                        
+                            if(t.getTurnoutType()==LayoutTurnout.SINGLE_SLIP){
+                                return true;
+                            }
+                            if(t.getTurnoutType()==LayoutTurnout.DOUBLE_SLIP){
+                                if((t.getSignalB2Name()!=null) && (!t.getSignalB2Name().equals("")) &&
+                                    (t.getSignalC2Name()!=null) && (!t.getSignalC2Name().equals("")) ){
+                                        return true;
+                                }
+                            }
+                }
+                return false;
+            }
 			else {
 				if ( (t.getSignalA1Name()!=null) && (!t.getSignalA1Name().equals("")) &&
 						(t.getSignalB1Name()!=null) && (!t.getSignalB1Name().equals("")) &&
@@ -899,6 +920,53 @@ public class ConnectivityUtil
 			// should never happen
 			return null;
 		}
+	}
+    
+    	/**
+	 * Returns the Signal Mast at the Anchor block boundary 
+	 * If 'facing' is 'true', returns the head that faces toward the specified Block
+	 * If 'facing' is 'false', returns the head that faces away from the specified Block
+	 */		
+	public SignalMast getSignalMastAtAnchor(PositionablePoint p, Block block, boolean facing) {
+		if ( (p==null) || (block==null) ) {
+			log.error("null arguments in call to getSignalHeadAtAnchor");
+			return null;
+		}
+		LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
+		if (((p.getConnect1()).getLayoutBlock()==lBlock) && ((p.getConnect2()).getLayoutBlock()!=lBlock)) {
+			if ( (leTools.isAtWestEndOfAnchor(p.getConnect2(), p) && facing) ||
+						((!leTools.isAtWestEndOfAnchor(p.getConnect2(), p)) && (!facing)) )				
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getWestBoundSignalMast()));
+			else
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getEastBoundSignalMast()));
+		}
+		else if (((p.getConnect1()).getLayoutBlock()!=lBlock) && ((p.getConnect2()).getLayoutBlock()==lBlock)) {
+			if ( (leTools.isAtWestEndOfAnchor(p.getConnect1(), p) && facing) ||
+						((!leTools.isAtWestEndOfAnchor(p.getConnect1(), p)) && (!facing)) )
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getWestBoundSignalMast()));
+			else
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getEastBoundSignalMast()));
+		}
+		else {
+			// should never happen
+			return null;
+		}
+	}
+    
+    
+    //Signalmasts are only valid or requited on the boundary to a block.
+    public boolean layoutTurnoutHasSignalMasts(LayoutTurnout t) {
+        String[] turnoutBlocks = t.getBlockBoundaries();
+        boolean valid = true;
+        if(turnoutBlocks[0]!=null && (t.getSignalAMast()==null  || t.getSignalAMast().equals("")))
+            valid = false;
+        if(turnoutBlocks[1]!=null && (t.getSignalBMast()==null  || t.getSignalBMast().equals("")))
+            valid = false;
+        if(turnoutBlocks[2]!=null && (t.getSignalCMast()==null  || t.getSignalCMast().equals("")))
+            valid = false;
+        if(turnoutBlocks[3]!=null && (t.getSignalDMast()==null  || t.getSignalDMast().equals("")))
+            valid = false;
+		return valid;
 	}
 
 	/**

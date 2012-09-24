@@ -276,7 +276,6 @@ public class LayoutSlip extends LayoutTurnout
 	}
     
     public void reCheckBlockBoundary(){
-        log.info("Recheck block");
         if(connectA==null && connectB==null && connectC==null && connectD==null){
             //This is no longer a block boundary, therefore will remove signal masts and sensors if present
             if(!getSignalAMast().equals(""))
@@ -440,87 +439,92 @@ public class LayoutSlip extends LayoutTurnout
     /**
      * Display popup menu for information and editing
      */
-    protected void showPopUp(MouseEvent e) {
+    protected void showPopUp(MouseEvent e, boolean editable) {
         if (popup != null ) {
 			popup.removeAll();
 		}
 		else {
             popup = new JPopupMenu();
 		}
-		popup.add(getName());
-		boolean blockAssigned = false;
-		if ( (blockName==null) || (blockName.equals("")) ) popup.add(rb.getString("NoBlock"));
-		else {
-			popup.add(rb.getString("BlockID")+": "+getLayoutBlock().getID());
-			blockAssigned = true;
-		}
+        if(editable){
+            popup.add(getName());
+            boolean blockAssigned = false;
+            if ( (blockName==null) || (blockName.equals("")) ) popup.add(rb.getString("NoBlock"));
+            else {
+                popup.add(rb.getString("BlockID")+": "+getLayoutBlock().getID());
+                blockAssigned = true;
+            }
 
-		popup.add(new JSeparator(JSeparator.HORIZONTAL));
-		popup.add(new AbstractAction(rb.getString("Edit")) {
-				public void actionPerformed(ActionEvent e) {
-					editLayoutSlip(instance);
-				}
-			});
-		popup.add(new AbstractAction(rb.getString("Remove")) {
-				public void actionPerformed(ActionEvent e) {
-					if (layoutEditor.removeLayoutSlip(instance)) {
-						// Returned true if user did not cancel
-						remove();
-						dispose();
-					}
-				}
-			});
-		if (blockAssigned) {
-			popup.add(new AbstractAction(rb.getString("SetSignals")) {
-				public void actionPerformed(ActionEvent e) {
-                        if (tools == null) {
-                            tools = new LayoutEditorTools(layoutEditor);
-                        }
-                    tools.setSlipFromMenu((LayoutSlip)instance,
-							layoutEditor.signalIconEditor,layoutEditor.signalFrame);
-				}
-			});
-		}
-
-        final String[] boundaryBetween = getBlockBoundaries();
-        boolean blockBoundaries = false;
-        
-        for (int i = 0; i<4; i++){
-            if(boundaryBetween[i]!=null)
-                blockBoundaries=true;
-        }
-        if (blockBoundaries){
-             popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
-                public void actionPerformed(ActionEvent e) {
-                    if (tools == null) {
-                        tools = new LayoutEditorTools(layoutEditor);
-                    }
-                    tools.setSignalMastsAtSlipFromMenu((LayoutSlip)instance, boundaryBetween, layoutEditor.signalFrame);
-                }
-            });
-             popup.add(new AbstractAction(rb.getString("SetSensors")) {
-                public void actionPerformed(ActionEvent e) {
-                    if (tools == null) {
-                        tools = new LayoutEditorTools(layoutEditor);
-                    }
-                    tools.setSensorsAtSlipFromMenu((LayoutSlip)instance, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
-                }
-            });
-        }
-        
-        if (jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
-            if(blockAssigned){
-                popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+            popup.add(new JSeparator(JSeparator.HORIZONTAL));
+            popup.add(new AbstractAction(rb.getString("Edit")) {
                     public void actionPerformed(ActionEvent e) {
-                        AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
-                        routeTableAction.actionPerformed(e);
+                        editLayoutSlip(instance);
+                    }
+                });
+            popup.add(new AbstractAction(rb.getString("Remove")) {
+                    public void actionPerformed(ActionEvent e) {
+                        if (layoutEditor.removeLayoutSlip(instance)) {
+                            // Returned true if user did not cancel
+                            remove();
+                            dispose();
+                        }
+                    }
+                });
+            if (blockAssigned) {
+                popup.add(new AbstractAction(rb.getString("SetSignals")) {
+                    public void actionPerformed(ActionEvent e) {
+                            if (tools == null) {
+                                tools = new LayoutEditorTools(layoutEditor);
+                            }
+                        tools.setSlipFromMenu((LayoutSlip)instance,
+                                layoutEditor.signalIconEditor,layoutEditor.signalFrame);
                     }
                 });
             }
+
+            final String[] boundaryBetween = getBlockBoundaries();
+            boolean blockBoundaries = false;
+            
+            for (int i = 0; i<4; i++){
+                if(boundaryBetween[i]!=null)
+                    blockBoundaries=true;
+            }
+            if (blockBoundaries){
+                 popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                    public void actionPerformed(ActionEvent e) {
+                        if (tools == null) {
+                            tools = new LayoutEditorTools(layoutEditor);
+                        }
+                        tools.setSignalMastsAtSlipFromMenu((LayoutSlip)instance, boundaryBetween, layoutEditor.signalFrame);
+                    }
+                });
+                 popup.add(new AbstractAction(rb.getString("SetSensors")) {
+                    public void actionPerformed(ActionEvent e) {
+                        if (tools == null) {
+                            tools = new LayoutEditorTools(layoutEditor);
+                        }
+                        tools.setSensorsAtSlipFromMenu((LayoutSlip)instance, boundaryBetween, layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
+                    }
+                });
+            }
+            
+            if (jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+                if(blockAssigned){
+                    popup.add(new AbstractAction(rb.getString("ViewBlockRouting")) {
+                        public void actionPerformed(ActionEvent e) {
+                            AbstractAction  routeTableAction = new  LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
+                            routeTableAction.actionPerformed(e);
+                        }
+                    });
+                }
+            }
+            setAdditionalEditPopUpMenu(popup);
+            layoutEditor.setShowAlignmentMenu(popup);
+            popup.show(e.getComponent(), e.getX(), e.getY());
+        } else if(!viewAdditionalMenu.isEmpty()){
+            setAdditionalViewPopUpMenu(popup);
+            popup.show(e.getComponent(), e.getX(), e.getY());
         }
-        
-        layoutEditor.setShowAlignmentMenu(popup);
-		popup.show(e.getComponent(), e.getX(), e.getY());
     }
     
     public String[] getBlockBoundaries(){
