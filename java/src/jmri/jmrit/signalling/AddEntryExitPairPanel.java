@@ -40,6 +40,9 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
     JComboBox selectPanel = new JComboBox();
     JComboBox fromPoint = new JComboBox();
     JComboBox toPoint = new JComboBox();
+    
+    String [] clearOptions = {"Prompt User", "Cancel Route", "Clear Route"};
+    JComboBox clearEntry = new JComboBox(clearOptions);
     String [] interlockTypes = {"Set Turnouts Only", "Set Turnouts and SignalMasts", "Full Interlock"};
     JComboBox typeBox = new JComboBox(interlockTypes);
     
@@ -53,7 +56,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
         JPanel top = new JPanel();
-        top.setLayout(new GridLayout(4,2));
+        top.setLayout(new GridLayout(6,2));
 
         top.add(new JLabel(rb.getString("SelectPanel")));
         top.add(selectPanel);
@@ -83,6 +86,21 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         top.add(typeBox);
         add(top);
 
+        clearEntry.setSelectedIndex(EntryExitPairs.instance().getClearDownOption());
+        ActionListener clearEntryListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                EntryExitPairs.instance().setClearDownOption(clearEntry.getSelectedIndex());
+            }
+        };
+        
+        top.add(new JLabel(""));
+        top.add(new JLabel(""));
+        clearEntry.addActionListener(clearEntryListener);
+        clearEntry.setToolTipText("set the action for when the NX buttons are reselected");
+        top.add(new JLabel("ReSelection Action"));
+        top.add(clearEntry);
+        add(top);
+        
         JPanel p=new JPanel();
         JButton ok = new JButton(rb.getString("Add"));
         p.add(ok);

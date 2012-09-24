@@ -90,6 +90,13 @@ public class EntryExitPairs implements jmri.Manager{
     */
     final static int FULLINTERLOCK = 0x02;
     
+    
+    final static int PROMPTUSER = 0x00;
+    final static int AUTOCANCEL = 0x01;
+    final static int AUTOCLEAR = 0x02;
+    
+    static int routeClearOption = PROMPTUSER;
+    
     static int nxButtonTimeout = 10;
     static int nxMessageBoxClearTimeout = 30;
     
@@ -236,6 +243,14 @@ public class EntryExitPairs implements jmri.Manager{
 
     public void deregister(NamedBean n) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    public void setClearDownOption(int i){
+        routeClearOption = i;
+    }
+    
+    public int getClearDownOption(){
+        return routeClearOption;
     }
     
     public void dispose(){ }
@@ -505,12 +520,8 @@ public class EntryExitPairs implements jmri.Manager{
         }
     
     }
-
+    
     jmri.SignalMastLogicManager smlm = InstanceManager.signalMastLogicManagerInstance();
-
-    final static int PROMPTUSER = 0x00;
-    final static int AUTOCLEAR = 0x01;
-    final static int AUTOCANCEL = 0x02;
     
     final static int CANCELROUTE = 0;
     final static int CLEARROUTE = 1;
@@ -869,26 +880,30 @@ public class EntryExitPairs implements jmri.Manager{
                     uniDirection = true;
             }
             
-            transient protected PropertyChangeListener propertyBlockListener = new PropertyChangeListener() {
+            protected  PropertyChangeListener propertyBlockListener = new PropertyChangeListener() {
                 public void propertyChange(PropertyChangeEvent e) {
-                    Block blk = (Block) e.getSource();
-                    if (e.getPropertyName().equals("state")) {
-                        if (log.isDebugEnabled()) log.debug(mUserName + "  We have a change of state on the block " + blk.getDisplayName());
-                        int now = ((Integer) e.getNewValue()).intValue();
-                        
-                        if (now==Block.OCCUPIED){
-                            LayoutBlock lBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(blk);
-                            //If the block was previously active or inactive then we will 
-                            //reset the useExtraColor, but not if it was previously unknown or inconsistent.
-                            lBlock.setUseExtraColor(false);
-                            blk.removePropertyChangeListener(propertyBlockListener); //was this
-                            removeBlockFromRoute(lBlock);
-                        } else {
-                            if (log.isDebugEnabled()) log.debug("state was " + now + " and did not go through reset");
-                        }
-                    }
+                    blockStateUpdated(e);
                 }
             };
+            
+            protected void blockStateUpdated(PropertyChangeEvent e){
+                Block blk = (Block) e.getSource();
+                if (e.getPropertyName().equals("state")) {
+                    if (log.isDebugEnabled()) log.debug(mUserName + "  We have a change of state on the block " + blk.getDisplayName());
+                    int now = ((Integer) e.getNewValue()).intValue();
+                    
+                    if (now==Block.OCCUPIED){
+                        LayoutBlock lBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(blk);
+                        //If the block was previously active or inactive then we will 
+                        //reset the useExtraColor, but not if it was previously unknown or inconsistent.
+                        lBlock.setUseExtraColor(false);
+                        blk.removePropertyChangeListener(propertyBlockListener); //was this
+                        removeBlockFromRoute(lBlock);
+                    } else {
+                        if (log.isDebugEnabled()) log.debug("state was " + now + " and did not go through reset");
+                    }
+                }
+            }
             
             Object lastSeenActiveBlockObject;
             
@@ -976,7 +991,12 @@ public class EntryExitPairs implements jmri.Manager{
                     return;
                 }
                 if(!state){
-                    cancelClearOptionBox();
+                    switch(getClearDownOption()){
+                        case PROMPTUSER : cancelClearOptionBox(); break;
+                        case AUTOCANCEL : cancelClearInterlock(CANCELROUTE); break;
+                        case AUTOCLEAR  : cancelClearInterlock(CLEARROUTE); break;
+                        default         : cancelClearOptionBox(); break;
+                    }
                     return;
                 }
                 /*We put the setting of the route into a seperate thread and put a glass pane infront of the layout editor,

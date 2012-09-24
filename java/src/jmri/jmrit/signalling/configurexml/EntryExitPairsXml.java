@@ -37,6 +37,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         setStoreElementClass(element);
         ArrayList<LayoutEditor> editors = p.getSourcePanelList();
         if (editors.size()==0) return element;
+        element.addContent(new Element("cleardown").addContent(""+p.getClearDownOption()));
         for (int k = 0; k<editors.size(); k++){
             LayoutEditor panel = editors.get(k);
             List<Object> nxpair = p.getSourceList(panel);
@@ -125,6 +126,13 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
     public boolean load(Element element) {
         // create the objects
 		EntryExitPairs eep = EntryExitPairs.instance();
+        
+        try {
+            String clearoption = element.getChild("cleardown").getText();
+            eep.setClearDownOption(Integer.parseInt(clearoption));
+        } catch (java.lang.NullPointerException e){
+            //Considered normal if it doesn't exists
+        }
 		// get attributes
         ArrayList<Object> loadedPanel = jmri.InstanceManager.configureManagerInstance().getInstanceList(LayoutEditor.class);
         @SuppressWarnings("unchecked")
