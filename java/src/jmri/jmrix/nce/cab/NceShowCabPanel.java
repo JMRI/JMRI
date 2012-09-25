@@ -131,7 +131,7 @@ import jmri.jmrix.nce.NceTrafficController;
 
 public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 	
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.cab.NceShowCabBundle");
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.cab.NceShowCabBundle");
 	
 	private static final int CS_CAB_MEM = 0x8800;	// start of NCE CS cab context page for cab 0
 													// memory
@@ -310,23 +310,23 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	addItem(p1, space2, 4, 2);
     	
         // row 3
-    	JPanel p2 = new JPanel();
-    	p2.setLayout(new GridBagLayout());
-        addItem(p2, textNumer, 1, 3);
-        addItemLeft(p2, textCab, 2, 3);
-        addItemLeft(p2, textAddress, 3, 3);
-        addItemLeft(p2, textSpeed, 4, 3);
-        addItemLeft(p2, textConsist, 5, 3);
-        addItemLeft(p2, textFunctions, 6, 3);
-        addItemLeft(p2, textDisplay1, 7, 3);
-        addItemLeft(p2, textDisplay2, 8, 3);
-        addItemLeft(p2, textLastUsed, 9, 3);
+//    	JPanel p2 = new JPanel();
+//    	p2.setLayout(new GridBagLayout());
+//        addItem(p2, textNumer, 1, 3);
+//        addItemLeft(p2, textCab, 2, 3);
+//        addItemLeft(p2, textAddress, 3, 3);
+//        addItemLeft(p2, textSpeed, 4, 3);
+//        addItemLeft(p2, textConsist, 5, 3);
+//        addItemLeft(p2, textFunctions, 6, 3);
+//        addItemLeft(p2, textDisplay1, 7, 3);
+//        addItemLeft(p2, textDisplay2, 8, 3);
+//        addItemLeft(p2, textLastUsed, 9, 3);
         
     	addButtonAction(refreshButton);
     	addButtonAction(purgeButton);
     	
     	add(p1);
-    	add(p2);
+//    	add(p2);
     	add(cabsPane);
     	
     	// pad out panel
@@ -403,8 +403,20 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     			e.printStackTrace();
     		}
     	}
+    	
     	firstTime = false;
     	cabsPanel.removeAll();
+    	// build header
+    	addItem(cabsPanel, textNumer, 1, 0);	// number
+    	addItem(cabsPanel, textCab, 2, 0);		// type
+    	addItem(cabsPanel, textAddress, 3, 0);	// address
+      	addItem(cabsPanel, textSpeed, 4, 0);	// speed
+      	addItem(cabsPanel, textConsist, 5, 0);	// consist
+      	addItem(cabsPanel, textFunctions, 6, 0);// functions
+      	addItem(cabsPanel, textDisplay1, 7, 0);	// line1
+      	addItem(cabsPanel, textDisplay2, 8, 0);	// line2
+      	addItem(cabsPanel, textLastUsed, 9, 0);	// last used
+      	
     	int numberOfCabs = 0;
         // build table of cabs
         for (int currCabId=2; currCabId<CAB_MAX; currCabId++){
@@ -424,7 +436,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         	readCabMemory1(currCabId, CAB_FLAGS1);
            	if (!waitNce())
         		return;
-           	if (log.isDebugEnabled()) log.debug("Read flag1 character " + recChar);
+           	if (log.isDebugEnabled()) log.debug("ID = "+currCabId+" Read flag1 character " + recChar);
            	// test it really changed
            	if (recChar != -1) {
 	        	// save value for purge
@@ -763,18 +775,22 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     // puts the thread to sleep while we wait for the read CS memory to complete
     private boolean waitNce(){
     	int count = 100;
+    	log.debug("going to sleep");
        	while (waiting > 0){
-    		try{
-    			Thread.sleep(60);
-    		} catch (Exception e){
-    			//return false;
-    		}
+       		synchronized (this) {
+				try {
+					wait(100);
+				} catch (InterruptedException e) {
+				    
+				}
+			}
     		count--;
     		if (count < 0){
     			textStatus.setText("Error");
     			return false;
     		}
     	}
+       	log.debug("awake!");
        	return true;
     }
     
@@ -806,7 +822,10 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 				recChars[i] = r.getElement(i);
 			}
 		}
-		
+		// wake up thread
+		synchronized (this) {
+			notify();
+		}
 	}
 
     // Write 1 byte of NCE cab memory 
