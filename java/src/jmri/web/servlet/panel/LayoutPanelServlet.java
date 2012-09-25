@@ -43,6 +43,8 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
             panel.setAttribute("paneltype", getPanelType());
             panel.setAttribute("height", ""+editor.getLayoutHeight());
             panel.setAttribute("width", ""+editor.getLayoutWidth());
+            panel.setAttribute("panelheight", ""+editor.getLayoutHeight());
+            panel.setAttribute("panelwidth", ""+editor.getLayoutWidth());
             panel.setAttribute("showtooltips", "" + (editor.showTooltip() ? "yes" : "no"));
             panel.setAttribute("controlling", "" + (editor.allControlling() ? "yes" : "no"));
     		panel.setAttribute("xscale", Float.toString((float)editor.getXScale()));

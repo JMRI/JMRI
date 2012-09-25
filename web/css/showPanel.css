@@ -30,6 +30,13 @@ body {
   padding-left: 6px;
   background-repeat:no-repeat;
 }
+div#panelArea {
+  border-right: solid 1px #888;
+  border-bottom: solid 1px #888;
+  -moz-box-shadow: 5px 5px 5px #ccc;
+  -webkit-box-shadow: 5px 5px 5px #ccc;
+  box-shadow: 5px 5px 5px #ccc;
+}
 div#panelFooter {
 	margin: 8px;
 }

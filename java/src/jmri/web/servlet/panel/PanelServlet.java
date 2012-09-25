@@ -39,10 +39,11 @@ public class PanelServlet extends AbstractPanelServlet {
             JFrame frame = editor.getTargetFrame();
             log.info("Target Frame [" + frame.getTitle() + "]");
             Dimension size = frame.getSize();
-
             panel.setAttribute("name", name);
-            panel.setAttribute("height", "" + size.height);
-            panel.setAttribute("width", "" + size.width);
+            panel.setAttribute("height", "" + frame.getContentPane().getHeight());
+            panel.setAttribute("width", "" +  frame.getContentPane().getWidth());
+            panel.setAttribute("panelheight", "" + frame.getContentPane().getHeight());
+            panel.setAttribute("panelwidth", "" +  frame.getContentPane().getWidth());
 
             panel.setAttribute("showtooltips", "" + (editor.showTooltip() ? "yes" : "no"));
             panel.setAttribute("controlling", "" + (editor.allControlling() ? "yes" : "no"));

@@ -95,15 +95,15 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 	$($panel[0].attributes).each(function() {
 		$gPanel[this.name] = this.value;
 	});
-	$('div#panelArea').width($gPanel.width);
-	$('div#panelArea').height($gPanel.height);
-	$('div#workingMessage').width($gPanel.width);
-	$('div#workingMessage').height($gPanel.height);
+	$('div#panelArea').width($gPanel.panelwidth);
+	$('div#panelArea').height($gPanel.panelheight);
+	$('div#workingMessage').width($gPanel.panelwidth);
+	$('div#workingMessage').height($gPanel.panelheight);
 	
 	//insert the canvas layer and set up context used by layouteditor "drawn" objects, set some defaults 
 	if ($gPanel.paneltype == "LayoutPanel") {
-		$('div#panelArea').before("<canvas id='panelCanvas' width=" + $gPanel.width + "px height=" + 
-				$gPanel.height +"px style='position:absolute;z-index:2;'>");
+		$('div#panelArea').before("<canvas id='panelCanvas' width=" + $gPanel.panelwidth + "px height=" + 
+				$gPanel.panelheight +"px style='position:absolute;z-index:2;'>");
 		var canvas = document.getElementById("panelCanvas");  
 		$gCtx = canvas.getContext("2d");  
 		$gCtx.strokeStyle = $gPanel.defaulttrackcolor;
