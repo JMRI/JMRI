@@ -12843,7 +12843,7 @@ public class LayoutEditorTools
         SignalHeadIcon l = getSignalHeadIcon(headName);
         placingBlockD(l, true, (4+l.getHeight()));
 	}
-	@SuppressWarnings("null")
+    
 	private void setLogicSlip(SignalHead head,TrackSegment track1,SignalHead secondHead,TrackSegment track2,
 					boolean setup1, boolean setup2, 
 						LayoutSlip slip, Turnout nearTurnout, Turnout farTurnout,
@@ -12903,7 +12903,6 @@ public class LayoutEditorTools
 			}
 			if (secondHead!=null) {
 				// this head signals only the continuing track of the far turnout
-                //Need to work out how to add the state of both turnouts
 				if (!initializeBlockBossLogic(head.getSystemName())) return;
 				logic.setMode(BlockBossLogic.TRAILINGMAIN);
                 if(farState==Turnout.THROWN)
@@ -12960,7 +12959,8 @@ public class LayoutEditorTools
 			if (!initializeBlockBossLogic(head.getSystemName())) return;
 			logic.setMode(BlockBossLogic.FACING);
 			logic.setTurnout(farTurnout.getSystemName());
-			logic.setWatchedSensor1(occupancy.getSystemName());
+            if(occupancy!=null)
+                logic.setWatchedSensor1(occupancy.getSystemName());
 			logic.setWatchedSensor2(occupancy2.getSystemName());
 			logic.setSensor2(connectorOccupancy.getSystemName());
 			if (nextHead!=null) {
@@ -12986,8 +12986,12 @@ public class LayoutEditorTools
             farState = layoutSlip.getTurnoutState(farTurnout, divergeState);
 			
             logic.setMode(BlockBossLogic.TRAILINGDIVERGING);
-            if(farState==Turnout.CLOSED)
+            if(farState==Turnout.CLOSED){
                 logic.setMode(BlockBossLogic.TRAILINGMAIN);
+                logic.setLimitSpeed1(true);
+            } else {
+                logic.setLimitSpeed2(true);
+            }
 			logic.setTurnout(farTurnout.getSystemName());
 			logic.setSensor1(occupancy2.getSystemName());
 			if (occupancy2!=connectorOccupancy)
@@ -13000,7 +13004,6 @@ public class LayoutEditorTools
 			}
 			String nearSensorName = setupNearLogixSlip(nearTurnout, nearState, secondHead, farTurnout, farState, slip, number+1);
 			addNearSensorToSlipLogic(nearSensorName);
-			logic.setLimitSpeed2(true);
 			finalizeBlockBossLogic();			
 		}
 	}
