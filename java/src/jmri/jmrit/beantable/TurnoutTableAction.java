@@ -472,7 +472,9 @@ public class TurnoutTableAction extends AbstractTableAction {
             
             public void comboBoxAction(ActionEvent e){
                 if(log.isDebugEnabled()) log.debug("Combobox change");
-                table.getCellEditor().stopCellEditing();
+                if(table!=null && table.getCellEditor()!=null){
+                    table.getCellEditor().stopCellEditing();
+                }
             }
 
             @Override
