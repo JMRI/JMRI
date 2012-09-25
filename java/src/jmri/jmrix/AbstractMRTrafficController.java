@@ -282,7 +282,13 @@ abstract public class AbstractMRTrafficController {
         					handleTimeout(modeMsg,l);
         				}
                         mCurrentState = WAITMSGREPLYSTATE;
-            		}
+            		} else {
+                          // no mode message required, but the message
+                          // needs a different mode
+                          if(log.isDebugEnabled()) 
+                             log.debug("Setting mode to: " + m.getNeededMode());
+                          mCurrentMode=m.getNeededMode();
+                        }
             	}
                     forwardToPort(m, l);
             	// reply expected?
