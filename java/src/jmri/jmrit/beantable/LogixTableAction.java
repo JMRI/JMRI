@@ -3316,7 +3316,7 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _namePanel.setToolTipText(rbx.getString("NameHintOBlock"));
                 _namePanel.setVisible(true);
-
+/*
                 if (actionType==Conditional.ACTION_ALLOCATE_BLOCK_PATH || 
                         actionType==Conditional.ACTION_SET_BLOCK_PATH_TURNOUTS) {
                     p = (JPanel)_actionPanel.getComponent(0);
@@ -3329,7 +3329,7 @@ public class LogixTableAction extends AbstractTableAction {
                     _actionPanel.setVisible(true);
                 } else {
                 }
-
+*/
                 break;
             case Conditional.ITEM_TYPE_AUDIO:
                 for(int i=0; i<Conditional.ITEM_TO_AUDIO_ACTION.length; i++) {
@@ -4142,10 +4142,10 @@ public class LogixTableAction extends AbstractTableAction {
                 actionType = Conditional.ITEM_TO_OBLOCK_ACTION[selection-1];
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
-                if (actionType==Conditional.ACTION_ALLOCATE_BLOCK_PATH ||
+/*                if (actionType==Conditional.ACTION_ALLOCATE_BLOCK_PATH ||
                             actionType==Conditional.ACTION_SET_BLOCK_PATH_TURNOUTS) {
                     _curAction.setActionString((String)_actionBox.getSelectedItem());
-                }
+                }*/
                 break;
             case Conditional.ITEM_TYPE_CLOCK:
                 actionType = Conditional.ITEM_TO_CLOCK_ACTION[selection-1];
