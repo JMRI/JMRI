@@ -40,7 +40,8 @@ and how to use them are described in
 <a href="OBlockTable.shtml">The Occupancy Block Tables</a>.
 <p>
 It may be easier to define <b>OBlocks</b>, <b>Portals</b> and <b>OPaths</b> using
-the <b>Circuit Builder</b> tool found in the Control Panel Editor.  The Circuit 
+the <b>Circuit Builder</b> tool found in the Control Panel Editor.  Circuit Builder
+is an interactive tool that creates OBlocks, Portals and Paths graphically.  The Circuit 
 Builder will also convert the track segments and turnout icons of your layout to 
 Indicator Track and Indicator Turnout icons.  These icons display by color the
 status of the OBlock they represent - whether the track circuit of the OBlock is
@@ -99,13 +100,22 @@ path - e.g. "Arrival Track #1" in the destination block.</p>
 <p>
 There may be more than one way to get from the origin track to the destination
 track. The computer presents you with a list of all the routes it finds - 
-some of these may be quite lengthy.  You may review and choose the route you
-want to use from the list.  If the list is too lengthy, you may restrict the number
-of routes found by specifying an 
-intermediate </b>via block</b> and path that must be included in the route.  The
-computer will re-calculate the route with this restriction and present you only with
-routes through the specified "Via" block and path.
-<A HREF="WarrantTable.shtml"> Creating and Editing Warrants</A>.</li> has more
+some of these may be quite lengthy - especially when the route can be a repeating
+loop.  You may review and choose the route you
+want to use from the list.  If the list is too lengthy, there are several ways 
+you can restrict the number of routes found.
+<ul> 
+	<li>1. Specify a maximum number of blocks to use in a route by entering a
+	number in the <b>Max Number of Blocks in Route</b> box.  The computer will only
+	list routes with this number or fewer blocks</li>
+	<li>2. Specify an intermediate </b>Via Location</b> block and path that must be 
+	included in the route.  The computer will re-calculate the route with this 
+	restriction and present you only with routes through the specified "Via" block
+	and path.</li>
+	<li>3. Specify an <b>Avoid Location</b> block and path that must not be in the route.
+	The computer will not list any routes containing this "avoid" block and path</li> 
+</ul>	 
+<A HREF="WarrantTable.shtml"> Creating and Editing Warrants</A>. has more
 information about this.</p>
 <p>
 The computer may not find a route from the origin track to the destination
@@ -113,7 +123,8 @@ track that you believe is there.  When this occurs, you may request the computer
 to display the routes the algorithm has attempted.  As you trace the  
 attempted routes you
 may find that you have forgotten to enter a path or miss-labeled the correct portal
-to a path.  (or, heaven forbid! found a bug.)</b></p>
+to a path.  <i>A common mistake is to incorrectly specify the portal that must be used to leave
+the starting block or to enter the destination block.</i></p>
 <p>When you are satisfied with the route, select the <b>Record/Playback Script</b> tab.</p>
 
 <H3>Tables on the Record/Playback Script Tab</H3>
@@ -127,7 +138,7 @@ an external event.
 
 <H3>Choosing a Train</H3>
 Inside the <b>Choose Engine Consist</b> box you will find 
-a drop dowm 'combo box' labeled <b>Engine Roster</b> that displays all the trains
+a drop down 'combo box' labeled <b>Engine Roster</b> that displays all the trains
 listed in the Roster.  Selecting one will assign a train to the warrant.
 <p>
 If you do not have a Roster defined then you may enter a locomotive's DCC address in the
@@ -144,7 +155,7 @@ information about this.</p>
 
 <H3>Learn Mode Throttle</H3>
 If a train has been assigned, that is, has a valid train Id or valid DCC address in the warrant,
-then a throttle can be aquired by pressing the <b>Start</b> button.  This
+then a throttle can be acquired by pressing the <b>Start</b> button.  This
 throttle will operate the acquired train and all the throttle commands will be
 recorded until the <b>Stop</b> button is pressed.
 <A HREF="WarrantTable.shtml"> Creating and Editing Warrants</A>.</li> has more
@@ -167,10 +178,12 @@ automated train, restart it or stop the train and abort the remaining throttle c
 Although there are separate operations to reserve a warrant route (Allocate) and
 set turnouts and signals (Set Route) these operations do not have to be done to run
 an automated train.  A <b>Run</b> operation can begin without them.  The train will
-seek allocation and set turnouts and signals as it proceeds on the route.  When
+seek allocation and set turnouts as it proceeds on the route.  When
 confronted with an occupied block, the train will stop and wait until the block clears.
 When the next block is clear but the block beyond the next block is occupied, the
-train will approach at reduced speed.  An automated train will attempt to secure
+train will approach at reduced speed.  Similarly, if the Portals have been define with
+Signal Heads or signal Masts protecting the blocks they join, the train will use the 
+speed notch defined for the appearance or aspect of the signal. An automated train will attempt to secure
 allocation of the next two blocks each time it enters a block. 
 <A HREF="WarrantTable.shtml"> Creating and Editing Warrants</A>.</li> has more
 information about this.</p>
@@ -185,15 +198,19 @@ between recording and playback, may result in the train not performing a throttl
 command at the same place on the layout each time.  The <b>Throttle Adjustment</b>
 text field can be used to modify the throttle setting by a fixed ratio for all
 speed commands.  - or individual commands may have their throttle setting or elapsed
-time value changed.
-<p> 
+time value changed by editing the throttle command table.
+<p>
 The "NOOP" commands with value "Enter Block" should not be removed.  These rows 
 are used to synchronize the automatic running of a train to the recorded elapsed
 time in the block, by either extending the elapsed time if the train has arrived
 too soon or shortening the elapsed time of the following commands if it arrived
 too late.  
 <p>
-The run protection discussed in the previous section and synchronizing commands
+Rows can be inserted into Throttle command Table so the train can set external sensor
+states or respond to the state of an external sensor. 
+<A HREF="WarrantTable.shtml"> Creating and Editing Warrants</A>. has more
+information about this.</p>
+The run protection discussed in previous sections and synchronizing commands
 depends on reliable occupancy detection.  If the layout is prone to have spurious 
 false detection signals, then automated running will be unsatisfactory - trains may wait
 indefinitely for phantom trains to release occupancy or run indefinitely by not

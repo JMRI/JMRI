@@ -49,7 +49,7 @@ Press the <b>Calculate Route</b> button and the the computer will determine all 
 intermediate paths needed to make the trip.
 <ul>
         <b>NOTE:</b> in the upper right hand portion of the Create/Edit 
-        Warrant frome is a table listing all the OBlocks you have defined.
+        Warrant frame is a table listing all the OBlocks you have defined.
         Either the System Name or the User Name can be dragged and dropped
         into the location blocks on the upper left hand side of the frame.
 </ul>
@@ -67,18 +67,21 @@ intermediate paths needed to make the trip.
         </ul>
         Setting the Exit Portal determines the direction the train will
         take.  There is no further need to specify direction, since the 
-        algorithm will provide the route.</li>
+        algorithm will only provide routes that leave in that direction.</li>
 
         <li><b>Destination Location</b>: - Consists of a text field for the
         destination <b>Block Name</b> and a drop down menu for the terminating
         <b>Path Name</b> and a drop down menu to select the <b>Entry Portal
         Name</b>.
         <ul>
-        As above the block may have several paths and the  path
+        As above the block may have several paths and the path
         where you intend the train to finish its run needs to be specified.
-        Also, specifying the
-        Entry portal for the destination is needed since the layout may have 
-        a reversing loop allowing the path to be entered from either end.  
+        It is important to specify the
+        Entry portal for the destination.  This is needed when the layout has 
+        reversing loops allowing the path to be entered from either end. 
+        <i>A common mistake when no route are found is to specify an entry 
+        portal or path that cannot
+        be reached by the direction taken when leaving the origin block.</i> 
         </ul>
         </li>
         <li><b>Via Location</b>: - Consists of a text field for a
@@ -183,12 +186,12 @@ not move until the user sets "Resume". (see below how to set these user commands
 <H3>Throttle Command Table</H3>
 The Throttle Command Table has the following columns:
 <ul>
-        <li><b>ET(msec)</b>: - The elapsed time in milliseconds to wait after 
-        a command is sent before issuing the next throttle command.</li>
+        <li><b>ET(msec)</b>: - The elapsed time in milliseconds to wait before 
+        issuing the throttle command.</li>
         <li><b>Command</b>: - The throttle command that was recorded (direction, speed, 
         or button press or release).</li>
         <li><b>Value</b>: - The value of the command.</li> 
-        <li><b>Block</b>: - The block the train has last entered when the throttle
+        <li><b>Block</b>: - The block the train occupied when the throttle
         command was recorded.</li>
 </ul>
 In addition to the commands you entered from the throttle, a marker when each
@@ -196,9 +199,6 @@ block is entered is also recorded.  A marker row in the table has the elapsed ti
 the last throttle command, the command name "NoOp" (i.e. no command was send to the 
 train), the value "Enter Block" and the block name being entered.  These rows help
 to synchronize the running of the train to keep to its recorded schedule. 
-</p><p>
-All of the columns in the Throttle Command Table can be edited.  Perhaps you want to
-touch up the horn blasts or modify the speeds.  Just enter the data you want.
 </p>
 
 <H3>Synchronizing Commands to Block boundaries.</H3>
@@ -207,11 +207,11 @@ the entry into each block at the same time as was recorded.
 If the consist of a train changes, or if power is changed, the recorded elapsed times
 may not allow the throttle commands to execute at the same points on the route where
 the "Learn Mode" train recorded them.  The "NoOp" markers can usually correct this. However, 
-in extreme cases or for commands issued within the block sychronization may
-still be uncorrected.
+in extreme cases or for commands issued within the block synchronization may
+still be uncorrected.  You may also lengthen or shorten the synchronization times for entering a block.
 <p>
-If this is the case, a <b>Throttle Adjustment</b> can be entered to multiply the throttle setting
-to supply more or less power. 
+Another option is to use the <b>Throttle Adjustment</b> to enter a ratio to multiply the throttle setting
+and thus supply more or less power. 
 <ul>
         <b>NOTE:</b>The throttle adjustment factor is not permanently saved.  The default 
         mutiplier is always 1.0.  Whenever a factor is wanted, it must be entered manually 
@@ -224,8 +224,12 @@ to supply more or less power.
 
 <H3>Editing Throttle Commands</H3>
 
-The values in the Throttle Command Table can be changed by typing new entries into cells
-of the table.  Rows may be inserted or deleted form the table using the buttons to the 
+All of the columns in the Throttle Command Table can be edited.  Perhaps you want to
+touch up the timing for the horn blasts or modify the speeds.  Just enter the data you want.
+The values in the Throttle Command Table are changed by typing new entries into cells
+of the table.  
+<p>
+Rows may be inserted or deleted from the table using the buttons to the 
 right of the table.  Note that an inserted row has 0 elapsed time from the previous 
 command so you may want to adjust this by taking time away from either the previous
 row or the following row and entering it into the inserted row.  Also, when a row is
@@ -236,11 +240,32 @@ elapsed time in the block constant.
 
 <H3>Triggering External Events From Scripts</H3>
 
-External animation or other events may be triggered by entering a "<i>Sensor</i>"
-command.  To do this, insert a row with the word "Sensor" in the Command column and
+External animation or other events may be triggered by entering a "<i>Set Sensor</i>"
+command.  To do this, insert a row with the words <b>Set Sensor</b> in the Command column and
 a valid sensor name in the Block column.  The Value column should have the action 
 you want the sensor to take at its execution time - the words "active" or "inactive".
+Also enter the elapsed time when to trigger the setting of the sensor.  On playback
+when this command is executed the state of the sensor will be set.
 </p>
+
+<H3>Internal Synchronization From External Events</H3>
+Additional synchronization can be done within a block.  For example stopping a train
+at a water tower or over an uncoupling device or for any reason where using the elapsed
+time of a command is not precise enough.To do this, insert a row with the words 
+<b>Wait Sensor</b> in the Command column and
+a valid sensor name in the Block column.  The Value column should have the action 
+words "active" or "inactive".  On playback when this command is executed the script
+pauses and the current
+movement of the train is sustained until the sensor changes to the specified state.
+When that happens the script the continues to execute according to the recorded 
+times.  In this case the "Wait Sensor" might be an optical sensor positioned to
+detect specific point.  Bracket the "Wait Sensor" command with speed commands, the
+one before with a very slow speed and the one after with speed 0 (or -1).  The script will
+then have the train creep at the slow speed until the sensor makes the detection.
+Then the script continues and the speed 0 command stops the train.
+<p>
+If the "Wait Sensor" is already at the specified state when playback executes its
+command the script continues. 
 
 <H3>Running Trains on Dark Blocks</H3>
 The Learn mode and Run Mode functions can be used on blocks that do not have detection sensors.
@@ -249,6 +274,11 @@ cannot reset the turnouts or modify its speed while the train is enroute.  This 
 there is no protection from rouge trains fouling the route or from turnouts being changed
 while the train is enroute.  Therefore run trains
 with caution over dark blocks.
+<p>Note that entry into a dark block is detected differently that an occupancy block.
+Obviously, entry into an occupancy block is recorded when the occupancy block detects
+occupancy.  However entry into a dark block can only be recorded as the time with the
+previous occupancy block shows no occupancy.  That is, entry into a dark block is the
+tail of the train not the head.
 
 <H2>Run Mode</H2>
 Pressing the <b>Run</b> button in the <b>Run Train</b> box
@@ -266,14 +296,14 @@ check for occupancy will also reset the turnouts for the route, if they have bee
 inadvertently changed from another source.
 <p>
 The occupancy detection and synchronized commands used to notify a train when it enters
-a block depends on accuracte occupancy detection.  If the layout does not have reliable 
+a block depends on accurate occupancy detection.  If the layout does not have reliable 
 occupancy detection, automated trains may run with unexpected consequences.  Trains may
-wait indefititely when false detection occurs.  The block
+wait indefinitely when false detection occurs.  The block
 protection done when entering a block can be disabled.  The following radio buttons set 
 this:
 <ul>
         <li><b>Run with block Protection</b>: - Runs the train with the occupancy detection
-        when entering blocks and with the synchroniation features.</li>
+        when entering blocks and with the synchronization features.</li>
         <li><b>Run with blocks dark</b>: - Runs the train as described for Dark Blocks.</li>
 </ul>
 
