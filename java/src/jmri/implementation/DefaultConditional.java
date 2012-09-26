@@ -1008,9 +1008,9 @@ public class DefaultConditional extends AbstractNamedBean
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
 						else {
-                            String msg = w.allocateRoute();
+                            String msg = w.allocateRoute(null);
 							if (msg !=null) {
-                                errorList.add("Warrant "+action.getDeviceName()+" - "+msg);
+                                log.info("Warrant "+action.getDeviceName()+" - "+msg);
                             }
                             actionCount++;
 						}
@@ -1033,7 +1033,7 @@ public class DefaultConditional extends AbstractNamedBean
 						else {
                             String msg = w.setRoute(0, null);
 							if (msg!=null) {
-                                errorList.add("Warrant "+action.getDeviceName()+" unable to Set Route - "+msg);
+								log.info("Warrant "+action.getDeviceName()+" unable to Set Route - "+msg);
                             }
                             actionCount++;
 						}
@@ -1046,7 +1046,7 @@ public class DefaultConditional extends AbstractNamedBean
 						else {
                             String msg = w.setThrottleFactor(getActionString(action));
 							if (msg!=null) {
-                                errorList.add("Warrant "+action.getDeviceName()+" unable to Set Throttle Factor - "+msg);
+								log.info("Warrant "+action.getDeviceName()+" unable to Set Throttle Factor - "+msg);
                             }
                             actionCount++;
 						}
@@ -1058,7 +1058,9 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						else {
                             if (!w.setTrainId(getActionString(action))) {
-                                errorList.add("Unable to find train Id "+action.getActionString()+" in Roster  - "+action.getDeviceName());
+                            	String s = "Unable to find train Id "+action.getActionString()+" in Roster  - "+action.getDeviceName();
+                            	log.info(s);
+                                errorList.add(s);	// could be serious - display error to UI
                             }
                             actionCount++;
 						}
@@ -1079,7 +1081,8 @@ public class DefaultConditional extends AbstractNamedBean
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
 						else {
-                            String err = w.runAutoTrain(true);
+							String err = w.setRoute(0, null);
+                            err = w.setRunMode(Warrant.MODE_RUN, null, null, null, false);
                             if (err!=null) {
                                 errorList.add("runAutoTrain error - "+err);
                             }
@@ -1092,7 +1095,8 @@ public class DefaultConditional extends AbstractNamedBean
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
 						}
 						else {
-                            String err = w.runAutoTrain(false);
+							String err = w.setRoute(0, null);
+                            err = w.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
                             if (err!=null) {
                                 errorList.add("runManualTrain error - "+err);
                             }
@@ -1180,14 +1184,14 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
                     case ACTION_SET_BLOCK_PATH_TURNOUTS:
-                        b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+                    	b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
 						else {
                             String err = b.setPath(getActionString(action), null);
                             if (err!=null) {
-                                errorList.add("setPath error - "+err);
+                                log.info("setPath error - "+err);
                             }
                             actionCount++;
 						}

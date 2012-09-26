@@ -44,6 +44,8 @@ public class DnDStringImportHandler extends TransferHandler {
                 String data = (String)tr.getTransferData(DataFlavor.stringFlavor);
                 JTextField field = (JTextField)comp;
                 field.setText(data);
+                //Notify listeners drop happened
+                field.firePropertyChange("DnDrop", 0, 1);
                 return true;
             }
         } catch (UnsupportedFlavorException ufe) {
