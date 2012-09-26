@@ -38,7 +38,7 @@ public class ThrottleSetting {
     public String getBlockName() { return _blockName; }
 
     public String toString() {
-        return "ThrottleSetting: "+_command+"= "+_value+", wait "+_time+"ms in block "+_blockName; 
+        return "ThrottleSetting: wait "+_time+"ms for "+_command+"= "+_value+" at block "+_blockName; 
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleSetting.class.getName());

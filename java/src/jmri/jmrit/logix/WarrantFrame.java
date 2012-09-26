@@ -68,8 +68,9 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
 
     private ArrayList <BlockOrder> _orders = new ArrayList <BlockOrder>();
     private ArrayList <ThrottleSetting> _throttleCommands = new ArrayList <ThrottleSetting>();
-    private long _startTime;
+    private long 			_startTime;
     private LearnThrottleFrame _learnThrottle = null;
+    private DccLocoAddress 	_locoAddress = null;
 
     BlockOrder  _originBlockOrder;
     BlockOrder  _destBlockOrder;
@@ -118,7 +119,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     */
     public WarrantFrame(String warrantName) {
         super(false, false);
-        _warrant = InstanceManager.warrantManagerInstance().provideWarrant(warrantName);
+        _warrant = InstanceManager.warrantManagerInstance().getWarrant(warrantName);
         _create = false;
         setup();
         init();
@@ -536,7 +537,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         JButton startButton = new JButton(rb.getString("Start"));
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                runTrain(Warrant.MODE_LEARN);
+                runLearnModeTrain();
             }
         });
         JButton stopButton = new JButton(rb.getString("Stop"));
@@ -774,7 +775,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
-        _throttleCommands.add(row, new ThrottleSetting(0, "NoOp", null, null));
+        _throttleCommands.add(row, new ThrottleSetting(0, null, null, null));
         _commandModel.fireTableDataChanged();
     }
 
@@ -950,6 +951,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         p.add(pp, BorderLayout.NORTH);
         p.add(blockBox, BorderLayout.CENTER);
         blockBox.addActionListener(this);
+        blockBox.addPropertyChangeListener(this);
         return p;
     }
 
@@ -965,6 +967,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         p.add(pp, BorderLayout.NORTH);
         p.add(box, BorderLayout.CENTER);
         box.addActionListener(this);
+//        box.addPropertyChangeListener(this);
         box.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         //box.setMaximumSize(new Dimension(100, box.getPreferredSize().height));
         return p;
@@ -1027,6 +1030,10 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         _thisActionEventId = e.getID();
         if (log.isDebugEnabled()) log.debug("actionPerformed: source "+((Component)obj).getName()+
                      " id= "+e.getID()+", ActionCommand= "+e.getActionCommand());
+        doAction(obj);
+    }
+    
+    void doAction(Object obj) {
         if (obj instanceof JTextField)
         {
             JTextField box = (JTextField)obj;
@@ -1072,7 +1079,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             }
         }
         textBox.setText(text);
-        OBlock block = InstanceManager.oBlockManagerInstance().provideOBlock(text);
+        OBlock block = InstanceManager.oBlockManagerInstance().getOBlock(text);
         if (block == null && text.length()>0) {
             JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                     rb.getString("BlockNotFound"), text),
@@ -1519,69 +1526,57 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     }
 
     /******************* Learn or Run a train *******************/
-
-    private void runTrain(int mode) {
-        String msg = null;
+    /**
+     * all non-null returns are fatal
+     * @return
+     */
+    private String checkTrainId() {
+    	String msg = null;
         if (_warrant.getRunMode()!=Warrant.MODE_NONE) {
-            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(rb.getString("TrainRunning"), _trainNameBox.getText()),
-                                           rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            return;
+        	msg = java.text.MessageFormat.format(rb.getString("TrainRunning"), _trainNameBox.getText());
+            return msg;
         }
-        DccLocoAddress locoAddress = null;
-
         if (_orders.size()==0) {
             msg = java.text.MessageFormat.format(rb.getString("NoRouteSet"),
                         _originBlockBox.getText(), _destBlockBox.getText());
-        } else if (_train!=null) {
-            locoAddress = _train.getDccLocoAddress();
-            if (locoAddress==null) {
-                locoAddress = getLocoAddress();
-                if (locoAddress==null) {
-                    msg = rb.getString("NoRosterEntry");
-                } else {
-                    if (JOptionPane.showConfirmDialog(this, java.text.MessageFormat.format(
-                            rb.getString("UseAddress"), _dccNumBox.getText()), rb.getString("QuestionTitle"), 
-                             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) 
-                                    == JOptionPane.NO_OPTION) {
-                        return;
-                    }
-                }
+            return msg;
+        } 
+    	if (_train!=null) {
+            _locoAddress = _train.getDccLocoAddress();
+            if (_locoAddress==null) {
+                _locoAddress = getLocoAddress();
             }
+
         } else {
-            locoAddress = getLocoAddress();
-            if (locoAddress==null) {
-                msg = rb.getString("NoRosterEntry");
-            }
+            _locoAddress = getLocoAddress();
+        }
+        if (_locoAddress==null) {
+            msg = rb.getString("NoRosterEntry");
+        }
+        _statusBox.setText(msg);
+    	return msg;
+    }
+    /**
+     * non-null returns not necessarily fatal, but may require used decision or action
+     */
+    private String setupRun() {
+    	String msg = null;
+    	msg = _warrant.allocateRoute(_orders);    		
+        if (msg==null) {
+            msg = _warrant.setRoute(0, _orders);
         }
         if (msg==null) {
-            if (log.isDebugEnabled()) log.debug("runTrain:  _orders.size()= "+_orders.size());
-            msg = _warrant.setRoute(0, _orders);
-            if (msg!=null) {
-                BlockOrder bo = _warrant.getfirstOrder();
-                OBlock block = bo.getBlock();
-                String msg2 = block.allocate(_warrant);
-                if (msg2 == null) {
-                    if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(this,
-                            java.text.MessageFormat.format(WarrantTableAction.rb.getString("OkToRun"),
-                            msg), WarrantTableAction.rb.getString("WarningTitle"), 
-                            JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
-                        _warrant.deAllocate();
-                        return;
-                    }
-                    block.setPath(bo.getPathName(), _warrant);
-                    msg = null;
-                } else {
-                    msg = java.text.MessageFormat.format(
-                                    WarrantTableAction.rb.getString("OriginBlockNotSet"), msg2);
-                } 
-            }
+        	msg = _warrant.checkStartBlock();
         }
-        if (msg!=null) {
-            JOptionPane.showMessageDialog(this, msg, rb.getString("WarningTitle"), 
-                                          JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        if (mode==Warrant.MODE_LEARN) {
+    	return msg;
+    }
+    
+    private void runLearnModeTrain() {
+    	String msg = checkTrainId();
+    	if (msg==null) {
+            msg = setupRun();    		
+    	}
+    	if (msg==null) {
             if (_throttleCommands.size() > 0) {
                 if (JOptionPane.showConfirmDialog(this, rb.getString("deleteCommand"),
                    rb.getString("QuestionTitle"), JOptionPane.YES_NO_OPTION, 
@@ -1589,51 +1584,82 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                     return;
                 }
                 _throttleCommands = new ArrayList <ThrottleSetting>();
+                _commandModel.fireTableDataChanged();
             }
             if (_learnThrottle==null) {
                 _learnThrottle = new LearnThrottleFrame(this);
             } else {
                 _learnThrottle.setVisible(true);
-            }
-        } else if (mode==Warrant.MODE_RUN) { 
-            if (_throttleCommands==null || _throttleCommands.size()==0)  {
-                JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
-                        rb.getString("NoCommands"),_warrant.getDisplayName()), 
-                              rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-        } else {
-            return;
-        }
-
-        _startTime = System.currentTimeMillis();
-        _warrant.addPropertyChangeListener(this);
-        msg = _warrant.setThrottleFactor(_throttleFactorBox.getText());
+            }    		
+            msg = _warrant.setThrottleFactor(_throttleFactorBox.getText());
+    	}
         if (msg==null) {
             String trainName = _trainNameBox.getText();
             if (trainName!=null && trainName.length()>0) {
                 _warrant.setTrainName(trainName);
             }
-            msg = _warrant.setRunMode(mode, locoAddress, _learnThrottle, 
+            _startTime = System.currentTimeMillis();
+            _warrant.addPropertyChangeListener(this);
+           msg = _warrant.setRunMode(Warrant.MODE_LEARN, _locoAddress, _learnThrottle, 
                                           _throttleCommands, _runBlind.isSelected());
         }
         if (msg!=null) {
-        	_warrant.deAllocate();
+            stopRunTrain();
+            _statusBox.setText(msg);
+           JOptionPane.showMessageDialog(this, msg, rb.getString("WarningTitle"), 
+                                          JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void runTrain(int mode) {
+    	String msg = checkTrainId();
+        if (msg!=null) {
+            JOptionPane.showMessageDialog(this, msg, rb.getString("WarningTitle"), 
+                                          JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+    	msg = setupRun();
+        if (_throttleCommands==null || _throttleCommands.size()==0)  {
+            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
+                    rb.getString("NoCommands"),_warrant.getDisplayName()), 
+                          rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            _warrant.deAllocate();
+            _statusBox.setText(msg);
+           return;
+        }
+    	if (msg!=null) {
+            if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(this,
+                    java.text.MessageFormat.format(WarrantTableAction.rb.getString("OkToRun"),
+                    msg), WarrantTableAction.rb.getString("WarningTitle"), 
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+                _warrant.deAllocate();
+                _statusBox.setText(msg);
+                return;
+            }
+    	}
+        String trainName = _trainNameBox.getText();
+        if (trainName!=null && trainName.length()>0) {
+            _warrant.setTrainName(trainName);
+        }
+        _warrant.addPropertyChangeListener(this);
+        msg = _warrant.setRunMode(Warrant.MODE_RUN, _locoAddress, _learnThrottle, 
+                                      _throttleCommands, _runBlind.isSelected());
+        if (msg!=null) {
+            _statusBox.setText(msg);
+            stopRunTrain();
             JOptionPane.showMessageDialog(this, msg,
                                 rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            // learnThrottle will be disposed by _warrant.setRunMode(Warrant.MODE_NONE, null, null, null);
-            stopRunTrain();
             return;
         }
     }
 
     protected void stopRunTrain() {
+    	_warrant.deAllocate();
         String msg = _warrant.setRunMode(Warrant.MODE_NONE, null, null, null, false);
         _warrant.removePropertyChangeListener(this);
-        if (msg!=null) {
-        	_warrant.deAllocate();
-        }
         if (_learnThrottle!=null) {
+            _learnThrottle.setSpeedSetting(-0.5F);
+            _learnThrottle.setSpeedSetting(0.0F);
             _learnThrottle.dispose();
             _learnThrottle = null;
         }
@@ -1660,6 +1686,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         if (property.equals("RouteSearch"))  {
             _searchStatus.setText(java.text.MessageFormat.format(rb.getString("FinderStatus"),
                            new Object[] {e.getOldValue(), e.getNewValue()}));
+        } else if (property.equals("DnDrop"))  {
+        	doAction(e.getSource());
         } else {
             String item = "Error";
             switch (_warrant.getRunMode()) {
@@ -1943,7 +1971,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             OBlock block = null;
             switch (col) {
                 case BLOCK_COLUMN:
-                    block = InstanceManager.oBlockManagerInstance().provideOBlock((String)value);
+                    block = InstanceManager.oBlockManagerInstance().getOBlock((String)value);
                     if (block != null) { bo.setBlock(block); }
                     break;
                 case ENTER_PORTAL_COL: 
@@ -2085,8 +2113,12 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                         break;
                     }
                     cmd = cmd.trim().toUpperCase();
-                    if ("SPEED".equals(cmd) || "SPEEDSTEP".equals(cmd) || "FORWARD".equals(cmd)) {
-                        ts.setCommand((String)value);
+                    if ("SPEED".equals(cmd)) {
+                        ts.setCommand("Speed");
+                    } else if ("SPEEDSTEP".equals(cmd)) {
+                        ts.setCommand("SpeedStep");                    	
+                    } else if ("FORWARD".equals(cmd)) {
+                        ts.setCommand("Forward");
                     } else if (cmd.startsWith("F")) {
                         try {
                             int cmdNum = Integer.parseInt(cmd.substring(1));
@@ -2110,9 +2142,15 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                             msg = rb.getString("badLockFNum");
                         }
                     } else if ("NOOP".equals(cmd)) {
-                        ts.setCommand((String)value);
-                    } else if ("SENSOR".equals(cmd)) {
-                        ts.setCommand((String)value);
+                        msg = java.text.MessageFormat.format(
+                                rb.getString("cannotEnterNoop"), (String)value); 
+                    } else if (ts.getCommand().equals("NoOp")) {
+                        msg = java.text.MessageFormat.format(
+                                rb.getString("cannotChangeNoop"), (String)value); 
+                    } else if ("SENSOR".equals(cmd) || "SET SENSOR".equals(cmd) || "SET".equals(cmd)) {
+                        ts.setCommand("Set Sensor");
+                    } else if ("WAIT SENSOR".equals(cmd) || "WAIT".equals(cmd)) {
+                        ts.setCommand("Wait Sensor");
                     } else {
                         msg = java.text.MessageFormat.format(
                                 rb.getString("badCommand"), (String)value); 
@@ -2178,41 +2216,21 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                             msg = rb.getString("invalidBoolean");
                         }
                         ts.setValue((String)value);
-                    } else if ("SENSOR".equals(cmd)) {
+                    } else if ("SET SENSOR".equals(cmd) || "WAIT SENSOR".equals(cmd)) {
                         String v = ((String)value).toUpperCase();
                         if ("ACTIVE".equals(v) || "INACTIVE".equals(v)) {
                             ts.setValue((String)value);
                         } else {
                             msg = rb.getString("badSensorCommand");
                         }
-                    } else if ("NOOP".equals(cmd)) {
-                    	String val = (String)value;
-                        ts.setValue((String)value);                    		
-                    	if (rb.getString("Mark").toUpperCase().equals(val.toUpperCase())) {
-                    		String name = ts.getBlockName();
-                    		if (name==null) {
-                                JOptionPane.showMessageDialog(null, rb.getString("needBlockName"),
-                                        rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);                    			
-                    		} else {
-                                OBlock block = InstanceManager.oBlockManagerInstance().provideOBlock(name);
-                                if (block != null && getIndexOfBlock(block) >= 0) {
-                                    ts.setBlockName((String)value);
-                                } else {
-                                    msg = java.text.MessageFormat.format(
-                                            rb.getString("BlockNotInRoute"), (String)value); 
-                                }                    			
-                    		}
-                    	} else {
-                            msg = java.text.MessageFormat.format(
-                                    rb.getString("badValue"), (String)value, ts.getCommand());                    		
-                    	}
                     }
+                     ts.setBlockName(getPreviousBlockName(row));
                     break;
                 case BLOCK_COLUMN:
                     cmd = ts.getCommand().toUpperCase();
-                    if ("SENSOR".equals(cmd)) {
+                    if ("SET SENSOR".equals(cmd) || "WAIT SENSOR".equals(cmd)) {
                         try {
-                            jmri.Sensor s = InstanceManager.sensorManagerInstance().provideSensor((String)value);
+                            jmri.Sensor s = InstanceManager.sensorManagerInstance().getSensor((String)value);
                             if (s != null) {
                                 ts.setBlockName((String)value);
                             } else {
@@ -2223,14 +2241,16 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                             msg = java.text.MessageFormat.format(
                                     rb.getString("BadSensor"), (String)value); 
                         }
+                    } else if ("NOOP".equals(cmd)) {
+                        msg = java.text.MessageFormat.format(
+                                rb.getString("cannotChangeBlock"), (String)value); 
                     } else {
-                        OBlock block = InstanceManager.oBlockManagerInstance().provideOBlock((String)value);
-                        if (block != null && getIndexOfBlock(block) >= 0) {
-                            ts.setBlockName((String)value);
-                        } else {
+                    	String name = getPreviousBlockName(row);
+                    	if (!name.equals((String)value)) {
                             msg = java.text.MessageFormat.format(
-                                    rb.getString("BlockNotInRoute"), (String)value); 
-                        }
+                                    rb.getString("commandInBlock"), name);                              		
+                            ts.setBlockName(name);
+                    	}
                     }
                     break;
             }
@@ -2240,6 +2260,17 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             } else {
                 fireTableRowsUpdated(row, row);
             }
+        }
+        
+        private String getPreviousBlockName(int row) {
+        	for (int i=row; i>0; i--) {
+        		String name = _throttleCommands.get(i-1).getBlockName();
+                OBlock b = InstanceManager.oBlockManagerInstance().getOBlock(name);
+                if (b!=null) {
+                	return name;
+                }
+        	}       	
+        	return "StartBlock";
         }
 
     }

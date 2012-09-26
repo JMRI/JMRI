@@ -20,7 +20,7 @@ import jmri.NamedBeanHandle;
  * Additional states are defined to indicate status of the track and trains to control panels.
  *
  *<P>
- * Entrances (exits when train moves in opposute direction) to OBlocks have Portals. A
+ * Entrances (exits when train moves in opposite direction) to OBlocks have Portals. A
  * Portal object is a pair of OBlocks.  Each OBlock has a list of its Portals.
  *
  *<P>
@@ -263,36 +263,34 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     * @return name of block if block is already allocated to another warrant
     */
     protected String allocate(Warrant warrant) {
-        if (log.isDebugEnabled()) log.debug("Allocate warrant \""+warrant.getDisplayName()+"\" in block \""
-                                            +getSystemName()+"\", state= "+getState());
+        if (log.isDebugEnabled()) log.debug("Allocate block \""+getDisplayName()+
+        							"\" to warrant \""+warrant.getDisplayName()+"\"");
         if (warrant==null) {
-            return "ERROR! Allocate called with null warrant in block \""+getDisplayName()+"\"!";
+            return "ERROR! allocate called with null warrant in block \""+getDisplayName()+"\"!";
         }
         if (_warrant!=null && !warrant.equals(_warrant)) {
             // allocated to another warrant
             return java.text.MessageFormat.format(rb.getString("AllocatedToWarrant"),
                                                   _warrant.getDisplayName(), getDisplayName()); 
         }
-        if ((getState() & OUT_OF_SERVICE) !=0) {
+        int state = getState();
+        if ((state & OUT_OF_SERVICE) !=0) {
             return java.text.MessageFormat.format(rb.getString("BlockOutOfService"),
                                                     getDisplayName()); 
         }
         String path = warrant.getRoutePathInBlock(this);
-        if (_pathName!=null && !_pathName.equals(path)) {
-            return java.text.MessageFormat.format(rb.getString("AllocatedToPath"),
-                                          path, getDisplayName(), _pathName); 
+        if (_pathName==null) {
+            _pathName = path;
         }
         _warrant = warrant;
-        _pathName = path;
         // firePropertyChange signaled in super.setState()
         setState(getState() | ALLOCATED);
         return null;
     }
 
     /**
-    * 
-    * Note the block may be OCCUPIED by a non-warranted train, but the allocation is permitted.
-    * @return name of block if block is already allocated to another warrant
+    * Note path name may be set if block is not allocated to a warrant
+    * @return error message
     */
     public String allocate(String pathName) {
         if (log.isDebugEnabled()) log.debug("Allocate OBlock path \""+pathName+"\" in block \""
@@ -310,8 +308,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                                           pathName, getDisplayName(), _pathName); 
         }
         _pathName = pathName;
-        // firePropertyChange signaled in super.setState()
-        setState(getState() | ALLOCATED);
+//        setState(getState() | ALLOCATED);
         return null;
     }
 
@@ -320,8 +317,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     * Remove listener regardless of ownership
     */
     public String deAllocate(Warrant warrant) {
-        if (log.isDebugEnabled()) log.debug("deAllocate \""+_pathName+"\" in block \""
-                                            +getSystemName());
+        if (log.isDebugEnabled()) log.debug("deAllocate block \""+getDisplayName()+
+        				"\" from warrant \""+warrant.getDisplayName()+"\"");
         if (_warrant!=null) {
         	if (!_warrant.equals(warrant)) {
         		return "cannot deAllocate. warrant \""+_warrant.getDisplayName()+
@@ -353,7 +350,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     /**
     * Enforce unique portal names.  Portals are not managed beans and multiple
-    * config loads will create multiple Portal Objects that are "duplicates".
+    * configuration loads will create multiple Portal Objects that are "duplicates".
     */
     public void addPortal(Portal portal) {
         String name = getDisplayName();
@@ -504,26 +501,23 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     * @return error message if the call fails.  null if the call succeeds
     */
     public String setPath(String pathName, Warrant warrant) {
-        if (log.isDebugEnabled()) log.debug("setPath: OBlock \""+getSystemName()+" path to \""+
-                                            pathName+"\" by warrant "+warrant.getDisplayName());
+        if (log.isDebugEnabled()) log.debug("setPath: on OBlock \""+getSystemName()+" path to \""+
+                                            pathName+"\" for warrant "+warrant.getDisplayName());
         String msg = null;
         if (_warrant!=null && !_warrant.equals(warrant)) {
             msg = java.text.MessageFormat.format(rb.getString("AllocatedToWarrant"),
                                                   _warrant.getDisplayName(), getDisplayName());
-            log.error(msg);
             return msg; 
         }
         _warrant = warrant;
         OPath path = getPathByName(pathName);
         if (path==null) {
             msg = java.text.MessageFormat.format(rb.getString("PathNotFound"), pathName, getDisplayName()); 
-            log.error(msg);
             return msg; 
         } else {
             if (_warrant!=null) {
                 if (!pathName.equals(warrant.getRoutePathInBlock(this))) {
                     msg = java.text.MessageFormat.format(rb.getString("PathNotFound"), pathName, getDisplayName()); 
-                    log.error(msg);
                     return msg; 
                 }
             }
@@ -549,12 +543,11 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * Called by handleSensorChange
      */
     public void goingInactive() {
-//        setState((getState() & ~(OCCUPIED | RUNNING)) | UNOCCUPIED);
         if (log.isDebugEnabled()) log.debug("Allocated OBlock \""+getSystemName()+
                                             "\" goes UNOCCUPIED. from state= "+getState());
         if (_warrant!=null) {
-            _warrant.goingInactive(this);
             setValue(null);
+            _warrant.goingInactive(this);
         }
         setState((getState() & ~(OCCUPIED | RUNNING)) | UNOCCUPIED);
     }
@@ -570,7 +563,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (_warrant!=null) {
             _warrant.goingActive(this);
         } else if (_pathName!=null) {
-            // must be a manual path allocation.  unset iccupied bit and set manual path detection
+            // must be a manual path allocation.  unset unoccupied bit and set manual path detection
             setState((getState() & ~UNOCCUPIED) | (OCCUPIED | RUNNING));
         }
         if (log.isDebugEnabled()) log.debug("Block \""+getSystemName()+" went active, path= "+

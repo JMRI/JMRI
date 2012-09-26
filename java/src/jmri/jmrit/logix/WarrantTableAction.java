@@ -50,6 +50,7 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.Path;
+import jmri.util.com.sun.TableSorter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.jmrit.catalog.NamedIcon;
@@ -473,15 +474,18 @@ public class WarrantTableAction extends AbstractAction {
             _model.init();
 //	Casts at getTableCellEditorComponent() now fails with 3.0 ??            
             JTable table;   // = new JTable(_model);
+            ComboBoxCellEditor comboEd;
             try {   // following might fail due to a missing method on Mac Classic
-                jmri.util.com.sun.TableSorter sorter = new jmri.util.com.sun.TableSorter();
+            	TableSorter sorter = new jmri.util.com.sun.TableSorter(_model);
                 table = jmri.util.JTableUtil.sortableDataModel(sorter);
                 sorter.setTableHeader(table.getTableHeader());
+                comboEd = new ComboBoxCellEditor(new JComboBox(), sorter);
                 // set model last so later casts will work
                 ((jmri.util.com.sun.TableSorter)table.getModel()).setTableModel(_model);
             } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
                 log.error("WarrantTable: Unexpected error: "+e);
                 table = new JTable(_model);
+                comboEd = new ComboBoxCellEditor(new JComboBox());
             }
             
             table.setDefaultRenderer(Boolean.class, new ButtonRenderer());
@@ -490,7 +494,7 @@ public class WarrantTableAction extends AbstractAction {
             JComboBox box = new JComboBox(controls);
             box.setFont(new Font(null, Font.PLAIN, 12));
             table.getColumnModel().getColumn(WarrantTableModel.CONTROL_COLUMN).setCellEditor(new DefaultCellEditor(box));
-            table.getColumnModel().getColumn(WarrantTableModel.ROUTE_COLUMN).setCellEditor(new ComboBoxCellEditor(new JComboBox()));
+            table.getColumnModel().getColumn(WarrantTableModel.ROUTE_COLUMN).setCellEditor(comboEd);
             table.getColumnModel().getColumn(WarrantTableModel.ALLOCATE_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
             table.getColumnModel().getColumn(WarrantTableModel.ALLOCATE_COLUMN).setCellRenderer(new ButtonRenderer());
             table.getColumnModel().getColumn(WarrantTableModel.DEALLOC_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
@@ -609,12 +613,16 @@ public class WarrantTableAction extends AbstractAction {
 
     static public class ComboBoxCellEditor extends DefaultCellEditor
     {
-        ComboBoxCellEditor() {
-            super(new JComboBox());
-        }
+        TableSorter _sorter;
+        
         ComboBoxCellEditor(JComboBox comboBox) {
             super(comboBox);
             comboBox.setFont(new Font(null, Font.PLAIN, 12));
+        }
+        ComboBoxCellEditor(JComboBox comboBox, TableSorter sorter) {
+            super(comboBox);
+            comboBox.setFont(new Font(null, Font.PLAIN, 12));
+            _sorter = sorter;
         }
         public Component getTableCellEditorComponent(JTable table, Object value, 
                                          boolean isSelected, int row, int column) 
@@ -622,7 +630,10 @@ public class WarrantTableAction extends AbstractAction {
         	jmri.util.com.sun.TableSorter m = ((jmri.util.com.sun.TableSorter)table.getModel());       	
             WarrantTableModel model = (WarrantTableModel)m.getTableModel();
 
-//        	WarrantTableModel model = (WarrantTableModel)table.getModel();
+            // If table has been sorted, table row no longer is the same as array index
+            if (_sorter!=null) {
+            	row = _sorter.modelIndex(row);            	
+            }
             Warrant warrant = model.getWarrantAt(row);
             JComboBox comboBox = (JComboBox)getComponent();
             comboBox.removeAllItems();
@@ -878,7 +889,7 @@ public class WarrantTableAction extends AbstractAction {
                     }
                     break;
                 case ALLOCATE_COLUMN:
-                    msg = w.allocateRoute();
+                    msg = w.allocateRoute(null);
                     break;
                 case DEALLOC_COLUMN:
                     if (w.getRunMode() == Warrant.MODE_NONE) {
@@ -911,27 +922,39 @@ public class WarrantTableAction extends AbstractAction {
                         msg = w.setRoute(0, null);
                         if (log.isDebugEnabled()) log.debug("w.setRoute= "+msg);
                         if (msg!=null) {
+                            if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(null,
+                                    java.text.MessageFormat.format(WarrantTableAction.rb.getString("OkToRun"),
+                                    msg), WarrantTableAction.rb.getString("WarningTitle"), 
+                                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+                            	w.deAllocate();
+                            	msg = null;
+                            	return;
+                            }
                             BlockOrder bo = w.getfirstOrder();
                             OBlock block = bo.getBlock();
-                            String msg2 = block.allocate(w);
-                            if (msg2 == null) {
+                            msg = block.allocate(w);
+                            if (msg != null) {
                                 if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(null,
                                             java.text.MessageFormat.format(WarrantTableAction.rb.getString("OkToRun"),
                                             msg), WarrantTableAction.rb.getString("WarningTitle"), 
                                             JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
                                     w.deAllocate();
+                                    msg = null;
                                     return;
                                 }
-                                block.setPath(bo.getPathName(), w);
-                                msg = null;
+                                if (w.getDccAddress().equals(block.getWarrant().getDccAddress())) {
+                                    msg = null;		// allocate when train finishes 1st warrant                               	
+                                }
                             } else {
-                                if (log.isDebugEnabled()) log.debug("block.allocate(w)= "+msg2);
-                                msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString("OriginBlockNotSet"), 
-                                        msg2);
+                                msg = block.setPath(bo.getPathName(), w);                                	                            	
+                            }
+                            if (msg!=null) {
+                                 msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString("OriginBlockNotSet"), 
+                                        msg);
                                 break;
                             } 
                         }
-                        msg = w.runAutoTrain(true);
+                        msg = w.setRunMode(Warrant.MODE_RUN, null, null, null, false);
                         if (msg!=null) {
                         	w.deAllocate();
                         }
@@ -970,7 +993,7 @@ public class WarrantTableAction extends AbstractAction {
                                 break;
                             } 
                         }
-                        msg = w.runAutoTrain(false);
+                        msg = w.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
                         if (msg!=null) {
                         	w.deAllocate();
                         }
@@ -981,22 +1004,19 @@ public class WarrantTableAction extends AbstractAction {
                     }
                     break;
                 case CONTROL_COLUMN:
+                	// Messageis set when propertyChangeEvent (below) is received from a warrant
+                	// change.  fireTableRows then causes getValueAt() which calls getRunningMessage()
                     int mode = w.getRunMode();
-                    if (mode==Warrant.MODE_RUN || mode==Warrant.MODE_MANUAL) {
-                        String setting = (String)value;
-                        int s = -1;
-                        if (setting.equals(halt)) {
-                            s = Warrant.HALT; 
-                        } else if (setting.equals(resume)) {
-                            s = Warrant.RESUME; 
-                        } else if (setting.equals(abort)) {
-                            s = Warrant.ABORT;
-                        }
-                        w.controlRunTrain(s);
-                    } else {
-                        msg = java.text.MessageFormat.format(
-                                WarrantTableAction.rb.getString("NotRunning"), w.getDisplayName());
+                    String setting = (String)value;
+                    int s = -1;
+                    if (setting.equals(halt)) {
+                        s = Warrant.HALT; 
+                    } else if (setting.equals(resume)) {
+                        s = Warrant.RESUME; 
+                    } else if (setting.equals(abort)) {
+                        s = Warrant.ABORT;
                     }
+                    w.controlRunTrain(s);
                     getValueAt(row,col);
                     break;
                 case EDIT_COLUMN:

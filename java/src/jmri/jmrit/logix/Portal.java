@@ -347,9 +347,7 @@ public class Portal  {
     public long getEntranceSpeedChangeWaitForBlock(OBlock block) {
         if (block.equals(_toBlock)) {
             if (_fromSignal!=null) {
-                if (_fromSignal instanceof SignalHead) {
-                    return _fromSignalDelay;
-                }
+                return _fromSignalDelay;
             }
         } else if (block.equals(_fromBlock)) {
             if (_toSignal!=null) {
