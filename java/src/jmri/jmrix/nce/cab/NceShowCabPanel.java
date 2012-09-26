@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce.cab;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -286,10 +287,10 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	
     	setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     	cabsPane.setVisible(false);
-    	//cabsPane.setMinimumSize(new Dimension(300,300));
     	
     	JPanel p1 = new JPanel();
     	p1.setLayout(new GridBagLayout());
+    	p1.setPreferredSize(new Dimension(700, 40));
     	// row 1
     	refreshButton.setToolTipText(rb.getString("RefreshToolTip"));
     	checkBoxActive.setToolTipText(rb.getString("CheckBoxActiveToolTip"));
@@ -336,7 +337,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	addItem(cabsPanel, space4, 0, 1);
     	addItem(cabsPanel, space5, 0, 2);
     	cabsPane.setVisible(true);
-    	refreshPanel();
+
+    	refreshPanel();   	
+ 
     }
 
     // refresh button
@@ -407,15 +410,15 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	firstTime = false;
     	cabsPanel.removeAll();
     	// build header
-    	addItem(cabsPanel, textNumer, 1, 0);	// number
-    	addItem(cabsPanel, textCab, 2, 0);		// type
-    	addItem(cabsPanel, textAddress, 3, 0);	// address
-      	addItem(cabsPanel, textSpeed, 4, 0);	// speed
-      	addItem(cabsPanel, textConsist, 5, 0);	// consist
-      	addItem(cabsPanel, textFunctions, 6, 0);// functions
-      	addItem(cabsPanel, textDisplay1, 7, 0);	// line1
-      	addItem(cabsPanel, textDisplay2, 8, 0);	// line2
-      	addItem(cabsPanel, textLastUsed, 9, 0);	// last used
+    	addItemTop(cabsPanel, textNumer, 1, 0);	// number
+    	addItemTop(cabsPanel, textCab, 2, 0);		// type
+    	addItemTop(cabsPanel, textAddress, 3, 0);	// address
+      	addItemTop(cabsPanel, textSpeed, 4, 0);	// speed
+      	addItemTop(cabsPanel, textConsist, 5, 0);	// consist
+      	addItemTop(cabsPanel, textFunctions, 6, 0);// functions
+      	addItemTop(cabsPanel, textDisplay1, 7, 0);	// line1
+      	addItemTop(cabsPanel, textDisplay2, 8, 0);	// line2
+      	addItemTop(cabsPanel, textLastUsed, 9, 0);	// last used
       	
     	int numberOfCabs = 0;
         // build table of cabs
@@ -469,16 +472,16 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	            	type.setText(rb.getString("UnknownCabType") + ": " + recChar);
 	            }
 	        	// add items to table
-	        	addItem(cabsPanel, number, 1, currCabId);
+	        	addItemTop(cabsPanel, number, 1, currCabId);
 	        	number.setText(Integer.toString(currCabId));
-	        	addItem(cabsPanel, type, 2, currCabId);
-	        	addItem(cabsPanel, address, 3, currCabId);
-	          	addItem(cabsPanel, speed, 4, currCabId);
-	          	addItem(cabsPanel, consist, 5, currCabId);
-	          	addItem(cabsPanel, functions, 6, currCabId);
-	          	addItem(cabsPanel, line1, 7, currCabId);
-	          	addItem(cabsPanel, line2, 8, currCabId);
-	          	addItem(cabsPanel, lastUsed, 9, currCabId);
+	        	addItemTop(cabsPanel, type, 2, currCabId);
+	        	addItemTop(cabsPanel, address, 3, currCabId);
+	          	addItemTop(cabsPanel, speed, 4, currCabId);
+	          	addItemTop(cabsPanel, consist, 5, currCabId);
+	          	addItemTop(cabsPanel, functions, 6, currCabId);
+	          	addItemTop(cabsPanel, line1, 7, currCabId);
+	          	addItemTop(cabsPanel, line2, 8, currCabId);
+	          	addItemTop(cabsPanel, lastUsed, 9, currCabId);
 	          	if (cabId != FLAGS1_CABID_AIU) {
 		          	// read 16 bytes of memory, we'll use 7 of the 16
 		        	readCabMemory16(currCabId, CAB_CURR_SPEED);
@@ -875,6 +878,16 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 		gc.weightx = 100.0;
 		gc.weighty = 100.0;
 		gc.anchor = GridBagConstraints.WEST;
+		p.add(c, gc);
+	}
+	
+	protected void addItemTop(JPanel p, JComponent c, int x, int y) {
+		GridBagConstraints gc = new GridBagConstraints();
+		gc.gridx = x;
+		gc.gridy = y;
+		gc.weightx = 100.0;
+		gc.weighty = 100.0;
+		gc.anchor = GridBagConstraints.NORTH;
 		p.add(c, gc);
 	}
     
