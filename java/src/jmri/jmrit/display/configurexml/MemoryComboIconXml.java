@@ -1,0 +1,116 @@
+
+package jmri.jmrit.display.configurexml;
+
+import java.util.List;
+
+import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.MemoryComboIcon;
+import javax.swing.DefaultComboBoxModel;
+import jmri.Memory;
+import org.jdom.Element;
+import org.jdom.Attribute;
+
+/**
+ * Handle configuration for display.MemorySpinnerIcon objects.
+ *
+ * @author Pete Cressman  Copyright (c) 2012
+ * @version $Revision: 1 $
+ */
+public class MemoryComboIconXml extends PositionableLabelXml {
+
+    public MemoryComboIconXml() {
+    }
+
+    /**
+     * Default implementation for storing the contents of a
+     * MemorySpinnerIcon
+     * @param o Object to store, of type MemorySpinnerIcon
+     * @return Element containing the complete info
+     */
+    public Element store(Object o) {
+
+    	MemoryComboIcon p = (MemoryComboIcon)o;
+
+        Element element = new Element("memoryComboIcon");
+        
+        Element elem = new Element("itemList");
+        DefaultComboBoxModel model = p.getComboModel();
+        for(int i=0; i<model.getSize(); i++) {
+        	Element e = new Element("item");
+        	e.setAttribute("index", ""+i);
+        	e.addContent((String)model.getElementAt(i));
+        	elem.addContent(e);
+        }
+        element.addContent(elem);
+
+        // include attributes
+        element.setAttribute("memory", p.getNamedMemory().getName());
+        storeCommonAttributes(p, element);
+        storeTextInfo(p, element);
+        
+        element.setAttribute("class", "jmri.jmrit.display.configurexml.MemoryComboIconXml");
+        return element;
+    }
+
+
+    public boolean load(Element element) {
+        log.error("Invalid method called");
+        return false;
+    }
+
+    /**
+     * Load, starting with the memoryComboIcon element, then
+     * all the value-icon pairs
+     * @param element Top level Element to unpack.
+     * @param o  an Editor as an Object
+     */
+	public void load(Element element, Object o) {
+        // create the objects
+        Editor p = (Editor)o;
+
+        Element elem = element.getChild("itemList");
+        List<Element> list = elem.getChildren("item");
+        String[] items = new String[list.size()];
+        for (int i=0; i<list.size(); i++) {
+            Element e = list.get(i);
+            String item = e.getText();
+            int idx = 0;
+            try {
+                idx = e.getAttribute("index").getIntValue();
+            } catch ( org.jdom.DataConversionException ex) {
+                log.error("failed to convert ComboBoxIcon index attribute");
+                idx = i;
+            }
+            items[i] = item;
+        }
+
+        MemoryComboIcon l = new MemoryComboIcon(p, items);
+
+        loadTextInfo(l, element);
+        String name;
+        Attribute attr = element.getAttribute("memory"); 
+        if (attr == null) {
+            log.error("incorrect information for a memory location; must use memory name");
+            p.loadFailed();
+            return;
+        } else {
+            name = attr.getValue();
+        }
+        
+        Memory m = jmri.InstanceManager.memoryManagerInstance().getMemory(name);
+        
+        if (m!=null) {
+            l.setMemory(name);
+        } else {
+            log.error("Memory named '"+attr.getValue()+"' not found.");
+            p.loadFailed();
+            return;
+        }
+        
+        p.putItem(l);
+        // load individual item's option settings after editor has set its global settings
+        loadCommonAttributes(l, Editor.MEMORIES, element);
+    }
+
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryComboIconXml.class.getName());
+}

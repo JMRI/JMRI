@@ -28,7 +28,7 @@ public class MemoryInputIconXml extends PositionableLabelXml {
 
         MemoryInputIcon p = (MemoryInputIcon)o;
 
-        Element element = new Element("memoryicon");
+        Element element = new Element("memoryInputIcon");
 
         // include attributes
         element.setAttribute("colWidth", ""+p.getNumColumns());
@@ -47,7 +47,7 @@ public class MemoryInputIconXml extends PositionableLabelXml {
     }
 
     /**
-     * Load, starting with the memoryicon element, then
+     * Load, starting with the memoryInputIcon element, then
      * all the value-icon pairs
      * @param element Top level Element to unpack.
      * @param o  an Editor as an Object
