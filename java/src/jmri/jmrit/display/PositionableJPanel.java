@@ -24,13 +24,13 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     protected boolean debug = false;
 
     private ToolTip _tooltip;
-    private boolean _showTooltip =true;
-    private boolean _editable = true;
-    private boolean _positionable = true;
-    private boolean _viewCoordinates = false;
-    private boolean _controlling = true;
-    private boolean _hidden = false;
-	private int _displayLevel;
+    protected boolean _showTooltip =true;
+    protected boolean _editable = true;
+    protected boolean _positionable = true;
+    protected boolean _viewCoordinates = false;
+    protected boolean _controlling = true;
+    protected boolean _hidden = false;
+    protected int _displayLevel;
     private double _scale = 1.0;    // scaling factor
 
     JMenuItem lock = null;
@@ -46,20 +46,22 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         return finishClone(pos);
     }
 
-    public Positionable finishClone(Positionable pos) {
+    public Positionable finishClone(Positionable p) {
+    	PositionableJPanel pos = (PositionableJPanel)p;
         pos.setLocation(getX(), getY());
-        pos.setDisplayLevel(getDisplayLevel());
-        pos.setControlling(isControlling());
-        pos.setHidden(isHidden());
-        pos.setPositionable(isPositionable());
-        pos.setShowTooltip(showTooltip());        
+        pos._displayLevel = _displayLevel;
+        pos._controlling = _controlling;
+        pos._hidden = _hidden;
+        pos._positionable = _positionable;
+        pos._showTooltip =_showTooltip;        
         pos.setTooltip(getTooltip());        
-        pos.setEditable(isEditable());        
+        pos._editable = _editable;
         if (getPopupUtility()==null) {
             pos.setPopupUtility(null);
         } else {
-            pos.setPopupUtility(getPopupUtility().clone(pos));
+            pos.setPopupUtility(getPopupUtility().clone(pos, pos.getTextComponent()));
         }
+        pos.updateSize();
         return pos;
     }
     
@@ -127,6 +129,9 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     }
     public boolean getSaveOpaque() {
     	return isOpaque();
+    }
+    public JComponent getTextComponent() {
+    	return this;
     }
 
     public String getNameString() {
@@ -252,6 +257,7 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
                                              e.getClickCount(), e.isPopupTrigger())); 
     }
     public void mouseExited(MouseEvent e) {
+    	transferFocus();
         _editor.mouseExited(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(), 
                                              e.getX()+this.getX(), e.getY()+this.getY(), 
                                              e.getClickCount(), e.isPopupTrigger())); 

@@ -3,6 +3,8 @@ package jmri.jmrit.display;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+
+import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 
 /**
@@ -104,6 +106,7 @@ public interface Positionable extends Cloneable  {
     public void rotate(int deg);
     public int getDegrees();
     public boolean getSaveOpaque();		// for rotated text
+    public JComponent getTextComponent();
 
     public void remove();
 
@@ -164,4 +167,5 @@ public interface Positionable extends Cloneable  {
     public java.awt.Dimension getPreferredSize();
     public void invalidate();
     public void repaint();
+    public boolean requestFocusInWindow();
 }

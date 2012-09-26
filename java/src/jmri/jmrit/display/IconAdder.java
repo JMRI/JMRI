@@ -560,12 +560,14 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _closeButton.setVisible(false);
             p.add(_closeButton);
         }
-        p.add(_addButton);
+        _buttonPanel.add(p);
         if (_table != null) {
             _addButton.setEnabled(false);
             _addButton.setToolTipText(rb.getString("ToolTipPickFromTable"));
         }
-        addAdditionalButtons(p);
+        addAdditionalButtons(_buttonPanel);
+        p = new JPanel();
+        p.add(_addButton);
         _buttonPanel.add(p);
 
         _buttonPanel.add(Box.createVerticalStrut(STRUT_SIZE));

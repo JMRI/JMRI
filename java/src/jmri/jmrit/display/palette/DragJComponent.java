@@ -5,6 +5,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.datatransfer.Transferable; 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.dnd.*;
@@ -35,16 +36,16 @@ import jmri.jmrit.display.Editor;
  public abstract class DragJComponent extends JPanel implements DragGestureListener, DragSourceListener, Transferable {    
 
      DataFlavor _dataFlavor;
-     public DragJComponent(DataFlavor flavor) {
+     public DragJComponent(DataFlavor flavor, Dimension dim) {
          super();
          String borderName = ItemPalette.convertText("dragToPanel");
          setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
                                                           borderName));
-         int width = Math.max(100, getPreferredSize().width);
-         int height = Math.max(65, getPreferredSize().height);
+         // guestimate border is about 5 pixels thick. plus some margin
+         int width = Math.max(100, dim.width+20);
+         int height = Math.max(65, dim.height+20);
          setPreferredSize(new java.awt.Dimension(width, height));
          setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
-//         setBorder(new javax.swing.border.EmptyBorder(12,5,12,5));
          DragSource dragSource = DragSource.getDefaultDragSource();
          dragSource.createDefaultDragGestureRecognizer(this,
                      DnDConstants.ACTION_COPY, this);

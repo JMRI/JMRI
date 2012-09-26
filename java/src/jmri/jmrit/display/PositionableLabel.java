@@ -18,6 +18,7 @@ import java.awt.image.BufferedImage;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JCheckBoxMenuItem;
@@ -195,16 +196,19 @@ public class PositionableLabel extends JLabel implements Positionable {
         if (getPopupUtility()==null) {
             pos.setPopupUtility(null);
         } else {
-            pos.setPopupUtility(getPopupUtility().clone(pos));
+            pos.setPopupUtility(getPopupUtility().clone(pos, pos.getTextComponent()));
         }
         pos.setOpaque(isOpaque());
         pos._saveOpaque = _saveOpaque;
         if (_icon && _namedIcon!=null) {
         	pos._namedIcon = cloneIcon(_namedIcon, pos);
             pos.setIcon(pos._namedIcon);
-            pos.updateSize();
         }
+        pos.updateSize();
         return pos;
+    }
+    public JComponent getTextComponent() {
+    	return this;
     }
 
     protected NamedIcon cloneIcon(NamedIcon icon, PositionableLabel pos) {

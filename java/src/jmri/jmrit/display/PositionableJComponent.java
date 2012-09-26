@@ -56,9 +56,13 @@ public class PositionableJComponent extends JComponent implements Positionable {
         pos.setShowTooltip(showTooltip());        
         pos.setTooltip(getTooltip());        
         pos.setEditable(isEditable());
+        pos.updateSize();
         return pos;
     }
-    
+    public JComponent getTextComponent() {
+    	return this;
+    }
+   
     /***************** Positionable methods **********************/
 
     public void setPositionable(boolean enabled) {

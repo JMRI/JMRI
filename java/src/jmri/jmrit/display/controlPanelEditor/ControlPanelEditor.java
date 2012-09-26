@@ -847,11 +847,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         for (int i=0; i<_selectionGroup.size(); i++) {
             Positionable p = _selectionGroup.get(i);
-            rect= p.getBounds(rect);
-            Rectangle2D.Double rect2D = new Rectangle2D.Double(rect.x*_paintScale,
-                                                               rect.y*_paintScale,
-                                                               rect.width*_paintScale,
-                                                               rect.height*_paintScale);
+            Rectangle2D.Double rect2D = new Rectangle2D.Double(p.getX()*_paintScale,
+                                                               p.getY()*_paintScale,
+                                                               p.maxWidth()*_paintScale,
+                                                               p.maxHeight()*_paintScale);
             if (rect2D.contains(x, y)) {
                 return p;
             }

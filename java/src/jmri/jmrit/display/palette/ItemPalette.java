@@ -289,12 +289,12 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
     }
 
     public ItemPalette() {
-        super(false, false);
+        super(true, true);
         loadIcons();
     }
 
     public ItemPalette(String title, Editor editor) {
-        super(title, false, false);
+        super(title, true, true);
 //        long t = System.currentTimeMillis();
         loadIcons();
         addWindowListener(new java.awt.event.WindowAdapter() {

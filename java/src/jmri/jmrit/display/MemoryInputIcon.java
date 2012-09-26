@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.FlowLayout;
 
+import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -34,7 +35,6 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     int _nCols; 
     
     // the associated Memory object
-    //Memory memory = null;
     private NamedBeanHandle<Memory> namedMemory;
     
     
@@ -68,6 +68,9 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         MemoryInputIcon pos = (MemoryInputIcon)p;
         pos.setMemory(namedMemory.getName());
         return super.finishClone(pos);
+    }
+    public JComponent getTextComponent() {
+    	return _textBox;
     }
 
     public void mouseExited(java.awt.event.MouseEvent e) {
@@ -143,10 +146,6 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
             name = getMemory().getSystemName();
         return name;
     }
-
-    public void setSelectable(boolean b) {selectable = b;}
-    public boolean isSelectable() { return selectable;}
-    boolean selectable = false;
     
     private void updateMemory() {
         if (namedMemory == null) return;
@@ -177,7 +176,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
                     spinner.setValue(Integer.valueOf(_textBox.getColumns()));
                     JPanel p2 = new JPanel();
                     //p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
-                    p2.setLayout(new FlowLayout(FlowLayout.TRAILING));
+                    //p2.setLayout(new FlowLayout(FlowLayout.TRAILING));
                     p2.add(new JLabel(rb.getString("NumColsLabel")));
                     p2.add(spinner);
                     p.add(p2);

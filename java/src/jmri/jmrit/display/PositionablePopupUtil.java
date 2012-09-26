@@ -43,6 +43,7 @@ public class PositionablePopupUtil {
 
     protected final int LABEL = 1;
     protected final int TEXTFIELD = 2;
+    protected final int JCOMPONENT = 3;
 
     public PositionablePopupUtil(Positionable parent, JComponent textComp) {
         _parent = parent;
@@ -50,8 +51,11 @@ public class PositionablePopupUtil {
             _textType = LABEL;
         } else if (textComp instanceof JTextField) {
             _textType = TEXTFIELD;
+        } else if (textComp instanceof JComponent){
+            _textType = JCOMPONENT;
         } else {
             log.error("PositionablePopupUtil unknown text component: "+textComp.getClass().getName());
+        	
         }
         _textComponent = textComp;
         debug = log.isDebugEnabled();
@@ -61,8 +65,8 @@ public class PositionablePopupUtil {
         _propertiesUtil = new PositionablePropertiesUtil(_parent);
     }
 
-    public PositionablePopupUtil clone(Positionable parent) {
-        PositionablePopupUtil util = parent.getPopupUtility();
+    public PositionablePopupUtil clone(Positionable parent, JComponent textComp) {
+    	PositionablePopupUtil util = new PositionablePopupUtil(parent, textComp);
         if (util!=null) {
             util.setJustification(getJustification());
             util.setHorizontalAlignment(getJustification());

@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
@@ -57,6 +58,9 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         MemorySpinnerIcon pos = (MemorySpinnerIcon)p;
         pos.setMemory(namedMemory.getName());
         return super.finishClone(pos);
+    }
+    public JComponent getTextComponent() {
+    	return ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField();
     }
 
     public Dimension getSize() {
@@ -137,11 +141,11 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
             name = getMemory().getSystemName();
         return name;
     }
-
+/*
     public void setSelectable(boolean b) {selectable = b;}
     public boolean isSelectable() { return selectable;}
     boolean selectable = false;
-    
+*/    
     public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Memory"));
         popup.add(new AbstractAction(txt) {

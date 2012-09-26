@@ -1496,17 +1496,17 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     protected void addMemoryEditor() {
         IconAdder editor = new IconAdder("Memory") {
-                JButton b = new JButton(rb.getString("AddSpinner"));
+                JButton bSpin = new JButton(rb.getString("AddSpinner"));
                 JButton bBox = new JButton(rb.getString("AddInputBox"));
                 JSpinner spinner = new JSpinner(_spinCols);
                 protected void addAdditionalButtons(JPanel p) {
-                    b.addActionListener( new ActionListener() {
+                	bSpin.addActionListener( new ActionListener() {
                         public void actionPerformed(ActionEvent a) {
                         addMemorySpinner();
                         }
                     });
                     JPanel p1 = new JPanel();
-                    p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
+                    //p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
                     bBox.addActionListener( new ActionListener() {
                         public void actionPerformed(ActionEvent a) {
                         addMemoryInputBox();
@@ -1514,21 +1514,20 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     });
                     ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().setColumns(2);
                     spinner.setMaximumSize(spinner.getPreferredSize());
-                    p1.add(bBox);
                     JPanel p2 = new JPanel();
-                    //p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
-                    p2.setLayout(new FlowLayout(FlowLayout.TRAILING));
                     p2.add(new JLabel(rb.getString("NumColsLabel")));
                     p2.add(spinner);
-                    p1.add(bBox);
                     p1.add(p2);
+                    p1.add(bBox);
                     p.add(p1);
-                    p.add(b);
+                    p1 = new JPanel();
+                    p1.add(bSpin);
+                    p.add(p1);
                 }
 
                 public void valueChanged(ListSelectionEvent e) {
                     super.valueChanged(e);
-                    b.setEnabled(addIconIsEnabled());
+                    bSpin.setEnabled(addIconIsEnabled());
                     bBox.setEnabled(addIconIsEnabled());
                 }
         };
@@ -2068,18 +2067,18 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected void removeFromTarget(Positionable l) {
         _targetPanel.remove((Component)l);
         _highlightcomponent = null;
+        Point p = l.getLocation();
+        int w = l.getWidth();
+        int h = l.getHeight();
+        _targetPanel.validate();
+        _targetPanel.repaint(p.x,p.y,w,h);
     }
 
     public boolean removeFromContents(Positionable l) {
         removeFromTarget(l);
-        Point p = l.getLocation();
-        int w = l.getWidth();
-        int h = l.getHeight();
         //todo check that parent == _targetPanel
         //Container parent = this.getParent();   
         // force redisplay
-        _targetPanel.validate();
-        _targetPanel.repaint(p.x,p.y,w,h);
         return _contents.remove(l);
     }
 
@@ -2385,8 +2384,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     public void actionPerformed(ActionEvent a) {
                         PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
                         _decorator.getText(_pos);
-                        setAttributes(util, _pos, _decorator.isOpaque());
-                        setSelectionsAttributes(util, _pos, _decorator.isOpaque());
+                        if (_selectionGroup==null) {
+                            setAttributes(util, _pos, _decorator.isOpaque());                        	
+                        } else {
+                            setSelectionsAttributes(util, _pos, _decorator.isOpaque());                        	
+                        }
                         dispose();
                     }
             });
@@ -2402,29 +2404,48 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             return panel0;
         }
     }
-    
+
+    /**
+     * Called from setSelectionsAttributes - i.e. clone because maybe several Positionables use the data
+     * @param newUtil
+     * @param p
+     * @param isOpaque
+     */
     protected void setAttributes(PositionablePopupUtil newUtil, Positionable p, boolean isOpaque) {
+        p.setPopupUtility(newUtil.clone(p, p.getTextComponent()));
+		p.setOpaque(isOpaque);
     	if (p instanceof PositionableLabel) {
     		PositionableLabel pos = (PositionableLabel)p;
         	if (!pos.isText() || (pos.isText() && pos.isIcon())) {
         		return;
         	} else {
-                pos.setPopupUtility(newUtil.clone(pos));
-        		pos.setOpaque(isOpaque);
-        		pos.saveOpaque(isOpaque);
                 int deg = pos.getDegrees();
                 if (deg!=0) {
+            		pos.setOpaque(false);
+            		pos.saveOpaque(isOpaque);
                     pos.rotate(0);
+                    int mar = newUtil.getMargin();
+                    int bor = newUtil.getBorderSize();
+                    javax.swing.border.Border outlineBorder;
+                    if (bor==0) {
+                    	outlineBorder = BorderFactory.createEmptyBorder(0, 0, 0, 0);
+                    }else {
+                    	outlineBorder = new javax.swing.border.LineBorder(newUtil.getBorderColor(), bor);           	
+                    }
+                    javax.swing.border.Border borderMargin;
+        	        if (isOpaque){
+        	            borderMargin = new javax.swing.border.LineBorder(pos.getBackground(), mar);    	                
+        	        } else{
+        	            borderMargin = BorderFactory.createEmptyBorder(mar, mar, mar, mar);
+        	        }
+                    pos.setBorder(new javax.swing.border.CompoundBorder(outlineBorder, borderMargin));
             		pos.setOpaque(isOpaque);
-                    pos.rotate(deg);        	
+                    pos.rotate(deg);
                 }        		
         	}
     	}
-        p.setPopupUtility(newUtil.clone(p));
-		p.setOpaque(isOpaque);
-//		PositionablePopupUtil u = pos.getPopupUtility();
-//		u.setMargin(u.getMargin());
 		p.updateSize();
+		p.repaint();
         if (p instanceof PositionableIcon) {
         	jmri.NamedBean bean = p.getNamedBean();
         	if (bean!=null) {

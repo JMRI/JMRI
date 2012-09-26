@@ -390,49 +390,32 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
 
     private void setStatus(OBlock block, int state) {
         String pathName = block.getAllocatedPathName();
+        setControlling(true);
+    	removeLocoIcon();
         if ((state & OBlock.TRACK_ERROR)!=0) {
             _status = "ErrorTrack";
         } else if ((state & OBlock.OUT_OF_SERVICE)!=0) {
             setControlling(false);
-            /*
-            if ((state & OBlock.OCCUPIED)!=0) {
-                _status = "OccupiedTrack";
-            } else {
-                _status = "DontUseTrack";
-            }
-            */
             _status = "DontUseTrack";
+        } else if ((state & OBlock.ALLOCATED)!=0) {
+            if (_paths!=null && _paths.contains(pathName)) {
+            	if ((state & OBlock.RUNNING)!=0) {
+                    _status = "PositionTrack";           		
+                    if (_showTrain) {
+                        setLocoIcon((String)block.getValue());
+                    }
+            	} else {
+                    _status = "AllocatedTrack";            		
+            	}
+            } else {
+            	_status = "ClearTrack";     // icon not on path
+            }
         } else if ((state & OBlock.OCCUPIED)!=0) {
-            setControlling(true);
-            if (_showTrain) {
-                setLocoIcon((String)block.getValue());
-            }
-            if ((state & OBlock.RUNNING)!=0) {
-                if (_paths!=null && _paths.contains(pathName)) {
-                    _status = "PositionTrack";
-                } else {
-                    _status = "ClearTrack";     // icon not on path
-                }
-            } else {
-                _status = "OccupiedTrack";
-            }
+           	_status = "OccupiedTrack";       	
+        } else if ((state & Sensor.UNKNOWN)!=0) {
+            _status = "DontUseTrack";
         } else {
-            setControlling(true);
-            if (_loco!=null) {
-                _loco.remove();
-                _loco = null;
-            }
-            if ((state & OBlock.ALLOCATED)!=0) {
-                if (_paths!=null && _paths.contains(pathName)) {
-                    _status = "AllocatedTrack";     // icon on path
-                } else {
-                    _status = "ClearTrack";
-                }
-            } else if ((state & Sensor.UNKNOWN)!=0) {
-                _status = "DontUseTrack";
-            } else {
-                _status = "ClearTrack";
-            }
+        	_status = "ClearTrack";             	       	
         }
     }
 
@@ -447,13 +430,15 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             _status = "ErrorTrack";
         }
     }
-
+    private void removeLocoIcon() {
+        if (_loco!=null) {
+            _loco.remove();
+            _loco = null;
+        }    	
+    }
     private void setLocoIcon(String trainName) {
         if (trainName==null) {
-            if (_loco!=null) {
-                _loco.remove();
-                _loco = null;
-            }
+        	removeLocoIcon();
             return;
         }
         if (_loco!=null) {

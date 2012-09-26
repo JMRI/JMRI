@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
@@ -53,7 +54,6 @@ public class ReporterItemPanel extends TableItemPanel {
         if (!_update) {
             _iconFamilyPanel.add(instructions());
         }
-        _dragIconPanel = new JPanel();
         makeDndIconPanel(null, null);
 
         _iconFamilyPanel.add(_dragIconPanel);
@@ -63,13 +63,8 @@ public class ReporterItemPanel extends TableItemPanel {
          if (_update) {
              return;
          }
-         _dragIconPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
-
          _reporter = new ReporterIcon(_editor);
          JPanel panel = new JPanel();
-         String borderName = ItemPalette.convertText("dragToPanel");
-         panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
-                                                          borderName));
          JPanel comp;
          try {
              comp = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
@@ -84,7 +79,8 @@ public class ReporterItemPanel extends TableItemPanel {
          int width = Math.max(100, panel.getPreferredSize().width);
          panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
          panel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
-         _dragIconPanel.add(panel);
+         _dragIconPanel = panel;
+         _dragIconPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
      }
 
     /**
@@ -113,13 +109,13 @@ public class ReporterItemPanel extends TableItemPanel {
     }
 
     protected IconDragJComponent getDragger(DataFlavor flavor) {
-        return new IconDragJComponent(flavor);
+        return new IconDragJComponent(flavor, _reporter.getPreferredSize());
     }
 
     protected class IconDragJComponent extends DragJComponent {
 
-        public IconDragJComponent(DataFlavor flavor) {
-            super(flavor);
+        public IconDragJComponent(DataFlavor flavor, Dimension dim) {
+            super(flavor, dim);
         }
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {
             if (!isDataFlavorSupported(flavor)) {
