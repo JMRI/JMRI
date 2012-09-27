@@ -63,8 +63,9 @@ public class JmritTest extends TestCase {
             suite.addTest(jmri.jmrit.symbolicprog.SymbolicProgTest.suite());
             suite.addTest(jmri.jmrit.ussctc.UssCtcTest.suite());
             suite.addTest(jmri.jmrit.AbstractIdentifyTest.suite());
-            suite.addTest(jmri.jmrit.DccLocoAddressSelectorTest.suite());
         }
+
+            suite.addTest(jmri.jmrit.DccLocoAddressSelectorTest.suite());
         
         return suite;
     }
