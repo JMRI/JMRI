@@ -267,11 +267,15 @@ public class SplitVariableValue extends VariableValue
     }
 
     public void readChanges() {
-         if (isChanged()) readAll();
+         if (isToRead() && !isChanged()) 
+            log.debug("!!!!!!! unacceptable combination in readChanges: "+label());
+         if (isChanged() || isToRead()) readAll();
     }
 
     public void writeChanges() {
-         if (isChanged()) writeAll();
+         if (isToWrite() && !isChanged()) 
+            log.debug("!!!!!! unacceptable combination in writeChanges: "+label());
+         if (isChanged() || isToWrite()) writeAll();
     }
 
     public void readAll() {
