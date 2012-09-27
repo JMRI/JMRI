@@ -443,6 +443,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             log.warn("Sensor "+sensorName+" not found.");
         }
     }
+    
+    protected Sensor getWaitSensor() {
+    	return _waitSensor;
+    }
+    
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) log.debug("propertyChange "+evt.getPropertyName()+
         		" new value= "+evt.getNewValue());
