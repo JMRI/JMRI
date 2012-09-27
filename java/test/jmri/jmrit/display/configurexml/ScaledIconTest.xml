@@ -62,7 +62,7 @@
         <rotation>2</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="161" y="172" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="161" y="172" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" degrees="45" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/jmri48x48.gif" degrees="45" scale="1.5">
         <rotation>0</rotation>
       </icon>
