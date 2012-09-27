@@ -158,11 +158,12 @@
                 <xs:element name="protocol" minOccurs="1" maxOccurs="unbounded">
                   <xs:simpleType>
                     <xs:restriction base="xs:token" >
-                      <xs:enumeration value="DCC"/>
-                      <xs:enumeration value="Selectrix"/>
-                      <xs:enumeration value="Motorola"/>
-                      <xs:enumeration value="MFX"/>
-                      <xs:enumeration value="M4"/>
+                      <xs:enumeration value="dcc"/>
+                      <xs:enumeration value="selectrix"/>
+                      <xs:enumeration value="motorola"/>
+                      <xs:enumeration value="mfx"/>
+                      <xs:enumeration value="m4"/>
+                      <xs:enumeration value="openlcb"/>
                     </xs:restriction>
                   </xs:simpleType>
                 </xs:element>

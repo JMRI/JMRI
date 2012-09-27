@@ -49,9 +49,9 @@
         <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire"/>
         <size length="13.5" width="9" height="3.0" units="mm"/>
         <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Selectrix</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
         </protocols>
       </model>
       <model model="LokPilot micro DCC 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall">
@@ -66,9 +66,9 @@
         <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
         <size length="23.5" width="15.5" height="5.5" units="mm"/>
         <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Selectrix</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
         </protocols>
       </model>
       <model model="LokPilot DCC 3.0" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium">
@@ -85,8 +85,8 @@
         <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
         <size length="23.5" width="15.5" height="5.5" units="mm"/>
         <protocols>
-            <protocol>MFX</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>mfx</protocol>
+            <protocol>motorola</protocol>
         </protocols>
       </model>
       <model model="LokPilot XL 3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other">
@@ -100,8 +100,8 @@
         <output name="8" label="   AUX6    " maxcurrent="600 mA" connection="other"/>
         <size length="64" width="25" height="11.5" units="mm"/>
         <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
         </protocols>
       </model>
       <model model="LokPilot Fx 3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium">
@@ -113,8 +113,8 @@
         <output name="6" label="   AUX4    " maxcurrent="250 mA" connection="wire"/>
         <size length="17.5" width="15.5" height="5.5" units="mm"/>
         <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
         </protocols>
       </model>
     </family>

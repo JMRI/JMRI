@@ -47,9 +47,9 @@
         <size length="21.3" width="15.5" height="5.5" units="mm"/>
         <!-- connector="NEM651, NEM 652, 21MTC, Plux12, wires" -->
         <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Selectrix</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
         </protocols>
       </model>
       <model model="LokPilot DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
@@ -90,9 +90,9 @@
         <size length="10.5" width="5.8" height="2.8" units="mm"/>
         <!-- connector="NEM651, NEM 652, Next18" -->
         <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Selectrix</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
         </protocols>
       </model>        
       <model model="LokPilot Micro DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes">

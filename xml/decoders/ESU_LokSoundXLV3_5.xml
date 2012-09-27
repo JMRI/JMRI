@@ -33,8 +33,8 @@
         <output name="8" label="AUX 6" maxcurrent="600mA"/>
         <size length="51" width="40" height="14" units="mm"/>
         <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
         </protocols>
       </model>
       <functionlabels>
