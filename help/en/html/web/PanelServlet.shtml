@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright 2012 -->
+<!-- $Id: PanelServlet.shtml 20353 2012-04-15 11:48:26Z mstevetodd $ -->
+<title>JMRI: Panel Servlet</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1> 
+JMRI: Panel Servlet
+</h1>
+
+The JMRI Panel Servlets provide web access to information about "open" JMRI panels.
+
+This servlet responds to the following URL patterns: <ul>
+    <li>/panel/Panel/&lt;panel name&gt;</li>
+    <li>/panel/ControlPanel/&lt;panel name&gt;</li>
+    <li>/panel/Layout/&lt;panel name&gt;</li>
+  </ul>where Panel, ControlPanel and Layout refer to the JMRI editor used to create each type of panel.
+  <p>The servlet returns an xml stream with various elements needed to recreate that particular panel externally.
+  <p>Currently, there is a client-side web app called "<a href="showPanelHelp.shtml">showPanel</a>" that uses these definitions to 
+  "draw" panels in a browser, allowing for clicks on active elements and update of changes made by
+  this app and elsewhere in JMRI.  <a href="showPanelHelp.shtml">[more info about showPanel]</a>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

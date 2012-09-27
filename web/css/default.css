@@ -43,6 +43,9 @@
 		display: inline;
 		background: #AAA;
 	}
+	ul {
+		margin-top: 2px;
+	}
 
 /* General Structure */
 

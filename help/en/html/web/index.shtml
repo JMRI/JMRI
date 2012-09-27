@@ -31,18 +31,21 @@ JMRI can provide web access to your model railroad.
 The basic method was developed by Konrad Froetzheim and colleagues 
 in the early 1990's for their "Internet Model Railroad". 
 A standard web server communicates with the user's normal web browser, accepting 
-HTTP requests in the usual way. 
-These requests are handed to a small "JMRI connector", which interprets 
-them and returns the information from JMRI back to the browser.
+HTTP requests in the usual way.  <a href="WebServer.shtml"> 
+Details of the JMRI web server</a>
 
 <p>
 For example, the user can have their browser request the current 
-contents of a JMRI panel, which is 
+contents of a JMRI frame (window), which is 
 returned back to the browser as an image to be displayed. 
-Or the user can click on the image of a JMRI panel, 
-which causes the browser to request a click in the same position on a JMRI panel. 
+The user can click on the image of that JMRI frame, 
+which causes the browser to request a click in the same position on that JMRI frame. 
 JMRI acts on that click, 
-and also sends back an image of the updated panel.
+and also sends back an image of the updated frame.
+<p>
+Also, client applications such as <a href="http://withrottle.com" target=_new>WiThrottle</a> and 
+<a href="http://enginedriver.rrclubs.org" target=_new>EngineDriver</a> can use the
+JMRI web server to provide additional features, such as panel access and roster icons. 
 
 <a id="Start">
 <h2>Starting Web Access</h2>
@@ -57,41 +60,38 @@ is working.
 Check that you can properly communicate with and operate your layout. 
 
 <p>
-<img src="images/Startup.jpg" align="right" height="117" width="312"/>
-To start web access from the menus, select "Start Mini Web Server"
-under the "Tools" menu. A small window will open to confirm that
-it started, and to show you the URL that it's using.
+To start web access from the menus, select "Start JMRI Web Server"
+under the "Tools" menu. 
 
 <p>
 Next, check the connection. 
 
 <p>
 If you're using a Bonjour/Zeroconf-enabled web browser like
-Safari or 
-<a href="http://www.bonjourfoxy.net/">Firefox</a>, 
-you should see a "JMRI on (your computer name)"
-web site in the "Bonjour" tab.  You can just click on that
+Safari you should see a "My JMRI Railroad"
+web site in the "Bonjour" tab.  Chrome and FireFox users can 
+enable the "Bonjour" feature with the 
+<a href="http://dnssd.me" target=_new>DNSSD plug-in</a>.
+You can just click on the "My JMRI Railroad" link 
 to get to the welcome page of the JMRI web server.
 
 <p>
-Otherwise, enter the starting URL from the "Web server started ..."
-message, which will be something like "http://10.0.1.7:12080/index.html"
+Otherwise, enter the starting URL, which will be something like "http://192.168.1.7:12080"
 (or if you're browsing on the same computer right now, 
-<a href="http://localhost:12080/index.html">click here</a>, or press the
-"Open in Browser" button).
+<a href="http://localhost:12080">click here</a>.
 The default port is 12080, but this can be changed in 
-MiniServer Preferences.
-You should see a welcome screen, which serves as the home page for the mini web server.  
+Web Server Preferences.
+You should see a welcome screen, which serves as the home page for the JMRI web server.  
 This page (by default) contains a number of useful examples and links.
 
 <p>
 Next, let's make sure you can access JMRI functions.
 From the JMRI Tools menu select "Power Control", which should open a new window. 
 Then click on 
-<a href="http://localhost:12080/panel/Power%20Control.html">this link</a> 
+<a href="http://localhost:12080/frame/Power%20Control.html">this link</a> 
 or enter the URL 
 <code><pre>
-http://localhost:12080/panel/Power%20Control.html
+http://localhost:12080/frame/Power%20Control.html
 </pre></code>
 This should display the Power Control window on your web browser. 
 (Note: "localhost" is an alias for your 
@@ -99,7 +99,7 @@ computer; if you want to access the computer running JMRI from some other comput
 replace "localhost" 
 with the IP address displayed on the main screen, e.g. 
 <code><pre>
-http://127.0.0.1:12080/panel/Power%20Control.html
+http://192.168.1.7:12080/frame/Power%20Control.html
 </pre></code>
 or something similar) 
 If everything is working, you should see the Power Control window on your browser screen. 
@@ -116,16 +116,16 @@ start the server each time you start the program.
 To do this, open the Preferences window, select the 
 "Start Up" tab, and 
 click "Add Action".  In the new selection box that
-appears, select "Start Web Miniserver".  
+appears, select "Start Web Server".  
 Don't forget to save your changes!
 
+<h2>Web Server Preferences</h2>
+<a href="images/WebServerPreferences.png" target=_new alt="click to enlarge">
+<img src="images/WebServerPreferences.png" height="200px" style="float:right;"></a> 
+There are a number of Web Server-related settings that you can change in Preferences, Web Server
+(see image at right, click to enlarge)
 <p>
-The MiniServer defaults to port 12080, but this can be changed using
-the MiniServer Preferences dialog. 
-
-<p>
-The "index.html" page that you used in the 
-previous section
+The "index.html" page 
 is automatically created by the program in the JMRI
 preferences directory.  You can edit it to 
 display whatever you want; by default, JMRI won't modify if it exists. 
@@ -175,7 +175,7 @@ You may also call the <b>inControl</b> directly:
 <code><pre>
 <a href="http://localhost:12080/web/inControl.html" target="_blank">http://localhost:12080/web/inControl.html</a>
 </pre></code>
-See <b>mini web server</b> starting page for more info or jump to the <b>inControl</b> help page:
+See <b>JMRI web server</b> starting page for more info or jump to the <b>inControl</b> help page:
 <code><pre>
 <a href="/help/en/package/jmri/jmrit/inControl/inControl.shtml">/help/en/package/jmri/jmrit/inControl/inControl.shtml</a>
 </pre></code>

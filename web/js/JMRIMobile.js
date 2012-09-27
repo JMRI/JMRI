@@ -29,7 +29,7 @@
 var $gPrevType = ""; //persistent variable to help refresh views only on change 
 var $gLastLogMsgTime =new Date().getTime();  //save last time (for logging elapsed time in debug messages)
 var $gValues = new Array();  //persistent variable to keep track of current values, to avoid reprocessing unchanged items
-//var $gXHRList;  //persistent variable to allow aborting of superseded connections
+var $gXHRList;  //persistent variable to allow aborting of superseded connections
 
 //handle button press, send request for immediate change 
 var $sendChange = function($type, $name, $nextValue){
@@ -43,11 +43,12 @@ var $sendChange = function($type, $name, $nextValue){
 var $sendXMLIOList = function($commandstr){
 
 	//abort active connection
-//	if ($gXHRList) {
-//		$gXHRList.abort();
-//	}
-//	$gXHRList = $.ajax({ 
-	$.ajax({
+	if ($gXHRList != undefined && $gXHRList.readyState != 4) {  
+		if (window.console) console.log( "aborting active list connection");
+		$gXHRList.abort();
+	}
+	$gXHRList = $.ajax({ 
+//	$.ajax({
 		type: 'POST',
 		url:  '/xmlio/',
 		data: $commandstr,
@@ -324,6 +325,22 @@ function $logMsg(msg) {
 	}
 }
 
+ var timer;  //persistent var used by this function
+ function endAndStartTimer() {
+ 	window.clearTimeout(timer);
+ 	if ($gWidgets["ISXMLIOHEARTBEAT"] != undefined) { //don't bother if widgets not loaded
+ 		timer = window.setTimeout(function(){
+// 			if (window.console) console.log("timer fired");
+ 			var $nextState = $getNextState($gWidgets["ISXMLIOHEARTBEAT"]);
+ 			$gWidgets["ISXMLIOHEARTBEAT"].state = $nextState; 
+ 			$sendElementChange("sensor", "ISXMLIOHEARTBEAT", $nextState)
+ 			endAndStartTimer(); //repeat
+ 		}, $gTimeout * 1000);
+ 	}
+ }
+
+
+ 
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 $(document).ready(function() {
 

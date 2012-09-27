@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright 2012 -->
+<!-- $Id: showPanelHelp.shtml 20353 2012-04-15 11:48:26Z mstevetodd $ -->
+<title>JMRI: showPanel web application</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1> 
+JMRI: showPanel web application
+</h1>
+
+<h3>Background</h3>
+<p>The JMRI <a href="FrameServlet.shtml">FrameServlet</a> is a useful tool for extending JMRI to browsers by periodically grabbing a screen image of a requested
+window (running on a JMRI server), displaying it in the browser, and transmitting any mouse clicks back to the JMRI window.  Unfortunately, there are some
+drawbacks to this approach (delayed response, heavy server load, no highlighting of active elements, mouse "sharing", etc.).
+</p>
+With the addition of the JMRI <a href="PanelServlet.shtml">PanelServlet</a>, it became possible for a client app to retrieve complete details of a
+panel, enough to recreate the panel in the client.  The <a href="XMLIO.shtml">XMLIOServlet</a> provides for updating JMRI elements, and for monitoring 
+changes to those elements.
+<h3>New web application</h3>
+<p><b><em>showPanel.html</em></b> is a modern web application which draws active JMRI panels on a browser screen.  It retrieves panel definitions from JMRI 
+ via the <a href="PanelServlet.shtml">PanelServlet</a> and builds panel client-side, including click functions.  
+ It sends changes and listens for changes to panel elements using the <a href="XMLIO.shtml">xmlio server</a>.</p>  
+ <p>Links to all available panels are shown on the JMRI Web Server home page (you might need to rebuild it in Prefs to see the links)</p> 
+ <p>The base url is "/web/showPanel.html".  With no parms, the page will list links to available panels, 
+ or you can pass a parm of the format "?name=[type]/[panelname]" to open the specified panel directly.  
+ For example: http://192.168.0.7:12080/web/showPanel.html?name=Layout/MyPanel"</p>
+ <p>This app requires a modern "HTML5" browser (Chrome, FireFox, Safari, IE9).  It is still under development, with several element types not supported yet.</p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

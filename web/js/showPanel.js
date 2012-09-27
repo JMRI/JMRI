@@ -4,8 +4,8 @@
  *    click functions.  Sends and listens for changes to panel elements using the xmlio server.
  *    If no parm passed, page will list links to available panels.
  *  Approach:  Read panel's xml and create widget objects with all needed attributes.  There are 
- *    3 "widgetFamily"s: text, icon and drawn.  States are handled by naming members 
- *    iconX, textX, cssX where X is the state.
+ *    3 "widgetFamily"s: text, icon and drawn.  States are handled by storing members 
+ *    iconX, textX, cssX where X is the state.  The corresponding ones are used whenever the state changes.
  *    CSS classes are used throughout to attach events to correct widgets, as well as control appearance.
  *    The xmlio element name is used to send changes to xmlio server and to process changes made elsewhere.
  *    Drawn widgets are handled by drawing directly on the javascript "canvas" layer.
@@ -17,6 +17,7 @@
  *  
  *  TODO: handle turnoutdrawunselectedleg = "yes"
  *  TODO: handle drawn ellipse (see LMRC APB)
+ *  TODO: show list of available panels in footer, or add [Prev] [Next] links to navigate between panels
  *  TODO: figure out "held" state on signalheads (see LMRC APB)
  *  TODO: handle segmented click on multisensor and enable
  *  TODO: move occupiedsensor state to widget from block, to allow skipping of unchanged

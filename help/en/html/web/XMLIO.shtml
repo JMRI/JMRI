@@ -24,16 +24,31 @@
 JMRI: XML IO Servlet
 </h1>
 
-The JMRI XML Servlet provides web access to JMRI services.
+The JMRI XML Servlet provides bidirectional web access to JMRI services.
 
 <p>
 The servlet lives in the 
 <a href="http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">jmri.web.servlet.xmlio</a>
 package, and provides web access to the
 <a href="http://jmri.org/JavaDoc/doc/jmri/web/xmlio/package-summary.html">JMRI XML IO package</a>.
-By default, the JMRI mini server will send any URL that starts with /xmlio to this servlet.
-
+By default, the JMRI Web Server will send any URL that starts with /xmlio to this servlet.  It will list all 
+known elements of a specified type, accept changes to the value/state of elements, and respond with 
+current value/state of elements.  If sent a list of elements with current values, it will "monitor" for changes
+to any of those elements, returning the new values.
 <p>
+Element types fully supported:<ul>
+<li>power</li>
+<li>turnout</li>
+<li>sensor</li>
+<li>signalhead</li>
+<li>memory</li>
+<li>route</li>
+</ul>
+Element types list-only:<ul>
+<li>roster</li>
+<li>frame</li>
+<li>panel</li>
+<li>metadata</li></ul><p>
 There are several sample pages that show how this can be used:
 <dl>
 <dt><a href="http://localhost:12080/web/request.html">web/request.html</a>
@@ -55,7 +70,7 @@ and create turnouts 1 through 4.
 <p>
 Please note that this servlet has only been used with 
 the 
-<a href="MiniServer.shtml">JMRI Web Server</a>, and may
+<a href="WebServer.shtml">JMRI Web Server</a>, and may
 not work with other servlet containers.  We're committed to
 making it work, however, so just get in touch with 
 the JMRI developers if you encounter any problems.

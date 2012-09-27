@@ -24,7 +24,8 @@
 JMRI: Frame Servlet
 </h1>
 
-The JMRI Frame Servlet provides web access to JMRI windows.
+The JMRI Frame Servlet provides web access to JMRI windows.  Its base url is "/frame/", 
+which by itself will return a page listing available frames.
 
 <p>
 It uses the facilities of the jmri.util.JmriJFrame class
@@ -34,23 +35,26 @@ it's OK for the window to have been minimized to the Start Bar (Windows)
 or converted to an icon (MacOS X and Linux).
 
 <p>
-The Web Server Preferences can be used to adjust the default delay after
+The <a href="index.shtml#Configure">Web Server Preferences</a> can be used to adjust the default delay after
 a click and adjust the periodic refresh between clicks.  You can also
 enter a list of frames which are not to be allowed, and enable ajax 
-refresh (new) or use the older meta-refresh.
+refresh (recommended) or use the older meta-refresh.
 
 <p>
-The jmri/web/servlet/frameimage/JmriJFrameServlet.properties
+The jmri/web/servlet/frameimage/JmriJFrameServlet.properties 
+  <a href="https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/java/src/jmri/web/servlet/frameimage/JmriJFrameServlet.properties" target=_new>
+  [view]</a>
 file can be used to configure the HTML that's returned when
 a frame is requested.
 
 <p>
 Please note that this servlet has only been used with 
 the 
-<a href="MiniServer.shtml">JMRI Web Server</a>, and may
+<a href="WebServer.shtml">JMRI Web Server</a>, and may
 not work with other servlet containers.  We're committed to
 making it work, however, so just get in touch with 
 the JMRI developers if you encounter any problems.
+</div>
 
 <!--#include virtual="/Footer" -->
 </body>

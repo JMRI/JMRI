@@ -52,7 +52,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
         // iPads or Android tablet apps could directly render the panels.
 
         // first, process any "list" elements
-    	//  roster, frame, and metadata are immediate only
+    	//  roster, frame, panel and metadata are immediate only
     	//  power, turnout, sensor, signalhead, memory and route can be monitored for changes, pass current values to begin
         @SuppressWarnings("unchecked")
         List<Element> lists = new ArrayList<Element>(e.getChildren("list"));

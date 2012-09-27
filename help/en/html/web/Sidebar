@@ -6,26 +6,29 @@
 	    <dl>
 
 		<dt><h3><a href="index.shtml">Basic Use</a></h3></dt>
-		<dd>JMRI has built-in support for viewing your
+		<dd>JMRI has built-in support for working with your
 		layout from a web browser.
 		    <UL>
-		    <LI><dfn><a href="index.shtml#Start">Getting Started</a></dfn>
-		    <LI><dfn><a href="index.shtml#Configure">Configuring</a></dfn>
-		    <LI><dfn><a href="index.shtml#URLs">URLs</a></dfn>
+		    <LI><dfn><a href="index.shtml#Start">Getting Started</a></dfn></li>
+		    <LI><dfn><a href="index.shtml#Configure">Configuring</a></dfn></li>
+		    <LI><dfn><a href="index.shtml#URLs">URLs</a></dfn></li>
 		    </UL>
 		</dd>
 
-		<dt><h3><a href="MiniServer.shtml">Advanced Configuration</a></h3></dt>
-		<dd>JMRI's built-in support can be reconfigured to some extent.
+		<dt><h3><a href="WebServer.shtml">Advanced Configuration</a></h3></dt>
+		<dd>Details of JMRI's built-in web support.
 		    <UL>
-		    <LI><dfn><a href="MiniServer.shtml">Miniserver</a></dfn>
+		    <LI><dfn><a href="WebServer.shtml">Miniserver</a></dfn>
 		    </UL>
 		</dd>
 
-		<dt><h3>Advanced Uses</h3></dt>
-		<dd>The JMRI web components can be used in your own web server.
+		<dt><h3>Servlets</h3></dt>
+		<dd>Details of the JMRI web components.
 		    <UL>
-		    <LI><dfn><a href="FrameServlet.shtml">Frame servlet</a></dfn>
+		    <LI><dfn><a href="FrameServlet.shtml">Frame servlet</a></dfn></li>
+		    <LI><dfn><a href="RosterServlet.shtml">Roster servlet</a></dfn></li>
+		    <LI><dfn><a href="PanelServlet.shtml">Panel servlet</a></dfn></li>
+		    <LI><dfn><a href="XMLIO.shtml">XMLIO servlet</a></dfn></li>
 		    </UL>
 		</dd>
 
