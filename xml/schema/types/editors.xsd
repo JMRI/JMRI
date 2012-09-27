@@ -128,6 +128,7 @@
       <xs:attribute name="fixedWidth" type="xs:string" />
       <xs:attribute name="fixedHeight" type="xs:string" />
       <xs:attribute name="rotate" type="xs:string" />
+      <xs:attribute name="degrees" type="xs:string" />
       <xs:attribute name="icon" type="xs:string" />
       <xs:attribute name="text" type="xs:string" />
       <xs:attribute name="size" type="xs:string" />
