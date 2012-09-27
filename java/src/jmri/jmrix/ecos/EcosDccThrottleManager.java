@@ -68,40 +68,20 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
     public boolean addressTypeUnique() { return false; }
     
     public String[] getAddressTypes(){
-        return new String[]{rb.getString("ComboItemDCC"),
-                         rb.getString("ComboItemMotorola"),
-                         rb.getString("ComboItemSelectrix"),
-                         rb.getString("ComboItemMFX")};
+        return new String[]{
+                        LocoAddress.Protocol.DCC.getPeopleName(),
+                        LocoAddress.Protocol.MOTOROLA.getPeopleName(),
+                        LocoAddress.Protocol.SELECTRIX.getPeopleName(),
+                        LocoAddress.Protocol.MFX.getPeopleName()};
     }
     
-    public int[] getAddressIntTypes(){
-        return new int[]{LocoAddress.DCC, LocoAddress.MOTOROLA, LocoAddress.SELECTRIX, LocoAddress.MFX};
+    public LocoAddress.Protocol[] getAddressProtocolTypes(){
+        return new LocoAddress.Protocol[]{LocoAddress.Protocol.DCC, 
+                                        LocoAddress.Protocol.MOTOROLA,
+                                        LocoAddress.Protocol.SELECTRIX,
+                                        LocoAddress.Protocol.MFX};
     }
-    
-    public String getAddressTypeString(int prot){
-        switch(prot){
-            case LocoAddress.MOTOROLA: return rb.getString("ComboItemMotorola");
-            case LocoAddress.SELECTRIX: return rb.getString("ComboItemSelectrix");
-            case LocoAddress.MFX: return rb.getString("ComboItemMFX");
-            default: return rb.getString("ComboItemDCC");
-        }
-    }
-    
-    public int getProtocolFromString(String selection){
-        int val = LocoAddress.DCC;
-        if (selection.equals(rb.getString("ComboItemDCC"))){
-            val = LocoAddress.DCC;
-        } else if (selection.equals(rb.getString("ComboItemMotorola"))){
-            val = LocoAddress.MOTOROLA;
-        } else if (selection.equals(rb.getString("ComboItemSelectrix"))){
-            val = LocoAddress.SELECTRIX;
-        } else if (selection.equals(rb.getString("ComboItemMFX"))){
-            val = LocoAddress.MFX;
-        } else {
-            log.error("Protocol '" + selection + "' is unknown so will default to dcc");
-        }
-        return val;
-    }
+        
 
     /*
      * Local method for deciding short/long address

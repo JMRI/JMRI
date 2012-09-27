@@ -78,7 +78,7 @@ public class DccLocoAddressSelectorTest extends TestCase {
         Assert.assertEquals("check type  ", false,sel.getAddress().isLongAddress());
 	}
     
-    // can leave selector box, and get sensical answers
+    // can leave selector box alone, and get sensical answers
 	public void testLetTypeSitLong() {
 	    setThrottleManager();
         DccLocoAddressSelector sel = new DccLocoAddressSelector();

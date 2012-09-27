@@ -104,12 +104,12 @@ public class RosterEntryPane extends javax.swing.JPanel  {
             // This goes through to find common protocols between the command station and the decoder
             // and will set the selection box list to match those that are common.
             jmri.ThrottleManager tm = InstanceManager.throttleManagerInstance();
-            List<Integer> protocoltypes = new ArrayList<Integer>();
-            for (int prot : tm.getAddressIntTypes()) {
+            List<LocoAddress.Protocol> protocoltypes = new ArrayList<LocoAddress.Protocol>();
+            for (LocoAddress.Protocol prot : tm.getAddressProtocolTypes()) {
                 protocoltypes.add(prot);
             }
 
-            if(!protocoltypes.contains(LocoAddress.DCC_LONG) && !protocoltypes.contains(LocoAddress.DCC_SHORT)){
+            if(!protocoltypes.contains(LocoAddress.Protocol.DCC_LONG) && !protocoltypes.contains(LocoAddress.Protocol.DCC_SHORT)){
                 //Multi protocol systems so far are not worried about dcc long vs dcc short
                 List<DecoderFile> l = DecoderIndexFile.instance().matchingDecoderList(null, r.getDecoderFamily(), null, null, null,r.getDecoderModel());
                 if (log.isDebugEnabled()) log.debug("found "+l.size()+" matches");
@@ -125,7 +125,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
                     if(d!=null && d.getSupportedProtocols().length>0){
                         ArrayList<String> protocols = new ArrayList<String>(d.getSupportedProtocols().length);
                         
-                        for(Integer i:d.getSupportedProtocols()){
+                        for(LocoAddress.Protocol i:d.getSupportedProtocols()){
                             if(protocoltypes.contains(i))
                                 protocols.add(tm.getAddressTypeString(i));
                         }
@@ -402,7 +402,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
     
     public void setDccAddress(String a) {
         DccLocoAddress addr = addrSel.getAddress();
-        int protocol = addr.getProtocol();
+        LocoAddress.Protocol protocol = addr.getProtocol();
         addrSel.setAddress(new DccLocoAddress(Integer.parseInt(a), protocol));
     }
     public void setDccAddressLong(boolean m) {
@@ -410,7 +410,9 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         int n = 0;
         if(addr!=null){
             //If the protocol is already set to something other than DCC, then do not try to configure it as DCC long or short.
-            if(addr.getProtocol()>LocoAddress.DCC_LONG)
+            if(addr.getProtocol() != LocoAddress.Protocol.DCC_LONG 
+                        && addr.getProtocol() != LocoAddress.Protocol.DCC_SHORT 
+                        && addr.getProtocol() != LocoAddress.Protocol.DCC )
                 return;
             n = addr.getNumber();
         }

@@ -7,7 +7,6 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.ImageIcon;
@@ -64,7 +63,7 @@ public class RosterEntry implements jmri.BasicRosterEntry{
     protected String _model = "";
     protected String _dccAddress = "3";
     //protected boolean _isLongAddress = false;
-    protected int _protocol = LocoAddress.DCC_SHORT;
+    protected LocoAddress.Protocol _protocol = LocoAddress.Protocol.DCC_SHORT;
     protected String _comment = "";
     protected String _decoderModel = "";
     protected String _decoderFamily = "";
@@ -246,45 +245,33 @@ public class RosterEntry implements jmri.BasicRosterEntry{
 
     public void setLongAddress(boolean b) {
         Boolean old = false;
-        if(_protocol==LocoAddress.DCC_LONG)
+        if(_protocol==LocoAddress.Protocol.DCC_LONG)
                 old = true;
         if(b)
-            _protocol=LocoAddress.DCC_LONG;
+            _protocol=LocoAddress.Protocol.DCC_LONG;
         else
-            _protocol=LocoAddress.DCC_SHORT;
+            _protocol=LocoAddress.Protocol.DCC_SHORT;
         firePropertyChange("longaddress", old, Boolean.valueOf(b));
     }
 
     public boolean isLongAddress() {
-        if(_protocol==LocoAddress.DCC_LONG)
+        if(_protocol==LocoAddress.Protocol.DCC_LONG)
             return true;
         return false;
     }
 
-    public void setProtocol(int protocol){
-        int old = _protocol;
+    public void setProtocol(LocoAddress.Protocol protocol){
+        LocoAddress.Protocol old = _protocol;
         _protocol = protocol;
         firePropertyChange("protocol", old, _protocol);
     }
 
-    public int getProtocol(){
+    public LocoAddress.Protocol getProtocol(){
         return _protocol;
     }
     
     public String getProtocolAsString(){
-        String protocol;
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
-        switch(_protocol){
-            case(LocoAddress.DCC_SHORT) : protocol = rb.getString("ProtocolDCC_Short"); break;
-            case(LocoAddress.DCC_LONG) : protocol = rb.getString("ProtocolDCC_Long"); break;
-            case(LocoAddress.DCC) : protocol = rb.getString("ProtocolDCC"); break;
-            case(LocoAddress.SELECTRIX) : protocol = rb.getString("ProtocolSelectrix"); break;
-            case(LocoAddress.MOTOROLA) : protocol = rb.getString("ProtocolMotorola"); break;
-            case(LocoAddress.MFX) : protocol = rb.getString("ProtocolMFX"); break;
-            case(LocoAddress.M4) : protocol = rb.getString("ProtocolM4"); break;
-            default : protocol = rb.getString("ProtocolDCC_Short");
-        }
-        return protocol;
+        return _protocol.getPeopleName();
     }
 
     public void   setComment(String s) {
@@ -415,7 +402,7 @@ public class RosterEntry implements jmri.BasicRosterEntry{
                 _protocol = la.getProtocol();
             } else {
                 _dccAddress = "";
-                _protocol = LocoAddress.DCC_SHORT;
+                _protocol = LocoAddress.Protocol.DCC_SHORT;
             }
         } else {// Did not find "locoaddress" element carrying the short/long, probably
                 // because this is an older-format file, so try to use system default.
@@ -429,15 +416,15 @@ public class RosterEntry implements jmri.BasicRosterEntry{
             } catch (NumberFormatException e2) { address = 3;}  // ignore, accepting the default value
             if (tf!=null && tf.canBeLongAddress(address) && !tf.canBeShortAddress(address)) {
                 // if it has to be long, handle that
-                _protocol = LocoAddress.DCC_LONG;
+                _protocol = LocoAddress.Protocol.DCC_LONG;
             } else if (tf!=null && !tf.canBeLongAddress(address) && tf.canBeShortAddress(address)) {
                 // if it has to be short, handle that
-                _protocol = LocoAddress.DCC_SHORT;
+                _protocol = LocoAddress.Protocol.DCC_SHORT;
             } else {
                 // else guess short address
                 // These people should resave their roster, so we'll warn them
                 warnShortLong(_id);
-                _protocol = LocoAddress.DCC_SHORT;
+                _protocol = LocoAddress.Protocol.DCC_SHORT;
 
             }
         }        

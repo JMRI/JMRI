@@ -771,11 +771,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     }
     
     //Converts the int value of the protocol to the ESU protocol string
-    private String protocol(int protocol){
+    private String protocol(LocoAddress.Protocol protocol){
         switch(protocol){
-            case LocoAddress.MOTOROLA: return "MM28";
-            case LocoAddress.SELECTRIX: return "SX28";
-            case LocoAddress.MFX: return "MMFKT";
+            case MOTOROLA: return "MM28";
+            case SELECTRIX: return "SX28";
+            case MFX: return "MMFKT";
             default: return "DCC128";
         }
     }

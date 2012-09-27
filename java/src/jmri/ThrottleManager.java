@@ -158,20 +158,29 @@ public interface ThrottleManager {
     /**
     * return a string value for a given int protocol value
     */
-    public String getAddressTypeString(int prot);
+    public String getAddressTypeString(LocoAddress.Protocol prot);
 
 	/**
      * returns an Integer list of different protocols that are supported by 
      * system, to include short vs long or DCC vs Selectrix vs Motorola
      */
-    public int[] getAddressIntTypes();
+    public LocoAddress.Protocol[] getAddressProtocolTypes();
 
     /**
      * Get the integer value representing a protocol
      * @param selection
      * @return the integer value of the protocol
      */
-    public int getProtocolFromString(String selection);
+    public LocoAddress.Protocol getProtocolFromString(String selection);
+    
+    /**
+     * Get the object representing a particular address
+     * @param value String in format specific to the protocol
+     * @param protocol specific protocol string, see the specific throttle manager for values
+     * @return probably of a subtype
+     */
+    public LocoAddress getAddress(String value, String protocol);
+    public LocoAddress getAddress(String value, LocoAddress.Protocol protocol);
     
    /**
     * The string provided in the getAddressTypes of a protocol for a given address

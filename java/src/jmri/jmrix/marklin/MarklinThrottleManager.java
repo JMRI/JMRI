@@ -72,35 +72,17 @@ public class MarklinThrottleManager extends AbstractThrottleManager implements M
     protected boolean singleUse() { return false; }
     
     public String[] getAddressTypes(){
-        return new String[]{rb.getString("ComboItemDCC"),
-                         rb.getString("ComboItemMotorola"),
-                         rb.getString("ComboItemMFX")};
+        return new String[]{
+                        LocoAddress.Protocol.DCC.getPeopleName(),
+                        LocoAddress.Protocol.MFX.getPeopleName(),
+                        LocoAddress.Protocol.MOTOROLA.getPeopleName()};
     }
 
-    public String getAddressTypeString(int prot){
-        switch(prot){
-            case LocoAddress.MOTOROLA: return rb.getString("ComboItemMotorola");
-            case LocoAddress.MFX: return rb.getString("ComboItemMFX");
-            default: return rb.getString("ComboItemDCC");
-        }
-    }
-
-    public int[] getAddressIntTypes(){
-        return new int[]{LocoAddress.DCC, LocoAddress.MFX, LocoAddress.MOTOROLA};
-    }
-
-    public int getProtocolFromString(String selection){
-        int val = LocoAddress.DCC;
-        if (selection.equals(rb.getString("ComboItemDCC"))){
-            val = LocoAddress.DCC;
-        } else if (selection.equals(rb.getString("ComboItemMotorola"))){
-            val = LocoAddress.MOTOROLA;
-        } else if (selection.equals(rb.getString("ComboItemMFX"))){
-            val = LocoAddress.MFX;
-        } else {
-            log.error("Protocol '" + selection + "' is unknown so will default to dcc");
-        }
-        return val;
+    public LocoAddress.Protocol[] getAddressProtocolTypes(){
+        return new LocoAddress.Protocol[]{
+                    LocoAddress.Protocol.DCC, 
+                    LocoAddress.Protocol.MFX, 
+                    LocoAddress.Protocol.MOTOROLA};
     }
 
     /*

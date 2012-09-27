@@ -54,7 +54,20 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
      * Are there any ambiguous addresses (short vs long) on this system?
      */
     public boolean addressTypeUnique() { return false; }
+
+    public String[] getAddressTypes(){
+        return new String[]{LocoAddress.Protocol.DCC_SHORT.getPeopleName(),
+                         LocoAddress.Protocol.DCC_LONG.getPeopleName(),
+                         LocoAddress.Protocol.OPENLCB.getPeopleName()};
+    }
     
+    public LocoAddress.Protocol[] getAddressProtocolTypes(){
+        return new LocoAddress.Protocol[]{LocoAddress.Protocol.DCC_SHORT, 
+                                            LocoAddress.Protocol.DCC_LONG,
+                                            LocoAddress.Protocol.OPENLCB};
+    }
+        
+
     public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l){
         log.debug("disposeThrottle called for " + t);
         if ( super.disposeThrottle(t, l)){

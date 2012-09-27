@@ -40,63 +40,54 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             return adapterMemo.getUserName();
         return userName;
     }
-    
-    final protected static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ThrottleBundle");
-    
+        
+    /** 
+     * By default, only DCC in this implementation
+     */
     public String[] getAddressTypes(){
-        return new String[]{rb.getString("ComboItemShort"),
-                         rb.getString("ComboItemLong")};
+        return new String[]{
+                         LocoAddress.Protocol.DCC.getPeopleName(),
+                         LocoAddress.Protocol.DCC_SHORT.getPeopleName(),
+                         LocoAddress.Protocol.DCC_LONG.getPeopleName()};
     }
 
-    public String getAddressTypeString(int prot){
-        switch(prot){
-            case LocoAddress.DCC_SHORT: return rb.getString("ComboItemShort");
-            case LocoAddress.DCC_LONG: return rb.getString("ComboItemLong");
-            default: return rb.getString("ComboItemShort");
-        }
+    /** 
+     * By default, only DCC in this implementation
+     */
+    public String getAddressTypeString(LocoAddress.Protocol prot){
+        return prot.getPeopleName();
     }
 
-    public int[] getAddressIntTypes(){
-        return new int[]{LocoAddress.DCC_SHORT, LocoAddress.DCC_LONG};
+    public LocoAddress.Protocol[] getAddressProtocolTypes(){
+        return new LocoAddress.Protocol[]{LocoAddress.Protocol.DCC, LocoAddress.Protocol.DCC_SHORT, LocoAddress.Protocol.DCC_LONG};
     }
 
-    public int getProtocolFromString(String selection){
-        int val = LocoAddress.DCC;
-        if(selection.equals(rb.getString("ComboItemNone"))){
-            val = LocoAddress.DCC;
-        } else if (selection.equals(rb.getString("ComboItemShort"))){
-            val = LocoAddress.DCC_SHORT;
-        } else if (selection.equals(rb.getString("ComboItemLong"))){
-            val = LocoAddress.DCC_LONG;
-        } else {
-            log.error("Protocol '" + selection + "' is unknown so will default to dcc");
-        }
-        return val;
+    public LocoAddress getAddress(String value, LocoAddress.Protocol protocol) {
+        if (value == null) return null;
+        if (protocol == null) return null;
+        int num = Integer.parseInt(value);
+
+        // if DCC long and can't be, or short and can't be, fix
+        if (!canBeShortAddress(num)) protocol = LocoAddress.Protocol.DCC_LONG;
+        if (!canBeLongAddress(num)) protocol = LocoAddress.Protocol.DCC_SHORT;
+
+        // if still ambiguous, prefer short
+        if (protocol == LocoAddress.Protocol.DCC) protocol = LocoAddress.Protocol.DCC_SHORT;
+        
+        return new DccLocoAddress(num,protocol);
+    }
+    public LocoAddress getAddress(String value, String protocol) {
+        if (value == null) return null;
+        if (protocol == null) return null;
+        LocoAddress.Protocol p = getProtocolFromString(protocol);
+
+        return getAddress(value, p);        
+    }
+
+    public LocoAddress.Protocol getProtocolFromString(String selection){
+        return LocoAddress.Protocol.getByPeopleName(selection);
     }
     
-    /*public String getMode(int address){
-        if (canBeLongAddress(address) && !canBeShortAddress(address)) {
-            return rb.getString("ComboItemLong");
-        }
-        
-        // if it has to be short, handle that
-        if (!canBeLongAddress(address) && canBeShortAddress(address)) {
-            return rb.getString("ComboItemShort");
-        }
-        return rb.getString("ComboItemShort");
-    }*/
-    
-    /*public int getMode(int address){
-        if (canBeLongAddress(address) && !canBeShortAddress(address)) {
-            return 2;
-        }
-        
-        // if it has to be short, handle that
-        if (!canBeLongAddress(address) && canBeShortAddress(address)) {
-            return 1;
-        }
-        return 1;
-    }*/
     
 	/**
 	 * throttleListeners is indexed by the address, and
@@ -577,7 +568,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * to use the new disposeThrottle.
      */
 
-    protected static class Addresses{
+    protected static class Addresses {
 
         int useActiveCount = 0;
         DccThrottle throttle = null;

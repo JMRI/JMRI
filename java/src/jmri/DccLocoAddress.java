@@ -22,12 +22,12 @@ public class DccLocoAddress implements LocoAddress {
 
 	public DccLocoAddress(int number, boolean isLong) {
 		this.number = number;
-        protocol = LocoAddress.DCC_SHORT;
+        protocol = LocoAddress.Protocol.DCC_SHORT;
         if(isLong)
-            protocol = LocoAddress.DCC_LONG;
+            protocol = LocoAddress.Protocol.DCC_LONG;
 	}
     
-    public DccLocoAddress(int number, int protocol){
+    public DccLocoAddress(int number, LocoAddress.Protocol protocol){
         this.number = number;
         this.protocol = protocol;
     }
@@ -49,42 +49,44 @@ public class DccLocoAddress implements LocoAddress {
     
     public int hashCode() {
         switch(protocol){
-            case LocoAddress.DCC_SHORT : return number;
-            case LocoAddress.DCC_LONG : return 20000+number;
-            case LocoAddress.SELECTRIX: return 30000+number;
-            case LocoAddress.MOTOROLA: return 40000+number;
-            case LocoAddress.MFX: return 50000+number;
-            case LocoAddress.M4: return 60000+number;
-            default: return number;
+            case DCC_SHORT :    return (int)(number&0xFFFFFFFF);
+            case DCC_LONG :     return (int)(20000+number&0xFFFFFFFF);
+            case SELECTRIX:     return (int)(30000+number&0xFFFFFFFF);
+            case MOTOROLA:      return (int)(40000+number&0xFFFFFFFF);
+            case MFX:           return (int)(50000+number&0xFFFFFFFF);
+            case M4:            return (int)(60000+number&0xFFFFFFFF);
+            case OPENLCB:       return (int)(70000+number&0xFFFFFFFF);
+            default:            return (int)(number&0xFFFFFFFF);
         }
     }
     
     public String toString() {
         switch(protocol){
-            case LocoAddress.DCC_SHORT : return ""+number+"(S)";
-            case LocoAddress.DCC_LONG : return ""+number+"(L)";
-            case LocoAddress.SELECTRIX: return ""+number+"(SX)";
-            case LocoAddress.MOTOROLA: return ""+number+"(MM)";
-            case LocoAddress.M4: return ""+number+"(M4)";
-            case LocoAddress.MFX: return ""+number+"(MFX)";
+            case DCC_SHORT : return ""+number+"(S)";
+            case DCC_LONG : return ""+number+"(L)";
+            case SELECTRIX: return ""+number+"(SX)";
+            case MOTOROLA: return ""+number+"(MM)";
+            case M4: return ""+number+"(M4)";
+            case MFX: return ""+number+"(MFX)";
+            case OPENLCB: return ""+number+"(OpenLCB)";
             default: return ""+number+"(D)";
         }
     }
     
 	public boolean isLongAddress() { 
-        if(protocol==DCC_SHORT)
+        if(protocol==LocoAddress.Protocol.DCC_SHORT)
             return false;
         return true;
     }
     
-    public int getProtocol() {
+    public LocoAddress.Protocol getProtocol() {
         return protocol;
     }
     
-    public int getNumber() { return number; }
+    public int getNumber() { return (int)number; }
 	
-    private int number;
-    private int protocol = LocoAddress.DCC;
+    private long number;
+    private LocoAddress.Protocol protocol = LocoAddress.Protocol.DCC;
 
 }
 

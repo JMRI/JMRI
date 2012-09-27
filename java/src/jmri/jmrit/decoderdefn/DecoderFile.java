@@ -6,9 +6,12 @@ import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import jmri.LocoAddress;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.ResetTableModel;
+
 import org.jdom.Element;
 import org.jdom.filter.ElementFilter;
 
@@ -164,30 +167,21 @@ public class DecoderFile extends XmlFile {
         return decoderElement.getChild("family").getAttribute("mfg").getValue();
     }
     
-    ArrayList<Integer> protocols = null;
+    ArrayList<LocoAddress.Protocol> protocols = null;
     
-    public Integer[] getSupportedProtocols(){
+    public LocoAddress.Protocol[] getSupportedProtocols(){
         if(protocols==null)
             setSupportedProtocols();
-        return protocols.toArray(new Integer[protocols.size()]);
+        return protocols.toArray(new LocoAddress.Protocol[protocols.size()]);
     }
     
     private void setSupportedProtocols(){
-        protocols = new ArrayList<Integer>();
+        protocols = new ArrayList<LocoAddress.Protocol>();
         if(_element.getChild("protocols")!=null){
             @SuppressWarnings("unchecked")
             List<Element> protocolList = _element.getChild("protocols").getChildren("protocol");
             for(Element e: protocolList){
-                if(e.getText().equals("DCC"))
-                    protocols.add(jmri.LocoAddress.DCC);
-                else if (e.getText().equals("Selectrix"))
-                    protocols.add(jmri.LocoAddress.SELECTRIX);
-                else if (e.getText().equals("Motorola"))
-                    protocols.add(jmri.LocoAddress.MOTOROLA);
-                else if (e.getText().equals("MFX"))
-                    protocols.add(jmri.LocoAddress.MFX);
-                else if (e.getText().equals("M4"))
-                    protocols.add(jmri.LocoAddress.M4);
+                protocols.add(LocoAddress.Protocol.getByShortName(e.getText()));
             }
         }
     }

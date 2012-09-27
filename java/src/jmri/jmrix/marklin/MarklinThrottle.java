@@ -373,10 +373,10 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     
     int getCANAddress(){
         switch(address.getProtocol()){
-            case LocoAddress.DCC : return MarklinConstants.DCCSTART + address.getNumber();
-            case LocoAddress.MOTOROLA : return address.getNumber();
-            case LocoAddress.SELECTRIX : return MarklinConstants.SX2START + address.getNumber();
-            case LocoAddress.MFX : return MarklinConstants.MFXSTART + address.getNumber();
+            case DCC : return MarklinConstants.DCCSTART + address.getNumber();
+            case MOTOROLA : return address.getNumber();
+            case SELECTRIX : return MarklinConstants.SX2START + address.getNumber();
+            case MFX : return MarklinConstants.MFXSTART + address.getNumber();
             default  : return MarklinConstants.DCCSTART + address.getNumber();
         }
     }

@@ -158,7 +158,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	 *            requested.
 	 */
 	public void notifyThrottleFound(DccThrottle t) {
-		log.warn("Asked for "+currentAddress.getNumber()+" got "+ t.getLocoAddress() );
+		log.info("Asked for "+currentAddress.getNumber()+" got "+ t.getLocoAddress() );
 		if ( consistAddress!=null && 
                     ((DccLocoAddress)t.getLocoAddress()).getNumber() == consistAddress.getNumber()) {
                     // notify the listeners that a throttle was found

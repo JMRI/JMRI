@@ -32,18 +32,7 @@ public class LocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
         
         if (p!=null) {
             element.addContent(new Element("number").addContent(""+p.getNumber()));
-            String protocol = null;
-            switch(p.getProtocol()){
-                case(LocoAddress.DCC_SHORT) : protocol = "dcc_short"; break;
-                case(LocoAddress.DCC_LONG) : protocol = "dcc_long"; break;
-                case(LocoAddress.DCC) : protocol = "dcc"; break;
-                case(LocoAddress.SELECTRIX) : protocol = "selectrix"; break;
-                case(LocoAddress.MOTOROLA) : protocol = "motorola"; break;
-                case(LocoAddress.MFX) : protocol = "mfx"; break;
-                case(LocoAddress.M4) : protocol = "m4"; break;
-                default : protocol = "dcc";
-            }
-            element.addContent(new Element("protocol").addContent(protocol));
+            element.addContent(new Element("protocol").addContent(p.getProtocol().getShortName()));
         } else {
             element.addContent(new Element("number").addContent(""));
             element.addContent(new Element("protocol").addContent(""));
@@ -64,24 +53,7 @@ public class LocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
         }
         int addr = Integer.parseInt(element.getChild("number").getText());
         String protocol = element.getChild("protocol").getText();
-        int prot = 0x00;
-        if(protocol.equals("dcc_short")){
-            prot = LocoAddress.DCC_SHORT;
-        } else if (protocol.equals("dcc_long")){
-            prot = LocoAddress.DCC_LONG;
-        } else if (protocol.equals("dcc")){
-            prot = LocoAddress.DCC;
-        } else if (protocol.equals("selectrix")){
-            prot = LocoAddress.SELECTRIX;
-        } else if (protocol.equals("motorola")){
-            prot = LocoAddress.MOTOROLA;
-        } else if (protocol.equals("mfx")){
-            prot = LocoAddress.MFX;
-        } else if (protocol.equals("m4")){
-            prot = LocoAddress.M4;
-        } else {
-            prot = LocoAddress.DCC;
-        }
+        LocoAddress.Protocol prot = LocoAddress.Protocol.getByShortName(protocol);
         return new jmri.DccLocoAddress(addr, prot);
     }
 

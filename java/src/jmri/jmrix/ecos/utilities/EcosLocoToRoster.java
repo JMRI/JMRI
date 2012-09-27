@@ -446,15 +446,15 @@ public class EcosLocoToRoster implements EcosListener {
         re.putAttribute(adaptermemo.getPreferenceManager().getRosterAttribute(), _ecosObject);
         re.ensureFilenameExists();
         if(pDecoderFile.getSupportedProtocols().length>0){
-            List<Integer> protocols = new ArrayList<Integer>(Arrays.asList(pDecoderFile.getSupportedProtocols()));
-            if((ecosLoco.getProtocol().startsWith("DCC")) && protocols.contains(jmri.LocoAddress.DCC)){
-                re.setProtocol(jmri.LocoAddress.DCC);
-            } else if (ecosLoco.getProtocol().equals("MMFKT") && protocols.contains(jmri.LocoAddress.MFX)){
-                re.setProtocol(jmri.LocoAddress.MFX);
-            } else if (ecosLoco.getProtocol().startsWith("MM") && protocols.contains(jmri.LocoAddress.MOTOROLA)){
-                re.setProtocol(jmri.LocoAddress.MOTOROLA);
-            } else if (ecosLoco.getProtocol().equals("SX32") && protocols.contains(jmri.LocoAddress.SELECTRIX)){
-                re.setProtocol(jmri.LocoAddress.SELECTRIX);
+            List<jmri.LocoAddress.Protocol> protocols = new ArrayList<jmri.LocoAddress.Protocol>(Arrays.asList(pDecoderFile.getSupportedProtocols()));
+            if((ecosLoco.getProtocol().startsWith("DCC")) && protocols.contains(jmri.LocoAddress.Protocol.DCC)){
+                re.setProtocol(jmri.LocoAddress.Protocol.DCC);
+            } else if (ecosLoco.getProtocol().equals("MMFKT") && protocols.contains(jmri.LocoAddress.Protocol.MFX)){
+                re.setProtocol(jmri.LocoAddress.Protocol.MFX);
+            } else if (ecosLoco.getProtocol().startsWith("MM") && protocols.contains(jmri.LocoAddress.Protocol.MOTOROLA)){
+                re.setProtocol(jmri.LocoAddress.Protocol.MOTOROLA);
+            } else if (ecosLoco.getProtocol().equals("SX32") && protocols.contains(jmri.LocoAddress.Protocol.SELECTRIX)){
+                re.setProtocol(jmri.LocoAddress.Protocol.SELECTRIX);
             }
         }
         
