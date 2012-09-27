@@ -47,8 +47,8 @@ public class DccLocoAddressSelector extends JPanel
             configureBox(InstanceManager.throttleManagerInstance().getAddressTypes());
         } else {
             configureBox(
-                new String[]{rb.getString("ComboItemShort"),
-                             rb.getString("ComboItemLong")});
+                new String[]{LocoAddress.Protocol.DCC_SHORT.getPeopleName(),
+                             LocoAddress.Protocol.DCC_LONG.getPeopleName()});
         }
 
     }
