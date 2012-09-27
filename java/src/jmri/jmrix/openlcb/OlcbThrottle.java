@@ -67,27 +67,6 @@ public class OlcbThrottle extends AbstractThrottle
     }
 
     /**
-     * Send the message to set the state of functions F0, F1, F2, F3, F4
-     */
-    protected void sendFunctionGroup1() {
-    }
-
-    /**
-     * Send the message to set the state of
-     * functions F5, F6, F7, F8
-     */
-    protected void sendFunctionGroup2() {
-
-    }
-
-    /**
-     * Send the message to set the state of
-     * functions F9, F10, F11, F12
-     */
-    protected void sendFunctionGroup3() {
-    }
-
-    /**
      * Set the speed & direction
      * <P>
      * This intentionally skips the emergency stop value of 1.
