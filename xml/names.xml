@@ -255,6 +255,9 @@
 		<definition item="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX" />
 
 		<definition item="Consist Adjustments Active"/>
+		
+		<definition item="Consist Option 1"/>
+		<definition item="Consist Option 2"/>
 
 
 	</definitiongroup>
