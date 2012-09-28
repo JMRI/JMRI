@@ -47,12 +47,20 @@ public class OlcbThrottle extends AbstractThrottle
         // create OpenLCB library object that does the magic & activate
         if (mgr.get(MimicNodeStore.class) == null) log.error("Failed to access Mimic Node Store");
         if (mgr.get(DatagramService.class) == null) log.error("Failed to access Datagram Service");
-        oti = new ThrottleImplementation(
+        if (address instanceof OpenLcbLocoAddress) {
+            oti = new ThrottleImplementation(
+                    ((OpenLcbLocoAddress)address).getNode(),
+                    (MimicNodeStore)mgr.get(MimicNodeStore.class),
+                    (DatagramService)mgr.get(DatagramService.class)
+                );            
+        } else {
+            oti = new ThrottleImplementation(
                     this.address.getNumber(),
                     this.address.isLongAddress(),
                     (MimicNodeStore)mgr.get(MimicNodeStore.class),
                     (DatagramService)mgr.get(DatagramService.class)
                 );
+        }
         oti.start();
     }
 

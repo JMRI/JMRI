@@ -55,6 +55,17 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
      */
     public boolean addressTypeUnique() { return false; }
 
+    public LocoAddress getAddress(String value, LocoAddress.Protocol protocol) {
+        // if OpenLCB handle here
+        if (protocol == LocoAddress.Protocol.OPENLCB) {
+            org.openlcb.NodeID node = new org.openlcb.NodeID(value);
+            return new OpenLcbLocoAddress(node);
+        } else {
+            // otherwise defer up to DCC
+            return super.getAddress(value, protocol);
+        }
+    }
+
     public String[] getAddressTypes(){
         return new String[]{LocoAddress.Protocol.DCC_SHORT.getPeopleName(),
                          LocoAddress.Protocol.DCC_LONG.getPeopleName(),
