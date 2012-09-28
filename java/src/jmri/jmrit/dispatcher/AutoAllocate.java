@@ -698,7 +698,7 @@ log.info("auto allocating Section "+ar.getSection().getUserName());
 			}
 		}
 		else {
-			for (int i=tsList.size(); i>0; i--) {
+			for (int i=tsList.size()-1; i>=0; i--) {
 				if (tsList.get(i).getSequenceNumber()<curSeq) {
 					for (int j=0; j<aSectionList.size(); j++) {
 						if (tsList.get(i).getSection()==aSectionList.get(j)) {
@@ -733,7 +733,7 @@ log.info("auto allocating Section "+ar.getSection().getUserName());
 			}
 		}
 		else {
-			for (int i=tsList.size(); i>0; i--) {
+            for (int i=tsList.size()-1; i>=0; i--) {
 				if (tsList.get(i).getSequenceNumber()<curSeq) {
 					for (int k = 0; k<rtsList.size(); k++) {
 						if ( (tsList.get(i).getSection()==rtsList.get(k).getSection()) && 
