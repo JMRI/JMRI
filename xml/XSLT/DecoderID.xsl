@@ -80,6 +80,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 			<th bgcolor="#cccccc">Family</th>
 			<th bgcolor="#cccccc">Min CV7 value</th>
 			<th bgcolor="#cccccc">Max CV7 value</th>
+			<th bgcolor="#cccccc">Internal ID</th>
 		</tr>
 
 		<xsl:for-each select="/decoderIndex-config/decoderIndex/familyList/family">
@@ -99,6 +100,11 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <xsl:if test="string-length(@highVersionID)=0" ><xsl:value-of select="../@highVersionID"/></xsl:if>
 <xsl:value-of select="@highVersionID"/>
 </td>
+
+				<td bgcolor="#eeeeee" valign="top" align="center">
+<xsl:value-of select="@productID"/>
+</td>
+
 			  </tr>
 			  <xsl:for-each select="versionCV">
         		<xsl:call-template name="versionCVline"/>
@@ -122,8 +128,12 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
                                 <td bgcolor="#eeeeee" valign="top" align="center">
 <xsl:value-of select="@highVersionID"/>
 </td>
+                                <td bgcolor="#eeeeee" valign="top" align="center"></td>
                         </tr>
 </xsl:template>
 
+<!-- do nothing with the following elements -->
+<xsl:template match="functionlabel"/>
+<xsl:template match="protocol"/>
 
 </xsl:stylesheet>
