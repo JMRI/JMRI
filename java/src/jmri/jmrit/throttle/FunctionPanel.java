@@ -12,6 +12,7 @@ import javax.swing.JToggleButton;
 import javax.swing.WindowConstants;
 
 import jmri.DccThrottle;
+import jmri.LocoAddress;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
@@ -523,7 +524,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 		setFnButtons();
 	}
 
-	public void notifyAddressReleased(int address, boolean isLong)
+	public void notifyAddressReleased(LocoAddress la)
 	{
 		if (log.isDebugEnabled()) log.debug("Throttle released");
 		setEnabled(false);
@@ -532,7 +533,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 		mThrottle = null;
 	}
 
-	public void notifyAddressChosen(int newAddress, boolean isLong) {
+	public void notifyAddressChosen(LocoAddress l) {
 	}
 
         public void notifyConsistAddressChosen(int newAddress, boolean isLong) { 

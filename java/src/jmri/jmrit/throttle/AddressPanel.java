@@ -446,7 +446,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 			AddressListener l = listeners.get(i);
 			if (log.isDebugEnabled())
 				log.debug("Notify address listener of address change " + l.getClass());			
-			l.notifyAddressChosen(currentAddress.getNumber(), currentAddress.isLongAddress());
+			l.notifyAddressChosen(currentAddress);
 		}
 
     	boolean requestOK =
@@ -527,8 +527,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 				if (log.isDebugEnabled()) {
 					log.debug("Notify address listener of release " + l.getClass());
 				}
-				l.notifyAddressReleased(currentAddress.getNumber(),
-						currentAddress.isLongAddress());
+				l.notifyAddressReleased(currentAddress);
 			}
 		}
 	}

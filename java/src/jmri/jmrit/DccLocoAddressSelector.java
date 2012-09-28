@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 import java.awt.Font;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import jmri.jmrix.JmrixConfigPane;
 
 /**
  * Tool for selecting short/long address for DCC throttles.
@@ -102,9 +103,16 @@ public class DccLocoAddressSelector extends JPanel
 
     public void setAddress(DccLocoAddress a) {
         if (a!=null) {
-            text.setText(""+a.getNumber());
-            if(InstanceManager.throttleManagerInstance()!=null){
-                box.setSelectedItem(InstanceManager.throttleManagerInstance().getAddressTypeString(a.getProtocol()));
+            if (a instanceof jmri.jmrix.openlcb.OpenLcbLocoAddress) {
+                // now special case, should be refactored
+                jmri.jmrix.openlcb.OpenLcbLocoAddress oa = (jmri.jmrix.openlcb.OpenLcbLocoAddress) a;
+                text.setText(oa.getNode().toString());
+                box.setSelectedItem(jmri.LocoAddress.Protocol.OPENLCB.getPeopleName());
+            } else {
+                text.setText(""+a.getNumber());
+                if(InstanceManager.throttleManagerInstance()!=null){
+                    box.setSelectedItem(InstanceManager.throttleManagerInstance().getAddressTypeString(a.getProtocol()));
+                }
             }
         }
     }

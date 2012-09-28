@@ -3,6 +3,7 @@ package jmri.jmrit.throttle;
 import java.awt.Color;
 
 import jmri.DccThrottle;
+import jmri.LocoAddress;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.swing.ResizableImagePanel;
 
@@ -36,12 +37,12 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
 		}
 	}
 
-	public void notifyAddressReleased(int address, boolean isLong)  {
+	public void notifyAddressReleased(LocoAddress la)  {
 		setImagePath(null);
 		setVisible(false);
 	}
 	
-	public void notifyAddressChosen(int newAddress, boolean isLong) {		
+	public void notifyAddressChosen(LocoAddress l) {		
 	}
 
         public void notifyConsistAddressChosen(int newAddress, boolean isLong) { 

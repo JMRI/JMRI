@@ -27,6 +27,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.MouseInputAdapter;
 
 import jmri.DccThrottle;
+import jmri.LocoAddress;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.MouseInputAdapterInstaller;
@@ -1349,10 +1350,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         WindowPreferences.setPreferences(this, window);
     }
 
-	public void notifyAddressChosen(int newAddress, boolean isLong) {	
+	public void notifyAddressChosen(LocoAddress l) {	
 	}
 
-	public void notifyAddressReleased(int address, boolean isLong) {
+	public void notifyAddressReleased(LocoAddress la) {
 		this.setEnabled(false);
         if (throttle != null)
         	throttle.removePropertyChangeListener(this);

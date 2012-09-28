@@ -3,6 +3,7 @@ package jmri.jmrit.throttle;
 import java.util.EventListener;
 
 import jmri.DccThrottle;
+import jmri.LocoAddress;
 
 /**
  * Interface for classes that wish to get notification that a new
@@ -17,13 +18,13 @@ public interface AddressListener extends EventListener
      * Receive notification that a new address has been selected.
      * @param newAddress The address that is now selected.
      */
-    public void notifyAddressChosen(int newAddress, boolean isLong);
+    public void notifyAddressChosen(jmri.LocoAddress l);
 	
 	/**
 	 * Receive notification that an address has been released/dispatched
 	 * @param address The address released/dispatched
 	 */
-	public void notifyAddressReleased(int address, boolean isLong);
+	public void notifyAddressReleased(LocoAddress la);
 	
 	/**
 	 * Receive notification that a throttle has been found

@@ -5,6 +5,7 @@ import java.util.Iterator;
 import javax.swing.table.AbstractTableModel;
 import jmri.DccThrottle;
 import jmri.DccLocoAddress;
+import jmri.LocoAddress;
 
 public class ThrottlesTableModel extends AbstractTableModel implements AddressListener, java.beans.PropertyChangeListener {
 
@@ -38,11 +39,11 @@ public class ThrottlesTableModel extends AbstractTableModel implements AddressLi
         fireTableDataChanged();
     }
 
-    public void notifyAddressChosen(int newAddress, boolean isLong) {
+    public void notifyAddressChosen(LocoAddress la) {
     }
 
-    public void notifyAddressReleased(int address, boolean isLong) {
-        DccLocoAddress la = new DccLocoAddress(address,isLong);
+    public void notifyAddressReleased(LocoAddress addr) {
+        DccLocoAddress la = (DccLocoAddress)addr;
         fireTableDataChanged();
         jmri.InstanceManager.throttleManagerInstance().removeListener(la, this);
     }

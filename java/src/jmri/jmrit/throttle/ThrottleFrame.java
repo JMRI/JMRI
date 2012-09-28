@@ -29,6 +29,7 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
 import jmri.DccThrottle;
+import jmri.LocoAddress;
 import jmri.configurexml.LoadXmlConfigAction;
 import jmri.configurexml.StoreXmlConfigAction;
 import jmri.jmrit.XmlFile;
@@ -849,10 +850,10 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 		}
     }
 
-	public void notifyAddressChosen(int newAddress, boolean isLong) {	
+	public void notifyAddressChosen(LocoAddress l) {	
 	}
 
-	public void notifyAddressReleased(int address, boolean isLong) {
+	public void notifyAddressReleased(LocoAddress la) {
 		setLastUsedSaveFile(null);
 		setFrameTitle();
 		throttleWindow.updateGUI();

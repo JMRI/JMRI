@@ -85,8 +85,8 @@ public class DccLocoAddress implements LocoAddress {
     
     public int getNumber() { return (int)number; }
 	
-    private long number;
-    private LocoAddress.Protocol protocol = LocoAddress.Protocol.DCC;
+    protected long number;
+    protected LocoAddress.Protocol protocol = LocoAddress.Protocol.DCC;
 
 }
 
