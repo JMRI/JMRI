@@ -1,31 +1,5 @@
 // NceShowCabPanel.java
 
-package jmri.jmrix.nce.cab;
-
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.text.MessageFormat;
-import java.util.Calendar;
-import java.util.ResourceBundle;
-
-import javax.swing.JButton;
-
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-
-import jmri.jmrix.nce.NceBinaryCommand;
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
-import jmri.jmrix.nce.NceTrafficController;
-
-
 /**
  * Frame to display NCE cabs
  * 
@@ -126,9 +100,43 @@ import jmri.jmrix.nce.NceTrafficController;
  * Writing zero to FLAGS1 will remove the cab from the 'active' list
  * 
  * @author Dan Boudreau Copyright (C) 2009, 2010
- * @author Ken Cameron Copyright (C) 2010
+ * @author Ken Cameron Copyright (C) 2012
  * @version $Revision$
  */
+
+package jmri.jmrix.nce.cab;
+
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.util.Calendar;
+import java.util.ResourceBundle;
+
+import javax.swing.JButton;
+
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+
+import jmri.jmrix.nce.NceBinaryCommand;
+import jmri.jmrix.nce.NceMessage;
+import jmri.jmrix.nce.NceReply;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
+import jmri.jmrix.nce.NceTrafficController;
+import jmri.util.table.ButtonEditor;
+import jmri.util.table.ButtonRenderer;
 
 public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 	
@@ -161,9 +169,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	private static final int FLAGS1_CABID_NODISP = 0x01;	// bit 0=1, bit 7=0;
 	private static final int FLAGS1_CABID_USB = 0x80;		// bit 0=0, bit 7=1;
 	private static final int FLAGS1_CABID_AIU = 0x81;		// bit 0=1, bit 7=1;
-	private static final int FLAGS1_CABISACTIVE = 0x02;	// if cab is active
-	private static final int FLAGS1_MASK_CABID = 0x81;	// Only bits 0 and 7.
-	private static final int FLAGS1_MASK_CABISACTIVE = 0x02;	// if cab is active
+	public static final int FLAGS1_CABISACTIVE = 0x02;	// if cab is active
+	public static final int FLAGS1_MASK_CABID = 0x81;	// Only bits 0 and 7.
+	public static final int FLAGS1_MASK_CABISACTIVE = 0x02;	// if cab is active
 	
 	private static final int FUNC_L_F0 = 0x10;		// F0 or headlight
 	private static final int FUNC_L_F1 = 0x01;		// F1
@@ -197,9 +205,10 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	private static final int FUNC_H_F26 = 0x20;		// F26
 	private static final int FUNC_H_F27 = 0x40;		// F27
 	private static final int FUNC_H_F28 = 0x80;		// F28
-	
+
 	Thread NceCabUpdateThread;	
-	private int[] cabFlag1Array = new int[CAB_MAX];
+	
+	public static int[] cabFlag1Array = new int[CAB_MAX];
 	private Calendar[] cabLastChangeArray = new Calendar[CAB_MAX];
 	private int[] cabSpeedArray = new int[CAB_MAX];
 	private int[] cabFlagsArray = new int[CAB_MAX];
@@ -227,12 +236,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     
     // major buttons
     JButton refreshButton = new JButton(rb.getString("Refresh"));
-    JButton purgeButton = new JButton(rb.getString("PurgeCab"));
     
     // check boxes
-    JCheckBox checkBoxActive = new JCheckBox(rb.getString("Active"));
-    // text field
-    JTextField purgeCabId = new JTextField(3);
+    static JCheckBox checkBoxShowActive = new JCheckBox(rb.getString("CheckBoxLabelShowActive"));
+    static JCheckBox checkBoxShowDisplayText = new JCheckBox(rb.getString("CheckBoxLabelShowDisplayText"));
+    static JCheckBox checkBoxShowAllFunctions = new JCheckBox(rb.getString("CheckBoxLabelShowAllFunctions"));
+    
+    // text fields
     
     // for padding out panel
     JLabel space1a = new JLabel("    ");
@@ -243,10 +253,55 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     JLabel space3 = new JLabel(" ");
     JLabel space4 = new JLabel(" ");
     JLabel space5 = new JLabel(" ");
-    
-    JPanel cabsPanel = new JPanel();
-    JScrollPane cabsPane;
+        
+    class dataRow	{
+    	int			cab;
+    	String		type;
+    	JButton 	buttonPurgeCab;
+    	int			loco;
+    	int			speed; 
+    	String		dir;
+    	String		mode;
+    	String		consist;
+    	boolean		F0;
+    	boolean		F1;
+    	boolean		F2;
+    	boolean		F3;
+    	boolean		F4;
+    	boolean		F5;
+    	boolean		F6;
+    	boolean		F7;
+    	boolean		F8;
+    	boolean		F9;
+    	boolean		F10;
+    	boolean		F11;
+    	boolean		F12;
+    	boolean		F13;
+    	boolean		F14;
+    	boolean		F15;
+    	boolean		F16;
+    	boolean		F17;
+    	boolean		F18;
+    	boolean		F19;
+    	boolean		F20;
+    	boolean		F21;
+    	boolean		F22;
+    	boolean		F23;
+    	boolean		F24;
+    	boolean		F25;
+    	boolean		F26;
+    	boolean		F27;
+    	boolean		F28;
+    	String		text1;
+    	String		text2;
+    	String		lastChange;
+    };
 
+    dataRow[] cabData = new dataRow[CAB_MAX];
+
+    nceCabTableModel cabModel = new nceCabTableModel(cabData);
+    JTable cabTable = new JTable(cabModel);
+    
     private NceTrafficController tc = null;
 
     public NceShowCabPanel() {
@@ -280,103 +335,98 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     public void initComponents(NceSystemConnectionMemo m) throws Exception {
     	this.memo = m;
         this.tc = m.getNceTrafficController();
-        cabsPane = new JScrollPane(cabsPanel);
-    	cabsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-    	
+
+        // fill in cab array
+        for (int i = 0; i < CAB_MAX; i++) {
+    		cabData[i] = new dataRow();
+        }
     	// the following code sets the frame's initial state
     	
     	setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    	cabsPane.setVisible(false);
     	
     	JPanel p1 = new JPanel();
     	p1.setLayout(new GridBagLayout());
     	p1.setPreferredSize(new Dimension(700, 40));
     	// row 1
     	refreshButton.setToolTipText(rb.getString("RefreshToolTip"));
-    	checkBoxActive.setToolTipText(rb.getString("CheckBoxActiveToolTip"));
-    	checkBoxActive.setSelected(true);
-    	purgeCabId.setToolTipText(rb.getString("PurgeCabIdToolTip"));
-    	purgeButton.setToolTipText(rb.getString("PurgeButtonToolTip"));
+    	addButtonAction(refreshButton);
+    	checkBoxShowActive.setToolTipText(rb.getString("CheckBoxActiveToolTip"));
+    	checkBoxShowActive.setSelected(true);
+    	addCheckBoxAction(checkBoxShowActive);
+    	checkBoxShowAllFunctions.setToolTipText(rb.getString("CheckBoxShowAllFunctionsToolTip"));
+    	checkBoxShowAllFunctions.setSelected(false);
+    	checkBoxShowDisplayText.setToolTipText(rb.getString("CheckBoxShowDisplayToolTip"));
+    	checkBoxShowDisplayText.setSelected(false);
     	addItem(p1, refreshButton, 2, 1);
     	addItem(p1, space1a, 3, 1);
     	addItem(p1, textStatus, 4, 1);
     	addItem(p1, space1b, 5, 1);
-    	addItem(p1, checkBoxActive, 6, 1);
-    	addItem(p1, space1c, 7, 1);
-    	addItem(p1, purgeCabId, 10, 1);
-    	addItem(p1, space1d, 11, 1);
-    	addItem(p1, purgeButton, 12, 1);
+    	addItem(p1, checkBoxShowActive, 6, 1);
+//    	addItem(p1, space1c, 7, 1);
+//    	addItem(p1, checkBoxShowAllFunctions, 8, 1);
+//    	addItem(p1, space1d, 9, 1);
+//    	addItem(p1, checkBoxShowDisplayText, 10, 1);
     	
-    	// row 2
-    	addItem(p1, space2, 4, 2);
-    	
-        // row 3
-//    	JPanel p2 = new JPanel();
-//    	p2.setLayout(new GridBagLayout());
-//        addItem(p2, textNumer, 1, 3);
-//        addItemLeft(p2, textCab, 2, 3);
-//        addItemLeft(p2, textAddress, 3, 3);
-//        addItemLeft(p2, textSpeed, 4, 3);
-//        addItemLeft(p2, textConsist, 5, 3);
-//        addItemLeft(p2, textFunctions, 6, 3);
-//        addItemLeft(p2, textDisplay1, 7, 3);
-//        addItemLeft(p2, textDisplay2, 8, 3);
-//        addItemLeft(p2, textLastUsed, 9, 3);
-        
-    	addButtonAction(refreshButton);
-    	addButtonAction(purgeButton);
-    	
+    	JScrollPane cabScrollPane = new JScrollPane(cabTable);
+    	cabTable.setFillsViewportHeight(true);
+    	cabTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+    	cabModel.setShowAllCabs(!checkBoxShowActive.isSelected());
+    	for (int col = 0; col < cabTable.getColumnCount(); col++) {
+    		int width = cabModel.getPreferredWidth(col);
+    		TableColumn c = cabTable.getColumnModel().getColumn(col);
+    		c.setPreferredWidth(width);
+    	}
+		cabTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    	cabScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+    	cabScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+    	setColumnToHoldButton(cabTable, 2);
     	add(p1);
-//    	add(p2);
-    	add(cabsPane);
+    	add(cabScrollPane);
     	
     	// pad out panel
-    	cabsPanel.setLayout(new GridBagLayout());
-    	cabsPanel.setVisible(true);
-    	addItem(cabsPanel, space3, 0, 0);
-    	addItem(cabsPanel, space4, 0, 1);
-    	addItem(cabsPanel, space5, 0, 2);
-    	cabsPane.setVisible(true);
+    	cabScrollPane.setVisible(true);
 
     	refreshPanel();   	
  
     }
 
-    // refresh button
-    public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+    // button actions
+    public void buttonActionPerformed(ActionEvent ae) {
     	Object src = ae.getSource();
     	if (src == refreshButton) {
     		refreshPanel();
-    	} else if (src == purgeButton) {
-    		purgeCab();
     	} else {
     		log.error("unknown action performed: " + src);
     	}
 	}
- 
-    private void purgeCab() {
-    	// if id provided
-    	int cab = 0;
-    	try {
-        	cab = Integer.parseInt(purgeCabId.getText().trim());
-    	} catch (NumberFormatException e) {
-            log.error(rb.getString("ErrorInvalidValue") + purgeCabId.getText().trim());
-    		return;
+
+    // checkboxes
+    public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+    	Object src = ae.getSource();
+    	if (src == checkBoxShowActive) {
+    		cabModel.setShowAllCabs(!checkBoxShowActive.isSelected());
+    		refreshPanel();
+    	} else {
+    		log.error("unknown checkbox action performed: " + src);
     	}
-    	if (cab < 1 || cab >= CAB_MAX) {
-            log.error(rb.getString("ErrorValueRange") + purgeCabId.getText().trim());
+	}
+    
+    public void purgeCab(int cab) {
+    	if (cab < 1 || cab > cabData.length) {
+            log.error(rb.getString("ErrorValueRange") + cab);
     		return;
     	}
     	// if id is active
     	int act = cabFlag1Array[cab] & FLAGS1_MASK_CABISACTIVE;
     	if (act != FLAGS1_CABISACTIVE) {
-            log.error(rb.getString("ErrorCabNotActive") + purgeCabId.getText().trim());
+            log.error(rb.getString("ErrorCabNotActive") + cab);
     	}
     	// clear bit for active and cab type details
+    	cabFlag1Array[cab] = 0;
     	writeCabMemory1(cab, CAB_FLAGS1, 0);
-    	purgeCabId.setText(" ");
     	// update the display
     	refreshPanel();
+        textStatus.setText(rb.getString("StatusCabPurged") + " " + cab);
     	return;
     }
     
@@ -385,7 +435,6 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         if (NceCabUpdateThread != null && NceCabUpdateThread.isAlive())	
         	return; // thread is already running
     	textStatus.setText(rb.getString("StatusReadingMemory"));
-        waiting = 0;
     	NceCabUpdateThread = new Thread(new Runnable() {
     		public void run() {
     			cabUpdate();
@@ -397,6 +446,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     }
     
     private boolean firstTime = true; // wait for panel to display
+    
     // Thread to update cab info, allows the use of sleep or wait
     private void cabUpdate() {
     	if (firstTime){
@@ -408,38 +458,18 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	}
     	
     	firstTime = false;
-    	cabsPanel.removeAll();
-    	// build header
-    	addItemTop(cabsPanel, textNumer, 1, 0);	// number
-    	addItemTop(cabsPanel, textCab, 2, 0);		// type
-    	addItemTop(cabsPanel, textAddress, 3, 0);	// address
-      	addItemTop(cabsPanel, textSpeed, 4, 0);	// speed
-      	addItemTop(cabsPanel, textConsist, 5, 0);	// consist
-      	addItemTop(cabsPanel, textFunctions, 6, 0);// functions
-      	addItemTop(cabsPanel, textDisplay1, 7, 0);	// line1
-      	addItemTop(cabsPanel, textDisplay2, 8, 0);	// line2
-      	addItemTop(cabsPanel, textLastUsed, 9, 0);	// last used
-      	
-    	int numberOfCabs = 0;
         // build table of cabs
-        for (int currCabId=2; currCabId<CAB_MAX; currCabId++){
-        	JLabel number = new JLabel();
-        	JLabel type = new JLabel();
-         	JLabel address = new JLabel();
-           	JLabel speed = new JLabel();
-           	JLabel consist = new JLabel();
-           	JLabel functions = new JLabel();
-           	JLabel lastUsed = new JLabel();
-           	JLabel line1 = new JLabel();
-           	JLabel line2 = new JLabel();
+        for (int currCabId=0; currCabId < cabData.length; currCabId++){
            	
+            textStatus.setText(rb.getString("StatusReadingCabId") + currCabId);
+            cabData[currCabId].cab = currCabId;
            	int foundChange = 0;
            	recChar = -1;
            	// create cab type by reading the FLAGS1 byte
         	readCabMemory1(currCabId, CAB_FLAGS1);
            	if (!waitNce())
         		return;
-           	if (log.isDebugEnabled()) log.debug("ID = "+currCabId+" Read flag1 character " + recChar);
+           	if (log.isDebugEnabled()) log.debug("ID = " + currCabId + " Read flag1 character " + recChar);
            	// test it really changed
            	if (recChar != -1) {
 	        	// save value for purge
@@ -450,38 +480,26 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	        	cabFlag1Array[currCabId] = recChar;
 	        	if ((recChar & FLAGS1_MASK_CABISACTIVE) != FLAGS1_CABISACTIVE) {
 	        		// not active slot
-	            	if (checkBoxActive.isSelected())
-	            		continue;
+	            	continue;
 	        	}
 	        	int cabId = recChar & FLAGS1_MASK_CABID; // mask off don't care bits
 	        	if (cabId == FLAGS1_CABID_DISPLAY){
-	        		type.setText("ProCab");
-	        		numberOfCabs++;
+	        		cabData[currCabId].type =  rb.getString("TypeProCab");
 	        	}
 	        	else if (cabId == FLAGS1_CABID_NODISP){ 
-	        		type.setText("Cab04/06");	// Cab04 or Cab06
-	        		numberOfCabs++;
+	        		cabData[currCabId].type = rb.getString("TypeCab04");	// Cab04 or Cab06
 	        	}
 	           	else if (cabId == FLAGS1_CABID_USB){
-	        		type.setText("USB/M-P");	// USB or Mini-Panel
+	           		cabData[currCabId].type = rb.getString("TypeUSB");	// USB or Mini-Panel
 	           	}
 	            else if (cabId == FLAGS1_CABID_AIU){
-	        		type.setText("AIU");
+	            	cabData[currCabId].type = rb.getString("TypeAIU");
 	            }
 	            else {
-	            	type.setText(rb.getString("UnknownCabType") + ": " + recChar);
+	            	cabData[currCabId].type = rb.getString("TypeUnknownCab") + ": " + recChar;
 	            }
-	        	// add items to table
-	        	addItemTop(cabsPanel, number, 1, currCabId);
-	        	number.setText(Integer.toString(currCabId));
-	        	addItemTop(cabsPanel, type, 2, currCabId);
-	        	addItemTop(cabsPanel, address, 3, currCabId);
-	          	addItemTop(cabsPanel, speed, 4, currCabId);
-	          	addItemTop(cabsPanel, consist, 5, currCabId);
-	          	addItemTop(cabsPanel, functions, 6, currCabId);
-	          	addItemTop(cabsPanel, line1, 7, currCabId);
-	          	addItemTop(cabsPanel, line2, 8, currCabId);
-	          	addItemTop(cabsPanel, lastUsed, 9, currCabId);
+
+	        	cabData[currCabId].cab = currCabId;
 	          	if (cabId != FLAGS1_CABID_AIU) {
 		          	// read 16 bytes of memory, we'll use 7 of the 16
 		        	readCabMemory16(currCabId, CAB_CURR_SPEED);
@@ -495,7 +513,8 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 		        	}
 		        	cabSpeedArray[currCabId] = readChar;
 		        	if (log.isDebugEnabled()) log.debug("Read speed character "+Integer.toString(readChar));
-		        	String sped = Integer.toString(readChar);
+		        	cabData[currCabId].speed = readChar;
+		        	
 		        	// read the FLAGS byte
 		        	readChar = recChars[CAB_FLAGS-CAB_CURR_SPEED];
 		        	if (cabFlagsArray[currCabId] != readChar) {
@@ -505,23 +524,22 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 		        	cabFlagsArray[currCabId] = readChar;
 		        	int direction = readChar & 0x04;
 		        	if (direction > 0)
-		        		sped = sped + " F";
+		        		cabData[currCabId].dir = rb.getString("DirForward");
 		        	else
-		        		sped = sped + " R";
+		        		cabData[currCabId].dir = rb.getString("DirReverse");
 		        	int mode = readChar & 0x02;
 		        	// USB doesn't use the 28/128 bit
 		        	if (cabId != FLAGS1_CABID_USB){
 		        		if (mode > 0)
-		        			sped = sped + " / 128";
+		        			cabData[currCabId].mode = "128";
 		        		else
-		        			sped = sped + " / 28";
+		        			cabData[currCabId].mode = "28";
 		        	}
-		        	speed.setText(sped);
 		        	
 		        	// create loco address, read the high address byte
 		        	readChar = recChars[CAB_ADDR_H-CAB_CURR_SPEED];
 		        	if (log.isDebugEnabled()) log.debug("Read address high character "+readChar);
-		        	int locoAddress = (readChar & 0x3F) *256;
+		        	int locoAddress = (readChar & 0x3F) * 256;
 		        	// read the low address byte
 		        	readChar = recChars[CAB_ADDR_L-CAB_CURR_SPEED];
 		        	if (log.isDebugEnabled()) log.debug("Read address low character "+readChar);
@@ -531,7 +549,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 		        		if (log.isDebugEnabled()) log.debug(currCabId + ": Loco " + locoAddress + "<->" + cabLocoArray[currCabId]);
 		        	}
 		        	cabLocoArray[currCabId] = locoAddress;
-		        	address.setText(Integer.toString(locoAddress));
+		        	cabData[currCabId].loco = locoAddress;
 		        	
 		        	// create consist address
 		        	readChar = recChars[CAB_ALIAS-CAB_CURR_SPEED];
@@ -541,9 +559,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 		        	}
 		        	cabConsistArray[currCabId] = readChar;
 		        	if(readChar == 0)
-		        		consist.setText(" ");
+		        		cabData[currCabId].consist = " ";
 		        	else
-		        		consist.setText(Integer.toString(readChar));
+		        		cabData[currCabId].consist = Integer.toString(readChar);
 		        	
 		        	// create function keys
 		        	readChar = recChars[CAB_FUNC_L-CAB_CURR_SPEED];
@@ -553,27 +571,26 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 		        	}
 		        	cabF0Array[currCabId] = readChar;
 		        	if (log.isDebugEnabled()) log.debug("Function low character "+readChar);
-		        	StringBuilder func = new StringBuilder();
 		        	if ((readChar & FUNC_L_F0) > 0)
-		        		func.append(" L");
+		        		cabData[currCabId].F0 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F0 = false;
 		           	if ((readChar & FUNC_L_F1) > 0)
-		           		func.append(" 1");
+		           		cabData[currCabId].F1 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F1 = false;
 		           	if ((readChar & FUNC_L_F2) > 0)
-		           		func.append(" 2");
+		           		cabData[currCabId].F2 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F2 = false;
 		           	if ((readChar & FUNC_L_F3) > 0)
-		           		func.append(" 3");
+		           		cabData[currCabId].F3 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F3 = false;
 		           	if ((readChar & FUNC_L_F4) > 0)
-		           		func.append(" 4");
+		           		cabData[currCabId].F4 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F4 = false;
 		        	readChar = recChars[CAB_FUNC_H-CAB_CURR_SPEED];
 		        	if (cabF5Array[currCabId] != readChar) {
 		        		foundChange++;
@@ -582,37 +599,37 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 		        	cabF5Array[currCabId] = readChar;
 		        	if (log.isDebugEnabled()) log.debug("Function high character "+readChar);
 		           	if ((readChar & FUNC_H_F5) > 0)
-		           		func.append(" 5");
+		           		cabData[currCabId].F5 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F5 = false;
 		           	if ((readChar & FUNC_H_F6) > 0)
-		           		func.append(" 6");
+		           		cabData[currCabId].F6 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F6 = false;
 		           	if ((readChar & FUNC_H_F7) > 0)
-		           		func.append(" 7");
+		           		cabData[currCabId].F7 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F7 = false;
 		           	if ((readChar & FUNC_H_F8) > 0)
-		           		func.append(" 8");
+		           		cabData[currCabId].F8 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F8 = false;
 		           	if ((readChar & FUNC_H_F9) > 0)
-		           		func.append(" 9");
+		           		cabData[currCabId].F9 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F9 = false;
 		           	if ((readChar & FUNC_H_F10) > 0)
-		           		func.append(" 10");
+		           		cabData[currCabId].F10 = true;
 		        	else
-		        		func.append(" - ");
+		        		cabData[currCabId].F10 = false;
 		          	if ((readChar & FUNC_H_F11) > 0)
-		          		func.append(" 11");
+		          		cabData[currCabId].F11 = true;
 		        	else
-		        		func.append(" - ");
+		        		cabData[currCabId].F11 = false;
 		          	if ((readChar & FUNC_H_F12) > 0)
-		          		func.append(" 12");
+		          		cabData[currCabId].F12 = true;
 		        	else
-		        		func.append(" - ");
+		        		cabData[currCabId].F12 = false;
 
 		          	// get the functions 13-20 values
 		        	readCabMemory1(currCabId, CAB_FUNC_13_20);
@@ -624,37 +641,37 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 		        	}
 		        	cabF13Array[currCabId] = recChar;
 		           	if ((recChar & FUNC_H_F13) > 0)
-		           		func.append(" 13");
+		           		cabData[currCabId].F13 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F13 = false;
 		           	if ((recChar & FUNC_H_F14) > 0)
-		           		func.append(" 14");
+		           		cabData[currCabId].F14 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F14 = false;
 		           	if ((recChar & FUNC_H_F15) > 0)
-		           		func.append(" 15");
+		           		cabData[currCabId].F15 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F15 = false;
 		           	if ((recChar & FUNC_H_F16) > 0)
-		           		func.append(" 16");
+		           		cabData[currCabId].F16 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F16 = false;
 		           	if ((recChar & FUNC_H_F17) > 0)
-		           		func.append(" 17");
+		           		cabData[currCabId].F17 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F17 = false;
 		           	if ((recChar & FUNC_H_F18) > 0)
-		           		func.append(" 18");
+		           		cabData[currCabId].F18 = true;
 		        	else
-		        		func.append(" - ");
+		        		cabData[currCabId].F18 = false;
 		          	if ((recChar & FUNC_H_F19) > 0)
-		          		func.append(" 19");
+		          		cabData[currCabId].F19 = true;
 		        	else
-		        		func.append(" - ");
+		        		cabData[currCabId].F19 = false;
 		          	if ((recChar & FUNC_H_F20) > 0)
-		          		func.append(" 20");
+		          		cabData[currCabId].F20 = true;
 		        	else
-		        		func.append(" - ");
+		        		cabData[currCabId].F20 = false;
 
 		          	// get the functions 13-20 values
 		        	readCabMemory1(currCabId, CAB_FUNC_21_28);
@@ -666,40 +683,38 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 		        	}
 		        	cabF21Array[currCabId] = recChar;
 		           	if ((recChar & FUNC_H_F21) > 0)
-		           		func.append(" 21");
+		           		cabData[currCabId].F21 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F21 = false;
 		           	if ((recChar & FUNC_H_F22) > 0)
-		           		func.append(" 22");
+		           		cabData[currCabId].F22 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F22 = false;
 		           	if ((recChar & FUNC_H_F23) > 0)
-		           		func.append(" 23");
+		           		cabData[currCabId].F23 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F23 = false;
 		           	if ((recChar & FUNC_H_F24) > 0)
-		           		func.append(" 24");
+		           		cabData[currCabId].F24 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F24 = false;
 		           	if ((recChar & FUNC_H_F25) > 0)
-		           		func.append(" 25");
+		           		cabData[currCabId].F25 = true;
 		        	else
-		        		func.append(" -");
+		        		cabData[currCabId].F25 = false;
 		           	if ((recChar & FUNC_H_F26) > 0)
-		           		func.append(" 26");
+		           		cabData[currCabId].F26 = true;
 		        	else
-		        		func.append(" - ");
+		        		cabData[currCabId].F26 = false;
 		          	if ((recChar & FUNC_H_F27) > 0)
-		          		func.append(" 27");
+		          		cabData[currCabId].F27 = true;
 		        	else
-		        		func.append(" - ");
+		        		cabData[currCabId].F27 = false;
 		          	if ((recChar & FUNC_H_F28) > 0)
-		          		func.append(" 28");
+		          		cabData[currCabId].F28 = true;
 		        	else
-		        		func.append(" - ");
+		        		cabData[currCabId].F28 = false;
 		        	
-		          	functions.setText(func.toString());
-		          	
 		          	// get the display values
 		        	readCabMemory16(currCabId, CAB_LINE_1);
 		        	if (!waitNce())
@@ -719,7 +734,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 			        	}
 		        		debug1.append(" " + recChars[i]);
 		        	}
-		        	line1.setText(text1.toString());
+		        	cabData[currCabId].text1 = text1.toString();
 		        	if (log.isDebugEnabled()) log.debug("TextLine1Debug: " + debug1);
 		        	
 		        	readCabMemory16(currCabId, CAB_LINE_2);
@@ -740,60 +755,64 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 			        	}
 		        		debug2.append(" " + recChars[i]);
 		        	}
-		        	line2.setText(text2.toString());
+		        	cabData[currCabId].text2 = text2.toString();
 		        	if (log.isDebugEnabled()) log.debug("TextLine2Debug: " + debug2);
 		        	
+		        	Calendar now = Calendar.getInstance();
 		          	if (foundChange > 0 || cabLastChangeArray[currCabId] == null) {
-		            	cabLastChangeArray[currCabId] = Calendar.getInstance();
+		            	cabLastChangeArray[currCabId] = now;
+			          	StringBuilder txt = new StringBuilder();
+			          	int h = cabLastChangeArray[currCabId].get(Calendar.HOUR_OF_DAY);
+			          	int m = cabLastChangeArray[currCabId].get(Calendar.MINUTE);
+			          	int s = cabLastChangeArray[currCabId].get(Calendar.SECOND);
+			          	if (h < 10) {
+			          		txt.append("0");
+			          	}
+			            txt.append(h);
+			            txt.append(":");
+			            if (m < 10) {
+			            	txt.append("0");
+			            }
+			            txt.append(m);
+			            txt.append(":");
+			            if (s < 10) {
+			            	txt.append("0");
+			            }
+			            txt.append(s);
+			            cabData[currCabId].lastChange = txt.toString();
 		            }
 	          	}
-	          	
-	          	StringBuilder txt = new StringBuilder();
-	          	int h = cabLastChangeArray[currCabId].get(Calendar.HOUR_OF_DAY);
-	          	int m = cabLastChangeArray[currCabId].get(Calendar.MINUTE);
-	          	int s = cabLastChangeArray[currCabId].get(Calendar.SECOND);
-	          	if (h < 10) {
-	          		txt.append("0");
-	          	}
-	            txt.append(h);
-	            txt.append(":");
-	            if (m < 10) {
-	            	txt.append("0");
-	            }
-	            txt.append(m);
-	            txt.append(":");
-	            if (s < 10) {
-	            	txt.append("0");
-	            }
-	            txt.append(s);
-	            lastUsed.setText(txt.toString());
            	}
         }
  
-    	cabsPane.setVisible(true);
-    	cabsPane.repaint();
-    	textStatus.setText(MessageFormat.format(rb.getString("FoundCabs"), new Object[]{numberOfCabs}));
+        textStatus.setText(rb.getString("StatusReadingDone"));
+    	this.setVisible(true);
+    	this.repaint();
     }
     
     // puts the thread to sleep while we wait for the read CS memory to complete
     private boolean waitNce(){
     	int count = 100;
-    	log.debug("going to sleep");
+    	if (log.isDebugEnabled()) {
+    		log.debug("Going to sleep");
+    	}
        	while (waiting > 0){
        		synchronized (this) {
-				try {
-					wait(100);
-				} catch (InterruptedException e) {
-				    
-				}
-			}
+	    		try{
+	    			wait(100);
+	    		} catch (InterruptedException e){
+	    			//nothing to see here, move along
+	    		}
+       		}
     		count--;
     		if (count < 0){
     			textStatus.setText("Error");
     			return false;
     		}
     	}
-       	log.debug("awake!");
+    	if (log.isDebugEnabled()) {
+    		log.debug("awake!");
+    	}
        	return true;
     }
     
@@ -898,7 +917,358 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 			}
 		});
 	}
-   
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceShowCabPanel.class.getName());	
+
+    private void addCheckBoxAction(JCheckBox b) {
+		b.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				checkBoxActionPerformed(e);
+			}
+		});
+	}
+
+    void setColumnToHoldButton(JTable table, int column) {
+        TableColumnModel tcm = table.getColumnModel();
+        // install the button renderers & editors in this column
+        ButtonRenderer buttonRenderer = new ButtonRenderer();
+        tcm.getColumn(column).setCellRenderer(buttonRenderer);
+        TableCellEditor buttonEditor = new ButtonEditor(new JButton(rb.getString("ButtonPurgeCab")));
+        tcm.getColumn(column).setCellEditor(buttonEditor);
+        // ensure the table rows, columns have enough room for buttons
+        table.setRowHeight(new JButton("  " + cabModel.getValueAt(1, column)).getPreferredSize().height);
+        table.getColumnModel().getColumn(column)
+                        .setPreferredWidth(new JButton(rb.getString("ButtonPurgeCab")).getPreferredSize().width + 1);
+    }
+
+    public void dispose() {
+        cabModel = null;
+        cabData = null;
+        super.dispose();
+    }	
+    
+	class nceCabTableModel extends AbstractTableModel {
+				
+		dataRow[] cabData;
+	
+		nceCabTableModel(dataRow[] cabDataPtr) {
+			this.cabData = cabDataPtr;
+		}
+		
+	    private String[] columnNames = {
+			rb.getString("ColHeaderCabId"),
+			rb.getString("ColHeaderType"),
+			rb.getString("ColHeaderPurge"),
+			rb.getString("ColHeaderLoco"),
+			rb.getString("ColHeaderSpeed"),
+			rb.getString("ColHeaderDir"),
+			rb.getString("ColHeaderMode"),
+			rb.getString("ColHeaderConsist"),
+			rb.getString("ColHeaderF0"),
+			rb.getString("ColHeaderF1"),
+			rb.getString("ColHeaderF2"),
+			rb.getString("ColHeaderF3"),
+			rb.getString("ColHeaderF4"),
+			rb.getString("ColHeaderF5"),
+			rb.getString("ColHeaderF6"),
+			rb.getString("ColHeaderF7"),
+			rb.getString("ColHeaderF8"),
+			rb.getString("ColHeaderF9"),
+			rb.getString("ColHeaderText"),
+			rb.getString("ColHeaderLastUsed")
+	    };
+	
+	    private boolean showAllCabs = false;
+	    private boolean showAllFunctions = true;
+	    private boolean showCabDisplay = true;
+	    
+	    public int getColumnCount() {
+	        return columnNames.length;
+	    }
+	
+	    public int getRowCount() {
+			int activeRows = 0;
+	    	if (!getShowAllCabs()) {
+	    		for (int i = 1; i < cabData.length; i++) {
+	    			if ((NceShowCabPanel.cabFlag1Array[i] & NceShowCabPanel.FLAGS1_MASK_CABISACTIVE) == NceShowCabPanel.FLAGS1_CABISACTIVE) {
+	    				activeRows++;
+	    			}
+	    		}
+	    	} else {
+	    		activeRows = cabData.length;
+	    	}
+	        return activeRows * 3;
+	    }
+	    
+	    /** 
+	     * Return cabId for row number
+	     */
+	    protected int getCabIdForRow(int row) {
+	    	int activeRows = -1;
+	    	if (!getShowAllCabs()) {
+	    		for (int i = 1; i < cabData.length; i++) {
+	    			if ((NceShowCabPanel.cabFlag1Array[i] & NceShowCabPanel.FLAGS1_MASK_CABISACTIVE) == NceShowCabPanel.FLAGS1_CABISACTIVE) {
+	    				activeRows++;
+	    				if (row == activeRows) {
+	    					return i;
+	    				}
+	    			}
+	    		}
+	    	}
+	    	return row;
+	    }
+	
+	    public String getColumnName(int col) {
+	        return columnNames[col];
+	    }
+	
+	    public Object getValueAt(int row, int col) {
+	    	int dRow = getCabIdForRow(row / 3);
+	    	int sRow = row % 3;
+	    	dataRow r = cabData[dRow];
+	    	boolean activeCab = (NceShowCabPanel.cabFlag1Array[dRow] & NceShowCabPanel.FLAGS1_MASK_CABISACTIVE) == NceShowCabPanel.FLAGS1_CABISACTIVE;
+	    	if (r == null) {
+	    		return null;
+	    	}
+	    	if (!activeCab && (col != 0)) {
+	    		return null;
+	    	}
+	    	switch (col) {
+	    	case 0:
+	    		if (sRow == 0) {
+	        		return r.cab;
+	    		} else {
+	    			return null;
+	    		}
+	    	case 1:
+	    		if (sRow == 0) {
+	        		return r.type;
+	    		} else {
+	    			return null;
+	    		}
+	    	case 2:
+	    		if (col == 0) {
+	    			return null;
+	    		}
+	    		if (sRow == 0) {
+	    			return rb.getString("ButtonPurgeCab");
+	    		} else {
+	    			return null;
+	    		}
+	    	case 3:
+	    		if (sRow == 0) {
+	        		return r.loco;
+	    		} else {
+	    			return null;
+	    		}
+	    	case 4:
+	    		if (sRow == 0) {
+	        		return r.speed;
+	    		} else {
+	    			return null;
+	    		}
+	    	case 5:
+	    		if (sRow == 0) {
+	        		return r.dir;
+	    		} else {
+	    			return null;
+	    		}
+	    	case 6:
+	    		if (sRow == 0) {
+	        		return r.mode;
+	    		} else {
+	    			return null;
+	    		}
+	    	case 7:
+	    		if (sRow == 0) {
+	        		return r.consist;
+	    		} else {
+	    			return null;
+	    		}
+	    	case 8:
+	    		switch (sRow) {
+	    		case 0:
+	        		return r.F0;
+	    		case 1:
+	    			return r.F10;
+	    		case 2:
+	    			return r.F20;
+	    		}
+	    	case 9:
+	    		switch (sRow) {
+	    		case 0:
+	        		return r.F1;
+	    		case 1:
+	    			return r.F11;
+	    		case 2:
+	    			return r.F21;
+	    		}
+	    	case 10:
+	    		switch (sRow) {
+	    		case 0:
+	        		return r.F2;
+	    		case 1:
+	    			return r.F12;
+	    		case 2:
+	    			return r.F22;
+	    		}
+	    	case 11:
+	    		switch (sRow) {
+	    		case 0:
+	        		return r.F3;
+	    		case 1:
+	    			return r.F13;
+	    		case 2:
+	    			return r.F23;
+	    		}
+	    	case 12:
+	    		switch (sRow) {
+	    		case 0:
+	        		return r.F4;
+	    		case 1:
+	    			return r.F14;
+	    		case 2:
+	    			return r.F24;
+	    		}
+	    	case 13:
+	    		switch (sRow) {
+	    		case 0:
+	        		return r.F5;
+	    		case 1:
+	    			return r.F15;
+	    		case 2:
+	    			return r.F25;
+	    		}
+	    	case 14:
+	    		switch (sRow) {
+	    		case 0:
+	        		return r.F6;
+	    		case 1:
+	    			return r.F16;
+	    		case 2:
+	    			return r.F26;
+	    		}
+	    	case 15:
+	    		switch (sRow) {
+	    		case 0:
+	        		return r.F7;
+	    		case 1:
+	    			return r.F17;
+	    		case 2:
+	    			return r.F27;
+	    		}
+	    	case 16:
+	    		switch (sRow) {
+	    		case 0:
+	        		return r.F8;
+	    		case 1:
+	    			return r.F18;
+	    		case 2:
+	    			return r.F28;
+	    		}
+	    	case 17:
+	    		switch (sRow) {
+	    		case 0:
+	        		return r.F9;
+	    		case 1:
+	    			return r.F19;
+	    		case 2:
+	    			return null;
+	    		}
+	    	case 18:
+	    		switch (sRow) {
+	    		case 0:
+	    			return r.text1;
+	    		case 1:
+	        		return r.text2;
+	    		case 2:
+	    			return null;
+	    		}
+	    	case 19:
+	    		if (sRow == 0) {
+	        		return r.lastChange;
+	    		} else {
+	    			return null;
+	    		}
+	    	}
+	    	return "";
+	    }
+	
+	    public void setValueAt(Object value, int row, int col) {
+	    	int dRow = getCabIdForRow(row / 3);
+	    	if (col == 2) {
+	    		purgeCab(dRow);
+	    	}
+	    }
+	    
+	    @SuppressWarnings("unchecked")
+		public Class getColumnClass(int c) {
+	    	if (c == 0 || c == 3  || c == 5) {
+	    		return Integer.class;
+	    	} else if (c == 1 || c == 4 || (c >= 6 && c <= 7) || (c >= 18 && c <= 19)){
+	    		return String.class;
+	    	} else if (c >= 8 && c <= 17) {
+	    		return Boolean.class;
+	    	} else if (c == 2) {
+	    		return JButton.class;
+	    	} else {
+	    		return null;
+	    	}
+	    }
+	    
+	    public int getPreferredWidth(int col) {
+	    	int width = 0;
+			if (col == 0) {
+				width = new JTextField(3).getPreferredSize().width;
+			} else if (col <= 1){
+				width = new JTextField(4).getPreferredSize().width;
+			} else if (col <= 2){
+				width = new JButton(rb.getString("ButtonPurgeCab")).getPreferredSize().width;
+			} else if (col <= 7){
+				width = new JTextField(3).getPreferredSize().width;
+			} else if (col <= 17){
+				width = new JCheckBox().getPreferredSize().width;
+			} else if (col <= 18){
+				width = new JTextField(9).getPreferredSize().width;
+			} else if (col <= 19){
+				width = new JTextField(5).getPreferredSize().width;
+			} else {
+				width = 0;
+			}
+			return width;
+		}
+	    
+	    public boolean isCellEditable(int row, int col) {
+	        if (col == 2) {
+	            return true;
+	        } else {
+	            return false;
+	        }
+	    }
+	
+		public boolean getShowAllCabs() {
+			return showAllCabs;
+		}
+	
+		public void setShowAllCabs(boolean b) {
+			this.showAllCabs = b;
+		}
+		
+		public boolean getShowAllFunctions() {
+			return showAllFunctions;
+		}
+	
+		public void setshowAllFunctions(boolean showAllFunctions) {
+			this.showAllFunctions = showAllFunctions;
+		}
+	
+		public boolean getShowCabDisplay() {
+			return showCabDisplay;
+		}
+	
+		public void setshowCabDisplay(boolean showCabDisplay) {
+			this.showCabDisplay = showCabDisplay;
+		}
+	}
+
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceShowCabPanel.class.getName());
 }
 
