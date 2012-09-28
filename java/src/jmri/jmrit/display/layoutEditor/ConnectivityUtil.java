@@ -1592,20 +1592,46 @@ public class ConnectivityUtil
 				pType = LayoutEditor.LEVEL_XING_B;
 				break;
 			case LayoutEditor.SLIP_A :
-				tTrack = (TrackSegment)((LevelXing)cNode).getConnectC();
-				pType = LayoutEditor.SLIP_C;
+                if(cNodeState==0){
+                    tTrack = (TrackSegment)((LayoutSlip)cNode).getConnectC();
+                    pType = LayoutEditor.SLIP_C;
+                } else if (cNodeState ==1){
+                    tTrack = (TrackSegment)((LayoutSlip)cNode).getConnectD();
+                    pType = LayoutEditor.SLIP_D;
+                }
 				break;
 			case LayoutEditor.SLIP_B :
-				tTrack = (TrackSegment)((LevelXing)cNode).getConnectD();
-				pType = LayoutEditor.SLIP_D;
+                if(cNodeState==0){
+                    tTrack = (TrackSegment)((LayoutSlip)cNode).getConnectD();
+                    pType = LayoutEditor.SLIP_D;
+                } else if (cNodeState==1 && (((LayoutSlip)cNode).getTurnoutType()==LayoutTurnout.DOUBLE_SLIP)){
+                    tTrack = (TrackSegment)((LayoutSlip)cNode).getConnectC();
+                    pType = LayoutEditor.SLIP_C;
+                } else {
+                    log.error("Request to follow not allowed on a single slip");
+                    return null;
+                }
 				break;
 			case LayoutEditor.SLIP_C:
-				tTrack = (TrackSegment)((LevelXing)cNode).getConnectA();
-				pType = LayoutEditor.SLIP_A;
+                if(cNodeState==0){
+                    tTrack = (TrackSegment)((LayoutSlip)cNode).getConnectA();
+                    pType = LayoutEditor.SLIP_A;
+                } else if (cNodeState==1 && (((LayoutSlip)cNode).getTurnoutType()==LayoutTurnout.DOUBLE_SLIP)){
+                    tTrack = (TrackSegment)((LayoutSlip)cNode).getConnectB();
+                    pType = LayoutEditor.SLIP_B;
+                } else {
+                    log.error("Request to follow not allowed on a single slip");
+                    return null;
+                }
 				break;
 			case LayoutEditor.SLIP_D:
-				tTrack = (TrackSegment)((LevelXing)cNode).getConnectB();
-				pType = LayoutEditor.SLIP_B;
+                if(cNodeState==0){
+                    tTrack = (TrackSegment)((LayoutSlip)cNode).getConnectB();
+                    pType = LayoutEditor.SLIP_B;
+                } else if (cNodeState ==1){
+                    tTrack = (TrackSegment)((LayoutSlip)cNode).getConnectA();
+                    pType = LayoutEditor.SLIP_A;
+                }
 				break;
 			default:
 				log.error("Unable to initiate 'getTrackNode'.  Probably bad input Track Node.");
@@ -1767,7 +1793,7 @@ public class ConnectivityUtil
                 break;
             case LayoutEditor.SLIP_B:
                 ls = (LayoutSlip)node.getNode();
-                 tBlock = ((TrackSegment)ls.getConnectD()).getLayoutBlock().getBlock();
+                tBlock = ((TrackSegment)ls.getConnectD()).getLayoutBlock().getBlock();
                 if(ls.getTurnoutType()==LayoutSlip.DOUBLE_SLIP){
                     //Double slip
                     if ( (tBlock!=node.getTrackSegment().getLayoutBlock().getBlock()) &&
