@@ -2,14 +2,12 @@ package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
 import jmri.configurexml.*;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.controlPanelEditor.shape.*;
 
 import java.awt.Color;
 
 import org.jdom.Attribute;
-import org.jdom.DataConversionException;
 import org.jdom.Element;
 
 /**

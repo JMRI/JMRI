@@ -5,11 +5,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.jmrix.srcp.parser.SRCPClientParser;
-import jmri.jmrix.srcp.parser.ParseException;
-
-import java.io.StringReader;
-
 /**
  * SRCPCommandStationTest.java
  *

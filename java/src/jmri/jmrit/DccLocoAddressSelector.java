@@ -8,14 +8,11 @@ import javax.swing.BoxLayout;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.InstanceManager;
-import jmri.ThrottleManager;
-
 import java.util.ResourceBundle;
 
 import java.awt.Font;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import jmri.jmrix.JmrixConfigPane;
 
 /**
  * Tool for selecting short/long address for DCC throttles.

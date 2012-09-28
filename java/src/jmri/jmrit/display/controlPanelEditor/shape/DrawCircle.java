@@ -1,12 +1,9 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
-
 import javax.swing.*;
 
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;

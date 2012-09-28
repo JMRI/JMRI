@@ -2,14 +2,7 @@
 
 package jmri.jmrix.openlcb.swing.hub;
 
-import java.awt.*;
-import java.awt.event.*;
-
 import javax.swing.*;
-import javax.swing.event.*;
-
-import jmri.util.JmriJFrame;
-
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.swing.CanPanelInterface;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -17,9 +10,6 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.adapters.gridconnect.GridConnectMessage;
 import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
-
-import org.openlcb.MimicNodeStore;
-import org.openlcb.Connection;
 
 import org.openlcb.hub.*;
 

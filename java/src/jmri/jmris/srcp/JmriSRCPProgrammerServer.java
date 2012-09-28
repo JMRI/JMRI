@@ -4,7 +4,6 @@ package jmri.jmris.srcp;
 
 import java.io.*;
 
-import jmri.Programmer;
 import jmri.ProgListener;
 
 import jmri.jmris.AbstractProgrammerServer;

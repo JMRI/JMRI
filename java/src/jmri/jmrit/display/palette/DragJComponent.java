@@ -10,8 +10,6 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.dnd.*;
 
-import jmri.jmrit.display.Editor;
-
 /**
  * Gives a JComponent the capability to Drag and Drop 
  * <P>

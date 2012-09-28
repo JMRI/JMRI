@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ResourceBundle;
 
 /**
  * Abstract implementation of a ThrottleManager.

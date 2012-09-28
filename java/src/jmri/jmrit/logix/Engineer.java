@@ -4,7 +4,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import jmri.DccThrottle;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.Sensor;
 
 /**

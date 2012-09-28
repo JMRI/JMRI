@@ -3,11 +3,8 @@
 package jmri.jmris;
 
 import java.io.*;
-import java.util.ArrayList;
-
 import jmri.InstanceManager;
 import jmri.Programmer;
-import jmri.ProgListener;
 
 /**
  * Abstract interface between the a JMRI Programmer and a 
