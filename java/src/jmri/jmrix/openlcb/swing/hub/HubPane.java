@@ -67,10 +67,10 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         add(new JLabel("Port: "+hub.getPort()));
         add(label);
         
-        startHubThread();
+        startHubThread(hub.getPort());
     }
      
-    void startHubThread() {
+    void startHubThread(int port) {
         Thread t = new Thread(){
             public void run() {
                 hub.start();
@@ -102,8 +102,14 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         });
         
         t.start();
+        
+        advertise(port);
     }
        
+    void advertise(int port) {
+        jmri.util.zeroconf.ZeroConfService.create("_openlcb-can._tcp.local.", port).publish();
+    }
+    
     public String getTitle() {
         return "OpenLCB Hub Control";
     }
