@@ -194,6 +194,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_Locations" url="package/jmri/jmrit/operations/Operations.shtml#Locations"/>
 
+<mapID target="html.web.RosterServlet" url="html/web/RosterServlet.shtml"/>
+
 <mapID target="package.jmri.jmrix.rps.swing.soundset.SoundSetFrame" url="package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml"/>
 
 <mapID target="package.jmri.jmrix.nce.packetgen.NcePacketGenFrame" url="package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml"/>
@@ -694,6 +696,8 @@
 
 <mapID target="manual.DP3_2-14_manual.dp3_Main_file_print_entry" url="manual/DP3_2-14_manual/dp3_Main_file_print_entry.shtml"/>
 
+<mapID target="html.web.PanelServlet" url="html/web/PanelServlet.shtml"/>
+
 <mapID target="manual.3-0_DecoderPro3.Comp_PrintData_b" url="manual/3-0_DecoderPro3/Comp_PrintData_b.shtml"/>
 
 <mapID target="manual.3-0_DecoderPro3.Comp_PrintData_a" url="manual/3-0_DecoderPro3/Comp_PrintData_a.shtml"/>
@@ -816,9 +820,9 @@
 
 <mapID target="manual.JMRI_2-12_Manual.Main_XpressNet_LZV100CM" url="manual/JMRI_2-12_Manual/Main_XpressNet.shtml#LZV100CM"/>
 
-<mapID target="html.hardware.maple.index" url="html/hardware/maple/index.shtml"/>
-
 <mapID target="Acknowledgements_W" url="Acknowledgements.shtml#W"/>
+
+<mapID target="html.hardware.maple.index" url="html/hardware/maple/index.shtml"/>
 
 <mapID target="Acknowledgements_V" url="Acknowledgements.shtml#V"/>
 
@@ -1468,9 +1472,9 @@
 
 <mapID target="manual.JMRI_2-12_Manual.Main_XpressNet_InfoDialog" url="manual/JMRI_2-12_Manual/Main_XpressNet.shtml#InfoDialog"/>
 
-<mapID target="manual.3-0_DecoderPro.Main_Panels_PanelEditor" url="manual/3-0_DecoderPro/Main_Panels.shtml#PanelEditor"/>
-
 <mapID target="manual.JMRI_2-14_manual.Main_LocoNet_Packet" url="manual/JMRI_2-14_manual/Main_LocoNet.shtml#Packet"/>
+
+<mapID target="manual.3-0_DecoderPro.Main_Panels_PanelEditor" url="manual/3-0_DecoderPro/Main_Panels.shtml#PanelEditor"/>
 
 <mapID target="manual.JMRI_2-14_manual.Programmer_Start_Setting Up" url="manual/JMRI_2-14_manual/Programmer_Start.shtml#Setting Up"/>
 
@@ -1644,9 +1648,9 @@
 
 <mapID target="manual.3-0_DecoderPro.Ops_ImportCarsFile" url="manual/3-0_DecoderPro/Ops_ImportCarsFile.shtml"/>
 
-<mapID target="manual.DP3_2-14_manual.Throttle_Top" url="manual/DP3_2-14_manual/Throttle.shtml#Top"/>
-
 <mapID target="manual.JMRI_2-14_manual.Main_LocoNet_CommandStation" url="manual/JMRI_2-14_manual/Main_LocoNet.shtml#CommandStation"/>
+
+<mapID target="manual.DP3_2-14_manual.Throttle_Top" url="manual/DP3_2-14_manual/Throttle.shtml#Top"/>
 
 <mapID target="manual.JMRI_2-14_manual.Start_DCC_Hardware" url="manual/JMRI_2-14_manual/Start_DCC_Hardware.shtml"/>
 
@@ -1975,6 +1979,8 @@
 <mapID target="package.jmri.jmrit.display.SetSignalsAtTurnout" url="package/jmri/jmrit/display/SetSignalsAtTurnout.shtml"/>
 
 <mapID target="manual.3-0_DecoderPro3.Main_EasyDCC_Top" url="manual/3-0_DecoderPro3/Main_EasyDCC.shtml#Top"/>
+
+<mapID target="html.web.showPanelHelp" url="html/web/showPanelHelp.shtml"/>
 
 <mapID target="manual.JMRI_2-12_Manual.Main_LocoNet_BDL16Programmer" url="manual/JMRI_2-12_Manual/Main_LocoNet.shtml#BDL16Programmer"/>
 
@@ -2659,8 +2665,6 @@
 <mapID target="manual.DP3_2-14_manual.Start_DCC_Systems" url="manual/DP3_2-14_manual/Start_DCC_Systems.shtml"/>
 
 <mapID target="manual.JMRI_2-14_manual.Main_NCE_Consist" url="manual/JMRI_2-14_manual/Main_NCE.shtml#Consist"/>
-
-<mapID target="html.web.MiniServer" url="html/web/MiniServer.shtml"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter1_ThrottlesSub" url="html/tools/throttle/ThrottleChapter1.shtml#ThrottlesSub"/>
 
@@ -3360,9 +3364,9 @@
 
 <mapID target="package.jmri.jmrit.beantable.SignalAddEdit" url="package/jmri/jmrit/beantable/SignalAddEdit.shtml"/>
 
-<mapID target="manual.3-0_DecoderPro3.Main_LocoNet_BDL16" url="manual/3-0_DecoderPro3/Main_LocoNet.shtml#BDL16"/>
-
 <mapID target="html.hardware.loconet.PR2" url="html/hardware/loconet/PR2.shtml"/>
+
+<mapID target="manual.3-0_DecoderPro3.Main_LocoNet_BDL16" url="manual/3-0_DecoderPro3/Main_LocoNet.shtml#BDL16"/>
 
 <mapID target="manual.JMRI_2-14_manual.Dcode_Format" url="manual/JMRI_2-14_manual/Dcode_Format.shtml"/>
 
@@ -3475,6 +3479,8 @@
 <mapID target="package.jmri.jmrit.operations.Operations_BuildOptions" url="package/jmri/jmrit/operations/Operations.shtml#BuildOptions"/>
 
 <mapID target="manual.DP3_2-14_manual.Start_Preferences_Throttle" url="manual/DP3_2-14_manual/Start_Preferences.shtml#Throttle"/>
+
+<mapID target="html.web.WebServer" url="html/web/WebServer.shtml"/>
 
 <mapID target="manual.JMRI_2-14_manual.Dcode_Start" url="manual/JMRI_2-14_manual/Dcode_Start.shtml"/>
 
@@ -4186,11 +4192,11 @@
 
 <mapID target="manual.DP3_2-14_manual.images.sflogo" url="manual/DP3_2-14_manual/images/sflogo.png"/>
 
+<mapID target="manual.DP3_2-14_manual.images.btn_lanch_throttle" url="manual/DP3_2-14_manual/images/btn_lanch_throttle.png"/>
+
 <mapID target="html.tools.signaling.ldt.output5_html_5402c321" url="html/tools/signaling/ldt/output5_html_5402c321.png"/>
 
 <mapID target="html.tools.signaling.ldt.output2_html_cf50511" url="html/tools/signaling/ldt/output2_html_cf50511.png"/>
-
-<mapID target="manual.DP3_2-14_manual.images.btn_lanch_throttle" url="manual/DP3_2-14_manual/images/btn_lanch_throttle.png"/>
 
 <mapID target="images.tracksegments.TranTOc" url="images/tracksegments/TranTOc.gif"/>
 
