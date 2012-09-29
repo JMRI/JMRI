@@ -41,16 +41,9 @@ The help files are located in the "help" directory
 within the JMRI distribution directory. 
 
 <p>
-The master copy of this is stored in CVS as the "help" 
-module.  This means to get your own local copy, just do:
-<code><PRE>
-cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
-cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all 
-</PRE></code>
-(If asked for a password, just hit return;
-see our 
-"<a href="getcode.shtml">getting the code</a>" page for more information
-on getting JMRI content with CVS)
+The master copy of this is stored in SVN as the "help" 
+module.  This means to get your own local copy, just follow the steps on the  
+"<a href="getcode.shtml">getting the code</a>" page.
 
 <P>
 Within that, all the English-language files are located
@@ -170,48 +163,42 @@ JavaHelp uses various XML files to
 control how the table of contents and index are displayed.
 We create those with
 <A HREF="http://jhelpdev.sourceforge.net/">JHelpDev</a>.
-Please don't edit them manually.
+Please don't edit them manually.  
 
 <P>
-To do this:
+JHelpDev is now included in the JMRI dist.  To use the tool:
 <OL>
-<LI>You have to put some files in your help/en directory 
-Download 
-<A HREF="http://downloads.sourceforge.net/jmri/JHelpDevTool.3.zip?download">this .zip archive</a>
-and put in in your project's help/en directory, then expand it.
-It should create a jhelpdev.jar file, and a lib directory 
-containing additional .jar files.  
-These files don't show up in CVS, for various reasons.
+<li>Make sure you've run "update" from SVN before getting started.</li>
+<LI>Start the tool by clicking on the jhelpdev.jar file.</LI>
 
-<li>It's important that you update the configuration files
-from CVS before running the tool.  The configuration info is 
-complicated, and a CVS merge may not go well later.
-<br/>
-<code>cvs -q update Map.jhm *.xml</code>
-
-<LI>Start the tool by clicking on the jhelpdev.jar file.
-
-<LI>Once the window appears, select "Open Project" under the "File" menu.
+<LI>Once the window appears, select "Open Project" under the "File" menu.</LI>
 
 <LI>Navigate to the "help" directory in your checked out copy of the code, 
 then the "en" directory within that, then select the "JHelpDev.xml" file 
-and click "Open".
+and click "Open".</LI>
 
-<LI>Click the "Create All" button to recreate the maps, index, etc.
+<LI>Click the "Create All" button to recreate the maps, index, etc.</LI>
 
 <li>Then, back on the command line and in the help/en directory, invoke
-"ant" to create the web index and table of contents pages.
+"ant" to create the web index and table of contents pages.  (Or if using 
+Eclipse, right-click on the help/en/build.xml file and select Run As Ant Build.)</li>
 </OL>
 
 <p>
-The various control files that JavaHelp uses are stored in CVS, 
-so once you've done this CVS will show them as modified.  
+The various control files that JavaHelp uses are stored in SVN, 
+so once you've done this SVN will show them as modified.  
 Please check them in when you check in new help files so other 
 people don't have to recreate those control files for themselves.
 <P>
 You can also use the tool to add them to the table of contents, etc, if you'd like. 
 There's more info on how to do that on the
 <a href="http://jhelpdev.sourceforge.net/">JHelpDev web site</a>.
+
+
+<h2>Updating the JMRI.ORG site</h2>
+Changes to Help pages which are checked into svn should show up automatically on the JMRI.ORG
+site after a short while.  If this does not work, you can visit <a href="http://jmri.org/updateSVN.php" target=_new>[this page]</a>
+to push the update along. 
 
 <!--#include virtual="/Footer" -->
 
