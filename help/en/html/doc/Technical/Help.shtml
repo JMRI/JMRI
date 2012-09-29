@@ -197,7 +197,7 @@ There's more info on how to do that on the
 
 <h2>Updating the JMRI.ORG site</h2>
 Changes to Help pages which are checked into svn should show up automatically on the JMRI.ORG
-site after a short while.  If this does not work, you can visit <a href="http://jmri.org/updateSVN.php" target=_new>[this page]</a>
+site after a short while.  If this does not work, you can visit <a href="http://jmri.org/updateSVN.php" target=_new  rel="nofollow">[this page]</a>
 to push the update along. 
 
 <!--#include virtual="/Footer" -->
