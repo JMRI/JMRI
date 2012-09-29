@@ -31,14 +31,23 @@
 	and which locomotive functions are active.
 </P>
 <P>
+    The display has three lines for each cab.
+    The functions display as check marks in three rows, F0 through F9 on the first row,
+    F10 through F19 on the second row and F20 through F28 on the third row.
+    The two lines of the cab display text are also shown.
+</P>
+<P>
 	The monitor will read the current cab information when the tool is first selected.
 	It will then update the list when the "Refresh" button is pressed or if a cab address
-	is purged.
+	is purged. It does take a number of seconds to request all the information for an
+	active cab. On layouts with lots of active cabs it will take a number of seconds
+	to update.
+</P> 
 <P>
 	To help manage cabs on very large layouts the display will show the last time a cab
 	was seen as active and changed settings.
-	Using that you can then enter the cab id and use the "Purge" button to mark
-	the cab address as in-active.
+	Hitting the "Purge" button on a line for a cab address will mark it as in-active
+	and remove it from the active list.
 	This is expected to improve the keystroke response on the remaining cabs
 	as the command station will not have to timeout waiting for a response from
 	the purged cab address.
