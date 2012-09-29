@@ -67,8 +67,8 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         int num = Integer.parseInt(value);
 
         // if DCC long and can't be, or short and can't be, fix
-        if (!canBeShortAddress(num)) protocol = LocoAddress.Protocol.DCC_LONG;
-        if (!canBeLongAddress(num)) protocol = LocoAddress.Protocol.DCC_SHORT;
+        if ((LocoAddress.Protocol.DCC == protocol || LocoAddress.Protocol.DCC_SHORT == protocol) && !canBeShortAddress(num)) protocol = LocoAddress.Protocol.DCC_LONG;
+        if ((LocoAddress.Protocol.DCC == protocol || LocoAddress.Protocol.DCC_LONG == protocol) && !canBeLongAddress(num)) protocol = LocoAddress.Protocol.DCC_SHORT;
 
         // if still ambiguous, prefer short
         if (protocol == LocoAddress.Protocol.DCC) protocol = LocoAddress.Protocol.DCC_SHORT;
