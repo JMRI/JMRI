@@ -29,12 +29,14 @@ public class OpenLcbLocoAddress extends DccLocoAddress {
         if (a==null) return false;
         try {
             OpenLcbLocoAddress other = (OpenLcbLocoAddress) a;
-            if (this.number != other.number) return false;
-            if (this.protocol != other.protocol) return false;
-            return true;
+            return node.equals(other.node);
         } catch (Exception e) { return false; }
     }
 
+    public int hashCode() {
+        return node.hashCode();
+    }
+    
     public NodeID getNode() { return node; }
     
     NodeID node;
