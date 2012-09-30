@@ -46,16 +46,16 @@ continuous integration engine for this.
 Specific results of interest:
 <ul>
 <li><a href="http://builds.jmri.org/jenkins/">Dashboard</a> page that gives one-line status
-<li><a href="http://builds.jmri.org/jenkins/job/Development%20(SVN)/">Development</a> page, 
+<li><a href="http://builds.jmri.org/jenkins/job/Development/">Development</a> page, 
 showing status of the builds done after every series of commits.
 There are also pages of the 
-<a href="http://builds.jmri.org/jenkins/job/Development%20(SVN)/changes">most recent changes<a> and the
-<a href="http://builds.jmri.org/jenkins/job/Development%20(SVN)/lastBuild/">most results<a>.
-<li><a href="http://builds.jmri.org/jenkins/job/FindBugs%20(SVN)/">FindBugs</a> page, 
+<a href="http://builds.jmri.org/jenkins/job/Development/changes">most recent changes<a> and the
+<a href="http://builds.jmri.org/jenkins/job/Development/lastBuild/">most results<a>.
+<li><a href="http://builds.jmri.org/jenkins/job/FindBugs/">FindBugs</a> page, 
 showing status of the more-extensive tests done periodically.
 There are also pages of the 
-<a href="http://builds.jmri.org/jenkins/job/FindBugs%20(SVN)/changes">most recent changes<a> and the
-<a href="http://builds.jmri.org/jenkins/job/FindBugs%20(SVN)/lastBuild/">most recent results<a>.
+<a href="http://builds.jmri.org/jenkins/job/FindBugs/changes">most recent changes<a> and the
+<a href="http://builds.jmri.org/jenkins/job/FindBugs/lastBuild/">most recent results<a>.
 <p>
 For more information on JMRI's use of FindBugs, see the
 <a href="FindBugs.shtml">separate FindBugs page</a>.
