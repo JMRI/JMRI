@@ -246,7 +246,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     synchronized public int getRunState() {
-        if (_waitForClear) {
+        if (_abort) {
+            return Warrant.ABORT;
+        } else if (_waitForClear) {
             return Warrant.WAIT_FOR_CLEAR;
         } else if (_waitForSync) {
             return Warrant.WAIT_FOR_TRAIN;
@@ -254,8 +256,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             return Warrant.WAIT_FOR_SENSOR;
         } else  if (_halt) {
             return Warrant.HALT;
-        } else if (_abort) {
-            return Warrant.ABORT;
         } else if (!_speedType.equals("Normal")) {
             return Warrant.SPEED_RESTRICTED;
         }

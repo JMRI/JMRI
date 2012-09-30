@@ -18,6 +18,8 @@ import jmri.NamedBeanHandle;
  * However, an OBlock can be defined without an occupancy sensor and used to calculate routes.  
  *
  * Additional states are defined to indicate status of the track and trains to control panels.
+ * A jmri.Block has a PropertyChangeListener on the occupancy sensor and the OBlock will pass
+ * state changes of the sensor on to its warrant.
  *
  *<P>
  * Entrances (exits when train moves in opposite direction) to OBlocks have Portals. A
@@ -308,7 +310,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                                           pathName, getDisplayName(), _pathName); 
         }
         _pathName = pathName;
-//        setState(getState() | ALLOCATED);
+//        setState(getState() | ALLOCATED);  DO NOT ALLOCATE
         return null;
     }
 
@@ -509,6 +511,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                                                   _warrant.getDisplayName(), getDisplayName());
             return msg; 
         }
+        pathName = pathName.trim();
         _warrant = warrant;
         OPath path = getPathByName(pathName);
         if (path==null) {
@@ -516,9 +519,12 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             return msg; 
         } else {
             if (_warrant!=null) {
-                if (!pathName.equals(warrant.getRoutePathInBlock(this))) {
-                    msg = java.text.MessageFormat.format(rb.getString("PathNotFound"), pathName, getDisplayName()); 
-                    return msg; 
+            	// Sanity check
+            	String p = warrant.getRoutePathInBlock(this);
+                if (!pathName.equals(p)) {
+                    log.error("path \""+pathName+"\" for block \""+getDisplayName()+
+                    		"\" does not agree with path \""+p+"\" in route of warrant \""+
+                    		warrant.getDisplayName()+"\"."); 
                 }
             }
             _pathName = pathName;

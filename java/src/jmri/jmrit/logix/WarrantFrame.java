@@ -1618,7 +1618,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                                           JOptionPane.WARNING_MESSAGE);
             return;
         }
-    	msg = setupRun();
         if (_throttleCommands==null || _throttleCommands.size()==0)  {
             JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                     rb.getString("NoCommands"),_warrant.getDisplayName()), 
@@ -1627,6 +1626,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             _statusBox.setText(msg);
            return;
         }
+    	msg = setupRun();
     	if (msg!=null) {
             if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(this,
                     java.text.MessageFormat.format(WarrantTableAction.rb.getString("OkToRun"),
@@ -1642,7 +1642,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             _warrant.setTrainName(trainName);
         }
         _warrant.addPropertyChangeListener(this);
-        msg = _warrant.setRunMode(Warrant.MODE_RUN, _locoAddress, _learnThrottle, 
+        msg = _warrant.setRunMode(Warrant.MODE_RUN, _locoAddress, null, 
                                       _throttleCommands, _runBlind.isSelected());
         if (msg!=null) {
             _statusBox.setText(msg);
@@ -1701,8 +1701,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                     } else if (property.equals("blockSkip")) {
                         setThrottleCommand("NoOp", rb.getString("Skip"));
                     } else if (property.equals("abortLearn")) {
-                        _learnThrottle.setSpeedSetting(-0.5F);
-                        _learnThrottle.setSpeedSetting(0.0F);
                         stopRunTrain();
                     }
                     item = java.text.MessageFormat.format(rb.getString("Learning"),
