@@ -34,8 +34,8 @@ package, and provides web access to the
 By default, the JMRI Web Server will send any URL that starts with /xmlio to this servlet.  It will list all 
 known elements of a specified type, accept changes to the value/state of elements, and respond with 
 current value/state of elements.  If sent a list of elements with current values, it will "monitor" for changes
-to any of those elements, returning the new values.
-<p>
+to any of those elements, returning the new values.</p>
+
 Element types fully supported:<ul>
 <li>power</li>
 <li>turnout</li>
@@ -48,9 +48,16 @@ Element types list-only:<ul>
 <li>roster</li>
 <li>frame</li>
 <li>panel</li>
-<li>metadata</li></ul><p>
+<li>metadata</li>
+<li>railroad</li>
+</ul>
+Throttle is a unique case, slightly different syntax, supports read and change, but not list or monitoring:<ul>
+<li>throttle</li>
+</ul>
 There are several sample pages that show how this can be used:
 <dl>
+<dt><a href="http://localhost:12080/index.html">index.html</a>
+<dd>(default JMRI Web Server home page)  This page makes several read-only xmlio requests to populate page title, frame and panel lists.
 <dt><a href="http://localhost:12080/web/request.html">web/request.html</a>
 <dd>Makes a single XML request for all available sensors, and shows their status in a table.
 <dt><a href="http://localhost:12080/web/monitor.html">web/monitor.html</a>
@@ -59,12 +66,13 @@ updating a table when any change.
 <dt><a href="http://localhost:12080/web/throttle.html">web/throttle.html</a>
 <dd>Sends a speed command to a DCC locomotive on the layout when a button is pressed.
 <dt><a href="http://localhost:12080/web/turnoutPanel.html">web/turnoutPanel.html</a>
-<dd>Example of a control panel on a web page.  To use it, configure JMRI to use
-"LocoNet Simulator" (if you don't have a LocoNet connection already; in JMRI
-2.9.7 or later, the demo uses "internal" devices and this is not necessary)
-and create turnouts 1 through 4.
+<dd>Example of a control panel on a web page.
 <dt><a href="http://localhost:12080/web/turnoutPanel.html">web/turnoutMonitor.html</a>
 <dd>More complex turnout table, with buttons to throw and close turnouts.
+<dt><a href="http://localhost:12080/web/JMRI_XMLIO_test.html">web/JMRI_XMLIO_test.html</a> 
+<dd>Useful for sending various commands to xmlio server and viewing the responses.
+<dt><a href="http://localhost:12080/web/showPanel.html">web/showPanel.html</a> and <a href="http://localhost:12080/web/JMRIMobile.html">web/JMRIMobile.html</a> 
+<dd>Both of these tools use the xmlio server for retrieving data from JMRI, sending changes and monitoring for changes to elements.
 </dl>
 
 <p>
@@ -77,8 +85,9 @@ the JMRI developers if you encounter any problems.
 
 <h2>Request Format</h2>
 
-The XML schema is defined in the 
-<a href="http://jmri.org/xml/schema/xmlio.xsd">xmlio.xsd schema document</a>.
+<p>The XML schema is defined in the 
+<a href="http://jmri.org/xml/schema/xmlio.xsd">xmlio.xsd schema document</a>.</p>
+<p>There is also an attribute-based syntax available.  (see status examples below)  The xmlio server responds with the same syntax as the request uses.</p>
 
 <p>Below are some example requests and responses.
 
@@ -131,6 +140,8 @@ the response will only be returned when one or more of the included
 item's state has changed to something different.
 
 <h3>Get all objects of a type</h3>
+
+Request:
 
 <code><pre>
 &lt;xmlio&gt;
@@ -198,6 +209,17 @@ All writes are done before the values are collected for any reads,
 but there is no guarantee that the consequences of the writes
 have propagated completely.
 
+<h3>Set the status of an object (attribute-based syntax)</h3>
+
+Request:
+<code><pre>
+&lt;turnout name="IT12" set="2" /&gt;
+</pre></code>
+Reply:
+<code><pre>
+&lt;turnout name="IT12" value="2" /&gt;
+</pre></code>
+
 <h3>Control a Throttle</h3>
 
 A &lt;throttle&gt; element
@@ -232,7 +254,7 @@ Dr. T Catherall Ed, September/October 1995,
 <a href="http://web.archive.org/web/*/http://rr-vs.informatik.uni-ulm.de/rr/">page referenced</a>
 <a href="http://rr.informatik.tu-freiberg.de/index.php?con=home&sel=&lang=eng&js=1&">rehosted</a>.
 
-
+</div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

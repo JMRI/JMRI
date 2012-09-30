@@ -52,8 +52,9 @@ public class DefaultXmlIOServer implements XmlIOServer {
         // iPads or Android tablet apps could directly render the panels.
 
         // first, process any "list" elements
-    	//  roster, frame, panel and metadata are immediate only
+    	//  roster, frame, panel, metadata and railroad are immediate only
     	//  power, turnout, sensor, signalhead, memory and route can be monitored for changes, pass current values to begin
+    	//  throttle accepts changes
         @SuppressWarnings("unchecked")
         List<Element> lists = new ArrayList<Element>(e.getChildren("list"));
         for (Element list : lists) {
@@ -1392,7 +1393,11 @@ public class DefaultXmlIOServer implements XmlIOServer {
             // This will only be sent as an attribute of a throttle element
             // to prevent clients that don't know what to do with unknown
             // elements from crashing.
-            item.setAttribute("SSM", Integer.toString(t.getSpeedStepMode()));
+            if (useAttributes) {
+            	item.setAttribute("SSM", Integer.toString(t.getSpeedStepMode()));
+            } else {
+            	item.addContent(new Element("SSM").addContent(Integer.toString(t.getSpeedStepMode())));
+            }
         }
     }
 
