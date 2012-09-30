@@ -36,19 +36,18 @@ import java.util.Map.Entry;
 public class IndicatorTrackIcon extends PositionableIcon 
                         implements java.beans.PropertyChangeListener, IndicatorTrack {
 
-    ArrayList<String> _paths;      // list of paths that include this icon
-
     private NamedBeanHandle<Sensor> namedOccSensor = null;
     private NamedBeanHandle<OBlock> namedOccBlock = null;
 
+    private IndicatorTrackPaths _pathUtil;
+    private IndicatorItemPanel _trackPanel;
     private String _status;     // is a key for _iconMap
-    private boolean _showTrain; // this track should display _loco when occupied
-    private LocoIcon _loco = null;
 
 
     public IndicatorTrackIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
         super(editor);
+        _pathUtil = new IndicatorTrackPaths();
         _status = "ClearTrack";
         _iconMap = new Hashtable<String, NamedIcon>();
     }
@@ -63,14 +62,8 @@ public class IndicatorTrackIcon extends PositionableIcon
         pos.setOccSensorHandle(namedOccSensor);
         pos.setOccBlockHandle(namedOccBlock);
         pos._iconMap = cloneMap(_iconMap, pos);
-        if (_paths!=null) {
-            pos._paths = new ArrayList<String>();
-            for (int i=0; i<_paths.size(); i++) {
-                pos._paths.add(_paths.get(i));
-            }
-        }
+        pos._pathUtil = _pathUtil.deepClone();
         pos._iconFamily = _iconFamily;
-        pos._showTrain = _showTrain;
         return super.finishClone(pos);
     }
 
@@ -162,41 +155,22 @@ public class IndicatorTrackIcon extends PositionableIcon
     public NamedBeanHandle <OBlock> getNamedOccBlock() { return namedOccBlock; }
 
     public void setShowTrain(boolean set) {
-        _showTrain = set;
+    	_pathUtil.setShowTrain(set);
     }
     public boolean showTrain() {
-        return _showTrain;
+        return _pathUtil.showTrain();
     }
-
-    public Iterator<String> getPaths() {
-        if (_paths==null) {
-            return null;
-        }
-        return _paths.iterator();
+    public ArrayList<String> getPaths() {
+    	return _pathUtil.getPaths();
     }
     public void setPaths(ArrayList<String>paths) {
-        _paths = paths;
-        if (log.isDebugEnabled()) {
-            log.debug("setPaths");
-            for (int i=0; i<_paths.size(); i++) {
-                log.debug("pathName= "+_paths.get(i));
-            }
-        }
+    	_pathUtil.setPaths(paths);
     }
-
     public void addPath(String path) {
-        if (_paths==null) {
-            _paths = new ArrayList<String>();
-        }
-        if (!_paths.contains(path)) {
-            _paths.add(path);
-        }
-        if (log.isDebugEnabled()) log.debug("addPath \""+path+"\" #paths= "+_paths.size());
+    	_pathUtil.addPath(path);
     }
     public void removePath(String path) {
-        if (_paths!=null) {
-            _paths.remove(path);
-        }
+    	_pathUtil.removePath(path);
     }
 
     /**
@@ -235,33 +209,10 @@ public class IndicatorTrackIcon extends PositionableIcon
 	}
 
     private void setStatus(OBlock block, int state) {
-        String pathName = block.getAllocatedPathName();
-        setControlling(true);
-    	removeLocoIcon();
-        if ((state & OBlock.TRACK_ERROR)!=0) {
-            _status = "ErrorTrack";
-        } else if ((state & OBlock.OUT_OF_SERVICE)!=0) {
-            setControlling(false);
-            _status = "DontUseTrack";
-        } else if ((state & OBlock.ALLOCATED)!=0) {
-            if (_paths!=null && _paths.contains(pathName)) {
-            	if ((state & OBlock.RUNNING)!=0) {
-                    _status = "PositionTrack";           		
-                    if (_showTrain) {
-                        setLocoIcon((String)block.getValue());
-                    }
-            	} else {
-                    _status = "AllocatedTrack";            		
-            	}
-            } else {
-            	_status = "ClearTrack";     // icon not on path
-            }
-        } else if ((state & OBlock.OCCUPIED)!=0) {
-           	_status = "OccupiedTrack";       	
-        } else if ((state & Sensor.UNKNOWN)!=0) {
-            _status = "DontUseTrack";
-        } else {
-        	_status = "ClearTrack";             	       	
+        _status = _pathUtil.setStatus(block, state);
+        _pathUtil.setLocoIcon((String)block.getValue(), getLocation(), getSize(), _editor);
+        if (_status.equals("DontUseTrack")) {
+        	setControlling(false);
         }
     }
 
@@ -277,35 +228,6 @@ public class IndicatorTrackIcon extends PositionableIcon
         }
     }
     
-    private void removeLocoIcon() {
-        if (_loco!=null) {
-            _loco.remove();
-            _loco = null;
-        }    	
-    }
-
-    private void setLocoIcon(String trainName) {
-        if (trainName==null) {
-        	removeLocoIcon();
-            return;
-        }
-        if (_loco!=null) {
-            return;
-        }
-        trainName = trainName.trim();
-        _loco = _editor.selectLoco(trainName);
-        if (_loco==null) {
-            _loco = _editor.addLocoIcon(trainName);
-        }
-        if (_loco!=null) {
-            java.awt.Point pt = getLocation();
-            pt.x = pt.x + (getWidth() - _loco.getWidth())/2;
-            pt.y = pt.y + (getHeight() - _loco.getHeight())/2;
-            _loco.setLocation(pt);
-            log.debug("Display Loco \""+trainName+"\" ("+_status+") at ("+pt.x+", "+pt.y+")");
-        }
-    }
-
     public String getNameString() {
         String str = "";
         if (namedOccBlock!=null) {
@@ -345,8 +267,6 @@ public class IndicatorTrackIcon extends PositionableIcon
         return true;
     }
 
-    IndicatorItemPanel _trackPanel;
-
     protected void editItem() {
         makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTrack")));
         _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _iconFamily, _editor);
@@ -375,8 +295,8 @@ public class IndicatorTrackIcon extends PositionableIcon
         if (namedOccBlock!=null) {
             _trackPanel.setOccDetector(namedOccBlock.getBean().getDisplayName());
         }
-        _trackPanel.setShowTrainName(_showTrain);
-        _trackPanel.setPaths(_paths);
+        _trackPanel.setShowTrainName(_pathUtil.showTrain());
+        _trackPanel.setPaths(_pathUtil.getPaths());
         _paletteFrame.add(_trackPanel);
         _paletteFrame.setLocationRelativeTo(this);
         _paletteFrame.toFront();
@@ -387,9 +307,9 @@ public class IndicatorTrackIcon extends PositionableIcon
     void updateItem() {
         setOccSensor(_trackPanel.getOccSensor());
         setOccBlock(_trackPanel.getOccBlock());
-        _showTrain = _trackPanel.getShowTrainName();
+        _pathUtil.setShowTrain(_trackPanel.getShowTrainName());
         _iconFamily = _trackPanel.getFamilyName();
-        _paths = _trackPanel.getPaths();
+        _pathUtil.setPaths(_trackPanel.getPaths());
         Hashtable<String, NamedIcon> iconMap = _trackPanel.getIconMap();
         if (iconMap!=null) {
             Hashtable<String, NamedIcon> oldMap = cloneMap(_iconMap, this);

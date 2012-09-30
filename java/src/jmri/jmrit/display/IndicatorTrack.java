@@ -8,7 +8,7 @@ import jmri.Sensor;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.logix.OBlock;
 /**
- * Defines track objects that dispaly status bt color.
+ * Defines track objects that display status color.
  * <P>
  *
  * @author Pete Cressman Copyright (c) 2010
@@ -29,10 +29,9 @@ public interface IndicatorTrack extends Positionable  {
     public void setShowTrain(boolean set);
     public boolean showTrain();
 
-    public Iterator<String> getPaths();
-    public void setPaths(ArrayList<String>paths);
-    public void addPath(String path);
-    public void removePath(String path);
     public void setStatus(int state);
 
+    public ArrayList<String> getPaths();
+    public void addPath(String path);
+    public void removePath(String path);
 }

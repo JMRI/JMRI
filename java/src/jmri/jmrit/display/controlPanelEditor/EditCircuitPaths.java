@@ -12,6 +12,8 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 
+import org.jdom.Element;
+
 import jmri.jmrit.logix.*;
 
 /**
@@ -279,13 +281,13 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         for (int i=0; i<list.size(); i++) {
             Positionable pos = list.get(i);
             if (pos instanceof IndicatorTrack) {
-                Iterator<String> iter = ((IndicatorTrack)pos).getPaths();
-                if (iter!=null) {
-                    while (iter.hasNext()) {
-                        if (name.equals(iter.next())) {
+                ArrayList <String> paths = ((IndicatorTrack)pos).getPaths();
+                if (paths!=null) {
+                	for (int j=0; j<paths.size(); j++) {
+                        if (name.equals(paths.get(j))) {
                             _pathGroup.add(pos);
                         }
-                    }
+                	}
                 }
             } else {
                 PortalIcon icon = (PortalIcon)pos;
@@ -491,11 +493,13 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         for (int i=0; i<list.size(); i++) {
             if (list.get(i) instanceof IndicatorTrack) {
                 IndicatorTrack icon = (IndicatorTrack)list.get(i);
-                Iterator<String> iter = icon.getPaths();
-                while (iter.hasNext()) {
-                    if (oldName.equals(iter.next())) {
+                ArrayList <String> paths = ((IndicatorTrack)icon).getPaths();
+                if (paths!=null) {
+                	for (int j=0; j<paths.size(); j++) {
+                        if (oldName.equals(paths.get(j))) {
                             changeGroup.add(icon);
-                    }
+                        }
+                	}
                 }
             }
         }

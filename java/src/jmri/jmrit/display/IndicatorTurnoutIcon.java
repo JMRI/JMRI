@@ -37,25 +37,25 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
+ * @author Pete Cressman  Copyright (c) 2010 2012
  * @version $Revision$
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack {
 
     Hashtable<String, Hashtable<Integer, NamedIcon>> _iconMaps;
-    ArrayList <String> _paths;      // list of paths that include this icon
-
 
     private NamedBeanHandle<Sensor> namedOccSensor = null;
     private NamedBeanHandle<OBlock> namedOccBlock = null;
 
+    private IndicatorTrackPaths _pathUtil;
+    private IndicatorTOItemPanel _TOPanel;
     private String _status;
-    private boolean _showTrain; // this track should display _loco when occupied
-    private LocoIcon _loco = null;
 
     public IndicatorTurnoutIcon(Editor editor) {
         super(editor);
         log.debug("IndicatorTurnoutIcon ctor: isIcon()= "+isIcon()+", isText()= "+isText());
+        _pathUtil = new IndicatorTrackPaths();
         _status = "DontUseTrack";
         _iconMaps = initMaps();
 
@@ -98,13 +98,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         pos.setOccBlockHandle(namedOccBlock);
         pos.setOccSensorHandle(namedOccSensor);
         pos._iconMaps = cloneMaps(pos);
-        if (_paths!=null) {
-            pos._paths = new ArrayList<String>();
-            for (int i=0; i<_paths.size(); i++) {
-                pos._paths.add(_paths.get(i));
-            }
-        }
-        pos._showTrain = _showTrain;
+        pos._pathUtil = _pathUtil.deepClone();
+        pos._iconFamily = _iconFamily;
         return super.finishClone(pos);
     }
     
@@ -198,32 +193,22 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     public NamedBeanHandle <OBlock> getNamedOccBlock() { return namedOccBlock; }
 
     public void setShowTrain(boolean set) {
-        _showTrain = set;
+    	_pathUtil.setShowTrain(set);
     }
     public boolean showTrain() {
-        return _showTrain;
+        return _pathUtil.showTrain();
     }
-    
-    public Iterator<String> getPaths() {
-        if (_paths==null) {
-            return null;
-        }
-        return _paths.iterator();
+    public ArrayList<String> getPaths() {
+    	return _pathUtil.getPaths();
     }
     public void setPaths(ArrayList<String>paths) {
-        _paths = paths;
+    	_pathUtil.setPaths(paths);
     }
-
     public void addPath(String path) {
-        if (_paths==null) {
-            _paths = new ArrayList<String>();
-        }
-        _paths.add(path);
+    	_pathUtil.addPath(path);
     }
     public void removePath(String path) {
-        if (_paths!=null) {
-            _paths.remove(path);
-        }
+    	_pathUtil.removePath(path);
     }
 
     /**
@@ -335,9 +320,6 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
 	 * Drive the current state of the display from the state of the turnout and status of track.
 	 */
     public void displayState(int state) {
-        if (_loco!=null) {
-            _loco.remove();
-        }
         if (getNamedTurnout() == null) {
             log.debug("Display state "+state+", disconnected");
         } else {
@@ -389,33 +371,10 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
 	}
 
     private void setStatus(OBlock block, int state) {
-        String pathName = block.getAllocatedPathName();
-        setControlling(true);
-    	removeLocoIcon();
-        if ((state & OBlock.TRACK_ERROR)!=0) {
-            _status = "ErrorTrack";
-        } else if ((state & OBlock.OUT_OF_SERVICE)!=0) {
-            setControlling(false);
-            _status = "DontUseTrack";
-        } else if ((state & OBlock.ALLOCATED)!=0) {
-            if (_paths!=null && _paths.contains(pathName)) {
-            	if ((state & OBlock.RUNNING)!=0) {
-                    _status = "PositionTrack";           		
-                    if (_showTrain) {
-                        setLocoIcon((String)block.getValue());
-                    }
-            	} else {
-                    _status = "AllocatedTrack";            		
-            	}
-            } else {
-            	_status = "ClearTrack";     // icon not on path
-            }
-        } else if ((state & OBlock.OCCUPIED)!=0) {
-           	_status = "OccupiedTrack";       	
-        } else if ((state & Sensor.UNKNOWN)!=0) {
-            _status = "DontUseTrack";
-        } else {
-        	_status = "ClearTrack";             	       	
+        _status = _pathUtil.setStatus(block, state);
+        _pathUtil.setLocoIcon((String)block.getValue(), getLocation(), getSize(), _editor);
+        if (_status.equals("DontUseTrack")) {
+        	setControlling(false);
         }
     }
 
@@ -430,35 +389,6 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             _status = "ErrorTrack";
         }
     }
-    private void removeLocoIcon() {
-        if (_loco!=null) {
-            _loco.remove();
-            _loco = null;
-        }    	
-    }
-    private void setLocoIcon(String trainName) {
-        if (trainName==null) {
-        	removeLocoIcon();
-            return;
-        }
-        if (_loco!=null) {
-            return;
-        }
-        trainName = trainName.trim();
-        _loco = _editor.selectLoco(trainName);
-        if (_loco==null) {
-            _loco = _editor.addLocoIcon(trainName);
-        }
-        if (_loco!=null) {
-            java.awt.Point pt = getLocation();
-            pt.x = pt.x + (getWidth() - _loco.getWidth())/2;
-            pt.y = pt.y + (getHeight() - _loco.getHeight())/2;
-            _loco.setLocation(pt);
-            log.debug("Display Loco \""+trainName+"\" ("+_status+") at ("+pt.x+", "+pt.y+")");
-        }
-    }
-    
-    IndicatorTOItemPanel _TOPanel;
 
     protected void editItem() {
         makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTO")));
@@ -501,8 +431,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         if (namedOccBlock!=null) {
             _TOPanel.setOccDetector(namedOccBlock.getBean().getDisplayName());
         }
-        _TOPanel.setShowTrainName(_showTrain);
-        _TOPanel.setPaths(_paths);
+        _TOPanel.setShowTrainName(_pathUtil.showTrain());
+        _TOPanel.setPaths(_pathUtil.getPaths());
         _paletteFrame.add(_TOPanel);
         _paletteFrame.pack();
         _paletteFrame.setVisible(true);
@@ -513,16 +443,15 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         setTurnout(_TOPanel.getTableSelection().getSystemName());
         setOccSensor(_TOPanel.getOccSensor());
         setOccBlock(_TOPanel.getOccBlock());
-        _showTrain = _TOPanel.getShowTrainName();
+        _pathUtil.setShowTrain(_TOPanel.getShowTrainName());
         _iconFamily = _TOPanel.getFamilyName();
-        _paths = _TOPanel.getPaths();
+        _pathUtil.setPaths(_TOPanel.getPaths());
         Hashtable<String, Hashtable<String, NamedIcon>> iconMap = _TOPanel.getIconMaps();
         if (iconMap!=null) {
             Iterator<Entry<String, Hashtable<String, NamedIcon>>> it = iconMap.entrySet().iterator();
             while (it.hasNext()) {
                 Entry<String, Hashtable<String, NamedIcon>> entry = it.next();
                 String status = entry.getKey();
-    //            Hashtable<Integer, NamedIcon> oldMap = cloneMap(_iconMaps.get(status), null);
                 Hashtable <Integer, NamedIcon> oldMap = _iconMaps.get(entry.getKey());
                 Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
                 while (iter.hasNext()) {

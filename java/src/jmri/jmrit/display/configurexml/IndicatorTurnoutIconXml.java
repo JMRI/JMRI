@@ -81,13 +81,14 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         element.addContent(el);
 
         elem = new Element("paths");
-        Iterator<String> iter = p.getPaths();
-        if (iter!=null) {
-            while (iter.hasNext()) {
+        ArrayList <String> paths = p.getPaths();
+        if (paths!=null) {
+        	for (int i=0; i<paths.size(); i++) {
                 Element e = new Element("path");
-                e.addContent(iter.next());
+                e.addContent(paths.get(i));
                 elem.addContent(e);
-            }
+        		
+        	}
             element.addContent(elem);
         }
 
