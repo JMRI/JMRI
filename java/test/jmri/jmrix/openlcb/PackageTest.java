@@ -35,6 +35,7 @@ public class PackageTest extends TestCase {
 
         suite.addTest(CanConverterTest.suite());
         suite.addTest(OlcbAddressTest.suite());
+        suite.addTest(OpenLcbLocoAddressTest.suite());
         suite.addTest(OlcbSensorManagerTest.suite());
         suite.addTest(OlcbSensorTest.suite());
         suite.addTest(OlcbTurnoutManagerTest.suite());
