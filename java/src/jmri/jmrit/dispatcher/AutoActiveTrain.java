@@ -834,7 +834,7 @@ public class AutoActiveTrain implements ThrottleListener {
 			return (null);
 		}
 		Runnable pauseTrain = new PauseTrain(fastMinutes);
-		Thread tPause = new Thread(pauseTrain);
+		Thread tPause = new Thread(pauseTrain, "pause train " + _activeTrain.getTrainName());
 		tPause.start();
 		return tPause;
 	}
@@ -963,8 +963,8 @@ public class AutoActiveTrain implements ThrottleListener {
 				//   resume running - restore speed, status, and ramp rate
 				setCurrentRampRate(_savedRampRate);
 				setTargetSpeed(_savedTargetSpeed);
-				setSpeedBySignal();
 				_activeTrain.setStatus(ActiveTrain.RUNNING);
+                setSpeedBySignal();
 			}
 		}
 		private int _fastMinutes = 0;
