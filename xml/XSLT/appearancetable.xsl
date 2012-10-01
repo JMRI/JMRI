@@ -248,7 +248,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 </xsl:template>
 
 <xsl:template match="specificappearances">
-  <b>Specific Apperance Mapping</b>
+  <b>Specific Appearance Mapping</b>
   <!-- display aspect mappings in a small table -->
   <!-- header -->
   <table border="2" cellpadding="5">
