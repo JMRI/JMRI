@@ -20,7 +20,8 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
     public NetworkDriverAdapter() {
         super();
         option2Name = "Eprom";
-        options.put(option2Name, new Option("Command Station EPROM", new String[]{"2004 or earlier", "2006 or later"}));
+        // the default is 2006 or later
+        options.put(option1Name, new Option("Command Station EPROM", new String[]{"2006 or later", "2004 or earlier"}));
         adaptermemo = new NceSystemConnectionMemo();
         setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
     }
@@ -42,10 +43,10 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
     	// set the command options, Note that the NetworkDriver uses
     	// the second option for EPROM revision
         if (getOptionState(option2Name).equals(getOptionChoices(option2Name)[0])) {
-        	adaptermemo.configureCommandStation(NceTrafficController.OPTION_2004);
-        } else {
             // setting binary mode
             adaptermemo.configureCommandStation(NceTrafficController.OPTION_2006);
+        } else {
+            adaptermemo.configureCommandStation(NceTrafficController.OPTION_2004);
         }
         
         tc.connectPort(this); 

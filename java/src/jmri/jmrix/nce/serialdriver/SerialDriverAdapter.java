@@ -33,7 +33,8 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
     public SerialDriverAdapter() {
         super();
         option1Name = "Eprom";
-        options.put(option1Name, new Option("Command Station EPROM", new String[]{"2004 or earlier", "2006 or later"}));
+        // the default is 2006 or later
+        options.put(option1Name, new Option("Command Station EPROM", new String[]{"2006 or later", "2004 or earlier"}));
         setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
         adaptermemo = new NceSystemConnectionMemo();
     }
@@ -119,10 +120,10 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         tc.setAdapterMemo(adaptermemo);     
              
         if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[0])) {
-            adaptermemo.configureCommandStation(NceTrafficController.OPTION_2004);
-        } else {
             // setting binary mode
             adaptermemo.configureCommandStation(NceTrafficController.OPTION_2006);
+        } else {
+            adaptermemo.configureCommandStation(NceTrafficController.OPTION_2004);
         }
         
         tc.connectPort(this); 

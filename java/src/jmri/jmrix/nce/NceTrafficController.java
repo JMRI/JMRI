@@ -98,7 +98,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      */
     static public final int OPTION_FORCE_BINARY = 10000;
     
-    private int commandOptions = OPTION_2004;
+    private int commandOptions = OPTION_2006;
     public boolean commandOptionSet = false;
     
     /** 
