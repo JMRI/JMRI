@@ -225,8 +225,8 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
         if (!getOptionState(option1Name).equals(validOption1[0]))
             flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         activeSerialPort.setFlowControlMode(flow);
-        if (getOptionState(option2Name).equals(validOption2[0]))
-            setCheckBuffer(true);
+        /* if (getOptionState(option2Name).equals(validOption2[0]))
+            setCheckBuffer(true);*/
     }
     
     
