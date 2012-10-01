@@ -1035,54 +1035,46 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	    	case 0:
 	    		if (sRow == 0) {
 	        		return r.cab;
-	    		} else {
-	    			return null;
 	    		}
+	    		break;
 	    	case 1:
 	    		if (sRow == 0) {
 	        		return r.type;
-	    		} else {
-	    			return null;
 	    		}
+	    		break;
 	    	case 2:
 	    		if (col == 0) {
 	    			return null;
 	    		}
 	    		if (sRow == 0) {
 	    			return rb.getString("ButtonPurgeCab");
-	    		} else {
-	    			return null;
 	    		}
+	    		break;
 	    	case 3:
 	    		if (sRow == 0) {
 	        		return r.loco;
-	    		} else {
-	    			return null;
 	    		}
+	    		break;
 	    	case 4:
 	    		if (sRow == 0) {
 	        		return r.speed;
-	    		} else {
-	    			return null;
 	    		}
+	    		break;
 	    	case 5:
 	    		if (sRow == 0) {
 	        		return r.dir;
-	    		} else {
-	    			return null;
 	    		}
+	    		break;
 	    	case 6:
 	    		if (sRow == 0) {
 	        		return r.mode;
-	    		} else {
-	    			return null;
 	    		}
+	    		break;
 	    	case 7:
 	    		if (sRow == 0) {
 	        		return r.consist;
-	    		} else {
-	    			return null;
 	    		}
+	    		break;
 	    	case 8:
 	    		switch (sRow) {
 	    		case 0:
@@ -1092,6 +1084,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	    		case 2:
 	    			return r.F20;
 	    		}
+	    		break;
 	    	case 9:
 	    		switch (sRow) {
 	    		case 0:
@@ -1101,6 +1094,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	    		case 2:
 	    			return r.F21;
 	    		}
+	    		break;
 	    	case 10:
 	    		switch (sRow) {
 	    		case 0:
@@ -1110,6 +1104,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	    		case 2:
 	    			return r.F22;
 	    		}
+	    		break;
 	    	case 11:
 	    		switch (sRow) {
 	    		case 0:
@@ -1128,6 +1123,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	    		case 2:
 	    			return r.F24;
 	    		}
+	    		break;
 	    	case 13:
 	    		switch (sRow) {
 	    		case 0:
@@ -1137,6 +1133,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	    		case 2:
 	    			return r.F25;
 	    		}
+	    		break;
 	    	case 14:
 	    		switch (sRow) {
 	    		case 0:
@@ -1146,6 +1143,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	    		case 2:
 	    			return r.F26;
 	    		}
+	    		break;
 	    	case 15:
 	    		switch (sRow) {
 	    		case 0:
@@ -1155,6 +1153,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	    		case 2:
 	    			return r.F27;
 	    		}
+	    		break;
 	    	case 16:
 	    		switch (sRow) {
 	    		case 0:
@@ -1170,26 +1169,23 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	        		return r.F9;
 	    		case 1:
 	    			return r.F19;
-	    		case 2:
-	    			return null;
 	    		}
+	    		break;
 	    	case 18:
 	    		switch (sRow) {
 	    		case 0:
 	    			return r.text1;
 	    		case 1:
 	        		return r.text2;
-	    		case 2:
-	    			return null;
 	    		}
+	    		break;
 	    	case 19:
 	    		if (sRow == 0) {
 	        		return r.lastChange;
-	    		} else {
-	    			return null;
 	    		}
+	    		break;
 	    	}
-	    	return "";
+	    	return null;
 	    }
 	
 	    public void setValueAt(Object value, int row, int col) {
