@@ -28,14 +28,16 @@ public class NceTurnoutTest extends AbstractTurnoutTest {
 
 	public void checkThrownMsgSent() {
 		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-		// Assert.assertEquals("content", "S C02 81 FE 7F", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
-		Assert.assertEquals("content", "93 02 81 FE 7F", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
+		// 2004 eprom output:
+		// Assert.assertEquals("content", "93 02 81 FE 7F", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
+		Assert.assertEquals("content", "AD 00 04 04 00", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
 	}
 
 	public void checkClosedMsgSent() {
 		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-		//Assert.assertEquals("content", "S C02 81 FF 7E", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
-		Assert.assertEquals("content", "93 02 81 FF 7E", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
+		// 2004 eprom output:
+		//Assert.assertEquals("content", "93 02 81 FF 7E", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
+		Assert.assertEquals("content", "AD 00 04 03 00", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
 	}
 
 	// from here down is testing infrastructure
