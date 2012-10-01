@@ -41,12 +41,14 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
     JComboBox fromPoint = new JComboBox();
     JComboBox toPoint = new JComboBox();
     
-    String [] clearOptions = {"Prompt User", "Cancel Route", "Clear Route"};
+    String [] clearOptions = {"Prompt User", "Clear Route", "Cancel Route"};
     JComboBox clearEntry = new JComboBox(clearOptions);
     String [] interlockTypes = {"Set Turnouts Only", "Set Turnouts and SignalMasts", "Full Interlock"};
     JComboBox typeBox = new JComboBox(interlockTypes);
     
     ArrayList<LayoutEditor> panels;
+    
+     EntryExitPairs nxPairs = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
     
     protected static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.EntryExitBundle");
     
@@ -86,10 +88,10 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         top.add(typeBox);
         add(top);
 
-        clearEntry.setSelectedIndex(EntryExitPairs.instance().getClearDownOption());
+        clearEntry.setSelectedIndex(nxPairs.getClearDownOption());
         ActionListener clearEntryListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                EntryExitPairs.instance().setClearDownOption(clearEntry.getSelectedIndex());
+                nxPairs.setClearDownOption(clearEntry.getSelectedIndex());
             }
         };
         
@@ -143,9 +145,8 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         if(from==null || to==null)
             return;
         
-        EntryExitPairs entryexit = EntryExitPairs.instance();
-        entryexit.addNXDestination(from.getPoint(), to.getPoint(), panel);
-        entryexit.setEntryExitType(from.getPoint(), panel, to.getPoint(), typeBox.getSelectedIndex());
+        nxPairs.addNXDestination(from.getPoint(), to.getPoint(), panel);
+        nxPairs.setEntryExitType(from.getPoint(), panel, to.getPoint(), typeBox.getSelectedIndex());
     }
     
     jmri.util.JmriJFrame entryExitFrame = null;
@@ -184,18 +185,17 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
                             entryExitFrame.setVisible(false);
                             entryExitFrame.dispose();
                         }
-                        EntryExitPairs.instance().removePropertyChangeListener(this);
+                        nxPairs.removePropertyChangeListener(this);
                         JOptionPane.showMessageDialog(null, "Generation of Entry Exit Pairs Completed");
                     }
                 }
             };
             try {
-                EntryExitPairs entryexit = EntryExitPairs.instance();
-                entryexit.addPropertyChangeListener(propertyNXListener);
-                entryexit.automaticallyDiscoverEntryExitPairs(panels.get(selectPanel.getSelectedIndex()), typeBox.getSelectedIndex());
+                nxPairs.addPropertyChangeListener(propertyNXListener);
+                nxPairs.automaticallyDiscoverEntryExitPairs(panels.get(selectPanel.getSelectedIndex()), typeBox.getSelectedIndex());
             } catch (jmri.JmriException e){
                 log.info("Exception here");
-                EntryExitPairs.instance().removePropertyChangeListener(propertyNXListener);
+                nxPairs.removePropertyChangeListener(propertyNXListener);
                 JOptionPane.showMessageDialog(null, e.toString());
                 entryExitFrame.setVisible(false);
             }
@@ -270,8 +270,6 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
 
     TableModel nxModel;
     
-    EntryExitPairs nxPairs = EntryExitPairs.instance();
-
     static final int FROMPOINTCOL= 0;
     static final int TOPOINTCOL = 1;
     static final int ACTIVECOL = 2;

@@ -4639,7 +4639,7 @@ public class LogixTableAction extends AbstractTableAction {
         if( name != null){
             name = name.trim();
             if (name.length()>0) {
-            	nb = jmri.jmrit.signalling.EntryExitPairs.instance().getNamedBean(name);
+            	nb = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getNamedBean(name);
             	if (nb != null) {
             		return nb.getSystemName();
             	}

@@ -125,7 +125,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
     @SuppressWarnings({ "unchecked", "null" })
     public boolean load(Element element) {
         // create the objects
-		EntryExitPairs eep = EntryExitPairs.instance();
+		EntryExitPairs eep = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
         
         try {
             String clearoption = element.getChild("cleardown").getText();
@@ -212,7 +212,7 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
     }
     
     public int loadOrder(){
-        return EntryExitPairs.instance().getXMLOrder();
+        return jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getXMLOrder();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EntryExitPairsXml.class.getName());

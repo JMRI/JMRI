@@ -670,7 +670,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         
         EntryExitPairs manager;
         EntryExitPickModel () {
-            manager = jmri.jmrit.signalling.EntryExitPairs.instance();
+            manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
             _name = rb.getString("TitleEntryExitTable");
         }
         public Manager getManager() {

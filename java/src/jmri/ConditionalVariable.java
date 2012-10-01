@@ -125,7 +125,7 @@ public class ConditionalVariable {
                     _namedBean = nbhm.getNamedBeanHandle(_name, sm);
                     break;
                 case Conditional.ITEM_TYPE_ENTRYEXIT:
-                    NamedBean nb = jmri.jmrit.signalling.EntryExitPairs.instance().getBySystemName(_name);
+                    NamedBean nb = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getBySystemName(_name);
                     if(nb == null){
                         log.error("invalid entry exit name= \""+_name+"\" in state variable");
                         return;
@@ -245,7 +245,7 @@ public class ConditionalVariable {
                 bean = InstanceManager.oBlockManagerInstance().getOBlock(_name);
                 break;
             case Conditional.ITEM_TYPE_ENTRYEXIT:
-                bean = jmri.jmrit.signalling.EntryExitPairs.instance().getBySystemName(_name);
+                bean = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getBySystemName(_name);
                 break;
             default : log.error("Type "+itemType+" not set for " + _name);
         }

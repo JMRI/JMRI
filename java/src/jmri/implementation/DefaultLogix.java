@@ -786,7 +786,7 @@ public class DefaultLogix extends AbstractNamedBean
 				b.addPropertyChangeListener (listener);
                 return;
             case LISTENER_TYPE_ENTRYEXIT:
-				NamedBean ex = jmri.jmrit.signalling.EntryExitPairs.instance().getBySystemName(listener.getDevName());
+				NamedBean ex = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getBySystemName(listener.getDevName());
 				if (ex==null) {
 					msg= "entryexit";
 					break;
@@ -900,7 +900,7 @@ public class DefaultLogix extends AbstractNamedBean
                     b.removePropertyChangeListener(listener);
                     return;
                 case LISTENER_TYPE_ENTRYEXIT:
-                    NamedBean ex = jmri.jmrit.signalling.EntryExitPairs.instance().getBySystemName(listener.getDevName());
+                    NamedBean ex = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getBySystemName(listener.getDevName());
                     if (ex==null) {
                         msg= "entryexit";
                         break;

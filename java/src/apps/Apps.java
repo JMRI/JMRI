@@ -110,6 +110,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         // Install an IdTag manager
         jmri.InstanceManager.store(new jmri.managers.DefaultIdTagManager(), jmri.IdTagManager.class);
+        //Install Entry Exit Pairs Manager
+        jmri.InstanceManager.store(new jmri.jmrit.signalling.EntryExitPairs(), jmri.jmrit.signalling.EntryExitPairs.class);
 
         // install preference manager
         InstanceManager.setTabbedPreferences(new apps.gui3.TabbedPreferences());
