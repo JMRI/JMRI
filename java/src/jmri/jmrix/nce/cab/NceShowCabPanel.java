@@ -786,6 +786,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         }
  
         textStatus.setText(rb.getString("StatusReadingDone"));
+        cabModel.fireTableDataChanged();
     	this.setVisible(true);
     	this.repaint();
     }
