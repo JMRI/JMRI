@@ -452,7 +452,7 @@ JMRI restarts, the "Operations" menu item on the main menu will no longer be vis
 as there are no operations files to load. If you want to once again use the 
 operations feature, you can either load the demo files or restore a previous backup. 
 To do this, open the Operations Settings page by selecting the "Settings" 
-option on the Tools->Operations menu of the main page. From there you can 
+option on the Tools-&gt;Operations menu of the main page. From there you can 
 do either a restore or a load of the demo files in the usual way.</p>
 
 <A NAME="SettingsOptions"></A>
@@ -1659,7 +1659,10 @@ For example a load of tools could be entered as "L(Tools)" or just "Tools" if de
 
 If wish this car to be part of a kernel which is a group of cars that
 you want to switch as one unit, press "Edit" across from "Kernel" and
-enter a kernel name. Then select the kernel from the menu box.
+enter a kernel name. Then select the kernel from the menu box.  The first car you assign to the kernel
+becomes the lead car.  The program when searching for a track to set out the kernel will only use the lead
+car's attributes when determining if the track can accept the kernel.  However, the program does use the entire
+length of the kernel to determine if the group of cars will fit on the destination track.
 
 <H3>Optional Fields</H3>
 

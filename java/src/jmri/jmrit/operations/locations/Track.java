@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -1133,6 +1134,11 @@ public class Track {
 		}
 		for (int i=0; i<scheduleItems.size(); i++){
 			ScheduleItem si = schedule.getItemById(scheduleItems.get(i));
+			// check train schedule
+			if (!si.getTrainScheduleId().equals("") && TrainScheduleManager.instance().getScheduleById(si.getTrainScheduleId()) == null){
+				status = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getTrainScheduleId()});
+				break;
+			}
 			if (!_location.acceptsTypeName(si.getType())){
 				status = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getType()});
 				break;
@@ -1144,8 +1150,7 @@ public class Track {
 			if (!si.getRoad().equals("") && !acceptsRoadName(si.getRoad())){
 				status = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getRoad()});
 				break;
-			}
-			
+			}			
 			if (!si.getRoad().equals("") && !CarRoads.instance().containsName(si.getRoad())){
 				status = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getRoad()});
 				break;

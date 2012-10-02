@@ -172,7 +172,7 @@ class SchedulesByLoadFrame extends OperationsFrame implements java.beans.Propert
 								addItemLeft(locationsPanel, new JLabel(spur.getName()+" ("+spur.getScheduleName()+")"), 1, x);
 								// create string (type, timetable, road, load)
 								String s = item.getType();
-								if (!item.getTrainScheduleId().equals(""))
+								if (!item.getTrainScheduleId().equals("") && TrainScheduleManager.instance().getScheduleById(item.getTrainScheduleId()) != null)
 									s = s + ", "+ TrainScheduleManager.instance().getScheduleById(item.getTrainScheduleId()).getName();
 								else
 									s = s + ",";
