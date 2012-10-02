@@ -140,7 +140,7 @@ to let JMRI replace it with the newest version.
 You can create your own web pages using any tool you'd like. 
 To access JMRI from those pages, you just 
 need to know the proper URLs to request the services you'd like. 
-Several examples are linked from the index.html (mini server home page), 
+Several examples are linked from the index.html (JMRI Web Server home page), 
 
 <h2>Open Window (Frame) Access</h2>
     To display any <em>already open</em> JMRI window as a <b>clickable</b> image that periodically refreshes, use a URL like:
@@ -152,7 +152,7 @@ Several examples are linked from the index.html (mini server home page),
     <p>Note the frame title in the URL, followed by ".html".  Replace any spaces in the title with "%20".</p>
     For current, dynamically-generated list of available windows, use this URL:
     <code><pre><a href="http://127.0.0.1:12080/frame">http://127.0.0.1:12080/frame</a></pre></code>
-    <p><em>Note:</em> Adjust defaults such as refresh timing, disallowed frames and ajax usage in MiniServer Preferences.</p>
+    <p><em>Note:</em> Adjust defaults such as refresh timing, disallowed frames and ajax usage in Web Server Preferences.</p>
     You can override the defaults for individual pages by using the following parms in your URL:
     <ul>
     <li><b>plain</b> (hide the footer links)</li>

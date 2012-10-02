@@ -32,6 +32,9 @@
  *  TODO: make turnout, levelXing occupancy work like LE panels (more than just checking A)
  *  TODO: draw dashed curves
  *  TODO: figure out FireFox issue using size of alt text for rotation of unloaded images
+ *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
+ *  TODO: finish indicatorXXicon logic, handling occupancy and error states
+ *  TODO: handle inputs/selection on various memory widgets
  *   
  **********************************************************************************************/
 
@@ -161,6 +164,26 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$widget['degrees'] = 	($(this).find('icon').attr('degrees') * 1) + ($rotation * 90);
 						$widget['scale'] = 		$(this).find('icon').attr('scale');
 						break;
+					case "indicatortrackicon" :
+						$widget['icon1'] = 		$(this).find('iconmap').find('ClearTrack').attr('url');
+						var $rotation = 		$(this).find('iconmap').find('ClearTrack').find('rotation').text();
+						$widget['degrees'] = 	($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) + ($rotation * 90);
+						$widget['scale'] = 		$(this).find('iconmap').find('ClearTrack').attr('scale');
+						break;
+					case "indicatorturnouticon" :
+						$widget['name']  =		$(this).find('turnout').text();; //normalize name
+						$widget['element']  =	"turnout"; //what xmlio server calls this
+						$widget['icon1'] = 		$(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('url');
+						$widget['icon2'] = 		$(this).find('iconmaps').find('ClearTrack').find('TurnoutStateClosed').attr('url');
+						$widget['icon4'] = 		$(this).find('iconmaps').find('ClearTrack').find('TurnoutStateThrown').attr('url');
+						$widget['icon8'] = 		$(this).find('iconmaps').find('ClearTrack').find('BeanStateInconsistent').attr('url');
+						var $rotation = 		$(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').find('rotation').text();
+						$widget['degrees'] = 	($(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('degrees') * 1) + ($rotation * 90);
+						$widget['scale'] = 		$(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('scale');
+						if ($widget.forcecontroloff != "true") {
+							$widget.classes += 		$widget.element + " clickable ";
+						}
+						break;
 					case "turnouticon" :
 						$widget['name']  =		$widget.turnout; //normalize name
 						$widget['element']  =	"turnout"; //what xmlio server calls this
@@ -278,6 +301,12 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$widget['name']  =		$widget.memory; //normalize name
 						$widget['element']  =	"memory"; //what xmlio server calls this
 						$widget['text']  =		$widget.memory; //use name for initial text
+						break;
+					case "memoryComboIcon" :
+						$widget['name']  =		$widget.memory; //normalize name
+						$widget['element']  =	"memory"; //what xmlio server calls this
+						$widget['text']  =		$widget.memory; //use name for initial text
+						$widget.styles['border']	= "1px solid black" //add border for looks (temporary)
 						break;
 					}
 					$widget['safeName'] = $safeName($widget.name);
@@ -1179,6 +1208,7 @@ var $getWidgetFamily = function($widget) {
 	switch ($widget.widgetType) {
 	case "memoryicon" :
 	case "locoicon" :
+	case "memoryComboIcon" :
 //	case "reportericon" :
 		return "text";
 		break;
@@ -1189,6 +1219,8 @@ var $getWidgetFamily = function($widget) {
 	case "fastclock" :
 	case "signalheadicon" :
 //	case "signalmasticon" :
+	case "indicatortrackicon" :
+	case "indicatorturnouticon" :
 		return "icon";
 		break;
 	case "layoutturnout" :
