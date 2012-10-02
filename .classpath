@@ -3,8 +3,8 @@
 	<classpathentry excluding="**/.cvsignore|**/COPYING" kind="src" path="java/src"/>
 	<classpathentry excluding="**/.cvsignore|**/COPYING" kind="src" path="java/test"/>
 	<classpathentry excluding="**/.cvsignore|**/COPYING" kind="src" path="java/tmp"/>
-    <classpathentry excluding="**/Thumbs.db" kind="src" path="resources"/>
-   	<classpathentry kind="lib" path="lib/activation.jar"/>
+	<classpathentry excluding="**/Thumbs.db" kind="src" path="resources"/>
+	<classpathentry kind="lib" path="lib/activation.jar"/>
 	<classpathentry kind="lib" path="lib/annotations.jar"/>
 	<classpathentry kind="lib" path="lib/ch.ntb.usb.jar"/>
 	<classpathentry kind="lib" path="lib/ecj.jar"/>
@@ -47,7 +47,7 @@
 	<classpathentry kind="lib" path="lib/WinRegistry-4.4.jar"/>
 	<classpathentry kind="lib" path="lib/xAPlib.jar"/>
 	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/Java SE 1.6"/>
 	<classpathentry kind="lib" path="lib/jetty-websocket-8.1.0.v20120127.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="java/classes"/>
 </classpath>
