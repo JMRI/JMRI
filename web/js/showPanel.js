@@ -462,6 +462,11 @@ function $drawCircle($ptx, $pty, $radius, $color, $width) {
 
 //draw a Tracksegment (pass in widget)
 function $drawTrackSegment($widget) {
+	//if set to hidden, don't draw anything
+	if ($widget.hidden == "yes") {
+		return;
+	}
+	
 	//get the endpoints by name
 	var $pt1 = $gPts[$widget.connect1name+"."+$widget.type1];
 	if ($pt1 == undefined) {
@@ -569,6 +574,10 @@ function $drawIcon($widget) {
 
 //draw a LevelXing (pass in widget)
 function $drawLevelXing($widget) {
+	//if set to hidden, don't draw anything
+	if ($widget.hidden == "yes") {
+		return;
+	}
 	var $width = $gPanel.sidetrackwidth;
 	 //set levelxing width same as the A track
 	if ($gWidgets[$widget.connectaname] !=undefined) {
@@ -611,6 +620,10 @@ function $drawLevelXing($widget) {
 
 //draw a Turnout (pass in widget)
 function $drawTurnout($widget) {
+	//if set to hidden, don't draw anything
+	if ($widget.hidden == "yes") {
+		return;
+	}
 	var $width = $gPanel.sidetrackwidth;
 	 //set turnout width same as the A track
 	if ($gWidgets[$widget.connectaname] !=undefined) {
