@@ -20,7 +20,6 @@
  *  TODO: show list of available panels in footer, or add [Prev] [Next] links to navigate between panels
  *  TODO: figure out "held" state on signalheads (see LMRC APB)
  *  TODO: handle segmented click on multisensor and enable
- *  TODO: move occupiedsensor state to widget from block, to allow skipping of unchanged
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
  *  TODO: determine proper level (z-index) for canvas layer
@@ -345,6 +344,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						//set widget occupancysensor from block to speed affected changes later
 						if ($gBlks[$widget.blockname] != undefined) {
 							$widget['occupancysensor'] = $gBlks[$widget.blockname].occupancysensor; 
+							$widget['occupancystate'] =  $gBlks[$widget.blockname].state; 
 						}
 						$gWidgets[$widget.id] = $widget; //store widget in persistent array 
 						$storeTurnoutPoints($widget); //also store the turnout's 3 end points for other connections  
@@ -362,6 +362,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						//set widget occupancysensor from block to speed affected changes later
 						if ($gBlks[$widget.blockname] != undefined) {
 							$widget['occupancysensor'] = $gBlks[$widget.blockname].occupancysensor; 
+							$widget['occupancystate'] =  $gBlks[$widget.blockname].state; 
 						}
 						//store this widget in persistent array, with ident as key
 						$widget['id'] = $widget.ident; 
@@ -377,6 +378,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						if ($gBlks[$widget.blocknameac] != undefined) {
 							$widget['blockname'] = $widget.blocknameac; //normalize blockname 
 							$widget['occupancysensor'] = $gBlks[$widget.blocknameac].occupancysensor; 
+							$widget['occupancystate'] =  $gBlks[$widget.blocknameac].state; 
 						}
 						//store widget in persistent array
 						$gWidgets[$widget.id] = $widget; 
@@ -585,7 +587,7 @@ function $drawLevelXing($widget) {
 			$width = $gPanel.mainlinetrackwidth; 
 		}
 	} else {
-		if (window.console) console.log("could not get trackwidth of "+$widget.connectaname+" for "+$widget.name);
+//		if (window.console) console.log("could not get trackwidth of "+$widget.connectaname+" for "+$widget.name);
 	}
 	if ($gPanel.turnoutcircles == "yes") {
 		$drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $gPanel.turnoutcirclecolor, 1);
@@ -631,7 +633,7 @@ function $drawTurnout($widget) {
 			$width = $gPanel.mainlinetrackwidth; 
 		}
 	} else {
-		if (window.console) console.log("could not get trackwidth of "+$widget.connectaname+" for "+$widget.name);
+//		if (window.console) console.log("could not get trackwidth of "+$widget.connectaname+" for "+$widget.name);
 	}
 	if ($gPanel.turnoutcircles == "yes") {
 		$drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $gPanel.turnoutcirclecolor, 1);
@@ -934,9 +936,11 @@ var $setElementState = function($element, $name, $newState) {
 		if ($widget.element == $element && $widget.name == $name && $widget.state != $newState) {
 			$setWidgetState($id, $newState);
 		}
-		//if sensor and changed, also check widget's occupancy sensor and redraw widget's color if matched 
-		if ($element == 'sensor' && $widget.occupancysensor == $name) {
+		//if sensor and changed, also check each widget's occupancy sensor and redraw widget's color if matched 
+		if ($element == 'sensor' && $widget.occupancysensor == $name && $widget.occupancystate != $newState) {
 			$gBlks[$widget.blockname].state = $newState; //set the block to the newstate first
+			$gWidgets[$widget.id].occupancystate = $newState;
+			if (window.console) console.log( "redraw " + $widget.widgetType + " " + $widget.name + " for " + $widget.occupancysensor);
 			switch ($widget.widgetType) {
 			case 'layoutturnout' :
 				$drawTurnout($widget);
@@ -1017,7 +1021,7 @@ var $getXMLStateList = function(){
 			$retXml += "<" + $widget.element + " name='" + $widget.name + "' value='" + $widget.state +"'/>";
 			$ela[$elkey] = $elkey; //mark as already in list
 		}
-		$elkey = 'sensor.' + $widget.name;
+		$elkey = 'sensor.' + $widget.occupancysensor;
 		if ($widget.occupancysensor != undefined && $ela[$elkey] == undefined) { //also add each new occupancy sensor to the monitored list 
 			$retXml += "<sensor name='" + $widget.occupancysensor + "' value='" + $gBlks[$widget.blockname].state +"'/>";
 			$ela[$elkey] = $elkey; //mark as already in list
