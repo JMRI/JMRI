@@ -35,7 +35,7 @@ import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.signalling.EntryExitPairs;
 
 public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
-        //private static final long serialVersionUID = 1L;
+        
         transient PointDetails point = null;
         Boolean uniDirection = true;
         int entryExitType = EntryExitPairs.SETUPTURNOUTSONLY;//SETUPSIGNALMASTLOGIC;
@@ -46,11 +46,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
         boolean disposed = false;
         String uniqueId = null;
         
-        EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
+        transient EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
         
         private static final long serialVersionUID = 1209131245L;
         
-        transient jmri.SignalMastLogicManager smlm = InstanceManager.signalMastLogicManagerInstance();
         transient jmri.SignalMastLogic sml;
         
         final static int NXMESSAGEBOXCLEARTIMEOUT = 30;
@@ -72,8 +71,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
             this.src = src;
             this.point=point;
             if(id==null){
-             uniqueId = UUID.randomUUID().toString();
-             mSystemName = uniqueId;
+                uniqueId = UUID.randomUUID().toString();
+                mSystemName = uniqueId;
             } else {
                 uniqueId = id;
             }
@@ -145,7 +144,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                 uniDirection = true;
         }
         
-        protected transient PropertyChangeListener propertyBlockListener;/* = new PropertyChangeListener() {
+        protected PropertyChangeListener propertyBlockListener;/* = new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent e) {
                 Block blk = (Block) e.getSource();
                 if (e.getPropertyName().equals("state")) {
@@ -384,11 +383,13 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                             if((src.sourceSignal instanceof SignalMast) && (getSignal() instanceof SignalMast)){
                                 SignalMast smSource = (SignalMast) src.sourceSignal;
                                 SignalMast smDest = (SignalMast) getSignal();
-                                sml = smlm.newSignalMastLogic(smSource);
-                                if(!sml.isDestinationValid(smDest)){
-                                    //if no signalmastlogic existed then created it, but set it not to be stored.
-                                    sml.setDestinationMast(smDest);
-                                    sml.setStore(jmri.SignalMastLogic.STORENONE, smDest);
+                                synchronized(this){
+                                    sml = InstanceManager.signalMastLogicManagerInstance().newSignalMastLogic(smSource);
+                                    if(!sml.isDestinationValid(smDest)){
+                                        //if no signalmastlogic existed then created it, but set it not to be stored.
+                                        sml.setDestinationMast(smDest);
+                                        sml.setStore(jmri.SignalMastLogic.STORENONE, smDest);
+                                    }
                                 }
                                 LinkedHashMap<Block, Integer> blks = new LinkedHashMap<Block, Integer>();
                                 //Remove the first block as it is our start block
@@ -398,10 +399,12 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                                         routeDetails.get(i).getBlock().setState(Block.UNOCCUPIED);
                                     blks.put(routeDetails.get(i).getBlock(), Block.UNOCCUPIED);
                                 }
-                                smSource.setHeld(false);
-                                sml.setAutoBlocks(blks, smDest);
-                                sml.setAutoTurnouts(turnoutSettings, smDest);
-                                sml.initialise(smDest);
+                                synchronized(this){
+                                    smSource.setHeld(false);
+                                    sml.setAutoBlocks(blks, smDest);
+                                    sml.setAutoTurnouts(turnoutSettings, smDest);
+                                    sml.initialise(smDest);
+                                }
                                 smSource.addPropertyChangeListener( new PropertyChangeListener() {
                                     public void propertyChange(PropertyChangeEvent e) {
                                         SignalMast source = (SignalMast)e.getSource();
@@ -540,12 +543,14 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
             }
             
             //Get rid of the signal mast logic to the destination mast.
-            if((getSignal() instanceof SignalMast) && (sml!=null)){
-                SignalMast mast = (SignalMast) getSignal();
-                if (sml.getStoreState(mast)==jmri.SignalMastLogic.STORENONE)
-                    sml.removeDestination(mast);
+            synchronized(this){
+                if((getSignal() instanceof SignalMast) && (sml!=null)){
+                    SignalMast mast = (SignalMast) getSignal();
+                    if (sml.getStoreState(mast)==jmri.SignalMastLogic.STORENONE)
+                        sml.removeDestination(mast);
+                }
+                sml = null;
             }
-            sml=null;
             
             if(routeDetails==null){
                 return;

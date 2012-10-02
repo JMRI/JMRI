@@ -76,7 +76,7 @@ public class EntryExitPairs implements jmri.Manager{
     public final static int AUTOCLEAR = 0x01;
     public final static int AUTOCANCEL = 0x02;
     
-    static int routeClearOption = PROMPTUSER;
+    int routeClearOption = PROMPTUSER;
     
     static JPanel glassPane = new JPanel();
     
