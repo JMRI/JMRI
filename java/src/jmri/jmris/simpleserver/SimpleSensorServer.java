@@ -4,6 +4,8 @@ package jmri.jmris.simpleserver;
 
 import java.io.*;
 
+import org.eclipse.jetty.websocket.WebSocket.Connection;
+
 import jmri.Sensor;
 
 import jmri.jmris.AbstractSensorServer;
@@ -18,7 +20,13 @@ import jmri.jmris.AbstractSensorServer;
 public class SimpleSensorServer extends AbstractSensorServer {
 
    private DataOutputStream output;
+   private Connection connection;
 
+   public SimpleSensorServer(Connection connection) {
+	   super();
+	   this.connection = connection;
+   }
+   
    public SimpleSensorServer(DataInputStream inStream,DataOutputStream outStream){
         super();
         output=outStream;
@@ -34,16 +42,16 @@ public class SimpleSensorServer extends AbstractSensorServer {
          addSensorToList(sensorName);
 
 	if(Status==Sensor.INACTIVE){
-		output.writeBytes("SENSOR " + sensorName + " INACTIVE\n");
+		this.sendMessage("SENSOR " + sensorName + " INACTIVE\n");
         } else if (Status==Sensor.ACTIVE){
-		output.writeBytes("SENSOR " + sensorName + " ACTIVE\n");
+		this.sendMessage("SENSOR " + sensorName + " ACTIVE\n");
         } else {
-		output.writeBytes("SENSOR " + sensorName + " UNKNOWN\n");
+		this.sendMessage("SENSOR " + sensorName + " UNKNOWN\n");
         }
      }
 
      public void sendErrorStatus(String sensorName) throws IOException {
- 	output.writeBytes("SENSOR ERROR\n");
+ 	this.sendMessage("SENSOR ERROR\n");
      }
 
      public void parseStatus(String statusString) throws jmri.JmriException,java.io.IOException {
@@ -65,7 +73,14 @@ public class SimpleSensorServer extends AbstractSensorServer {
             }
      }
 
-
+     private void sendMessage(String message) throws IOException {
+     	if (this.output != null) {
+     		this.output.writeBytes(message);
+     	} else {
+     		this.connection.sendMessage(message);
+     	}
+     }
+     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleSensorServer.class.getName());
 
 }

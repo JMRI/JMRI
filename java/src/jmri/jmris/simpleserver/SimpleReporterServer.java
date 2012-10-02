@@ -4,6 +4,8 @@ package jmri.jmris.simpleserver;
 
 import java.io.*;
 
+import org.eclipse.jetty.websocket.WebSocket.Connection;
+
 import jmri.Reporter;
 
 import jmri.jmris.AbstractReporterServer;
@@ -18,7 +20,13 @@ import jmri.jmris.AbstractReporterServer;
 public class SimpleReporterServer extends AbstractReporterServer {
 
    private DataOutputStream output;
+   private Connection connection;
 
+   public SimpleReporterServer(Connection connection) {
+	   super();
+	   this.connection = connection;
+   }
+   
    public SimpleReporterServer(DataInputStream inStream,DataOutputStream outStream){
         super();
         output=outStream;
@@ -33,13 +41,13 @@ public class SimpleReporterServer extends AbstractReporterServer {
      {
          addReporterToList(reporterName);
         if(r!=null)
-	  output.writeBytes("REPORTER " + reporterName + " " + r.toString() +"\n");
+	  this.sendMessage("REPORTER " + reporterName + " " + r.toString() +"\n");
         else
-	  output.writeBytes("REPORTER " + reporterName + "\n" );
+	  this.sendMessage("REPORTER " + reporterName + "\n" );
      }
 
      public void sendErrorStatus(String reporterName) throws IOException {
- 	output.writeBytes("REPORTER ERROR\n");
+ 	this.sendMessage("REPORTER ERROR\n");
      }
 
      public void parseStatus(String statusString) throws jmri.JmriException,java.io.IOException {
@@ -60,7 +68,14 @@ public class SimpleReporterServer extends AbstractReporterServer {
             //}
      }
 
-
+     private void sendMessage(String message) throws IOException {
+     	if (this.output != null) {
+     		this.output.writeBytes(message);
+     	} else {
+     		this.connection.sendMessage(message);
+     	}
+     }
+     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleReporterServer.class.getName());
 
 }

@@ -6,6 +6,8 @@ import java.io.*;
 import java.util.ArrayList;
 import javax.management.Attribute;
 
+import org.eclipse.jetty.websocket.WebSocket.Connection;
+
 /**
  * Simple interface between the JMRI operations and a network connection
  * 
@@ -100,7 +102,13 @@ public class SimpleOperationsServer extends jmri.jmris.AbstractOperationsServer 
 	public static final String FIELDSEPARATOR = "=";
 	
 	private DataOutputStream output;
+	private Connection connection;
 
+	public SimpleOperationsServer(Connection connection) {
+		super();
+		this.connection = connection;
+	}
+	
 	public SimpleOperationsServer(DataInputStream inStream,
 			DataOutputStream outStream) {
 		super();
@@ -117,7 +125,7 @@ public class SimpleOperationsServer extends jmri.jmris.AbstractOperationsServer 
 	 * to the String.
 	 */
     public void sendMessage(ArrayList<Attribute> contents) throws IOException {
-        output.writeBytes(constructOperationsMessage(contents) + "\n");
+        this.sendMessage(constructOperationsMessage(contents) + "\n");
     }
     
 	/**
@@ -132,7 +140,7 @@ public class SimpleOperationsServer extends jmri.jmris.AbstractOperationsServer 
 	 * @throws IOException if there is a problem sending the error message
 	 */
 	public void sendErrorStatus(String errorStatus) throws IOException {
-	    output.writeBytes(OPERATIONS + ": " + errorStatus + "\n");
+	    this.sendMessage(OPERATIONS + ": " + errorStatus + "\n");
 	}
 
 	/**
@@ -301,6 +309,14 @@ public class SimpleOperationsServer extends jmri.jmris.AbstractOperationsServer 
 	    }
 	}
 	
+    private void sendMessage(String message) throws IOException {
+    	if (this.output != null) {
+    		this.output.writeBytes(message);
+    	} else {
+    		this.connection.sendMessage(message);
+    	}
+    }
+    
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 			.getLogger(SimpleOperationsServer.class.getName());
 

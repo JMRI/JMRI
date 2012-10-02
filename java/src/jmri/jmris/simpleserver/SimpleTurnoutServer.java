@@ -4,6 +4,9 @@ package jmri.jmris.simpleserver;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+
+import org.eclipse.jetty.websocket.WebSocket.Connection;
+
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.jmris.AbstractTurnoutServer;
@@ -18,7 +21,12 @@ import jmri.jmris.AbstractTurnoutServer;
 public class SimpleTurnoutServer extends AbstractTurnoutServer {
 
     private DataOutputStream output;
+    private Connection connection;
 
+    public SimpleTurnoutServer(Connection connection) {
+    	this.connection = connection;
+    }
+    
     public SimpleTurnoutServer(DataInputStream inStream, DataOutputStream outStream) {
 
         output = outStream;
@@ -32,18 +40,18 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
     public void sendStatus(String turnoutName, int Status) throws IOException {
         addTurnoutToList(turnoutName);
         if (Status == Turnout.THROWN) {
-            output.writeBytes("TURNOUT " + turnoutName + " THROWN\n");
+            this.sendMessage("TURNOUT " + turnoutName + " THROWN\n");
         } else if (Status == Turnout.CLOSED) {
-            output.writeBytes("TURNOUT " + turnoutName + " CLOSED\n");
+            this.sendMessage("TURNOUT " + turnoutName + " CLOSED\n");
         } else {
             //  unknown state
-            output.writeBytes("TURNOUT " + turnoutName + " UNKNOWN\n");
+            this.sendMessage("TURNOUT " + turnoutName + " UNKNOWN\n");
         }
     }
 
     @Override
     public void sendErrorStatus(String turnoutName) throws IOException {
-        output.writeBytes("TURNOUT ERROR\n");
+        this.sendMessage("TURNOUT ERROR\n");
     }
 
     @Override
@@ -67,5 +75,14 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
                     InstanceManager.turnoutManagerInstance().provideTurnout(statusString.substring(index)).getKnownState());
         }
     }
+
+    private void sendMessage(String message) throws IOException {
+    	if (this.output != null) {
+    		this.output.writeBytes(message);
+    	} else {
+    		this.connection.sendMessage(message);
+    	}
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleLightServer.class.getName());
 }

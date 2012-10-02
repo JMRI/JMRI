@@ -2,10 +2,12 @@
 package jmri.jmris.simpleserver;
 
 import java.io.*;
+
 import jmri.JmriException;
 import jmri.Light;
 import jmri.jmris.AbstractLightServer;
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.websocket.WebSocket.Connection;
 
 /**
  * Simple Server interface between the JMRI light manager and a network
@@ -16,8 +18,13 @@ import org.apache.log4j.Logger;
  */
 public class SimpleLightServer extends AbstractLightServer {
 
-    private DataOutputStream output;
+    private DataOutputStream output = null;
+    private Connection connection = null;
 
+    public SimpleLightServer(Connection connection) {
+    	this.connection = connection;
+    }
+    
     public SimpleLightServer(DataInputStream inStream, DataOutputStream outStream) {
 
         output = outStream;
@@ -30,18 +37,18 @@ public class SimpleLightServer extends AbstractLightServer {
     @Override
     public void sendStatus(String lightName, int Status) throws IOException {
         if (Status == Light.ON) {
-            output.writeBytes("LIGHT " + lightName + " ON\n");
+            this.sendMessage("LIGHT " + lightName + " ON\n");
         } else if (Status == Light.OFF) {
-            output.writeBytes("LIGHT " + lightName + " OFF\n");
+        	this.sendMessage("LIGHT " + lightName + " OFF\n");
         } else {
             //  unknown state
-            output.writeBytes("LIGHT " + lightName + " UNKNOWN\n");
+        	this.sendMessage("LIGHT " + lightName + " UNKNOWN\n");
         }
     }
 
     @Override
     public void sendErrorStatus(String lightName) throws IOException {
-        output.writeBytes("LIGHT ERROR\n");
+    	this.sendMessage("LIGHT ERROR\n");
     }
 
     @Override
@@ -60,5 +67,14 @@ public class SimpleLightServer extends AbstractLightServer {
             lightOff(statusString.substring(index, statusString.indexOf(" ", index + 1)));
         }
     }
+    
+    private void sendMessage(String message) throws IOException {
+    	if (this.output != null) {
+    		this.output.writeBytes(message);
+    	} else {
+    		this.connection.sendMessage(message);
+    	}
+    }
+    
     static Logger log = Logger.getLogger(SimpleLightServer.class.getName());
 }

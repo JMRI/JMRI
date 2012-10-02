@@ -4,18 +4,22 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
 import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfService;
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.component.LifeCycle;
+import org.eclipse.jetty.util.thread.ExecutorThreadPool;
 
 /**
  * An HTTP server that handles requests for HTTPServlets.
@@ -55,11 +59,15 @@ public final class WebServer implements LifeCycle.Listener {
 
     public void start() {
         if (server == null) {
-            server = new Server(preferences.getPort());
+            server = new Server();
+            SelectChannelConnector connector = new SelectChannelConnector();
+            connector.setMaxIdleTime(5 * 60 * 1000); // 5 minutes
+            connector.setSoLingerTime(-1);
+            connector.setPort(preferences.getPort());
+            connector.setThreadPool(new ExecutorThreadPool(10, 1000, 10, TimeUnit.SECONDS));
+            server.setConnectors(new Connector[]{connector});
 
             ContextHandlerCollection contexts = new ContextHandlerCollection();
-
-
             for (String path : services.keySet()) {
                 ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SECURITY);
                 context.setContextPath(path);
@@ -72,8 +80,8 @@ public final class WebServer implements LifeCycle.Listener {
                 }
                 contexts.addHandler(context);
             }
-
             server.setHandler(contexts);
+
             server.addLifeCycleListener(this);
 
             Thread serverThread = new ServerThread(server);

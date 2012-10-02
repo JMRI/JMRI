@@ -4,6 +4,9 @@ package jmri.jmris.simpleserver;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import org.apache.log4j.Logger;
+import org.eclipse.jetty.websocket.WebSocket.Connection;
+
 import jmri.PowerManager;
 import jmri.jmris.AbstractPowerServer;
 
@@ -17,12 +20,18 @@ import jmri.jmris.AbstractPowerServer;
 public class SimplePowerServer extends AbstractPowerServer {
 
     private DataOutputStream output;
+    private Connection connection;
+    static Logger log = Logger.getLogger(SimplePowerServer.class.getName());
 
     public SimplePowerServer(DataInputStream inStream, DataOutputStream outStream) {
         output = outStream;
         mgrOK();
     }
 
+    public SimplePowerServer(Connection cnctn) {
+    	this.connection = cnctn;
+    	mgrOK();
+    }
 
     /*
      * Protocol Specific Abstract Functions
@@ -30,17 +39,17 @@ public class SimplePowerServer extends AbstractPowerServer {
     @Override
     public void sendStatus(int Status) throws IOException {
         if (Status == PowerManager.ON) {
-            output.writeBytes("POWER ON\n");
+            this.sendStatus("POWER ON\n");
         } else if (Status == PowerManager.OFF) {
-            output.writeBytes("POWER OFF\n");
+            this.sendStatus("POWER OFF\n");
         } else {
-            output.writeBytes("POWER UNKNOWN\n");
+            this.sendStatus("POWER UNKNOWN\n");
         }
     }
 
     @Override
     public void sendErrorStatus() throws IOException {
-        output.writeBytes("POWER ERROR\n");
+        this.sendStatus("POWER ERROR\n");
     }
 
     @Override
@@ -57,5 +66,12 @@ public class SimplePowerServer extends AbstractPowerServer {
             setOffStatus();
         }
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimplePowerServer.class.getName());
+    
+    public void sendStatus(String status) throws IOException {
+    	if (this.output != null) {
+    		this.output.writeBytes(status);
+    	} else {
+    		this.connection.sendMessage(status);
+    	}
+    }
 }

@@ -9,6 +9,7 @@ import jmri.JmriException;
 import jmri.SignalHead;
 import jmri.jmris.AbstractSignalHeadServer;
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.websocket.WebSocket.Connection;
 
 /**
  * Simple Server interface between the JMRI Sensor manager and a network
@@ -20,8 +21,14 @@ import org.apache.log4j.Logger;
 public class SimpleSignalHeadServer extends AbstractSignalHeadServer {
 
     private DataOutputStream output;
+    private Connection connection;
     static Logger log = Logger.getLogger(SimpleSignalHeadServer.class.getName());
 
+    public SimpleSignalHeadServer(Connection connection) {
+    	super();
+    	this.connection = connection;
+    }
+    
     public SimpleSignalHeadServer(DataInputStream inStream, DataOutputStream outStream) {
         super();
         output = outStream;
@@ -33,12 +40,12 @@ public class SimpleSignalHeadServer extends AbstractSignalHeadServer {
     @Override
     public void sendStatus(String signalHeadName, int Status) throws IOException {
         this.addSignalHeadToList(signalHeadName);
-        output.writeBytes("SIGNALHEAD " + signalHeadName + " " + this.nameForAppearance(Status) + "\n");
+        this.sendMessage("SIGNALHEAD " + signalHeadName + " " + this.nameForAppearance(Status) + "\n");
     }
 
     @Override
     public void sendErrorStatus(String signalHeadName) throws IOException {
-        output.writeBytes("SIGNALHEAD ERROR\n");
+        this.sendMessage("SIGNALHEAD ERROR\n");
     }
 
     @Override
@@ -50,5 +57,13 @@ public class SimpleSignalHeadServer extends AbstractSignalHeadServer {
             SignalHead signalHead = InstanceManager.signalHeadManagerInstance().getSignalHead(status[1]);
             this.sendStatus(signalHead.getSystemName(), signalHead.getAppearance());
         }
+    }
+
+    private void sendMessage(String message) throws IOException {
+    	if (this.output != null) {
+    		this.output.writeBytes(message);
+    	} else {
+    		this.connection.sendMessage(message);
+    	}
     }
 }
