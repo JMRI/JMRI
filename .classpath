@@ -3,7 +3,8 @@
 	<classpathentry excluding="**/.cvsignore|**/COPYING" kind="src" path="java/src"/>
 	<classpathentry excluding="**/.cvsignore|**/COPYING" kind="src" path="java/test"/>
 	<classpathentry excluding="**/.cvsignore|**/COPYING" kind="src" path="java/tmp"/>
-	<classpathentry kind="lib" path="lib/activation.jar"/>
+    <classpathentry excluding="**/Thumbs.db" kind="src" path="resources"/>
+   	<classpathentry kind="lib" path="lib/activation.jar"/>
 	<classpathentry kind="lib" path="lib/annotations.jar"/>
 	<classpathentry kind="lib" path="lib/ch.ntb.usb.jar"/>
 	<classpathentry kind="lib" path="lib/ecj.jar"/>
