@@ -144,7 +144,7 @@ class SchedulesByLoadFrame extends OperationsFrame implements java.beans.Propert
 		int x=0;
 		addItemLeft(locationsPanel, new JLabel(rb.getString("trackSchedule")), 1, x);
 		addItemLeft(locationsPanel, new JLabel(rb.getString("receiveTypeLoad")), 2, x);
-		addItemLeft(locationsPanel, new JLabel(rb.getString("Ship")), 3, x);
+		addItemLeft(locationsPanel, new JLabel(rb.getString("shipLoad")), 3, x);
 		addItemLeft(locationsPanel, new JLabel(rb.getString("destinationTrack")), 4, x++);
 		List<String> locations = locationManager.getLocationsByIdList();
 		for (int i=0; i<locations.size(); i++){
@@ -174,8 +174,12 @@ class SchedulesByLoadFrame extends OperationsFrame implements java.beans.Propert
 								String s = item.getType();
 								if (!item.getTrainScheduleId().equals(""))
 									s = s + ", "+ TrainScheduleManager.instance().getScheduleById(item.getTrainScheduleId()).getName();
+								else
+									s = s + ",";
 								if (!item.getRoad().equals(""))
 									s = s + ", "+ item.getRoad();
+								else
+									s = s + ",";
 								s = s + ", "+item.getLoad();
 								addItemLeft(locationsPanel, new JLabel(rb.getString("Receive")+" ("+s+")"), 2, x);
 								addItemLeft(locationsPanel, new JLabel(rb.getString("Ship")+" ("+item.getShip()+")"), 3, x++);
