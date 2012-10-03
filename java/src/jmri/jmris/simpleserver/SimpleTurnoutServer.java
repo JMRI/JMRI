@@ -58,7 +58,7 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
     public void parseStatus(String statusString) throws jmri.JmriException, java.io.IOException {
         int index;
         index = statusString.indexOf(" ") + 1;
-        log.error("stautsString");
+        log.debug(statusString);
         if (statusString.contains("THROWN")) {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Turnout THROWN");
@@ -84,5 +84,5 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
     	}
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleLightServer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleTurnoutServer.class.getName());
 }
