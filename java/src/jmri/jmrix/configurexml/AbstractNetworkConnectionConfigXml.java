@@ -40,12 +40,8 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
         // many of the following are required by the DTD; failing to include
         // them makes the XML file unreadable, but at least the next
         // invocation of the program can then continue.
-        if (adapter.getSystemConnectionMemo()!=null){
-            e.setAttribute("userName", adapter.getSystemConnectionMemo().getUserName());
-            e.setAttribute("systemPrefix", adapter.getSystemConnectionMemo().getSystemPrefix());
-        }
-        if (adapter.getManufacturer()!=null)
-            e.setAttribute("manufacturer", adapter.getManufacturer());
+
+        storeCommon(e, adapter);
         if (adapter.getHostName()!=null)
             e.setAttribute("address", adapter.getHostName());
         else e.setAttribute("address", rb.getString("noneSelected"));
@@ -53,11 +49,6 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
         if (adapter.getPort()!=0)
             e.setAttribute("port", ""+adapter.getPort());
         else e.setAttribute("port", rb.getString("noneSelected"));
-        
-        if (adapter.getDisabled())
-            e.setAttribute("disabled", "yes");
-        else e.setAttribute("disabled", "no");
-        saveOptions(e, adapter);
 
         e.setAttribute("class", this.getClass().getName());
 
@@ -97,52 +88,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
         } catch ( NullPointerException ex) {  // considered normal if the attributes are not present
         }
         
-        if (e.getAttribute("option1")!=null) {
-            String option1Setting = e.getAttribute("option1").getValue();
-            adapter.configureOption1(option1Setting);
-        }
-        if (e.getAttribute("option2")!=null) {
-            String option2Setting = e.getAttribute("option2").getValue();
-            adapter.configureOption2(option2Setting);
-        }
-        if (e.getAttribute("option3")!=null) {
-            String option3Setting = e.getAttribute("option3").getValue();
-            adapter.configureOption3(option3Setting);
-        }
-        if (e.getAttribute("option4")!=null) {
-            String option4Setting = e.getAttribute("option4").getValue();
-            adapter.configureOption4(option4Setting);
-        }
-        
-        loadOptions(e.getChild("options"), adapter);
-        
-        String manufacturer;
-        try { 
-            manufacturer = e.getAttribute("manufacturer").getValue();
-            adapter.setManufacturer(manufacturer);
-        } catch ( NullPointerException ex) { //Considered normal if not present
-            
-        }
-
-
-        if (adapter.getSystemConnectionMemo()!=null){
-            if (e.getAttribute("userName")!=null){
-                adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
-            }
-
-            if (e.getAttribute("systemPrefix")!=null) {
-                adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
-            }
-        }
-
-        
-        if (e.getAttribute("disabled")!=null) {
-            String yesno = e.getAttribute("disabled").getValue();
-                if ( (yesno!=null) && (!yesno.equals("")) ) {
-                    if (yesno.equals("no")) adapter.setDisabled(false);
-                    else if (yesno.equals("yes")) adapter.setDisabled(true);
-                }
-        }
+        loadCommon(e, adapter);
         // register, so can be picked up next time
         register();
         

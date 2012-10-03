@@ -2,6 +2,7 @@ package jmri.jmrix.lenz.xnetsimulator.configurexml;
 
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.jmrix.SerialPortAdapter;
 import jmri.jmrix.lenz.xnetsimulator.ConnectionConfig;
 import jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter;
 
@@ -26,6 +27,8 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     public ConnectionConfigXml() {
         super();
     }
+    
+    protected SerialPortAdapter adapter;
 
     /**
      * A Simulator connection needs no extra information, so
@@ -38,17 +41,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         getInstance(o);
 
         Element e = new Element("connection");
-        
-        if (adapter.getSystemConnectionMemo()!=null){
-            e.setAttribute("userName", adapter.getSystemConnectionMemo().getUserName());
-            e.setAttribute("systemPrefix", adapter.getSystemConnectionMemo().getSystemPrefix());
-        }
-        if (adapter.getManufacturer()!=null)
-            e.setAttribute("manufacturer", adapter.getManufacturer());
-        
-        if (adapter.getDisabled())
-            e.setAttribute("disabled", "yes");
-        else e.setAttribute("disabled", "no");
+        storeCommon(e, adapter);
         
         e.setAttribute("class", this.getClass().getName());
 
@@ -64,32 +57,8 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     	boolean result = true;
         // start the "connection"
         getInstance();
-        //adapter = new jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter();
         
-        String manufacturer;
-        try { 
-            manufacturer = e.getAttribute("manufacturer").getValue();
-            adapter.setManufacturer(manufacturer);
-        } catch ( NullPointerException ex) { //Considered normal if not present
-            
-        }
-        if (adapter.getSystemConnectionMemo()!=null){
-            if (e.getAttribute("userName")!=null) {
-                adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
-            }
-            
-            if (e.getAttribute("systemPrefix")!=null) {
-                adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
-            }
-        }
-        
-        if (e.getAttribute("disabled")!=null) {
-            String yesno = e.getAttribute("disabled").getValue();
-                if ( (yesno!=null) && (!yesno.equals("")) ) {
-                    if (yesno.equals("no")) adapter.setDisabled(false);
-                    else if (yesno.equals("yes")) adapter.setDisabled(true);
-                }
-        }
+        loadCommon(e, adapter);
         
         // register, so can be picked up next time
         register();
@@ -108,7 +77,6 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     protected void getInstance() {
         if(adapter==null){
            adapter = new XNetSimulatorAdapter();
-           //adapter.configure();
         }
     }
     

@@ -2,6 +2,7 @@ package jmri.jmrix.internal.configurexml;
 
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.jmrix.SerialPortAdapter;
 import jmri.jmrix.internal.ConnectionConfig;
 import jmri.jmrix.internal.InternalAdapter;
 
@@ -26,6 +27,8 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     protected void getInstance() {
         adapter = new InternalAdapter();
     }
+    
+    protected SerialPortAdapter adapter;
 
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig)object).getAdapter();
@@ -39,13 +42,8 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     public Element store(Object o) {
         getInstance(o);
         Element e = new Element("connection");
-        if (adapter.getSystemConnectionMemo()!=null){
-            e.setAttribute("userName", adapter.getSystemConnectionMemo().getUserName());
-            e.setAttribute("systemPrefix", adapter.getSystemConnectionMemo().getSystemPrefix());
-        }
-        if (adapter.getDisabled())
-            e.setAttribute("disabled", "yes");
-        else e.setAttribute("disabled", "no");
+        storeCommon(e, adapter);
+        
         e.setAttribute("class", this.getClass().getName());
 
         return e;
@@ -57,25 +55,8 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     public boolean load(Element e) {
     	boolean result = true;
         getInstance();
-//        jmri.jmrix.internal.InternalSystemConnectionMemo memo = new jmri.jmrix.internal.InternalSystemConnectionMemo();
-//        memo.configureManagers();
-        
-        if (adapter.getSystemConnectionMemo()!=null){
-            if (e.getAttribute("userName")!=null){
-                adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
-            }
 
-            if (e.getAttribute("systemPrefix")!=null) {
-                adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
-            }
-        }
-        if (e.getAttribute("disabled")!=null) {
-            String yesno = e.getAttribute("disabled").getValue();
-                if ( (yesno!=null) && (!yesno.equals("")) ) {
-                    if (yesno.equals("no")) adapter.setDisabled(false);
-                    else if (yesno.equals("yes")) adapter.setDisabled(true);
-                }
-        }
+        loadCommon(e, adapter);
         // register, so can be picked up
         register();
         

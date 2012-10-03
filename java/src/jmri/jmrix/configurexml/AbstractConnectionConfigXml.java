@@ -1,7 +1,6 @@
 package jmri.jmrix.configurexml;
 
 import jmri.configurexml.*;
-import jmri.jmrix.SerialPortAdapter;
 import jmri.jmrix.PortAdapter;
 
 import org.jdom.Element;
@@ -22,7 +21,6 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     static java.util.ResourceBundle rb = 
         java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
     
-    protected SerialPortAdapter adapter;
     abstract protected void getInstance();
     abstract protected void register();
 
@@ -31,30 +29,20 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
      * @param o Object to store, of type PositionableLabel
      * @return Element containing the complete info
      */
-    public Element store(Object o) {
-        getInstance();
-
-        Element e = new Element("connection");
-        // many of the following are required by the DTD; failing to include
-        // them makes the XML file unreadable, but at least the next
-        // invocation of the program can then continue.
+    abstract public Element store(Object o);
+    
+    protected void storeCommon(Element e,  PortAdapter adapter){
+        if (adapter.getSystemConnectionMemo()!=null){
+            e.setAttribute("userName", adapter.getSystemConnectionMemo().getUserName());
+            e.setAttribute("systemPrefix", adapter.getSystemConnectionMemo().getSystemPrefix());
+        }
         if (adapter.getManufacturer()!=null)
             e.setAttribute("manufacturer", adapter.getManufacturer());
-        if (adapter.getCurrentPortName()!=null)
-            e.setAttribute("port", adapter.getCurrentPortName());
-        else e.setAttribute("port", rb.getString("noneSelected"));
-
-        if (adapter.getCurrentBaudRate()!=null)
-            e.setAttribute("speed", adapter.getCurrentBaudRate());
-        else e.setAttribute("speed", rb.getString("noneSelected"));
-
+            
+        if (adapter.getDisabled())
+            e.setAttribute("disabled", "yes");
+        else e.setAttribute("disabled", "no");
         saveOptions(e, adapter);
-        
-        e.setAttribute("class", this.getClass().getName());
-
-        extendElement(e);
-
-        return e;
     }
 
 
@@ -69,15 +57,9 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
      * @param e Top level Element to unpack.
      * @return true if successful
       */
-    public boolean load(Element e) throws Exception {
-    	boolean result = true;
-        getInstance();
-        // configure port name
-        String portName = e.getAttribute("port").getValue();
-        adapter.setPort(portName);
-        String baudRate = e.getAttribute("speed").getValue();
-        adapter.configureBaudRate(baudRate);
-
+    abstract public boolean load(Element e) throws Exception;
+    
+    protected void loadCommon(Element e, PortAdapter adapter){
         if (e.getAttribute("option1")!=null) {
             String option1Setting = e.getAttribute("option1").getValue();
             adapter.configureOption1(option1Setting);
@@ -86,50 +68,47 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
             String option2Setting = e.getAttribute("option2").getValue();
             adapter.configureOption2(option2Setting);
         }
+        if (e.getAttribute("option3")!=null) {
+            String option3Setting = e.getAttribute("option3").getValue();
+            adapter.configureOption3(option3Setting);
+        }
+        if (e.getAttribute("option4")!=null) {
+            String option4Setting = e.getAttribute("option4").getValue();
+            adapter.configureOption4(option4Setting);
+        }
+        
         loadOptions(e.getChild("options"), adapter);
-        String manufacturer;
+        
         try { 
-            manufacturer = e.getAttribute("manufacturer").getValue();
-            adapter.setManufacturer(manufacturer);
+            adapter.setManufacturer(e.getAttribute("manufacturer").getValue());
         } catch ( NullPointerException ex) { //Considered normal if not present
             
         }
-        // register, so can be picked up next time
-        register();
 
-        // try to open the port
-        String status = adapter.openPort(portName, "JMRI app");
-        if (status != null ) {
-            // indicates an error, return it
-            ConfigXmlManager.creationErrorEncountered(
-                                        null, "opening connection",
-                                        org.apache.log4j.Level.ERROR,
-                                        status,
-                                        null,null,null
-                                    );
-            // now force end to operation
-            return false;
+        if (adapter.getSystemConnectionMemo()!=null){
+            if (e.getAttribute("userName")!=null){
+                adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
+            }
+
+            if (e.getAttribute("systemPrefix")!=null) {
+                adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
+            }
         }
         
-        // if successful so far, go ahead and configure
-        adapter.configure();
-
-        // once all the configure processing has happened, do any
-        // extra config
-        unpackElement(e);
-        return result;
+        if (e.getAttribute("disabled")!=null) {
+            String yesno = e.getAttribute("disabled").getValue();
+            if ( (yesno!=null) && (!yesno.equals("")) ) {
+                if (yesno.equals("no")) adapter.setDisabled(false);
+                else if (yesno.equals("yes")) adapter.setDisabled(true);
+            }
+        }
+    
     }
 
     protected void saveOptions(Element e, PortAdapter adapter){
         Element element = new Element("options");
         String[] options = adapter.getOptions();
-        /*Hashtable<String, AbstractPortController.Option> options = ((AbstractPortController)adapter).getOptionList();
-        for(String i:options.keySet()){
-            Element elem = new Element("option");
-            elem.addContent(new Element("name").addContent(options.get(i).getName()));
-            elem.addContent(new Element("value").addContent(options.get(i).getCurrent()));
-            element.addContent(elem);
-        }*/
+
         for(String i:options){
             Element elem = new Element("option");
             elem.addContent(new Element("name").addContent(i));
