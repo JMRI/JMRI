@@ -1197,6 +1197,9 @@ custom loads.</P>
 any load that you've created for the that type of car.  The window then shows which schedules by location are receiving
 or shipping that specific car load.</P>
 
+<P>If you want a list of custom car loads for each of your car types, you can use the "Print Car Loads" or
+"Preview Car Loads" found under Tools in the "Show schedules by car type and load" window.</P>
+
    <A NAME="Interchange"></A>
    <H3>Classification/Interchange Tracks</H3>
 
@@ -1474,7 +1477,7 @@ serviced by the same locations and tracks.</P>
 <H2>Cars</H2>
 
 The cars window allows you to edit your car roster. You can enter a car's
-number, road, type, length. The program will automatically calculate the
+road, number, type, and length. The program will automatically calculate the
 car's weight based on length and the scale your modeling. You can
 optionally add the car's color, build date, load and owner. If you want
 a group of cars to be switched as a unit, you can create a "kernel". You
@@ -1581,8 +1584,8 @@ road or delete any that you don't need.</P>
 
 <H3>Road Number</H3>
 
-Now enter the car's number in the text box. The program requires a
-unique road name and road number for each car. If you have cars with
+Now enter the car's road number in the text box. The program requires a
+unique road name and number for each car. If you have cars with
 identical roads and numbers, simply add a -1, -2, etc. to each of the
 car numbers. The program when printing out the manifest or switch list
 will drop the -1, -2, etc. from the car's road number.
@@ -1590,15 +1593,15 @@ will drop the -1, -2, etc. from the car's road number.
 <A NAME="CarTypeLengthWeight"></A>
 <H3>Car Type, Length, Weight</H3>
 
-Select the car's type and length from the menu boxes. Use the
-"Edit" button to the right of the menu boxes to add or delete car types, or lengths that you
-want to add or remove. The car's weight is automatically calculated, but
-you can enter a different weight if necessary. When entering the length
-of a car, enter the length of the body and not the total length. For
-example, a forty foot boxcar has a length of 40 feet. The program when
-calculating lengths will add two feet to each end of a car for the
-couplers. Therefore when you place a forty foot car at a spur, it will
-consume 44 feet of track.
+Select the car's type and length from the menu boxes. Use the "Edit"
+button to the right of the menu boxes to add or delete car types, or
+lengths that you want to add or remove. The car's weight is
+automatically calculated, but you can enter a different weight if
+necessary. When entering the length of a car, enter the length of the
+body and not the total length. For example, a forty foot boxcar has a
+length of 40 feet. The program when calculating lengths will add two
+feet to each end of a car for the couplers. Therefore when you place a
+forty foot car at a spur, it will consume 44 feet of track.
 
 <H3>Car subType</H3>
 
@@ -1659,10 +1662,12 @@ For example a load of tools could be entered as "L(Tools)" or just "Tools" if de
 
 If wish this car to be part of a kernel which is a group of cars that
 you want to switch as one unit, press "Edit" across from "Kernel" and
-enter a kernel name. Then select the kernel from the menu box.  The first car you assign to the kernel
-becomes the lead car.  The program when searching for a track to set out the kernel will only use the lead
-car's attributes when determining if the track can accept the kernel.  However, the program does use the entire
-length of the kernel to determine if the group of cars will fit on the destination track.
+enter a kernel name. Then select the kernel from the menu box. The first
+car you assign to the kernel becomes the lead car. The program when
+searching for a track to set out the kernel will only use the lead car's
+attributes when determining if the track can accept the kernel. However,
+the program does use the entire length of the kernel to determine if the
+group of cars will fit on the destination track.
 
 <H3>Optional Fields</H3>
 
@@ -2260,7 +2265,7 @@ caboose.
 
 <P>You can also request helper locomotives for those long up hill battles that your train
     might experience. The current code only adds a comment to the manifest requesting helper service
-    starting at the location you select and removes the helper service at the second location
+    starting at the location you select, and removes the helper service at the second location
     specified by you.</P>
 
    <A NAME="TrainScripts"></A>
