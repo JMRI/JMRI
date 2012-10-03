@@ -51,11 +51,8 @@ public class PositionablePopupUtil {
             _textType = LABEL;
         } else if (textComp instanceof JTextField) {
             _textType = TEXTFIELD;
-        } else if (textComp instanceof JComponent){
-            _textType = JCOMPONENT;
         } else {
-            log.error("PositionablePopupUtil unknown text component: "+textComp.getClass().getName());
-        	
+            _textType = JCOMPONENT;
         }
         _textComponent = textComp;
         debug = log.isDebugEnabled();
@@ -67,20 +64,18 @@ public class PositionablePopupUtil {
 
     public PositionablePopupUtil clone(Positionable parent, JComponent textComp) {
     	PositionablePopupUtil util = new PositionablePopupUtil(parent, textComp);
-        if (util!=null) {
-            util.setJustification(getJustification());
-            util.setHorizontalAlignment(getJustification());
-            util.setFixedWidth(getFixedWidth());
-            util.setFixedHeight(getFixedHeight());
-            util.setMargin(getMargin());
-            util.setBorderSize(getBorderSize());
-            util.setBorderColor(getBorderColor());
-            util.setFont(util.getFont().deriveFont(getFontStyle()));
-            util.setFontSize(getFontSize());
-            util.setOrientation(getOrientation());
-            util.setBackgroundColor(getBackground());
-            util.setForeground(getForeground());
-        }
+        util.setJustification(getJustification());
+        util.setHorizontalAlignment(getJustification());
+        util.setFixedWidth(getFixedWidth());
+        util.setFixedHeight(getFixedHeight());
+        util.setMargin(getMargin());
+        util.setBorderSize(getBorderSize());
+        util.setBorderColor(getBorderColor());
+        util.setFont(util.getFont().deriveFont(getFontStyle()));
+        util.setFontSize(getFontSize());
+        util.setOrientation(getOrientation());
+        util.setBackgroundColor(getBackground());
+        util.setForeground(getForeground());
         return util;
     }
 
