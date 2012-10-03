@@ -50,7 +50,6 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 	
 	public void enableTrainLogging(boolean enable){
 		if (enable){
-			createFile();
 			addTrainListeners();
 		} else {
 			removeTrainListeners();
@@ -88,6 +87,8 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 	}
 	
 	private void store(Train train){
+		// create train file if needed
+		createFile();
 		// Note that train status can contain a comma
 		String line = train.getName() +del+ "\""+train.getDescription()+"\""
 		+del+ "\""+train.getCurrentLocationName()+"\""

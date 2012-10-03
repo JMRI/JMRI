@@ -55,7 +55,6 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 	
 	public void enableCarLogging(boolean enable){
 		if (enable){
-			createFile();
 			addCarListeners();
 		} else {
 			removeCarListeners();
@@ -64,7 +63,6 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 	
 	public void enableEngineLogging(boolean enable){
 		if (enable){
-			createFile();
 			addEngineListeners();
 		} else {
 			removeEngineListeners();
@@ -112,6 +110,9 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 	
 	private boolean mustHaveTrack = true;	// when true only updates that have a track are saved
 	private void store(RollingStock rs){
+		// create the log file if needed
+		createFile();
+		
 		if (rs.getTrack() == null && mustHaveTrack)
 			return;
 		
