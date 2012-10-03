@@ -5,6 +5,10 @@ package jmri.jmrit.operations.rollingstock;
 import java.io.File;
 import java.util.Locale;
 
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import junit.framework.Assert;
@@ -23,15 +27,27 @@ public class OperationsLoggerTest extends TestCase {
 
 	// test creation
 	public void testCreate() {
+		// load a car
+		CarManager manager = CarManager.instance();
+		Car c1 = manager.newCar("CP", "1");
+		c1.setType("Boxcar");
+		c1.setLength("40");
 		// log cars
 		Setup.setCarLoggerEnabled(true);
 		// turn on logging
 		RollingStockLogger.instance().enableCarLogging(true);
-		
+		// log is created after a car is placed
+		File file = new File(RollingStockLogger.instance().getFullLoggerFileName());	
+		Assert.assertFalse("file exists", file.exists());
+		// place car
+		Location l1 = new Location("id1", "Logger location B");
+        Track l1t1 = l1.addTrack("Logger track A",Track.SIDING);
+        l1t1.setLength(100);
+		Assert.assertEquals("place c1", Track.OKAY, c1.setLocation(l1, l1t1));
+				
 		// confirm creation of directory
 		File dir = new File(RollingStockLogger.instance().getDirectoryName());		
 		Assert.assertTrue("directory exists", dir.exists());
-		File file = new File(RollingStockLogger.instance().getFullLoggerFileName());	
 		Assert.assertTrue("file exists", file.exists());
 		
 		// now delete file
@@ -55,6 +71,11 @@ public class OperationsLoggerTest extends TestCase {
 		if (!tempstring.contains(File.separator+"JUnitTest")){
 			OperationsSetupXml.setOperationsDirectoryName("operations"+File.separator+"JUnitTest");
 		}
+		// delete file and log directory before testing
+		File file = new File(RollingStockLogger.instance().getFullLoggerFileName());
+		file.delete();
+		File dir = new File(RollingStockLogger.instance().getDirectoryName());
+		dir.delete();
     }
 
 	public OperationsLoggerTest(String s) {
