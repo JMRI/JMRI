@@ -1120,6 +1120,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	    		case 2:
 	    			return r.F23;
 	    		}
+	    		break;
 	    	case 12:
 	    		switch (sRow) {
 	    		case 0:
@@ -1169,6 +1170,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	    		case 2:
 	    			return r.F28;
 	    		}
+	    		break;
 	    	case 17:
 	    		switch (sRow) {
 	    		case 0:
@@ -1201,8 +1203,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	    	}
 	    }
 	    
-	    @SuppressWarnings("unchecked")
-		public Class getColumnClass(int c) {
+		public Class<?> getColumnClass(int c) {
 	    	if (c == 0 || c == 3  || c == 5) {
 	    		return Integer.class;
 	    	} else if (c == 1 || c == 4 || (c >= 6 && c <= 7) || (c >= 18 && c <= 19)){
