@@ -138,6 +138,19 @@ import jmri.jmrit.logix.OBlock;
         }
     }
 
-   
+    protected String setStatus(int state) {
+    	String status;
+        if (state==Sensor.ACTIVE) {
+            status = "OccupiedTrack";
+        } else if (state==Sensor.INACTIVE) {
+            status = "ClearTrack";
+        } else if (state==Sensor.UNKNOWN) {
+            status = "DontUseTrack";
+        } else {
+            status = "ErrorTrack";
+        }
+        return status;
+    }
+       
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndicatorTrackPaths.class.getName());
  }

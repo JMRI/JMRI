@@ -138,7 +138,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         if (namedOccSensor != null) {
             Sensor sensor = getOccSensor();
             sensor.addPropertyChangeListener(this, namedOccSensor.getName(), "Indicator Turnout Icon");
-            setStatus(sensor.getKnownState());
+            _status = _pathUtil.setStatus(sensor.getKnownState());
             if (_iconMaps!=null) {
                 displayState(turnoutState());
             }
@@ -209,6 +209,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     }
     public void removePath(String path) {
     	_pathUtil.removePath(path);
+    }
+    public void setStatus(int state) {
+    	_pathUtil.setStatus(state);
     }
 
     /**
@@ -363,7 +366,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
             if (evt.getPropertyName().equals("KnownState")) {
                 int now = ((Integer)evt.getNewValue()).intValue();
                 if (source.equals(getOccSensor())) {
-                    setStatus(now);
+                	_status = _pathUtil.setStatus(now);
                 }
             }
         }
@@ -375,18 +378,6 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         _pathUtil.setLocoIcon((String)block.getValue(), getLocation(), getSize(), _editor);
         if (_status.equals("DontUseTrack")) {
         	setControlling(false);
-        }
-    }
-
-    public void setStatus(int state) {
-        if (state==Sensor.ACTIVE) {
-            _status = "OccupiedTrack";
-        } else if (state==Sensor.INACTIVE) {
-            _status = "ClearTrack";
-        } else if (state==Sensor.UNKNOWN) {
-            _status = "DontUseTrack";
-        } else {
-            _status = "ErrorTrack";
         }
     }
 

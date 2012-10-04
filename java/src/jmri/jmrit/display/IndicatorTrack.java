@@ -28,10 +28,8 @@ public interface IndicatorTrack extends Positionable  {
 
     public void setShowTrain(boolean set);
     public boolean showTrain();
-
-    public void setStatus(int state);
-
     public ArrayList<String> getPaths();
     public void addPath(String path);
     public void removePath(String path);
+    public void setStatus(int state);
 }
