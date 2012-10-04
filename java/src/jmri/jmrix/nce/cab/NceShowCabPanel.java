@@ -239,9 +239,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     JButton refreshButton = new JButton(rb.getString("Refresh"));
     
     // check boxes
-    static JCheckBox checkBoxShowActive = new JCheckBox(rb.getString("CheckBoxLabelShowActive"));
-    static JCheckBox checkBoxShowDisplayText = new JCheckBox(rb.getString("CheckBoxLabelShowDisplayText"));
-    static JCheckBox checkBoxShowAllFunctions = new JCheckBox(rb.getString("CheckBoxLabelShowAllFunctions"));
+    JCheckBox checkBoxShowActive = new JCheckBox(rb.getString("CheckBoxLabelShowActive"));
+    JCheckBox checkBoxShowDisplayText = new JCheckBox(rb.getString("CheckBoxLabelShowDisplayText"));
+    JCheckBox checkBoxShowAllFunctions = new JCheckBox(rb.getString("CheckBoxLabelShowAllFunctions"));
     
     // text fields
     
