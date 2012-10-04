@@ -110,6 +110,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
@@ -458,6 +459,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	}
     	
     	firstTime = false;
+    	int cabsFound = 0;
         // build table of cabs
         for (int currCabId=0; currCabId < cabData.length; currCabId++){
            	
@@ -481,6 +483,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	        	if ((recChar & FLAGS1_MASK_CABISACTIVE) != FLAGS1_CABISACTIVE) {
 	        		// not active slot
 	            	continue;
+	        	}
+	        	if (currCabId >= 1 || !checkBoxShowActive.isSelected()) {
+	           		cabsFound++;
 	        	}
 	        	int cabId = recChar & FLAGS1_MASK_CABID; // mask off don't care bits
 	        	if (cabId == FLAGS1_CABID_DISPLAY){
@@ -785,7 +790,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
            	}
         }
  
-        textStatus.setText(rb.getString("StatusReadingDone"));
+        textStatus.setText(MessageFormat.format(rb.getString("StatusReadingDone") + ", " + rb.getString("FoundCabs"), cabsFound));
         cabModel.fireTableDataChanged();
     	this.setVisible(true);
     	this.repaint();
