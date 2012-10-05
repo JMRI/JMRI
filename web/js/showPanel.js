@@ -611,7 +611,7 @@ function $drawClock($widget) {
 	var $fcr = $gWidgets['IMRATEFACTOR'].state * 1; //get the fast clock rate factor from its widget
 	var $h = "";
 	$h += "<div class='clocktext' style='font-size:" + $fs + "%;' >" + $widget.state + "<br />" + $fcr +":1</div>";  //add the text
-	$h += "<img class='clockface' src='/resources/clock2.gif' />";  				//add the clockface
+	$h += "<img class='clockface' src='/web/images/clockface.png' />"; 				//add the clockface
 	$h += "<img class='clockhourhand' src='/web/images/clockhourhand.png' />"; 		//add the hour hand
 	$h += "<img class='clockminutehand' src='/web/images/clockminutehand.png' />"; 	//add the minute hand
 	$("div#panelArea>#"+$widget.id).html($h); //set the html for the widget
