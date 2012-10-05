@@ -57,12 +57,40 @@ div#panelFooter span.info {
 }
 
 div.MemoryInputIconXml, div.MemorySpinnerIconXml {
-	paddinxg: 1px 1em 1px 1em;
+	padding: 1px 1em 1px 1em;
 	border:  solid black 1px;
 	min-width: 4em;
 	text-align: center;
 }
 
+div.fastclock>div.clocktext {
+	position: relative;
+	top:      55%;
+	margin-left:  auto;
+	margin-right: auto;
+	text-align: center;
+	font-family:  serif;
+	font-weight:  bold;
+}
+div.fastclock>img.clockface {
+    position: absolute;
+    z-index: -1;
+    width: 100%; /*so it will grow with scale */
+    top:	0;
+    left: 	0;
+}
+div.fastclock>img.clockhourhand, div.fastclock>img.clockminutehand {
+	position: absolute;
+    width: 100%; /*so they will grow with scale */
+	top: 	0;
+	left: 	0; 
+}
+div.fastclock>img.clockminutehand {
+  z-index: 2;
+}
+div.fastclock>img.clockhourhand {
+  z-index: 1;
+}
 .modal {
     display:    none;
     position:   fixed;

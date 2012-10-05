@@ -16,6 +16,7 @@
 *
 **********************************************************************************************/
 
+//TODO: add new heartbeat logic
 //TODO: add button? link to type's page from settings Include list
 //TODO: checking a new function creates a new, duplicate connection (not needed)
 //TODO: "wide-screen" version that shows multiple "pages" at once, for use on wider browsers
@@ -33,7 +34,6 @@ var $gXHRList;  //persistent variable to allow aborting of superseded connection
 
 //handle button press, send request for immediate change 
 var $sendChange = function($type, $name, $nextValue){
-	$.mobile.showPageLoadingMsg("b","sending change to JMRI....");  //show pageloading message
 	var $commandstr = '<xmlio><item><type>' + $type + '</type><name>' + $name + '</name><set>' + $nextValue +'</set></item>' 
 	    + '</xmlio>';
 	$sendXMLIOChg($commandstr);
@@ -56,19 +56,21 @@ var $sendXMLIOList = function($commandstr){
 			$processResponse($r, $s, $x); //handle returned data
 		},
 		async: true,
-		timeout: 150000,  //TODO: rethink this, maybe send a dummy change?
+		timeout: 150000,  //TODO: redo this to use dummy heartbeat sensor
 		dataType: 'xml' //<--dataType
 	});
 };
 
 //send a command to the server, and ignore the response (used for change commands)
 var $sendXMLIOChg = function($commandstr){
+	$.mobile.loading( 'show', {text: 'sending change to xmlio server', textVisible:true, theme:'b'});
 	$.ajax({  
 		type: 'POST',
 		url:  '/xmlio/',
 		data: $commandstr,
 		success: function($r, $s, $x){
 			//ignore this response
+			$.mobile.loading( 'hide' );
 		},
 		async: true,
 		timeout: 2000,  //two seconds
@@ -78,8 +80,7 @@ var $sendXMLIOChg = function($commandstr){
 
 //process the response returned for the "list" command
 var $processResponse = function($returnedData, $success, $xhr) {
-
-	$.mobile.showPageLoadingMsg("b","processing response from JMRI....");  //show pageloading message
+	$.mobile.loading( 'show', {text: 'processing changes from xmlio server', textVisible:true, theme:'b'});
 
 	$('div.errorMessage').html("");  //clear out the error message onscreen
 
@@ -177,7 +178,7 @@ var $processResponse = function($returnedData, $success, $xhr) {
 	//echo value list back to server, which will cause server to monitor for changes
 	$sendXMLIOList($xmlstr);
 
-	$.mobile.hidePageLoadingMsg(); //hide the pageloading message
+	$.mobile.loading( 'hide' ); //hide the pageloading message
 
 };    	
 
@@ -351,8 +352,6 @@ $(document).ready(function() {
 		$changeToPageWhenAvailable($newPage, 10)  //try requested page 10 times
 	}
 	
-	$.mobile.showPageLoadingMsg("b", "retrieving saved settings");  //show pageloading message
-
 	//retrieve checked values from localstorage and set checkboxes to match
 	var $savedInputs = ["turnout","frame"];  //default selections
 	if (localStorage['savedInputs']) {
@@ -399,8 +398,5 @@ $(document).ready(function() {
 	});
 	
 	$("#settings").page();
-
-	$.mobile.hidePageLoadingMsg();  //hide pageloading message
-
 
 });

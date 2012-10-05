@@ -15,6 +15,7 @@
  *  		4) browser user clicks on widget? send "set state" command and go to 3)
  *  		5) error? go back to 2) 
  *  
+ *  TODO: add analog clock (in progress)
  *  TODO: handle turnoutdrawunselectedleg = "yes"
  *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
  *  TODO: handle "&" in panel names 
@@ -34,6 +35,7 @@
  *  TODO: figure out FireFox issue using size of alt text for rotation of unloaded images
  *  TODO: finish indicatorXXicon logic, handling occupancy and error states
  *  TODO: handle inputs/selection on various memory widgets
+ *  TODO: improve look of multisensorclick by sending all state changes in one message
  *   
  **********************************************************************************************/
 
@@ -152,11 +154,6 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 				switch ($widget.widgetFamily) {
 				case "icon" :
 					switch ($widget.widgetType) {
-					case "fastclock" :
-						$widget['icon1'] = 		"/resources/clock2.gif";
-						$widget['scale'] = 		$(this).attr('scale');
-						$widget['level'] =		10;  //not included in xml
-						break;
 					case "positionablelabel" :
 						$widget['icon1'] = 		$(this).find('icon').attr('url');
 						var $rotation = 		$(this).find('icon').find('rotation').text();
@@ -171,7 +168,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						break;
 					case "indicatorturnouticon" :
 						$widget['name']  =		$(this).find('turnout').text();; //normalize name
-						$widget['element']  =	"turnout"; //what xmlio server calls this
+						$widget['element']  =	'turnout'; //what xmlio server calls this
 						$widget['icon1'] = 		$(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('url');
 						$widget['icon2'] = 		$(this).find('iconmaps').find('ClearTrack').find('TurnoutStateClosed').attr('url');
 						$widget['icon4'] = 		$(this).find('iconmaps').find('ClearTrack').find('TurnoutStateThrown').attr('url');
@@ -309,6 +306,17 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 							$widget.styles['line-height']	= $widget.scale * 20 + "px";  //center vertically
 						}
 						break;
+					case "fastclock" :
+						$widget['name'] = 		'IMCURRENTTIME';
+						$widget['element']  =	'memory';
+						$widget.styles['width'] 	= "166px";  //hard-coded to match original size of clock image
+						$widget.styles['height'] 	= "166px";
+						$widget['scale'] = 		$(this).attr('scale');
+						if ($widget.level == undefined) {
+							$widget['level'] =		10;  //if not included in xml
+						}
+						$widget['text']  =		"00:00 AM";
+						break;
 					case "memoryicon" :
 						$widget['name']  =		$widget.memory; //normalize name
 						$widget['element']  =	"memory"; //what xmlio server calls this
@@ -434,15 +442,6 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 		$sendElementChange($gWidgets[this.id].element, $gWidgets[this.id].name, INACTIVE);  //send inactive on up
 	});
 	
-	//add a dummy sensor widget for use as heartbeat
-	$widget = new Array();
-	$widget['element'] = "sensor";
-	$widget['name'] = "ISXMLIOHEARTBEAT";  //internal sensor, will be created if not there
-	$widget['id'] 	= $widget['name'];
-	$widget['safeName']	= $widget['name'];
-	$widget['state'] = UNKNOWN;
-	$gWidgets[$widget.id] = $widget;
-
 	$drawAllDrawnWidgets(); //draw all the widgets once more, to address some bidrectional dependencies in the xml
 	$('div#workingMessage').hide();
 	$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>'); //send initial states to xmlio server
@@ -456,7 +455,6 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 //perform regular click-handling, bound to click event for clickable, non-momentary widgets.
 function $handleClick(e) {
 	var $widget = $gWidgets[this.id];
-if (window.console) console.log("regular click called for "+$widget.name);
     var $newState = $getNextState($widget);  //determine next state from current state
 	$sendElementChange($widget.element, $widget.name, $newState);  //send new value to xmlio server
 	if ($widget.secondturnoutname != undefined) {  //TODO: put this in a more logical place?
@@ -605,6 +603,27 @@ if (CP.lineTo) {
         }       
         this.restore();
     }
+}
+
+//draw the analog clock (pass in widget), called on each update of clock
+function $drawClock($widget) {
+	var $fs = $widget.scale * 100;  //scale percentage, used for text
+	var $fcr = $gWidgets['IMRATEFACTOR'].state * 1; //get the fast clock rate factor from its widget
+	var $h = "";
+	$h += "<div class='clocktext' style='font-size:" + $fs + "%;' >" + $widget.state + "<br />" + $fcr +":1</div>";  //add the text
+	$h += "<img class='clockface' src='/resources/clock2.gif' />";  				//add the clockface
+	$h += "<img class='clockhourhand' src='/web/images/clockhourhand.png' />"; 		//add the hour hand
+	$h += "<img class='clockminutehand' src='/web/images/clockminutehand.png' />"; 	//add the minute hand
+	$("div#panelArea>#"+$widget.id).html($h); //set the html for the widget
+	
+	var hours = $widget.state.split(':')[0]; 	//extract hours from format "H:MM AM"
+	var mins =  $widget.state.split(':')[1].split(' ')[0]; //extract minutes
+    var hdegree = hours * 30 + (mins / 2);
+    var hrotate = "rotate(" + hdegree + "deg)";
+    $("div.fastclock>img.clockhourhand").css({ "transform": hrotate}); //set rotation for hour hand
+    var mdegree = mins * 6;
+    var mrotate = "rotate(" + mdegree + "deg)";
+    $("div.fastclock>img.clockminutehand").css({ "transform" : mrotate }); //set rotation for minute hand
 }
 
 //draw an icon-type widget (pass in widget)
@@ -975,7 +994,7 @@ var $setWidgetPosition = function(e) {
 			e.css({position:'absolute',left:(parseInt($widget.x)+tx)+'px',top:(parseInt($widget.y)+ty)+'px',zIndex:$widget.level});
 			if ($widget.degrees != undefined && $widget.degrees != 0){
 				var $rot = "rotate("+$widget.degrees+"deg)";
-				e.css({MozTransform:$rot,WebkitTransform:$rot,msTransform:$rot});
+				e.css({"transform":$rot});
 			}
 			//set new height and width if scale specified 
 			if ($widget.scale != 1 && $height > 0){
@@ -1024,7 +1043,12 @@ var $setWidgetState = function($id, $newState) {
 			break;
 		case "text" :
 			if ($widget.element == "memory") {
-				$('div#'+$id).text($newState);  //set memory text to new value from server
+				if ($widget.widgetType == "fastclock") {
+					if (window.console) console.log( "setting " + $widget.widgetType + " " + $widget.name + " to " + $newState);
+					$drawClock($widget);
+				} else{
+					$('div#'+$id).text($newState);  //set memory text to new value from server
+				}
 			} else {
 				if ($widget['text'+$newState] != undefined) {
 					$('div#'+$id).text($widget['text'+$newState]);  //set text to new state's text
@@ -1285,6 +1309,7 @@ var $getWidgetFamily = function($widget) {
 	case "locoicon" :
 	case "memoryComboIcon" :
 	case "memoryInputIcon" :
+	case "fastclock" :
 //	case "reportericon" :
 		return "text";
 		break;
@@ -1292,7 +1317,6 @@ var $getWidgetFamily = function($widget) {
 	case "turnouticon" :
 	case "sensoricon" :
 	case "multisensoricon" :
-	case "fastclock" :
 	case "signalheadicon" :
 //	case "signalmasticon" :
 	case "indicatortrackicon" :
@@ -1317,7 +1341,6 @@ function endAndStartTimer() {
 	window.clearTimeout(timer);
 	if ($gWidgets["ISXMLIOHEARTBEAT"] != undefined) { //don't bother if widgets not loaded
 		timer = window.setTimeout(function(){
-//			if (window.console) console.log("timer fired");
 			var $nextState = $getNextState($gWidgets["ISXMLIOHEARTBEAT"]);
 			$gWidgets["ISXMLIOHEARTBEAT"].state = $nextState; 
 			$sendElementChange("sensor", "ISXMLIOHEARTBEAT", $nextState)
@@ -1380,6 +1403,24 @@ $(document).ready(function() {
 		$(document).attr('title', 'Show JMRI Panel: ' + $panelName);
 		//add a link to the panel xml
 		$("div#panelFooter").append("&nbsp;<a href='/panel/" + $panelName + "' target=_new>[Panel XML]</a>");
+
+		//add a dummy sensor widget for use as heartbeat
+		$widget = new Array();
+		$widget['element'] = "sensor";
+		$widget['name'] = "ISXMLIOHEARTBEAT";  //internal sensor, will be created if not there
+		$widget['id'] 	= $widget['name'];
+		$widget['safeName']	= $widget['name'];
+		$widget['state'] = UNKNOWN;
+		$gWidgets[$widget.id] = $widget;
+
+		//add a widget to retrieve current fastclock rate
+		$widget = new Array();
+		$widget['element'] = "memory";
+		$widget['name'] = "IMRATEFACTOR";  //already defined in JMRI
+		$widget['id'] 	= $widget['name'];
+		$widget['safeName']	= $widget['name'];
+		$widget['state'] = "1.0";
+		$gWidgets[$widget.id] = $widget;
 
 		//request actual xml of panel, and process it on return
 		$requestPanelXML($panelName);
