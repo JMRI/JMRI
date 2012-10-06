@@ -570,7 +570,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             _warrant.goingActive(this);
         } else if (_pathName!=null) {
             // must be a manual path allocation.  unset unoccupied bit and set manual path detection
-            setState((getState() & ~UNOCCUPIED) | (OCCUPIED | RUNNING));
+            setState((getState() & ~UNOCCUPIED) | (OCCUPIED/* | RUNNING */));
         }
         if (log.isDebugEnabled()) log.debug("Block \""+getSystemName()+" went active, path= "+
                                             _pathName+", state= "+getState());

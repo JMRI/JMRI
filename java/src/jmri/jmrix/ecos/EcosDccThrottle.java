@@ -396,6 +396,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             String message = "set("+this.objectNumber+", stop)";
             EcosMessage m = new EcosMessage(message);
             tc.sendEcosMessage(m, this);
+            this.speedSetting = 0.0f;
         }
         record(speed);
     }
@@ -494,10 +495,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                             }
                             speedMessageSent--;
                         }
-                        else if(result.equals("stop")){
-                            this.speedSetting = Float.valueOf(0).floatValue();
-                            log.debug("Stopping the loco");
-                        }
                         else if(result.equals("dir")){
                             val = (msg.substring(start+1, end));
                             boolean newDirection;
@@ -505,6 +502,12 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                             else newDirection = false;
                             super.setIsForward(newDirection);
                         }
+                    }
+                } else {
+                    if(msg.contains("stop")){
+                        log.debug("Stopping the loco");
+                        super.setSpeedSetting(0.0f);
+                        
                     }
                 }
             }

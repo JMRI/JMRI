@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- version 1 - new file for QSi V8 files -->
+
+<!-- Diesel bell selections -->
+
+<ienumVal>
+	<ienumChoice choice="Native Bell" value="1" />
+	<ienumChoice choice="Diesel Bell, Air, Fast 1" />
+	<ienumChoice choice="Diesel Bell, Air, Fast 2" />
+	<ienumChoice choice="Diesel Bell, Air, Fast 3" />
+	<ienumChoice choice="Diesel Bell, Air, Fast 4" />
+	<ienumChoice choice="Diesel Bell, Air, Fast 5" />
+	<ienumChoice choice="Diesel Bell, Air, Fast 6" />
+	<ienumChoice choice="Diesel Bell, Air, Mid 1" />
+	<ienumChoice choice="Diesel Bell, Air, Mid 2" />
+	<ienumChoice choice="Diesel Bell, Air, Mid 3" />
+	<ienumChoice choice="Diesel Bell, Air, Mid 4" />
+	<ienumChoice choice="Diesel Bell, Air, Mid 5" />
+	<ienumChoice choice="Diesel Bell, Air, Mid 6" />
+	<ienumChoice choice="Diesel Bell, Air, Very Fast" />
+	<ienumChoice choice="Diesel Bell, Elec, Mid" />
+	<ienumChoice choice="Diesel Bell, Hand Pull, Slow" />
+	<ienumChoice choice="Diesel Bell, Air, Random" />
+	<ienumChoice choice="Diesel Bell, Elec, Mid" />
+	<ienumChoice choice="Diesel Bell, air, Mid" />
+</ienumVal>
+
+ 	  	 

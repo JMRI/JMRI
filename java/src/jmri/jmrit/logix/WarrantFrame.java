@@ -1594,6 +1594,9 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             msg = _warrant.setThrottleFactor(_throttleFactorBox.getText());
     	}
         if (msg==null) {
+        	msg = _warrant.checkRoute();
+        }
+        if (msg==null) {
             String trainName = _trainNameBox.getText();
             if (trainName!=null && trainName.length()>0) {
                 _warrant.setTrainName(trainName);

@@ -252,6 +252,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 	public void dispose() {
 		removeCarListeners();
 		removeEngineListeners();
+		fileLogger = null;
 	}
 
 	public void propertyChange(PropertyChangeEvent e) {

@@ -163,6 +163,7 @@ public class OperationsBackupTest extends TestCase {
 		// restore locale
 		Locale.setDefault(Locale.getDefault());
 		apps.tests.Log4JFixture.tearDown();
+		deleteTestFiles();
 	}
 
 	// Some private helper methods......

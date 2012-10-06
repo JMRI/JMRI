@@ -15,11 +15,13 @@
  *  		4) browser user clicks on widget? send "set state" command and go to 3)
  *  		5) error? go back to 2) 
  *  
+ *  TODO: add analog clock (in progress)
  *  TODO: handle turnoutdrawunselectedleg = "yes"
+ *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
+ *  TODO: handle "&" in panel names 
  *  TODO: handle drawn ellipse (see LMRC APB)
  *  TODO: show list of available panels in footer, or add [Prev] [Next] links to navigate between panels
  *  TODO: figure out "held" state on signalheads (see LMRC APB)
- *  TODO: handle segmented click on multisensor and enable
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
  *  TODO: determine proper level (z-index) for canvas layer
@@ -31,9 +33,9 @@
  *  TODO: make turnout, levelXing occupancy work like LE panels (more than just checking A)
  *  TODO: draw dashed curves
  *  TODO: figure out FireFox issue using size of alt text for rotation of unloaded images
- *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
  *  TODO: finish indicatorXXicon logic, handling occupancy and error states
  *  TODO: handle inputs/selection on various memory widgets
+ *  TODO: improve look of multisensorclick by sending all state changes in one message
  *   
  **********************************************************************************************/
 
@@ -152,11 +154,6 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 				switch ($widget.widgetFamily) {
 				case "icon" :
 					switch ($widget.widgetType) {
-					case "fastclock" :
-						$widget['icon1'] = 		"/resources/clock2.gif";
-						$widget['scale'] = 		$(this).attr('scale');
-						$widget['level'] =		10;  //not included in xml
-						break;
 					case "positionablelabel" :
 						$widget['icon1'] = 		$(this).find('icon').attr('url');
 						var $rotation = 		$(this).find('icon').find('rotation').text();
@@ -171,7 +168,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						break;
 					case "indicatorturnouticon" :
 						$widget['name']  =		$(this).find('turnout').text();; //normalize name
-						$widget['element']  =	"turnout"; //what xmlio server calls this
+						$widget['element']  =	'turnout'; //what xmlio server calls this
 						$widget['icon1'] = 		$(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('url');
 						$widget['icon2'] = 		$(this).find('iconmaps').find('ClearTrack').find('TurnoutStateClosed').attr('url');
 						$widget['icon4'] = 		$(this).find('iconmaps').find('ClearTrack').find('TurnoutStateThrown').attr('url');
@@ -235,6 +232,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						break;
 					case "multisensoricon" :
 						//create multiple widgets, 1st with all images, stack others with non-active states set to a clear image
+						//  set up siblings array so each widget can also set state of the others
 						$widget['element']  =	"sensor"; //what xmlio server calls this
 						$widget['icon1'] = 		$(this).find('unknown').attr('url');
 						$widget['icon4'] =  	$(this).find('inactive').attr('url');
@@ -242,20 +240,32 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						var $rotation = 		$(this).find('unknown').find('rotation').text();
 						$widget['degrees'] = 	($(this).find('unknown').attr('degrees') * 1) + ($rotation * 90);
 						$widget['scale'] = 		$(this).find('unknown').attr('scale');
+						if ($widget.forcecontroloff != "true") {
+							$widget.classes += 		$widget.element + " clickable ";
+						}
+						$widget['siblings'] = new Array();  //array of related multisensors
+						$widget['hoverText'] = "";  		//for override of hovertext
 						var actives = $(this).find('active'); //get array of actives used by this multisensor
-						actives.each(function(i, item) {  //loop thru array
+						var $id = $widget.id;
+						actives.each(function(i, item) {  //loop thru array once to set up siblings array, to be copied to all siblings
+							$widget.siblings.push($id);
+							$widget.hoverText += $(item).attr('sensor') + " "; //add sibling names to hovertext
+							$id = "spWidget_" + $gUnique(); 	  	 // set new id
+						});
+						actives.each(function(i, item) {  //loop thru array again to create each widget
+							$widget['id'] = $widget.siblings[i]; 	  	 // use id already set in sibling array
 							$widget.name 	 = $(item).attr('sensor');
 							$widget['icon2'] = 	$(item).attr('url');
-							if (actives.size() > 1) { //only save widget and make a new one if more than one active found
+							if (i < actives.size()-1) { //only save widget and make a new one if more than one active found
 								$preloadWidgetImages($widget); //start loading all images
 								$widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
 								$gWidgets[$widget.id] = $widget; //store widget in persistent array
 								$drawIcon($widget); //actually place and position the widget on the panel
 								$widget = jQuery.extend(true, {}, $widget); //get a new copy of widget
-								$widget['id'] = "spWidget_" + $gUnique(); 	  	 // set new id
 								$widget['icon1'] = 	"/web/images/transparent_1x1.png";
 								$widget['icon4'] =  "/web/images/transparent_1x1.png"; //set non-actives to transparent image 
 								$widget['icon8'] =	"/web/images/transparent_1x1.png";
+								$widget['state'] = ACTIVE; //to avoid sizing based on the transparent image
 							}
 						});
 						break;
@@ -296,11 +306,23 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 							$widget.styles['line-height']	= $widget.scale * 20 + "px";  //center vertically
 						}
 						break;
+					case "fastclock" :
+						$widget['name'] = 		'IMCURRENTTIME';
+						$widget['element']  =	'memory';
+						$widget.styles['width'] 	= "166px";  //hard-coded to match original size of clock image
+						$widget.styles['height'] 	= "166px";
+						$widget['scale'] = 		$(this).attr('scale');
+						if ($widget.level == undefined) {
+							$widget['level'] =		10;  //if not included in xml
+						}
+						$widget['text']  =		"00:00 AM";
+						break;
 					case "memoryicon" :
 						$widget['name']  =		$widget.memory; //normalize name
 						$widget['element']  =	"memory"; //what xmlio server calls this
 						$widget['text']  =		$widget.memory; //use name for initial text
 						break;
+					case "memoryInputIcon" :
 					case "memoryComboIcon" :
 						$widget['name']  =		$widget.memory; //normalize name
 						$widget['element']  =	"memory"; //what xmlio server calls this
@@ -407,27 +429,19 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 			}  //end of function
 	);  //end of each
 
-	//hook up mousedown state toggle function to non-momentary clickable widgets
-	$('.clickable:not(.momentary)').bind(DOWNEVENT, $handleClick);
+	//hook up mouseup state toggle function to non-momentary clickable widgets, except for multisensor
+	$('.clickable:not(.momentary):not(.multisensoricon)').bind(UPEVENT, $handleClick);
+	
+	//hook up mouseup state change function to multisensor (special handling)
+	$('.clickable.multisensoricon').bind(UPEVENT, $handleMultiClick);
 	
 	//momentary widgets always go active on mousedown, and inactive on mouseup, current state is ignored
 	$('.clickable.momentary').bind(DOWNEVENT, function(e) {
-	    var $newState = ACTIVE; 
-		$sendElementChange($gWidgets[this.id].element, $gWidgets[this.id].name, $newState);  //send new value to xmlio server
+		$sendElementChange($gWidgets[this.id].element, $gWidgets[this.id].name, ACTIVE);  //send active on down
 	}).bind(UPEVENT, function(e) {
-	    var $newState = INACTIVE; 
-		$sendElementChange($gWidgets[this.id].element, $gWidgets[this.id].name, $newState);  //send new value to xmlio server
+		$sendElementChange($gWidgets[this.id].element, $gWidgets[this.id].name, INACTIVE);  //send inactive on up
 	});
 	
-	//add a dummy sensor widget for use as heartbeat
-	$widget = new Array();
-	$widget['element'] = "sensor";
-	$widget['name'] = "ISXMLIOHEARTBEAT";  //internal sensor, will be created if not there
-	$widget['id'] 	= $widget['name'];
-	$widget['safeName']	= $widget['name'];
-	$widget['state'] = UNKNOWN;
-	$gWidgets[$widget.id] = $widget;
-
 	$drawAllDrawnWidgets(); //draw all the widgets once more, to address some bidrectional dependencies in the xml
 	$('div#workingMessage').hide();
 	$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>'); //send initial states to xmlio server
@@ -446,6 +460,45 @@ function $handleClick(e) {
 	if ($widget.secondturnoutname != undefined) {  //TODO: put this in a more logical place?
 		$sendElementChange($widget.element, $widget.secondturnoutname, $newState);  //also send 2nd turnout
 	}
+};
+
+//perform multisensor click-handling, bound to click event for clickable multisensor widgets.
+function $handleMultiClick(e) {
+	var $widget = $gWidgets[this.id];
+	var clickX = e.pageX - this.offsetLeft;  //get click location on widget
+	var clickY = e.pageY - this.offsetTop;
+//find if we want to increment or decrement
+	var dec = false;
+	if ($widget.updown == "true") {
+		if (clickY > this.height/2) dec = true;
+	} else {
+		if (clickX < this.width/2)  dec = true;
+	}
+	var displaying = 0;
+	for (i in $widget.siblings) {  //determine which is currently active
+		if ($gWidgets[$widget.siblings[i]].state == ACTIVE) {
+			displaying = i; //flag the current active sibling
+		}
+	};
+	var next;  //determine which is the next one which should be set to active
+	if (dec) {
+		next = displaying-1;
+		if (next < 0) next = 0;
+	} else {
+		next = displaying*1 +1;
+		if (next > i) next = i;
+	}
+	for (i in $widget.siblings) {  //loop through siblings and send changes as needed
+		if (i == next) {
+			if ($gWidgets[$widget.siblings[i]].state != ACTIVE) {
+				$sendElementChange('sensor', $gWidgets[$widget.siblings[i]].name, ACTIVE);  //set next sensor to active and send command to xmlio server
+			}
+		} else {
+			if ($gWidgets[$widget.siblings[i]].state != INACTIVE) {
+				$sendElementChange('sensor', $gWidgets[$widget.siblings[i]].name, INACTIVE);  //set all other siblings to inactive if not already
+			}
+		}
+	};
 };
 
 //draw a Circle (color and width are optional)
@@ -552,10 +605,34 @@ if (CP.lineTo) {
     }
 }
 
+//draw the analog clock (pass in widget), called on each update of clock
+function $drawClock($widget) {
+	var $fs = $widget.scale * 100;  //scale percentage, used for text
+	var $fcr = $gWidgets['IMRATEFACTOR'].state * 1; //get the fast clock rate factor from its widget
+	var $h = "";
+	$h += "<div class='clocktext' style='font-size:" + $fs + "%;' >" + $widget.state + "<br />" + $fcr +":1</div>";  //add the text
+	$h += "<img class='clockface' src='/web/images/clockface.png' />"; 				//add the clockface
+	$h += "<img class='clockhourhand' src='/web/images/clockhourhand.png' />"; 		//add the hour hand
+	$h += "<img class='clockminutehand' src='/web/images/clockminutehand.png' />"; 	//add the minute hand
+	$("div#panelArea>#"+$widget.id).html($h); //set the html for the widget
+	
+	var hours = $widget.state.split(':')[0]; 	//extract hours from format "H:MM AM"
+	var mins =  $widget.state.split(':')[1].split(' ')[0]; //extract minutes
+    var hdegree = hours * 30 + (mins / 2);
+    var hrotate = "rotate(" + hdegree + "deg)";
+    $("div.fastclock>img.clockhourhand").css({ "transform": hrotate}); //set rotation for hour hand
+    var mdegree = mins * 6;
+    var mrotate = "rotate(" + mdegree + "deg)";
+    $("div.fastclock>img.clockminutehand").css({ "transform" : mrotate }); //set rotation for minute hand
+}
+
 //draw an icon-type widget (pass in widget)
 function $drawIcon($widget) {
-	var $hoverText = "";  
-	if ($widget.name) { //if name available, use it as hover text
+	var $hoverText = "";
+	if ($widget.hoverText != undefined) {
+		$hoverText = " title='"+ $widget.hoverText+"' alt='"+$widget.hoverText+"'";
+	}
+	if ($hoverText == "" && $widget.name != undefined) { //if name available, use it as hover text if still blank
 		$hoverText = " title='"+$widget.name+"' alt='"+$widget.name+"'";
 	}
 
@@ -917,7 +994,7 @@ var $setWidgetPosition = function(e) {
 			e.css({position:'absolute',left:(parseInt($widget.x)+tx)+'px',top:(parseInt($widget.y)+ty)+'px',zIndex:$widget.level});
 			if ($widget.degrees != undefined && $widget.degrees != 0){
 				var $rot = "rotate("+$widget.degrees+"deg)";
-				e.css({MozTransform:$rot,WebkitTransform:$rot,msTransform:$rot});
+				e.css({"transform":$rot});
 			}
 			//set new height and width if scale specified 
 			if ($widget.scale != 1 && $height > 0){
@@ -966,7 +1043,12 @@ var $setWidgetState = function($id, $newState) {
 			break;
 		case "text" :
 			if ($widget.element == "memory") {
-				$('div#'+$id).text($newState);  //set memory text to new value from server
+				if ($widget.widgetType == "fastclock") {
+					if (window.console) console.log( "setting " + $widget.widgetType + " " + $widget.name + " to " + $newState);
+					$drawClock($widget);
+				} else{
+					$('div#'+$id).text($newState);  //set memory text to new value from server
+				}
 			} else {
 				if ($widget['text'+$newState] != undefined) {
 					$('div#'+$id).text($widget['text'+$newState]);  //set text to new state's text
@@ -1226,6 +1308,8 @@ var $getWidgetFamily = function($widget) {
 	case "memoryicon" :
 	case "locoicon" :
 	case "memoryComboIcon" :
+	case "memoryInputIcon" :
+	case "fastclock" :
 //	case "reportericon" :
 		return "text";
 		break;
@@ -1233,7 +1317,6 @@ var $getWidgetFamily = function($widget) {
 	case "turnouticon" :
 	case "sensoricon" :
 	case "multisensoricon" :
-	case "fastclock" :
 	case "signalheadicon" :
 //	case "signalmasticon" :
 	case "indicatortrackicon" :
@@ -1258,7 +1341,6 @@ function endAndStartTimer() {
 	window.clearTimeout(timer);
 	if ($gWidgets["ISXMLIOHEARTBEAT"] != undefined) { //don't bother if widgets not loaded
 		timer = window.setTimeout(function(){
-//			if (window.console) console.log("timer fired");
 			var $nextState = $getNextState($gWidgets["ISXMLIOHEARTBEAT"]);
 			$gWidgets["ISXMLIOHEARTBEAT"].state = $nextState; 
 			$sendElementChange("sensor", "ISXMLIOHEARTBEAT", $nextState)
@@ -1321,6 +1403,24 @@ $(document).ready(function() {
 		$(document).attr('title', 'Show JMRI Panel: ' + $panelName);
 		//add a link to the panel xml
 		$("div#panelFooter").append("&nbsp;<a href='/panel/" + $panelName + "' target=_new>[Panel XML]</a>");
+
+		//add a dummy sensor widget for use as heartbeat
+		$widget = new Array();
+		$widget['element'] = "sensor";
+		$widget['name'] = "ISXMLIOHEARTBEAT";  //internal sensor, will be created if not there
+		$widget['id'] 	= $widget['name'];
+		$widget['safeName']	= $widget['name'];
+		$widget['state'] = UNKNOWN;
+		$gWidgets[$widget.id] = $widget;
+
+		//add a widget to retrieve current fastclock rate
+		$widget = new Array();
+		$widget['element'] = "memory";
+		$widget['name'] = "IMRATEFACTOR";  //already defined in JMRI
+		$widget['id'] 	= $widget['name'];
+		$widget['safeName']	= $widget['name'];
+		$widget['state'] = "1.0";
+		$gWidgets[$widget.id] = $widget;
 
 		//request actual xml of panel, and process it on return
 		$requestPanelXML($panelName);

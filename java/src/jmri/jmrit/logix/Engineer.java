@@ -67,8 +67,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                         // note, blind runs cannot detect entrance.
                         if (!_warrant._tempRunBlind && _syncIdx > _warrant._idxCurrentOrder) {
                             // commands are ahead of current train position 
-                            if (log.isDebugEnabled()) log.debug("Command Block "+ts.getBlockName()+
-                                                      " wait for train to enter. "+_warrant.getDisplayName());
+                            if (log.isDebugEnabled()) log.debug("Command Block \""+ts.getBlockName()+
+                                                      "\" wait for train to enter. "+_warrant.getDisplayName());
                             _waitForSync = true;
                             _warrant.fireRunStatus("Command", Integer.valueOf(_idxCurrentCommand), Integer.valueOf(_idxCurrentCommand+1));
                             wait();
@@ -291,7 +291,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         } else {
             _throttle.setSpeedSetting(0.0f);
         }
-        if (log.isDebugEnabled()) log.debug("setHalt: throttle speed= "+_throttle.getSpeedSetting()+
+        if (log.isDebugEnabled()) log.debug("setHalt("+halt+"): throttle speed= "+_throttle.getSpeedSetting()+
                 					" _waitForClear= "+_waitForClear+" warrant "+_warrant.getDisplayName());
     }
 
@@ -487,8 +487,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 endSpeed = modifySpeed(endSpeed, endSpeedType);
                 String old = _speedType;
                 _speedType = endSpeedType;   // transistion
-                if (log.isDebugEnabled()) log.debug("rampSpeed from "+old+" to "+endSpeedType+
-                					" warrant "+_warrant.getDisplayName());
+                if (log.isDebugEnabled()) log.debug("rampSpeed from \""+old+"\" to \""+endSpeedType+
+                					"\" on warrant "+_warrant.getDisplayName());
                 float speed = _throttle.getSpeedSetting();
                 _warrant.fireRunStatus("SpeedRestriction", old, 
                                    (endSpeed > speed ? "increasing" : "decreasing"));

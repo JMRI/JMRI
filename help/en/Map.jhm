@@ -820,9 +820,9 @@
 
 <mapID target="manual.JMRI_2-12_Manual.Main_XpressNet_LZV100CM" url="manual/JMRI_2-12_Manual/Main_XpressNet.shtml#LZV100CM"/>
 
-<mapID target="Acknowledgements_W" url="Acknowledgements.shtml#W"/>
-
 <mapID target="html.hardware.maple.index" url="html/hardware/maple/index.shtml"/>
+
+<mapID target="Acknowledgements_W" url="Acknowledgements.shtml#W"/>
 
 <mapID target="Acknowledgements_V" url="Acknowledgements.shtml#V"/>
 
@@ -1648,9 +1648,9 @@
 
 <mapID target="manual.3-0_DecoderPro.Ops_ImportCarsFile" url="manual/3-0_DecoderPro/Ops_ImportCarsFile.shtml"/>
 
-<mapID target="manual.JMRI_2-14_manual.Main_LocoNet_CommandStation" url="manual/JMRI_2-14_manual/Main_LocoNet.shtml#CommandStation"/>
-
 <mapID target="manual.DP3_2-14_manual.Throttle_Top" url="manual/DP3_2-14_manual/Throttle.shtml#Top"/>
+
+<mapID target="manual.JMRI_2-14_manual.Main_LocoNet_CommandStation" url="manual/JMRI_2-14_manual/Main_LocoNet.shtml#CommandStation"/>
 
 <mapID target="manual.JMRI_2-14_manual.Start_DCC_Hardware" url="manual/JMRI_2-14_manual/Start_DCC_Hardware.shtml"/>
 
@@ -4192,11 +4192,11 @@
 
 <mapID target="manual.DP3_2-14_manual.images.sflogo" url="manual/DP3_2-14_manual/images/sflogo.png"/>
 
-<mapID target="manual.DP3_2-14_manual.images.btn_lanch_throttle" url="manual/DP3_2-14_manual/images/btn_lanch_throttle.png"/>
-
 <mapID target="html.tools.signaling.ldt.output5_html_5402c321" url="html/tools/signaling/ldt/output5_html_5402c321.png"/>
 
 <mapID target="html.tools.signaling.ldt.output2_html_cf50511" url="html/tools/signaling/ldt/output2_html_cf50511.png"/>
+
+<mapID target="manual.DP3_2-14_manual.images.btn_lanch_throttle" url="manual/DP3_2-14_manual/images/btn_lanch_throttle.png"/>
 
 <mapID target="images.tracksegments.TranTOc" url="images/tracksegments/TranTOc.gif"/>
 

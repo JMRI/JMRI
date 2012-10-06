@@ -95,6 +95,7 @@ public class WarrantTableAction extends AbstractAction {
     JTextField  _startWarrant = new JTextField(30);
     JTextField  _endWarrant = new JTextField(30);
     JTextField  _status = new JTextField(90);
+    Color _background;
 
     public WarrantTableAction(String menuOption) {
 	    super(rb.getString(menuOption));
@@ -533,7 +534,8 @@ public class WarrantTableAction extends AbstractAction {
             JPanel panel = new JPanel();
             JPanel p = new JPanel();
             p.add(new JLabel("status"));
-        	_status.setBackground(Color.lightGray);
+        	_background = _status.getBackground();
+        	_status.setFont(jmri.util.FontUtil.deriveFont(_status.getFont(),java.awt.Font.BOLD));
             p.add(_status);
             _status.setEditable(false);
             tablePanel.add(p, BorderLayout.CENTER);
@@ -657,7 +659,11 @@ public class WarrantTableAction extends AbstractAction {
         }
     }
     void setStatusText(String msg, Color c) {
-    	_status.setBackground(Color.black);
+    	if (Color.red.equals(c)) {
+        	_status.setBackground(Color.white);   		
+    	} else {
+        	_status.setBackground(Color.gray);    		
+    	}
     	_status.setForeground(c);
     	_status.setText(msg);
     }
@@ -883,7 +889,7 @@ public class WarrantTableAction extends AbstractAction {
             if (log.isDebugEnabled()) log.debug("setValueAt: row= "+row+", column= "+col+", value= "+value.getClass().getName());
             Warrant w = getWarrantAt(row);
             String msg = null;
-        	_status.setBackground(Color.lightGray);
+        	_status.setBackground(_background);
         	_status.setText(null);
         	switch (col) {
                 case WARRANT_COLUMN:
@@ -956,27 +962,31 @@ public class WarrantTableAction extends AbstractAction {
                             msg = rb.getString("EmptyRoute");
                             break;
                         }
-                        msg = w.setRoute(0, null);
+                        msg = w.allocateRoute(null);
                         if (msg!=null) {
                         	setStatusText(msg, Color.red);
-                        	msg = null;
                         }
-                        BlockOrder bo = w.getfirstOrder();
-                        OBlock block = bo.getBlock();
-                        msg = block.allocate(w);
-                        if (msg!=null) {
-                        	setStatusText(msg, Color.red);
+                        String msg2 = w.setRoute(0, null);
+                        if (msg==null && msg2!=null) {
+                        	setStatusText(msg2, Color.red);
                         }
                         if (msg==null) {
-                            msg = block.setPath(bo.getPathName(), w);                                	                            	
+                        	msg = w.checkRoute();
+                        	if (msg!=null) {
+                               	setStatusText(msg, Color.yellow);                        		
+                        	}
                         }
-                        if (msg!=null) {
-                            msg = java.text.MessageFormat.format(rb.getString("OriginBlockNotSet"), 
-                                    msg);                        	
-                        	setStatusText(msg, Color.red);
+                        if (msg==null) {
+                        	msg = w.checkStartBlock();
+                        	if (msg!=null) {
+                               	setStatusText(msg, Color.yellow);                        		
+                        	}
                         }
-                        msg = w.setRunMode(Warrant.MODE_RUN, null, null, null, false);
-                        msg = null;		// will be the same message that user OK'd to ignore
+                        msg = w.checkForContinuation();
+                        if (msg==null) {
+                            msg = w.setRunMode(Warrant.MODE_RUN, null, null, null, false);
+                            msg = null;		// will be the same message that user OK'd to ignore
+                        }
                     } else {
                     	setStatusText(java.text.MessageFormat.format(
                                 rb.getString("TrainRunning"), w.getDisplayName()), Color.red);

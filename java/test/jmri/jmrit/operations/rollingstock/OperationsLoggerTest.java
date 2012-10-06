@@ -32,10 +32,8 @@ public class OperationsLoggerTest extends TestCase {
 		Car c1 = manager.newCar("CP", "1");
 		c1.setType("Boxcar");
 		c1.setLength("40");
-		// log cars
-		Setup.setCarLoggerEnabled(true);
 		// turn on logging
-		RollingStockLogger.instance().enableCarLogging(true);
+		Setup.setCarLoggerEnabled(true);
 		// log is created after a car is placed
 		File file = new File(RollingStockLogger.instance().getFullLoggerFileName());	
 		Assert.assertFalse("file exists", file.exists());
@@ -76,6 +74,8 @@ public class OperationsLoggerTest extends TestCase {
 		file.delete();
 		File dir = new File(RollingStockLogger.instance().getDirectoryName());
 		dir.delete();
+		
+		RollingStockLogger.instance().dispose();
     }
 
 	public OperationsLoggerTest(String s) {

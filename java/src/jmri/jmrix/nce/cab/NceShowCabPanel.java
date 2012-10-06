@@ -110,6 +110,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
@@ -238,9 +239,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     JButton refreshButton = new JButton(rb.getString("Refresh"));
     
     // check boxes
-    static JCheckBox checkBoxShowActive = new JCheckBox(rb.getString("CheckBoxLabelShowActive"));
-    static JCheckBox checkBoxShowDisplayText = new JCheckBox(rb.getString("CheckBoxLabelShowDisplayText"));
-    static JCheckBox checkBoxShowAllFunctions = new JCheckBox(rb.getString("CheckBoxLabelShowAllFunctions"));
+    JCheckBox checkBoxShowActive = new JCheckBox(rb.getString("CheckBoxLabelShowActive"));
+    JCheckBox checkBoxShowDisplayText = new JCheckBox(rb.getString("CheckBoxLabelShowDisplayText"));
+    JCheckBox checkBoxShowAllFunctions = new JCheckBox(rb.getString("CheckBoxLabelShowAllFunctions"));
     
     // text fields
     
@@ -458,6 +459,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	}
     	
     	firstTime = false;
+    	int cabsFound = 0;
         // build table of cabs
         for (int currCabId=0; currCabId < cabData.length; currCabId++){
            	
@@ -481,6 +483,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	        	if ((recChar & FLAGS1_MASK_CABISACTIVE) != FLAGS1_CABISACTIVE) {
 	        		// not active slot
 	            	continue;
+	        	}
+	        	if (currCabId >= 1 || !checkBoxShowActive.isSelected()) {
+	           		cabsFound++;
 	        	}
 	        	int cabId = recChar & FLAGS1_MASK_CABID; // mask off don't care bits
 	        	if (cabId == FLAGS1_CABID_DISPLAY){
@@ -785,7 +790,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
            	}
         }
  
-        textStatus.setText(rb.getString("StatusReadingDone"));
+        textStatus.setText(MessageFormat.format(rb.getString("StatusReadingDone") + ", " + rb.getString("FoundCabs"), cabsFound));
         cabModel.fireTableDataChanged();
     	this.setVisible(true);
     	this.repaint();
@@ -1115,6 +1120,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	    		case 2:
 	    			return r.F23;
 	    		}
+	    		break;
 	    	case 12:
 	    		switch (sRow) {
 	    		case 0:
@@ -1164,6 +1170,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	    		case 2:
 	    			return r.F28;
 	    		}
+	    		break;
 	    	case 17:
 	    		switch (sRow) {
 	    		case 0:
@@ -1196,8 +1203,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	    	}
 	    }
 	    
-	    @SuppressWarnings("unchecked")
-		public Class getColumnClass(int c) {
+		public Class<?> getColumnClass(int c) {
 	    	if (c == 0 || c == 3  || c == 5) {
 	    		return Integer.class;
 	    	} else if (c == 1 || c == 4 || (c >= 6 && c <= 7) || (c >= 18 && c <= 19)){

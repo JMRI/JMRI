@@ -19,12 +19,14 @@
   <version author="Michael Mosher" version="4" lastUpdated="20120216"/>
   <version author="Michael Mosher" version="5" lastUpdated="20120619"/>
   <version author="Michael Mosher" version="6" lastUpdated="20120727"/>
+  <version author="Michael Mosher" version="7" lastUpdated="20121006"/>
 <!-- version 1 - Created from Ver 7 file -->
 <!-- version 2 - Add diesel & electric -->
 <!-- version 3 - fix bug in balance CV -->
 <!-- version 4 - fix bug in CV115.76.0 -->
 <!-- version 5 - Add models 1102,1106,1107,1108,1110,1111; add cv 52.50,57,58,59,60,61,62,64,65; remove cv 55.xx.15,16-->
 <!-- version 6 - Fix bug with two byte varables, reorder CV56.254.xx-->
+<!-- version 7 - Add iemuns to sound choice CVs -->
   <decoder>
     <family name="QSI Ver. 8" mfg="QSIndustries" lowVersionID="8">
       <model model="Titan Diesel" numFns="14" numOuts="0" productID="1100">
@@ -2787,7 +2789,7 @@
       </ivariable>
       <ivariable label="Horn Select" CVname="117.0.1" CV="117" PI="0" SI="1" default="1" item="CV117.0.1" 
 		include="1100">
-        <indexedVal/>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/DieselHornV8.xml"/>
       </ivariable>
       <ivariable label="Max Whistle" CVname="117.0.0" CV="117" PI="0" SI="0" default="33" item="CV117.0.0" readOnly="yes" 
 		include="3100,4100">
@@ -2795,15 +2797,19 @@
       </ivariable>
       <ivariable label="Whistle Select" CVname="117.0.1" CV="117" PI="0" SI="1" default="1" item="CV117.0.1" 
 		include="3100,4100">
-        <indexedVal/>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/SteamWhistleV8.xml"/>
       </ivariable>
       <ivariable label="Max Bell" CVname="117.8.0" CV="117" PI="8" SI="0" default="22" item="CV117.8.0" readOnly="yes" 
 		include="1100,3100,4100" >
         <indexedVal/>
       </ivariable>
       <ivariable label="Bell Select" CVname="117.8.1" CV="117" PI="8" SI="1" default="1" item="CV117.8.1" 
-		include="1100,3100,4100" >
-        <indexedVal/>
+		include="1100" >
+        <xi:include href="http://jmri.org/xml/decoders/qsi/DieselBellV8.xml"/>
+      </ivariable>
+      <ivariable label="Bell Select" CVname="117.8.1" CV="117" PI="8" SI="1" default="1" item="CV117.8.1" 
+		include="3100,4100" >
+        <xi:include href="http://jmri.org/xml/decoders/qsi/SteamBellV8.xml"/>
       </ivariable>
       <ivariable label="Max Motor" CVname="117.10.0" CV="117" PI="10" SI="0" default="18" item="CV117.10.0" readOnly="yes" 
 		include="1100">
@@ -2811,7 +2817,7 @@
       </ivariable>
       <ivariable label="Motor Select" CVname="117.10.1" CV="117" PI="10" SI="1" default="1" item="CV117.10.1" 
 		include="1100">
-        <indexedVal/>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/DieselMotorV8.xml"/>
       </ivariable>
       <ivariable label="Max Chuff" CVname="117.10.0" CV="117" PI="10" SI="0" default="5" item="CV117.10.0" readOnly="yes" 
 		include="3100,4100">
@@ -2819,15 +2825,19 @@
       </ivariable>
       <ivariable label="Chuff Select" CVname="117.10.1" CV="117" PI="10" SI="1" default="1" item="CV117.10.1" 
 		include="3100,4100">
-        <indexedVal/>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/SteamChuffV8.xml"/>
       </ivariable>
       <ivariable label="Max Air Pump" CVname="117.16.0" CV="117" PI="16" SI="0" default="7" item="CV117.16.0" readOnly="yes" 
 		include="1100,3100,4100" >
         <indexedVal/>
       </ivariable>
       <ivariable label="Air Pump Select" CVname="117.16.1" CV="117" PI="16" SI="1" default="1" item="CV117.16.1" 
-		include="1100,3100,4100" >
-        <indexedVal/>
+		include="1100" >
+        <xi:include href="http://jmri.org/xml/decoders/qsi/DieselAirPumpV8.xml"/>
+      </ivariable>
+      <ivariable label="Air Pump Select" CVname="117.16.1" CV="117" PI="16" SI="1" default="1" item="CV117.16.1" 
+		include="3100,4100" >
+        <xi:include href="http://jmri.org/xml/decoders/qsi/SteamAirPumpV8.xml"/>
       </ivariable>
       <ivariable label="Cooling fan Horn" CVname="117.19.0" CV="117" PI="19" SI="0" default="5" item="CV117.19.0" readOnly="yes" 
 		include="1100">
@@ -2835,7 +2845,7 @@
       </ivariable>
       <ivariable label="Cooling fan Select" CVname="117.19.1" CV="117" PI="19" SI="1" default="1" item="CV117.19.1" 
 		include="1100">
-        <indexedVal/>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/DieselFanV8.xml"/>
       </ivariable>
       <ivariable label="Max Steam Generator" CVname="117.26.0" CV="117" PI="26" SI="0" default="5" item="CV117.26.0" readOnly="yes" 
 		include="3100,4100">
@@ -2843,7 +2853,7 @@
       </ivariable>
       <ivariable label="Steam Generator Select" CVname="117.26.1" CV="117" PI="26" SI="1" default="1" item="CV117.26.1" 
 		include="3100,4100">
-        <indexedVal/>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/SteamGeneratorV8.xml"/>
       </ivariable>
       <ivariable label="Max Dynamic Brake" CVname="117.28.0" CV="117" PI="28" SI="0" default="6" item="CV117.28.0" readOnly="yes" 
 		include="1100">
@@ -2851,15 +2861,19 @@
       </ivariable>
       <ivariable label="Dynamic Brake Select" CVname="117.28.1" CV="117" PI="28" SI="1" default="1" item="CV117.28.1" 
 		include="1100">
-        <indexedVal/>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/DieselDynamicV8.xml"/>
       </ivariable>
       <ivariable label="Max Alt Horn" CVname="117.40.0" CV="117" PI="40" SI="0" default="30" item="CV117.40.0" readOnly="yes" 
 		include=",1100,3100,4100" >
         <indexedVal/>
       </ivariable>
       <ivariable label="Alt Horn Select" CVname="117.40.1" CV="117" PI="40" SI="1" default="1" item="CV117.40.1" 
-		include=",1100,3100,4100" >
-        <indexedVal/>
+		include="1100" >
+        <xi:include href="http://jmri.org/xml/decoders/qsi/DieselHornV8.xml"/>
+      </ivariable>
+      <ivariable label="Alt Whistle Select" CVname="117.40.1" CV="117" PI="40" SI="1" default="1" item="CV117.40.1" 
+		include="3100,4100" >
+        <xi:include href="http://jmri.org/xml/decoders/qsi/SteamWhistleV8.xml"/>
       </ivariable>
 <!-- CV118.PI.SI pitch shift -->
       <ivariable label="Chuff Pitch Shift" CVname="118.10" CV="118" PI="10" default="0" item="CV118.10 Value" mask="XVVVVVVV"

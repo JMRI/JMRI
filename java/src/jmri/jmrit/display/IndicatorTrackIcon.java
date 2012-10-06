@@ -102,7 +102,7 @@ public class IndicatorTrackIcon extends PositionableIcon
              }
              Sensor sensor = getOccSensor();
              sensor.addPropertyChangeListener(this, namedOccSensor.getName(), "Indicator Track");
-             setStatus(sensor.getKnownState());
+             _status = _pathUtil.setStatus(sensor.getKnownState());
              displayState(_status);
          } 
      }
@@ -172,6 +172,9 @@ public class IndicatorTrackIcon extends PositionableIcon
     public void removePath(String path) {
     	_pathUtil.removePath(path);
     }
+    public void setStatus(int state) {
+    	_pathUtil.setStatus(state);
+    }
 
     /**
     * Place icon by its bean state name
@@ -201,7 +204,7 @@ public class IndicatorTrackIcon extends PositionableIcon
             if (evt.getPropertyName().equals("KnownState")) {
                 int now = ((Integer)evt.getNewValue()).intValue();
                 if (source.equals(getOccSensor())) {
-                    setStatus(now);
+                	_status = _pathUtil.setStatus(now);
                 }
             }
         }
@@ -216,18 +219,6 @@ public class IndicatorTrackIcon extends PositionableIcon
         }
     }
 
-    public void setStatus(int state) {
-        if (state==Sensor.ACTIVE) {
-            _status = "OccupiedTrack";
-        } else if (state==Sensor.INACTIVE) {
-            _status = "ClearTrack";
-        } else if (state==Sensor.UNKNOWN) {
-            _status = "DontUseTrack";
-        } else {
-            _status = "ErrorTrack";
-        }
-    }
-    
     public String getNameString() {
         String str = "";
         if (namedOccBlock!=null) {
@@ -249,7 +240,7 @@ public class IndicatorTrackIcon extends PositionableIcon
 	 * Drive the current state of the display from the state of the turnout.
 	 */
     void displayState(String status) {
-        log.debug(getNameString() +" displayStatus "+_status);
+    	if (log.isDebugEnabled()) log.debug(getNameString() +" displayStatus "+_status);
         NamedIcon icon = getIcon(status);
         if (icon!=null) {
             super.setIcon(icon);

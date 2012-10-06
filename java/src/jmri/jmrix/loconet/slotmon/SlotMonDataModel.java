@@ -13,6 +13,8 @@ import jmri.util.StringUtil;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
@@ -300,6 +302,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     }
 
     public void setValueAt(Object value, int row, int col) {
+        int status = 0;
+        
         if (col == ESTOPCOLUMN) {
             log.debug("Start estop in slot "+row);
             // check for in use
@@ -351,11 +355,31 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                         (tempF3 ? LnConstants.DIRF_F3 : 0) |
                         (tempF4 ? LnConstants.DIRF_F4 : 0));
             
+            // set status to 'In Use' if other
+            status = s.slotStatus();
+            if (status != LnConstants.LOCO_IN_USE) {
+                memo.getLnTrafficController().sendLocoNetMessage(
+                        s.writeStatus(LnConstants.LOCO_IN_USE
+                    ));
+            }
             LocoNetMessage msg = new LocoNetMessage(4);
             msg.setOpCode(LnConstants.OPC_LOCO_DIRF);
             msg.setElement(1, s.getSlot());
             msg.setElement(2, new_dirf);       // 1 here is estop
             memo.getLnTrafficController().sendLocoNetMessage(msg);
+            // Delay here allows command station time to xmit on the rails.
+            try {
+                Thread.sleep(100);
+            } 
+            catch (InterruptedException ex) {
+                Logger.getLogger(SlotMonDataModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            // reset status to original value if not previously 'in use'
+            if(status != LnConstants.LOCO_IN_USE)
+            {
+               memo.getLnTrafficController().sendLocoNetMessage(
+                        s.writeStatus(status)); 
+            }
             fireTableRowsUpdated(row,row);
         }
         else if ((col == F5COLUMN) ||
@@ -378,11 +402,35 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                            (tempF7 ? LnConstants.SND_F7 : 0) |
                            (tempF6 ? LnConstants.SND_F6 : 0) |
                            (tempF5 ? LnConstants.SND_F5 : 0));
+            
+            // set status to 'In Use' if other
+            status = s.slotStatus();
+            if (status != LnConstants.LOCO_IN_USE) {
+                memo.getLnTrafficController().sendLocoNetMessage(
+                        s.writeStatus(LnConstants.LOCO_IN_USE
+                    ));
+            }
+            
             LocoNetMessage msg = new LocoNetMessage(4);
             msg.setOpCode(LnConstants.OPC_LOCO_SND);
             msg.setElement(1, s.getSlot());
             msg.setElement(2, new_snd);       // 1 here is estop
             memo.getLnTrafficController().sendLocoNetMessage(msg);
+            // Delay here allows command station time to xmit on the rails.
+            try {
+                Thread.sleep(100);
+            } 
+            catch (InterruptedException ex) {
+                Logger.getLogger(SlotMonDataModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            // reset status to original value if not previously 'in use'
+            if(status != LnConstants.LOCO_IN_USE)
+            {
+               memo.getLnTrafficController().sendLocoNetMessage(
+                        s.writeStatus(status)); 
+            }
+            
             fireTableRowsUpdated(row,row);
         }
         else if (col == DISPCOLUMN) {

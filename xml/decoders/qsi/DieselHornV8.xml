@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- version 1 - new file for QSi V8 files -->
+
+<!-- Diesel horn selections -->
+
+<ienumVal>
+	<ienumChoice choice="Native Horn               " value="1" />
+	<ienumChoice choice="Nathan K3L                " />
+	<ienumChoice choice="Unknown Aus               " />
+	<ienumChoice choice="Leslie S3                 " />
+	<ienumChoice choice="Nathan P3 (American)      " />
+	<ienumChoice choice="Leslie Typhon A-200 Single" />
+	<ienumChoice choice="WABCo E2 #1               " />
+	<ienumChoice choice="WABCo E2 #2               " />
+	<ienumChoice choice="WABCo E2 #3               " />
+	<ienumChoice choice="WABCo E2 #4               " />
+	<ienumChoice choice="Leslie S2m                " />
+	<ienumChoice choice="WABCo A2 #2               " />
+	<ienumChoice choice="Nathan K5LL               " />
+	<ienumChoice choice="Nathan K5La (low pressure)" />
+	<ienumChoice choice="Nathan K3 (American)      " />
+	<ienumChoice choice="Leslie S5-T               " />
+	<ienumChoice choice="Nathan M5                 " />
+	<ienumChoice choice="WABCo D5                  " />
+	<ienumChoice choice="Nathan H5                 " />
+	<ienumChoice choice="Nathan M3                 " />
+	<ienumChoice choice="Nathan P3 (Canadian)      " />
+	<ienumChoice choice="Nathan P5                 " />
+	<ienumChoice choice="Budd Co. Single Chime     " />
+	<ienumChoice choice="WABCo A2 #1               " />
+	<ienumChoice choice="Leslie S3 (low pressure)  " />
+	<ienumChoice choice="WABCo E1                  " />
+	<ienumChoice choice="Leslie S3J                " />
+	<ienumChoice choice="WABCo EA2                 " />
+	<ienumChoice choice="Nathan P5 (long)          " />
+	<ienumChoice choice="Nathan K5La (Amtrak)      " />
+</ienumVal>
+
+ 	  	 
