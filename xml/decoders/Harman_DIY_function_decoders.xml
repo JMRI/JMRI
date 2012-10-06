@@ -1,0 +1,834 @@
+<?xml version="1.0"?>
+<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<!-- Copyright (C) JMRI 2006 All rights reserved -->
+<!-- See the COPYING file for more information on licensing and appropriate use -->
+<decoder-config>
+		<version author="Paul Harman" 
+					version="0.2" lastUpdated="20120918"/>
+
+
+<decoder>
+	<family name="Harman DIY Function Decoders" mfg="Harman-DIY">
+	
+		<model model="Function1-8"  numOuts="8" numFns="16" formFactor="HO">
+			<output name="1" label="Output A" />
+			<output name="2" label="Output B" />
+			<output name="3" label="Output C" />
+			<output name="4" label="Output D" />
+			<output name="5" label="Output E" />
+			<output name="6" label="Output F" />
+			<output name="7" label="Output G" />
+			<output name="8" label="Output H" />
+						</model>
+		<model model="Function1-3"  numOuts="4" numFns="16" formFactor="HO">
+			<output name="1" label="Output A" />
+			<output name="2" label="Output B" />
+			<output name="3" label="Omitted" />
+			<output name="4" label="Output D" />
+						</model>
+
+			
+	</family>
+
+	<programming direct="yes" paged="yes" 
+	                     register="yes" ops="yes"></programming>
+
+	<variables>
+		<variable label="Primary Address" CV="1" comment="Short address"
+						item="Short Address"  default="03">
+			<shortAddressVal/></variable>
+			
+		<variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+				<decVal/>
+			</variable>
+			
+		<variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
+				<decVal/>
+			</variable>
+
+		<variable label="Analog Mode F1" CV="13" mask="XXXXXXXV" default="1" minOut="1"
+					item="Analog Mode Function Status - F1">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable label="Analog Mode F2" CV="13" mask="XXXXXXVX" default="1" minOut="2"
+					item="Analog Mode Function Status - F2">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable label="Analog Mode F3" CV="13" mask="XXXXXVXX" default="1" minOut="3"
+					item="Analog Mode Function Status - F3">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable label="Analog Mode F4" CV="13" mask="XXXXVXXX" default="1" minOut="3"
+					item="Analog Mode Function Status - F4">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable label="Analog Mode F5" CV="13" mask="XXXVXXXX" default="1" minOut="3"
+					item="Analog Mode Function Status - F5">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable label="Analog Mode F6" CV="13" mask="XXVXXXXX" default="1" minOut="3"
+					item="Analog Mode Function Status - F6">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable label="Analog Mode F7" CV="13" mask="XVXXXXXX" default="1" minOut="3"
+					item="Analog Mode Function Status - F7">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable label="Analog Mode F8" CV="13" mask="VXXXXXXX" default="1" minOut="3"
+					item="Analog Mode Function Status - F8">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		
+		<variable label="Analog Mode FL in Forward" CV="14" mask="XXXXXXXV" default="1" minOut="1"
+					item="Analog Mode Function Status - F0(f)">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable label="Analog Mode FL in Reverse" CV="14" mask="XXXXXXVX" default="1" minOut="2"
+					item="Analog Mode Function Status - F0(r)">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable label="Analog Mode F9" CV="14" mask="XXXXXVXX" default="1" minOut="3"
+					item="Analog Mode Function Status - F9">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable label="Analog Mode F10" CV="14" mask="XXXXVXXX" default="1" minOut="3"
+					item="Analog Mode Function Status - F10">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable label="Analog Mode F11" CV="14" mask="XXXVXXXX" default="1" minOut="3"
+					item="Analog Mode Function Status - F11">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+		<variable label="Analog Mode F12" CV="14" mask="XXVXXXXX" default="1" minOut="3"
+					item="Analog Mode Function Status - F12">
+			<enumVal>
+				<enumChoice choice="off"/>
+				<enumChoice choice="on"/>
+				</enumVal></variable>
+
+		
+
+		<variable label="Decoder Lock ID release" CV="15" default="0"
+						tooltip="Match decoder lock to unlock ID number">
+			<decVal/>
+			</variable>
+
+		
+		<variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="1"
+						tooltip="Set this decoder's unique locking ID number">
+			<decVal/>
+			</variable>
+			
+		<variable label="Long Address" CV="17" item="Extended Address">
+			<longAddressVal/>
+			</variable>
+
+		<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
+			<decVal/></variable>
+		
+		<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+			<enumVal>
+				<enumChoice choice="Normal"></enumChoice>
+				<enumChoice choice="Reversed"></enumChoice>
+				</enumVal></variable>
+
+		<variable label="Consist Address Active For F1" CV="21" mask="XXXXXXXV" minOut="1"
+					item="Consist Address Active For F1">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Respond to Consist Address"/>
+				</enumVal></variable>
+		<variable label="Consist Address Active For F2" CV="21" mask="XXXXXXVX" minOut="2"
+					item="Consist Address Active For F2">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Respond to Consist Address"/>
+				</enumVal></variable>
+		<variable label="Consist Address Active For F3" CV="21" mask="XXXXXVXX" minOut="3"
+					item="Consist Address Active For F3">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Respond to Consist Address"/>
+				</enumVal></variable>
+		<variable label="Consist Address Active For F4" CV="21" mask="XXXXVXXX" minOut="3"
+					item="Consist Address Active For F4">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Respond to Consist Address"/>
+				</enumVal></variable>
+		<variable label="Consist Address Active For F5" CV="21" mask="XXXVXXXX" minOut="3"
+					item="Consist Address Active For F5">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Respond to Consist Address"/>
+				</enumVal></variable>
+		<variable label="Consist Address Active For F6" CV="21" mask="XXVXXXXX" minOut="3"
+					item="Consist Address Active For F6">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Respond to Consist Address"/>
+				</enumVal></variable>
+		<variable label="Consist Address Active For F7" CV="21" mask="XVXXXXXX" minOut="3"
+					item="Consist Address Active For F7">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Respond to Consist Address"/>
+				</enumVal></variable>
+		<variable label="Consist Address Active For F8" CV="21" mask="VXXXXXXX" minOut="3"
+					item="Consist Address Active For F8">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Respond to Consist Address"/>
+				</enumVal></variable>
+
+		<variable label="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" minOut="1"
+					item="Consist Address Active For F1">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Respond to Consist Address"/>
+				</enumVal></variable>
+		<variable label="Consist Address Active For FL in Reverse" CV="21" mask="XXXXXXVX" minOut="2"
+					item="Consist Address Active For F2">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Respond to Consist Address"/>
+				</enumVal></variable>
+		<variable label="Consist Address Active For F9" CV="21" mask="XXXXXVXX" minOut="3"
+					item="Consist Address Active For F3">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Respond to Consist Address"/>
+				</enumVal></variable>
+		<variable label="Consist Address Active For F10" CV="21" mask="XXXXVXXX" minOut="3"
+					item="Consist Address Active For F4">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Respond to Consist Address"/>
+				</enumVal></variable>
+		<variable label="Consist Address Active For F11" CV="21" mask="XXXVXXXX" minOut="3"
+					item="Consist Address Active For F5">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Respond to Consist Address"/>
+				</enumVal></variable>
+		<variable label="Consist Address Active For F12" CV="21" mask="XXVXXXXX" minOut="3"
+					item="Consist Address Active For F6">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Respond to Consist Address"/>
+				</enumVal></variable>
+
+
+
+
+		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+			<enumVal>
+				<enumChoice choice="forward"/>
+				<enumChoice choice="reverse"/>
+				</enumVal>
+			</variable>
+		<variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1"
+					 item="Analog (DC) Operation">
+			<enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX"
+					item="Address Format">
+			<enumVal>
+				<enumChoice choice="2 digit addressing"/>
+				<enumChoice choice="4 digit addressing"/>
+				</enumVal>
+			</variable>
+			
+		<variable label="FL(f) controls output 1"     CV="33"  mask="VXXXXXXX" minOut="1"  default="1">			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="FL(f) controls output 2"     CV="33"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="FL(f) controls output 3"        CV="33"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="FL(f) controls output 4"        CV="33"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="FL(f) controls output 5"        CV="33"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="FL(f) controls output 6"        CV="33"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="FL(f) controls output 7"        CV="33"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="FL(f) controls output 8"        CV="33"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+			
+		<variable label="FL(r) controls output 1"     CV="34"  mask="VXXXXXXX" minOut="1">			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="FL(r) controls output 2"     CV="34"  mask="XVXXXXXX" minOut="1" default="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="FL(r) controls output 3"        CV="34"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="FL(r) controls output 4"        CV="34"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="FL(r) controls output 5"        CV="34"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="FL(r) controls output 6"        CV="34"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="FL(r) controls output 7"        CV="34"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="FL(r) controls output 8"        CV="34"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="F1 controls output 1"     CV="35"  mask="VXXXXXXX" minOut="1">			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F1 controls output 2"     CV="35"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F1 controls output 3"        CV="35"  mask="XXVXXXXX" minOut="8" default="1">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F1 controls output 4"        CV="35"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F1 controls output 5"        CV="35"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F1 controls output 6"        CV="35"  mask="XXXXXVXX" minOut="8" > 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F1 controls output 7"        CV="35"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F1 controls output 8"        CV="35"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="F2 controls output 1"     CV="36"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F2 controls output 2"     CV="36"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F2 controls output 3"        CV="36"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F2 controls output 4"        CV="36"  mask="XXXVXXXX" minOut="1" default="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F2 controls output 5"        CV="36"  mask="XXXXVXXX" minOut="8" > 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F2 controls output 6"        CV="36"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F2 controls output 7"        CV="36"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F2 controls output 8"        CV="36"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="F3 controls output 1"     CV="37"  mask="VXXXXXXX" minOut="1"  >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F3 controls output 2"     CV="37"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F3 controls output 3"        CV="37"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F3 controls output 4"        CV="37"  mask="XXXVXXXX" minOut="1" > 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F3 controls output 5"        CV="37"  mask="XXXXVXXX" minOut="8" default="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F3 controls output 6"        CV="37"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F3 controls output 7"        CV="37"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F3 controls output 8"        CV="37"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+
+		<variable label="F4 controls output 1"     CV="38"  mask="VXXXXXXX" minOut="1"  >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F4 controls output 2"     CV="38"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F4 controls output 3"        CV="38"  mask="XXVXXXXX" minOut="8"  >     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F4 controls output 4"        CV="38"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F4 controls output 5"        CV="38"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F4 controls output 6"        CV="38"  mask="XXXXXVXX" minOut="8" default="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F4 controls output 7"        CV="38"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F4 controls output 8"        CV="38"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+
+		<variable label="F5 controls output 1"     CV="39"  mask="VXXXXXXX" minOut="1"  >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F5 controls output 2"     CV="39"  mask="XVXXXXXX" minOut="1" > 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F5 controls output 3"        CV="39"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F5 controls output 4"        CV="39"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F5 controls output 5"        CV="39"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F5 controls output 6"        CV="39"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F5 controls output 7"        CV="39"  mask="XXXXXXVX" minOut="8" default="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F5 controls output 8"        CV="39"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+
+		<variable label="F6 controls output 1"     CV="40"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F6 controls output 2"     CV="40"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F6 controls output 3"        CV="40"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F6 controls output 4"        CV="40"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F6 controls output 5"        CV="40"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F6 controls output 6"        CV="40"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F6 controls output 7"        CV="40"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F6 controls output 8"        CV="40"  mask="XXXXXXXV" minOut="8" default="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="F7 controls output 1"     CV="41"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F7 controls output 2"     CV="41"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F7 controls output 3"        CV="41"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F7 controls output 4"        CV="41"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F7 controls output 5"        CV="41"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F7 controls output 6"        CV="41"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F7 controls output 7"        CV="41"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F7 controls output 8"        CV="41"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="F8 controls output 1"     CV="42"  mask="VXXXXXXX" minOut="1"  >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F8 controls output 2"     CV="42"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F8 controls output 3"        CV="42"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F8 controls output 4"        CV="42"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F8 controls output 5"        CV="42"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F8 controls output 6"        CV="42"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F8 controls output 7"        CV="42"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F8 controls output 8"        CV="42"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="F9 controls output 1"     CV="43"  mask="VXXXXXXX" minOut="1"  >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F9 controls output 2"     CV="43"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F9 controls output 3"        CV="43"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F9 controls output 4"        CV="43"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F9 controls output 5"        CV="43"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F9 controls output 6"        CV="43"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F9 controls output 7"        CV="43"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F9 controls output 8"        CV="43"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="F10 controls output 1"     CV="44"  mask="VXXXXXXX" minOut="1"  >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F10 controls output 2"     CV="44"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F10 controls output 3"        CV="44"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F10 controls output 4"        CV="44"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F10 controls output 5"        CV="44"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F10 controls output 6"        CV="44"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F10 controls output 7"        CV="44"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F10 controls output 8"        CV="44"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="F11 controls output 1"     CV="45"  mask="VXXXXXXX" minOut="1"  >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F11 controls output 2"     CV="45"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F11 controls output 3"        CV="45"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F11 controls output 4"        CV="45"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F11 controls output 5"        CV="45"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F11 controls output 6"        CV="45"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F11 controls output 7"        CV="45"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F11 controls output 8"        CV="45"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="F12 controls output 1"     CV="46"  mask="VXXXXXXX" minOut="1"  >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F12 controls output 2"     CV="46"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="F12 controls output 3"        CV="46"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F12 controls output 4"        CV="46"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F12 controls output 5"        CV="46"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F12 controls output 6"        CV="46"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F12 controls output 7"        CV="46"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="F12 controls output 8"        CV="46"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+
+
+
+
+		<variable label="AltF13 controls output 1"     CV="83"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF13 controls output 2"     CV="83"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF13 controls output 3"        CV="83"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF13 controls output 4"        CV="83"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF13 controls output 5"        CV="83"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF13 controls output 6"        CV="83"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF13 controls output 7"        CV="83"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF13 controls output 8"        CV="83"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="AltF14 controls output 1"     CV="84"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF14 controls output 2"     CV="84"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF14 controls output 3"        CV="84"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF14 controls output 4"        CV="84"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF14 controls output 5"        CV="84"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF14 controls output 6"        CV="84"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF14 controls output 7"        CV="84"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF14 controls output 8"        CV="84"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="AltF15 controls output 1"     CV="85"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF15 controls output 2"     CV="85"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF15 controls output 3"        CV="85"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF15 controls output 4"        CV="85"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF15 controls output 5"        CV="85"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF15 controls output 6"        CV="85"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF15 controls output 7"        CV="85"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF15 controls output 8"        CV="85"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="AltF16 controls output 1"     CV="86"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF16 controls output 2"     CV="86"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF16 controls output 3"        CV="86"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF16 controls output 4"        CV="86"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF16 controls output 5"        CV="86"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF16 controls output 6"        CV="86"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF16 controls output 7"        CV="86"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF16 controls output 8"        CV="86"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="AltF17 controls output 1"     CV="87"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF17 controls output 2"     CV="87"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF17 controls output 3"        CV="87"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF17 controls output 4"        CV="87"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF17 controls output 5"        CV="87"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF17 controls output 6"        CV="87"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF17 controls output 7"        CV="87"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF17 controls output 8"        CV="87"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="AltF18 controls output 1"     CV="88"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF18 controls output 2"     CV="88"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF18 controls output 3"        CV="88"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF18 controls output 4"        CV="88"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF18 controls output 5"        CV="88"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF18 controls output 6"        CV="88"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF18 controls output 7"        CV="88"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF18 controls output 8"        CV="88"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="AltF19 controls output 1"     CV="89"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF19 controls output 2"     CV="89"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF19 controls output 3"        CV="89"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF19 controls output 4"        CV="89"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF19 controls output 5"        CV="89"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF19 controls output 6"        CV="89"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF19 controls output 7"        CV="89"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF19 controls output 8"        CV="89"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="AltF20 controls output 1"     CV="90"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF20 controls output 2"     CV="90"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF20 controls output 3"        CV="90"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF20 controls output 4"        CV="90"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF20 controls output 5"        CV="90"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF20 controls output 6"        CV="90"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF20 controls output 7"        CV="90"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF20 controls output 8"        CV="90"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="AltF21 controls output 1"     CV="91"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF21 controls output 2"     CV="91"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF21 controls output 3"        CV="91"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF21 controls output 4"        CV="91"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF21 controls output 5"        CV="91"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF21 controls output 6"        CV="91"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF21 controls output 7"        CV="91"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF21 controls output 8"        CV="91"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="AltF22 controls output 1"     CV="92"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF22 controls output 2"     CV="92"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF22 controls output 3"        CV="92"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF22 controls output 4"        CV="92"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF22 controls output 5"        CV="92"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF22 controls output 6"        CV="92"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF22 controls output 7"        CV="92"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF22 controls output 8"        CV="92"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="AltF23 controls output 1"     CV="93"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF23 controls output 2"     CV="93"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF23 controls output 3"        CV="93"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF23 controls output 4"        CV="93"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF23 controls output 5"        CV="93"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF23 controls output 6"        CV="93"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF23 controls output 7"        CV="93"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF23 controls output 8"        CV="93"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="AltF24 controls output 1"     CV="94"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF24 controls output 2"     CV="94"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF24 controls output 3"        CV="94"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF24 controls output 4"        CV="94"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF24 controls output 5"        CV="94"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF24 controls output 6"        CV="94"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF24 controls output 7"        CV="94"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF24 controls output 8"        CV="94"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="AltF25 controls output 1"     CV="95"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF25 controls output 2"     CV="95"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF25 controls output 3"        CV="95"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF25 controls output 4"        CV="95"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF25 controls output 5"        CV="95"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF25 controls output 6"        CV="95"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF25 controls output 7"        CV="95"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF25 controls output 8"        CV="95"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="AltF26 controls output 1"     CV="96"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF26 controls output 2"     CV="96"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF26 controls output 3"        CV="96"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF26 controls output 4"        CV="96"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF26 controls output 5"        CV="96"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF26 controls output 6"        CV="96"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF26 controls output 7"        CV="96"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF26 controls output 8"        CV="96"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="AltF27 controls output 1"     CV="97"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF27 controls output 2"     CV="97"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF27 controls output 3"        CV="97"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF27 controls output 4"        CV="97"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF27 controls output 5"        CV="97"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF27 controls output 6"        CV="97"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF27 controls output 7"        CV="97"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF27 controls output 8"        CV="97"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+		<variable label="AltF28 controls output 1"     CV="98"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF28 controls output 2"     CV="98"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="AltF28 controls output 3"        CV="98"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF28 controls output 4"        CV="98"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF28 controls output 5"        CV="98"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF28 controls output 6"        CV="98"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF28 controls output 7"        CV="98"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="AltF28 controls output 8"        CV="98"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+
+
+		<variable label="invert output 1"     CV="99"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="invert output 2"     CV="99"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="invert output 3"        CV="99"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="invert output 4"        CV="99"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="invert output 5"        CV="99"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="invert output 6"        CV="99"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="invert output 7"        CV="99"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="invert output 8"        CV="99"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+
+		<variable label="flicker output 1"     CV="100"  mask="VXXXXXXX" minOut="1" >			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="flicker output 2"     CV="100"  mask="XVXXXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+		<variable label="flicker output 3"        CV="100"  mask="XXVXXXXX" minOut="8">     	<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="flicker output 4"        CV="100"  mask="XXXVXXXX" minOut="1"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="flicker output 5"        CV="100"  mask="XXXXVXXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="flicker output 6"        CV="100"  mask="XXXXXVXX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="flicker output 7"        CV="100"  mask="XXXXXXVX" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+		<variable label="flicker output 8"        CV="100"  mask="XXXXXXXV" minOut="8"> 				<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>         
+
+
+			
+		<variable label="User Private ID #1" CV="105"
+					item="User Id #1">
+			<decVal/>
+			</variable>
+		<variable label="User Private ID #2" CV="106"
+					item="User Id #2">
+			<decVal/>
+			</variable>
+			
+	</variables>
+	
+</decoder>
+
+
+<pane name="Extended Function Map">
+	<column>
+		<display item="Higher Function Number Mapping" format="radiobuttons" tooltip="CV 61"/>
+		<label label=" " />
+			<label label=" " />
+			<label label="         Description                         Output wire or operation" />
+			<label label="                                                                     " />
+		<row>
+		<column>			
+			<label label="                                1 "  />
+			<label label="                             Output " />
+			<label label="                                A  " />
+			<label label="   " /> 
+			<display item="AltF13 controls output 1" format="checkbox" label="F13 Button  " tooltip="CV 83" />
+			<display item="AltF14 controls output 1" format="checkbox" label="F14 Button  " tooltip="CV 84" />
+			<display item="AltF15 controls output 1" format="checkbox" label="F15 Button  " tooltip="CV 85" />
+			<display item="AltF16 controls output 1" format="checkbox" label="F16 Button  " tooltip="CV 86" />			
+			<display item="AltF17 controls output 1" format="checkbox" label="F17 Button  " tooltip="CV 87" />
+			<display item="AltF18 controls output 1" format="checkbox" label="F18 Button  " tooltip="CV 88" />
+			<display item="AltF19 controls output 1" format="checkbox" label="F19 Button  " tooltip="CV 89" />
+			<display item="AltF20 controls output 1" format="checkbox" label="F20 Button  " tooltip="CV 90" />
+			<display item="AltF21 controls output 1" format="checkbox" label="F21 Button  " tooltip="CV 91" />
+			<display item="AltF22 controls output 1" format="checkbox" label="F22 Button  " tooltip="CV 92" />
+			<display item="AltF23 controls output 1" format="checkbox" label="F23 Button  " tooltip="CV 93" />
+			<display item="AltF24 controls output 1" format="checkbox" label="F24 Button  " tooltip="CV 94" />
+			<display item="AltF25 controls output 1" format="checkbox" label="F25 Button  " tooltip="CV 95" />
+			<display item="AltF26 controls output 1" format="checkbox" label="F26 Button  " tooltip="CV 96" />
+			<display item="AltF27 controls output 1" format="checkbox" label="F27 Button  " tooltip="CV 97" />
+			<display item="AltF28 controls output 1" format="checkbox" label="F28 Button  " tooltip="CV 98" />
+			<label label=" "  />
+			<display item="invert output 1" format="checkbox" label="Invert Output" tooltip="CV 99" />
+			<label label="Flicker"  />
+
+		</column>
+		<column>
+			<label label="    2  " />
+			<label label=" Output  " />
+			<label label="    B  " />
+			<label label=" " />
+			<display item="AltF13 controls output 2" format="checkbox" label="" tooltip="CV 83" />
+			<display item="AltF14 controls output 2" format="checkbox" label="" tooltip="CV 84" />
+			<display item="AltF15 controls output 2" format="checkbox" label="" tooltip="CV 85" />
+			<display item="AltF16 controls output 2" format="checkbox" label="" tooltip="CV 86" />			
+			<display item="AltF17 controls output 2" format="checkbox" label="" tooltip="CV 87" />
+			<display item="AltF18 controls output 2" format="checkbox" label="" tooltip="CV 88" />
+			<display item="AltF19 controls output 2" format="checkbox" label="" tooltip="CV 89" />
+			<display item="AltF20 controls output 2" format="checkbox" label="" tooltip="CV 90" />
+			<display item="AltF21 controls output 2" format="checkbox" label="" tooltip="CV 91" />
+			<display item="AltF22 controls output 2" format="checkbox" label="" tooltip="CV 92" />
+			<display item="AltF23 controls output 2" format="checkbox" label="" tooltip="CV 93" />
+			<display item="AltF24 controls output 2" format="checkbox" label="" tooltip="CV 94" />
+			<display item="AltF25 controls output 2" format="checkbox" label="" tooltip="CV 95" />
+			<display item="AltF26 controls output 2" format="checkbox" label="" tooltip="CV 96" />
+			<display item="AltF27 controls output 2" format="checkbox" label="" tooltip="CV 97" />
+			<display item="AltF28 controls output 2" format="checkbox" label="" tooltip="CV 98" />
+			<label label=" "  />
+			<display item="invert output 2" format="checkbox" label="" tooltip="CV 99" />
+			<label label=" "  />
+
+		</column>
+
+		<column>
+			<label label="    3 " minout="8" />
+			<label label=" Output " />
+			<label label="    C " />
+			<label label=" " />
+			<display item="AltF13 controls output 3" format="checkbox" label="" tooltip="CV 83" />
+			<display item="AltF14 controls output 3" format="checkbox" label="" tooltip="CV 84" />
+			<display item="AltF15 controls output 3" format="checkbox" label="" tooltip="CV 85" />
+			<display item="AltF16 controls output 3" format="checkbox" label="" tooltip="CV 86" />		
+			<display item="AltF17 controls output 3" format="checkbox" label="" tooltip="CV 87" />
+			<display item="AltF18 controls output 3" format="checkbox" label="" tooltip="CV 88" />
+			<display item="AltF19 controls output 3" format="checkbox" label="" tooltip="CV 89" />
+			<display item="AltF20 controls output 3" format="checkbox" label="" tooltip="CV 90" />
+			<display item="AltF21 controls output 3" format="checkbox" label="" tooltip="CV 91" />
+			<display item="AltF22 controls output 3" format="checkbox" label="" tooltip="CV 92" />
+			<display item="AltF23 controls output 3" format="checkbox" label="" tooltip="CV 93" />
+			<display item="AltF24 controls output 3" format="checkbox" label="" tooltip="CV 94" />
+			<display item="AltF25 controls output 3" format="checkbox" label="" tooltip="CV 95" />
+			<display item="AltF26 controls output 3" format="checkbox" label="" tooltip="CV 96" />
+			<display item="AltF27 controls output 3" format="checkbox" label="" tooltip="CV 97" />
+			<display item="AltF28 controls output 3" format="checkbox" label="" tooltip="CV 98" />
+			<label label=" "  />
+			<display item="invert output 3" format="checkbox" label="" tooltip="CV 99" />
+			<display item="flicker output 3" format="checkbox" label="" tooltip="CV 100" />
+
+		</column>
+
+		<column>
+			<label label="    4 " />
+			<label label=" Output " />
+			<label label="    D " />
+			<label label=" " />
+			<display item="AltF13 controls output 4" format="checkbox" label=" " tooltip="CV 83" />
+			<display item="AltF14 controls output 4" format="checkbox" label=" " tooltip="CV 84" />
+			<display item="AltF15 controls output 4" format="checkbox" label=" " tooltip="CV 85" />
+			<display item="AltF16 controls output 4" format="checkbox" label=" " tooltip="CV 86" />
+			<display item="AltF17 controls output 4" format="checkbox" label=" " tooltip="CV 87" />
+			<display item="AltF18 controls output 4" format="checkbox" label=" " tooltip="CV 88" />
+			<display item="AltF19 controls output 4" format="checkbox" label=" " tooltip="CV 89" />
+			<display item="AltF20 controls output 4" format="checkbox" label=" " tooltip="CV 90" />
+			<display item="AltF21 controls output 4" format="checkbox" label=" " tooltip="CV 91" />
+			<display item="AltF22 controls output 4" format="checkbox" label=" " tooltip="CV 92" />
+			<display item="AltF23 controls output 4" format="checkbox" label=" " tooltip="CV 93" />
+			<display item="AltF24 controls output 4" format="checkbox" label=" " tooltip="CV 94" />
+			<display item="AltF25 controls output 4" format="checkbox" label=" " tooltip="CV 95" />
+			<display item="AltF26 controls output 4" format="checkbox" label=" " tooltip="CV 96" />
+			<display item="AltF27 controls output 4" format="checkbox" label=" " tooltip="CV 97" />
+			<display item="AltF28 controls output 4" format="checkbox" label=" " tooltip="CV 98" />
+			<label label=" "  />
+			<display item="invert output 4" format="checkbox" label="" tooltip="CV 99" />
+			<label label=" "  />
+
+		</column>
+
+		<column>
+			<label label="    5 " />
+			<label label=" Output " />
+			<label label="    E " />
+			<label label=" " />
+			<display item="AltF13 controls output 5" format="checkbox" label="" tooltip="CV 83" />
+			<display item="AltF14 controls output 5" format="checkbox" label="" tooltip="CV 84" />
+			<display item="AltF15 controls output 5" format="checkbox" label="" tooltip="CV 85" />
+			<display item="AltF16 controls output 5" format="checkbox" label="" tooltip="CV 86" />
+			<display item="AltF17 controls output 5" format="checkbox" label="" tooltip="CV 87" />
+			<display item="AltF18 controls output 5" format="checkbox" label="" tooltip="CV 88" />
+			<display item="AltF19 controls output 5" format="checkbox" label="" tooltip="CV 89" />
+			<display item="AltF20 controls output 5" format="checkbox" label="" tooltip="CV 90" />
+			<display item="AltF21 controls output 5" format="checkbox" label="" tooltip="CV 91" />
+			<display item="AltF22 controls output 5" format="checkbox" label="" tooltip="CV 92" />
+			<display item="AltF23 controls output 5" format="checkbox" label="" tooltip="CV 93" />
+			<display item="AltF24 controls output 5" format="checkbox" label="" tooltip="CV 94" />
+			<display item="AltF25 controls output 5" format="checkbox" label="" tooltip="CV 95" />
+			<display item="AltF26 controls output 5" format="checkbox" label="" tooltip="CV 96" />
+			<display item="AltF27 controls output 5" format="checkbox" label="" tooltip="CV 97" />
+			<display item="AltF28 controls output 5" format="checkbox" label="" tooltip="CV 98" />
+			<label label=" "  />
+			<display item="invert output 5" format="checkbox" label="" tooltip="CV 99" />
+			<display item="flicker output 5" format="checkbox" label="" tooltip="CV 100" />
+
+		</column>
+
+		<column>
+			<label label="    6 " />
+			<label label=" Output " />
+			<label label="    F " />
+			<label label=" " />
+			<display item="AltF13 controls output 6" format="checkbox" label="" tooltip="CV 83" />
+			<display item="AltF14 controls output 6" format="checkbox" label="" tooltip="CV 84" />
+			<display item="AltF15 controls output 6" format="checkbox" label="" tooltip="CV 85" />
+			<display item="AltF16 controls output 6" format="checkbox" label="" tooltip="CV 86" />
+			<display item="AltF17 controls output 6" format="checkbox" label="" tooltip="CV 87" />
+			<display item="AltF18 controls output 6" format="checkbox" label="" tooltip="CV 88" />
+			<display item="AltF19 controls output 6" format="checkbox" label="" tooltip="CV 89" />
+			<display item="AltF20 controls output 6" format="checkbox" label="" tooltip="CV 90" />
+			<display item="AltF21 controls output 6" format="checkbox" label="" tooltip="CV 91" />
+			<display item="AltF22 controls output 6" format="checkbox" label="" tooltip="CV 92" />
+			<display item="AltF23 controls output 6" format="checkbox" label="" tooltip="CV 93" />
+			<display item="AltF24 controls output 6" format="checkbox" label="" tooltip="CV 94" />
+			<display item="AltF25 controls output 6" format="checkbox" label="" tooltip="CV 95" />
+			<display item="AltF26 controls output 6" format="checkbox" label="" tooltip="CV 96" />
+			<display item="AltF27 controls output 6" format="checkbox" label="" tooltip="CV 97" />
+			<display item="AltF28 controls output 6" format="checkbox" label="" tooltip="CV 98" />
+			<label label=" "  />
+			<display item="invert output 6" format="checkbox" label="" tooltip="CV 99" />
+			<display item="flicker output 6" format="checkbox" label="" tooltip="CV 100" />
+
+		</column>
+
+		<column>
+			<label label="    7 " />
+			<label label=" Output " />
+			<label label="    G " />
+			<label label=" " />
+			<display item="AltF13 controls output 7" format="checkbox" label="" tooltip="CV 83" />
+			<display item="AltF14 controls output 7" format="checkbox" label="" tooltip="CV 84" />
+			<display item="AltF15 controls output 7" format="checkbox" label="" tooltip="CV 85" />
+			<display item="AltF16 controls output 7" format="checkbox" label="" tooltip="CV 86" />
+			<display item="AltF17 controls output 7" format="checkbox" label="" tooltip="CV 87" />
+			<display item="AltF18 controls output 7" format="checkbox" label="" tooltip="CV 88" />
+			<display item="AltF19 controls output 7" format="checkbox" label="" tooltip="CV 89" />
+			<display item="AltF20 controls output 7" format="checkbox" label="" tooltip="CV 90" />
+			<display item="AltF21 controls output 7" format="checkbox" label="" tooltip="CV 91" />
+			<display item="AltF22 controls output 7" format="checkbox" label="" tooltip="CV 92" />
+			<display item="AltF23 controls output 7" format="checkbox" label="" tooltip="CV 93" />
+			<display item="AltF24 controls output 7" format="checkbox" label="" tooltip="CV 94" />
+			<display item="AltF25 controls output 7" format="checkbox" label="" tooltip="CV 95" />
+			<display item="AltF26 controls output 7" format="checkbox" label="" tooltip="CV 96" />
+			<display item="AltF27 controls output 7" format="checkbox" label="" tooltip="CV 97" />
+			<display item="AltF28 controls output 7" format="checkbox" label="" tooltip="CV 98" />
+			<label label=" "  />
+			<display item="invert output 7" format="checkbox" label="" tooltip="CV 99" />
+			<display item="flicker output 7" format="checkbox" label="" tooltip="CV 100" />
+
+		</column>
+
+		<column>
+			<label label="    8 " />
+			<label label=" Output " />
+			<label label="    H " />
+			<label label=" " />
+			<display item="AltF13 controls output 8" format="checkbox" label="" tooltip="CV 83" />
+			<display item="AltF14 controls output 8" format="checkbox" label="" tooltip="CV 84" />
+			<display item="AltF15 controls output 8" format="checkbox" label="" tooltip="CV 85" />
+			<display item="AltF16 controls output 8" format="checkbox" label="" tooltip="CV 86" />
+			<display item="AltF17 controls output 8" format="checkbox" label="" tooltip="CV 87" />
+			<display item="AltF18 controls output 8" format="checkbox" label="" tooltip="CV 88" />
+			<display item="AltF19 controls output 8" format="checkbox" label="" tooltip="CV 89" />
+			<display item="AltF20 controls output 8" format="checkbox" label="" tooltip="CV 90" />
+			<display item="AltF21 controls output 8" format="checkbox" label="" tooltip="CV 91" />
+			<display item="AltF22 controls output 8" format="checkbox" label="" tooltip="CV 92" />
+			<display item="AltF23 controls output 8" format="checkbox" label="" tooltip="CV 93" />
+			<display item="AltF24 controls output 8" format="checkbox" label="" tooltip="CV 94" />
+			<display item="AltF25 controls output 8" format="checkbox" label="" tooltip="CV 95" />
+			<display item="AltF26 controls output 8" format="checkbox" label="" tooltip="CV 96" />
+			<display item="AltF27 controls output 8" format="checkbox" label="" tooltip="CV 97" />
+			<display item="AltF28 controls output 8" format="checkbox" label="" tooltip="CV 98" />
+			<label label=" "  />
+			<display item="invert output 8" format="checkbox" label="" tooltip="CV 99" />
+			<display item="flicker output 8" format="checkbox" label="" tooltip="CV 100" />
+
+		</column>
+
+				
+		</row>
+
+	<label label=" "  />
+
+	</column>
+</pane>
+
+
+
+<pane name="Decoder Lock">
+	<column>
+		<label label="CV16, decoder lock"/>
+		<display item="Decoder Lock ID number" />
+		<label label="Tip: you must set CV15 equal to this number to unlock the decoder for programming"/>
+
+		<label label="                       "/>
+		<label label="Decoder release (CV15)"/>
+		<display item="Decoder Lock ID release" />
+		<label label="To release, set CV15 to match the lock"/>
+
+
+	</column>
+
+</pane>
+</decoder-config>
