@@ -13,13 +13,14 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-  <version author="dick@rr-cirkits.com" version="0.08" lastUpdated="20120312"/>
+  <version author="dick@rr-cirkits.com" version="0.09" lastUpdated="20120930"/>
   <!-- Version 0.01  Working version modified from TC-64 -->
   <!-- Version 0.04  Added presets for input lines -->
   <!-- Version 0.05  Added logic table entries -->
   <!-- Version 0.06  Corrected output port for signal mode -->
   <!-- Version 0.07  Switched to xi:include for many items to control file size. -->
   <!-- Version 0.08  Limits address writes to Service Mode only to reduce accidental errors. (done in firmware) -->
+  <!-- Version 0.09  Correct Master Mode CV. -->
 
   <decoder>
     <family name="Control Point" mfg="RR-CirKits" type="stationary" comment="The Control Point is normally programmed in OPs mode">
@@ -77,7 +78,7 @@
           <enumChoice choice="Bi-polar LEDs"/>
         </enumVal>
       </variable>
-      <variable label="Master Mode" CV="19" mask="VXXXXXXX">
+      <variable label="Master Mode" CV="112" mask="VXXXXXXX">
         <enumVal>
           <enumChoice choice="No     "/>
           <enumChoice choice="Enable"/>
@@ -15737,9 +15738,9 @@
             <compositeSetting label="OUT1 Output Direction" value="0"/>
             <compositeSetting label="OUT2 Output Direction" value="1"/>
             <compositeSetting label="OUT1 Type" value="0"/>
-            <compositeSetting label="OUT1 Timing" value="7"/>
+            <compositeSetting label="OUT1 Timing" value="0"/>
             <compositeSetting label="OUT2 Type" value="0"/>
-            <compositeSetting label="OUT2 Timing" value="7"/> 
+            <compositeSetting label="OUT2 Timing" value="0"/> 
           </compositeChoice>
           <compositeChoice choice="Stall Inverted">
             <compositeSetting label="OUT1 Paired" value="2"/>
@@ -15749,9 +15750,9 @@
             <compositeSetting label="OUT1 Output Direction" value="1"/>
             <compositeSetting label="OUT2 Output Direction" value="0"/>
             <compositeSetting label="OUT1 Type" value="0"/>
-            <compositeSetting label="OUT1 Timing" value="7"/>
+            <compositeSetting label="OUT1 Timing" value="0"/>
             <compositeSetting label="OUT2 Type" value="0"/>
-            <compositeSetting label="OUT2 Timing" value="7"/> 
+            <compositeSetting label="OUT2 Timing" value="0"/> 
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="OUT1 Paired" value="3"/>
@@ -15809,9 +15810,9 @@
             <compositeSetting label="OUT3 Output Direction" value="0"/>
             <compositeSetting label="OUT4 Output Direction" value="1"/>
             <compositeSetting label="OUT3 Type" value="0"/>
-            <compositeSetting label="OUT3 Timing" value="7"/>
+            <compositeSetting label="OUT3 Timing" value="0"/>
             <compositeSetting label="OUT4 Type" value="0"/>
-            <compositeSetting label="OUT4 Timing" value="7"/>
+            <compositeSetting label="OUT4 Timing" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Stall Inverted">
             <compositeSetting label="OUT3 Paired" value="2"/>
@@ -15821,9 +15822,9 @@
             <compositeSetting label="OUT3 Output Direction" value="1"/>
             <compositeSetting label="OUT4 Output Direction" value="0"/>
             <compositeSetting label="OUT3 Type" value="0"/>
-            <compositeSetting label="OUT3 Timing" value="7"/>
+            <compositeSetting label="OUT3 Timing" value="0"/>
             <compositeSetting label="OUT4 Type" value="0"/>
-            <compositeSetting label="OUT4 Timing" value="7"/>
+            <compositeSetting label="OUT4 Timing" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="OUT3 Paired" value="3"/>
@@ -15881,9 +15882,9 @@
             <compositeSetting label="OUT5 Output Direction" value="0"/>
             <compositeSetting label="OUT6 Output Direction" value="1"/>
             <compositeSetting label="OUT5 Type" value="0"/>
-            <compositeSetting label="OUT5 Timing" value="7"/>
+            <compositeSetting label="OUT5 Timing" value="0"/>
             <compositeSetting label="OUT6 Type" value="0"/>
-            <compositeSetting label="OUT6 Timing" value="7"/>
+            <compositeSetting label="OUT6 Timing" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Stall Inverted">
             <compositeSetting label="OUT5 Paired" value="2"/>
@@ -15893,9 +15894,9 @@
             <compositeSetting label="OUT5 Output Direction" value="1"/>
             <compositeSetting label="OUT6 Output Direction" value="0"/>
             <compositeSetting label="OUT5 Type" value="0"/>
-            <compositeSetting label="OUT5 Timing" value="7"/>
+            <compositeSetting label="OUT5 Timing" value="0"/>
             <compositeSetting label="OUT6 Type" value="0"/>
-            <compositeSetting label="OUT6 Timing" value="7"/>
+            <compositeSetting label="OUT6 Timing" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="OUT5 Paired" value="3"/>
@@ -15953,9 +15954,9 @@
             <compositeSetting label="OUT7 Output Direction" value="0"/>
             <compositeSetting label="OUT8 Output Direction" value="1"/>
             <compositeSetting label="OUT7 Type" value="0"/>
-            <compositeSetting label="OUT7 Timing" value="7"/>
+            <compositeSetting label="OUT7 Timing" value="0"/>
             <compositeSetting label="OUT8 Type" value="0"/>
-            <compositeSetting label="OUT8 Timing" value="7"/>
+            <compositeSetting label="OUT8 Timing" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Stall Inverted">
             <compositeSetting label="OUT7 Paired" value="2"/>
@@ -15965,9 +15966,9 @@
             <compositeSetting label="OUT7 Output Direction" value="1"/>
             <compositeSetting label="OUT8 Output Direction" value="0"/>
             <compositeSetting label="OUT7 Type" value="0"/>
-            <compositeSetting label="OUT7 Timing" value="7"/>
+            <compositeSetting label="OUT7 Timing" value="0"/>
             <compositeSetting label="OUT8 Type" value="0"/>
-            <compositeSetting label="OUT8 Timing" value="7"/>
+            <compositeSetting label="OUT8 Timing" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="OUT7 Paired" value="3"/>
