@@ -645,7 +645,7 @@
 		</column>
 
 		<column>
-			<label label="    3 " minout="8" />
+			<label label="    3 " />
 			<label label=" Output " />
 			<label label="    C " />
 			<label label=" " />
