@@ -17,10 +17,12 @@
 <!-- ver2 Added CV16, fixed CV 474.3, fixed light effect type, moved some var to other panes -->
 <!-- ver3 fixed CV293.0 bug -->
 <!-- ver4 fixed CV249 bug, added CVs 47,48,51,122,123,129,130,133,250,255 -->
+<!-- ver5 fixed range and default values CVs 5 and 6 -->
   <version author="Michael Mosher" version="1" lastUpdated="20110505"/>
   <version author="Michael Mosher" version="2" lastUpdated="20110523"/>
   <version author="Michael Mosher" version="3" lastUpdated="20120223"/>
   <version author="Dave Heap" version="4" lastUpdated="20120721"/>
+  <version author="Dave Heap" version="5" lastUpdated="20120917"/>
   <decoder>
     <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
       <model model="LokSound V4.0 NEM652" numOuts="40" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="54400">
@@ -287,12 +289,12 @@
         <decVal/>
         <label>Deceleration</label>
       </variable>
-      <variable label="Vhigh" CV="5" default="64">
-        <decVal max="64"/>
+      <variable label="Vhigh" CV="5" default="255">
+        <decVal/>
         <label>Vhigh</label>
       </variable>
-      <variable label="Vmid" CV="6" default="22">
-        <decVal max="64"/>
+      <variable label="Vmid" CV="6" default="88">
+        <decVal/>
         <label>Vmid</label>
       </variable>
       <variable label="Decoder Version " CV="7" readOnly="no" item="Decoder Version">
