@@ -19,6 +19,8 @@
   <version author="Matthew Harris" version="2" lastUpdated="20100329"/>
 <!-- ver3 fix bug in sanding volume CV -->
   <version author="Michael Mosher" version="3" lastUpdated="20101216"/>
+<!-- ver4 fixed range and default values CVs 5 and 6 -->
+  <version author="Dave Heap" version="4" lastUpdated="20120929"/>
   <decoder>
     <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168">
       <model model="LokSound Select Alco 244" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73401">
@@ -449,12 +451,12 @@
         <decVal/>
         <label>Deceleration</label>
       </variable>
-      <variable label="Vhigh" CV="5" default="64">
-        <decVal max="64"/>
+      <variable label="Vhigh" CV="5" default="255">
+        <decVal/>
         <label>Vhigh</label>
       </variable>
-      <variable label="Vmid" CV="6" default="22">
-        <decVal max="64"/>
+      <variable label="Vmid" CV="6" default="88">
+        <decVal/>
         <label>Vmid</label>
       </variable>
       <variable label="Decoder Version " CV="7" readOnly="no" item="Decoder Version">
