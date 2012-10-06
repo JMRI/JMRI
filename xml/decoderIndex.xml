@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20120908-1722-jake on Sat Sep 08 10:22:46 PDT 2012 $Id$-->
-  <decoderIndex version="242">
+  <!--Written by JMRI version 20121006-2223-jake on Sat Oct 06 15:23:38 PDT 2012 $Id$-->
+  <decoderIndex version="244">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1207,9 +1207,9 @@
           <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire" />
           <size length="13.5" width="9" height="3.0" units="mm" />
           <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Selectrix</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
           </protocols>
         </model>
         <model model="LokPilot micro DCC 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall">
@@ -1224,9 +1224,9 @@
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
           <size length="23.5" width="15.5" height="5.5" units="mm" />
           <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Selectrix</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
           </protocols>
         </model>
         <model model="LokPilot DCC 3.0" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium">
@@ -1243,8 +1243,8 @@
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
           <size length="23.5" width="15.5" height="5.5" units="mm" />
           <protocols>
-            <protocol>MFX</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>mfx</protocol>
+            <protocol>motorola</protocol>
           </protocols>
         </model>
         <model model="LokPilot XL 3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other">
@@ -1258,8 +1258,8 @@
           <output name="8" label="   AUX6    " maxcurrent="600 mA" connection="other" />
           <size length="64" width="25" height="11.5" units="mm" />
           <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
           </protocols>
         </model>
         <model model="LokPilot Fx 3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium">
@@ -1271,8 +1271,8 @@
           <output name="6" label="   AUX4    " maxcurrent="250 mA" connection="wire" />
           <size length="17.5" width="15.5" height="5.5" units="mm" />
           <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
           </protocols>
         </model>
       </family>
@@ -1322,9 +1322,9 @@
           <size length="21.3" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, NEM 652, 21MTC, Plux12, wires" -->
           <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Selectrix</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
           </protocols>
         </model>
         <model model="LokPilot DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
@@ -1365,9 +1365,9 @@
           <size length="10.5" width="5.8" height="2.8" units="mm" />
           <!-- connector="NEM651, NEM 652, Next18" -->
           <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Selectrix</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
           </protocols>
         </model>
         <model model="LokPilot Micro DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes">
@@ -1427,8 +1427,8 @@
           <output name="4" label="AUX 2" maxcurrent="250mA" />
           <size length="30" width="15.5" height="6.5" units="mm" />
           <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
           </protocols>
         </model>
         <model model="LokSound Version 3.5 (21 pin)" numOuts="6" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
@@ -1439,8 +1439,8 @@
           <output name="5" label="AUX 3" maxcurrent="250mA" />
           <output name="6" label="AUX 4" maxcurrent="250mA" />
           <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
           </protocols>
         </model>
         <functionlabels>
@@ -1720,8 +1720,8 @@
           <output name="8" label="AUX 6" maxcurrent="600mA" />
           <size length="51" width="40" height="14" units="mm" />
           <protocols>
-            <protocol>DCC</protocol>
-            <protocol>Motorola</protocol>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
           </protocols>
         </model>
         <functionlabels>
@@ -2388,6 +2388,40 @@
           <versionCV lowVersionID="48" highVersionID="63" />
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
+        </model>
+      </family>
+      <family name="Harman DIY Accessory Decoders" mfg="Harman-DIY" type="locomotive" file="Harman_DIY_accessory_decoders.xml">
+        <model model="Eight outputs" numOuts="8" numFns="16" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Output A" connection="unspecified" />
+          <output name="2" label="Output B" connection="unspecified" />
+          <output name="3" label="Output C" connection="unspecified" />
+          <output name="4" label="Output D" connection="unspecified" />
+          <output name="5" label="Output E" connection="unspecified" />
+          <output name="6" label="Output F" connection="unspecified" />
+          <output name="7" label="Output G" connection="unspecified" />
+          <output name="8" label="Output H" connection="unspecified" />
+        </model>
+        <model model="Two outputs" numOuts="2" numFns="16" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Output A" connection="unspecified" />
+          <output name="2" label="Output B" connection="unspecified" />
+        </model>
+      </family>
+      <family name="Harman DIY Function Decoders" mfg="Harman-DIY" type="locomotive" file="Harman_DIY_function_decoders.xml">
+        <model model="Function1-8" numOuts="8" numFns="16" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Output A" connection="unspecified" />
+          <output name="2" label="Output B" connection="unspecified" />
+          <output name="3" label="Output C" connection="unspecified" />
+          <output name="4" label="Output D" connection="unspecified" />
+          <output name="5" label="Output E" connection="unspecified" />
+          <output name="6" label="Output F" connection="unspecified" />
+          <output name="7" label="Output G" connection="unspecified" />
+          <output name="8" label="Output H" connection="unspecified" />
+        </model>
+        <model model="Function1-3" numOuts="4" numFns="16" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Output A" connection="unspecified" />
+          <output name="2" label="Output B" connection="unspecified" />
+          <output name="3" label="Omitted" connection="unspecified" />
+          <output name="4" label="Output D" connection="unspecified" />
         </model>
       </family>
       <family name="Sapphire-R8245" mfg="Hornby" highVersionID="10" lowVersionID="10" comment="Decoder with auntomous loco control and fuel/water simulation" type="locomotive" file="Hornby8245_v2.xml">
