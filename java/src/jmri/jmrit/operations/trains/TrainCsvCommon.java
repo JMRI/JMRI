@@ -29,6 +29,7 @@ public class TrainCsvCommon extends TrainCommon {
 	protected final static String EDT = "EDT"+del+"Estimated Departure Time"+del;
 	protected final static String LC = "LC"+del+"Location Comment"+del;
 	protected final static String LN = "LN"+del+"Location Name"+del;
+	protected final static String LOGO = "LOGO"+del+"Logo file path"+del;
 	protected final static String NW = "NW"+del+"No Work";
 	protected final static String PC = "PC"+del+"Pick up car";
 	protected final static String PL = "PL"+del+"Pick up loco";

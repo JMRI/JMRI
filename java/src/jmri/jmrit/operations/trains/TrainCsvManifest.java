@@ -52,7 +52,13 @@ public class TrainCsvManifest extends TrainCsvCommon {
 		else
 			addLine(fileOut, RN+"\""+Setup.getRailroadName()+"\"");
 		addLine(fileOut, TN+train.getName());
-		addLine(fileOut, TM+"\""+train.getDescription()+"\"");		
+		addLine(fileOut, TM+"\""+train.getDescription()+"\"");
+		// add logo
+		String logoURL = Setup.getManifestLogoURL();
+		if (!train.getManifestLogoURL().equals(""))
+			logoURL = train.getManifestLogoURL();
+		if (!logoURL.equals(""))
+			addLine(fileOut, LOGO+logoURL);
 		addLine(fileOut, VT+getDate());
 		// train comment can have multiple lines
 		if (!train.getComment().equals("")){
