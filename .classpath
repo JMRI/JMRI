@@ -13,6 +13,7 @@
 	<classpathentry kind="lib" path="lib/javacc.jar"/>
 	<classpathentry kind="lib" path="lib/javacsv.jar"/>
 	<classpathentry kind="lib" path="lib/jdom.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core-2.0.6.jar"/>
 	<classpathentry kind="lib" path="lib/jetty-continuation-8.1.0.v20120127.jar"/>
 	<classpathentry kind="lib" path="lib/jetty-http-8.1.0.v20120127.jar"/>
 	<classpathentry kind="lib" path="lib/jetty-io-8.1.0.v20120127.jar"/>
@@ -49,5 +50,7 @@
 	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="lib/jetty-websocket-8.1.0.v20120127.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/jackson-databind-2.0.6.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-annotations-2.0.6.jar"/>
 	<classpathentry kind="output" path="java/classes"/>
 </classpath>

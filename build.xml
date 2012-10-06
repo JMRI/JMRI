@@ -139,6 +139,9 @@
         <pathelement location="${libdir}/jfcunit.jar"/>
         <pathelement location="${libdir}/WinRegistry-4.4.jar"/>
         <pathelement location="${libdir}/jakarta-regexp-1.5.jar"/>
+        <pathelement location="${libdir}/jackson-core-2.0.6.jar"/>
+        <pathelement location="${libdir}/jackson-annotations-2.0.6.jar"/>
+        <pathelement location="${libdir}/jackson-databind-2.0.6.jar"/>
         <pathelement location="${libdir}/jetty-continuation-8.1.0.v20120127.jar"/>
         <pathelement location="${libdir}/jetty-http-8.1.0.v20120127.jar"/>
         <pathelement location="${libdir}/jetty-security-8.1.0.v20120127.jar"/>

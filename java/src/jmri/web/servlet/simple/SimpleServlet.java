@@ -1,5 +1,5 @@
 // SimpleWebSocketServlet.java
-package jmri.web.servlet.websocket;
+package jmri.web.servlet.simple;
 
 import java.io.IOException;
 import java.util.Date;
@@ -29,14 +29,14 @@ import org.eclipse.jetty.websocket.WebSocketServlet;
  *
  * @author rhwood
  */
-public class SimpleWebSocketServlet extends WebSocketServlet {
+public class SimpleServlet extends WebSocketServlet {
 
 	private final Set<SimpleWebSocket> sockets = new CopyOnWriteArraySet<SimpleWebSocket>();
     private static ResourceBundle html = ResourceBundle.getBundle("jmri.web.server.Html");
-    private static ResourceBundle wsHtml = ResourceBundle.getBundle("jmri.web.servlet.websocket.SimpleWebSocket");
-	private static Logger log = Logger.getLogger(SimpleWebSocketServlet.class);
+    private static ResourceBundle wsHtml = ResourceBundle.getBundle("jmri.web.servlet.simple.Simple");
+	private static Logger log = Logger.getLogger(SimpleServlet.class);
 
-	public SimpleWebSocketServlet() {
+	public SimpleServlet() {
 		super();
 		InstanceManager.shutDownManagerInstance().register(new QuietShutDownTask("Close simple web sockets") {
 			@Override
@@ -72,7 +72,7 @@ public class SimpleWebSocketServlet extends WebSocketServlet {
         response.getWriter().println(String.format(html.getString("HeadFormat"),
                 html.getString("HTML5DocType"),
                 "JMRI Simple Network Console",
-                SimpleWebSocketServlet.class.getSimpleName(),
+                SimpleServlet.class.getSimpleName(),
                 wsHtml.getString("HeadAdditions")));
         response.getWriter().println(wsHtml.getString("BodyContent"));
         response.getWriter().println(String.format(html.getString("TailFormat"), "", ""));
