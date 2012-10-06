@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- version 1 - new file for QSi V8 files -->
+
+<!-- Diesel motor selections -->
+
+<ienumVal>
+	<ienumChoice choice="Native Motor" value="1" />
+	<ienumChoice choice="ALCo 244-12" />
+	<ienumChoice choice="MS 531-6" />
+	<ienumChoice choice="ALCo 539-6" />
+	<ienumChoice choice="ALCo 539T-6" />
+	<ienumChoice choice="Baldwin 608NA" />
+	<ienumChoice choice="Baldwin 608A" />
+	<ienumChoice choice="EMD 567B-16 #2" />
+	<ienumChoice choice="EMD 567B-16 #6" />
+	<ienumChoice choice="EMD 645-16 NA #1" />
+	<ienumChoice choice="EMD 645E3-16 #1" />
+	<ienumChoice choice="EMD 710-16" />
+	<ienumChoice choice="FM 38D-8" />
+	<ienumChoice choice="FM 38D-12" />
+	<ienumChoice choice="GE FDL-16" />
+	<ienumChoice choice="GE FDL-12" />
+	<ienumChoice choice="Winton 201A" />
+</ienumVal>
+
+ 	  	 
