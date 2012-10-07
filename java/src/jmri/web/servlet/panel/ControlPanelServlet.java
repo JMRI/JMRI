@@ -31,7 +31,7 @@ public class ControlPanelServlet extends AbstractPanelServlet {
     }
 
     @Override
-    protected String getPanel(String name) {
+    protected String getXmlPanel(String name) {
         if (log.isDebugEnabled()) {
             log.debug("Getting " + getPanelType() + " for " + name);
         }
@@ -88,5 +88,11 @@ public class ControlPanelServlet extends AbstractPanelServlet {
             return "ERROR Requested panel [" + name + "] does not exist.";
         }
     }
+
+	@Override
+	protected String getJsonPanel(String name) {
+		// TODO Auto-generated method stub
+		return "ERROR JSON support not implemented";
+	}
 
 }

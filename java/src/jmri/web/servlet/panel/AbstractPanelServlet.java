@@ -24,7 +24,12 @@ import org.jdom.Element;
  */
 abstract class AbstractPanelServlet extends HttpServlet {
 
-    protected static final String CONTENT_TYPE = "application/xml; charset=utf-8";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3134679703461026038L;
+	protected static final String JSON_CONTENT_TYPE = "application/json; charset=utf-8";
+	protected static final String XML_CONTENT_TYPE = "application/xml; charset=utf-8";
     static Logger log = Logger.getLogger(AbstractPanelServlet.class.getName());
 
     abstract protected String getPanelType();
@@ -42,9 +47,13 @@ abstract class AbstractPanelServlet extends HttpServlet {
         if (request.getRequestURI().endsWith("/")) {
             listPanels(request, response);
         } else {
+        	boolean useXML = true;
+        	if ("json".equals(request.getParameter("format"))) {
+        		useXML = false;
+        	}
             String[] path = request.getRequestURI().split("/");
-            response.setContentType(CONTENT_TYPE);
-            String panel = getPanel(path[path.length - 1].replaceAll("%20", " "));
+            response.setContentType(XML_CONTENT_TYPE);
+            String panel = getPanel(path[path.length - 1].replaceAll("%20", " "), useXML);
             if (panel == null) {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "See the JMRI console for details.");
             } else if (panel.startsWith("ERROR")) {
@@ -58,10 +67,23 @@ abstract class AbstractPanelServlet extends HttpServlet {
     }
 
     protected void listPanels(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	if ("json".equals(request.getParameter("format"))) {
+    		response.sendRedirect("/json/panels");
+    	}
         response.sendRedirect("/xmlio/list?type=panel");
     }
 
-    abstract protected String getPanel(String name);
+    protected String getPanel(String name, boolean useXML) {
+    	if (useXML) {
+    		return getXmlPanel(name);
+    	} else {
+    		return getJsonPanel(name);
+    	}
+    }
+    
+    abstract protected String getJsonPanel(String name);
+    
+    abstract protected String getXmlPanel(String name);
 
     protected Editor getEditor(String name) {
         List<JmriJFrame> frames = JmriJFrame.getFrameList(Editor.class);
