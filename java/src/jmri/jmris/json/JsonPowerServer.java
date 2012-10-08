@@ -6,8 +6,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.jmris.AbstractPowerServer;
-
-import org.eclipse.jetty.websocket.WebSocket.Connection;
+import jmri.jmris.JmriConnection;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,16 +19,16 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  * for the Power state. These states are identical to the {@link jmri.PowerManager}
  * power states, with the addition of -1 as an error indicator.
  * 
- * The JSON string is in the form: <code>{type:'power', data:{status:&lt;integer&gt;}}</code>
+ * The JSON string is in the form: <code>{type:'power', data:{state:&lt;integer&gt;}}</code>
  * 
  * @author rhwood
  */
 public class JsonPowerServer extends AbstractPowerServer {
 
-	private Connection connection;
+	private JmriConnection connection;
 	private ObjectMapper mapper;
 
-	public JsonPowerServer(Connection connection) {
+	public JsonPowerServer(JmriConnection connection) {
 		this.connection = connection;
 		this.mapper = new ObjectMapper();
 		mgrOK();
@@ -46,13 +45,21 @@ public class JsonPowerServer extends AbstractPowerServer {
 
 	@Override
 	public void sendErrorStatus() throws IOException {
-		this.sendStatus(-1);
+		ObjectNode root = this.mapper.createObjectNode();
+		root.put("type", "error");
+		ObjectNode data = root.putObject("error");
+		data.put("code", -1);
+		data.put("message", "JMRI Power Manager generated an error.");
+		this.connection.sendMessage(this.mapper.writeValueAsString(root));
 	}
 
 	@Override
 	public void parseStatus(String statusString) throws JmriException, IOException {
-		JsonNode root = this.mapper.readTree(statusString);
-		switch (root.path("data").path("state").asInt(PowerManager.UNKNOWN)) {
+		this.parseRequest(this.mapper.readTree(statusString).path("data"));
+	}
+	
+	public void parseRequest(JsonNode data) throws JmriException, IOException {
+		switch (data.path("state").asInt(PowerManager.UNKNOWN)) {
 		case PowerManager.OFF:
 			this.setOffStatus();
 			break;
