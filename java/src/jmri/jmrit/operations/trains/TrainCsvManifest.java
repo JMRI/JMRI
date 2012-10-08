@@ -111,7 +111,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
 			}
 			// add route comment
 			if (!rl.getComment().equals("")){
-				addLine(fileOut, RC+"\""+rl.getComment()+"\"");
+				addLine(fileOut, RLC+"\""+rl.getComment()+"\"");
 			}			
 			// engine change or helper service?
 			if (train.getSecondLegOptions() != Train.NONE){

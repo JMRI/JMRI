@@ -34,6 +34,7 @@ public class TrainCsvCommon extends TrainCommon {
 	protected final static String PC = "PC"+del+"Pick up car";
 	protected final static String PL = "PL"+del+"Pick up loco";
 	protected final static String RC = "RC"+del+"Route Comment"+del;
+	protected final static String RLC = "RLC"+del+"Route Location Comment"+del;
 	protected final static String RH = "RH"+del+"Remove Helpers";
 	protected final static String RN = "RN"+del+"Railroad Name"+del;
 	protected final static String SC = "SC"+del+"Set out car";

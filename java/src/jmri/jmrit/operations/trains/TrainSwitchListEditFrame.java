@@ -94,6 +94,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	    // Layout the panel by rows
 	   	locationPanelCheckBoxes.setLayout(new GridBagLayout());
 		updateLocationCheckboxes();
+		enableChangeButtons();
 		
 		// row 2
     	JPanel controlpanel = new JPanel();
@@ -108,6 +109,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     	addItem(controlpanel, printButton, 1, 2);
     	addItem(controlpanel, changeButton, 2, 2);
     	
+    	changeButton.setToolTipText(rb.getString("PrintChangesTip"));
+    	
     	// row 4
     	if (!Setup.isSwitchListRealTime()){
     		addItem(controlpanel, updateButton, 0, 3);
@@ -115,6 +118,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     	if (Setup.isGenerateCsvSwitchListEnabled()){
     		addItem(controlpanel, csvGenerateButton, 1, 3);
     		addItem(controlpanel, csvChangeButton, 2, 3);
+    		csvChangeButton.setToolTipText(rb.getString("CsvChangesTip"));
     	}
     	
 		getContentPane().add(controlpanel);
@@ -233,8 +237,6 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	
 	// name change or number of locations has changed
 	private void updateLocationCheckboxes(){
-		changeButton.setEnabled(false);
-		csvChangeButton.setEnabled(false);
 		List<String> locations = manager.getLocationsByNameList();		
 		synchronized (this) {
 			for (int i =0; i<locations.size(); i++){
@@ -275,7 +277,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			addItemLeft(locationPanelCheckBoxes, checkBox, 0, y);
 			
 			JLabel status = new JLabel(l.getStatus());
-			if (l.getStatus().equals(Location.MODIFIED)){
+			if (l.getStatus().equals(Location.MODIFIED) && l.isSwitchListEnabled()){
 				changeButton.setEnabled(true);
 				csvChangeButton.setEnabled(true);
 			}
@@ -301,6 +303,19 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		locationPanelCheckBoxes.revalidate();
 		pack();
 		repaint();
+	}
+	
+	private void enableChangeButtons(){
+		changeButton.setEnabled(false);
+		csvChangeButton.setEnabled(false);
+		List<String> locations = manager.getLocationsByNameList();
+		for (int i =0; i<locations.size(); i++){
+			Location l = manager.getLocationById(locations.get(i));
+			if (l.getStatus().equals(Location.MODIFIED) && l.isSwitchListEnabled()){
+				changeButton.setEnabled(true);
+				csvChangeButton.setEnabled(true);
+			}
+		}
 	}
 	
 	// The print switch list for a location has changed
@@ -357,13 +372,17 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if(e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY)) 
+		if(e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY)){
 			changeLocationCheckboxes(e);
+			enableChangeButtons();
+		}
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Location.SWITCHLIST_COMMENT_CHANGED_PROPERTY))
+				e.getPropertyName().equals(Location.SWITCHLIST_COMMENT_CHANGED_PROPERTY)){
 			updateLocationCheckboxes();
+			enableChangeButtons();
+		}
 	}
 	
 	public static class TrainSwitchListCommentFrame extends OperationsFrame {
