@@ -2,10 +2,16 @@
 
 package jmri.jmris;
 
+import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.management.Attribute;
 
+import org.apache.log4j.Logger;
+
+import jmri.JmriException;
 import jmri.jmris.simpleserver.SimpleOperationsServer;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.trains.*;
@@ -16,12 +22,12 @@ import jmri.jmrit.operations.locations.*;
  * 
  * @author Paul Bender Copyright (C) 2010
  * @author Dan Boudreau Copyright (C) 2012 (added checks for null train)
- * @author Rodney Black Copyright (C) 2012 
+ * @author Rodney Black Copyright (C) 2012
+ * @author Randall Wood Copyright (C) 2012 
  * @version $Revision$
  */
 
-abstract public class AbstractOperationsServer implements
-		java.beans.PropertyChangeListener {
+abstract public class AbstractOperationsServer implements PropertyChangeListener {
 
 	TrainManager tm = null;
 	LocationManager lm = null;
@@ -38,7 +44,7 @@ abstract public class AbstractOperationsServer implements
 	 * send a list of trains known by Operations to the client
 	 */
 	public void sendTrainList() {
-		java.util.List<String> trainList = tm.getTrainsByNameList();
+		List<String> trainList = tm.getTrainsByNameList();
 		ArrayList<Attribute> aTrain;
 		for (String trainID : trainList) {
 		    aTrain = new ArrayList<Attribute>(1);
@@ -56,7 +62,7 @@ abstract public class AbstractOperationsServer implements
 	 *  send a list of locations known by Operations to the client
 	 */
 	public void sendLocationList() {
-		java.util.List<String> locationList = lm.getLocationsByNameList();
+		List<String> locationList = lm.getLocationsByNameList();
 		ArrayList<Attribute> location;
 		for (String LocationID : locationList) {
 		    location = new ArrayList<Attribute>(1);
@@ -313,10 +319,8 @@ abstract public class AbstractOperationsServer implements
 
 	abstract public void sendErrorStatus(String errorStatus) throws IOException;
 
-	abstract public void parseStatus(String statusString)
-			throws jmri.JmriException;
+	abstract public void parseStatus(String statusString) throws JmriException, IOException;
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-			.getLogger(AbstractOperationsServer.class.getName());
+	static Logger log = Logger.getLogger(AbstractOperationsServer.class.getName());
 
 }
