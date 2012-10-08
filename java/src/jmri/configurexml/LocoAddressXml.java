@@ -51,7 +51,12 @@ public class LocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
             DccLocoAddressXml adapter = new DccLocoAddressXml();
             return adapter.getAddress(element.getChild("dcclocoaddress"));
         }
-        int addr = Integer.parseInt(element.getChild("number").getText());
+        int addr = 0;
+        try {
+            addr = Integer.parseInt(element.getChild("number").getText());
+        } catch (java.lang.NumberFormatException e){
+            return null;
+        }
         String protocol = element.getChild("protocol").getText();
         LocoAddress.Protocol prot = LocoAddress.Protocol.getByShortName(protocol);
         return new jmri.DccLocoAddress(addr, prot);
