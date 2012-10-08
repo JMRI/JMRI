@@ -598,10 +598,12 @@ Here's a list of the current codes and descriptions:
 <tr><td>EDT</td><td>Estimated Departure Time</td><td>Time</td></tr>
 <tr><td>LC</td><td>Location Comment</td><td>Comment</td></tr>
 <tr><td>LN</td><td>Location Name</td><td>Name</td></tr>
+<tr><td>LOGO</td><td>Path name to logo</td><td>URL</td></tr>
 <tr><td>NW</td><td>No Work</td></tr>
 <tr><td>PC</td><td>Pick up car</td><td>See below</td></tr>
 <tr><td>PL</td><td>Pick up loco</td><td>See below</td></tr>
 <tr><td>RC</td><td>Route Comment</td><td>Comment</td></tr>
+<tr><td>RLC</td><td>Route Location Comment</td><td>Comment</td></tr>
 <tr><td>RH</td><td>Remove Helpers</td></tr>
 <tr><td>RN</td><td>Railroad Name</td><td>Name</td></tr>
 <tr><td>SC</td><td>Set out car</td><td>See below</td></tr>
