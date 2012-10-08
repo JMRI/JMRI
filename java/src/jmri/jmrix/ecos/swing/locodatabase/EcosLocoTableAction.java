@@ -90,8 +90,6 @@ public class EcosLocoTableAction extends AbstractTableAction {
     protected void createModel() {
         m = new BeanTableDataModel() {
         
-
-
             //We have to set a manager first off, but this gets replaced.
             protected EcosLocoAddressManager getManager() { return locoManager;}
             protected String getRosterAttribute() { return rosterAttribute; }
@@ -292,7 +290,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
             
             synchronized public void dispose() {
                 //if(showLocoMonitor){
-                    locoManager.monitorLocos(false);
+                    //locoManager.monitorLocos(false);
                     showLocoMonitor=false;
                 //}
                 getManager().removePropertyChangeListener(this);
@@ -377,7 +375,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
     boolean showLocoMonitor = false;
     void showMonitorChanged() {
         showLocoMonitor = showMonitorLoco.isSelected();
-        locoManager.monitorLocos(showLocoMonitor);
+        //locoManager.monitorLocos(showLocoMonitor);
         XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
         TableColumn column  = columnModel.getColumnByModelIndex(SPEEDDIR);
         columnModel.setColumnVisible(column, showLocoMonitor);

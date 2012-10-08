@@ -124,28 +124,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
      * Convert a Ecos speed integer to a float speed value
      */
     protected float floatSpeed(int lSpeed) {
-        if (lSpeed == 0) return 0.f;
-        else if (lSpeed == 1) return -1.f;   // estop
-        else if (super.speedStepMode == SpeedStepMode128)
-          return ( (lSpeed-1)/126.f);
-        else
-          return (int)(lSpeed * 27.f + 0.5) + 1 ;
-    }
+        if (lSpeed == 0) return 0.0f;
+        return ( (lSpeed)/126.f);
 
-    /**
-     * Convert a float speed value to a Ecos speed integer
-     */
-    protected int intSpeed(float fSpeed) {
-    
-          if (fSpeed == 0.f)
-            return 0;
-          else if (fSpeed < 0.f)
-            return 1;   // estop
-            // add the 0.5 to handle float to int round for positive numbers
-          if (super.speedStepMode == SpeedStepMode128)
-            return (int)(fSpeed * 126.f + 0.5) + 1 ;
-          else
-            return (int)(fSpeed * 27.f + 0.5) + 1 ;
     }
     
     /**
@@ -366,37 +347,25 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     public void setSpeedSetting(float speed) {
         if(!_haveControl) return;
         int value;
-        if (speed == this.speedSetting) return;
-        /*if (super.speedStepMode == SpeedStepMode128) {
-            value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
-            if (value>0) value = value+1;  // skip estop
-            if (value>127) value = 127;    // max possible speed
-            if (value<0) value = 0;        // emergency stop
-		} else {
-	        value = (int)((28-1)*speed);     // -1 for rescale to avoid estop
-	        if (value>0) value = value+1;  	// skip estop
-	        if (value>28) value = 28;    	// max possible speed
-	        if (value<0) value = 0;        	// emergency stop
-		}*/
-        // The ecos always references 128 steps, when using the speed command
-        // even if the speedsteps for the loco are 28, or 14 (ie marklin)
-        value = (int)((128-1)*speed);     // -1 for rescale to avoid estop
-        if (value>0) value = value+1;  // skip estop
-        if (value>128) value = 128;    // max possible speed
-        if (value<0) value = 0;        // emergency stop
-        //speedSetting = value;
-        if (value >0) {
+        if (speed == this.speedSetting){
+            return;
+        }
+        value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
+        if (value>128) value = 126;    // max possible speed
+        if ((value >0) || (value ==0.0)) {
+            this.speedSetting = speed;
             String message = "set("+this.objectNumber+", speed["+value+"])";
             EcosMessage m = new EcosMessage(message);
             tc.sendEcosMessage(m, this);
             speedMessageSent++;
         }
-        else{
+        else {
             //Not sure if this performs an emergency stop or a normal one.
             String message = "set("+this.objectNumber+", stop)";
+            this.speedSetting = 0.0f;
             EcosMessage m = new EcosMessage(message);
             tc.sendEcosMessage(m, this);
-            this.speedSetting = 0.0f;
+            
         }
         record(speed);
     }
@@ -426,7 +395,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     
     protected void throttleDispose(){
         EcosMessage m;
-        String message = "release("+this.objectNumber+", view, control)";
+        String message = "release("+this.objectNumber+", control)";
         m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
         _haveControl = false;
@@ -502,12 +471,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                             else newDirection = false;
                             super.setIsForward(newDirection);
                         }
-                    }
-                } else {
-                    if(msg.contains("stop")){
-                        log.debug("Stopping the loco");
-                        super.setSpeedSetting(0.0f);
-                        
                     }
                 }
             }
@@ -726,7 +689,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                     _haveControl = true;
                 if (!_hadControl){
                     ((EcosDccThrottleManager)adapterMemo.get(jmri.ThrottleManager.class)).throttleSetup(this, this.address, true);
-                    //adapterMemo.getThrottleManager().throttleSetup(this, this.address, true);
                 }
                 getInitialStates();
             }

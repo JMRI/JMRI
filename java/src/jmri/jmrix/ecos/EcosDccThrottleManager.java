@@ -92,7 +92,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
     
     @Override
     public int supportedSpeedModes() {
-    	return(DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+    	return(DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28 | DccThrottle.SpeedStepMode14);
         }
         
     public void throttleSetup(EcosDccThrottle throttle, LocoAddress address, boolean result){

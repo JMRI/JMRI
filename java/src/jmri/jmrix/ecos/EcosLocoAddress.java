@@ -150,6 +150,7 @@ public class EcosLocoAddress {
     }
 
     public void setProtocol(String protocol){
+        firePropertyChange("protocol", _protocol, protocol);
         _protocol = protocol;
     }   
     
@@ -157,7 +158,6 @@ public class EcosLocoAddress {
     The Temporary Entry Field is used to determine if JMRI has had to create the entry on an ad-hoc basis
     for the throttle.  If this is set to True, the throttle can evaluate this field to determine if the 
     loco should be removed from the Ecos Database when closing the application.
-    
     */
     
     boolean _tempEntry = false;
@@ -180,6 +180,9 @@ public class EcosLocoAddress {
             if (msg.contains("dir")){
                 setDirection(getDirection(msg));
             }
+            if (msg.contains("protocol")){
+                setProtocol(getProtocol(msg));
+            }
         }
     }
 
@@ -189,6 +192,15 @@ public class EcosLocoAddress {
         startval=line.indexOf("speed[")+6;
         endval=(line.substring(startval)).indexOf("]")+startval;
         return Integer.parseInt(line.substring(startval, endval));
+    }
+    
+    String getProtocol(String line){
+        int startval;
+        int endval;
+        startval=line.indexOf("protocol[")+9;
+        endval=(line.substring(startval)).indexOf("]")+startval;
+        return line.substring(startval, endval);
+    
     }
 
     boolean getDirection(String line){
