@@ -94,13 +94,8 @@ public class JmriJInternalFrameInterface implements jmri.util.swing.WindowInterf
     public boolean multipleInstances() { return true; }
 
     @Override
-    public boolean isFrame() {
-        return (this.mainFrame != null);
-    }
-
-    @Override
     public Frame getFrame() {
-        return (isFrame()) ? this.mainFrame : null;
+        return (this.mainFrame != null) ? this.mainFrame : null;
     }
 
 }

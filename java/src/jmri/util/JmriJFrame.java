@@ -810,11 +810,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
     
     @Override
-    public boolean isFrame() {
-        return true;
-    }
-
-    @Override
     public Frame getFrame() {
         return this;
     }

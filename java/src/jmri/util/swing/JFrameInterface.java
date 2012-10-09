@@ -35,11 +35,6 @@ public class JFrameInterface implements WindowInterface {
     }
 
     @Override
-    public boolean isFrame() {
-        return (this.frame != null);
-    }
-
-    @Override
     public Frame getFrame() {
         return this.frame;
     }

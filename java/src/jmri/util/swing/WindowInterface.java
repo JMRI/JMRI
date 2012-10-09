@@ -64,14 +64,7 @@ public interface WindowInterface {
     //public void runMethod(String method, Object args[]);
 
     /**
-     * Test if the WindowInterface object extends java.awt.Frame
-     * 
-     * @return true if the WindowInterface is a Frame
-     */
-    public boolean isFrame();
-
-    /**
-     * Returns the WindowInterface as a Frame or null if isFrame() is false.
+     * Returns the WindowInterface as a Frame or null.
      * 
      * @return a Frame or null
      */
