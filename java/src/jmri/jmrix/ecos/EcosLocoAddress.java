@@ -82,13 +82,16 @@ public class EcosLocoAddress {
         return !doNotAddToRoster;
     }
     
-    private void setSpeed(int speed){
+    protected void setSpeed(int speed){
         int oldspeed = currentSpeed;
         currentSpeed = speed;
         firePropertyChange("Speed", oldspeed, currentSpeed);
     }
     
     public int getSpeed() { return currentSpeed; }
+    protected void setDirection(String line){
+        setDirection(getDirection(line));
+    }
     
     private void setDirection(boolean dir){
         boolean olddir = direction;
@@ -117,7 +120,9 @@ public class EcosLocoAddress {
     }
 
     public void setEcosDescription(String description){
+        String oldValue = _ecosDescription;
         _ecosDescription = description;
+        firePropertyChange("name", oldValue, _ecosDescription);
     }    
     
     public String getRosterId(){
@@ -125,8 +130,9 @@ public class EcosLocoAddress {
     }
 
     public void setRosterId(String roster){
-        firePropertyChange("RosterId", _rosterId, roster);
-        _rosterId = roster;
+        String oldValue = _rosterId;
+        _rosterId=roster;
+        firePropertyChange("RosterId", oldValue, _rosterId);
     }    
     //Protocol is here as it is a potential value from the ecos
     // We may not actually use it.
@@ -150,8 +156,10 @@ public class EcosLocoAddress {
     }
 
     public void setProtocol(String protocol){
-        firePropertyChange("protocol", _protocol, protocol);
+        String oldValue = _protocol;
         _protocol = protocol;
+        firePropertyChange("protocol", oldValue, _protocol);
+        
     }   
     
     /*
@@ -175,42 +183,20 @@ public class EcosLocoAddress {
         if (m.getResultCode()!=0) return; //The result is not valid therefore we can not set it.
         if (msg.startsWith("<REPLY get("+_ecosObject+",") || msg.startsWith("<EVENT "+_ecosObject+">")) {
             if (msg.contains("speed")){
-                setSpeed(getSpeed(msg));
+                setSpeed(Integer.parseInt(EcosReply.getContentDetails(msg, "speed")));
             }
             if (msg.contains("dir")){
                 setDirection(getDirection(msg));
             }
             if (msg.contains("protocol")){
-                setProtocol(getProtocol(msg));
+                setProtocol(EcosReply.getContentDetails(msg, "protocol"));
             }
         }
     }
 
-    int getSpeed(String line){
-        int startval;
-        int endval;
-        startval=line.indexOf("speed[")+6;
-        endval=(line.substring(startval)).indexOf("]")+startval;
-        return Integer.parseInt(line.substring(startval, endval));
-    }
-    
-    String getProtocol(String line){
-        int startval;
-        int endval;
-        startval=line.indexOf("protocol[")+9;
-        endval=(line.substring(startval)).indexOf("]")+startval;
-        return line.substring(startval, endval);
-    
-    }
-
     boolean getDirection(String line){
-        int startval;
-        int endval;
         boolean newDirection = false;
-        startval=line.indexOf("dir[")+4;
-        endval=(line.substring(startval)).indexOf("]")+startval;
-        String val = line.substring(startval, endval);
-        if (val.equals("0")) newDirection=true;
+        if (EcosReply.getContentDetails(line, "dir").equals("0")) newDirection=true;
         return newDirection;
     }
     

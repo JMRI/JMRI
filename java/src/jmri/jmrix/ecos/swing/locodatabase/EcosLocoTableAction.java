@@ -5,12 +5,17 @@ import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
 import jmri.NamedBean;
 import jmri.Manager;
+import java.awt.Component;
 import java.util.List;
+import java.util.Hashtable;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.DefaultCellEditor;
 import java.awt.event.MouseEvent;
 import javax.swing.JOptionPane;
 
@@ -93,16 +98,11 @@ public class EcosLocoTableAction extends AbstractTableAction {
             //We have to set a manager first off, but this gets replaced.
             protected EcosLocoAddressManager getManager() { return locoManager;}
             protected String getRosterAttribute() { return rosterAttribute; }
-
-            
-            /*public EcosLocoAddress getByDccAddress(int address) {return getManager().getByDccAddress(address);}*/
             
             public String getValue(String s) {
                 return "Set";
             }
             protected String getMasterClassName() { return getClassName(); }
-            /*public int getDisplayDeleteMsg() { return -1; }
-            public void setDisplayDeleteMsg(int boo) {  }*/
             public void clickOn(jmri.NamedBean t) { }
             
             @Override
@@ -147,38 +147,39 @@ public class EcosLocoTableAction extends AbstractTableAction {
             @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col==COMMENTCOL) {
-                    String ecosObjectNo = ecosObjectIdList.get(row);
-                    if (value==null)
+                    RosterEntry re = null;
+                      String ecosObjectNo = ecosObjectIdList.get(row);
+                    if (value==null){
                         return;
-                    GlobalRosterEntryComboBox c = (GlobalRosterEntryComboBox) value;
-                    RosterEntry[] l = c.getSelectedRosterEntries();
-                    if (l.length == 0){
-                        List<RosterEntry> r = Roster.instance().getEntriesWithAttributeKeyValue(getRosterAttribute(), ecosObjectNo);
-                        if(r.size()!=0){
-                            r.get(0).deleteAttribute(getRosterAttribute());
-                            getByEcosObject(ecosObjectNo).setRosterId(null);
-                            r.get(0).updateFile();
-                        }
                     } else {
-                        if((l[0].getAttribute(getRosterAttribute())!=null) && !l[0].getAttribute(getRosterAttribute()).equals("")){
-                            JOptionPane.showMessageDialog(f, ecosObjectNo +" This roster entry already has an ECOS loco assigned to it ");
-                            log.error(ecosObjectNo +" This roster entry already has an ECOS loco assigned to it ");
-                            return;
+                        if(value instanceof RosterEntry){
+                            re = (RosterEntry)value;
+                            if((re.getAttribute(getRosterAttribute())!=null && !re.getAttribute(getRosterAttribute()).equals(""))){
+                                JOptionPane.showMessageDialog(f, ecosObjectNo +" This roster entry already has an ECOS loco assigned to it ");
+                                log.error(ecosObjectNo +" This roster entry already has an ECOS loco assigned to it ");
+                                return;
+                            }
+                            String oldRoster = getByEcosObject(ecosObjectNo).getRosterId();
+                            RosterEntry oldre =null;
+                            if(oldRoster!=null){
+                                oldre = Roster.instance().getEntryForId(oldRoster);
+                                if(oldre!=null)
+                                    oldre.deleteAttribute(getRosterAttribute());
+                            }
+                            re.putAttribute(getRosterAttribute(), ecosObjectNo);
+                            getByEcosObject(ecosObjectNo).setRosterId(re.getId());
+                            re.updateFile();
+                        } else if (value instanceof String){
+                            List<RosterEntry> r = Roster.instance().getEntriesWithAttributeKeyValue(getRosterAttribute(), ecosObjectNo);
+                            if(r.size()!=0){
+                                r.get(0).deleteAttribute(getRosterAttribute());
+                                getByEcosObject(ecosObjectNo).setRosterId(null);
+                                r.get(0).updateFile();
+                            }
+                        
                         }
-                        String oldRoster = getByEcosObject(ecosObjectNo).getRosterId();
-                        RosterEntry oldre =null;
-                        if(oldRoster!=null){
-                            oldre = Roster.instance().getEntryForId(oldRoster);
-                            if(oldre!=null)
-                                oldre.deleteAttribute(getRosterAttribute());
-                        }
-                        RosterEntry re = l[0];
-                        re.putAttribute(getRosterAttribute(), ecosObjectNo);
-                        getByEcosObject(ecosObjectNo).setRosterId(re.getId());
-                        re.updateFile();
                     }
                     Roster.writeRosterFile();
-                    fireTableRowsUpdated(row, row);
                 }  else if (col==ADDTOROSTERCOL) {
                     addToRoster(row, col);
                 } else if (col==STOP){
@@ -186,12 +187,76 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 }
             }
             
+            public JTable makeJTable(TableSorter srtr) {
+                JTable table = new JTable(srtr)  {
+                    
+                    public TableCellRenderer getCellRenderer(int row, int column) {
+                        if (column == COMMENTCOL) {
+                            return getRenderer(row);
+                        } else
+                            return super.getCellRenderer(row, column);
+                    }
+                    public TableCellEditor getCellEditor(int row, int column) {
+                        if (column == COMMENTCOL) {
+                            return getEditor(row);
+                        } else
+                            return super.getCellEditor(row, column);
+                    }
+                    
+                    TableCellRenderer getRenderer(int row) {
+                        TableCellRenderer retval = rendererMap.get(ecosObjectIdList.get(row));
+                        if (retval == null) {
+                            jmri.jmrix.ecos.EcosLocoAddress b = getByEcosObject(ecosObjectIdList.get(row));
+                            RosterEntry re = null;
+                            if (b!=null){
+                                re = Roster.instance().getEntryForId(b.getRosterId());
+                            }
+                            retval = new RosterBoxRenderer(re);
+                            rendererMap.put(ecosObjectIdList.get(row), retval);
+                        }
+                        return retval;
+                    }
+                    Hashtable<Object, TableCellRenderer> rendererMap = new Hashtable<Object, TableCellRenderer>();
+                    
+                    TableCellEditor getEditor(int row) {
+                        TableCellEditor retval = editorMap.get(ecosObjectIdList.get(row));
+                        if (retval == null) {
+                            jmri.jmrix.ecos.EcosLocoAddress b = getByEcosObject(ecosObjectIdList.get(row));
+                            RosterEntry re = null;
+                            if (b!=null){
+                                re = Roster.instance().getEntryForId(b.getRosterId());
+                            }
+                            GlobalRosterEntryComboBox cb = new GlobalRosterEntryComboBox();
+                            cb.setNonSelectedItem(" ");
+                            if(re==null){
+                                cb.setSelectedIndex(0);
+                            } else {
+                                cb.setSelectedItem(re);
+                            }
+                            // create a new one with right aspects
+                            retval = new RosterComboBoxEditor(cb);
+                            editorMap.put(ecosObjectIdList.get(row), retval);
+                        }
+                        return retval;
+                    }
+                    Hashtable<Object, TableCellEditor> editorMap = new Hashtable<Object, TableCellEditor>();
+                };
+                table.getTableHeader().setReorderingAllowed(true);
+                table.setColumnModel(new XTableColumnModel());
+                table.createDefaultColumnsFromModel();
+                
+                addMouseListenerToHeader(table);
+                return table;
+            }
             /**
              * Is this property event announcing a change this table should display?
              * <P>
              * Note that events will come both from the jmri.jmrix.ecos.EcosLocoAddressManagers and also from the manager
              */
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+                if(!showLocoMonitor && (e.getPropertyName().equals("Speed") || e.getPropertyName().equals("Direction"))){
+                    return false;
+                }
                 return true;
             }
             
@@ -272,11 +337,8 @@ public class EcosLocoTableAction extends AbstractTableAction {
     
             public void configureTable(JTable tbl) {
                 table = tbl;
-                table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-				table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
                 setColumnToHoldButton(table, ADDTOROSTERCOL, 
                         new JButton("Add to Roster"));
-                /*if(showLocoMonitor)*/
                 setColumnToHoldButton(table,STOP,stopButton());
                 super.configureTable(table);
                 XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
@@ -289,10 +351,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
             public NamedBean getByUserName(String name) { return null;}
             
             synchronized public void dispose() {
-                //if(showLocoMonitor){
-                    //locoManager.monitorLocos(false);
-                    showLocoMonitor=false;
-                //}
+                showLocoMonitor=false;
                 getManager().removePropertyChangeListener(this);
                 if (ecosObjectIdList != null) {
                     for (int i = 0; i< ecosObjectIdList.size(); i++) {
@@ -308,7 +367,6 @@ public class EcosLocoTableAction extends AbstractTableAction {
             
             @Override
             public Object getValueAt(int row, int col) {
-                // some error checking
                 if (row >= ecosObjectIdList.size()){
                     log.debug("row is greater than list size");
                     return null;
@@ -331,15 +389,13 @@ public class EcosLocoTableAction extends AbstractTableAction {
                     if (b!=null){
                         re = Roster.instance().getEntryForId(b.getRosterId());
                     }
-                    
-                    GlobalRosterEntryComboBox c = new GlobalRosterEntryComboBox();
-                    c.setNonSelectedItem(" ");
+                    GlobalRosterEntryComboBox cb = (GlobalRosterEntryComboBox) table.getCellRenderer(row, col);
                     if(re==null){
-                        c.setSelectedIndex(0);
-                    } else {
-                        c.setSelectedItem(re);
+                        cb.setSelectedIndex(0);
+                    } else{
+                        cb.setSelectedItem(re);
                     }
-                    return c;
+                    return re;
                 case DELETECOL:
                     b = getByEcosObject(ecosObjectIdList.get(row));
                     return (b!=null) ? b.getProtocol() : null;
@@ -375,13 +431,11 @@ public class EcosLocoTableAction extends AbstractTableAction {
     boolean showLocoMonitor = false;
     void showMonitorChanged() {
         showLocoMonitor = showMonitorLoco.isSelected();
-        //locoManager.monitorLocos(showLocoMonitor);
         XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
         TableColumn column  = columnModel.getColumnByModelIndex(SPEEDDIR);
         columnModel.setColumnVisible(column, showLocoMonitor);
         column  = columnModel.getColumnByModelIndex(STOP);
         columnModel.setColumnVisible(column, showLocoMonitor);
-        //m.fireTableStructureChanged(); // update view
     }
     
     JCheckBox showMonitorLoco = new JCheckBox("Monitor Loco Speed");
@@ -420,10 +474,8 @@ public class EcosLocoTableAction extends AbstractTableAction {
             });
     }    
     void addToRoster(int row, int col){
-    //locoManager.
         if (getByEcosObject(ecosObjectIdList.get(row)).getRosterId()==null){
             EcosLocoToRoster addLoco = new EcosLocoToRoster(adaptermemo);
-            //addLoco.ecosLocoToRoster(ecosObjectIdList.get(row), adaptermemo);
             getByEcosObject(ecosObjectIdList.get(row)).allowAddToRoster();
             addLoco.addToQueue(getByEcosObject(ecosObjectIdList.get(row)));
             addLoco.processQueue();
@@ -441,6 +493,40 @@ public class EcosLocoTableAction extends AbstractTableAction {
     @Override
     protected String helpTarget() {
         return "package.jmri.jmrix.ecos.ecosLocoTable";
+    }
+    
+    public static class RosterBoxRenderer extends GlobalRosterEntryComboBox implements TableCellRenderer {
+        public RosterBoxRenderer(RosterEntry re) {
+            super();
+            setNonSelectedItem(" ");
+            if(re==null){
+                setSelectedIndex(0);
+            } else {
+                setSelectedItem(re);
+            }
+        }
+    
+        public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+            if (isSelected) {
+                setForeground(table.getSelectionForeground());
+                super.setBackground(table.getSelectionBackground());
+            } else {
+                setForeground(table.getForeground());
+                setBackground(table.getBackground());
+            }
+            if(value == null)
+                setSelectedIndex(0);
+            else
+                setSelectedItem(value);
+            return this;
+        }
+    }
+    
+    public class RosterComboBoxEditor extends DefaultCellEditor {
+        public RosterComboBoxEditor(GlobalRosterEntryComboBox cb) {
+            super(cb);
+        }
     }
     
     protected void addPressed(ActionEvent e){ }
