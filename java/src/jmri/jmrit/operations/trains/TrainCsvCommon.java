@@ -44,6 +44,7 @@ public class TrainCsvCommon extends TrainCommon {
 	protected final static String TL = "TL"+del+"Train Length"+del;
 	protected final static String TM = "TM"+del+"Train Manifest Description"+del;
 	protected final static String TN = "TN"+del+"Train Name"+del;
+	protected final static String TRUN = "TRUN"+del+"Truncate";
 	protected final static String TW = "TW"+del+"Train Weight"+del;
 	protected final static String TT = "TT"+del+"Train Terminates"+del;
 	protected final static String VT = "VT"+del+"Valid"+del;
