@@ -341,7 +341,9 @@ abstract public class AbstractMRTrafficController {
                 	}
                 }
                 // went around with nothing to do; leave programming state if in it
-                if(mCurrentMode == PROGRAMINGMODE) log.error("Timeout - in service mode");
+                if(mCurrentMode == PROGRAMINGMODE &&
+                   log.isDebugEnabled() ) 
+                       log.debug("Timeout - in service mode");
                 if (mCurrentState == POLLSTATE && mCurrentMode == PROGRAMINGMODE && programmerIdle() ) {
                 	log.debug("timeout causes leaving programming mode");
                 	mCurrentState = WAITREPLYINNORMMODESTATE;
