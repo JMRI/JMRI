@@ -429,5 +429,25 @@ public class StringUtil {
         }
         return result;        
     }
+    /**
+     * Return String after replacing various special characters with their "escaped" counterpart, to facilitate use with web servers. 
+     *
+     * @param  String to escape
+     * @return String with escaped values
+     */
+    static public String escapeString(String s) {
+        return s.replaceAll(" ", "%20").replaceAll("#", "%23").replaceAll("&", "%26");
+    }
+    
+    /**
+     * Return String after replacing various escaped character with their "regular" counterpart, to facilitate use with web servers. 
+     *
+     * @param  String to unescape
+     * @return String with escaped values replaced with regular values
+     */
+    static public String unescapeString(String s) {
+        return s.replaceAll("%20", " ").replaceAll("%23", "#").replaceAll("%26", "&");
+    }
+    
     
 }

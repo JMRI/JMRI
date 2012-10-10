@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import jmri.util.JmriJFrame;
+import jmri.util.StringUtil;
 import jmri.web.server.WebServerManager;
 import org.apache.log4j.Logger;
 
@@ -329,7 +330,7 @@ public class JmriJFrameServlet extends HttpServlet {
             String title = frame.getTitle();
             //don't add to list if blank or disallowed
             if (!title.equals("") && frame.getAllowInFrameServlet() && !disallowedFrames.contains(title)) {
-                String link = "/frame/" + title.replaceAll(" ", "%20").replaceAll("#", "%23").replaceAll("&", "%26") + ".html";
+                String link = "/frame/" + StringUtil.escapeString(title) + ".html";
                 //format a table row for each valid window (frame)
                 response.getWriter().append("<tr><td><a href='" + link + "'>");
                 response.getWriter().append(title);
@@ -337,7 +338,7 @@ public class JmriJFrameServlet extends HttpServlet {
                 response.getWriter().append("<td><a href='");
                 response.getWriter().append(link);
                 response.getWriter().append("'><img src='");
-                response.getWriter().append("/frame/" + title.replaceAll(" ", "%20").replaceAll("#", "%23").replaceAll("&", "%26") + ".png");
+                response.getWriter().append("/frame/" + StringUtil.escapeString(title) + ".png");
                 response.getWriter().append("'></a></td></tr>\n");
             }
         }
@@ -354,7 +355,8 @@ public class JmriJFrameServlet extends HttpServlet {
             int stop = (URI.contains("?")) ? URI.indexOf("?") : URI.length();
             URI = URI.substring(URI.lastIndexOf("/"), stop);
             // URI contains a leading / at this point
-            URI = URI.substring(1, URI.lastIndexOf(".")).replaceAll("%20", " ").replaceAll("%23", "#").replaceAll("%26", "&");
+            URI = URI.substring(1, URI.lastIndexOf("."));
+            URI = StringUtil.unescapeString(URI); //undo escaped characters
             if (log.isDebugEnabled()) {
                 log.debug("Frame name is " + URI);
             }
