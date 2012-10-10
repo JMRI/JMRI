@@ -436,7 +436,7 @@ public class StringUtil {
      * @return String with escaped values
      */
     static public String escapeString(String s) {
-        return s.replaceAll(" ", "%20").replaceAll("#", "%23").replaceAll("&", "%26");
+        return s.replaceAll(" ","%20").replaceAll("#","%23").replaceAll("&","%26").replaceAll("'","%27").replaceAll("\"","%22").replaceAll("<","%3C").replaceAll(">","%3E");
     }
     
     /**
@@ -446,7 +446,7 @@ public class StringUtil {
      * @return String with escaped values replaced with regular values
      */
     static public String unescapeString(String s) {
-        return s.replaceAll("%20", " ").replaceAll("%23", "#").replaceAll("%26", "&");
+        return s.replaceAll("%20"," ").replaceAll("%23","#").replaceAll("%26","&").replaceAll("%27","'").replaceAll("%22","\"").replaceAll("%3C","<").replaceAll("%3E",">");
     }
     
     

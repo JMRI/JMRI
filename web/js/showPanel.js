@@ -1257,7 +1257,7 @@ var $getNextState = function($widget){
 function getParameterByName(name) {
 	var match = RegExp('[?&]' + name + '=([^&]*)')
 	.exec(window.location.search);
-	return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+	return match && match[1];
 }
 
 //request and show a list of available panels from the server (used when no panel passed in)

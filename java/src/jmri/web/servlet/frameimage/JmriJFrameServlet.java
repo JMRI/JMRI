@@ -260,7 +260,7 @@ public class JmriJFrameServlet extends HttpServlet {
         response.setDateHeader("Last-Modified", now.getTime());
         response.setDateHeader("Expires", now.getTime());
         // 0 is host
-        // 1 is frame name
+        // 1 is frame name  (after escaping special characters)
         // 2 is retry in META tag, click or noclick retry
         // 3 is retry in next URL, future retry
         // 4 is state of plain
@@ -268,7 +268,7 @@ public class JmriJFrameServlet extends HttpServlet {
         // 6 is ajax preference
         // 7 is protect
         Object[] args = new String[]{"localhost",
-            frame.getTitle().replaceAll("#", "%23"),
+            StringUtil.escapeString(frame.getTitle()),
             (click ? clickRetryTime : noclickRetryTime),
             noclickRetryTime,
             Boolean.toString(plain),
