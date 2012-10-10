@@ -248,7 +248,17 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
             		if (m.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE && 
                 	    m.getElement(1)==XNetConstants.CS_SERVICE_REG_PAGE_RESPONSE) {
                 	    // valid operation response, but does it belong to us?
-			    if(m.getElement(2)!=_cv) return;
+                            try {
+                               if(m.getElement(2)!=registerFromCV(_cv)) {
+                                   log.debug(" result for CV " + m.getElement(2) +
+                                             " expecting " + _cv);
+                                   return;
+                               }
+                            } catch (jmri.ProgrammerException e) {
+                                progState = NOTPROGRAMMING;
+                                notifyProgListenerEnd(_val, jmri.ProgListener.UnknownError);
+                            }
+
 			    // see why waiting
 			    if (_progRead) {
 			        // read was in progress - get return value
@@ -263,7 +273,11 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
             		} else if (m.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE && 
                 		   m.getElement(1)==XNetConstants.CS_SERVICE_DIRECT_RESPONSE) {
                 	    // valid operation response, but does it belong to us?
-			    if(m.getElement(2)!=_cv) return;
+                            if(m.getElement(2)!=_cv) {
+                                log.debug(" result for CV " + m.getElement(2) +
+                                          " expecting " + _cv);
+                                return;
+                            }
 			    // see why waiting
 			    if (_progRead) {
 				// read was in progress - get return value
