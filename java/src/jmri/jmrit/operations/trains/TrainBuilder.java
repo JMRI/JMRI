@@ -2809,6 +2809,7 @@ public class TrainBuilder extends TrainCommon{
 
 	private void buildFailed(BuildFailedException e){
 		String msg = e.getMessage();
+		train.setBuildFailedMessage(msg);
 		train.setStatus(Train.BUILDFAILED);
 		train.setBuildFailed(true);
 		if(log.isDebugEnabled())
