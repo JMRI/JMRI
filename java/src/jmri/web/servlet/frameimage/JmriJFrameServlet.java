@@ -329,7 +329,7 @@ public class JmriJFrameServlet extends HttpServlet {
             String title = frame.getTitle();
             //don't add to list if blank or disallowed
             if (!title.equals("") && frame.getAllowInFrameServlet() && !disallowedFrames.contains(title)) {
-                String link = "/frame/" + title.replaceAll(" ", "%20").replaceAll("#", "%23") + ".html";
+                String link = "/frame/" + title.replaceAll(" ", "%20").replaceAll("#", "%23").replaceAll("&", "%26") + ".html";
                 //format a table row for each valid window (frame)
                 response.getWriter().append("<tr><td><a href='" + link + "'>");
                 response.getWriter().append(title);
@@ -337,7 +337,7 @@ public class JmriJFrameServlet extends HttpServlet {
                 response.getWriter().append("<td><a href='");
                 response.getWriter().append(link);
                 response.getWriter().append("'><img src='");
-                response.getWriter().append("/frame/" + title.replaceAll(" ", "%20").replaceAll("#", "%23") + ".png");
+                response.getWriter().append("/frame/" + title.replaceAll(" ", "%20").replaceAll("#", "%23").replaceAll("&", "%26") + ".png");
                 response.getWriter().append("'></a></td></tr>\n");
             }
         }
@@ -354,7 +354,7 @@ public class JmriJFrameServlet extends HttpServlet {
             int stop = (URI.contains("?")) ? URI.indexOf("?") : URI.length();
             URI = URI.substring(URI.lastIndexOf("/"), stop);
             // URI contains a leading / at this point
-            URI = URI.substring(1, URI.lastIndexOf(".")).replaceAll("%20", " ").replaceAll("%23", "#");
+            URI = URI.substring(1, URI.lastIndexOf(".")).replaceAll("%20", " ").replaceAll("%23", "#").replaceAll("%26", "&");
             if (log.isDebugEnabled()) {
                 log.debug("Frame name is " + URI);
             }

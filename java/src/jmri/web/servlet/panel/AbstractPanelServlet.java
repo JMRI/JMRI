@@ -53,7 +53,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
         	}
             String[] path = request.getRequestURI().split("/");
             response.setContentType(XML_CONTENT_TYPE);
-            String panel = getPanel(path[path.length - 1].replaceAll("%20", " "), useXML);
+            String panel = getPanel(path[path.length - 1].replaceAll("%20", " ").replaceAll("%23", "#").replaceAll("%26", "&"), useXML);
             if (panel == null) {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "See the JMRI console for details.");
             } else if (panel.startsWith("ERROR")) {
