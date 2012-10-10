@@ -470,6 +470,67 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		f.dispose();
 	}
 	
+
+	public void testScheduleEditFrame(){
+		LocationManager lManager = LocationManager.instance();
+		Location l = lManager.getLocationByName("Test Loc C");
+		Assert.assertNotNull("Location exists", l);
+		Track t = l.getTrackByName("3rd siding track", null);
+		Assert.assertNotNull("Track exists", t);
+		ScheduleEditFrame f = new ScheduleEditFrame();
+		f.setTitle("Test Schedule Frame");
+		f.initComponents(null, l, t);
+		f.scheduleNameTextField.setText("Test Schedule A");
+		f.commentTextField.setText("Test Comment");
+		//f.addScheduleButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addScheduleButton ) );
+		
+		// was the schedule created?
+		ScheduleManager m = ScheduleManager.instance();
+		Schedule s = m.getScheduleByName("Test Schedule A");	
+		Assert.assertNotNull("Test Schedule A exists", s);
+		
+		// now add some car types to the schedule
+		f.typeBox.setSelectedItem("Boxcar");
+		//f.addTypeButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
+		f.typeBox.setSelectedItem("Flatcar");
+		//f.addTypeButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
+		f.typeBox.setSelectedItem("Coilcar");
+		//f.addTypeButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
+		// put Tank Food at start of list
+		f.typeBox.setSelectedItem("Tank Food");
+		//f.addLocAtTop.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addLocAtTop ) );
+		//f.addTypeButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
+		//f.saveScheduleButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveScheduleButton ) );
+		
+		List<String> list = s.getItemsBySequenceList();
+		Assert.assertEquals("number of items", 4, list.size());
+		
+		ScheduleItem si = s.getItemById(list.get(0));		
+		Assert.assertEquals("1st type", "Tank Food", si.getType());
+		si = s.getItemById(list.get(1));		
+		Assert.assertEquals("2nd type", "Boxcar", si.getType());
+		si = s.getItemById(list.get(2));		
+		Assert.assertEquals("3rd type", "Flatcar", si.getType());
+		si = s.getItemById(list.get(3));		
+		Assert.assertEquals("3rd type", "Coilcar", si.getType());
+		
+		//f.deleteScheduleButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteScheduleButton ) );
+		// Yes to pop up
+		pressDialogButton(f, "Yes");
+		s = m.getScheduleByName("Test Schedule A");	
+		Assert.assertNull("Test Schedule A exists", s);
+		
+		f.dispose();
+	}
+	
 	public void testScheduleComboBoxes(){
 		LocationManager lm = LocationManager.instance();
 		Location l = lm.newLocation("new test location");
@@ -530,65 +591,6 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	}
 
 	
-	public void testScheduleEditFrame(){
-		LocationManager lManager = LocationManager.instance();
-		Location l = lManager.getLocationByName("Test Loc C");
-		Assert.assertNotNull("Location exists", l);
-		Track t = l.getTrackByName("3rd siding track", null);
-		Assert.assertNotNull("Track exists", t);
-		ScheduleEditFrame f = new ScheduleEditFrame();
-		f.setTitle("Test Schedule Frame");
-		f.initComponents(null, l, t);
-		f.scheduleNameTextField.setText("Test Schedule A");
-		f.commentTextField.setText("Test Comment");
-		//f.addScheduleButton.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.addScheduleButton ) );
-		
-		// was the schedule created?
-		ScheduleManager m = ScheduleManager.instance();
-		Schedule s = m.getScheduleByName("Test Schedule A");	
-		Assert.assertNotNull("Test Schedule A exists", s);
-		
-		// now add some car types to the schedule
-		f.typeBox.setSelectedItem("Boxcar");
-		//f.addTypeButton.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
-		f.typeBox.setSelectedItem("Flatcar");
-		//f.addTypeButton.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
-		f.typeBox.setSelectedItem("Coilcar");
-		//f.addTypeButton.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
-		// put Tank Food at start of list
-		f.typeBox.setSelectedItem("Tank Food");
-		//f.addLocAtTop.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.addLocAtTop ) );
-		//f.addTypeButton.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
-		//f.saveScheduleButton.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveScheduleButton ) );
-		
-		List<String> list = s.getItemsBySequenceList();
-		Assert.assertEquals("number of items", 4, list.size());
-		
-		ScheduleItem si = s.getItemById(list.get(0));		
-		Assert.assertEquals("1st type", "Tank Food", si.getType());
-		si = s.getItemById(list.get(1));		
-		Assert.assertEquals("2nd type", "Boxcar", si.getType());
-		si = s.getItemById(list.get(2));		
-		Assert.assertEquals("3rd type", "Flatcar", si.getType());
-		si = s.getItemById(list.get(3));		
-		Assert.assertEquals("3rd type", "Coilcar", si.getType());
-		
-		//f.deleteScheduleButton.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteScheduleButton ) );
-		// Yes to pop up
-		pressDialogButton(f, "Yes");
-		s = m.getScheduleByName("Test Schedule A");	
-		Assert.assertNull("Test Schedule A exists", s);
-		
-		f.dispose();
-	}
 	
 	public void testScheduleTableFrame(){
 		SchedulesTableFrame f = new SchedulesTableFrame();
