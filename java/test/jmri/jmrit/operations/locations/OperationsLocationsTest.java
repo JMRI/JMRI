@@ -1158,12 +1158,6 @@ public class OperationsLocationsTest extends TestCase {
 		// dispose kills instance, so reload manager
 		manager = LocationManager.instance();
 		
-		// load options
-		LocationEditFrame frame = new LocationEditFrame();
-		frame.setSize(700, 720);
-		frame.setLocation(14, 16);
-		//manager.setLocationEditFrame(frame);
-		
 		// now load locations
 		List<String> locationList = manager.getLocationsByIdList();
 		Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
