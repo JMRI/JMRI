@@ -22,6 +22,8 @@ import java.io.File;
 import java.util.List;
 import java.util.Locale;
 
+import javax.swing.JComboBox;
+
 /**
  * Tests for the Operations Locations GUI class
  *  
@@ -466,6 +468,65 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertTrue("staging selected", f.stageRadioButton.isSelected());
 		
 		f.dispose();
+	}
+	
+	public void testScheduleComboBoxes(){
+		LocationManager lm = LocationManager.instance();
+		Location l = lm.newLocation("new test location");
+		Track t = l.addTrack("track 1", Track.SIDING);
+		
+		ScheduleManager sm = ScheduleManager.instance();
+		
+		// clear out any previous schedules
+		sm.dispose();
+		sm = ScheduleManager.instance();
+		
+		Schedule s1 = sm.newSchedule("new schedule");
+		Schedule s2 = sm.newSchedule("newer schedule");
+		ScheduleItem i1 = s1.addItem("BoxCar");
+		i1.setRoad("new road");
+		i1.setLoad("new load");
+		i1.setShip("new ship load");
+		ScheduleItem i2 = s1.addItem("Caboose");
+		i2.setRoad("road");
+		i2.setLoad("load");
+		i2.setShip("ship load");
+		
+		Assert.assertEquals("1 First schedule name", "new schedule", s1.getName());
+		Assert.assertEquals("1 First schedule name", "newer schedule", s2.getName());
+		
+		List<String> names = sm.getSchedulesByNameList();
+		Assert.assertEquals("There should be 2 schedules", 2, names.size());
+		Schedule sch1 = sm.getScheduleById(names.get(0));
+		Schedule sch2 = sm.getScheduleById(names.get(1));
+		Assert.assertEquals("2 First schedule name", "new schedule", sch1.getName());
+		Assert.assertEquals("2 First schedule name", "newer schedule", sch2.getName());
+		Assert.assertEquals("Schedule 1", sch1, sm.getScheduleByName("new schedule"));
+		Assert.assertEquals("Schedule 2", sch2, sm.getScheduleByName("newer schedule"));
+		
+		JComboBox box = sm.getComboBox();
+		Assert.assertEquals("3 First schedule name", "", box.getItemAt(0));
+		Assert.assertEquals("3 First schedule name", sch1, box.getItemAt(1));
+		Assert.assertEquals("3 First schedule name", sch2, box.getItemAt(2));
+		
+		JComboBox box2 = sm.getSidingsByScheduleComboBox(s1);
+		Assert.assertEquals("First siding name", null, box2.getItemAt(0));
+		
+		// now add a schedule to siding
+		t.setScheduleId(sch1.getId());
+		
+		JComboBox box3 = sm.getSidingsByScheduleComboBox(s1);
+		LocationTrackPair ltp = (LocationTrackPair)box3.getItemAt(0);
+		
+		Assert.assertEquals("Location track pair location", l, ltp.getLocation()); 
+		Assert.assertEquals("Location track pair track", t, ltp.getTrack()); 
+		
+		// remove all schedules
+		sm.dispose();
+		
+		names = sm.getSchedulesByNameList();
+		Assert.assertEquals("There should be no schedules", 0, names.size());
+		
 	}
 
 	

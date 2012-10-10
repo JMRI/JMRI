@@ -40,7 +40,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.routes.RouteManager;
-import jmri.util.JmriJFrame;
 
 /**
  * Tests for the Operations Trains class
@@ -5711,13 +5710,6 @@ public class OperationsTrainsTest extends TestCase {
 		
 		Setup.setBuildAggressive(false);
 
-	}
-	
-	public void testTrainTestPanel(){
-	    // confirm panel creation
-		JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
-        Assert.assertNotNull(f);
-        
 	}
 
 	// test location Xml create support

@@ -454,6 +454,13 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		f.dispose();
 	}
 	
+	public void testTrainTestPanel(){
+	    // confirm panel creation
+		JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
+        Assert.assertNotNull(f);
+        
+	}
+	
 	@SuppressWarnings("unchecked")
 	private void pressDialogButton(JmriJFrame f, String buttonName){
 		//  (with JfcUnit, not pushing this off to another thread)			                                            
