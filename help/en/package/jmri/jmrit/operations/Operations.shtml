@@ -613,8 +613,9 @@ Here's a list of the current codes and descriptions:
 <tr><td>TL</td><td>Train Length</td><td>Length</td></tr>
 <tr><td>TM</td><td>Train Manifest Description</td><td>Description</td></tr>
 <tr><td>TN</td><td>Train Name</td><td>Name</td></tr>
-<tr><td>TW</td><td>Train Weight</td><td>Weight</td></tr>
+<tr><td>TRUN</td><td>Truncate</td></tr>
 <tr><td>TT</td><td>Train Terminates</td><td>Name</td></tr>
+<tr><td>TW</td><td>Train Weight</td><td>Weight</td></tr>
 <tr><td>VT</td><td>Valid</td><td>Month/Day, Year Time</td></tr>
 </table>
 
