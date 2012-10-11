@@ -95,11 +95,6 @@ public class JmriJFrameInterface implements jmri.util.swing.WindowInterface {
     public void dispose() {}
 
     @Override
-    public boolean isFrame() {
-        return false;
-    }
-
-    @Override
     public Frame getFrame() {
         return null;
     }

@@ -14,6 +14,7 @@ import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
+import jmri.util.StringUtil;
 import jmri.web.server.WebServerManager;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
@@ -237,14 +238,14 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     if (frame.getAllowInFrameServlet()) {
                         String frameTitle = frame.getTitle();
                         if (!frameTitle.equals("") && !disallowedFrames.contains(frameTitle)) {
+                            String escapedTitle = StringUtil.escapeString(frameTitle);
                             Element n = new Element((useAttributes) ? "frame" : "item");
                             if (useAttributes) {
-                                n.setAttribute("name", frameTitle.replaceAll(" ", "%20").replaceAll("#", "%23"));
+                                n.setAttribute("name", escapedTitle);
                                 n.setAttribute("userName", frameTitle);
                             } else {
                                 n.addContent(new Element("type").addContent("frame"));
-                                //get rid of spaces in name
-                                n.addContent(new Element("name").addContent(frameTitle.replaceAll(" ", "%20").replaceAll("#", "%23")));
+                                n.addContent(new Element("name").addContent(escapedTitle));
                                 n.addContent(new Element("userName").addContent(frameTitle));
                             }
                             e.addContent(n);
@@ -260,14 +261,15 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     if (frame.getAllowInFrameServlet()) {
                         String title = ((JmriJFrame) ((Editor)frame).getTargetPanel().getTopLevelAncestor()).getTitle();
                         if (!title.equals("") && !disallowedFrames.contains(title)) {
+                            String escapedTitle = StringUtil.escapeString(title);
                             Element n = new Element((useAttributes) ? "panel" : "item");
                             if (useAttributes) {
-                            	n.setAttribute("name", "ControlPanel/" + title.replaceAll(" ", "%20").replaceAll("#", "%23"));
+                            	n.setAttribute("name", "ControlPanel/" + escapedTitle);
                             	n.setAttribute("userName", title);
                             	n.setAttribute("type", "Control Panel");
                             } else {
                                 n.addContent(new Element("type").addContent("panel"));
-                                n.addContent(new Element("name").addContent("ControlPanel/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")));
+                                n.addContent(new Element("name").addContent("ControlPanel/" + escapedTitle));
                                 n.addContent(new Element("userName").addContent(title));
                             }
                             e.addContent(n);
@@ -279,14 +281,15 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     if (frame.getAllowInFrameServlet() && !(LayoutEditor.class.isInstance(frame))) {  //skip LayoutEditor panels, as they will be added next
                         String title = ((JmriJFrame) ((Editor)frame).getTargetPanel().getTopLevelAncestor()).getTitle();
                         if (!title.equals("") && !disallowedFrames.contains(title)) {
+                            String escapedTitle = StringUtil.escapeString(title);
                             Element n = new Element((useAttributes) ? "panel" : "item");
                             if (useAttributes) {
-                            	n.setAttribute("name", "Panel/" + title.replaceAll(" ", "%20").replaceAll("#", "%23"));
+                            	n.setAttribute("name", "Panel/" + escapedTitle);
                             	n.setAttribute("userName", title);
                             	n.setAttribute("type", "Panel");
                             } else {
                                 n.addContent(new Element("type").addContent("panel"));
-                                n.addContent(new Element("name").addContent("Panel/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")));
+                                n.addContent(new Element("name").addContent("Panel/" + escapedTitle));
                                 n.addContent(new Element("userName").addContent(title));
                             }
                             e.addContent(n);
@@ -298,14 +301,15 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     if (frame.getAllowInFrameServlet()) {
                         String title = ((JmriJFrame) ((Editor)frame).getTargetPanel().getTopLevelAncestor()).getTitle();
                         if (!title.equals("") && !disallowedFrames.contains(title)) {
+                            String escapedTitle = StringUtil.escapeString(title);
                             Element n = new Element((useAttributes) ? "panel" : "item");
                             if (useAttributes) {
-                            	n.setAttribute("name", "Layout/" + title.replaceAll(" ", "%20").replaceAll("#", "%23"));
+                            	n.setAttribute("name", "Layout/" + escapedTitle);
                             	n.setAttribute("userName", title);
                             	n.setAttribute("type", "Layout");
                             } else {
                                 n.addContent(new Element("type").addContent("panel"));
-                                n.addContent(new Element("name").addContent("Layout/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")));
+                                n.addContent(new Element("name").addContent("Layout/" + escapedTitle));
                                 n.addContent(new Element("userName").addContent(title));
                             }
                             e.addContent(n);

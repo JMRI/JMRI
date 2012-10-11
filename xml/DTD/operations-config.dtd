@@ -161,7 +161,9 @@
 
 <!ATTLIST comments misplacedCars		CDATA #IMPLIED> 
 
-<!ELEMENT control (maximumStringLengths)*>
+<!ELEMENT control (backwardCompatibility | maximumStringLengths)*>
+
+<!ELEMENT backwardCompatibility EMPTY>
  
 <!ELEMENT maximumStringLengths (max_len_string_attibute | max_len_string_road_number | max_len_string_location_name
 | max_len_string_track_name | max_len_string_track_length_name | max_len_string_length_name

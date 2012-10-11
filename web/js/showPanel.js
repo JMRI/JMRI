@@ -15,11 +15,11 @@
  *  		4) browser user clicks on widget? send "set state" command and go to 3)
  *  		5) error? go back to 2) 
  *  
- *  TODO: add analog clock (in progress)
- *  TODO: handle turnoutdrawunselectedleg = "yes"
+ *  TODO: handle turnoutdrawunselectedleg = "yes" for crossovers
  *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
  *  TODO: handle "&" in panel names 
  *  TODO: handle drawn ellipse (see LMRC APB)
+ *  TODO: finish layoutturntable (draw rays) (see Mtn RR)
  *  TODO: show list of available panels in footer, or add [Prev] [Next] links to navigate between panels
  *  TODO: figure out "held" state on signalheads (see LMRC APB)
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
@@ -29,7 +29,7 @@
  *  TODO: diagnose and correct the hover dislocation on images (or turn it off)
  *  TODO: verify that assuming same rotation and scale for all icons in a "set" is OK
  *  TODO: deal with mouseleave, mouseout, touchout, etc. Slide off Stop button on rb1 for example.
- *  TODO: handle really exotic layoutturnouts, such as double-crossovers
+ *  TODO: handle remaining drawn widgets, such as double-crossovers
  *  TODO: make turnout, levelXing occupancy work like LE panels (more than just checking A)
  *  TODO: draw dashed curves
  *  TODO: figure out FireFox issue using size of alt text for rotation of unloaded images
@@ -404,10 +404,14 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						}
 						//store widget in persistent array
 						$gWidgets[$widget.id] = $widget; 
-						//also store the turnout's 3 end points for other connections
+						//also store the xing's 4 end points for other connections
 						$storeLevelXingPoints($widget);  
-						//draw the turnout
+						//draw the xing
 						$drawLevelXing($widget);  
+						break;
+					case "layoutturntable" :
+						//just draw the circle for now, don't even store it
+						$drawCircle($widget.xcen, $widget.ycen, $widget.radius); 
 						break;
 					case "backgroundColor" :  //set background color of the panel itself
 						$('div#panelArea').css({"background-color" : "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ")"});
@@ -698,6 +702,7 @@ function $drawLevelXing($widget) {
 };
 
 //draw a Turnout (pass in widget)
+//  see LayoutEditor.drawTurnouts()
 function $drawTurnout($widget) {
 	//if set to hidden, don't draw anything
 	if ($widget.hidden == "yes") {
@@ -712,25 +717,28 @@ function $drawTurnout($widget) {
 	} else {
 //		if (window.console) console.log("could not get trackwidth of "+$widget.connectaname+" for "+$widget.name);
 	}
-	if ($gPanel.turnoutcircles == "yes") {
-		$drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $gPanel.turnoutcirclecolor, 1);
-	}
 	var cenx = $widget.xcen;
 	var ceny = $widget.ycen
 	var ax = $gPts[$widget.ident+PT_A].x;
 	var ay = $gPts[$widget.ident+PT_A].y;
 	var bx = $gPts[$widget.ident+PT_B].x;
 	var by = $gPts[$widget.ident+PT_B].y;
-	var abx = ax+((bx-ax)*0.5); // midpoint AB
-	var aby = ay+((by-ay)*0.5);
 	var cx = $gPts[$widget.ident+PT_C].x;
 	var cy = $gPts[$widget.ident+PT_C].y;
+	var abx = (ax*1)+((bx-ax)*0.5); // midpoint AB
+	var aby = (ay*1)+((by-ay)*0.5);
+	if ($gPanel.turnoutdrawunselectedleg == 'yes'){ //only calculate midpoints if needed
+		var cenbx = (cenx*1)+((bx-cenx)*0.5); // midpoint cenB
+		var cenby = (ceny*1)+((by-ceny)*0.5);
+		var cencx = (cenx*1)+((cx-cenx)*0.5); // midpoint cenC
+		var cency = (ceny*1)+((cy-ceny)*0.5);
+	}
 	var dx, dy, dcx, dcy;
 	if ($gPts[$widget.ident+PT_D] != undefined) {
 		dx = $gPts[$widget.ident+PT_D].x;
 		dy = $gPts[$widget.ident+PT_D].y;
-		dcx = dx+((cx-dx)*0.5); // midpoint DC
-		dcy = dy+((cy-dy)*0.5);
+		dcx = (dx*1)+((cx-dx)*0.5); // midpoint DC
+		dcy = (dy*1)+((cy-dy)*0.5);
 	}
 	var erase = $gPanel.backgroundcolor;
 	
@@ -748,20 +756,26 @@ function $drawTurnout($widget) {
 	//turnout A--B
 	//         \-C
 	if ($widget.type==LH_TURNOUT||$widget.type==RH_TURNOUT||$widget.type==WYE_TURNOUT) {
-		$drawLine(ax, ay, cenx, ceny, $color, $width); //A to center (incoming)
 		//if closed or thrown, draw the selected leg in the default track color and erase the other one
 		if ($widget.state == CLOSED || $widget.state == THROWN) {
 			if ($widget.state == $widget.continuing) {
 				$drawLine(cenx, ceny, cx, cy, erase, $width); //erase center to C (diverging leg)
+				if ($gPanel.turnoutdrawunselectedleg == 'yes'){
+					$drawLine(cx, cy, cencx, cency, $color, $width); //C to midC (diverging leg)
+				}
 				$drawLine(cenx, ceny, bx, by, $color, $width); //center to B (straight leg)
 			} else {
 				$drawLine(cenx, ceny, bx, by, erase, $width); //erase center to B (straight leg)
+				if ($gPanel.turnoutdrawunselectedleg == 'yes'){
+					$drawLine(bx, by, cenbx, cenby, $color, $width); //B to midB (straight leg)
+				}
 				$drawLine(cenx, ceny, cx, cy, $color, $width); //center to C (diverging leg)
 			}
 		} else {  //if undefined, draw both legs
 			$drawLine(cenx, ceny, bx, by, $color, $width); //center to B (straight leg)
 			$drawLine(cenx, ceny, cx, cy, $color, $width); //center to C (diverging leg)
 		}
+		$drawLine(ax, ay, cenx, ceny, $color, $width); //A to center (incoming)
 	// xover A--B
 	//       D--C
 	} else if ($widget.type==LH_XOVER||$widget.type==RH_XOVER) {
@@ -785,6 +799,9 @@ function $drawTurnout($widget) {
 				}
 			}
 		}
+	}
+	if ($gPanel.turnoutcircles == "yes") {  //draw turnout circle if requested
+		$drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $gPanel.turnoutcirclecolor, 1);
 	}
 };
 
@@ -1240,7 +1257,7 @@ var $getNextState = function($widget){
 function getParameterByName(name) {
 	var match = RegExp('[?&]' + name + '=([^&]*)')
 	.exec(window.location.search);
-	return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+	return match && match[1];
 }
 
 //request and show a list of available panels from the server (used when no panel passed in)
@@ -1329,6 +1346,7 @@ var $getWidgetFamily = function($widget) {
 	case "backgroundColor" :
 	case "layoutblock" :
 	case "levelxing" :
+	case "layoutturntable" :
 		return "drawn";
 		break;
 	};

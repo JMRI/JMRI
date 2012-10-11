@@ -7,7 +7,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -40,7 +39,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.routes.RouteManager;
-import jmri.util.JmriJFrame;
 
 /**
  * Tests for the Operations Trains class
@@ -123,28 +121,6 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Train Constant DEPARTURETIME_CHANGED_PROPERTY", "TrainDepartureTime", Train.DEPARTURETIME_CHANGED_PROPERTY);
 		
 		Assert.assertEquals("Train Constant AUTO", "Auto", Train.AUTO);
-	}
-
-	// test TrainIcon attributes
-	public void testTrainIconAttributes() {
-		Train train1 = new Train("TESTTRAINID", "TESTNAME");
-
-		Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
-		Assert.assertEquals("Train Name", "TESTNAME", train1.getName());
-		Assert.assertEquals("Train toString", "TESTNAME", train1.toString());
-
-		jmri.jmrit.display.panelEditor.PanelEditor editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test Panel");
-        Assert.assertNotNull("New editor", editor);
-		TrainIcon trainicon1 = editor.addTrainIcon("TestName");
-		trainicon1.setTrain(train1);
-		Assert.assertEquals("TrainIcon set train", "TESTNAME", trainicon1.getTrain().getName());
-		
-		// test color change
-		String[] colors = TrainIcon.getLocoColors();
-		for (int i=0; i<colors.length; i++){
-			trainicon1.setLocoColor(colors[i]);
-		}
-		editor.getTargetFrame().dispose();
 	}
 
 	// test Train attributes
@@ -1110,15 +1086,6 @@ public class OperationsTrainsTest extends TestCase {
 		CarManager cmanager = CarManager.instance();
 		CarTypes ct = CarTypes.instance();
 		EngineTypes et = EngineTypes.instance();
-		
-		// create and register a panel
-		jmri.jmrit.display.panelEditor.PanelEditor editor = new jmri.jmrit.display.panelEditor.PanelEditor("Train Test Panel");
-		PanelMenu.instance().addEditorPanel(editor);
-		
-		// Place train icons on panel
-		Setup.setPanelName("Train Test Panel");
-		// Set terminate color to yellow
-		Setup.setTrainIconColorTerminate(TrainIcon.YELLOW);
 
 		// register the car and engine types used
 		ct.addName("Boxcar");
@@ -2690,48 +2657,7 @@ public class OperationsTrainsTest extends TestCase {
 		
 		Assert.assertTrue("Bob test train1 built", train1.isBuilt());
 		Assert.assertTrue("Bob test train2 built", train2.isBuilt());
-		
-		// check train icon location and name
-		TrainIcon ti1 = train1.getTrainIcon();
-		Assert.assertNotNull("Train 1 icon exists", ti1);
-		Assert.assertEquals("Train 1 icon text", "MET 5501", ti1.getText());
-		TrainIcon ti2 = train2.getTrainIcon();
-		Assert.assertNotNull("Train 2 icon exists", ti2);
-		Assert.assertEquals("Train 2 icon text", "MWT 5888", ti2.getText());
-		
-		// icon uses TrainIconAnimation 2 pixels every 3 mSec
-		// X=0 to X=150 175/2 * 3 = 225 mSec
-		// Y=0 to Y=25 25/2 * 3 = 38 mSec		
-		
-		// need to wait for icon to finish moving
-		for (int i=0; i<200; i++){
-			if (ti1.getX() == 175 && ti1.getY() == 25)
-				break;
-			sleep(10);	// need to wait on slow machines
-		}
-		
-		Assert.assertEquals("Train 1 icon X", 175, ti1.getX());
-		Assert.assertEquals("Train 1 icon Y", 25, ti1.getY());
-		Assert.assertEquals("Train 2 icon X", 75, ti2.getX());
-		Assert.assertEquals("Train 2 icon Y", 50, ti2.getY());
-		
-		//move the trains
-		train1.move();
-		train2.move();
-			
-		// icon uses TrainIconAnimation 2 pixels every 3 mSec	
-		
-		// need to wait for icon to finish moving
-		for (int i=0; i<200; i++){
-			if (ti1.getX() == 25 && ti1.getY() == 50)
-				break;
-			sleep(10);	// need to wait on slow machines
-		}
-		
-		Assert.assertEquals("Train 1 icon X", 25, ti1.getX());
-		Assert.assertEquals("Train 1 icon Y", 50, ti1.getY());
-		Assert.assertEquals("Train 2 icon X", 125, ti2.getX());
-		Assert.assertEquals("Train 2 icon Y", 50, ti2.getY());		
+	
 	}
 	
 	// Test a route of one location (local train).
@@ -5712,13 +5638,6 @@ public class OperationsTrainsTest extends TestCase {
 		Setup.setBuildAggressive(false);
 
 	}
-	
-	public void testTrainTestPanel(){
-	    // confirm panel creation
-		JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
-        Assert.assertNotNull(f);
-        
-	}
 
 	// test location Xml create support
 	public void testXMLCreate() throws Exception {
@@ -5898,6 +5817,9 @@ public class OperationsTrainsTest extends TestCase {
 	}
 	
 	public void testXMLRead() throws JDOMException, IOException{
+		
+		// prevent swing access when loading train icon
+		Setup.setPanelName("");
 		
 		RouteManager rmanager = RouteManager.instance();
 		Route A = rmanager.getRouteByName("A");
@@ -6095,15 +6017,6 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("t3 status", "t3 X status", t3.getStatus());
 		
 		LocationManager.instance().dispose();
-
-	}
-	
-	private synchronized void sleep(int time){
-		try {
-			wait(time);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 
 	}
 

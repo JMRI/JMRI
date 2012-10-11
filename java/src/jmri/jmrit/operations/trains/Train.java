@@ -61,6 +61,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _description = "";
 	protected RouteLocation _current = null;// where the train is located in its route
 	protected String _status = "";
+	protected String _buildFailedMessage ="";	// the build failed message for this train
 	protected boolean _built = false;		// when true, a train manifest has been built
 	protected boolean _modified = false;	// when true, user has modified train after being built
 	protected boolean _build = true;		// when true, build this train
@@ -2039,6 +2040,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 	}
 	
+
 	/**
 	 * Returns true if the train build failed. Note that returning false doesn't
 	 * mean the build was successful.
@@ -2047,6 +2049,18 @@ public class Train implements java.beans.PropertyChangeListener {
 	 */
 	public boolean getBuildFailed() {
 		return _buildFailed;
+	}
+	
+	protected void setBuildFailedMessage(String message) {
+		String old = _buildFailedMessage;
+		_buildFailedMessage = message;
+		if (!old.equals(message)){
+			setDirtyAndFirePropertyChange("buildFailedMessage", old, message);
+		}
+	}
+	
+	protected String getBuildFailedMessage(){
+		return _buildFailedMessage;
 	}
 	
 	/**
@@ -2319,39 +2333,42 @@ public class Train implements java.beans.PropertyChangeListener {
 			_trainIcon.remove();
 			_trainIcon.dispose();
 		}
-		Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
-		if (editor != null) { 
-            _trainIcon = editor.addTrainIcon(getIconName());
-			_trainIcon.setTrain(this);
-			if (getIconName().length() > 9) {
-				_trainIcon.setFont(jmri.util.FontUtil.deriveFont(_trainIcon.getFont(), 8.f));
-			}
-			if (getCurrentLocation() != null)
-				_trainIcon.setLocation(getCurrentLocation().getTrainIconX(), getCurrentLocation().getTrainIconY());
-			// add throttle if there's a throttle manager
-			if (jmri.InstanceManager.throttleManagerInstance()!=null) {
-				// add throttle if JMRI loco roster entry exist
-				RosterEntry entry = null;
-				if (getLeadEngine() != null){
-					// first try and find a match based on loco road number
-					List<RosterEntry> entries = Roster.instance().matchingList(null, getLeadEngine().getNumber(), null, null, null, null, null);
-					if (entries.size() > 0){
-						entry = entries.get(0);
-					}
-					if (entry == null){
-						// now try finding a match based on DCC address
-						entries = Roster.instance().matchingList(null, null, getLeadEngine().getNumber(), null, null, null, null);
+		// if there's a panel specified, get it and place icon
+		if (!Setup.getPanelName().equals("")){
+			Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
+			if (editor != null) { 
+				_trainIcon = editor.addTrainIcon(getIconName());
+				_trainIcon.setTrain(this);
+				if (getIconName().length() > 9) {
+					_trainIcon.setFont(jmri.util.FontUtil.deriveFont(_trainIcon.getFont(), 8.f));
+				}
+				if (getCurrentLocation() != null)
+					_trainIcon.setLocation(getCurrentLocation().getTrainIconX(), getCurrentLocation().getTrainIconY());
+				// add throttle if there's a throttle manager
+				if (jmri.InstanceManager.throttleManagerInstance()!=null) {
+					// add throttle if JMRI loco roster entry exist
+					RosterEntry entry = null;
+					if (getLeadEngine() != null){
+						// first try and find a match based on loco road number
+						List<RosterEntry> entries = Roster.instance().matchingList(null, getLeadEngine().getNumber(), null, null, null, null, null);
 						if (entries.size() > 0){
 							entry = entries.get(0);
 						}
+						if (entry == null){
+							// now try finding a match based on DCC address
+							entries = Roster.instance().matchingList(null, null, getLeadEngine().getNumber(), null, null, null, null);
+							if (entries.size() > 0){
+								entry = entries.get(0);
+							}
+						}
 					}
-				}
-				if (entry != null){
-					_trainIcon.setRosterEntry(entry);
-					if(getLeadEngine().getConsist() != null)
-						_trainIcon.setConsistNumber(getLeadEngine().getConsist().getConsistNumber());
-				} else{
-					log.debug("Loco roster entry not found for train ("+getName()+")");
+					if (entry != null){
+						_trainIcon.setRosterEntry(entry);
+						if(getLeadEngine().getConsist() != null)
+							_trainIcon.setConsistNumber(getLeadEngine().getConsist().getConsistNumber());
+					} else{
+						log.debug("Loco roster entry not found for train ("+getName()+")");
+					}
 				}
 			}
 		}
@@ -2427,6 +2444,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		setTerminationTrack(null);
 		setBuilt(false);
 		setBuildFailed(false);
+		setBuildFailedMessage("");
 		setPrinted(false);
 		// remove cars and engines from this train via property change
 		setStatus(TRAINRESET);
@@ -2646,6 +2664,8 @@ public class Train implements java.beans.PropertyChangeListener {
     		_build = a.getValue().equals("true");
     	if ((a = e.getAttribute("buildFailed")) != null)
     		_buildFailed = a.getValue().equals("true");
+    	if ((a = e.getAttribute("buildFailedMessage")) != null)
+    		_buildFailedMessage = a.getValue();
     	if ((a = e.getAttribute("printed")) != null)
     		_printed = a.getValue().equals("true");
     	if ((a = e.getAttribute("modified")) != null)
@@ -2813,6 +2833,7 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("built", isBuilt()?"true":"false");
         e.setAttribute("build", isBuildEnabled()?"true":"false");
         e.setAttribute("buildFailed", getBuildFailed()?"true":"false");
+        e.setAttribute("buildFailedMessage", getBuildFailedMessage());
         e.setAttribute("printed", isPrinted()?"true":"false");
         e.setAttribute("modified", isModified()?"true":"false");
         e.setAttribute("switchListStatus", getSwitchListStatus());

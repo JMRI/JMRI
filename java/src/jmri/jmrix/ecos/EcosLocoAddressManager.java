@@ -102,6 +102,14 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         
         l = new EcosLocoAddress(ecosObject, p.getRosterAttribute());
         register(l);
+        
+        EcosMessage m = new EcosMessage("request("+ecosObject+", view)");
+        tc.sendEcosMessage(m, this);
+        m = new EcosMessage("get("+ecosObject+", speed)");
+        tc.sendEcosMessage(m, this);
+        
+        m = new EcosMessage("get("+ecosObject+", dir)");
+        tc.sendEcosMessage(m, this);
         return _tecos.get(ecosObject);
     }
 
@@ -186,15 +194,12 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         monitorState = monitor;
         List<String> objects = getEcosObjectList();
 
-        for(int x = 0; x < objects.size(); x++){
-            boolean isLongAddress = false;
-            if(getByEcosObject(objects.get(x)).getEcosLocoAddress()>128)
-                isLongAddress = true;
-            jmri.DccLocoAddress la = new jmri.DccLocoAddress(getByEcosObject(objects.get(x)).getEcosLocoAddress(), isLongAddress);
-            if(monitor)
-                adaptermemo.getThrottleManager().attachListener(la, _re, this);
-            else
-                adaptermemo.getThrottleManager().removeListener(la, this);
+        for(String ecosObject:objects){
+            EcosMessage m = new EcosMessage("get("+ecosObject+", speed)");
+            tc.sendEcosMessage(m, this);
+            
+            m = new EcosMessage("get("+ecosObject+", dir)");
+            tc.sendEcosMessage(m, this);
         }
     }
     
@@ -240,6 +245,8 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         oldsize = _tdcc.size();
         _tdcc.remove(dccAddress);
         firePropertyChange("length", Integer.valueOf(oldsize), Integer.valueOf(_tdcc.size()));
+        EcosMessage m = new EcosMessage("release("+ecosObject+", view)");
+        tc.sendEcosMessage(m, this);
         // listen for name and state changes to forward
     }
 
@@ -533,17 +540,12 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                     }
                 } else {
                     EcosLocoAddress tmploco;
-                    //So long as the event information is for a turnout we will determine
-                    //which turnout it is for and let that deal with the message.
-                    //int object = m.getEcosObjectId();
-                    //if ((1000<=ecosObjectId) && (ecosObjectId<2000)){
-                        log.debug("Forwarding on State change for " + ecosObjectId);
-                        String strLocoObject = Integer.toString(ecosObjectId);
-                        tmploco = _tecos.get(strLocoObject);
-                        if (tmploco!=null){
-                            tmploco.reply(m);
-                        }
-                    //}
+                    log.debug("Forwarding on State change for " + ecosObjectId);
+                    String strLocoObject = Integer.toString(ecosObjectId);
+                    tmploco = _tecos.get(strLocoObject);
+                    if (tmploco!=null){
+                        tmploco.reply(m);
+                    }
                 } 
             } else {
                 String replyType = m.getReplyType();
@@ -587,7 +589,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                         }
                         locoToRoster.processQueue();
                     }
-                } else if (replyType.equals("get")){
+                } else if (replyType.equals("get") || m.isUnsolicited()){
                 //Need to really check if this all fits together correctly!  Might need to get the loco id from the reply string to
                 //identify the loco correctly
                     EcosLocoAddress tmploco;
@@ -600,15 +602,13 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                         }
                         return;
                     }
-
-                    //int object = GetEcosObjectNumber.getEcosObjectNumber(lines[0], "(", ",");
-                    //if ( (1000<=object) && (object<2000)) {
+                    
                     tmploco = provideByEcosObject(""+ecosObjectId);
                     if(tmploco.getCV7()==null){
                         tmploco.setCV7("0");
                         getEcosCVs(tmploco);
                     }
-                    //} else return;
+                    
                     for(int i =1; i<lines.length-1; i++) {
                         if(lines[i].contains("cv[")){
                             int startcvnum = lines[i].indexOf("[")+1;
@@ -827,7 +827,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
             }
         
         }
-        monitorLocos(monitorState);
+        //monitorLocos(monitorState);
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosLocoAddressManager.class.getName());

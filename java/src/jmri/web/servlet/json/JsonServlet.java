@@ -3,42 +3,35 @@ package jmri.web.servlet.json;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.Route;
-import jmri.RouteManager;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
 import jmri.implementation.QuietShutDownTask;
+import jmri.jmris.JmriConnection;
+import jmri.jmris.json.JsonLightServer;
+import jmri.jmris.json.JsonOperationsServer;
 import jmri.jmris.json.JsonPowerServer;
-import jmri.jmris.simpleserver.SimpleLightServer;
-import jmri.jmris.simpleserver.SimpleOperationsServer;
-import jmri.jmris.simpleserver.SimpleReporterServer;
-import jmri.jmris.simpleserver.SimpleSensorServer;
-import jmri.jmris.simpleserver.SimpleSignalHeadServer;
-import jmri.jmris.simpleserver.SimpleTurnoutServer;
+import jmri.jmris.json.JsonProgrammerServer;
+import jmri.jmris.json.JsonReporterServer;
+import jmri.jmris.json.JsonSensorServer;
+import jmri.jmris.json.JsonTurnoutServer;
+import jmri.jmris.json.JsonSignalHeadServer;
+import jmri.web.server.WebServerManager;
 
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketServlet;
-import org.jdom.Element;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
@@ -47,7 +40,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  */
 public class JsonServlet extends WebSocketServlet {
 
-	protected ObjectMapper mapper;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -671593634343578915L;
+	private JsonServer server;
+	private ObjectMapper mapper;
 	
 	private final Set<JsonWebSocket> sockets = new CopyOnWriteArraySet<JsonWebSocket>();
     private static ResourceBundle html = ResourceBundle.getBundle("jmri.web.server.Html");
@@ -56,17 +54,22 @@ public class JsonServlet extends WebSocketServlet {
 
 	public JsonServlet() {
 		super();
+	}
+	
+	public void init() throws ServletException {
+		super.init();
+		this.server = new JsonServer();
 		this.mapper = new ObjectMapper();
 		InstanceManager.shutDownManagerInstance().register(new QuietShutDownTask("Close JSON web sockets") {
 			@Override
 			public boolean execute() {
 				for (JsonWebSocket socket : sockets) {
 					try {
-						socket.connection.sendMessage(socket.mapper.writeValueAsString(socket.mapper.createObjectNode().put("type", "goodbye")));
+						socket.wsConnection.sendMessage(socket.mapper.writeValueAsString(socket.mapper.createObjectNode().put("type", "goodbye")));
 					} catch (Exception e) {
 						log.warn("Unable to send goodbye while closing socket.\n" + e.getMessage());
 					}
-					socket.connection.close();
+					socket.wsConnection.close();
 				}
 				return true;
 			}
@@ -93,17 +96,55 @@ public class JsonServlet extends WebSocketServlet {
         response.setDateHeader("Last-Modified", now.getTime());
         response.setDateHeader("Expires", now.getTime());
 
-        String rest = request.getPathInfo().substring(request.getPathInfo().indexOf("/") + 1);
-        if (rest.length() != 0) {
-        	if (rest.equals("memories")) {
-        		this.doMemories(request, response);
-        	} else if (rest.equals("routes")) {
-        		this.doRoutes(request, response);
-        	} else if (rest.equals("sensors")) {
-        		this.doSensors(request, response);
-        	} else if (rest.equals("turnouts")) {
-        		this.doTurnouts(request, response);
+        String[] rest = request.getPathInfo().split("/");
+        String type = rest[1];
+        if (type.length() != 0) {
+            String name = (rest.length > 2) ? rest[2] : null;
+        	JsonNode reply = null;
+        	if (type.equals("memories")) {
+        		reply = this.server.getMemories();
+        	} else if (type.equals("metadata")) {
+        		reply = this.server.getMetadata();
+        	} else if (type.equals("panels")) {
+        		reply = this.server.getPanels();
+        	} else if (type.equals("power")) {
+        		reply = this.server.getPower();
+        	} else if (type.equals("railroad")) {
+        		reply = this.server.getRailroad();
+        	} else if (type.equals("roster")) {
+        		reply = this.server.getRoster();
+        	} else if (type.equals("routes")) {
+        		reply = this.server.getRoutes();
+        	} else if (type.equals("sensors")) {
+        		reply = this.server.getSensors();
+        	} else if (type.equals("signalHeads")) {
+        		reply = this.server.getSignalHeads();
+        	} else if (type.equals("turnouts")) {
+        		reply = this.server.getTurnouts();
+        	} else if (name != null) {
+        		if (type.equals("memory")) {
+        			reply = this.server.getMemory(name);
+        		} else if (type.equals("reporter")) {
+        			reply = this.server.getReporter(name);
+        		} else if (type.equals("rosterEntry")) {
+        			reply = this.server.getRosterEntry(name);
+        		} else if (type.equals("route")) {
+        			reply = this.server.getRoute(name);
+        		} else if (type.equals("sensor")) {
+        			reply = this.server.getSensor(name);
+        		} else if (type.equals("signalHead")) {
+        			reply = this.server.getSignalHead(name);
+        		} else if (type.equals("turnout")) {
+        			reply = this.server.getTurnout(name);
+        		} else {
+            		log.warn("Type \"" + type + "\" unknown.");
+            		reply = this.server.getUnknown();
+        		}
+        	} else {
+        		log.warn("Type \"" + type + "\" unknown.");
+        		reply = this.server.getUnknown();
         	}
+        	response.getWriter().write(this.mapper.writeValueAsString(reply));
         } else {
             response.getWriter().println(String.format(html.getString("HeadFormat"),
                     html.getString("HTML5DocType"),
@@ -115,124 +156,50 @@ public class JsonServlet extends WebSocketServlet {
         }
 	}
 
-	protected void doMemories(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		ObjectNode root = this.mapper.createObjectNode();
-		root.put("type", "list");
-		root.put("list", "memory");
-		ArrayNode memories = root.putArray("memory");
-        MemoryManager m = InstanceManager.memoryManagerInstance();
-        List<String> names = m.getSystemNameList();
-        for (String name : names) {
-            Memory t = m.getMemory(name);
-            ObjectNode memory = this.mapper.createObjectNode();
-            memory.put("name", name);
-            memory.put("userName", t.getUserName());
-            memory.put("comment", t.getComment());
-            memory.put("value", t.getValue().toString());
-            memories.add(memory);
-        }
-        response.getWriter().write(this.mapper.writeValueAsString(root));
-	}
-
-	protected void doRoutes(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		ObjectNode root = this.mapper.createObjectNode();
-		root.put("type", "list");
-		root.put("list", "route");
-		ArrayNode routes = root.putArray("route");
-        RouteManager m = InstanceManager.routeManagerInstance();
-        SensorManager s = InstanceManager.sensorManagerInstance();
-        List<String> names = m.getSystemNameList();
-        for (String name : names) {
-            Route t = m.getRoute(name);
-            ObjectNode route = this.mapper.createObjectNode();
-            route.put("name", name);
-            route.put("userName", t.getUserName());
-            route.put("comment", t.getComment());
-            route.put("state", (s.provideSensor(t.getTurnoutsAlignedSensor()) != null) ? (s.provideSensor(t.getTurnoutsAlignedSensor())).getKnownState() : 0);
-            routes.add(route);
-        }
-        response.getWriter().write(this.mapper.writeValueAsString(root));
-	}
-
-	protected void doSensors(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		ObjectNode root = this.mapper.createObjectNode();
-		root.put("type", "list");
-		root.put("list", "sensor");
-		ArrayNode sensors = root.putArray("sensor");
-        SensorManager m = InstanceManager.sensorManagerInstance();
-        List<String> names = m.getSystemNameList();
-        for (String name : names) {
-            Sensor t = m.getSensor(name);
-            ObjectNode sensor = this.mapper.createObjectNode();
-            sensor.put("name", name);
-            sensor.put("userName", t.getUserName());
-            sensor.put("comment", t.getComment());
-            sensor.put("inverted", t.getInverted());
-            sensor.put("state", t.getKnownState());
-            sensors.add(sensor);
-        }            
-        response.getWriter().write(this.mapper.writeValueAsString(root));
-	}
-
-	protected void doTurnouts(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		ObjectNode root = this.mapper.createObjectNode();
-		root.put("type", "list");
-		root.put("list", "turnout");
-		ArrayNode turnouts = root.putArray("turnout");
-        TurnoutManager m = InstanceManager.turnoutManagerInstance();
-        List<String> names = m.getSystemNameList();
-        for (String name : names) {
-            Turnout t = m.getTurnout(name);
-            ObjectNode turnout = this.mapper.createObjectNode();
-            turnout.put("name", name);
-            turnout.put("userName", t.getUserName());
-            turnout.put("comment", t.getComment());
-            turnout.put("inverted", t.getInverted());
-            turnout.put("state", t.getKnownState());
-            turnouts.add(turnout);
-        }
-        response.getWriter().write(this.mapper.writeValueAsString(root));
-	}
-
 	public class JsonWebSocket implements WebSocket.OnTextMessage {
 
-		protected Connection connection;
+		protected Connection wsConnection;
+		protected JmriConnection jmriConnection;
 		protected ObjectMapper mapper;
-		private SimpleLightServer lightServer;
-		private SimpleOperationsServer operationsServer;
+		private JsonLightServer lightServer;
+		private JsonOperationsServer operationsServer;
 		private JsonPowerServer powerServer;
-		private SimpleReporterServer reporterServer;
-		private SimpleSensorServer sensorServer;
-		private SimpleSignalHeadServer signalHeadServer;
-		private SimpleTurnoutServer turnoutServer;
+		private JsonProgrammerServer programmerServer;
+		private JsonReporterServer reporterServer;
+		private JsonSensorServer sensorServer;
+		private JsonSignalHeadServer signalHeadServer;
+		private JsonTurnoutServer turnoutServer;
 
 		public void sendMessage(String message) throws IOException {
-			this.connection.sendMessage(message);
+			this.wsConnection.sendMessage(message);
 		}
 
 		@Override
 		public void onOpen(Connection cnctn) {
-			this.connection = cnctn;
-			this.connection.setMaxIdleTime(10000); // default is 10 seconds (10000 milliseconds) set to 0 to disable timeouts
+			this.wsConnection = cnctn;
+			this.jmriConnection = new JmriConnection(this.wsConnection);
+			this.wsConnection.setMaxIdleTime(0); // default is 10 seconds (10000 milliseconds) set to 0 to disable timeouts
 			this.mapper = new ObjectMapper();
 			sockets.add(this);
-			this.lightServer = new SimpleLightServer(this.connection);
-			this.operationsServer = new SimpleOperationsServer(this.connection);
-			this.powerServer = new JsonPowerServer(this.connection);
-			this.reporterServer = new SimpleReporterServer(this.connection);
-			this.sensorServer = new SimpleSensorServer(this.connection);
-			this.signalHeadServer = new SimpleSignalHeadServer(this.connection);
-			this.turnoutServer = new SimpleTurnoutServer(this.connection);
+			this.lightServer = new JsonLightServer(this.jmriConnection);
+			this.operationsServer = new JsonOperationsServer(this.jmriConnection);
+			this.powerServer = new JsonPowerServer(this.jmriConnection);
+			this.programmerServer = new JsonProgrammerServer(this.jmriConnection);
+			this.reporterServer = new JsonReporterServer(this.jmriConnection);
+			this.sensorServer = new JsonSensorServer(this.jmriConnection);
+			this.signalHeadServer = new JsonSignalHeadServer(this.jmriConnection);
+			this.turnoutServer = new JsonTurnoutServer(this.jmriConnection);
 			try {
 				ObjectNode root = this.mapper.createObjectNode();
 				root.put("type", "hello");
 				ObjectNode data = root.putObject("data");
 				data.put("JMRI", jmri.Version.name());
-				data.put("heartbeat", this.connection.getMaxIdleTime() * 0.8);
-				this.connection.sendMessage(this.mapper.writeValueAsString(root));
+				data.put("heartbeat", this.wsConnection.getMaxIdleTime() * 0.8);
+				data.put("railroad", WebServerManager.getWebServerPreferences().getRailRoadName());
+				this.wsConnection.sendMessage(this.mapper.writeValueAsString(root));
 			} catch (IOException e) {
 				log.warn(e.getMessage(), e);
-				this.connection.close();
+				this.wsConnection.close();
 				sockets.remove(this);
 			}
 		}
@@ -249,71 +216,89 @@ public class JsonServlet extends WebSocketServlet {
 			}
 			try {
 				JsonNode root = this.mapper.readTree(string);
-				String type = root.path("type").asText().toLowerCase().trim(); // be forgiving?
+				String type = root.path("type").asText();
+				JsonNode data = root.path("data");
 				if (type.equals("ping")) {
-					this.connection.sendMessage(this.mapper.writeValueAsString(this.mapper.createObjectNode().put("type", "pong")));
+					this.jmriConnection.sendMessage(this.mapper.writeValueAsString(this.mapper.createObjectNode().put("type", "pong")));
 				} else if (type.equals("goodbye")) {
-					this.connection.sendMessage(this.mapper.writeValueAsString(this.mapper.createObjectNode().put("type", "goodbye")));
-					this.connection.close();
-				} else if (type.equals("power")) {
-					this.powerServer.parseStatus(string);
-				} else if (type.equals("TURNOUT")) {
-					this.turnoutServer.parseStatus(string);
-				} else if (type.equals("LIGHT")) {
-					this.lightServer.parseStatus(string);
-				} else if (type.equals("SENSOR")) {
-					this.sensorServer.parseStatus(string);
-				} else if (type.equals("SIGNALHEAD")) {
-					this.signalHeadServer.parseStatus(string);
-				} else if (type.equals("REPORTER")) {
-					this.reporterServer.parseStatus(string);
-				} else if (type.equals(SimpleOperationsServer.OPERATIONS)) {
-					this.operationsServer.parseStatus(string);
+					this.jmriConnection.sendMessage(this.mapper.writeValueAsString(this.mapper.createObjectNode().put("type", "goodbye")));
+					this.wsConnection.close();
+				} else if (type.equals("list")) {
+					JsonNode reply = null;
+					String list = root.path("list").asText();
+					if (list.equals("memories")) {
+						reply = server.getMemories();
+					} else if (list.equals("metadata")) {
+						reply = server.getMetadata();
+					} else if (list.equals("panels")) {
+						reply = server.getPanels();
+					} else if (list.equals("roster")) {
+						reply = server.getRoster();
+					} else if (list.equals("routes")) {
+						reply = server.getRoutes();
+					} else if (list.equals("sensors")) {
+						reply = server.getSensors();
+					} else if (list.equals("signalHeads")) {
+						reply = server.getSignalHeads();
+					} else if (list.equals("turnouts")) {
+						reply = server.getTurnouts();
+					} else {
+						this.sendErrorMessage(0, "unknown type");
+						return;
+					}
+					this.jmriConnection.sendMessage(this.mapper.writeValueAsString(reply));
+				} else if (!data.isMissingNode()) {
+					if (type.equals("light")) {
+						this.lightServer.parseRequest(data);
+					} else if (type.equals(JsonOperationsServer.OPERATIONS)) {
+						this.operationsServer.parseRequest(data);
+					} else if (type.equals("power")) {
+						this.powerServer.parseRequest(data);
+					} else if (type.equals("programmer")) {
+						this.programmerServer.parseRequest(data);
+					} else if (type.equals("sensor")) {
+						this.sensorServer.parseRequest(data);
+					} else if (type.equals("signalHead")) {
+						this.signalHeadServer.parseRequest(data);
+					} else if (type.equals("reporter")) {
+						this.reporterServer.parseRequest(data);
+					} else if (type.equals("rosterEntry")) {
+						this.wsConnection.sendMessage(this.mapper.writeValueAsString(server.getRosterEntry(data.path("name").asText())));
+					} else if (type.equals("turnout")) {
+						this.turnoutServer.parseRequest(data);
+					} else {
+						this.sendErrorMessage(0, "unknown type");
+					}
 				} else {
-					ObjectNode error = this.mapper.createObjectNode();
-					error.put("type", "error");
-					ObjectNode data = error.putObject("data");
-					data.put("code", 0);
-					data.put("message", "unknown type");
-					this.connection.sendMessage(this.mapper.writeValueAsString(error));
+					this.sendErrorMessage(0, "expected message data");
 				}
 			} catch (JsonProcessingException pe) {
 				log.warn("Exception processing \"" + string + "\"\n" + pe.getMessage());
-				ObjectNode root = this.mapper.createObjectNode();
-				root.put("type", "error");
-				ObjectNode data = root.putObject("data");
-				data.put("code", 0);
-				data.put("message", "unable to process");
-				try {
-					this.connection.sendMessage(this.mapper.writeValueAsString(root));
-				} catch (IOException ie) {
-					log.warn(ie.getMessage(), ie);
-					this.connection.close();
-					sockets.remove(this);
-				} catch (Exception e) {
-					log.warn("Exception processing exception\n" + e.getMessage());
-				}
+				this.sendErrorMessage(0, "unable to process");
 			} catch (JmriException je) {
-				ObjectNode root = this.mapper.createObjectNode();
-				root.put("type", "error");
-				ObjectNode data = root.putObject("data");
-				data.put("code", 0);
-				data.put("message", "unsupported operation");
-				try {
-					this.connection.sendMessage(this.mapper.writeValueAsString(root));
-				} catch (IOException ie) {
-					log.warn(ie.getMessage(), ie);
-					this.connection.close();
-					sockets.remove(this);
-				} catch (Exception e) {
-					log.warn("Exception processing exception\n" + e.getMessage());
-				}
+				this.sendErrorMessage(0, "unsupported operation");
 			} catch (IOException ie) {
 				log.warn(ie.getMessage(), ie);
-				this.connection.close();
+				this.wsConnection.close();
 				sockets.remove(this);
 			}
 		}
 
+		private void sendErrorMessage(int code, String message) {
+			ObjectNode root = this.mapper.createObjectNode();
+			root.put("type", "error");
+			ObjectNode data = root.putObject("error");
+			data.put("code", code);
+			data.put("message", message);
+			try {
+				this.wsConnection.sendMessage(this.mapper.writeValueAsString(root));
+			} catch (IOException ie) {
+				log.warn(ie.getMessage(), ie);
+				this.wsConnection.close();
+				sockets.remove(this);
+			} catch (Exception e) {
+				log.warn("Exception processing exception\n" + e.getMessage());
+			}
+		}
 	}
 }

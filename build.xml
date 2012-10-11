@@ -403,7 +403,7 @@
     <!-- NetBeans IDE debug target in nbproject/ide-targets.xml -->
     <target name="debug"
             description="compile source with debugging on, omitting tests"
-            depends="init, copyfiles, compile-generated-source">
+            depends="init, javacc, copyfiles, compile-generated-source">
         <!-- Compile the java code from ${source} into ${target} -->
         <antcall target="-java-compile-internal">
             <param name="java.source.directory" value="${source}"/>

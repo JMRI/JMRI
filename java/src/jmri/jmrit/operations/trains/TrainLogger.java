@@ -93,7 +93,9 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 		String line = train.getName() +del+ "\""+train.getDescription()+"\""
 		+del+ "\""+train.getCurrentLocationName()+"\""
 		+del+ "\""+train.getNextLocationName()+"\""
-		+del+ "\""+ train.getStatus()+"\"" +del+ getTime();
+		+del+ "\""+ train.getStatus()+"\"" 
+		+del+ "\""+ train.getBuildFailedMessage()+"\"" 
+		+del+ getTime();
 		fileOut(line);
 	}
 	
@@ -102,6 +104,7 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 		+del+ rb.getString("Current")
 		+del+ rb.getString("NextLocation")
 		+del+ rb.getString("Status")
+		+del+ rb.getString("BuildMessages")
 		+del+ rb.getString("DateAndTime");
 		return header;
 	}

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.ecos;
 
+import java.util.Arrays;
+import java.util.List;
 /**
  * Carries the reply to an EcosMessage.
  * <P>
@@ -122,10 +124,13 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
         if (getElement(6)!=' ') return false;
         return true;
     }
+    
+    String replyType = null;
 
     public String getReplyType(){
         if(!isReply()) return "";
-        
+        if(replyType!=null)
+            return replyType;
         StringBuilder sb = new StringBuilder();
         for(int i = 7; i<getNumDataElements(); i++){
             if(getElement(i) =='('){
@@ -133,10 +138,36 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
             }
             sb.append((char)getElement(i));
         }
+        replyType = sb.toString();
         return sb.toString();
     }
     
+    List<String> headerDetails = null;
+    
+    public List<String> getReplyHeaderDetails(){
+        if(!isReply()) return  Arrays.asList(new String[0]);
+        if(headerDetails!=null)
+            return headerDetails;
+        StringBuilder sb = new StringBuilder();
+        int iOffSet = 8 + getReplyType().length()+(""+getEcosObjectId()).length();
+        if(getElement(iOffSet)==',') iOffSet++;
+        if(getElement(iOffSet)==' ') iOffSet++;
+        for(int i = iOffSet; i<getNumDataElements(); i++){
+            if(getElement(i) ==')'){
+                break;
+            }
+            sb.append((char)getElement(i));
+        }
+        headerDetails = Arrays.asList(sb.toString().split(","));
+        return headerDetails;
+    }
+    
+    int objectId = -1;
+    
     public int getEcosObjectId(){
+        if(objectId!= -1)
+            return objectId;
+        
         StringBuilder sb = new StringBuilder();
         int iOffSet = 7 + getReplyType().length();
         if(!isEvent())
@@ -146,10 +177,13 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
                 break;
             } else if (getElement(i)==','){
                 break;
+            } else if (getElement(i)==')'){
+                break;
             }
             sb.append((char)getElement(i));
         }
-        return Integer.parseInt(sb.toString());
+        objectId = Integer.parseInt(sb.toString());
+        return objectId;
     }
     /**
     * get the contents of the reply, excluding the header and footer
@@ -163,6 +197,18 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
             returnval[i-1] = lines[i];
         }
         return returnval;
+    }
+    
+    static public String getContentDetail(String str){
+        int start=str.indexOf("[")+2;
+        int end=str.indexOf("]")-1;
+        return str.substring(start, end);
+    }
+    
+    static public String getContentDetails(String line, String item){
+        int startval=line.indexOf(item)+item.length()+1;
+        int endval=(line.substring(startval)).indexOf("]")+startval;
+        return line.substring(startval, endval);
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosReply.class.getName());

@@ -4,16 +4,16 @@ body {
 	font-family: sans-serif;
 }
 .rotatable {
-	-moz-transform-origin: 0% 0%;
 	-webkit-transform-origin: 0% 0%;
-	-o-transform-origin: 0% 0%;
+	-moz-transform-origin: 0% 0%;
 	-ms-transform-origin: 0% 0%;
+	-o-transform-origin: 0% 0%;
 	transform-origin: 0% 0%;
 }
 .clickable:hover {
-  cursor: pointer;
-  border: solid 1px lightGray;
   margin: -1px;
+  border: solid 1px lightGray;
+  cursor: pointer;
 }
 .positionablelabel.text.hidden,
 .sensoricon.hidden,
@@ -21,20 +21,20 @@ body {
 	display: none;
 }
 .locoicon {
-  min-width:  60px;
-  width:  60px;
-  min-height: 20px;
-  line-height: 20px;
-/*  text-align: center;
-  vertical-align: middle; */
   padding-left: 6px;
+  min-width:  60px;
+  min-height: 20px;
+  width:  60px;
   background-repeat:no-repeat;
+/* vertical-align: middle; */
+/* text-align: center; */
+  line-height: 20px;
 }
 div#panelArea {
   border-right: solid 1px #888;
   border-bottom: solid 1px #888;
-  -moz-box-shadow: 5px 5px 5px #ccc;
   -webkit-box-shadow: 5px 5px 5px #ccc;
+  -moz-box-shadow: 5px 5px 5px #ccc;
   box-shadow: 5px 5px 5px #ccc;
 }
 div#panelFooter {
@@ -43,8 +43,8 @@ div#panelFooter {
 
 div#panelFooter a {
 	padding: 8px 8px 4px 8px;
-	font-style: italic;
 	text-decoration: none;
+	font-style: italic;
 }
 
 div#panelFooter a:hover {
@@ -52,38 +52,38 @@ div#panelFooter a:hover {
 }
 
 div#panelFooter span.info {
-	font-size: 80%;
 	font-style: italic;
+	font-size: 80%;
 }
 
 div.MemoryInputIconXml, div.MemorySpinnerIconXml {
 	padding: 1px 1em 1px 1em;
-	border:  solid black 1px;
 	min-width: 4em;
+	border:  solid black 1px;
 	text-align: center;
 }
 
 div.fastclock>div.clocktext {
 	position: relative;
 	top:      55%;
-	margin-left:  auto;
 	margin-right: auto;
+	margin-left:  auto;
 	text-align: center;
-	font-family:  serif;
 	font-weight:  bold;
+	font-family:  serif;
 }
 div.fastclock>img.clockface {
     position: absolute;
-    z-index: -1;
-    width: 100%; /*so it will grow with scale */
     top:	0;
     left: 	0;
+    z-index: -1;
+    width: 100%; /*so it will grow with scale */
 }
 div.fastclock>img.clockhourhand, div.fastclock>img.clockminutehand {
 	position: absolute;
-    width: 100%; /*so they will grow with scale */
 	top: 	0;
-	left: 	0; 
+	left: 	0;
+    width: 100%; /*so they will grow with scale */ 
 }
 div.fastclock>img.clockminutehand {
   z-index: 2;
@@ -102,4 +102,3 @@ div.fastclock>img.clockhourhand {
     height:     100%;
     width:      100%;
     background: rgba( 255, 255, 255, .90 ); 
-}

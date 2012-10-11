@@ -65,12 +65,7 @@ public class PanedInterface implements jmri.util.swing.WindowInterface {
     }
 
     @Override
-    public boolean isFrame() {
-        return (this.frame != null);
-    }
-
-    @Override
     public Frame getFrame() {
-        return (isFrame()) ? this.frame : null;
+        return (this.frame != null) ? this.frame : null;
     }
 }

@@ -29,26 +29,16 @@ public class OperationsTest extends TestCase {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.jmrit.operations.OperationsTest"); // no tests in class itself
 		suite.addTest(jmri.jmrit.operations.setup.OperationsSetupTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
-		    suite.addTest(jmri.jmrit.operations.locations.OperationsLocationsTest.suite()); // references Swing, so skipped
-		}
-		
+		suite.addTest(jmri.jmrit.operations.locations.OperationsLocationsTest.suite()); // fixed references to Swing, 10/10/2012
 		suite.addTest(jmri.jmrit.operations.rollingstock.OperationsRollingStockTest.suite());
 		suite.addTest(jmri.jmrit.operations.rollingstock.cars.OperationsCarsTest.suite());
 		suite.addTest(jmri.jmrit.operations.rollingstock.engines.OperationsEnginesTest.suite());
 		suite.addTest(jmri.jmrit.operations.routes.OperationsRoutesTest.suite());
+		suite.addTest(jmri.jmrit.operations.trains.OperationsTrainsTest.suite());  // fixed references to Swing, 10/10/2012
+		suite.addTest(jmri.jmrit.operations.router.OperationsCarRouterTest.suite());  // fixed references to Swing, 10/10/2012
 
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {  
-		    suite.addTest(jmri.jmrit.operations.trains.OperationsTrainsTest.suite()); // references Swing, so skipped
-		}
-		
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {  
-		    suite.addTest(jmri.jmrit.operations.router.OperationsCarRouterTest.suite());  // references Swing, so skipped
-		}
-
+        // GUI tests start here
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
-            // GUI tests start here
             suite.addTest(jmri.jmrit.operations.setup.OperationsSetupGuiTest.suite());
             suite.addTest(jmri.jmrit.operations.locations.OperationsLocationsGuiTest.suite());
             suite.addTest(jmri.jmrit.operations.rollingstock.cars.OperationsCarsGuiTest.suite());

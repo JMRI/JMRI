@@ -5,12 +5,13 @@ package jmri.jmrit.operations.trains;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
-import java.awt.Frame;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 import java.util.List;
+
+import javax.swing.JLabel;
 
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -480,8 +481,8 @@ public class TrainCommon {
 			pagesize = new Dimension(206,792);
 		// Metrics don't always work for the various font names, so use Monospaced
 		Font font = new Font("Monospaced", Font.PLAIN, Setup.getFontSize());
-		Frame frame = new Frame();
-		FontMetrics metrics = frame.getFontMetrics(font);
+		JLabel label = new JLabel();
+		FontMetrics metrics = label.getFontMetrics(font);
 		int charwidth = metrics.charWidth('m');
 
 		// compute lines and columns within margins

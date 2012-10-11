@@ -98,20 +98,20 @@ public class TrainCsvManifest extends TrainCsvCommon {
 				else
 					addLine(fileOut, EDT+train.getExpectedDepartureTime(rl));
 					
+				Location loc = locationManager.getLocationByName(rl.getName());
 				// add location comment
-				if (Setup.isPrintLocationCommentsEnabled()){
-					Location l = locationManager.getLocationByName(rl.getName());
-					if (!l.getComment().equals("")){
-						// location comment can have multiple lines
-						String[] comments = l.getComment().split("\n");
-						for (int i=0; i<comments.length; i++)
-							addLine(fileOut, LC+"\""+comments[i]+"\"");							
-					}
+				if (Setup.isPrintLocationCommentsEnabled() && !loc.getComment().equals("")){					
+					// location comment can have multiple lines
+					String[] comments = loc.getComment().split("\n");
+					for (int i=0; i<comments.length; i++)
+						addLine(fileOut, LC+"\""+comments[i]+"\"");							
 				}
+				if (Setup.isTruncateManifestEnabled() && loc.isSwitchListEnabled())
+					addLine(fileOut, TRUN);
 			}
 			// add route comment
 			if (!rl.getComment().equals("")){
-				addLine(fileOut, RC+"\""+rl.getComment()+"\"");
+				addLine(fileOut, RLC+"\""+rl.getComment()+"\"");
 			}			
 			// engine change or helper service?
 			if (train.getSecondLegOptions() != Train.NONE){
