@@ -30,8 +30,8 @@ public class OperationsTest extends TestCase {
 		TestSuite suite = new TestSuite("jmri.jmrit.operations.OperationsTest"); // no tests in class itself
 		suite.addTest(jmri.jmrit.operations.setup.OperationsSetupTest.suite());
 
-		if (!System.getProperty("jmri.headlesstest","false").equals("true"))
-			suite.addTest(jmri.jmrit.operations.locations.OperationsLocationsTest.suite()); // references Swing, so skipped
+//		if (!System.getProperty("jmri.headlesstest","false").equals("true"))
+		suite.addTest(jmri.jmrit.operations.locations.OperationsLocationsTest.suite()); // references Swing, so skipped
 
 		suite.addTest(jmri.jmrit.operations.rollingstock.OperationsRollingStockTest.suite());
 		suite.addTest(jmri.jmrit.operations.rollingstock.cars.OperationsCarsTest.suite());
