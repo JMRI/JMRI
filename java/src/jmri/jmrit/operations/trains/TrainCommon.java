@@ -481,10 +481,8 @@ public class TrainCommon {
 			pagesize = new Dimension(206,792);
 		// Metrics don't always work for the various font names, so use Monospaced
 		Font font = new Font("Monospaced", Font.PLAIN, Setup.getFontSize());
-		//Frame frame = new Frame();
 		JLabel label = new JLabel();
 		FontMetrics metrics = label.getFontMetrics(font);
-		//FontMetrics metrics = frame.getFontMetrics(font);
 		int charwidth = metrics.charWidth('m');
 
 		// compute lines and columns within margins
