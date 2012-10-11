@@ -307,8 +307,13 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
             		if (m.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE && 
                 	    m.getElement(1)==XNetConstants.CS_SERVICE_REG_PAGE_RESPONSE) {
                 	    // valid operation response, but does it belong to us?
-                            try { 
-			       if(m.getElement(2)!=registerFromCV(_cv)) {
+                            try {
+                               // we always save the cv number, but if
+                               // we are using register mode, there is
+                               // at least one case (CV29) where the value
+                               // returned does not match the value we saved. 
+			       if(m.getElement(2)!=_cv &&
+                                  m.getElement(2)!=registerFromCV(_cv)) {
                                    log.debug(" result for CV " + m.getElement(2) +
                                              " expecting " + _cv);
                                    return;
