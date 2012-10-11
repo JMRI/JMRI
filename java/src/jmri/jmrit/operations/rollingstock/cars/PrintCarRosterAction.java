@@ -208,6 +208,8 @@ public class PrintCarRosterAction  extends AbstractAction {
 			return buf.toString(); 	
     }
     
+    JLabel sort = new JLabel();
+    
     JComboBox manifestOrientationComboBox = Setup.getOrientationComboBox();
     
     JCheckBox printCarsWithLocation = new JCheckBox(rb.getString("PrintCarsWithLocation"));
@@ -238,6 +240,10 @@ public class PrintCarRosterAction  extends AbstractAction {
     		super();
     		this.pcr = pcr;
     		// create panel
+    		JPanel pSortBy = new JPanel();
+    		pSortBy.setBorder(BorderFactory.createTitledBorder(rb.getString("SortBy")));
+    		pSortBy.add(sort);
+    		
     		JPanel pOrientation = new JPanel();
     		pOrientation.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOrientation")));
     		pOrientation.add(manifestOrientationComboBox);
@@ -289,18 +295,24 @@ public class PrintCarRosterAction  extends AbstractAction {
     		JPanel pButtons = new JPanel();  
     		pButtons.setLayout(new GridBagLayout());
     		pButtons.add(okayButton);
+    		pButtons.setBorder(BorderFactory.createTitledBorder(""));
     		addButtonAction(okayButton);
     	   		
     		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
+    		getContentPane().add(pSortBy);
     		getContentPane().add(pOrientation);
     		getContentPane().add(pPanel);
     		getContentPane().add(pButtons);
-    		setPreferredSize(null);
     		pack();
     		setVisible(true);
     	}
     	
     	public void initComponents() {
+    		if (isPreview)
+    			cpof.setTitle(rb.getString("MenuItemPreview"));
+    		else
+    			cpof.setTitle(rb.getString("MenuItemPrint"));
+    		sort.setText(panel.carsModel.getSortByName());
     		printSpace.setEnabled(panel.sortByLocation.isSelected());
     		printPage.setEnabled(panel.sortByLocation.isSelected());
     		if (!panel.sortByLocation.isSelected()){
