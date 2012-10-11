@@ -556,7 +556,15 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		Car car = carManager.getByRoadAndNumber(roadComboBox.getSelectedItem().toString(),
 				roadNumberTextField.getText());
 		if (car != null){
-			if (c == null || !car.getId().equals(c.getId())){
+			// new car?
+			if (c == null){
+				JOptionPane.showMessageDialog(this,
+						rb.getString("carRoadExists"), rb.getString("carCanNotAdd"),
+						JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			// old car with new road or number?
+			if (!car.getId().equals(c.getId())){
 				JOptionPane.showMessageDialog(this,
 						rb.getString("carRoadExists"), rb.getString("carCanNotUpdate"),
 						JOptionPane.ERROR_MESSAGE);
