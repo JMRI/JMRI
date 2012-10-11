@@ -38,11 +38,11 @@ public class OperationsTest extends TestCase {
 		suite.addTest(jmri.jmrit.operations.rollingstock.engines.OperationsEnginesTest.suite());
 		suite.addTest(jmri.jmrit.operations.routes.OperationsRoutesTest.suite());
 
-		if (!System.getProperty("jmri.headlesstest","false").equals("true"))
-			suite.addTest(jmri.jmrit.operations.trains.OperationsTrainsTest.suite());  // references Swing, so skipped
+//		if (!System.getProperty("jmri.headlesstest","false").equals("true"))
+		suite.addTest(jmri.jmrit.operations.trains.OperationsTrainsTest.suite());  // references Swing, so skipped
 
-		if (!System.getProperty("jmri.headlesstest","false").equals("true")) 
-			suite.addTest(jmri.jmrit.operations.router.OperationsCarRouterTest.suite());  // references Swing, so skipped
+//		if (!System.getProperty("jmri.headlesstest","false").equals("true")) 
+		suite.addTest(jmri.jmrit.operations.router.OperationsCarRouterTest.suite());  // references Swing, so skipped
 
 
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
