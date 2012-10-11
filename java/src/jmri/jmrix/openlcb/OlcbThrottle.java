@@ -89,7 +89,7 @@ public class OlcbThrottle extends AbstractThrottle
         this.speedSetting = speed;
         
         // send to OpenLCB
-        oti.setSpeed(speed*100.0*(isForward ? 1.0 : -1.0));
+        oti.setSpeed(speed*100.0,isForward);
         
         // notify 
         if (oldSpeed != this.speedSetting)
