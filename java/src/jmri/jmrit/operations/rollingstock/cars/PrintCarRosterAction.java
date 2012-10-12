@@ -111,7 +111,8 @@ public class PrintCarRosterAction  extends AbstractAction {
         		Car car = manager.getById(cars.get(i));
         		if (printCarsWithLocation.isSelected() && car.getLocation() == null)
         			continue;	// car doesn't have a location skip
-        		if (printCarLocation.isSelected()){
+        		location = "";
+        		if (printCarLocation.isSelected() && car.getLocation() != null){
         			location = car.getLocationName().trim() + " - " + car.getTrackName().trim();
         			// reduce location name by one half of the track name
         			location = padAttribute(location, Control.max_len_string_location_name+Control.max_len_string_track_name/2);
