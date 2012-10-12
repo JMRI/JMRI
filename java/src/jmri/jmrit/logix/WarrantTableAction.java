@@ -1086,7 +1086,7 @@ public class WarrantTableAction extends AbstractAction {
                 // a NamedBean added or deleted
                 init();
                 fireTableDataChanged();
-            } else {
+            } else if (e.getSource() instanceof NamedBean){
                 // a value changed.  Find it, to avoid complete redraw
                 NamedBean bean = (NamedBean)e.getSource();
                 for (int i=0; i<_warList.size(); i++) {
@@ -1096,7 +1096,7 @@ public class WarrantTableAction extends AbstractAction {
                 }
             }
             if (log.isDebugEnabled()) log.debug("propertyChange of \""+e.getPropertyName()+
-                                                "\" for "+e.getSource().toString());
+                                                "\" for "+e.getSource().getClass().getName());
         }
 
     }
