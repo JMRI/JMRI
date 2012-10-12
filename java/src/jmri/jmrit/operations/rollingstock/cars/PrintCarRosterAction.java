@@ -62,6 +62,7 @@ public class PrintCarRosterAction  extends AbstractAction {
     
     int numberCharPerLine = 90;
     int ownerMaxLen = CarOwners.instance().getCurMaxNameLength();
+    List<String> cars;
     
     private void printCars(){
     	
@@ -103,7 +104,6 @@ public class PrintCarRosterAction  extends AbstractAction {
 		if (printCarLoad.isSelected() || printCarKernel.isSelected() || printCarColor.isSelected())
 			ownerMaxLen = 5;
         
-        List<String> cars = panel.getSortByList();
         try {
         	printTitleLine(writer);
         	String previousLocation = "";
@@ -209,7 +209,7 @@ public class PrintCarRosterAction  extends AbstractAction {
 			return buf.toString(); 	
     }
     
-    JLabel sort = new JLabel();
+    JLabel sort = new JLabel(" ");
     
     JComboBox manifestOrientationComboBox = Setup.getOrientationComboBox();
     
@@ -250,26 +250,26 @@ public class PrintCarRosterAction  extends AbstractAction {
     		pOrientation.add(manifestOrientationComboBox);
     		
     		JPanel pPanel = new JPanel();
-    		pPanel.setLayout(new BoxLayout(pPanel,BoxLayout.Y_AXIS));
+    		pPanel.setLayout(new GridBagLayout());
     		pPanel.setBorder(BorderFactory.createTitledBorder(rb.getString("PrintOptions")));
-    		pPanel.add(printCarsWithLocation);
-    		pPanel.add(printCarLength);
-    		pPanel.add(printCarWeight);
-    		pPanel.add(printCarColor);
-    		pPanel.add(printCarLoad);
-    		pPanel.add(printCarKernel);
-    		pPanel.add(printCarOwner);
-    		pPanel.add(printCarBuilt);
+    		addItemLeft (pPanel, printCarsWithLocation, 0, 0);
+    		addItemLeft (pPanel, printCarLength, 0, 1);
+    		addItemLeft (pPanel, printCarWeight, 0, 2);
+    		addItemLeft (pPanel, printCarColor, 0, 3);
+    		addItemLeft (pPanel, printCarLoad, 0, 4);
+    		addItemLeft (pPanel, printCarKernel, 0, 5);
+    		addItemLeft (pPanel, printCarOwner, 0, 6);
+    		addItemLeft (pPanel, printCarBuilt, 0, 7);
     		if (Setup.isValueEnabled())
-    			pPanel.add(printCarValue);
+    			addItemLeft (pPanel, printCarValue, 0, 8);
     		if (Setup.isRfidEnabled())
-    			pPanel.add(printCarRfid);
-    		pPanel.add(printCarLocation);
-    		pPanel.add(printCarTrain);
-    		pPanel.add(printCarDestination);
-    		pPanel.add(printCarComment);
-			pPanel.add(printSpace);
-			pPanel.add(printPage);
+    			addItemLeft (pPanel, printCarRfid, 0, 9);
+    		addItemLeft (pPanel, printCarLocation, 0, 10);
+    		addItemLeft (pPanel, printCarTrain, 0, 11);
+    		addItemLeft (pPanel, printCarDestination, 0, 12);
+    		addItemLeft (pPanel, printCarComment, 0, 13);
+    		addItemLeft (pPanel, printSpace, 0, 14);
+    		addItemLeft (pPanel, printPage, 0, 15);
     		    		
     		// set defaults
     		printCarsWithLocation.setSelected(false);
@@ -314,6 +314,7 @@ public class PrintCarRosterAction  extends AbstractAction {
     		else
     			cpof.setTitle(rb.getString("MenuItemPrint"));
     		sort.setText(panel.carsModel.getSortByName());
+    		cars = panel.getSortByList();
     		printSpace.setEnabled(panel.sortByLocation.isSelected());
     		printPage.setEnabled(panel.sortByLocation.isSelected());
     		if (!panel.sortByLocation.isSelected()){
