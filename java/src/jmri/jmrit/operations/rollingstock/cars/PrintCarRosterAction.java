@@ -304,6 +304,7 @@ public class PrintCarRosterAction  extends AbstractAction {
     		getContentPane().add(pOrientation);
     		getContentPane().add(pPanel);
     		getContentPane().add(pButtons);
+    		setPreferredSize(null);
     		pack();
     		setVisible(true);
     	}
