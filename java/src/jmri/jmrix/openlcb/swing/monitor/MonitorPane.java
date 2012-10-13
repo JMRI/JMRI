@@ -8,6 +8,11 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 
+import org.openlcb.Message;
+import org.openlcb.can.AliasMap;
+import org.openlcb.can.OpenLcbCanFrame;
+import org.openlcb.can.MessageBuilder;
+
 /**
  * Frame displaying (and logging) OpenLCB (CAN) frames
  *
@@ -22,6 +27,9 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     }
 
     CanSystemConnectionMemo memo;
+    AliasMap aliasMap;
+    MessageBuilder messageBuilder;
+    
     
     public void initContext(Object context) {
         if (context instanceof CanSystemConnectionMemo ) {
@@ -33,6 +41,9 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         this.memo = memo;
 
         memo.getTrafficController().addCanListener(this);
+        
+        aliasMap = memo.get(org.openlcb.can.AliasMap.class);
+        messageBuilder = new MessageBuilder(aliasMap);
     }
     
     public String getTitle() {
@@ -48,32 +59,88 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         super.dispose();
     }
 
+    String formatFrame(boolean extended, int header, int len, int[] content) {
+        StringBuilder formatted = new StringBuilder("");
+        formatted.append(extended ? "[" : "(");
+        formatted.append(Integer.toHexString(header));
+        formatted.append((extended ? "]" : ")"));
+        for (int i = 0; i < len; i++) {
+            formatted.append(" ");
+            formatted.append(jmri.util.StringUtil.twoHexFromInt(content[i]));
+        }
+        return new String(formatted);
+    }
+    
+    // see jmri.jmrix.openlcb.OlcbConfigurationManager
+    java.util.List<Message> frameToMessages(int header, int len, int[] content) {
+            OpenLcbCanFrame frame = new OpenLcbCanFrame(header & 0xFFF);
+            frame.setHeader(header);
+            if (len != 0) {
+                byte[] data = new byte[len];
+                for (int i = 0; i < data.length; i++) {
+                    data[i] = (byte)content[i];
+                }
+                frame.setData(data);
+            }
+            
+            aliasMap.processFrame(frame);
+            java.util.List<Message> list = messageBuilder.processFrame(frame);
+            return list;
+    }
+    
+    void format(String prefix, boolean extended, int header, int len, int[] content) {
+        String raw = formatFrame(extended, header, len, content);
+        String formatted = prefix+": Unknown frame "+raw;
+        if (extended && (header & 0x08000000) != 0) {
+            // is a message type
+            java.util.List<Message> list = frameToMessages(header, len, content);
+            if (list == null || list.size() == 0) {
+                // didn't format, check for partial datagram
+                if ((header & 0x0F000000) == 0x0B000000) {
+                    formatted = prefix+": (Start of Datagram)";
+                } else if ((header & 0x0F000000) == 0x0C000000) {
+                    formatted = prefix+": (Middle of Datagram)";
+                } else {
+                    formatted = prefix+": Unknown message "+raw;
+                }
+            } else {
+                formatted = prefix+": "+list.get(0).toString();
+            }
+        } else {
+            // control type
+            if ((header & 0x07000000) == 0x00000000) {
+                switch (header & 0x00FFF000) {
+                    case 0x00700000 :
+                        formatted = prefix+": RID frame "+raw;
+                        break;
+                    case 0x00701000 :
+                        formatted = prefix+": AMD frame "+raw;
+                        break;
+                    case 0x00702000 :
+                        formatted = prefix+": AME frame "+raw;
+                        break;
+                    case 0x00703000 :
+                        formatted = prefix+": AMR frame "+raw;
+                        break;
+                    default :
+                        formatted = prefix+": CAN control frame "+raw;
+                        break;
+                }
+            } else {
+                formatted = prefix+": CID "+((header&0x7000000)/0x1000000)+" frame for alias "+Integer.toHexString(header&0xFFF).toUpperCase();
+            }
+        }
+        nextLine(formatted+"\n", raw);
+    }
+    
     public synchronized void message(CanMessage l) {  // receive a message and log it
         if (log.isDebugEnabled()) log.debug("Message: "+l.toString());
-        StringBuilder formatted = new StringBuilder("M: ");
-        formatted.append(l.isExtended() ? "[" : "(");
-        formatted.append(Integer.toHexString(l.getHeader()));
-        formatted.append((l.isExtended() ? "]" : ")"));
-        for (int i = 0; i < l.getNumDataElements(); i++) {
-            formatted.append(" ");
-            formatted.append(jmri.util.StringUtil.twoHexFromInt(l.getElement(i)));
-        }
-        formatted.append("\n");
-        nextLine(new String(formatted), l.toString());
+        format("M", l.isExtended(), l.getHeader(), l.getNumDataElements(), l.getData());
     }
 
     public synchronized void reply(CanReply l) {  // receive a reply and log it
         if (log.isDebugEnabled()) log.debug("Reply: "+l.toString());
-        StringBuilder formatted = new StringBuilder("R: ");
-        formatted.append(l.isExtended() ? "[" : "(");
-        formatted.append(Integer.toHexString(l.getHeader()));
-        formatted.append((l.isExtended() ? "]" : ")"));
-        for (int i = 0; i < l.getNumDataElements(); i++) {
-            formatted.append(" ");
-            formatted.append(jmri.util.StringUtil.twoHexFromInt(l.getElement(i)));
-        }
-        formatted.append("\n");
-        nextLine(new String(formatted), l.toString());
+        format("R", l.isExtended(), l.getHeader(), l.getNumDataElements(), l.getData());
     }
     
     /**
