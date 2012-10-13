@@ -212,6 +212,7 @@ public class Setup {
 	private static boolean manifestEditorEnabled = false;	// when true use text editor to view build report
 	private static boolean switchListSameManifest = true;	// when true switch list format is the same as the manifest
 	private static boolean manifestTruncated = false;		// when true, manifest is truncated if switch list is available
+	private static boolean manifestDepartureTime = false;	// when true, manifest shows train's departure time
 	private static boolean switchListRealTime = true;		// when true switch list only show work for built trains
 	private static boolean switchListAllTrains = true;		// when true show all trains that visit the location
 	private static boolean switchListPage = false;			// when true each train has its own page
@@ -633,7 +634,15 @@ public class Setup {
 	public static boolean isTruncateManifestEnabled(){
 		return manifestTruncated;
 	}
-
+	
+	public static void setUseDepartureTimeEnabled(boolean b){
+		manifestDepartureTime = b;
+	}
+	
+	public static boolean isUseDepartureTimeEnabled(){
+		return manifestDepartureTime;
+	}
+	
 	public static void setPrintLocationCommentsEnabled(boolean enable){
 		printLocationComments = enable;
 	}
@@ -1496,6 +1505,7 @@ public class Setup {
     	
     	e.addContent(values = new Element("manifest"));
     	values.setAttribute("truncate", isTruncateManifestEnabled()?"true":"false");
+    	values.setAttribute("useDepartureTime", isUseDepartureTimeEnabled()?"true":"false");
     	values.setAttribute("useEditor", isManifestEditorEnabled()?"true":"false");
     	values.setAttribute("hazardousMsg", getHazardousMsg());
     	
@@ -1880,6 +1890,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("manifest truncate: "+enable);
         		setTruncateManifestEnabled(enable.equals("true"));
+        	}
+           	if((a = operations.getChild("manifest").getAttribute("useDepartureTime"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("manifest use departure time: "+enable);
+        		setUseDepartureTimeEnabled(enable.equals("true"));
         	}
         	if((a = operations.getChild("manifest").getAttribute("useEditor"))!= null){
         		String enable = a.getValue();

@@ -104,6 +104,9 @@ public class TrainManifest extends TrainCommon {
 					} else if (!rl.getDepartureTime().equals("")){
 						newLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
 								+", "+rb.getString("departureTime")+" "+rl.getFormatedDepartureTime());
+					} else if (Setup.isUseDepartureTimeEnabled()){
+						newLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
+								+", "+rb.getString("departureTime")+" "+train.getExpectedDepartureTime(rl));
 					} else if (!expectedArrivalTime.equals("-1")){
 						newLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
 								+", "+rb.getString("estimatedArrival")+" "+ expectedArrivalTime);
