@@ -338,12 +338,12 @@ public class SignalTableModel extends AbstractTableModel {
                                 } else {
                                     signalRow.setPortal(null);
                                 }
-                            } else {
+/*                            } else {
                                 if (portal.setApproachSignal(signal, time, fromBlock)) {
                                     signalRow.setToBlock(portal.getOpposingBlock(fromBlock));
                                 } else {
                                     signalRow.setPortal(null);
-                                }
+                                }*/
                             }
                         }
                         if (verifySignalRow(signalRow)) {
@@ -408,11 +408,11 @@ public class SignalTableModel extends AbstractTableModel {
                             if (signalRow.getFromBlock()==null) {
                                 signalRow.setFromBlock(portal.getOpposingBlock(signalRow.getToBlock()));
                             }
-                        } else {
+/*                        } else {
                             portal.setApproachSignal(signal, signalRow.getDelayTime(), signalRow.getFromBlock());
                             if (signalRow.getToBlock()==null) {
                                 signalRow.setToBlock(portal.getOpposingBlock(signalRow.getFromBlock()));
-                            }
+                            }*/
                         }
                     }
                     signalRow.setSignal(signal);
@@ -449,7 +449,7 @@ public class SignalTableModel extends AbstractTableModel {
                     }
                     signalRow.setPortal(portal);
                     signalRow.setFromBlock(block);
-                    if (portal!=null) {
+/*                    if (portal!=null) {
                         checkPortal(signalRow);
                         if (portal.setApproachSignal(signalRow.getSignal(), signalRow.getDelayTime(), block)) {
                             if (signalRow.getToBlock()==null) {
@@ -464,7 +464,7 @@ public class SignalTableModel extends AbstractTableModel {
                         }
                         makeList();
                         fireTableRowsUpdated(row,row);
-                    }
+                    }*/
                     break;
                 case PORTAL_COLUMN:
                     deleteSignal(signalRow);    // delete old
@@ -482,13 +482,13 @@ public class SignalTableModel extends AbstractTableModel {
                             if (signalRow.getFromBlock()==null) {
                                 signalRow.setFromBlock(portal.getOpposingBlock(signalRow.getToBlock()));
                             }
-                        } else if (signalRow.getFromBlock()!=null && portal.setApproachSignal(
+/*                        } else if (signalRow.getFromBlock()!=null && portal.setApproachSignal(
                                                                         signalRow.getSignal(),
                                                                         signalRow.getDelayTime(), 
                                                                         signalRow.getFromBlock())) {
                             if (signalRow.getToBlock()==null) {
                                 signalRow.setToBlock(portal.getOpposingBlock(signalRow.getFromBlock()));
-                            }
+                            }*/
                         } else if (signalRow.getToBlock()==null && signalRow.getFromBlock()==null) {
                             signalRow.setFromBlock(null);
                             signalRow.setToBlock(null);
@@ -557,6 +557,10 @@ public class SignalTableModel extends AbstractTableModel {
                         break;
                     }
                     signalRow.setDelayTime(time);
+                    portal = getPortal(signalRow.getPortal(), signalRow.getFromBlock(), signalRow.getToBlock());
+                    if (portal!=null) {
+                    	portal.setProtectSignal(signalRow.getSignal(), time, signalRow.getToBlock());
+                    }
                     fireTableRowsUpdated(row,row);
                     break;
                 case DELETE_COL:
@@ -640,11 +644,11 @@ public class SignalTableModel extends AbstractTableModel {
 
     public int getPreferredWidth(int col) {
         switch (col) {
-            case NAME_COLUMN:       return new JTextField(14).getPreferredSize().width;
-            case FROM_BLOCK_COLUMN: return new JTextField(14).getPreferredSize().width;
-            case PORTAL_COLUMN:     return new JTextField(14).getPreferredSize().width;
-            case TO_BLOCK_COLUMN:   return new JTextField(14).getPreferredSize().width;
-            case TIME_OFFSET:       return new JTextField(5).getPreferredSize().width;
+            case NAME_COLUMN:       return new JTextField(15).getPreferredSize().width;
+            case FROM_BLOCK_COLUMN: return new JTextField(15).getPreferredSize().width;
+            case PORTAL_COLUMN:     return new JTextField(15).getPreferredSize().width;
+            case TO_BLOCK_COLUMN:   return new JTextField(15).getPreferredSize().width;
+            case TIME_OFFSET:       return new JTextField(6).getPreferredSize().width;
             case DELETE_COL:        return new JButton("DELETE").getPreferredSize().width;
         }
         return 5;

@@ -206,20 +206,6 @@ public class Portal  {
         return true;
     }
 
-    public boolean setApproachSignal(NamedBean signal, long time, OBlock approachBlock) {
-        if (approachBlock==null) return false;
-        if (_fromBlock.equals(approachBlock)) {
-            _fromSignal = signal;
-            _fromSignalDelay = time;
-            //log.debug("setSignal: _toSignal= \""+name+", approachBlock= "+approachBlock);
-        }
-        if (_toBlock.equals(approachBlock)) {
-            _toSignal = signal;
-            _toSignalDelay = time;
-            //log.debug("setSignal: _fromSignal= \""+name+", approachBlock= "+approachBlock);
-        }
-        return true;
-    }
     public NamedBean getFromSignal() {
         return _fromSignal;
     }
@@ -313,28 +299,28 @@ public class Portal  {
     }
 
     /**
-    * Check signals, if any, for speed into next block. The signal that protects the
+    * Check signals, if any, for speed into the block. The signal that protects the
     * "to" block is the signal facing the "from" Block, i.e. the "from" signal.
     * (and vice-versa) 
     * @param block is the direction of entry, "from" block
-    * @return permissible speed
+    * @return permissible speed, null if no signal
     */
-    public String getPermissibleSpeedForBlock(OBlock block) {
-        String speed = "Normal";
+    public String getPermissibleEntranceSpeed(OBlock block) {
+        String speed = null;
         if (block.equals(_toBlock)) {
             if (_fromSignal!=null) {
                 if (_fromSignal instanceof SignalHead) {
-                    speed = getPermissibleSpeedFromSignal((SignalHead)_fromSignal);
+                    speed = getPermissibleSignalEntranceSpeed((SignalHead)_fromSignal);
                 } else {
-                    speed = getPermissibleSpeedFromSignal((SignalMast)_fromSignal);
+                    speed = getPermissibleSignalEntranceSpeed((SignalMast)_fromSignal);
                 }
             }
         } else if (block.equals(_fromBlock)) {
             if (_toSignal!=null) {
                 if (_toSignal instanceof SignalHead) {
-                    speed = getPermissibleSpeedFromSignal((SignalHead)_toSignal);
+                    speed = getPermissibleSignalEntranceSpeed((SignalHead)_toSignal);
                 } else {
-                    speed = getPermissibleSpeedFromSignal((SignalMast)_toSignal);
+                    speed = getPermissibleSignalEntranceSpeed((SignalMast)_toSignal);
                 }
             }
         } else {
@@ -356,29 +342,88 @@ public class Portal  {
         }
         return 0;
     }
-
-    private String getPermissibleSpeedFromSignal(SignalHead signal) {
-        int appearance = signal.getAppearance();
-        String speed = Warrant.getSpeedMap().getAppearanceSpeed(signal.getAppearanceName(appearance));
-        if (speed==null) {
-            log.info("SignalHead \""+ signal.getDisplayName()+"\" has no speed specified for appearance "+
-                            signal.getAppearanceName(appearance)+"! - Restricting Movement!");
-            speed = "Restricted";
+    /**
+    * Check signals, if any, for speed out of the block. The signal that protects the
+    * "to" block is the signal facing the "from" Block, i.e. the "from" signal.
+    * (and vice-versa) 
+    * @param block is the direction of entry, "from" block
+    * @return permissible speed, null if no signal
+    */
+    public String getPermissibleExitSpeed(OBlock block) {
+        String speed = null;
+        if (block.equals(_toBlock)) {
+            if (_fromSignal!=null) {
+                if (_fromSignal instanceof SignalHead) {
+                    speed = getPermissibleSignalExitSpeed((SignalHead)_fromSignal);
+                } else {
+                    speed = getPermissibleSignalExitSpeed((SignalMast)_fromSignal);
+                }
+            }
+        } else if (block.equals(_fromBlock)) {
+            if (_toSignal!=null) {
+                if (_toSignal instanceof SignalHead) {
+                    speed = getPermissibleSignalExitSpeed((SignalHead)_toSignal);
+                } else {
+                    speed = getPermissibleSignalExitSpeed((SignalMast)_toSignal);
+                }
+            }
+        } else {
+            log.error("Block \""+block.getDisplayName()+"\" is not in Portal \""+_portalName+"\".");
         }
-        if (log.isDebugEnabled()) log.debug(signal.getDisplayName()+" has speed "+speed+" from appearance "+
-                                                signal.getAppearanceName(appearance)); 
+        // no signals, proceed at recorded speed
         return speed;
     }
 
-    private String getPermissibleSpeedFromSignal(SignalMast signal) {
+
+    private String getPermissibleSignalEntranceSpeed(SignalHead signal) {
+        int appearance = signal.getAppearance();
+        String speed = Warrant.getSpeedMap().getAppearanceSpeed(signal.getAppearanceName(appearance));
+        if (speed==null) {
+            log.error("SignalHead \""+ signal.getDisplayName()+"\" has no speed specified for appearance \""+
+                            signal.getAppearanceName(appearance)+"\"! - Restricting Movement!");
+            speed = "Restricted";
+        }
+        if (log.isDebugEnabled()) log.debug(signal.getDisplayName()+" has speed notch= "+speed+" from appearance \""+
+                                                signal.getAppearanceName(appearance)+"\""); 
+        return speed;
+    }
+
+    private String getPermissibleSignalEntranceSpeed(SignalMast signal) {
         String aspect = signal.getAspect();
         String speed = Warrant.getSpeedMap().getAspectSpeed(aspect, signal.getSignalSystem());
         if (speed==null) {
-            log.info("SignalMast \""+ signal.getDisplayName()+"\" has no speed specified for aspect "+
-                                                aspect+"! - Restricting Movement!");
+            log.error("SignalMast \""+ signal.getDisplayName()+"\" has no speed specified for aspect \""+
+                                                aspect+"\"! - Restricting Movement!");
             speed = "Restricted";
         }
-        if (log.isDebugEnabled()) log.debug(signal.getDisplayName()+" has speed= "+speed+" from aspect "+aspect);
+        if (log.isDebugEnabled()) log.debug(signal.getDisplayName()+" has speed notch= "+speed+
+        			" from aspect \""+aspect+"\"");
+        return speed;
+    }
+    
+    private String getPermissibleSignalExitSpeed(SignalHead signal) {
+        int appearance = signal.getAppearance();
+        String speed = Warrant.getSpeedMap().getAppearanceSpeed(signal.getAppearanceName(appearance));
+        if (speed==null) {
+            log.error("SignalHead \""+ signal.getDisplayName()+"\" has no (exit) speed specified for appearance \""+
+                            signal.getAppearanceName(appearance)+"\"! - Restricting Movement!");
+            speed = "Restricted";
+        }
+        if (log.isDebugEnabled()) log.debug(signal.getDisplayName()+" has exit speed notch= "+speed+
+        		" from appearance \""+signal.getAppearanceName(appearance)+"\""); 
+        return speed;
+    }
+
+    private String getPermissibleSignalExitSpeed(SignalMast signal) {
+        String aspect = signal.getAspect();
+        String speed = Warrant.getSpeedMap().getAspectExitSpeed(aspect, signal.getSignalSystem());
+        if (speed==null) {
+            log.error("SignalMast \""+ signal.getDisplayName()+"\" has no exit speed specified for aspect \""+
+                                                aspect+"\"! - Restricting Movement!");
+            speed = "Restricted";
+        }
+        if (log.isDebugEnabled()) log.debug(signal.getDisplayName()+" has exit speed notch= "+
+        				speed+" from aspect \""+aspect+"\"");
         return speed;
     }
     

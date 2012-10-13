@@ -32,6 +32,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     private Warrant _warrant;
     private Sensor 	_waitSensor;
     private int		_sensorWaitState;
+//    private long	_signalOffset;		// milli-seconds to advance a speed change
+//    private String	_signalSpeedType;
+//    private boolean _signalSpeedChange;
 
     final ReentrantLock _lock = new ReentrantLock();
 
@@ -40,6 +43,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         _idxCurrentCommand = -1;
         _throttle = throttle;
         _syncIdx = 0;
+//        _signalSpeedType = "Normal";
         setSpeedStepMode(_throttle.getSpeedStepMode());
     }
 
@@ -60,8 +64,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                         wait(time);
                     }
                     if (_abort) { break; }
-                    if (!command.equals("SET SENSOR") && !command.equals("WAIT SENSOR")) {
-                        _syncIdx = _warrant.getIndexOfBlock(ts.getBlockName());
+                    if (!command.equals("SET SENSOR") && !command.equals("WAIT SENSOR")
+                    			&& !command.equals("RUN WARRANT")) {
+                        _syncIdx = _warrant.getIndexOfBlock(ts.getBlockName(), _warrant._idxCurrentOrder);
                         // Having waited, time=ts.getTime(), so blocks should agree.  if not,
                         // wait for train to arrive at block and send sync notification.
                         // note, blind runs cannot detect entrance.
@@ -122,6 +127,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     setSensor(ts.getBlockName(), ts.getValue());
                 } else if (command.equals("WAIT SENSOR")) {
                     getSensor(ts.getBlockName(), ts.getValue());
+                } else if (command.equals("RUN WARRANT")) {
+                    runWarrant(ts);
                 }
                 _warrant.fireRunStatus("Command", Integer.valueOf(_idxCurrentCommand-1), Integer.valueOf(_idxCurrentCommand));
                 et = System.currentTimeMillis()-et;
@@ -192,6 +199,16 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         ThrottleRamp ramp = new ThrottleRamp(endSpeedType, waitTime);
         new Thread(ramp).start();
     }
+
+    /**
+    * Set up a signal speed change to occur "advanceTime" milli-seconds before the next
+    * block ("NOOP") synchronization.
+    *
+    synchronized public void setSignalSpeedChange(String signalSpeedType, long advanceTime) {
+    	_signalSpeedType = signalSpeedType;
+    	_signalOffset = advanceTime;
+    	_signalSpeedChange = true;
+    }*/
 
     /**
     * Get the last normal speed setting.  Regress through commends, if necessary.  
@@ -462,6 +479,43 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
 		}
     }
+
+    /**
+     * Wait for Sensor state event 
+     * @param sensorName
+     * @param action
+     */
+    private void runWarrant(ThrottleSetting ts) {
+    	Warrant w = InstanceManager.warrantManagerInstance().getWarrant(ts.getBlockName());
+    	if (w==null) {
+            log.warn("Warrant \""+ts.getBlockName()+"\" not found.");
+            return;
+    	}
+    	int num = 0;
+        try {
+            num = Integer.parseInt(ts.getValue());
+        } catch (NumberFormatException nfe) {
+        	log.error("Could not parse \""+ts.getValue()+"\". "+nfe);
+        }
+    	if (num==0) {
+            log.info("Warrant \""+_warrant.getDisplayName()+"\" completed last launch of \""+ts.getBlockName()+"\".");
+            return;
+    	}
+    	if (num>0) {
+        	num--;
+            ts.setValue(Integer.toString(num));    		
+    	}
+        String msg = null;
+        if (_warrant.equals(w)) {
+            _idxCurrentCommand = -1;
+        	w.startupWarrant();
+        } else {
+            msg = w.setRunMode(Warrant.MODE_RUN, null, null, null, false);        	
+        }
+        if (msg!=null) {
+        	log.error("Continuing warrant lanch from \""+_warrant.getDisplayName()+"\": "+msg);        	
+        }
+    }
     
     class ThrottleRamp implements Runnable {
         String endSpeedType;
@@ -486,7 +540,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 float endSpeed = getLastSpeedCommand(_idxCurrentCommand);
                 endSpeed = modifySpeed(endSpeed, endSpeedType);
                 String old = _speedType;
-                _speedType = endSpeedType;   // transistion
+                _speedType = endSpeedType;   // transition
                 if (log.isDebugEnabled()) log.debug("rampSpeed from \""+old+"\" to \""+endSpeedType+
                 					"\" on warrant "+_warrant.getDisplayName());
                 float speed = _throttle.getSpeedSetting();
@@ -554,6 +608,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 _speedOverride = false;
                 _lock.unlock();
             }
+            if (log.isDebugEnabled()) log.debug("rampSpeed complete to \""+endSpeedType+
+					"\" on warrant "+_warrant.getDisplayName());
             synchNotify(null);
         }
     }

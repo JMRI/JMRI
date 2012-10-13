@@ -112,15 +112,11 @@ public class BlockOrder  {
     protected String getPermissibleEntranceSpeed() {
         Portal portal = _block.getPortalByName(getEntryName());
         if (portal!=null) {
-            String speed = portal.getPermissibleSpeedForBlock(_block);
-            if (speed==null) {
-                log.error("getPermissibleEntranceSpeed, speed is null! "+this.toString());
-                speed = "Normal";
-            }
-            return speed;
+            return portal.getPermissibleEntranceSpeed(_block);
         }
-        log.warn("getPermissibleEntranceSpeed, no entry portal! "+this.toString());
-        return "Normal";
+        // OK if this is first block
+        //log.warn("getPermissibleEntranceSpeed, no entry portal! "+this.toString());
+        return null;
     }
 
     protected long getEntranceSpeedChangeWait() {
@@ -130,6 +126,17 @@ public class BlockOrder  {
         }
         return 0;
     }
+    
+    protected String getPermissibleExitSpeed() {
+        Portal portal = _block.getPortalByName(getEntryName());
+        if (portal!=null) {
+            return portal.getPermissibleExitSpeed(_block);
+        }
+        // OK if this is first block
+//        log.warn("getPermissibleExitSpeed, no entry portal! "+this.toString());
+        return null;
+    }
+
 
     protected jmri.NamedBean getSignal() {
         return _block.getPortalByName(getEntryName()).getSignalProtectingBlock(_block);

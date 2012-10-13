@@ -93,7 +93,7 @@ public class EcosLocoAddress {
         setDirection(getDirection(line));
     }
     
-    private void setDirection(boolean dir){
+    protected void setDirection(boolean dir){
         boolean olddir = direction;
         direction = dir;
         firePropertyChange("Direction", olddir, direction);

@@ -93,7 +93,7 @@ public class SignalSpeedMap {
             List<Element> list = root.getChild("aspectSpeeds").getChildren();
             for (int i = 0; i < list.size(); i++) {
                 String name = list.get(i).getName();
-                Float speed = 0f;
+                Float speed = Float.valueOf(0f);
                 try {
                     speed = new Float(list.get(i).getText());
                 } catch (NumberFormatException nfe) {
@@ -132,6 +132,14 @@ public class SignalSpeedMap {
         return (String)system.getProperty(aspect, "speed");
     }
     /**
+    * @return speed from SignalMast Aspect name
+    */
+    public String getAspectExitSpeed(String aspect, jmri.SignalSystem system) {
+        if (log.isDebugEnabled()) log.debug("getAspectExitSpeed: aspect="+aspect+", speed2="+
+                                            system.getProperty(aspect, "speed2"));
+        return (String)system.getProperty(aspect, "speed2");
+    }
+    /**
     * @return speed from SignalHead Appearance name
     */
     public String getAppearanceSpeed(String name) throws NumberFormatException {
@@ -156,14 +164,18 @@ public class SignalSpeedMap {
             //java.util.Enumeration<String> e = _table.keys();
             throw new IllegalArgumentException("attempting to get speed from invalid name: "+name);
         }
-        return _table.get(name);
+        Float speed = _table.get(name);
+        if (speed==null) {
+        	return 0.0f;
+        }        	
+        return speed.floatValue();
     }
     
     public String getNamedSpeed(float speed){
         java.util.Enumeration<String> e = _table.keys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
-            if(_table.get(key)==speed){
+            if(_table.get(key)==Float.valueOf(speed)) {
                 return key;
             }
         }

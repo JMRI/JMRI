@@ -1225,7 +1225,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     @Override
     public String getClassDescription() { return rb.getString("TitleTurnoutTable"); }
     
-    public static class BeanBoxRenderer extends JmriBeanComboBox implements TableCellRenderer {
+    static class BeanBoxRenderer extends JmriBeanComboBox implements TableCellRenderer {
         public BeanBoxRenderer() {
             super(InstanceManager.sensorManagerInstance());
             setFirstItemBlank(true);
@@ -1248,7 +1248,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
     }
     
-    public class BeanComboBoxEditor extends DefaultCellEditor {
+    static class BeanComboBoxEditor extends DefaultCellEditor {
         public BeanComboBoxEditor(JmriBeanComboBox beanBox) {
             super(beanBox);
         }

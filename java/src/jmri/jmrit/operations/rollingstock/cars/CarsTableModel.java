@@ -151,6 +151,29 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     		fireTableDataChanged();
     }
     
+    public String getSortByName(){
+    	switch(_sort) {
+    	case SORTBYNUMBER: return rb.getString("Number");
+    	case SORTBYROAD: return rb.getString("Road");
+    	case SORTBYTYPE: return rb.getString("Type");
+    	case SORTBYCOLOR: return rb.getString("Color");
+    	case SORTBYLOAD: return rb.getString("Load");
+    	case SORTBYKERNEL: return rb.getString("Kernel");
+    	case SORTBYLOCATION: return rb.getString("Location");
+    	case SORTBYDESTINATION: return rb.getString("Destination");
+    	case SORTBYTRAIN: return rb.getString("Train");
+    	case SORTBYFINALDESTINATION: return rb.getString("FinalDestination");
+    	case SORTBYRWE: return rb.getString("ReturnWhenEmpty");
+    	case SORTBYMOVES: return rb.getString("Moves");
+    	case SORTBYBUILT: return rb.getString("Built");
+    	case SORTBYOWNER: return rb.getString("Owner");
+    	case SORTBYVALUE: return Setup.getValueLabel();
+    	case SORTBYRFID: return Setup.getRfidLabel();
+    	case SORTBYWAIT: return rb.getString("Wait");
+    	default: return "Error";
+    	}
+    }
+    
     String _roadNumber = "";
     int _index = 0;
     

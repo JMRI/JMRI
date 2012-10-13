@@ -1685,7 +1685,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         String property = e.getPropertyName();
         if (log.isDebugEnabled()) log.debug("propertyChange \""+property+
                                             "\" old= "+e.getOldValue()+" new= "+e.getNewValue()+
-                                            " source= "+e.getSource());
+                                            " source= "+e.getSource().getClass().getName());
         if (property.equals("RouteSearch"))  {
             _searchStatus.setText(java.text.MessageFormat.format(rb.getString("FinderStatus"),
                            new Object[] {e.getOldValue(), e.getNewValue()}));
@@ -2145,13 +2145,15 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                     } else if ("NOOP".equals(cmd)) {
                         msg = java.text.MessageFormat.format(
                                 rb.getString("cannotEnterNoop"), (String)value); 
-                    } else if (ts.getCommand().equals("NoOp")) {
+                    } else if (ts.getCommand()!=null && ts.getCommand().equals("NoOp")) {
                         msg = java.text.MessageFormat.format(
                                 rb.getString("cannotChangeNoop"), (String)value); 
                     } else if ("SENSOR".equals(cmd) || "SET SENSOR".equals(cmd) || "SET".equals(cmd)) {
                         ts.setCommand("Set Sensor");
                     } else if ("WAIT SENSOR".equals(cmd) || "WAIT".equals(cmd)) {
                         ts.setCommand("Wait Sensor");
+                    } else if ("RUN WARRANT".equals(cmd)) {
+                        ts.setCommand("Run Warrant");                    	
                     } else {
                         msg = java.text.MessageFormat.format(
                                 rb.getString("badCommand"), (String)value); 
@@ -2224,6 +2226,14 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                         } else {
                             msg = rb.getString("badSensorCommand");
                         }
+                    } else if ("RUN WARRANT".equals(cmd)) {
+                        try {
+                            int num = Integer.parseInt((String)value);
+                            ts.setValue((String)value);
+                        } catch (NumberFormatException nfe) {
+                        	msg  = java.text.MessageFormat.format(
+                                    rb.getString("badValue"), (String)value, cmd);
+                        }
                     }
                      ts.setBlockName(getPreviousBlockName(row));
                     break;
@@ -2238,13 +2248,26 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                                 msg = java.text.MessageFormat.format(
                                         rb.getString("BadSensor"), (String)value); 
                             }
-                        } catch (NumberFormatException nfe) {
+                        } catch (Exception ex) {
                             msg = java.text.MessageFormat.format(
-                                    rb.getString("BadSensor"), (String)value); 
+                                    rb.getString("BadSensor"), (String)value) + ex; 
                         }
                     } else if ("NOOP".equals(cmd)) {
                         msg = java.text.MessageFormat.format(
                                 rb.getString("cannotChangeBlock"), (String)value); 
+                    } else if ("RUN WARRANT".equals(cmd)) {
+                        try {
+                            Warrant w = InstanceManager.warrantManagerInstance().getWarrant((String)value);
+                            if (w != null) {
+                                ts.setBlockName((String)value);
+                            } else {
+                                msg = java.text.MessageFormat.format(
+                                        rb.getString("BadWarrant"), (String)value); 
+                            }
+                        } catch (Exception ex) {
+                        	msg  = java.text.MessageFormat.format(
+                                    rb.getString("BadWarrant"), (String)value, cmd)+ex;
+                        }
                     } else {
                     	String name = getPreviousBlockName(row);
                     	if (!name.equals((String)value)) {

@@ -80,7 +80,6 @@ public class EcosLocoTableAction extends AbstractTableAction {
         adaptermemo = memo;
         locoManager = adaptermemo.getLocoAddressManager();
         rosterAttribute = adaptermemo.getPreferenceManager().getRosterAttribute();
-        
     }
     
     protected EcosLocoAddress getByEcosObject(String object) {return locoManager.getByEcosObject(object);}
@@ -127,13 +126,10 @@ public class EcosLocoTableAction extends AbstractTableAction {
                 if (e.getPropertyName().equals("length")) {
                     // a new jmri.jmrix.ecos.EcosLocoAddressManager is available in the manager
                     updateNameList();
-                    //log.debug("Table changed length to "+ecosObjectIdList.size());
                     fireTableDataChanged();
                 } else if (matchPropertyName(e)) {
                     // a value changed.  Find it, to avoid complete redraw
                     String object = ((jmri.jmrix.ecos.EcosLocoAddress)e.getSource()).getEcosObject();
-                    //if (log.isDebugEnabled()) log.debug("Update cell "+ecosObjectIdList.indexOf(name)+","
-                     //                                   +VALUECOL+" for "+name);
                     // since we can add columns, the entire row is marked as updated
                     int row = ecosObjectIdList.indexOf(object);
                     fireTableRowsUpdated(row, row);
@@ -148,7 +144,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
             public void setValueAt(Object value, int row, int col) {
                 if (col==COMMENTCOL) {
                     RosterEntry re = null;
-                      String ecosObjectNo = ecosObjectIdList.get(row);
+                    String ecosObjectNo = ecosObjectIdList.get(row);
                     if (value==null){
                         return;
                     } else {
@@ -495,7 +491,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
         return "package.jmri.jmrix.ecos.ecosLocoTable";
     }
     
-    public static class RosterBoxRenderer extends GlobalRosterEntryComboBox implements TableCellRenderer {
+    static class RosterBoxRenderer extends GlobalRosterEntryComboBox implements TableCellRenderer {
         public RosterBoxRenderer(RosterEntry re) {
             super();
             setNonSelectedItem(" ");
@@ -523,7 +519,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
         }
     }
     
-    public class RosterComboBoxEditor extends DefaultCellEditor {
+    static class RosterComboBoxEditor extends DefaultCellEditor {
         public RosterComboBoxEditor(GlobalRosterEntryComboBox cb) {
             super(cb);
         }
