@@ -118,6 +118,7 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
             _dataChars[i] = d[i];
         }
     }
+    public int[] getData() { return _dataChars; }
     
     // CAN header
     public int getHeader() { return _header; }
