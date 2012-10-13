@@ -145,6 +145,7 @@
 
 <!ATTLIST tab enabled					(true | false ) "false"> 
 <!ATTLIST manifest truncate				(true | false ) "false"> 
+<!ATTLIST manifest useDepartureTime		(true | false ) "false"> 
 <!ATTLIST manifest useEditor			(true | false ) "false"> 
 <!ATTLIST manifest hazardousMsg			CDATA #IMPLIED> 
 
