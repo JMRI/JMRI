@@ -85,6 +85,7 @@ public class PrintOptionFrame extends OperationsFrame{
 	JCheckBox use12hrFormatCheckBox = new JCheckBox(rb.getString("12hrFormat"));
 	JCheckBox printValidCheckBox = new JCheckBox(rb.getString("PrintValid"));
 	JCheckBox truncateCheckBox = new JCheckBox(rb.getString("Truncate"));
+	JCheckBox departureTimeCheckBox = new JCheckBox(rb.getString("DepartureTime"));
 	
 	
 	// text field
@@ -157,6 +158,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		use12hrFormatCheckBox.setToolTipText(rb.getString("Use12hrFormatTip"));
 		printValidCheckBox.setToolTipText(rb.getString("PrintValidTip"));
 		truncateCheckBox.setToolTipText(rb.getString("TruncateTip"));
+		departureTimeCheckBox.setToolTipText(rb.getString("DepartureTimeTip"));
 		switchListRealTimeCheckBox.setToolTipText(rb.getString("RealTimeTip"));
 		switchListAllTrainsCheckBox.setToolTipText(rb.getString("AllTrainsTip"));
 		switchListPageCheckBox.setToolTipText(rb.getString("PageTrainTip"));
@@ -369,6 +371,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		pManifestComment.add(printRouteCommentsCheckBox);
 		pManifestComment.add(printLoadsEmptiesCheckBox);
 		pManifestComment.add(use12hrFormatCheckBox);
+		pManifestComment.add(departureTimeCheckBox);
 		pManifestComment.add(printTimetableNameCheckBox);
 		pManifestComment.add(truncateCheckBox);
 				
@@ -476,6 +479,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		use12hrFormatCheckBox.setSelected(Setup.is12hrFormatEnabled());
 		printValidCheckBox.setSelected(Setup.isPrintValidEnabled());
 		truncateCheckBox.setSelected(Setup.isTruncateManifestEnabled());
+		departureTimeCheckBox.setSelected(Setup.isUseDepartureTimeEnabled());
 		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
 		editManifestCheckBox.setSelected(Setup.isManifestEditorEnabled());
 		
@@ -691,6 +695,7 @@ public class PrintOptionFrame extends OperationsFrame{
 			Setup.setPrintValidEnabled(printValidCheckBox.isSelected());
 			Setup.setPrintTimetableNameEnabled(printTimetableNameCheckBox.isSelected());
 			Setup.setTruncateManifestEnabled(truncateCheckBox.isSelected());
+			Setup.setUseDepartureTimeEnabled(departureTimeCheckBox.isSelected());
 			Setup.setManifestEditorEnabled(editManifestCheckBox.isSelected());
 			Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
 			OperationsSetupXml.instance().writeOperationsFile();
