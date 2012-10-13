@@ -136,6 +136,7 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
             _dataChars[i] = d[i];
         }
     }
+    public int[] getData() { return _dataChars; }
     
     
     // CAN header

@@ -63,7 +63,7 @@ public class JmriConnection {
      */
     public void sendMessage(String message) throws IOException {
     	if (this.dataOutputStream != null) {
-    		this.dataOutputStream.writeBytes(message);
+    		this.dataOutputStream.writeBytes(message + "\n\r");
     	} else if (this.webSocketConnection != null) {
     		this.webSocketConnection.sendMessage(message);
     	}

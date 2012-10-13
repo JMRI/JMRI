@@ -6,18 +6,24 @@ package jmri.web.servlet.panel;
 
 import java.io.IOException;
 import java.util.List;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import jmri.jmrit.display.Editor;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServer;
+
 import org.apache.log4j.Logger;
 import org.jdom.Attribute;
 import org.jdom.Element;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
  *
@@ -25,9 +31,7 @@ import org.jdom.Element;
  */
 abstract class AbstractPanelServlet extends HttpServlet {
 
-    /**
-	 * 
-	 */
+	protected ObjectMapper mapper;
 	private static final long serialVersionUID = 3134679703461026038L;
 	protected static final String JSON_CONTENT_TYPE = "application/json; charset=utf-8";
 	protected static final String XML_CONTENT_TYPE = "application/xml; charset=utf-8";
@@ -38,6 +42,8 @@ abstract class AbstractPanelServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
+        this.mapper = new ObjectMapper();
+        this.mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
     }
 
     @Override
@@ -114,4 +120,5 @@ abstract class AbstractPanelServlet extends HttpServlet {
 
         }
     }
+    
 }

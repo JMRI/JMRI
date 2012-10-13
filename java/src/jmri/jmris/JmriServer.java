@@ -173,7 +173,7 @@ public class JmriServer {
             } catch (java.lang.NullPointerException ex) {
                 // When we get an IO exception here, we're done with this client
                 if (log.isDebugEnabled()) {
-                    log.debug("Client Disconnect");
+                    log.debug("Client Disconnect", ex);
                 }
                 // Unregister with the server
                 removeClient(this);
