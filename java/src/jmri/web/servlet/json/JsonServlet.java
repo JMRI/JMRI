@@ -37,6 +37,7 @@ public class JsonServlet extends WebSocketServlet {
 	private ObjectMapper mapper;
 	
 	private final Set<JsonWebSocket> sockets = new CopyOnWriteArraySet<JsonWebSocket>();
+	private static ResourceBundle server = ResourceBundle.getBundle("jmri.jmris.json.JsonServer");
     private static ResourceBundle html = ResourceBundle.getBundle("jmri.web.server.Html");
     private static ResourceBundle wsHtml = ResourceBundle.getBundle("jmri.web.servlet.json.JsonHtml");
 	private static Logger log = Logger.getLogger(JsonServlet.class);
@@ -159,7 +160,9 @@ public class JsonServlet extends WebSocketServlet {
 		public void onOpen(Connection cnctn) {
 			this.wsConnection = cnctn;
 			this.jmriConnection = new JmriConnection(this.wsConnection);
-			this.wsConnection.setMaxIdleTime(0); // default is 10 seconds (10000 milliseconds) set to 0 to disable timeouts
+			//TODO: make this settable
+			// default timeout is 15 seconds (15000 milliseconds); set to 0 to disable timeouts
+			this.wsConnection.setMaxIdleTime(Integer.parseInt(server.getString("JsonServerTimeout")));
 			this.mapper = new ObjectMapper();
 			this.handler = new JsonClientHandler(this.jmriConnection);
 			sockets.add(this);

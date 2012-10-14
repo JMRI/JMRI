@@ -18,6 +18,7 @@ import jmri.util.zeroconf.ZeroConfService;
 public class JmriServer {
 
     protected int portNo = 3000; // Port to listen to for new clients.
+    protected int timeout = 0; // Timeout in milliseconds (0 = no timeout).
     protected ServerSocket connectSocket;
     protected ZeroConfService service;
     private Thread listenThread = null;
@@ -36,18 +37,23 @@ public class JmriServer {
         this(3000);
     }
 
-    // Create a new server using a given port
+    // Create a new server using a given port and no timeout
     public JmriServer(int port) {
-        super();
+    	this(port, 0);
+    }
+
+    // Create a new server using a given port with a timeout
+    // A timeout of 0 is infinite
+    public JmriServer(int port, int timeout) {
+    	super();
         // Try registering the server on the given port
-        try {
-            connectSocket = new ServerSocket(port);
-        } catch (IOException e) {
-            log.error("Failed to connect to port " + port);
-        }
-
-        this.portNo = port;
-
+    	try {
+    		this.connectSocket = new ServerSocket(port);
+    	} catch (IOException e) {
+    		log.error("Failed to connect to port " + port);
+    	}
+    	this.portNo = port;
+    	this.timeout = timeout;
     }
 
     // Maintain a vector of connected clients
@@ -103,6 +109,7 @@ public class JmriServer {
             try {
                 while (running) {
                     Socket clientSocket = listenSocket.accept();
+                    clientSocket.setSoTimeout(timeout);
                     if (log.isDebugEnabled()) {
                         log.debug(" Client Connected from IP " + clientSocket.getInetAddress() + " port " + clientSocket.getPort());
                     }

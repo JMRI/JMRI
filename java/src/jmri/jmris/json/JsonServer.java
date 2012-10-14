@@ -30,19 +30,18 @@ public class JsonServer extends JmriServer {
 
 	public static JmriServer instance() {
 		if (_instance == null) {
-			int port = Integer.parseInt(rb.getString("JsonServerPort"));
-			_instance = new JsonServer(port);
+			_instance = new JsonServer();
 		}
 		return _instance;
 	}
 
 	// Create a new server using the default port
 	public JsonServer() {
-		this(Integer.parseInt(rb.getString("JsonServerPort")));
+		this(Integer.parseInt(rb.getString("JsonServerPort")), Integer.parseInt(rb.getString("JsonServerTimeout")));
 	}
 
-	public JsonServer(int port) {
-		super(port);
+	public JsonServer(int port, int timeout) {
+		super(port, timeout);
 		log.info("JMRI JsonServer started on port " + port);
 	}
 
@@ -53,10 +52,8 @@ public class JsonServer extends JmriServer {
 		JsonClientHandler handler = new JsonClientHandler(new JmriConnection(outStream));
 
 		// Start by sending a welcome message
-		// TODO: use a settable constant
-		handler.sendHello(10);
+		handler.sendHello(this.timeout);
 
-		// TODO: implement heartbeat-based timer
 		while (true) {
 			scanner.skip("[\r\n]*");// skip any stray end of line characters.
 			// Read the command from the client

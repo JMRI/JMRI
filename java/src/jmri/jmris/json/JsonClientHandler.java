@@ -50,6 +50,10 @@ public class JsonClientHandler {
 		if (log.isDebugEnabled()) {
 			log.debug("Received from client: " + string);
 		}
+		// silently accept '*' as a single-character heartbeat without replying to client
+		if (string.equals("*")) {
+			return;
+		}
 		try {
 			JsonNode root = this.mapper.readTree(string);
 			String type = root.path("type").asText();
@@ -123,7 +127,7 @@ public class JsonClientHandler {
 		root.put("type", "hello");
 		ObjectNode data = root.putObject("data");
 		data.put("JMRI", jmri.Version.name());
-		data.put("heartbeat", heartbeat * 0.8);
+		data.put("heartbeat", Math.round(heartbeat * 0.9f));
 		data.put("railroad", WebServerManager.getWebServerPreferences().getRailRoadName());
 		this.connection.sendMessage(this.mapper.writeValueAsString(root));
 	}
