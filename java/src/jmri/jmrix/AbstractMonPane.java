@@ -277,6 +277,14 @@ public abstract class AbstractMonPane extends JmriPanel  {
     }
 
     /**
+     * Sets the display window to fixed width font, so that 
+     * e.g. columns line up
+     */
+    public void setFixedWidthFont() {
+        monTextPane.setFont( new java.awt.Font( "Monospaced", java.awt.Font.PLAIN, monTextPane.getFont().getSize() ) );
+    }
+    
+    /**
      * Define help menu for this window.
      * <p>
      * By default, provides a generic help page
