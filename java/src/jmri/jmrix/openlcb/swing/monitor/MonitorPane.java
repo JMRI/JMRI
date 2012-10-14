@@ -44,6 +44,8 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         
         aliasMap = memo.get(org.openlcb.can.AliasMap.class);
         messageBuilder = new MessageBuilder(aliasMap);
+        
+        setFixedWidthFont();
     }
     
     public String getTitle() {
@@ -108,26 +110,29 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
             }
         } else {
             // control type
+            String alias = "0x"+Integer.toHexString(header&0xFFF).toUpperCase();
             if ((header & 0x07000000) == 0x00000000) {
+                int[] data = new int[len];
+                System.arraycopy(content, 0, data, 0, len);
                 switch (header & 0x00FFF000) {
                     case 0x00700000 :
-                        formatted = prefix+": RID frame "+raw;
+                        formatted = prefix+": Alias "+alias+" RID frame";
                         break;
                     case 0x00701000 :
-                        formatted = prefix+": AMD frame "+raw;
+                        formatted = prefix+": Alias "+alias+" AMD frame for node "+org.openlcb.Utilities.toHexDotsString(data);
                         break;
                     case 0x00702000 :
-                        formatted = prefix+": AME frame "+raw;
+                        formatted = prefix+": Alias "+alias+" AME frame for node "+org.openlcb.Utilities.toHexDotsString(data);
                         break;
                     case 0x00703000 :
-                        formatted = prefix+": AMR frame "+raw;
+                        formatted = prefix+": Alias "+alias+" AMR frame for node "+org.openlcb.Utilities.toHexDotsString(data);
                         break;
                     default :
-                        formatted = prefix+": CAN control frame "+raw;
+                        formatted = prefix+": Unknown CAN control frame: "+raw;
                         break;
                 }
             } else {
-                formatted = prefix+": CID "+((header&0x7000000)/0x1000000)+" frame for alias "+Integer.toHexString(header&0xFFF).toUpperCase();
+                formatted = prefix+": Alias "+alias+" CID "+((header&0x7000000)/0x1000000)+" frame";
             }
         }
         nextLine(formatted+"\n", raw);
@@ -135,7 +140,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
     
     public synchronized void message(CanMessage l) {  // receive a message and log it
         if (log.isDebugEnabled()) log.debug("Message: "+l.toString());
-        format("M", l.isExtended(), l.getHeader(), l.getNumDataElements(), l.getData());
+        format("S", l.isExtended(), l.getHeader(), l.getNumDataElements(), l.getData());
     }
 
     public synchronized void reply(CanReply l) {  // receive a reply and log it
