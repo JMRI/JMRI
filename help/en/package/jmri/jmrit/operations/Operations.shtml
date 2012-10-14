@@ -714,7 +714,7 @@ different format for your switch lists.
    <A NAME="ManifestComments"></A>
 <H3>Manifests Options</H3>
 
-   The program allows you to customize your train manifest to your liking. There are seven optional
+   The program allows you to customize your train manifest to your liking. There are eight optional
    checkboxes and their functions are described below. 
    <P>
    The "Print Valid" checkbox causes the program to print date and time the train was
@@ -726,8 +726,10 @@ different format for your switch lists.
     manifest if the "Location" and "Route" checkboxes are selected respectively. If you want the
     manifest to show how many car loads and empties are in the train, select the "Loads and Empties"
     checkbox. You can also use a 12 hour rather than a 24 hour clock format on your manifests and
-    switch lists. Selecting the "Show Timetable" prints which train <A HREF="#Timetable">timetable</A> you are
-    using when building your trains.
+    switch lists. The manifest normally shows the estimated arrival time for the train at each
+    location worked by the train, selecting the "Departure Time" checkbox changes the format to
+    showing the departure time. Selecting the "Show Timetable" prints which train <A
+     HREF="#Timetable">timetable</A> you are using when building your trains.
    </P>
    <P>The last option is "Truncate" and when selected will cause the program to reduce the
     amount of information printed when setting out or picking up a car at a location that also has a
