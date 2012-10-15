@@ -262,16 +262,13 @@ public class NceThrottle extends AbstractThrottle{
 		
 		// The NCE USB doesn't support the NMRA packet format
 		if (sendA2command) {
-			
 	        byte[] bl;
 	        int value;
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())
 				locoAddr += 0xC000;
-            value = (int)((126-1)*speed);     // -1 for rescale to avoid estop
-            if (value>0) value = value+1;  // skip estop
+            value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
             if (value>126) value = 126;    // max possible speed, 127 can crash PowerCab! 
-			
 			// emergency stop?
 			if (value < 0){
 			
