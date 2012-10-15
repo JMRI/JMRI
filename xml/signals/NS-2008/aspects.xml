@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>NS-2008</name>
+  <date>2008</date>
+  <reference>As described in the January 2008 version of the NS Operating Rules Book - 271-272'.</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2012</year><year>2012</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+        <email>jake@physics.berkeley.edu</email>
+    </author>    
+    <author>
+        <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
+        <email>dick@rr-cirkits.com</email>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2012-10-09</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspects>
+
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule N281</rule>
+      <indication>Proceed.at authorized speed</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach Limited</name>
+      <rule>Rule N281-B</rule>
+      <indication>Proceed approaching the next signal at Limited Speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Limited</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Limited Clear</name>
+      <rule>Rule N281-C</rule>
+      <indication>Proceed at Limited Speed until entire train clears all interlocking, controlled point or spring switches; then proceed at authorized speed.</indication>
+      <speed>Limited</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach Medium</name>
+      <rule>Rule N282</rule>
+      <indication>Proceed, approaching the next signal at Medium Speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Advance Approach</name>
+      <rule>Rule N282-A</rule>
+      <indication>Proceed prepared to stop at the second signal. Trains exceeding Limited Speed must begin reduction to Limited Speed as soon as engine passes the Advance Approach signal.</indication>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Medium Clear</name>
+      <rule>Rule N283</rule>
+      <indication>Proceed at Medium Speed until entire train clears all interlocking, controlled point or spring switches; then proceed at authorized speed.</indication>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Medium Approach Medium</name>
+      <rule>Rule N283-A</rule>
+      <indication>Proceed at Medium Speed until entire train clears all interlocking, controlled point or spring switches, then approach the next signal at Medium Speed. Trains exceeding Medium Speed must begin reduction to Medium Speed as soon as the Medium Approach Medium signal is clearly visible.</indication>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach Slow</name>
+      <rule>Rule N284</rule>
+      <indication>Proceed, approaching next signal at Slow Speed. Trains exceeding Medium Speed must at once reduce to that speed.</indication>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule N285</rule>
+      <indication>Proceed prepared to stop at the next signal. Train exceeding Medium Speed must at once reduce to that speed.</indication>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Normal</route>
+    </aspect>
+
+    <aspect>
+      <name>Medium Approach</name>
+      <rule>Rule N286</rule>
+      <indication>Proceed prepared to stop at the next signal. Trains exceeding Medium Speed must begin reduction to Medium Speed as soon as the Medium Approach signal is clearly visible.</indication>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Slow Clear</name>
+      <rule>Rule N287</rule>
+      <indication>Proceed at Slow Speed until entire train clears all interlocking, controlled point or spring switches, then proceed at authorized speed.</indication>
+      <speed>Slow</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Slow Approach</name>
+      <rule>Rule N288</rule>
+      <indication>Proceed prepared to stop at the next signal. Slow Speed applies until entire train clears all interlocking, controlled point or spring switches, then Medium Speed applies.</indication>
+      <speed>Slow</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
+    </aspect>
+
+    <aspect>
+      <name>Restricting</name>
+      <rule>Rule N290</rule>
+      <indication>Proceed at Slow Speed until entire train clears all interlocking, controlled point or spring switches, then proceed at authorized speed.</indication>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
+      <name>Stop Signal</name>
+      <rule>Rule N292</rule>
+      <indication>Stop.</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+    </aspect>
+
+  </aspects>
+
+  <appearancefiles>
+    <appearancefile href="appearance-CLS-3-3-3-hi.xml"/>
+    <appearancefile href="appearance-CLS-3-3-hi.xml"/>
+    <appearancefile href="appearance-CLS-3-3-lo.xml"/>
+    <appearancefile href="appearance-CLS-3-hi.xml"/>
+    <appearancefile href="appearance-CLS-3-lo.xml"/>
+  </appearancefiles>
+  
+</aspecttable>
+  
