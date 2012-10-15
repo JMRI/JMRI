@@ -200,8 +200,8 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
     }
     
     static public String getContentDetail(String str){
-        int start=str.indexOf("[")+2;
-        int end=str.indexOf("]")-1;
+        int start=str.indexOf("[")+1;
+        int end=str.indexOf("]");
         return str.substring(start, end);
     }
     

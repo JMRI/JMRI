@@ -405,22 +405,21 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void reply(EcosReply m) {
-        int tmpstart;
+        /*int tmpstart;
         int tmpend;
         int start;
         int end;
         String msg = m.toString();
         String[] lines = msg.split("\n");
-        log.debug("found "+(lines.length)+" response from Ecos");
+        log.debug("found "+(lines.length)+" response from Ecos");*/
         int resultCode = m.getResultCode();
         if (resultCode==0){
             String replyType = m.getReplyType();
             if(replyType.equals("create")){
-                for(int i =1; i<lines.length-1; i++) {
-                    if(lines[i].contains("10 id[")){
-                        start = lines[i].indexOf("[")+1;
-                        end = lines[i].indexOf("]");
-                        String EcosAddr = lines[i].substring(start, end);
+                String[] msgDetails = m.getContents();
+                for (String line: msgDetails) {
+                    if(line.startsWith("10 id[")){
+                        String EcosAddr = EcosReply.getContentDetail(line);
                         objEcosLoco.setEcosObject(EcosAddr);
                         objEcosLocoManager.deregister(objEcosLoco);
                         objEcosLocoManager.register(objEcosLoco);
@@ -433,12 +432,12 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 return;
             }
             
-            if (lines[lines.length-1].contains("<END 0 (NERROR_OK)>")){
+            /*if (lines[lines.length-1].contains("<END 0 (NERROR_OK)>")){
                 //Need to investigate this a bit futher to see what the significance of the message is
                 //we may not have to worry much about it.
                 log.info("Loco has been created on the ECoS Sucessfully.");
                 return;
-            }
+            }*/
             if(m.getEcosObjectId()!=objEcosLoco.getEcosObjectAsInt()){
                 log.debug("message is not for us");
                 return;
@@ -447,31 +446,21 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 //log.debug("The last command was accepted by the ecos");
                 //This might need to use speedstep, rather than speed
                 //This is for standard response to set and request.
-                start = msg.indexOf("[");
-                end = msg.indexOf("]");
-                if (start>0 && end >0) {
-                    tmpstart = msg.indexOf(", ");
-                    tmpend = msg.indexOf("[");
-                    String val;
-                    if (tmpstart>0 && tmpend >0) {
-                        String result = msg.substring(tmpstart+2, tmpend);
-                        if (result.equals("speed")){
-                            //We only check on the last speed message sent, otherwise the software throttle keeps jumpping up and down.
-                            if(speedMessageSent==1){
-                                val = msg.substring(start+1, end);
-                                Float newSpeed = new Float ( floatSpeed(Integer.parseInt(val) ) ) ;
-                                super.setSpeedSetting(newSpeed);
-                            }
-                            speedMessageSent--;
+                String[] msgDetails = m.getContents();
+                for (String line: msgDetails) {
+                    if (line.contains("speed")){
+                        if(speedMessageSent==1){
+                            Float newSpeed = new Float (floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))) ) ;
+                            super.setSpeedSetting(newSpeed);
                         }
-                        else if(result.equals("dir")){
-                            val = (msg.substring(start+1, end));
-                            boolean newDirection;
-                            if (val.equals("0")) newDirection=true;
-                            else newDirection = false;
-                            super.setIsForward(newDirection);
-                        }
+                        speedMessageSent--;
                     }
+                    else if (line.contains("dir")){
+                        boolean newDirection = false;
+                        if (EcosReply.getContentDetails(line, "dir").equals("0")) newDirection=true;
+                        super.setIsForward(newDirection);
+                    }
+                
                 }
             }
             //Treat gets and events as the same.
@@ -481,202 +470,186 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                     return;
                 }
                 //log.debug("The last command was accepted by the ecos");
-                for (int i =1; i<lines.length-1; i++){
-                    String object = this.objectNumber;
-                    tmpstart = lines[i].indexOf(object + " ")+object.length()+1;
-                    tmpend = lines[i].indexOf("[");
-                    String val;
-                    if (tmpstart>0 && tmpend >0) {
-                        String result = lines[i].substring(tmpstart, tmpend);
-                        start = lines[i].indexOf("[");
-                        end = lines[i].indexOf("]");
-                        if (result.equals("protocol")){
-                            val = (lines[i].substring(start+1, end));
-                            if (val.contains("DCC128")) this.speedStepMode=SpeedStepMode128;
-                            else if (val.contains("DCC28")) this.speedStepMode=SpeedStepMode28;
-                        }
-                        else if (result.equals("msg")){
-                            val = (lines[i].substring(start+1, end));
-                            //We get this lost control error because we have registered as a viewer.
-                            if (val.contains("CONTROL_LOST")){
-                                retryControl();
-                                log.debug("We have no control over the ecos object, but will retry.");
-                            }
-                        }
-                        else if (result.equals("speed")){
-                            val = lines[i].substring(start+1, end);
-                            Float newSpeed = new Float ( floatSpeed(Integer.parseInt(val) ) ) ;
-                            super.setSpeedSetting(newSpeed);
-                        }
-                        else if(result.equals("dir")){
-                            val = (lines[i].substring(start+1, end));
-                            boolean newDirection;
-                            if (val.equals("0")) newDirection = true;
-                            else newDirection = false;
-                            super.setIsForward(newDirection);
-                        }
-                        else if (lines[i].contains("func[")) {
-                            int funcstart = lines[i].indexOf("[")+1;
-                            int funcfinish = lines[i].indexOf(", ");
-
-                            int function = Integer.parseInt(lines[i].substring(funcstart, funcfinish));
-                            int valstart = lines[i].indexOf(", ")+2;
-                            int valfinish = lines[i].indexOf("]");
-                            int functionValue = Integer.parseInt(lines[i].substring(valstart, valfinish));
-                            boolean functionresult = false;
-                            if (functionValue == 1) functionresult = true;
-                            switch (function) {
-                                case 0: if (this.f0!=functionresult) {
-                                            notifyPropertyChangeListener("F0", this.f0, functionresult);
-                                            this.f0 = functionresult;
-                                         }
-                                         break;
-                                case 1: if (this.f1!=functionresult) {
-                                            notifyPropertyChangeListener("F1", this.f1, functionresult);
-                                            this.f1 = functionresult;
-                                         }
-                                         break;
-                                case 2: if (this.f2!=functionresult) {
-                                            notifyPropertyChangeListener("F2", this.f2, functionresult);
-                                            this.f2 = functionresult;
-                                         }
-                                         break;
-                                case 3: if (this.f3!=functionresult) {
-                                            notifyPropertyChangeListener("F3", this.f3, functionresult);
-                                            this.f3 = functionresult;
-                                         }
-                                         break;
-                                case 4: if (this.f4!=functionresult) {
-                                            notifyPropertyChangeListener("F4", this.f4, functionresult);
-                                            this.f4 = functionresult;
-                                         }
-                                         break;
-                                case 5: if (this.f5!=functionresult) {
-                                            notifyPropertyChangeListener("F5", this.f5, functionresult);
-                                            this.f5 = functionresult;
-                                         }
-                                         break;
-                                case 6: if (this.f6!=functionresult) {
-                                            notifyPropertyChangeListener("F6", this.f6, functionresult);
-                                            this.f6 = functionresult;
-                                         }
-                                         break;
-                                case 7: if (this.f7!=functionresult) {
-                                            notifyPropertyChangeListener("F7", this.f7, functionresult);
-                                            this.f7 = functionresult;
-                                         }
-                                         break;
-                                case 8: if (this.f8!=functionresult) {
-                                            notifyPropertyChangeListener("F8", this.f8, functionresult);
-                                            this.f8 = functionresult;
-                                         }
-                                         break;
-                                case 9: if (this.f9!=functionresult) {
-                                            notifyPropertyChangeListener("F9", this.f9, functionresult);
-                                            this.f9 = functionresult;
-                                         }
-                                         break;
-                                case 10: if (this.f10!=functionresult) {
-                                            notifyPropertyChangeListener("F10", this.f10, functionresult);
-                                            this.f10 = functionresult;
-                                         }
-                                         break;
-                                case 11: if (this.f11!=functionresult) {
-                                            notifyPropertyChangeListener("F11", this.f11, functionresult);
-                                            this.f11 = functionresult;
-                                         }
-                                         break;
-                                case 12: if (this.f12!=functionresult) {
-                                            notifyPropertyChangeListener("F12", this.f12, functionresult);
-                                            this.f12 = functionresult;
-                                         }
-                                         break;
-                                case 13: if (this.f13!=functionresult) {
-                                            notifyPropertyChangeListener("F13", this.f13, functionresult);
-                                            this.f13 = functionresult;
-                                         }
-                                         break;
-                                case 14: if (this.f14!=functionresult) {
-                                            notifyPropertyChangeListener("F14", this.f14, functionresult);
-                                            this.f14 = functionresult;
-                                         }
-                                         break;
-                                case 15: if (this.f15!=functionresult) {
-                                            notifyPropertyChangeListener("F15", this.f15, functionresult);
-                                            this.f15 = functionresult;
-                                         }
-                                         break;
-                                case 16: if (this.f16!=functionresult) {
-                                            notifyPropertyChangeListener("F16", this.f16, functionresult);
-                                            this.f16 = functionresult;
-                                         }
-                                         break;
-                                case 17: if (this.f17!=functionresult) {
-                                            notifyPropertyChangeListener("F17", this.f17, functionresult);
-                                            this.f17 = functionresult;
-                                         }
-                                         break;
-                                case 18: if (this.f18!=functionresult) {
-                                            notifyPropertyChangeListener("F18", this.f18, functionresult);
-                                            this.f18 = functionresult;
-                                         }
-                                         break;
-                                case 19: if (this.f19!=functionresult) {
-                                            notifyPropertyChangeListener("F19", this.f19, functionresult);
-                                            this.f19 = functionresult;
-                                         }
-                                         break;
-                                case 20: if (this.f20!=functionresult) {
-                                            notifyPropertyChangeListener("F20", this.f20, functionresult);
-                                            this.f20 = functionresult;
-                                         }
-                                         break;
-                                case 21: if (this.f21!=functionresult) {
-                                            notifyPropertyChangeListener("F21", this.f21, functionresult);
-                                            this.f21 = functionresult;
-                                         }
-                                         break;
-                                case 22: if (this.f22!=functionresult) {
-                                            notifyPropertyChangeListener("F22", this.f22, functionresult);
-                                            this.f22 = functionresult;
-                                        }
-                                        break;
-                                case 23: if (this.f23!=functionresult) {
-                                            notifyPropertyChangeListener("F23", this.f23, functionresult);
-                                            this.f23 = functionresult;
-                                         }
-                                         break;
-                                case 24: if (this.f24!=functionresult) {
-                                            notifyPropertyChangeListener("F24", this.f24, functionresult);
-                                            this.f24 = functionresult;
-                                         }
-                                         break;
-                                case 25: if (this.f25!=functionresult) {
-                                            notifyPropertyChangeListener("F25", this.f25, functionresult);
-                                            this.f25 = functionresult;
-                                         }
-                                         break;
-                                case 26: if (this.f26!=functionresult) {
-                                            notifyPropertyChangeListener("F26", this.f26, functionresult);
-                                            this.f26 = functionresult;
-                                         }
-                                         break;
-                                case 27: if (this.f27!=functionresult) {
-                                            notifyPropertyChangeListener("F27", this.f27, functionresult);
-                                            this.f27 = functionresult;
-                                         }
-                                         break;
-                                case 28: if (this.f28!=functionresult) {
-                                            notifyPropertyChangeListener("F28", this.f28, functionresult);
-                                            this.f28 = functionresult;
-                                         }
-                                         break;
-                                default : break;
-                            }
-                        }
+                String[] msgDetails = m.getContents();
+                for (String line: msgDetails) {
+                    if (line.contains("speed")){
+                        Float newSpeed = new Float (floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))) ) ;
+                        super.setSpeedSetting(newSpeed);
                     }
+                    else if (line.contains("dir")){
+                        boolean newDirection = false;
+                        if (EcosReply.getContentDetails(line, "dir").equals("0")) newDirection=true;
+                        super.setIsForward(newDirection);
+                    } else if (line.contains("protocol")){
+                        String pro = EcosReply.getContentDetails(line, "protocol");
+                        if(pro.equals("DCC128")) setSpeedStepMode(SpeedStepMode128);
+                        else if (pro.equals("DCC28")) setSpeedStepMode(SpeedStepMode28);
+                        else if (pro.equals("DCC14")) setSpeedStepMode(SpeedStepMode14);
+                    } else if (line.contains("func")){
+                        String funcStr = EcosReply.getContentDetails(line, "func");
+                        int function = Integer.parseInt(funcStr.substring(0, funcStr.indexOf(",")));
+                        int functionValue = Integer.parseInt(funcStr.substring((funcStr.indexOf(", ")+2), funcStr.length()));
+                        boolean functionresult = false;
+                        if (functionValue == 1) functionresult = true;
+                        switch (function) {
+                            case 0: if (this.f0!=functionresult) {
+                                        notifyPropertyChangeListener("F0", this.f0, functionresult);
+                                        this.f0 = functionresult;
+                                     }
+                                     break;
+                            case 1: if (this.f1!=functionresult) {
+                                        notifyPropertyChangeListener("F1", this.f1, functionresult);
+                                        this.f1 = functionresult;
+                                     }
+                                     break;
+                            case 2: if (this.f2!=functionresult) {
+                                        notifyPropertyChangeListener("F2", this.f2, functionresult);
+                                        this.f2 = functionresult;
+                                     }
+                                     break;
+                            case 3: if (this.f3!=functionresult) {
+                                        notifyPropertyChangeListener("F3", this.f3, functionresult);
+                                        this.f3 = functionresult;
+                                     }
+                                     break;
+                            case 4: if (this.f4!=functionresult) {
+                                        notifyPropertyChangeListener("F4", this.f4, functionresult);
+                                        this.f4 = functionresult;
+                                     }
+                                     break;
+                            case 5: if (this.f5!=functionresult) {
+                                        notifyPropertyChangeListener("F5", this.f5, functionresult);
+                                        this.f5 = functionresult;
+                                     }
+                                     break;
+                            case 6: if (this.f6!=functionresult) {
+                                        notifyPropertyChangeListener("F6", this.f6, functionresult);
+                                        this.f6 = functionresult;
+                                     }
+                                     break;
+                            case 7: if (this.f7!=functionresult) {
+                                        notifyPropertyChangeListener("F7", this.f7, functionresult);
+                                        this.f7 = functionresult;
+                                     }
+                                     break;
+                            case 8: if (this.f8!=functionresult) {
+                                        notifyPropertyChangeListener("F8", this.f8, functionresult);
+                                        this.f8 = functionresult;
+                                     }
+                                     break;
+                            case 9: if (this.f9!=functionresult) {
+                                        notifyPropertyChangeListener("F9", this.f9, functionresult);
+                                        this.f9 = functionresult;
+                                     }
+                                     break;
+                            case 10: if (this.f10!=functionresult) {
+                                        notifyPropertyChangeListener("F10", this.f10, functionresult);
+                                        this.f10 = functionresult;
+                                     }
+                                     break;
+                            case 11: if (this.f11!=functionresult) {
+                                        notifyPropertyChangeListener("F11", this.f11, functionresult);
+                                        this.f11 = functionresult;
+                                     }
+                                     break;
+                            case 12: if (this.f12!=functionresult) {
+                                        notifyPropertyChangeListener("F12", this.f12, functionresult);
+                                        this.f12 = functionresult;
+                                     }
+                                     break;
+                            case 13: if (this.f13!=functionresult) {
+                                        notifyPropertyChangeListener("F13", this.f13, functionresult);
+                                        this.f13 = functionresult;
+                                     }
+                                     break;
+                            case 14: if (this.f14!=functionresult) {
+                                        notifyPropertyChangeListener("F14", this.f14, functionresult);
+                                        this.f14 = functionresult;
+                                     }
+                                     break;
+                            case 15: if (this.f15!=functionresult) {
+                                        notifyPropertyChangeListener("F15", this.f15, functionresult);
+                                        this.f15 = functionresult;
+                                     }
+                                     break;
+                            case 16: if (this.f16!=functionresult) {
+                                        notifyPropertyChangeListener("F16", this.f16, functionresult);
+                                        this.f16 = functionresult;
+                                     }
+                                     break;
+                            case 17: if (this.f17!=functionresult) {
+                                        notifyPropertyChangeListener("F17", this.f17, functionresult);
+                                        this.f17 = functionresult;
+                                     }
+                                     break;
+                            case 18: if (this.f18!=functionresult) {
+                                        notifyPropertyChangeListener("F18", this.f18, functionresult);
+                                        this.f18 = functionresult;
+                                     }
+                                     break;
+                            case 19: if (this.f19!=functionresult) {
+                                        notifyPropertyChangeListener("F19", this.f19, functionresult);
+                                        this.f19 = functionresult;
+                                     }
+                                     break;
+                            case 20: if (this.f20!=functionresult) {
+                                        notifyPropertyChangeListener("F20", this.f20, functionresult);
+                                        this.f20 = functionresult;
+                                     }
+                                     break;
+                            case 21: if (this.f21!=functionresult) {
+                                        notifyPropertyChangeListener("F21", this.f21, functionresult);
+                                        this.f21 = functionresult;
+                                     }
+                                     break;
+                            case 22: if (this.f22!=functionresult) {
+                                        notifyPropertyChangeListener("F22", this.f22, functionresult);
+                                        this.f22 = functionresult;
+                                    }
+                                    break;
+                            case 23: if (this.f23!=functionresult) {
+                                        notifyPropertyChangeListener("F23", this.f23, functionresult);
+                                        this.f23 = functionresult;
+                                     }
+                                     break;
+                            case 24: if (this.f24!=functionresult) {
+                                        notifyPropertyChangeListener("F24", this.f24, functionresult);
+                                        this.f24 = functionresult;
+                                     }
+                                     break;
+                            case 25: if (this.f25!=functionresult) {
+                                        notifyPropertyChangeListener("F25", this.f25, functionresult);
+                                        this.f25 = functionresult;
+                                     }
+                                     break;
+                            case 26: if (this.f26!=functionresult) {
+                                        notifyPropertyChangeListener("F26", this.f26, functionresult);
+                                        this.f26 = functionresult;
+                                     }
+                                     break;
+                            case 27: if (this.f27!=functionresult) {
+                                        notifyPropertyChangeListener("F27", this.f27, functionresult);
+                                        this.f27 = functionresult;
+                                     }
+                                     break;
+                            case 28: if (this.f28!=functionresult) {
+                                        notifyPropertyChangeListener("F28", this.f28, functionresult);
+                                        this.f28 = functionresult;
+                                     }
+                                     break;
+                            default : break;
+                        }
+                    
+                    } else if (line.contains("msg")){
+                        //We get this lost control error because we have registered as a viewer.
+                        if (line.contains("CONTROL_LOST")){
+                            retryControl();
+                            log.debug("We have no control over the ecos object, but will retry.");
+                        }
+                    
+                    }
+                
                 }
-
             }
             else if(replyType.equals("release")){
                 log.debug("Released "+this.objectNumber +" from the Ecos");
@@ -721,7 +694,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             }
             jmri.InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
         }
-        else log.debug("Last Message resulted in an END code we do not understand\n" + lines[lines.length-1]);
+        else log.debug("Last Message resulted in an END code we do not understand " + resultCode);
     }
 
     public void message(EcosMessage m) {

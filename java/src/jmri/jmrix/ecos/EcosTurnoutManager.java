@@ -71,32 +71,26 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     public void reply(EcosReply m) {
         // is this a list of turnouts?
         EcosTurnout et;
-        int start;
-        int end;
-        String msg = m.toString();
-        String[] lines = msg.split("\n");
+        
         if (m.getResultCode()==0){
             int ecosObjectId = m.getEcosObjectId();
             if((ecosObjectId!=11) && ((ecosObjectId<20000) || (ecosObjectId>30000))){
                 log.debug("message receieved that is not within the valid turnout object range");
                 return;
             }
+            List<String> headerDetails = m.getReplyHeaderDetails();
+            String[] msgContents = m.getContents();
+            //log.info("Initial Header " + headerDetails);
             if (m.isUnsolicited()){
                 if(ecosObjectId==11){
-                //if (lines[0].startsWith("<EVENT 11>")){
                     //Creation or removal of a turnout from the Ecos.
-                    if (lines[1].contains("msg[LIST_CHANGED]")){
+                    if (msgContents[0].contains("msg[LIST_CHANGED]")){
                         log.debug("We have received notification of a change in the Turnout list");
                         EcosMessage mout = new EcosMessage("queryObjects(11)");
                         tc.sendEcosMessage(mout, this);
                     }
                     //Creation or removal of a turnout from the Ecos.
                 } else {
-                //else if (lines[0].startsWith("<EVENT")){
-                    //So long as the event information is for a turnout we will determine
-                    //which turnout it is for and let that deal with the message.
-                    //int object = GetEcosObjectNumber.getEcosObjectNumber(lines[0], " ", ">");
-                    //if ((20000<=object) && (object<40000)){
                         log.debug("Forwarding on State change for " + ecosObjectId);
                         et = _tecos.get(ecosObjectId);
                         if (et!=null){
@@ -109,23 +103,26 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                 etx.reply(m);
                             }
                         }
-                   // }
                 }
             
             } else {
                 String replyType = m.getReplyType();
                 if(replyType.equals("queryObjects")){
-                    if (lines[0].startsWith("<REPLY queryObjects(11)>")) {
-                        checkTurnoutList(lines);
+                    if(ecosObjectId==11 && headerDetails.size()==0){
+                    //if (lines[0].startsWith("<REPLY queryObjects(11)>")) {
+                        log.info("No sub details");
+                        checkTurnoutList(msgContents);
                     }
-                    else if (lines[0].startsWith("<REPLY queryObjects(11, addr)>")) {
+                    else if (headerDetails.contains("addr")) {
                         // yes, make sure TOs exist
-                        log.debug("found "+(lines.length-2)+" turnout objects");
-                        for (int i = 1; i<lines.length-1; i++) {
-                            if (lines[i].contains("addr[")) { // skip odd lines
-                                int object = GetEcosObjectNumber.getEcosObjectNumber(lines[i], null, " ");
+                        //log.debug("found "+(lines.length-2)+" turnout objects");
+                        for(String item: m.getContents()){
+                            log.info("header " + item);
+                        //for (int i = 1; i<lines.length-1; i++) {
+                            if (item.contains("addr")) { // skip odd lines
+                                int object = GetEcosObjectNumber.getEcosObjectNumber(item, null, " ");
                                 if ( (20000<=object) && (object<30000)) { // only physical turnouts
-                                    int addr = GetEcosObjectNumber.getEcosObjectNumber(lines[i], "[", "]");
+                                    int addr = GetEcosObjectNumber.getEcosObjectNumber(item, "[", "]");
                                     log.debug("Found turnout object "+object+" addr "+addr);
                                     
                                     if ( addr > 0 ) {
@@ -134,14 +131,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                             et = (EcosTurnout)provideTurnout(prefix+"T"+addr);
                                             et.setObjectNumber(object);
                                             _tecos.put(object, et);
-                                            // listen for changes
                                         }
-                                        /*EcosMessage em = new EcosMessage("request("+object+",view)");
-                                        tc.sendEcosMessage(em, null);
-                                        
-                                        // get initial state
-                                        em = new EcosMessage("get("+object+",state)");
-                                        tc.sendEcosMessage(em, null);*/
                                     }
                                 } else if (( 30000<=object) && (object<40000)){  //This is a ecos route
                                     log.debug("Found route object " + object);
@@ -152,11 +142,6 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                         et.setObjectNumber(object);
                                         _tecos.put(object, et);
                                     }
-                                    // get initial state#
-                                    /*EcosMessage em = new EcosMessage("request("+object+",view)");
-                                    tc.sendEcosMessage(em, null);
-                                    EcosMessage em = new EcosMessage("get("+object+",state)");
-                                    tc.sendEcosMessage(em, null);*/
                                 }
                                 if ( (20000<=object) && (object<40000)){
                                     EcosMessage em = new EcosMessage("request("+object+",view)");
@@ -166,75 +151,69 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                 }
                             }
                         }
-                    } else if (lines[0].startsWith("<REPLY queryObjects(11, addrext)>")){
-                        for (int i = 1; i<lines.length-1; i++) {
-                            if (lines[i].contains("addrext[")) { // skip odd lines
-                                turnoutAddressDetails(lines[i]);
+                    } else if (headerDetails.contains("addrext")){
+                        //log.info("Extended");
+                        for(String item: m.getContents()){
+                            //log.info(item);
+                            if (item.contains("addrext")) { // skip odd lines
+                                turnoutAddressDetails(item);
                             }
                         }
                     }
                 }
                 else if(replyType.equals("get")){
-                //else if (lines[0].startsWith("<REPLY get(") ) {
-                    
-                    //int object = GetEcosObjectNumber.getEcosObjectNumber(lines[0], "(", ",");
-                    //if ((20000<=object) && (object<40000)){
-                        //et = _tecos.get(object);
-                        et = (EcosTurnout) getByEcosObject(ecosObjectId);
-                        if(lines[0].contains("state")){
-                            //As this is in response to a change in state we shall forward
-                            //it straight on to the ecos turnout to deal with.
-                            et.reply(m);
-                            //As the event will come from one object, we shall check to see if it is an extended address,
-                            // if it is we also forward the message onto the slaved address.
-                            if(et.getExtended()!=0){
-                                EcosTurnout etx = (EcosTurnout)provideTurnout(et.getSlaveAddress());
-                                etx.reply(m);
-                            }
+                    et = (EcosTurnout) getByEcosObject(ecosObjectId);
+                    if(headerDetails.contains("state")){
+                        //As this is in response to a change in state we shall forward
+                        //it straight on to the ecos turnout to deal with.
+                        et.reply(m);
+                        //As the event will come from one object, we shall check to see if it is an extended address,
+                        // if it is we also forward the message onto the slaved address.
+                        if(et.getExtended()!=0){
+                            EcosTurnout etx = (EcosTurnout)provideTurnout(et.getSlaveAddress());
+                            etx.reply(m);
+                        }
 
-                        } else if (lines[0].contains("symbol")){
+                    } else if (headerDetails.contains("symbol")){
                         //Extract symbol number and set on turnout.
-                            int symbol = GetEcosObjectNumber.getEcosObjectNumber(lines[1], "[", "]");
-                            et.setExtended(symbol);
-                            et.setTurnoutOperation(jmri.TurnoutOperationManager.getInstance().getOperation("NoFeedback"));
-                            if((symbol==2)||(symbol==4)){
-                                
-                                EcosTurnout etx = (EcosTurnout)provideTurnout(et.getSlaveAddress());
-                                etx.setExtended(symbol);
-                                etx.setTurnoutOperation(jmri.TurnoutOperationManager.getInstance().getOperation("NoFeedback"));
-                                switch(symbol) {
-                                    case 2 : et.setComment("Three Way Point with " + et.getSlaveAddress());
-                                            break;
-                                    case 4 : et.setComment("Double Slip with " + et.getSlaveAddress());
-                                            break;
-                                    default : break;
-                                }
+                        int symbol = GetEcosObjectNumber.getEcosObjectNumber(msgContents[0], "[", "]");
+                        et.setExtended(symbol);
+                        et.setTurnoutOperation(jmri.TurnoutOperationManager.getInstance().getOperation("NoFeedback"));
+                        if((symbol==2)||(symbol==4)){
+                            
+                            EcosTurnout etx = (EcosTurnout)provideTurnout(et.getSlaveAddress());
+                            etx.setExtended(symbol);
+                            etx.setTurnoutOperation(jmri.TurnoutOperationManager.getInstance().getOperation("NoFeedback"));
+                            switch(symbol) {
+                                case 2 : et.setComment("Three Way Point with " + et.getSlaveAddress());
+                                        break;
+                                case 4 : et.setComment("Double Slip with " + et.getSlaveAddress());
+                                        break;
+                                default : break;
                             }
-                            // get initial state
-                            EcosMessage em = new EcosMessage("get("+ecosObjectId+",state)");
-                            tc.sendEcosMessage(em, this);
-                        
-                        } else if (lines[0].contains("addrext")){
-                            turnoutAddressDetails(lines[1]);
                         }
-                        else {
-                            String name = null;
-                            for(int i = 1; i<lines.length-1;i++){
-                                if (lines[i].contains("name")){
-                                    start=lines[i].indexOf("[")+2;
-                                    end=lines[i].indexOf("]")-1;
-                                    if ((name!=null) && (start!=end))
-                                        name = name + " " + lines[i].substring(start, end);
-                                    else if (name==null)
-                                        name = lines[i].substring(start, end);
-                                    //name = name + " " +
-                                    //et.setUserName(name);
-                                }
+                        // get initial state
+                        EcosMessage em = new EcosMessage("get("+ecosObjectId+",state)");
+                        tc.sendEcosMessage(em, this);
+                    
+                    } else if (headerDetails.contains("addrext")){
+                        turnoutAddressDetails(msgContents[0]);
+                    }
+                    else {
+                        String name = null;
+                        for(String li: msgContents){
+                            if (li.contains("name")){
+                                //start=li.indexOf("[")+2;
+                                //end=li.indexOf("]")-1;
+                                if ((name!=null) /*&& (start!=end)*/)
+                                    name = name + EcosReply.getContentDetail(li); /*" " + li.substring(start, end);*/
+                                else
+                                    name = EcosReply.getContentDetail(li); /*li.substring(start, end);*/
                             }
-                            if (name!=null)
-                                et.setUserName(name);
                         }
-                    //}
+                        if (name!=null)
+                            et.setUserName(name);
+                    }
                 }
             }
         }
@@ -363,8 +342,8 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
             nomatch=true;
             String strJMRITurnout=jmrilist[i];
             intTurnout = Integer.parseInt(strJMRITurnout);
-            for(int k=1; k<ecoslines.length-1;k++){
-                strECOSTurnout = ecoslines[k].replaceAll("[\\n\\r]","");
+            for(String li: ecoslines){
+                strECOSTurnout = li.replaceAll("[\\n\\r]","");
                 if (strECOSTurnout.equals(strJMRITurnout)){
                     nomatch=false;
                     break;
@@ -464,16 +443,14 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
             }
         }
         int turnout;
-        for(int i=1; i<ecoslines.length-1; i++){
-            String tmpturn = ecoslines[i].replaceAll("[\\n\\r]","");
+        for(String li: ecoslines){
+            String tmpturn = li.replaceAll("[\\n\\r]","");
             turnout = Integer.parseInt(tmpturn);
             if(getByEcosObject(turnout)==null){
                 EcosMessage mout = new EcosMessage("get(" + turnout + ", addrext)");
                 tc.sendEcosMessage(mout, this);
             }
         }
-        /*mout = new EcosMessage("request(11, view)");
-        tc.sendEcosMessage(mout, this);*/
     }
     
     boolean noWarnDelete = false;
