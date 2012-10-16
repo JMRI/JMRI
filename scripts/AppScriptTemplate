@@ -114,17 +114,22 @@ then
 	      ARCH="i386"
 	    fi
 
-            # Now deal with ARM architecture
-            if [ "$ARCH" = "armv5tel" ]
-            then
-              ARCH="armv5"
-            fi
+        # Now deal with ARM architecture 
+        #   armv61 contains hard-float version, armv5 contains soft-float version
 
-            if [ "$ARCH" = "armv6l" ]
-            then
-              # currently contains hard-float versions, may need work for others
-              ARCH="armv61"
-            fi
+        if [ "$ARCH" = "armv5tel" ]; then
+          ARCH="armv5"
+        fi
+
+        if [ "$ARCH" = "armv6l" ]; then
+          #determine hard vs. soft float using readelf
+          HARDFLOAT=`readelf -a /usr/bin/readelf | grep armhf`  
+          if [ -z "$HARDFLOAT" ]; then
+            ARCH="armv5"
+          else    
+            ARCH="armv61"
+          fi
+        fi
 
 	    if [ -d "${SYSLIBPATH}/$ARCH" ]
 	    then
