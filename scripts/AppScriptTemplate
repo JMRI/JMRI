@@ -115,7 +115,7 @@ then
 	    fi
 
         # Now deal with ARM architecture 
-        #   armv61 contains hard-float version, armv5 contains soft-float version
+        #   armv6l contains hard-float version, armv5 contains soft-float version
 
         if [ "$ARCH" = "armv5tel" ]; then
           ARCH="armv5"
@@ -127,7 +127,7 @@ then
           if [ -z "$HARDFLOAT" ]; then
             ARCH="armv5"
           else    
-            ARCH="armv61"
+            ARCH="armv6l"
           fi
         fi
 
