@@ -70,6 +70,9 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
             formatted.append(" ");
             formatted.append(jmri.util.StringUtil.twoHexFromInt(content[i]));
         }
+        for (int i = len; i < 8; i++) {
+            formatted.append("   ");
+        }
         return new String(formatted);
     }
     
