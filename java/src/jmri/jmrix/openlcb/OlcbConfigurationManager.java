@@ -197,7 +197,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         for (int j=0; j<part3.length; j++) content[i++] = part3[j];
         for (int j=0; j<part4.length; j++) content[i++] = part4[j];
         
-        nodeStore.put(new SimpleNodeIdentInfoReplyMessage(nodeID,content),null);
+        // store to self!
+        nodeStore.put(new SimpleNodeIdentInfoReplyMessage(nodeID,nodeID,content),null);
     }
     
     protected ResourceBundle getActionModelResourceBundle(){
