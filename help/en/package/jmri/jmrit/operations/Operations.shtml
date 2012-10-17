@@ -2084,9 +2084,8 @@ service Danville. At Danville we have a yard and several spurs. We
 want the mainline train to service Danville's yard, but not the spurs.
 We don't want to use a switcher to service the spurs at
 Danville. However, we do want locals to service them! We need to tell
-the program which tracks in Danville are service by which trains.  We might
-be able to do this using interchanges, but we're also using schedules on our spurs!  So
-that rules out using interchange tracks.</P>
+the program which tracks in Danville are service by which trains.</P>
+
 <P>Solution, we create a yard in "Danville", and create spurs in
 "Danville-1". The mainline train has "Danville" in it's route. The
 locals will service "Danville" and "Danville-1". Now the dilemma, do the
@@ -2096,8 +2095,8 @@ then "Danville-1". At the first "Danville-1" we request only pick ups at
 the spurs, at "Danville" we specify both pick ups and set outs to the
 yard, and at the second "Danville-1" we specify only set outs. </P>
 
-<P>Now the mainline train only services Danville yard.  The locals service Danville yard and the
-spurs.</P> 
+<P>Another solution is to simply use the spur's ability to select which trains
+can service the track.</P>
 
 <A	NAME="SetTrainIconCoordinates"></A>
 <H3>Set Train Icon Coordinates</H3>
