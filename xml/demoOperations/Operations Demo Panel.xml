@@ -2,204 +2,220 @@
 <?xml-stylesheet type="text/xsl" href="/xml/XSLT/panelfile-2-9-6.xsl"?>
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
-    <major>2</major>
-    <minor>10</minor>
-    <test>0</test>
-    <modifier />
+    <major>3</major>
+    <minor>1</minor>
+    <test>4</test>
+    <modifier>.4</modifier>
   </jmriversion>
-  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory systemName="IMCURRENTTIME" value="7:38 PM">
-      <systemName>IMCURRENTTIME</systemName>
-    </memory>
-  </memories>
   <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
     <sensor systemName="ISCLOCKRUNNING" inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
     </sensor>
   </sensors>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Oct 26 19:36:29 EDT 2010" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IMCURRENTTIME" value="7:48 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory systemName="IMRATEFACTOR" value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
   <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
-  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Operations Demo Panel" x="20" y="20" height="257" width="933" editable="no" positionable="no" showcoordinates="no" showtooltips="yes" controlling="no" hide="yes" panelmenu="no" scrollable="both">
-    <positionablelabel x="227" y="19" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" text="Bakersfield" size="11" style="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="341" y="19" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" text="Port Arthur" size="11" style="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="494" y="19" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" text="DanVille" size="11" style="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="602" y="19" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" text="Hillsboro" size="11" style="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="705" y="19" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" text="Farmington" size="11" style="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="827" y="19" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" text="Lakeview" size="11" style="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="9" y="19" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" text="Susanville" size="11" style="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="833" y="1" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" text="East" size="11" style="1" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="11" y="1" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" text="West" size="11" style="1" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="418" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Oct 26 19:36:29 EDT 2010" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Operations Demo Panel" x="20" y="20" height="257" width="994" editable="no" positionable="no" showtooltips="no" controlling="no" hide="yes" panelmenu="no" scrollable="both">
+    <positionablelabel x="227" y="19" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" text="Bakersfield" size="11" style="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="341" y="19" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" text="Port Arthur" size="11" style="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Text Label</toolTip>
+    </positionablelabel>
+    <positionablelabel x="494" y="19" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" text="DanVille" size="11" style="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Text Label</toolTip>
+    </positionablelabel>
+    <positionablelabel x="602" y="19" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" text="Hillsboro" size="11" style="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="705" y="19" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" text="Farmington" size="11" style="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Text Label</toolTip>
+    </positionablelabel>
+    <positionablelabel x="827" y="19" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" text="Lakeview" size="11" style="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="9" y="19" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" text="Susanville" size="11" style="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Text Label</toolTip>
+    </positionablelabel>
+    <positionablelabel x="833" y="1" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" text="East" size="11" style="1" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="11" y="1" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" text="West" size="11" style="1" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="418" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="48" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="48" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="122" y="69" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="122" y="69" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="122" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="122" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="233" y="69" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="233" y="69" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="233" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="233" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="85" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="85" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/os-righthand-east-closed.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="196" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="196" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/os-righthand-east-closed.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="307" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="307" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/os-righthand-east-closed.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="455" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="455" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/os-righthand-east-closed.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="159" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="159" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
         <rotation>2</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="270" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="270" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
         <rotation>2</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="344" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="344" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="344" y="69" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="344" y="69" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="492" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="492" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="492" y="69" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="492" y="69" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="603" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="603" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="603" y="69" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="603" y="69" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="381" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="381" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
         <rotation>2</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="11" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="11" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
         <rotation>2</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="529" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="529" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
         <rotation>2</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="751" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="751" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
         <rotation>2</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="640" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="640" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
         <rotation>2</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="566" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="566" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/os-righthand-east-closed.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="677" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="677" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/os-righthand-east-closed.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="825" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="825" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/os-righthand-east-closed.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="122" y="19" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" text="Fremont" size="11" style="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="788" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="122" y="19" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" text="Fremont" size="11" style="0" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="788" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="714" y="69" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="714" y="69" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <toolTip>Icon</toolTip>
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="714" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="714" y="45" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
   </paneleditor>
-  <filehistory>
-    <operation>
-      <type>app</type>
-      <date>Tue Oct 26 19:36:28 EDT 2010</date>
-      <filename>PanelPro version 2.10 starts under Java 1.6.0_17 at Tue Oct 26 19:36:28 EDT 2010</filename>
-    </operation>
-    <operation>
-      <type>Load OK</type>
-      <date>Tue Oct 26 19:36:29 EDT 2010</date>
-      <filename>PanelProConfig2.xml</filename>
-    </operation>
-    <operation>
-      <type>Load OK</type>
-      <date>Tue Oct 26 19:37:06 EDT 2010</date>
-      <filename>Operations Demo Panel.xml</filename>
-    </operation>
-    <operation>
-      <type>Store</type>
-      <date>Tue Oct 26 19:38:12 EDT 2010</date>
-      <filename />
-    </operation>
-  </filehistory>
-  <!--Written by JMRI version 2.10 on Tue Oct 26 19:38:12 EDT 2010 $Id$-->
+  <!--Written by JMRI version 3.1.4-r21417 on Thu Oct 18 19:48:54 EDT 2012 $Id$-->
 </layout-config>
 
