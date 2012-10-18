@@ -66,8 +66,10 @@ public class JsonClientHandler {
 			} else if (type.equals("list")) {
 				JsonNode reply = null;
 				String list = root.path("list").asText();
-				if (list.equals("memories")) {
-					reply = JsonLister.getMemories();
+				if (list.equals("lights")) {
+					reply = JsonLister.getLights();
+				} else if (list.equals("memories")) {
+						reply = JsonLister.getMemories();
 				} else if (list.equals("metadata")) {
 					reply = JsonLister.getMetadata();
 				} else if (list.equals("panels")) {

@@ -6,6 +6,7 @@ import java.util.List;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.Light;
 import jmri.Memory;
 import jmri.Metadata;
 import jmri.Reporter;
@@ -39,6 +40,28 @@ public class JsonLister {
 	private static ObjectMapper mapper = new ObjectMapper();
 	private static Logger log = Logger.getLogger(JsonLister.class);
 
+	static public JsonNode getLight(String name) {
+		ObjectNode root = mapper.createObjectNode();
+		root.put("type", "light");
+		ObjectNode data = root.putObject("data");
+		Light light = InstanceManager.lightManagerInstance().getLight(name);
+		data.put("name", light.getSystemName());
+		data.put("userName", light.getUserName());
+		data.put("comment", light.getComment());
+		data.put("state", light.getState());
+		return root;
+	}
+
+	static public JsonNode getLights() {
+		ObjectNode root = mapper.createObjectNode();
+		root.put("type", "list");
+		ArrayNode lights = root.putArray("list");
+		for (String name : InstanceManager.lightManagerInstance().getSystemNameList()) {
+			lights.add(getLight(name));
+		}
+		return root;
+	}
+	
 	static public JsonNode getMemories() {
 		ObjectNode root = mapper.createObjectNode();
 		root.put("type", "list");

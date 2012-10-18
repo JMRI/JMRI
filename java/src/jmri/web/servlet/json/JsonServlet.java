@@ -90,7 +90,9 @@ public class JsonServlet extends WebSocketServlet {
         if (type != null) {
             String name = (rest.length > 2) ? rest[2] : null;
         	JsonNode reply = null;
-        	if (type.equals("memories")) {
+        	if (type.equals("lights")) {
+        		reply = JsonLister.getLights();
+        	} else if (type.equals("memories")) {
         		reply = JsonLister.getMemories();
         	} else if (type.equals("metadata")) {
         		reply = JsonLister.getMetadata();
@@ -111,8 +113,10 @@ public class JsonServlet extends WebSocketServlet {
         	} else if (type.equals("turnouts")) {
         		reply = JsonLister.getTurnouts();
         	} else if (name != null) {
-        		if (type.equals("memory")) {
-        			reply = JsonLister.getMemory(name);
+        		if (type.equals("light")) {
+        			reply = JsonLister.getLight(name);
+        		} else if (type.equals("memory")) {
+            			reply = JsonLister.getMemory(name);
         		} else if (type.equals("reporter")) {
         			reply = JsonLister.getReporter(name);
         		} else if (type.equals("rosterEntry")) {
