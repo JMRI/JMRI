@@ -132,6 +132,9 @@ public class PanelServlet extends AbstractPanelServlet {
 				if (sub != null) {
 					try {
 						// TODO: get all panel contents as JSON
+						// I tried using JavaBean Introspection to simply build the contents using Jackson Databindings,
+						// but when a panel element has a reference to the panel or to itself as a property, this leads
+						// to infinite recursion
 					} catch (Exception ex) {
 						log.error("Error storing panel element: " + ex, ex);
 					}
