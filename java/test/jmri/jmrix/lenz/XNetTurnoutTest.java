@@ -138,6 +138,16 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 		Assert.assertTrue(t.getKnownState() == jmri.Turnout.THROWN);
         }
 
+        @Override
+        public void testDispose(){
+                t.setCommandedState(jmri.Turnout.CLOSED);    // in case registration with TrafficController
+
+                //is deferred to after first use
+                t.dispose();
+                Assert.assertEquals("controller listeners remaining", 1, numListeners());
+        }
+
+
 
 	// from here down is testing infrastructure
 

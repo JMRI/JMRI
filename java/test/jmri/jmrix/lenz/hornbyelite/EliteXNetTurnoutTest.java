@@ -83,6 +83,15 @@ public class EliteXNetTurnoutTest extends jmri.implementation.AbstractTurnoutTes
         }
 
 
+        @Override
+        public void testDispose(){
+                t.setCommandedState(jmri.Turnout.CLOSED);    // in case registration with TrafficController
+
+                //is deferred to after first use
+                t.dispose();
+                Assert.assertEquals("controller listeners remaining", 1, numListeners());
+        }
+
 	// from here down is testing infrastructure
 
 	public EliteXNetTurnoutTest(String s) {
