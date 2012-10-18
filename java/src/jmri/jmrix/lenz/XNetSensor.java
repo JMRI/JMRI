@@ -71,7 +71,10 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
  				  " (Address " + baseaddress + 
                                   " position " + (((address-1) % 8) + 1) +
 				  ")");
-        this.requestUpdateFromLayout();
+        // Finally, request the current state from the layout.
+        //this.requestUpdateFromLayout();
+        tc.getFeedbackMessageCache().requestCachedStateFromLayout(this);
+
     }
 
     /**
@@ -158,6 +161,15 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     public void dispose() {
         super.dispose();
     }
+
+    // package protected routine to get the Sensor Number
+    int getNumber() { return address; }
+
+    // package protected routine to get the Sensor Base Address
+    int getBaseAddress() { return baseaddress; }
+
+    // package protected routine to get the Sensor Nibble
+    int getNibble() { return nibble; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetSensor.class.getName());
 

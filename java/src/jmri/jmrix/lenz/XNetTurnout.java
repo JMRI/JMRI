@@ -150,7 +150,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 	_stateListener=new XNetTurnoutStateListener(this);
 	this.addPropertyChangeListener(_stateListener);
 	// Finally, request the current state from the layout.
-    	requestUpdateFromLayout();
+    	tc.getFeedbackMessageCache().requestCachedStateFromLayout(this);
     }
 
     //Set the mode information for XPressNet Turnouts.

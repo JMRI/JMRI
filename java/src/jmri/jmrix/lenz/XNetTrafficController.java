@@ -292,6 +292,19 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     public void setSystemConnectionMemo(XNetSystemConnectionMemo m){
       mMemo = m;
     }
+
+   private XNetFeedbackMessageCache _FeedbackCache = null;
+
+   /**
+     * return an XNetFeedbackMessageCache object associated with this
+     * traffic controller.
+     */
+   public XNetFeedbackMessageCache getFeedbackMessageCache() {
+        if(_FeedbackCache == null)
+           _FeedbackCache = new XNetFeedbackMessageCache(this);
+        return _FeedbackCache;
+   }
+
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetTrafficController.class.getName());
 }
 
