@@ -11,6 +11,9 @@
 (function($){
     $.extend({
         websocket: function(url, s) {
+        	if (typeof(WebSocket) == "undefined") {
+        		WebSocket = (MozWebSocket) ? MozWebSocket : null;
+        	}
             var ws = WebSocket ? new WebSocket( url ) : {
                 send: function(m){ return false },
                 close: function(){}
