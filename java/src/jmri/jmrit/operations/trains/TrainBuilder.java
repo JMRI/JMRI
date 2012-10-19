@@ -1816,8 +1816,14 @@ public class TrainBuilder extends TrainCommon{
 								new Object[]{departStageTrack.getName(), eng.toString(), eng.getModel(), train.getName()}));
 						return false;
 					}
+					// does the engine road match the train requirements?
+					if (!train.getEngineRoad().equals("") && !train.getEngineRoad().equals(eng.getRoad())){
+						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingDepartEngineRoad"),
+								new Object[]{departStageTrack.getName(), eng.toString(), eng.getRoad(), train.getName()}));
+						return false;				
+					}
 					// does the train accept the engine road from the staging track?
-					if (!train.acceptsRoadName(eng.getRoad())){
+					if (train.getEngineRoad().equals("") && !train.acceptsRoadName(eng.getRoad())){
 						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingDepartEngineRoad"),
 								new Object[]{departStageTrack.getName(), eng.toString(), eng.getRoad(), train.getName()}));
 						return false;				
