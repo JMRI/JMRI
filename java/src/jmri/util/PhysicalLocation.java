@@ -21,6 +21,7 @@ package jmri.util;
 
 import javax.vecmath.Vector3f;
 import java.util.regex.*;
+import jmri.NamedBean;
 
 /* PhysicalLocation
  * 
@@ -43,6 +44,13 @@ public class PhysicalLocation extends Vector3f {
     float[] f = new float[3];  // used for extracting a single dimension
                                // from the underlying vector.
 
+    // Class methods
+
+    public static final PhysicalLocation Origin = new PhysicalLocation(0.0f, 0.0f, 0.0f);
+    public static final String NBPropertyKey = "physical_location";
+
+    // Instance methods
+
     public PhysicalLocation() {
 	super();
     }
@@ -53,6 +61,10 @@ public class PhysicalLocation extends Vector3f {
 
     public PhysicalLocation(float x, float y, float z) {
 	super(x, y, z);
+    }
+
+    public PhysicalLocation(PhysicalLocation p) {
+	super(p.getX(), p.getY(), p.getZ());
     }
 
     public float getX() {
@@ -88,12 +100,35 @@ public class PhysicalLocation extends Vector3f {
 	this.set(f);
     }
 
+    public Boolean equals(PhysicalLocation l) {
+	if ((this.getX() == l.getX()) && (this.getY() == l.getY()) && (this.getZ() == l.getZ())) {
+	    return (true);
+	} else {
+	    return(false);
+	}
+    }
+
+    public void setBeanPhysicalLocation(NamedBean b) {
+	b.setProperty(PhysicalLocation.NBPropertyKey,  this.toString());
+    }
+
+    public static PhysicalLocation getBeanPhysicalLocation(NamedBean b) {
+	String s = (String)b.getProperty(PhysicalLocation.NBPropertyKey);
+	if ((s == null) || (s.equals(""))) {
+	    return(PhysicalLocation.Origin);
+	}
+	else {
+	    return(PhysicalLocation.parse(s));
+	}
+    }
+
     // Get a panel component that can be used to view and/or edit a location.
     static public PhysicalLocationPanel getPanel(String title) {
 	return(new PhysicalLocationPanel(title));
     }
 
     // Parse a string representation (x,y,z)
+    // Returns a new PhysicalLocation object.
     static public PhysicalLocation parse(String pos) {
 	// position is stored as a tuple string "(x,y,z)"
 	// Regex [-+]?[0-9]*\.?[0-9]+
