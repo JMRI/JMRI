@@ -83,6 +83,14 @@ public interface ReporterManager extends Manager {
     public Reporter getByUserName(String userName);
 
     /**
+     * Locate an instance based on a user name, or if that fails,
+     * by system name.  Returns null if no
+     * instance already exists.
+     * @return requested Reporter object or null if none exists
+     */
+    public Reporter getByDisplayName(String userName);
+
+    /**
      * Return an instance with the specified system and user names.
      * Note that two calls with the same arguments will get the same instance;
      * there is only one Reporter object representing a given physical Reporter

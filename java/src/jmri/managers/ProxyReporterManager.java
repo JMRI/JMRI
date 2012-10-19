@@ -66,6 +66,17 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
         return (Reporter) super.getBeanByUserName(userName);
     }
 
+    public Reporter getByDisplayName(String key) {
+	// First try to find it in the user list.
+	// If that fails, look it up in the system list
+	Reporter retv = this.getByUserName(key);
+	if (retv == null) {
+	    retv = this.getBySystemName(key);
+	}
+	// If it's not in the system list, go ahead and return null
+	return(retv);
+    }
+
     /**
      * Return an instance with the specified system and user names.
      * Note that two calls with the same arguments will get the same instance;
