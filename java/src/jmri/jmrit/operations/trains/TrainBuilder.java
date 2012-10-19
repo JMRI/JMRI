@@ -1817,7 +1817,7 @@ public class TrainBuilder extends TrainCommon{
 						return false;
 					}
 					// does the engine road match the train requirements?
-					if (!train.getEngineRoad().equals("") && !train.getEngineRoad().equals(eng.getRoad())){
+					if (!train.getRoadOption().equals(Train.ALLLOADS) && !train.getEngineRoad().equals("") && !train.getEngineRoad().equals(eng.getRoad())){
 						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingDepartEngineRoad"),
 								new Object[]{departStageTrack.getName(), eng.toString(), eng.getRoad(), train.getName()}));
 						return false;				
