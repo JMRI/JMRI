@@ -46,7 +46,7 @@ public class DebugMenu extends JMenu {
             "jmri.jmrit.log.Log4JTreePane"));
         add(new JSeparator());
 	add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction("Virtual Sound Decoder"));
-	add(new jmri.jmrit.beantable.physicallocation.SetPhysicalLocationAction("Set Reporter Locations", null));
+	add(new jmri.jmrit.beantable.SetPhysicalLocationAction("Set Reporter Locations", null));
 
 
     }
