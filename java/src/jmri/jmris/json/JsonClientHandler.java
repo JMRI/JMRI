@@ -69,7 +69,7 @@ public class JsonClientHandler {
 				if (list.equals("lights")) {
 					reply = JsonLister.getLights();
 				} else if (list.equals("memories")) {
-						reply = JsonLister.getMemories();
+					reply = JsonLister.getMemories();
 				} else if (list.equals("metadata")) {
 					reply = JsonLister.getMetadata();
 				} else if (list.equals("panels")) {
