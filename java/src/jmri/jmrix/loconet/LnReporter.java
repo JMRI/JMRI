@@ -145,6 +145,25 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
 	}
     }
 
+    // Parses out a (possibly old) LnReporter-generated report string to extract the direction from the end.
+    // Assumes the LocoReporter format is "NNNN [enter|exit]"
+    public PhysicalLocationReporter.Direction getDirection(String rep) {
+	// Extract the direction from the tail of the report string
+	log.debug("report string: " + rep);
+	Pattern ln_p = Pattern.compile("(\\d+) (enter|exits)");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
+	Matcher m = ln_p.matcher(rep);
+	if (m.find()) {
+	    log.debug("Parsed direction: " + m.group(2));
+	    if (m.group(2).equals("enter")) {
+		return(PhysicalLocationReporter.Direction.ENTER);
+	    } else {
+		return(PhysicalLocationReporter.Direction.EXIT);
+	    }
+	} else {
+	    return(PhysicalLocationReporter.Direction.UNKNOWN);
+	}
+    }
+
     // data members
     int _number;   // loconet Reporter number
 

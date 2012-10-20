@@ -290,6 +290,8 @@ class VSDecoderManager implements PropertyChangeListener {
 	String sa;
 	Integer la = 0;
 	String eventName = (String)event.getPropertyName();
+	String newValue = (String)event.getNewValue();
+
 	if (eventName.equals("currentReport")) {
 	    Reporter arp = (Reporter) event.getSource();
 	    // Need to decide which reporter it is, so we can use different methods
@@ -300,8 +302,9 @@ class VSDecoderManager implements PropertyChangeListener {
 		return;
 	    }
 	    //if (arp.supportsPhysicalLocation()) { 
-	    if (arp instanceof PhysicalLocationReporter) { 
-		setDecoderPositionByAddr(((PhysicalLocationReporter)arp).getLocoAddress((String)event.getNewValue()), loc);
+	    if (arp instanceof PhysicalLocationReporter) {
+		if (((PhysicalLocationReporter)arp).getDirection(newValue) == PhysicalLocationReporter.Direction.ENTER)
+		    setDecoderPositionByAddr(((PhysicalLocationReporter)arp).getLocoAddress(newValue), loc);
 	    } // Reporting object implements PhysicalLocationReporter
 	    else {
 		log.debug("Reporter doesn't support physical location reporting.");

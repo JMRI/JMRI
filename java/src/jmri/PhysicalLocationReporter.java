@@ -30,6 +30,10 @@ import jmri.util.PhysicalLocation;
 
 public interface PhysicalLocationReporter {
 
+    static public enum Direction { UNKNOWN, ENTER, EXIT }
+
     public LocoAddress getLocoAddress(String s);
+
+    public Direction getDirection(String s);
 }
 
