@@ -125,6 +125,7 @@ public class SimpleServer extends JmriServer {
                 outStream.writeBytes("Unknown Command " + cmd + "\n");
             }
         }
+        inputScanner.close();
     }
     static Logger log = Logger.getLogger(SimpleServer.class.getName());
 }
