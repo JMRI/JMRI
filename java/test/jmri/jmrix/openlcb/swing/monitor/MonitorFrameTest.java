@@ -42,8 +42,8 @@ public class MonitorFrameTest extends TestCase {
         
         f.message(msg);
         
-        Assert.assertEquals("formatted", "M: [12345678] 01 02\n", testFormatted);
-        Assert.assertEquals("raw", "01 02", testRaw);
+        Assert.assertEquals("formatted", "S: Alias 0x678 CID 2 frame\n", testFormatted);
+        Assert.assertEquals("raw", "[12345678] 01 02                  ", testRaw);
         memo.dispose();
     }
     
@@ -71,8 +71,8 @@ public class MonitorFrameTest extends TestCase {
         
         f.reply(msg);
         
-        Assert.assertEquals("formatted", "R: [12345678] 01 02\n", testFormatted);
-        Assert.assertEquals("raw", "01 02", testRaw);
+        Assert.assertEquals("formatted", "R: Alias 0x678 CID 2 frame\n", testFormatted);
+        Assert.assertEquals("raw", "[12345678] 01 02                  ", testRaw);
         memo.dispose();
     }
     
