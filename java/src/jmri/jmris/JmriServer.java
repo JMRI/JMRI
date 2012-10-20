@@ -84,10 +84,14 @@ public class JmriServer {
 
     // Advertise the service with ZeroConf
     protected void advertise() {
-        service = ZeroConfService.create("_jmri._tcp.local.", portNo);
-        service.publish();
+        this.advertise("_jmri._tcp.local.");
     }
 
+    protected void advertise(String type) {
+    	service = ZeroConfService.create(type, portNo);
+    	service.publish();
+    }
+    
     public void stop() {
         listenThread = null;
         service.stop();

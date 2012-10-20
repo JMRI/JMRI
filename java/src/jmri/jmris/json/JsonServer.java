@@ -45,6 +45,11 @@ public class JsonServer extends JmriServer {
 		log.info("JMRI JsonServer started on port " + port);
 	}
 
+	@Override
+	protected void advertise() {
+        this.advertise("_jmri-json._tcp.local.");
+	}
+	
 	// Handle communication to a client through inStream and outStream
 	@Override
 	public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
