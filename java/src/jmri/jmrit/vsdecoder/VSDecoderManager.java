@@ -22,21 +22,32 @@ package jmri.jmrit.vsdecoder;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collection;
-import jmri.util.JmriJFrame;
-import javax.swing.JFrame;
-
-import jmri.jmrit.XmlFile;
-import java.io.File;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import java.util.List;
+import java.util.Iterator;
 import java.util.ResourceBundle;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+import javax.swing.JFrame;
 import org.jdom.Element;
+
 import jmri.DccLocoAddress;
+import jmri.jmrit.XmlFile;
+import jmri.util.JmriJFrame;
 import jmri.util.PhysicalLocation;
+import jmri.Reporter;
+import jmri.LocoAddress;
+import jmri.DccLocoAddress;
+import jmri.Reporter;
+import jmri.PhysicalLocationReporter;
 
 // VSDecoderFactory
 //
 // Builds VSDecoders as needed.  Handles loading from XML if needed.
 
-class VSDecoderManager {
+class VSDecoderManager implements PropertyChangeListener {
 
     public static enum EventType { NONE, DECODER_LIST_CHANGE }  // propertyChangeEvents fired by the Manager.
 
@@ -71,6 +82,9 @@ class VSDecoderManager {
 	String dirname = XmlFile.prefsDir()+ "vsdecoder" +File.separator;
 	XmlFile.ensurePrefsPresent(dirname);
 	vsdecoderPrefs = new VSDecoderPreferences(dirname+ rb.getString("VSDPreferencesFileName"));
+
+	// Listen to ReporterManager for Report List changes
+	setupReporterManagerListener();
     }
 
     public static VSDecoderManager instance() {
@@ -165,11 +179,13 @@ class VSDecoderManager {
 	    d.setPosition(p);
     }
 
-    public void setDecoderPositionByAddr(DccLocoAddress a, PhysicalLocation p) {
+    public void setDecoderPositionByAddr(LocoAddress a, PhysicalLocation p) {
 	// Find the addressed decoder
 	// This is a bit hokey.  Need a better way to index decoder by address
+	// OK, this whole LocoAddress vs. DccLocoAddress thing has rendered this SUPER HOKEY.
+	DccLocoAddress da = new DccLocoAddress(a.getNumber(), a.getProtocol());
 	for ( VSDecoder d : decodertable.values()) {
-	    if (d.getAddress().equals(a)) {
+	    if (da.equals(a)) {
 		d.setPosition(p);
 		return;
 	    }
@@ -207,6 +223,102 @@ class VSDecoderManager {
 	} catch (java.io.IOException ioe) {
 	    log.error("IOException loading VSDecoder from " + path);
 	    // would be nice to pop up a dialog here...
+	}
+    }
+
+    // This listener listens to the ReporterManager for changes to the list of Reporters.
+    // Need to trap list length (name="length") changes and add listeners when new ones are added.
+    void setupReporterManagerListener() {
+	// Register ourselves as a listener for changes to the Reporter list.  For now, we won't do this. Just force a
+	// save and reboot after reporters are added.  We'll fix this later.
+	jmri.InstanceManager.reporterManagerInstance().addPropertyChangeListener(new PropertyChangeListener() {
+		public void propertyChange(PropertyChangeEvent event) {
+		    log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
+		    reporterManagerPropertyChange(event);
+		}
+	    });
+
+	// Now, the Reporter Table might already be loaded and filled out, so we need to get all the Reporters and list them.
+	// And add ourselves as a listener to them.
+	List<String> names = jmri.InstanceManager.reporterManagerInstance().getSystemNameList();
+	Iterator<String> i = names.iterator();
+	while (i.hasNext()) {
+	    Reporter r = jmri.InstanceManager.reporterManagerInstance().getBySystemName(i.next());
+	    if (r != null) {
+		r.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent event) {
+			    log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
+			    reporterPropertyChange(event);
+			}
+		    });
+		  
+	    }
+	}
+    }
+
+    public void propertyChange(PropertyChangeEvent evt) {
+	// does nothing ... yet...
+	return;
+    }
+
+    private Boolean isLocoNetEntryReport(String s) {
+	Pattern ln_p = Pattern.compile("(\\d+) enter");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
+
+	Matcher m = ln_p.matcher(s);
+	if (m.find()) {
+	    return(true);
+	} else {
+	    return(false);
+	}
+    }
+
+    private String getLnReportAddress(String s) {
+	Pattern ln_p = Pattern.compile("(\\d+) enter");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
+
+	Matcher m = ln_p.matcher(s);
+	if (m.find()) {
+	    return(m.group(1));
+	} else {
+	    return(null);
+	}
+    }
+
+    
+    public void reporterPropertyChange(PropertyChangeEvent event) {
+	// Needs to check the ID on the event, look up the appropriate VSDecoder,
+	// get the location of the event source, and update the decoder's location.
+	String sa;
+	Integer la = 0;
+	String eventName = (String)event.getPropertyName();
+	if (eventName.equals("currentReport")) {
+	    Reporter arp = (Reporter) event.getSource();
+	    // Need to decide which reporter it is, so we can use different methods
+	    // to extract the address and the location.
+	    PhysicalLocation loc = PhysicalLocation.getBeanPhysicalLocation(arp);
+	    if (loc.equals(PhysicalLocation.Origin)) {
+		// Physical location at origin means it hasn't been set.
+		return;
+	    }
+	    //if (arp.supportsPhysicalLocation()) { 
+	    if (arp instanceof PhysicalLocationReporter) { 
+		setDecoderPositionByAddr(((PhysicalLocationReporter)arp).getLocoAddress((String)event.getNewValue()), loc);
+	    } // Reporting object implements PhysicalLocationReporter
+	    else {
+		log.debug("Reporter doesn't support physical location reporting.");
+	    }
+	} // name == currentReport
+	return;
+    }
+
+    public void reporterManagerPropertyChange(PropertyChangeEvent event) {
+	String eventName = event.getPropertyName();
+	String sOldValue, sNewValue;
+	Integer oldValue, newValue;
+
+	log.debug("VSDecoder received Reporter Manager Property Change: " + eventName);
+	if (eventName.equals("length")) {
+	    log.debug("New Reporter added to list.");
+	    
 	}
     }
 

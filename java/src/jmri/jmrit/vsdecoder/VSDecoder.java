@@ -21,6 +21,7 @@ package jmri.jmrit.vsdecoder;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class VSDecoder implements PropertyChangeListener {
     private String vsd_path;       // Path to VSD file used
     private String profile_name;   // Name used in the "profiles" combo box
                                    // to select this decoder.
-    DccLocoAddress address;        // Currently assigned loco address
+    LocoAddress address;        // Currently assigned loco address -- should be LocoAddress...
     boolean initialized = false;   // This decoder has been initialized
     boolean enabled = false;       // This decoder is enabled
     private boolean is_default = false;  // This decoder is the default for its file
@@ -64,6 +65,7 @@ public class VSDecoder implements PropertyChangeListener {
 	// Force re-initialization
 	initialized = _init();
     }
+
 
     public VSDecoder(String id, String name, String path) {
 	this(id, name);
@@ -155,17 +157,21 @@ public class VSDecoder implements PropertyChangeListener {
 	}
     }
 
+    // DCC-specific and unused. Deprecate this.
     public void releaseAddress(int number, boolean isLong) {
 	// remove the listener, if we can...
     }
 
+    // DCC-specific.  Deprecate this.
     public void setAddress(int number, boolean isLong) {
 	this.setAddress(new DccLocoAddress(number, isLong));
     }
-
-    public void setAddress(DccLocoAddress a) {
-	address = a;
-	jmri.InstanceManager.throttleManagerInstance().attachListener(address, new PropertyChangeListener() {
+    
+    public void setAddress(LocoAddress l) {
+	// Hack for ThrottleManager Dcc dependency
+	address = l;
+	DccLocoAddress dl = new DccLocoAddress(l.getNumber(), l.getProtocol());
+	jmri.InstanceManager.throttleManagerInstance().attachListener(dl, new PropertyChangeListener() {
 		public void propertyChange(PropertyChangeEvent event) {
 		    log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
 		    throttlePropertyChange(event);
@@ -173,11 +179,15 @@ public class VSDecoder implements PropertyChangeListener {
 	    });
 	log.debug("VSDecoder: Address set to " + address.toString());
     }
-
-    public DccLocoAddress getAddress() {
+    
+    public LocoAddress getAddress() {
 	return(address);
     }
-
+    /*
+    public DccLocoAddress getDccAddress() {
+	return(new DccLocoAddress(address.getNumber(), address.getProtocol()));
+    }
+    */
     public float getMasterVolume() {
 	return(master_volume);
     }
@@ -202,6 +212,7 @@ public class VSDecoder implements PropertyChangeListener {
 
     public void setPosition(PhysicalLocation p) {
 	my_position = p;
+	log.debug("Set Position: " + my_position.toString());
 	for (VSDSound s : sound_list.values()) {
 	    s.setPosition(p);
 	}
@@ -215,7 +226,7 @@ public class VSDecoder implements PropertyChangeListener {
 	// Respond to events from the GUI.
 	String property = evt.getPropertyName();
 	if (property.equals("AddressChange")) {
-	    this.setAddress((DccLocoAddress)evt.getNewValue());
+	    this.setAddress((LocoAddress)evt.getNewValue());
 	    this.enable();
 	} else if (property.equals("Mute")) {
 	    log.debug("VSD: Mute change. value = " + evt.getNewValue());

@@ -23,6 +23,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.util.swing.*;
 
@@ -300,7 +301,7 @@ public class VSDecoderPane extends JmriPanel {
     // setAddress()
     //
     // Update the Decoder's address...
-    public void setAddress(DccLocoAddress a) {
+    public void setAddress(LocoAddress a) {
 	if (a != null) {
 	    VSDecoder decoder = VSDecoderManager.instance().getVSDecoderByID(decoder_id);
 	    if (decoder != null) {
@@ -314,7 +315,15 @@ public class VSDecoderPane extends JmriPanel {
     // setTitle();
     //
     // Update the window title with the given address.
+    // Deprecate this eventually
     public void setTitle(DccLocoAddress a) {
+	if (a != null) {
+	    parent.setTitle("VSDecoder - " + a.toString());
+	}
+    }
+
+    // New version
+    public void setTitle(LocoAddress a) {
 	if (a != null) {
 	    parent.setTitle("VSDecoder - " + a.toString());
 	}

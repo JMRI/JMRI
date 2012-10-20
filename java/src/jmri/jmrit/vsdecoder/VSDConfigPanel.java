@@ -35,6 +35,7 @@ import jmri.util.swing.JmriPanel;
 import javax.swing.SwingWorker;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
+import jmri.LocoAddress;
 
 @SuppressWarnings("serial")
 public class VSDConfigPanel extends JmriPanel {
@@ -355,7 +356,7 @@ public class VSDConfigPanel extends JmriPanel {
 	rosterEntry = entry;
 
 	// Set the Address box from the Roster entry
-	main_pane.setAddress(entry.getDccLocoAddress());
+	main_pane.setAddress((LocoAddress)entry.getDccLocoAddress());
 	addressSelector.setAddress(entry.getDccLocoAddress());
 	addressSelector.setEnabled(true);
 
