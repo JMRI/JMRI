@@ -212,7 +212,7 @@ public class VSDecoder implements PropertyChangeListener {
 
     public void setPosition(PhysicalLocation p) {
 	my_position = p;
-	log.debug("Set Position: " + my_position.toString());
+	log.debug("( " + this.getAddress() + ") Set Position: " + my_position.toString());
 	for (VSDSound s : sound_list.values()) {
 	    s.setPosition(p);
 	}

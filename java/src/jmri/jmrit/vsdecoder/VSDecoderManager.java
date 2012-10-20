@@ -184,8 +184,11 @@ class VSDecoderManager implements PropertyChangeListener {
 	// This is a bit hokey.  Need a better way to index decoder by address
 	// OK, this whole LocoAddress vs. DccLocoAddress thing has rendered this SUPER HOKEY.
 	DccLocoAddress da = new DccLocoAddress(a.getNumber(), a.getProtocol());
+	DccLocoAddress dd = null;
+	log.debug("Decoder Address: " + a.getNumber());
 	for ( VSDecoder d : decodertable.values()) {
-	    if (da.equals(a)) {
+	    dd = new DccLocoAddress(d.getAddress().getNumber(), d.getAddress().getProtocol());
+	    if (da.equals(dd)) {
 		d.setPosition(p);
 		return;
 	    }
