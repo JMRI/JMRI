@@ -6,6 +6,7 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import jmri.LocoAddress;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnReporter class.
@@ -66,6 +67,13 @@ public class LnReporterTest extends TestCase {
         LocoNetMessage l = new LocoNetMessage(new int[]{0xE4,0x08,0x00,0x40,0x03,0x42,0x35,0x05});
         a3.message(l);
         assertEquals("Lissy message 2", "8501 seen northbound", a3.getLastReport().toString());
+    }
+
+    public void testLnReporterGetLocoAddress() {
+	LnReporter r = new LnReporter(3, tc, "L");
+	LocoAddress t = r.getLocoAddress("7413 enter");
+	assertEquals("getLocoAddress", t.getNumber(), 7413);
+	
     }
 
     // from here down is testing infrastructure

@@ -3,6 +3,11 @@
 package jmri.jmrix.loconet;
 
 import jmri.implementation.AbstractReporter;
+import jmri.PhysicalLocationReporter;
+import jmri.LocoAddress;
+import jmri.DccLocoAddress;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
  * Extend jmri.AbstractReporter for LocoNet layouts
@@ -33,7 +38,7 @@ import jmri.implementation.AbstractReporter;
  * @version			$Revision$
  */
  
- public class LnReporter extends AbstractReporter implements LocoNetListener {
+public class LnReporter extends AbstractReporter implements LocoNetListener, PhysicalLocationReporter {
 
     public LnReporter(int number, LnTrafficController tc, String prefix) {  // a human-readable Reporter number must be specified!
         super(prefix+"R"+number);  // can't use prefix here, as still in construction
@@ -123,6 +128,21 @@ import jmri.implementation.AbstractReporter;
     public void dispose() {
          tc.removeLocoNetListener(~0, this);
          super.dispose();
+    }
+     
+    // Parses out a (possibly old) LnReporter-generated report string to extract the address from the front.
+    // Assumes the LocoReporter format is "NNNN [enter|exit]"
+    public LocoAddress getLocoAddress(String rep) {
+	// Extract the number from the head of the report string
+	log.debug("report string: " + rep);
+	Pattern ln_p = Pattern.compile("(\\d+) (enter|exits)");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
+	Matcher m = ln_p.matcher(rep);
+	if (m.find()) {
+	    log.debug("Parsed address: " + m.group(1));
+	    return(new DccLocoAddress(Integer.parseInt(m.group(1)), LocoAddress.Protocol.DCC_LONG));
+	} else {
+	    return(null);
+	}
     }
 
     // data members
