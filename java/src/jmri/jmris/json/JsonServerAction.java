@@ -16,7 +16,7 @@ public class JsonServerAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JsonServer.instance().start();
+		JsonServerManager.getJsonServer().start();
 	}
 
 }

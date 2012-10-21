@@ -24,20 +24,12 @@ import org.apache.log4j.Logger;
  */
 public class JsonServer extends JmriServer {
 
-	private static JmriServer _instance = null;
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.json.JsonServer");
 	static Logger log = Logger.getLogger(JsonServer.class.getName());
 
-	public static JmriServer instance() {
-		if (_instance == null) {
-			_instance = new JsonServer();
-		}
-		return _instance;
-	}
-
 	// Create a new server using the default port
 	public JsonServer() {
-		this(Integer.parseInt(rb.getString("JsonServerPort")), Integer.parseInt(rb.getString("JsonServerTimeout")));
+		this(JsonServerManager.getJsonServerPreferences().getPort(), JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
 	}
 
 	public JsonServer(int port, int timeout) {
