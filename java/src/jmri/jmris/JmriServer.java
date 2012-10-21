@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+
+import jmri.InstanceManager;
+import jmri.ShutDownTask;
 import jmri.util.zeroconf.ZeroConfService;
 
 /**
@@ -20,7 +23,8 @@ public class JmriServer {
     protected int portNo = 3000; // Port to listen to for new clients.
     protected int timeout = 0; // Timeout in milliseconds (0 = no timeout).
     protected ServerSocket connectSocket;
-    protected ZeroConfService service;
+    protected ZeroConfService service = null;
+    protected ShutDownTask shutDownTask = null;
     private Thread listenThread = null;
     private ArrayList<clientListener> connectedClientThreads = new ArrayList<clientListener>();
     private static JmriServer _instance = null;
@@ -75,10 +79,13 @@ public class JmriServer {
 
     public void start() {
         /* Start the server thread */
-        if (listenThread == null) {
-            listenThread = new Thread(new newClientListener(connectSocket));
-            listenThread.start();
-            advertise();
+        if (this.listenThread == null) {
+            this.listenThread = new Thread(new newClientListener(connectSocket));
+            this.listenThread.start();
+            this.advertise();
+        }
+        if (this.shutDownTask != null && InstanceManager.shutDownManagerInstance() != null) {
+            InstanceManager.shutDownManagerInstance().register(this.shutDownTask);
         }
     }
 
@@ -88,13 +95,18 @@ public class JmriServer {
     }
 
     protected void advertise(String type) {
-    	service = ZeroConfService.create(type, portNo);
-    	service.publish();
+        if (this.service == null) {
+            this.service = ZeroConfService.create(type, this.portNo);
+        }
+        this.service.publish();
     }
     
     public void stop() {
-        listenThread = null;
-        service.stop();
+        this.listenThread = null;
+        this.service.stop();
+        if (this.shutDownTask != null && InstanceManager.shutDownManagerInstance() != null) {
+            InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
+        }
     }
 
     // Internal thread to listen for new connections
