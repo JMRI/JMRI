@@ -36,22 +36,6 @@ import jmri.util.swing.WindowInterface;
  */
 public class CornwallRR extends Apps {
 
-    protected void createMenus(JMenuBar menuBar, WindowInterface wi) {
-        fileMenu(menuBar, wi);
-        editMenu(menuBar, wi);
-        toolsMenu(menuBar, wi);
-        rosterMenu(menuBar, wi);
-        panelMenu(menuBar, wi);
-        systemsMenu(menuBar, wi);
-        debugMenu(menuBar, wi);
-        helpMenu(menuBar, wi);
-    }
-
-    protected void systemsMenu(JMenuBar menuBar, JFrame frame) {
-        // separate C/MRI and LocoNet menus
-        jmri.jmrix.ActiveSystemsMenu.addItems(menuBar);
-    }
-
     protected String line1() {
         return MessageFormat.format("Cornwall RR, based on JMRI {0}",
                                 new Object[]{jmri.Version.name()});
