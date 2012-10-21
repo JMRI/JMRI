@@ -2,31 +2,75 @@
 
 package apps.gui3;
 
-import apps.AppConfigBase;
-import apps.GuiLafConfigPane;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Vector;
 
-import jmri.jmrix.JmrixConfigPane;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTabbedPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
+import javax.swing.plaf.FontUIResource;
 
-import java.text.MessageFormat;
+import jmri.InstanceManager;
+import jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane;
+import jmri.jmrit.roster.RosterConfigPane;
+import jmri.jmrit.symbolicprog.ProgrammerConfigPane;
+import jmri.jmrit.throttle.ThrottlesPreferencesPane;
+import jmri.jmrit.withrottle.WiThrottlePrefsPanel;
+import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionStatus;
+import jmri.jmrix.JmrixConfigPane;
+import jmri.swing.PreferencesPanel;
+import jmri.web.server.WebServerPreferencesPanel;
 
-import java.awt.*;
-import java.awt.event.*;
-
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Enumeration;
-
-import java.lang.reflect.Method;
-
-import javax.swing.*;
+import org.apache.log4j.Logger;
 import org.jdom.Element;
-import java.util.Vector;
-import java.io.File;
+
+import apps.AppConfigBase;
+import apps.CreateButtonPanel;
+import apps.FileLocationPane;
+import apps.GuiLafConfigPane;
+import apps.ManagerDefaultsConfigPane;
+import apps.PerformActionPanel;
+import apps.PerformFilePanel;
+import apps.PerformScriptPanel;
+import apps.SystemConsoleConfigPanel;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Provide access to preferences via a 
@@ -37,30 +81,38 @@ import java.io.File;
  */
 public class TabbedPreferences extends AppConfigBase {
 
-    @Override
+	@Override
     public String getHelpTarget() { return "package.apps.TabbedPreferences"; }
     @Override
     public String getTitle() { return rb.getString("TitlePreferences"); }
     @Override
     public boolean isMultipleInstances() { return false; }  // only one of these!
     ArrayList<Element> preferencesElements = new ArrayList<Element>();
+    HashMap<String, PreferencesPanel> preferencesPanels = new HashMap<String, PreferencesPanel>();
 
     // All the following needs to be in a separate preferences frame
     // class! How about switching AppConfigPanel to tabbed?
 
     JPanel detailpanel = new JPanel();
     JTabbedPane connectionPanel = new JTabbedPane();
-    jmri.jmrit.throttle.ThrottlesPreferencesPane throttlePreferences;
-    jmri.jmrit.withrottle.WiThrottlePrefsPanel withrottlePrefsPanel;
-    jmri.web.server.WebServerPreferencesPanel webServerPreferences;
+    ThrottlesPreferencesPane throttlePreferences;
+    WiThrottlePrefsPanel withrottlePrefsPanel;
+    //JsonServerPreferencesPanel webServerPreferences;
     
     ArrayList<JmrixConfigPane> connectionTabInstance = new ArrayList<JmrixConfigPane>();
     ArrayList<preferencesCatItems> preferencesArray = new ArrayList<preferencesCatItems>();
     JPanel buttonpanel;
-    JList list;
+    JList<String> list;
     JButton save;
     JScrollPane listScroller;
     int initalisationState = 0x00;
+    Hashtable<Class<?>, Object> saveHook = new Hashtable<Class<?>, Object>();
+    Hashtable<Class<?>, String> saveMethod = new Hashtable<Class<?>, String>();
+	private static final long serialVersionUID = -6266891995866315885L;
+    
+    static final int UNINITIALISED = 0x00;
+    static final int INITIALISING = 0x01;
+    static final int INITIALISED = 0x02;
     
     public TabbedPreferences(){
         
@@ -87,10 +139,6 @@ public class TabbedPreferences extends AppConfigBase {
         preferencesArray.add(new preferencesCatItems("WEBSERVER", rb.getString("MenuWebServer")));
     }
     
-    static final int UNINITIALISED = 0x00;
-    static final int INITIALISING = 0x01;
-    static final int INITIALISED = 0x02;
-    
     public synchronized int init(){
         if(initalisationState==INITIALISED)
                 return INITIALISED;
@@ -105,10 +153,10 @@ public class TabbedPreferences extends AppConfigBase {
                 deleteConnectionIcon.getIconHeight()+2);
         addConnectionIcon = new ImageIcon("resources"+File.separator+"icons"+File.separator+"misc" + File.separator+ "gui3" + File.separator+"Add16x16.png");              
 
-        throttlePreferences = new jmri.jmrit.throttle.ThrottlesPreferencesPane();
-        withrottlePrefsPanel = new jmri.jmrit.withrottle.WiThrottlePrefsPanel();
-        webServerPreferences = new jmri.web.server.WebServerPreferencesPanel();
-        list = new JList();
+        throttlePreferences = new ThrottlesPreferencesPane();
+        withrottlePrefsPanel = new WiThrottlePrefsPanel();
+        //webServerPreferences = new JsonServerPreferencesPanel();
+        list = new JList<String>();
         listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(100, 100));
     
@@ -130,8 +178,8 @@ public class TabbedPreferences extends AppConfigBase {
                     invokeSaveOptions();
                     throttlePreferences.jbSaveActionPerformed(e);
                     withrottlePrefsPanel.storeValues();
-                    webServerPreferences.storeValues();
-                    apps.FileLocationPane.save();
+                    //webServerPreferences.storeValues();
+                    FileLocationPane.save();
                     savePressed();
                 }
             });
@@ -146,25 +194,25 @@ public class TabbedPreferences extends AppConfigBase {
 
         try {
             addItem("DEFAULTS",rb.getString("MenuDefaults"), rb.getString("TabbedLayoutDefaults"), rb.getString("LabelTabbedLayoutDefaults"),
-                new apps.ManagerDefaultsConfigPane(), true, null);
+                new ManagerDefaultsConfigPane(), true, null);
         } catch (Exception ex) {
             log.error("Error in trying to add defaults to the preferences " + ex.toString());
         }
         try {
             addItem("FILELOCATIONS", rb.getString("MenuFileLocation"), rb.getString("TabbedLayoutFileLocations"),
-                rb.getString("LabelTabbedFileLocations"), new apps.FileLocationPane(), true, null);
+                rb.getString("LabelTabbedFileLocations"), new FileLocationPane(), true, null);
         } catch (Exception ex) {
             log.error("Error in trying to add the file locations to the preferences " + ex.toString());
         }
         try {
             addItem("STARTUP", rb.getString("MenuStartUp"), rb.getString("TabbedLayoutStartupActions"),
-                rb.getString("LabelTabbedLayoutStartupActions"), new apps.PerformActionPanel(), true, null);
+                rb.getString("LabelTabbedLayoutStartupActions"), new PerformActionPanel(), true, null);
             addItem("STARTUP", rb.getString("MenuStartUp"), rb.getString("TabbedLayoutCreateButton"),
-                rb.getString("LabelTabbedLayoutCreateButton"), new apps.CreateButtonPanel(), true, null);
+                rb.getString("LabelTabbedLayoutCreateButton"), new CreateButtonPanel(), true, null);
             addItem("STARTUP", rb.getString("MenuStartUp"), rb.getString("TabbedLayoutStartupFiles"),
-                rb.getString("LabelTabbedLayoutStartupFiles"), new apps.PerformFilePanel(), true, null);
+                rb.getString("LabelTabbedLayoutStartupFiles"), new PerformFilePanel(), true, null);
             addItem("STARTUP", rb.getString("MenuStartUp"), rb.getString("TabbedLayoutStartupScripts"),
-                rb.getString("LabelTabbedLayoutStartupScripts"), new apps.PerformScriptPanel(), true, null);
+                rb.getString("LabelTabbedLayoutStartupScripts"), new PerformScriptPanel(), true, null);
         } catch (Exception ex) {
             log.error("Error in trying to add the startup items to the preferences " + ex.toString());
         }
@@ -174,21 +222,21 @@ public class TabbedPreferences extends AppConfigBase {
             addItem("DISPLAY", rb.getString("MenuDisplay"), rb.getString("TabbedLayoutLocale"),
                     rb.getString("LabelTabbedLayoutLocale"), gui.doLocale(), false, null);
             addItem("DISPLAY", rb.getString("MenuDisplay"), rb.getString("TabbedLayoutConsole"),
-                    rb.getString("LabelTabbedLayoutConsole"), new apps.SystemConsoleConfigPanel(), true, null);
+                    rb.getString("LabelTabbedLayoutConsole"), new SystemConsoleConfigPanel(), true, null);
         } catch (Exception ex) {
             log.error("Error in trying to add display config to the preferences " + ex.toString());
         }
         try {
             addItem("MESSAGES", rb.getString("MenuMessages"), null, null,
-                new jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane(), false, null);
+                new UserMessagePreferencesPane(), false, null);
         } catch (Exception ex) {
             log.error("Error in trying to add message items to the preferences " + ex.toString());
         }
         try {
             addItem("ROSTER", rb.getString("MenuRoster"), rb.getString("TabbedLayoutProgrammer"), rb.getString("LabelTabbedLayoutProgrammer"),
-                new jmri.jmrit.symbolicprog.ProgrammerConfigPane(true), true, null);
+                new ProgrammerConfigPane(true), true, null);
             addItem("ROSTER", rb.getString("MenuRoster"), rb.getString("TabbedLayoutRoster"),
-                rb.getString("LabelTabbedLayoutRoster"), new jmri.jmrit.roster.RosterConfigPane(), true, null);
+                rb.getString("LabelTabbedLayoutRoster"), new RosterConfigPane(), true, null);
         } catch (Exception ex) {
             log.error("Error in trying to add roster preferemce " + ex.toString());
         }
@@ -205,10 +253,24 @@ public class TabbedPreferences extends AppConfigBase {
             log.error("Error in trying to add WiThrottle preferences " + ex.toString());
         }
         try {
-            addItem("WEBSERVER", rb.getString("MenuWebServer"), null, null, webServerPreferences, false, null);
+            //addItem("WEBSERVER", rb.getString("MenuWebServer"), null, null, webServerPreferences, false, null);
         } catch (Exception ex) {
             log.error("Error trying to add Web Server preferences " + ex.toString());
         }
+        try {
+			List<String> classNames = (new ObjectMapper()).readValue(rb.getString("PreferencesPanels"), new TypeReference<List<String>>(){});
+			for (String className : classNames) {
+				try {
+					PreferencesPanel panel = (PreferencesPanel) Class.forName(className).newInstance();
+					this.preferencesPanels.put(className, panel);
+					addItem(panel.getPreferencesItem(), panel.getPreferencesItemText(), panel.getTabbedPreferencesTitle(), panel.getLabelKey(), panel.getPreferencesComponent(), panel.isPersistant(), panel.getPreferencesTooltip());
+				} catch (Exception e) {
+					log.error("Unable to add preferences class (" + className + ")", e);
+				}
+			}
+		} catch (Exception e) {
+			log.error("Unable to parse PreferencePanels property", e);
+		}
         for(int x=0; x<preferencesArray.size(); x++){
             detailpanel.add(preferencesArray.get(x).getPanel(), preferencesArray.get(x).getPrefItem());
         }
@@ -224,8 +286,6 @@ public class TabbedPreferences extends AppConfigBase {
         return initalisationState;
     }
     
-    Hashtable<Class<?>, Object> saveHook = new Hashtable<Class<?>, Object>();
-    Hashtable<Class<?>, String> saveMethod = new Hashtable<Class<?>, String>();
     /**
      *  Provides a method for preferences dynamically added to the preference window
      *  to have a method ran when the save button is pressed, thus allowing panes 
@@ -256,7 +316,7 @@ public class TabbedPreferences extends AppConfigBase {
                     method = strClass.getDeclaredMethod (strMethod);
                     method.invoke(saveHook.get(strClass));
                     booMethod = true;
-                } catch (java.lang.reflect.InvocationTargetException et){
+                } catch (InvocationTargetException et){
                     errorInMethod=true;
                     log.error(et.toString());
                 } catch (IllegalAccessException ei){
@@ -272,7 +332,7 @@ public class TabbedPreferences extends AppConfigBase {
                         method = strClass.getMethod (strMethod);
                         method.invoke(saveHook.get(strClass));
                         booMethod=true;
-                    } catch (java.lang.reflect.InvocationTargetException et){
+                    } catch (InvocationTargetException et){
                         errorInMethod=true;
                         booMethod = false;
                         log.error(et.toString());
@@ -294,13 +354,18 @@ public class TabbedPreferences extends AppConfigBase {
                 log.error("Unable to save Preferences for " + strClass);
             }
         }
+        for (PreferencesPanel panel : this.preferencesPanels.values()) {
+        	if (!panel.isPersistant()) {
+        		panel.savePreferences();
+        	}
+        }
     }
     
     void setUpConnectionPanel(){
-        ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
+        ArrayList<Object> connList = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
         if (connList!=null){
             for (int x = 0; x<connList.size(); x++){
-                JmrixConfigPane configPane = jmri.jmrix.JmrixConfigPane.instance(x);
+                JmrixConfigPane configPane = JmrixConfigPane.instance(x);
                 addConnection(x, configPane);
             }
         } else {
@@ -311,13 +376,13 @@ public class TabbedPreferences extends AppConfigBase {
     }
     
     public void setUIFontSize(float size){
-        java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
+        Enumeration<Object> keys = UIManager.getDefaults().keys();
         Font f;
         while (keys.hasMoreElements()) {
           Object key = keys.nextElement();
           Object value = UIManager.get (key);
           
-          if (value instanceof javax.swing.plaf.FontUIResource){
+          if (value instanceof FontUIResource){
             f = UIManager.getFont(key).deriveFont(Font.PLAIN, size);
             UIManager.put (key, f);
           }
@@ -325,12 +390,12 @@ public class TabbedPreferences extends AppConfigBase {
     }
     
 
-    public void setUIFont(javax.swing.plaf.FontUIResource f){
-        java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
+    public void setUIFont(FontUIResource f){
+        Enumeration<Object> keys = UIManager.getDefaults().keys();
         while (keys.hasMoreElements()) {
           Object key = keys.nextElement();
           Object value = UIManager.get (key);
-          if (value instanceof javax.swing.plaf.FontUIResource)
+          if (value instanceof FontUIResource)
             UIManager.put (key, f);
           }
     }
@@ -360,7 +425,7 @@ public class TabbedPreferences extends AppConfigBase {
         itemBeingAdded.addPreferenceItem(tabtitle, labelKey, item, tooltip, store);
         if (store){
             items.add(item);
-            //jmri.InstanceManager.configureManagerInstance().registerPref(item);
+            //InstanceManager.configureManagerInstance().registerPref(item);
         }
     }
     
@@ -424,7 +489,7 @@ public class TabbedPreferences extends AppConfigBase {
         if (list.getListSelectionListeners().length>0){
             list.removeListSelectionListener(list.getListSelectionListeners()[0]);
         }
-        list = new JList(new Vector<String>(getChoices()));
+        list = new JList<String>(new Vector<String>(getChoices()));
         listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(100, 100));
         
@@ -503,7 +568,7 @@ public class TabbedPreferences extends AppConfigBase {
 
         connectionPanel.setToolTipTextAt(tabPosition, title);
 
-        if(jmri.jmrix.ConnectionStatus.instance().isConnectionOk(configPane.getCurrentProtocolInfo())){
+        if(ConnectionStatus.instance().isConnectionOk(configPane.getCurrentProtocolInfo())){
             tabLabel.setForeground(Color.black);
         } else {
             tabLabel.setForeground(Color.red);
@@ -526,7 +591,7 @@ public class TabbedPreferences extends AppConfigBase {
         connectionPanel.setSelectedIndex(connectionPanel.getTabCount()-2);
     }
     
-    jmri.jmrix.JmrixConfigPane comm1;
+    JmrixConfigPane comm1;
     GuiLafConfigPane guiPrefs;
     
     private void removeTab(ActionEvent e, int x){
@@ -550,7 +615,7 @@ public class TabbedPreferences extends AppConfigBase {
             items.remove(configPane);
             try{
                 JmrixConfigPane.dispose(configPane);
-            } catch (java.lang.NullPointerException ex) {log.error("Caught Null Pointer Exception while removing connection tab"); }
+            } catch (NullPointerException ex) {log.error("Caught Null Pointer Exception while removing connection tab"); }
             connectionTabInstance.remove(i);
             if(connectionPanel.getTabCount()==1){
                 addConnectionTab();
@@ -742,6 +807,6 @@ public class TabbedPreferences extends AppConfigBase {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TabbedPreferences.class.getName());
+    static Logger log = Logger.getLogger(TabbedPreferences.class.getName());
 
 }
