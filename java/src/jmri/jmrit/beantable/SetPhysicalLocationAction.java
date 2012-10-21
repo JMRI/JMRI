@@ -67,6 +67,8 @@ public class SetPhysicalLocationAction extends AbstractAction {
 	
 	Reporter _reporter;
 
+	String emptyReporterString = "(No Reporters)";
+
 	List<Reporter> _reporterList = new ArrayList<Reporter>();
 	
 	// labels
@@ -122,9 +124,17 @@ public class SetPhysicalLocationAction extends AbstractAction {
 	    addHelpMenu("package.jmri.jmrit.operations.Operations_SetTrainIconCoordinates",	true); // fix this later
 	    
 	    // setup buttons
-	    addButtonAction(saveButton);
-	    addButtonAction(closeButton);
-	    
+	    saveButton.addActionListener(new java.awt.event.ActionListener() {
+		    public void actionPerformed(java.awt.event.ActionEvent e) {
+			saveButtonActionPerformed(e);
+		    }
+		});
+	    closeButton.addActionListener(new java.awt.event.ActionListener() {
+		    public void actionPerformed(java.awt.event.ActionEvent e) {
+			closeButtonActionPerformed(e);
+		    }
+		});
+
 	    // setup combo box
 	    addComboBoxAction(reporterBox);
 	    reporterBox.setSelectedIndex(0);
@@ -155,6 +165,10 @@ public class SetPhysicalLocationAction extends AbstractAction {
 		    displayList.add(r.getDisplayName());
 		}
 	    }
+	    if (displayList.isEmpty()) {
+		displayList.add(emptyReporterString);
+		saveButton.setEnabled(false);
+	    }
 	    String[] sa = new String[displayList.size()];
 	    displayList.toArray(sa);
 	    javax.swing.JComboBox retv = new javax.swing.JComboBox(sa);
@@ -162,7 +176,11 @@ public class SetPhysicalLocationAction extends AbstractAction {
 	    
 	}
 	
-	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+	public void closeButtonActionPerformed(java.awt.event.ActionEvent ae) {
+	    dispose();
+	}
+
+	public void saveButtonActionPerformed(java.awt.event.ActionEvent ae) {
 	    // check to see if a location has been selected
 	    if (reporterBox.getSelectedItem() == null
 		|| reporterBox.getSelectedItem().equals("")) {
@@ -175,15 +193,10 @@ public class SetPhysicalLocationAction extends AbstractAction {
 	    Reporter l = getReporterFromList();
 	    if (l == null)
 		return;
-	    if (ae.getSource() == saveButton) {
-		int value = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("UpdatePhysicalLocation"),
-										     new Object[] { l.getDisplayName() }), rb.getString("SaveLocation?"), JOptionPane.YES_NO_OPTION);
-		if (value == JOptionPane.YES_OPTION)
-		    saveSpinnerValues(l);
-	    }
-	    if (ae.getSource() == closeButton) {
-		dispose();
-	    }
+	    int value = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("UpdatePhysicalLocation"),
+										 new Object[] { l.getDisplayName() }), rb.getString("SaveLocation?"), JOptionPane.YES_NO_OPTION);
+	    if (value == JOptionPane.YES_OPTION)
+		saveSpinnerValues(l);
 	}
 	
 	Reporter getReporterFromList() {
@@ -200,7 +213,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
 	    if (reporterBox.getSelectedItem() != null) {
-		if (reporterBox.getSelectedItem().equals("")) {
+		if (reporterBox.getSelectedItem().equals("") || reporterBox.getSelectedItem().equals(emptyReporterString)) {
 		    resetSpinners();
 		} else {
 		    Reporter l = getReporterFromList();
