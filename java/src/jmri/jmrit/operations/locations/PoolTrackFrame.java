@@ -3,8 +3,6 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.GridBagLayout;
-import java.awt.event.*;
-
 import javax.swing.*;
 
 import java.text.MessageFormat;

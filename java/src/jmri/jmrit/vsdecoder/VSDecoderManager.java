@@ -39,8 +39,6 @@ import jmri.util.JmriJFrame;
 import jmri.util.PhysicalLocation;
 import jmri.Reporter;
 import jmri.LocoAddress;
-import jmri.DccLocoAddress;
-import jmri.Reporter;
 import jmri.PhysicalLocationReporter;
 
 // VSDecoderFactory

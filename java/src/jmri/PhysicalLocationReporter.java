@@ -1,7 +1,5 @@
 package jmri;
 
-import jmri.util.PhysicalLocation;
-
 /* <hr>
  * PhysicalLocationReporter Interface
  * </hr>

@@ -2,8 +2,6 @@
 package jmri.jmrit.display;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import jmri.Sensor;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.logix.OBlock;

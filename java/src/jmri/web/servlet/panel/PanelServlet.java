@@ -6,7 +6,6 @@ package jmri.web.servlet.panel;
 
 import java.awt.Dimension;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import jmri.configurexml.ConfigXmlManager;
@@ -19,7 +18,6 @@ import org.jdom.output.XMLOutputter;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 

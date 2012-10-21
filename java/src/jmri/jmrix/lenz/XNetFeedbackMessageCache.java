@@ -2,8 +2,6 @@
 
 package jmri.jmrix.lenz;
 
-import jmri.Turnout;
-
 /**
  * Implement a feedback message cache for XPressNet sensors and turnouts.
  * <P>

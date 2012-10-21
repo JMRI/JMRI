@@ -3,11 +3,7 @@ package jmri.jmrit.display;
 import java.awt.Point;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
-
 import jmri.Sensor;
-import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.OBlock;
 /**
  * A utility class replacing common methods formerly implementing the 

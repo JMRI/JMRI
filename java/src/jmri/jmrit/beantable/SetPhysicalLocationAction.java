@@ -3,7 +3,6 @@
 package jmri.jmrit.beantable;
 
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.OperationsXml;
 import jmri.util.PhysicalLocationPanel;
 import jmri.util.PhysicalLocation;
 import jmri.Reporter;
