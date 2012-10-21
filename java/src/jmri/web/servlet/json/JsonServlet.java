@@ -16,6 +16,7 @@ import jmri.implementation.QuietShutDownTask;
 import jmri.jmris.JmriConnection;
 import jmri.jmris.json.JsonClientHandler;
 import jmri.jmris.json.JsonLister;
+import jmri.jmris.json.JsonServerManager;
 
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.websocket.WebSocket;
@@ -164,9 +165,7 @@ public class JsonServlet extends WebSocketServlet {
 		public void onOpen(Connection cnctn) {
 			this.wsConnection = cnctn;
 			this.jmriConnection = new JmriConnection(this.wsConnection);
-			//TODO: make this settable
-			// default timeout is 15 seconds (15000 milliseconds); set to 0 to disable timeouts
-			this.wsConnection.setMaxIdleTime(Integer.parseInt(server.getString("JsonServerTimeout")));
+			this.wsConnection.setMaxIdleTime(JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
 			this.mapper = new ObjectMapper();
 			this.handler = new JsonClientHandler(this.jmriConnection);
 			sockets.add(this);
