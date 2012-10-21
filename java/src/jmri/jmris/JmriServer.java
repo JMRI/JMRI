@@ -26,7 +26,7 @@ public class JmriServer {
     protected ZeroConfService service = null;
     protected ShutDownTask shutDownTask = null;
     private Thread listenThread = null;
-    private ArrayList<clientListener> connectedClientThreads = new ArrayList<clientListener>();
+    protected ArrayList<clientListener> connectedClientThreads = new ArrayList<clientListener>();
     private static JmriServer _instance = null;
 
     public synchronized static JmriServer instance() {
@@ -72,7 +72,7 @@ public class JmriServer {
     //Remove a client
     private synchronized void removeClient(clientListener client) {
         if (connectedClientThreads.contains(client)) {
-            client.stop();
+            client.stop(this);
             connectedClientThreads.remove(client);
         }
     }
@@ -102,6 +102,9 @@ public class JmriServer {
     }
     
     public void stop() {
+    	for (clientListener client : this.connectedClientThreads) {
+    		client.stop(this);
+    	}
         this.listenThread = null;
         this.service.stop();
         if (this.shutDownTask != null && InstanceManager.shutDownManagerInstance() != null) {
@@ -152,7 +155,7 @@ public class JmriServer {
     } // end of newClientListener class
 
     // Internal class to handle a client
-    class clientListener implements Runnable {
+    protected class clientListener implements Runnable {
 
         Socket clientSocket = null;
         DataInputStream inStream = null;
@@ -177,7 +180,13 @@ public class JmriServer {
             clientThread.start();
         }
 
-        public void stop() {
+        public void stop(JmriServer server) {
+        	try {
+            	server.stopClient(inStream, outStream);
+				clientSocket.close();
+			} catch (IOException e) {
+				// silently ignore, since we may be reacting to a closed socket
+			}
             clientThread = null;
         }
 
@@ -218,6 +227,11 @@ public class JmriServer {
                 outStream.write(cmd);
             }
         }
+    }
+    
+    // Send a stop message to the client if applicable
+    public void stopClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
+    	outStream.writeBytes("");
     }
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriServer.class.getName());
 }
