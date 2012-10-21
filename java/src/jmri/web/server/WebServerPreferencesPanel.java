@@ -18,11 +18,14 @@ import jmri.swing.DefaultEditableListModel;
 import jmri.swing.DefaultListCellEditor;
 import jmri.swing.EditableList;
 import jmri.swing.JTitledSeparator;
+import jmri.swing.PreferencesPanel;
+
 import org.apache.log4j.Logger;
 
-public class WebServerPreferencesPanel extends JPanel implements ListDataListener {
+public class WebServerPreferencesPanel extends JPanel implements ListDataListener, PreferencesPanel {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.web.server.WebServerStrings");
+	private static final long serialVersionUID = 6907436730813458420L;
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.web.server.WebServerStrings");
     static Logger log = Logger.getLogger(WebServerPreferencesPanel.class.getName());
     Border lineBorder;
     JSpinner clickDelaySpinner;
@@ -290,4 +293,44 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
             model.removeElementAt(lde.getIndex0());
         }
     }
+
+	@Override
+	public String getPreferencesItem() {
+		return rb.getString("PreferencesItem");
+	}
+
+	@Override
+	public String getPreferencesItemText() {
+		return rb.getString("PreferencesItemTitle");
+	}
+
+	@Override
+	public String getTabbedPreferencesTitle() {
+		return null;
+	}
+
+	@Override
+	public String getLabelKey() {
+		return null;
+	}
+
+	@Override
+	public JComponent getPreferencesComponent() {
+		return this;
+	}
+
+	@Override
+	public boolean isPersistant() {
+		return false;
+	}
+
+	@Override
+	public String getPreferencesTooltip() {
+		return null;
+	}
+
+	@Override
+	public void savePreferences() {
+		this.storeValues();
+	}
 }
