@@ -9,6 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+import jmri.implementation.QuietShutDownTask;
 import jmri.jmris.JmriConnection;
 import jmri.jmris.JmriServer;
 
@@ -34,9 +35,35 @@ public class JsonServer extends JmriServer {
 
 	public JsonServer(int port, int timeout) {
 		super(port, timeout);
-		log.info("JMRI JsonServer started on port " + port);
+        shutDownTask = new QuietShutDownTask("Stop JSON Server") {
+
+            @Override
+            public boolean execute() {
+                try {
+                	JsonServerManager.getJsonServer().stop();
+                } catch (Exception ex) {
+                    log.warn("Error shutting down JSON Server: " + ex.getLocalizedMessage());
+                    if (log.isDebugEnabled()) {
+                        log.debug("Details follow: ", ex);
+                    }
+                }
+                return true;
+            }
+        };
 	}
 
+	@Override
+	public void start() {
+		log.info("Starting JSON Server on port " + this.portNo);
+		super.start();
+	}
+
+	@Override
+	public void stop() {
+		log.info("Stopping JSON Server.");
+		super.stop();
+	}
+	
 	@Override
 	protected void advertise() {
         this.advertise("_jmri-json._tcp.local.");
