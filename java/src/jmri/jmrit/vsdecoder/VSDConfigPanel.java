@@ -106,18 +106,6 @@ public class VSDConfigPanel extends JmriPanel {
     protected void updateAddress() {
 	// Simulates the clicking of the address Set button
 	VSDecoder dec = main_pane.getDecoder();
-	/*
-	try {
-	    int addr = Integer.parseInt(addressTextBox.getText());
-	    main_pane.firePropertyChange(VSDecoderPane.PropertyChangeID.ADDRESS_CHANGE,
-			       dec.getAddress(), new DccLocoAddress(addr, true));
-	    int addr = Integer.parseInt(addressTextBox.getText());
-	    main_pane.firePropertyChange(VSDecoderPane.PropertyChangeID.ADDRESS_CHANGE,
-			       dec.getAddress(), new DccLocoAddress(addr, true));
-	} catch(NumberFormatException e) {
-	    // Address box does not contain an integer... do nothing.
-	}
-	*/
 	if (addressSelector.getAddress() != null) {
 	    main_pane.firePropertyChange(VSDecoderPane.PropertyChangeID.ADDRESS_CHANGE,
 					 dec.getAddress(), addressSelector.getAddress());
@@ -133,8 +121,6 @@ public class VSDConfigPanel extends JmriPanel {
     @SuppressWarnings("unchecked")
     public void handleDecoderListChange(VSDManagerEvent e) {
 	log.warn("Handling the decoder list change");
-	//ArrayList<String> sl = (ArrayList<String>)e.getData();
-	//this.updateProfileList(sl);
 	this.updateProfileList((ArrayList<String>) e.getData());
     }
 
@@ -157,7 +143,6 @@ public class VSDConfigPanel extends JmriPanel {
 		profileComboBox.addItem(st);
 	    }
 	}
-	//profileComboBox.removeItem(loadProfilePrompt);
 
 	if (profileComboBox.getItemCount() > 0) {
 	    profileComboBox.setEnabled(true);
@@ -395,6 +380,7 @@ public class VSDConfigPanel extends JmriPanel {
         if (rosterSelector.getSelectedRosterEntries().length != 0) {
             log.debug("Roster Entry selected...");
             setRosterEntry(rosterSelector.getSelectedRosterEntries()[0]);
+	    rosterSaveButton.setEnabled(true);
         }
     }
     
