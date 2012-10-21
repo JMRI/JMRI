@@ -63,7 +63,7 @@ public class JsonServer extends JmriServer {
 		log.info("Stopping JSON Server.");
 		super.stop();
 	}
-	
+
 	@Override
 	protected void advertise() {
         this.advertise("_jmri-json._tcp.local.");
@@ -97,4 +97,8 @@ public class JsonServer extends JmriServer {
 		handler.onClose();
 	}
 
+	@Override
+	public void stopClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
+		outStream.writeBytes("{'type':'goodbye'}");
+	}
 }
