@@ -102,7 +102,7 @@ public class TabbedPreferences extends AppConfigBase {
     ArrayList<JmrixConfigPane> connectionTabInstance = new ArrayList<JmrixConfigPane>();
     ArrayList<preferencesCatItems> preferencesArray = new ArrayList<preferencesCatItems>();
     JPanel buttonpanel;
-    JList<String> list;
+    JList list;
     JButton save;
     JScrollPane listScroller;
     int initalisationState = 0x00;
@@ -156,7 +156,7 @@ public class TabbedPreferences extends AppConfigBase {
         throttlePreferences = new ThrottlesPreferencesPane();
         withrottlePrefsPanel = new WiThrottlePrefsPanel();
         //webServerPreferences = new JsonServerPreferencesPanel();
-        list = new JList<String>();
+        list = new JList();
         listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(100, 100));
     
@@ -489,7 +489,7 @@ public class TabbedPreferences extends AppConfigBase {
         if (list.getListSelectionListeners().length>0){
             list.removeListSelectionListener(list.getListSelectionListeners()[0]);
         }
-        list = new JList<String>(new Vector<String>(getChoices()));
+        list = new JList(new Vector<String>(getChoices()));
         listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(100, 100));
         
