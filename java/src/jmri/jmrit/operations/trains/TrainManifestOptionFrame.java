@@ -1,4 +1,4 @@
-// OptionFrame.java
+// TrainManifestOptionFrame.java
 
 package jmri.jmrit.operations.trains;
 
@@ -23,13 +23,13 @@ import java.io.File;
 
 
 /**
- * Frame for user edit of train options
+ * Frame for user edit of the train manifest options
  * 
  * @author Dan Boudreau Copyright (C) 2010
  * @version $Revision$
  */
 
-public class OptionFrame extends OperationsFrame{
+public class TrainManifestOptionFrame extends OperationsFrame{
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
@@ -56,7 +56,7 @@ public class OptionFrame extends OperationsFrame{
 	
 	// combo boxes
 
-	public OptionFrame() {
+	public TrainManifestOptionFrame() {
 		super(ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle").getString("TitleOptions"));
 	}
 
@@ -95,7 +95,7 @@ public class OptionFrame extends OperationsFrame{
 		JPanel pCheckboxes = new JPanel();
 		pCheckboxes.setLayout(new GridBagLayout());
 		JScrollPane pCheckboxesPane = new JScrollPane(pCheckboxes);
-		pCheckboxesPane.setBorder(BorderFactory.createTitledBorder(""));
+		pCheckboxesPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifest")));
 		addItem (pCheckboxes, ShowTimesCheckBox, 0, 0);
 		
 		// row 11
@@ -190,5 +190,5 @@ public class OptionFrame extends OperationsFrame{
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(OptionFrame.class.getName());
+	.getLogger(TrainManifestOptionFrame.class.getName());
 }

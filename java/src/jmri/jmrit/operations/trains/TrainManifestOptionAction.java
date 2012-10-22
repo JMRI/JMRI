@@ -1,4 +1,4 @@
-//OptionAction.java
+//TrainManifestOptionAction.java
 
 package jmri.jmrit.operations.trains;
 
@@ -8,26 +8,26 @@ import javax.swing.AbstractAction;
 
 
 /**
- * Swing action to load the options frame.
+ * Swing action to load the train manifest options frame.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
  * @version $Revision$
  */
-public class OptionAction extends AbstractAction {
+public class TrainManifestOptionAction extends AbstractAction {
 	
 	TrainEditFrame frame = null;
 
-    public OptionAction(String s, TrainEditFrame frame) {
+    public TrainManifestOptionAction(String s, TrainEditFrame frame) {
     	super(s);
     	this.frame = frame;
     }
 
-    OptionFrame f = null;
+    TrainManifestOptionFrame f = null;
     public void actionPerformed(ActionEvent e) {
         // create a settings frame
     	if (f == null || !f.isVisible()){
-    		f = new OptionFrame();
+    		f = new TrainManifestOptionFrame();
     		f.initComponents(frame);
     	}
         f.setExtendedState(Frame.NORMAL);
@@ -35,7 +35,7 @@ public class OptionAction extends AbstractAction {
     }
     
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(OptionAction.class.getName());
+	.getLogger(TrainManifestOptionAction.class.getName());
 }
 
-/* @(#)OptionAction.java */
+/* @(#)TrainManifestOptionAction.java */
