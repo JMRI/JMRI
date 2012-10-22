@@ -265,8 +265,7 @@ class VSDecoderManager implements PropertyChangeListener {
     public void reporterPropertyChange(PropertyChangeEvent event) {
 	// Needs to check the ID on the event, look up the appropriate VSDecoder,
 	// get the location of the event source, and update the decoder's location.
-	String sa;
-	Integer la = 0;
+	@SuppressWarnings("cast")
 	String eventName = (String)event.getPropertyName();
 	String newValue = (String)event.getNewValue();
 
@@ -293,8 +292,6 @@ class VSDecoderManager implements PropertyChangeListener {
 
     public void reporterManagerPropertyChange(PropertyChangeEvent event) {
 	String eventName = event.getPropertyName();
-	String sOldValue, sNewValue;
-	Integer oldValue, newValue;
 
 	log.debug("VSDecoder received Reporter Manager Property Change: " + eventName);
 	if (eventName.equals("length")) {

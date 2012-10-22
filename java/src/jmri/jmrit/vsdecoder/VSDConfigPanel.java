@@ -341,7 +341,7 @@ public class VSDConfigPanel extends JmriPanel {
 	rosterEntry = entry;
 
 	// Set the Address box from the Roster entry
-	main_pane.setAddress((LocoAddress)entry.getDccLocoAddress());
+	main_pane.setAddress(entry.getDccLocoAddress());
 	addressSelector.setAddress(entry.getDccLocoAddress());
 	addressSelector.setEnabled(true);
 
