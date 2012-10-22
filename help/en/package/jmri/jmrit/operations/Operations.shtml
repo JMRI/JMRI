@@ -117,6 +117,7 @@ of tools and can be found under the main menu heading
     <LI><A HREF="#Routes">Routes</A>
      <UL>
       <LI><A HREF="#EditRoute">Edit Route</A></LI>
+      <LI><A HREF="#PassengerTrainRoute">Passenger Train Route</A></LI>
       <LI><A HREF="#RouteFeatures">Route Features</A></LI>
       <LI><A HREF="#SetTrainIconCoordinates">Set Train Icon Coordinates</A></LI>
      </UL></LI>
@@ -2047,8 +2048,19 @@ routes is also created each time the "Save Route" button is pressed.
 
 In the Route window select "Tools-&gt;Copy Route" to make a copy of your
 route. Enter the name of the new route and select the route that you
-want to copy. If you want the route reversed check the "Invert" box. 
+want to copy. If you want the route reversed check the "Invert" box.
 
+<A NAME="PassengerTrainRoute"></A>
+<H3>Passenger Train Route</H3>
+
+   Normally passenger trains run on a schedule based on departure times. If you want your manifests
+   to show the departure times for your train, create a route in which you specify the departure
+   time at each location. In the lower right hand corner of the "Edit Route" window, select
+   "Departure Time" in the Display box. Now select the departure time for each location in the
+   train's route. The manifest statement "No work at xxx" isn't appropriate for a passenger train.
+   To eliminate this statement, simply add a comment to each location in the train's route. Use the
+   Edit Route window, and for each location, you can add a comment or edit an existing one. 
+   
 <A NAME="RouteFeatures"></A>
 <H3>Route Features</H3>
 
