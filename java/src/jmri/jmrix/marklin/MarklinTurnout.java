@@ -144,7 +144,6 @@ public class MarklinTurnout extends AbstractTurnout
     // to listen for status changes from Marklin system
     public void reply(MarklinReply m) {
         if(m.getPriority()==MarklinConstants.PRIO_1 && m.getCommand()>=MarklinConstants.ACCCOMMANDSTART && m.getCommand()<=MarklinConstants.ACCCOMMANDEND ){
-            log.info(m.toHexString());
             if(protocol==UNKNOWN) {
                 if(m.getAddress()==_number+MarklinConstants.MM1ACCSTART-1){
                     protocol=MM2;
@@ -155,7 +154,6 @@ public class MarklinTurnout extends AbstractTurnout
                     return;
                 }
             }
-            log.info("Protocol set to " + protocol);
             if(m.getAddress()==getCANAddress()){
                 switch (m.getElement(9)){
                     case 0x00   : setKnownStateFromCS(Turnout.THROWN); break;
