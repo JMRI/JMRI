@@ -94,7 +94,7 @@ public class ThrottleWindow extends JmriJFrame {
     
     private void initGUI()
     {
-        setTitle("Throttle");
+        setTitle(throttleBundle.getString("ThrottleFrameTitle"));
         setLayout(new BorderLayout());
         throttlesLayout = new CardLayout();
         throttlesPanel = new JPanel(throttlesLayout);
