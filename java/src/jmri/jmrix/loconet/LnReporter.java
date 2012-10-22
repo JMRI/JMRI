@@ -139,7 +139,7 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
 	Matcher m = ln_p.matcher(rep);
 	if (m.find()) {
 	    log.debug("Parsed address: " + m.group(1));
-	    return(new DccLocoAddress(Integer.parseInt(m.group(1)), LocoAddress.Protocol.DCC_LONG));
+	    return(new DccLocoAddress(Integer.parseInt(m.group(1)), LocoAddress.Protocol.DCC));
 	} else {
 	    return(null);
 	}

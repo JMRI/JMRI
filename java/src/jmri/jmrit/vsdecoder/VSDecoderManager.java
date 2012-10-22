@@ -185,7 +185,7 @@ class VSDecoderManager implements PropertyChangeListener {
 	DccLocoAddress dd = null;
 	log.debug("Decoder Address: " + a.getNumber());
 	for ( VSDecoder d : decodertable.values()) {
-	    dd = new DccLocoAddress(d.getAddress().getNumber(), d.getAddress().getProtocol());
+	    dd = new DccLocoAddress(d.getAddress().getNumber(), LocoAddress.Protocol.DCC);
 	    if (da.equals(dd)) {
 		d.setPosition(p);
 		return;
@@ -262,29 +262,6 @@ class VSDecoderManager implements PropertyChangeListener {
 	return;
     }
 
-    private Boolean isLocoNetEntryReport(String s) {
-	Pattern ln_p = Pattern.compile("(\\d+) enter");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
-
-	Matcher m = ln_p.matcher(s);
-	if (m.find()) {
-	    return(true);
-	} else {
-	    return(false);
-	}
-    }
-
-    private String getLnReportAddress(String s) {
-	Pattern ln_p = Pattern.compile("(\\d+) enter");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
-
-	Matcher m = ln_p.matcher(s);
-	if (m.find()) {
-	    return(m.group(1));
-	} else {
-	    return(null);
-	}
-    }
-
-    
     public void reporterPropertyChange(PropertyChangeEvent event) {
 	// Needs to check the ID on the event, look up the appropriate VSDecoder,
 	// get the location of the event source, and update the decoder's location.
