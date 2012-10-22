@@ -129,14 +129,28 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
          tc.removeLocoNetListener(~0, this);
          super.dispose();
     }
+
+    // parseReport()
+    // Parses out a (possibly old) LnReporter-generated report string to extract info used by
+    // the public PhysicalLocationReporter methods.  Returns a Matcher that, if successful, should
+    // have the following groups defined.
+    // matcher.group(1) : the locomotive address
+    // matcher.group(2) : (enter | exit | seen)
+    // matcher.group(3) | (northbound | southbound) -- Lissy messages only
+    //
+    // NOTE: This code is dependent on the transpondingReport() and lissyReport() methods above.  If they change, the regex here must change.
+    private Matcher parseReport(String rep) {
+	Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
+	Matcher m = ln_p.matcher(rep);
+	return(m);
+    }
      
     // Parses out a (possibly old) LnReporter-generated report string to extract the address from the front.
     // Assumes the LocoReporter format is "NNNN [enter|exit]"
     public LocoAddress getLocoAddress(String rep) {
 	// Extract the number from the head of the report string
 	log.debug("report string: " + rep);
-	Pattern ln_p = Pattern.compile("(\\d+) (enter|exits)");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
-	Matcher m = ln_p.matcher(rep);
+	Matcher m = this.parseReport(rep);
 	if (m.find()) {
 	    log.debug("Parsed address: " + m.group(1));
 	    return(new DccLocoAddress(Integer.parseInt(m.group(1)), LocoAddress.Protocol.DCC));
@@ -150,11 +164,14 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
     public PhysicalLocationReporter.Direction getDirection(String rep) {
 	// Extract the direction from the tail of the report string
 	log.debug("report string: " + rep);
-	Pattern ln_p = Pattern.compile("(\\d+) (enter|exits)");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
-	Matcher m = ln_p.matcher(rep);
+	Matcher m = this.parseReport(rep);
 	if (m.find()) {
 	    log.debug("Parsed direction: " + m.group(2));
 	    if (m.group(2).equals("enter")) {
+		// LocoNet Enter message
+		return(PhysicalLocationReporter.Direction.ENTER);
+	    } else if (m.group(2).equals("seen")) {
+		// Lissy message.  Treat them all as "entry" messages.
 		return(PhysicalLocationReporter.Direction.ENTER);
 	    } else {
 		return(PhysicalLocationReporter.Direction.EXIT);

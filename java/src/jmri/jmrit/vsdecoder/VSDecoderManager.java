@@ -177,17 +177,19 @@ class VSDecoderManager implements PropertyChangeListener {
 	    d.setPosition(p);
     }
 
-    public void setDecoderPositionByAddr(LocoAddress a, PhysicalLocation p) {
+    public void setDecoderPositionByAddr(LocoAddress a, PhysicalLocation l) {
 	// Find the addressed decoder
 	// This is a bit hokey.  Need a better way to index decoder by address
 	// OK, this whole LocoAddress vs. DccLocoAddress thing has rendered this SUPER HOKEY.
-	DccLocoAddress da = new DccLocoAddress(a.getNumber(), a.getProtocol());
-	DccLocoAddress dd = null;
 	log.debug("Decoder Address: " + a.getNumber());
 	for ( VSDecoder d : decodertable.values()) {
-	    dd = new DccLocoAddress(d.getAddress().getNumber(), LocoAddress.Protocol.DCC);
-	    if (da.equals(dd)) {
-		d.setPosition(p);
+	    // Get the Decoder's address protocol.  If it's a DCC_LONG or DCC_SHORT, convert to DCC
+	    // since the LnReprter can't tell the difference and will always report "DCC".
+	    LocoAddress.Protocol p = d.getAddress().getProtocol();
+	    if ((p == LocoAddress.Protocol.DCC_LONG) || (p == LocoAddress.Protocol.DCC_SHORT))
+	    p = LocoAddress.Protocol.DCC;
+	    if ((d.getAddress().getNumber() == a.getNumber()) && (p == a.getProtocol())) {
+		d.setPosition(l);
 		return;
 	    }
 	}
