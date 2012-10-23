@@ -211,6 +211,8 @@ public class TrainManifest extends TrainCommon {
 								s = s +", "+rb.getString("departureTime")+" "+train.getDepartureTime();
 							else if (!rl.getDepartureTime().equals(""))
 								s = s +", "+rb.getString("departureTime")+" "+rl.getFormatedDepartureTime();
+							else if (Setup.isUseDepartureTimeEnabled() && !rl.getComment().equals("") && r != routeList.size()-1)
+								s = s +", "+rb.getString("departureTime")+" "+train.getExpectedDepartureTime(rl);
 						}
 						newLine(fileOut, s);
 					}
