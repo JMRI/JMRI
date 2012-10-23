@@ -118,6 +118,7 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
             _dataChars[i] = d[i];
         }
     }
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array, can be directly manipulated
     public int[] getData() { return _dataChars; }
     
     // CAN header
