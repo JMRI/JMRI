@@ -57,7 +57,7 @@ public class PositionableRoundRectXml extends PositionableShapeXml {
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor)o;
-        PositionableRoundRect ps = new PositionableRoundRect(ed);;
+        PositionableRoundRect ps = new PositionableRoundRect(ed);
 
 		Element elem = element.getChild("size");
         ps.setWidth(getInt(elem, "width"));

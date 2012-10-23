@@ -99,7 +99,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor)o;
-        PositionableShape ps = new PositionableShape(ed);;
+        PositionableShape ps = new PositionableShape(ed);
         
         // get object class and determine editor being used
 		Editor editor = (Editor)o;

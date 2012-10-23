@@ -491,7 +491,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         for (int i=0; i<list.size(); i++) {
             if (list.get(i) instanceof IndicatorTrack) {
                 IndicatorTrack icon = (IndicatorTrack)list.get(i);
-                ArrayList <String> paths = ((IndicatorTrack)icon).getPaths();
+                ArrayList <String> paths = icon.getPaths();
                 if (paths!=null) {
                 	for (int j=0; j<paths.size(); j++) {
                         if (oldName.equals(paths.get(j))) {

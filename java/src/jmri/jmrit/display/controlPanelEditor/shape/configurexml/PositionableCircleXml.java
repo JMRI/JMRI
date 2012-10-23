@@ -52,7 +52,7 @@ public class PositionableCircleXml extends PositionableShapeXml {
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor)o;
-        PositionableCircle ps = new PositionableCircle(ed);;
+        PositionableCircle ps = new PositionableCircle(ed);
     	
 		Element elem = element.getChild("size");
         ps.setRadius(getInt(elem, "radius"));

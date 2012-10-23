@@ -53,7 +53,7 @@ public class PositionableEllipseXml extends PositionableShapeXml {
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor)o;
-        PositionableEllipse ps = new PositionableEllipse(ed);;
+        PositionableEllipse ps = new PositionableEllipse(ed);
     	
 		Element elem = element.getChild("size");
         ps.setWidth(getInt(elem, "width"));

@@ -2459,7 +2459,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             for (int i=0; i<_selectionGroup.size(); i++) {
             	Positionable p = _selectionGroup.get(i);
             	if ( p instanceof PositionableLabel ) {
-                    setAttributes(util, (PositionableLabel)p, isOpaque);           		
+                    setAttributes(util, p, isOpaque);           		
             	}
              }
         }

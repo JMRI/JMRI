@@ -52,7 +52,7 @@ public class PositionableRectangleXml extends PositionableShapeXml {
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor)o;
-    	PositionableRectangle ps = new PositionableRectangle(ed);;
+    	PositionableRectangle ps = new PositionableRectangle(ed);
     	
 		Element elem = element.getChild("size");
         ps.setWidth(getInt(elem, "width"));

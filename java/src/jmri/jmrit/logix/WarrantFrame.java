@@ -2232,7 +2232,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                             ts.setValue((String)value);
                         } catch (NumberFormatException nfe) {
                         	msg  = java.text.MessageFormat.format(
-                                    rb.getString("badValue"), (String)value, cmd);
+                                    rb.getString("badValue"), value, cmd);
                         }
                     }
                      ts.setBlockName(getPreviousBlockName(row));
@@ -2266,11 +2266,11 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                             }
                         } catch (Exception ex) {
                         	msg  = java.text.MessageFormat.format(
-                                    rb.getString("BadWarrant"), (String)value, cmd)+ex;
+                                    rb.getString("BadWarrant"), value, cmd)+ex;
                         }
                     } else {
                     	String name = getPreviousBlockName(row);
-                    	if (!name.equals((String)value)) {
+                    	if (!name.equals(value)) {
                             msg = java.text.MessageFormat.format(
                                     rb.getString("commandInBlock"), name);                              		
                             ts.setBlockName(name);
