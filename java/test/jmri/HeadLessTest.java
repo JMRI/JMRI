@@ -49,7 +49,7 @@ public class HeadLessTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.JmriTest");  // no tests in this class itself
         
-        suite.addTest(jmri.JmriTest.suite());
+        suite.addTest(jmri.PackageTest.suite());
         
         return suite;
     }

@@ -46,7 +46,7 @@ public class AllTest extends TestCase  {
         // all tests from here down in heirarchy
         TestSuite suite = new TestSuite("AllTest");  // no tests in this class itself
         // all tests from other classes
-        suite.addTest(jmri.JmriTest.suite());
+        suite.addTest(jmri.PackageTest.suite());
 
         return suite;
     }
