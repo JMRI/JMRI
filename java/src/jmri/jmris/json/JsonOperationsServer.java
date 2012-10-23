@@ -165,19 +165,26 @@ public class JsonOperationsServer extends AbstractOperationsServer {
 			response.add(new Attribute(TRAIN, train));
 			if (!data.path(TRAINLENGTH).isMissingNode()) {
 				response.add(new Attribute(TRAINLENGTH, this.constructTrainLength(train)));
-			} else if (!data.path(TRAINWEIGHT).isMissingNode()) {
+			}
+			if (!data.path(TRAINWEIGHT).isMissingNode()) {
 				response.add(new Attribute(TRAINWEIGHT, this.constructTrainWeight(train)));
-			} else if (!data.path(TRAINCARS).isMissingNode()) {
+			}
+			if (!data.path(TRAINCARS).isMissingNode()) {
 				response.add(new Attribute(TRAINCARS, this.constructTrainNumberOfCars(train)));
-			} else if (!data.path(TRAINLEADLOCO).isMissingNode()) {
+			}
+			if (!data.path(TRAINLEADLOCO).isMissingNode()) {
 				response.add(new Attribute(TRAINLEADLOCO, this.constructTrainLeadLoco(train)));
-			} else if (!data.path(TRAINCABOOSE).isMissingNode()) {
+			}
+			if (!data.path(TRAINCABOOSE).isMissingNode()) {
 				response.add(new Attribute(TRAINCABOOSE, this.constructTrainCaboose(train)));
-			} else if (!data.path(TRAINSTATUS).isMissingNode()) {
+			}
+			if (!data.path(TRAINSTATUS).isMissingNode()) {
 				response.add(new Attribute(TRAINSTATUS, this.constructTrainStatus(train)));
-			} else if (!data.path(TERMINATE).isMissingNode()) {
+			}
+			if (!data.path(TERMINATE).isMissingNode()) {
 				response.add(new Attribute(TERMINATE, this.terminateTrain(train)));
-			} else if (!data.path(TRAINLOCATION).isMissingNode()) {
+			}
+			if (!data.path(TRAINLOCATION).isMissingNode()) {
 				if (data.path(TRAINLOCATION).isNull()) {
 					response.add(new Attribute(TRAINLOCATION, this.constructTrainLocation(train)));
 				} else {
