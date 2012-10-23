@@ -600,6 +600,7 @@ public class TrainBuilder extends TrainCommon{
 					new Object[]{}));		
 					
 		addLine(buildReport, FIVE,  MessageFormat.format(rb.getString("buildBegineSearchEngines"), new Object[]{numberOfEngines, model, road, rl.getName(), rld.getName()}));
+		boolean foundLoco = false;
 		for (int indexEng=0; indexEng<engineList.size(); indexEng++){
 			Engine engine = engineManager.getById(engineList.get(indexEng));
 			log.debug("Engine ("+engine.toString()+") at location ("+engine.getLocationName()+")");
@@ -699,7 +700,9 @@ public class TrainBuilder extends TrainCommon{
 					}
 				}
 			}
-
+			// found a loco!
+			foundLoco = true;
+			
 			// now find terminal track for engine(s)
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildEngineRoadModelType"),new Object[]{engine.toString(), engine.getRoad(), engine.getModel(), engine.getType()}));
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildAtLocation"),new Object[]{(engine.getLocationName()+", "+engine.getTrackName()), rld.getName()}));
@@ -737,7 +740,9 @@ public class TrainBuilder extends TrainCommon{
 				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCanNotDropEngToDest"),new Object[]{engine.toString(), rld.getName()}));
 			}		
 		}
-		// not able to find engines
+		if (!foundLoco)
+			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoLocosFoundAtLocation"),new Object[]{rl.getName()}));
+		// not able to assign engines to train
 		return false;
 	}
 	
