@@ -33,8 +33,8 @@ $(document).ready(function() {
 			}
 		}
 	});
+	$('input#sendCmd').click(function() {
+		jmri.socket._send($('input#command').val());
+		return false;
+	});
 });
-$('sendCmd').onclick = function(event) {
-	server.send($('command').value);
-	return false;
-};
