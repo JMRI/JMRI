@@ -46,6 +46,22 @@ public class JsonClientHandler {
 		this.throttleServer.onClose();
 	}
 	
+	/**
+	 * Process a JSON string and handle appropriately.
+	 * 
+	 * Currently JSON strings in four different forms are handled by this method:<ul>
+	 * <li>list requests in the form: <code>{"type":"list","list":"trains"}</code>
+	 * that are passed to the JsonLister for handling.</li>
+	 * <li>individual item requests in the form: <code>{"type":"turnout",data:{"name":"LT14"}</code>
+	 * that are passed to type-specific handlers.</li>
+	 * <li>a heartbeat in the form <code>*</code> or <code>{"type":"ping"}</code>. The <code>*</code> heartbeat
+	 * gets no response, while the JSON heartbeat causes a <code>{"type":"pong"}</code> response.</li>
+	 * <li>a signoff in the form: <code>{"type":"goodbye"}</code> to which an identical response
+	 * is sent before the connection gets closed.</li>
+	 * 
+	 * @param string
+	 * @throws IOException
+	 */
 	public void onMessage(String string) throws IOException {
 		if (log.isDebugEnabled()) {
 			log.debug("Received from client: " + string);
@@ -68,6 +84,8 @@ public class JsonClientHandler {
 				String list = root.path("list").asText();
 				if (list.equals("lights")) {
 					reply = JsonLister.getLights();
+				} else if (list.equals("locations")) {
+					reply = JsonLister.getLocations();
 				} else if (list.equals("memories")) {
 					reply = JsonLister.getMemories();
 				} else if (list.equals("metadata")) {
@@ -82,12 +100,10 @@ public class JsonClientHandler {
 					reply = JsonLister.getSensors();
 				} else if (list.equals("signalHeads")) {
 					reply = JsonLister.getSignalHeads();
+				} else if (list.equals("trains")) {
+					reply = JsonLister.getTrains();
 				} else if (list.equals("turnouts")) {
 					reply = JsonLister.getTurnouts();
-				} else if (list.equals("trains")) {      /* e.g. {"type":"list","list":"trains"} */
-					reply = JsonLister.getTrains();
-				} else if (list.equals("locations")) {   /* e.g. {"type":"list","list":"locations"} */
-					reply = JsonLister.getLocations();
 				} else {
 					this.sendErrorMessage(0, "unknown list requested: [" + list + "]");
 					return;
