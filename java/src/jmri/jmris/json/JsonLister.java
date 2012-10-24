@@ -65,7 +65,36 @@ public class JsonLister {
 		}
 		return root;
 	}
-	
+
+	static public JsonNode getLocation(String id) {
+		ObjectNode root = mapper.createObjectNode();
+		root.put("type", "location");
+		ObjectNode data = root.putObject("data");
+		try {
+			Location location = LocationManager.instance().getLocationByName(id);
+			data.put("name", location.getName());
+			data.put("id", location.getId());
+			data.put("length", location.getLength());
+			data.put("comment", location.getComment());
+		} catch (NullPointerException e) {
+			root.put("type", "error");
+			data.put("code", -1);
+			data.put("message", "Unable to get location [" + id + "]");
+			log.error("Unable to get location [" + id + "].", e);
+		}
+		return root;
+	}
+
+	static public JsonNode getLocations() {
+		ObjectNode root = mapper.createObjectNode();
+		root.put("type", "list");
+		ArrayNode locations = root.putArray("list");
+		for (String locationID : LocationManager.instance().getLocationsByNameList()) {
+			locations.add(getLocation(locationID));
+		}
+		return root;
+	}
+
 	static public JsonNode getMemories() {
 		ObjectNode root = mapper.createObjectNode();
 		root.put("type", "list");
@@ -321,14 +350,13 @@ public class JsonLister {
         return root;
 	}
 
-	static public JsonNode getTrain(String name) {
+	static public JsonNode getTrain(String id) {
 		ObjectNode root = mapper.createObjectNode();
 		root.put("type", "train");
 		ObjectNode data = root.putObject("data");
-		TrainManager tm = TrainManager.instance();
 		try {
-			Train train = tm.getTrainByName(name);
-			data.put("name", name);
+			Train train = TrainManager.instance().getTrainById(id);
+			data.put("name", train.getName());
 			data.put("id", train.getId());
 			data.put("departureTime", train.getDepartureTime());
 			data.put("comment", train.getComment());
@@ -344,8 +372,8 @@ public class JsonLister {
 		} catch (NullPointerException e) {
 			root.put("type", "error");
 			data.put("code", -1);
-			data.put("message", "Unable to get train [" + name + "]");
-			log.error("Unable to get train [" + name + "]. " + e);
+			data.put("message", "Unable to get train [" + id + "]");
+			log.error("Unable to get train [" + id + "].", e);
 		}
 		return root;
 	}
@@ -354,44 +382,11 @@ public class JsonLister {
 		ObjectNode root = mapper.createObjectNode();
 		root.put("type", "list");
 		ArrayNode trains = root.putArray("list");
-		TrainManager tm = TrainManager.instance();
-		for (String trainID : tm.getTrainsByNameList()) {
-			trains.add(getTrain(tm.getTrainById(trainID).getName()));
+		for (String trainID : TrainManager.instance().getTrainsByNameList()) {
+			trains.add(getTrain(trainID));
 		}
 		return root;
 	}
-
-	static public JsonNode getLocation(String name) {
-		ObjectNode root = mapper.createObjectNode();
-		root.put("type", "location");
-		ObjectNode data = root.putObject("data");
-		LocationManager lm = LocationManager.instance();
-		try {
-			Location location = lm.getLocationByName(name);
-			data.put("name", name);
-			data.put("id", location.getId());
-			data.put("length", location.getLength());
-			data.put("comment", location.getComment());
-		} catch (NullPointerException e) {
-			root.put("type", "error");
-			data.put("code", -1);
-			data.put("message", "Unable to get location [" + name + "]");
-			log.error("Unable to get location [" + name + "]. " + e);
-		}
-		return root;
-	}
-
-	static public JsonNode getLocations() {
-		ObjectNode root = mapper.createObjectNode();
-		root.put("type", "list");
-		ArrayNode locations = root.putArray("list");
-		LocationManager lm = LocationManager.instance();
-		for (String locationID : lm.getLocationsByNameList()) {
-			locations.add(getLocation(lm.getLocationById(locationID).getName()));
-		}
-		return root;
-	}
-
 
 	static public JsonNode getTurnout(String name) {
 		ObjectNode root = mapper.createObjectNode();
