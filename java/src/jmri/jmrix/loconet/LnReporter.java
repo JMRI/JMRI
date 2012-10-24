@@ -4,6 +4,7 @@ package jmri.jmrix.loconet;
 
 import jmri.implementation.AbstractReporter;
 import jmri.PhysicalLocationReporter;
+import jmri.util.PhysicalLocation;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import java.util.regex.Pattern;
@@ -179,6 +180,10 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
 	} else {
 	    return(PhysicalLocationReporter.Direction.UNKNOWN);
 	}
+    }
+
+    public PhysicalLocation getPhysicalLocation() {
+	return(PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
     // data members
