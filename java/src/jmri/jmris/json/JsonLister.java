@@ -19,6 +19,10 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
@@ -317,6 +321,78 @@ public class JsonLister {
         return root;
 	}
 
+	static public JsonNode getTrain(String name) {
+		ObjectNode root = mapper.createObjectNode();
+		root.put("type", "train");
+		ObjectNode data = root.putObject("data");
+		TrainManager tm = TrainManager.instance();
+		try {
+			Train train = tm.getTrainByName(name);
+			data.put("name", name);
+			data.put("id", train.getId());
+			data.put("departureTime", train.getDepartureTime());
+			data.put("comment", train.getComment());
+			data.put("route", train.getRoute().getName());
+			if (train.getDepartureTrack() != null) {
+				data.put("departureTrack", train.getDepartureTrack().getName());
+			}
+			if (train.getTerminationTrack() != null) {
+				data.put("terminationTrack", train.getTerminationTrack().getName());
+			}
+			data.put("currentLocationName", train.getCurrentLocationName());
+			data.put("status", train.getStatus());
+		} catch (NullPointerException e) {
+			root.put("type", "error");
+			data.put("code", -1);
+			data.put("message", "Unable to get train [" + name + "]");
+			log.error("Unable to get train [" + name + "]. " + e);
+		}
+		return root;
+	}
+
+	static public JsonNode getTrains() {
+		ObjectNode root = mapper.createObjectNode();
+		root.put("type", "list");
+		ArrayNode trains = root.putArray("list");
+		TrainManager tm = TrainManager.instance();
+		for (String trainID : tm.getTrainsByNameList()) {
+			trains.add(getTrain(tm.getTrainById(trainID).getName()));
+		}
+		return root;
+	}
+
+	static public JsonNode getLocation(String name) {
+		ObjectNode root = mapper.createObjectNode();
+		root.put("type", "location");
+		ObjectNode data = root.putObject("data");
+		LocationManager lm = LocationManager.instance();
+		try {
+			Location location = lm.getLocationByName(name);
+			data.put("name", name);
+			data.put("id", location.getId());
+			data.put("length", location.getLength());
+			data.put("comment", location.getComment());
+		} catch (NullPointerException e) {
+			root.put("type", "error");
+			data.put("code", -1);
+			data.put("message", "Unable to get location [" + name + "]");
+			log.error("Unable to get location [" + name + "]. " + e);
+		}
+		return root;
+	}
+
+	static public JsonNode getLocations() {
+		ObjectNode root = mapper.createObjectNode();
+		root.put("type", "list");
+		ArrayNode locations = root.putArray("list");
+		LocationManager lm = LocationManager.instance();
+		for (String locationID : lm.getLocationsByNameList()) {
+			locations.add(getLocation(lm.getLocationById(locationID).getName()));
+		}
+		return root;
+	}
+
+
 	static public JsonNode getTurnout(String name) {
 		ObjectNode root = mapper.createObjectNode();
 		root.put("type", "turnout");
@@ -331,8 +407,8 @@ public class JsonLister {
 		} catch (NullPointerException e) {
 			root.put("type", "error");
 			data.put("code", -1);
-			data.put("message", "Unable to get turnout");
-			log.error("Unable to get turnout." + e);
+			data.put("message", "Unable to get turnout [" + name + "]");
+			log.error("Unable to get turnout [" + name + "]." + e);
 		}
 		return root;
 	}

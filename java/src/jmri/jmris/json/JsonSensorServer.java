@@ -32,6 +32,7 @@ public class JsonSensorServer extends AbstractSensorServer {
 	public JsonSensorServer(JmriConnection connection) {
 		super();
 		this.connection = connection;
+    	this.mapper = new ObjectMapper();
 	}
 
 	/*
@@ -40,7 +41,7 @@ public class JsonSensorServer extends AbstractSensorServer {
 	@Override
 	public void sendStatus(String sensorName, int status) throws IOException {
     	ObjectNode root = this.mapper.createObjectNode();
-    	root.put("type", "turnout");
+    	root.put("type", "sensor");
     	ObjectNode data = root.putObject("data");
     	data.put("name", sensorName);
     	data.put("state", status);

@@ -84,10 +84,15 @@ public class JsonClientHandler {
 					reply = JsonLister.getSignalHeads();
 				} else if (list.equals("turnouts")) {
 					reply = JsonLister.getTurnouts();
+				} else if (list.equals("trains")) {      /* e.g. {"type":"list","list":"trains"} */
+					reply = JsonLister.getTrains();
+				} else if (list.equals("locations")) {   /* e.g. {"type":"list","list":"locations"} */
+					reply = JsonLister.getLocations();
 				} else {
-					this.sendErrorMessage(0, "unknown type");
+					this.sendErrorMessage(0, "unknown list requested: [" + list + "]");
 					return;
 				}
+				//if (log.isDebugEnabled()) log.debug("Sending to client: " + this.mapper.writeValueAsString(reply));
 				this.connection.sendMessage(this.mapper.writeValueAsString(reply));
 			} else if (!data.isMissingNode()) {
 				if (type.equals("light")) {

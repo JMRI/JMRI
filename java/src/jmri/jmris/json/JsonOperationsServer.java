@@ -158,7 +158,7 @@ public class JsonOperationsServer extends AbstractOperationsServer {
 		ArrayList<Attribute> response = new ArrayList<Attribute>();
 		if (!data.path(LOCATIONS).isMissingNode()) {
 			this.sendLocationList();
-		} else if (!data.path(TRAINS).isMissingNode()) {
+		} else if (!data.path(TRAINS).isMissingNode()) {  /* e.g. {"type":"operations","data":{"trains":null}} */
 			this.sendTrainList();
 		} else if (!data.path(TRAIN).isMissingNode()) {
 			String train = data.path(TRAIN).asText();

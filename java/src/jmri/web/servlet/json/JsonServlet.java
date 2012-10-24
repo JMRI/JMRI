@@ -107,6 +107,10 @@ public class JsonServlet extends WebSocketServlet {
         		reply = JsonLister.getRoster();
         	} else if (type.equals("routes")) {
         		reply = JsonLister.getRoutes();
+        	} else if (type.equals("trains")) {
+        		reply = JsonLister.getTrains();
+        	} else if (type.equals("locations")) {
+        		reply = JsonLister.getLocations();
         	} else if (type.equals("sensors")) {
         		reply = JsonLister.getSensors();
         	} else if (type.equals("signalHeads")) {
@@ -130,6 +134,10 @@ public class JsonServlet extends WebSocketServlet {
         			reply = JsonLister.getSignalHead(name);
         		} else if (type.equals("turnout")) {
         			reply = JsonLister.getTurnout(name);
+        		} else if (type.equals("train")) {
+        			reply = JsonLister.getTrain(name);
+        		} else if (type.equals("location")) {
+        			reply = JsonLister.getLocation(name);
         		} else {
             		log.warn("Type \"" + type + "\" unknown.");
             		reply = JsonLister.getUnknown();
