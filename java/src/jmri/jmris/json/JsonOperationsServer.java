@@ -154,13 +154,19 @@ public class JsonOperationsServer extends AbstractOperationsServer {
 		this.parseRequest(this.mapper.readTree(statusString).path("data"));
 	}
 
+	/**
+	 * Respond to an operations request.
+	 * 
+	 * Note that unlike the SimpleOperationsServer, this server will not list anything, but relies on the
+	 * JsonClientHandler to handle requests for lists of operations data on its behalf.
+	 * 
+	 * @param data
+	 * @throws JmriException
+	 * @throws IOException
+	 */
 	public void parseRequest(JsonNode data) throws JmriException, IOException {
 		ArrayList<Attribute> response = new ArrayList<Attribute>();
-		if (!data.path(LOCATIONS).isMissingNode()) {
-			this.sendLocationList();
-		} else if (!data.path(TRAINS).isMissingNode()) {  /* e.g. {"type":"operations","data":{"trains":null}} */
-			this.sendTrainList();
-		} else if (!data.path(TRAIN).isMissingNode()) {
+		if (!data.path(TRAIN).isMissingNode() && !data.path(TRAIN).isNull()) {
 			String train = data.path(TRAIN).asText();
 			response.add(new Attribute(TRAIN, train));
 			if (!data.path(TRAINLENGTH).isMissingNode()) {
