@@ -36,6 +36,17 @@ import javax.swing.SwingWorker;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.LocoAddress;
+import java.text.MessageFormat;
+import javax.swing.JOptionPane;
+
+import jmri.Programmer;
+import jmri.InstanceManager;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.symbolicprog.CvTableModel;
+import jmri.jmrit.symbolicprog.IndexedCvTableModel;
+import jmri.jmrit.symbolicprog.VariableTableModel;
+import jmri.jmrit.XmlFile;
+
 
 @SuppressWarnings("serial")
 public class VSDConfigPanel extends JmriPanel {
@@ -213,7 +224,7 @@ public class VSDConfigPanel extends JmriPanel {
 	// Connect to the VSDecoderManager, so we know when the Profile list changes.
 	VSDecoderManager.instance().addEventListener(new VSDManagerListener() {
 		public void eventAction(VSDManagerEvent e) {
-		    if (e.getType() == VSDecoderManager.EventType.DECODER_LIST_CHANGE) {
+		    if (e.getType() == VSDManagerEvent.EventType.DECODER_LIST_CHANGE) {
 			log.debug("Received Decoder List Change Event");
 			handleDecoderListChange(e);
 		    }
@@ -392,12 +403,67 @@ public class VSDConfigPanel extends JmriPanel {
         log.debug("rosterSaveButton pressed");
         if (rosterSelector.getSelectedRosterEntries().length != 0) {
             RosterEntry r = rosterSelector.getSelectedRosterEntries()[0];
-            r.putAttribute("VSDecoder_Path", main_pane.getDecoder().getVSDFilePath());
-            r.putAttribute("VSDecoder_Profile", profileComboBox.getSelectedItem().toString());
+	    String path = main_pane.getDecoder().getVSDFilePath();
+	    String profile = profileComboBox.getSelectedItem().toString();
+	    if ((path == null) || (profile == null)) {
+		log.debug("Path and/or Profile not selected.  Ignore Save button press.");
+		return;
+	    } else {
+		r.setOpen(true);
+		r.putAttribute("VSDecoder_Path", main_pane.getDecoder().getVSDFilePath());
+		r.putAttribute("VSDecoder_Profile", profileComboBox.getSelectedItem().toString());
+		int value = JOptionPane.showConfirmDialog(null,
+							  MessageFormat.format(vsdecoderBundle.getString("UpdateRoster"),
+									       new Object[] { r.titleString() }), 
+							  vsdecoderBundle.getString("SaveRoster?"), JOptionPane.YES_NO_OPTION);
+		if (value == JOptionPane.YES_OPTION) {
+		    storeFile(r);
+		}
+		r.setOpen(false);
+	    }
 
             // Need to write RosterEntry to file.
         }
     }
+
+    protected boolean storeFile(RosterEntry _rosterEntry) {
+        log.debug("storeFile starts");
+	// We need to create a programmer, a cvTableModel, an iCvTableModel, and a variableTableModel.
+	// Doesn't matter which, so we'll use the LocoNet programmer.
+	Programmer p = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+	CvTableModel cvModel = new CvTableModel(null, p);
+	IndexedCvTableModel iCvModel = new IndexedCvTableModel(null, p);
+	VariableTableModel variableModel = new VariableTableModel(null, new String[]  {"Name", "Value"}, cvModel, iCvModel);
+	
+	// Now, in theory we can call _rosterEntry.writeFile...
+        if (_rosterEntry.getFileName() != null) {
+            // set the loco file name in the roster entry
+            _rosterEntry.readFile();  // read, but don't yet process
+	    _rosterEntry.loadCvModel(cvModel, iCvModel);
+        }
+
+        // id has to be set!
+        if (_rosterEntry.getId().equals("")) {
+            log.debug("storeFile without a filename; issued dialog");
+            return false;
+        }
+        
+        // if there isn't a filename, store using the id
+        _rosterEntry.ensureFilenameExists();
+
+        // create the RosterEntry to its file
+        _rosterEntry.writeFile(cvModel, iCvModel, variableModel ); // where to get the models???
+
+        // mark this as a success
+        variableModel.setFileDirty(false);
+
+        // and store an updated roster file
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        Roster.writeRosterFile();
+
+        return true;
+    }
+
 
     // profileComboBoxActionPerformed()
     //

@@ -40,14 +40,14 @@ import jmri.util.PhysicalLocation;
 import jmri.Reporter;
 import jmri.LocoAddress;
 import jmri.PhysicalLocationReporter;
+import jmri.util.PhysicalLocation;
+import jmri.IdTag;
 
 // VSDecoderFactory
 //
 // Builds VSDecoders as needed.  Handles loading from XML if needed.
 
 class VSDecoderManager implements PropertyChangeListener {
-
-    public static enum EventType { NONE, DECODER_LIST_CHANGE }  // propertyChangeEvents fired by the Manager.
 
     private static final ResourceBundle rb = VSDecoderBundle.bundle();
 
@@ -181,16 +181,23 @@ class VSDecoderManager implements PropertyChangeListener {
 	// Find the addressed decoder
 	// This is a bit hokey.  Need a better way to index decoder by address
 	// OK, this whole LocoAddress vs. DccLocoAddress thing has rendered this SUPER HOKEY.
+	if ((a == null) || (l == null)) {
+	    log.debug("Decoder Address is Null");
+	    return;
+	}
 	log.debug("Decoder Address: " + a.getNumber());
 	for ( VSDecoder d : decodertable.values()) {
 	    // Get the Decoder's address protocol.  If it's a DCC_LONG or DCC_SHORT, convert to DCC
 	    // since the LnReprter can't tell the difference and will always report "DCC".
 	    LocoAddress.Protocol p = d.getAddress().getProtocol();
 	    if ((p == LocoAddress.Protocol.DCC_LONG) || (p == LocoAddress.Protocol.DCC_SHORT))
-	    p = LocoAddress.Protocol.DCC;
+		p = LocoAddress.Protocol.DCC;
 	    if ((d.getAddress().getNumber() == a.getNumber()) && (p == a.getProtocol())) {
 		d.setPosition(l);
-		return;
+		// Loop through all the decoders (assumes N will be "small"), in case
+		// there are multiple decoders with the same address.  This will be somewhat broken
+		// if there's a DCC_SHORT and a DCC_LONG decoder with the same address number.
+		//return;
 	    }
 	}
 	// decoder not found.  Do nothing.
@@ -269,26 +276,34 @@ class VSDecoderManager implements PropertyChangeListener {
 	// get the location of the event source, and update the decoder's location.
 	@SuppressWarnings("cast")
 	String eventName = (String)event.getPropertyName();
-	String newValue = (String)event.getNewValue();
-
-	if (eventName.equals("currentReport")) {
-	    Reporter arp = (Reporter) event.getSource();
+	if ((event.getSource() instanceof PhysicalLocationReporter) && (eventName.equals("currentReport"))) {
+	    PhysicalLocationReporter arp = (PhysicalLocationReporter) event.getSource();
 	    // Need to decide which reporter it is, so we can use different methods
 	    // to extract the address and the location.
-	    PhysicalLocation loc = PhysicalLocation.getBeanPhysicalLocation(arp);
+	    PhysicalLocation loc = arp.getPhysicalLocation();
 	    if (loc.equals(PhysicalLocation.Origin)) {
 		// Physical location at origin means it hasn't been set.
 		return;
 	    }
-	    //if (arp.supportsPhysicalLocation()) { 
-	    if (arp instanceof PhysicalLocationReporter) {
-		if (((PhysicalLocationReporter)arp).getDirection(newValue) == PhysicalLocationReporter.Direction.ENTER)
-		    setDecoderPositionByAddr(((PhysicalLocationReporter)arp).getLocoAddress(newValue), loc);
-	    } // Reporting object implements PhysicalLocationReporter
-	    else {
-		log.debug("Reporter doesn't support physical location reporting.");
+		
+	    if (event.getNewValue() instanceof String) {
+		// newValue is of String type.
+		// LocoNet, Lissi
+		String newValue = (String)event.getNewValue();
+
+		if (arp.getDirection(newValue) == PhysicalLocationReporter.Direction.ENTER)
+		    setDecoderPositionByAddr(arp.getLocoAddress(newValue), loc);
+	    } 
+	    else if (event.getNewValue() instanceof IdTag) {
+		// newValue is of IdTag type.
+		// Dcc4Pc, Ecos, 
+		// Assume Reporter "arp" is the most recent seen location
+		IdTag newValue = (IdTag) event.getNewValue();
+		setDecoderPositionByAddr(arp.getLocoAddress(newValue.getTagID()), loc);
 	    }
-	} // name == currentReport
+	} else {
+	    log.debug("Reporter doesn't support physical location reporting or isn't reporting new info.");
+	}  // Reporting object implements PhysicalLocationReporter
 	return;
     }
 
@@ -330,7 +345,7 @@ class VSDecoderManager implements PropertyChangeListener {
 	*/
 	// /debug
 	    
-	fireMyEvent(new VSDManagerEvent(this, EventType.DECODER_LIST_CHANGE, new_entries));
+	fireMyEvent(new VSDManagerEvent(this, VSDManagerEvent.EventType.DECODER_LIST_CHANGE, new_entries));
     }
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderManager.class.getName());
