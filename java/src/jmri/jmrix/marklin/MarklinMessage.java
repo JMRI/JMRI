@@ -144,6 +144,37 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
     
+    static public MarklinMessage setLocoEmergencyStop(int addr){
+        MarklinMessage m = new MarklinMessage();
+        m.setElement(0, MarklinConstants.SYSCOMMANDSTART&0xFF);
+        m.setElement(1,  0x00&0xFF);
+        m.setElement(2, MarklinConstants.HASHBYTE1&0xFF);
+        m.setElement(3, MarklinConstants.HASHBYTE2&0xFF);
+        m.setElement(4, 0x05&0xFF); //five bytes;
+        m.setElement(MarklinConstants.CANADDRESSBYTE1, (addr>>24)&0xFF);
+        m.setElement(MarklinConstants.CANADDRESSBYTE2, (addr>>16)&0xFF);
+        m.setElement(MarklinConstants.CANADDRESSBYTE3, (addr>>8)&0xFF);
+        m.setElement(MarklinConstants.CANADDRESSBYTE4, (addr)&0xFF);
+        m.setElement(9, MarklinConstants.LOCOEMERGENCYSTOP&0xFF);
+        return m;
+    }
+    
+    static public MarklinMessage setLocoSpeedSteps(int addr, int step){
+        MarklinMessage m = new MarklinMessage();
+        m.setElement(0, MarklinConstants.SYSCOMMANDSTART&0xFF);
+        m.setElement(1,  0x00&0xFF);
+        m.setElement(2, MarklinConstants.HASHBYTE1&0xFF);
+        m.setElement(3, MarklinConstants.HASHBYTE2&0xFF);
+        m.setElement(4, 0x05&0xFF); //five bytes;
+        m.setElement(MarklinConstants.CANADDRESSBYTE1, (addr>>24)&0xFF);
+        m.setElement(MarklinConstants.CANADDRESSBYTE2, (addr>>16)&0xFF);
+        m.setElement(MarklinConstants.CANADDRESSBYTE3, (addr>>8)&0xFF);
+        m.setElement(MarklinConstants.CANADDRESSBYTE4, (addr)&0xFF);
+        m.setElement(9, 0x05&0xFF);
+        m.setElement(10, step&0xFF);
+        return m;
+    }
+    
     static public MarklinMessage getQryLocoDirection(int addr){
         MarklinMessage m = new MarklinMessage();
         m.setElement(0, (MarklinConstants.LOCODIRECTION>>7)&0xFF);

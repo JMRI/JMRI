@@ -107,9 +107,16 @@ public final class MarklinConstants {
     public final static int DCCSTART   = 0xC000;
     public final static int DCCEND   = 0xFFFF;
     
+    public final static int LOCOEMERGENCYSTOP = 0x03;
     public final static int LOCOSPEED = 0x04;
     public final static int LOCODIRECTION = 0x05;
     public final static int LOCOFUNCTION = 0x06;
+    
+    public final static int STEPSHORT28 = 0x00;
+    public final static int STEPSHORT14 = 0x01;
+    public final static int STEPSHORT128 = 0x02;
+    public final static int STEPLONG28 = 0x03;
+    public final static int STEPLONG128 = 0x04;
     
     public final static int S88EVENT = 0x11;
 }
