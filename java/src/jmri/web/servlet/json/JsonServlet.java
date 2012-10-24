@@ -38,8 +38,7 @@ public class JsonServlet extends WebSocketServlet {
 	private ObjectMapper mapper;
 	
 	private final Set<JsonWebSocket> sockets = new CopyOnWriteArraySet<JsonWebSocket>();
-	private static ResourceBundle server = ResourceBundle.getBundle("jmri.jmris.json.JsonServer");
-    private static ResourceBundle html = ResourceBundle.getBundle("jmri.web.server.Html");
+	private static ResourceBundle html = ResourceBundle.getBundle("jmri.web.server.Html");
     private static ResourceBundle wsHtml = ResourceBundle.getBundle("jmri.web.servlet.json.JsonHtml");
 	private static Logger log = Logger.getLogger(JsonServlet.class);
 
@@ -93,6 +92,8 @@ public class JsonServlet extends WebSocketServlet {
         	JsonNode reply = null;
         	if (type.equals("lights")) {
         		reply = JsonLister.getLights();
+        	} else if (type.equals("locations")) {
+        		reply = JsonLister.getLocations();
         	} else if (type.equals("memories")) {
         		reply = JsonLister.getMemories();
         	} else if (type.equals("metadata")) {
@@ -107,19 +108,19 @@ public class JsonServlet extends WebSocketServlet {
         		reply = JsonLister.getRoster();
         	} else if (type.equals("routes")) {
         		reply = JsonLister.getRoutes();
-        	} else if (type.equals("trains")) {
-        		reply = JsonLister.getTrains();
-        	} else if (type.equals("locations")) {
-        		reply = JsonLister.getLocations();
         	} else if (type.equals("sensors")) {
         		reply = JsonLister.getSensors();
         	} else if (type.equals("signalHeads")) {
         		reply = JsonLister.getSignalHeads();
+        	} else if (type.equals("trains")) {
+        		reply = JsonLister.getTrains();
         	} else if (type.equals("turnouts")) {
         		reply = JsonLister.getTurnouts();
         	} else if (name != null) {
         		if (type.equals("light")) {
         			reply = JsonLister.getLight(name);
+        		} else if (type.equals("location")) {
+        			reply = JsonLister.getLocation(name);
         		} else if (type.equals("memory")) {
             			reply = JsonLister.getMemory(name);
         		} else if (type.equals("reporter")) {
@@ -132,12 +133,10 @@ public class JsonServlet extends WebSocketServlet {
         			reply = JsonLister.getSensor(name);
         		} else if (type.equals("signalHead")) {
         			reply = JsonLister.getSignalHead(name);
-        		} else if (type.equals("turnout")) {
-        			reply = JsonLister.getTurnout(name);
         		} else if (type.equals("train")) {
         			reply = JsonLister.getTrain(name);
-        		} else if (type.equals("location")) {
-        			reply = JsonLister.getLocation(name);
+        		} else if (type.equals("turnout")) {
+        			reply = JsonLister.getTurnout(name);
         		} else {
             		log.warn("Type \"" + type + "\" unknown.");
             		reply = JsonLister.getUnknown();
