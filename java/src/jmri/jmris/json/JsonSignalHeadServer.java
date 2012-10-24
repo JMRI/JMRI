@@ -40,7 +40,7 @@ public class JsonSignalHeadServer extends AbstractSignalHeadServer {
     @Override
     public void sendStatus(String signalHeadName, int status) throws IOException {
     	ObjectNode root = this.mapper.createObjectNode();
-    	root.put("type", "signalhead");
+    	root.put("type", "signalHead");
     	ObjectNode data = root.putObject("data");
     	data.put("name", signalHeadName);
     	data.put("state", status);
