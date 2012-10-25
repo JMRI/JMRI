@@ -59,7 +59,6 @@ public class Car extends RollingStock {
 	public static final String SCHEDULE = rb.getString("schedule");
 	public static final String CUSTOM = rb.getString("custom");
 	public static final String CAPACITY = rb.getString("capacity");
-	//public static final String LOAD = rb.getString("load");
 	
 	public Car(){
 		
@@ -421,24 +420,6 @@ public class Car extends RollingStock {
 	}
 	
 	/**
-	 * Used to determine if a car can be placed at a location and
-	 * track.  A return of Track.OKAY means the car can be placed at
-	 * the location and track.
-	 */
-	/*
-	public String testLocation(Location location, Track track) {
-		String status = super.testLocation(location, track);
-		if (!status.equals(Track.OKAY))
-			return status;
-		if (location != null && track != null && !track.acceptsLoadName(getLoad())){
-			log.debug("Can't set (" + toString() + ") load (" +getLoad()+ ") at location ("+ location.getName() + ", " + track.getName() + ") wrong load");
-			return Track.LOAD+ " ("+getLoad()+")";
-		}
-		return Track.OKAY;
-	}
-	*/
-	
-	/**
 	 * Used to determine if a car can be set out at a destination (location).
 	 * Track is optional.  In addition to all of the tests that testLocation
 	 * performs, spurs with schedules are also checked.
@@ -447,12 +428,6 @@ public class Car extends RollingStock {
 		String status = super.testDestination(destination, track);
 		if (!status.equals(Track.OKAY))
 			return status;
-		/*
-		if (destination != null && track != null && !track.acceptsLoadName(getLoad())){
-			log.debug("Can't set (" + toString() + ") load (" +getLoad()+ ") at destination ("+ destination.getName() + ", " + track.getName() + ") wrong load");
-			return LOAD+ " ("+getLoad()+")";
-		}
-		*/
 		// a spur with a schedule can overload in aggressive mode, check track capacity
 		if (Setup.isBuildAggressive() && track != null && !track.getScheduleId().equals("")){
 			if (track.getUsedLength() > track.getLength()){
@@ -515,29 +490,35 @@ public class Car extends RollingStock {
 		return SCHEDULE + " NO MATCH";
 	}
 	
-	private String checkScheduleItem(Track track, ScheduleItem si){
-		if (!si.getTrainScheduleId().equals("") 
-				&& !TrainManager.instance().getTrainScheduleActiveId().equals(si.getTrainScheduleId())){
-			TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(si.getTrainScheduleId());
+	private String checkScheduleItem(Track track, ScheduleItem si) {
+		if (!si.getTrainScheduleId().equals("")
+				&& !TrainManager.instance().getTrainScheduleActiveId()
+				.equals(si.getTrainScheduleId())) {
+			TrainSchedule sch = TrainScheduleManager.instance()
+					.getScheduleById(si.getTrainScheduleId());
 			if (sch != null)
-				return SCHEDULE + " (" +track.getScheduleName()+ ") requests car only on ("+sch.getName()+")";
-		}			
-		if (getType().equals(si.getType())) {
-			if (si.getRoad().equals("") || getRoad().equals(si.getRoad()))
-				if (si.getLoad().equals("") || getLoad().equals(si.getLoad()))
-					return Track.OKAY;
-				else
-					return SCHEDULE + " (" + track.getScheduleName()
-							+ ") "+rb.getString("requestCar")+" "+Track.TYPE+" (" + si.getType()
-							+ ") "+Track.ROAD+" (" + si.getRoad() + ") "+Track.LOAD+" ("
-							+ si.getLoad() + ")";
-			else
 				return SCHEDULE + " (" + track.getScheduleName()
-						+ ") "+rb.getString("requestCar")+" "+Track.TYPE+" (" + si.getType()
-						+ ") "+Track.ROAD+" (" + si.getRoad() + ")";
-		} else
-			return SCHEDULE + " (" + track.getScheduleName()
-					+ ") "+rb.getString("requestCar")+" "+Track.TYPE+" (" + si.getType() + ")";		
+						+ ") "+rb.getString("requestCarOnly")+" (" + sch.getName() + ")";
+		}
+		// Check for correct car type, road, load
+		if (!getType().equals(si.getType())) {
+			return SCHEDULE + " (" + track.getScheduleName() + ") "
+					+ rb.getString("requestCar") + " " + Track.TYPE + " ("
+					+ si.getType() + ")";
+		}
+		if (!si.getRoad().equals("") && !getRoad().equals(si.getRoad())) {
+			return SCHEDULE + " (" + track.getScheduleName() + ") "
+					+ rb.getString("requestCar") + " " + Track.TYPE + " ("
+					+ si.getType() + ") " + Track.ROAD + " ("
+					+ si.getRoad() + ")";
+		}
+		if (!si.getLoad().equals("") && !getLoad().equals(si.getLoad())) {
+			return SCHEDULE + " (" + track.getScheduleName() + ") "
+					+ rb.getString("requestCar") + " " + Track.TYPE	+ " (" 
+					+ si.getType() + ") " + Track.LOAD + " ("
+					+ si.getLoad() + ")";
+		}
+		return Track.OKAY;
 	}
 	
 	/**
@@ -587,9 +568,6 @@ public class Car extends RollingStock {
 			setOrder(oldDestTrack.getMoves());
 		// update load when car reaches a spur
 		loadNext(oldDestTrack);
-		// set destination and destination track if available
-		//if (!Router.instance().setDestination(this, null))
-		//	super.setDestination(null, null);	// couldn't route car, maybe next time
 		return status;
 	}
 	
@@ -657,12 +635,6 @@ public class Car extends RollingStock {
 		}
 		// set the car's next load
 		setNextLoad(scheduleItem.getShip());
-		/*
-		// if car has a custom load, and no new load specified, then use empty 
-		if (!getLoad().equals(carLoads.getDefaultEmptyName()) && !getLoad().equals(carLoads.getDefaultLoadName()) 
-				&& getNextLoad().equals(""))
-			setNextLoad(carLoads.getDefaultEmptyName());
-			*/
 		// set the car's next destination and track
 		setNextDestination(scheduleItem.getDestination());
 		setNextDestTrack(scheduleItem.getDestinationTrack());
