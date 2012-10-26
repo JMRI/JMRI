@@ -92,7 +92,12 @@
 </p>
 <p><img src="images/separator.png" alt="sep" width="340" height="4">
 <p><strong>Virtual Sound Decoder</strong>
-<p>Opens the <strong>VSDecoder engine name (L) </strong>dialog box to set up sounds.
+<p>Opens the <strong>VSDecoder</strong> dialog box to set up
+locomotive sounds.
+<p><strong>Set Reporter Locations</strong></p>
+<p>Opens the <strong>Virtual Sound Decoder Set Reporter
+Locations</strong> dialog to set up Reporter locations for locomotive
+sound position tracking.
 <p><img src="images/separator.png" alt="sep" width="340" height="4">
 <p><strong><a name="pricom"></a>PRICOM <img src="images/arrow.gif" alt="arrow" width="20" height="9"></strong>
 <ul>

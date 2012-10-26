@@ -412,6 +412,8 @@ The Basic Programmer</h4>
           <li><a href="Main_Debug.shtml#logMessage">Log Message</a></li>
           <li>Display Message Log</li>
           <li>Display Log Categories</li>
+	  <li><a href="Main_VSD.shtml">Virtual Sound Decoder</a></li>
+	  <li><a href="Main_VSD.shtml#VSDLocations">Set Reporter Locations</a></li>
           <li>Listed Table Access</li>
           <li>Listed Table Access-Direct to Routes</li>
           <li>PRICOM <img src="images/arrow.gif" width="20" height="9" alt="arrow">
