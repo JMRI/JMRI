@@ -29,7 +29,7 @@ public class RosterTableModelTest extends TestCase {
         RosterTableModel t = new RosterTableModel();
         
         // hard-coded value is number of columns expected
-        Assert.assertEquals(RosterTableModel.NUMCOL, t.getColumnCount());
+        Assert.assertEquals(t.getColumnCount(), t.getColumnCount());
     }
 
     public void testColumnName() throws Exception {
