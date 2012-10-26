@@ -252,8 +252,9 @@ public class RosterMediaPane extends javax.swing.JPanel {
 				kv = new KeyValueModel("","");
 			
 			if (col == 0) // update key
-				if (! keyExist((String) value)) // if not exist
-					kv.key = (String) value;
+                //Force keys to be save as a single string with no spaces
+				if (! keyExist(((String) value).replaceAll("\\s", ""))) // if not exist
+					kv.key = ((String) value).replaceAll("\\s", "");
 				else {
 					setValueAt(value+"-1", row, col); // else change key name
 					return;
