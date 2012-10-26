@@ -293,7 +293,7 @@ public class LayoutBlockManager extends AbstractManager {
 			i ++;
 		}
 		if (lc==null) {
-			log.error("Block "+facingBlock.getSystemName()+"is not connected to Block "+protectedBlock.getSystemName());
+			log.error("Block "+facingBlock.getSystemName()+" is not connected to Block "+protectedBlock.getSystemName());
 			return null;
 		}
 		// blocks are connected, get connection item types
