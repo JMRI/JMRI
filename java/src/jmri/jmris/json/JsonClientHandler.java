@@ -52,7 +52,7 @@ public class JsonClientHandler {
 	 * Currently JSON strings in four different forms are handled by this method:<ul>
 	 * <li>list requests in the form: <code>{"type":"list","list":"trains"}</code>
 	 * that are passed to the JsonLister for handling.</li>
-	 * <li>individual item requests in the form: <code>{"type":"turnout",data:{"name":"LT14"}</code>
+	 * <li>individual item requests in the form: <code>{"type":"turnout","data":{"name":"LT14"}}</code>
 	 * that are passed to type-specific handlers.</li>
 	 * <li>a heartbeat in the form <code>*</code> or <code>{"type":"ping"}</code>. The <code>*</code> heartbeat
 	 * gets no response, while the JSON heartbeat causes a <code>{"type":"pong"}</code> response.</li>
@@ -82,7 +82,11 @@ public class JsonClientHandler {
 			} else if (type.equals("list")) {
 				JsonNode reply = null;
 				String list = root.path("list").asText();
-				if (list.equals("lights")) {
+				if (list.equals("cars")) {
+					reply = JsonLister.getCars();
+				} else if (list.equals("engines")) {
+					reply = JsonLister.getEngines();
+				} else if (list.equals("lights")) {
 					reply = JsonLister.getLights();
 				} else if (list.equals("locations")) {
 					reply = JsonLister.getLocations();

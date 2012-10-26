@@ -1,4 +1,4 @@
-// JsonServer.java
+// JsonLister.java
 package jmri.jmris.json;
 
 import java.io.File;
@@ -21,6 +21,11 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.roster.Roster;
@@ -43,6 +48,63 @@ public class JsonLister {
 
 	private static ObjectMapper mapper = new ObjectMapper();
 	private static Logger log = Logger.getLogger(JsonLister.class);
+
+	static public JsonNode getCar(String id) {
+		ObjectNode root = mapper.createObjectNode();
+		root.put("type", "car");
+		ObjectNode data = root.putObject("data");
+		Car car = CarManager.instance().getById(id);
+		data.put("id", car.getId());
+		data.put("road", car.getRoad());
+		data.put("number", car.getNumber());
+		data.put("load", car.getLoad().replace("<", "&lt;"));
+		data.put("locationId", car.getRouteLocationId());
+		data.put("trackName", car.getTrackName());
+		data.put("destinationId", car.getRouteDestinationId());
+		data.put("destinationTrackName", car.getDestinationTrackName());
+		data.put("type", car.getType());
+		data.put("length", car.getLength());
+		data.put("color", car.getColor());
+		data.put("comment", car.getComment());
+	    return root;
+	}
+
+	static public JsonNode getCars() {
+		ObjectNode root = mapper.createObjectNode();
+		root.put("type", "list");
+		ArrayNode cars = root.putArray("list");
+	    for (String id : CarManager.instance().getByIdList()) {
+	        cars.add(getCar(id));
+	    }
+	    return root;
+	}
+
+	static public JsonNode getEngine(String id) {
+		ObjectNode root = mapper.createObjectNode();
+		root.put("type", "engine");
+		ObjectNode data = root.putObject("data");
+		Engine engine = EngineManager.instance().getById(id);
+		data.put("id", engine.getId());
+		data.put("road", engine.getRoad());
+		data.put("number", engine.getNumber());
+		data.put("locationId", engine.getRouteLocationId());
+		data.put("trackName", engine.getTrackName());
+		data.put("destinationId", engine.getRouteDestinationId());
+		data.put("destinationTrackName", engine.getDestinationTrackName());
+		data.put("model", engine.getModel());
+		data.put("comment", engine.getComment());
+	    return root;
+	}
+
+	static public JsonNode getEngines() {
+		ObjectNode root = mapper.createObjectNode();
+		root.put("type", "list");
+		ArrayNode engines = root.putArray("list");
+	    for (String id : EngineManager.instance().getByIdList()) {
+	        engines.add(getEngine(id));
+	    }
+	    return root;
+	}
 
 	static public JsonNode getLight(String name) {
 		ObjectNode root = mapper.createObjectNode();
@@ -358,17 +420,32 @@ public class JsonLister {
 			Train train = TrainManager.instance().getTrainById(id);
 			data.put("name", train.getName());
 			data.put("id", train.getId());
-			data.put("departureTime", train.getDepartureTime());
+			data.put("departureTime", train.getFormatedDepartureTime());
+			data.put("description", train.getDescription());
 			data.put("comment", train.getComment());
 			data.put("route", train.getRoute().getName());
-			if (train.getDepartureTrack() != null) {
-				data.put("departureTrack", train.getDepartureTrack().getName());
+			data.put("routeId", train.getRoute().getId());
+			data.put("routeLocations", getRouteLocationsForTrain(train));
+			data.put("engines", getEnginesForTrain(train));
+			data.put("cars", getCarsForTrain(train));
+			if (train.getTrainDepartsName() != null) {
+				data.put("trainDepartsName", train.getTrainDepartsName());
 			}
-			if (train.getTerminationTrack() != null) {
-				data.put("terminationTrack", train.getTerminationTrack().getName());
+			if (train.getTrainTerminatesName() != null) {
+				data.put("trainTerminatesName", train.getTrainTerminatesName());
 			}
 			data.put("currentLocationName", train.getCurrentLocationName());
 			data.put("status", train.getStatus());
+			data.put("trainLength", train.getTrainLength());
+			data.put("trainWeight", train.getTrainWeight());
+			data.put("numberCarsInTrain", train.getNumberCarsInTrain());
+	        if (train.getLeadEngine() != null) {
+	        	data.put("leadEngine", train.getLeadEngine().toString());
+	        }
+	        if (train.getCabooseRoadAndNumber() != null) {
+	        	data.put("cabooseRoadAndNumber", train.getCabooseRoadAndNumber());
+	        }
+			
 		} catch (NullPointerException e) {
 			root.put("type", "error");
 			data.put("code", -1);
@@ -425,6 +502,48 @@ public class JsonLister {
 		data.put("code", "-1");
 		data.put("message", "unknown type");
 		return root;
+	}
+
+	static private ArrayNode getCarsForTrain(Train train) {
+		ArrayNode clan = mapper.createArrayNode();
+		CarManager carManager = CarManager.instance();
+		List<String> carList = carManager.getByTrainDestinationList(train);
+		for (int k = 0; k < carList.size(); k++) {
+			clan.add(getCar(carList.get(k)).get("data")); //add each car's data to the carList array
+		}
+		return clan;  //return array of car data
+	}
+
+	static private ArrayNode getEnginesForTrain(Train train) {
+		ArrayNode elan = mapper.createArrayNode();
+		EngineManager engineManager = EngineManager.instance();
+		List<String> engineList = engineManager.getByTrainList(train);
+		for (int k = 0; k < engineList.size(); k++) {
+			elan.add(getEngine(engineList.get(k)).get("data")); //add each engine's data to the engineList array
+		}
+		return elan;  //return array of engine data
+	}
+
+	static private ArrayNode getRouteLocationsForTrain(Train train) {
+		ArrayNode rlan = mapper.createArrayNode();
+		List<String> routeList = train.getRoute().getLocationsBySequenceList();
+		for (int r = 0; r < routeList.size(); r++) {
+			ObjectNode rln = mapper.createObjectNode();
+			RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));			
+			rln.put("id", 				rl.getId());
+			rln.put("name", 			rl.getName());
+			rln.put("trainDirection", 	rl.getTrainDirectionString());
+			rln.put("comment", 			rl.getComment());
+			rln.put("sequenceId", 		rl.getSequenceId());
+			rln.put("expectedArrivalTime", train.getExpectedArrivalTime(rl));
+			rln.put("expectedDepartureTime", train.getExpectedDepartureTime(rl));
+			rln.put("location", 		rl.getLocation().getName());
+			rln.put("locationId", 		rl.getLocation().getId());
+			rln.put("locationLength", 	rl.getLocation().getLength());
+			rln.put("locationComment", 	rl.getLocation().getComment());
+			rlan.add(rln); //add this routeLocation to the routeLocation array
+		}
+		return rlan;  //return array of routeLocations
 	}
 	
 }

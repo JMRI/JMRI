@@ -1,4 +1,4 @@
-// JsonWebSocketServlet.java
+// JsonServlet.java
 package jmri.web.servlet.json;
 
 import java.io.IOException;
@@ -75,6 +75,15 @@ public class JsonServlet extends WebSocketServlet {
 		return new JsonWebSocket();
 	}
 
+	/**
+	 * handle HTTP get requests for json data
+	 *   examples: /json/sensor/IS22 (return data for sensor with systemname "IS22"
+	 *             /json/sensors (returns list of all sensors known to JMRI)
+	 *   example responses: 
+	 *     {"type":"sensor","data":{"name":"IS22","userName":"FarEast","comment":null,"inverted":false,"state":4}}
+	 *     {"type":"list","list":[{"type":"sensor","data":{"name":"IS22","userName":"FarEast","comment":null,"inverted":false,"state":4}}]}
+	 *   note that data will vary for each type
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Date now = new Date();
@@ -90,7 +99,11 @@ public class JsonServlet extends WebSocketServlet {
         if (type != null) {
             String name = (rest.length > 2) ? rest[2] : null;
         	JsonNode reply = null;
-        	if (type.equals("lights")) {
+        	if (type.equals("cars")) {
+        		reply = JsonLister.getCars();
+        	} else if (type.equals("engines")) {
+        		reply = JsonLister.getEngines();
+        	} else if (type.equals("lights")) {
         		reply = JsonLister.getLights();
         	} else if (type.equals("locations")) {
         		reply = JsonLister.getLocations();
@@ -117,12 +130,16 @@ public class JsonServlet extends WebSocketServlet {
         	} else if (type.equals("turnouts")) {
         		reply = JsonLister.getTurnouts();
         	} else if (name != null) {
-        		if (type.equals("light")) {
+        		if (type.equals("car")) {
+        			reply = JsonLister.getCar(name);
+        		} else if (type.equals("engine")) {
+        			reply = JsonLister.getEngine(name);
+        		} else if (type.equals("light")) {
         			reply = JsonLister.getLight(name);
         		} else if (type.equals("location")) {
         			reply = JsonLister.getLocation(name);
         		} else if (type.equals("memory")) {
-            			reply = JsonLister.getMemory(name);
+        			reply = JsonLister.getMemory(name);
         		} else if (type.equals("reporter")) {
         			reply = JsonLister.getReporter(name);
         		} else if (type.equals("rosterEntry")) {
