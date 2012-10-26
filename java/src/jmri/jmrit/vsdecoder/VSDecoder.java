@@ -38,6 +38,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+
 import jmri.util.PhysicalLocation;
 import jmri.jmrit.vsdecoder.VSDecoderEvent;
 import jmri.jmrit.operations.trains.Train;
@@ -60,6 +61,9 @@ public class VSDecoder implements PropertyChangeListener {
     private float master_volume;
 
     private PhysicalLocation my_position;
+
+    // List of registered event listeners
+    protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
     HashMap<String, VSDSound> sound_list;   // list of sounds
     HashMap<String, Trigger> trigger_list;  // list of triggers
@@ -178,12 +182,37 @@ public class VSDecoder implements PropertyChangeListener {
 	return(vsd_path);
     }
 
-    private void fireMyEvent(VSDecoderEvent evt) {
-	//Object[] listeners = listenerList.getListenerList();
+    // VSDecoder Events
 
-	//for (VSDManagerListener l : listenerList.getListeners(VSDManagerListener.class)) {
-	//    l.eventAction(evt);
-	//}
+    /**
+     * public String addEventListener(VSDecoderListener listener)
+     *
+     * Add a listener for this object's events
+     *
+     * @param (VSDecoderListener) listener handle
+     * @return void
+     */
+    public void addEventListener(VSDecoderListener listener) {
+	listenerList.add(VSDecoderListener.class, listener);
+    }
+
+    /**
+     * public String removeEventListener(VSDecoderListener listener)
+     *
+     * Remove a listener for this object's events
+     *
+     * @param (VSDecoderListener) listener handle
+     * @return void
+     */
+    public void removeEventListener(VSDecoderListener listener) {
+	listenerList.remove(VSDecoderListener.class, listener);
+    }
+
+    /** Fire an event to this object's listeners */
+    private void fireMyEvent(VSDecoderEvent evt) {
+	for (VSDecoderListener l : listenerList.getListeners(VSDecoderListener.class)) {
+	    l.eventAction(evt);
+	}
     }
 
     /**
@@ -392,17 +421,19 @@ public class VSDecoder implements PropertyChangeListener {
      * @param evt (PropertyChangeEvent) event to respond to
      * @return void
      */
+    @SuppressWarnings("cast")
     public void propertyChange(PropertyChangeEvent evt) {
 	// Respond to events from the GUI.
 	String property = evt.getPropertyName();
-	if (property.equals("AddressChange")) {
+	if (property.equals(VSDecoderPane.PCIDMap.get(VSDecoderPane.PropertyChangeID.ADDRESS_CHANGE))) {
+	    log.debug("Decoder set address = " + (LocoAddress)evt.getNewValue());
 	    this.setAddress((LocoAddress)evt.getNewValue());
 	    this.enable();
-	} else if (property.equals("Mute")) {
+	} else if (property.equals(VSDecoderPane.PCIDMap.get(VSDecoderPane.PropertyChangeID.MUTE))) {
 	    log.debug("VSD: Mute change. value = " + evt.getNewValue());
 	    Boolean b = (Boolean)evt.getNewValue();
 	    this.mute(b.booleanValue());
-	} else if (property.equals("VolumeChange")) {
+	} else if (property.equals(VSDecoderPane.PCIDMap.get(VSDecoderPane.PropertyChangeID.VOLUME_CHANGE))) {
 	    log.debug("VSD: Volume change. value = " + evt.getNewValue());
 	    // Slider gives integer 0-100.  Need to change that to a float 0.0-1.0
 	    this.setMasterVolume((1.0f * (Integer)evt.getNewValue())/100.0f);

@@ -1,5 +1,11 @@
 package jmri.jmrit.vsdecoder;
 
+/**
+ * class VSDecoderPane
+ *
+ * GUI pane for a Virtual Sound Decoder (VSDecoder).
+ */
+
 /*
  * <hr>
  * This file is part of JMRI.
@@ -42,7 +48,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.border.TitledBorder;
 
-
 /**
  * Virtual Sound Decoder for playing sounds off of LocoNet messages.
  * Based on the LocoMon tool by Bob Jacobsen
@@ -56,7 +61,7 @@ public class VSDecoderPane extends JmriPanel {
 
     public static enum PropertyChangeID { ADDRESS_CHANGE, PROFILE_SELECT, MUTE, VOLUME_CHANGE }
 
-    private static final Map<PropertyChangeID, String> PCIDMap;
+    public static final Map<PropertyChangeID, String> PCIDMap;
     static {
 	Map<PropertyChangeID, String> aMap = new HashMap<PropertyChangeID, String>();
 	aMap.put(PropertyChangeID.ADDRESS_CHANGE, "AddressChange");
@@ -82,36 +87,40 @@ public class VSDecoderPane extends JmriPanel {
     private JPanel soundsPanel;
     private JPanel optionPanel;
     private JPanel volumePanel;
+    private jmri.util.swing.StatusBar statusBar;
 
     private static String VSDecoderFileLocation = null;
 
     //private List<JMenu> menuList;
 
+    /** Create a new VSDecoderPane */
     public VSDecoderPane(VSDecoderFrame p) {
         super();
 	parent = p;
 	decoder_mgr = VSDecoderManager.instance();
     }
 
-    
+    /** getFrame() Get this Pane's parent Frame */
     public VSDecoderFrame getFrame() { return(parent); }
 
-    
-    // getHelpTarget()
-    //
-    // Return a reference to the help file
+    /** getHelpTarget()
+     *
+     * Return a reference to the help file
+     */
     public String getHelpTarget() { return "package.jmri.jmrix.vsdecoder.VSDecoderPane"; }
 
-    // getTitle()
-    //
-    // Return a suggested title for the enclosing frame.
+    /** getTitle()
+     *
+     * Return a suggested title for the enclosing frame.
+     */
     public String getTitle() { 
         return VSDecoderBundle.bundle().getString("WindowTitle");
     }
 
-    // getDefaultVSDecoderFolder()
-    //
-    // Return a string default default path for the VSD files
+    /** getDefaultVSDecoderFolder()
+     *
+     * Return a string default default path for the VSD files
+     */
     public static String getDefaultVSDecoderFolder() {
         if (VSDecoderFileLocation == null)
             return XmlFile.prefsDir()+"vsdecoder"+File.separator ;
@@ -119,29 +128,36 @@ public class VSDecoderPane extends JmriPanel {
     }
 
 
-
+    /** init() : does nothing.  Here to satisfy the parent class */
     public void init() {
 	// Does nothing.  Here for completeness.
     }
     
+    /** initContext() : does nothing.  Here to satisfy the parent class */
     public void initContext(Object context) {
 	// Does nothing.  Here for completeness.
     }
 
-    // initComponents()
-    //
-    // initialzies the GUI components.
+    /** initComponents()
+     *
+     * initialzies the GUI components.
+     */
     public void initComponents() {
 	log.debug("initComponents()");
 	//buildMenu();
 
-	setLayout(new BorderLayout(10, 0));
+	setLayout(new GridBagLayout());
 	setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
 	// Add the tabbed pane to the VSDecoderPane.  The tabbedPane will contain all the other panes.
 	tabbedPane = new JTabbedPane();
-	tabbedPane.setMinimumSize(new Dimension(300, 300));
-	add(tabbedPane, BorderLayout.CENTER);
+	GridBagConstraints gbc1 = new GridBagConstraints();
+	gbc1.gridx = 0; gbc1.gridy = 0;
+	gbc1.fill = GridBagConstraints.BOTH;
+	gbc1.anchor = GridBagConstraints.CENTER;
+	gbc1.weightx = 1.0; gbc1.weighty = 1.0;
+	this.add(tabbedPane, gbc1);
+		  
 
 	//-------------------------------------------------------------------
 	// configPanel
@@ -157,7 +173,6 @@ public class VSDecoderPane extends JmriPanel {
 
 	tabbedPane.addTab("Options", optionPanel);
 	
-
 	//-------------------------------------------------------------------
 	// soundsPanel
 	// The soundsPanel holds buttons for specific sounds.
@@ -171,7 +186,6 @@ public class VSDecoderPane extends JmriPanel {
 	volumePanel.setLayout(new BorderLayout(10, 0));
 	TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), "Volume");
 	title.setTitlePosition(TitledBorder.DEFAULT_POSITION);
-	//volumePanel.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
 	volumePanel.setBorder(title);
 
 	JSlider volume = new JSlider(0, 100);
@@ -187,6 +201,7 @@ public class VSDecoderPane extends JmriPanel {
 	volumePanel.add(volume, BorderLayout.LINE_START);
 
 	JToggleButton mute_button = new JToggleButton("Mute");
+	
 	mute_button.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    muteButtonPressed(e);
@@ -195,16 +210,36 @@ public class VSDecoderPane extends JmriPanel {
 	    });
 	volumePanel.add(mute_button, BorderLayout.LINE_END);
 
-	volumePanel.setPreferredSize(new Dimension(300, 60));
-	add(volumePanel, BorderLayout.PAGE_END);
+	GridBagConstraints gbc2 = new GridBagConstraints();
+	gbc2.gridx = 0; gbc2.gridy = 1;
+	gbc2.fill = GridBagConstraints.BOTH;
+	gbc2.anchor = GridBagConstraints.CENTER;
+	gbc2.weightx = 1.0; gbc2.weighty = 0.1;
+	this.add(volumePanel, gbc2);
 
+	//-------------------------------------------------------------------
+	// statusBar
+	// The statusBar shows decoder status.
+	statusBar = new jmri.util.swing.StatusBar();
+	statusBar.setMessage("Status: No decoder assigned");
+	GridBagConstraints gbc3 = new GridBagConstraints();
+	gbc3.gridx = 0; gbc3.gridy = 2;
+	gbc3.fill = GridBagConstraints.BOTH;
+	gbc3.anchor = GridBagConstraints.PAGE_END;
+	gbc3.weightx = 1.0; gbc3.weighty = 0.1;
+	this.add(statusBar, gbc3);
+
+	//-------------------------------------------------------------------
 	// Pack and set visible
 	parent.pack();
 	parent.setVisible(true);
     }
 
+    
     // PROPERTY CHANGE EVENT FUNCTIONS
 
+    /** Handle a mute button press event */
+    // NOTE: should this be public???
     public void muteButtonPressed(ActionEvent e) {
 	JToggleButton b = (JToggleButton)e.getSource();
 	log.debug("Mute button pressed. value = " + b.isSelected());
@@ -212,25 +247,30 @@ public class VSDecoderPane extends JmriPanel {
 	// do something.
     }
 
+    /** Handle a volume slider change */
+    // NOTE: should this be public???
     public void volumeChange(ChangeEvent e) {
 	JSlider v = (JSlider)e.getSource();
 	log.debug("Volume slider moved. value = " + v.getValue());
 	firePropertyChange(PropertyChangeID.VOLUME_CHANGE, v.getValue(), v.getValue());
-
-	// do something
     }
 
     // VSDecoderManager Events
+
+    /** Add a listener for this Pane's property change events */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
 	List<PropertyChangeListener> l = Arrays.asList(listenerList.getListeners(PropertyChangeListener.class));
 	if (!l.contains(listener))
 	    listenerList.add(PropertyChangeListener.class, listener);
     }
 
+    /** Remove a listener */
     public void removePropertyChangeListener(PropertyChangeListener listener) {
 	listenerList.remove(PropertyChangeListener.class, listener);
     }
 
+    /** Fire a property change from this object */
+    // NOTE: should this be public???
     public void firePropertyChange(PropertyChangeID id, Object oldProp, Object newProp) {
 	String pcname;
 
@@ -240,6 +280,7 @@ public class VSDecoderPane extends JmriPanel {
 	firePropertyChange(new PropertyChangeEvent(this, pcname, oldProp, newProp));
     }
 
+    /** Fire a property change from this object */
     void firePropertyChange(PropertyChangeEvent evt) {
 	//Object[] listeners = listenerList.getListenerList();
 
@@ -248,9 +289,10 @@ public class VSDecoderPane extends JmriPanel {
 	}
     }
 
-    // getDecoder()
-    //
-    // Looks up the currently referenced decoder and returns it.
+    /** getDecoder()
+     *
+     * Looks up the currently referenced decoder and returns it.
+     */
     public VSDecoder getDecoder() {
 	VSDecoder d = VSDecoderManager.instance().getVSDecoderByID(decoder_id);
 	addPropertyChangeListener(d);
@@ -258,18 +300,20 @@ public class VSDecoderPane extends JmriPanel {
     }
 
 
-    // getDecoder(String)
-    //
-    // Looks up a decoder profile by name and returns that decoder.
+    /** getDecoder(String)
+     *
+     * Looks up a decoder profile by name and returns that decoder.
+     */
     public VSDecoder getDecoder(String profile) {
 	VSDecoder d = VSDecoderManager.instance().getVSDecoder(profile);
 	addPropertyChangeListener(d);
 	return(d);
     }
 
-    // setDecoder()
-    //
-    // set the Decoder ID and update the soundsPanel
+    /** setDecoder()
+     *
+     * set the Decoder ID and update the soundsPanel
+     */
     public void setDecoder(VSDecoder dec) {
 	if (dec != null) {
 	    // Store the new decoder
@@ -288,6 +332,17 @@ public class VSDecoderPane extends JmriPanel {
 		    public void windowIconified(WindowEvent e) {}
 		    public void windowOpened(WindowEvent e) {}
 		});
+	    // Register ourselves as an event listener to the decoder
+	    dec.addEventListener(new VSDecoderListener() { 
+		    public void eventAction(VSDecoderEvent e) {
+			decoderEventAction(e);
+		    }
+		});
+	    // Update the status bar
+	    if (dec.getPosition() != null)
+		statusBar.setMessage("Location: " + dec.getPosition().toString());
+	    else
+		statusBar.setMessage("Location: unknown");
 	    // Update the sounds pane
 	    tabbedPane.remove(soundsPanel);
 	    soundsPanel = new VSDSoundsPanel(decoder_id, this);
@@ -298,24 +353,43 @@ public class VSDecoderPane extends JmriPanel {
 	
     }
 
-    // setAddress()
-    //
-    // Update the Decoder's address...
+    /** Handle an event from the VSDecoder */
+    protected void decoderEventAction(VSDecoderEvent e) {
+	// Update the status bar...
+	if (e.getType() == VSDecoderEvent.EventType.LOCATION_CHANGE) {
+	    if (e.getData() != null) {
+		jmri.util.PhysicalLocation p = (jmri.util.PhysicalLocation) e.getData();
+		statusBar.setMessage("Location:"+ p.toString());
+	    } else {
+		statusBar.setMessage("Location: unknown");
+	    }
+	}
+    }
+
+    /** setAddress()
+     *
+     * Update the Decoder's address...
+     */
     public void setAddress(LocoAddress a) {
 	if (a != null) {
-	    VSDecoder decoder = VSDecoderManager.instance().getVSDecoderByID(decoder_id);
-	    if (decoder != null) {
-		decoder.setAddress(a);
-		decoder.enable();
-	    }
+	    log.debug("Pane Set Address: " + a);
+	    firePropertyChange(PropertyChangeID.ADDRESS_CHANGE, null, a);
+
+	    //VSDecoder decoder = VSDecoderManager.instance().getVSDecoderByID(decoder_id);
+	    //if (decoder != null) {
+	    //decoder.setAddress(a);
+	    //decoder.enable();
+	    ///}
 	    this.setTitle(a);
 	}
     }
 
-    // setTitle();
-    //
-    // Update the window title with the given address.
-    // Deprecate this eventually
+    /** setTitle();
+     *
+     * Update the window title with the given address.
+     */
+    // SHould this be public?
+    @Deprecated
     public void setTitle(DccLocoAddress a) {
 	if (a != null) {
 	    parent.setTitle("VSDecoder - " + a.toString());
@@ -329,10 +403,10 @@ public class VSDecoderPane extends JmriPanel {
 	}
     }
 
+    /** Handle window close event */
     public void windowClosing(WindowEvent e) {
 	log.debug("VSDecoderPane windowClosing() called...");
     }
-
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderPane.class.getName());
 }

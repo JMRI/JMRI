@@ -351,15 +351,6 @@ public class VSDConfigPanel extends JmriPanel {
 	// Update the roster entry local var.
 	rosterEntry = entry;
 
-	// Set the Address box from the Roster entry
-	main_pane.setAddress(entry.getDccLocoAddress());
-	addressSelector.setAddress(entry.getDccLocoAddress());
-	addressSelector.setEnabled(true);
-
-	//addressTextBox.setText(""+entry.getDccLocoAddress().getNumber());
-	//addressTextBox.setEnabled(true);
-	addressSetButton.setEnabled(true);
-
 	// Get VSD info from Roster.
 	vsd_path = rosterEntry.getAttribute("VSDecoder_Path");
 	vsd_profile = rosterEntry.getAttribute("VSDecoder_Profile");
@@ -380,6 +371,14 @@ public class VSDConfigPanel extends JmriPanel {
 		profile_selected = true;
 	    }
 	}
+
+	// Set the Address box from the Roster entry
+	// Do this after the VSDecoder create, so it will see the change.
+	main_pane.setAddress(entry.getDccLocoAddress());
+	addressSelector.setAddress(entry.getDccLocoAddress());
+	addressSelector.setEnabled(true);
+	addressSetButton.setEnabled(true);
+
 
     }
 
