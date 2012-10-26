@@ -5,6 +5,17 @@ package jmri.jmrix.rfid;
 import jmri.IdTag;
 import jmri.implementation.AbstractReporter;
 
+import jmri.LocoAddress;
+import jmri.DccLocoAddress;
+import jmri.PhysicalLocationReporter;
+import jmri.util.PhysicalLocation;
+import jmri.IdTagManager;
+import jmri.InstanceManager;
+import jmri.ReporterManager;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+
 /**
  * Extend AbstractReporter for RFID systems
  * <P>
@@ -29,7 +40,7 @@ import jmri.implementation.AbstractReporter;
  * @since       2.11.4
  */
 public class RfidReporter extends AbstractReporter
-                        implements RfidTagListener {
+    implements RfidTagListener, PhysicalLocationReporter {
 
     public RfidReporter(String systemName) {
         super(systemName);
@@ -69,6 +80,56 @@ public class RfidReporter extends AbstractReporter
     public int getState() {
         return state;
     }
+
+    // Methods to support PhysicalLocationReporter interface
+
+    /** getLocoAddress() 
+     *
+     * get the locomotive address we're reporting about from the
+     * current report.
+     *
+     * Note: We ignore the string passed in, because rfid Reporters
+     * don't send String type reports.
+     */
+    public LocoAddress getLocoAddress(String rep) {
+	// For now, we assume the current report.
+	// IdTag.getTagID() is a system-name-ized version of the loco address. I think.
+	// Matcher.group(1) : loco address (I think)
+	IdTag cr = (IdTag)this.getCurrentReport();
+	ReporterManager rm = InstanceManager.reporterManagerInstance();
+	Pattern p = Pattern.compile(""+rm.getSystemPrefix()+rm.typeLetter()+"(\\d+)");
+	Matcher m = p.matcher(cr.getTagID());
+	if (m.find()) {
+	    log.debug("Parsed address: " + m.group(1));
+	    // I have no idea what kind of loco address an Ecos reporter uses,
+	    // so we'll default to DCC for now.
+	    return(new DccLocoAddress(Integer.parseInt(m.group(1)), LocoAddress.Protocol.DCC));
+	} else {
+	    return(null);
+	}
+    }
+    
+    /** getDirection()
+     *
+     * Gets the direction (ENTER/EXIT) of the report.  Because of the
+     * way rfid Reporters work (or appear to), all reports are ENTER type.
+     */
+    public PhysicalLocationReporter.Direction getDirection(String rep) {
+	// TEMPORARY:  Assume we're always Entering, if asked.
+	return(PhysicalLocationReporter.Direction.ENTER);
+    }
+    
+    /** getPhysicalLocation()
+     *
+     * Returns the PhysicalLocation of the Reporter
+     *
+     * Reports its own location, for now.  Not sure if that's the right thing or not.
+     * NOT DONE YET
+     */
+    public PhysicalLocation getPhysicalLocation() {
+	return(PhysicalLocation.getBeanPhysicalLocation(this));
+    }
+    
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RfidReporter.class.getName());
 

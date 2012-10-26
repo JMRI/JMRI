@@ -7,6 +7,12 @@ import java.util.ArrayList;
 
 import jmri.implementation.AbstractReporter;
 
+import jmri.LocoAddress;
+import jmri.DccLocoAddress;
+import jmri.PhysicalLocationReporter;
+import jmri.util.PhysicalLocation;
+
+
 /**
  * RPS implementation of the Reporter interface.
  * <P>
@@ -103,6 +109,48 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
         Model.instance().removeRegion(region);
     }
     
+    // Methods to support PhysicalLocationReporter interface
+
+    /** getLocoAddress()
+     *
+     * Parses out a (possibly old) RpsReporter-generated report string to extract the address from the front.
+     * Assumes the RpsReporter format is "NNNN"
+     */
+    public LocoAddress getLocoAddress(String rep) {
+	// The report is a string, that is the ID of the locomotive (I think)
+	log.debug("Parsed address: " + rep);
+	// I have no idea what kind of loco address an RPS reporter uses,
+	// so we'll default to DCC for now.
+	if (rep.length() > 0) {
+	    return(new DccLocoAddress(Integer.parseInt(rep), LocoAddress.Protocol.DCC));
+	} else {
+	    return(null);
+	}
+    }
+    
+    /** getDirection()
+     *
+     * Gets the direction (ENTER/EXIT) of the report.  Because of the
+     * way Ecos Reporters work (or appear to), all reports are ENTER type.
+     */
+     public PhysicalLocationReporter.Direction getDirection(String rep) {
+	 // The RPS reporter only sends a report on entry.
+	 return(PhysicalLocationReporter.Direction.ENTER);
+     }
+
+    /** getPhysicalLocation()
+     *
+     * Returns the PhysicalLocation of the Reporter
+     *
+     * Reports its own location, for now.  Not sure if that's the right thing or not.
+     * Would be nice if it reported the exact measured location of the transmitter, but right now that doesn't
+     * appear to be being stored anywhere retrievable.
+     * NOT DONE YET
+     */
+    public PhysicalLocation getPhysicalLocation() {
+	return(PhysicalLocation.getBeanPhysicalLocation(this));
+    }
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsReporter.class.getName());
  }
 
