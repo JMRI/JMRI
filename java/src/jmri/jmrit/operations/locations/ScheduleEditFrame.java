@@ -289,6 +289,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		if(scheduleTable.isEditing()){
 			log.debug("schedule table edit true");
 			scheduleTable.getCellEditor().stopCellEditing();
+			scheduleTable.clearSelection();
 		}
 		if (_track != null){
 			_track.setScheduleId(_schedule.getId());

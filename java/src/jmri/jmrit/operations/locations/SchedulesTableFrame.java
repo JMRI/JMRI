@@ -53,7 +53,7 @@ public class SchedulesTableFrame extends OperationsFrame {
     	schedulesPane = new JScrollPane(schedulesTable);
     	schedulesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
     	schedulesPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-       	schedulesModel.initTable(schedulesTable);
+       	schedulesModel.initTable(this, schedulesTable);
      	getContentPane().add(schedulesPane);
      	
      	// Set up the control panel
@@ -120,6 +120,7 @@ public class SchedulesTableFrame extends OperationsFrame {
 	}
 
     public void dispose() {
+    	saveTableDetails(schedulesTable);
     	schedulesModel.dispose();
         super.dispose();
     }

@@ -79,7 +79,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 
 	List<String> sysList = null;
     
-	void initTable(JTable table) {
+	void initTable(SchedulesTableFrame frame, JTable table) {
 		// Install the button handlers
 		TableColumnModel tcm = table.getColumnModel();
 		ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -91,6 +91,18 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
+        setPreferredWidths(frame, table);
+
+		// set row height
+		table.setRowHeight(new JComboBox().getPreferredSize().height);
+		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	}
+	
+	private void setPreferredWidths(SchedulesTableFrame frame, JTable table){
+		if (frame.loadTableDetails(table))
+			return;	// done
+        log.debug("Setting preferred widths");
 		// set column preferred widths
 		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
@@ -99,10 +111,6 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 		table.getColumnModel().getColumn(STATUSCOLUMN).setPreferredWidth(150);
 		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(90);
-		// set row height
-		table.setRowHeight(new JComboBox().getPreferredSize().height);
-		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
     
     public int getRowCount() { return sysList.size(); }

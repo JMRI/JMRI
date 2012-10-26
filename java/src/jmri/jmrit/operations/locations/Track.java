@@ -1169,6 +1169,29 @@ public class Track {
 				status = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getShip()});
 				break;
 			}
+			// check destination
+			if (si.getDestination() != null && !si.getDestination().acceptsTypeName(si.getType())){
+				status = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getDestination()});
+				break;
+			}
+			// check destination track
+			if (si.getDestination() != null && si.getDestinationTrack() != null){
+				if (!si.getDestinationTrack().acceptsTypeName(si.getType())){
+					status = MessageFormat.format(rb.getString("NotValid"),
+							new Object[]{si.getDestinationTrack()+" ("+rb.getString("Type")+")"});
+					break;
+				}
+				if (!si.getRoad().equals("") && !si.getDestinationTrack().acceptsRoadName(si.getRoad())){
+					status = MessageFormat.format(rb.getString("NotValid"),
+							new Object[]{si.getDestinationTrack()+" ("+rb.getString("Road")+")"});
+					break;
+				}
+				if (!si.getShip().equals("") && !si.getDestinationTrack().acceptsLoadName(si.getShip())){
+					status = MessageFormat.format(rb.getString("NotValid"),
+							new Object[]{si.getDestinationTrack()+" ("+rb.getString("Load")+")"});
+					break;
+				}
+			}
 		}
 		return status;
 	}

@@ -351,8 +351,14 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     
     private JComboBox getDestComboBox(ScheduleItem si){
     	//log.debug("getDestComboBox for ScheduleItem "+si.getType());
-    	JComboBox cb = LocationManager.instance().getComboBox();  
+    	JComboBox cb = LocationManager.instance().getComboBox();
+    	filterDestinations(cb, si.getType());
     	cb.setSelectedItem(si.getDestination());
+       	if (si.getDestination() != null && !cb.getSelectedItem().equals(si.getDestination())){
+    		String notValid = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getDestination()});
+    		cb.addItem(notValid);
+    		cb.setSelectedItem(notValid);
+    	}
     	return cb;
     }
     
@@ -364,6 +370,11 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         	dest.updateComboBox(cb);  
         	filterTracks(dest, cb, si.getType(), si.getRoad(), si.getShip());
         	cb.setSelectedItem(si.getDestinationTrack());
+           	if (si.getDestinationTrack() != null && !cb.getSelectedItem().equals(si.getDestinationTrack())){
+        		String notValid = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getDestinationTrack()});
+        		cb.addItem(notValid);
+        		cb.setSelectedItem(notValid);
+        	}
     	}
     	return cb;
     }
@@ -501,6 +512,16 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     	log.debug("Delete schedule item");
 		ScheduleItem si = _schedule.getItemById(_list.get(row));
     	_schedule.deleteItem(si);
+    }
+    
+    // remove destinations that don't service the car's type
+    private void filterDestinations (JComboBox cb, String carType){
+    	for (int i=1; i<cb.getItemCount(); i++){
+    		Location dest = (Location)cb.getItemAt(i);
+    		if (!dest.acceptsTypeName(carType)){
+    			cb.removeItem(dest);
+    		}
+    	}
     }
     
     // remove destination tracks that don't service the car's type, road, or load
