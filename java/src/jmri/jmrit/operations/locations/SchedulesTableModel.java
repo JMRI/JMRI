@@ -124,8 +124,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         case SCH_STATUSCOLUMN: return rb.getString("Status");
         case SIDINGSCOLUMN: return rb.getString("Sidings");
         case STATUSCOLUMN: return rb.getString("StatusSiding");
-        case EDITCOLUMN: return "";		//edit column
-        case DELETECOLUMN: return "";	//delete column
+        case EDITCOLUMN: return rb.getString("Edit");
+        case DELETECOLUMN: return rb.getString("Delete");
         default: return "unknown";
         }
     }
