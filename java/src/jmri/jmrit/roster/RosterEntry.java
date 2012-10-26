@@ -561,8 +561,10 @@ public class RosterEntry implements jmri.BasicRosterEntry{
     }
 
     public void putAttribute(String key, String value) {
+        String oldValue = getAttribute(key);
         if (attributePairs == null) attributePairs = new java.util.TreeMap<String,String>();
         attributePairs.put(key, value);
+        firePropertyChange("attributeUpdated:"+key, oldValue, value);
     }
     public String getAttribute(String key) {
         if (attributePairs == null) return null;
@@ -570,8 +572,10 @@ public class RosterEntry implements jmri.BasicRosterEntry{
     }
     
     public void deleteAttribute(String key) {
-        if (attributePairs != null)
+        if (attributePairs != null) {
             attributePairs.remove(key);
+            firePropertyChange("attributeDeleted", key, null);
+        }
     }
 
     /**

@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.util.Enumeration;
 
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.jmrit.roster.Roster;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.XTableColumnModel;
 
@@ -47,14 +48,13 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
         dataModel = new RosterTableModel(editable);
         sorter = new TableSorter(dataModel);
     	dataTable = new JTable(sorter);
-        sorter.setTableHeader(dataTable.getTableHeader());        
+        sorter.setTableHeader(dataTable.getTableHeader());
         dataScroll	= new JScrollPane(dataTable);
 
-        TableColumn tc = columnModel.getColumnByModelIndex(RosterTableModel.PROTOCOL);
-        columnModel.setColumnVisible(tc, false);
         // set initial sort
         TableSorter tmodel = ((TableSorter)dataTable.getModel());
         tmodel.setSortingStatus(RosterTableModel.ADDRESSCOL, TableSorter.ASCENDING);
+
         
         // some columns, e.g. date, will need custom sorters.  See e.g.
         // jmri.jmrit.beantable.BeanTableFrame for an example of
@@ -68,8 +68,33 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
         dataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         
         dataTable.setColumnModel(columnModel);
+        dataModel.setColumnModel(columnModel);
         dataTable.createDefaultColumnsFromModel();
-
+        dataTable.setAutoCreateColumnsFromModel(false);
+        
+        TableColumn tc = columnModel.getColumnByModelIndex(RosterTableModel.PROTOCOL);
+        columnModel.setColumnVisible(tc, false);
+        
+        for(String s:Roster.instance().getAllAttributeKeys()){
+            if(!s.contains("RosterGroup") && !s.toLowerCase().startsWith("sys") && !s.toUpperCase().startsWith("VSD")){
+                String[] r = s.split("(?=\\p{Lu})");
+                StringBuilder sb = new StringBuilder();
+                sb.append(r[0].trim());
+                //System.out.println("'"+r[0]+",");
+                for(int j = 1; j<r.length; j++){
+                    //System.out.println("'"+r[j]+",");
+                    sb.append(" ");
+                    sb.append(r[j].trim());
+                }
+                TableColumn c = new TableColumn(dataModel.getColumnCount());
+                c.setHeaderValue((sb.toString()).trim());
+                dataTable.addColumn(c);
+                dataModel.addColumn(c.getHeaderValue());
+                columnModel.setColumnVisible(c, false);
+            }
+        }
+        
+        
         // resize columns as requested
         resetColumnWidths();
 

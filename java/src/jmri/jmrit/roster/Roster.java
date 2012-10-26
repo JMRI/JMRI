@@ -226,6 +226,28 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         return null;
     }
 
+    public int getGroupIndex(String group, RosterEntry re){
+        List<RosterEntry> l = matchingList(null, null, null, null, null, null, null);
+        int num = 0;
+        for (RosterEntry r : l) {
+            if (group != null) {
+                if ((r.getAttribute(getRosterGroupProperty(group)) != null)
+                        && r.getAttribute(getRosterGroupProperty(group)).equals("yes")) {
+                    if (r == re) {
+                        return num;
+                    }
+                    num++;
+                }
+            } else {
+                if (re == r) {
+                    return num;
+                }
+                num++;
+            }
+        }
+        return -1;
+    }
+
     /**
      * Return filename from a "title" string, ala selection in matchingComboBox.
      * @return The filename matching this "title", or null if none exists

@@ -497,6 +497,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             
             if(p.getTableColumnHidden(rostertableref, columnName)){
                 tcm.setColumnVisible(tc, false);
+            } else if(p.getTableColumnOrder(rostertableref, columnName)!=-1) {
+                //Use Column order to determine if the column has previously been saved.
+                tcm.setColumnVisible(tc, true);
             }
         }
         
