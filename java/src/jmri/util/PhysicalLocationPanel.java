@@ -24,14 +24,13 @@ import javax.swing.border.*;
  */
 
 
-/* PhysicalLocationPanel
+/** PhysicalLocationPanel
  *
  * Provides a Swing component to show and/or edit a PhysicalLocation
  */
 
 public class PhysicalLocationPanel extends JPanel {
 
-    JTextField xt, yt, zt;
     TitledBorder tb;
     JSpinner xs, ys, zs;
     SpinnerNumberModel spinnerModel;
@@ -41,11 +40,16 @@ public class PhysicalLocationPanel extends JPanel {
     static final Float spin_value = 0.0f;
     static final Float spin_inc = 0.1f;
 
+    /** Constructor */
     public PhysicalLocationPanel() {
 	super();
 	initComponents("");
     }
 
+    /** Constructor 
+     * 
+     * @param title (String) : Window title
+     */
     public PhysicalLocationPanel(String title) {
 	super();
 	initComponents(title);
@@ -54,7 +58,8 @@ public class PhysicalLocationPanel extends JPanel {
     private GridBagConstraints setConstraints(int x, int y, boolean fill) {
 	GridBagConstraints gbc1 = new GridBagConstraints();
 	gbc1.insets = new Insets(2, 2, 2, 2);
-	gbc1.gridx = GridBagConstraints.RELATIVE;
+	gbc1.gridx = x;
+	//gbc1.gridx = GridBagConstraints.RELATIVE;
 	gbc1.gridy = y;
 	gbc1.weightx = 100.0;
 	gbc1.weighty = 100.0;
@@ -74,61 +79,67 @@ public class PhysicalLocationPanel extends JPanel {
 
 	this.setLayout(new GridBagLayout());
 	
-	xt = new JTextField(20);
-	xt.setColumns(20);
-	yt = new JTextField(20);
-	yt.setColumns(20);
-	zt = new JTextField(20);
-	zt.setColumns(20);
-
 	xs = new JSpinner(new SpinnerNumberModel(spin_value, min_spin, max_spin, spin_inc));
 	ys = new JSpinner(new SpinnerNumberModel(spin_value, min_spin, max_spin, spin_inc));
 	zs = new JSpinner(new SpinnerNumberModel(spin_value, min_spin, max_spin, spin_inc));
-	xs.setMaximumSize(new Dimension(10, xs.getHeight()));
-	ys.setMaximumSize(new Dimension(10, ys.getHeight()));
-	zs.setMaximumSize(new Dimension(10, zs.getHeight()));
 	
 	JLabel xl = new JLabel("X");
-	xl.setMaximumSize(new Dimension(10, xl.getHeight()));
 	JLabel yl = new JLabel("Y");
-	yl.setMaximumSize(new Dimension(10, yl.getHeight()));
 	JLabel zl = new JLabel("Z");
-	zl.setMaximumSize(new Dimension(10, zl.getHeight()));
-
 
 	this.add(xl, setConstraints(0,0, false));
-	this.add(xs, setConstraints(1,0, true));
-	this.add(yl, setConstraints(2,0, false));
-	this.add(ys, setConstraints(3,0, true));
-	this.add(zl, setConstraints(3,0, false));
-	this.add(zs, setConstraints(5,0, true));
+	this.add(xs, setConstraints(GridBagConstraints.RELATIVE,0, true));
+	this.add(yl, setConstraints(GridBagConstraints.RELATIVE,0, false));
+	this.add(ys, setConstraints(GridBagConstraints.RELATIVE,0, true));
+	this.add(zl, setConstraints(GridBagConstraints.RELATIVE,0, false));
+	this.add(zs, setConstraints(GridBagConstraints.RELATIVE,0, true));
 
-	this.setPreferredSize(new Dimension(300, xl.getHeight()+100));
-	this.setMaximumSize(new Dimension(350, xl.getHeight()+100));
 	this.setVisible(true);
 	log.debug("initComponents() complete");
     }
 
+    /** Set the window tile
+     *
+     * @param t : new title
+     */
     public void setTitle(String t) {
 	tb.setTitle(t);
     }
 
+    /** Retrieve the window title
+     *
+     * @return (String) title
+     */
     public String getTitle() {
 	return(tb.getTitle());
     }
 
+    /** Set the value of the pane
+     *
+     * @param p (PhysicalLocation) : value to set
+     */
     public void setValue(PhysicalLocation p) {
 	xs.setValue(p.getX());
 	ys.setValue(p.getY());
 	zs.setValue(p.getZ());
     }
 
+
+    /** Set the value of the pane
+     *
+     * @param s (String) : value to set
+     */
     public void setValue(String s) {
 	PhysicalLocation p = PhysicalLocation.parse(s);
 	if (p != null) {
 	    this.setValue(p);
 	}
     }
+
+    /** Get the value of the pane
+     *
+     * @return PhysicalLocation : Current value of pane
+     */
     
     public PhysicalLocation getValue() {
 	Float x = (Float)((SpinnerNumberModel)xs.getModel()).getNumber();

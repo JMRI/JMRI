@@ -60,7 +60,8 @@ public class VSDecoder implements PropertyChangeListener {
 
     private float master_volume;
 
-    private PhysicalLocation my_position;
+    private PhysicalLocation my_position; // My "absolute" position relative to the OpenAL Context origin.
+    //private PhysicalLocation my_relative_position ; // position relative to the listener position (VSDecoderPreferences)
 
     // List of registered event listeners
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
@@ -389,15 +390,27 @@ public class VSDecoder implements PropertyChangeListener {
      * public void setPosition(PhysicalLocation p)
      *
      * set the x/y/z position in the soundspace of this VSDecoder
+     * Translates the given position to a position relative to the listener
+     * for the component VSDSounds.
      *
-     * @param p (PhysicalLocation) location relative to the listener
+     * The idea is that the user-preference Listener Position (relative to the
+     * USER's chosen origin) is always the OpenAL Context's origin.
+     *
+     * @param p (PhysicalLocation) location relative to the user's chosen Origin.
      * @return void
      */
     public void setPosition(PhysicalLocation p) {
+	// Store the actual position relative to the user's Origin locally.
 	my_position = p;
 	log.debug("( " + this.getAddress() + ") Set Position: " + my_position.toString());
+
+	// Give all of the VSDSound objects the position translated relative to the listener position.
+	// This is a workaround for OpenAL requiring the listener position to always be at (0,0,0).
+	PhysicalLocation ref = VSDecoderManager.instance().getVSDecoderPreferences().getListenerPosition();
+	if (ref == null)
+	    ref = PhysicalLocation.Origin;
 	for (VSDSound s : sound_list.values()) {
-	    s.setPosition(p);
+	    s.setPosition(PhysicalLocation.translate(p, ref));
 	}
 	fireMyEvent(new VSDecoderEvent(this, VSDecoderEvent.EventType.LOCATION_CHANGE, p));
     }

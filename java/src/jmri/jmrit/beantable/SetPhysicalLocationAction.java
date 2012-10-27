@@ -40,12 +40,15 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.JmritBeantablePhysicalLocationBundle");
 
+    /** Constructor */
     public SetPhysicalLocationAction(String s, Reporter reporter) {
     	super(s);
 	_reporter = reporter;
     }
 
     SetPhysicalLocationFrame f = null;
+
+    /** Action method */
     public void actionPerformed(ActionEvent e) {
         // create a copy route frame
     	if (f == null || !f.isVisible()){
@@ -87,6 +90,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 	// Spinners
 	PhysicalLocationPanel physicalLocation;
 	
+	/** Frame Constructor */
 	public SetPhysicalLocationFrame(Reporter l) {
 	    super(rb.getString("MenuSetPhysicalLocation"));
 	    
@@ -144,17 +148,11 @@ public class SetPhysicalLocationAction extends AbstractAction {
 	    }
 	    
 	    pack();
-	    /*
-	     * if (getWidth()<350) setSize(350, getHeight()); // height has to be
-	     * tall enough for four train directions if (getHeight()<400)
-	     * setSize(getWidth(), 400);
-	     */
-	    setPreferredSize(new Dimension(350, 200));
-	    setMaximumSize(new Dimension(350, getHeight()));
 	    setVisible(true);
 	}
 
-	javax.swing.JComboBox getReporterComboBox() {
+	/** Construct the combo box with the list of available Reporters */
+	protected javax.swing.JComboBox getReporterComboBox() {
 	    ReporterManager mgr = jmri.InstanceManager.reporterManagerInstance();
 	    String[] nameArray = mgr.getSystemNameArray();
 	    List<String> displayList = new ArrayList<String>();
@@ -176,10 +174,12 @@ public class SetPhysicalLocationAction extends AbstractAction {
 	    
 	}
 	
+	/** Close button action */
 	public void closeButtonActionPerformed(java.awt.event.ActionEvent ae) {
 	    dispose();
 	}
 
+	/** Save button action -> save this Reporter's location */
 	public void saveButtonActionPerformed(java.awt.event.ActionEvent ae) {
 	    // check to see if a location has been selected
 	    if (reporterBox.getSelectedItem() == null
@@ -199,7 +199,8 @@ public class SetPhysicalLocationAction extends AbstractAction {
 		saveSpinnerValues(l);
 	}
 	
-	Reporter getReporterFromList() {
+	/** Get a Reporter from its name in the combo box */
+	private Reporter getReporterFromList() {
 	    String s = (String)reporterBox.getSelectedItem();
 	    // Since we don't have "getByDisplayName()" we need to do this in two steps
 	    Reporter r = jmri.InstanceManager.reporterManagerInstance().getByDisplayName(s);
@@ -211,6 +212,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 	    return(r);
 	}
 
+	/** Combo box action */
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
 	    if (reporterBox.getSelectedItem() != null) {
 		if (reporterBox.getSelectedItem().equals("") || reporterBox.getSelectedItem().equals(emptyReporterString)) {
@@ -222,23 +224,24 @@ public class SetPhysicalLocationAction extends AbstractAction {
 	    }
 	}
 	
+	/** Spinner change event */
 	public void spinnerChangeEvent(javax.swing.event.ChangeEvent ae) {
 	    if (ae.getSource() == physicalLocation) {
 		Reporter l = getReporterFromList();
 		if (l != null)
-		    //l.setPhysicalLocation(physicalLocation.getValue());
-		    physicalLocation.getValue().setBeanPhysicalLocation(l);
+		    PhysicalLocation.setBeanPhysicalLocation(physicalLocation.getValue(), l);
 	    }
 	}
 	
+	/** Reset spinners to zero */
 	private void resetSpinners() {
 	    // Reset spinners to zero.
 	    physicalLocation.setValue(new PhysicalLocation());
 	}
 	
+	/** Load spinners from an existing Reporter */
 	private void loadSpinners(Reporter r) {
 	    log.debug("Load spinners Reporter location " + r.getSystemName());
-	    //physicalLocation.setValue(r.getPhysicalLocation());
 	    physicalLocation.setValue(PhysicalLocation.getBeanPhysicalLocation(r));
 	}
 	
@@ -249,17 +252,19 @@ public class SetPhysicalLocationAction extends AbstractAction {
 	 * physicalLocation.setEnabled(enable); }
 	 */
 	
+	/** Write spinner values to a Reporter */
 	private void saveSpinnerValues(Reporter r) {
 	    log.debug("Save train icons coordinates for location " + r.getSystemName());
-	    //r.setPhysicalLocation(physicalLocation.getValue());
-	    physicalLocation.getValue().setBeanPhysicalLocation(r);
+	    PhysicalLocation.setBeanPhysicalLocation(physicalLocation.getValue(), r);
 	}
 	
+	/** Destroy this frame */
 	public void dispose() {
 	    super.dispose();
 	}
 	
     }
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger
 	.getLogger(SetPhysicalLocationAction.class.getName());
 }
