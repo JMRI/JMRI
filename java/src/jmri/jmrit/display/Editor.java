@@ -1241,7 +1241,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (!_contents.add(l)) {
             log.error("Unable to add "+l.getNameString()+" to _contents");
         }
-        Component[] comps = _targetPanel.getComponentsInLayer(Editor.MARKERS);
         if (_debug) log.debug("putItem "+l.getNameString()+" to _contents. level= "+l.getDisplayLevel());
     }
     

@@ -58,6 +58,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             panel.setAttribute("greenBackground", ""+p.getBackgroundColor().getGreen());
             panel.setAttribute("blueBackground", ""+p.getBackgroundColor().getBlue());
         }
+        panel.setAttribute("state", ""+p.getExtendedState());
 
         // include contents
         List <Positionable> contents = p.getContents();
@@ -173,6 +174,16 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         if ((a = element.getAttribute("panelmenu"))!=null && a.getValue().equals("no"))
             value = false;
         panel.setPanelMenu(value);
+        
+        if ((a = element.getAttribute("state"))!=null) {
+        	try {
+        		int xState = a.getIntValue();
+                panel.setExtendedState(xState);
+        	} catch ( org.jdom.DataConversionException e) {
+                log.error("failed to convert ControlPanelEditor's extended State");
+                result = false;
+            }        	
+        }
 
         String state = "both";
         if ((a = element.getAttribute("scrollable"))!=null)

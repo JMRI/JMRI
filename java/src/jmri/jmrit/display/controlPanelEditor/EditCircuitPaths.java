@@ -337,55 +337,21 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         _block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
     }
 
-    private boolean addOK() {
+    /**
+    * Check for icons and Portals
+    */
+    private void addPath() {
         String name = _pathName.getText();
         if (name==null || name.trim().length()==0) {
             JOptionPane.showMessageDialog(this, rbcp.getString("TooltipPathName"),
                                 rbcp.getString("makePath"), JOptionPane.INFORMATION_MESSAGE);
-            return false;
+            return;
         }
         if (_pathGroup.size()==0) {
             JOptionPane.showMessageDialog(this, rbcp.getString("noPathIcons"),
                                 rbcp.getString("makePath"), JOptionPane.INFORMATION_MESSAGE);
-            return false;
-        } else {
-        	Iterator<Positionable> iter = _pathGroup.iterator();
-        	int portalCnt = 0;
-        	int trackCnt = 0;
-        	while (iter.hasNext()) {
-        		Positionable pos = iter.next();
-        		if (pos instanceof IndicatorTrack) {
-        			trackCnt++;
-        		} else if (pos instanceof PortalIcon) {
-        			portalCnt++;
-        		}
-        	}
-        	String msg = null;
-        	if (trackCnt==0) {
-                msg = "noPathIcons";
-        	}
-        	if (portalCnt==0) {
-                msg = "tooFewPortals";
-        	} else if (portalCnt>2) {
-                msg = "tooManyPortals";        		
-        	}
-        	if (msg!=null) {
-                JOptionPane.showMessageDialog(this, rbcp.getString(msg),
-                        rbcp.getString("makePath"), JOptionPane.INFORMATION_MESSAGE);
-                return false;
-        	}
-        }
-        return true;
-    }
-
-    /**
-    * addOK() must be called prior to this method
-    */
-    private void addPath() {
-        if (!addOK()) {
             return;
-        }    	
-        String name = _pathName.getText();
+        }
         Portal fromPortal = null;
         Portal toPortal = null;
         boolean hasTrack = false;

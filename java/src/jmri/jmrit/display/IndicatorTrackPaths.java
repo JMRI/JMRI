@@ -1,9 +1,20 @@
 package jmri.jmrit.display;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Dimension;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import jmri.Sensor;
+import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.jmrit.display.controlPanelEditor.shape.PositionableRoundRect;
 import jmri.jmrit.logix.OBlock;
 /**
  * A utility class replacing common methods formerly implementing the 
@@ -17,11 +28,11 @@ import jmri.jmrit.logix.OBlock;
 
 	protected ArrayList <String> _paths;      // list of paths that this icon displays
 	protected boolean _showTrain; 		// this track icon should display _loco when occupied
-	protected LocoIcon _loco = null;
-     
-    protected IndicatorTrackPaths() {    	 
-	}
-     
+	private LocoLable _loco = null;
+
+	protected IndicatorTrackPaths() {
+    }
+    
 	protected IndicatorTrackPaths deepClone() {
 		IndicatorTrackPaths p = new IndicatorTrackPaths();
         if (_paths!=null) {
@@ -122,16 +133,25 @@ import jmri.jmrit.logix.OBlock;
             return;
         }
         trainName = trainName.trim();
-        _loco = ed.selectLoco(trainName);
-        if (_loco==null) {
-            _loco = ed.addLocoIcon(trainName);
-        }
-        if (_loco!=null) {
-            pt.x = pt.x + (size.width - _loco.getWidth())/2;
-            pt.y = pt.y + (size.height - _loco.getHeight())/2;
-            _loco.setLocation(pt);
-//            log.debug("Display Loco \""+trainName+"\" ("+_status+") at ("+pt.x+", "+pt.y+")");
-        }
+    	_loco = new LocoLable(ed);
+        FontMetrics metrics = ed.getFontMetrics(ed.getFont());
+    	int width = metrics.stringWidth(trainName);
+    	int height = metrics.getHeight();
+    	_loco.setLineWidth(1);
+    	_loco.setLineColor(Color.RED);
+    	_loco.setAlpha(150);
+    	_loco.setFillColor(Color.WHITE);
+    	_loco.setText(trainName);
+    	_loco.setWidth(width+height/2);
+    	_loco.setHeight(height);
+    	_loco.setCornerRadius(height/2);
+    	_loco.makeShape();
+    	_loco.setDisplayLevel(Editor.MARKERS);
+        _loco.updateSize();
+        pt.x = pt.x + (size.width - _loco.maxWidth())/2;
+        pt.y = pt.y + (size.height - _loco.maxHeight())/2;
+        _loco.setLocation(pt);
+        ed.putItem(_loco);
     }
 
     protected String setStatus(int state) {
@@ -147,6 +167,38 @@ import jmri.jmrit.logix.OBlock;
         }
         return status;
     }
-       
+    
+    class LocoLable extends PositionableRoundRect {
+    	
+    	String _text;
+    	
+        public LocoLable(Editor editor) {
+        	super(editor);
+        }
+
+        public LocoLable(Editor editor, Shape shape) {
+           	super(editor, shape);
+        }
+        
+        public void setText(String text) {
+        	_text = text;        	
+        }
+        
+        public void paint(Graphics g) {
+        	super.paint(g);
+            Graphics2D g2d = (Graphics2D)g;
+            if (_transform!=null ) {
+            	g2d.transform(_transform);
+            }        
+            g2d.setFont(getFont().deriveFont(Font.BOLD));
+        	int textWidth = getFontMetrics(getFont()).stringWidth(_text);
+        	int textHeight = getFontMetrics(getFont()).getHeight();
+    		int hOffset = Math.max((maxWidth()-textWidth)/2, 0);
+    		int vOffset = Math.max((maxHeight()-textHeight)/2, 0) + getFontMetrics(getFont()).getAscent();
+            g2d.setColor(Color.BLACK);
+            g2d.drawString(_text, hOffset, vOffset);
+        }
+    }
+      
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndicatorTrackPaths.class.getName());
  }
