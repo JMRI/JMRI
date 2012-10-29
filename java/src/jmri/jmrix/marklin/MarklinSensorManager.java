@@ -152,10 +152,10 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
     }
     
     void padPortNumber (int portNo, StringBuilder sb){
-        if (port<10){
+        if (portNo<10){
             sb.append("0");
         }
-        sb.append(port);
+        sb.append(portNo);
     }
 
     // to listen for status changes from Marklin system
@@ -222,14 +222,14 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         
         String sensorprefix = getSystemPrefix()+"S"+board+":";
         Hashtable<Integer, MarklinSensor> sensorList = _tmarklin.get(board);
-        for(int port =1; port<17; port++){
+        for(int portNo =1; portNo<17; portNo++){
             result = intState & k;
-            ms= sensorList.get(port);
+            ms= sensorList.get(portNo);
             if(ms==null){
                 StringBuilder sb = new StringBuilder();
                 sb.append(sensorprefix);
                 //Little work around to pad single digit address out.
-                padPortNumber(port, sb);
+                padPortNumber(portNo, sb);
                 ms = (MarklinSensor)provideSensor(sb.toString());
             }
             if(ms!=null){
