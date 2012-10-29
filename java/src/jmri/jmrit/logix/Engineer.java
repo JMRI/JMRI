@@ -32,9 +32,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     private Warrant _warrant;
     private Sensor 	_waitSensor;
     private int		_sensorWaitState;
-//    private long	_signalOffset;		// milli-seconds to advance a speed change
-//    private String	_signalSpeedType;
-//    private boolean _signalSpeedChange;
 
     final ReentrantLock _lock = new ReentrantLock();
 
@@ -43,7 +40,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         _idxCurrentCommand = -1;
         _throttle = throttle;
         _syncIdx = 0;
-//        _signalSpeedType = "Normal";
         setSpeedStepMode(_throttle.getSpeedStepMode());
     }
 
@@ -130,9 +126,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 } else if (command.equals("RUN WARRANT")) {
                     runWarrant(ts);
                 }
-                _warrant.fireRunStatus("Command", Integer.valueOf(_idxCurrentCommand-1), Integer.valueOf(_idxCurrentCommand));
+                _warrant.fireRunStatus("Command", Integer.valueOf(_idxCurrentCommand), Integer.valueOf(_idxCurrentCommand+1));
                 et = System.currentTimeMillis()-et;
-                if (log.isDebugEnabled()) log.debug("Cmd #"+_idxCurrentCommand+": "+
+                if (log.isDebugEnabled()) log.debug("Cmd #"+(_idxCurrentCommand+1)+": "+
                                                     ts.toString()+" et= "+et+" warrant "+_warrant.getDisplayName());
             } catch (NumberFormatException e) {
                   log.error("Command failed! "+ts.toString()+" - "+e);
@@ -201,16 +197,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     /**
-    * Set up a signal speed change to occur "advanceTime" milli-seconds before the next
-    * block ("NOOP") synchronization.
-    *
-    synchronized public void setSignalSpeedChange(String signalSpeedType, long advanceTime) {
-    	_signalSpeedType = signalSpeedType;
-    	_signalOffset = advanceTime;
-    	_signalSpeedChange = true;
-    }*/
-
-    /**
     * Get the last normal speed setting.  Regress through commends, if necessary.  
     */
     private float getLastSpeedCommand(int currentIndex) {
@@ -247,6 +233,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 
         if (map.isRatioOfNormalSpeed()) {
             speed *= s;
+        } else { // max speed specified by signal aspect
+        	// use the minimum of recorded speed and aspect specified speed
+        	if (s<speed) {
+        		speed = s;
+        	}
         }
         speed *= _warrant._throttleFactor;
         if (0.0f < speed && speed < _minSpeed) {
@@ -258,8 +249,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     private void setSpeed(float speed) {
         _speed = speed;
         _throttle.setSpeedSetting(_speed);
-//        if (log.isDebugEnabled()) log.debug("_speedType="+_speedType+", Speed set to "+
-//                           _speed+" _wait= "+_wait+" warrant "+_warrant.getDisplayName());
+        if (log.isDebugEnabled()) log.debug("_speedType="+_speedType+", Speed set to "+
+        		_speed+" _waitForClear= "+_waitForClear+" warrant "+_warrant.getDisplayName());
     }
 
     synchronized public int getRunState() {

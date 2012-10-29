@@ -903,10 +903,12 @@ public class WarrantTableAction extends AbstractAction {
                     if (addr!= null && addr.length() != 0) {
                         try {
                             char ch = Character.toUpperCase(addr.charAt(addr.length()-1));
-                            boolean isLong = true;
+                            boolean isLong = false;
                             int n = 0;
                             if (Character.isDigit(ch)){
                                 n = Integer.parseInt(addr);
+                                ch = addr.charAt(0);
+                                isLong = (ch=='0' && addr.length()>3);  // leading zero means long
                             } else {
                                 isLong = (ch == 'L');
                                 n = Integer.parseInt(addr.substring(0, addr.length()-1));

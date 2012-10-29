@@ -47,7 +47,7 @@ import jmri.util.JmriJFrame;
 /**
  *  A JFrame to contain throttle elements such as speed control,
  *  function panel.  It keeps a record of the throttle commands
- *  for plyback leter. <p>
+ *  for playback later. <p>
  *
  *  Modeled on package jmri.jmrit.throttle by
  * @author     Glen Oberhauser

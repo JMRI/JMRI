@@ -48,7 +48,8 @@ import jmri.jmrit.picker.PickListModel;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  * <P>
- *
+ * This class is a window for creating and editing Warrants.
+ * <p>
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener, PropertyChangeListener {
@@ -787,15 +788,18 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             return;
         }
         ThrottleSetting cmd = _throttleCommands.get(row);
-        if (cmd.getCommand().trim().toUpperCase().equals("NOOP")) {
-            JOptionPane.showMessageDialog(null, rb.getString("cannotDeleteNoop"),
-            rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        long time = cmd.getTime();
-        if ((row+1) < _throttleCommands.size()) {
-            time += _throttleCommands.get(row+1).getTime(); 
-            _throttleCommands.get(row+1).setTime(time);
+        if (cmd!=null) {
+        	String c = cmd.getCommand();
+            if (c!=null && c.trim().toUpperCase().equals("NOOP")) {
+                JOptionPane.showMessageDialog(null, rb.getString("cannotDeleteNoop"),
+                rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            long time = cmd.getTime();
+            if ((row+1) < _throttleCommands.size()) {
+                time += _throttleCommands.get(row+1).getTime(); 
+                _throttleCommands.get(row+1).setTime(time);
+            }        	
         }
         _throttleCommands.remove(row);
         _commandModel.fireTableDataChanged();
@@ -999,7 +1003,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                 List<RosterEntry> l = Roster.instance().matchingList(null, null, name, null, null, null, null );
                 if (l.size() > 0) {
                     _train = l.get(0);
-                    _dccNumBox.setText(_train.getDccLocoAddress().toString());
                 }
             } else {
                 _train = Roster.instance().entryFromTitle(name);
@@ -2126,7 +2129,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                             if (cmdNum < 0 || 28 < cmdNum) {
                                 msg = rb.getString("badFunctionNum");
                             } else {
-                                ts.setCommand((String)value);
+                                ts.setCommand(cmd);
                             }
                         } catch (Exception e) {
                             msg = rb.getString("badFunctionNum");
@@ -2137,7 +2140,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                             if (cmdNum < 0 || 28 < cmdNum) {
                                 msg = rb.getString("badLockFNum");
                             } else {
-                                ts.setCommand((String)value);
+                                ts.setCommand(cmd);
                             }
                         } catch (Exception e) {
                             msg = rb.getString("badLockFNum");

@@ -45,6 +45,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     protected List <ThrottleSetting> _commands;   // temp commands used in run mode
     protected int   _idxCurrentOrder;       // Index of block at head of train (if running)
     protected String _currentSpeed;			// name of last moving speed, i.e. never "Stop"
+    protected String _exitSpeed;			// name of speed to exit the "protected" block
 
     private int     _runMode;
     private Engineer _engineer;         // thread that runs the train
@@ -522,6 +523,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 }
                 _student = student;
                 _currentSpeed = "Normal";
+                _exitSpeed = "Normal";
              } else if (mode == MODE_RUN) {
                  if (commands == null || commands.size()== 0) {
                      _commands = _throttleCommands;
@@ -1115,26 +1117,29 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         BlockOrder bo = getBlockOrderAt(index);
         bo.setPath(this);
         String speed = bo.getPermissibleEntranceSpeed();
+        String exitSpeed = bo.getPermissibleExitSpeed();
     	long speedOffset = 1000*getSpeedChangeWait(_idxCurrentOrder);
-        if (speed==null && index>0) {
-        	bo = getBlockOrderAt(index-1);
-        	speed = bo.getPermissibleExitSpeed();
-        	speedOffset = 1000*getSpeedChangeWait(_idxCurrentOrder-1);
-        }
         if (speed!=null) {
         	// speed change from signals
         	if (speed.equals("Stop")) {
                 _stoppingSignal = bo.getSignal();
                 _stoppingSignal.addPropertyChangeListener(this);
         	}
-        	if(_debug) log.debug("signal indicates \""+speed+"\" speed aspect on Warrant \""+getDisplayName()+
-            		"\". Set speed change Delay to "+speedOffset+"ms for entrance into "+
+        	if(_debug) log.debug("signal indicates \""+speed+"\" entrance speed and \""+exitSpeed+
+        			"\" exit speed on Warrant \""+getDisplayName()+
+            		"\".\n Set speed change Delay to "+speedOffset+"ms for entrance into "+
             		getBlockOrderAt(index).getBlock().getDisplayName()+
             		(_stoppingSignal==null ? ".": " _stoppingSignal= \""+_stoppingSignal.getDisplayName()+"\""));
         } else {
-        	// continue as before
-        	speed = _currentSpeed;
+        	if (_exitSpeed!=null) {
+        		// saved exit speed from last block
+            	speed = _exitSpeed;        		
+        	} else {
+            	// continue as before
+            	speed = _currentSpeed;        		
+        	}
         }
+        _exitSpeed = exitSpeed;
         if(_debug) log.debug("getCurrentSpeedAt("+index+"): speed= \""+speed+"\" for warrant= "+getDisplayName());
         return speed;
     }
@@ -1170,11 +1175,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      */
     private String getNextSpeed() {
         String nextSpeed = null;
+        String exitSpeed = null;
         BlockOrder bo = getBlockOrderAt(_idxCurrentOrder+1);
         OBlock nextBlock = bo.getBlock();
         if (allocateNextBlock(nextBlock)) {
             bo.setPath(this);
             nextSpeed = bo.getPermissibleEntranceSpeed();
+            exitSpeed = bo.getPermissibleExitSpeed();
             long speedOffset = 1000*getSpeedChangeWait(_idxCurrentOrder+1);
             if (nextSpeed==null) {
             	bo = getBlockOrderAt(_idxCurrentOrder);
@@ -1186,8 +1193,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     _stoppingSignal = bo.getSignal();
                     _stoppingSignal.addPropertyChangeListener(this);
             	}
-             	if(_debug) log.debug("signal indicates \""+nextSpeed+"\" speed aspect on Warrant \""+getDisplayName()+
-                		"\". Set change speed Delay to "+speedOffset+"ms for entrance into "+nextBlock.getDisplayName()+
+             	if(_debug) log.debug("signal indicates \""+nextSpeed+"\" entrance speed and \""+exitSpeed+
+            			"\" exit speed on Warrant \""+getDisplayName()+"\".\n Set change speed Delay to "+
+                		speedOffset+"ms for entrance into "+nextBlock.getDisplayName()+
                 		(_stoppingSignal==null ? ".": " _stoppingSignal= \""+_stoppingSignal.getDisplayName()+"\""));
             } else if ((nextBlock.getState() & OBlock.OCCUPIED) != 0) {
                 // Rule 292 - "visible" obstacle ahead. no signals or they didn't detect it.
@@ -1220,8 +1228,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             	_currentSpeed = nextSpeed;        		
         	}
         } else {
-        	nextSpeed = _currentSpeed;
+        	if (_exitSpeed!=null) {
+        		// saved exit speed from last block
+        		nextSpeed = _exitSpeed;        		
+        	} else {
+            	// continue as before
+        		nextSpeed = _currentSpeed;        		
+        	}
         }
+        _exitSpeed = exitSpeed;
         if(_debug) log.debug("getNextSpeed(): Entrance speed for \""+nextBlock.getDisplayName()+"\"= \""+
         						nextSpeed+"\" for warrant= "+getDisplayName());
         return nextSpeed;
