@@ -55,6 +55,9 @@ public class CbusOpCodes {
         return buf.toString();
     }
 
+    /**
+     * Hashmap for decoding CBUS opcodes <opc, string description>
+     */
     public static final Map<Integer, String> opcodeMap = createMap();
 
     /*
@@ -108,7 +111,7 @@ public class CbusOpCodes {
         result.put(CbusConstants.CBUS_DFNON,"Set Engine Function On (DFNON) Session:,%1, Fn:,%1");
         result.put(CbusConstants.CBUS_DFNOF,"Set Engine Function Off (DFNOF) Session:,%1, Fn:,%1");
         result.put(CbusConstants.CBUS_SSTAT,"Service mode status (SSTAT) Session:,%1, Status:,%1");
-        
+
         result.put(CbusConstants.CBUS_RQNN,"NN Acknowledge (RQNN) NN:,%2");
         result.put(CbusConstants.CBUS_NNREL,"NN Release (NNREL) NN:,%2");
         result.put(CbusConstants.CBUS_NNACK,"Keep Alive (NNREF) NN:,%2");
@@ -162,7 +165,7 @@ public class CbusOpCodes {
         result.put(CbusConstants.CBUS_ARSOF,"Accessory Short Request (ARSOF) NN:,%2, DN:,%2");
         result.put(CbusConstants.CBUS_EXTC3,"Extended Op-code (EXTC3):,%1, Data:,%1, ,%1, ,%1");
 
-        
+
         // Opcodes with 5 data
         result.put(CbusConstants.CBUS_RDCC4,"DCC 4 byte pkt (RDCC4) Repeat:,%1, Byte 1:,%1, 2:,%1, 3:,%1, 4:,%1");
         result.put(CbusConstants.CBUS_WCVS,"Write CV (WCVS) Session:,%1, CV:,%2, Mode:,%1, Data:,%1");
@@ -220,6 +223,55 @@ public class CbusOpCodes {
         result.put(CbusConstants.CBUS_EXTC6,"Extended Op-code (EXTC6):,%1, Data:,%1, ,%1, ,%1, ,%1, ,%1, ,%1");
 
         return Collections.unmodifiableMap(result);
+    }
+
+    /**
+     * Set of CBUS short event opcodes
+     */
+    public static final Set<Integer> shortOpcodes = createShort();
+
+     /**
+     * Test if CBUS opcode represents a short event
+     *
+     * @param opc   CBUS op code
+     * @return      True if opcode represents a short event
+     */
+    public static boolean isShortEvent(int opc) {
+        if (shortOpcodes.contains(opc)) { return true; }
+        return false;
+    }
+
+    /*
+     * Populate hashset with list of short opcodes
+     */
+    private static Set<Integer> createShort() {
+        Set<Integer> result = new HashSet<Integer>();
+         // Opcodes with 4 data
+        result.add(CbusConstants.CBUS_ASON);
+        result.add(CbusConstants.CBUS_ASOF);
+        result.add(CbusConstants.CBUS_ASRQ);
+        result.add(CbusConstants.CBUS_ARSON);
+        result.add(CbusConstants.CBUS_ARSOF);
+
+        // Opcodes with 5 data
+        result.add(CbusConstants.CBUS_ASON1);
+        result.add(CbusConstants.CBUS_ASOF1);
+        result.add(CbusConstants.CBUS_ARSON1);
+        result.add(CbusConstants.CBUS_ARSOF1);
+
+        // Opcodes with 6 data
+        result.add(CbusConstants.CBUS_ASON2);
+        result.add(CbusConstants.CBUS_ASOF2);
+        result.add(CbusConstants.CBUS_ARSON2);
+        result.add(CbusConstants.CBUS_ARSOF2);
+
+        // Opcodes with 7 data
+        result.add(CbusConstants.CBUS_ASON3);
+        result.add(CbusConstants.CBUS_ASOF3);
+        result.add(CbusConstants.CBUS_ARSON3);
+        result.add(CbusConstants.CBUS_ARSOF3);
+
+        return Collections.unmodifiableSet(result);
     }
 
 }

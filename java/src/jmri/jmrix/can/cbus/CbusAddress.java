@@ -160,16 +160,34 @@ public class CbusAddress {
     
     boolean match(CanReply r) {
         if (r.getNumDataElements() != aFrame.length) return false;
-        for (int i = 0; i<aFrame.length; i++) {
-            if (aFrame[i]!=r.getElement(i)) return false;
+        int opc = CbusMessage.getOpcode(r);
+        if (CbusOpCodes.isShortEvent(opc)) {
+            // Skip node number for short events
+            if (aFrame[0]!=r.getElement(0)) return false;
+            for (int i = 3; i<aFrame.length; i++) {
+                if (aFrame[i]!=r.getElement(i)) return false;
+            }
+        } else {
+            for (int i = 0; i<aFrame.length; i++) {
+                if (aFrame[i]!=r.getElement(i)) return false;
+            }
         }
         return true;
     }
     
     boolean match(CanMessage r) {
         if (r.getNumDataElements() != aFrame.length) return false;
-        for (int i = 0; i<aFrame.length; i++) {
-            if (aFrame[i]!=r.getElement(i)) return false;
+        int opc = CbusMessage.getOpcode(r);
+        if (CbusOpCodes.isShortEvent(opc)) {
+            // Skip node number for short events
+            if (aFrame[0]!=r.getElement(0)) return false;
+            for (int i = 3; i<aFrame.length; i++) {
+                if (aFrame[i]!=r.getElement(i)) return false;
+            }
+        } else {
+            for (int i = 0; i<aFrame.length; i++) {
+                if (aFrame[i]!=r.getElement(i)) return false;
+            }
         }
         return true;
     }
