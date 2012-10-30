@@ -64,13 +64,13 @@ var $buildManifest = function($r, $s, $x){
 			if ($rl.id == $e.destinationId) {
 				$hl += "  <li class='car engine setout'><span class='action'>Set out</span> " +
 				"<span class='roadNumber'>" + $e.road + " " + $e.number + "</span> " +
-				"<span class='model'>" + $e.model + "</span> " +
+				"<span class='model hideable'>" + $e.model + "</span> " +
 				"<span class='trackName'>to " + $e.trackName + "</span></li>";
 				$setouts++;
 			}
 		});
 		$h += "  <li class='location'>" + $rl.location + " (" + $rl.expectedArrivalTime + ") "; 
-		$h += " "
+
 		if ($pickups==0 && $moves==0 && $setouts==0) {
 			$h += "No work ";
 		} else {
@@ -85,6 +85,13 @@ var $buildManifest = function($r, $s, $x){
 	$h += "</ul>";
 	$('div#displayArea').html($h); //put output on page
 
+	//insert checkbox image in all li's, hidden until row is clicked
+	$('li.car>span.action').before("<img class='actionComplete' src='/images/VerySmallCheck.png'>");
+	//set up click handler on car items to toggle actionCompleted class
+	$('li.car').click(function () {
+		$(this).toggleClass("actionCompleted");
+	});
+	
 	//add simple collapsible for locations, 
 	//   copied from https://codeblitz.wordpress.com/2009/04/15/jquery-animated-collapsible-list/
 	$(function(){

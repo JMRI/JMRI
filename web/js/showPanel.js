@@ -3,11 +3,11 @@
  *    Retrieves panel xml from JMRI and builds panel client-side from that xml, including
  *    click functions.  Sends and listens for changes to panel elements using the xmlio server.
  *    If no parm passed, page will list links to available panels.
- *  Approach:  Read panel's xml and create widget objects with all needed attributes.  There are 
+ *  Approach:  Read panel's xml and create widget objects in the browser with all needed attributes.  There are 
  *    3 "widgetFamily"s: text, icon and drawn.  States are handled by storing members 
- *    iconX, textX, cssX where X is the state.  The corresponding ones are used whenever the state changes.
+ *    iconX, textX, cssX where X is the state.  The corresponding members are "shown" whenever the state changes.
  *    CSS classes are used throughout to attach events to correct widgets, as well as control appearance.
- *    The xmlio element name is used to send changes to xmlio server and to process changes made elsewhere.
+ *    The xmlio element name is used to send changes to xmlio server and to listen for changes made elsewhere.
  *    Drawn widgets are handled by drawing directly on the javascript "canvas" layer.
  *  Loop: 	1) request panel and process the returned panel xml, placing/drawing widgets on panel, and saving info as needed
  *  		2) send list of current states to server and wait for changes
@@ -17,8 +17,8 @@
  *  
  *  TODO: handle turnoutdrawunselectedleg = "yes" for crossovers
  *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
- *  TODO: handle "&" in panel names 
  *  TODO: handle drawn ellipse (see LMRC APB)
+ *  TODO: research movement of locoicons
  *  TODO: finish layoutturntable (draw rays) (see Mtn RR)
  *  TODO: show list of available panels in footer, or add [Prev] [Next] links to navigate between panels
  *  TODO: figure out "held" state on signalheads (see LMRC APB)
@@ -35,7 +35,7 @@
  *  TODO: figure out FireFox issue using size of alt text for rotation of unloaded images
  *  TODO: finish indicatorXXicon logic, handling occupancy and error states
  *  TODO: handle inputs/selection on various memory widgets
- *  TODO: improve look of multisensorclick by sending all state changes in one message
+ *  TODO: improve visual of multisensorclick by sending all state changes in one message
  *   
  **********************************************************************************************/
 
