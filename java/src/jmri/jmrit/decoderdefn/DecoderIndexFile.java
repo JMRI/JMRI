@@ -483,6 +483,7 @@ public class DecoderIndexFile extends XmlFile {
             }
             catch (org.jdom.JDOMException exj) {log.error("could not parse "+files[i]+": "+exj.getMessage());}
             catch (java.io.FileNotFoundException exj) {log.error("could not read "+files[i]+": "+exj.getMessage());}
+            catch (Exception exj) {log.error("other exception while dealing with "+files[i]+": "+exj.getMessage());}
         }
 
         index.addContent(mfgList);
