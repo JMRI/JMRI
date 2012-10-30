@@ -189,6 +189,11 @@ class VSDecoderManager implements PropertyChangeListener {
 	    log.debug("Decoder Address is Null");
 	    return;
 	}
+	if (l.equals(PhysicalLocation.Origin)) {
+	    log.debug("Location : "  + l.toString() + " ... ignoring.");
+	    // Physical location at origin means it hasn't been set.
+	    return;
+	}
 	log.debug("Decoder Address: " + a.getNumber());
 	for ( VSDecoder d : decodertable.values()) {
 	    // Get the Decoder's address protocol.  If it's a DCC_LONG or DCC_SHORT, convert to DCC
@@ -320,28 +325,21 @@ class VSDecoderManager implements PropertyChangeListener {
 	    PhysicalLocationReporter arp = (PhysicalLocationReporter) event.getSource();
 	    // Need to decide which reporter it is, so we can use different methods
 	    // to extract the address and the location.
-	    PhysicalLocation loc = arp.getPhysicalLocation();
-	    if (loc.equals(PhysicalLocation.Origin)) {
-		log.debug("Location : "  + loc.toString() + " ... ignoring.");
-		// Physical location at origin means it hasn't been set.
-		return;
-	    }
-		
 	    if (event.getNewValue() instanceof String) {
-		// newValue is of String type.
-		// LocoNet, Lissi
 		String newValue = (String)event.getNewValue();
-
 		if (arp.getDirection(newValue) == PhysicalLocationReporter.Direction.ENTER)
-		    setDecoderPositionByAddr(arp.getLocoAddress(newValue), loc);
-	    } 
-	    else if (event.getNewValue() instanceof IdTag) {
+		    setDecoderPositionByAddr(arp.getLocoAddress(newValue), arp.getPhysicalLocation(newValue));
+	    } else if (event.getNewValue() instanceof IdTag) {
 		// newValue is of IdTag type.
 		// Dcc4Pc, Ecos, 
 		// Assume Reporter "arp" is the most recent seen location
 		IdTag newValue = (IdTag) event.getNewValue();
-		setDecoderPositionByAddr(arp.getLocoAddress(newValue.getTagID()), loc);
+		setDecoderPositionByAddr(arp.getLocoAddress(newValue.getTagID()), arp.getPhysicalLocation(null));
+	    } else {
+		log.debug("Reporter's return type is not supported.");
+		// do nothing
 	    }
+
 	} else {
 	    log.debug("Reporter doesn't support physical location reporting or isn't reporting new info.");
 	}  // Reporting object implements PhysicalLocationReporter
