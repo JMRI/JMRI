@@ -57,7 +57,7 @@ public class JsonLister {
 		data.put("id", car.getId());
 		data.put("road", car.getRoad());
 		data.put("number", car.getNumber());
-		data.put("load", car.getLoad().replace("<", "&lt;"));
+		data.put("load", car.getLoad());
 		data.put("locationId", car.getRouteLocationId());
 		data.put("trackName", car.getTrackName());
 		data.put("destinationId", car.getRouteDestinationId());

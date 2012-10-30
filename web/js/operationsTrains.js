@@ -7,11 +7,12 @@ var $showTrainList = function(){
 			if ($r.length > 0) {
 				$h += "No trains defined in JMRI Operations.";
 			} else {
-				$h += "<table><tr><th>Time</th><th>Name</th><th>Description</th><th>Route</th>" + 
-				         "<th>Departs</th><th>Terminates</th><th>Current</th><th>Status</th><th>Conductor</th><th>Manifest</th><th>Id</th></tr>";
+				$h += "<table><tr><th>Manifest</th><th>Time</th><th>Name</th><th>Description</th><th>Route</th>" + 
+				         "<th>Departs</th><th>Terminates</th><th>Current</th><th>Status</th><th>Conductor</th><th>Id</th></tr>";
 				$.each($r.list, function(i, item) {  //loop through the returned list of trains
 					$train = item.data;  //everything of interest is in the data element
 					$h += "<tr>";
+					$h += "<td><a href='/web/operationsManifest.html?trainid=" + $train.id + "'>Manifest</td>";
 					$h += "<td>" + $train.departureTime + "</td>";
 					$h += "<td>" + $train.name + " (" + $train.leadEngine + ")</td>";
 					$h += "<td>" + $train.description + "</td>";
@@ -20,9 +21,7 @@ var $showTrainList = function(){
 					$h += "<td>" + $train.trainTerminatesName + "</td>";
 					$h += "<td>" + $train.currentLocationName + "</td>";
 					$h += "<td>" + $train.status + "</td>";
-//					$h += "<td>" + $train.comment + "</td>";
 					$h += "<td><a href='/web/operationsConductor.html?trainid=" + $train.id + "'>Conductor</td>";
-					$h += "<td><a href='/web/operationsManifest.html?trainid=" + $train.id + "'>Manifest</td>";
 					$h += "<td><a href='/json/train/" + $train.id + "'>" + $train.id + "</td>";
 					$h += "</tr>";
 				});
