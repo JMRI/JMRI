@@ -505,6 +505,16 @@ import java.util.regex.Matcher;
       * of the locomotive being reported about
       */
      public PhysicalLocation getPhysicalLocation() {
+	 return(getPhysicalLocation(null));
+     }
+
+     /** getPhysicalLocation(String s)
+      *
+      * Returns the PhysicalLocation of this Reporter.  Assumed to be the location
+      * of the locomotive being reported about.
+      * Does not use the parameter s.
+      */
+     public PhysicalLocation getPhysicalLocation(String s) {
 	 return(PhysicalLocation.getBeanPhysicalLocation(this));
      }
     

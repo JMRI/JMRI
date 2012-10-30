@@ -125,9 +125,18 @@ import java.util.regex.Matcher;
      * NOT DONE YET
      */
      public PhysicalLocation getPhysicalLocation() {
-	 return(PhysicalLocation.getBeanPhysicalLocation(this));
+	 return(this.getPhysicalLocation(null));
      }
 
+    /** getPhysicalLocation(String s)
+     *
+     * Returns the PhysicalLocation of the Reporter
+     *
+     * Does not use the parameter s.
+     */
+     public PhysicalLocation getPhysicalLocation(String s) {
+	 return(PhysicalLocation.getBeanPhysicalLocation(this));
+     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosReporter.class.getName());
 

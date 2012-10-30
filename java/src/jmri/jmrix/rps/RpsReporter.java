@@ -118,11 +118,17 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
      */
     public LocoAddress getLocoAddress(String rep) {
 	// The report is a string, that is the ID of the locomotive (I think)
-	log.debug("Parsed address: " + rep);
+	log.debug("Parsed ID: " + rep);
 	// I have no idea what kind of loco address an RPS reporter uses,
 	// so we'll default to DCC for now.
 	if (rep.length() > 0) {
-	    return(new DccLocoAddress(Integer.parseInt(rep), LocoAddress.Protocol.DCC));
+	    try {
+		int id = Integer.parseInt(rep);
+		int addr = Engine.instance().getTransmitter(id).getAddress();
+		return(new DccLocoAddress(addr, LocoAddress.Protocol.DCC));
+	    } catch(NumberFormatException e) {
+		return(null);
+	    }
 	} else {
 	    return(null);
 	}
@@ -149,6 +155,30 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
      */
     public PhysicalLocation getPhysicalLocation() {
 	return(PhysicalLocation.getBeanPhysicalLocation(this));
+    }
+
+    /** getPhysicalLocation(String s)
+     *
+     * Returns the PhysicalLocation of the Transmitter with the given ID
+     *
+     * Given an ID (in String form), looks up the Transmitter and gets
+     * its current PhysicalLocation (translated from the RPS Measurement).
+     */
+    public PhysicalLocation getPhysicalLocation(String s) {
+	if (s.length() > 0) {
+	    try {
+		int id = Integer.parseInt(s);
+		Vector3d v = Engine.instance().getTransmitter(id).getLastMeasurement().getVector();
+		return(new PhysicalLocation(new Vector3f(v)));
+	    } catch(NumberFormatException e) {
+		return(null);
+	    } catch(NullPointerException e) {
+		return(null);
+	    }
+	} else {
+	    return(null);
+	}
+
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsReporter.class.getName());

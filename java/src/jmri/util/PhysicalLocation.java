@@ -20,6 +20,7 @@ package jmri.util;
  */
 
 import javax.vecmath.Vector3f;
+import javax.vecmath.Vector3d;
 import java.util.regex.*;
 import jmri.NamedBean;
 
@@ -165,6 +166,10 @@ public class PhysicalLocation extends Vector3f {
 
     /** Constructor from Vector3f */
     public PhysicalLocation(Vector3f v) {
+	super(v);
+    }
+
+    public PhysicalLocation(Vector3d v) {
 	super(v);
     }
 

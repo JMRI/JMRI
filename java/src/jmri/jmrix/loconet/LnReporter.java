@@ -186,6 +186,11 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
 	return(PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
+    // Does not use the parameter S.
+    public PhysicalLocation getPhysicalLocation(String s) {
+	return(PhysicalLocation.getBeanPhysicalLocation(this));
+    }
+
     // data members
     int _number;   // loconet Reporter number
 
