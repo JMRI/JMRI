@@ -1,0 +1,38 @@
+/* stylesheet for specific needs of the Operations-related pages */
+
+ul ul {
+	padding-left: 2%;
+}
+h1 {
+	font-size: 125%;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+ul.manifest>li.location {
+	font-size: 150%;
+}
+ul.manifest>li.location>ul {
+	font-size: 75%;
+}
+ul.manifest {
+	white-space: nowrap;
+}
+ul.manifest>span.comment {
+	font-style: italic;
+}
+ul.manifest>li.location>ul.cars>li.car>span.roadNumber {
+	font-size: 125%;
+}
+ul.manifest>li.location>ul.cars>li.car>span.trackName {
+	font-size: 125%;
+}
+
+/* hide non-critical elements if the screen is narrow */
+@media only screen and (max-width: 480px) {
+  .hideable {
+    display :none;
+  }
+}
+ul.manifest>li>ul>li {
+	list-style: none;
+}
