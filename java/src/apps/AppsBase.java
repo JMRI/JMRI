@@ -161,6 +161,12 @@ public abstract class AppsBase {
         // install the named bean handler
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
 
+        // Install an IdTag manager
+        jmri.InstanceManager.store(new jmri.managers.DefaultIdTagManager(), jmri.IdTagManager.class);
+
+        //Install Entry Exit Pairs Manager
+        jmri.InstanceManager.store(new jmri.jmrit.signalling.EntryExitPairs(), jmri.jmrit.signalling.EntryExitPairs.class);
+
     }
 
     protected void setAndLoadPreferenceFile() {

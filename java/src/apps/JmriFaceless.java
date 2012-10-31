@@ -8,7 +8,8 @@ package apps;
  *   overhead associated with display functions.  Needs an existing JMRI configuration file
  *   passed as parm to program, or it will use the default of JmriFacelessConfig3.xml 
  * Copied from apps.gui3.demo3.Demo3, then removed all ui-related elements
- * NOTE: JMRI "server" functions based on ui components (such as JmriJFramesmay need to be modified to check isHeadless() and adjust their 
+ * NOTE: JMRI "server" functions based on ui components (such as JmriJFrames)
+ *   may need to be modified to check isHeadless() and adjust their 
  *   behavior as needed. 
  * <P>
  *
