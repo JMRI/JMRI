@@ -21,7 +21,6 @@
  *  TODO: research movement of locoicons
  *  TODO: finish layoutturntable (draw rays) (see Mtn RR)
  *  TODO: show list of available panels in footer, or add [Prev] [Next] links to navigate between panels
- *  TODO: figure out "held" state on signalheads (see LMRC APB)
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
  *  TODO: determine proper level (z-index) for canvas layer
@@ -76,6 +75,8 @@ var GREEN       = 0x10;
 var FLASHGREEN  = 0x20;
 var LUNAR       = 0x40;
 var FLASHLUNAR  = 0x80;
+var HELD		= 0x0100;  //additional to deal with "Held" pseudo-state
+
 var RH_TURNOUT = 1; //named constants for turnout types
 var LH_TURNOUT = 2;
 var WYE_TURNOUT = 3;
@@ -211,6 +212,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 					case "signalheadicon" :
 						$widget['name']  =		$widget.signalhead; //normalize name
 						$widget['element']  =	"signalhead"; //what xmlio server calls this
+						$widget['icon' + HELD] =  	$(this).find('icons').find('held').attr('url');
 						$widget['icon' + DARK] 	=	$(this).find('icons').find('dark').attr('url');
 						$widget['icon' + RED] =  	$(this).find('icons').find('red').attr('url');
 						if ($widget['icon' + RED] == undefined) { //look for held if no red
@@ -1235,7 +1237,7 @@ var $getNextState = function($widget){
         	var $currentState;
         	for (k in $widget) {
         		var s = k.substr(4); //strip off the state of current icon var
-        		if (k.indexOf('icon') == 0 && $widget[k] != undefined ) { //valid value, name starts with 'icon'
+        		if (k.indexOf('icon') == 0 && $widget[k] != undefined && k != 'icon'+HELD) { //valid value, name starts with 'icon', but not the HELD one
         			if ($firstState == undefined) $firstState = s;  //remember the first state (for last one)
         			if ($currentState != undefined && $nextState == undefined) $nextState = s; //last one was the current, so this one must be next
         			if (s == $widget.state) $currentState = s;

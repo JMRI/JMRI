@@ -14,6 +14,7 @@ import jmri.Route;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.SignalHead;
+import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
@@ -394,12 +395,26 @@ public class JsonLister {
 		root.put("type", "signalHead");
 		ObjectNode data = root.putObject("data");
 		SignalHead signalHead = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-		data.put("name", name);
-		data.put("userName", signalHead.getUserName());
-		data.put("comment", signalHead.getComment());
-		data.put("state", signalHead.getAppearance());
-		data.put("lit", signalHead.getLit());
-        return root;
+		try {
+			data.put("name", name);
+			data.put("userName", signalHead.getUserName());
+			data.put("comment", signalHead.getComment());
+			data.put("lit", signalHead.getLit());
+			data.put("appearance", signalHead.getAppearance());
+			data.put("held", signalHead.getHeld());
+			//state is appearance, plus a flag for held status
+            if (signalHead.getHeld()) {
+            	data.put("state", SignalHead.HELD);   
+            } else {
+            	data.put("state", signalHead.getAppearance());
+            }
+		} catch (NullPointerException e) {
+			root.put("type", "error");
+			data.put("code", -1);
+			data.put("message", "Unable to get signalHead [" + name + "]");
+			log.error("Unable to get signalHead [" + name + "].", e);
+		}
+		return root;
 	}
 	
 	static public JsonNode getSignalHeads() {
@@ -411,6 +426,31 @@ public class JsonLister {
         }
         return root;
 	}
+
+	static public JsonNode getSignalMast(String name) {
+		ObjectNode root = mapper.createObjectNode();
+		root.put("type", "signalMast");
+		ObjectNode data = root.putObject("data");
+		SignalMast signalMast = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+		data.put("name", name);
+		data.put("userName", signalMast.getUserName());
+		data.put("comment", signalMast.getComment());
+		data.put("aspect", signalMast.getAspect());
+		data.put("state", signalMast.getState());
+		data.put("lit", signalMast.getLit());
+        return root;
+	}
+
+	static public JsonNode getSignalMasts() {
+		ObjectNode root = mapper.createObjectNode();
+		root.put("type", "list");
+		ArrayNode signalMasts = root.putArray("list");
+        for (String name : InstanceManager.signalMastManagerInstance().getSystemNameList()) {
+            signalMasts.add(getSignalMast(name));
+        }
+        return root;
+	}
+
 
 	static public JsonNode getTrain(String id) {
 		ObjectNode root = mapper.createObjectNode();

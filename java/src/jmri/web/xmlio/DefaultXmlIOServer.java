@@ -666,15 +666,19 @@ public class DefaultXmlIOServer implements XmlIOServer {
         	log.warn("SignalHead " + name + " not found, skipping.");
         	return false;
         }
+    	int state = b.getState();
+    	if (b.getHeld()) {
+        	state = SignalHead.HELD;  //also handle held as a state   
+        }
 
         // check for value element, which means compare
         if (item.getAttributeValue("value") != null) {
-            return (b.getState() != Integer.parseInt(item.getAttributeValue("value")));
+            return (state != Integer.parseInt(item.getAttributeValue("value")));
         } else {
         Element v = item.getChild("value");
         if (v!=null) {
-            int state = Integer.parseInt(v.getText());
-            return  (b.getState() != state);
+            int newState = Integer.parseInt(v.getText());
+            return  (state != newState);
         }
         }
         return false;  // no difference
@@ -926,9 +930,12 @@ public class DefaultXmlIOServer implements XmlIOServer {
     void immediateReadSignalHead(String name, Element item) {
     	// get signalhead
     	SignalHead b = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-
+        int state = b.getState();
+    	if (b.getHeld()) {
+        	state = SignalHead.HELD;  //also handle held as a state   
+        }
     	if (useAttributes) {
-    		item.setAttribute("value", Integer.toString(b.getState()));
+    		item.setAttribute("value", Integer.toString(state));
     	} else {
     		Element v = item.getChild("value");
 
@@ -936,7 +943,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
     		if (v == null) item.addContent(v = new Element("value"));
 
     		// set result
-    		v.setText(""+b.getState());
+    		v.setText(""+state);
     	}
     }
 

@@ -131,7 +131,7 @@ var $processResponse = function($returnedData, $success, $xhr) {
 						$currentItem.valueText = $getValueText($currentItem.type, $currentItem.value); 
 					}
 					//include a "safe" version of name for use as ID   TODO: other cleanup needed?
-					$currentItem.safeName = $currentItem.name.replace(/:/g, "_").replace(/ /g, "_").replace(/%20/g, "_").replace(/\"/g, "_");
+					$currentItem.safeName = $currentItem.name.replace(/:/g, "_").replace(/;/g, "_").replace(/ /g, "_").replace(/%20/g, "_").replace(/\"/g, "_");
 					
 					//if a "page" of this type doesn't exist yet, create it, and add menu buttons to all
 					if (!$("#type-" + $type).length) {

@@ -72,6 +72,7 @@ public interface SignalHead extends NamedBean {
     public static final int FLASHGREEN  = 0x20;
     public static final int LUNAR       = 0x40;
     public static final int FLASHLUNAR  = 0x80;
+	public static final int HELD 		= 0x0100;
 
     /**
      * Appearance is a bound parameter. 
