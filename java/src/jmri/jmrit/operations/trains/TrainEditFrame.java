@@ -541,18 +541,26 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		return true;
 	}
 	
-	private boolean checkModel(){
-		String model = (String)modelEngineBox.getSelectedItem();
+	private boolean checkModel() {
+		String model = (String) modelEngineBox.getSelectedItem();
 		if (numEnginesBox.getSelectedItem().equals("0") || model.equals(""))
 			return true;
 		String type = EngineModels.instance().getModelType(model);
-		if(_train.acceptsTypeName(type))
-			return true;
-		JOptionPane.showMessageDialog(this,
-				MessageFormat.format(rb.getString("TrainModelService"), new Object[] {model, type}), MessageFormat.format(rb.getString("CanNot"),
-						new Object[] {rb.getString("save")}),
-				JOptionPane.ERROR_MESSAGE);
-		return false;
+		if (!_train.acceptsTypeName(type)) {
+			JOptionPane.showMessageDialog(this, MessageFormat.format(
+					rb.getString("TrainModelService"), new Object[] {model,type}),
+					MessageFormat.format(rb.getString("CanNot"), new Object[] {rb.getString("save")}),
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (roadEngineBox.getItemCount() == 1) {
+			log.debug("No locos available that match the model selected!");
+			JOptionPane.showMessageDialog(this, MessageFormat.format(
+					rb.getString("NoLocosModel"), new Object[] {model}),
+					MessageFormat.format(rb.getString("TrainWillNotBuild"), new Object[]{_train.getName()}),
+					JOptionPane.WARNING_MESSAGE);
+		}
+		return true;
 	}
 	
 	private void reportTrainExists(String s){
