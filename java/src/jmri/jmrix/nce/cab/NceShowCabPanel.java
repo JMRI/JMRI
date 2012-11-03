@@ -296,7 +296,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	String		text1;
     	String		text2;
     	String		lastChange;
-    };
+    }
 
     dataRow[] cabData = new dataRow[CAB_MAX];
 
