@@ -2436,7 +2436,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public boolean reset(){
 		// is this train in route?
 		if (isTrainInRoute()){
-			log.info("Train has started its route, can not reset");
+			log.info("Train ("+getName()+") has started its route, can not be reset");
 			return false;
 		}
 		setCurrentLocation(null);

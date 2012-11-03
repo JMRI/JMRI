@@ -74,26 +74,28 @@ public class OptionFrame extends OperationsFrame{
 	}
 
 	public void initComponents() {
-		
-		// the following code sets the frame's initial state
 
-		// load checkboxes	
-		valueCheckBox.setSelected(Setup.isValueEnabled());
-		rfidCheckBox.setSelected(Setup.isRfidEnabled());
-		routerCheckBox.setSelected(Setup.isCarRoutingEnabled());
-		carLoggerCheckBox.setSelected(Setup.isCarLoggerEnabled());
-		engineLoggerCheckBox.setSelected(Setup.isEngineLoggerEnabled());
-		trainLoggerCheckBox.setSelected(Setup.isTrainLoggerEnabled());
+		// load checkboxes			
 		localInterchangeCheckBox.setSelected(Setup.isLocalInterchangeMovesEnabled());
 		localSidingCheckBox.setSelected(Setup.isLocalSidingMovesEnabled());
 		localYardCheckBox.setSelected(Setup.isLocalYardMovesEnabled());
+		// staging options
 		trainIntoStagingCheckBox.setSelected(Setup.isTrainIntoStagingCheckEnabled());
 		stagingAvailCheckBox.setSelected(Setup.isStagingTrackImmediatelyAvail());
 		stagingTurnCheckBox.setSelected(Setup.isAllowReturnToStagingEnabled());
 		promptToTrackStagingCheckBox.setSelected(Setup.isPromptToStagingEnabled());
 		promptFromTrackStagingCheckBox.setSelected(Setup.isPromptFromStagingEnabled());
+		// router
+		routerCheckBox.setSelected(Setup.isCarRoutingEnabled());
+		// logging options
+		carLoggerCheckBox.setSelected(Setup.isCarLoggerEnabled());
+		engineLoggerCheckBox.setSelected(Setup.isEngineLoggerEnabled());
+		trainLoggerCheckBox.setSelected(Setup.isTrainLoggerEnabled());
+
 		generateCvsManifestCheckBox.setSelected(Setup.isGenerateCsvManifestEnabled());
 		generateCvsSwitchListCheckBox.setSelected(Setup.isGenerateCsvSwitchListEnabled());
+		valueCheckBox.setSelected(Setup.isValueEnabled());
+		rfidCheckBox.setSelected(Setup.isRfidEnabled());
 		enableVsdCheckBox.setSelected(Setup.isVsdPhysicalLocationEnabled());
 		
 		// load text fields

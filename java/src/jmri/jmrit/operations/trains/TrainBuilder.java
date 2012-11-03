@@ -442,11 +442,11 @@ public class TrainBuilder extends TrainCommon{
 		getCarWithFred(train.getCabooseRoad(), train.getTrainDepartsRouteLocation(), cabooseOrFredTerminatesFirstLeg);
 		
 		// first caboose change?
-		if ((train.getSecondLegOptions() & Train.ADD_CABOOSE) > 0){
+		if ((train.getSecondLegOptions() & Train.ADD_CABOOSE) > 0 && train.getSecondLegStartLocation() != null && cabooseOrFredTerminatesSecondLeg != null){
 			getCaboose(train.getSecondLegCabooseRoad(), secondLeadEngine, train.getSecondLegStartLocation(), cabooseOrFredTerminatesSecondLeg, true);
 		}
 		// second caboose change?
-		if ((train.getThirdLegOptions() & Train.ADD_CABOOSE) > 0){
+		if ((train.getThirdLegOptions() & Train.ADD_CABOOSE) > 0 && train.getThirdLegStartLocation() != null && cabooseOrFredTerminatesThirdLeg != null){
 			getCaboose(train.getThirdLegCabooseRoad(), thirdLeadEngine, train.getThirdLegStartLocation(), cabooseOrFredTerminatesThirdLeg, true);
 		}
 		
@@ -871,6 +871,14 @@ public class TrainBuilder extends TrainCommon{
 	 * @throws BuildFailedException If car not found.
 	 */	
 	private void getCaboose(String roadCaboose, Engine leadEngine, RouteLocation rl, RouteLocation rld, boolean requiresCaboose) throws BuildFailedException{
+		if (rl == null){
+			log.error("Departure track for caboose is null");
+			return;
+		}
+		if (rld == null){
+			log.error("Destination track for caboose is null");
+			return;
+		}
 		// load departure track if staging
 		Track departTrack = null;
 		if (rl == train.getTrainDepartsRouteLocation())
@@ -1520,7 +1528,7 @@ public class TrainBuilder extends TrainCommon{
 					(car.getDestination() == null || car.getDestinationTrack() == null || car.getTrain() == null)){
 				carCount++;
 				if (carCount < 21)
-					buf.append(NEW_LINE + car.toString());
+					buf.append(NEW_LINE + " "+ car.toString());
 			}
 		}
 		if (carCount > 0){

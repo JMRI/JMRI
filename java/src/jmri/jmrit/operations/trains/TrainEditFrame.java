@@ -403,7 +403,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				return;
 			if(!_train.reset()){			
 				JOptionPane.showMessageDialog(this,
-						"Train is in route to "+_train.getTrainTerminatesName(), "Can not delete train!",
+						MessageFormat.format(rb.getString("TrainIsInRoute"),new Object[] {train.getTrainTerminatesName()}), rb.getString("CanNotDeleteTrain"),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}

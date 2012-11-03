@@ -17,7 +17,9 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -350,7 +352,19 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     		train.printBuildReport();
     	} else if (manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)){
     		if (log.isDebugEnabled()) log.debug("Reset train ("+train.getName()+")");
-			if(!train.reset())			
+    		// check to see if departure track was reused
+    		if (Setup.isStagingTrackImmediatelyAvail() 
+    				&& !train.isTrainInRoute()
+    				&& train.getDepartureTrack() != null 
+    				&& train.getDepartureTrack().getLocType().equals(Track.STAGING)
+    				&& (train.getDepartureTrack().getNumberRS() != train.getDepartureTrack().getPickupRS())
+    				|| train.getDepartureTrack().getDropRS() > 0){
+    			log.debug("Train is departing staging that already has inbound cars");
+    			JOptionPane.showMessageDialog(null, 
+    					MessageFormat.format(rb.getString("StagingTrackUsed"),new Object[] {train.getDepartureTrack().getName()}),
+    					rb.getString("CanNotResetTrain"), JOptionPane.INFORMATION_MESSAGE);
+    		}
+    		else if(!train.reset())			
 				JOptionPane.showMessageDialog(null,
 						MessageFormat.format(rb.getString("TrainIsInRoute"),new Object[] {train.getTrainTerminatesName()}), rb.getString("CanNotResetTrain"),
 						JOptionPane.ERROR_MESSAGE);
