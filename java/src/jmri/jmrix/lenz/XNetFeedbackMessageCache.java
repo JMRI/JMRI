@@ -77,17 +77,17 @@ public class XNetFeedbackMessageCache implements XNetListener {
 
     // listen for turnouts, creating them as needed
     synchronized public void message(XNetReply l) {
-	if(log.isDebugEnabled()) log.debug("recieved message: " +l);
-	if(l.isFeedbackBroadcastMessage()) {
-	   int numDataBytes = l.getElement(0) & 0x0f;
-	   for(int i=1;i<numDataBytes;i+=2) {
-		// parse message type
-        	int addr = l.getTurnoutMsgAddr(i);
+	    if (log.isDebugEnabled()) log.debug("recieved message: " +l);
+	    if (l.isFeedbackBroadcastMessage()) {
+	        int numDataBytes = l.getElement(0) & 0x0f;
+	        for(int i=1;i<numDataBytes;i+=2) {
+	        // parse message type
+        	    int addr = l.getTurnoutMsgAddr(i);
                 // cache the message for later requests
                 messageCache[l.getElement(1)][(l.getElement(2)&0x10)>>4]=l;
                 messagePending[l.getElement(1)][(l.getElement(2)&0x10)>>4]=false;
-          }
-       }
+            }
+        }
     }
 
     // listen for the messages to the LI100/LI101
