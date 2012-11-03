@@ -255,6 +255,10 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 	
 	private void addNewRouteLocation(){
+		if(routeTable.isEditing()){
+			log.debug("route table edit true");
+			routeTable.getCellEditor().stopCellEditing();
+		}
 		// add location to this route
 		Location l = (Location)locationBox.getSelectedItem();
 		RouteLocation rl;
