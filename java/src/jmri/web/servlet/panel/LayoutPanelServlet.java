@@ -132,7 +132,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                         elem.addContent(new Element("metric").addContent(""+b.getBlockMetric()));
                     }
                     //add to the panel xml
-                    if (elem!=null) panel.addContent(elem);
+                    panel.addContent(elem);
                     num++;
                 }
     		}
