@@ -174,8 +174,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         This ensures that the message is displayed on the screen for a minimum of 2.5seconds, if the time taken
         to get to this point in the code is longer that 2.5seconds then the wait is not invoked.
         */
-        if (elapsedTime<=2501){
-            long sleep = 2500-elapsedTime;
+        long sleep = 2500-elapsedTime;
+        if (sleep>0){
             log.debug("The time that the debug message was displayed was less than 2500ms - " + elapsedTime + 
                             " going to sleep for " + sleep +" to allow user sufficient time to do something");
             try{
