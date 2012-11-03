@@ -157,7 +157,8 @@ Add the word "Includes" to the last line so it looks like
 </PRE>
     
     <li>Now, configure the server to handle files with ".shtml" 
-    extensions.  Find the section that looks like:
+    extensions.  Find the section that looks like (the leading comment
+    may be different):
 <PRE>
     #
     # To use server-parsed HTML files
