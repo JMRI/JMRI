@@ -80,8 +80,8 @@ public class XNetFeedbackMessageCache implements XNetListener {
 	    if (log.isDebugEnabled()) log.debug("recieved message: " +l);
 	    if (l.isFeedbackBroadcastMessage()) {
 	        int numDataBytes = l.getElement(0) & 0x0f;
-	        for(int i=1;i<numDataBytes;i+=2) {
-	        // parse message type
+	        for (int i=1;i<numDataBytes;i+=2) {
+	            // parse message type
         	    int addr = l.getTurnoutMsgAddr(i);
                 // cache the message for later requests
                 messageCache[l.getElement(1)][(l.getElement(2)&0x10)>>4]=l;
