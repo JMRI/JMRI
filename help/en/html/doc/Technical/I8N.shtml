@@ -91,6 +91,7 @@ By convention, resouce names for GUI elements start with one of
 <LI>Error - for an error message displayed as part of the GUI
 </ol>
 Other resources are named so as not to conflict with these.
+
 <H2>Adapting to a new language</h2>
 The primary steps to adapt JMRI to a new language are:
 <UL>
@@ -100,11 +101,8 @@ of the GUI controls.
 and icons.
 </UL>
 <P>
-To get a clean copy of the properties files from CVS, do:
-<PRE>
-   cvs checkout properties
-</PRE>
-(For more info on using CVS, please see the 
+Get a clean copy of the source code using SVN.
+(For more info on using SVN, please see the 
 <A HREF="getcode.shtml">page on getting a copy of the code</a>.)
 <P>
 Then, make copies of the files with suffix for your
@@ -130,13 +128,19 @@ You can then edit those files to enter text in
 your own language. Please don't edit the lines in the 
 file that contain things like $Release: $; those are used 
 by 
-<A HREF="CVSFAQ.shtml">CVS</a> 
+<A HREF="SVNFAQ.shtml">SVN</a> 
 to keep track of the history of changeds.
 <P>
 Languages that involve non-roman letters require some
-extra care; please see the 
-<A HREF="http://java.sun.com/j2se/1.3/docs/guide/intl/faq.html">Sun internationalization FAQ</a>
-for more info on how to include those characters in your property files.
+extra care. The property files must contain only
+ISO 8859-1 characters.  If you want to use unicode characters, 
+these must be manually escaped.  
+(The 'native2ascii' command-line tool can help with this.)
+
+Please see the 
+<A HREF="http://www.oracle.com/technetwork/java/javase/tech/faq-jsp-138165.html">Java internationalization FAQ</a>
+for more info on how to include those characters in your property files, particularly the
+question on "How do I specify non-ASCII strings in a properties file?".
 <P>
 All that adapts the program itself, at least as far as we've 
 "internationalized" it.  (That's an ongoing effort, with 
