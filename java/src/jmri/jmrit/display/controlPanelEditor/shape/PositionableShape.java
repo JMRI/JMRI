@@ -35,7 +35,7 @@ public class PositionableShape extends PositionableJComponent {
     protected int		_degrees;
     protected AffineTransform _transform;
     
-    public static java.util.ResourceBundle rbcp = ControlPanelEditor.rbcp;
+    public final static java.util.ResourceBundle rbcp = ControlPanelEditor.rbcp;
     
     public PositionableShape(Editor editor) {
     	super(editor);
