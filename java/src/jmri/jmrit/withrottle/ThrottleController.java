@@ -437,6 +437,9 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                 log.warn("No throttle frame to receive: " + inPackage);
                 return false;
             }
+            try{    //  Some layout connections cannot handle rapid inputs
+                Thread.sleep(20);
+            } catch (java.lang.InterruptedException ex){}
         }else{  //  Address not set
             switch (inPackage.charAt(0)) {
                 case 'L':	//	Set a Long address.

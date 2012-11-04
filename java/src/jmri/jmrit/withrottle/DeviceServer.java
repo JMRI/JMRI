@@ -353,10 +353,10 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             } catch (IndexOutOfBoundsException exb){
                 log.warn("Bad message \""+inPackage+"\" from device: "+getName());
             }
-            try{    //  Some layout connections cannot handle rapid inputs
-                Thread.sleep(20);
-            }catch (java.lang.InterruptedException ex){}
-        }while (keepReading);	//	'til we tell it to stop
+//            try{    //  Some layout connections cannot handle rapid inputs
+//                Thread.sleep(20);
+//            } catch (java.lang.InterruptedException ex){}
+        } while (keepReading);	//	'til we tell it to stop
         log.debug("Ending thread run loop for device: "+getName());
         closeThrottles();
 
