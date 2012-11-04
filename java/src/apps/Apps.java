@@ -732,7 +732,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
     static JComponent _buttonSpace = null;
     
-    //2012/01/21 dboudreau rb needs to be reloaded after reading the configuration file so the locale is set properly.
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_PKGPROTECT",
+                                                    justification="Needs protected access so it can be reloaded after reading the configuration file so the locale is set properly")
     protected static ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
 
     static AppConfigBase prefs;
