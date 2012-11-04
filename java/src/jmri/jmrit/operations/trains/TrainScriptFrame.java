@@ -419,10 +419,6 @@ public class TrainScriptFrame extends OperationsFrame {
  			setSize(getWidth(), Control.panelHeight);
 		setVisible(true);
     }
-	
-	public void dispose() {
-		super.dispose();
-	}
  	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 	.getLogger(TrainScriptFrame.class.getName());
