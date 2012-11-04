@@ -657,7 +657,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         b.setState(b.getState() | OBlock.RUNNING);
         // getNextSpeed() calls allocateNextBlock() who will set _stoppingBlock, if necessary
         // do before starting throttle commands in engineer
-        _currentSpeed = "Normal";
         _currentSpeed = getNextSpeed();		// will modify _currentSpeed, if necessary
         _engineer.rampSpeedTo(_currentSpeed, 0);    	
     }
