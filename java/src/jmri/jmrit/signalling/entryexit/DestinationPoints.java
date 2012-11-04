@@ -144,7 +144,9 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                 uniDirection = true;
         }
         
-        protected PropertyChangeListener propertyBlockListener;/* = new PropertyChangeListener() {
+        transient protected PropertyChangeListener propertyBlockListener;
+        
+        /* = new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent e) {
                 Block blk = (Block) e.getSource();
                 if (e.getPropertyName().equals("state")) {
