@@ -56,7 +56,6 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	TrainManagerXml managerXml;
 
 	Train _train = null;
-	TrainEditFrame _trainEditFrame;
 
 	JPanel panelRoadNames = new JPanel();
 	JPanel panelLoadNames = new JPanel();
@@ -207,9 +206,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
       	trainReq2Pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
       	trainReq2Pane.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainRequires")));
       	
-		_trainEditFrame = parent;
-		_trainEditFrame.setChildFrame(this);
-		_train = _trainEditFrame._train;
+		parent.setChildFrame(this);
+		_train = parent._train;
 
 		// load managers
 		manager = TrainManager.instance();
@@ -1184,7 +1182,6 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		if (_train != null){
 			_train.removePropertyChangeListener(this);
 		}
-		_trainEditFrame.setChildFrame(null);
 		super.dispose();
 	}
 

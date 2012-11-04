@@ -34,7 +34,6 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
 	Train _train = null;
-	TrainEditFrame _trainEditFrame;
 	
 	// labels
 	JLabel textPad = new JLabel("   ");
@@ -63,9 +62,8 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 	public void initComponents(TrainEditFrame parent) {
 		
 		// the following code sets the frame's initial state
-		_trainEditFrame = parent;
-		_trainEditFrame.setChildFrame(this);
-		_train = _trainEditFrame._train;
+		parent.setChildFrame(this);
+		_train = parent._train;
 		
 		// add tool tips
 		addLogoButton.setToolTipText(rb.getString("AddLogoToolTip"));

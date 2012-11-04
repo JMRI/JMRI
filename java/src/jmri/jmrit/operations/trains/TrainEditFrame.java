@@ -62,7 +62,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	RouteManager routeManager;
 
 	Train _train = null;
-	Frame _childFrame = null;
 	List<JCheckBox> typeCarCheckBoxes = new ArrayList<JCheckBox>();
 	List<JCheckBox> typeEngineCheckBoxes = new ArrayList<JCheckBox>();
 	List<JCheckBox> locationCheckBoxes = new ArrayList<JCheckBox>();
@@ -414,8 +413,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			}	
 			routeBox.setSelectedItem("");
 			manager.deregister(train);
-			if (_childFrame != null)
-				_childFrame.dispose();
+			for (int i=0; i<children.size(); i++){
+				Frame frame = children.get(i);
+				frame.dispose();
+			}
 			_train = null;
 
 			enableButtons(false);
@@ -847,17 +848,20 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		locationPanelCheckBoxes.revalidate();
 	}
 	
+	RouteEditFrame ref;
     private void editAddRoute (){
     	log.debug("Edit/add route");
-    	RouteEditFrame lef = new RouteEditFrame();
+    	if (ref != null)
+    		ref.dispose();  		
+    	ref = new RouteEditFrame();
     	Object selected =  routeBox.getSelectedItem();
 		if (selected != null && !selected.equals("")){
 			Route route = (Route)selected;
-			lef.setTitle(rbr.getString("TitleRouteEdit"));
-			lef.initComponents(route);
+			ref.setTitle(rbr.getString("TitleRouteEdit"));
+			ref.initComponents(route);
 		} else {
-			lef.setTitle(rbr.getString("TitleRouteAdd"));
-			lef.initComponents(null);
+			ref.setTitle(rbr.getString("TitleRouteAdd"));
+			ref.initComponents(null);
 		}
     }
     
@@ -887,8 +891,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		setVisible(true);
     }
     
+    List<Frame> children = new ArrayList<Frame>();
     public void setChildFrame(Frame frame){
-    	_childFrame = frame;
+    	if (children.contains(frame))
+    		return;
+    	children.add(frame);
     }
 	
 	public void dispose() {
@@ -898,8 +905,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		CarTypes.instance().removePropertyChangeListener(this);
 		CarRoads.instance().removePropertyChangeListener(this);	
 		routeManager.removePropertyChangeListener(this);
-		if (_childFrame != null)
-			_childFrame.dispose();
+		for (int i=0; i<children.size(); i++){
+			Frame frame = children.get(i);
+			frame.dispose();
+		}
 		if (_train != null){
 			_train.removePropertyChangeListener(this);
 			Route route = _train.getRoute();

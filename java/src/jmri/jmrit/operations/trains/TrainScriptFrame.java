@@ -42,7 +42,6 @@ public class TrainScriptFrame extends OperationsFrame {
 	TrainManagerXml managerXml;
 
 	Train _train = null;
-	TrainEditFrame _trainEditFrame;
 
 	// script panels
 	JPanel pBuildScript = new JPanel();
@@ -94,9 +93,8 @@ public class TrainScriptFrame extends OperationsFrame {
       	terminationScriptPane.setBorder(BorderFactory.createTitledBorder(rb.getString("ScriptsWhenTerminated")));  	
 
 		// remember who called us
-		_trainEditFrame = parent;
-		_trainEditFrame.setChildFrame(this);
-		_train = _trainEditFrame._train;
+		parent.setChildFrame(this);
+		_train = parent._train;
 
 		// load managers
 		manager = TrainManager.instance();
@@ -423,7 +421,6 @@ public class TrainScriptFrame extends OperationsFrame {
     }
 	
 	public void dispose() {
-		_trainEditFrame.setChildFrame(null);
 		super.dispose();
 	}
  	
