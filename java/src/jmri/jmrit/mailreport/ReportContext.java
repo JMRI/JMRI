@@ -96,6 +96,8 @@ public class ReportContext {
 
         addProperty("java.compiler");
         addProperty("java.ext.dirs");
+
+        addProperty("file.encoding");
         		
         addProperty("os.name");
         addProperty("os.arch");
