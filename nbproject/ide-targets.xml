@@ -12,6 +12,7 @@
             <sysproperty key="java.security.policy" value="lib/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>       
+            <sysproperty key="file.encoding" value="UTF-8"/>       
             <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
