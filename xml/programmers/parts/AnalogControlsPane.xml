@@ -1,15 +1,29 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <pane name="Analog Controls">
   <name xml:lang="ca">Control Analògic</name>
     <column>
-        <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)"/>
+        <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
+            <tooltip xml:lang="ca">Determina si una locomotora pot funcionar en CC</tooltip>
+        </display>
         <display item="Analog Vstart" tooltip="CV 60"/>
-        <display item="Analog Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero"/>
-        <display item="Radio Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero"/>
-        <display item="Zero-1 Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero"/>
-        <display item="Trix Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero"/>
-        <display item="CTC/Railcommand Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero"/>
-        <display item="FMZ(Fleischmann)" tooltip="Sets the alternate power source to use when the short address is zero"/>
+        <display item="Analog Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
+            <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
+        </display>
+        <display item="Radio Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
+            <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
+        </display>
+        <display item="Zero-1 Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
+            <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
+        </display>
+        <display item="Trix Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
+            <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
+        </display>
+        <display item="CTC/Railcommand Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
+            <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
+        </display>
+        <display item="FMZ(Fleischmann)" tooltip="Sets the alternate power source to use when the short address is zero">
+            <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
+        </display>
     </column>
     <column>
         <display item="Analog Mode Function Status - FL" format="checkbox" tooltip="Sets the status of function FL when the unit is operating in analog power mode"/>
