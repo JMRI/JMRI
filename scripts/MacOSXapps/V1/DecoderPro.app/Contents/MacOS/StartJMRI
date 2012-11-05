@@ -156,6 +156,7 @@ OPTIONS="${OPTIONS} -Xms96m"
 OPTIONS="${OPTIONS} -Xmx640m"
 # MacOS X specific options
 OPTIONS="${OPTIONS} -Dapple.laf.useScreenMenuBar=true"
+OPTIONS="${OPTIONS} -Dfile.encoding=UTF-8"
 OPTIONS="${OPTIONS} -Dcom.apple.macos.useScreenMenuBar=true"
 OPTIONS="${OPTIONS} -Dcom.apple.mrj.application.apple.menu.about.name=${APPNAME}"
 

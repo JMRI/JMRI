@@ -197,6 +197,7 @@ if [ "$OS" = "macosx" ]; then
     MEMORY_OPTIONS="-Xms96m -Xmx640m"
     OS_OPTIONS="-Dapple.laf.useScreenMenuBar=true"
     OS_OPTIONS="${OS_OPTIONS} -Dcom.apple.macos.useScreenMenuBar=true"
+    OS_OPTIONS="${OS_OPTIONS} -Dfile.encoding=UTF-8"
     if [ -f "${BUNDLEDIR}/Contents/Resources/@ICON@.icns" ]; then
         APPICON="${BUNDLEDIR}/Contents/Resources/@ICON@.icns"
     else

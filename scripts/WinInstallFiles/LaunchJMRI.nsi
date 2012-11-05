@@ -341,6 +341,8 @@ Section "Main"
   ; -- memory start and max limits
   StrCpy $OPTIONS "$OPTIONS -Xms${MINMEM}m"
   StrCpy $OPTIONS "$OPTIONS -Xmx$CALCMAXMEMm"
+  ; -- default file coding
+  StrCpy $OPTIONS "$OPTIONS -Dfile.encoding=UTF-8"
   
   ; -- Read environment variable
   ; -- JMRI_USERHOME - user files location

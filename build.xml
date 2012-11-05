@@ -593,6 +593,7 @@
                          value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="file.encoding" value="UTF-8"/>
             <sysproperty key="java.library.path"
                          path=".:${arch.lib.path}:${libdir}"/>
             <sysproperty key="jinput.plugins"
