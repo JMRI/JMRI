@@ -127,6 +127,9 @@
       <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation><xs:documentation>Provide internationalized label text</xs:documentation></xs:annotation>
       </xs:element>
+      <xs:element name="tooltip" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation>Provide internationalized tooltip text</xs:documentation></xs:annotation>
+      </xs:element>
     </xs:sequence>
     <xs:attribute name="item" type="xs:string"/>
     <xs:attribute name="label" type="xs:string"/>

@@ -75,7 +75,7 @@ public class PaneProgPane extends javax.swing.JPanel
     IndexedCvTableModel _indexedCvModel;
     VariableTableModel _varModel;
     PaneContainer container;
-    
+        
     boolean _cvTable; 
 
     static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
@@ -1192,7 +1192,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 cs.gridwidth = 1;
             }
             else if (name.equals("label")) { // its  a label
-                JLabel l = new JLabel(e.getAttribute("label").getValue());
+                JLabel l = new JLabel(LocaleSelector.getAttribute(e,"label"));
                 l.setAlignmentX(1.0f);
                 cs.fill = GridBagConstraints.BOTH;
                 cs.gridwidth = GridBagConstraints.REMAINDER;
@@ -1547,9 +1547,10 @@ public class PaneProgPane extends javax.swing.JPanel
             rep = getRep(i, format);
             rep.setMaximumSize(rep.getPreferredSize());
             // set tooltip if specified here & not overridden by defn in Variable
-            if ( (attr = var.getAttribute("tooltip")) != null && attr.getValue() != null
+            String tip = "";
+            if ( (tip = LocaleSelector.getAttribute(var, "tooltip"))!=null
                 && rep.getToolTipText()==null)
-                rep.setToolTipText(attr.getValue());
+                rep.setToolTipText(tip);
         }
         return rep;
     }
