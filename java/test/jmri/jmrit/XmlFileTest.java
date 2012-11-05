@@ -129,37 +129,6 @@ public class XmlFileTest extends TestCase {
         Assert.assertTrue("Element found", e!=null);
     }
     
-    /**
-     * Test error recovery by forcing the 1st attempt to fail (by overriding the
-     * method), and capturing the error-notification method.
-     *
-     * This test expects an error message from the getRootViaURL() methd, and 
-     * tests for it.
-     */
-    public void testReadFileMethod1() throws org.jdom.JDOMException, java.io.IOException {
-        // ensure file present
-        testWriteFile();
-        
-        // try to read
-        testFlag = false;
-        XmlFile x = new XmlFile() {
-           protected void reportError1(String name, Exception e) {
-                log.debug("invoked");
-                testFlag = true;
-            }
-            protected Element getRootViaURI(boolean verify, InputStream stream) 
-                                    throws org.jdom.JDOMException, java.io.FileNotFoundException {
-                log.debug("getRootViaURI dummy");
-                throw new org.jdom.JDOMException("test dummy");
-            }
-        };
-        Element e = x.rootFromName("temp"+File.separator+"prefs"+File.separator+"test.xml");
-        Assert.assertNotNull("exists", e );
-        log.debug("returns "+testFlag);
-        Assert.assertTrue("Error handler invoked OK", testFlag);
-    }
-    boolean testFlag = false;
-
     // from here down is testing infrastructure
     
     public XmlFileTest(String s) {

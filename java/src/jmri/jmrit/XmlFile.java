@@ -6,6 +6,9 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+import java.io.Reader;
 
 import java.net.URL;
 
@@ -32,7 +35,7 @@ import org.jdom.output.XMLOutputter;
  * We implement this using our own EntityResolvor, the 
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007, 2012
  * @version	$Revision$
  */
 public abstract class XmlFile {
@@ -90,41 +93,8 @@ public abstract class XmlFile {
      *          exception should be thrown if anything goes wrong.
      */
     public Element rootFromFile(File file) throws org.jdom.JDOMException, java.io.IOException {
-        Element e;
         if (log.isDebugEnabled()) log.debug("reading xml from file: " + file.getPath());
-        try {
-            InputStream stream = new BufferedInputStream(new FileInputStream(file));
-            return getRootViaURI(verify, stream);
-        }
-        catch (org.jdom.input.JDOMParseException e4) {
-            // file opened, but couldn't be parsed; report that up
-            throw e4;
-        }
-        catch (org.jdom.JDOMException e1) {
-            // 1st attempt failed, try second using deprecated method
-            if (!openWarn1) reportError1(file.getName(), e1);
-            openWarn1 = true;
-            try {
-                InputStream stream = new BufferedInputStream(new FileInputStream(file));
-                e = getRootViaURL(verify, stream);
-                log.info("getRootViaURL succeeded as 2nd try");
-                return e;
-            }
-            catch (org.jdom.JDOMException e2) {
-                // 2nd attempt failed, try third.
-                if (!openWarn2) reportError2(file.getName(), e2);
-                openWarn2 = true;
-                // All exceptions are allowed to propagate out, 
-                // as we have no retry algorithms left
-                InputStream stream = new BufferedInputStream(new FileInputStream(file));
-                e = getRootViaRelative(verify, stream);
-                log.info("GetRootViaRelative succeeded as 3rd try");
-                new Exception().printStackTrace();
-                return e;
-            }
-            // other errors are allowed to propagate out
-        }
-        // other errors are allowed to propagate out
+        return getRoot(verify, new FileInputStream(file));
     }
 
     /**
@@ -140,106 +110,37 @@ public abstract class XmlFile {
      *          exception should be thrown if anything goes wrong.
      */
     public Element rootFromURL(URL url) throws org.jdom.JDOMException, java.io.IOException {
-        Element e;
-        try {
-            InputStream stream = new BufferedInputStream(url.openConnection().getInputStream());
-            return getRootViaURI(verify, stream);
-        }
-        catch (org.jdom.input.JDOMParseException e4) {
-            // file opened, but couldn't be parsed; report that up
-            throw e4;
-        }
-        catch (org.jdom.JDOMException e1) {
-            // 1st attempt failed, try second using deprecated method
-            if (!openWarn1) reportError1(url.toString(), e1);
-            openWarn1 = true;
-            try {
-                InputStream stream = new BufferedInputStream(url.openConnection().getInputStream());
-                e = getRootViaURL(verify, stream);
-                log.info("getRootViaURL succeeded as 2nd try");
-                return e;
-            }
-            catch (org.jdom.JDOMException e2) {
-                // 2nd attempt failed, try third.
-                if (!openWarn2) reportError2(url.toString(), e2);
-                openWarn2 = true;
-                // All exceptions are allowed to propagate out, 
-                // as we have no retry algorithms left
-                InputStream stream = new BufferedInputStream(url.openConnection().getInputStream());
-                e = getRootViaRelative(verify, stream);
-                log.info("GetRootViaRelative succeeded as 3rd try");
-                new Exception().printStackTrace();
-                return e;
-            }
-            // other errors are allowed to propagate out
-        }
-        // other errors are allowed to propagate out
+        if (log.isDebugEnabled()) log.debug("reading xml from URL: " + url.toString());
+        return getRoot(verify, url.openConnection().getInputStream());
     }
-
-    static boolean openWarn1 = false;
-    static boolean openWarn2 = false;
-    static boolean openWarn3 = false;
     
     /**
      * Specify a standard prefix for DTDs in new XML documents
      */
     static public final String dtdLocation = "/xml/DTD/";
     
-    // made members for overriding in tests
-    protected void reportError1(String name, Exception e) {
-        log.warn("Failed to open "+name+" on 1st attempt, error was: "+e);
-    }
-    protected void reportError2(String name, Exception e) {
-        log.warn("Failed to open on 2nd attempt, error was: "+e);
-    }
-    
     /**
-     * Find the DTD via a relative path and get the root element.
-     * @deprecated 1.8
+     * Get the root element from an XML document in a stream.
      */
-    @Deprecated
-    private Element getRootViaRelative(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
-
-        if (log.isDebugEnabled()) log.debug("getRootViaRelative");
-
+    protected Element getRoot(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
+        if (log.isDebugEnabled()) log.debug("getRoot from stream");
         SAXBuilder builder = getBuilder(verify);  // argument controls validation
-        
         Document doc = builder.build(new BufferedInputStream(stream));
-
         // find root
         return doc.getRootElement();
     }
     
     /**
-     * Find the DTD via a URL and get the root element.
-     * @deprecated 1.8
-     * 
+     * Get the root element from an XML document in a Reader.
+     *
+     * Runs through a BufferedReader for increased performance.
+     *
+     * @since 3.1.5
      */
-    @Deprecated
-    private Element getRootViaURL(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
-        
-        if (log.isDebugEnabled()) log.debug("getRootViaURL");
-
+    protected Element getRoot(boolean verify, InputStreamReader reader) throws org.jdom.JDOMException, java.io.IOException {
+        if (log.isDebugEnabled()) log.debug("getRoot from reader with encoding "+reader.getEncoding());
         SAXBuilder builder = getBuilder(verify);  // argument controls validation
-        
-        Document doc = builder.build(new BufferedInputStream(stream));
-
-        // find root
-        return doc.getRootElement();
-    }
-    
-    /**
-     * Find the DTD via a URI and get the root element.
-     * 
-     */
-    protected Element getRootViaURI(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
-
-        if (log.isDebugEnabled()) log.debug("getRootViaURI");
-
-        SAXBuilder builder = getBuilder(verify);  // argument controls validation
-
-        Document doc = builder.build(new BufferedInputStream(stream));
-
+        Document doc = builder.build(new BufferedReader(reader));
         // find root
         return doc.getRootElement();
     }
@@ -256,9 +157,7 @@ public abstract class XmlFile {
         java.io.FileOutputStream o = new java.io.FileOutputStream(file);
         try {
             XMLOutputter fmt = new XMLOutputter();
-        
             fmt.setFormat(org.jdom.output.Format.getPrettyFormat());
-        
             fmt.output(doc, o);
         } finally {
             o.close();
@@ -290,7 +189,6 @@ public abstract class XmlFile {
         }
     }
 
-
     /**
      * Return a File object for a name. This is here to implement the
      * search rule:
@@ -320,7 +218,6 @@ public abstract class XmlFile {
             }
         }
     }
-
 
     /**
      * Diagnostic printout of as much as we can find
@@ -735,6 +632,7 @@ public abstract class XmlFile {
         builder.setEntityResolver(new jmri.util.JmriLocalEntityResolver());
         builder.setFeature("http://apache.org/xml/features/xinclude", true);
         builder.setFeature("http://apache.org/xml/features/xinclude/fixup-base-uris", false);
+        builder.setFeature("http://apache.org/xml/features/allow-java-encodings", true);
         
         // for schema validation. Not needed for DTDs, so continue if not found now
         try {
@@ -747,7 +645,6 @@ public abstract class XmlFile {
         } catch (Exception e) {
             log.warn("Could not set schema validation feature: "+e);
         }
-        
         return builder;
     }
     
