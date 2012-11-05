@@ -196,7 +196,7 @@ public class Setup {
 	private static String hazardousMsg = "("+rb.getString("Hazardous")+")";
 	private static String logoURL ="";
 	private static String panelName ="Panel";
-	private static String buildReportLevel = BUILD_REPORT_NORMAL;	
+	private static String buildReportLevel = BUILD_REPORT_VERY_DETAILED;	
 	private static int carSwitchTime = 3;		// how long it take to move a car
 	private static int travelTime = 4;// how long it take a train to move one location
 	private static String yearModeled = ""; 	// year being modeled
