@@ -122,6 +122,10 @@ public class TrainBuilder extends TrainCommon{
 		Date startTime = new Date();
 		addLine(buildReport, ONE, MessageFormat.format(rb.getString("BuildReportMsg"),new Object[]{train.getName(), startTime}));
 		addLine(buildReport, ONE, MessageFormat.format(rb.getString("BuildReportVersion"),new Object[]{Version.name()}));
+		// show the various build detail levels
+		addLine(buildReport, THREE, rb.getString("buildReportLevelThree"));
+		addLine(buildReport, FIVE, rb.getString("buildReportLevelFive"));
+		addLine(buildReport, SEVEN, rb.getString("buildReportLevelSeven"));
 		
 		if (train.getRoute() == null){
 			throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorRoute"),new Object[]{train.getName()}));
