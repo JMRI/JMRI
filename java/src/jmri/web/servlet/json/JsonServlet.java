@@ -125,6 +125,8 @@ public class JsonServlet extends WebSocketServlet {
         		reply = JsonLister.getSensors();
         	} else if (type.equals("signalHeads")) {
         		reply = JsonLister.getSignalHeads();
+        	} else if (type.equals("signalMasts")) {
+        		reply = JsonLister.getSignalMasts();
         	} else if (type.equals("trains")) {
         		reply = JsonLister.getTrains();
         	} else if (type.equals("turnouts")) {
@@ -150,6 +152,8 @@ public class JsonServlet extends WebSocketServlet {
         			reply = JsonLister.getSensor(name);
         		} else if (type.equals("signalHead")) {
         			reply = JsonLister.getSignalHead(name);
+        		} else if (type.equals("signalMast")) {
+        			reply = JsonLister.getSignalMast(name);
         		} else if (type.equals("train")) {
         			reply = JsonLister.getTrain(name);
         		} else if (type.equals("turnout")) {

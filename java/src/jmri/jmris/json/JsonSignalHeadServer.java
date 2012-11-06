@@ -1,4 +1,4 @@
-//SimpleSignalHeadServer.java
+//JsonSignalHeadServer.java
 package jmri.jmris.json;
 
 import java.io.IOException;
@@ -15,8 +15,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
- * Simple Server interface between the JMRI Sensor manager and a network
- * connection
+ * JSON Web Socket interface between the JMRI SignalHead manager and a
+ * network connection
  *
  * @author Paul Bender Copyright (C) 2010
  * @version $Revision: 21313 $

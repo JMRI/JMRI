@@ -4,7 +4,6 @@
  */
 package jmri.web.servlet.panel;
 
-import java.awt.Dimension;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -42,7 +41,6 @@ public class ControlPanelServlet extends AbstractPanelServlet {
 
             JFrame frame = editor.getTargetFrame();
             log.info("Target Frame [" + frame.getTitle() + "]");
-            Dimension size = frame.getSize();
 
             panel.setAttribute("name", name);
             panel.setAttribute("height", "" + frame.getContentPane().getHeight());
@@ -69,6 +67,9 @@ public class ControlPanelServlet extends AbstractPanelServlet {
                 if (sub != null) {
                     try {
                         Element e = ConfigXmlManager.elementFromObject(sub);
+                        if (e.getName() == "signalmasticon") {  //insert icon details into signalmast
+                            e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast")));
+                        }
                         if (e != null) {
                             parsePortableURIs(e);
                             panel.addContent(e);

@@ -4,7 +4,6 @@
  */
 package jmri.web.servlet.panel;
 
-import java.awt.Dimension;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.JFrame;
@@ -18,7 +17,6 @@ import org.jdom.output.XMLOutputter;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
@@ -46,7 +44,7 @@ public class PanelServlet extends AbstractPanelServlet {
 
 			JFrame frame = editor.getTargetFrame();
 			log.info("Target Frame [" + frame.getTitle() + "]");
-			Dimension size = frame.getSize();
+
 			panel.setAttribute("name", name);
 			panel.setAttribute("height", "" + frame.getContentPane().getHeight());
 			panel.setAttribute("width", "" +  frame.getContentPane().getWidth());
@@ -72,6 +70,9 @@ public class PanelServlet extends AbstractPanelServlet {
 				if (sub != null) {
 					try {
 						Element e = ConfigXmlManager.elementFromObject(sub);
+                        if (e.getName() == "signalmasticon") {  //insert icon details into signalmast
+                            e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast")));
+                        }
 						if (e != null) {
 							parsePortableURIs(e);
 							panel.addContent(e);
@@ -105,7 +106,7 @@ public class PanelServlet extends AbstractPanelServlet {
 
 			JFrame frame = editor.getTargetFrame();
 			log.info("Target Frame [" + frame.getTitle() + "]");
-			Dimension size = frame.getSize();
+
 			panel.put("name", name);
 			panel.put("height", frame.getContentPane().getHeight());
 			panel.put("width", frame.getContentPane().getWidth());
@@ -122,7 +123,6 @@ public class PanelServlet extends AbstractPanelServlet {
 			}
 
 			// include contents
-			ArrayNode contents = panel.putArray("contents");
 			if (log.isDebugEnabled()) {
 				log.debug("N elements: " + editor.getContents().size());
 			}

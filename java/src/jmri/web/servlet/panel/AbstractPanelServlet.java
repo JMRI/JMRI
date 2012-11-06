@@ -112,7 +112,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
                         if (url != null) {
                             ((Attribute) attr).setValue(url);
                         } else {
-                            ((Element) child).removeAttribute("url");
+//                            ((Element) child).removeAttribute("url");  //TODO: this doesn't work, gets comodification error
                         }
                     }
                 }
@@ -120,5 +120,42 @@ abstract class AbstractPanelServlet extends HttpServlet {
 
         }
     }
-    
+
+    //build and return an "icons" element containing icon urls for all signalmast states
+	Element getSignalMastIconsElement(String name) {
+        Element icons = new Element("icons");
+        jmri.SignalMast signalMast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(name);
+        java.util.Vector<String> aspects = signalMast.getValidAspects();
+        for (int i=0; i<aspects.size(); i++){
+        	String aspect = aspects.elementAt(i); 
+            Element ea = new Element(aspect.replaceAll(" ", "")); //create element for aspect after removing spaces
+            String url = signalMast.getAppearanceMap().getImageLink(aspect, "default");  //TODO: use correct imageset
+            if(!url.contains("preference:"))
+                url = "program:" + url.substring(url.indexOf("resources"));
+            ea.setAttribute("url", url); //        
+            icons.addContent(ea);
+        } 
+        String url = signalMast.getAppearanceMap().getImageLink("$held", "default");  //add "Held" aspect if defined
+        if (url != "") {
+            if(!url.contains("preference:"))
+                url = "program:" + url.substring(url.indexOf("resources"));
+        	Element ea = new Element("Held");
+        	ea.setAttribute("url", url);        
+        	icons.addContent(ea);
+        }
+        url = signalMast.getAppearanceMap().getImageLink("$dark", "default");  //add "Dark" aspect if defined
+        if (url != "") {
+            if(!url.contains("preference:"))
+                url = "program:" + url.substring(url.indexOf("resources"));
+        	Element ea = new Element("Dark"); 
+        	ea.setAttribute("url", url);        
+        	icons.addContent(ea);
+        }
+    	Element ea = new Element("Unknown"); 
+    	ea.setAttribute("url", "program:resources/icons/misc/X-red.gif");  //add icon for unknown state        
+    	icons.addContent(ea);
+
+    	return icons;
+	}
+
 }

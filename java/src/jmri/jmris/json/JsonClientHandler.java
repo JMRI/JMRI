@@ -22,6 +22,7 @@ public class JsonClientHandler {
 	private JsonReporterServer reporterServer;
 	private JsonSensorServer sensorServer;
 	private JsonSignalHeadServer signalHeadServer;
+//	private JsonSignalMastServer signalMastServer;
 	private JsonThrottleServer throttleServer;
 	private JsonTurnoutServer turnoutServer;
 	private JmriConnection connection;
@@ -38,6 +39,7 @@ public class JsonClientHandler {
 		this.reporterServer = new JsonReporterServer(this.connection);
 		this.sensorServer = new JsonSensorServer(this.connection);
 		this.signalHeadServer = new JsonSignalHeadServer(this.connection);
+//		this.signalMastServer = new JsonSignalMastServer(this.connection);
 		this.throttleServer = new JsonThrottleServer(this.connection);
 		this.turnoutServer = new JsonTurnoutServer(this.connection);
 	}
@@ -104,6 +106,8 @@ public class JsonClientHandler {
 					reply = JsonLister.getSensors();
 				} else if (list.equals("signalHeads")) {
 					reply = JsonLister.getSignalHeads();
+				} else if (list.equals("signalMasts")) {
+					reply = JsonLister.getSignalMasts();
 				} else if (list.equals("trains")) {
 					reply = JsonLister.getTrains();
 				} else if (list.equals("turnouts")) {
@@ -127,6 +131,8 @@ public class JsonClientHandler {
 					this.sensorServer.parseRequest(data);
 				} else if (type.equals("signalHead")) {
 					this.signalHeadServer.parseRequest(data);
+//				} else if (type.equals("signalMast")) {
+//					this.signalMastServer.parseRequest(data);
 				} else if (type.equals("reporter")) {
 					this.reporterServer.parseRequest(data);
 				} else if (type.equals("rosterEntry")) {

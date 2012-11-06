@@ -96,6 +96,8 @@ abstract public class AbstractSignalHeadServer {
                 return "LUNAR";
             case SignalHead.FLASHLUNAR:
                 return "FLASHLUNAR";
+            case SignalHead.HELD:
+                return "HELD";
             default:
                 return "UNKNOWN";
         }

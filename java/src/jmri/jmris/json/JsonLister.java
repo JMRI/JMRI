@@ -134,7 +134,7 @@ public class JsonLister {
 		root.put("type", "location");
 		ObjectNode data = root.putObject("data");
 		try {
-			Location location = LocationManager.instance().getLocationByName(id);
+			Location location = LocationManager.instance().getLocationById(id);
 			data.put("name", location.getName());
 			data.put("id", location.getId());
 			data.put("length", location.getLength());
@@ -142,8 +142,8 @@ public class JsonLister {
 		} catch (NullPointerException e) {
 			root.put("type", "error");
 			data.put("code", -1);
-			data.put("message", "Unable to get location [" + id + "]");
-			log.error("Unable to get location [" + id + "].", e);
+			data.put("message", "Unable to get location id=" + id);
+			log.error("Unable to get location id=" + id + ".", e);
 		}
 		return root;
 	}
@@ -152,7 +152,7 @@ public class JsonLister {
 		ObjectNode root = mapper.createObjectNode();
 		root.put("type", "list");
 		ArrayNode locations = root.putArray("list");
-		for (String locationID : LocationManager.instance().getLocationsByNameList()) {
+		for (String locationID : LocationManager.instance().getLocationsByIdList()) {
 			locations.add(getLocation(locationID));
 		}
 		return root;
@@ -408,6 +408,7 @@ public class JsonLister {
             } else {
             	data.put("state", signalHead.getAppearance());
             }
+			data.put("appearanceName", signalHead.getAppearanceName());
 		} catch (NullPointerException e) {
 			root.put("type", "error");
 			data.put("code", -1);
@@ -432,13 +433,34 @@ public class JsonLister {
 		root.put("type", "signalMast");
 		ObjectNode data = root.putObject("data");
 		SignalMast signalMast = InstanceManager.signalMastManagerInstance().getSignalMast(name);
-		data.put("name", name);
-		data.put("userName", signalMast.getUserName());
-		data.put("comment", signalMast.getComment());
-		data.put("aspect", signalMast.getAspect());
-		data.put("state", signalMast.getState());
-		data.put("lit", signalMast.getLit());
-        return root;
+		try {
+			data.put("name", name);
+			data.put("userName", signalMast.getUserName());
+			if (signalMast.getComment() != null) {
+				data.put("comment", signalMast.getComment());
+			}
+			String aspect = signalMast.getAspect();
+			if (aspect == null) {
+				aspect = "Unknown"; //if null, set aspect to "Unknown"   
+			}
+			data.put("aspect", aspect);
+			data.put("lit", signalMast.getLit());
+			data.put("held", signalMast.getHeld());;
+			//state is appearance, plus flags for held and dark statii
+			if ((signalMast.getHeld()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD)!=null)) {
+				data.put("state", "Held");
+			} else if ((signalMast.getLit()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK)!=null)) {
+				data.put("state", "Dark");
+			} else {
+				data.put("state", aspect);
+			}
+		} catch (NullPointerException e) {
+			root.put("type", "error");
+			data.put("code", -1);
+			data.put("message", "Unable to get signalMast [" + name + "]");
+			log.error("Unable to get signalMast [" + name + "].", e);
+		}
+		return root;
 	}
 
 	static public JsonNode getSignalMasts() {
@@ -489,8 +511,8 @@ public class JsonLister {
 		} catch (NullPointerException e) {
 			root.put("type", "error");
 			data.put("code", -1);
-			data.put("message", "Unable to get train [" + id + "]");
-			log.error("Unable to get train [" + id + "].", e);
+			data.put("message", "Unable to get train id=" + id);
+			log.error("Unable to get train id= " + id + ".", e);
 		}
 		return root;
 	}
