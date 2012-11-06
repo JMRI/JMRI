@@ -53,8 +53,8 @@
 	package for the Macintosh
 	<LI>Rick Beaber contributed definitions for MRC decoders
 	<LI>Robin Becker, who has had a major role in the Soundtraxx decoder
-	definitions, created our Windows icons and has debugged several
-	difficult problems
+	definitions, created our Windows icons, has debugged several
+	difficult problems and created a Tam Valley decoder definition.
     <LI>John Bell, who improved the NCE instructions
 	<LI>Paul Bender, who wrote the XpressNet throttle code, maintains the
 	XpressNet implementation, created the LI101 configuration tool, has
@@ -285,6 +285,7 @@
 	<LI>Nick Kulp, who helped test much of the C/MRI and signaling logic, presented
 	<A href="http://jmri.org/community/clinics/NickKulpMarch2004/index.html">a nice clinic</a> on
 	how to start making panels, and contributed numerous icons
+	<LI>Tighe Kuykendall improved documentation.
 <a name="L"></A>
 	<LI>Al Lautenslager of CVP Products, who loaned some EasyDCC hardware
 	and found answers to programming questions
