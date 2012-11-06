@@ -129,7 +129,7 @@ In the rest of this page, we provide links to the various examples of those two 
 </ul>
 
 See also the 
-<a href="http://jmri.org/JavaDoc/doc/jmri/util/zeroconf/ZeroConfUtil.html">jmri.util.zeroconf</a> package of Zeroconf/Binjour utilities for use in JMRI.
+<a href="http://jmri.org/JavaDoc/doc/jmri/util/zeroconf/ZeroConfUtil.html">jmri.util.zeroconf</a> package of Zeroconf/Bonjour utilities for use in JMRI.
 
 <p>
 See also the 
