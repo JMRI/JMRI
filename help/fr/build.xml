@@ -40,7 +40,7 @@
     		destdir="${target}"
     		extension=".html"
     		style="format.xsl"
-    		includes="JmriHelp_enIndex.xml"
+    		includes="JmriHelp_frIndex.xml"
     	>
         <xmlcatalog>
             <dtd
@@ -54,7 +54,7 @@
                 location="index_2_0.dtd"/>
         </xmlcatalog>
     </xslt>
-    <move file="JmriHelp_enIndex.html" tofile="webindex.shtml"/> 
+    <move file="JmriHelp_frIndex.html" tofile="webindex.shtml"/> 
   </target>
 
   <target name="TOC" depends="init" 
@@ -63,7 +63,7 @@
     		destdir="${target}"
     		extension=".html"
     		style="format.xsl"
-    		includes="JmriHelp_enTOC.xml"
+    		includes="JmriHelp_frTOC.xml"
     	>
         <xmlcatalog>
             <dtd
@@ -77,7 +77,7 @@
                 location="index_2_0.dtd"/>
         </xmlcatalog>
 	</xslt>
-    <move file="JmriHelp_enTOC.html" tofile="webtoc.shtml"/> 
+    <move file="JmriHelp_frTOC.html" tofile="webtoc.shtml"/> 
   </target>
 
   <target name="all" depends="init, index, TOC" 
