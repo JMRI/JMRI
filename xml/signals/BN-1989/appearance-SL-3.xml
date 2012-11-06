@@ -14,6 +14,9 @@
     <author>
         <personname><firstname>James</firstname><surname>Koretsky</surname></personname>
     </author>
+    <author>
+        <personname><firstname>Ken</firstname><surname>Cameron</surname></personname>
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -22,6 +25,12 @@
         <date>2010-02-08</date>
         <authorinitials>JK</authorinitials>
         <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2012-11-06</date>
+        <authorinitials>KSC</authorinitials>
+        <revremark>Added basic aspect mappings</revremark>
     </revision>    
   </revhistory>
 
@@ -256,8 +265,33 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
     </aspectMapping>
     
     <aspectMapping>
+     <advancedAspect>Diverging Approach</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    
+    <aspectMapping>
+     <advancedAspect>Diverging Approach Medium</advancedAspect>
+     <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+    
+    <aspectMapping>
+     <advancedAspect>Diverging Clear</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    
+    <aspectMapping>
      <advancedAspect>Approach</advancedAspect>
      <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+    
+    <aspectMapping>
+     <advancedAspect>Approach Restricting</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Approach Medium</advancedAspect>
+     <ourAspect>Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
@@ -266,8 +300,8 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
     </aspectMapping>
 
     <aspectMapping>
-     <advancedAspect>Approach Medium</advancedAspect>
-     <ourAspect>Clear</ourAspect>
+     <advancedAspect>Advance Approach</advancedAspect>
+     <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
