@@ -25,6 +25,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.16.0
+; - Modification to pass flag for correct usage with UTF-8 encoded files
+; -------------------------------------------------------------------------
 ; - Version 0.1.15.0
 ; - Add flag to allow 64-bit Windows to force the use of a 32-bit JRE
 ; -------------------------------------------------------------------------
@@ -113,7 +116,7 @@
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
 !define COPYRIGHT  "© 1997-2012 JMRI Community"   ; Copyright string
-!define VER        "0.1.15.0"                     ; Launcher version
+!define VER        "0.1.16.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
