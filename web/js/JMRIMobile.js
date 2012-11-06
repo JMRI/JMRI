@@ -131,7 +131,7 @@ var $processResponse = function($returnedData, $success, $xhr) {
 						$currentItem.valueText = $getValueText($currentItem.type, $currentItem.value); 
 					}
 					//include a "safe" version of name for use as ID   TODO: other cleanup needed?
-					$currentItem.safeName = $currentItem.name.replace(/:/g, "_").replace(/;/g, "_").replace(/ /g, "_").replace(/%20/g, "_").replace(/\"/g, "_");
+					$currentItem.safeName = $currentItem.name.replace(/\$/g, "_").replace(/\(/g, "_").replace(/\)/g, "_").replace(/:/g, "_").replace(/;/g, "_").replace(/ /g, "_").replace(/%20/g, "_").replace(/\"/g, "_");
 					
 					//if a "page" of this type doesn't exist yet, create it, and add menu buttons to all
 					if (!$("#type-" + $type).length) {
@@ -141,11 +141,8 @@ var $processResponse = function($returnedData, $success, $xhr) {
 						//add the menu item _inside_ footer on each page
 						$("#footer").append("<a data-role='button' href='#type-" + $type + "' data-mini='true' data-inline='true' data-theme='b'>" + $type +"</a>");
 
-//						$("#settings").page();
-//						$("#settings").trigger("create");
 						//render the changes to the new page
 						$("#type-" + $type).page();
-//						$("#type-" + $type).trigger("create");
 
 						//(re)format footer, then copy to all pages
 						$("div#footer").trigger("create");
@@ -198,6 +195,9 @@ var $getNextValue = function($type, $value){
 	if ($type == 'memory') {
 		return $value + '.';  //default to appending a dot for testing, will add prompt/edit later
 	}
+	if ($type == 'signalmast') {
+		return "Stop";  //TODO: add proper handling of Unknown, Held and Dark to xmlioserver
+	}
 	var $nextValue = ($value=='4' ? '2' : '4');
 	return $nextValue;
 };
@@ -230,7 +230,7 @@ var $getValueText = function($type, $value){
 		} else {
 			return '<img src="/web/images/PowerGrey.png">';
 		}
-	} else if ($type == 'memory' || $type == 'metadata' || $type == 'signalhead' ) {
+	} else if ($type == 'memory' || $type == 'metadata' || $type == 'signalhead' || $type == 'signalmast' ) {
 		return $value;
 	}
 	return '???';
