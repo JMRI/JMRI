@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20121013-1551-jake on Sat Oct 13 08:51:39 PDT 2012 $Id$-->
-  <decoderIndex version="246">
+  <!--Written by JMRI version 20121106-1834-jake on Tue Nov 06 10:34:27 PST 2012 $Id$-->
+  <decoderIndex version="248">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -9096,6 +9096,9 @@
       </family>
       <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SMD82.xml">
         <model model="SMD82" lowVersionID="1" comment="SMD82 is a stationary decoder, but it can be programmed in the usual way" />
+      </family>
+      <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SMD84.xml">
+        <model model="SMD84" lowVersionID="1" comment="SMD84 is a stationary decoder, but it can be programmed in the usual way" />
       </family>
       <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SRC16.xml">
         <model model="SRC16" lowVersionID="1" comment="SRC16 is a stationary decoder with serial bus" />
