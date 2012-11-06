@@ -12,9 +12,9 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" >
 	<!-- showEmptyPanes="no" -->
-	<version author="robin@n3ix.com" version="1.0" lastUpdated="20120618"/>
+	<version author="robin@n3ix.com" version="1.02" lastUpdated="20120810"/>
 	<decoder>
 		<family name="Quad-LN" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN is programmed in OPs mode except for the address.">
 			<model model="Quad-LN" comment="4 Servo Driver" lowVersionID="5"/>
@@ -31,7 +31,7 @@
 			</variable>
 
 			<variable label="Servo Start Address" CV="2" mask="VVVVVVVV" default="0">
-				<splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="1" />
+				<splitVal highCV="3" upperMask="XXXXXXXX" factor="8" offset="1" />
 			</variable>
 			<variable label="Servo Base Block Lo Change" CV="254" mask="XXXXXXXX" default="0">
 				<splitVal highCV="2" upperMask="VVVVVVVV"/>
@@ -39,6 +39,7 @@
 			<variable label="Servo Base Block Hi Change" CV="255" mask="XXXXXXXX" default="0">
 				<splitVal highCV="3" upperMask="VVVVVVVV"/>
 			</variable>
+
 			<variable label="Servo1 Addr" CV="2" infoOnly="yes" mask="VVVVVVVV" default="1">
 				<splitVal highCV="3" upperMask="XXXXXXXV" factor="8" offset="1" /> 
 			</variable>
@@ -121,8 +122,8 @@
 				<splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="0"/> 
 			</variable>
 
-			<variable label="AutoAlign Current" CV="19" item="AutoAlign Current" default="60">
-				<decVal min="0" max="200"/>
+			<variable label="AutoAlign Current" CV="19" item="AutoAlign Current" default="0">
+				<decVal min="0" max="78"/>
 			</variable>
 			<variable label="Reserved" CV="20" readOnly="yes">
 				<decVal/>
@@ -261,6 +262,49 @@
 				<label>Servo1 Swap Endpoints</label>
 				<comment>Matches Closed/Thrown commands to the desired endpoints</comment>
 			</variable>
+			<variable label="Servo1 Directional Speed" CV="38" mask="XXXVXXXX" item="Servo1 Directional Speed" default="0">
+				<enumVal>
+					<enumChoice choice="Disable">
+						<choice>Disable</choice>
+					</enumChoice>
+					<enumChoice choice="Enable">
+						<choice>Enable</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Servo1 Directional Speed</label>
+			</variable>
+			<variable label="Servo1 Thrown RapidStart" CV="51" mask="VVXXXXXX" item="Servo1 Thrown RapidStart" default="0">
+				<enumVal>
+					<enumChoice choice="None">
+						<choice>None</choice>
+					</enumChoice>
+					<enumChoice choice="One-eighth travel">
+						<choice>One-eighth travel</choice>
+					</enumChoice>
+					<enumChoice choice="One-quarter travel">
+						<choice>One-quarter travel</choice>
+					</enumChoice>
+					<enumChoice choice="Three-eighths travel">
+						<choice>Three-eighth travel</choice>
+					</enumChoice>
+				</enumVal>
+				<qualifier>
+					<variableref>Servo1 Directional Speed</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+				<label>Servo1 Thrown RapidStart</label>
+			</variable>
+			<variable label="Servo1 Thrown Speed" CV="51" mask="XXVVVVVV" item="Servo1 Thrown Speed" default="4">
+				<decVal/>
+				<qualifier>
+					<variableref>Servo1 Directional Speed</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+				<label>Servo1 Thrown Speed</label>
+				<comment>Speed Range: 0-63</comment>
+			</variable>
 			<variable label="Servo1 Lock" CV="38" mask="XXVXXXXX" item="Servo1 Lock" default="1">
 				<enumVal>
 					<enumChoice choice="Not Lockable">
@@ -334,7 +378,7 @@
 				</enumVal>
 				<label>Servo1 Cascade Action</label>
 			</variable>
-			<variable label="GPIO2 Trigger" CV="41" mask="XXXXXXVV" item="GPIO2 Trigger" default="1">
+			<variable label="GPIO2 Trigger" CV="41" mask="XXXXXXVV" item="GPIO2 Trigger" default="2">
 				<enumVal>
 					<enumChoice choice="None">
 						<choice>None</choice>
@@ -351,7 +395,7 @@
 				</enumVal>
 				<label>GPIO2 Trigger</label>
 			</variable>
-			<variable label="GPIO2 Message" CV="41" mask="XXXXVVXX" item="GPIO2 Message" default="0">
+			<variable label="GPIO2 Message" CV="41" mask="XXXXXVXX" item="GPIO2 Message" default="0">
 				<enumVal>
 					<enumChoice choice="General Sensor">
 						<choice>General Sensor</choice>
@@ -359,28 +403,28 @@
 					<enumChoice choice="Closed Position Feedback">
 						<choice>Position Feedback</choice>
 					</enumChoice>
-					<enumChoice choice="Track Power">
-						<choice>Track Power</choice>
-					</enumChoice>
-					<enumChoice choice="EStop">
-						<choice>EStop</choice>
-					</enumChoice>
 				</enumVal>
 				<label>GPIO2 Message</label>
 			</variable>
-			<variable label="GPIO2 LED Mode" CV="41" mask="XXVVXXXX" item="GPIO2 LED Mode" default="2">
+			<variable label="GPIO2 LED Mode" CV="41" mask="XXVVVXXX" item="GPIO2 LED Mode" default="2">
 				<enumVal>
 					<enumChoice choice="Disable - Input only">
 						<choice>Disable</choice>
 					</enumChoice>
 					<enumChoice choice="Steady Drive">
-						<choice>Enable</choice>
+						<choice>Steady</choice>
 					</enumChoice>
 					<enumChoice choice="Blink on Move">
-						<choice>Enable</choice>
+						<choice>Blink Move</choice>
 					</enumChoice>
 					<enumChoice choice="Blink on Move or Lock">
-						<choice>Enable</choice>
+						<choice>Blink Move Lock</choice>
+					</enumChoice>
+					<enumChoice choice="Blink on Lock">
+						<choice>Blink Lock</choice>
+					</enumChoice>
+					<enumChoice choice="Lock State">
+						<choice>Lock State</choice>
 					</enumChoice>
 				</enumVal>
 				<label>GPIO2 LED Mode</label>
@@ -619,7 +663,7 @@
 				</enumVal>
 				<label>GPIO1 Trigger</label>
 			</variable>
-			<variable label="GPIO1 Message" CV="46" mask="XXXXVVXX" item="GPIO1 Message" default="0">
+			<variable label="GPIO1 Message" CV="46" mask="XXXXXVXX" item="GPIO1 Message" default="0">
 				<enumVal>
 					<enumChoice choice="General Sensor">
 						<choice>General Sensor</choice>
@@ -627,28 +671,28 @@
 					<enumChoice choice="Thrown Position Feedback">
 						<choice>Position Feedback</choice>
 					</enumChoice>
-					<enumChoice choice="Track Power">
-						<choice>Track Power</choice>
-					</enumChoice>
-					<enumChoice choice="EStop">
-						<choice>EStop</choice>
-					</enumChoice>
 				</enumVal>
 				<label>GPIO1 Message</label>
 			</variable>
-			<variable label="GPIO1 LED Mode" CV="46" mask="XXVVXXXX" item="GPIO1 LED Mode" default="1">
+			<variable label="GPIO1 LED Mode" CV="46" mask="XXVVVXXX" item="GPIO1 LED Mode" default="1">
 				<enumVal>
 					<enumChoice choice="Disable - Input only">
 						<choice>Disable</choice>
 					</enumChoice>
 					<enumChoice choice="Steady Drive">
-						<choice>Enable</choice>
+						<choice>Steady</choice>
 					</enumChoice>
 					<enumChoice choice="Blink on Move">
-						<choice>Enable</choice>
+						<choice>Blink Move</choice>
 					</enumChoice>
 					<enumChoice choice="Blink on Move or Lock">
-						<choice>Enable</choice>
+						<choice>Blink Move Lock</choice>
+					</enumChoice>
+					<enumChoice choice="Blink on Lock">
+						<choice>Blink Lock</choice>
+					</enumChoice>
+					<enumChoice choice="Lock State">
+						<choice>Lock State</choice>
 					</enumChoice>
 				</enumVal>
 				<label>GPIO1 LED Mode</label>
@@ -915,6 +959,49 @@
 				<label>Servo2 Swap Endpoints</label>
 				<comment>Matches Closed/Thrown commands to the desired endpoints</comment>
 			</variable>
+			<variable label="Servo2 Directional Speed" CV="60" mask="XXXVXXXX" item="Servo2 Directional Speed" default="0">
+				<enumVal>
+					<enumChoice choice="Disable">
+						<choice>Disable</choice>
+					</enumChoice>
+					<enumChoice choice="Enable">
+						<choice>Enable</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Servo2 Directional Speed</label>
+			</variable>
+			<variable label="Servo2 Thrown RapidStart" CV="73" mask="VVXXXXXX" item="Servo2 Thrown RapidStart" default="0">
+				<enumVal>
+					<enumChoice choice="None">
+						<choice>None</choice>
+					</enumChoice>
+					<enumChoice choice="One-eighth travel">
+						<choice>One-eighth travel</choice>
+					</enumChoice>
+					<enumChoice choice="One-quarter travel">
+						<choice>One-quarter travel</choice>
+					</enumChoice>
+					<enumChoice choice="Three-eighths travel">
+						<choice>Three-eighth travel</choice>
+					</enumChoice>
+				</enumVal>
+				<qualifier>
+					<variableref>Servo2 Directional Speed</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+				<label>Servo2 Thrown RapidStart</label>
+			</variable>
+			<variable label="Servo2 Thrown Speed" CV="73" mask="XXVVVVVV" item="Servo2 Thrown Speed" default="4">
+				<decVal/>
+				<qualifier>
+					<variableref>Servo2 Directional Speed</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+				<label>Servo2 Thrown Speed</label>
+				<comment>Speed Range: 0-63</comment>
+			</variable>
 			<variable label="Servo2 Lock" CV="60" mask="XXVXXXXX" item="Servo2 Lock" default="1">
 				<enumVal>
 					<enumChoice choice="Not Lockable">
@@ -988,7 +1075,7 @@
 				</enumVal>
 				<label>Servo2 Cascade Action</label>
 			</variable>
-			<variable label="GPIO4 Trigger" CV="63" mask="XXXXXXVV" item="GPIO4 Trigger" default="1">
+			<variable label="GPIO4 Trigger" CV="63" mask="XXXXXXVV" item="GPIO4 Trigger" default="2">
 				<enumVal>
 					<enumChoice choice="None">
 						<choice>None</choice>
@@ -1005,7 +1092,7 @@
 				</enumVal>
 				<label>GPIO4 Trigger</label>
 			</variable>
-			<variable label="GPIO4 Message" CV="63" mask="XXXXVVXX" item="GPIO4 Message" default="0">
+			<variable label="GPIO4 Message" CV="63" mask="XXXXXVXX" item="GPIO4 Message" default="0">
 				<enumVal>
 					<enumChoice choice="General Sensor">
 						<choice>General Sensor</choice>
@@ -1013,28 +1100,28 @@
 					<enumChoice choice="Closed Position Feedback">
 						<choice>Position Feedback</choice>
 					</enumChoice>
-					<enumChoice choice="Track Power">
-						<choice>Track Power</choice>
-					</enumChoice>
-					<enumChoice choice="EStop">
-						<choice>EStop</choice>
-					</enumChoice>
 				</enumVal>
 				<label>GPIO4 Message</label>
 			</variable>
-			<variable label="GPIO4 LED Mode" CV="63" mask="XXVVXXXX" item="GPIO4 LED Mode" default="2">
+			<variable label="GPIO4 LED Mode" CV="63" mask="XXVVVXXX" item="GPIO4 LED Mode" default="2">
 				<enumVal>
 					<enumChoice choice="Disable - Input only">
 						<choice>Disable</choice>
 					</enumChoice>
 					<enumChoice choice="Steady Drive">
-						<choice>Enable</choice>
+						<choice>Steady</choice>
 					</enumChoice>
 					<enumChoice choice="Blink on Move">
-						<choice>Enable</choice>
+						<choice>Blink Move</choice>
 					</enumChoice>
 					<enumChoice choice="Blink on Move or Lock">
-						<choice>Enable</choice>
+						<choice>Blink Move Lock</choice>
+					</enumChoice>
+					<enumChoice choice="Blink on Lock">
+						<choice>Blink Lock</choice>
+					</enumChoice>
+					<enumChoice choice="Lock State">
+						<choice>Lock State</choice>
 					</enumChoice>
 				</enumVal>
 				<label>GPIO4 LED Mode</label>
@@ -1273,7 +1360,7 @@
 				</enumVal>
 				<label>GPIO3 Trigger</label>
 			</variable>
-			<variable label="GPIO3 Message" CV="68" mask="XXXXVVXX" item="GPIO3 Message" default="0">
+			<variable label="GPIO3 Message" CV="68" mask="XXXXXVXX" item="GPIO3 Message" default="0">
 				<enumVal>
 					<enumChoice choice="General Sensor">
 						<choice>General Sensor</choice>
@@ -1281,28 +1368,28 @@
 					<enumChoice choice="Thrown Position Feedback">
 						<choice>Position Feedback</choice>
 					</enumChoice>
-					<enumChoice choice="Track Power">
-						<choice>Track Power</choice>
-					</enumChoice>
-					<enumChoice choice="EStop">
-						<choice>EStop</choice>
-					</enumChoice>
 				</enumVal>
 				<label>GPIO3 Message</label>
 			</variable>
-			<variable label="GPIO3 LED Mode" CV="68" mask="XXVVXXXX" item="GPIO3 LED Mode" default="1">
+			<variable label="GPIO3 LED Mode" CV="68" mask="XXVVVXXX" item="GPIO3 LED Mode" default="1">
 				<enumVal>
 					<enumChoice choice="Disable - Input only">
 						<choice>Disable</choice>
 					</enumChoice>
 					<enumChoice choice="Steady Drive">
-						<choice>Enable</choice>
+						<choice>Steady</choice>
 					</enumChoice>
 					<enumChoice choice="Blink on Move">
-						<choice>Enable</choice>
+						<choice>Blink Move</choice>
 					</enumChoice>
 					<enumChoice choice="Blink on Move or Lock">
-						<choice>Enable</choice>
+						<choice>Blink Move Lock</choice>
+					</enumChoice>
+					<enumChoice choice="Blink on Lock">
+						<choice>Blink Lock</choice>
+					</enumChoice>
+					<enumChoice choice="Lock State">
+						<choice>Lock State</choice>
 					</enumChoice>
 				</enumVal>
 				<label>GPIO3 LED Mode</label>
@@ -1569,6 +1656,49 @@
 				<label>Servo3 Swap Endpoints</label>
 				<comment>Matches Closed/Thrown commands to the desired endpoints</comment>
 			</variable>
+			<variable label="Servo3 Directional Speed" CV="82" mask="XXXVXXXX" item="Servo3 Directional Speed" default="0">
+				<enumVal>
+					<enumChoice choice="Disable">
+						<choice>Disable</choice>
+					</enumChoice>
+					<enumChoice choice="Enable">
+						<choice>Enable</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Servo3  Directional Speed</label>
+			</variable>
+			<variable label="Servo3 Thrown RapidStart" CV="95" mask="VVXXXXXX" item="Servo3 Thrown RapidStart" default="0">
+				<enumVal>
+					<enumChoice choice="None">
+						<choice>None</choice>
+					</enumChoice>
+					<enumChoice choice="One-eighth travel">
+						<choice>One-eighth travel</choice>
+					</enumChoice>
+					<enumChoice choice="One-quarter travel">
+						<choice>One-quarter travel</choice>
+					</enumChoice>
+					<enumChoice choice="Three-eighths travel">
+						<choice>Three-eighth travel</choice>
+					</enumChoice>
+				</enumVal>
+				<qualifier>
+					<variableref>Servo3 Directional Speed</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+				<label>Servo3 Thrown RapidStart</label>
+			</variable>
+			<variable label="Servo3 Thrown Speed" CV="95" mask="XXVVVVVV" item="Servo3 Thrown Speed" default="4">
+				<decVal/>
+				<qualifier>
+					<variableref>Servo3 Directional Speed</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+				<label>Servo3 Thrown Speed</label>
+				<comment>Speed Range: 0-63</comment>
+			</variable>
 			<variable label="Servo3 Lock" CV="82" mask="XXVXXXXX" item="Servo3 Lock" default="1">
 				<enumVal>
 					<enumChoice choice="Not Lockable">
@@ -1642,7 +1772,7 @@
 				</enumVal>
 				<label>Servo3 Cascade Action</label>
 			</variable>
-			<variable label="GPIO6 Trigger" CV="85" mask="XXXXXXVV" item="GPIO6 Trigger" default="1">
+			<variable label="GPIO6 Trigger" CV="85" mask="XXXXXXVV" item="GPIO6 Trigger" default="2">
 				<enumVal>
 					<enumChoice choice="None">
 						<choice>None</choice>
@@ -1659,7 +1789,7 @@
 				</enumVal>
 				<label>GPIO6 Trigger</label>
 			</variable>
-			<variable label="GPIO6 Message" CV="85" mask="XXXXVVXX" item="GPIO6 Message" default="0">
+			<variable label="GPIO6 Message" CV="85" mask="XXXXXVXX" item="GPIO6 Message" default="0">
 				<enumVal>
 					<enumChoice choice="General Sensor">
 						<choice>General Sensor</choice>
@@ -1667,28 +1797,28 @@
 					<enumChoice choice="Closed Position Feedback">
 						<choice>Position Feedback</choice>
 					</enumChoice>
-					<enumChoice choice="Track Power">
-						<choice>Track Power</choice>
-					</enumChoice>
-					<enumChoice choice="EStop">
-						<choice>EStop</choice>
-					</enumChoice>
 				</enumVal>
 				<label>GPIO6 Message</label>
 			</variable>
-			<variable label="GPIO6 LED Mode" CV="85" mask="XXVVXXXX" item="GPIO6 LED Mode" default="2">
+			<variable label="GPIO6 LED Mode" CV="85" mask="XXVVVXXX" item="GPIO6 LED Mode" default="2">
 				<enumVal>
 					<enumChoice choice="Disable - Input only">
 						<choice>Disable</choice>
 					</enumChoice>
 					<enumChoice choice="Steady Drive">
-						<choice>Enable</choice>
+						<choice>Steady</choice>
 					</enumChoice>
 					<enumChoice choice="Blink on Move">
-						<choice>Enable</choice>
+						<choice>Blink Move</choice>
 					</enumChoice>
 					<enumChoice choice="Blink on Move or Lock">
-						<choice>Enable</choice>
+						<choice>Blink Move Lock</choice>
+					</enumChoice>
+					<enumChoice choice="Blink on Lock">
+						<choice>Blink Lock</choice>
+					</enumChoice>
+					<enumChoice choice="Lock State">
+						<choice>Lock State</choice>
 					</enumChoice>
 				</enumVal>
 				<label>GPIO6 LED Mode</label>
@@ -1927,7 +2057,7 @@
 				</enumVal>
 				<label>GPIO5 Trigger</label>
 			</variable>
-			<variable label="GPIO5 Message" CV="90" mask="XXXXVVXX" item="GPIO5 Message" default="0">
+			<variable label="GPIO5 Message" CV="90" mask="XXXXXVXX" item="GPIO5 Message" default="0">
 				<enumVal>
 					<enumChoice choice="General Sensor">
 						<choice>General Sensor</choice>
@@ -1935,28 +2065,28 @@
 					<enumChoice choice="Thrown Position Feedback">
 						<choice>Position Feedback</choice>
 					</enumChoice>
-					<enumChoice choice="Track Power">
-						<choice>Track Power</choice>
-					</enumChoice>
-					<enumChoice choice="EStop">
-						<choice>EStop</choice>
-					</enumChoice>
 				</enumVal>
 				<label>GPIO5 Message</label>
 			</variable>
-			<variable label="GPIO5 LED Mode" CV="90" mask="XXVVXXXX" item="GPIO5 LED Mode" default="1">
+			<variable label="GPIO5 LED Mode" CV="90" mask="XXVVVXXX" item="GPIO5 LED Mode" default="1">
 				<enumVal>
 					<enumChoice choice="Disable - Input only">
 						<choice>Disable</choice>
 					</enumChoice>
 					<enumChoice choice="Steady Drive">
-						<choice>Enable</choice>
+						<choice>Steady</choice>
 					</enumChoice>
 					<enumChoice choice="Blink on Move">
-						<choice>Enable</choice>
+						<choice>Blink Move</choice>
 					</enumChoice>
 					<enumChoice choice="Blink on Move or Lock">
-						<choice>Enable</choice>
+						<choice>Blink Move Lock</choice>
+					</enumChoice>
+					<enumChoice choice="Blink on Lock">
+						<choice>Blink Lock</choice>
+					</enumChoice>
+					<enumChoice choice="Lock State">
+						<choice>Lock State</choice>
 					</enumChoice>
 				</enumVal>
 				<label>GPIO5 LED Mode</label>
@@ -2211,7 +2341,7 @@
 				<label>Servo4 Speed</label>
 				<comment>Speed Range: 0-63</comment>
 			</variable>
-			<variable label="Servo4 Swap Endpoints" CV="103" mask="VXXXXXXX" item="Servo4 Swap Endpoints" default="0">
+			<variable label="Servo4 Swap Endpoints" CV="104" mask="VXXXXXXX" item="Servo4 Swap Endpoints" default="0">
 				<enumVal>
 					<enumChoice choice="Normal Endpoints">
 						<choice>Normal Endpoints</choice>
@@ -2222,6 +2352,49 @@
 				</enumVal>
 				<label>Servo4 Swap Endpoints</label>
 				<comment>Matches Closed/Thrown commands to the desired endpoints</comment>
+			</variable>
+			<variable label="Servo4 Directional Speed" CV="104" mask="XXXVXXXX" item="Servo4 Directional Speed" default="0">
+				<enumVal>
+					<enumChoice choice="Disable">
+						<choice>Disable</choice>
+					</enumChoice>
+					<enumChoice choice="Enable">
+						<choice>Enable</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Servo4  Directional Speed</label>
+			</variable>
+			<variable label="Servo4 Thrown RapidStart" CV="117" mask="VVXXXXXX" item="Servo4 Thrown RapidStart" default="0">
+				<enumVal>
+					<enumChoice choice="None">
+						<choice>None</choice>
+					</enumChoice>
+					<enumChoice choice="One-eighth travel">
+						<choice>One-eighth travel</choice>
+					</enumChoice>
+					<enumChoice choice="One-quarter travel">
+						<choice>One-quarter travel</choice>
+					</enumChoice>
+					<enumChoice choice="Three-eighths travel">
+						<choice>Three-eighth travel</choice>
+					</enumChoice>
+				</enumVal>
+				<qualifier>
+					<variableref>Servo4 Directional Speed</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+				<label>Servo4 Thrown RapidStart</label>
+			</variable>
+			<variable label="Servo4 Thrown Speed" CV="117" mask="XXVVVVVV" item="Servo4 Thrown Speed" default="4">
+				<decVal/>
+				<qualifier>
+					<variableref>Servo4 Directional Speed</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+				<label>Servo4 Thrown Speed</label>
+				<comment>Speed Range: 0-63</comment>
 			</variable>
 			<variable label="Servo4 Lock" CV="104" mask="XXVXXXXX" item="Servo4 Lock" default="1">
 				<enumVal>
@@ -2296,7 +2469,7 @@
 				</enumVal>
 				<label>Servo4 Cascade Action</label>
 			</variable>
-			<variable label="GPIO8 Trigger" CV="107" mask="XXXXXXVV" item="GPIO8 Trigger" default="1">
+			<variable label="GPIO8 Trigger" CV="107" mask="XXXXXXVV" item="GPIO8 Trigger" default="2">
 				<enumVal>
 					<enumChoice choice="None">
 						<choice>None</choice>
@@ -2313,7 +2486,7 @@
 				</enumVal>
 				<label>GPIO8 Trigger</label>
 			</variable>
-			<variable label="GPIO8 Message" CV="107" mask="XXXXVVXX" item="GPIO8 Message" default="0">
+			<variable label="GPIO8 Message" CV="107" mask="XXXXXVXX" item="GPIO8 Message" default="0">
 				<enumVal>
 					<enumChoice choice="General Sensor">
 						<choice>General Sensor</choice>
@@ -2321,28 +2494,28 @@
 					<enumChoice choice="Closed Position Feedback">
 						<choice>Position Feedback</choice>
 					</enumChoice>
-					<enumChoice choice="Track Power">
-						<choice>Track Power</choice>
-					</enumChoice>
-					<enumChoice choice="EStop">
-						<choice>EStop</choice>
-					</enumChoice>
 				</enumVal>
 				<label>GPIO8 Message</label>
 			</variable>
-			<variable label="GPIO8 LED Mode" CV="107" mask="XXVVXXXX" item="GPIO8 LED Mode" default="2">
+			<variable label="GPIO8 LED Mode" CV="107" mask="XXVVVXXX" item="GPIO8 LED Mode" default="2">
 				<enumVal>
 					<enumChoice choice="Disable - Input only">
 						<choice>Disable</choice>
 					</enumChoice>
 					<enumChoice choice="Steady Drive">
-						<choice>Enable</choice>
+						<choice>Steady</choice>
 					</enumChoice>
 					<enumChoice choice="Blink on Move">
-						<choice>Enable</choice>
+						<choice>Blink Move</choice>
 					</enumChoice>
 					<enumChoice choice="Blink on Move or Lock">
-						<choice>Enable</choice>
+						<choice>Blink Move Lock</choice>
+					</enumChoice>
+					<enumChoice choice="Blink on Lock">
+						<choice>Blink Lock</choice>
+					</enumChoice>
+					<enumChoice choice="Lock State">
+						<choice>Lock State</choice>
 					</enumChoice>
 				</enumVal>
 				<label>GPIO8 LED Mode</label>
@@ -2581,7 +2754,7 @@
 				</enumVal>
 				<label>GPIO7 Trigger</label>
 			</variable>
-			<variable label="GPIO7 Message" CV="112" mask="XXXXVVXX" item="GPIO7 Message" default="0">
+			<variable label="GPIO7 Message" CV="112" mask="XXXXXVXX" item="GPIO7 Message" default="0">
 				<enumVal>
 					<enumChoice choice="General Sensor">
 						<choice>General Sensor</choice>
@@ -2589,28 +2762,28 @@
 					<enumChoice choice="Thrown Position Feedback">
 						<choice>Position Feedback</choice>
 					</enumChoice>
-					<enumChoice choice="Track Power">
-						<choice>Track Power</choice>
-					</enumChoice>
-					<enumChoice choice="EStop">
-						<choice>EStop</choice>
-					</enumChoice>
 				</enumVal>
 				<label>GPIO7 Message</label>
 			</variable>
-			<variable label="GPIO7 LED Mode" CV="112" mask="XXVVXXXX" item="GPIO7 LED Mode" default="1">
+			<variable label="GPIO7 LED Mode" CV="112" mask="XXVVVXXX" item="GPIO7 LED Mode" default="1">
 				<enumVal>
 					<enumChoice choice="Disable - Input only">
 						<choice>Disable</choice>
 					</enumChoice>
 					<enumChoice choice="Steady Drive">
-						<choice>Enable</choice>
+						<choice>Steady</choice>
 					</enumChoice>
 					<enumChoice choice="Blink on Move">
-						<choice>Enable</choice>
+						<choice>Blink Move</choice>
 					</enumChoice>
 					<enumChoice choice="Blink on Move or Lock">
-						<choice>Enable</choice>
+						<choice>Blink Move Lock</choice>
+					</enumChoice>
+					<enumChoice choice="Blink on Lock">
+						<choice>Blink Lock</choice>
+					</enumChoice>
+					<enumChoice choice="Lock State">
+						<choice>Lock State</choice>
 					</enumChoice>
 				</enumVal>
 				<label>GPIO7 LED Mode</label>
@@ -3599,7 +3772,7 @@
 					</display>
 					<label label=" "/>	
 					<label label=" "/>	
-					<display item="AutoAlign Current" label="AutoAlign Current" tooltip="Current limit for AutoAlignment: 20-200, or 0 for Manual">
+					<display item="AutoAlign Current" label="AutoAlign Current" tooltip="Current limit for AutoAlignment: 10-80 (typ) or 0 for manual preset selection">
 						<label>AutoAlign Current</label>
 					</display>
 					<display item="Lock Indicator" label="Lock Indicator" tooltip="Lock state to indicate on LED">
@@ -3665,8 +3838,8 @@
 			</row>
 			<row>
 				<column>
-					<label label="Decoder File Version: 1.00">
-						<label>Decoder File Version: 1.00</label>
+					<label label="Decoder File Version: 1.02">
+						<label>Decoder File Version: 1.02</label>
 					</label>
 				</column>
 			</row>
@@ -3720,14 +3893,23 @@
 					<display item="Servo1 Thrown" label="Thrown Position" tooltip="0=full CCW, 2400=full CW">
 						<label>Thrown Position</label>
 					</display>
+					<display item="Servo1 Swap Endpoints" label="Orientation" tooltip="Matches Closed/Thrown commands to physical servo installation">
+						<label>Orientation</label>
+					</display>
 					<display item="Servo1 Speed" label="Speed" tooltip="0-63: 0=very slow, 4=normal, 63=very fast">
 						<label>Speed</label>
 					</display>
 					<display item="Servo1 RapidStart" label="RapidStart" tooltip="increases speed during initial movement">
 						<label>RapidStart</label>
 					</display>
-					<display item="Servo1 Swap Endpoints" label="Orientation" tooltip="Matches Closed/Thrown commands to physical servo installation">
-						<label>Orientation</label>
+					<display item="Servo1 Directional Speed" label="Directional Speed" tooltip="enables separate speed setting for travel in the Thrown direction">
+						<label>Directional Speed</label>
+					</display>
+					<display item="Servo1 Thrown Speed" label="Thrown Speed" tooltip="0-63: 0=very slow, 4=normal, 63=very fast">
+						<label>Thrown Speed</label>
+					</display>
+					<display item="Servo1 Thrown RapidStart" label="Thrown RapidStart" tooltip="increases speed during initial movement">
+						<label>Thrown RapidStart</label>
 					</display>
 					<label label=" "/>	
 					<label label="                                  LOCK"/>
@@ -3917,14 +4099,23 @@
 					<display item="Servo2 Thrown" label="Thrown Position" tooltip="0=full CCW, 2400=full CW">
 						<label>Thrown Position</label>
 					</display>
+					<display item="Servo2 Swap Endpoints" label="Orientation" tooltip="Matches Closed/Thrown commands to physical servo installation">
+						<label>Orientation</label>
+					</display>
 					<display item="Servo2 Speed" label="Speed" tooltip="0-63: 0=very slow, 4=normal, 63=very fast">
 						<label>Speed</label>
 					</display>
 					<display item="Servo2 RapidStart" label="RapidStart" tooltip="increases speed during initial movement">
 						<label>RapidStart</label>
 					</display>
-					<display item="Servo2 Swap Endpoints" label="Orientation" tooltip="Matches Closed/Thrown commands to physical servo installation">
-						<label>Orientation</label>
+					<display item="Servo2 Directional Speed" label="Directional Speed" tooltip="enables separate speed setting for travel in the Thrown direction">
+						<label>Directional Speed</label>
+					</display>
+					<display item="Servo2 Thrown Speed" label="Thrown Speed" tooltip="0-63: 0=very slow, 4=normal, 63=very fast">
+						<label>Thrown Speed</label>
+					</display>
+					<display item="Servo2 Thrown RapidStart" label="Thrown RapidStart" tooltip="increases speed during initial movement">
+						<label>Thrown RapidStart</label>
 					</display>
 					<label label=" "/>	
 					<label label="                                  LOCK"/>
@@ -4114,14 +4305,23 @@
 					<display item="Servo3 Thrown" label="Thrown Position" tooltip="0=full CCW, 2400=full CW">
 						<label>Thrown Position</label>
 					</display>
+					<display item="Servo3 Swap Endpoints" label="Orientation" tooltip="Matches Closed/Thrown commands to physical servo installation">
+						<label>Orientation</label>
+					</display>
 					<display item="Servo3 Speed" label="Speed" tooltip="0-63: 0=very slow, 4=normal, 63=very fast">
 						<label>Speed</label>
 					</display>
 					<display item="Servo3 RapidStart" label="RapidStart" tooltip="increases speed during initial movement">
 						<label>RapidStart</label>
 					</display>
-					<display item="Servo3 Swap Endpoints" label="Orientation" tooltip="Matches Closed/Thrown commands to physical servo installation">
-						<label>Orientation</label>
+					<display item="Servo3 Directional Speed" label="Directional Speed" tooltip="enables separate speed setting for travel in the Thrown direction">
+						<label>Directional Speed</label>
+					</display>
+					<display item="Servo3 Thrown Speed" label="Thrown Speed" tooltip="0-63: 0=very slow, 4=normal, 63=very fast">
+						<label>Thrown Speed</label>
+					</display>
+					<display item="Servo3 Thrown RapidStart" label="Thrown RapidStart" tooltip="increases speed during initial movement">
+						<label>Thrown RapidStart</label>
 					</display>
 					<label label=" "/>	
 					<label label="                                  LOCK"/>
@@ -4311,14 +4511,23 @@
 					<display item="Servo4 Thrown" label="Thrown Position" tooltip="0=full CCW, 2400=full CW">
 						<label>Thrown Position</label>
 					</display>
+					<display item="Servo4 Swap Endpoints" label="Orientation" tooltip="Matches Closed/Thrown commands to physical servo installation">
+						<label>Orientation</label>
+					</display>
 					<display item="Servo4 Speed" label="Speed" tooltip="0-63: 0=very slow, 4=normal, 63=very fast">
 						<label>Speed</label>
 					</display>
 					<display item="Servo4 RapidStart" label="RapidStart" tooltip="increases speed during initial movement">
 						<label>RapidStart</label>
 					</display>
-					<display item="Servo4 Swap Endpoints" label="Orientation" tooltip="Matches Closed/Thrown commands to physical servo installation">
-						<label>Orientation</label>
+					<display item="Servo4 Directional Speed" label="Directional Speed" tooltip="enables separate speed setting for travel in the Thrown direction">
+						<label>Directional Speed</label>
+					</display>
+					<display item="Servo4 Thrown Speed" label="Thrown Speed" tooltip="0-63: 0=very slow, 4=normal, 63=very fast">
+						<label>Thrown Speed</label>
+					</display>
+					<display item="Servo4 Thrown RapidStart" label="Thrown RapidStart" tooltip="increases speed during initial movement">
+						<label>Thrown RapidStart</label>
 					</display>
 					<label label=" "/>	
 					<label label="                                  LOCK"/>
