@@ -288,22 +288,22 @@
 						<choice>Three-eighth travel</choice>
 					</enumChoice>
 				</enumVal>
+				<label>Servo1 Thrown RapidStart</label>
 				<qualifier>
 					<variableref>Servo1 Directional Speed</variableref>
 					<relation>eq</relation>
 					<value>1</value>
 				</qualifier>
-				<label>Servo1 Thrown RapidStart</label>
 			</variable>
 			<variable label="Servo1 Thrown Speed" CV="51" mask="XXVVVVVV" item="Servo1 Thrown Speed" default="4">
 				<decVal/>
+				<label>Servo1 Thrown Speed</label>
+				<comment>Speed Range: 0-63</comment>
 				<qualifier>
 					<variableref>Servo1 Directional Speed</variableref>
 					<relation>eq</relation>
 					<value>1</value>
 				</qualifier>
-				<label>Servo1 Thrown Speed</label>
-				<comment>Speed Range: 0-63</comment>
 			</variable>
 			<variable label="Servo1 Lock" CV="38" mask="XXVXXXXX" item="Servo1 Lock" default="1">
 				<enumVal>
@@ -985,22 +985,22 @@
 						<choice>Three-eighth travel</choice>
 					</enumChoice>
 				</enumVal>
+				<label>Servo2 Thrown RapidStart</label>
 				<qualifier>
 					<variableref>Servo2 Directional Speed</variableref>
 					<relation>eq</relation>
 					<value>1</value>
 				</qualifier>
-				<label>Servo2 Thrown RapidStart</label>
 			</variable>
 			<variable label="Servo2 Thrown Speed" CV="73" mask="XXVVVVVV" item="Servo2 Thrown Speed" default="4">
 				<decVal/>
+				<label>Servo2 Thrown Speed</label>
+				<comment>Speed Range: 0-63</comment>
 				<qualifier>
 					<variableref>Servo2 Directional Speed</variableref>
 					<relation>eq</relation>
 					<value>1</value>
 				</qualifier>
-				<label>Servo2 Thrown Speed</label>
-				<comment>Speed Range: 0-63</comment>
 			</variable>
 			<variable label="Servo2 Lock" CV="60" mask="XXVXXXXX" item="Servo2 Lock" default="1">
 				<enumVal>
@@ -1682,22 +1682,22 @@
 						<choice>Three-eighth travel</choice>
 					</enumChoice>
 				</enumVal>
+				<label>Servo3 Thrown RapidStart</label>
 				<qualifier>
 					<variableref>Servo3 Directional Speed</variableref>
 					<relation>eq</relation>
 					<value>1</value>
 				</qualifier>
-				<label>Servo3 Thrown RapidStart</label>
 			</variable>
 			<variable label="Servo3 Thrown Speed" CV="95" mask="XXVVVVVV" item="Servo3 Thrown Speed" default="4">
 				<decVal/>
+				<label>Servo3 Thrown Speed</label>
+				<comment>Speed Range: 0-63</comment>
 				<qualifier>
 					<variableref>Servo3 Directional Speed</variableref>
 					<relation>eq</relation>
 					<value>1</value>
 				</qualifier>
-				<label>Servo3 Thrown Speed</label>
-				<comment>Speed Range: 0-63</comment>
 			</variable>
 			<variable label="Servo3 Lock" CV="82" mask="XXVXXXXX" item="Servo3 Lock" default="1">
 				<enumVal>
@@ -2379,22 +2379,22 @@
 						<choice>Three-eighth travel</choice>
 					</enumChoice>
 				</enumVal>
+				<label>Servo4 Thrown RapidStart</label>
 				<qualifier>
 					<variableref>Servo4 Directional Speed</variableref>
 					<relation>eq</relation>
 					<value>1</value>
 				</qualifier>
-				<label>Servo4 Thrown RapidStart</label>
 			</variable>
 			<variable label="Servo4 Thrown Speed" CV="117" mask="XXVVVVVV" item="Servo4 Thrown Speed" default="4">
 				<decVal/>
+				<label>Servo4 Thrown Speed</label>
+				<comment>Speed Range: 0-63</comment>
 				<qualifier>
 					<variableref>Servo4 Directional Speed</variableref>
 					<relation>eq</relation>
 					<value>1</value>
 				</qualifier>
-				<label>Servo4 Thrown Speed</label>
-				<comment>Speed Range: 0-63</comment>
 			</variable>
 			<variable label="Servo4 Lock" CV="104" mask="XXVXXXXX" item="Servo4 Lock" default="1">
 				<enumVal>
