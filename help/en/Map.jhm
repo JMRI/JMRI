@@ -550,6 +550,8 @@
 
 <mapID target="manual.3-0_DecoderPro.Main_LocoNet_Clock" url="manual/3-0_DecoderPro/Main_LocoNet.shtml#Clock"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_PassengerTrainRoute" url="package/jmri/jmrit/operations/Operations.shtml#PassengerTrainRoute"/>
+
 <mapID target="package.jmri.jmrit.beantable.TurnoutTable_Lock Mode" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#Lock Mode"/>
 
 <mapID target="package.jmri.jmrit.beantable.ReporterTable" url="package/jmri/jmrit/beantable/ReporterTable.shtml"/>
@@ -1648,9 +1650,9 @@
 
 <mapID target="manual.3-0_DecoderPro.Ops_ImportCarsFile" url="manual/3-0_DecoderPro/Ops_ImportCarsFile.shtml"/>
 
-<mapID target="manual.DP3_2-14_manual.Throttle_Top" url="manual/DP3_2-14_manual/Throttle.shtml#Top"/>
-
 <mapID target="manual.JMRI_2-14_manual.Main_LocoNet_CommandStation" url="manual/JMRI_2-14_manual/Main_LocoNet.shtml#CommandStation"/>
+
+<mapID target="manual.DP3_2-14_manual.Throttle_Top" url="manual/DP3_2-14_manual/Throttle.shtml#Top"/>
 
 <mapID target="manual.JMRI_2-14_manual.Start_DCC_Hardware" url="manual/JMRI_2-14_manual/Start_DCC_Hardware.shtml"/>
 
@@ -1799,6 +1801,8 @@
 <mapID target="manual.JMRI_2-14_manual.Main_Throttle_Top" url="manual/JMRI_2-14_manual/Main_Throttle.shtml#Top"/>
 
 <mapID target="manual.JMRI_2-12_Manual.Main_LocoNet_BDL16" url="manual/JMRI_2-12_Manual/Main_LocoNet.shtml#BDL16"/>
+
+<mapID target="manual.3-0_DecoderPro.Main_VSD" url="manual/3-0_DecoderPro/Main_VSD.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_MisplacedCarsComment" url="package/jmri/jmrit/operations/Operations.shtml#MisplacedCarsComment"/>
 
@@ -3145,6 +3149,8 @@
 <mapID target="manual.3-0_DecoderPro.Ops_TrainsModify_PrintTop" url="manual/3-0_DecoderPro/Ops_TrainsModify.shtml#PrintTop"/>
 
 <mapID target="package.jmri.jmrit.display.PanelTarget" url="package/jmri/jmrit/display/PanelTarget.shtml"/>
+
+<mapID target="manual.3-0_DecoderPro.Main_VSD_VSDLocations" url="manual/3-0_DecoderPro/Main_VSD.shtml#VSDLocations"/>
 
 <mapID target="manual.JMRI_2-14_manual.Ops_TrainsModify_Print" url="manual/JMRI_2-14_manual/Ops_TrainsModify.shtml#Print"/>
 
