@@ -1070,7 +1070,7 @@ var $setWidgetState = function($id, $newState) {
 	var $widget = $gWidgets[$id];
 	if ($widget.state != $newState) {  //don't bother if already this value
 		if (window.console) console.log( "setting " + $id + " for " + $widget.element + " " + $widget.name + " --> " + $newState);
-//		$widget.state = $newState;  
+		$widget.state = $newState;  
 		switch ($widget.widgetFamily) {
 		case "icon" :
 			$('img#'+$id).attr('src', $widget['icon'+$newState.replace(/ /g, "_")]);  //set image src to next state's image
