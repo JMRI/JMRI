@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>James</firstname><surname>Koretsky</surname></personname>
+    </author>
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2012-08-31</date>
+        <authorinitials>JK</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspecttable>BN</aspecttable>
+  <name>Double searchlight signal</name>
+  <reference> As described in the
+October 1989 Burlington Northern Railroad Southern Region, Debraska Division Timetable #2. In effect at 0001 Continental Mountain Time, Sunday October 29, 1989.
+  </reference>
+  <description>Appearances for a two-searchlight signal head or semaphore which are used in Automatic Block, CTC and Interlocking Systems</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <reference>Rule 230</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-230-a.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>dark</show>
+      <reference>Rule 230</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-230-b.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advance Approach</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>Rule 232</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-232.gif</imagelink>
+    </appearance>
+  
+    <appearance>
+      <aspectname>Approach Diverging</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <reference>Rule 233</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-233.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>flashyellow</show>
+      <show>red</show>
+      <reference>Rule 234</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-234-a.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>flashyellow</show>
+      <show>dark</show>
+      <reference>Rule 234</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-234-b.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Restricting</aspectname>
+      <show>yellow</show>
+      <show>lunar</show>
+      <reference>Rule 235</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-235.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Rule 236</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-236-a.gif</imagelink>
+    </appearance>
+    
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>dark</show>
+      <reference>Rule 236</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-236-b.gif</imagelink>
+    </appearance>
+    
+    <appearance>
+      <aspectname>Diverging Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Rule 237</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-237.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Diverging Approach Medium</aspectname>
+      <show>red</show>
+      <show>flashyellow</show>
+      <reference>Rule 238</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-238.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Diverging Approach</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Rule 239</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-239.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricted Proceed</aspectname>
+      <show>red</show>
+      <show>flashred</show>
+      <reference>Rule 241</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-241-a.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricted Proceed</aspectname>
+      <show>flashred</show>
+      <show>red</show>
+      <reference>Rule 241</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-241-b.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricted Proceed</aspectname>
+      <show>lunar</show>
+      <show>red</show>
+      <reference>Rule 241</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-241-c.gif
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricted Proceed</aspectname>
+      <show>red</show>
+      <show>lunar</show>
+      <reference>Rule 241</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-241-d.gif
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricted Proceed</aspectname>
+      <show>dark</show>
+      <show>lunar</show>
+      <reference>Rule 241</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-241-e.gif
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricted Proceed</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <reference>Rule 241</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-241-f.gif
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricted Proceed</aspectname>
+      <show>red</show>
+      <show>dark</show>
+      <reference>Rule 241</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-241-g.gif
+      </imagelink>
+    </appearance>
+    
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <reference>Rule 242</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-2-high/rule-242.gif</imagelink>
+    </appearance>
+  </appearances>
+  
+    <specificappearances><!-- Start of Specific Appearances list -->
+       <danger>
+          <aspect>Stop</aspect>
+       </danger>
+       <held>
+          <aspect>Stop</aspect>
+       </held>
+    </specificappearances><!-- End of Specific Appearances list -->
+  
+    <aspectMappings><!-- Start of Aspect Mapping -->
+
+    <aspectMapping>
+     <advancedAspect>Stop</advancedAspect>
+     <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+    
+    <aspectMapping>
+     <advancedAspect>Restricted Proceed</advancedAspect>
+     <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+    
+    <aspectMapping>
+     <advancedAspect>Approach Medium</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Approach</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Clear</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+  </aspectMappings><!-- End of Aspect Mapping -->
+</appearancetable>  

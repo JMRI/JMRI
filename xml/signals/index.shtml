@@ -45,16 +45,34 @@ The available definitions include:
 <dt><a href="AAR-1946/index.shtml">AAR-1946</a>
     <dd>American Association of Railroads 1946 rule book
 
-<dt><a href="NS-2008/index.shtml">NS-2008</a>
-    <dd>Norfolk Southern Corporation Operating rules book (NORAC)
+<dt><a href="BN-1989/index.shtml">BN-1989</a>
+    <dd>1989 October Burlington Northern
+    <br>
+    <i>Partial aspect mapping, not finished.</i>
+
+<dt><a href="BR-2003/index.shtml">BR-2003</a>
+    <dd>2003 BR rule book
 
 <dt><a href="CSX-1998/index.shtml">CSX-1998</a>
     <dd>CSX 1998 rule book
     <br>
     <i>Some errors in aspect mapping, not finished.</i>
 
+<dt><a href="DB-HV-1969/index.shtml">DB HV 1969</a>
+    <dd>1969 Deutsche Bundesbahn "Einheitsbauform" Home Signal/Distant signal (Hauptsignal/Vorsignal) system revision
+    <br>
+    <i>Missing aspect mapping, not finished.</i>
+
 <dt><a href="NYCS-1937/index.shtml">NYCS-1937</a>
     <dd>New York Central System 1937 rule book
+    <br>
+    <i>Missing aspect mapping, not finished.</i>
+
+<dt><a href="NS-2008/index.shtml">NS-2008</a>
+    <dd>Norfolk Southern Corporation Operating rules book (NORAC)
+
+<dt><a href="SLSF-1973/index.shtml">SLSF-1973</a>
+    <dd>1973 SLSF (Frisco) rules 
     <br>
     <i>Missing aspect mapping, not finished.</i>
 
@@ -65,24 +83,6 @@ The available definitions include:
 
 <dt><a href="SPTCO-1960/index.shtml">SPTCO-1960</a>
     <dd>Southern Pacific Railway and Transportation Company 1960 rule book
-    <br>
-    <i>Missing aspect mapping, not finished.</i>
-
-<dt><a href="DB-HV-1969/index.shtml">DB HV 1969</a>
-    <dd>1969 Deutsche Bundesbahn "Einheitsbauform" Home Signal/Distant signal (Hauptsignal/Vorsignal) system revision
-    <br>
-    <i>Missing aspect mapping, not finished.</i>
-
-<dt><a href="SLSF-1973/index.shtml">SLSF-1973</a>
-    <dd>1973 SLSF (Frisco) rules 
-    <br>
-    <i>Missing aspect mapping, not finished.</i>
-
-<dt><a href="BR-2003/index.shtml">BR-2003</a>
-    <dd>2003 BR rule book
-
-<dt><a href="BN-1989/index.shtml">BN-1989</a>
-	<dd>1989 October Burlington Northern
     <br>
     <i>Missing aspect mapping, not finished.</i>
 

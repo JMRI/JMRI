@@ -34,85 +34,107 @@
       <name>Clear</name>
       <rule>Rule 230</rule>
       <indication>Proceed</indication>
-      <reference>Page 2</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
     </aspect>
 
     <aspect>
       <name>Advance Approach</name>
       <rule>Rule 232</rule>
       <indication>Proceed prepared to stop at second signal</indication>
-      <reference>Page 2</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
     </aspect>
   
     <aspect>
       <name>Approach Diverging</name>
       <rule>Rule 233</rule>
       <indication>Proceed prepared to advance on diverging route at the next signal at prescribed speed through turnout.</indication>
-      <reference>Page 2</reference>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
     </aspect>
  
     <aspect>
       <name>Approach Medium</name>
       <rule>Rule 234</rule>
       <indication>Proceed prepared to pass next signal not exceeding 35 MPH.</indication>
-      <reference>Page 2</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
     </aspect>
 
     <aspect>
       <name>Approach Restricting</name>
       <rule>Rule 235</rule>
       <indication>Proceed prepared to pass next signal at restricted speed.</indication>
-      <reference>Page 2</reference>
+      <speed>Medium</speed>
+      <speed2>Limited</speed2>
+      <route>Normal</route>
     </aspect>
 
     <aspect>
       <name>Approach</name>
       <rule>Rule 236</rule>
       <indication>Proceed prepared to stop at next signal, trains exceeding 35 MPH immediately reduce to that speed.</indication>
-      <reference>Page 2</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
     </aspect>
 
     <aspect>
       <name>Diverging Clear</name>
       <rule>Rule 237</rule>
       <indication>Proceed on diverging route not exceeding prescribed speed through turnout.</indication>
-      <reference>Page 2</reference>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
       <name>Diverging Approach Medium</name>
       <rule>Rule 238</rule>
       <indication>Proceed on diverging route not exceeding prescribed speed through turnout prepared to pass next signal not exceeding 35 MPH.</indication>
-      <reference>Page 2</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
       <name>Diverging Approach</name>
       <rule>Rule 239</rule>
       <indication>Proceed on diverging route not exceeding prescribed speed through turnout prepared to stop at next signal, trains exceeding 35 MPH immediately reduce to that speed.</indication>
-      <reference>Page 2</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
       <name>Restricted Proceed</name>
       <rule>Rule 241</rule>
       <indication>Proceed at restricted speed.</indication>
-      <reference>Page 2</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
     </aspect>
 
     <aspect>
       <name>Stop</name>
       <rule>Rule 242</rule>
       <indication>Stop.</indication>
-      <reference>Page 2</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
     </aspect>
 
   </aspects>
 
   <appearancefiles>
-    <appearancefile href="appearance-SL-1-abs.xml"/>
-    <appearancefile href="appearance-SL-2-abs.xml"/>
-    <appearancefile href="appearance-SL-3-abs.xml"/>
+    <appearancefile href="appearance-SL-1.xml"/>
+    <appearancefile href="appearance-SL-2.xml"/>
+    <appearancefile href="appearance-SL-3.xml"/>
   </appearancefiles>
 
   
