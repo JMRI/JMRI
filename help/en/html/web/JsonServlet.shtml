@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright 2012 -->
+<!-- $Id: JsonServlet.shtml 20353 2012-04-15 11:48:26Z mstevetodd $ -->
+<title>JMRI: Json Servlet</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<STYLE type="text/css">
+   table#jsonResponses {
+     border-collapse:collapse;
+   }
+   table#jsonResponses td {
+     border: 1px solid grey;
+     width: 33%;
+   }
+   code {
+     white-space: normal;
+   }
+</STYLE>
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1> 
+JMRI: Json Servlet
+</h1>
+<p>The <b>JMRI Json Servlet</b> provides web access to lists and values for numerous JMRI-defined entities, in the modern 
+  <a href='http://en.wikipedia.org/wiki/JSON' target=_new>JSON format</a>.  It also provides a
+  <a href='http://en.wikipedia.org/wiki/WebSocket' target=_new>WebSocket</a> interface for 
+  making changes to the state of those entities, and listening for external changes.</p>
+
+The <b>HTTP GET</b> feature of the servlet responds to the following URL patterns: 
+<ul>
+  <li>/json/cars</li>
+  <li>/json/car/&lt;ID&gt;</li>
+  <li>/json/sensors</li>
+  <li>/json/sensor/&lt;name&gt;</li>
+</ul>Currently, the servlet supports cars, engines, lights, locations, memories, metadata, panels, power, railroad, roster, routes, sensors, signalHeads, signalMasts, trains, and turnouts.
+ 
+</p>
+
+The <a href='http://en.wikipedia.org/wiki/WebSocket' target=_new>WebSocket</a> feature of this servlet
+currently handles JSON strings in four different forms:
+<ul>
+<li>list requests in the form: <code>{"type":"list","list":"trains"}</code>
+that are passed to the JsonLister for handling.</li>
+<li>individual item state requests in the form: <code>{"type":"turnout","data":{"name":"LT14"}}</code>
+that are passed to type-specific handlers.  These 
+requests will initiate "listeners", which will send updated responses every time the item's state changes.</li>
+<li>a heartbeat in the form <code>*</code> or <code>{"type":"ping"}</code>. The <code>*</code> heartbeat
+gets no response, while the JSON heartbeat causes a <code>{"type":"pong"}</code> response.</li>
+<li>a signoff in the form: <code>{"type":"goodbye"}</code> to which an identical response
+is sent before the connection gets closed.</li>
+</ul>
+
+The <b>WebSocket</b> feature of the servlet can be seen
+  by browsing to the <b>/json/</b> url, where a <b>JSON console</b> is providing for testing.<br />
+Example commands and responses:  
+<table id="jsonResponses"><tr><th>command</th><th>response</th><th>notes</th></tr>
+  <tr><td><code>{"type":"sensor","data":{"name":"IS2"}}</code></td><td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td><td>request current state of sensor IS2</td></tr>
+  <tr><td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td><td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td><td>set sensor IS2 to InActive (4)</td></tr>
+  <tr><td><code>{"type":"turnout","data":{"name":"IT99","state":0}}</code></td><td><code>{"type":"turnout","data":{"name":"IT99","state":4}}</code></td><td>sending state=0 is also treated as request for current state</td></tr>
+  <tr><td><code>{"type":"power","data":{}}</code></td><td><code>{"type":"power","data":{"state":2}}</code></td><td>power does not need a name</code></td></tr>
+  <tr><td><code>{"type":"ping"}</code></td><td><code>{"type":"pong"}</code></td><td>ping request and response</td></tr>
+  <tr><td><code>{"type":"list","list":"panels"}</code></td><td><code>{"type":"list","list":[{"name":"Panel/Panel",
+  "URL":"/panel/Panel/Panel?format=json","userName":"Panel","type":"Panel"},
+  {"name":"Layout/Waccamaw%20Coast%20Line",
+  "URL":"/panel/Layout/Waccamaw%20Coast%20Line?format=json",
+  "userName":"Waccamaw Coast Line","type":"Layout"}]}</code></td><td>request a list of panels, respond with array of two panels' details</td></tr>
+  
+</table>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

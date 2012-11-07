@@ -41,6 +41,7 @@ Element types fully supported:<ul>
 <li>turnout</li>
 <li>sensor</li>
 <li>signalhead</li>
+<li>signalmast</li>
 <li>memory</li>
 <li>route</li>
 </ul>

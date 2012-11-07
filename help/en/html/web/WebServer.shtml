@@ -49,6 +49,8 @@ handle them.  Of particular interest are:<ul>
 <li><a href="XMLIO.shtml">XMLIOServlet</a> (provides lists and values of JMRI-defined items, accepts changes to those values, and 
   can monitor for changes)</li>
 <li><a href="PanelServlet.shtml">PanelServlet</a> (serves xml definitions of available JMRI panels)</li>
+<li><a href="JsonServlet.shtml">JsonServlet</a>(provides lists and values of JMRI-defined items in JSON format.  Also has a WebSocket feature 
+  that accepts changes to those values, and can monitor for changes)</li>
 </ul>
 
 <dt>jmri/web/server/Html.properties

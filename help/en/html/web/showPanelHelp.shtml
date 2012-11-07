@@ -40,7 +40,7 @@ changes to those elements.
  <p>The base url is "/web/showPanel.html".  With no parms, the page will list links to available panels, 
  or you can pass a parm of the format "?name=[type]/[panelname]" to open the specified panel directly.  
  For example: http://192.168.0.7:12080/web/showPanel.html?name=Layout/MyPanel"</p>
- <p>This app requires a modern "HTML5" browser (Chrome, FireFox, Safari, IE9).  It is still under development, with several element types not supported yet.</p>
+ <p>This app requires a modern "HTML5" browser (Chrome, FireFox, Safari, IE9).  It is still under development, with some element types not supported yet.</p>
 </div>
 
 <!--#include virtual="/Footer" -->
