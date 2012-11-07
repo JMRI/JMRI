@@ -534,6 +534,8 @@ the <A HREF="#BuildOptions">aggressive</A> mode for building trains.
    staging location. Note that when this options is selected, that the program will only return cars
    to staging when destinations are not available on the layout.
    
+   <P>This options is also available on a per train basis.  See <A HREF="#TrainBuildOptions">Train Build Options</A>.</P>
+   
     <A NAME="PromptDepartureTrack"></A>
 <H3>Prompt for Departure Track from Staging</H3>
 
@@ -2211,6 +2213,17 @@ aggressive mode, the cars in staging are set out last.
 <P>
 You can also request that all car pick ups are sent to the last location in your route (terminal).
 Useful if you don't want your cars picked up and set out at various locations in your train's route.
+
+   <H4>Allow cars to return to staging if needed</H4>
+
+   When a train departs and returns to the same staging location, it is regarded as a turn by the
+   program. A turn normally takes cars from staging, sets them out on the layout, picks up new cars
+   and returns to staging with those cars. Normally the program doesn't allow the same cars to depart and
+   return to staging. However, it may be desirable to allow the train carry the cars
+   rather than having the program report that cars in staging couldn't be delivered to destinations
+   on the layout. Selecting this option allows a turn to transport cars to and from the same
+   staging location. Note that when this options is selected, that the program will only return cars
+   to staging when destinations are not available on the layout.
 
 <A NAME="TrainRoadNames"></A>
 <H3>Train Road Names</H3>
