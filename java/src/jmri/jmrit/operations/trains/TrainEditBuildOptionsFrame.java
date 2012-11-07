@@ -28,6 +28,7 @@ import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -146,6 +147,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     // check boxes
     JCheckBox buildNormalcheckBox = new JCheckBox(rb.getString("NormalModeWhenBuilding"));
     JCheckBox sendToTerminalcheckBox = new JCheckBox();
+    JCheckBox returnStagingcheckBox = new JCheckBox(rb.getString("AllowCarsToReturn"));
 	
 	// text field
     JTextField builtAfterTextField = new JTextField(10);
@@ -241,6 +243,9 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     	pOption.setBorder(BorderFactory.createTitledBorder(rb.getString("Options")));
     	addItem(pOption, buildNormalcheckBox, 0, 0);
     	addItem(pOption, sendToTerminalcheckBox, 1, 0);
+    	addItem(pOption, returnStagingcheckBox, 0, 1);
+    	
+    	returnStagingcheckBox.setEnabled(false);	// only enable if train departs and returns to same staging loc
     		
 		// row 3
 		panelRoadNames.setLayout(new GridBagLayout());
@@ -439,11 +444,19 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			trainDescription.setText(_train.getDescription());
 			buildNormalcheckBox.setSelected(_train.isBuildTrainNormalEnabled());
 			sendToTerminalcheckBox.setSelected(_train.isSendCarsToTerminalEnabled());
+			returnStagingcheckBox.setSelected(_train.isAllowReturnToStagingEnabled());
 			sendToTerminalcheckBox.setText(MessageFormat.format(rb.getString("SendToTerminal"),new Object[] {_train.getTrainTerminatesName()}));
 			builtAfterTextField.setText(_train.getBuiltStartYear());
 			builtBeforeTextField.setText(_train.getBuiltEndYear());
 			setBuiltRadioButton();
 			enableButtons(true);
+			// does train depart and return to same staging location?
+			if (_train.getTrainDepartsRouteLocation() != null
+					&& _train.getTrainTerminatesRouteLocation() != null
+					&& _train.getTrainTerminatesRouteLocation().getLocation().getLocationOps() == (Location.STAGING)
+					&& _train.getTrainDepartsRouteLocation().getName().equals(_train.getTrainTerminatesRouteLocation().getName())) {
+				returnStagingcheckBox.setEnabled(true);
+			}
 			// listen for train changes
 			_train.addPropertyChangeListener(this);
 		} else {
@@ -927,6 +940,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			return;
 		_train.setBuildTrainNormalEnabled(buildNormalcheckBox.isSelected());
 		_train.setSendCarsToTerminalEnabled(sendToTerminalcheckBox.isSelected());
+		_train.setAllowReturnToStagingEnabled(returnStagingcheckBox.isSelected());
 		_train.setBuiltStartYear(builtAfterTextField.getText().trim());
 		_train.setBuiltEndYear(builtBeforeTextField.getText().trim());
 		
@@ -1020,9 +1034,12 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		
 		none1.setEnabled(enabled);
 		change1Engine.setEnabled(enabled);
+		modify1Caboose.setEnabled(enabled);
 		helper1Service.setEnabled(enabled);
+		
 		none2.setEnabled(enabled);
 		change2Engine.setEnabled(enabled);
+		modify2Caboose.setEnabled(enabled);
 		helper2Service.setEnabled(enabled);
 		
 		saveTrainButton.setEnabled(enabled);

@@ -2514,17 +2514,23 @@ public class TrainBuilder extends TrainCommon{
 			// get the destination
 			Location testDestination = locationManager.getLocationByName(rld.getName());
 			if (testDestination == null){
-				// The following code should not be executed, all locations in the route have been already checked
+				// The following should never throw, all locations in the route have been already checked
 				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorRouteLoc"),
 						new Object[]{train.getRoute().getName(), rld.getName()}));
 			}
 			// don't move car to same location unless the route only has one location (local moves) or is passenger, caboose or car with FRED
-			if (splitString(rl.getName()).equals(splitString(rld.getName())) && !localSwitcher && !car.isPassenger() && !car.isCaboose() && !car.hasFred()){
+			if (splitString(rl.getName()).equals(splitString(rld.getName()))
+					&& !localSwitcher && !car.isPassenger() && !car.isCaboose()
+					&& !car.hasFred()) {
 				// allow cars to return to the same staging location if no other options (tracks) are available
-				if (Setup.isAllowReturnToStagingEnabled() && testDestination.getLocationOps() == Location.STAGING && trackSave == null){
-					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildReturnCarToStaging"),new Object[]{car.toString(), rld.getName()}));
-				} else {			
-					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCarLocEqualDestination"),new Object[]{car.toString(), rld.getName()}));
+				if ((train.isAllowReturnToStagingEnabled() || Setup.isAllowReturnToStagingEnabled())
+						&& testDestination.getLocationOps() == Location.STAGING
+						&& trackSave == null) {
+					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildReturnCarToStaging"),
+							new Object[] { car.toString(), rld.getName() }));
+				} else {
+					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCarLocEqualDestination"),
+							new Object[] { car.toString(), rld.getName() }));
 					continue;
 				}
 			}
