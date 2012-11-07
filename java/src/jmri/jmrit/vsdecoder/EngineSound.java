@@ -38,6 +38,8 @@ class EngineSound extends VSDSound {
     boolean auto_start_engine = false;
 
     int fade_length = 100;
+    int fade_in_time = 100;
+    int fade_out_time = 100;
 
     javax.swing.Timer t;
 
@@ -79,6 +81,47 @@ class EngineSound extends VSDSound {
 
     public void fadeOut() {
 	this.stop();
+    }
+
+    public int getFadeInTime() {
+	return(this.fade_in_time);
+    }
+
+    public int getFadeOutTime() {
+	return(this.fade_out_time);
+    }
+
+    protected void setFadeInTime(int t) {
+	this.fade_in_time = t;
+    }
+
+    protected void setFadeInTime(String s) {
+	if (s == null) {
+	    log.debug("setFadeInTime null string");
+	    return;
+	}
+	try {
+	    this.setFadeInTime(Integer.parseInt(s));
+	} catch (NumberFormatException e) {
+	    log.debug("setFadeInTime Failed to parse int from: " + s);
+	}
+    }
+
+    protected void setFadeOutTime(int t) {
+	this.fade_out_time = t;
+    }
+
+    protected void setFadeOutTime(String s) {
+	if (s == null) {
+	    log.debug("setFadeInTime null string");
+	    return;
+	}
+
+	try {
+	    this.setFadeOutTime(Integer.parseInt(s));
+	} catch (NumberFormatException e) {
+	    log.debug("setFadeOutTime Failed to parse int from: " + s);
+	}
     }
 
     static final public int calcEngineNotch(final float throttle) {
@@ -159,6 +202,9 @@ class EngineSound extends VSDSound {
 	// Do only the stuff common...
 	this.setName(e.getAttribute("name").getValue());
 	log.debug("EngineSound: " + e.getAttribute("name").getValue());
+	this.setFadeInTime(e.getChildText("fade-in-time"));
+	this.setFadeOutTime(e.getChildText("fade-out-time"));
+	log.debug("Fade-In-Time: " + this.getFadeInTime() + " Fade-Out-Time: " + this.getFadeOutTime());
     }
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EngineSound.class.getName());
