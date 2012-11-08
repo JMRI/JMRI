@@ -1607,6 +1607,7 @@ public class TrainBuilder extends TrainCommon{
 		destination.setStatus();
 		// add car to train
 		addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarAssignedDest"),new Object[]{car.toString(), (destination.getName()+", "+track.getName())}));
+		addLine(buildReport, SEVEN, " ");	// add line when in very detailed report mode
 		car.setTrain(train);
 		car.setRouteLocation(rl);
 		car.setRouteDestination(rld);
@@ -2447,6 +2448,8 @@ public class TrainBuilder extends TrainCommon{
 				car.setNextDestination(car.getPreviousNextDestination());
 				car.setNextDestTrack(car.getPreviousNextDestTrack());
 				car.setDestination(null,null);
+				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoDestForCar"),new Object[]{car.toString()}));
+				addLine(buildReport, SEVEN, " ");	// add line when in very detailed report mode
 			}
 		}
 		return true;
@@ -2739,6 +2742,7 @@ public class TrainBuilder extends TrainCommon{
 		} 
 		if (routeList.size()>1){
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoDestForCar"),new Object[]{car.toString()}));
+			addLine(buildReport, SEVEN, " ");	// add line when in very detailed report mode
 			if (car.getTrack() != null && !car.getTrack().getServiceOrder().equals(Track.NORMAL)){
 				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildRemoveCarServiceOrder"),new Object[]{car.toString(), car.getTrack().getName(), car.getTrack().getServiceOrder()}));
 				carList.remove(car.getId());
