@@ -16,13 +16,14 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class JsonClientHandler {
 
 	private JsonLightServer lightServer;
+	private JsonMemoryServer memoryServer;
 	private JsonOperationsServer operationsServer;
 	private JsonPowerServer powerServer;
 	private JsonProgrammerServer programmerServer;
 	private JsonReporterServer reporterServer;
 	private JsonSensorServer sensorServer;
 	private JsonSignalHeadServer signalHeadServer;
-//	private JsonSignalMastServer signalMastServer;
+	private JsonSignalMastServer signalMastServer;
 	private JsonThrottleServer throttleServer;
 	private JsonTurnoutServer turnoutServer;
 	private JmriConnection connection;
@@ -33,13 +34,14 @@ public class JsonClientHandler {
 		this.connection = connection;
 		this.mapper = new ObjectMapper();
 		this.lightServer = new JsonLightServer(this.connection);
+		this.memoryServer = new JsonMemoryServer(this.connection);
 		this.operationsServer = new JsonOperationsServer(this.connection);
 		this.powerServer = new JsonPowerServer(this.connection);
 		this.programmerServer = new JsonProgrammerServer(this.connection);
 		this.reporterServer = new JsonReporterServer(this.connection);
 		this.sensorServer = new JsonSensorServer(this.connection);
 		this.signalHeadServer = new JsonSignalHeadServer(this.connection);
-//		this.signalMastServer = new JsonSignalMastServer(this.connection);
+		this.signalMastServer = new JsonSignalMastServer(this.connection);
 		this.throttleServer = new JsonThrottleServer(this.connection);
 		this.turnoutServer = new JsonTurnoutServer(this.connection);
 	}
@@ -54,8 +56,10 @@ public class JsonClientHandler {
 	 * Currently JSON strings in four different forms are handled by this method:<ul>
 	 * <li>list requests in the form: <code>{"type":"list","list":"trains"}</code>
 	 * that are passed to the JsonLister for handling.</li>
-	 * <li>individual item requests in the form: <code>{"type":"turnout","data":{"name":"LT14"}}</code>
-	 * that are passed to type-specific handlers.</li>
+	 * <li>individual item state requests in the form: <code>{"type":"turnout","data":{"name":"LT14"}}</code>
+	 * that are passed to type-specific handlers.  In addition to the initial response, 
+	 * these requests will initiate "listeners",
+     * which will send updated responses every time the item's state changes.</li>
 	 * <li>a heartbeat in the form <code>*</code> or <code>{"type":"ping"}</code>. The <code>*</code> heartbeat
 	 * gets no response, while the JSON heartbeat causes a <code>{"type":"pong"}</code> response.</li>
 	 * <li>a signoff in the form: <code>{"type":"goodbye"}</code> to which an identical response
@@ -121,6 +125,8 @@ public class JsonClientHandler {
 			} else if (!data.isMissingNode()) {
 				if (type.equals("light")) {
 					this.lightServer.parseRequest(data);
+				} else if (type.equals("memory")) {
+					this.memoryServer.parseRequest(data);
 				} else if (type.equals(JsonOperationsServer.OPERATIONS)) {
 					this.operationsServer.parseRequest(data);
 				} else if (type.equals("power")) {
@@ -131,8 +137,8 @@ public class JsonClientHandler {
 					this.sensorServer.parseRequest(data);
 				} else if (type.equals("signalHead")) {
 					this.signalHeadServer.parseRequest(data);
-//				} else if (type.equals("signalMast")) {
-//					this.signalMastServer.parseRequest(data);
+				} else if (type.equals("signalMast")) {
+					this.signalMastServer.parseRequest(data);
 				} else if (type.equals("reporter")) {
 					this.reporterServer.parseRequest(data);
 				} else if (type.equals("rosterEntry")) {
@@ -142,7 +148,7 @@ public class JsonClientHandler {
 				} else if (type.equals("turnout")) {
 					this.turnoutServer.parseRequest(data);
 				} else {
-					this.sendErrorMessage(0, "unknown type");
+					this.sendErrorMessage(0, "unknown type: [" + type + "].");
 				}
 			} else {
 				this.sendErrorMessage(0, "expected message data");
