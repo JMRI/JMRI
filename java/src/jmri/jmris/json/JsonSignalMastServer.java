@@ -76,8 +76,8 @@ public class JsonSignalMastServer extends AbstractSignalMastServer {
 	    		state = "Dark";
 			}
     		this.sendStatus(name, state);
-    	} else { //else set the appearance to the state passed-in
-    		this.setSignalMastAppearance(name, state);
+    	} else { //else set the aspect to the state passed in
+    		this.setSignalMastAspect(name, state);
     	}
     	this.addSignalMastToList(name);
     }
