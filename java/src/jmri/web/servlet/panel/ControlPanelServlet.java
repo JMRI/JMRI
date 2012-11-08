@@ -67,10 +67,10 @@ public class ControlPanelServlet extends AbstractPanelServlet {
                 if (sub != null) {
                     try {
                         Element e = ConfigXmlManager.elementFromObject(sub);
-                        if (e.getName() == "signalmasticon") {  //insert icon details into signalmast
-                            e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast")));
-                        }
                         if (e != null) {
+                            if (e.getName() == "signalmasticon") {  //insert icon details into signalmast
+                                e.addContent(getSignalMastIconsElement(e.getAttributeValue("signalmast")));
+                            }
                             parsePortableURIs(e);
                             panel.addContent(e);
                         }
