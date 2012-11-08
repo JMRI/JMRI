@@ -196,14 +196,16 @@ public class Portal  {
         if (_fromBlock.equals(protectedBlock)) {
             _toSignal = signal;
             _toSignalDelay = time;
+            return true;
             //log.debug("setSignal: _toSignal= \""+name+", protectedBlock= "+protectedBlock);
         }
         if (_toBlock.equals(protectedBlock)) {
             _fromSignal = signal;
             _fromSignalDelay = time;
+            return true;
             //log.debug("setSignal: _fromSignal= \""+name+", protectedBlock= "+protectedBlock);
         }
-        return true;
+        return false;
     }
 
     public NamedBean getFromSignal() {

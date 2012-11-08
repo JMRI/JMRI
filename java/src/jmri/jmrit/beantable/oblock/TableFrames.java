@@ -484,6 +484,14 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _signalModel = new SignalTableModel(this);
         _signalModel.init();
         JTable signalTable = new DnDJTable(_signalModel, new int[] {SignalTableModel.DELETE_COL});
+        try {   // following might fail due to a missing method on Mac Classic
+        	TableSorter sorter = new TableSorter(signalTable.getModel());
+            sorter.setTableHeader(signalTable.getTableHeader());
+//            sorter.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
+            signalTable.setModel(sorter);
+        } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
+            log.error("makeSignalFrame: Unexpected error: "+e);
+        }
         signalTable.getColumnModel().getColumn(SignalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         signalTable.getColumnModel().getColumn(SignalTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
         for (int i=0; i<_signalModel.getColumnCount(); i++) {
