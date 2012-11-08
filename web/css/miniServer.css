@@ -179,6 +179,18 @@ div#frame_image_wrapper:hover {
 	cursor: pointer;
 }
 
+.float-left {
+	float: left;
+	padding-right: 1em;
+}
+.float-right {
+	float: right;
+	padding-left: 1em;
+}
+.float-clear {
+	clear: both;
+}
+
 
 /*body*/
 #mainContent {
@@ -209,3 +221,4 @@ div#frame_image_wrapper:hover {
 	ul.snav > li:first-child:before {
 		content: "";
 	}
+

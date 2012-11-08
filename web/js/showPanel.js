@@ -1078,7 +1078,6 @@ var $setWidgetState = function($id, $newState) {
 		case "text" :
 			if ($widget.element == "memory") {
 				if ($widget.widgetType == "fastclock") {
-					if (window.console) console.log( "setting " + $widget.widgetType + " " + $widget.name + " to " + $newState);
 					$drawClock($widget);
 				} else{
 					$('div#'+$id).text($newState);  //set memory text to new value from server
