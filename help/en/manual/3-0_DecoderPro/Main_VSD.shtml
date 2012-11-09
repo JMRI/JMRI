@@ -40,14 +40,14 @@ speakers.</span></p>
 <p><span id="product-desc">Locomotive sound "Profiles" are stored in a file
 called a "VSD File".  When the Virtual Sound Decoder ("VSDecoder" or
 "VSD") is launched, the user chooses the desired Profile, and then
-assigns the Decoder an address.  When the operator then controls the engine by
+assigns the VSDecoder an address.  When the operator then controls the engine by
 pressing function buttons or changing the speed, the Virtual Sound
 Decoder responds just like a hardware sound decoder installed in the
 locomotive would by playing sounds through the computer
 speakers.</span></p>
 <h4>OpenAL Required</h4>
 <p>Virtual Sound Decoder requires that your system have the OpenAL
-audio system installed.  OpenAL is included by default on the Mac, but
+audio lbirary installed.  OpenAL is included by default on the Mac, but
 must be installed on Windows.</p>
 <p>OpenAL is available free from Creative Labs.
 You can <a href="http://connect.creativelabs.com/openal/Downloads/Forms/AllItems.aspx">download the installer for your operating system</a> from the
@@ -91,6 +91,7 @@ throttles include:</p>
   <li>EngineDriver</li>
   <li>OpenLCB*</li>
   <li>Lenz XpressNet*</li>
+  <li>ESU ECoS*</li>
   <li>NCE : PowerHouse PRO*</li>
 </ul>
 <p>*Support for these systems is expected but not confirmed.  If you
@@ -110,9 +111,9 @@ because they do not send throttle information to JMRI.</p>
 <p>The buttons on the Sounds tab can be used to trigger sounds if you
 are using an incompatible throttle system.</p>
 
-<a name="VSDLocations"></a><h4>Location Following (coming soon!)</h4>
-<p>(Note: This function will be active in a near-future test release.)
-With input from locomotive tracking hardware, Virtual Sound Decoder is
+<a name="VSDLocations"></a><h4>Location Following</h4>
+<p>(Note: This function will be active starting with test release 3.1.5.)</p>
+<p>With input from locomotive tracking hardware, Virtual Sound Decoder is
 able to move the apparent source of the locomotive sound to follow the
 locomotive's position on the layout.
 <h5>Location Following Setup</h5>
@@ -143,16 +144,26 @@ To enable VSD Location Following, follow these steps:
   <li>In the dialog, set X / Y / Z coordinates for each reporter you
   wish to use for VSD location following.  <em>Click "Save" for
   each reporter</em>.</li>
-  <li>Save your configuration either in a config file or as part of a Panel</li>
+  <li>Save your configuration either in a config file or as part of a
+  Panel</li>
+  <li>Tell VSD where the listener is:
+  <ul>
+    <li>From the main window, select Debug->Virtual Sound Decoder</li>
+    <li>Choose File->VSDecoder Preferences</li>
+    <li>set the X / Y / Z location of the Listener according to the
+    same coordinates you used for the Reporter positions. Note the
+    Listener is assumed to be facing in the +Y direction</li>
+    <li>Click "Save"</li>
+    </ul>
 </ol>
 
 <p>The X / Y / Z location values can be in any unit you choose,
 including an arbitrary relative scheme, as long as you are
-consistent.  The listener's position is at the origin (0, 0, 0).
-Positive X is to the listener's right, positve Y is in front of the
+consistent. Positive X is to the listener's right, positve Y is in front of the
 listener, and positive Z is up.  Negative values are left, behind, and
 down, respectively.  If you want a reporter to not affect the train's
-apparent location, set the reporter's location to (0, 0, 0).</p>
+apparent location, set the reporter's location to (0, 0, 0) and it
+will be ignored.</p>
 
 <p>When you have followed the above setup steps, launch a VSDecoder
 window, assign a locomotive and run it.  As your locomotive moves
@@ -283,9 +294,9 @@ will be automatically loaded on start-up.  This can save a step for
 frequently used VSD Files.</p>
 <h5>Listener Position</h5>
 These entries allow the Listener Position to be set relative to the
-user-chosen Origin of the sound field.
-<i>Bug Note:  The current implementation of the underlying audio system forces the listener position
-to be (0,0,0), so this preference is non-functional.</i>
+user-chosen Origin of the sound field.  This allows you to place the
+Origin at a convenient-for-you spot, such as a corner of the layout
+or of the room.
 <h5> Cancel / Apply / Save Buttons</h5>
 <p> Choose Cancel to cancel changes to the Preferences</p>
 <p> Choose Apply to apply changes to the Preferences</p>
