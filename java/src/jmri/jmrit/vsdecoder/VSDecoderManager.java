@@ -47,7 +47,7 @@ import jmri.IdTag;
 //
 // Builds VSDecoders as needed.  Handles loading from XML if needed.
 
-class VSDecoderManager implements PropertyChangeListener {
+public class VSDecoderManager implements PropertyChangeListener {
 
     private static final ResourceBundle rb = VSDecoderBundle.bundle();
 
@@ -390,7 +390,7 @@ class VSDecoderManager implements PropertyChangeListener {
 	*/
 	// /debug
 	    
-	fireMyEvent(new VSDManagerEvent(this, VSDManagerEvent.EventType.DECODER_LIST_CHANGE, new_entries));
+	fireMyEvent(new VSDManagerEvent(this, VSDManagerEvent.EventType.PROFILE_LIST_CHANGE, new_entries));
     }
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderManager.class.getName());

@@ -142,8 +142,10 @@ class EngineSound extends VSDSound {
 
     }
 
-    public void changeNotch(int new_notch) {
-	log.debug("EngineSound.changeNotch()"); 
+    // This is the default behavior.  Subclasses can do fancier things
+    // if they want.
+    public void handleSpeedChange(Float s, EnginePane e) {
+	e.setThrottle(EngineSound.calcEngineNotch(s));
     }
 
     protected Timer newTimer(int time, boolean repeat, ActionListener al) {
