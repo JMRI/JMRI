@@ -65,7 +65,7 @@ public class TrainIconXml extends LocoIconXml {
 		//  The operations program restores the Icons when the Trains window is opened.   
 		//  The train icons have to be placed based on the trains database state,
 		//  and not where the icons were on the panel when the panel was saved.
-		log.warn("loading of TrainIcon not implemented, TrainIcons will be placed by Operations");
+		log.debug("Warning: loading of TrainIcon not implemented, TrainIcons will be placed by Operations");
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainIconXml.class.getName());
