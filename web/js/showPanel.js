@@ -232,6 +232,20 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 							$widget.classes += 		$widget.element + " clickable ";
 						}
 						break;
+					case "signalmasticon" :
+						$widget['name']  =		$widget.signalmast; //normalize name
+						$widget['element']  =	"signalmast"; //what xmlio server calls this
+						var icons = $(this).find('icons').children(); //get array of icons
+						icons.each(function(i, item) {  //loop thru icons array and set all iconXX urls for widget
+							$widget['icon'+item.nodeName] = $(item).attr('url'); 
+						});
+						$widget['degrees'] = 	$(this).attr('degrees') * 1;
+						$widget['scale'] = 		$(this).attr('scale');
+						if ($widget.forcecontroloff != "true") {
+							$widget.classes += 		$widget.element + " clickable ";
+						}
+						$widget['state'] = "Clear"; //set the default to a likely icon
+						break;
 					case "multisensoricon" :
 						//create multiple widgets, 1st with all images, stack others with non-active states set to a clear image
 						//  set up siblings array so each widget can also set state of the others
@@ -318,6 +332,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 							$widget['level'] =		10;  //if not included in xml
 						}
 						$widget['text']  =		"00:00 AM";
+						$widget['state']  =		"00:00 AM";
 						break;
 					case "memoryicon" :
 						$widget['name']  =		$widget.memory; //normalize name
@@ -643,7 +658,7 @@ function $drawIcon($widget) {
 	}
 
 	//add the image to the panel area, with appropriate css classes and id (skip any unsupported)
-	if ($widget.icon1 != undefined) {
+	if ($widget['icon'+$widget.state] != undefined) {
 		$("div#panelArea").append("<img id=" + $widget.id +
 				" class='" + $widget.classes +
 				"' src='" + $widget["icon"+$widget['state']] + "' " + $hoverText + "/>");
@@ -1058,12 +1073,11 @@ var $setWidgetState = function($id, $newState) {
 		$widget.state = $newState;  
 		switch ($widget.widgetFamily) {
 		case "icon" :
-			$('img#'+$id).attr('src', $widget['icon'+$newState]);  //set image src to next state's image
+			$('img#'+$id).attr('src', $widget['icon'+$newState.replace(/ /g, "_")]);  //set image src to next state's image
 			break;
 		case "text" :
 			if ($widget.element == "memory") {
 				if ($widget.widgetType == "fastclock") {
-					if (window.console) console.log( "setting " + $widget.widgetType + " " + $widget.name + " to " + $newState);
 					$drawClock($widget);
 				} else{
 					$('div#'+$id).text($newState);  //set memory text to new value from server
@@ -1083,7 +1097,7 @@ var $setWidgetState = function($id, $newState) {
 			}
 			break;
 		}
-		$gWidgets[$id].state = $newState;  //update the changed widget back to persistent var
+		$gWidgets[$id].state = $newState;  //update the persistent widget to the new state
 	}
 };
 
@@ -1209,7 +1223,7 @@ jQuery.fn.xmlClean = function() {
 }
 //handle the toggling (or whatever) of the "next" state for the passed-in widget
 var $getNextState = function($widget){
-	var $nextState;
+	var $nextState = undefined;
 	if ($widget.widgetType == 'signalheadicon') { //special case for signalheadicons
         switch ($widget.clickmode * 1) {          //   logic based on SignaHeadIcon.java
         case 0 :
@@ -1233,10 +1247,10 @@ var $getNextState = function($widget){
 //            getSignalHead().setHeld(!getSignalHead().getHeld());
             break;
         case 3: //loop through all iconX and get "next one"
-        	var $firstState;
-        	var $currentState;
+        	var $firstState = undefined;
+        	var $currentState = undefined;
         	for (k in $widget) {
-        		var s = k.substr(4); //strip off the state of current icon var
+        		var s = k.substr(4); //extract the state from current icon var
         		if (k.indexOf('icon') == 0 && $widget[k] != undefined && k != 'icon'+HELD) { //valid value, name starts with 'icon', but not the HELD one
         			if ($firstState == undefined) $firstState = s;  //remember the first state (for last one)
         			if ($currentState != undefined && $nextState == undefined) $nextState = s; //last one was the current, so this one must be next
@@ -1246,6 +1260,21 @@ var $getNextState = function($widget){
         	};
         	if ($nextState == undefined) $nextState = $firstState;  //if still not set, start over
         } //end of switch 
+
+	} else if ($widget.widgetType == 'signalmasticon') { //special case for signalmasticons
+		//loop through all iconX and get "next one"
+		var $firstState = undefined;
+		var $currentState = undefined;
+		for (k in $widget) {
+			var s = k.substr(4).replace(/_/g, " "); //extract the state from current icon var, replace underscores with blanks
+			if (k.indexOf('icon') == 0 && $widget[k] != undefined && s != 'Held' && s != 'Dark' && s != 'Unknown') { //valid value, name starts with 'icon', but not the HELD one
+				if ($firstState == undefined) $firstState = s;  //remember the first state (for last one)
+				if ($currentState != undefined && $nextState == undefined) $nextState = s; //last one was the current, so this one must be next
+				if (s == $widget.state) $currentState = s;
+				if (window.console) console.log('key: ' + k + " first="+ $firstState);
+			}
+		};
+		if ($nextState == undefined) $nextState = $firstState;  //if still not set, start over
 
 	} else {  //start with INACTIVE, then toggle to ACTIVE and back
 		$nextState = ($widget.state == ACTIVE ? INACTIVE : ACTIVE);
@@ -1303,14 +1332,10 @@ var $requestPanelXML = function($panelName){
 
 //preload all images referred to by the widget
 var $preloadWidgetImages = function($widget) {
-	if ($widget['icon1']  != undefined) $("<img src='" + $widget['icon1']  + "'/>");
-	if ($widget['icon2']  != undefined) $("<img src='" + $widget['icon2']  + "'/>");
-	if ($widget['icon4']  != undefined) $("<img src='" + $widget['icon4']  + "'/>");
-	if ($widget['icon8']  != undefined) $("<img src='" + $widget['icon8']  + "'/>");
-	if ($widget['icon16'] != undefined) $("<img src='" + $widget['icon16'] + "'/>");
-	if ($widget['icon32'] != undefined) $("<img src='" + $widget['icon32'] + "'/>");
-	if ($widget['icon64'] != undefined) $("<img src='" + $widget['icon64'] + "'/>");
-	if ($widget['icon128']!= undefined) $("<img src='" + $widget['icon128']+ "'/>");
+	for (k in $widget) {
+		if (k.indexOf('icon') == 0 && $widget[k] != undefined) { //if attribute names starts with 'icon', it's an image, so preload it
+			$("<img src='" + $widget[k]  + "'/>");		}
+	};
 };    	
 
 //determine widget "family" for broadly grouping behaviors
@@ -1337,7 +1362,7 @@ var $getWidgetFamily = function($widget) {
 	case "sensoricon" :
 	case "multisensoricon" :
 	case "signalheadicon" :
-//	case "signalmasticon" :
+	case "signalmasticon" :
 	case "indicatortrackicon" :
 	case "indicatorturnouticon" :
 		return "icon";

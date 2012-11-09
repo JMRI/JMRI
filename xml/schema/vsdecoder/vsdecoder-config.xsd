@@ -160,52 +160,54 @@ Top Level Elements not brought over from DTD
 
       <!-- or engine-sound -->
       <xs:sequence>
-	  <xs:element name="start-sound">
-	    <xs:complexType>
-	      <xs:all>
-		<xs:element name="file" type="xs:string"/>
-		<xs:element name="gain" type="xs:float"/>
-	      </xs:all>
-	    </xs:complexType>
-	  </xs:element>
-	  <xs:element name="shutdown-sound">
-	    <xs:complexType>
-	      <xs:all>
-		<xs:element name="file" type="xs:string"/>
-		<xs:element name="gain" type="xs:float"/>
-	      </xs:all>
-	    </xs:complexType>
-	  </xs:element>
-	  <xs:element name="notch-up-sound" minOccurs="0" maxOccurs="unbounded">
-	    <xs:complexType>
-	      <xs:all>
-		<xs:element name="file" type="xs:string"/>
-		<xs:element name="gain" type="xs:float"/>
-	      </xs:all>
-	    </xs:complexType>
-	  </xs:element>
-	  <xs:element name="notches" minOccurs="1" maxOccurs="1" type="xs:integer"/>
-	  <xs:element name="notch-sound" minOccurs="0" maxOccurs="unbounded">
-	    <xs:complexType>
-	      <xs:all>
-		<xs:element name="notch" type="xs:integer"/>
-		<xs:element name="file" type="xs:string"/>
-		<xs:element name="gain" type="xs:float"/>
-	      </xs:all>
-	    </xs:complexType>
-	  </xs:element>
-	  <xs:element name="notch-transition" minOccurs="0" maxOccurs="unbounded">
-	    <xs:complexType>
-	      <xs:all>
-		<xs:element name="prev-notch" type="xs:integer"/>
-		<xs:element name="next-notch" type="xs:integer"/>
-		<xs:element name="file" type="xs:string"/>
-		<xs:element name="gain" type="xs:float"/>
-	      </xs:all>
-	    </xs:complexType>
-	  </xs:element>
+	<xs:element name="fade-in-time" type="xs:string" minOccurs="0" maxOccurs="1" />
+	<xs:element name="fade-out-time" type="xs:string" minOccurs="0" maxOccurs="1" />
+	<xs:element name="start-sound">
+	  <xs:complexType>
+	    <xs:all>
+	      <xs:element name="file" type="xs:string"/>
+	      <xs:element name="gain" type="xs:float"/>
+	    </xs:all>
+	  </xs:complexType>
+	</xs:element>
+	<xs:element name="shutdown-sound">
+	  <xs:complexType>
+	    <xs:all>
+	      <xs:element name="file" type="xs:string"/>
+	      <xs:element name="gain" type="xs:float"/>
+	    </xs:all>
+	  </xs:complexType>
+	</xs:element>
+	<xs:element name="notch-up-sound" minOccurs="0" maxOccurs="unbounded">
+	  <xs:complexType>
+	    <xs:all>
+	      <xs:element name="file" type="xs:string"/>
+	      <xs:element name="gain" type="xs:float"/>
+	    </xs:all>
+	  </xs:complexType>
+	</xs:element>
+	<xs:element name="notches" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+	<xs:element name="notch-sound" minOccurs="0" maxOccurs="unbounded">
+	  <xs:complexType>
+	    <xs:all>
+	      <xs:element name="notch" type="xs:integer"/>
+	      <xs:element name="file" type="xs:string"/>
+	      <xs:element name="gain" type="xs:float"/>
+	    </xs:all>
+	  </xs:complexType>
+	</xs:element>
+	<xs:element name="notch-transition" minOccurs="0" maxOccurs="unbounded">
+	  <xs:complexType>
+	    <xs:all>
+	      <xs:element name="prev-notch" type="xs:integer"/>
+	      <xs:element name="next-notch" type="xs:integer"/>
+	      <xs:element name="file" type="xs:string"/>
+	      <xs:element name="gain" type="xs:float"/>
+	    </xs:all>
+	  </xs:complexType>
+	</xs:element>
       </xs:sequence>
-
+      
       <!-- or Steam sound -->
       <xs:sequence>
 	<xs:element name="top-speed" type="xs:integer"/>

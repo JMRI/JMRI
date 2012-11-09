@@ -46,8 +46,8 @@ public class SignalTableModel extends AbstractTableModel {
     public static final int PORTAL_COLUMN = 2;
     public static final int TO_BLOCK_COLUMN = 3;
     public static final int TIME_OFFSET = 4;
-    static public final int DELETE_COL = 6;
-    public static final int NUMCOLS = 7;
+    static public final int DELETE_COL = 5;
+    public static final int NUMCOLS = 6;
 
     static final ResourceBundle rbo = ResourceBundle.getBundle("jmri.jmrit.beantable.OBlockTableBundle");
     
@@ -117,16 +117,10 @@ public class SignalTableModel extends AbstractTableModel {
             tempRow[i] = null;
         }
         tempRow[TIME_OFFSET] = "0";
+        tempRow[DELETE_COL] = rbo.getString("ButtonClear");
     }
     private void makeList() {
         ArrayList <SignalRow> tempList = new ArrayList <SignalRow>();
-        // save signals that do not have all their blocks yet
-        for (int i=0; i<_signalList.size(); i++) {
-            SignalRow sr = _signalList.get(i);
-            if (sr.getToBlock()==null || sr.getFromBlock()==null) {
-                tempList.add(sr);
-            }
-        }
         // collect signals entered into Portals
         Iterator<Portal> bIter = _parent.getPortalModel().getPortalList().iterator();
         while (bIter.hasNext()) {
@@ -145,32 +139,6 @@ public class SignalTableModel extends AbstractTableModel {
                 addToList(tempList, sr);
             }
         }
-        // remove duplicates
-        for (int j=0; j<tempList.size(); j++) {
-            SignalRow sr = tempList.get(j);
-            NamedBean srSignal = sr.getSignal();
-            if (srSignal==null) {
-                continue;
-            }
-            for (int i=tempList.size()-1; i>j; i--) {
-                SignalRow srowi = tempList.get(i);
-                if (srowi.equals(sr)) {
-                    continue;
-                }
-                if (srSignal.equals(srowi.getSignal())) {
-                    if (log.isDebugEnabled()) log.debug("makeList: duplicate signal "+srSignal.getDisplayName());
-
-                    if (sr.getFromBlock()!=null && !sr.getFromBlock().equals(srowi.getFromBlock())) {
-                        JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                            rbo.getString("IllegalUseOfSignal"), srSignal.getDisplayName(), 
-                            sr.getToBlock().getDisplayName(), 
-                            sr.getFromBlock().getDisplayName(), srowi.getFromBlock().getDisplayName()),
-                                rbo.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }
-        }
-
         _signalList = tempList;
         if (log.isDebugEnabled()) log.debug("makeList exit: _signalList has "
                                             +_signalList.size()+" rows.");
@@ -190,44 +158,121 @@ public class SignalTableModel extends AbstractTableModel {
             tempList.add(sr);
         }
     }
+    
+    private String checkSignalRow(SignalRow sr) {
+    	Portal portal = sr.getPortal();
+    	OBlock fromBlock = sr.getFromBlock();
+    	OBlock toBlock = sr.getToBlock();
+    	String msg = null;
+        if (portal!=null) {
+            if (toBlock==null && sr.getFromBlock()==null) {
+                msg = java.text.MessageFormat.format(rbo.getString("SignalDirection"),
+                                                     portal.getName(), 
+                                                     portal.getFromBlock().getDisplayName(),
+                                                     portal.getToBlock().getDisplayName());
+                return msg;
+            }
+    		OBlock pToBlk = portal.getToBlock();
+    		OBlock pFromBlk = portal.getFromBlock();
+    		if (pToBlk.equals(toBlock)) {
+    			if (fromBlock==null) {
+    				sr.setFromBlock(pFromBlk);
+/*    			} else if (!fromBlock.equals(pFromBlk)) {
+                	msg = java.text.MessageFormat.format(
+                            rbo.getString("PortalBlockConflict"), portal.getName(), 
+                            fromBlock.getDisplayName());    */				
+    			}
+    		} else if (pFromBlk.equals(toBlock)) {
+    			if (fromBlock==null) {
+    				sr.setFromBlock(pToBlk);
+/*    			} else if (!toBlock.equals(pToBlk)) {
+                	msg = java.text.MessageFormat.format(
+                            rbo.getString("PortalBlockConflict"), portal.getName(),
+                            toBlock.getDisplayName()); */
+    			}       			       			
+    		} else if (pToBlk.equals(fromBlock)) {
+    			if (toBlock==null) {
+    				sr.setToBlock(pFromBlk);
+    			}       			       			
+    		} else if (pFromBlk.equals(fromBlock)) {
+    			if (toBlock==null) {
+    				sr.setToBlock(pToBlk);
+    			}       			       			
+    		} else {
+            	msg = java.text.MessageFormat.format(
+                        rbo.getString("PortalBlockConflict"), portal.getName(),
+                        toBlock.getDisplayName());    			
+    		}
+        } else if (fromBlock!=null && toBlock!=null) {
+        	Portal p = _parent.getPortalModel().getPortal(fromBlock, toBlock);
+            if (p==null) {
+                msg = java.text.MessageFormat.format(rbo.getString("NoSuchPortal"), 
+                                fromBlock.getDisplayName(), toBlock.getDisplayName());
+            } else {
+            	sr.setPortal(p);
+            }
+        }
+        if ( msg==null && fromBlock != null && fromBlock.equals(toBlock)) {
+            msg = java.text.MessageFormat.format(
+                    rbo.getString("SametoFromBlock"), fromBlock.getDisplayName());
+        }
+    	return msg;
+    }
 
-    private boolean verifySignalRow(SignalRow sr) {
-        NamedBean srSignal = sr.getSignal();
-        if (srSignal==null) {
-            return true;
+    private String checkDuplicateSignal(NamedBean signal) {
+        if (signal==null) {
+            return null;
         }
-        if (log.isDebugEnabled()) log.debug("verifySignalRow: signal= "+srSignal.getDisplayName()+
-                                            " _signalList.size= "+_signalList.size());
         for (int i=0; i<_signalList.size(); i++)  {
-            SignalRow rowSignal = _signalList.get(i);
-            if (rowSignal.equals(sr)) {
-                continue;
+            SignalRow srow = _signalList.get(i);
+            if (signal.equals(srow.getSignal())) {
+                return java.text.MessageFormat.format(rbo.getString("DuplSignalName"), 
+                		signal.getDisplayName(), srow.getToBlock().getDisplayName(), 
+                		srow.getPortal().getName(), srow.getFromBlock().getDisplayName());
+                
             }
-            if (srSignal.equals(rowSignal.getSignal()) ) {
-                // duplicate signals
-                OBlock srFromBlk = sr.getFromBlock();
-                if (srFromBlk==null) {
-                    return true;
-                }
-                if (srFromBlk.equals(rowSignal.getFromBlock()) ) {
-                    // OK if from blocks the same, but inform user
-                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                            rbo.getString("DuplSignalName"), srSignal.getDisplayName(),
-                            srFromBlk.getDisplayName(), rowSignal.getToBlock().getDisplayName()),
-                        rbo.getString("InfoTitle"), JOptionPane.INFORMATION_MESSAGE);
-                } else if (rowSignal.getFromBlock()!= null) {
-                    // error. Cannot use from 2 different blocks
-                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                        rbo.getString("IllegalUseOfSignal"), srSignal.getDisplayName(), 
-                        rowSignal.getToBlock().getDisplayName(), 
-                        srFromBlk.getDisplayName(), rowSignal.getFromBlock().getDisplayName()),
-                            rbo.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                    return false;
-                }
-            }
-            return true;
         }
-        return true;
+        return null;
+    }
+    private String checkDuplicateSignal(SignalRow row) {
+    	NamedBean signal = row.getSignal();
+        if (signal==null) {
+            return null;
+        }
+        for (int i=0; i<_signalList.size(); i++)  {
+            SignalRow srow = _signalList.get(i);
+            if (srow.equals(row)) {
+            	continue;
+            }
+            if (signal.equals(srow.getSignal())) {
+                return java.text.MessageFormat.format(rbo.getString("DuplSignalName"), 
+                		signal.getDisplayName(), srow.getToBlock().getDisplayName(), 
+                		srow.getPortal().getName(), srow.getFromBlock().getDisplayName());
+                
+            }
+        }
+        return null;
+    }
+    
+    private String checkDuplicateProtection(SignalRow row) {
+    	Portal portal = row.getPortal();
+    	OBlock block = row.getToBlock();
+        if (block==null || portal==null) {
+        	return null;
+        }
+        for (int i=0; i<_signalList.size(); i++)  {
+            SignalRow srow = _signalList.get(i);
+            if (srow.equals(row)) {
+            	continue;
+            }
+            if (block.equals(srow.getToBlock()) && portal.equals(srow.getPortal())) {
+                return java.text.MessageFormat.format(rbo.getString("DuplProtection"), 
+                		block.getDisplayName(), portal.getName(), 
+                		srow.getFromBlock().getDisplayName(), srow.getSignal().getDisplayName());              
+            }
+        }
+        return null;
+    	
     }
 
     public int getColumnCount () {
@@ -249,18 +294,9 @@ public class SignalTableModel extends AbstractTableModel {
         return "";
     }
 
-    String _saveSignalName;
     public Object getValueAt(int rowIndex, int columnIndex) {
         //if (log.isDebugEnabled()) log.debug("getValueAt rowIndex= "+rowIndex+" _lastIdx= "+_lastIdx);
         if (_signalList.size() == rowIndex) {
-            if (_saveSignalName!=null && _parent.getSignalTablePane()!=null) {
-                int idx = getSignalIndex(_saveSignalName);
-                if (idx > -1) {
-                    if (log.isDebugEnabled()) log.debug("Signal Scroll of "+_saveSignalName+", to "+idx*TableFrames.ROW_HEIGHT); 
-                    _parent.getSignalTablePane().getVerticalScrollBar().setValue(idx*TableFrames.ROW_HEIGHT);
-                    _saveSignalName = null;
-                }
-            }
             return tempRow[columnIndex];
         }
         switch(columnIndex) {
@@ -295,215 +331,174 @@ public class SignalTableModel extends AbstractTableModel {
     public void setValueAt(Object value, int row, int col) {
         String msg = null;
         if (_signalList.size() == row) {
-            if (log.isDebugEnabled()) log.debug("setValueAt: col= "+col+", row= "+row+", value= "+(String)value);
-            switch (col) {
-                case NAME_COLUMN:
-                    String name = (String)value;
-                    NamedBean signal = Portal.getSignal((String)value); 
-                    if (signal!=null) {
-                        _saveSignalName = name;
-                        // Note: Portal ctor will add this Portal to each of its 'from' & 'to' Block.
-                        OBlock fromBlock = InstanceManager.oBlockManagerInstance()
-                                                    .getOBlock(tempRow[FROM_BLOCK_COLUMN]);
-                        OBlock toBlock = InstanceManager.oBlockManagerInstance()
-                                                    .getOBlock(tempRow[TO_BLOCK_COLUMN]);
-                        long time = 0;
-                        try {
-                            time = Long.parseLong(tempRow[TIME_OFFSET]);
-                        } catch (NumberFormatException nfe) {
-                            msg = rbo.getString("DelayTriggerTime");
-                        }
-                        Portal portal = _parent.getPortalModel().getPortalByName(tempRow[PORTAL_COLUMN]);
-                        if (portal==null && fromBlock!=null && toBlock!=null) {
-                            portal = _parent.getPortalModel().getPortal(fromBlock, toBlock);
-                            if (portal==null && msg==null) {
-                                msg = java.text.MessageFormat.format(rbo.getString("NoSuchPortal"), 
-                                                fromBlock.getDisplayName(), toBlock.getDisplayName());
-                            }
-                        }
-                        SignalRow signalRow = new SignalRow(signal, fromBlock, portal, toBlock, time);
-                        checkPortal(signalRow);
-                        fromBlock = signalRow.getFromBlock();
-                        toBlock = signalRow.getToBlock();
-                        if ( msg==null && fromBlock != null && fromBlock.equals(toBlock)) {
-                            msg = java.text.MessageFormat.format(
-                                    rbo.getString("SametoFromBlock"), fromBlock.getDisplayName());
-                        }
-                        if (msg==null && portal!=null) {
-                            if (toBlock!=null) {
-                                if (portal.setProtectSignal(signal, time, toBlock)) {
-                                    if (fromBlock==null) {
-                                        signalRow.setFromBlock(portal.getOpposingBlock(toBlock));
-                                    }
-                                } else {
-                                    signalRow.setPortal(null);
-                                }
-/*                            } else {
-                                if (portal.setApproachSignal(signal, time, fromBlock)) {
-                                    signalRow.setToBlock(portal.getOpposingBlock(fromBlock));
-                                } else {
-                                    signalRow.setPortal(null);
-                                }*/
-                            }
-                        }
-                        if (verifySignalRow(signalRow)) {
-                            _signalList.add(signalRow);
-                        }
-                        makeList();
-                        initTempRow();
-                        fireTableDataChanged();
-                    } else {
-                        msg = java.text.MessageFormat.format(rbo.getString("NoSuchSignal"), (String)value);
-                    }
-                    break;
-                case FROM_BLOCK_COLUMN:
-                    OBlock block = InstanceManager.oBlockManagerInstance().getOBlock((String)value);
-                    if (block==null) {
-                        msg = java.text.MessageFormat.format(
-                            rbo.getString("NoSuchBlock"), (String)value);
-                    } else {
-                        tempRow[FROM_BLOCK_COLUMN] = (String)value;
-                    }
-                    break;
-                case PORTAL_COLUMN:
-                    Portal portal = _parent.getPortalModel().getPortalByName((String)value);
-                    if (portal==null) {
-                        msg = java.text.MessageFormat.format(
-                                rbo.getString("NoSuchPortalName"), (String)value);
-                    } else {
-                        tempRow[PORTAL_COLUMN] = (String)value;
-                    }
-                    break;
-                case TO_BLOCK_COLUMN:
-                    block = InstanceManager.oBlockManagerInstance().getOBlock((String)value);
-                    if (block==null) {
-                        msg = java.text.MessageFormat.format(
-                            rbo.getString("NoSuchBlock"), (String)value);
-                    } else {
-                        tempRow[TO_BLOCK_COLUMN] = (String)value;
-                    }
-                    break;
-                case TIME_OFFSET:
-                    try {
-                        Long.parseLong((String)value);
-                        tempRow[TIME_OFFSET] = (String)value;
-                    } catch (NumberFormatException nfe) {
-                        msg = rbo.getString("DelayTriggerTime");
-                    }
-                    break;
+        	if (col==DELETE_COL) {
+        		initTempRow();
+        		fireTableRowsUpdated(row,row);
+        		return;
+            } else {
+            	String str = (String)value;
+            	if (str!=null && str.trim().length()>0) {               	
+                 	tempRow[col] = str.trim();             		
+            	} else {
+                 	tempRow[col] = null;             		            		
+            	}
             }
-        } else {
+        	String name = tempRow[NAME_COLUMN];
+        	if (name == null) {
+        		return;
+        	}
+        	OBlock fromBlock = null;
+        	OBlock toBlock = null;
+        	Portal portal = null;
+        	if (tempRow[FROM_BLOCK_COLUMN]!=null) {
+                fromBlock = InstanceManager.oBlockManagerInstance().getOBlock(tempRow[FROM_BLOCK_COLUMN]);
+                if (fromBlock==null) {
+                    msg = java.text.MessageFormat.format(
+                            rbo.getString("NoSuchBlock"), tempRow[FROM_BLOCK_COLUMN]);                	
+                }        		
+        	}
+        	if (tempRow[TO_BLOCK_COLUMN]!=null) {
+                toBlock = InstanceManager.oBlockManagerInstance().getOBlock(tempRow[TO_BLOCK_COLUMN]);
+                if (toBlock==null && msg==null) {
+                    msg = java.text.MessageFormat.format(
+                            rbo.getString("NoSuchBlock"), tempRow[TO_BLOCK_COLUMN]);                	
+                }       		
+        	}
+        	if (tempRow[PORTAL_COLUMN]!=null) {
+            	portal = _parent.getPortalModel().getPortalByName(tempRow[PORTAL_COLUMN]);
+            	if (portal==null && msg==null) {
+                    msg = java.text.MessageFormat.format(rbo.getString("NoSuchPortalName"), tempRow[PORTAL_COLUMN]);            		
+            	}        		
+        	}
+            NamedBean signal = Portal.getSignal(name);
+        	if (msg==null) {
+                if (signal==null) {
+                    msg = java.text.MessageFormat.format(rbo.getString("NoSuchSignal"), name);            	
+                } else {
+                	msg = checkDuplicateSignal(signal);            	
+                }        		
+        	}
+            long time = 0;
+            try {
+                time = Long.parseLong(tempRow[TIME_OFFSET]);
+            } catch (NumberFormatException nfe) {
+                if (msg==null) {            	
+                    msg = rbo.getString("DelayTriggerTime");
+                }
+            }
+            if (msg==null) {
+                SignalRow signalRow = new SignalRow(signal, fromBlock, portal, toBlock, time);
+                msg =  checkSignalRow(signalRow);       		
+                if (msg==null) {
+                	portal = signalRow.getPortal();
+                	toBlock = signalRow.getToBlock();
+                	msg = checkDuplicateProtection(signalRow);
+                    if (msg==null && portal!=null) {
+                        if (portal.setProtectSignal(signal, time, toBlock)) {
+                            if (signalRow.getFromBlock()==null) {
+                                signalRow.setFromBlock(portal.getOpposingBlock(toBlock));
+                            }
+                            _signalList.add(signalRow);
+                            initTempRow();
+                            fireTableDataChanged();
+                        } else {
+                        	msg = java.text.MessageFormat.format(rbo.getString("PortalBlockConflict"),
+                        					portal.getName(), toBlock.getDisplayName());
+                        }
+                    }
+                }
+        	}
+        	
+        } else {	// Editing existing signal configurations
             SignalRow signalRow =_signalList.get(row);
             switch(col) {
                 case NAME_COLUMN:
                     NamedBean signal = Portal.getSignal((String)value); 
                     if (signal==null) {
                         msg = java.text.MessageFormat.format(rbo.getString("NoSuchSignal"), (String)value);
+//                        signalRow.setSignal(null);                            		
                         break;
                     }
-                    Portal portal = getPortal(signalRow.getPortal(), signalRow.getFromBlock(), signalRow.getToBlock());
-                    if (portal!=null) {
-                        if (signalRow.getToBlock()!=null) {
-                            portal.setProtectSignal(signal, signalRow.getDelayTime(), signalRow.getToBlock());
-                            if (signalRow.getFromBlock()==null) {
-                                signalRow.setFromBlock(portal.getOpposingBlock(signalRow.getToBlock()));
-                            }
-/*                        } else {
-                            portal.setApproachSignal(signal, signalRow.getDelayTime(), signalRow.getFromBlock());
-                            if (signalRow.getToBlock()==null) {
-                                signalRow.setToBlock(portal.getOpposingBlock(signalRow.getFromBlock()));
-                            }*/
-                        }
+                    Portal portal = signalRow.getPortal();
+                    if (portal!=null && signalRow.getToBlock()!=null) {
+                    	NamedBean oldSignal = signalRow.getSignal();
+                        signalRow.setSignal(signal);                            		
+                    	msg = checkDuplicateSignal(signalRow);
+                    	if (msg==null) {
+                            deleteSignal(signalRow);    // delete old
+                            msg = setSignal(signalRow, false);
+                            fireTableRowsUpdated(row,row);                            	
+                    	} else {
+                            signalRow.setSignal(oldSignal);                            		
+                    		
+                    	}
                     }
-                    signalRow.setSignal(signal);
-                    if (!verifySignalRow(signalRow)) {
-                        deleteSignal(signalRow);
-                        _signalList.remove(signalRow);
-                    }
-                    makeList();
-                    fireTableRowsUpdated(row,row);
                     break;
                 case FROM_BLOCK_COLUMN:
                     OBlock block = InstanceManager.oBlockManagerInstance().getOBlock((String)value);
                     if (block==null) {
                         msg = java.text.MessageFormat.format(
                             rbo.getString("NoSuchBlock"), (String)value);
+//                        signalRow.setFromBlock(null);                    	
                         break;
                     }
                     if (block.equals(signalRow.getFromBlock())) {
                         break;      // no change
                     }
-                    if (block.equals(signalRow.getToBlock())){
-                        msg = java.text.MessageFormat.format(
-                                rbo.getString("SametoFromBlock"), block.getDisplayName());
+                    deleteSignal(signalRow);    // delete old
+                    OBlock oldBlock = signalRow.getFromBlock();
+                    signalRow.setFromBlock(block);                    	
+                    portal = signalRow.getPortal();
+                    if (checkPortalBlock(portal, block)) {
+                        signalRow.setToBlock(null);                    	
+                    } else {
+                        // get new portal
+                        portal = _parent.getPortalModel().getPortal(block, signalRow.getToBlock());
+                        signalRow.setPortal(portal);                        	
+                    }
+                    msg = checkSignalRow(signalRow);
+                    if (msg==null) {
+                    	msg = checkDuplicateProtection(signalRow);                    	
+                    } else {
+                        signalRow.setPortal(null);
                         break;
                     }
-                    deleteSignal(signalRow);    // delete old
-                     // get new portal
-                    portal = getPortal(signalRow.getPortal(), block , signalRow.getToBlock());
-                    if (portal!=null) {
-                        if (!checkPortalBlock(portal, block)) {
-                            portal = null;
-                            signalRow.setToBlock(null);
-                        }
+                    if (msg==null && signalRow.getPortal()!=null) {
+                        msg = setSignal(signalRow, true);
+                    } else {
+                        signalRow.setPortal(null);                    	
                     }
-                    signalRow.setPortal(portal);
-                    signalRow.setFromBlock(block);
-/*                    if (portal!=null) {
-                        checkPortal(signalRow);
-                        if (portal.setApproachSignal(signalRow.getSignal(), signalRow.getDelayTime(), block)) {
-                            if (signalRow.getToBlock()==null) {
-                                signalRow.setToBlock(portal.getOpposingBlock(signalRow.getFromBlock()));
-                            }
-                        } else {
-                            signalRow.setPortal(null);
-                        }
-                        if (!verifySignalRow(signalRow)) {
-                            deleteSignal(signalRow);
-                            _signalList.remove(signalRow);
-                        }
-                        makeList();
-                        fireTableRowsUpdated(row,row);
-                    }*/
+                    fireTableRowsUpdated(row,row);
                     break;
                 case PORTAL_COLUMN:
-                    deleteSignal(signalRow);    // delete old
                     portal = _parent.getPortalModel().getPortalByName((String)value);
                     if (portal==null) {
                         msg = java.text.MessageFormat.format(rbo.getString("NoSuchPortalName"), (String)value);
+//                        signalRow.setPortal(null);
                         break;
+                    }
+                    deleteSignal(signalRow);    // delete old
+                    signalRow.setPortal(portal);
+                    block = signalRow.getToBlock();
+                    if (checkPortalBlock(portal, block)) {
+                    	signalRow.setFromBlock(null);
                     } else {
+                        block = signalRow.getFromBlock();
+                        if (checkPortalBlock(portal, block)) {
+                        	signalRow.setToBlock(null);                        	
+                        }                    	
+                    }
+                    msg =  checkSignalRow(signalRow);       		
+                    if (msg==null) {
+                    	msg = checkDuplicateProtection(signalRow);
+                    } else {
+                        signalRow.setToBlock(null);
+                        break;
+                    }
+                    if (msg==null) {
                         signalRow.setPortal(portal);
-                        checkPortal(signalRow);
-                        if (signalRow.getToBlock()!=null && portal.setProtectSignal(
-                                                                    signalRow.getSignal(), 
-                                                                    signalRow.getDelayTime(), 
-                                                                    signalRow.getToBlock())) {
-                            if (signalRow.getFromBlock()==null) {
-                                signalRow.setFromBlock(portal.getOpposingBlock(signalRow.getToBlock()));
-                            }
-/*                        } else if (signalRow.getFromBlock()!=null && portal.setApproachSignal(
-                                                                        signalRow.getSignal(),
-                                                                        signalRow.getDelayTime(), 
-                                                                        signalRow.getFromBlock())) {
-                            if (signalRow.getToBlock()==null) {
-                                signalRow.setToBlock(portal.getOpposingBlock(signalRow.getFromBlock()));
-                            }*/
-                        } else if (signalRow.getToBlock()==null && signalRow.getFromBlock()==null) {
-                            signalRow.setFromBlock(null);
-                            signalRow.setToBlock(null);
-                            msg = java.text.MessageFormat.format(rbo.getString("SignalDirection"),
-                                                                 portal.getName(), 
-                                                                 portal.getFromBlock().getDisplayName(),
-                                                                 portal.getToBlock().getDisplayName());
-                            break;
-                        }
-                        if (!verifySignalRow(signalRow)) {
-                            deleteSignal(signalRow);
-                            _signalList.remove(signalRow);
-                        }
-                        makeList();
-                        fireTableRowsUpdated(row,row);
+                        msg = setSignal(signalRow, false);
+                        fireTableRowsUpdated(row,row);                         	
                     }
                     break;
                 case TO_BLOCK_COLUMN:
@@ -511,42 +506,35 @@ public class SignalTableModel extends AbstractTableModel {
                     if (block==null) {
                         msg = java.text.MessageFormat.format(
                             rbo.getString("NoSuchBlock"), (String)value);
+//                        signalRow.setToBlock(null);
                         break;
                     }
                     if (block.equals(signalRow.getToBlock())) {
                         break;      // no change
                     }
-                    if (block.equals(signalRow.getFromBlock())){
-                        msg = java.text.MessageFormat.format(
-                                rbo.getString("SametoFromBlock"), block.getDisplayName());
+                    deleteSignal(signalRow);    // delete old
+                    signalRow.setToBlock(block);
+                    portal = signalRow.getPortal();
+                    if (checkPortalBlock(portal, block)) {
+                        signalRow.setFromBlock(null);                    	
+                    } else {
+                        // get new portal
+                        portal = _parent.getPortalModel().getPortal(signalRow.getFromBlock(), block);
+                        signalRow.setPortal(portal);
+                    }
+                    msg = checkSignalRow(signalRow);                    
+                    if (msg==null) {
+                    	msg = checkDuplicateProtection(signalRow);                    	
+                    } else {
+                        signalRow.setPortal(null);
                         break;
                     }
-                    deleteSignal(signalRow);    // delete old
-                    portal = getPortal(signalRow.getPortal(), signalRow.getFromBlock(), block);
-                    if (portal!=null) {
-                        if (!checkPortalBlock(portal, block)) {
-                            portal = null;
-                            signalRow.setFromBlock(null);
-                        }
+                    if (msg==null && signalRow.getPortal()!=null) {
+                        msg = setSignal(signalRow, true);
+                    } else {
+                        signalRow.setPortal(null);                    	
                     }
-                    signalRow.setPortal(portal);
-                    signalRow.setToBlock(block);
-                    if (portal!=null) {
-                        checkPortal(signalRow);
-                        if (portal.setProtectSignal(signalRow.getSignal(), signalRow.getDelayTime(), block)) {
-                            if (signalRow.getFromBlock()==null) {
-                                signalRow.setFromBlock(portal.getOpposingBlock(signalRow.getToBlock()));
-                            }
-                        } else {
-                            signalRow.setPortal(null);
-                        }
-                        if (!verifySignalRow(signalRow)) {
-                            deleteSignal(signalRow);
-                            _signalList.remove(signalRow);
-                        }
-                        makeList();
-                        fireTableRowsUpdated(row,row);
-                    }
+                    fireTableRowsUpdated(row,row);
                     break;
                 case TIME_OFFSET:
                     long time = 0;
@@ -554,13 +542,11 @@ public class SignalTableModel extends AbstractTableModel {
                         time = Long.parseLong((String)value);
                     } catch (NumberFormatException nfe) {
                         msg = rbo.getString("DelayTriggerTime");
+                        signalRow.setDelayTime(0);
                         break;
                     }
                     signalRow.setDelayTime(time);
-                    portal = getPortal(signalRow.getPortal(), signalRow.getFromBlock(), signalRow.getToBlock());
-                    if (portal!=null) {
-                    	portal.setProtectSignal(signalRow.getSignal(), time, signalRow.getToBlock());
-                    }
+                    msg = setSignal(signalRow, false);
                     fireTableRowsUpdated(row,row);
                     break;
                 case DELETE_COL:
@@ -576,15 +562,6 @@ public class SignalTableModel extends AbstractTableModel {
                     rbo.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
         }
     }
-/*
-    private SignalRow getSignalRow(String name) {
-        for (int i=0; i<_signalList.size(); i++)  {
-            if (_signalList.get(i).getSignal().getDisplayName().equals(name)) { 
-                return _signalList.get(i);
-            }
-        }
-        return null;
-    }  */
 
     private Portal getPortal(Portal p, OBlock fromBlock, OBlock toBlock) {
         if (p!= null) {
@@ -613,20 +590,43 @@ public class SignalTableModel extends AbstractTableModel {
             portal.deleteSignal(signalRow.getSignal());
         }
     }
+    
+    private String setSignal(SignalRow signalRow, boolean deletePortal) {
+    	Portal portal = signalRow.getPortal();
+        if (portal.setProtectSignal(signalRow.getSignal(), signalRow.getDelayTime(), signalRow.getToBlock())) {
+            if (signalRow.getFromBlock()==null) {
+                signalRow.setFromBlock(portal.getOpposingBlock(signalRow.getToBlock()));
+            }
+        } else {
+        	if (deletePortal) {
+                signalRow.setPortal(null);                    	       		
+        	} else {
+                signalRow.setToBlock(null);                    	        		
+        	}
+        	return java.text.MessageFormat.format(
+                    rbo.getString("PortalBlockConflict"), portal.getName(), 
+                    signalRow.getToBlock().getDisplayName()); 
+        }
+    	return null;
+    }
 
-    private void checkPortal (SignalRow signalRow) {
+/*    private boolean checkPortal (SignalRow signalRow) {
         // check that blocks belong to portal
+    	boolean ret = true;
         Portal portal = signalRow.getPortal();
         if (portal==null) {
-            return;
+            return false;
         }
         if (!checkPortalBlock(portal, signalRow.getFromBlock())) {
             signalRow.setFromBlock(null);
+            ret = false;
         }
         if (!checkPortalBlock(portal, signalRow.getToBlock())) {
             signalRow.setToBlock(null);
+            ret = false;
         }
-    }
+        return ret;
+    }*/
     private boolean checkPortalBlock(Portal portal, OBlock block) {
         return (portal.getToBlock().equals(block) || portal.getFromBlock().equals(block));
     }
@@ -644,10 +644,10 @@ public class SignalTableModel extends AbstractTableModel {
 
     public int getPreferredWidth(int col) {
         switch (col) {
-            case NAME_COLUMN:       return new JTextField(15).getPreferredSize().width;
-            case FROM_BLOCK_COLUMN: return new JTextField(15).getPreferredSize().width;
-            case PORTAL_COLUMN:     return new JTextField(15).getPreferredSize().width;
-            case TO_BLOCK_COLUMN:   return new JTextField(15).getPreferredSize().width;
+            case NAME_COLUMN:       return new JTextField(18).getPreferredSize().width;
+            case FROM_BLOCK_COLUMN: return new JTextField(18).getPreferredSize().width;
+            case PORTAL_COLUMN:     return new JTextField(18).getPreferredSize().width;
+            case TO_BLOCK_COLUMN:   return new JTextField(18).getPreferredSize().width;
             case TIME_OFFSET:       return new JTextField(6).getPreferredSize().width;
             case DELETE_COL:        return new JButton("DELETE").getPreferredSize().width;
         }

@@ -54,7 +54,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
 
         // first, process any "list" elements
     	//  roster, frame, panel, metadata and railroad are immediate only
-    	//  power, turnout, sensor, signalhead, memory and route can be monitored for changes, pass current values to begin
+    	//  power, turnout, sensor, signalhead, signalmast, memory and route 
+    	//  can be monitored for changes, pass current values to begin
     	//  throttle accepts changes
         @SuppressWarnings("unchecked")
         List<Element> lists = new ArrayList<Element>(e.getChildren("list"));
@@ -153,7 +154,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     e.addContent(n);
                 }            
             } else if (type.equals("signalhead")) {
-                // add an element for each sensor
+                // add an element for each signalhead
                 SignalHeadManager m = InstanceManager.signalHeadManagerInstance();
                 List<String> names = m.getSystemNameList();
                 for (String name : names) {
@@ -165,6 +166,25 @@ public class DefaultXmlIOServer implements XmlIOServer {
                         if (t.getComment() != null) n.setAttribute("comment", t.getComment());
                     } else {
                     n.addContent(new Element("type").addContent("signalhead"));
+                    n.addContent(new Element("name").addContent(name));
+                    n.addContent(new Element("userName").addContent(t.getUserName()));
+                    n.addContent(new Element("comment").addContent(t.getComment()));
+                    }
+                    e.addContent(n);
+                }            
+            } else if (type.equals("signalmast")) {
+                // add an element for each signalmast
+                SignalMastManager m = InstanceManager.signalMastManagerInstance();
+                List<String> names = m.getSystemNameList();
+                for (String name : names) {
+                    SignalMast t = m.getSignalMast(name);
+                    Element n = new Element((useAttributes) ? "signalMast" : "item");
+                    if (useAttributes) {
+                        n.setAttribute("name", name);
+                        if (t.getUserName() != null) n.setAttribute("userName", t.getUserName());
+                        if (t.getComment() != null) n.setAttribute("comment", t.getComment());
+                    } else {
+                    n.addContent(new Element("type").addContent("signalmast"));
                     n.addContent(new Element("name").addContent(name));
                     n.addContent(new Element("userName").addContent(t.getUserName()));
                     n.addContent(new Element("comment").addContent(t.getComment()));
@@ -380,6 +400,9 @@ public class DefaultXmlIOServer implements XmlIOServer {
             } else if (type.equals("signalhead")) {
                 immediateWriteSignalHead(name, item);
                 immediateReadSignalHead(name, item);
+            } else if (type.equals("signalmast")) {
+                immediateWriteSignalMast(name, item);
+                immediateReadSignalMast(name, item);
             } else if (type.equals("power")) {
                 immediateWritePower(name, item);
                 immediateReadPower(name, item);
@@ -439,6 +462,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             else if (type.equals("route")) addListenerToRoute(name, item, dr);
             else if (type.equals("sensor")) addListenerToSensor(name, item, dr);
             else if (type.equals("signalhead")) addListenerToSignalHead(name, item, dr);
+            else if (type.equals("signalmast")) addListenerToSignalMast(name, item, dr);
             else if (type.equals("power")) addListenerToPower(name, item, dr);
             else log.warn("Unexpected type: " + type);
         }
@@ -468,6 +492,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 else if (type.equals("memory")) immediateReadMemory(name, item);
                 else if (type.equals("sensor")) immediateReadSensor(name, item);
                 else if (type.equals("signalhead")) immediateReadSignalHead(name, item);
+                else if (type.equals("signalmast")) immediateReadSignalMast(name, item);
                 else if (type.equals("route")) immediateReadRoute(name, item);
                 else if (type.equals("power")) immediateReadPower(name, item);
                 else if (type.equals("metadata")) immediateReadMetadata(name, item);
@@ -502,6 +527,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 else if (type.equals("memory")) changed |= monitorProcessMemory(name, item);
                 else if (type.equals("sensor")) changed |= monitorProcessSensor(name, item);
                 else if (type.equals("signalhead")) changed |= monitorProcessSignalHead(name, item);
+                else if (type.equals("signalmast")) changed |= monitorProcessSignalMast(name, item);
                 else if (type.equals("route")) changed |= monitorProcessRoute(name, item);
                 else if (type.equals("power")) changed |= monitorProcessPower(name, item);
                 else if (type.equals("metadata")) changed = true;
@@ -543,6 +569,12 @@ public class DefaultXmlIOServer implements XmlIOServer {
         b.addPropertyChangeListener(dr);
     }
     
+    void addListenerToSignalMast(String name, Element item, DeferredRead dr) {
+    	if (log.isDebugEnabled()) log.debug("adding Listener To SignalMast " + name + " for " + dr.client);
+        SignalMast b = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+        b.addPropertyChangeListener(dr);
+    }
+    
     void addListenerToPower(String name, Element item, DeferredRead dr) {
     	if (log.isDebugEnabled()) log.debug("adding Listener To Power " + name + " for " + dr.client);
         PowerManager b = InstanceManager.powerManagerInstance();
@@ -576,6 +608,12 @@ public class DefaultXmlIOServer implements XmlIOServer {
     void removeListenerFromSignalHead(String name, Element item, DeferredRead dr) {
     	if (log.isDebugEnabled()) log.debug("removing Listener from SignalHead " + name + " for " + dr.client);
         SignalHead b = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+        b.removePropertyChangeListener(dr);
+    }
+    
+    void removeListenerFromSignalMast(String name, Element item, DeferredRead dr) {
+    	if (log.isDebugEnabled()) log.debug("removing Listener from SignalMast " + name + " for " + dr.client);
+        SignalMast b = InstanceManager.signalMastManagerInstance().getSignalMast(name);
         b.removePropertyChangeListener(dr);
     }
     
@@ -675,15 +713,46 @@ public class DefaultXmlIOServer implements XmlIOServer {
         if (item.getAttributeValue("value") != null) {
             return (state != Integer.parseInt(item.getAttributeValue("value")));
         } else {
-        Element v = item.getChild("value");
-        if (v!=null) {
-            int newState = Integer.parseInt(v.getText());
-            return  (state != newState);
-        }
+        	Element v = item.getChild("value");
+        	if (v!=null) {
+        		int newState = Integer.parseInt(v.getText());
+        		return  (state != newState);
+        	}
         }
         return false;  // no difference
     }
     
+    /**
+     * Return true if there is a difference
+     */
+    boolean monitorProcessSignalMast(String name, Element item) {
+    	SignalMast b = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+    	if (b == null) {
+    		log.warn("SignalMast " + name + " not found, skipping.");
+    		return false;
+    	}
+    	String state = b.getAspect();
+    	if ((b.getHeld()) && (b.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD)!=null)) {
+    		state = "Held";
+    	} else if ((b.getLit()) && (b.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK)!=null)) {
+    		state = "Dark";
+    	} else if (state == null) {
+    		state = "Unknown";
+    	}
+
+    	// check for value element, which means compare
+    	if (item.getAttributeValue("value") != null) {
+    		return (!state.equals(item.getAttributeValue("value")));
+    	} else {
+    		Element v = item.getChild("value");
+    		if (v!=null) {
+    			String newState = v.getText();
+    			return  (!state.equals(newState));
+    		}
+    	}
+    	return false;  // no difference
+    }
+
     /**
      * Return true if there is a difference
      */
@@ -785,6 +854,30 @@ public class DefaultXmlIOServer implements XmlIOServer {
     		if (v!=null) {
     			int state = Integer.parseInt(v.getText());
     			b.setState(state);
+    			item.removeContent(v);
+    		}
+    	}
+    }
+    
+    void immediateWriteSignalMast(String name, Element item) throws JmriException {
+    	// get signalMast
+    	SignalMast b = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+
+    	// check for set element, which means write
+    	if (item.getAttributeValue("set") != null) {
+    		try {
+    			b.setAspect(item.getAttributeValue("set"));
+    		} catch (IllegalArgumentException e) { //ignore invalid change requests
+    		}
+    		item.removeAttribute("set");
+    	} else {
+    		Element v = item.getChild("set");
+    		if (v!=null) {
+    			String state = v.getText();
+    			try {
+    				b.setAspect(state);
+    			} catch (IllegalArgumentException e) { //ignore invalid change requests
+    			}
     			item.removeContent(v);
     		}
     	}
@@ -944,6 +1037,30 @@ public class DefaultXmlIOServer implements XmlIOServer {
 
     		// set result
     		v.setText(""+state);
+    	}
+    }
+
+    void immediateReadSignalMast(String name, Element item) {
+    	// get signalMast
+    	SignalMast b = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+    	String state = b.getAspect();
+    	if ((b.getHeld()) && (b.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD)!=null)) {
+    		state = "Held";
+    	} else if ((b.getLit()) && (b.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK)!=null)) {
+    		state = "Dark";
+    	} else if (state == null) {
+    		state = "Unknown";
+    	}
+    	if (useAttributes) {
+    		item.setAttribute("value", state);
+    	} else {
+    		Element v = item.getChild("value");
+
+    		// Start read: ensure value element
+    		if (v == null) item.addContent(v = new Element("value"));
+
+    		// set result
+    		v.setText(state);
     	}
     }
 
@@ -1448,6 +1565,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 else if (type.equals("memory")) removeListenerFromMemory(name, item, this);
                 else if (type.equals("sensor")) removeListenerFromSensor(name, item, this);
                 else if (type.equals("signalhead")) removeListenerFromSignalHead(name, item, this);
+                else if (type.equals("signalmast")) removeListenerFromSignalMast(name, item, this);
                 else if (type.equals("route")) removeListenerFromRoute(name, item, this);
                 else if (type.equals("power")) removeListenerFromPower(name, item, this);
                 else log.warn("Unexpected type: "+type);

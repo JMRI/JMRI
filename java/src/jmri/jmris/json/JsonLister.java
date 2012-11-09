@@ -173,10 +173,21 @@ public class JsonLister {
 		root.put("type", "memory");
 		ObjectNode data = root.putObject("data");
 		Memory memory = InstanceManager.memoryManagerInstance().getMemory(name);
-        data.put("name", memory.getSystemName());
-        data.put("userName", memory.getUserName());
-        data.put("comment", memory.getComment());
-        data.put("value", memory.getValue().toString());
+		try {
+			data.put("name", memory.getSystemName());
+			data.put("userName", memory.getUserName());
+			data.put("comment", memory.getComment());
+			if (memory.getValue() == null) {
+				data.put("value", (String) memory.getValue());
+			} else {
+				data.put("value", memory.getValue().toString());
+			}
+		} catch (NullPointerException e) {
+			root.put("type", "error");
+			data.put("code", -1);
+			data.put("message", "Unable to get memory: " + name);
+			log.error("Unable to get memory: " + name + ".");
+		}
 		return root;
 	}
 

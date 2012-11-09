@@ -24,7 +24,7 @@ import java.util.EventObject;
 @SuppressWarnings("serial")
 public class VSDManagerEvent extends EventObject {
 
-    public static enum EventType { NONE, DECODER_LIST_CHANGE }  // propertyChangeEvents fired by the Manager.
+    public static enum EventType { NONE, DECODER_LIST_CHANGE, PROFILE_LIST_CHANGE }  // propertyChangeEvents fired by the Manager.
 
     VSDManagerEvent.EventType type;
     Object data;

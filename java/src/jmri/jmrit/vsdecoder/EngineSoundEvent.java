@@ -133,7 +133,8 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
     public void propertyChange(PropertyChangeEvent event) {
 	super.propertyChange(event);
 	if (event.getPropertyName().equals("SpeedSetting"))
-	    engine_pane.setThrottle(EngineSound.calcEngineNotch((Float)event.getNewValue()));
+	    ((EngineSound)parent.getSound("ENGINE")).handleSpeedChange((Float)event.getNewValue(), engine_pane);
+	//engine_pane.setThrottle(EngineSound.calcEngineNotch((Float)event.getNewValue()));
     }
 
 

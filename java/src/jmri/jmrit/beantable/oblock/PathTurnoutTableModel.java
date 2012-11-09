@@ -74,6 +74,7 @@ public class PathTurnoutTableModel extends AbstractTableModel {
         for (int i=0; i<NUMCOLS; i++) {
             tempRow[i] = null;
         }
+        tempRow[DELETE_COL] = rbo.getString("ButtonClear");
     }
     public int getColumnCount () {
         return NUMCOLS;
@@ -158,7 +159,11 @@ public class PathTurnoutTableModel extends AbstractTableModel {
                     break;           
                 case SETTINGCOLUMN:
                     tempRow[col] = (String)value;
-                    break;           
+                    break;
+                case DELETE_COL:
+                	initTempRow();
+                	fireTableRowsUpdated(row,row);
+                	break;
             }
             return;
         }
@@ -224,8 +229,8 @@ public class PathTurnoutTableModel extends AbstractTableModel {
 
     public int getPreferredWidth(int col) {
         switch (col) {
-            case TURNOUT_NAME_COL: return new JTextField(16).getPreferredSize().width;
-            case SETTINGCOLUMN: return new JTextField(8).getPreferredSize().width;
+            case TURNOUT_NAME_COL: return new JTextField(20).getPreferredSize().width;
+            case SETTINGCOLUMN: return new JTextField(10).getPreferredSize().width;
             case DELETE_COL: return new JButton("DELETE").getPreferredSize().width;
         }
         return 5;

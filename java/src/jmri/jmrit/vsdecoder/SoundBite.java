@@ -68,6 +68,7 @@ class SoundBite extends VSDSound {
                     sound_buf.setInputStream(vf.getInputStream(filename));
                 }
                 sound_src.setAssignedBuffer(sound_buf);
+		setLength();
                 setLooped(false);
             } catch (AudioException ex) {
                 log.warn("Problem creating SoundBite: " + ex);

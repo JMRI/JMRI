@@ -34,18 +34,21 @@ import jmri.util.PhysicalLocation;
 // loop() : starts extended sustain horn
 // stop() : ends extended sustain horn (plays end sound)
 
-class DieselSound extends EngineSound {
+class Diesel2Sound extends EngineSound {
 
     // Engine Sounds
-    HashMap<Integer, SoundBite> notch_sounds;
-    ArrayList<NotchTransition> transition_sounds;
+    HashMap<Integer, NotchSound> notch_sounds;
+    //ArrayList<NotchTransition> transition_sounds;
     SoundBite start_sound;
     SoundBite shutdown_sound;
-    NotchTransition notch_transition; // used for changing notches
+    SoundBite notch_transition; // used for changing notches
+    Float throttle_setting;
+    EnginePane engine_pane;
 
     int current_notch = 1;
+    boolean changing_speed = false;
 
-    public DieselSound(String name) {
+    public Diesel2Sound(String name) {
 	super(name);
     }
 
@@ -77,70 +80,92 @@ class DieselSound extends EngineSound {
     }
 
     @Override
-    public void changeNotch(int new_notch) {
-	log.debug("EngineSound.changeNotch() current = " + current_notch + 
-		  " new notch = " + new_notch);
-	if (new_notch != current_notch) {
-	    if (notch_sounds.containsKey(current_notch) && (engine_started || auto_start_engine))
-		notch_sounds.get(current_notch).fadeOut();
+    public void handleSpeedChange(Float s, EnginePane e) {
+	throttle_setting = s;
+	if (!changing_speed) 
+	    changeSpeed(s, e);
+    }
 
-	    notch_transition = findNotchTransient(current_notch, new_notch);
-	    if (notch_transition != null) {
-		log.debug("notch transition: name = " + notch_transition.getFileName() + " length = " + notch_transition.getLengthAsInt() +
-			  "fade_length = " + fade_length);
-		// Handle notch transition...
-		t = newTimer(notch_transition.getLengthAsInt() - notch_sounds.get(new_notch).getFadeInTime(), false,
-				   new ActionListener() {
-				       public void actionPerformed(ActionEvent e) {
-					   handleNotchTimerPop(e);
-				       }
-				   });
-		t.start();
-		notch_transition.fadeIn();
-	    } else {
-		log.debug("notch transition not found!");
-		if (notch_sounds.containsKey(new_notch) && (engine_started || auto_start_engine))
-		    notch_sounds.get(new_notch).fadeIn();
-	    }
-	    current_notch = new_notch;
+    // Responds to "CHANGE" trigger
+    public void changeThrottle(float s) {
+	NotchSound cn = notch_sounds.get(current_notch);
+	log.debug("Change Throttle: " + s + " Accel Limit = " + cn.getAccelLimit() + " Decel Limit = " + cn.getDecelLimit());
+	throttle_setting = s;
+	// Really first, is this a "Panic Stop"?
+	if (s < 0) {
+	    // DO something to shut down
+	    this.shutdown();
+	    return;
 	}
+	// First, am I too fast or too slow for the current notch?
+	if ((s <= cn.getAccelLimit()) && (s >= cn.getDecelLimit())) {
+	    // Still (or now) in this notch.  Nothing to do.
+	    changing_speed = false;
+	    log.debug("No Change");
+	    cn.fadeIn();
+	    //cn.play();
+	    return;
+	}
+	else if (s > cn.getAccelLimit()) {
+	    // Too fast. Need to go to next notch up.
+	    changing_speed = true;
+	    notch_transition = cn.getAccelSound();
+	    current_notch = cn.getNextNotch();
+	    log.debug("Change up. notch=" + current_notch);
+	} 
+	else if (s < cn.getDecelLimit()) {
+	    // Too slow.  Need to go to next notch down.
+	    changing_speed = true;
+	    notch_transition = cn.getDecelSound();
+	    current_notch = cn.getPrevNotch();
+	    log.debug("Change down. notch=" + current_notch);
+	}
+	// Now, regardless of whether we're going up or down, set the timer,
+	// fade the current sound, and move on.
+	if (notch_transition == null) {
+	    // No transition sound to play.  Skip the timer bit.
+	    // Recurse directly to try the next notch.
+	    //cn.fadeOut();
+	    cn.play();
+	    changeThrottle(s);
+	    log.debug("No transition sound defined.");
+	    return;
+	}
+	t = newTimer(notch_transition.getLengthAsInt() - this.getFadeInTime(), false,
+		     new ActionListener() {
+			 public void actionPerformed(ActionEvent e) {
+			     handleNotchTimerPop(e);
+			 }
+		     });
+	t.start();
+	//cn.fadeOut();
+	cn.stop();
+	//notch_transition.fadeIn();
+	notch_transition.play();
+	// Regardless, set the throttle to the (possibly new) current notch.
+    }
+
+    protected void changeSpeed(Float s, EnginePane e) {
+	engine_pane = e; // this should probably be cleaned up.  It's here for the recursion.
+	changeThrottle(s);
     }
 
     protected void handleNotchTimerPop(ActionEvent e) {
-	// notch value has already been changed
-	log.debug("Notch timer pop. nt.next_notch = " + notch_transition.getNextNotch() +
-		  "file = " + notch_sounds.get(notch_transition.getNextNotch()).getFileName());
-	if (notch_sounds.containsKey(notch_transition.getNextNotch()) && (engine_started || auto_start_engine)) {
-	    notch_sounds.get(notch_transition.getNextNotch()).fadeIn();
-	}
+	// semi-Recursively call the speed change handler until it quits setting up timers.
 	notch_transition.fadeOut();
-    }
-
-    private NotchTransition findNotchTransient(int prev, int next) {
-	log.debug("Looking for Transient: prev = " + prev + " next = " + next);
-	for (NotchTransition nt : transition_sounds) {
-	    log.debug("searching: nt.prev = " + nt.getPrevNotch() + " nt.next = " + nt.getNextNotch());
-	    if ((nt.getPrevNotch() == prev) && (nt.getNextNotch() == next)) {
-		log.debug("Found transient: prev = " + nt.getPrevNotch() + " next = " + nt.getNextNotch());
-		return(nt);
-	    }
-	}
-	// If we loop out, there's no transition that matches.
-	return(null);
+	changeSpeed(throttle_setting, engine_pane);
     }
 
     @Override
     public void startEngine() {
 	start_sound.play();
 	current_notch = calcEngineNotch(0.0f);
-	//t = newTimer(4500, false, new ActionListener() { 
 	t = newTimer(start_sound.getLengthAsInt() - start_sound.getFadeOutTime(), false, new ActionListener() { 
                 @Override
 		public void actionPerformed(ActionEvent e) {
 		    startToIdleAction(e);
 		}
 	    } );
-	//t.setInitialDelay(4500);
 	t.setInitialDelay(start_sound.getLengthAsInt() - start_sound.getFadeOutTime());
 	t.setRepeats(false);
 	log.debug("Starting Engine");
@@ -162,50 +187,35 @@ class DieselSound extends EngineSound {
 
     @Override
     public void shutdown() {
-	for (SoundBite ns : notch_sounds.values()) {
+	for (NotchSound ns : notch_sounds.values()) {
 	    ns.stop();
-	}
-	for (NotchTransition nt : transition_sounds) {
-	    nt.stop();
 	}
 	if (start_sound != null) start_sound.stop();
 	if (shutdown_sound != null) shutdown_sound.stop();
-	
     }
 
     @Override
     public void mute(boolean m) {
-	for (SoundBite ns : notch_sounds.values()) {
+	for (NotchSound ns : notch_sounds.values()) {
 	    ns.mute(m);
-	}
-	for (NotchTransition nt : transition_sounds) {
-	    nt.mute(m);
 	}
 	if (start_sound != null) start_sound.mute(m);
 	if (shutdown_sound != null) shutdown_sound.mute(m);
-	
     }
 
     @Override
     public void setVolume(float v) {
-	for (SoundBite ns : notch_sounds.values()) {
+	for (NotchSound ns : notch_sounds.values()) {
 	    ns.setVolume(v);
-	}
-	for (NotchTransition nt : transition_sounds) {
-	    nt.setVolume(v);
 	}
 	if (start_sound != null) start_sound.setVolume(v);
 	if (shutdown_sound != null) shutdown_sound.setVolume(v);
-	
     }
 
     @Override
     public void setPosition(PhysicalLocation p) {
-	for (SoundBite ns : notch_sounds.values()) {
+	for (NotchSound ns : notch_sounds.values()) {
 	    ns.setPosition(p);
-	}
-	for (NotchTransition nt : transition_sounds) {
-	    nt.setPosition(p);
 	}
 	if (start_sound != null) start_sound.setPosition(p);
 	if (shutdown_sound != null) shutdown_sound.setPosition(p);
@@ -226,14 +236,15 @@ class DieselSound extends EngineSound {
 	Element el;
 	//int num_notches;
 	String fn;
-	SoundBite sb;
+	//SoundBite sb;
+	NotchSound sb;
 
 	// Handle the common stuff.
 	super.setXml(e, vf);
 	
 	log.debug("Diesel EngineSound: " + e.getAttribute("name").getValue());
-	notch_sounds = new HashMap<Integer, SoundBite>();
-	transition_sounds = new ArrayList<NotchTransition>();
+	notch_sounds = new HashMap<Integer, NotchSound>();
+	//transition_sounds = new ArrayList<NotchTransition>();
 
 	// Get the notch sounds
 	Iterator<Element> itr =  (e.getChildren("notch-sound")).iterator();
@@ -243,31 +254,25 @@ class DieselSound extends EngineSound {
 	    fn = el.getChildText("file");
 	    int nn = Integer.parseInt(el.getChildText("notch"));
 	    //log.debug("Notch: " + nn + " File: " + fn);
-	    sb = new SoundBite(vf, fn, "Engine_n" + i, "Engine_" + i);
+	    sb = new NotchSound(vf, fn, "Engine_n" + i, "Engine_" + i);
 	    sb.setLooped(true);
 	    sb.setFadeTimes(this.getFadeInTime(), this.getFadeOutTime());
+	    //sb.setFadeTimes(0, 0);
 	    sb.setGain(setXMLGain(el));
+	    sb.setNextNotch(el.getChildText("next-notch"));
+	    sb.setPrevNotch(el.getChildText("prev-notch"));
+	    sb.setAccelLimit(el.getChildText("accel-limit"));
+	    sb.setDecelLimit(el.getChildText("decel-limit"));
+	    if (el.getChildText("accel-file") != null)
+		sb.setAccelSound(new SoundBite(vf, el.getChildText("accel-file"), "Engine_na" + i, "Engine_na" + i));
+	    else
+		sb.setAccelSound(null);
+	    if (el.getChildText("decel-file") != null)
+		sb.setDecelSound(new SoundBite(vf, el.getChildText("decel-file"), "Engine_nd" + i, "Engine_nd" + i)); 
+	    else
+		sb.setDecelSound(null);
 	    // Store in the list.
 	    notch_sounds.put(nn, sb);
-	    i++;
-	}
-
-	// Get the notch transitions
-	itr = (e.getChildren("notch-transition")).iterator();
-	i = 0;
-	NotchTransition nt;
-	while(itr.hasNext()) {
-	    el = itr.next();
-	    fn = el.getChildText("file");
-	    nt = new NotchTransition(vf, fn, "Engine_nt" + i, "Engine_nt" + i);
-	    nt.setPrevNotch(Integer.parseInt(el.getChildText("prev-notch")));
-	    nt.setNextNotch(Integer.parseInt(el.getChildText("next-notch")));
-	    //log.debug("Transition: prev=" + nt.getPrevNotch() + " next=" + nt.getNextNotch() + " File: " + fn);
-	    nt.setLooped(false);
-	    nt.setFadeTimes(this.getFadeInTime(), this.getFadeOutTime());
-	    // Handle gain
-	    nt.setGain(setXMLGain(el));
-	    transition_sounds.add(nt);
 	    i++;
 	}
 

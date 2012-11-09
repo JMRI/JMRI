@@ -37,4 +37,5 @@ $(document).ready(function() {
 		jmri.socket._send($('input#command').val());
 		return false;
 	});
+	$('#footer-menu>li+li+li').before("<li><a href='/help/en/html/web/JsonServlet.shtml'>Json Servlet Help</a></li>");
 });

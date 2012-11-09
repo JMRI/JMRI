@@ -68,6 +68,7 @@ public class PortalTableModel extends AbstractTableModel {
         for (int i=0; i<NUMCOLS; i++) {
             tempRow[i] = null;
         }
+        tempRow[DELETE_COL] = rbo.getString("ButtonClear");
     }
     private void makeList() {
          ArrayList <Portal> tempList = new ArrayList <Portal>();
@@ -134,17 +135,8 @@ public class PortalTableModel extends AbstractTableModel {
         return "";
     }
 
-    String _savePortalName;
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (_portalList.size() == rowIndex) {
-            if (_savePortalName!=null && _parent.getPortalTablePane()!=null) {
-                int idx = getPortalIndex(_savePortalName);
-                if (idx > -1) {
-                    if (log.isDebugEnabled()) log.debug("Portal Scroll of "+_savePortalName+", to "+idx*TableFrames.ROW_HEIGHT); 
-                    _parent.getPortalTablePane().getVerticalScrollBar().setValue(idx*TableFrames.ROW_HEIGHT);
-                    _savePortalName = null;
-                }
-            }
             return tempRow[columnIndex];
         }
         switch(columnIndex) {
@@ -161,53 +153,61 @@ public class PortalTableModel extends AbstractTableModel {
     }
 
     public void setValueAt(Object value, int row, int col) {
+        String msg = null;
         if (_portalList.size() == row) {
-
-            if (log.isDebugEnabled()) log.debug("setValueAt: col= "+col+", value= "+(String)value);
-            if (col==NAME_COLUMN) {
-                String name = (String)value;
-                String msg = null;
-                // Note: Portal ctor will add this Portal to each of its 'from' & 'to' Blocks.
-                OBlock fromBlock = InstanceManager.oBlockManagerInstance()
-                                            .getOBlock(tempRow[FROM_BLOCK_COLUMN]);
-                OBlock toBlock = InstanceManager.oBlockManagerInstance()
-                                            .getOBlock(tempRow[TO_BLOCK_COLUMN]);
-                if (getPortalByName(name)==null) {
-                    _savePortalName = name;
-                    if (fromBlock != null && 
-                            fromBlock.equals(toBlock)) {
-                        msg = java.text.MessageFormat.format(
-                                rbo.getString("SametoFromBlock"), fromBlock.getDisplayName());
-                    } else if (name != null && name.length()>0) {
-                        Portal portal = new Portal(fromBlock, name, toBlock);
-                        _portalList.add(portal);
-                        makeList();
-                        initTempRow();
-                        fireTableDataChanged();
-                    }
-                } else {
-                    msg = java.text.MessageFormat.format(
-                            rbo.getString("DuplPortalName"), (String)value);
-                }
-                if (fromBlock==null || toBlock==null) { 
-                    // double load of config file will have the first creation of a Portal
-                    // with no blocks by the second file (it's just how things are loaded with
-                    // forward and backward references to each other.  These objects cannot
-                    // be created with complete specifications on their instantiation.
-                    msg = java.text.MessageFormat.format(rbo.getString("PortalNeedsBlock"), name);
-                }
-                if (msg!=null) {
-                    JOptionPane.showMessageDialog(null, msg,
-                            rbo.getString("WarningTitle"),  JOptionPane.WARNING_MESSAGE);
-                }
-            }
-            else { tempRow[col] = (String)value; }
-            return;
+        	 if (col==DELETE_COL) {
+        		 initTempRow();
+                 fireTableRowsUpdated(row,row);
+                 return;
+             } else { 
+             	tempRow[col] = (String)value; 
+             }
+        	 String name = tempRow[NAME_COLUMN];
+        	 if (name != null) {
+        		 name = name.trim();
+        		 if (name.length()==0) {
+        			 return;
+        		 }
+        	 } else {
+        		 return;
+        	 }
+             // Note: Portal ctor will add this Portal to each of its 'from' & 'to' Blocks.
+             OBlock fromBlock = InstanceManager.oBlockManagerInstance()
+                                         .getOBlock(tempRow[FROM_BLOCK_COLUMN]);
+             OBlock toBlock = InstanceManager.oBlockManagerInstance()
+                                         .getOBlock(tempRow[TO_BLOCK_COLUMN]);
+             if (fromBlock==null || toBlock==null) {
+            	 if (fromBlock==null && tempRow[FROM_BLOCK_COLUMN]!=null) {
+                     msg = java.text.MessageFormat.format(
+                             rbo.getString("NoSuchBlock"), tempRow[FROM_BLOCK_COLUMN]);            		 
+            	 } else if (toBlock==null && tempRow[TO_BLOCK_COLUMN]!=null) {
+                     msg = java.text.MessageFormat.format(
+                             rbo.getString("NoSuchBlock"), tempRow[TO_BLOCK_COLUMN]);            		 
+            	 } else {
+                     msg = java.text.MessageFormat.format(rbo.getString("PortalNeedsBlock"), name);            		 
+            	 }
+             } else if (fromBlock != null && fromBlock.equals(toBlock)) {
+                 msg = java.text.MessageFormat.format(
+                         rbo.getString("SametoFromBlock"), fromBlock.getDisplayName());
+             } else if (getPortalByName(name)==null) {            	 
+                 Portal portal = new Portal(fromBlock, name, toBlock);
+                 _portalList.add(portal);
+                 makeList();
+                 initTempRow();
+                 fireTableDataChanged();
+             } else {
+               	 msg = java.text.MessageFormat.format(
+                         rbo.getString("DuplPortalName"), (String)value);
+             }
+             if (msg!=null) {
+                 JOptionPane.showMessageDialog(null, msg,
+                         rbo.getString("WarningTitle"),  JOptionPane.WARNING_MESSAGE);
+             }       	 
+             return;
         }
 
         Portal portal =_portalList.get(row);
-        String msg = null;
-
+ 
         switch(col) {
             case FROM_BLOCK_COLUMN:
                 OBlock block = InstanceManager.oBlockManagerInstance().getOBlock((String)value);
@@ -330,8 +330,8 @@ public class PortalTableModel extends AbstractTableModel {
     public int getPreferredWidth(int col) {
         switch (col) {
             case FROM_BLOCK_COLUMN:
-            case TO_BLOCK_COLUMN: return new JTextField(15).getPreferredSize().width;
-            case NAME_COLUMN: return new JTextField(15).getPreferredSize().width;
+            case TO_BLOCK_COLUMN: return new JTextField(20).getPreferredSize().width;
+            case NAME_COLUMN: return new JTextField(20).getPreferredSize().width;
             case DELETE_COL: return new JButton("DELETE").getPreferredSize().width;
         }
         return 5;

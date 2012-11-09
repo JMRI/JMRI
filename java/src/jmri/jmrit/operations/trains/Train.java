@@ -69,6 +69,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected boolean _printed = false;		// when true, manifest has been printed
 	protected boolean _sendToTerminal = false;	// when true, cars picked up by train only go to terminal
 	protected boolean _buildNormal = false;	// when true build this train in normal mode
+	protected boolean _allowCarsReturnStaging = false;	// when true allow cars to return to staging if necessary
 	protected Route _route = null;
 	protected Track _departureTrack;		// the departure track from staging
 	protected Track _terminationTrack;		// the termination track into staging
@@ -1878,6 +1879,23 @@ public class Train implements java.beans.PropertyChangeListener {
 			setDirtyAndFirePropertyChange("build train normal", old?"true":"false", enable?"true":"false");
 		}
 	}
+	
+	/**
+	 * When true allow a turn to return cars to staging.  A turn is a train
+	 * that departs and terminates at the same location.
+	 * @return true if cars can return to staging
+	 */
+	public boolean isAllowReturnToStagingEnabled(){
+		return _allowCarsReturnStaging;
+	}
+	
+	public void setAllowReturnToStagingEnabled(boolean enable){
+		boolean old = _allowCarsReturnStaging;
+		_allowCarsReturnStaging = enable;
+		if (old != enable){
+			setDirtyAndFirePropertyChange("allow cars to return to staging", old?"true":"false", enable?"true":"false");
+		}
+	}
 
 	protected void setBuilt(boolean built) {
 		boolean old = _built;
@@ -2658,6 +2676,8 @@ public class Train implements java.beans.PropertyChangeListener {
     		_buildNormal = a.getValue().equals("true");
     	if ((a = e.getAttribute("toTerminal")) != null)
     		_sendToTerminal = a.getValue().equals("true");
+    	if ((a = e.getAttribute("allowReturn")) != null)
+    		_allowCarsReturnStaging = a.getValue().equals("true");
     	if ((a = e.getAttribute("built")) != null)
     		_built = a.getValue().equals("true");
     	if ((a = e.getAttribute("build")) != null)
@@ -2830,6 +2850,7 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("cabooseRoad", getCabooseRoad());
         e.setAttribute("buildNormal", isBuildTrainNormalEnabled()?"true":"false");
         e.setAttribute("toTerminal", isSendCarsToTerminalEnabled()?"true":"false");
+        e.setAttribute("allowReturn", isAllowReturnToStagingEnabled()?"true":"false");
         e.setAttribute("built", isBuilt()?"true":"false");
         e.setAttribute("build", isBuildEnabled()?"true":"false");
         e.setAttribute("buildFailed", getBuildFailed()?"true":"false");

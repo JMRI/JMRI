@@ -121,14 +121,15 @@ abstract class AbstractPanelServlet extends HttpServlet {
         }
     }
 
-    //build and return an "icons" element containing icon urls for all signalmast states
+    //build and return an "icons" element containing icon urls for all signalmast states,
+    //  element names are aspect names, with blanks replaced by underscores
 	Element getSignalMastIconsElement(String name) {
         Element icons = new Element("icons");
         jmri.SignalMast signalMast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(name);
         java.util.Vector<String> aspects = signalMast.getValidAspects();
         for (int i=0; i<aspects.size(); i++){
         	String aspect = aspects.elementAt(i); 
-            Element ea = new Element(aspect.replaceAll(" ", "")); //create element for aspect after removing spaces
+            Element ea = new Element(aspect.replaceAll(" ", "_")); //create element for aspect after replacing spaces
             String url = signalMast.getAppearanceMap().getImageLink(aspect, "default");  //TODO: use correct imageset
             if(!url.contains("preference:"))
                 url = "program:" + url.substring(url.indexOf("resources"));

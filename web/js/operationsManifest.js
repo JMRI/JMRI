@@ -95,9 +95,6 @@ var $buildManifest = function($r, $s, $x){
 	//add simple collapsible for locations, 
 	//   copied from https://codeblitz.wordpress.com/2009/04/15/jquery-animated-collapsible-list/
 	$(function(){
-		$('li')
-			.css('pointer','default')
-			.css('list-style-image','none');
 		$('li:has(ul)')
 			.click(function(event){
 				if (this == event.target) {
@@ -109,7 +106,7 @@ var $buildManifest = function($r, $s, $x){
 			})
 			.css({cursor:'pointer', 'list-style-image':'url(/web/images/plusbox.gif)'})
 			.children().hide();
-		$('li:not(:has(ul))').css({cursor:'default', 'list-style-image':'none'});
+		$('li:not(:has(ul))').css({'list-style-image':'none'});
 	});
 
 };

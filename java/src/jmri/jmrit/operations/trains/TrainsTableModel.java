@@ -358,7 +358,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     				&& train.getDepartureTrack() != null 
     				&& train.getDepartureTrack().getLocType().equals(Track.STAGING)
     				&& (train.getDepartureTrack().getNumberRS() != train.getDepartureTrack().getPickupRS()
-    				|| train.getDepartureTrack().getDropRS() > 0)){
+    				|| (train.getDepartureTrack().getDropRS() > 0 && train.getTerminationTrack() == null)
+    				|| (train.getDepartureTrack().getDropRS() > 0 && train.getTerminationTrack() != null
+    				&& train.getDepartureTrack() != train.getTerminationTrack()))){
     			log.debug("Train is departing staging that already has inbound cars");
     			JOptionPane.showMessageDialog(null, 
     					MessageFormat.format(rb.getString("StagingTrackUsed"),new Object[] {train.getDepartureTrack().getName()}),

@@ -83,6 +83,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         for (int i=0; i<NUMCOLS; i++) {
             tempRow[i] = null;
         }
+        tempRow[DELETE_COL] = rbo.getString("ButtonClear");
     }
 
     public int getColumnCount () {
@@ -159,8 +160,10 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                     }
                 }
                 fireTableDataChanged();
-            }
-            else {
+            } else if (col==DELETE_COL) {
+            	initTempRow();
+                fireTableRowsUpdated(row,row);
+            }else {
                 tempRow[col] = strValue;
             }
             if (msg != null) {
@@ -214,7 +217,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 break;
             case NAME_COLUMN:
                 if (strValue!=null) {
-                    if (_block.getPathByName(strValue)==null) {
+                    if (_block.getPathByName(strValue)!=null) {
                         msg = java.text.MessageFormat.format(
                                 rbo.getString("DuplPathName"), strValue); 
                     } else {
@@ -305,7 +308,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
             case FROM_PORTAL_COLUMN:
             case NAME_COLUMN: 
             case TO_PORTAL_COLUMN:
-                return new JTextField(14).getPreferredSize().width;
+                return new JTextField(18).getPreferredSize().width;
             case EDIT_COL:
                 return new JButton("TURNOUT").getPreferredSize().width;
             case DELETE_COL: 

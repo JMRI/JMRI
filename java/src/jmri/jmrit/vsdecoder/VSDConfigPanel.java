@@ -224,7 +224,7 @@ public class VSDConfigPanel extends JmriPanel {
 	// Connect to the VSDecoderManager, so we know when the Profile list changes.
 	VSDecoderManager.instance().addEventListener(new VSDManagerListener() {
 		public void eventAction(VSDManagerEvent e) {
-		    if (e.getType() == VSDManagerEvent.EventType.DECODER_LIST_CHANGE) {
+		    if (e.getType() == VSDManagerEvent.EventType.PROFILE_LIST_CHANGE) {
 			log.debug("Received Decoder List Change Event");
 			handleDecoderListChange(e);
 		    }

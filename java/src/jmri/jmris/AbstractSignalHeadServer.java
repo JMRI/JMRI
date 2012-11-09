@@ -1,4 +1,4 @@
-//AbstractSignalServer.java
+//AbstractSignalHeadServer.java
 package jmri.jmris;
 
 import java.beans.PropertyChangeEvent;
@@ -11,7 +11,7 @@ import jmri.SignalHead;
 import org.apache.log4j.Logger;
 
 /**
- * Abstract interface between the a JMRI signal head and a network connection
+ * Abstract interface between a JMRI signal head and a network connection
  *
  * @author Paul Bender Copyright (C) 2010
  * @version $Revision$
@@ -39,6 +39,7 @@ abstract public class AbstractSignalHeadServer {
         if (!signalHeads.contains(signalHeadName)) {
             signalHeads.add(signalHeadName);
             InstanceManager.signalHeadManagerInstance().getSignalHead(signalHeadName).addPropertyChangeListener(new SignalHeadListener(signalHeadName));
+            if (log.isDebugEnabled()) log.debug("Added listener to signalHead " + signalHeadName);
         }
     }
 
@@ -142,14 +143,17 @@ abstract public class AbstractSignalHeadServer {
         // update state as state of signalHead changes
         @Override
         public void propertyChange(PropertyChangeEvent e) {
-            // If the Commanded State changes, show transition state as "<inconsistent>"
-            if (e.getPropertyName().equals("KnownState")) {
-                int now = ((Integer) e.getNewValue()).intValue();
+            if (e.getPropertyName().equals("Appearance") || e.getPropertyName().equals("Held")) {
+            	SignalHead sh = (SignalHead)e.getSource();
+            	int state = sh.getAppearance();
+            	if (sh.getHeld()) {
+            		state = SignalHead.HELD;
+            	}
                 try {
-                    sendStatus(name, now);
+                    sendStatus(name, state);
                 } catch (IOException ie) {
-                    log.debug("Error Sending Status");
                     // if we get an error, de-register
+                    if (log.isDebugEnabled()) log.debug("Unable to send status, removing listener from signalHead " + name);
                     signalHead.removePropertyChangeListener(this);
                     removeSignalHeadFromList(name);
                 }

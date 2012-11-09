@@ -49,19 +49,11 @@ import org.jdom.Element;
 
 public class VSDecoder implements PropertyChangeListener {
 
-    private String my_id;          // Unique ID for this VSDecoder
-    private String vsd_path;       // Path to VSD file used
-    private String profile_name;   // Name used in the "profiles" combo box
-                                   // to select this decoder.
-    LocoAddress address;        // Currently assigned loco address -- should be LocoAddress...
     boolean initialized = false;   // This decoder has been initialized
     boolean enabled = false;       // This decoder is enabled
     private boolean is_default = false;  // This decoder is the default for its file
 
-    private float master_volume;
-
-    private PhysicalLocation my_position; // My "absolute" position relative to the OpenAL Context origin.
-    //private PhysicalLocation my_relative_position ; // position relative to the listener position (VSDecoderPreferences)
+    private VSDConfig config;
 
     // List of registered event listeners
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
@@ -83,8 +75,9 @@ public class VSDecoder implements PropertyChangeListener {
     @Deprecated
     public VSDecoder(String id, String name) {
 
-	profile_name = name;
-	my_id = id;
+	config = new VSDConfig();
+	config.setProfileName(name);
+	config.setID(id);
 	
 	sound_list = new HashMap<String, VSDSound>();
 	trigger_list = new HashMap<String, Trigger>();
@@ -106,8 +99,10 @@ public class VSDecoder implements PropertyChangeListener {
      * @param path  (String) Path to a VSD file to pull the given Profile from
      */
     public VSDecoder(String id, String name, String path) {
-	profile_name = name;
-	my_id = id;
+	
+	config = new VSDConfig();
+	config.setProfileName(name);
+	config.setID(id);
 	
 	sound_list = new HashMap<String, VSDSound>();
 	trigger_list = new HashMap<String, Trigger>();
@@ -116,7 +111,7 @@ public class VSDecoder implements PropertyChangeListener {
 	// Force re-initialization
 	initialized = _init();
 
-	vsd_path = path;
+	config.setVSDPath(path);
 
 	try {
 	    VSDFile vsdfile = new VSDFile(path);
@@ -148,7 +143,9 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * @return (String) system name of this VSDecoder
      */
-    public String getID() { return(my_id); }
+    public String getID() {
+	return(config.getID());
+    }
 
     /**
      * public boolean isInitialized()
@@ -169,7 +166,7 @@ public class VSDecoder implements PropertyChangeListener {
      * @return void
      */
     public void setVSDFilePath(String p) {
-	vsd_path = p;
+	config.setVSDPath(p);
     }
 
     /**
@@ -180,7 +177,7 @@ public class VSDecoder implements PropertyChangeListener {
      * @return (String) path to VSD file
      */
     public String getVSDFilePath() {
-	return(vsd_path);
+	return(config.getVSDPath());
     }
 
     // VSDecoder Events
@@ -312,7 +309,7 @@ public class VSDecoder implements PropertyChangeListener {
      */
     public void setAddress(LocoAddress l) {
 	// Hack for ThrottleManager Dcc dependency
-	address = l;
+	config.setLocoAddress(l);
 	DccLocoAddress dl = new DccLocoAddress(l.getNumber(), l.getProtocol());
 	jmri.InstanceManager.throttleManagerInstance().attachListener(dl, new PropertyChangeListener() {
 		public void propertyChange(PropertyChangeEvent event) {
@@ -320,7 +317,7 @@ public class VSDecoder implements PropertyChangeListener {
 		    throttlePropertyChange(event);
 		}
 	    });
-	log.debug("VSDecoder: Address set to " + address.toString());
+	log.debug("VSDecoder: Address set to " + config.getLocoAddress().toString());
     }
     
     /**
@@ -331,7 +328,7 @@ public class VSDecoder implements PropertyChangeListener {
      * @return the currently assigned LocoAddress
      */
     public LocoAddress getAddress() {
-	return(address);
+	return(config.getLocoAddress());
     }
 
     /**
@@ -342,7 +339,7 @@ public class VSDecoder implements PropertyChangeListener {
      * @return (float) volume level (0.0 - 1.0)
      */
     public float getMasterVolume() {
-	return(master_volume);
+	return(config.getVolume());
     }
 
     /**
@@ -355,9 +352,9 @@ public class VSDecoder implements PropertyChangeListener {
      */
     public void setMasterVolume(float vol) {
 	log.debug("VSD: float volume = " + vol);
-	master_volume = vol;
+	config.setVolume(vol);
 	for (VSDSound vs : sound_list.values()) {
-	    vs.setVolume(master_volume);
+	    vs.setVolume(vol);
 	}
     }
 
@@ -401,8 +398,8 @@ public class VSDecoder implements PropertyChangeListener {
      */
     public void setPosition(PhysicalLocation p) {
 	// Store the actual position relative to the user's Origin locally.
-	my_position = p;
-	log.debug("( " + this.getAddress() + ") Set Position: " + my_position.toString());
+	config.setPhysicalLocation(p);
+	log.debug("( " + this.getAddress() + ") Set Position: " + p.toString());
 
 	// Give all of the VSDSound objects the position translated relative to the listener position.
 	// This is a workaround for OpenAL requiring the listener position to always be at (0,0,0).
@@ -423,7 +420,7 @@ public class VSDecoder implements PropertyChangeListener {
      * @return PhysicalLocation location of this VSDecoder
      */
     public PhysicalLocation getPosition() {
-	return(my_position);
+	return(config.getPhysicalLocation());
     }
 
     /**
@@ -594,7 +591,7 @@ public class VSDecoder implements PropertyChangeListener {
      * @return void
      */
     public void setProfileName(String pn) {
-	profile_name = pn;
+	config.setProfileName(pn);
     }
 
     /**
@@ -605,7 +602,7 @@ public class VSDecoder implements PropertyChangeListener {
      * @return (String) name of the currently selected profile
      */
     public String getProfileName() {
-	return(profile_name);
+	return(config.getProfileName());
     }
 
     /**
@@ -678,7 +675,7 @@ public class VSDecoder implements PropertyChangeListener {
 	Element me = new Element("vsdecoder");
 	ArrayList<Element> le = new ArrayList<Element>();
 
-	me.setAttribute("name", this.profile_name);
+	me.setAttribute("name", this.config.getProfileName());
 
 	// If this decoder is marked as default, add the default Element.
 	if (is_default)
@@ -807,6 +804,11 @@ public class VSDecoder implements PropertyChangeListener {
 	    } else if (el.getAttributeValue("type").equals("diesel")) {
 		// Handle a Diesel Engine sound
 		DieselSound es = new DieselSound(el.getAttributeValue("name"));
+		es.setXml(el, vf);
+		sound_list.put(el.getAttributeValue("name"), es);
+	    } else if (el.getAttributeValue("type").equals("diesel2")) {
+		// Handle a Diesel Engine sound
+		Diesel2Sound es = new Diesel2Sound(el.getAttributeValue("name"));
 		es.setXml(el, vf);
 		sound_list.put(el.getAttributeValue("name"), es);
 	    } else if (el.getAttributeValue("type").equals("steam")) {

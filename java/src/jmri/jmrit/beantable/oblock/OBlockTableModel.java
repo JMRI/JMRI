@@ -87,6 +87,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
         tempRow[LENGTHCOL] = twoDigit.format(0.0);
         tempRow[UNITSCOL] = "";
         tempRow[CURVECOL] = noneText;
+        tempRow[DELETE_COL] = rbo.getString("ButtonClear");
     }
 
     public Manager getManager() {
@@ -134,7 +135,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                 if (!_saveBlockName.startsWith("OB")) {
                     _saveBlockName = "OB"+_saveBlockName;
                 }
-                b = manager.provideOBlock(_saveBlockName.toUpperCase());
+                b = manager.getOBlock(_saveBlockName.toUpperCase());
                 if (b!=null) {
                     int idx =  getIndexOf(b);
                     _parent.getBlockTablePane().getVerticalScrollBar().setValue(idx*TableFrames.ROW_HEIGHT);
@@ -192,6 +193,11 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
         if (log.isDebugEnabled()) log.debug("setValueAt: row= "+row+", col= "+col+", value= "+(String)value);
         if (super.getRowCount() == row) 
         {
+        	if (col==DELETE_COL) {
+        		initTempRow();
+        		fireTableRowsUpdated(row,row);
+        		return;
+        	}            
             if (col==SYSNAMECOL || col==USERNAMECOL) {
                 if (col==SYSNAMECOL) {
                     tempRow[SYSNAMECOL] = (String)value;
@@ -201,7 +207,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                 _saveBlockName = tempRow[SYSNAMECOL];
                 OBlock block = manager.createNewOBlock((String)value, tempRow[USERNAMECOL]);
                 if (block==null) {
-                    block = manager.provideOBlock(tempRow[USERNAMECOL]);
+                    block = manager.getOBlock(tempRow[USERNAMECOL]);
                     String name = "blank";     // zero length string error
                     if (block!=null) {
                         name = block.getDisplayName();
@@ -243,23 +249,21 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                 //fireTableRowsUpdated(row,row);
                 initTempRow();
                 fireTableDataChanged();
-            } else {
-                if (col==UNITSCOL) {
+            } else if (col==UNITSCOL) {
                     if (tempRow[UNITSCOL].equals("in")) {
                         tempRow[UNITSCOL] = "cm";
                     } else {
                         tempRow[UNITSCOL] = "in";
                     }
-                } else {
-                    tempRow[col] = (String)value;
-                }
+            } else {
+                tempRow[col] = (String)value;
             }
             return;
         }
         OBlock block = (OBlock)getBeanAt(row);
         switch (col) {
             case USERNAMECOL:
-                OBlock b = manager.provideOBlock((String)value);
+                OBlock b = manager.getOBlock((String)value);
                 if (b != null) {
                     JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
                         rbo.getString("CreateDuplBlockErr"), block.getDisplayName()),
@@ -389,10 +393,10 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
 
     public int getPreferredWidth(int col) {
         switch (col) {
-            case SYSNAMECOL: return new JTextField(15).getPreferredSize().width;
-            case USERNAMECOL: return new JTextField(15).getPreferredSize().width;
-            case COMMENTCOL: return new JTextField(8).getPreferredSize().width;
-            case SENSORCOL: return new JTextField(13).getPreferredSize().width;
+            case SYSNAMECOL: return new JTextField(18).getPreferredSize().width;
+            case USERNAMECOL: return new JTextField(18).getPreferredSize().width;
+            case COMMENTCOL: return new JTextField(10).getPreferredSize().width;
+            case SENSORCOL: return new JTextField(15).getPreferredSize().width;
             case CURVECOL: return new JTextField(5).getPreferredSize().width;
             case LENGTHCOL: return new JTextField(5).getPreferredSize().width;
             case UNITSCOL: return new JTextField(2).getPreferredSize().width;
