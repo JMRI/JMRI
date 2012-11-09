@@ -313,6 +313,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						}
 						break;
 					case "locoicon" :
+					case "trainicon" :
 						//also set the background icon for this one (additional css in .html file)
 						$widget['icon1'] = 		$(this).find('icon').attr('url');
 						$widget.styles['background-image'] 	= "url('" + $widget.icon1 + "')";
@@ -1351,6 +1352,7 @@ var $getWidgetFamily = function($widget) {
 	switch ($widget.widgetType) {
 	case "memoryicon" :
 	case "locoicon" :
+	case "trainicon" :
 	case "memoryComboIcon" :
 	case "memoryInputIcon" :
 	case "fastclock" :
