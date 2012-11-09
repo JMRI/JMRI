@@ -56,12 +56,16 @@ public class TrainIconXml extends LocoIconXml {
 	}
 
 	/**
-	 * Create a PositionableLabel, then add to a target JLayeredPane
+	 * TrainIcons should be loaded by the operations function, not here
 	 * @param element Top level Element to unpack.
 	 * @param o  an Editor as an Object
 	 */
 	public void load(Element element, Object o) {
-		log.warn("loading of TrainIcon not implemented");
+		//NOTE: this method should not be populated.  
+		//  The operations program restores the Icons when the Trains window is opened.   
+		//  The train icons have to be placed based on the trains database state,
+		//  and not where the icons were on the panel when the panel was saved.
+		log.warn("loading of TrainIcon not implemented, TrainIcons will be placed by Operations");
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainIconXml.class.getName());
