@@ -26,7 +26,7 @@ JMRI: WiFi Throttle Communications Protocol
 </h1>
 
 This page describes the protocol provided by the
-<a href="">jmri.jmrit.withrottle</a>
+<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">jmri.jmrit.withrottle</a>
 package for controlling trains through JMRI via 
 a TCP/IP link.
 
