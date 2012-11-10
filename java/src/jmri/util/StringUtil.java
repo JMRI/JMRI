@@ -432,7 +432,7 @@ public class StringUtil {
     /**
      * Return String after replacing various special characters with their "escaped" counterpart, to facilitate use with web servers. 
      *
-     * @param  String to escape
+     * @param  s String to escape
      * @return String with escaped values
      */
     static public String escapeString(String s) {
@@ -442,7 +442,7 @@ public class StringUtil {
     /**
      * Return String after replacing various escaped character with their "regular" counterpart, to facilitate use with web servers. 
      *
-     * @param  String to unescape
+     * @param s String to unescape
      * @return String with escaped values replaced with regular values
      */
     static public String unescapeString(String s) {

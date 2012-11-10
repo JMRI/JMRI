@@ -619,8 +619,7 @@ public class AbstractAutomaton implements Runnable {
 
     /**
      * Obtains a DCC throttle, including waiting for the command station response.
-     * @param address
-     * @param longAddress true if this is a long address, false for a short address
+     * @param re specifies the desired locomotive
      * @return A usable throttle, or null if error
      */
     public DccThrottle getThrottle(BasicRosterEntry re) {

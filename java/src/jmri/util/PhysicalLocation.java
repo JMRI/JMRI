@@ -97,9 +97,8 @@ public class PhysicalLocation extends Vector3f {
      * 
      * Store PhysicalLocation p as a property in NamedBean b.
      *
-     * @param p : PhysicalLocation
-     * @param b : NamedBean
-     * @return void
+     * @param p PhysicalLocation
+     * @param b NamedBean
      */
     public static void setBeanPhysicalLocation(PhysicalLocation p, NamedBean b) {
 	b.setProperty(PhysicalLocation.NBPropertyKey,  p.toString());
@@ -240,8 +239,7 @@ public class PhysicalLocation extends Vector3f {
      * If you want a new PhysicalLocation that represents the relative position,
      * call the class method translate(loc, ref)
      *
-     *  @param ref : new reference (origin) point
-     *  @return void
+     *  @param ref new reference (origin) point
      */
     public void translate(PhysicalLocation ref) {
 	if (ref == null)
