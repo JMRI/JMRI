@@ -30,7 +30,7 @@
      value-of instructions.
 -->     
 <xsl:template match='index'>
-    <HTML LANG="en">
+    <HTML LANG="fr">
     <HEAD>
     <TITLE>JMRI Help System: Index</TITLE>
     <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1" />
@@ -89,7 +89,7 @@
 
 
 <xsl:template match='toc'>
-    <HTML LANG="en">
+    <HTML LANG="fr">
     <HEAD>
     <TITLE>JMRI Help System: Table of Contents</TITLE>
     <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1" />

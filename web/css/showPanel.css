@@ -20,7 +20,7 @@ body {
 .signalheadicon.hidden {
 	display: none;
 }
-.locoicon {
+.locoicon, .trainicon {
   padding-left: 6px;
   min-width:  60px;
   min-height: 20px;

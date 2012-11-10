@@ -63,7 +63,6 @@ public interface PreferencesPanel {
 	 * This should be true if the implementing class relies on the {@link jmri.ConfigureManager} stores and retrieves the preferences
 	 * managed by the implementing class on behalf of the implementing class.
 	 * 
-	 * @return
 	 */
 	public abstract boolean isPersistant();
 	

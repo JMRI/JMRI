@@ -10,17 +10,17 @@ import java.util.List;
  * control messages on to them.  Creates a new MultiThrottleController for
  * each loco requested on this throttle.  Each loco will then be able to be controlled individually.
  * '*' is a wildcard loco key. Forwards to all locos on this MultiThrottle.
- *
- * Sample messages:
- * MT+L757<;>L757       On T throttle, add loco L757.
- * MT+L1234<;>L1234     On T throttle, add loco L1234.
- * MTAL757<;>R1         On T throttle, loco L757, set direction to forward.
- * MTAL1234<;>R0        On T throttle, loco L1234, set direction to reverse.
- * MTAL757<;>V42        On T throttle, loco L757, set speed to 42.
- * MTAL1234<;>V42       On T throttle, loco L1234, set speed to 42.
- * MTA*<;>V16           On T throttle, all locos, set speed to 16.
- * MT-L757<;>L757       On T throttle, remove loco L757. (Still has L1234)
- *
+ *<p>
+ * Sample messages:<ul>
+ *<li> MT+L757<;>L757       On T throttle, add loco L757.
+ *<li> MT+L1234<;>L1234     On T throttle, add loco L1234.
+ *<li> MTAL757<;>R1         On T throttle, loco L757, set direction to forward.
+ *<li> MTAL1234<;>R0        On T throttle, loco L1234, set direction to reverse.
+ *<li> MTAL757<;>V42        On T throttle, loco L757, set speed to 42.
+ *<li> MTAL1234<;>V42       On T throttle, loco L1234, set speed to 42.
+ *<li> MTA*<;>V16           On T throttle, all locos, set speed to 16.
+ *<li> MT-L757<;>L757       On T throttle, remove loco L757. (Still has L1234)
+ *</ul>
  *	@author Brett Hoffman   Copyright (C) 2011
  *	@version $Revision$
  */

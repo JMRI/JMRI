@@ -43,7 +43,17 @@ called a "VSD File".  When the Virtual Sound Decoder ("VSDecoder" or
 assigns the Decoder an address.  When the operator then controls the engine by
 pressing function buttons or changing the speed, the Virtual Sound
 Decoder responds just like a hardware sound decoder installed in the
-locomotive would by playing sounds through the computer speakers.</span></p>
+locomotive would by playing sounds through the computer
+speakers.</span></p>
+<h4>OpenAL Required</h4>
+<p>Virtual Sound Decoder requires that your system have the OpenAL
+audio system installed.  OpenAL is available free from Creative Labs.
+You can <a href="http://connect.creativelabs.com/openal/Downloads/Forms/AllItems.aspx">download the installer for your operating system</a> from the
+OpenAL site.</p>
+<p>If you do not have OpenAL installed, Virtual Sound Decoder will
+<i>seem</i> to work, except you will get no sound output.</p>
+<p>Please NOTE:  OpenAL is a separate project from JMRI and is neither
+maintained nor controlled by the JMRI team.</p>
 <h4>Virtual Sound Decoder dialog</h4>
 <p>The Virtual Sound Decoder dialog is launched from the Debug menu.
 It provides several tabs that allow you to configure and control your

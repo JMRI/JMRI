@@ -17,6 +17,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 //import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -244,7 +245,6 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 		
 		
 		if (_train != null){
-			textTrainName.setText(_train.getIconName());
 			textTrainDescription.setText(_train.getDescription());
 			// show train comment box only if there's a comment
 			if (_train.getComment().equals(""))
@@ -271,8 +271,11 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
-		//JMenu toolMenu = new JMenu(rb.getString("Tools"));			
-		//menuBar.add(toolMenu);
+		if (_train != null){
+			JMenu toolMenu = new JMenu(rb.getString("Tools"));
+			toolMenu.add(new ShowCarsInTrainAction(rb.getString("MenuItemShowCarsInTrain"), _train));
+			menuBar.add(toolMenu);
+		}
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
 		
@@ -358,6 +361,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 			movePane.setVisible(false);	
 			RouteLocation rl = _train.getCurrentLocation();
 			if (rl != null){
+				textTrainName.setText(_train.getIconName());
 				pTrainRouteLocationComment.setVisible(!rl.getComment().equals(""));
 				textTrainRouteLocationComment.setText(rl.getComment());
 				textLocationName.setText(rl.getLocation().getName());

@@ -16,15 +16,15 @@ public interface AddressListener extends EventListener
 {
     /**
      * Receive notification that a new address has been selected.
-     * @param newAddress The address that is now selected.
+     * @param address The address that is now selected.
      */
-    public void notifyAddressChosen(jmri.LocoAddress l);
+    public void notifyAddressChosen(jmri.LocoAddress address);
 	
 	/**
 	 * Receive notification that an address has been released/dispatched
 	 * @param address The address released/dispatched
 	 */
-	public void notifyAddressReleased(LocoAddress la);
+	public void notifyAddressReleased(LocoAddress address);
 	
 	/**
 	 * Receive notification that a throttle has been found

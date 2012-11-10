@@ -44,7 +44,7 @@ public class Application {
 
     /**
      * Set the current JMRI application name.
-     * @param name String containing the JMRI application name
+     * @param applicationName String containing the JMRI application name
      * @throws IllegalAccessException
      * @throws IllegalArgumentException
      */
