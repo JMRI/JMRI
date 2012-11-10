@@ -44,6 +44,10 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 	JLabel textLocationName = new JLabel();
 	JLabel textNextLocationName = new JLabel();
 	JLabel textStatus = new JLabel();
+	JLabel textPickUp = new JLabel(rb.getString("Pickup"));
+	JLabel textInTrain = new JLabel(rb.getString("InTrain"));
+	JLabel textSetOut = new JLabel(rb.getString("SetOut"));
+	
 
 	// major buttons
 
@@ -129,8 +133,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 		
        	update();
 		
-		if (_train != null){
-			textTrainName.setText(_train.getIconName());			
+		if (_train != null){			
 			setTitle(rb.getString("TitleShowCarsInTrain") + " ("+_train.getName()+")");
 
 			// listen for train changes
@@ -154,6 +157,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 	private void update(){
 		log.debug("update");
 		if (_train != null && _train.getRoute() != null){
+			textTrainName.setText(_train.getIconName());
 			pCars.removeAll();
 			RouteLocation rl = _train.getCurrentLocation();
 			if (rl != null){
@@ -163,12 +167,17 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 				// now update the car pick ups and set outs
 				List<String> carList = carManager.getByTrainDestinationList(_train);
 				List<String> routeList = _train.getRoute().getLocationsBySequenceList();
-				// block cars by destination
+				// add header
 				int i = 0;
+				addItemLeft(pCars, textPickUp, 0, 0);
+				addItemLeft(pCars, textInTrain, 1, 0);
+				addItemLeft(pCars, textSetOut, 2, i++);
+				// block cars by destination
 				for (int j = 0; j < routeList.size(); j++) {
 					RouteLocation rld = _train.getRoute().getLocationById(routeList.get(j));
 					for (int k = 0; k < carList.size(); k++) {
 						Car car = carManager.getById(carList.get(k));
+						log.debug("car "+car.toString() + " track " +car.getTrackName() + " routelocation "+car.getRouteLocation().getName());
 						if ((car.getTrack() == null || car.getRouteLocation() == rl) 
 								&& car.getRouteDestination() == rld){
 							JCheckBox checkBox = new JCheckBox(car.toString());
@@ -226,8 +235,13 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 		//if (Control.showProperty && log.isDebugEnabled()) 
 		log.debug("Property change " +e.getPropertyName() + " for: "+e.getSource().toString()
 				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY) 
-				|| e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)){
+			// Move property change to end of list so car updates happen before this window determines train length, etc.
+			_train.removePropertyChangeListener(this);
+			_train.addPropertyChangeListener(this);
+			update();
+		}
+		if (e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY))
 			update();
 	}
 

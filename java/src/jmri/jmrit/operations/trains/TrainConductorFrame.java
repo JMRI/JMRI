@@ -245,7 +245,6 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 		
 		
 		if (_train != null){
-			textTrainName.setText(_train.getIconName());
 			textTrainDescription.setText(_train.getDescription());
 			// show train comment box only if there's a comment
 			if (_train.getComment().equals(""))
@@ -362,6 +361,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 			movePane.setVisible(false);	
 			RouteLocation rl = _train.getCurrentLocation();
 			if (rl != null){
+				textTrainName.setText(_train.getIconName());
 				pTrainRouteLocationComment.setVisible(!rl.getComment().equals(""));
 				textTrainRouteLocationComment.setText(rl.getComment());
 				textLocationName.setText(rl.getLocation().getName());

@@ -50,6 +50,7 @@ public class TrainIcon extends LocoIcon {
 			});
 			popup.add(makeTrainRouteMenu()); 
 			popup.add(new TrainConductorAction(rb.getString("TitleTrainConductor"), train));
+			popup.add(new ShowCarsInTrainAction(rb.getString("MenuItemShowCarsInTrain"), train));
             if (!isEditable()) {
                 popup.add(new AbstractAction("Set X&Y") {
                     public void actionPerformed(ActionEvent e) {
