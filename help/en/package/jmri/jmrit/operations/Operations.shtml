@@ -613,7 +613,7 @@ Here's a list of the current codes and descriptions:
 <tr><td>SL</td><td>Set out loco</td><td>See below</td></tr>
 <tr><td>TC</td><td>Train Comment</td><td>Comment</td></tr>
 <tr><td>TD</td><td>Train Departs</td><td>Name</td></tr>
-<tr><td>TL</td><td>Train Length</td><td>Length</td></tr>
+<tr><td>TL</td><td>Train Length</td><td>Length, Empties, Number of cars</td></tr>
 <tr><td>TM</td><td>Train Manifest Description</td><td>Description</td></tr>
 <tr><td>TN</td><td>Train Name</td><td>Name</td></tr>
 <tr><td>TRUN</td><td>Truncate</td></tr>
