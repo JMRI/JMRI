@@ -17,6 +17,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 //import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -271,8 +272,11 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
-		//JMenu toolMenu = new JMenu(rb.getString("Tools"));			
-		//menuBar.add(toolMenu);
+		if (_train != null){
+			JMenu toolMenu = new JMenu(rb.getString("Tools"));
+			toolMenu.add(new ShowCarsInTrainAction(rb.getString("MenuItemShowCarsInTrain"), _train));
+			menuBar.add(toolMenu);
+		}
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
 		
