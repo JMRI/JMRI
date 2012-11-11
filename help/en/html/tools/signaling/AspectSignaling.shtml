@@ -128,9 +128,15 @@ JMRI users have provided a number of pre-defined signal systems:
 <dt><a href="../../../../../xml/signals/NYCS-1937/index.shtml">NYCS-1937</a>
     <dd>New York Central System 1937 rule book
 
+<dt><a href="../../../../../xml/signals/NS-2008/index.shtml">NS-2008</a>
+    <dd>Norfolk Southern Corporation Operating rules book (NORAC)
+
 <dt><a href="../../../../../xml/signals/SLSF-1973/index.shtml">SLSF-1973</a>
     <dd>SLSF (Frisco) 1973 rule book
 
+<dt><a href="../../../../../xml/signals/SPTCO-1930/index.shtml">SPTCO-1930</a>
+    <dd>Southern Pacific Railway and Transportation Company 1930 rule book
+    
 <dt><a href="../../../../../xml/signals/SPTCO-1960/index.shtml">SPTCO-1960</a>
     <dd>Southern Pacific Railway and Transportation Company 1960 rule book
 </dl>

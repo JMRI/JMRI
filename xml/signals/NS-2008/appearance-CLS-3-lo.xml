@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
 
 <appearancetable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
@@ -40,35 +40,35 @@
       <aspectname>Limited Clear</aspectname>
       <show>flashgreen</show>
       <reference>N281c (c5)</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-hi/rule-N281-C.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-lo/rule-N281-C.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Slow Clear</aspectname>
       <show>green</show>
       <reference>N287 (c5)</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-hi/rule-N287.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-lo/rule-N287.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Slow Approach</aspectname>
       <show>flashyellow</show>
       <reference>N288 (c5)</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-hi/rule-N288.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-lo/rule-N288.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>yellow</show>
       <reference>290 (c5)</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-hi/rule-290.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-lo/rule-N290.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Stop Signal</aspectname>
       <show>red</show>
       <reference>292 (c5)</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-hi/rule-292.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-lo/rule-N292.gif</imagelink>
     </appearance>
 
   </appearances>
