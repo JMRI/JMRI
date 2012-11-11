@@ -94,7 +94,7 @@ Second, we build the release branch:
     
     This will do (more or less) the following actions:
 
-    svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/2.13.5
+    svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/3.1.5
     <check in an update of the version number of trunk/HEAD>
     <check in an update of the version number of the new release>
 
@@ -106,7 +106,7 @@ Second, we build the release branch:
     cd ../../branches/jmri/releases
     svn update 2.13.5
 
-    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/2.13.5")
+    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/3.1.5")
 
     ( to merge everything to date: svn merge ^/trunk/jmri
       If you do this, beware, you'll also merge in the new release.properties file, which you do NOT want to do.
