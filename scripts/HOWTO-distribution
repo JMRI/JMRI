@@ -166,15 +166,17 @@ Final release steps:
     keys for SourceForge.net set up)
 
     (SourceForge may have disabled CURL in their shell servers, in which
-    case do this somewhere else with good connectivity)
+    case do this somewhere else with good connectivity; the upload from Jenkins
+    will be slow in any case)
     (If you use a browser to download instead of curl, make sure the .tgz wasn't auto-expanded)
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o archive.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.1.3/ws/jmri/dist/release/*zip*/release.zip"
+    curl -o archive.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.1.5/ws/jmri/dist/release/*zip*/release.zip"
     unzip archive.zip
-    cd archive/jmri/dist/release
-    scp JMRI.3.1.3-* user,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
+    cd release
+    scp JMRI.3.1.5-* user,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"    
+        (the scp is needed even if on SF.net, so that the FRS system knows you've added something; using cp is NFG)
     (clean up and logout)
 
     Wait until the downloads have propagated to the mirrors; check
