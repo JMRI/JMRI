@@ -1,13 +1,5 @@
 package jmri.jmrit.operations.setup;
 
-/**
- * Operations settings. 
- * 
- * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision$
- */
-//import java.awt.Dimension;
-//import java.awt.Point;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -20,7 +12,12 @@ import jmri.jmrit.operations.trains.TrainLogger;
 
 import org.jdom.Element;
 
-
+/**
+ * Operations settings. 
+ * 
+ * @author Daniel Boudreau Copyright (C) 2008, 2010, 2012
+ * @version $Revision$
+ */
 public class Setup {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");

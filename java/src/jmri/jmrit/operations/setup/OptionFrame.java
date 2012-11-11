@@ -261,6 +261,8 @@ public class OptionFrame extends OperationsFrame{
 			Setup.setVsdPhysicalLocationEnabled(enableVsdCheckBox.isSelected());
 			// write the file
 			OperationsSetupXml.instance().writeOperationsFile();
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
 		}
 	}
 

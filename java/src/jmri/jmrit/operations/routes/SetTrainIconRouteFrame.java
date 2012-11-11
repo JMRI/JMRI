@@ -166,6 +166,8 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
     	}
     	if (ae.getSource() == saveButton){
     		RouteManagerXml.instance().writeOperationsFile();
+    		if (Setup.isCloseWindowOnSaveEnabled())
+    			dispose();
     	}
     }
 	

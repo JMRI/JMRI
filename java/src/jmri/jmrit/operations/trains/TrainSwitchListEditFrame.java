@@ -385,7 +385,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		}
 	}
 	
-	public static class TrainSwitchListCommentFrame extends OperationsFrame {
+	private static class TrainSwitchListCommentFrame extends OperationsFrame {
 		
 		// text area
 		JTextArea commentTextArea	= new JTextArea(10,90);
@@ -395,7 +395,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		
 		Location _location;
 		
-		public TrainSwitchListCommentFrame(Location location) {
+		private TrainSwitchListCommentFrame(Location location) {
 			super();
 			initComponents(location);
 		}

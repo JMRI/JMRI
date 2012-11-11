@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.trains;
 
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 
@@ -161,6 +162,8 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 		}
 		OperationsXml.save();	// save files
 		updateTrains();
+		if (Setup.isCloseWindowOnSaveEnabled())
+			dispose();
 	}
 	
 	private void updateTrains(){

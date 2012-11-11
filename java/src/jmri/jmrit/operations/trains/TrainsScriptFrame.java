@@ -20,6 +20,7 @@ import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.FileUtil;
 
 
@@ -181,8 +182,10 @@ public class TrainsScriptFrame extends OperationsFrame {
 			runScripts(manager.getShutDownScripts());				
 		}
 		if (ae.getSource() == saveButton){
-			log.debug("train save button activated");
+			log.debug("Save button activated");
 			OperationsXml.save();
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
 		}
 	}
 	
