@@ -554,9 +554,6 @@ public class Car extends RollingStock {
 		// return if not Okay 
 		if (!status.equals(Track.OKAY))
 			return status;
-		status = testSchedule(track);
-		if (!status.equals(Track.OKAY))
-			return status;
 		// now check to see if the track has a schedule
 		if (oldDestTrack != track)
 			scheduleNext(track);

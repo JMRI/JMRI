@@ -36,8 +36,9 @@ public class Router extends TrainCommon {
 	private List<Track> lastLocationTracks = new ArrayList<Track>();
 	private List<Track> otherLocationTracks = new ArrayList<Track>();
 	
-	private static final String STATUS_TRAIN = rb.getString("RouterTrain");	// report that train can not move car
+	private static final String STATUS_NOT_THIS_TRAIN = rb.getString("RouterTrain");	// report that train can not move car
 	private static final String STATUS_NOT_ABLE = rb.getString("RouterNotAble");
+	private static final String STATUS_CAR_AT_DESINATION = rb.getString("RouterCarAtDestination");
 	
 	private String _status = "";
 	private Train _train = null;
@@ -83,6 +84,7 @@ public class Router extends TrainCommon {
 		if (car.getLocation() != null && car.getLocation().equals(car.getNextDestination()) 
 				&& (car.getTrack().equals(car.getNextDestTrack()) || car.getNextDestTrack() == null)){
 			log.debug("Car ("+car.toString()+") has arrived at next destination");
+			_status = STATUS_CAR_AT_DESINATION;
 			car.setNextDestination(null);
 			car.setNextDestTrack(null);
 			return false;
@@ -92,7 +94,7 @@ public class Router extends TrainCommon {
 			return false;
 		// note clone car has the car "next destination" as its destination
 		Car clone = clone(car);
-		//Note the following test doesn't check for car length which is what we want!
+		//Note the following test doesn't check for car length which is what we want!  Also ignores if track has a schedule.
 		_status = clone.testDestination(clone.getDestination(), clone.getDestinationTrack());
 		if (!_status.equals(Track.OKAY)){
 			//log.info("Next destination ("+car.getNextDestinationName()+", "+car.getNextDestTrackName()+"+) failed for car ("+car.toString()+") due to "+_status);
@@ -116,7 +118,7 @@ public class Router extends TrainCommon {
 			// now check to see if specific train can service car directly
 			if (_train != null && !trainServicesCar){
 				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("TrainDoesNotServiceCar"),new Object[]{_train.getName(), car.toString(), (clone.getDestinationName()+", "+clone.getDestinationTrackName())}));
-				_status = STATUS_TRAIN;
+				_status = STATUS_NOT_THIS_TRAIN;
 				return true;	// car can be routed, but not by this train!
 			}
 			_status = car.setDestination(clone.getDestination(), clone.getDestinationTrack());

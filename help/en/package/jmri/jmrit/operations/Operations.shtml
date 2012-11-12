@@ -619,7 +619,7 @@ Here's a list of the current codes and descriptions:
 <tr><td>TRUN</td><td>Truncate</td></tr>
 <tr><td>TT</td><td>Train Terminates</td><td>Name</td></tr>
 <tr><td>TW</td><td>Train Weight</td><td>Weight</td></tr>
-<tr><td>VT</td><td>Valid</td><td>Month/Day, Year Time</td></tr>
+<tr><td>VT</td><td>Valid</td><td>Month/Day/Year Time</td></tr>
 </table>
 
 <P>Time uses the format Hour:Minute.</P>  
