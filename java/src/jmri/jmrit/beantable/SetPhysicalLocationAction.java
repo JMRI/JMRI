@@ -176,6 +176,10 @@ public class SetPhysicalLocationAction extends AbstractAction {
 	
 	/** Close button action */
 	public void closeButtonActionPerformed(java.awt.event.ActionEvent ae) {
+	    JOptionPane.showMessageDialog(null,
+					  rb.getString("CloseButtonSaveWarning"),
+					  rb.getString("CloseButtonSaveWarningTitle"),
+					  JOptionPane.WARNING_MESSAGE);
 	    dispose();
 	}
 
@@ -204,11 +208,6 @@ public class SetPhysicalLocationAction extends AbstractAction {
 	    String s = (String)reporterBox.getSelectedItem();
 	    // Since we don't have "getByDisplayName()" we need to do this in two steps
 	    Reporter r = jmri.InstanceManager.reporterManagerInstance().getByDisplayName(s);
-	    //Reporter r = jmri.InstanceManager.reporterManagerInstance().getByUserName(s);
-	    //if (r == null) {// no such user name
-	    //r = jmri.InstanceManager.reporterManagerInstance().getBySystemName(s);
-	    //}
-	    // (if getBySystemName() returns null, just return null.)
 	    return(r);
 	}
 
