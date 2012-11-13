@@ -73,6 +73,20 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
 	public synchronized void reply(SerialReply l) {  // receive a reply message and log it
 		nextLine(l.toMonitorString(),l.toString());
 	}
+
+    /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.powerline.swing.PowerlineNamedPaneAction {
+        public Default() {
+            super("Open Powerline Monitor", 
+                    new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                    SerialMonPane.class.getName(), 
+                    jmri.InstanceManager.getDefault(SerialSystemConnectionMemo.class));
+        }
+        
+    }
+    
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialMonPane.class.getName());
 
 }
