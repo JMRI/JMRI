@@ -138,6 +138,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
     	addHelpMenu("package.jmri.jmrit.operations.Operations_SwitchList", true);
 		// set frame size and train for display
     	pack();
+    	if (getWidth() < 400)
+    		setSize(400, getHeight());
+    	if (getHeight() < 300)
+    		setSize(getWidth(), 300);
 		setTitle(rb.getString("TitleSwitchLists"));
 		setVisible(true);
 	}

@@ -318,7 +318,9 @@ public class TrainPrintUtilities {
 	}
 	
 	public static String getDefaultPrinterName(){
-		return PrintServiceLookup.lookupDefaultPrintService().getName();
+		if (PrintServiceLookup.lookupDefaultPrintService() != null)
+			return PrintServiceLookup.lookupDefaultPrintService().getName();
+		return "";	// no default printer specified
 	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
