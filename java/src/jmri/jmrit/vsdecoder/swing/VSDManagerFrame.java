@@ -1,0 +1,300 @@
+package jmri.jmrit.vsdecoder.swing;
+
+/** class VSDManagerFrame
+ *
+ * Main frame for the new GUI VSDecoder Manager Frame
+ */
+
+/*
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ * <P>
+ *
+ * @author			Mark Underwood Copyright (C) 2011
+ * @version			$Revision: 21510 $
+ */
+
+import jmri.util.JmriJFrame;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Collections;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Arrays;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JToggleButton;
+import javax.swing.BoxLayout;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JSlider;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.EventListenerList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import jmri.jmrit.vsdecoder.VSDConfig;
+import jmri.jmrit.vsdecoder.VSDecoder;
+import jmri.jmrit.vsdecoder.VSDecoderManager;
+import jmri.jmrit.vsdecoder.VSDecoderBundle;
+import jmri.jmrit.vsdecoder.SoundEvent;
+
+@SuppressWarnings("serial")
+public class VSDManagerFrame extends JFrame {
+
+    private static final ResourceBundle rb = VSDecoderBundle.bundle();
+    public static enum PropertyChangeID { MUTE, VOLUME_CHANGE, ADD_DECODER, REMOVE_DECODER }
+
+    public static final Map<PropertyChangeID, String> PCIDMap;
+    static {
+	Map<PropertyChangeID, String> aMap = new HashMap<PropertyChangeID, String>();
+	aMap.put(PropertyChangeID.MUTE, "Mute");
+	aMap.put(PropertyChangeID.VOLUME_CHANGE, "VolumeChange");
+	aMap.put(PropertyChangeID.ADD_DECODER, "AddDecoder");
+	aMap.put(PropertyChangeID.REMOVE_DECODER, "RemoveDecoder");
+	PCIDMap = Collections.unmodifiableMap(aMap);
+    }
+
+    protected EventListenerList listenerList = new javax.swing.event.EventListenerList();
+
+    JPanel decoderPane;
+    JPanel volumePane;
+
+    private VSDConfig config;
+
+    //private List<JMenu> menuList;
+
+    /** Constructor */
+    public VSDManagerFrame() {
+	super();
+	config = new VSDConfig();
+	this.addPropertyChangeListener(VSDecoderManager.instance());
+	initGUI();
+    }
+
+    /** Build the GUI components */
+    public void initGUI() {
+	log.debug("initGUI");
+	this.setTitle(rb.getString("VSDManagerFrameTitle"));
+	//this.buildMenu();
+	this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
+
+	decoderPane = new JPanel();
+	decoderPane.setLayout(new BoxLayout(decoderPane, BoxLayout.PAGE_AXIS));
+
+	volumePane = new JPanel();
+	volumePane.setLayout(new BoxLayout(volumePane, BoxLayout.LINE_AXIS));
+	JToggleButton muteButton = new JToggleButton(rb.getString("MuteButtonLabel"));
+	JButton addButton = new JButton(rb.getString("AddButtonLabel"));
+	JSlider volume = new JSlider(0, 100);
+	volume.setMinorTickSpacing(10);
+	volume.setPaintTicks(true);
+	volume.setValue(80);
+	volume.setPreferredSize(new Dimension(200, 20));
+	volume.addChangeListener(new ChangeListener() {
+		public void stateChanged(ChangeEvent e) {
+		    volumeChange(e);
+		}
+	    });
+	volumePane.add(new JLabel(rb.getString("VolumePaneLabel")));
+	volumePane.add(volume);
+	volumePane.add(muteButton);
+	muteButton.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		    muteButtonPressed(e);
+		}
+	    });
+	volumePane.add(addButton);
+	addButton.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		    addButtonPressed(e);
+		}
+	    });
+
+	this.add(decoderPane);
+	this.add(volumePane);
+
+	log.debug("pane size + " + decoderPane.getPreferredSize());
+	this.pack();
+	this.setVisible(true);
+
+	log.debug("done...");
+    }
+
+    /** Handle "Mute" button press */
+    protected void muteButtonPressed(ActionEvent e) {
+	JToggleButton b = (JToggleButton)e.getSource();
+	log.debug("Mute button pressed. value = " + b.isSelected());
+	firePropertyChange(PropertyChangeID.MUTE, !b.isSelected(), b.isSelected());
+    }
+
+    /** Handle "Add" button press */
+    protected void addButtonPressed(ActionEvent e) {
+	log.debug("Add button pressed");
+	// Do something here.  Create a new VSDecoder and add it to the window.
+	VSDConfigDialog d = new VSDConfigDialog(decoderPane, rb.getString("NewDecoderConfigPaneTitle"), config);
+	d.addPropertyChangeListener(new PropertyChangeListener() {
+		public void propertyChange(PropertyChangeEvent event) {
+		    log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
+		    addButtonPropertyChange(event);
+		}
+		
+	    });
+	//firePropertyChange(PropertyChangeID.ADD_DECODER, null, null);
+    }
+
+    /** Callback for the Config Dialog */
+    protected void addButtonPropertyChange(PropertyChangeEvent event) {
+	log.debug("internal config dialog handler");
+	VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
+	if (newDecoder == null) {
+	    log.debug("no New Decoder constructed!" + config.toString());
+	}
+	VSDControl newControl = new VSDControl(config.getLocoAddress().toString());
+	// Set the Decoder to listen to PropertyChanges from the control
+	newControl.addPropertyChangeListener(newDecoder);
+	// Set US to listen to PropertyChanges from the control (mainly for DELETE)
+	newControl.addPropertyChangeListener(new PropertyChangeListener() {
+		public void propertyChange(PropertyChangeEvent event) {
+		    log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
+		    vsdControlPropertyChange(event);
+		}
+	    });
+	decoderPane.add(newControl);
+	if (newDecoder != null)
+	    newControl.addSoundButtons(new ArrayList<SoundEvent>(newDecoder.getEventList()));
+	//debugPrintDecoderList();
+	this.pack();
+	this.setVisible(true);
+	// Do we need to make newControl a listener to newDecoder?
+	//firePropertyChange(PropertyChangeID.ADD_DECODER, null, newDecoder);
+    }
+
+    /** Handle property change event from one of the VSDControls */
+    protected void vsdControlPropertyChange(PropertyChangeEvent event) {
+	String property = event.getPropertyName();
+	if (property.equals(VSDControl.PCIDMap.get(VSDControl.PropertyChangeID.DELETE))) {
+	    String ov = (String)event.getOldValue();
+	    String nv = (String)event.getNewValue();
+	    VSDecoder vsd = VSDecoderManager.instance().getVSDecoderByAddress(nv);
+	    if (vsd == null)
+		log.debug("VSD is null.");
+	    this.removePropertyChangeListener(vsd);
+	    log.debug("vsdControlPropertyChange: ID = " + PCIDMap.get(PropertyChangeID.REMOVE_DECODER) + " Old " + ov + " New " + nv);
+	    firePropertyChange(PropertyChangeID.REMOVE_DECODER, ov, nv);
+	    decoderPane.remove((VSDControl)event.getSource());
+	    //debugPrintDecoderList();
+	    decoderPane.validate();
+	    this.pack();
+	    this.setVisible(true);
+	}
+    }
+
+    /** (Debug only) Print the decoder list */
+    /*
+    private void debugPrintDecoderList() {
+	log.debug("Printing Decoder Lists from VSDManagerFrame...");
+	VSDecoderManager.instance().debugPrintDecoderList();
+    }
+    */
+
+    /** Handle volume slider change */
+    protected void volumeChange(ChangeEvent e) {
+	JSlider v = (JSlider)e.getSource();
+	log.debug("Volume slider moved. value = " + v.getValue());
+	firePropertyChange(PropertyChangeID.VOLUME_CHANGE, v.getValue(), v.getValue());
+    }
+
+    /*
+    private void buildMenu() {
+	JMenu fileMenu = new JMenu(vsdBundle.getString("VSDecoderFileMenu"));
+
+        fileMenu.add(new LoadVSDFileAction(vsdBundle.getString("VSDecoderFileMenuLoadVSDFile" )));
+        fileMenu.add(new StoreXmlVSDecoderAction(vsdBundle.getString("VSDecoderFileMenuSaveProfile" )));
+        fileMenu.add(new LoadXmlVSDecoderAction(vsdBundle.getString("VSDecoderFileMenuLoadProfile")));
+	fileMenu.add(new VSDecoderPreferencesAction(vsdBundle.getString("VSDecoderFileMenuPreferences")));
+
+	fileMenu.getItem(1).setEnabled(false); // disable XML store
+	fileMenu.getItem(2).setEnabled(false); // disable XML load
+
+	menuList = new ArrayList<JMenu>(2);
+
+	menuList.add(fileMenu);
+
+	this.setJMenuBar(new JMenuBar());
+	this.getJMenuBar().add(fileMenu);
+	this.addHelpMenu("package.jmri.jmrit.vsdecoder.VSDecoderFrame", true);
+	
+    }
+    */
+
+    /** Handle window close event */
+    public void windowClosing(java.awt.event.WindowEvent e) {
+	// Call the superclass function
+        //super.windowClosing(e);
+
+	log.debug("VSDecoderFrame windowClosing() called... " + e.toString());
+
+	log.debug("Calling decoderPane.windowClosing() directly " + e.toString());
+	//decoderPane.windowClosing(e);
+    }
+
+    // VSDecoderManager Events
+
+    /** Add a listener for this Pane's property change events */
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+	List<PropertyChangeListener> l = Arrays.asList(listenerList.getListeners(PropertyChangeListener.class));
+	if (!l.contains(listener))
+	    listenerList.add(PropertyChangeListener.class, listener);
+    }
+
+    /** Remove a listener */
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+	if (listener == null)
+	    log.warn("No listener!");
+	listenerList.remove(PropertyChangeListener.class, listener);
+    }
+
+    /** Fire a property change from this object */
+    // NOTE: should this be public???
+    public void firePropertyChange(PropertyChangeID id, Object oldProp, Object newProp) {
+	// map the property change ID
+	String pcname = PCIDMap.get(id);
+	PropertyChangeEvent pce = new PropertyChangeEvent(this, pcname, oldProp, newProp);
+	// Fire the actual PropertyChangeEvent
+	firePropertyChange(pce);
+    }
+
+    /** Fire a property change from this object */
+    void firePropertyChange(PropertyChangeEvent evt) {
+	if (evt == null) 
+	    log.warn("EVT is NULL!!");
+	for (PropertyChangeListener l : listenerList.getListeners(PropertyChangeListener.class)) {
+	    l.propertyChange(evt);
+	}
+    }
+
+    //public List<JMenu> getMenus() { return menuList; }
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDManagerFrame.class.getName());
+}
