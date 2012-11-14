@@ -16,7 +16,6 @@ import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,6 +24,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.util.swing.FontComboUtil;
 
 
 /**
@@ -106,7 +106,7 @@ public class PrintOptionFrame extends OperationsFrame{
 	Dimension minScrollerDim = new Dimension(700,60);
 	
 	// combo boxes
-	JComboBox fontComboBox = Setup.getFontComboBox();
+	JComboBox fontComboBox = new JComboBox();
 	JComboBox manifestOrientationComboBox = Setup.getOrientationComboBox();
 	JComboBox fontSizeComboBox = new JComboBox();
 	JComboBox pickupComboBox = Setup.getPrintColorComboBox();	// colors
@@ -201,6 +201,10 @@ public class PrintOptionFrame extends OperationsFrame{
 		JPanel pFontSize = new JPanel();
 		pFontSize.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFontSize")));
 		pFontSize.add(fontSizeComboBox);
+		
+		JPanel pFormat = new JPanel();
+		pFormat.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFormat")));
+		pFormat.add(tabFormatCheckBox);
 
 		JPanel pOrientation = new JPanel();
 		pOrientation.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOrientation")));
@@ -218,21 +222,17 @@ public class PrintOptionFrame extends OperationsFrame{
 		pLocalColor.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutLocalColor")));
 		pLocalColor.add(localComboBox);
 		
-		JPanel pFormat = new JPanel();
-		pFormat.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFormat")));
-		pFormat.add(tabFormatCheckBox);
-		
 		JPanel pSwitchFormat = new JPanel();
 		pSwitchFormat.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListFormat")));
 		pSwitchFormat.add(formatSwitchListCheckBox);
 
 		p1.add(pFont);
 		p1.add(pFontSize);
+		p1.add(pFormat);
 		p1.add(pOrientation);
 		p1.add(pPickupColor);
 		p1.add(pDropColor);
 		p1.add(pLocalColor);
-		p1.add(pFormat);
 		p1.add(pSwitchFormat);
 		
 		// engine message format		
@@ -504,7 +504,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		for (int i=7; i<15; i++)
 			fontSizeComboBox.addItem(i);
 		fontSizeComboBox.setSelectedItem(Setup.getFontSize());
-		fontComboBox.setSelectedItem(Setup.getFontName());
+		loadFontComboBox();
 
 		// setup buttons
 		addButtonAction(addLogoButton);
@@ -530,6 +530,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		addButtonAction(addSwitchListLocalComboboxButton);
 		addButtonAction(deleteSwitchListLocalComboboxButton);
 		
+		addCheckBoxAction(tabFormatCheckBox);
 		addCheckBoxAction(formatSwitchListCheckBox);
 		
 		setBuildReportRadioButton();
@@ -700,19 +701,19 @@ public class PrintOptionFrame extends OperationsFrame{
 			Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
 			OperationsSetupXml.instance().writeOperationsFile();
 			// Check font if user selected tab output
-			if (Setup.isTabEnabled() && (!Setup.getFontName().equals(Setup.COURIER) && !Setup.getFontName().equals(Setup.MONOSPACED))){
-				JOptionPane.showMessageDialog(this,
-						rb.getString("TabWorksBest"), rb.getString("ChangeFont"),
-						JOptionPane.WARNING_MESSAGE);				
-			}
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
 		}
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		log.debug("Switch list check box activated");
-		setSwitchListVisible(!formatSwitchListCheckBox.isSelected());
+		if (ae.getSource() == tabFormatCheckBox){
+			loadFontComboBox();
+		}
+		if (ae.getSource() == formatSwitchListCheckBox){
+			log.debug("Switch list check box activated");
+			setSwitchListVisible(!formatSwitchListCheckBox.isSelected());
+		}
 	}
 	
 	private void setSwitchListVisible(boolean b){
@@ -779,6 +780,17 @@ public class PrintOptionFrame extends OperationsFrame{
 				return;				
 			}				
 		}		
+	}
+	
+	private void loadFontComboBox(){
+		fontComboBox.removeAllItems();
+		List<String> fonts = FontComboUtil.getFonts(FontComboUtil.ALL);
+		if (tabFormatCheckBox.isSelected())
+			fonts = FontComboUtil.getFonts(FontComboUtil.MONOSPACED);
+		for (int i=0; i<fonts.size(); i++){
+			fontComboBox.addItem(fonts.get(i));
+		}
+		fontComboBox.setSelectedItem(Setup.getFontName());
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger

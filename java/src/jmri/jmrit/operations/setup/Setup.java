@@ -453,16 +453,6 @@ public class Setup {
 		enableVsdPhysicalLocations = enabled;
 	}
 	
-	/*
-	public static boolean isCreateReportersEnabled(){
-		return enableReporters;
-	}
-	
-	public static void setCreateReportersEnabled(boolean enabled){
-		enableReporters = enabled;
-	}
-	*/
-	
 	public static String getRailroadName(){
 		return railroadName;
 	}
@@ -1220,19 +1210,16 @@ public class Setup {
 		}
 	}
 	
-	public static JComboBox getFontComboBox(){
-		JComboBox box = new JComboBox();
-		//java.awt.Font fonts[] = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
-		//for (int i=0; i<fonts.length; i++){
-		//	box.addItem(fonts[i]);
-		//}
-		box.addItem(COURIER);
-		box.addItem(GARAMOND);
-		box.addItem(MONOSPACED);
-		box.addItem(SANSERIF);
-		box.addItem(SERIF);
-		return box;
-	}
+//	public static JComboBox getFontComboBox(){
+//		return jmri.util.swing.FontComboUtil.getFontCombo(FontComboUtil.ALL, 14);
+//		JComboBox box = new JComboBox();
+//		box.addItem(COURIER);
+//		box.addItem(GARAMOND);
+//		box.addItem(MONOSPACED);
+//		box.addItem(SANSERIF);
+//		box.addItem(SERIF);
+//		return box;
+//	}
 	
 	public static JComboBox getOrientationComboBox(){
 		JComboBox box = new JComboBox();
