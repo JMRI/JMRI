@@ -45,8 +45,11 @@ public class DebugMenu extends JMenu {
             new jmri.util.swing.sdi.JmriJFrameInterface(),
             "jmri.jmrit.log.Log4JTreePane"));
         add(new JSeparator());
-	add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction("Virtual Sound Decoder"));
-	add(new jmri.jmrit.beantable.SetPhysicalLocationAction("Set Reporter Locations", null));
+	JMenu vsdMenu = new JMenu("Virtual Sound Decoder");
+	vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction("New GUI", true));
+	vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction("Old GUI", false));
+	vsdMenu.add(new jmri.jmrit.beantable.SetPhysicalLocationAction("Set Reporter Locations", null));
+	add(vsdMenu);
 
 
     }
