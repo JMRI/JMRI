@@ -48,6 +48,7 @@ import jmri.jmrit.operations.locations.Location;
 import org.jdom.Element;
 
 import jmri.jmrit.vsdecoder.swing.VSDControl;
+import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
 
 public class VSDecoder implements PropertyChangeListener {
 
@@ -484,19 +485,28 @@ public class VSDecoder implements PropertyChangeListener {
 
 	// Respond to events from the old GUI.
 	String property = evt.getPropertyName();
-	if (property.equals(VSDecoderPane.PCIDMap.get(VSDecoderPane.PropertyChangeID.ADDRESS_CHANGE))) {
-	    log.debug("Decoder set address = " + (LocoAddress)evt.getNewValue());
-	    this.setAddress((LocoAddress)evt.getNewValue());
-	    this.enable();
-	} else if (property.equals(VSDecoderPane.PCIDMap.get(VSDecoderPane.PropertyChangeID.MUTE))) {
+	if ((property.equals(VSDManagerFrame.PCIDMap.get(VSDManagerFrame.PropertyChangeID.MUTE))) ||
+	    (property.equals(VSDecoderPane.PCIDMap.get(VSDecoderPane.PropertyChangeID.MUTE)))) {
+	    // Either GUI Mute button
 	    log.debug("VSD: Mute change. value = " + evt.getNewValue());
 	    Boolean b = (Boolean)evt.getNewValue();
 	    this.mute(b.booleanValue());
-	} else if (property.equals(VSDecoderPane.PCIDMap.get(VSDecoderPane.PropertyChangeID.VOLUME_CHANGE))) {
+
+	} else if ((property.equals(VSDManagerFrame.PCIDMap.get(VSDManagerFrame.PropertyChangeID.VOLUME_CHANGE))) ||
+		   (property.equals(VSDecoderPane.PCIDMap.get(VSDecoderPane.PropertyChangeID.VOLUME_CHANGE)))) {
+	    // Either GUI Volume slider
 	    log.debug("VSD: Volume change. value = " + evt.getNewValue());
 	    // Slider gives integer 0-100.  Need to change that to a float 0.0-1.0
 	    this.setMasterVolume((1.0f * (Integer)evt.getNewValue())/100.0f);
+	    
+	} else if (property.equals(VSDecoderPane.PCIDMap.get(VSDecoderPane.PropertyChangeID.ADDRESS_CHANGE))) {
+	    // OLD GUI Address Change
+	    log.debug("Decoder set address = " + (LocoAddress)evt.getNewValue());
+	    this.setAddress((LocoAddress)evt.getNewValue());
+	    this.enable();
+	    
 	} else if (property.equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
+	    // Train Location Move (either GUI)
 	    PhysicalLocation p = getTrainPosition((Train)evt.getSource());
 	    if (p != null)
 		this.setPosition(getTrainPosition((Train)evt.getSource()));
@@ -504,7 +514,9 @@ public class VSDecoder implements PropertyChangeListener {
 		log.debug("Train has null position");
 		this.setPosition(new PhysicalLocation());
 	    }
+	    
 	} else if (property.equals(Train.STATUS_CHANGED_PROPERTY))  {
+	    // Train Status change (either GUI)
 	    String status = (String)evt.getNewValue();
 	    log.debug("Train status changed: " + status);
 	    log.debug("New Location: " + getTrainPosition((Train)evt.getSource()));

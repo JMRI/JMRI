@@ -53,14 +53,21 @@ import javax.swing.event.EventListenerList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import jmri.util.JmriJFrame;
+import jmri.util.WindowMenu;
+
 import jmri.jmrit.vsdecoder.VSDConfig;
 import jmri.jmrit.vsdecoder.VSDecoder;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.VSDecoderBundle;
 import jmri.jmrit.vsdecoder.SoundEvent;
+import jmri.jmrit.vsdecoder.LoadVSDFileAction;
+import jmri.jmrit.vsdecoder.StoreXmlVSDecoderAction;
+import jmri.jmrit.vsdecoder.LoadXmlVSDecoderAction;
+import jmri.jmrit.vsdecoder.VSDecoderPreferencesAction;
 
 @SuppressWarnings("serial")
-public class VSDManagerFrame extends JFrame {
+public class VSDManagerFrame extends JmriJFrame {
 
     private static final ResourceBundle rb = VSDecoderBundle.bundle();
     public static enum PropertyChangeID { MUTE, VOLUME_CHANGE, ADD_DECODER, REMOVE_DECODER }
@@ -68,10 +75,10 @@ public class VSDManagerFrame extends JFrame {
     public static final Map<PropertyChangeID, String> PCIDMap;
     static {
 	Map<PropertyChangeID, String> aMap = new HashMap<PropertyChangeID, String>();
-	aMap.put(PropertyChangeID.MUTE, "Mute");
-	aMap.put(PropertyChangeID.VOLUME_CHANGE, "VolumeChange");
-	aMap.put(PropertyChangeID.ADD_DECODER, "AddDecoder");
-	aMap.put(PropertyChangeID.REMOVE_DECODER, "RemoveDecoder");
+	aMap.put(PropertyChangeID.MUTE, "VSDMF:Mute");
+	aMap.put(PropertyChangeID.VOLUME_CHANGE, "VSDMF:VolumeChange");
+	aMap.put(PropertyChangeID.ADD_DECODER, "VSDMF:AddDecoder");
+	aMap.put(PropertyChangeID.REMOVE_DECODER, "VSDMF:RemoveDecoder");
 	PCIDMap = Collections.unmodifiableMap(aMap);
     }
 
@@ -81,6 +88,8 @@ public class VSDManagerFrame extends JFrame {
     JPanel volumePane;
 
     private VSDConfig config;
+
+    private List<JMenu> menuList;
 
     //private List<JMenu> menuList;
 
@@ -96,7 +105,7 @@ public class VSDManagerFrame extends JFrame {
     public void initGUI() {
 	log.debug("initGUI");
 	this.setTitle(rb.getString("VSDManagerFrameTitle"));
-	//this.buildMenu();
+	this.buildMenu();
 	this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
 
 	decoderPane = new JPanel();
@@ -169,10 +178,12 @@ public class VSDManagerFrame extends JFrame {
 	VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
 	if (newDecoder == null) {
 	    log.debug("no New Decoder constructed!" + config.toString());
+	    return;
 	}
 	VSDControl newControl = new VSDControl(config.getLocoAddress().toString());
 	// Set the Decoder to listen to PropertyChanges from the control
 	newControl.addPropertyChangeListener(newDecoder);
+	this.addPropertyChangeListener(newDecoder);
 	// Set US to listen to PropertyChanges from the control (mainly for DELETE)
 	newControl.addPropertyChangeListener(new PropertyChangeListener() {
 		public void propertyChange(PropertyChangeEvent event) {
@@ -225,28 +236,50 @@ public class VSDManagerFrame extends JFrame {
 	firePropertyChange(PropertyChangeID.VOLUME_CHANGE, v.getValue(), v.getValue());
     }
 
-    /*
     private void buildMenu() {
-	JMenu fileMenu = new JMenu(vsdBundle.getString("VSDecoderFileMenu"));
+	JMenu fileMenu = new JMenu(rb.getString("VSDecoderFileMenu"));
 
-        fileMenu.add(new LoadVSDFileAction(vsdBundle.getString("VSDecoderFileMenuLoadVSDFile" )));
-        fileMenu.add(new StoreXmlVSDecoderAction(vsdBundle.getString("VSDecoderFileMenuSaveProfile" )));
-        fileMenu.add(new LoadXmlVSDecoderAction(vsdBundle.getString("VSDecoderFileMenuLoadProfile")));
-	fileMenu.add(new VSDecoderPreferencesAction(vsdBundle.getString("VSDecoderFileMenuPreferences")));
+        fileMenu.add(new LoadVSDFileAction(rb.getString("VSDecoderFileMenuLoadVSDFile" )));
+        fileMenu.add(new StoreXmlVSDecoderAction(rb.getString("VSDecoderFileMenuSaveProfile" )));
+        fileMenu.add(new LoadXmlVSDecoderAction(rb.getString("VSDecoderFileMenuLoadProfile")));
+
+	JMenu editMenu = new JMenu(rb.getString("VSDecoderEditMenu"));
+	editMenu.add(new VSDecoderPreferencesAction(rb.getString("VSDecoderFileMenuPreferences")));
 
 	fileMenu.getItem(1).setEnabled(false); // disable XML store
 	fileMenu.getItem(2).setEnabled(false); // disable XML load
 
-	menuList = new ArrayList<JMenu>(2);
+	menuList = new ArrayList<JMenu>(3);
 
 	menuList.add(fileMenu);
+	menuList.add(editMenu);
 
 	this.setJMenuBar(new JMenuBar());
 	this.getJMenuBar().add(fileMenu);
-	this.addHelpMenu("package.jmri.jmrit.vsdecoder.VSDecoderFrame", true);
+	this.getJMenuBar().add(editMenu);
+	this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.VSDManagerFrame", true); // Fix this... needs to be help for the new frame
 	
     }
-    */
+
+    /**
+     * Add a standard help menu, including window specific help item.
+     * @param ref JHelp reference for the desired window-specific help page
+     * @param direct true if the help menu goes directly to the help system,
+     *        e.g. there are no items in the help menu
+     *
+     * WARNING: BORROWED FROM JmriJFrame.  
+     */
+    public void addHelpMenu(String ref, boolean direct) {
+        // only works if no menu present?
+        JMenuBar bar = getJMenuBar();
+        if (bar == null) bar = new JMenuBar();
+        // add Window menu
+		bar.add(new WindowMenu(this)); // * GT 28-AUG-2008 Added window menu
+		// add Help menu
+        jmri.util.HelpUtil.helpMenu(bar, ref, direct);
+        setJMenuBar(bar);
+    }
+
 
     /** Handle window close event */
     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -282,6 +315,7 @@ public class VSDManagerFrame extends JFrame {
 	String pcname = PCIDMap.get(id);
 	PropertyChangeEvent pce = new PropertyChangeEvent(this, pcname, oldProp, newProp);
 	// Fire the actual PropertyChangeEvent
+	log.debug("Firing property change: " + pcname);
 	firePropertyChange(pce);
     }
 
