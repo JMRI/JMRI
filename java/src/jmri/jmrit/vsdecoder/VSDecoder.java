@@ -47,6 +47,8 @@ import jmri.jmrit.operations.locations.Location;
 
 import org.jdom.Element;
 
+import jmri.jmrit.vsdecoder.swing.VSDControl;
+
 public class VSDecoder implements PropertyChangeListener {
 
     boolean initialized = false;   // This decoder has been initialized
@@ -85,6 +87,47 @@ public class VSDecoder implements PropertyChangeListener {
 	    
 	// Force re-initialization
 	initialized = _init();
+    }
+
+    /** public VSDecoder(VSDConfig cfg)
+     *
+     * Construct a VSDecoder with the given system name (id)
+     * and configuration (config)
+     *
+     * Parameters:
+     * @param cfg  (VSDConfig) Configuration
+     */
+    public VSDecoder(VSDConfig cfg) {
+	config = cfg;
+
+	sound_list = new HashMap<String, VSDSound>();
+	trigger_list = new HashMap<String, Trigger>();
+	event_list = new HashMap<String, SoundEvent>();
+	    
+	// Force re-initialization
+	initialized = _init();
+
+	try {
+	    VSDFile vsdfile = new VSDFile(config.getVSDPath());
+	    if (vsdfile.isInitialized()) {
+		log.debug("Constructor: vsdfile init OK, loading XML...");
+		this.setXml(vsdfile, config.getProfileName());
+	    } else {
+		log.debug("Constructor: vsdfile init FAILED.");
+		initialized = false;
+	    }
+	} catch (java.util.zip.ZipException e) {
+	    log.error("ZipException loading VSDecoder from " + config.getVSDPath());
+	    // would be nice to pop up a dialog here...
+	} catch (java.io.IOException ioe) {
+	    log.error("IOException loading VSDecoder from " + config.getVSDPath());
+	    // would be nice to pop up a dialog here...
+	}
+
+	// Since the Config already has the address set, we need to call
+	// our own setAddress() to register the throttle listener
+	this.setAddress(config.getLocoAddress());
+	this.enable();
     }
 
     /**
@@ -433,7 +476,13 @@ public class VSDecoder implements PropertyChangeListener {
      */
     @SuppressWarnings("cast")
     public void propertyChange(PropertyChangeEvent evt) {
-	// Respond to events from the GUI.
+	// Respond to events from the new GUI.
+	if (evt.getSource() instanceof VSDControl) {
+	    // Nothing to do... yet...
+	    return;
+	}
+
+	// Respond to events from the old GUI.
 	String property = evt.getPropertyName();
 	if (property.equals(VSDecoderPane.PCIDMap.get(VSDecoderPane.PropertyChangeID.ADDRESS_CHANGE))) {
 	    log.debug("Decoder set address = " + (LocoAddress)evt.getNewValue());

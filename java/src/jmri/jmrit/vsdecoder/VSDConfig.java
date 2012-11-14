@@ -106,5 +106,14 @@ public class VSDConfig {
     public void setRosterEntry(RosterEntry r) {
 	roster = r;
     }
+
+    public String toString() {
+	return("Config: ID:" + my_id + 
+	       " Path:" + vsd_path + 
+	       " Profile:" + profile_name + 
+	       " Addr:" + address + 
+	       " Vol:" + volume + 
+	       " Loc:" + location);
+    }
     
 }

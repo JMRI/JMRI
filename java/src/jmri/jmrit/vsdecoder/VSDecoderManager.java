@@ -22,11 +22,13 @@ package jmri.jmrit.vsdecoder;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.List;
 import java.util.Iterator;
 import java.util.ResourceBundle;
+import java.util.Map;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -42,6 +44,7 @@ import jmri.LocoAddress;
 import jmri.PhysicalLocationReporter;
 import jmri.util.PhysicalLocation;
 import jmri.IdTag;
+import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
 
 // VSDecoderFactory
 //
@@ -54,7 +57,8 @@ public class VSDecoderManager implements PropertyChangeListener {
     private static final String vsd_property_change_name = "VSDecoder Manager";
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
-    HashMap<String, VSDecoder> decodertable; // list of active decoders
+    HashMap<String, VSDecoder> decodertable; // list of active decoders by System ID
+    HashMap<String, VSDecoder> decoderAddressMap; // List of active decoders by address
     HashMap<String, String> profiletable;    // list of loaded profiles key = profile name, value = path
     List<String> reportertable;        // list of Reporters we are following.
 
@@ -79,6 +83,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     public VSDecoderManager() {
 	// Setup the decoder table
 	decodertable = new HashMap<String, VSDecoder>();
+	decoderAddressMap = new HashMap<String, VSDecoder>();
 	profiletable = new HashMap<String, String>();  // key = profile name, value = path
 	reportertable = new ArrayList<String>();
 	// Get preferences
@@ -134,6 +139,7 @@ public class VSDecoderManager implements PropertyChangeListener {
 	    log.debug("Profile " + profile_name + " is in table.  Path = " + path);
 	    vsd = new VSDecoder(getNextVSDecoderID(), profile_name, path);
 	    decodertable.put(vsd.getID(), vsd);  // poss. broken for duplicate profile names
+	    decoderAddressMap.put(vsd.getAddress().toString(), vsd);
 	    return(vsd);
 	} else {
 	    // Don't have enough info to try to load from file.
@@ -145,7 +151,47 @@ public class VSDecoderManager implements PropertyChangeListener {
     public VSDecoder getVSDecoder(String profile_name, String path) {
 	VSDecoder vsd = new VSDecoder(getNextVSDecoderID(), profile_name, path);
 	decodertable.put(vsd.getID(), vsd); // poss. broken for duplicate profile names
+	if (vsd.getAddress() != null)
+	    decoderAddressMap.put(vsd.getAddress().toString(), vsd);
 	return(vsd);
+    }
+
+    /** Provide or build a VSDecoder based on a provided configuration */
+    public VSDecoder getVSDecoder(VSDConfig config) {
+	String path;
+	String profile_name = config.getProfileName();
+	if (profiletable.containsKey(profile_name)) {
+	    path = profiletable.get(profile_name);
+	    log.debug("Profile " + profile_name + " is in table.  Path = " + path);
+	    config.setVSDPath(path);
+	    config.setID(getNextVSDecoderID());
+	    VSDecoder vsd = new VSDecoder(config);
+	    decodertable.put(vsd.getID(), vsd);
+	    decoderAddressMap.put(vsd.getAddress().toString(), vsd);
+	    //debugPrintDecoderList();
+	    return(vsd);
+	} else {
+	    // Don't have enough info to try to load from file.
+	    log.error("Requested profile not loaded: " + profile_name);
+	    return(null);
+	}
+    }
+
+    public void debugPrintDecoderList() {
+	log.debug("Current Decoder List by System ID:");
+	Set<Map.Entry<String, VSDecoder>> ids = decodertable.entrySet();
+	Iterator<Map.Entry<String, VSDecoder>> idi = ids.iterator();
+	while (idi.hasNext()) {
+	    Map.Entry<String, VSDecoder> e = idi.next();
+	    log.debug("    ID = " +  e.getKey() + " Val = " + e.getValue().getAddress().toString());
+	}
+	log.debug("Current Decoder List by Address:");
+	ids = decoderAddressMap.entrySet();
+	idi = ids.iterator();
+	while (idi.hasNext()) {
+	    Map.Entry<String, VSDecoder> e = idi.next();
+	    log.debug("    ID = " +  e.getKey() + " Val = " + e.getValue().getAddress().toString());
+	}
     }
 
     public VSDecoder getVSDecoderByID(String id) {
@@ -154,6 +200,44 @@ public class VSDecoderManager implements PropertyChangeListener {
 	    log.debug("No decoder in table! ID = " + id);
 	return(decodertable.get(id));
     }
+
+    public VSDecoder getVSDecoderByAddress(String sa) {
+	if (sa == null) {
+	    log.debug("Decoder Address is Null");
+	    return(null);
+	}
+	log.debug("Decoder Address: " + sa);
+	VSDecoder rv = decoderAddressMap.get(sa);
+	if (rv == null) {
+	    log.debug("Not found.");
+	} else {
+	    log.debug("Found: " + rv.getAddress());
+	}
+	return(rv);
+    }
+
+    /*
+    public VSDecoder getVSDecoderByAddress(String sa) {
+	// First, translate the string into a DccLocoAddress
+        // no object if no address
+        if (sa.equals("")) return null;
+        
+	DccLocoAddress da = null;
+        // ask the Throttle Manager to handle this!
+        LocoAddress.Protocol protocol;
+        if(InstanceManager.throttleManagerInstance()!=null){
+            protocol = InstanceManager.throttleManagerInstance().getProtocolFromString(sa);
+            da = (DccLocoAddress)InstanceManager.throttleManagerInstance().getAddress(sa, protocol);
+        }
+
+	// now look up the decoder
+	if (da != null) {
+	    return getVSDecoderByAddress(da);
+	}
+	return(null);
+	
+    }
+    */
 
     public void setDefaultVSDecoder(VSDecoder d) {
 	default_decoder = d;
@@ -243,9 +327,19 @@ public class VSDecoderManager implements PropertyChangeListener {
 	}
     }
 
-    /*
-    @Deprecated
-    private void loadProfiles(String path) {
+
+    /** getProfilePath()
+     *
+     *  Retrieve the Path for a given Profile name.
+     */
+    public String getProfilePath(String profile) {
+	return(profiletable.get(profile));
+    }
+
+    /** Load Profiles from a VSD file
+     * Not deprecated anymore. used by the new ConfigDialog.
+     */
+    public void loadProfiles(String path) {
 	try {
 	    VSDFile vsdfile = new VSDFile(path);
 	    if (vsdfile.isInitialized()) {
@@ -259,7 +353,7 @@ public class VSDecoderManager implements PropertyChangeListener {
 	    // would be nice to pop up a dialog here...
 	}
     }
-    */
+
     protected void registerReporterListener(String sysName) {
 	Reporter r = jmri.InstanceManager.reporterManagerInstance().getReporter(sysName);
 	if (r == null) {
@@ -310,8 +404,20 @@ public class VSDecoderManager implements PropertyChangeListener {
 	    reporterManagerPropertyChange(evt);
 	} else if (evt.getSource() instanceof jmri.Reporter) {
 	    reporterPropertyChange(evt);
+	} else if (evt.getSource() instanceof VSDManagerFrame) {
+	    if (evt.getPropertyName().equals(VSDManagerFrame.PCIDMap.get(VSDManagerFrame.PropertyChangeID.REMOVE_DECODER))) {
+		// Shut down the requested decoder and remove it from the manager's hash maps. 
+		// Unless there are "illegal" handles, this should put the decoder on the garbage heap.  I think.
+		String sa = (String)evt.getNewValue();
+		VSDecoder d = this.getVSDecoderByAddress(sa);
+		log.debug("Removing Decoder " + sa + " ... " + d.getAddress());
+		d.shutdown();
+		decodertable.remove(d.getID());
+		decoderAddressMap.remove(sa);
+		debugPrintDecoderList();
+	    }
 	} else {
-	    // does nothing ... yet...
+	    // Un-Handled source. Does nothing ... yet...
 	}
 	return;
     }

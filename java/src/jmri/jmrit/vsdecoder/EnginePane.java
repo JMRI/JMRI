@@ -85,7 +85,7 @@ public class EnginePane extends JPanel {
 	listenerList.remove(PropertyChangeListener.class, listener);
     }
 
-    void firePropertyChangeEvent(PropertyChangeEvent evt) {
+    protected void firePropertyChangeEvent(PropertyChangeEvent evt) {
 	//Object[] listeners = listenerList.getListenerList();
 
 	for (PropertyChangeListener l : listenerList.getListeners(PropertyChangeListener.class)) {

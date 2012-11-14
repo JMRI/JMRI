@@ -161,7 +161,7 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
 
 	// Create the "button"  (should this be in constructor)
 	log.debug("Creating DieselPane");
-	engine_pane = new DieselPane("Engine");
+	engine_pane = new jmri.jmrit.vsdecoder.swing.DieselPane("Engine");
 
 	// Handle common stuff
 	super.setXml(el, vf);

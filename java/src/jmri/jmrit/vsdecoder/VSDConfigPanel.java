@@ -363,6 +363,8 @@ public class VSDConfigPanel extends JmriPanel {
 	    dec = VSDecoderManager.instance().getVSDecoder(vsd_profile, vsd_path);
 	    if (dec != null) {
 		log.debug("VSDecoder loaded from file: " + dec.getProfileName());
+		dec.setAddress(rosterEntry.getDccLocoAddress());
+		dec.enable();
 		main_pane.setDecoder(dec);
 		ArrayList<String> sl = VSDecoderManager.instance().getVSDProfileNames();
 		updateProfileList(sl);

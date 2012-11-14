@@ -21,7 +21,9 @@ package jmri.jmrit.vsdecoder;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import javax.swing.JFrame;
 import java.io.File;
+import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
 
 /**
  * Create a new VSDecoder Pane.
@@ -32,17 +34,20 @@ import java.io.File;
 @SuppressWarnings("serial")
 public class VSDecoderCreationAction extends AbstractAction {
 
+    Boolean _useNewGUI = false;
+
     /**
      * Constructor
      * @param s Name for the action.
      */
-    public VSDecoderCreationAction(String s) {
+    public VSDecoderCreationAction(String s, Boolean ng) {
         super(s);
+	_useNewGUI = ng;
     }
 
     public VSDecoderCreationAction() {
         //this(ThrottleBundle.bundle().getString("MenuItemNewThrottle"));
-        this("Virtual Sound Decoder");
+        this("Virtual Sound Decoder", false);
     }
 
     /**
@@ -51,7 +56,11 @@ public class VSDecoderCreationAction extends AbstractAction {
      */
     public void actionPerformed(ActionEvent e) {
 	String fp = null, fn = null;
-    	VSDecoderFrame tf = new VSDecoderFrame();
+	JFrame tf = null;
+	if (_useNewGUI == true)
+	    tf = new VSDManagerFrame();
+	else
+	    tf = new VSDecoderFrame();
 	if (VSDecoderManager.instance().getVSDecoderPreferences().isAutoLoadingDefaultVSDFile()) {
 	    // Force load of a VSD file
 	    fp = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
