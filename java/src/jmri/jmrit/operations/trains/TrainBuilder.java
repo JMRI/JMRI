@@ -50,6 +50,8 @@ public class TrainBuilder extends TrainCommon{
 	protected static final String THREE = Setup.BUILD_REPORT_NORMAL;
 	protected static final String FIVE = Setup.BUILD_REPORT_DETAILED;
 	protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
+	
+	protected static final String BLANK_LINE = " ";
 			
 	// build variables shared between local routines
 	Train train;				// the train being built
@@ -1125,9 +1127,6 @@ public class TrainBuilder extends TrainCommon{
         		}
     		} 
 		}
-
-		addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildFoundCars"),new Object[]{Integer.toString(carList.size()), train.getName()}));
-
 		// adjust car list to only have cars from one staging track
 		if (departStageTrack != null){
 			// Make sure that all cars in staging are moved
@@ -1138,7 +1137,7 @@ public class TrainBuilder extends TrainCommon{
 				Car c = carManager.getById(carList.get(carIndex));
 				if (c.getLocationName().equals(departLocation.getName())){
 					if (c.getTrackName().equals(departStageTrack.getName())){
-						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingCarAtLoc"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
+//						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingCarAtLoc"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
 						numCarsFromStaging++;
 						// populate car blocking hashtable
 						// don't block cabooses, cars with FRED, or passenger.  Only block lead cars in kernel
@@ -1152,9 +1151,19 @@ public class TrainBuilder extends TrainCommon{
 							numOfBlocks.put(c.getLastLocationId(), number);
 						}
 					} else {
-						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildExcludeCarAtLoc"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
+						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarAtLoc"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
 						carList.remove(c.getId());
 						carIndex--;
+					}
+				}
+			}
+			// show how many cars are departing from staging
+			addLine(buildReport, FIVE, "Departing staging track ("+departStageTrack.getName()+") with "+numCarsFromStaging+" cars");
+			for (carIndex=0; carIndex<carList.size(); carIndex++){
+				Car c = carManager.getById(carList.get(carIndex));
+				if (c.getLocationName().equals(departLocation.getName())){
+					if (c.getTrackName().equals(departStageTrack.getName())){
+						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildStagingCarAtLoc"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
 					}
 				}
 			}
@@ -1165,6 +1174,10 @@ public class TrainBuilder extends TrainCommon{
 			}
 			log.debug("Staging departure track ("+departStageTrack.getName()+") has "+numCarsFromStaging+" cars and "+numOfBlocks.size()+" blocks");
 		}
+		
+		// show how many cars were found
+		addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildFoundCars"),new Object[]{Integer.toString(carList.size()), train.getName()}));
+		
 		// now go through the car list and remove non-lead cars in kernels, destinations that aren't part of this route
 		for (carIndex=0; carIndex<carList.size(); carIndex++){
 			Car c = carManager.getById(carList.get(carIndex));
@@ -1476,12 +1489,15 @@ public class TrainBuilder extends TrainCommon{
 								|| (car.getLocationName().equals(departLocation.getName()) && departStageTrack != null))
 							// move this car, routing failed!
 							findDestinationAndTrack(car, rl, routeIndex, routeList.size());
+						else
+							addLine(buildReport, SEVEN, BLANK_LINE);	// add line when in very detailed report mode
 					} else {
 						// did the router assign a destination?
 						if (!checkCarForDestinationAndTrack(car, rl, routeIndex) && car.getTrack() != departStageTrack){
 							log.debug("Removing car ("+car.toString()+") from list, no car destination");
 							carList.remove(car.getId());
 							carIndex--;
+							addLine(buildReport, SEVEN, BLANK_LINE);	// add line when in very detailed report mode
 							continue;
 						}
 					}
@@ -1607,7 +1623,7 @@ public class TrainBuilder extends TrainCommon{
 		destination.setStatus();
 		// add car to train
 		addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarAssignedDest"),new Object[]{car.toString(), (destination.getName()+", "+track.getName())}));
-		addLine(buildReport, SEVEN, " ");	// add line when in very detailed report mode
+		addLine(buildReport, SEVEN, BLANK_LINE);	// add line when in very detailed report mode
 		car.setTrain(train);
 		car.setRouteLocation(rl);
 		car.setRouteDestination(rld);
@@ -2066,7 +2082,7 @@ public class TrainBuilder extends TrainCommon{
 	 */
 	private void findNextDestinationForCarLoad(Car car) throws BuildFailedException{
 		//log.debug("Car ("+car.toString()+ ") has load ("+car.getLoad()+") without a destination");
-		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchForSiding"),new Object[]{car.toString(), car.getLoad(), car.getLocationName()+", "+car.getTrackName()}));
+		addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildSearchForSiding"),new Object[]{car.toString(), car.getLoad(), car.getLocationName()+", "+car.getTrackName()}));
 		List<Track> tracks = locationManager.getTracks(Track.SIDING);
 		log.debug("Found "+tracks.size()+" spurs");
 		for (int i=0; i<tracks.size(); i++){
@@ -2449,7 +2465,7 @@ public class TrainBuilder extends TrainCommon{
 				car.setNextDestTrack(car.getPreviousNextDestTrack());
 				car.setDestination(null,null);
 				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoDestForCar"),new Object[]{car.toString()}));
-				addLine(buildReport, SEVEN, " ");	// add line when in very detailed report mode
+				addLine(buildReport, SEVEN, BLANK_LINE);	// add line when in very detailed report mode
 			}
 		}
 		return true;
@@ -2511,7 +2527,7 @@ public class TrainBuilder extends TrainCommon{
 			if (rld.canDrop() || car.hasFred() || car.isCaboose()){
 				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchingLocation"),new Object[]{rld.getName(),}));
 			} else {
-				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildRouteNoDropLocation"),new Object[]{train.getRoute().getName(), rld.getName()}));
+				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildRouteNoDropLocation"),new Object[]{train.getRoute().getName(), rld.getName()}));
 				continue;
 			}
 			// get the destination
@@ -2742,7 +2758,7 @@ public class TrainBuilder extends TrainCommon{
 		} 
 		if (routeList.size()>1){
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoDestForCar"),new Object[]{car.toString()}));
-			addLine(buildReport, SEVEN, " ");	// add line when in very detailed report mode
+			addLine(buildReport, SEVEN, BLANK_LINE);	// add line when in very detailed report mode
 			if (car.getTrack() != null && !car.getTrack().getServiceOrder().equals(Track.NORMAL)){
 				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildRemoveCarServiceOrder"),new Object[]{car.toString(), car.getTrack().getName(), car.getTrack().getServiceOrder()}));
 				carList.remove(car.getId());

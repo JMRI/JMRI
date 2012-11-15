@@ -764,53 +764,7 @@ The program will add the "Hazardous Comment" to the manifests and switch lists w
 selected in the "Car Edit" window and the "Hazardous" message format is selected in your manifest and switch lists
 print options.  You can change the comment if desired, and press "Save" to keep the change.
 
-   <H3>Switch List Options</H3>
 
-   There are three options for adjusting the switch lists to your liking. The first checkbox option
-   when selected tells the program to print all trains that visit a location, even if the train
-   doesn't have any work. If you deselect this option, then the program only prints out trains that
-   have work at that location.
-
-   <P>The next option when selected causes the program to print a train's switch list on a new
-    page for each train. This way your operators when completing the work for a train, can simply
-    discard the paperwork for that train. This mode is also useful if you have more than one
-    operator working a location, this way they can easily hand out the work by train.</P>
-
-   <P>The last option is whether you want your switch lists in real time or consolidation mode.
-    Normally you would generate your switch lists in real time. In this mode the switch list for a
-    location shows the work planned for trains that are built and not yet terminated.</P>
-
-   <P>If you only want to print out work for new trains, then deselect the real time option.
-    Once you've printed out the switch list for a location, when new work is created by building
-    trains, the old work for older trains is deleted. Note that you can use preview to see what work
-    a location has, but until you print it, new work will be added to the whatever work is currently
-    scheduled. So please understand that preview and print work differently in consolidation mode.</P>
-   <P>Another use for consolidation mode is to create large switch lists for a location by
-    building and terminating several trains. For example, if you have a small layout, you might have
-    to build and terminate quite a few trains in order to generate enough work for your operators.
-    If you use switch lists in real time you have to print them out before you terminate your
-    trains. Now if there isn't much work your switch list is going to be pretty short. By
-    deselecting the "Real Time" checkbox you can consolidate several small switch lists in to one
-    larger one. Use this mode if you want to save paper, otherwise don't bother, as it can be
-    difficult to use. It's a bit complicated, so here's the order you need to do things:</P>
-   <uL>
-    <li>In the "Print Options" window, deselect the "Real Time" checkbox and press "Save".
-    <li>Then build the trains you want consolidated switch lists for, then</li>
-    <li>press the "Switch Lists" button found at the bottom the "Trains" window, then</li>
-    <li>select which locations you want switch lists for in the "Switch Lists by Location"
-     window.</li>
-    <li>Then press the "Preview Switch Lists" or "Update Switch Lists" button.</li>
-    <li>Now print out your train manifests and terminate the trains you want terminated.</li>
-    <li>Continue building, updating switch lists, and terminating trains until your happy with
-     the amount of work generated.</li>
-    <li>Finally, print out your switch lists.</li>
-   </uL>
-
-   <P>Printing out the switch list for a location tells the program that you're done
-    consolidating your trains for this location. The program will clear the switch list when the
-    next change occurs to that location. If there are no changes to a location, then the switch list
-    is a copy of the last one printed. This allows you to print more than one copy of the switch
-    list if needed.</P>
 
    <H3>Manifest Preview</H3>
 
@@ -818,25 +772,29 @@ print options.  You can change the comment if desired, and press "Save" to keep 
    This option also allows you to make manual changes to your manifests before you print them.
    
    <A NAME="BuildReportDetails"></A>
-   <H3>Build Report Details</H3>
+   <H3>Build Report Options</H3>
 
-   You can adjust the amount of information that the build report will show. Select one of the four
-   levels using the radio buttons in the Print Options window. The program when generating the build
-   reports stores the "Very Detailed" information to disk. The radio buttons control how much of
-   that data is actually printed. The "Minimal" radio button provides the least amount of
-   information and "Very Detailed" provides the most. If you're only interested why a train won't
-   build, the "Minimal" setting can provide you with this information. The "Normal" setting shows
-   the train's route and requirements, along with the choices the program makes for setting out
-   locomotives and cars. The "Detailed" provides additional comments about the build and shows all
-   of the available cars for the train. The "Very Detailed" setting produces the most pages, and
-   will show why cars are excluded from the train, and why they are not picked up or set out. Be
-   sure and press "Save" after changing the build report selection.
+   From the "Operations-&gt;Settings-&gt;Tools" menu select "Build Report Options" to open the build
+   report options window. 
+   
+   <p>You can adjust the amount of information that the build report will show.
+   Select one of the four levels using the radio buttons in the Build Report Options window. The
+   program when generating the build reports stores the "Very Detailed" information to disk. The
+   radio buttons control how much of that data is actually printed. The "Minimal" radio button
+   provides the least amount of information and "Very Detailed" provides the most. If you're only
+   interested why a train won't build, the "Minimal" setting might provide you with this
+   information. The "Normal" setting shows the train's route and requirements, along with the
+   choices the program makes for setting out locomotives and cars. The "Detailed" provides
+   additional comments about the build and shows all of the available cars for the train. The "Very
+   Detailed" setting produces the most pages, and will show why cars are excluded from the train,
+   and why they are not picked up or set out. Be sure and press "Save" after changing the build
+   report selection.</p>
 
    <P>
    You also have the option of using a text editor to view your build report.  A text editor can make
    trouble shooting a problem much easier for you.  For example, say you have a car that isn't moving.
    Using the editor's find feature, you could search the build report using the car's road number
-   and quickly find why the car isn't being picked up by the train.
+   and quickly find why the car isn't being picked up by the train.</P>
    
 <A NAME="Locations"></A>
 <H2>Locations</H2>
@@ -2519,8 +2477,8 @@ for any reason and the "Build Reports" checkbox is selected, the program
 will send a report to your printer if the "Preview Manifests" isn't
 selected; or to a preview window if the "Preview Manifest" is selected.
 The build report can print out different levels of detail, from minimal
-to very detailed. See the Settings section <A HREF="#BuildReportDetails">Build
-Report Details</A> for more information on how to change the build report
+to very detailed. See the Settings section <A HREF="#BuildReportDetails">
+Build Report Options</A> for more information on how to change the build report
 detail level.
 
 <P><img src="images/BuildReport.png"></P>
@@ -2634,10 +2592,59 @@ charge of a yard or a location with many spurs or industries.
    <P>The switch list menu also lets you add a comment to the switch list for a location and
     select which printer to use when printing out the switch list.  Note that the program when
     printing out manifests will also use the printer associated the train's departure location.</P>
+    
+   <H3>Switch List Options</H3>
 
-   <P><img src="images/SwitchList.png"></P>
+   There are three options for adjusting the switch lists to your liking. The first checkbox option
+   when selected tells the program to print all trains that visit a location, even if the train
+   doesn't have any work. If you deselect this option, then the program only prints out trains that
+   have work at that location.
 
-<A NAME="TrainMove"></A>
+   <P>The next option when selected causes the program to print a train's switch list on a new
+    page for each train. This way your operators when completing the work for a train, can simply
+    discard the paperwork for that train. This mode is also useful if you have more than one
+    operator working a location, this way they can easily hand out the work by train.</P>
+
+   <P>The last option is whether you want your switch lists in real time or consolidation mode.
+    Normally you would generate your switch lists in real time. In this mode the switch list for a
+    location shows the work planned for trains that are built and not yet terminated.</P>
+
+   <P>If you only want to print out work for new trains, then deselect the real time option.
+    Once you've printed out the switch list for a location, when new work is created by building
+    trains, the old work for older trains is deleted. Note that you can use preview to see what work
+    a location has, but until you print it, new work will be added to the whatever work is currently
+    scheduled. So please understand that preview and print work differently in consolidation mode.</P>
+   <P>Another use for consolidation mode is to create large switch lists for a location by
+    building and terminating several trains. For example, if you have a small layout, you might have
+    to build and terminate quite a few trains in order to generate enough work for your operators.
+    If you use switch lists in real time you have to print them out before you terminate your
+    trains. Now if there isn't much work your switch list is going to be pretty short. By
+    deselecting the "Real Time" checkbox you can consolidate several small switch lists in to one
+    larger one. Use this mode if you want to save paper, otherwise don't bother, as it can be
+    difficult to use. It's a bit complicated, so here's the order you need to do things:</P>
+   <uL>
+    <li>Press the "Switch List" button found at the bottom the "Trains" window.</li>
+    <li>Select which locations you want switch lists for in the "Switch Lists by Location"
+     window.</li>
+    <li>Deselect the "Real Time" checkbox and press "Save".
+    <li>Now build the trains you want consolidated switch lists for.</li>
+    <li>Press the "Switch Lists" button again if you've closed the Switch List window.</li>
+    <li>Then press the "Preview Switch Lists" or "Update Switch Lists" button.</li>
+    <li>Now print out your train manifests and terminate the trains you want terminated.</li>
+    <li>Continue building, updating switch lists, and terminating trains until your happy with
+     the amount of work generated.</li>
+    <li>Finally, print out your switch lists.</li>
+   </uL>
+
+   <P>Printing out the switch list for a location tells the program that you're done
+    consolidating your trains for this location. The program will clear the switch list when the
+    next change occurs to that location. If there are no changes to a location, then the switch list
+    is a copy of the last one printed. This allows you to print more than one copy of the switch
+    list if needed.</P>
+
+   <P>
+      <img src="images/SwitchList.png">
+     </P> <A NAME="TrainMove"></A>
 <H3>Moving Trains</H3>
 
 After providing your operators with a printed manifest or location
@@ -2729,7 +2736,8 @@ and Timetable table column widths. Adjust the column widths to your
 liking and then press the window's "Save" or "Save Builds" to save your
 preferences.</P>
 
-<P>The end of operations help.</P></DIV>
+<P>The end of operations help.</P>
+    </DIV>
 <!-- closes #mainContent--></DIV>
 <!-- closes #mBody-->
 </BODY>

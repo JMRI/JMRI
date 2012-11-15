@@ -11,12 +11,10 @@ import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -28,7 +26,7 @@ import jmri.util.swing.FontComboUtil;
 
 
 /**
- * Frame for user edit of print options
+ * Frame for user edit of manifest and switch list print options
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012
  * @version $Revision$
@@ -64,20 +62,20 @@ public class PrintOptionFrame extends OperationsFrame{
 	JButton addSwitchListLocalComboboxButton = new JButton("+");
 	JButton deleteSwitchListLocalComboboxButton = new JButton("-");
 
-	// radio buttons		    
-    JRadioButton buildReportMin = new JRadioButton(rb.getString("Minimal"));
-    JRadioButton buildReportNor = new JRadioButton(rb.getString("Normal"));
-    JRadioButton buildReportMax = new JRadioButton(rb.getString("Detailed"));
-    JRadioButton buildReportVD = new JRadioButton(rb.getString("VeryDetailed"));
+//	// radio buttons		    
+//    JRadioButton buildReportMin = new JRadioButton(rb.getString("Minimal"));
+//    JRadioButton buildReportNor = new JRadioButton(rb.getString("Normal"));
+//    JRadioButton buildReportMax = new JRadioButton(rb.getString("Detailed"));
+//    JRadioButton buildReportVD = new JRadioButton(rb.getString("VeryDetailed"));
     
     // check boxes
     JCheckBox tabFormatCheckBox = new JCheckBox(rb.getString("TabFormat"));
     JCheckBox formatSwitchListCheckBox = new JCheckBox(rb.getString("SameAsManifest"));
-    JCheckBox switchListRealTimeCheckBox = new JCheckBox(rb.getString("SwitchListRealTime"));
-    JCheckBox switchListAllTrainsCheckBox = new JCheckBox(rb.getString("SwitchListAllTrains"));
-    JCheckBox switchListPageCheckBox = new JCheckBox(rb.getString("SwitchListPage"));
+//    JCheckBox switchListRealTimeCheckBox = new JCheckBox(rb.getString("SwitchListRealTime"));
+//    JCheckBox switchListAllTrainsCheckBox = new JCheckBox(rb.getString("SwitchListAllTrains"));
+//    JCheckBox switchListPageCheckBox = new JCheckBox(rb.getString("SwitchListPage"));
     JCheckBox editManifestCheckBox = new JCheckBox(rb.getString("UseTextEditor"));
-	JCheckBox buildReportCheckBox = new JCheckBox(rb.getString("BuildReportEdit"));
+//	JCheckBox buildReportCheckBox = new JCheckBox(rb.getString("BuildReportEdit"));
 	JCheckBox printLocCommentsCheckBox = new JCheckBox(rb.getString("PrintLocationComments"));
 	JCheckBox printRouteCommentsCheckBox = new JCheckBox(rb.getString("PrintRouteComments"));
 	JCheckBox printLoadsEmptiesCheckBox = new JCheckBox(rb.getString("PrintLoadsEmpties"));
@@ -159,10 +157,10 @@ public class PrintOptionFrame extends OperationsFrame{
 		printValidCheckBox.setToolTipText(rb.getString("PrintValidTip"));
 		truncateCheckBox.setToolTipText(rb.getString("TruncateTip"));
 		departureTimeCheckBox.setToolTipText(rb.getString("DepartureTimeTip"));
-		switchListRealTimeCheckBox.setToolTipText(rb.getString("RealTimeTip"));
-		switchListAllTrainsCheckBox.setToolTipText(rb.getString("AllTrainsTip"));
-		switchListPageCheckBox.setToolTipText(rb.getString("PageTrainTip"));
-		buildReportCheckBox.setToolTipText(rb.getString("CreatesTextFileTip"));
+//		switchListRealTimeCheckBox.setToolTipText(rb.getString("RealTimeTip"));
+//		switchListAllTrainsCheckBox.setToolTipText(rb.getString("AllTrainsTip"));
+//		switchListPageCheckBox.setToolTipText(rb.getString("PageTrainTip"));
+//		buildReportCheckBox.setToolTipText(rb.getString("CreatesTextFileTip"));
 		editManifestCheckBox.setToolTipText(rb.getString("UseTextEditorTip"));
 		
 		addEngPickupComboboxButton.setToolTipText(rb.getString("AddMessageComboboxTip"));
@@ -360,21 +358,26 @@ public class PrintOptionFrame extends OperationsFrame{
 		pSwLocal.add(addSwitchListLocalComboboxButton);
 		pSwLocal.add(deleteSwitchListLocalComboboxButton);
 		
+		// Manifest comments
+		JPanel pManifestOptions = new JPanel();
+		pManifestOptions.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifestOptions")));
+		pManifestOptions.add(printValidCheckBox);
+		pManifestOptions.add(printLocCommentsCheckBox);
+		pManifestOptions.add(printRouteCommentsCheckBox);
+		pManifestOptions.add(printLoadsEmptiesCheckBox);
+		pManifestOptions.add(use12hrFormatCheckBox);
+		pManifestOptions.add(departureTimeCheckBox);
+		pManifestOptions.add(printTimetableNameCheckBox);
+		pManifestOptions.add(truncateCheckBox);
+				
 		JPanel p2 = new JPanel();
 		p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
 		
-		// Manifest comments
-		JPanel pManifestComment = new JPanel();
-		pManifestComment.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifestOptions")));
-		pManifestComment.add(printValidCheckBox);
-		pManifestComment.add(printLocCommentsCheckBox);
-		pManifestComment.add(printRouteCommentsCheckBox);
-		pManifestComment.add(printLoadsEmptiesCheckBox);
-		pManifestComment.add(use12hrFormatCheckBox);
-		pManifestComment.add(departureTimeCheckBox);
-		pManifestComment.add(printTimetableNameCheckBox);
-		pManifestComment.add(truncateCheckBox);
-				
+		// Use text editor for manifest
+		JPanel pEdit = new JPanel();
+		pEdit.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifestPreview")));
+		pEdit.add(editManifestCheckBox);
+		
 		// manifest logo
 		JPanel pLogo = new JPanel();
 		pLogo.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutLogo")));
@@ -382,32 +385,16 @@ public class PrintOptionFrame extends OperationsFrame{
 		pLogo.add(addLogoButton);
 		pLogo.add(logoURL);
 		
-		p2.add(pManifestComment);
-		//p2.add(pHazardous);
+		p2.add(pEdit);
 		p2.add(pLogo);
-		
-		pManifest.add(p1);
-		pManifest.add(pEngPickup);
-		pManifest.add(pEngDrop);
-		pManifest.add(pPickup);
-		pManifest.add(pDrop);
-		pManifest.add(pLocal);
-		pManifest.add(pSl);
-		pManifest.add(pSwPickup);
-		pManifest.add(pSwDrop);
-		pManifest.add(pSwLocal);
-		pManifest.add(p2);
 		
 		// comments
 		JPanel pComments = new JPanel();
 		pComments.setLayout(new BoxLayout(pComments, BoxLayout.X_AXIS));
-		JScrollPane pCommentsPane = new JScrollPane(pComments);
-		pCommentsPane.setBorder(BorderFactory.createTitledBorder(""));
 		
 		// missing cars comment
 		JPanel pComment = new JPanel();
 		pComment.setLayout(new GridBagLayout());
-		//JScrollPane pCommentPane = new JScrollPane(pComment);
 		pComment.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutCommentOptions")));
 		addItem (pComment, commentScroller, 0, 0);
 		
@@ -419,39 +406,49 @@ public class PrintOptionFrame extends OperationsFrame{
 		pComments.add(pComment);
 		pComments.add(pHazardous);
 		
-		// panel options
-		JPanel pOptions = new JPanel();
-		pOptions.setLayout(new BoxLayout(pOptions, BoxLayout.X_AXIS));
-		JScrollPane pOptionsPane = new JScrollPane(pOptions);
-		pOptionsPane.setBorder(BorderFactory.createTitledBorder(""));
-			
-		JPanel pSwitchListOptions = new JPanel();
-		pSwitchListOptions.setLayout(new GridBagLayout());
-		pSwitchListOptions.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListOptions")));		
-		addItem(pSwitchListOptions, switchListAllTrainsCheckBox, 1, 0);
-		addItem(pSwitchListOptions, switchListPageCheckBox, 2, 0);
-		addItem(pSwitchListOptions, switchListRealTimeCheckBox, 3, 0);
-
-		JPanel pEdit = new JPanel();
-		pEdit.setLayout(new GridBagLayout());
-		pEdit.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifestPreview")));
-		addItem(pEdit, editManifestCheckBox, 0, 0);
-			
-		// build report
-		JPanel pReport = new JPanel();
-		pReport.setLayout(new GridBagLayout());		
-		pReport.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutReportOptions")));
-		// build report options
-		addItem (pReport, textBuildReport, 0, 16);
-		addItemLeft (pReport, buildReportMin, 1, 16);
-		addItemLeft (pReport, buildReportNor, 2, 16);
-		addItemLeft (pReport, buildReportMax, 3, 16);
-		addItemLeft (pReport, buildReportVD, 4, 16);
-		addItemWidth (pReport, buildReportCheckBox, 3, 1, 17);	
+		pManifest.add(p1);
+		pManifest.add(pEngPickup);
+		pManifest.add(pEngDrop);
+		pManifest.add(pPickup);
+		pManifest.add(pDrop);
+		pManifest.add(pLocal);
+		pManifest.add(pSl);
+		pManifest.add(pSwPickup);
+		pManifest.add(pSwDrop);
+		pManifest.add(pSwLocal);
+		pManifest.add(pManifestOptions);
+		pManifest.add(p2);
+		pManifest.add(pComments);
 		
-		pOptions.add(pSwitchListOptions);
-		pOptions.add(pEdit);
-		pOptions.add(pReport);
+
+		// panel options
+//		JPanel pOptions = new JPanel();
+//		pOptions.setLayout(new BoxLayout(pOptions, BoxLayout.X_AXIS));
+//		JScrollPane pOptionsPane = new JScrollPane(pOptions);
+//		pOptionsPane.setBorder(BorderFactory.createTitledBorder(""));
+			
+//		JPanel pSwitchListOptions = new JPanel();
+//		pSwitchListOptions.setLayout(new GridBagLayout());
+//		pSwitchListOptions.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutSwitchListOptions")));		
+//		addItem(pSwitchListOptions, switchListAllTrainsCheckBox, 1, 0);
+//		addItem(pSwitchListOptions, switchListPageCheckBox, 2, 0);
+//		addItem(pSwitchListOptions, switchListRealTimeCheckBox, 3, 0);
+			
+//		// build report
+//		JPanel pReport = new JPanel();
+//		pReport.setLayout(new GridBagLayout());		
+//		pReport.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutReportOptions")));
+//		// build report options
+//		addItem (pReport, textBuildReport, 0, 16);
+//		addItemLeft (pReport, buildReportMin, 1, 16);
+//		addItemLeft (pReport, buildReportNor, 2, 16);
+//		addItemLeft (pReport, buildReportMax, 3, 16);
+//		addItemLeft (pReport, buildReportVD, 4, 16);
+//		addItemWidth (pReport, buildReportCheckBox, 3, 1, 17);	
+		
+//		pOptions.add(pSwitchListOptions);
+//		pOptions.add(pEdit);
+//		pOptions.add(pReport);
 
 		// row 11
 		JPanel pControl = new JPanel();
@@ -460,8 +457,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		addItem(pControl, saveButton, 0, 0);
 		
 		getContentPane().add(pManifestPane);	
-		getContentPane().add(pCommentsPane);
-		getContentPane().add(pOptionsPane);
+//		getContentPane().add(pSwitchListOptions);
 		getContentPane().add(pControl);
 		
 		manifestOrientationComboBox.setSelectedItem(Setup.getManifestOrientation());
@@ -469,9 +465,9 @@ public class PrintOptionFrame extends OperationsFrame{
 		
 		tabFormatCheckBox.setSelected(Setup.isTabEnabled());
 		formatSwitchListCheckBox.setSelected(Setup.isSwitchListFormatSameAsManifest());
-		switchListRealTimeCheckBox.setSelected(Setup.isSwitchListRealTime());
-		switchListAllTrainsCheckBox.setSelected(Setup.isSwitchListAllTrainsEnabled());
-		switchListPageCheckBox.setSelected(Setup.isSwitchListPagePerTrainEnabled());
+//		switchListRealTimeCheckBox.setSelected(Setup.isSwitchListRealTime());
+//		switchListAllTrainsCheckBox.setSelected(Setup.isSwitchListAllTrainsEnabled());
+//		switchListPageCheckBox.setSelected(Setup.isSwitchListPagePerTrainEnabled());
 		printLocCommentsCheckBox.setSelected(Setup.isPrintLocationCommentsEnabled());
 		printRouteCommentsCheckBox.setSelected(Setup.isPrintRouteCommentsEnabled());
 		printLoadsEmptiesCheckBox.setSelected(Setup.isPrintLoadsAndEmptiesEnabled());
@@ -480,7 +476,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		printValidCheckBox.setSelected(Setup.isPrintValidEnabled());
 		truncateCheckBox.setSelected(Setup.isTruncateManifestEnabled());
 		departureTimeCheckBox.setSelected(Setup.isUseDepartureTimeEnabled());
-		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
+//		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
 		editManifestCheckBox.setSelected(Setup.isManifestEditorEnabled());
 		
 		hazardousTextField.setText(Setup.getHazardousMsg());
@@ -494,11 +490,11 @@ public class PrintOptionFrame extends OperationsFrame{
 		
 		commentTextArea.setText(Setup.getMiaComment());
 		
-		ButtonGroup buildReportGroup = new ButtonGroup();
-		buildReportGroup.add(buildReportMin);
-		buildReportGroup.add(buildReportNor);
-		buildReportGroup.add(buildReportMax);
-		buildReportGroup.add(buildReportVD);
+//		ButtonGroup buildReportGroup = new ButtonGroup();
+//		buildReportGroup.add(buildReportMin);
+//		buildReportGroup.add(buildReportNor);
+//		buildReportGroup.add(buildReportMax);
+//		buildReportGroup.add(buildReportVD);
 		
 		// load font sizes 7 through 14
 		for (int i=7; i<15; i++)
@@ -533,7 +529,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		addCheckBoxAction(tabFormatCheckBox);
 		addCheckBoxAction(formatSwitchListCheckBox);
 		
-		setBuildReportRadioButton();
+//		setBuildReportRadioButton();
 
 		//	build menu		
 		addHelpMenu("package.jmri.jmrit.operations.Operations_PrintOptions", true);
@@ -675,20 +671,20 @@ public class PrintOptionFrame extends OperationsFrame{
 			Setup.setHazardousMsg(hazardousTextField.getText());
 			// misplaced car comment
 			Setup.setMiaComment(commentTextArea.getText());
-			// build report level
-			if (buildReportMin.isSelected())
-				Setup.setBuildReportLevel(Setup.BUILD_REPORT_MINIMAL);
-			else if (buildReportNor.isSelected())
-				Setup.setBuildReportLevel(Setup.BUILD_REPORT_NORMAL);
-			else if (buildReportMax.isSelected())
-				Setup.setBuildReportLevel(Setup.BUILD_REPORT_DETAILED);
-			else if (buildReportVD.isSelected())
-				Setup.setBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+//			// build report level
+//			if (buildReportMin.isSelected())
+//				Setup.setBuildReportLevel(Setup.BUILD_REPORT_MINIMAL);
+//			else if (buildReportNor.isSelected())
+//				Setup.setBuildReportLevel(Setup.BUILD_REPORT_NORMAL);
+//			else if (buildReportMax.isSelected())
+//				Setup.setBuildReportLevel(Setup.BUILD_REPORT_DETAILED);
+//			else if (buildReportVD.isSelected())
+//				Setup.setBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
 			Setup.setTabEnabled(tabFormatCheckBox.isSelected());
 			Setup.setSwitchListFormatSameAsManifest(formatSwitchListCheckBox.isSelected());
-			Setup.setSwitchListRealTime(switchListRealTimeCheckBox.isSelected());
-			Setup.setSwitchListAllTrainsEnabled(switchListAllTrainsCheckBox.isSelected());
-			Setup.setSwitchListPagePerTrainEnabled(switchListPageCheckBox.isSelected());
+//			Setup.setSwitchListRealTime(switchListRealTimeCheckBox.isSelected());
+//			Setup.setSwitchListAllTrainsEnabled(switchListAllTrainsCheckBox.isSelected());
+//			Setup.setSwitchListPagePerTrainEnabled(switchListPageCheckBox.isSelected());
 			Setup.setPrintLocationCommentsEnabled(printLocCommentsCheckBox.isSelected());
 			Setup.setPrintRouteCommentsEnabled(printRouteCommentsCheckBox.isSelected());
 			Setup.setPrintLoadsAndEmptiesEnabled(printLoadsEmptiesCheckBox.isSelected());
@@ -698,7 +694,7 @@ public class PrintOptionFrame extends OperationsFrame{
 			Setup.setTruncateManifestEnabled(truncateCheckBox.isSelected());
 			Setup.setUseDepartureTimeEnabled(departureTimeCheckBox.isSelected());
 			Setup.setManifestEditorEnabled(editManifestCheckBox.isSelected());
-			Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
+//			Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
 			OperationsSetupXml.instance().writeOperationsFile();
 			// Check font if user selected tab output
 			if (Setup.isCloseWindowOnSaveEnabled())
@@ -755,12 +751,12 @@ public class PrintOptionFrame extends OperationsFrame{
 		pack();
 	}
 	
-	private void setBuildReportRadioButton(){
-		buildReportMin.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_MINIMAL));
-		buildReportNor.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL));
-		buildReportMax.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED));
-		buildReportVD.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED));
-	}
+//	private void setBuildReportRadioButton(){
+//		buildReportMin.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_MINIMAL));
+//		buildReportNor.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL));
+//		buildReportMax.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED));
+//		buildReportVD.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED));
+//	}
 	
 	private void addComboBox (JPanel panel, List<JComboBox> list, JComboBox box){
 		list.add(box);

@@ -383,7 +383,8 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
 		toolMenu.add(new OptionAction(rb.getString("TitleOptions")));
-		toolMenu.add(new PrintOptionAction(rb.getString("TitlePrintOptions")));
+		toolMenu.add(new PrintOptionAction());
+		toolMenu.add(new BuildReportOptionAction());
 		toolMenu.add(new BackupFilesAction(rb.getString("Backup")));
 		toolMenu.add(new RestoreFilesAction(rb.getString("Restore")));
 		toolMenu.add(new LoadDemoAction(rb.getString("LoadDemo")));

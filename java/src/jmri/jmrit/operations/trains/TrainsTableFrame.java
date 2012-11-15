@@ -31,6 +31,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.AutoSave;
+import jmri.jmrit.operations.setup.BuildReportOptionAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OptionAction;
 import jmri.jmrit.operations.setup.PrintOptionAction;
@@ -244,7 +245,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
 		toolMenu.add(new OptionAction(rb.getString("TitleOptions")));	
-		toolMenu.add(new PrintOptionAction(rb.getString("TitlePrintOptions")));
+		toolMenu.add(new PrintOptionAction());
+		toolMenu.add(new BuildReportOptionAction());
 		toolMenu.add(new TrainsByCarTypeAction(rb.getString("TitleModifyTrains")));
 		toolMenu.add(new TrainsScheduleAction(rb.getString("TitleTimeTableTrains")));
 		toolMenu.add(new TrainCopyAction(rb.getString("TitleTrainCopy")));

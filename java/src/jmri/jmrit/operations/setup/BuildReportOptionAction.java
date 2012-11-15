@@ -1,4 +1,4 @@
-// PrintOptionAction.java
+// BuildReportOptionAction.java
 
 package jmri.jmrit.operations.setup;
 
@@ -13,26 +13,26 @@ import javax.swing.AbstractAction;
  * Swing action to load the print options.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2009
- * @version $Revision$
+ * @author Daniel Boudreau Copyright (C) 2012
+ * @version $Revision: 17977 $
  */
-public class PrintOptionAction extends AbstractAction {
+public class BuildReportOptionAction extends AbstractAction {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 
-    public PrintOptionAction() {
-    	this (rb.getString("TitlePrintOptions"));
+    public BuildReportOptionAction() {
+    	this (rb.getString("TitleBuildReportOptions"));
     }
 	
-	public PrintOptionAction(String s) {
+	public BuildReportOptionAction(String s) {
     	super(s);
     }
 
-    PrintOptionFrame f = null;
+    BuildReportOptionFrame f = null;
     public void actionPerformed(ActionEvent e) {
         // create a settings frame
     	if (f == null || !f.isVisible()){
-    		f = new PrintOptionFrame();
+    		f = new BuildReportOptionFrame();
     		f.initComponents();
     	}
         f.setExtendedState(Frame.NORMAL);
@@ -40,7 +40,7 @@ public class PrintOptionAction extends AbstractAction {
     }
     
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(PrintOptionAction.class.getName());
+	.getLogger(BuildReportOptionAction.class.getName());
 }
 
-/* @(#)PrintOptionAction.java */
+/* @(#)BuildReportOptionAction.java */
