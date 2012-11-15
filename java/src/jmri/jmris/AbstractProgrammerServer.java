@@ -56,7 +56,7 @@ abstract public class AbstractProgrammerServer implements jmri.ProgListener {
     }
 
     public void readCV(int mode, int CV){
-       if( p == null && !(p.getCanRead()) ) {
+       if( p == null || !(p.getCanRead()) ) {
            try {
              sendNotAvailableStatus();
            } catch(java.io.IOException ioe){
