@@ -284,7 +284,6 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	
 	public void load(RollingStock rs){
 		_rs = rs;
-		_rs.addPropertyChangeListener(this);
 		textRoad.setText(_rs.getRoad()+" "+_rs.getNumber());
 		textType.setText(_rs.getType());
 		locationUnknownCheckBox.setSelected(_rs.isLocationUnknown());
@@ -301,6 +300,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 					getRb().getString("pressSaveWill"),	getRb().getString("rsInRoute"),
 					JOptionPane.WARNING_MESSAGE);
 		}
+		_rs.addPropertyChangeListener(this);
 	}
 	
 	// Save button
@@ -631,8 +631,6 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	// location combo box
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("Combobox action");
-		if (_disableComboBoxUpdate)
-			return;
 		if (ae.getSource()== locationBox){
 			updateLocation();
 		}
@@ -714,7 +712,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			if (locationBox.getSelectedItem().equals("")){
 				trackLocationBox.removeAllItems();
 			}else{
-				log.debug("CarSetFrame sees location: "+ locationBox.getSelectedItem());
+				log.debug("RollingStockFrame sees location: "+ locationBox.getSelectedItem());
 				Location l = (Location)locationBox.getSelectedItem();
 				l.updateComboBox(trackLocationBox, _rs, autoTrackCheckBox.isSelected(), false);
 				if (_rs != null && _rs.getLocation() != null && _rs.getLocation().equals(l) && _rs.getTrack() != null)
@@ -729,7 +727,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			if (destinationBox.getSelectedItem().equals("")){
 				trackDestinationBox.removeAllItems();
 			}else{
-				log.debug("CarSetFrame sees destination: "+ destinationBox.getSelectedItem());
+				log.debug("RollingStockFrame sees destination: "+ destinationBox.getSelectedItem());
 				Location l = (Location)destinationBox.getSelectedItem();
 				l.updateComboBox(trackDestinationBox, _rs, autoDestinationTrackCheckBox.isSelected(), true);
 				if (_rs != null && _rs.getDestination() != null && _rs.getDestination().equals(l) && _rs.getDestinationTrack() != null)
@@ -757,8 +755,6 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug ("PropertyChange "+e.getPropertyName()+" "+e.getNewValue());
-		if (_disableComboBoxUpdate)
-			return;
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||
 				e.getSource().getClass().equals(Car.class) ||

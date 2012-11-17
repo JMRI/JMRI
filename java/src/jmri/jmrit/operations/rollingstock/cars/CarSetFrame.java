@@ -120,6 +120,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	
 	// location combo box
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		_disableComboBoxUpdate = true;	// stop updates
 		super.comboBoxActionPerformed(ae);
 		if (ae.getSource()== finalDestinationBox){
 			updateFinalDestination();
@@ -127,6 +128,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		if (ae.getSource()== destReturnWhenEmptyBox){
 			updateReturnWhenEmpty();
 		}
+		_disableComboBoxUpdate = false;
 	}
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		super.buttonActionPerformed(ae);
@@ -396,6 +398,11 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	}
 	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
+		log.debug ("PropertyChange "+e.getPropertyName()+" "+e.getNewValue());
+		if (_disableComboBoxUpdate){
+			log.debug("Combobox update is disabled");
+			return;
+		}
 		super.propertyChange(e);
 		if (e.getPropertyName().equals(Car.NEXT_DESTINATION_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Car.NEXT_DESTINATION_TRACK_CHANGED_PROPERTY))

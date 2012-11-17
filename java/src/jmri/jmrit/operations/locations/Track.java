@@ -318,7 +318,11 @@ public class Track {
 			int length = Integer.parseInt(car.getLength())+ RollingStock.COUPLER;
 		if (car.getKernel() != null)
 			length = car.getKernel().getLength();
-		if (getLength()*getReservationFactor()/100 - (getReservedInRoute() + length) >= 0)
+		int reservationFactor = getReservationFactor();
+		// ignore reservation factor unless car is departing staging
+		if (car.getTrack() != null && !car.getTrack().getLocType().equals(Track.STAGING))
+			reservationFactor = 100;	// ignore, track isn't staging
+		if (getLength()*reservationFactor/100 - (getReservedInRoute() + length) >= 0)
 			return true;
 		else
 			return false;
