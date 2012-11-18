@@ -179,9 +179,15 @@ public class TrainBuilder extends TrainCommon{
 			}
 			else{
 				// we're going to use this location, so initialize the location
-				requested = requested + rl.getMaxCarMoves(); // add up the total number of car moves requested
 				rl.setCarMoves(0);					// clear the number of moves
-				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildLocRequestMoves"),new Object[]{rl.getName(), rl.getMaxCarMoves()}));
+				requested = requested + rl.getMaxCarMoves(); // add up the total number of car moves requested
+				// show the type of moves allowed at this location
+				if (rl.canDrop() && rl.canPickup())
+					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildLocRequestMoves"),new Object[]{rl.getName(), rl.getMaxCarMoves()}));
+				else if (!rl.canDrop())
+					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildLocRequestNoDrops"),new Object[]{rl.getName(), rl.getMaxCarMoves()}));
+				else
+					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildLocRequestNoPickups"),new Object[]{rl.getName(), rl.getMaxCarMoves()}));
 			}
 			rl.setTrainWeight(0);					// clear the total train weight 
 			rl.setTrainLength(0);					// and length
