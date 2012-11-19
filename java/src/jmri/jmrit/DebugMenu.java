@@ -49,6 +49,7 @@ public class DebugMenu extends JMenu {
 	vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction("New GUI", true));
 	vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction("Old GUI", false));
 	vsdMenu.add(new jmri.jmrit.beantable.SetPhysicalLocationAction("Set Reporter Locations", null));
+	vsdMenu.add(new jmri.jmrit.vsdecoder.swing.ManageLocationsAction("Manage VSD Locations", null));
 	add(vsdMenu);
 
 
