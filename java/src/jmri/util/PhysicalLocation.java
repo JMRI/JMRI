@@ -156,6 +156,10 @@ public class PhysicalLocation extends Vector3f {
 	return(s);
     }
 
+    public Vector3d toVector3d() {
+	return(new Vector3d(this));
+    }
+
     // Instance methods
 
     /** Default constructor */
@@ -175,6 +179,11 @@ public class PhysicalLocation extends Vector3f {
     /** Constructor from X, Y, Z (float) */
     public PhysicalLocation(float x, float y, float z) {
 	super(x, y, z);
+    }
+
+    /** Constructor from X, Y, Z (double) */
+    public PhysicalLocation(double x, double y, double z) {
+	super((float)x, (float)y, (float)z);
     }
 
     /** Copy Constructor */
