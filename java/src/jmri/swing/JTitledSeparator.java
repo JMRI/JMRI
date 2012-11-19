@@ -69,6 +69,7 @@ public class JTitledSeparator extends JPanel {
         }
         add(separatorPane, BorderLayout.CENTER);
         setTitle(title);
+        this.setMaximumSize(new Dimension(Integer.MAX_VALUE, this.getPreferredSize().height));
         adjustLook();
     }
 
