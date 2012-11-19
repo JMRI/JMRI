@@ -6,7 +6,6 @@ package jmri.jmris.json;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,14 +14,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
-
 import org.apache.log4j.Logger;
 
 public class JsonServerPreferencesPanel extends JPanel implements PreferencesPanel {
@@ -54,6 +50,7 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
         add(portPanel());
         add(new JTitledSeparator(rb.getString("JSONSectionTitle")));
         add(heartbeatPanel());
+        add(Box.createVerticalGlue());
     }
 
     private void setGUI() {
