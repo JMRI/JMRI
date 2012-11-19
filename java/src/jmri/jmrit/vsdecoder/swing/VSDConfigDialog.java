@@ -53,7 +53,7 @@ import jmri.jmrit.XmlFile;
 
 public class VSDConfigDialog extends JDialog {
 
-    private static final ResourceBundle rb = VSDecoderBundle.bundle();
+    private static final ResourceBundle rb = VSDSwingBundle.bundle();
 
     public static final String CONFIG_PROPERTY = "Config";
 
@@ -101,7 +101,8 @@ public class VSDConfigDialog extends JDialog {
 	
 	// Tabbed pane for loco select (Roster or Manual)
 	locoSelectPanel = new JTabbedPane();
-	TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), "Select Loco");
+	TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), 
+							      rb.getString("LocoTabbedPaneTitle"));
 	title.setTitlePosition(TitledBorder.DEFAULT_POSITION);
 	locoSelectPanel.setBorder(title);
 
@@ -110,8 +111,8 @@ public class VSDConfigDialog extends JDialog {
 	rosterPanel.setLayout(new BoxLayout(rosterPanel, BoxLayout.LINE_AXIS));
         addressPanel = new JPanel();
         addressPanel.setLayout(new BoxLayout(addressPanel, BoxLayout.LINE_AXIS));
-	locoSelectPanel.addTab("Roster", rosterPanel);
-	locoSelectPanel.addTab("Manual", addressPanel);
+	locoSelectPanel.addTab(rb.getString("LocoTabbedPaneRosterTab"), rosterPanel);
+	locoSelectPanel.addTab(rb.getString("LocoTabbedPaneManualTab"), addressPanel);
 
 	// Roster Tab components
 	rosterSelector = new RosterEntrySelectorPanel();
@@ -197,7 +198,7 @@ public class VSDConfigDialog extends JDialog {
 		}
 	    });
 
-	JButton cancelButton = new JButton("Cancel");
+	JButton cancelButton = new JButton(rb.getString("CancelButtonLabel"));
 	cancelButton.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent evt) {
 		    cancelButtonActionPerformed(evt);

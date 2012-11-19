@@ -53,7 +53,7 @@ import javax.swing.border.TitledBorder;
 import jmri.jmrit.vsdecoder.VSDecoder;
 import jmri.jmrit.vsdecoder.VSDConfig;
 import java.util.ResourceBundle;
-import jmri.jmrit.vsdecoder.VSDecoderBundle;
+import jmri.jmrit.vsdecoder.swing.VSDSwingBundle;
 import jmri.jmrit.vsdecoder.SoundEvent;
 import jmri.jmrit.vsdecoder.EngineSoundEvent;
 
@@ -66,7 +66,7 @@ import jmri.jmrit.vsdecoder.EngineSoundEvent;
 @SuppressWarnings("serial")
 public class VSDControl extends JPanel {
 
-    private static final ResourceBundle rb = VSDecoderBundle.bundle();
+    private static final ResourceBundle rb = VSDSwingBundle.bundle();
 
 
     public static enum PropertyChangeID { ADDRESS_CHANGE, CONFIG_CHANGE, PROFILE_SELECT, HORN, BELL, NOTCH, COUPLER, BRAKE, ESTART, DELETE }
@@ -92,16 +92,12 @@ public class VSDControl extends JPanel {
     Border tb;
     //TitledBorder tb;
     JLabel addressLabel;
-    JToggleButton bellButton;
-    JButton hornButton;
     JButton configButton;
     JButton optionButton;
     JButton deleteButton;
-    JButton estartButton;
 
     JPanel soundsPanel;
     JPanel configPanel;
-    JPanel enginePanel;
 
     private VSDConfig config;
 
@@ -170,24 +166,6 @@ public class VSDControl extends JPanel {
 	configPanel.add(deleteButton);
 	
 	
-	enginePanel = new JPanel();
-	enginePanel.setLayout(new GridBagLayout());
-	estartButton = new JButton(rb.getString("StartButtonLabel"));
-	JSlider engineNotch = new JSlider(1, 8);
-	engineNotch.setMinorTickSpacing(1);
-	engineNotch.setPaintTicks(true);
-	engineNotch.setValue(1);
-	engineNotch.setPreferredSize(new Dimension(200, 20));
-	engineNotch.addChangeListener(new ChangeListener() {
-		public void stateChanged(ChangeEvent e) {
-		    engineNotchChange(e);
-		}
-	    });
-	
-	enginePanel.add(new JLabel("Engine Notch:"), setConstraints(0, 0));
-	enginePanel.add(engineNotch, setConstraints(1,0,GridBagConstraints.NONE));
-	enginePanel.add(estartButton, setConstraints(0,1,GridBagConstraints.NONE));
-
 	// Add them to the panel
 	this.add(addressLabel, new GridBagConstraints(0, 0, 1, 2, 100.0, 100.0, 
 						      GridBagConstraints.LINE_START,
@@ -266,14 +244,6 @@ public class VSDControl extends JPanel {
 	log.debug("("+address+") Delete Button Pressed");
 	firePropertyChange(PropertyChangeID.DELETE, address, address);
     }
-
-    /** Handle engine notch changes. */
-    protected void engineNotchChange(ChangeEvent e) {
-	JSlider v = (JSlider)e.getSource();
-	log.debug("("+address+") Notch slider moved. value = " + v.getValue());
-	firePropertyChange(PropertyChangeID.NOTCH, v.getValue(), v.getValue());
-    }
-    
 
     /** Callback for the Config Dialog */
     protected void configDialogPropertyChange(PropertyChangeEvent event) {

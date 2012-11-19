@@ -20,6 +20,8 @@ package jmri.jmrit.vsdecoder.swing;
  */
 
 import java.util.ResourceBundle;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
@@ -36,8 +38,13 @@ import javax.swing.table.AbstractTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import jmri.util.PhysicalLocation;
-import jmri.jmrit.vsdecoder.VSDecoderBundle;
+import jmri.util.WindowMenu;
+import jmri.jmrit.vsdecoder.swing.VSDSwingBundle;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
+import jmri.jmrit.vsdecoder.LoadVSDFileAction;
+import jmri.jmrit.vsdecoder.StoreXmlVSDecoderAction;
+import jmri.jmrit.vsdecoder.LoadXmlVSDecoderAction;
+import jmri.jmrit.vsdecoder.VSDecoderPreferencesAction;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.ReporterManager;
 import jmri.Reporter;
@@ -50,7 +57,7 @@ import jmri.jmrit.operations.locations.Location;
 public class ManageLocationsFrame extends JFrame {
 
     // Uncomment this when we add labels...
-    //private static final ResourceBundle rb = VSDecoderBundle.bundle();
+    private static final ResourceBundle rb = VSDSwingBundle.bundle();
     public static enum PropertyChangeID { MUTE, VOLUME_CHANGE, ADD_DECODER, REMOVE_DECODER }
 
     public static final Map<PropertyChangeID, String> PCIDMap;
@@ -78,13 +85,12 @@ public class ManageLocationsFrame extends JFrame {
     private ListenerTableModel locModel;
     private ListeningSpot listenerLoc;
 
+    private List<JMenu> menuList;
 
     public ManageLocationsFrame(ListeningSpot listener, 
 				Object[][] reporters,
 				Object[][] ops) {
 	super();
-	//reporterMap = reporters;
-	//opsMap = ops;
 	reporterData = reporters;
 	opsData = ops;
 	listenerLoc = listener;
@@ -92,18 +98,21 @@ public class ManageLocationsFrame extends JFrame {
     }
     
     private void initGui() {
+
+	this.setTitle(rb.getString("ManageLocationsFrameTitle"));
+	this.buildMenu();
 	// Panel for managing listeners
 	listenerPanel = new JPanel();
 	listenerPanel.setLayout(new BorderLayout());
 
 	// Audio Mode Buttons
-	JRadioButton b1 = new JRadioButton("Room Ambient");
+	JRadioButton b1 = new JRadioButton(rb.getString("AudioModeRoomButton"));
 	b1.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    modeRadioButtonPressed(e);
 		}
 	    });
-	JRadioButton b2 = new JRadioButton("Headphones");
+	JRadioButton b2 = new JRadioButton(rb.getString("AudioModeHeadphoneButton"));
 	b2.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    modeRadioButtonPressed(e);
@@ -175,19 +184,19 @@ public class ManageLocationsFrame extends JFrame {
 	opsScrollPanel.getViewport().add(opsTable);
 
 	tabbedPane = new JTabbedPane();
-	tabbedPane.addTab("Reporters", reporterScrollPanel);
-	tabbedPane.addTab("Operations Locations", opsScrollPanel);
-	tabbedPane.addTab("Listeners", listenerPanel);
+	tabbedPane.addTab(rb.getString("ReportersTabTitle"), reporterScrollPanel);
+	tabbedPane.addTab(rb.getString("OpsTabTitle"), opsScrollPanel);
+	tabbedPane.addTab(rb.getString("ListenersTabTitle"), listenerPanel);
 
 	JPanel buttonPane = new JPanel();
 	buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
-	JButton cancelButton = new JButton("Close");
+	JButton cancelButton = new JButton(rb.getString("MLFCloseButton"));
 	cancelButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    cancelButtonPressed(e);
 		}
 	    });
-	JButton saveButton = new JButton("Save");
+	JButton saveButton = new JButton(rb.getString("MLFSaveButton"));
 	saveButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    saveButtonPressed(e);
@@ -215,8 +224,54 @@ public class ManageLocationsFrame extends JFrame {
 	this.setVisible(true);
     }
 
+    private void buildMenu() {
+	JMenu fileMenu = new JMenu(rb.getString("VSDecoderFileMenu"));
+
+        fileMenu.add(new LoadVSDFileAction(rb.getString("VSDecoderFileMenuLoadVSDFile" )));
+        fileMenu.add(new StoreXmlVSDecoderAction(rb.getString("VSDecoderFileMenuSaveProfile" )));
+        fileMenu.add(new LoadXmlVSDecoderAction(rb.getString("VSDecoderFileMenuLoadProfile")));
+
+	JMenu editMenu = new JMenu(rb.getString("VSDecoderEditMenu"));
+	editMenu.add(new VSDecoderPreferencesAction(rb.getString("VSDecoderEditMenuPreferences")));
+
+	fileMenu.getItem(1).setEnabled(false); // disable XML store
+	fileMenu.getItem(2).setEnabled(false); // disable XML load
+
+	menuList = new ArrayList<JMenu>(3);
+
+	menuList.add(fileMenu);
+	menuList.add(editMenu);
+
+	this.setJMenuBar(new JMenuBar());
+	this.getJMenuBar().add(fileMenu);
+	this.getJMenuBar().add(editMenu);
+	this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.VSDManagerFrame", true); // Fix this... needs to be help for the new frame
+	
+    }
+
+    /**
+     * Add a standard help menu, including window specific help item.
+     * @param ref JHelp reference for the desired window-specific help page
+     * @param direct true if the help menu goes directly to the help system,
+     *        e.g. there are no items in the help menu
+     *
+     * WARNING: BORROWED FROM JmriJFrame.  
+     */
+    public void addHelpMenu(String ref, boolean direct) {
+        // only works if no menu present?
+        JMenuBar bar = getJMenuBar();
+        if (bar == null) bar = new JMenuBar();
+        // add Window menu
+	// bar.add(new WindowMenu(this)); // * GT 28-AUG-2008 Added window menu
+	// add Help menu
+        jmri.util.HelpUtil.helpMenu(bar, ref, direct);
+        setJMenuBar(bar);
+    }
+
     private void saveButtonPressed(ActionEvent e) {
-	int value = JOptionPane.showConfirmDialog(null, "Save Reporters and Ops Locations?", "Save Changes", JOptionPane.YES_NO_OPTION);
+	int value = JOptionPane.showConfirmDialog(null, rb.getString("MLFSaveDialogMessage"), 
+						  rb.getString("MLFSaveDialogTitle"), 
+						  JOptionPane.YES_NO_OPTION);
 	if (value == JOptionPane.YES_OPTION) {
 	    saveTableValues();
 	    OperationsXml.save();
@@ -263,22 +318,21 @@ public class ManageLocationsFrame extends JFrame {
 
 }
 
+/** Private class to serve as TableModel for Reporters and Ops Locations */
 class LocationTableModel extends AbstractTableModel {
+    private static final ResourceBundle rb = VSDSwingBundle.bundle();
+
     private String[] columnNames = { "Name",
 				     "Use Location",
 				     "X",
 				     "Y",
 				     "Z" };
-    private Object[][]rowData = {
-	{ "Fred", new Boolean(false), 0.0d, 1.0d, 0.0d },
-	{ "Barney", new Boolean(false), 1.0d, 0.0d, 0.0d },
-	{ "Wilma", new Boolean(false), 0.0d, 0.0d, 1.0d },
-	{ "BamBam", new Boolean(false), 1.0d, 1.0d, 0.0d },
-	{ "Pebbles", new Boolean(false), 0.0d, 1.0d, 1.0d }
-    };
+    private Object[][]rowData;
 
     public LocationTableModel(Object[][] dataMap) {
 	super();
+	columnNames[0] =  rb.getString("LocationTableNameColumn");
+	columnNames[1] = rb.getString("LocationTableUseColumn");
 	rowData = dataMap;
     }
 
@@ -325,14 +379,21 @@ class LocationTableModel extends AbstractTableModel {
 
 }
 
+/** Private class for use as TableModel for Listener Locations */
 class ListenerTableModel extends AbstractTableModel {
-    private String[] columnNames = { "Name",
+    private static final ResourceBundle rb = VSDSwingBundle.bundle();
+
+    private String[] columnNames = {"Name",
 				     "Use Location",
 				     "X", "Y", "Z", "Bearing", "Azimuth" };
     private Object[][]rowData = null;
 
     public ListenerTableModel(Object[][] dataMap) {
 	super();
+	columnNames[0] =  rb.getString("ListenerTableNameColumn");
+	columnNames[1] = rb.getString("ListenerTableUseColumn");
+	columnNames[5] = rb.getString("ListenerTableBearingColumn");
+	columnNames[6] = rb.getString("ListenerTableAzimuthColumn");
 	rowData = dataMap;
     }
 

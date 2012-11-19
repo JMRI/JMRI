@@ -59,7 +59,7 @@ import jmri.util.WindowMenu;
 import jmri.jmrit.vsdecoder.VSDConfig;
 import jmri.jmrit.vsdecoder.VSDecoder;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
-import jmri.jmrit.vsdecoder.VSDecoderBundle;
+import jmri.jmrit.vsdecoder.swing.VSDSwingBundle;
 import jmri.jmrit.vsdecoder.SoundEvent;
 import jmri.jmrit.vsdecoder.LoadVSDFileAction;
 import jmri.jmrit.vsdecoder.StoreXmlVSDecoderAction;
@@ -69,7 +69,8 @@ import jmri.jmrit.vsdecoder.VSDecoderPreferencesAction;
 @SuppressWarnings("serial")
 public class VSDManagerFrame extends JmriJFrame {
 
-    private static final ResourceBundle rb = VSDecoderBundle.bundle();
+    private static final ResourceBundle rb = VSDSwingBundle.bundle();
+
     public static enum PropertyChangeID { MUTE, VOLUME_CHANGE, ADD_DECODER, REMOVE_DECODER }
 
     public static final Map<PropertyChangeID, String> PCIDMap;
@@ -243,7 +244,7 @@ public class VSDManagerFrame extends JmriJFrame {
         fileMenu.add(new LoadXmlVSDecoderAction(rb.getString("VSDecoderFileMenuLoadProfile")));
 
 	JMenu editMenu = new JMenu(rb.getString("VSDecoderEditMenu"));
-	editMenu.add(new VSDecoderPreferencesAction(rb.getString("VSDecoderFileMenuPreferences")));
+	editMenu.add(new VSDecoderPreferencesAction(rb.getString("VSDecoderEditMenuPreferences")));
 
 	fileMenu.getItem(1).setEnabled(false); // disable XML store
 	fileMenu.getItem(2).setEnabled(false); // disable XML load
