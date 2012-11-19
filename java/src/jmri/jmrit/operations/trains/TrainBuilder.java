@@ -1477,6 +1477,7 @@ public class TrainBuilder extends TrainCommon{
 						&& car.getDestination() == null && car.getNextDestination() == null){
 					findNextDestinationForCarLoad(car);
 					// did the router set a destination? If not this train doesn't service this car.
+					// TODO The following could be dead code, next destination isn't set if a car needs a different train 
 					if (car.getTrack() != departStageTrack && car.getNextDestination() != null && car.getDestination() == null){
 						log.debug("Removing car ("+car.toString()+") from list");
 						carList.remove(car.getId());
@@ -1486,6 +1487,14 @@ public class TrainBuilder extends TrainCommon{
 				}
 				// does car have a next destination, but no destination
 				if (car.getNextDestination() != null && car.getDestination() == null){
+					if (!train.isAllowLocalMovesEnabled() && splitString(car.getLocationName()).equals(splitString(car.getNextDestinationName()))){
+						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarHasFinalDestNoMove"),new Object[]{car.toString(), car.getNextDestinationName()}));
+						addLine(buildReport, SEVEN, BLANK_LINE);	// add line when in very detailed report mode
+						log.debug("Removing car ("+car.toString()+") from list");
+						carList.remove(car.getId());
+						carIndex--;
+						continue;
+					}
 					addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarRoutingBegins"),new Object[]{car.toString(), car.getLocationName(),(car.getNextDestinationName()+", "+car.getNextDestTrackName())}));
 					if (!Router.instance().setDestination(car, train, buildReport)){
 						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildNotAbleToSetDestination"),new Object[]{car.toString(), Router.instance().getStatus()}));
@@ -2100,7 +2109,7 @@ public class TrainBuilder extends TrainCommon{
 							new Object[]{track.getScheduleItemId(), track.getScheduleName(), track.getName(), track.getLocation().getName()}));
 				log.debug("Track ("+track.getName()+") has schedule ("+track.getScheduleName()+") item id ("+si.getId()+") requesting type ("+si.getType()+") " +
 						"load ("+si.getLoad()+") next dest ("+si.getDestinationName()+") track ("+si.getDestinationTrackName()+")");
-				if (!train.isAllowLocalMovesEnabled() && car.getLocationName().equals(track.getLocation().getName())){
+				if (!train.isAllowLocalMovesEnabled() && splitString(car.getLocationName()).equals(splitString(track.getLocation().getName()))){
 					log.debug("Skipping track ("+track.getName()+"), it would require a local move");
 					continue;
 				}
@@ -2766,15 +2775,14 @@ public class TrainBuilder extends TrainCommon{
 				log.error ("Couldn't add car "+car.toString()+" to train "+train.getName());
 			return carAdded;
 		} 
-		if (routeList.size()>1){
-			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoDestForCar"),new Object[]{car.toString()}));
-			addLine(buildReport, SEVEN, BLANK_LINE);	// add line when in very detailed report mode
-			if (car.getTrack() != null && !car.getTrack().getServiceOrder().equals(Track.NORMAL)){
-				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildRemoveCarServiceOrder"),new Object[]{car.toString(), car.getTrack().getName(), car.getTrack().getServiceOrder()}));
-				carList.remove(car.getId());
-				carIndex--;  		// removed car from list, so backup pointer 
-			}
+		// is car sitting on a FIFO or LIFO track?
+		if (car.getTrack() != null && !car.getTrack().getServiceOrder().equals(Track.NORMAL)){
+			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildRemoveCarServiceOrder"),new Object[]{car.toString(), car.getTrack().getName(), car.getTrack().getServiceOrder()}));
+			carList.remove(car.getId());
+			carIndex--;  		// removed car from list, so backup pointer 
 		}
+		addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoDestForCar"),new Object[]{car.toString()}));
+		addLine(buildReport, SEVEN, BLANK_LINE);	// add line when in very detailed report mode
 		return false;	// no build errors, but car not given destination
 	}
 	
