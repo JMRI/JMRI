@@ -212,14 +212,14 @@ public class RosterTableModel extends javax.swing.table.DefaultTableModel implem
                                 re.setModel(valueToSet); break;
             case OWNERCOL:      if(re.getOwner().equals(valueToSet)) return;
                                 re.setOwner(valueToSet); break;
-            default:            break;
+            default:            String attributeName = (getColumnName(col)).replaceAll("\\s", "");
+                                if(re.getAttribute(attributeName)!=null && re.getAttribute(attributeName).equals(valueToSet)) return;
+                                if((valueToSet==null) || valueToSet.equals(""))
+                                    re.deleteAttribute(attributeName);
+                                else
+                                    re.putAttribute(attributeName, valueToSet);
+                                break;
         }
-        String attributeName = (getColumnName(col)).replaceAll("\\s", "");
-        if(re.getAttribute(attributeName).equals(valueToSet)) return;
-        if((valueToSet==null) || valueToSet.equals(""))
-            re.deleteAttribute(attributeName);
-        else
-            re.putAttribute(attributeName, valueToSet);
         // need to mark as updated
         re.changeDateUpdated();
         re.updateFile();
