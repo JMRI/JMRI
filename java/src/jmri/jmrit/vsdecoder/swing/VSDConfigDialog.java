@@ -27,15 +27,8 @@ package jmri.jmrit.vsdecoder.swing;
 import java.awt.BorderLayout;
 import java.util.ResourceBundle;
 import javax.swing.SwingUtilities;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.BoxLayout;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -77,6 +70,8 @@ public class VSDConfigDialog extends JDialog {
     private javax.swing.JPanel rosterPanel;
     private javax.swing.JPanel profilePanel;
     private javax.swing.JPanel addressPanel;
+    private javax.swing.JTabbedPane locoSelectPanel;
+    private javax.swing.JButton closeButton;
 
     private NullProfileBoxItem loadProfilePrompt; // dummy profileComboBox entry
     private VSDConfig config; // local reference to the config being constructed by this dialog
@@ -104,21 +99,25 @@ public class VSDConfigDialog extends JDialog {
 	//setLayout(new BorderLayout(10, 10));
 	this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
 	
+	// Tabbed pane for loco select (Roster or Manual)
+	locoSelectPanel = new JTabbedPane();
+	TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), "Select Loco");
+	title.setTitlePosition(TitledBorder.DEFAULT_POSITION);
+	locoSelectPanel.setBorder(title);
+
+	// Roster Tab and Address Tab
 	rosterPanel = new JPanel();
 	rosterPanel.setLayout(new BoxLayout(rosterPanel, BoxLayout.LINE_AXIS));
-	profilePanel = new JPanel();
-	profilePanel.setLayout(new BoxLayout(profilePanel, BoxLayout.LINE_AXIS));
         addressPanel = new JPanel();
         addressPanel.setLayout(new BoxLayout(addressPanel, BoxLayout.LINE_AXIS));
-	this.add(profilePanel);
-	this.add(addressPanel);
-	this.add(rosterPanel);
+	locoSelectPanel.addTab("Roster", rosterPanel);
+	locoSelectPanel.addTab("Manual", addressPanel);
 
+	// Roster Tab components
 	rosterSelector = new RosterEntrySelectorPanel();
 	rosterSelector.setNonSelectedItem(rb.getString("EmptyRosterBox"));
 	//rosterComboBox.setToolTipText("tool tip for roster box");
 	rosterSelector.addPropertyChangeListener("selectedRosterEntries", new PropertyChangeListener(){
-
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
                 rosterItemSelectAction(null);
@@ -127,29 +126,32 @@ public class VSDConfigDialog extends JDialog {
         rosterPanel.add(rosterSelector);
         rosterLabel = new javax.swing.JLabel();
 	rosterLabel.setText(rb.getString("RosterLabel"));
-        rosterPanel.add(rosterLabel);
 
-	rosterSaveButton = new javax.swing.JButton();
-	rosterSaveButton.setText(rb.getString("ConfigSaveButtonLabel"));
-	rosterSaveButton.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-		    rosterSaveButtonAction(e);
+	// Address Tab Components
+        addressLabel = new javax.swing.JLabel();
+	addressSelector = new DccLocoAddressSelector();
+	addressSetButton = new javax.swing.JButton();
+	addressSetButton.setText(rb.getString("AddressSetButtonLabel"));
+	addressSetButton.addActionListener(new java.awt.event.ActionListener() {
+		public void actionPerformed(java.awt.event.ActionEvent evt) {
+		    addressSetButtonActionPerformed(evt);
 		}
 	    });
-	rosterSaveButton.setEnabled(false); // temporarily disable this until we update the RosterEntry
-	rosterSaveButton.setToolTipText(rb.getString("RosterSaveButtonToolTip"));
-	rosterPanel.add(rosterSaveButton);
+	addressSetButton.setEnabled(false);
+	addressSetButton.setToolTipText(rb.getString("AddressSetButtonToolTip"));
 
-        addressLabel = new javax.swing.JLabel();
-	addressSetButton = new javax.swing.JButton();
-	addressSelector = new DccLocoAddressSelector();
+	addressPanel.add(addressSelector.getCombinedJPanel());
+	addressPanel.add(addressSetButton);
+	addressPanel.add(addressLabel);
 
+	// Profile select Pane
+	profilePanel = new JPanel();
+	profilePanel.setLayout(new BoxLayout(profilePanel, BoxLayout.PAGE_AXIS));
 	profileComboBox = new javax.swing.JComboBox();
 	profileLabel = new javax.swing.JLabel();
 	profileLoadButton = new JButton(rb.getString("LoadVSDFileButtonLabel"));
+	profileLoadButton.setEnabled(false);
 	
-
-
         profileComboBox.setModel(new javax.swing.DefaultComboBoxModel());
 	// Add any already-loaded profile names
 	ArrayList<String> sl = VSDecoderManager.instance().getVSDProfileNames();
@@ -174,33 +176,48 @@ public class VSDConfigDialog extends JDialog {
 	    });
 
         profileLabel.setText(rb.getString("SoundProfileLabel"));
-        profilePanel.add(profileLabel);
 
-	addressSetButton.setText(rb.getString("AddressSetButtonLabel"));
-	addressSetButton.addActionListener(new java.awt.event.ActionListener() {
-		public void actionPerformed(java.awt.event.ActionEvent evt) {
-		    addressSetButtonActionPerformed(evt);
+	rosterSaveButton = new javax.swing.JButton();
+	rosterSaveButton.setText(rb.getString("ConfigSaveButtonLabel"));
+	rosterSaveButton.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		    rosterSaveButtonAction(e);
 		}
 	    });
-	addressSetButton.setEnabled(false);
-	addressSetButton.setToolTipText(rb.getString("AddressSetButtonToolTip"));
-	addressPanel.add(addressSelector.getCombinedJPanel());
-	addressPanel.add(addressSetButton);
-	addressPanel.add(addressLabel);
+	rosterSaveButton.setEnabled(false); // temporarily disable this until we update the RosterEntry
+	rosterSaveButton.setToolTipText(rb.getString("RosterSaveButtonToolTip"));
+
 
 	JPanel cbPanel = new JPanel();
-	JButton closeButton = new JButton(rb.getString("CloseButtonLabel"));
-	cbPanel.add(closeButton);
-	this.add(cbPanel);
+	closeButton = new JButton(rb.getString("CloseButtonLabel"));
+	closeButton.setEnabled(false);
 	closeButton.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent e) {
 		    closeButtonActionPerformed(e);
 		}
 	    });
 
+	JButton cancelButton = new JButton("Cancel");
+	cancelButton.addActionListener(new java.awt.event.ActionListener() {
+		public void actionPerformed(java.awt.event.ActionEvent evt) {
+		    cancelButtonActionPerformed(evt);
+		}
+	    });
+	cbPanel.add(cancelButton);
+	cbPanel.add(closeButton);
+
+
+	this.add(locoSelectPanel);
+	this.add(profilePanel);
+	this.add(rosterSaveButton);
+	this.add(cbPanel);
 	this.pack();
 	this.setVisible(true);
 
+    }
+
+    public void cancelButtonActionPerformed(java.awt.event.ActionEvent ae) {
+	dispose();
     }
 
     /** Handle the "Close" (or "OK") button action */
@@ -226,9 +243,15 @@ public class VSDConfigDialog extends JDialog {
     static class NullProfileBoxItem {
         @Override
 	public String toString() {
-	    //return rb.getString("NoLocoSelected");
 	    return(rb.getString("NoLocoSelectedText"));
 	}
+    }
+
+    private void enableProfileStuff(Boolean t) {
+	closeButton.setEnabled(t);
+	profileComboBox.setEnabled(t);
+	profileLoadButton.setEnabled(t);
+	rosterSaveButton.setEnabled(t);
     }
 
     /** rosterItemSelectAction()
@@ -240,7 +263,7 @@ public class VSDConfigDialog extends JDialog {
         if (rosterSelector.getSelectedRosterEntries().length != 0) {
             log.debug("Roster Entry selected...");
             setRosterEntry(rosterSelector.getSelectedRosterEntries()[0]);
-	    rosterSaveButton.setEnabled(true);
+	    enableProfileStuff(true);
         }
     }
 

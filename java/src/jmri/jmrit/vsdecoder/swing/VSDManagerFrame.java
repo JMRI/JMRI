@@ -192,8 +192,7 @@ public class VSDManagerFrame extends JmriJFrame {
 		}
 	    });
 	decoderPane.add(newControl);
-	if (newDecoder != null)
-	    newControl.addSoundButtons(new ArrayList<SoundEvent>(newDecoder.getEventList()));
+	newControl.addSoundButtons(new ArrayList<SoundEvent>(newDecoder.getEventList()));
 	//debugPrintDecoderList();
 	this.pack();
 	this.setVisible(true);

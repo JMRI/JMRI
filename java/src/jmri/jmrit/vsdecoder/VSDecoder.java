@@ -447,7 +447,7 @@ public class VSDecoder implements PropertyChangeListener {
 
 	// Give all of the VSDSound objects the position translated relative to the listener position.
 	// This is a workaround for OpenAL requiring the listener position to always be at (0,0,0).
-	PhysicalLocation ref = VSDecoderManager.instance().getVSDecoderPreferences().getListenerPosition();
+	PhysicalLocation ref = VSDecoderManager.instance().getVSDecoderPreferences().getListenerPhysicalLocation();
 	if (ref == null)
 	    ref = PhysicalLocation.Origin;
 	for (VSDSound s : sound_list.values()) {

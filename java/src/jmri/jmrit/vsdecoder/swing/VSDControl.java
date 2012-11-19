@@ -130,12 +130,6 @@ public class VSDControl extends JPanel {
 	return(setConstraints(x, y, fill, new Insets(2,2,2,2), GridBagConstraints.LINE_START));
     }
 
-    /*
-    private GridBagConstraints setConstraints(int x, int y, int fill, Insets ins) {
-	return(setConstraints(x, y, fill, ins, GridBagConstraints.LINE_START));
-    }
-    */
-
     private GridBagConstraints setConstraints(int x, int y, int fill, Insets ins, int anchor) {
 	GridBagConstraints gbc1 = new GridBagConstraints();
 	gbc1.insets = ins;
@@ -169,9 +163,6 @@ public class VSDControl extends JPanel {
 	configButton = new JButton(rb.getString("ConfigButtonLabel"));
 	optionButton = new JButton(rb.getString("OptionsButtonLabel"));
 	deleteButton = new JButton(rb.getString("DeleteButtonLabel"));
-	//configButton.setMargin(new Insets(0, 0, 0, 0));
-	//optionButton.setMargin(new Insets(0, 0, 0, 0));
-	//deleteButton.setMargin(new Insets(0, 0, 0, 0));
 	configPanel.add(configButton); // maybe don't allow this anymore.
 	configPanel.add(Box.createHorizontalGlue());
 	configPanel.add(optionButton);
@@ -203,7 +194,6 @@ public class VSDControl extends JPanel {
 						      GridBagConstraints.HORIZONTAL,
 						      new Insets(2,2,2,2),
 						      0, 0));
-	//this.add(enginePanel, setConstraints(1,0));
 	this.add(soundsPanel, setConstraints(2,0));
 	this.add(configPanel, setConstraints(3,0));
 	

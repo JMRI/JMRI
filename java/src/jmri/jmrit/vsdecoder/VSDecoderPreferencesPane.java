@@ -22,6 +22,8 @@ package jmri.jmrit.vsdecoder;
 import java.util.ResourceBundle;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -29,7 +31,11 @@ import javax.swing.BorderFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.awt.Dimension;
-
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import jmri.jmrit.vsdecoder.swing.Vector3dPanel;
+import jmri.jmrit.vsdecoder.swing.Vector2dPanel;
+import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 
 /**
  *
@@ -47,7 +53,12 @@ public class VSDecoderPreferencesPane extends javax.swing.JPanel implements Prop
     private javax.swing.JTextField  tfDefaultVSDFileName;
     private javax.swing.JLabel labelDefaultVSDFilePath;
     private javax.swing.JLabel labelDefaultVSDFileName;
-    private jmri.util.PhysicalLocationPanel listenerPos;
+    //private jmri.util.PhysicalLocationPanel listenerPos;
+    private Vector3dPanel listenerPos;
+    private Vector2dPanel listenerOtn;
+    private javax.swing.JRadioButton audioModeRoomButton;
+    private javax.swing.JRadioButton audioModeHeadphoneButton;
+    private javax.swing.ButtonGroup audioModeGroup;
 
     private javax.swing.JLabel	labelApplyWarning;
     private javax.swing.JButton jbApply;
@@ -101,7 +112,29 @@ public class VSDecoderPreferencesPane extends javax.swing.JPanel implements Prop
 	labelDefaultVSDFilePath = new javax.swing.JLabel();
 	labelDefaultVSDFileName = new javax.swing.JLabel();
 
-	listenerPos = new jmri.util.PhysicalLocationPanel("Listener Position");
+	listenerPos = new Vector3dPanel("X", "Y", "Z", 0.0d, -1000.0d, 1000.0d, 1.0d);
+	JPanel lpPanel = new JPanel();
+	lpPanel.setLayout(new BoxLayout(lpPanel, BoxLayout.LINE_AXIS));
+	lpPanel.add(new JLabel("Listener Position:"));
+	lpPanel.add(listenerPos);
+
+	listenerOtn = new Vector2dPanel("Bearing", "Azimuth", 0.0d, 0.0d, 360.0d, 1.0d);
+	JPanel loPanel = new JPanel();
+	loPanel.setLayout(new BoxLayout(loPanel, BoxLayout.LINE_AXIS));
+	loPanel.add(new JLabel("Listener Orientation:"));
+	loPanel.add(listenerOtn);
+
+	// Audio Mode
+	audioModeRoomButton = new JRadioButton("Room Ambient");
+	audioModeHeadphoneButton = new JRadioButton("Headphones");
+	audioModeGroup = new ButtonGroup();
+	audioModeGroup.add(audioModeRoomButton);
+	audioModeGroup.add(audioModeHeadphoneButton);
+	JPanel amPanel = new JPanel();
+	amPanel.setLayout(new BoxLayout(amPanel, BoxLayout.LINE_AXIS));
+	amPanel.add(new JLabel("Audio Mode:"));
+	amPanel.add(audioModeRoomButton);
+	amPanel.add(audioModeHeadphoneButton);
 
 	// Get label strings from the resource bundle and assign it.
 	cbAutoStartEngine.setText(vsdecoderBundle.getString("AutoStartEngine"));
@@ -161,7 +194,11 @@ public class VSDecoderPreferencesPane extends javax.swing.JPanel implements Prop
         prefsPane.add(tfDefaultVSDFileName, setConstraints(new Insets(2,10,2,2), 1, 3, 2, GridBagConstraints.HORIZONTAL)); //4
         prefsPane.add(labelDefaultVSDFilePath, setConstraints(new Insets(2,10,2,2), 0, 2, 1, GridBagConstraints.NONE)); //5
         prefsPane.add(labelDefaultVSDFileName, setConstraints(new Insets(2,10,2,2), 0, 3, 1, GridBagConstraints.NONE)); //6
-	prefsPane.add(listenerPos, setConstraints(new Insets(2,10,2,2), 0, 4, 2, GridBagConstraints.HORIZONTAL)); //17
+	prefsPane.add(lpPanel, setConstraints(new Insets(2,10,2,2), 0, 4, 2, GridBagConstraints.HORIZONTAL)); //17
+	prefsPane.add(loPanel, setConstraints(new Insets(2,10,2,2), 0, 5, 2, GridBagConstraints.HORIZONTAL)); //17
+	prefsPane.add(amPanel, setConstraints(new Insets(2,10,2,2), 0, 6, 2, GridBagConstraints.HORIZONTAL));
+
+	
 
         controlPane.add(jbSave, setConstraints(new Insets(5,3,5,2), 2, 100, 1, GridBagConstraints.NONE)); //7
         controlPane.add(jbCancel, setConstraints(new Insets(5,3,5,2), 0, 100, 1, GridBagConstraints.NONE)); //8
@@ -184,6 +221,15 @@ public class VSDecoderPreferencesPane extends javax.swing.JPanel implements Prop
         cbAutoLoadVSDFile.setSelected( tp.isAutoLoadingDefaultVSDFile() );
         tfDefaultVSDFilePath.setText( tp.getDefaultVSDFilePath() );
         tfDefaultVSDFileName.setText( tp.getDefaultVSDFileName() );
+	switch(tp.getAudioMode()) {
+	case HEADPHONES:
+	    audioModeHeadphoneButton.setSelected(true);
+	    break;
+	case ROOM_AMBIENT:
+	default:
+	    audioModeRoomButton.setSelected(true);
+	    break;
+	}
 	//tfListenerPosX.setText("" + tp.getListenerPosition().getX());
 	//tfListenerPosY.setText("" + tp.getListenerPosition().getY());
 	//tfListenerPosZ.setText("" + tp.getListenerPosition().getY());
@@ -196,7 +242,12 @@ public class VSDecoderPreferencesPane extends javax.swing.JPanel implements Prop
     	tp.setAutoLoadDefaultVSDFile(cbAutoLoadVSDFile.isSelected() );
     	tp.setDefaultVSDFilePath(tfDefaultVSDFilePath.getText() );
     	tp.setDefaultVSDFileName(tfDefaultVSDFileName.getText());
-	tp.setListenerPosition(listenerPos.getValue());
+	tp.setListenerPosition(new ListeningSpot("Listener", listenerPos.getValue()));
+	if (audioModeRoomButton.isSelected())
+	    tp.setAudioMode(VSDecoderPreferences.AudioMode.ROOM_AMBIENT);
+	else if (audioModeHeadphoneButton.isSelected())
+	    tp.setAudioMode(VSDecoderPreferences.AudioMode.HEADPHONES);
+
     	return tp;
     }
     

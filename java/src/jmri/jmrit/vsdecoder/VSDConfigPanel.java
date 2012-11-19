@@ -60,7 +60,6 @@ public class VSDConfigPanel extends JmriPanel {
 
     // GUI Elements
     private javax.swing.JLabel addressLabel;
-    private javax.swing.JTextField addressTextBox;
     private javax.swing.JButton addressSetButton;
     private DccLocoAddressSelector addressSelector;
     private RosterEntrySelectorPanel rosterSelector;
@@ -232,17 +231,21 @@ public class VSDConfigPanel extends JmriPanel {
 	    });
 
 	// Build the GUI.
-	setLayout(new BorderLayout(10, 10));
-	
+	//setLayout(new BorderLayout(10, 10));
+	setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+
 	rosterPanel = new JPanel();
 	rosterPanel.setLayout(new BoxLayout(rosterPanel, BoxLayout.LINE_AXIS));
 	profilePanel = new JPanel();
 	profilePanel.setLayout(new BoxLayout(profilePanel, BoxLayout.LINE_AXIS));
         addressPanel = new JPanel();
         addressPanel.setLayout(new BoxLayout(addressPanel, BoxLayout.LINE_AXIS));
-	this.add(profilePanel, BorderLayout.PAGE_START);
-	this.add(addressPanel, BorderLayout.CENTER);
-	this.add(rosterPanel, BorderLayout.PAGE_END);
+	//this.add(profilePanel, BorderLayout.PAGE_START);
+	//this.add(addressPanel, BorderLayout.CENTER);
+	//this.add(rosterPanel, BorderLayout.PAGE_END);
+	this.add(profilePanel);
+	this.add(addressPanel);
+	this.add(rosterPanel);
 
 	rosterSelector = new RosterEntrySelectorPanel();
 	rosterSelector.setNonSelectedItem("No Loco Selected");
@@ -270,7 +273,6 @@ public class VSDConfigPanel extends JmriPanel {
 	rosterSaveButton.setToolTipText(vsdecoderBundle.getString("RosterSaveButtonToolTip"));
 	rosterPanel.add(rosterSaveButton);
 
-        addressTextBox = new javax.swing.JTextField(5);
         addressLabel = new javax.swing.JLabel();
 	addressSetButton = new javax.swing.JButton();
 	addressSelector = new DccLocoAddressSelector();
@@ -301,26 +303,15 @@ public class VSDConfigPanel extends JmriPanel {
         profileLabel.setText("Sound Profile");
         profilePanel.add(profileLabel);
 
-        addressTextBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addressBoxActionPerformed(evt);
-            }
-        });
-	addressTextBox.setMaximumSize(addressTextBox.getPreferredSize());
-        //addressPanel.add(addressTextBox);
-
         addressLabel.setText("Address");
-	addressLabel.setMaximumSize(addressLabel.getPreferredSize());
-        //addressPanel.add(addressLabel);
+	//addressLabel.setMaximumSize(addressLabel.getPreferredSize());
 
-	//addressPanel.add(addressSetButton);
 	addressSetButton.setText("Set");
 	addressSetButton.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent evt) {
 		    addressSetButtonActionPerformed(evt);
 		}
 	    });
-	addressTextBox.setEnabled(false);
 	addressSetButton.setEnabled(false);
 	addressSetButton.setToolTipText("AddressSetButtonToolTip");
 	addressPanel.add(addressSelector.getCombinedJPanel());
@@ -503,7 +494,6 @@ public class VSDConfigPanel extends JmriPanel {
 	    updateAddress();
 	    // Either way, enable the address text box and set button.
 	    addressSetButton.setEnabled(true);
-	    addressTextBox.setEnabled(true);
 	    // Do something.
 	} else {
 	    log.warn("NULL POINTER returned from VSDecoderManager.");
@@ -538,10 +528,10 @@ public class VSDConfigPanel extends JmriPanel {
     //
     // ActionEventListener for addressSetButton
     // Does nothing.
-    private void addressBoxActionPerformed(java.awt.event.ActionEvent evt) {
+    //private void addressBoxActionPerformed(java.awt.event.ActionEvent evt) {
 	// Don't do anything just yet...
 	// Probably don't do anything ever...
-    }//GEN-LAST:event_jButton1ActionPerformed
+    //}
 
     // addressSetButtonActionPerformed()
     //

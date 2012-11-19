@@ -29,6 +29,7 @@ package jmri.jmrit.vsdecoder;
 import jmri.LocoAddress;
 import jmri.util.PhysicalLocation;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 
 public class VSDConfig {
     

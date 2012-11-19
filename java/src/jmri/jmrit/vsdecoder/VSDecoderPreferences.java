@@ -23,7 +23,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
+import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Collections;
 import jmri.util.PhysicalLocation;
+import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -32,12 +38,24 @@ import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 
 public class VSDecoderPreferences {
+
+    static public enum AudioMode { ROOM_AMBIENT, HEADPHONES } 
+    static public final Map<AudioMode, String> AudioModeMap;
+    static {
+	Map<AudioMode, String> aMap = new HashMap<AudioMode, String>();
+	aMap.put(AudioMode.ROOM_AMBIENT, "RoomAmbient");
+	aMap.put(AudioMode.HEADPHONES, "Headphones");
+	AudioModeMap = Collections.unmodifiableMap(aMap);
+    }
+    static public final AudioMode DefaultAudioMode = AudioMode.ROOM_AMBIENT;
+
     // Private variables to hold preference values
     private boolean _autoStartEngine = false; // play engine sound w/o waiting for "Engine Start" button pressed.
     private String _defaultVSDFilePath = null;
     private String _defaultVSDFileName = null;
     private boolean _autoLoadDefaultVSDFile = false; // Automatically load a VSD file.
-    private PhysicalLocation _listenerPosition;
+    private ListeningSpot _listenerPosition;
+    private AudioMode _audioMode;
 
     // Other internal variables
     //private Dimension _winDim = new Dimension(800,600);
@@ -50,13 +68,17 @@ public class VSDecoderPreferences {
 	VSDecoderPrefsXml prefs = new VSDecoderPrefsXml();
 	File file = new File(prefFile );
 	Element root;
+	
+	// Set default values
+	_defaultVSDFilePath = FileUtil.getExternalFilename("program:resources/vsdecoder");
+	_defaultVSDFileName = "example.vsd";
+	_listenerPosition = new ListeningSpot(); // default to (0, 0, 0) Orientation (0,1,0)
+	_audioMode = DefaultAudioMode;
+
+	// Try to load preferences from the file
 	try {
 	    root = prefs.rootFromFile(file);
         } catch (java.io.FileNotFoundException e2) {
-	    // Set default values
-	    _defaultVSDFilePath = FileUtil.getExternalFilename("program:resources/vsdecoder");
-	    _defaultVSDFileName = "example.vsd";
-	    _listenerPosition = new PhysicalLocation(); // default to 0, 0, 0
             log.info("Did not find VSDecoder preferences file.  This is normal if you haven't save the preferences before");
             root = null;
 	} catch (Exception e) {
@@ -79,9 +101,10 @@ public class VSDecoderPreferences {
 	if ((c = e.getChild("DefaultVSDFilePath")) != null) setDefaultVSDFilePath(c.getValue());
 	if ((c = e.getChild("DefaultVSDFileName")) != null) setDefaultVSDFileName(c.getValue());
 	if ((c = e.getChild("ListenerPosition")) != null)
-	    setListenerPosition(c.getValue());
+	    _listenerPosition = new ListeningSpot(c);
 	else
-	    setListenerPosition(new PhysicalLocation());
+	    _listenerPosition = new ListeningSpot();
+	if ((c = e.getChild("AudioMode")) != null) setAudioMode(c.getValue());
     }
     
     /**
@@ -101,8 +124,10 @@ public class VSDecoderPreferences {
 	ec = new Element("DefaultVSDFileName");
 	ec.setText("" + getDefaultVSDFileName());
 	e.addContent(ec);
-	ec = new Element("ListenerPosition");
-	ec.setText("" + _listenerPosition.toString());
+	// ListenerPosition generates its own XML
+	e.addContent(_listenerPosition.getXml("ListenerPosition"));
+	ec = new Element("AudioMode");
+	ec.setText("" + AudioModeMap.get(_audioMode));
 	e.addContent(ec);
     	return e;
     }
@@ -114,6 +139,7 @@ public class VSDecoderPreferences {
     	setDefaultVSDFilePath(tp.getDefaultVSDFilePath() );
     	setDefaultVSDFileName(tp.getDefaultVSDFileName() );
 	setListenerPosition(tp.getListenerPosition());
+	setAudioMode(tp.getAudioMode());
     	
     	if (listeners != null)
     		for (int i = 0; i < listeners.size(); i++) {
@@ -129,7 +155,8 @@ public class VSDecoderPreferences {
 		isAutoLoadingDefaultVSDFile() != tp.isAutoLoadingDefaultVSDFile() ||
 		!(getDefaultVSDFilePath().equals(tp.getDefaultVSDFilePath())) ||
 		!(getDefaultVSDFileName().equals(tp.getDefaultVSDFileName())) ||
-		!(getListenerPosition().equals(tp.getListenerPosition()))
+		!(getListenerPosition().equals(tp.getListenerPosition())) ||
+		!(getAudioMode().equals(tp.getAudioMode()))
 		);
     }
     
@@ -201,23 +228,47 @@ public class VSDecoderPreferences {
     public void setAutoLoadDefaultVSDFile(boolean b) {
 	_autoLoadDefaultVSDFile = b;
     }
-
-    public PhysicalLocation getListenerPosition() {
+    public ListeningSpot getListenerPosition() {
 	log.debug("getListenerPosition() : " + _listenerPosition.toString());
 	return(_listenerPosition);
     }
 
-    public void setListenerPosition(PhysicalLocation p) {
+    public void setListenerPosition(ListeningSpot p) {
 	_listenerPosition = p;
     }
+    // Note:  No setListenerPosition(String) for ListeningSpot implementation
 
-    public void setListenerPosition(String pos) {
-	PhysicalLocation p = PhysicalLocation.parse(pos);
-	if (p != null) {
-	    this.setListenerPosition(p);
-	} else {
-	    this.setListenerPosition(new PhysicalLocation());
+    public PhysicalLocation getListenerPhysicalLocation() {
+	return(_listenerPosition.getPhysicalLocation());
+    }
+
+    public void setListenerPosition(PhysicalLocation p) {
+	_listenerPosition = new ListeningSpot();
+	_listenerPosition.setLocation(p);
+    }
+
+    public AudioMode getAudioMode() {
+	return(_audioMode);
+    }
+
+    public void setAudioMode(AudioMode am) {
+	_audioMode = am;
+    }
+
+    public void setAudioMode(String am) {
+	// There's got to be a more efficient way to do this
+	Set<Map.Entry<AudioMode, String>> ids = AudioModeMap.entrySet();
+	Iterator<Map.Entry<AudioMode, String>> idi = ids.iterator();
+	while (idi.hasNext()) {
+	    Map.Entry<AudioMode, String> e = idi.next();
+	    log.debug("    ID = " +  e.getKey() + " Val = " + e.getValue());
+	    if (e.getValue().equals(am)){
+		_audioMode = e.getKey();
+		return;
+	    }
 	}
+	// We fell out of the loop.  Must be an invalid string. Set default
+	_audioMode = DefaultAudioMode;
     }
 
     /**
