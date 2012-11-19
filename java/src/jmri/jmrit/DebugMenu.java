@@ -45,11 +45,13 @@ public class DebugMenu extends JMenu {
             new jmri.util.swing.sdi.JmriJFrameInterface(),
             "jmri.jmrit.log.Log4JTreePane"));
         add(new JSeparator());
-	JMenu vsdMenu = new JMenu("Virtual Sound Decoder");
-	vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction("New GUI", true));
-	vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction("Old GUI", false));
-	vsdMenu.add(new jmri.jmrit.beantable.SetPhysicalLocationAction("Set Reporter Locations", null));
-	vsdMenu.add(new jmri.jmrit.vsdecoder.swing.ManageLocationsAction("Manage VSD Locations", null));
+	JMenu vsdMenu = new JMenu(rb.getString("VSDMenuItem"));
+	vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(rb.getString("VSDecoderManagerAction"), true));
+	vsdMenu.add(new jmri.jmrit.vsdecoder.swing.ManageLocationsAction(rb.getString("VSDecoderLocationManager"), null));
+	JMenu oldVsdMenu = new JMenu(rb.getString("OldVSDInterfaceMenuItem"));
+	oldVsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(rb.getString("OldVSDecoderWindow"), false));
+	oldVsdMenu.add(new jmri.jmrit.beantable.SetPhysicalLocationAction(rb.getString("OldSetReporterLocationsAction"), null));
+	vsdMenu.add(oldVsdMenu);
 	add(vsdMenu);
 
 
