@@ -47,7 +47,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Location;
 
 
-public class ManageLocationsFrame extends JmriJFrame {
+public class ManageLocationsFrame extends JFrame {
 
     // Uncomment this when we add labels...
     //private static final ResourceBundle rb = VSDecoderBundle.bundle();
@@ -90,12 +90,10 @@ public class ManageLocationsFrame extends JmriJFrame {
 	listenerLoc = listener;
 	initGui();
     }
-
+    
     private void initGui() {
 	// Panel for managing listeners
 	listenerPanel = new JPanel();
-	//listenerPanel.setLayout(new GridBagLayout());
-	//listenerPanel.setLayout(new BoxLayout(listenerPanel, BoxLayout.PAGE_AXIS));
 	listenerPanel.setLayout(new BorderLayout());
 
 	// Audio Mode Buttons
@@ -111,6 +109,7 @@ public class ManageLocationsFrame extends JmriJFrame {
 		    modeRadioButtonPressed(e);
 		}
 	    });
+	b2.setEnabled(false);
 	ButtonGroup bg = new ButtonGroup();
 	bg.add(b1);
 	bg.add(b2);
@@ -119,12 +118,6 @@ public class ManageLocationsFrame extends JmriJFrame {
 	modePanel.setLayout(new BoxLayout(modePanel, BoxLayout.LINE_AXIS));
 	modePanel.add(b1);
 	modePanel.add(b2);
-	//GridBagConstraints gbc3 = new GridBagConstraints();
-	//gbc3.gridx = 0; gbc3.gridy = GridBagConstraints.RELATIVE;
-	//gbc3.fill = GridBagConstraints.NONE;
-	//gbc3.anchor = GridBagConstraints.LINE_START;
-	//gbc3.weightx = 1.0; gbc3.weighty = 1.0;
-	//listenerPanel.add(modePanel, gbc3);
 
 	// Build Listener Locations Table
 	locData = new Object[1][7];
@@ -150,29 +143,8 @@ public class ManageLocationsFrame extends JmriJFrame {
 	locTable.setFillsViewportHeight(true);
 	locTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
 
-	//locScrollPanel.getViewport().add(locTable, null);
 	locScrollPanel.getViewport().add(locTable);
-	//locScrollPanel.setPreferredSize(new Dimension(520, 200));
 
-
-
-	//locPanel.add(new JLabel("Listener Location: "));
-	//Vector3dPanel posp = new Vector3dPanel("X", "Y", "Z", 0.0d, -1000.0d, 1000.0d, 1.0d);
-	//posp.setValue(listenerLoc.getLocation());
-	// We're for the moment assuming "Room Ambient" mode is forced.
-	// Orientation is always straight ahead +Y axis.
-	//Vector2dPanel orp = new Vector2dPanel("Bearing", "Azimuth", 0.0d, 0.0d, 360.0d, 1.0d);
-	//orp.setValue(new Vector2d(0.0d, 0.0d));
-	//orp.setEnabled(false);
-	//locPanel.add(posp);
-	//locPanel.add(orp);
-	//GridBagConstraints gbc4 = new GridBagConstraints();
-	//gbc4.gridx = 0; gbc4.gridy = GridBagConstraints.RELATIVE;
-	//gbc4.fill = GridBagConstraints.NONE;
-	//gbc4.anchor = GridBagConstraints.LINE_START;
-	//gbc4.weightx = 1.0; gbc4.weighty = 1.0;
-	//listenerPanel.add(locPanel, gbc4);
-	//listenerPanel.add(locScrollPanel, gbc4);
 	listenerPanel.add(modePanel, BorderLayout.NORTH);
 	listenerPanel.add(locScrollPanel, BorderLayout.CENTER);
 	
@@ -188,7 +160,8 @@ public class ManageLocationsFrame extends JmriJFrame {
 	reporterModel = new LocationTableModel(reporterData);
 	JTable reporterTable = new JTable(reporterModel);
 	reporterTable.setFillsViewportHeight(true);
-	reporterScrollPanel.getViewport().add(reporterTable, null);
+	reporterScrollPanel.getViewport().add(reporterTable);
+	reporterTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
 
 	opsPanel = new JPanel();
 	opsPanel.setLayout(new GridBagLayout());
@@ -197,18 +170,18 @@ public class ManageLocationsFrame extends JmriJFrame {
 	opsModel = new LocationTableModel(opsData);
 	JTable opsTable = new JTable(opsModel);
 	opsTable.setFillsViewportHeight(true);
+	opsTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
 
-	opsScrollPanel.getViewport().add(opsTable, null);
+	opsScrollPanel.getViewport().add(opsTable);
 
 	tabbedPane = new JTabbedPane();
 	tabbedPane.addTab("Reporters", reporterScrollPanel);
 	tabbedPane.addTab("Operations Locations", opsScrollPanel);
 	tabbedPane.addTab("Listeners", listenerPanel);
 
-
 	JPanel buttonPane = new JPanel();
 	buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
-	JButton cancelButton = new JButton("Cancel");
+	JButton cancelButton = new JButton("Close");
 	cancelButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    cancelButtonPressed(e);
@@ -223,8 +196,7 @@ public class ManageLocationsFrame extends JmriJFrame {
 	buttonPane.add(cancelButton);
 	buttonPane.add(saveButton);
 
-	//this.setLayout(new GridBagLayout());
-	this.setLayout(new BorderLayout());
+	this.getContentPane().setLayout(new GridBagLayout());
 	GridBagConstraints gbc1 = new GridBagConstraints();
 	gbc1.gridx = 0; gbc1.gridy = 0;
 	gbc1.fill = GridBagConstraints.BOTH;
@@ -232,11 +204,12 @@ public class ManageLocationsFrame extends JmriJFrame {
 	gbc1.weightx = 1.0; gbc1.weighty = 1.0;
 	GridBagConstraints gbc2 = new GridBagConstraints();
 	gbc2.gridx = 0; gbc2.gridy = 1;
-	gbc2.fill = GridBagConstraints.BOTH;
+	gbc2.fill = GridBagConstraints.NONE;
 	gbc2.anchor = GridBagConstraints.CENTER;
 	gbc2.weightx = 1.0; gbc2.weighty = 1.0;
-	this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
-	this.getContentPane().add(buttonPane, BorderLayout.PAGE_END);
+
+	this.getContentPane().add(tabbedPane, gbc1);
+	this.getContentPane().add(buttonPane, gbc2);
 
 	this.pack();
 	this.setVisible(true);
