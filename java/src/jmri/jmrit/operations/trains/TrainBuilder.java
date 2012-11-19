@@ -2100,6 +2100,10 @@ public class TrainBuilder extends TrainCommon{
 							new Object[]{track.getScheduleItemId(), track.getScheduleName(), track.getName(), track.getLocation().getName()}));
 				log.debug("Track ("+track.getName()+") has schedule ("+track.getScheduleName()+") item id ("+si.getId()+") requesting type ("+si.getType()+") " +
 						"load ("+si.getLoad()+") next dest ("+si.getDestinationName()+") track ("+si.getDestinationTrackName()+")");
+				if (!train.isAllowLocalMovesEnabled() && car.getLocationName().equals(track.getLocation().getName())){
+					log.debug("Skipping track ("+track.getName()+"), it would require a local move");
+					continue;
+				}
 				if (car.testDestination(track.getLocation(), track).equals(Track.OKAY)){
 					// check the number of in bound cars to this track
 					if (!track.isSpaceAvailable(car)){

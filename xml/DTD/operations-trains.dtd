@@ -84,6 +84,7 @@
 <!ATTLIST train buildNormal			(true | false) "false">
 <!ATTLIST train toTerminal			(true | false) "false">
 <!ATTLIST train allowReturn			(true | false) "false">
+<!ATTLIST train allowLocalMoves		(true | false) "true">
 <!ATTLIST train built				(true | false) "false">
 <!ATTLIST train build				(true | false) "false">
 <!ATTLIST train buildFailed			(true | false) "false">

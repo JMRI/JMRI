@@ -68,6 +68,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected boolean _buildFailed = false;	// when true, build for this train failed
 	protected boolean _printed = false;		// when true, manifest has been printed
 	protected boolean _sendToTerminal = false;	// when true, cars picked up by train only go to terminal
+	protected boolean _allowLocalMoves = true;	// when true, cars with custom loads can be moved locally
 	protected boolean _buildNormal = false;	// when true build this train in normal mode
 	protected boolean _allowCarsReturnStaging = false;	// when true allow cars to return to staging if necessary
 	protected Route _route = null;
@@ -1868,6 +1869,18 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 	}
 	
+	public boolean isAllowLocalMovesEnabled(){
+		return _allowLocalMoves;
+	}
+	
+	public void setAllowLocalMovesEnabled(boolean enable){
+		boolean old = _allowLocalMoves;
+		_allowLocalMoves = enable;
+		if (old != enable){
+			setDirtyAndFirePropertyChange("allow local moves", old?"true":"false", enable?"true":"false");
+		}
+	}
+	
 	public boolean isBuildTrainNormalEnabled(){
 		return _buildNormal;
 	}
@@ -2676,6 +2689,8 @@ public class Train implements java.beans.PropertyChangeListener {
     		_buildNormal = a.getValue().equals("true");
     	if ((a = e.getAttribute("toTerminal")) != null)
     		_sendToTerminal = a.getValue().equals("true");
+       	if ((a = e.getAttribute("allowLocalMoves")) != null)
+    		_allowLocalMoves = a.getValue().equals("true");
     	if ((a = e.getAttribute("allowReturn")) != null)
     		_allowCarsReturnStaging = a.getValue().equals("true");
     	if ((a = e.getAttribute("built")) != null)
@@ -2850,6 +2865,7 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("cabooseRoad", getCabooseRoad());
         e.setAttribute("buildNormal", isBuildTrainNormalEnabled()?"true":"false");
         e.setAttribute("toTerminal", isSendCarsToTerminalEnabled()?"true":"false");
+        e.setAttribute("allowLocalMoves", isAllowLocalMovesEnabled()?"true":"false");
         e.setAttribute("allowReturn", isAllowReturnToStagingEnabled()?"true":"false");
         e.setAttribute("built", isBuilt()?"true":"false");
         e.setAttribute("build", isBuildEnabled()?"true":"false");

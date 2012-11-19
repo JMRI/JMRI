@@ -145,9 +145,10 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     ButtonGroup cabooseOption2Group = new ButtonGroup();
     
     // check boxes
-    JCheckBox buildNormalcheckBox = new JCheckBox(rb.getString("NormalModeWhenBuilding"));
-    JCheckBox sendToTerminalcheckBox = new JCheckBox();
-    JCheckBox returnStagingcheckBox = new JCheckBox(rb.getString("AllowCarsToReturn"));
+    JCheckBox buildNormalCheckBox = new JCheckBox(rb.getString("NormalModeWhenBuilding"));
+    JCheckBox sendToTerminalCheckBox = new JCheckBox();
+    JCheckBox returnStagingCheckBox = new JCheckBox(rb.getString("AllowCarsToReturn"));
+    JCheckBox allowLocalMovesCheckBox = new JCheckBox(rb.getString("AllowLocalMoves"));
 	
 	// text field
     JTextField builtAfterTextField = new JTextField(10);
@@ -241,11 +242,12 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     	JPanel pOption = new JPanel();
     	pOption.setLayout(new GridBagLayout());
     	pOption.setBorder(BorderFactory.createTitledBorder(rb.getString("Options")));
-    	addItem(pOption, buildNormalcheckBox, 0, 0);
-    	addItem(pOption, sendToTerminalcheckBox, 1, 0);
-    	addItem(pOption, returnStagingcheckBox, 0, 1);
+    	addItem(pOption, buildNormalCheckBox, 0, 0);
+    	addItem(pOption, sendToTerminalCheckBox, 1, 0);
+    	addItem(pOption, returnStagingCheckBox, 0, 1);
+    	addItem(pOption, allowLocalMovesCheckBox, 1, 1);
     	
-    	returnStagingcheckBox.setEnabled(false);	// only enable if train departs and returns to same staging loc
+    	returnStagingCheckBox.setEnabled(false);	// only enable if train departs and returns to same staging loc
     		
 		// row 3
 		panelRoadNames.setLayout(new GridBagLayout());
@@ -442,10 +444,11 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		if (_train != null){
 			trainName.setText(_train.getName());
 			trainDescription.setText(_train.getDescription());
-			buildNormalcheckBox.setSelected(_train.isBuildTrainNormalEnabled());
-			sendToTerminalcheckBox.setSelected(_train.isSendCarsToTerminalEnabled());
-			returnStagingcheckBox.setSelected(_train.isAllowReturnToStagingEnabled());
-			sendToTerminalcheckBox.setText(MessageFormat.format(rb.getString("SendToTerminal"),new Object[] {_train.getTrainTerminatesName()}));
+			buildNormalCheckBox.setSelected(_train.isBuildTrainNormalEnabled());
+			sendToTerminalCheckBox.setSelected(_train.isSendCarsToTerminalEnabled());
+			returnStagingCheckBox.setSelected(_train.isAllowReturnToStagingEnabled());
+			allowLocalMovesCheckBox.setSelected(_train.isAllowLocalMovesEnabled());
+			sendToTerminalCheckBox.setText(MessageFormat.format(rb.getString("SendToTerminal"),new Object[] {_train.getTrainTerminatesName()}));
 			builtAfterTextField.setText(_train.getBuiltStartYear());
 			builtBeforeTextField.setText(_train.getBuiltEndYear());
 			setBuiltRadioButton();
@@ -455,7 +458,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 					&& _train.getTrainTerminatesRouteLocation() != null
 					&& _train.getTrainTerminatesRouteLocation().getLocation().getLocationOps() == (Location.STAGING)
 					&& _train.getTrainDepartsRouteLocation().getName().equals(_train.getTrainTerminatesRouteLocation().getName())) {
-				returnStagingcheckBox.setEnabled(true);
+				returnStagingCheckBox.setEnabled(true);
 			}
 			// listen for train changes
 			_train.addPropertyChangeListener(this);
@@ -938,9 +941,10 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	private void saveTrain(){
 		if (!checkInput())
 			return;
-		_train.setBuildTrainNormalEnabled(buildNormalcheckBox.isSelected());
-		_train.setSendCarsToTerminalEnabled(sendToTerminalcheckBox.isSelected());
-		_train.setAllowReturnToStagingEnabled(returnStagingcheckBox.isSelected());
+		_train.setBuildTrainNormalEnabled(buildNormalCheckBox.isSelected());
+		_train.setSendCarsToTerminalEnabled(sendToTerminalCheckBox.isSelected());
+		_train.setAllowReturnToStagingEnabled(returnStagingCheckBox.isSelected());
+		_train.setAllowLocalMovesEnabled(allowLocalMovesCheckBox.isSelected());
 		_train.setBuiltStartYear(builtAfterTextField.getText().trim());
 		_train.setBuiltEndYear(builtBeforeTextField.getText().trim());
 		
