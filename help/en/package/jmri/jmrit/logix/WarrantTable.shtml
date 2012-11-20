@@ -181,7 +181,12 @@ may deny permission.  It is the most restrictive of these three conditions
 that gives the auto-run train permission to proceed.  When such a denial is 
 cleared, the train will proceed automatically.  The only thing that overrides 
 having permission to proceed is if the user has set the control to "Halt".  The train will 
-not move until the user sets "Resume". (see below how to set these user commands.
+not move until the user sets "Resume". (see below how to set these user commands).
+<p>
+If a warrant is started and  the stating block is not occupied, the warrant will
+wait until the block is occupied.  When occupation occurs the warrant will start
+executing so is vital that the correct train, i.e. has the address specified in
+the warrant, occupies the block. 
 </p>   
 <H3>Throttle Command Table</H3>
 The Throttle Command Table has the following columns:
@@ -202,24 +207,27 @@ to synchronize the running of the train to keep to its recorded schedule.
 </p>
 
 <H3>Synchronizing Commands to Block boundaries.</H3>
-The "NoOp" markers attempt to shorten or lengthen the elapsed time to synchronize
-the entry into each block at the same time as was recorded.
+The entry into each block is recorded with a "NoOp" marker.
 If the consist of a train changes, or if power is changed, the recorded elapsed times
 may not allow the throttle commands to execute at the same points on the route where
-the "Learn Mode" train recorded them.  The "NoOp" markers can usually correct this. However, 
-in extreme cases or for commands issued within the block synchronization may
+the "Learn Mode" train recorded them. The "NoOp" markers can often correct this.  
+The "NoOp" markers attempt to shorten or lengthen the elapsed time to synchronize
+the entry into each block at the same time as was recorded.
+However, in extreme cases or for commands issued within the block synchronization may
 still be uncorrected.  You may also lengthen or shorten the synchronization times for entering a block.
 <p>
 Another option is to use the <b>Throttle Adjustment</b> to enter a ratio to multiply the throttle setting
 and thus supply more or less power. 
 <ul>
         <b>NOTE:</b>The throttle adjustment factor is not permanently saved.  The default 
-        mutiplier is always 1.0.  Whenever a factor is wanted, it must be entered manually 
+        multiplier is always 1.0.  Whenever a factor is wanted, it must be entered manually 
         each time the warrant is run. - <b>or be set by Logix</b> when Logix is used to set 
         the trainId and run the warrant.  The recorded and edited throttle commands are the 
         base settings for each warrant run.  TrainId and Throttle Factor can be set as desired
         for each warrant run.
 </ul>
+If a more precise way is needed to have a script event occur at a particular location, see the
+<b>Internal Synchronization From External Events/b> below.
 </p>
 
 <H3>Editing Throttle Commands</H3>
@@ -242,7 +250,7 @@ elapsed time in the block constant.
 
 External animation or other events may be triggered by entering a "<i>Set Sensor</i>"
 command.  To do this, insert a row with the words <b>Set Sensor</b> in the Command column and
-a valid sensor name in the Block column.  The Value column should have the action 
+a valid sensor name in the <i>Block</i> column.  The <i>Value</i> column should have the action 
 you want the sensor to take at its execution time - the words "active" or "inactive".
 Also enter the elapsed time when to trigger the setting of the sensor.  On playback
 when this command is executed the state of the sensor will be set.
@@ -251,21 +259,41 @@ when this command is executed the state of the sensor will be set.
 <H3>Internal Synchronization From External Events</H3>
 Additional synchronization can be done within a block.  For example stopping a train
 at a water tower or over an uncoupling device or for any reason where using the elapsed
-time of a command is not precise enough.To do this, insert a row with the words 
+time of a command is not precise enough. To do this, insert a row with the words 
 <b>Wait Sensor</b> in the Command column and
-a valid sensor name in the Block column.  The Value column should have the action 
+a valid sensor name in the <i>Block</i> column.  The <i>Value</i> column should have the action 
 words "active" or "inactive".  On playback when this command is executed the script
 pauses and the current
 movement of the train is sustained until the sensor changes to the specified state.
-When that happens the script the continues to execute according to the recorded 
+When that happens the script continues to execute according to the recorded 
 times.  In this case the "Wait Sensor" might be an optical sensor positioned to
 detect specific point.  Bracket the "Wait Sensor" command with speed commands, the
 one before with a very slow speed and the one after with speed 0 (or -1).  The script will
 then have the train creep at the slow speed until the sensor makes the detection.
 Then the script continues and the speed 0 command stops the train.
 <p>
+Likewise the script and train may stay stopped until a second "Wait Sensor" command 
+triggers the script to continue.
+<p>
 If the "Wait Sensor" is already at the specified state when playback executes its
 command the script continues. 
+
+<H3>Automatic Sequencing of Scripts</H3>
+
+It is possible to start another script from a script. To do this, insert a row with the words 
+<b>Run Warrant</b> in the Command column and name of a warrant in the <i>Block</i> column.  This command 
+launches the second warrant.  Note that a train with the address specified in the second warrant
+must be placed in the starting block of the second warrant.
+<p> 
+This feature can be used to loop a train repeatedly by using the same warrant name.  If a script 
+terminates with the destination block
+equal to the origin block, it will repeat for the number of times entered into the <i>Value</i>
+column.  If a negative number is entered the script will repeat indefinitely until an abort command is manually
+issued.  Another possibility would be to use warrant "from A to B" and warrant "from B to A", 
+where warrant "from A to B" runs warrant "from B to A" and warrant "from B to A"
+runs warrant "from A to B" and each warrant specifies the same train Id and the same number
+of repeats.
+</p>
 
 <H3>Running Trains on Dark Blocks</H3>
 The Learn mode and Run Mode functions can be used on blocks that do not have detection sensors.

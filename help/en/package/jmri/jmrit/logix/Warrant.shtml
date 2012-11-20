@@ -181,21 +181,27 @@ an automated train.  A <b>Run</b> operation can begin without them.  The train w
 seek allocation and set turnouts as it proceeds on the route.  When
 confronted with an occupied block, the train will stop and wait until the block clears.
 When the next block is clear but the block beyond the next block is occupied, the
-train will approach at reduced speed.  Similarly, if the Portals have been define with
-Signal Heads or signal Masts protecting the blocks they join, the train will use the 
-speed notch defined for the appearance or aspect of the signal. An automated train will attempt to secure
-allocation of the next two blocks each time it enters a block. 
+train will approach at reduced speed.  Similarly, if the Portals have been defined with
+Signal Heads or signal Masts protecting the blocks they join, the train will modify the
+speed according to the appearance or aspect of the signal. An automated train will attempt to secure
+allocation of the next two blocks each time it enters a block.  It also checks whether
+the block is occupied by an unknown train and will not enter if the block is occupied.
 <A HREF="WarrantTable.shtml"> Creating and Editing Warrants</A>.</li> has more
 information about this.</p>
 
 <H3>Editing Throttle Commands</H3>
-The recorded throttle commands execute according to the elapased time between commands.
+The recorded throttle commands execute according to the elapsed time between commands.
 The elapsed time (ET column) may be modified and even the command may be changed.
 Rows may be deleted and additional rows added.   
 <p>
 Changing the consist of a train or perhaps even a temperature change 
 between recording and playback, may result in the train not performing a throttle
-command at the same place on the layout each time.  The <b>Throttle Adjustment</b>
+command at the same place on the layout each time although the script attempts to 
+synchronize the elapsed time each time it enters a block by either delaying the timings
+of the next block until the train arrives at the block, or skipping the remaining time
+if the train arrives earlier than expected..
+</p>
+The <b>Throttle Adjustment</b>
 text field can be used to modify the throttle setting by a fixed ratio for all
 speed commands.  - or individual commands may have their throttle setting or elapsed
 time value changed by editing the throttle command table.

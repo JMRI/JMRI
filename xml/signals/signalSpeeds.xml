@@ -28,32 +28,34 @@
     </revision>    
   </revhistory>
 
-<!-- Meaning of the number used for the aspectSpeeds names                      -->
+<!-- Meaning of the number used for the aspectSpeeds names in the aspectSpeeds  -->
+<!-- table below. The table maps the names used in signal aspects.xml files to  -->
+<!-- a number that is translated to a throttle setting.                         -->
 <!-- percentNormal is the percentage of the recorded speed (the "Normal" speed  --> 
 <!-- percentThrottle is the percentage of the full throttle speed               --> 
-  <interpretation>percentNormal</interpretation>
+  <interpretation>percentThrottle</interpretation>
 
 <!-- Speed changes are ramped from the current indication to the next.          -->
 <!-- Throttle speed commands are sent incrementally with a delay between them.  -->
 <!-- The delay in milliseconds between speed increments sent to the throttle.   -->
   <msPerIncrement>750</msPerIncrement>
-<!-- Time needed to ramp a speed change can be shortened    -->
-<!-- Increase number of steps per throttle commands         -->   
+<!-- Time needed to ramp a speed change can be shortened      -->
+<!-- by increasing the number of steps per throttle command   -->   
   <stepsPerIncrement>1</stepsPerIncrement>
   
-<!-- map speed names to ratios used in throttle settings                            -->
+<!-- Map speed names to ratios used in throttle settings                            -->
 <!-- speed names may be put into aspect.xml files to indicate speed for the aspect  -->
 <!-- Each speed name is a "speed notch" and additional notch names can be added -   -->
 <!-- however the names must match those in the "appearanceSpeeds" table below for   -->
 <!-- signal Heads and those used in "aspects.xml" file for Signal Masts.            -->
 <!-- These speeds are enforced at the entrance to a block                           -->
   <aspectSpeeds>
-    <Maximum>125</Maximum>
-    <Normal>100</Normal>
-    <Limited>75</Limited>
-    <Medium>50</Medium>
-    <Slow>25</Slow>
-    <Restricted>15</Restricted>
+    <Maximum>100</Maximum>
+    <Normal>60</Normal>
+    <Limited>35</Limited>
+    <Medium>20</Medium>
+    <Slow>10</Slow>
+    <Restricted>3</Restricted>
     <Stop>0</Stop>
   </aspectSpeeds>
 

@@ -67,7 +67,7 @@ public abstract class ItemPanel extends JPanel {
     protected void removeIconMap(String family) {
     }
     protected void reset() {
-//      _paletteFrame.pack();
+      _paletteFrame.pack();
       _paletteFrame.invalidate();
       invalidate();
       _paletteFrame.repaint();
