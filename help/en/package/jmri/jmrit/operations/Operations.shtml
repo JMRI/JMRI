@@ -70,7 +70,8 @@ of tools and can be found under the main menu heading
       <LI><A HREF="#ResetDatabases">Reset Databases</A></LI>
       <LI><A HREF="#SettingsOptions">Options</A></LI>
      </UL></LI>
-    <LI><A HREF="#PrintOptions">Print Options</A></LI>
+    <LI><A HREF="#PrintOptions">Manifest Print Options</A></LI>
+    <LI><A HREF="#BuildReportDetails">Build Report Options</A></LI>
     <LI><A HREF="#Locations">Locations</A>
      <UL>
       <LI><A HREF="#Yards">Yards</A></LI>
@@ -662,11 +663,11 @@ track your rolling stock.  You can also rename these fields if you wish and use 
 
 
 <A NAME="PrintOptions"></A>
-<H2>Print Options</H2>
+<H2>Manifest Print Options</H2>
 
-You can modify the how the program prints the train manifests and the amount of detail
-that the build report provides.  From the "Operations-&gt;Settings-&gt;Tools" menu select "Print Options" to open
-the print option window.
+You can modify the how the program prints the train manifests and the location switch lists.
+From the "Operations-&gt;Settings-&gt;Tools" menu select "Manifest Print Options" to open
+the manifest print option window.
 <P>
 <img src="images/PrintOptions.png">
 </P>
@@ -674,6 +675,12 @@ the print option window.
 
 The program supports several types of fonts for printing. Select the desired
 font and size using the pull down menus.
+
+<H3>Message Format</H3>
+
+If you would like your manifest and switch lists printed in a tabular format select the
+tabular checkbox. Only equally spaced fonts like "Courier New" or "Monospaced" are
+shown in the Font selection box.
 
 <H3>Set Out Text Color</H3>
 
@@ -693,12 +700,6 @@ You can select the text color of your manifest when the operation is to
 move a car from one track to another at the same location. The car in
 this case in not added to the train. Select the desired color from the
 drop down box.
-
-<H3>Message Format</H3>
-
-If you would like your manifest and switch lists printed in a tabular format select the
-tabular checkbox. This options works best with font names that have
-equally spaced characters like "Courier or Monospaced".
 
 <H3>Switch List Format</H3>
 
@@ -742,36 +743,29 @@ different format for your switch lists.
     eventually where they need to be, the train manifest only shows which cars are being removed and
     added to the train.</P>
 
-   <H3>Add Logo</H3>
-
-If you want a logo in the top right hand corner of your manifests and
-switch lists, press the "Add Logo" button and select a file with the
-image you want to display. You can also have a different logo for every
-train in your roster, see <A HREF="#TrainOptions">Train Options</A> for
-details.
-
-<A NAME="MisplacedCarsComment"></A>
-<H3>Misplaced Cars Comment</H3>
-
-The program provides a comment for your operators to search for 
-<A	HREF="#CarsSet">misplaced</A> cars.  You can modify
-the comment to your liking.
-
-<A NAME="HazardousComment"></A>
-<H3>Hazardous Comment</H3>
-
-The program will add the "Hazardous Comment" to the manifests and switch lists when a car has the <A HREF="#CabooseFredHazardous">Hazardous</A> checkbox
-selected in the "Car Edit" window and the "Hazardous" message format is selected in your manifest and switch lists
-print options.  You can change the comment if desired, and press "Save" to keep the change.
-
-
-
    <H3>Manifest Preview</H3>
 
-   If you want to use a text editor to preview your manifests and switch lists, select this option.  
+   If you want to use a text editor to preview your manifests and switch lists, select this option.
    This option also allows you to make manual changes to your manifests before you print them.
-   
-   <A NAME="BuildReportDetails"></A>
+
+   <H3>Add Logo</H3>
+
+   If you want a logo in the top right hand corner of your manifests and switch lists, press the
+   "Add Logo" button and select a file with the image you want to display. You can also have a
+   different logo for every train in your roster, see
+   <A HREF="#TrainOptions">Train Options</A> for details. <A
+    NAME="MisplacedCarsComment"></A>
+   <H3>Misplaced Cars Comment</H3>
+
+   The program provides a comment for your operators to search for
+   <A HREF="#CarsSet">misplaced</A> cars. You can modify the comment to your liking.
+   <A NAME="HazardousComment"></A>
+   <H3>Hazardous Comment</H3>
+
+   The program will add the "Hazardous Comment" to the manifests and switch lists when a car has the
+   <A HREF="#CabooseFredHazardous">Hazardous</A> checkbox selected in the "Car Edit" window and the
+   "Hazardous" message format is selected in your manifest and switch lists print options. You can
+   change the comment if desired, and press "Save" to keep the change. <A NAME="BuildReportDetails"></A>
    <H3>Build Report Options</H3>
 
    From the "Operations-&gt;Settings-&gt;Tools" menu select "Build Report Options" to open the build
@@ -1182,7 +1176,13 @@ or shipping that specific car load.</P>
    <P>The car's load status does not change when placed at a classification/interchange track.</P>
 
    <P>If you want more control on how your classification/interchange track will operate, you
-    can optionally specify which trains or routes can pick up or set out cars.</P>
+    can optionally specify which trains or routes can pick up or set out cars. If you restrict which
+    trains or routes can pull cars from a classification/interchange track, you must also restrict the
+    track's car types to the same ones that the train services, otherwise you can have cars stranded
+    on the classification/interchange track. Given the complexity of this type of track, it is
+    strongly recommended that you not use classification/interchange tracks until you get
+    comfortable with how the program builds trains and you've read and understood the train build
+    reports.</P>
 
    <A NAME="CreateClassificationYard"></A>
    <H3>How to Create a Classification Yard</H3>
@@ -1204,7 +1204,16 @@ or shipping that specific car load.</P>
 
    Staging tracks are normally used to represent locations that generate traffic to and from your
    layout. Many times physical access to staging tracks is limited, therefore the program places
-   significant restrictions on how staging tracks are used.
+   significant restrictions on how staging tracks are used. A "Staging" track is one that holds one
+   complete train. Once a train arrives on a staging track, the cars and locomotives remain together
+   until the train departs the staging track. The program never modifies a train sitting on a
+   staging track. In order for a train to depart staging, the program must find new locations for
+   all of the locomotives and cars sitting on the staging track. No locos or cars can be left
+   behind.
+
+   <P>Due to the complexity of staging tracks, it is strongly recommended that you not use
+    staging tracks until you become comfortable with how the program builds trains including the
+    ability to read the train build reports.</P>
 
    <P>
     If this is your first time using a computer program to create car movements, it is recommended
@@ -1787,18 +1796,27 @@ other selected cars will have the same settings as the
 default car. Be sure to press "Save" in the Cars window if you want to
 keep your changes.
 
-<H3>Tools</H3>
+   <H3>Tools</H3>
 
-The cars "Tools" menu allows you to perform some useful functions to
-your car roster. In addition to "Import from file" feature described
-earlier, you can also export your cars to a comma separated value file.
-The "Export to file" function creates a file named
-"ExportOperationsCarRoster.csv" in the JMRI-&gt;operations directory. You
-can remove all of the cars in your roster using the "Delete all cars"
-option. You can also preview and print your car roster. The preview and
-print features use the same "Sort by" radio buttons as the cars window.
-One of the more useful sorts is by "Location", this allows you to
-quickly verify your car locations before or after an operations session.
+   The cars "Tools" menu allows you to perform some useful functions to your car roster. In addition
+   to "Import from file" feature described earlier, you can also export your cars to a comma
+   separated value file. The "Export to file" function creates a file named
+   "ExportOperationsCarRoster.csv" in the JMRI-&gt;operations directory. You can remove all of the
+   cars in your roster using the "Delete all cars" option.
+
+   <p>The "Reset move count all cars" will zero out all of the cars move counts. In normal use
+    you should never reset the car move counts. The program uses the move counts to
+    determine which cars have difficulty finding valid destination tracks. Cars with low move counts
+    eventually get higher priority over cars with larger move counts. By servicing the lower move count
+    cars first, the difficult car moves eventually get made by the program. Reseting car moves foils
+    this algorithm. The only valid time for reseting the move counts is when you add new cars to
+    your roster and you don't want your new cars to have priority over your old cars. However in
+    most cases, folks do want to see the new cars riding the first train out of town, so don't reset
+    the car moves if you want to put your new additions immediately to work!</p>
+
+   You can also preview and print your car roster. The preview and print features use the same "Sort
+   by" radio buttons as the cars window. One of the more useful sorts is by "Location", this allows
+   you to quickly verify your car locations before or after an operations session.
 
    <P>You can if you wish only preview or print cars for a specific location or track. In the
     "Edit Location" and "Edit Track" windows the "Tools" menu provides a "Show Cars" selection which
@@ -2165,25 +2183,38 @@ car roads, load, owners, and built dates the train will service.
 
 <H3>Options</H3>
 
-You can request that the program use normal mode when building the train.  This is useful when a
-train departs staging.  In normal mode, all of the cars in staging are set out first, where in 
-aggressive mode, the cars in staging are set out last.
-<P>
-You can also request that all car pick ups are sent to the last location in your route (terminal).
-Useful if you don't want your cars picked up and set out at various locations in your train's route.
+   <H4>Use normal mode when building this train</H4>
+
+   You can request that the program use normal mode when building the train. This is useful when a
+   train departs staging. In normal mode, all of the cars in staging are set out first, where in
+   aggressive mode, the cars in staging are set out last.  Selecting this option when you have build
+   failures out of staging could fix the failure.
+
+   <H4>Send all car pick ups to terminal</H4>
+
+   You can also request that all car pick ups are sent to the last location in your route
+   (terminal). Useful if you don't want your cars picked up and set out at various locations in your
+   train's route.
 
    <H4>Allow cars to return to staging if needed</H4>
 
    When a train departs and returns to the same staging location, it is regarded as a turn by the
    program. A turn normally takes cars from staging, sets them out on the layout, picks up new cars
-   and returns to staging with those cars. Normally the program doesn't allow the same cars to depart and
-   return to staging. However, it may be desirable to allow the train carry the cars
+   and returns to staging with those cars. Normally the program doesn't allow the same cars to
+   depart and return to staging. However, it may be desirable to allow the train carry the cars
    rather than having the program report that cars in staging couldn't be delivered to destinations
-   on the layout. Selecting this option allows a turn to transport cars to and from the same
-   staging location. Note that when this options is selected, that the program will only return cars
-   to staging when destinations are not available on the layout.
+   on the layout. Selecting this option allows a turn to transport cars to and from the same staging
+   location. Note that when this options is selected, that the program will only return cars to
+   staging when destinations are not available on the layout.
 
-<A NAME="TrainRoadNames"></A>
+   <H4>Allow local moves when a car has a custom load</H4>
+
+   The program when generating car movement normally doesn't create local moves. A local move is a
+   pick up and then a set out of a car at the same location. When you use custom loads, the program
+   can create local moves based on the car's custom load. So if you had a car sitting on a track
+   with a custom load, and you also had a spur with a schedule at the same location requesting that
+   load, the train's manifest could show the pull and spot as a local move. If you don't want your
+   train to perform local moves when a car has a custom load, deselect this option. <A NAME="TrainRoadNames"></A>
 <H3>Train Road Names</H3>
 
 You can control the road names that the train will service. Select under
