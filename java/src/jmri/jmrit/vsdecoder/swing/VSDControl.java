@@ -121,11 +121,11 @@ public class VSDControl extends JPanel {
     private GridBagConstraints setConstraints(int x, int y) {
 	return(setConstraints(x, y, GridBagConstraints.HORIZONTAL, new Insets(2,2,2,2), GridBagConstraints.LINE_START));
     }
-
+    /*
     private GridBagConstraints setConstraints(int x, int y, int fill) {
 	return(setConstraints(x, y, fill, new Insets(2,2,2,2), GridBagConstraints.LINE_START));
     }
-
+    */
     private GridBagConstraints setConstraints(int x, int y, int fill, Insets ins, int anchor) {
 	GridBagConstraints gbc1 = new GridBagConstraints();
 	gbc1.insets = ins;

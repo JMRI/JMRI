@@ -96,10 +96,14 @@ public class VSDManagerFrame extends JmriJFrame {
 
     /** Constructor */
     public VSDManagerFrame() {
-	super();
+	super(false, false);
 	config = new VSDConfig();
 	this.addPropertyChangeListener(VSDecoderManager.instance());
 	initGUI();
+    }
+
+    public void initComponents() {
+	//this.initGUI();
     }
 
     /** Build the GUI components */
@@ -195,8 +199,11 @@ public class VSDManagerFrame extends JmriJFrame {
 	decoderPane.add(newControl);
 	newControl.addSoundButtons(new ArrayList<SoundEvent>(newDecoder.getEventList()));
 	//debugPrintDecoderList();
+	decoderPane.revalidate();
+	decoderPane.repaint();
+
 	this.pack();
-	this.setVisible(true);
+	//this.setVisible(true);
 	// Do we need to make newControl a listener to newDecoder?
 	//firePropertyChange(PropertyChangeID.ADD_DECODER, null, newDecoder);
     }
@@ -274,8 +281,8 @@ public class VSDManagerFrame extends JmriJFrame {
         JMenuBar bar = getJMenuBar();
         if (bar == null) bar = new JMenuBar();
         // add Window menu
-		bar.add(new WindowMenu(this)); // * GT 28-AUG-2008 Added window menu
-		// add Help menu
+	bar.add(new WindowMenu(this)); // * GT 28-AUG-2008 Added window menu
+	// add Help menu
         jmri.util.HelpUtil.helpMenu(bar, ref, direct);
         setJMenuBar(bar);
     }

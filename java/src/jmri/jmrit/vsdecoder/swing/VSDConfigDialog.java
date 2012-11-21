@@ -138,7 +138,7 @@ public class VSDConfigDialog extends JDialog {
 		    addressSetButtonActionPerformed(evt);
 		}
 	    });
-	addressSetButton.setEnabled(false);
+	addressSetButton.setEnabled(true);
 	addressSetButton.setToolTipText(rb.getString("AddressSetButtonToolTip"));
 
 	addressPanel.add(addressSelector.getCombinedJPanel());
@@ -151,7 +151,7 @@ public class VSDConfigDialog extends JDialog {
 	profileComboBox = new javax.swing.JComboBox();
 	profileLabel = new javax.swing.JLabel();
 	profileLoadButton = new JButton(rb.getString("LoadVSDFileButtonLabel"));
-	profileLoadButton.setEnabled(false);
+	profileLoadButton.setEnabled(true);
 	
         profileComboBox.setModel(new javax.swing.DefaultComboBoxModel());
 	// Add any already-loaded profile names
@@ -265,6 +265,13 @@ public class VSDConfigDialog extends JDialog {
             log.debug("Roster Entry selected...");
             setRosterEntry(rosterSelector.getSelectedRosterEntries()[0]);
 	    enableProfileStuff(true);
+	    // undo the close button enable if there's no profile selected
+	    // (this would be when selecting a RosterEntry that doesn't have
+	    // predefined VSD info.
+	    if ((profileComboBox.getSelectedIndex() == -1) || 
+		(profileComboBox.getSelectedItem() instanceof NullProfileBoxItem))  {
+		closeButton.setEnabled(false);
+	}
         }
     }
 
@@ -301,6 +308,9 @@ public class VSDConfigDialog extends JDialog {
     }
 
     private void profileComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
+	// if there's also an Address entered, then enable the OK button.
+	if (addressSelector.getAddress() != null)
+	    closeButton.setEnabled(true);
     }
 
     private void profileLoadButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -311,6 +321,11 @@ public class VSDConfigDialog extends JDialog {
 
     /** handle the address "Set" button. */
     private void addressSetButtonActionPerformed(java.awt.event.ActionEvent evt) {
+	// If there's also a Profile selected, enable the OK button.
+	if ((profileComboBox.getSelectedIndex() != -1) && 
+	    (!(profileComboBox.getSelectedItem() instanceof NullProfileBoxItem)))  {
+	    closeButton.setEnabled(true);
+	}
     }
 
     /** handle profile list changes from the VSDecoderManager */

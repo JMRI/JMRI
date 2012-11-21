@@ -54,7 +54,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Location;
 
 
-public class ManageLocationsFrame extends JFrame {
+public class ManageLocationsFrame extends JmriJFrame {
 
     // Uncomment this when we add labels...
     private static final ResourceBundle rb = VSDSwingBundle.bundle();
@@ -90,7 +90,7 @@ public class ManageLocationsFrame extends JFrame {
     public ManageLocationsFrame(ListeningSpot listener, 
 				Object[][] reporters,
 				Object[][] ops) {
-	super();
+	super(false, false);
 	reporterData = reporters;
 	opsData = ops;
 	listenerLoc = listener;
@@ -103,7 +103,8 @@ public class ManageLocationsFrame extends JFrame {
 	this.buildMenu();
 	// Panel for managing listeners
 	listenerPanel = new JPanel();
-	listenerPanel.setLayout(new BorderLayout());
+	//listenerPanel.setLayout(new BorderLayout());
+	listenerPanel.setLayout(new BoxLayout(listenerPanel, BoxLayout.Y_AXIS));
 
 	// Audio Mode Buttons
 	JRadioButton b1 = new JRadioButton(rb.getString("AudioModeRoomButton"));
@@ -125,6 +126,7 @@ public class ManageLocationsFrame extends JFrame {
 	b1.setSelected(true);
 	JPanel modePanel = new JPanel();
 	modePanel.setLayout(new BoxLayout(modePanel, BoxLayout.LINE_AXIS));
+	modePanel.add(new JLabel("Listener Mode:"));
 	modePanel.add(b1);
 	modePanel.add(b2);
 
@@ -154,9 +156,10 @@ public class ManageLocationsFrame extends JFrame {
 
 	locScrollPanel.getViewport().add(locTable);
 
-	listenerPanel.add(modePanel, BorderLayout.NORTH);
-	listenerPanel.add(locScrollPanel, BorderLayout.CENTER);
-	
+	//listenerPanel.add(modePanel, BorderLayout.NORTH);
+	//listenerPanel.add(locScrollPanel, BorderLayout.CENTER);
+	listenerPanel.add(modePanel);
+	listenerPanel.add(locScrollPanel);
 
 	reporterPanel = new JPanel();
 	reporterPanel.setLayout(new GridBagLayout());
@@ -205,6 +208,8 @@ public class ManageLocationsFrame extends JFrame {
 	buttonPane.add(cancelButton);
 	buttonPane.add(saveButton);
 
+	this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+	/*
 	this.getContentPane().setLayout(new GridBagLayout());
 	GridBagConstraints gbc1 = new GridBagConstraints();
 	gbc1.gridx = 0; gbc1.gridy = 0;
@@ -216,10 +221,12 @@ public class ManageLocationsFrame extends JFrame {
 	gbc2.fill = GridBagConstraints.NONE;
 	gbc2.anchor = GridBagConstraints.CENTER;
 	gbc2.weightx = 1.0; gbc2.weighty = 1.0;
-
+	
 	this.getContentPane().add(tabbedPane, gbc1);
 	this.getContentPane().add(buttonPane, gbc2);
-
+*/
+	this.getContentPane().add(tabbedPane);
+	this.getContentPane().add(buttonPane);
 	this.pack();
 	this.setVisible(true);
     }
@@ -262,7 +269,7 @@ public class ManageLocationsFrame extends JFrame {
         JMenuBar bar = getJMenuBar();
         if (bar == null) bar = new JMenuBar();
         // add Window menu
-	// bar.add(new WindowMenu(this)); // * GT 28-AUG-2008 Added window menu
+	bar.add(new WindowMenu(this)); // * GT 28-AUG-2008 Added window menu
 	// add Help menu
         jmri.util.HelpUtil.helpMenu(bar, ref, direct);
         setJMenuBar(bar);
