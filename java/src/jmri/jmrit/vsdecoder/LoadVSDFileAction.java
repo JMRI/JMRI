@@ -54,6 +54,7 @@ public class LoadVSDFileAction extends AbstractAction {
     }
     
     JFileChooser fileChooser;
+    static private String last_path = null;
     
     /**
      *  The action is performed. Let the user choose the file to load from. Read
@@ -63,15 +64,21 @@ public class LoadVSDFileAction extends AbstractAction {
      */
     public void actionPerformed(ActionEvent e) {
 	if (fileChooser == null) {
-	    String default_dir = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
-	    log.debug("Default path: " + default_dir);
-	    fileChooser = new JFileChooser(VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath());
+	    // Need to somehow give the user a history...
+	    // Must investigate JFileChooser...
+	    String start_dir = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
+	    if (last_path != null)
+		start_dir = last_path;
+
+	    log.debug("Using path: " + start_dir);
+
+	    fileChooser = new JFileChooser(start_dir);
 	    jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter(rb.getString("LoadVSDFileChooserFilterLabel"));
 	    filt.addExtension("vsd");
 	    filt.addExtension("zip");
 	    fileChooser.setFileFilter(filt);
 	    fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
-	    fileChooser.setCurrentDirectory(new File(VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath()));
+	    fileChooser.setCurrentDirectory(new File(start_dir));
 	}
 	int retVal = fileChooser.showOpenDialog(null);
 	if (retVal != JFileChooser.APPROVE_OPTION) {
@@ -80,6 +87,13 @@ public class LoadVSDFileAction extends AbstractAction {
 	}
 
 	loadVSDFile(fileChooser.getSelectedFile());
+	// Store the last used directory
+	try {
+	    last_path = fileChooser.getCurrentDirectory().getCanonicalPath();
+	} catch (java.io.IOException err) {
+	    log.debug("Error getting current directory: " + err);
+	    last_path = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
+	}
     }
     
     
