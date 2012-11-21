@@ -132,6 +132,7 @@ public class Setup {
 	public static final String PICKUP_COMMENT = rb.getString("PickupComment");
 	public static final String HAZARDOUS = rb.getString("Hazardous");
 	public static final String NONE = " ";				// none has be a character or a space
+	public static final String TAB = rb.getString("Tab");	// used to tab out in tabular mode
 	public static final String BOX = " [ ] ";
 	
 	// these are for the utility printing when using tabs
@@ -1255,6 +1256,8 @@ public class Setup {
 		box.addItem(LOCATION);
 		box.addItem(DESTINATION);		
 		box.addItem(COMMENT);
+		if (isTabEnabled())
+			box.addItem(TAB);
 		return box;
 	}
 	
@@ -1277,6 +1280,8 @@ public class Setup {
 		box.addItem(DROP_COMMENT);
 		box.addItem(PICKUP_COMMENT);
 		box.addItem(RWE);
+		if (isTabEnabled())
+			box.addItem(TAB);
 		return box;
 	}
 	

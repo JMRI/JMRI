@@ -417,6 +417,9 @@ public class TrainCommon {
 		// the three truncated manifest attributes
 		else if (attribute.equals(Setup.NO_DESTINATION) || attribute.equals(Setup.NO_DEST_TRACK) || attribute.equals(Setup.NO_LOCATION))
 			return "";
+		// tab?
+		else if (attribute.equals(Setup.TAB))
+			return " "+tabString("", Control.max_len_string_attibute);
 		return " ("+rb.getString("ErrorPrintOptions")+") ";	// maybe user changed locale
 	}
 	
