@@ -343,9 +343,9 @@ public class TrainCommon {
 	// @param pickup true when rolling stock is being picked up 	
 	protected String getEngineAttribute(Engine engine, String attribute, boolean pickup){
 		if (attribute.equals(Setup.MODEL))
-			return " "+ engine.getModel();
+			return " "+tabString(engine.getModel(), Control.max_len_string_attibute);
 		if (attribute.equals(Setup.CONSIST))
-			return " "+ engine.getConsistName();
+			return " "+tabString(engine.getConsistName(), Control.max_len_string_attibute);
 		return getRollingStockAttribute(engine, attribute, pickup, false);
 	}
 	
