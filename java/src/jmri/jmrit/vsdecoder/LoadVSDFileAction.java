@@ -24,6 +24,7 @@ import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import java.util.ResourceBundle;
 
@@ -87,6 +88,7 @@ public class LoadVSDFileAction extends AbstractAction {
 	}
 
 	loadVSDFile(fileChooser.getSelectedFile());
+
 	// Store the last used directory
 	try {
 	    last_path = fileChooser.getCurrentDirectory().getCanonicalPath();
@@ -108,6 +110,11 @@ public class LoadVSDFileAction extends AbstractAction {
 	    }
 	    // Cleanup and close files.
 	    vsdfile.close();
+
+	    if (!vsdfile.isInitialized()) {
+		JOptionPane.showMessageDialog(null, vsdfile.getStatusMessage(), 
+					      rb.getString("VSDFileError"), JOptionPane.ERROR_MESSAGE);
+	    }
 
 	    return(vsdfile.isInitialized());
 
