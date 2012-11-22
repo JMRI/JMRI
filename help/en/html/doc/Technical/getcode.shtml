@@ -38,7 +38,7 @@
 
   <p>You can download the most recent source code from Subversion using:
   <code><pre>
-  svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri
+    svn checkout svn://svn.code.sf.net/p/jmri/code/trunk/jmri
   </prE></code>
   </p>
 
