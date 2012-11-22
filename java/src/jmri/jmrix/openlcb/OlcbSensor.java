@@ -10,6 +10,8 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficController;
 
+import java.util.Timer;
+
 /**
  * Extend jmri.AbstractSensor for OpenLCB controls.
  * <P>
@@ -18,6 +20,9 @@ import jmri.jmrix.can.TrafficController;
  */
 public class OlcbSensor extends AbstractSensor implements CanListener {
 
+    static int ON_TIME = 500; // time that sensor is active after being tripped
+    Timer timer = null;
+    
     OlcbAddress addrActive;    // go to active state
     OlcbAddress addrInactive;  // go to inactive state
 
@@ -44,17 +49,10 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
         }
         switch (v.length) {
             case 1:
+                // momentary sensor
                 addrActive = v[0];
-                // need to complement here for addr 1
-                // so address _must_ start with address + or -
-                if (address.startsWith("+")) {
-                    addrInactive = new OlcbAddress("-"+address);
-                } else if (address.startsWith("-")) {
-                    addrInactive = new OlcbAddress("+"+address);
-                } else {
-                    log.error("can't make 2nd event from systemname "+address);
-                    return;
-                }
+                addrInactive = null;
+                timer = new Timer(true);
                 break;
             case 2:
                 addrActive = v[0];
@@ -91,9 +89,12 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
             m = addrActive.makeMessage();
             tc.sendCanMessage(m, this);
             setOwnState(Sensor.ACTIVE);
+            if (addrInactive == null) setTimeout();
         } else if (s==Sensor.INACTIVE) {
-            m = addrInactive.makeMessage();
-            tc.sendCanMessage(m, this);
+            if (addrInactive!=null) {
+                m = addrInactive.makeMessage();
+                tc.sendCanMessage(m, this);
+            }
             setOwnState(Sensor.INACTIVE);
         }
     }
@@ -105,7 +106,8 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
     public void message(CanMessage f) {
         if (addrActive.match(f)) {
             setOwnState(Sensor.ACTIVE);
-        } else if (addrInactive.match(f)) {
+            if (addrInactive == null) setTimeout();
+        } else if (addrInactive!=null && addrInactive.match(f)) {
             setOwnState(Sensor.INACTIVE);
         }
     }
@@ -117,11 +119,26 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
     public void reply(CanReply f) {
         if (addrActive.match(f)) {
             setOwnState(Sensor.ACTIVE);
-        } else if (addrInactive.match(f)) {
+            if (addrInactive == null) setTimeout();
+        } else if (addrInactive!=null && addrInactive.match(f)) {
             setOwnState(Sensor.INACTIVE);
         }
     }
 
+    /**
+     * Have sensor return to inactive after delay, used
+     * if no inactive event was specified
+     */
+    void setTimeout() {
+        timer.schedule(new java.util.TimerTask() {
+            public void run() {
+                try {
+                    setKnownState(Sensor.INACTIVE);
+                } catch (jmri.JmriException e) { log.error("error setting momentary sensor INACTIVE", e); }                  
+            }
+        }, ON_TIME);
+    }
+    
     public void dispose() {
         tc.removeCanListener(this);
         super.dispose();

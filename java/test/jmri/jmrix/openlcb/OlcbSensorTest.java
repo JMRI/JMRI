@@ -50,6 +50,32 @@ public class OlcbSensorTest extends TestCase {
         
     }
 
+    public void testMomentarySensor() {
+        // load dummy TrafficController
+        TestTrafficController t = new TestTrafficController();
+        Assert.assertNotNull("exists", t );
+        OlcbSensor s = new OlcbSensor("MS", "1.2.3.4.5.6.7.8", t);
+        
+        // message for Active and Inactive
+        CanMessage mActive = new CanMessage( 
+                    new int[]{1,2,3,4,5,6,7,8},
+                    0x195B4123
+        );
+        mActive.setExtended(true);
+        
+        // check states
+        Assert.assertTrue(s.getKnownState()==Sensor.UNKNOWN);
+        
+        s.message(mActive);
+        Assert.assertTrue(s.getKnownState()==Sensor.ACTIVE);
+        
+        // wait for twice timeout to make sure
+        try { Thread.sleep(2 * OlcbSensor.ON_TIME);} catch (Exception e) {}
+        
+        Assert.assertTrue(s.getKnownState()==Sensor.INACTIVE);
+        
+    }
+
     public void testLocalChange() throws jmri.JmriException {
         // load dummy TrafficController
         TestTrafficController t = new TestTrafficController();

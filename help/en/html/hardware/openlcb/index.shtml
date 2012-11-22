@@ -88,7 +88,7 @@ determines which OpenLCB events it corresponds to.
 <p>
 A sensor is defined by two events: The one that sets it ACTIVE, and
 the one that sets it INACTIVE. The event numbers are essentially 
-arbitrary, and must both be specified.
+arbitrary, and are defined by the OpenLCB nodes that send them.
 Because events are not intrinsically associated with specific hardware
 objects, and because people can use event IDs in many ways, 
 the specific event IDs for a sensor must be supplied.  
@@ -96,6 +96,11 @@ You create Sensors using the
 <a href="../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">Add...</a>
 button on the
 <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>.
+If you supply two event IDs, the first will set the sensor ACTIVE and 
+the second will set it INACTIVE.  If you provide just one, it
+will set the sensor ACTIVE, and it will automatically reset itself to INACTIVE
+shortly after.  This can be used for events that indicate momentary things on
+the layout like "it's noon".
 
 <h2>Turnouts</h2>
 

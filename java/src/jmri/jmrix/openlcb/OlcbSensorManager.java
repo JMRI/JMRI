@@ -80,9 +80,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
             throw new IllegalArgumentException("Did not find usable system name: "+address+" to a valid Olcb sensor address");
         }
         switch (v.length){
-            case 1 : if (address.startsWith("+") || address.startsWith("-"))
-                        break;
-                     throw new IllegalArgumentException("can't make 2nd event from systemname "+address);
+            case 1 : break;
             case 2 : break;
             default :   throw new IllegalArgumentException("Wrong number of events in address: "+address);
         }
