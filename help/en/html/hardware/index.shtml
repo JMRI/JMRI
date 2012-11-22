@@ -294,10 +294,9 @@
 	    <dt class="im"><a href="http://srcpd.sourceforge.net/"><img src="http://www.der-moba.de/skins/dermoba/wiki.png" height="55" width="78" alt="SRCP"></a></dt>
 	    <dt>SRCP</dt>
 	    <dd><p class="dl">Configure: <a href="SRCP/index.shtml">Connection to SRCP server</a></p></dd>
-	    <dt class="im">
-	    </dt>
+
+	    <dt class="im"><a href="http://www.tams-online.de/"><img src="images/tams_logo.gif" width="48" height="20" alt="TAMS"></a></dt>
 	    <dt>TAMS</dt>
-        <a href="http://www.tams-online.de/"><img src="images/tams_logo.gif" width="48" height="20" alt="TAMS"></a>
 	    <dd><p class="dl">Configure connection to 
 		<a href="tams/index.shtml">TAMS</a> Master Control command station.</p>
 		<p>&nbsp;</p>
