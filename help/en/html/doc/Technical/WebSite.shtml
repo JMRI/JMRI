@@ -185,12 +185,12 @@ cd /Library/WebServer/Documents
     <LI>Check out the relevant files
 <PRE>
 # the trailing dot on the next line is important!
-svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri-website .  
-svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/help 
-svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/jython
-svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/resources
-svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/web
-svn co https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/xml
+svn checkout svn://svn.code.sf.net/p/jmri/code/trunk/jmri-website .  
+svn checkout svn://svn.code.sf.net/p/jmri/code/trunk/jmri/help 
+svn checkout svn://svn.code.sf.net/p/jmri/code/trunk/jmri/jython
+svn checkout svn://svn.code.sf.net/p/jmri/code/trunk/jmri/resources
+svn checkout svn://svn.code.sf.net/p/jmri/code/trunk/jmri/web
+svn checkout svn://svn.code.sf.net/p/jmri/code/trunk/jmri/xml
 </PRE>
 </UL>
 <LI>Restart your computer to reinitialize the web server.
