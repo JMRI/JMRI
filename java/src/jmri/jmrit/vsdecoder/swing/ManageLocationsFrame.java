@@ -37,6 +37,7 @@ import java.awt.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import jmri.util.PhysicalLocation;
 import jmri.util.WindowMenu;
 import jmri.jmrit.vsdecoder.swing.VSDSwingBundle;
@@ -68,6 +69,18 @@ public class ManageLocationsFrame extends JmriJFrame {
 	aMap.put(PropertyChangeID.ADD_DECODER, "VSDMF:AddDecoder");
 	aMap.put(PropertyChangeID.REMOVE_DECODER, "VSDMF:RemoveDecoder");
 	PCIDMap = Collections.unmodifiableMap(aMap);
+    }
+
+    // Map of Mnemonic KeyEvent values to GUI Components
+    private static final Map<String, Integer> Mnemonics = new HashMap<String, Integer>();
+	static {
+	Mnemonics.put("RoomMode", KeyEvent.VK_R);
+	Mnemonics.put("HeadphoneMode", KeyEvent.VK_H);
+	Mnemonics.put("ReporterTab", KeyEvent.VK_E);
+	Mnemonics.put("OpsTab", KeyEvent.VK_P);
+	Mnemonics.put("ListenerTab", KeyEvent.VK_L);
+	Mnemonics.put("CloseButton", KeyEvent.VK_O);
+	Mnemonics.put("SaveButton", KeyEvent.VK_S);
     }
 
     protected EventListenerList listenerList = new javax.swing.event.EventListenerList();
@@ -103,17 +116,20 @@ public class ManageLocationsFrame extends JmriJFrame {
 	this.buildMenu();
 	// Panel for managing listeners
 	listenerPanel = new JPanel();
-	//listenerPanel.setLayout(new BorderLayout());
 	listenerPanel.setLayout(new BoxLayout(listenerPanel, BoxLayout.Y_AXIS));
 
 	// Audio Mode Buttons
 	JRadioButton b1 = new JRadioButton(rb.getString("AudioModeRoomButton"));
+	b1.setToolTipText(rb.getString("MLFModeButtonRoomAudioToolTip"));
+	b1.setMnemonic(Mnemonics.get("RoomMode"));
 	b1.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    modeRadioButtonPressed(e);
 		}
 	    });
 	JRadioButton b2 = new JRadioButton(rb.getString("AudioModeHeadphoneButton"));
+	b2.setMnemonic(Mnemonics.get("HeadphoneMode"));
+	b2.setToolTipText(rb.getString("MLFModeButtonHeadphoneToolTip"));
 	b2.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    modeRadioButtonPressed(e);
@@ -156,8 +172,6 @@ public class ManageLocationsFrame extends JmriJFrame {
 
 	locScrollPanel.getViewport().add(locTable);
 
-	//listenerPanel.add(modePanel, BorderLayout.NORTH);
-	//listenerPanel.add(locScrollPanel, BorderLayout.CENTER);
 	listenerPanel.add(modePanel);
 	listenerPanel.add(locScrollPanel);
 
@@ -188,43 +202,37 @@ public class ManageLocationsFrame extends JmriJFrame {
 
 	tabbedPane = new JTabbedPane();
 	tabbedPane.addTab(rb.getString("ReportersTabTitle"), reporterScrollPanel);
+	tabbedPane.setToolTipTextAt(0, rb.getString("MLFReporterTabToolTip"));
+	tabbedPane.setMnemonicAt(0, Mnemonics.get("ReporterTab"));
 	tabbedPane.addTab(rb.getString("OpsTabTitle"), opsScrollPanel);
+	tabbedPane.setToolTipTextAt(1, rb.getString("MLFOpsTabToolTip"));
+	tabbedPane.setMnemonicAt(1, Mnemonics.get("OpsTab"));
 	tabbedPane.addTab(rb.getString("ListenersTabTitle"), listenerPanel);
+	tabbedPane.setToolTipTextAt(2, rb.getString("MLFListenerTabToolTip"));
+	tabbedPane.setMnemonicAt(2, Mnemonics.get("ListenerTab"));
 
 	JPanel buttonPane = new JPanel();
 	buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
-	JButton cancelButton = new JButton(rb.getString("MLFCloseButton"));
-	cancelButton.addActionListener(new ActionListener() {
+	JButton closeButton = new JButton(rb.getString("MLFCloseButton"));
+	closeButton.setToolTipText(rb.getString("MLFCloseButtonToolTip"));
+	closeButton.setMnemonic(Mnemonics.get("CloseButton"));
+	closeButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-		    cancelButtonPressed(e);
+		    closeButtonPressed(e);
 		}
 	    });
 	JButton saveButton = new JButton(rb.getString("MLFSaveButton"));
+	saveButton.setToolTipText(rb.getString("MLFSaveButtonToolTip"));
+	saveButton.setMnemonic(	Mnemonics.get("SaveButton"));
 	saveButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    saveButtonPressed(e);
 		}
 	    });
-	buttonPane.add(cancelButton);
+	buttonPane.add(closeButton);
 	buttonPane.add(saveButton);
 
 	this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-	/*
-	this.getContentPane().setLayout(new GridBagLayout());
-	GridBagConstraints gbc1 = new GridBagConstraints();
-	gbc1.gridx = 0; gbc1.gridy = 0;
-	gbc1.fill = GridBagConstraints.BOTH;
-	gbc1.anchor = GridBagConstraints.CENTER;
-	gbc1.weightx = 1.0; gbc1.weighty = 1.0;
-	GridBagConstraints gbc2 = new GridBagConstraints();
-	gbc2.gridx = 0; gbc2.gridy = 1;
-	gbc2.fill = GridBagConstraints.NONE;
-	gbc2.anchor = GridBagConstraints.CENTER;
-	gbc2.weightx = 1.0; gbc2.weighty = 1.0;
-	
-	this.getContentPane().add(tabbedPane, gbc1);
-	this.getContentPane().add(buttonPane, gbc2);
-*/
 	this.getContentPane().add(tabbedPane);
 	this.getContentPane().add(buttonPane);
 	this.pack();
@@ -317,7 +325,7 @@ public class ManageLocationsFrame extends JmriJFrame {
     private void modeRadioButtonPressed(ActionEvent e) {
     }
 
-    private void cancelButtonPressed(ActionEvent e) {
+    private void closeButtonPressed(ActionEvent e) {
 	dispose();
     }
 
@@ -338,6 +346,7 @@ class LocationTableModel extends AbstractTableModel {
 
     public LocationTableModel(Object[][] dataMap) {
 	super();
+	// Use i18n-ized column titles.
 	columnNames[0] =  rb.getString("LocationTableNameColumn");
 	columnNames[1] = rb.getString("LocationTableUseColumn");
 	rowData = dataMap;
@@ -397,6 +406,7 @@ class ListenerTableModel extends AbstractTableModel {
 
     public ListenerTableModel(Object[][] dataMap) {
 	super();
+	// Use i18n-ized column titles.
 	columnNames[0] =  rb.getString("ListenerTableNameColumn");
 	columnNames[1] = rb.getString("ListenerTableUseColumn");
 	columnNames[5] = rb.getString("ListenerTableBearingColumn");

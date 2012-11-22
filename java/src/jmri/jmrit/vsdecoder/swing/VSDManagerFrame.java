@@ -36,6 +36,7 @@ import java.util.Iterator;
 import java.util.Arrays;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -71,7 +72,7 @@ public class VSDManagerFrame extends JmriJFrame {
 
     private static final ResourceBundle rb = VSDSwingBundle.bundle();
 
-    public static enum PropertyChangeID { MUTE, VOLUME_CHANGE, ADD_DECODER, REMOVE_DECODER }
+    public static enum PropertyChangeID { MUTE, VOLUME_CHANGE, ADD_DECODER, REMOVE_DECODER, CLOSE_WINDOW }
 
     public static final Map<PropertyChangeID, String> PCIDMap;
     static {
@@ -80,13 +81,29 @@ public class VSDManagerFrame extends JmriJFrame {
 	aMap.put(PropertyChangeID.VOLUME_CHANGE, "VSDMF:VolumeChange");
 	aMap.put(PropertyChangeID.ADD_DECODER, "VSDMF:AddDecoder");
 	aMap.put(PropertyChangeID.REMOVE_DECODER, "VSDMF:RemoveDecoder");
+	aMap.put(PropertyChangeID.CLOSE_WINDOW, "VSDMF:CloseWindow");
 	PCIDMap = Collections.unmodifiableMap(aMap);
     }
+
+    // Map of Mnemonic KeyEvent values to GUI Components
+    private static final Map<String, Integer> Mnemonics = new HashMap<String, Integer>();
+	static {
+	    // Menu
+	    Mnemonics.put("FileMenu", KeyEvent.VK_F);
+	    Mnemonics.put("EditMenu", KeyEvent.VK_E);
+	    // Other GUI
+	    Mnemonics.put("MuteButton", KeyEvent.VK_M);
+	    Mnemonics.put("AddButton", KeyEvent.VK_A);
+	    Mnemonics.put("CloseButton", KeyEvent.VK_C);
+
+    }
+
 
     protected EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
     JPanel decoderPane;
     JPanel volumePane;
+    JPanel decoderBlank;
 
     private VSDConfig config;
 
@@ -115,16 +132,20 @@ public class VSDManagerFrame extends JmriJFrame {
 
 	decoderPane = new JPanel();
 	decoderPane.setLayout(new BoxLayout(decoderPane, BoxLayout.PAGE_AXIS));
+	decoderBlank = VSDControl.generateBlank();
+	decoderPane.add(decoderBlank);
 
 	volumePane = new JPanel();
 	volumePane.setLayout(new BoxLayout(volumePane, BoxLayout.LINE_AXIS));
 	JToggleButton muteButton = new JToggleButton(rb.getString("MuteButtonLabel"));
 	JButton addButton = new JButton(rb.getString("AddButtonLabel"));
+	JButton closeButton = new JButton(rb.getString("MgrCloseButtonLabel"));
 	JSlider volume = new JSlider(0, 100);
 	volume.setMinorTickSpacing(10);
 	volume.setPaintTicks(true);
 	volume.setValue(80);
 	volume.setPreferredSize(new Dimension(200, 20));
+	volume.setToolTipText(rb.getString("MgrVolumeToolTip"));
 	volume.addChangeListener(new ChangeListener() {
 		public void stateChanged(ChangeEvent e) {
 		    volumeChange(e);
@@ -133,15 +154,27 @@ public class VSDManagerFrame extends JmriJFrame {
 	volumePane.add(new JLabel(rb.getString("VolumePaneLabel")));
 	volumePane.add(volume);
 	volumePane.add(muteButton);
+	muteButton.setToolTipText(rb.getString("MgrMuteToolTip"));
+	muteButton.setMnemonic(Mnemonics.get("MuteButton"));
 	muteButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    muteButtonPressed(e);
 		}
 	    });
 	volumePane.add(addButton);
+	addButton.setToolTipText(rb.getString("MgrAddButtonToolTip"));
+	addButton.setMnemonic(Mnemonics.get("AddButton"));
 	addButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    addButtonPressed(e);
+		}
+	    });
+	volumePane.add(closeButton);
+	closeButton.setToolTipText(rb.getString("MgrCloseButtonToolTip"));
+	closeButton.setMnemonic(Mnemonics.get("CloseButton"));
+	closeButton.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		    closeButtonPressed(e);
 		}
 	    });
 
@@ -154,6 +187,13 @@ public class VSDManagerFrame extends JmriJFrame {
 
 	log.debug("done...");
     }
+
+    /** Handle "Close" button press */
+    protected void closeButtonPressed(ActionEvent e) {
+	firePropertyChange(PropertyChangeID.CLOSE_WINDOW, null, null);
+	dispose();
+    }
+
 
     /** Handle "Mute" button press */
     protected void muteButtonPressed(ActionEvent e) {
@@ -185,7 +225,8 @@ public class VSDManagerFrame extends JmriJFrame {
 	    log.debug("no New Decoder constructed!" + config.toString());
 	    return;
 	}
-	VSDControl newControl = new VSDControl(config.getLocoAddress().toString());
+	//VSDControl newControl = new VSDControl(config.getLocoAddress().toString());
+	VSDControl newControl = new VSDControl(config);
 	// Set the Decoder to listen to PropertyChanges from the control
 	newControl.addPropertyChangeListener(newDecoder);
 	this.addPropertyChangeListener(newDecoder);
@@ -196,6 +237,8 @@ public class VSDManagerFrame extends JmriJFrame {
 		    vsdControlPropertyChange(event);
 		}
 	    });
+	if (decoderPane.isAncestorOf(decoderBlank))
+	    decoderPane.remove(decoderBlank);
 	decoderPane.add(newControl);
 	newControl.addSoundButtons(new ArrayList<SoundEvent>(newDecoder.getEventList()));
 	//debugPrintDecoderList();
@@ -221,6 +264,8 @@ public class VSDManagerFrame extends JmriJFrame {
 	    log.debug("vsdControlPropertyChange: ID = " + PCIDMap.get(PropertyChangeID.REMOVE_DECODER) + " Old " + ov + " New " + nv);
 	    firePropertyChange(PropertyChangeID.REMOVE_DECODER, ov, nv);
 	    decoderPane.remove((VSDControl)event.getSource());
+	    if (decoderPane.getComponentCount() == 0)
+		decoderPane.add(decoderBlank);
 	    //debugPrintDecoderList();
 	    decoderPane.validate();
 	    this.pack();
@@ -245,12 +290,14 @@ public class VSDManagerFrame extends JmriJFrame {
 
     private void buildMenu() {
 	JMenu fileMenu = new JMenu(rb.getString("VSDecoderFileMenu"));
+	fileMenu.setMnemonic(Mnemonics.get("FileMenu"));
 
         fileMenu.add(new LoadVSDFileAction(rb.getString("VSDecoderFileMenuLoadVSDFile" )));
         fileMenu.add(new StoreXmlVSDecoderAction(rb.getString("VSDecoderFileMenuSaveProfile" )));
         fileMenu.add(new LoadXmlVSDecoderAction(rb.getString("VSDecoderFileMenuLoadProfile")));
 
 	JMenu editMenu = new JMenu(rb.getString("VSDecoderEditMenu"));
+	editMenu.setMnemonic(Mnemonics.get("EditMenu"));
 	editMenu.add(new VSDecoderPreferencesAction(rb.getString("VSDecoderEditMenuPreferences")));
 
 	fileMenu.getItem(1).setEnabled(false); // disable XML store

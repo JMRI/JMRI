@@ -35,6 +35,7 @@ import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
 public class VSDecoderCreationAction extends AbstractAction {
 
     Boolean _useNewGUI = false;
+    private static JFrame openFrame = null;
 
     /**
      * Constructor
@@ -58,7 +59,7 @@ public class VSDecoderCreationAction extends AbstractAction {
 	String fp = null, fn = null;
 	JFrame tf = null;
 	if (_useNewGUI == true)
-	    tf = new VSDManagerFrame();
+	    tf = VSDecoderManager.instance().provideManagerFrame();
 	else
 	    tf = new VSDecoderFrame();
 	if (VSDecoderManager.instance().getVSDecoderPreferences().isAutoLoadingDefaultVSDFile()) {

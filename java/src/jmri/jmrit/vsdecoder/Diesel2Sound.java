@@ -38,7 +38,6 @@ class Diesel2Sound extends EngineSound {
 
     // Engine Sounds
     HashMap<Integer, NotchSound> notch_sounds;
-    //ArrayList<NotchTransition> transition_sounds;
     SoundBite start_sound;
     SoundBite shutdown_sound;
     SoundBite notch_transition; // used for changing notches
@@ -234,9 +233,7 @@ class Diesel2Sound extends EngineSound {
     @SuppressWarnings("unchecked")
     public void setXml(Element e, VSDFile vf) {
 	Element el;
-	//int num_notches;
 	String fn;
-	//SoundBite sb;
 	NotchSound sb;
 
 	// Handle the common stuff.
@@ -244,7 +241,6 @@ class Diesel2Sound extends EngineSound {
 	
 	log.debug("Diesel EngineSound: " + e.getAttribute("name").getValue());
 	notch_sounds = new HashMap<Integer, NotchSound>();
-	//transition_sounds = new ArrayList<NotchTransition>();
 
 	// Get the notch sounds
 	Iterator<Element> itr =  (e.getChildren("notch-sound")).iterator();
@@ -257,7 +253,6 @@ class Diesel2Sound extends EngineSound {
 	    sb = new NotchSound(vf, fn, "Engine_n" + i, "Engine_" + i);
 	    sb.setLooped(true);
 	    sb.setFadeTimes(this.getFadeInTime(), this.getFadeOutTime());
-	    //sb.setFadeTimes(0, 0);
 	    sb.setGain(setXMLGain(el));
 	    sb.setNextNotch(el.getChildText("next-notch"));
 	    sb.setPrevNotch(el.getChildText("prev-notch"));

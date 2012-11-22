@@ -31,10 +31,13 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.HashMap;
 import java.text.MessageFormat;
 
 import jmri.jmrit.DccLocoAddressSelector;
@@ -56,6 +59,19 @@ public class VSDConfigDialog extends JDialog {
     private static final ResourceBundle rb = VSDSwingBundle.bundle();
 
     public static final String CONFIG_PROPERTY = "Config";
+
+    // Map of Mnemonic KeyEvent values to GUI Components
+    private static final Map<String, Integer> Mnemonics = new HashMap<String, Integer>();
+	static {
+	Mnemonics.put("RosterTab", KeyEvent.VK_R);
+	Mnemonics.put("ManualTab", KeyEvent.VK_M);
+	Mnemonics.put("AddressSet", KeyEvent.VK_T);
+	Mnemonics.put("ProfileLoad", KeyEvent.VK_L);
+	Mnemonics.put("RosterSave", KeyEvent.VK_S);
+	Mnemonics.put("CloseButton", KeyEvent.VK_O);
+	Mnemonics.put("CancelButton", KeyEvent.VK_C);
+    }
+	
 
     // GUI Elements
     private javax.swing.JLabel addressLabel;
@@ -113,10 +129,21 @@ public class VSDConfigDialog extends JDialog {
         addressPanel.setLayout(new BoxLayout(addressPanel, BoxLayout.LINE_AXIS));
 	locoSelectPanel.addTab(rb.getString("LocoTabbedPaneRosterTab"), rosterPanel);
 	locoSelectPanel.addTab(rb.getString("LocoTabbedPaneManualTab"), addressPanel);
-
+	//NOTE: There appears to be a bug in Swing that doesn't let Mnemonics work on a JTabbedPane when a sibling component
+	// has the focus.  Oh well.
+	try {
+	    locoSelectPanel.setToolTipTextAt(locoSelectPanel.indexOfTab(rb.getString("LocoTabbedPaneRosterTab")), rb.getString("LTPRosterTabToolTip"));
+	    locoSelectPanel.setMnemonicAt(locoSelectPanel.indexOfTab(rb.getString("LocoTabbedPaneRosterTab")), Mnemonics.get("RosterTab"));
+	    locoSelectPanel.setToolTipTextAt(locoSelectPanel.indexOfTab(rb.getString("LocoTabbedPaneManualTab")), rb.getString("LTPManualTabToolTip"));
+	    locoSelectPanel.setMnemonicAt(locoSelectPanel.indexOfTab(rb.getString("LocoTabbedPaneManualTab")), Mnemonics.get("ManualTab"));
+	} catch (IndexOutOfBoundsException iobe) {
+	    log.debug("Index out of bounds setting up tabbed Pane: " + iobe);
+	    // Ignore out-of-bounds exception.  We just won't have mnemonics or tool tips this go round.
+	}
 	// Roster Tab components
 	rosterSelector = new RosterEntrySelectorPanel();
 	rosterSelector.setNonSelectedItem(rb.getString("EmptyRosterBox"));
+	rosterSelector.setToolTipText(rb.getString("LTPRosterSelectorToolTip"));
 	//rosterComboBox.setToolTipText("tool tip for roster box");
 	rosterSelector.addPropertyChangeListener("selectedRosterEntries", new PropertyChangeListener(){
             @Override
@@ -131,15 +158,17 @@ public class VSDConfigDialog extends JDialog {
 	// Address Tab Components
         addressLabel = new javax.swing.JLabel();
 	addressSelector = new DccLocoAddressSelector();
+	addressSelector.setToolTipText(rb.getString("LTPAddressSelectorToolTip"));
 	addressSetButton = new javax.swing.JButton();
 	addressSetButton.setText(rb.getString("AddressSetButtonLabel"));
+	addressSetButton.setEnabled(true);
+	addressSetButton.setToolTipText(rb.getString("AddressSetButtonToolTip"));
+	addressSetButton.setMnemonic(Mnemonics.get("AddressSet"));
 	addressSetButton.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent evt) {
 		    addressSetButtonActionPerformed(evt);
 		}
 	    });
-	addressSetButton.setEnabled(true);
-	addressSetButton.setToolTipText(rb.getString("AddressSetButtonToolTip"));
 
 	addressPanel.add(addressSelector.getCombinedJPanel());
 	addressPanel.add(addressSetButton);
@@ -149,8 +178,11 @@ public class VSDConfigDialog extends JDialog {
 	profilePanel = new JPanel();
 	profilePanel.setLayout(new BoxLayout(profilePanel, BoxLayout.PAGE_AXIS));
 	profileComboBox = new javax.swing.JComboBox();
+	profileComboBox.setToolTipText(rb.getString("ProfileComboBoxToolTip"));
 	profileLabel = new javax.swing.JLabel();
 	profileLoadButton = new JButton(rb.getString("LoadVSDFileButtonLabel"));
+	profileLoadButton.setToolTipText(rb.getString("ProfileLoadButtonToolTip"));
+	profileLoadButton.setMnemonic(Mnemonics.get("ProfileLoad"));
 	profileLoadButton.setEnabled(true);
 	
         profileComboBox.setModel(new javax.swing.DefaultComboBoxModel());
@@ -187,11 +219,14 @@ public class VSDConfigDialog extends JDialog {
 	    });
 	rosterSaveButton.setEnabled(false); // temporarily disable this until we update the RosterEntry
 	rosterSaveButton.setToolTipText(rb.getString("RosterSaveButtonToolTip"));
+	rosterSaveButton.setMnemonic(Mnemonics.get("RosterSave"));
 
 
 	JPanel cbPanel = new JPanel();
 	closeButton = new JButton(rb.getString("CloseButtonLabel"));
 	closeButton.setEnabled(false);
+	closeButton.setToolTipText(rb.getString("CD_CloseButtonToolTip"));
+	closeButton.setMnemonic(Mnemonics.get("CloseButton"));
 	closeButton.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent e) {
 		    closeButtonActionPerformed(e);
@@ -199,6 +234,8 @@ public class VSDConfigDialog extends JDialog {
 	    });
 
 	JButton cancelButton = new JButton(rb.getString("CancelButtonLabel"));
+	cancelButton.setToolTipText(rb.getString("CD_CancelButtonToolTip"));
+	cancelButton.setMnemonic(Mnemonics.get("CancelButton"));
 	cancelButton.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent evt) {
 		    cancelButtonActionPerformed(evt);

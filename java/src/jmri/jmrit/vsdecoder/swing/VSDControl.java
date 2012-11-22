@@ -118,6 +118,30 @@ public class VSDControl extends JPanel {
 	initComponents(title);
     }
 
+    public VSDControl(VSDConfig c) {
+	super();
+	config = c;
+	address = config.getLocoAddress().toString();
+	initComponents(address);
+    }
+
+    static public JPanel generateBlank() {
+	VSDControl temp = new VSDControl("");
+	Dimension size = temp.getPreferredSize();
+	JLabel jl = new JLabel(rb.getString("BlankVSDControlLabel"));
+	jl.setMinimumSize(temp.getPreferredSize());
+	jl.setPreferredSize(temp.getPreferredSize());
+	jl.setHorizontalAlignment(SwingConstants.CENTER);
+	JPanel jp = new JPanel();
+	jp.setLayout(new BorderLayout());
+	jp.add(jl, BorderLayout.CENTER);
+	jl.setMinimumSize(temp.getPreferredSize());
+	jp.setPreferredSize(temp.getPreferredSize());
+	jp.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedBevelBorder(),
+							BorderFactory.createLoweredBevelBorder()));
+	return(jp);
+    }
+
     private GridBagConstraints setConstraints(int x, int y) {
 	return(setConstraints(x, y, GridBagConstraints.HORIZONTAL, new Insets(2,2,2,2), GridBagConstraints.LINE_START));
     }
@@ -144,7 +168,10 @@ public class VSDControl extends JPanel {
     protected void initComponents(String title) {
 	// Create the border.
 	// Could make this a titled border with the loco address as the title...
-	tb = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+	//tb = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+	tb = BorderFactory.createCompoundBorder(BorderFactory.createRaisedBevelBorder(),
+						BorderFactory.createLoweredBevelBorder());
+
 	this.setBorder(tb);
 
 	this.setLayout(new GridBagLayout());
@@ -165,11 +192,15 @@ public class VSDControl extends JPanel {
 	configPanel.add(Box.createHorizontalGlue());
 	configPanel.add(deleteButton);
 	
+	JPanel alPanel = new JPanel();
+	alPanel.setLayout(new BoxLayout(alPanel, BoxLayout.PAGE_AXIS));
+	alPanel.add(addressLabel);
+	alPanel.add(new JLabel(config.getProfileName()));
 	
 	// Add them to the panel
-	this.add(addressLabel, new GridBagConstraints(0, 0, 1, 2, 100.0, 100.0, 
+	this.add(alPanel, new GridBagConstraints(0, 0, 1, 2, 100.0, 100.0, 
 						      GridBagConstraints.LINE_START,
-						      GridBagConstraints.HORIZONTAL,
+						      GridBagConstraints.NONE,
 						      new Insets(2,2,2,2),
 						      0, 0));
 	this.add(soundsPanel, setConstraints(2,0));

@@ -71,6 +71,8 @@ public class VSDecoderManager implements PropertyChangeListener {
     private VSDecoderPreferences vsdecoderPrefs; // local pointer to the preferences object
     private JmriJFrame vsdecoderPreferencesFrame; // Frame for holding the preferences GUI  (do we need this?)
 
+    private JmriJFrame managerFrame = null;
+
     private VSDecoder default_decoder = null;  // shortcut pointer to the default decoder (do we need this?)
 
     private static int vsdecoderID = 0;
@@ -124,6 +126,13 @@ public class VSDecoderManager implements PropertyChangeListener {
 	vsdecoderPreferencesFrame.requestFocus();
     }
 	
+    public JmriJFrame provideManagerFrame() {
+	if (managerFrame == null) {
+	    managerFrame = new VSDManagerFrame();
+	}
+	return(managerFrame);
+    }
+
     private String getNextVSDecoderID() {
 	// vsdecoderID initialized to zero, pre-incremented before return...
 	// first returned ID value is 1.
@@ -398,6 +407,28 @@ public class VSDecoderManager implements PropertyChangeListener {
 	}
     }
 
+    protected void shutdownDecoders() {
+	// Shut down and destroy all running VSDecoders.
+	Set<String> vk = decodertable.keySet();
+	Iterator<String> it = vk.iterator();
+	while(it.hasNext()) {
+	    VSDecoder v = decodertable.get(it.next());
+	    v.shutdown();
+	}
+	// Empty the DecoderTable
+	vk = decodertable.keySet();
+	it = vk.iterator();
+	while(it.hasNext()) {
+	    decodertable.remove(it.next());
+	}
+	// Empty the AddressMap
+	vk = decoderAddressMap.keySet();
+	it = vk.iterator();
+	while(it.hasNext()) {
+	    decoderAddressMap.remove(it.next());
+	}
+    }
+
     public void propertyChange(PropertyChangeEvent evt) {
 	log.debug("property change name " + evt.getPropertyName() + " old " + evt.getOldValue() + " new " + evt.getNewValue());
 	if (evt.getSource() instanceof jmri.ReporterManager) {
@@ -415,6 +446,10 @@ public class VSDecoderManager implements PropertyChangeListener {
 		decodertable.remove(d.getID());
 		decoderAddressMap.remove(sa);
 		debugPrintDecoderList();
+	    } else if(evt.getPropertyName().equals(VSDManagerFrame.PCIDMap.get(VSDManagerFrame.PropertyChangeID.CLOSE_WINDOW))) {
+		// Note this assumes there is only one VSDManagerFrame open at a time.
+		shutdownDecoders();
+		managerFrame = null;
 	    }
 	} else {
 	    // Un-Handled source. Does nothing ... yet...

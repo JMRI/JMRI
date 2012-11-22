@@ -24,6 +24,7 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 18410 $
  */
 
+import java.util.ResourceBundle;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -42,12 +43,13 @@ import jmri.jmrit.vsdecoder.EngineSoundEvent;
 @SuppressWarnings("serial")
 public class DieselPane extends EnginePane {
     
+    private static final ResourceBundle rb = VSDSwingBundle.bundle();
+
     static final int THROTTLE_MIN = 1;
     static final int THROTTLE_MAX = 8;
     static final int THROTTLE_INIT = 1;
 
     JSpinner throttle_spinner;
-    JSlider throttle_slider;
     JToggleButton start_button;
 
     EngineSoundEvent engine;
@@ -62,7 +64,7 @@ public class DieselPane extends EnginePane {
     public DieselPane(String n) {
 	super(n);
 	initComponents();
-	throttle_setting = throttle_slider.getValue();
+	throttle_setting = THROTTLE_INIT;
 	engine_started = start_button.isSelected();
     }
 
@@ -84,34 +86,21 @@ public class DieselPane extends EnginePane {
 	
 	//Set up the throttle spinner
 	throttle_spinner = new JSpinner(new SpinnerNumberModel(THROTTLE_INIT, THROTTLE_MIN, THROTTLE_MAX, 1));
+	throttle_spinner.setToolTipText(rb.getString("DP_ThrottleSpinnerToolTip"));
 	throttle_spinner.setEnabled(false);
 
-	//Setup the throttle slider.
-	throttle_slider = new JSlider(JSlider.HORIZONTAL, THROTTLE_MIN,
-				      THROTTLE_MAX, THROTTLE_INIT);
-	throttle_slider.setMajorTickSpacing(1);
-	throttle_slider.setPaintTicks(true);
-	throttle_slider.setMinimumSize(new Dimension(400, 0));
-	throttle_slider.setSnapToTicks(true);
-	throttle_slider.addChangeListener(new ChangeListener() {
-		public void stateChanged(ChangeEvent e) {
-		    throttleChange(e);
-		}
-	    });
-	//this.add(throttle_slider);
 	this.add(throttle_spinner);
 
 	// Setup the start button
 	start_button = new JToggleButton();
 	start_button.setText("Engine Start");
+	start_button.setToolTipText(rb.getString("DP_StartButtonToolTip"));
 	start_button.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    startButtonChange(e);
 		}
 	    });
 	this.add(start_button);
-	//throttle_slider.setVisible(true);
-	//start_button.setVisible(true);
 	this.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 	this.setVisible(true);
     }
@@ -120,8 +109,8 @@ public class DieselPane extends EnginePane {
     public void throttleChange(ChangeEvent e) {
 	firePropertyChangeEvent(new PropertyChangeEvent(this, "throttle",
 						        throttle_setting,
-							throttle_slider.getValue()));
-	throttle_setting = throttle_slider.getValue();
+							(Integer)throttle_spinner.getModel().getValue()));
+	throttle_setting = (Integer)throttle_spinner.getModel().getValue();
     }
 
     /** Respond to a start button press */
@@ -139,12 +128,11 @@ public class DieselPane extends EnginePane {
 
     /** Return current notch setting of the throttle slider */
     public int throttleNotch() {
-	return(throttle_slider.getValue());
+	return((Integer)throttle_spinner.getModel().getValue());
     }
 
     /** set the throttle spinner value */
     public void setThrottle(int t) {
-	//throttle_slider.setValue(t);
 	throttle_spinner.setValue(t);
     }
 
