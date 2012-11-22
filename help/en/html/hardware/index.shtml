@@ -193,13 +193,14 @@
 	    </dd>
 
 	    <dt class="im"><a href="http://www.maplesystems.com">
-	    <IMG src="http://www.maplesystems.com/images/homepage-new/MapleLogo.gif" width="95" height="90" alt="Maple Logo"></a></dt>
+	    <IMG src="http://www.maplesystems.com/images/homepage-new/MapleLogo.gif" width="63" height="60" alt="Maple Logo"></a></dt>
 	    <dt>Maple Systems</dt>
 	    <dd>
 		<p>Maple Systems touch panel</p>
 	        <p class="dl">Configure: <a href="maple/index.shtml">connection via serial link</a></p>
 	    </dd>
-	    <dt><a href="http:/www.marklin.com/"><img src="images/marklin_logo.gif" width="101" height="22" alt="Marklin">Marklin</a></dt>
+	    <dt class="im"><a href="http:/www.marklin.com/"><img src="images/marklin_logo.gif" width="101" height="22" alt="Marklin"></a></dt>
+	    <dt>Marklin</dt>
 	    <dd><p class="dl">Configure connection to 
 		<a href="marklin/index.shtml">CS2</a> Command Station 2.</p>
         <a href="ecos/index.shtml">CS</a> Command Station - Reloaded see ESU ECoS</p>
@@ -209,6 +210,14 @@
 	    <img src="http://www.merg.org.uk/images/logo1m.gif" alt="MERG logo" height="45" width="100"></a></dt>
 	    <dt>MERG CBUS</dt>
 	    <dd><p class="dl">Configure: <a href="can/cbus/index.shtml">MERG CBUS networks</a></p></dd>
+
+	    <dt class="im"><a href="http://www.modelrec.com">
+	    <img src="http://www.modelrec.com/images/interface/MRCLogo.gif" alt="MRC logo" height="48" width="96"></a></dt>
+	    <dt>Model Rectifier Corp (MRC)</dt>
+	    <dd><p class="dl">MRC decoders can be configured via DecoderPro using any supported DCC system.</p>
+	    <p>JMRI cannot connect to the MRC DCC system because MRC hasn't given permission for us
+	    to use the information needed to do that.  For more information on this, 
+	    please <a href="http://www.modelrec.com">contact MRC directly</a>.</dd>
 
 	    <dt class=im><a href="http://www.proto87.com/RPS-MR-position-detection-system.html">
 	    <IMG src="images/RPS.gif"
@@ -246,7 +255,7 @@
 
 	    <dt class="im"><a href="http://openlcb.org/">
 	    <img src="http://openlcb.org/trunk/web/logo-ajs-dph.png" alt="OpenLCB logo" height="57" width="138"></a></dt>
-	    <dt>OpenLCB</dt>
+	    <dt><a href="http://openlcb.org/">OpenLCB</a></dt>
 	    <dd><p class="dl">Configure: <A HREF="openlcb/index.shtml">OpenLCB networks</a></p></dd>
 
 	    <dt class="im"><a href="http://www.protrak.cc">
@@ -259,7 +268,9 @@
 	    <dt>QSI Solutions</dt>
 	    <dd>
 		<p>Connection: Quantum Programmer</p>
-	        <p class="dl">Configure: <a href="qsi/index.shtml">USB connection</a></p></dd>
+	        <p class="dl">Configure: <a href="qsi/index.shtml">USB connection</a></p>
+	        <p>QSI decoders can be programmed with DecoderPro through any DCC system. 
+	        JMRI can't load sounds into QSI decoders.</dd>
 
 	    <dt class="im"><a href="http://www.raildriver.com">
 	    RailDriver</a></dt>
