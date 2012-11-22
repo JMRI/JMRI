@@ -35,6 +35,25 @@ Two initial efforts:
 
 <dl>
 <dt>
+<img src="http://www.openlcb.org/trunk/web/logo-ajs-dph.png" align="right" alt="OpenLCB logo" height="43" width="104">
+<a href="http://www.openlcb.org">OpenLCB</a>
+<dd>
+OpenLCB is a group of hobbyists and manufacturers who have 
+come together to produce a future-oriented layout control bus, also called
+<a href="http://openlcb.org">OpenLCB</a>.
+<p>
+JMRI includes 
+<a href="../openlcb/index.shtml">basic support for OpenLCB</a>, 
+and more is being developed along with OpenLCB itself.
+
+<p>
+<img src="http://www.nmra.org/common/nmra_logo.jpg" align="right" alt="NMRA logo" height="45" width="55">
+The <a href="http://www.nmra.org">NMRA</a> has 
+<a href="http://nmranet.org">decided</a> 
+to adopt OpenLCB and standardize it under the 
+<a href="http://nmranet.org">NMRAnet name</a>.
+
+<dt>
 <img src="http://www.merg.org.uk/images/logo1m.gif" align="right" alt="MERG logo" height="45" width="100">
 <a href="http://www.merg.org.uk/">MERG</a>
 <a href="http://www.merg.org.uk/resources/lcb.html">CBUS</a>
@@ -49,29 +68,6 @@ JMRI includes
 <a href="cbus/index.shtml">basic support for CBUS</a>, 
 and more is being developed along with CBUS itself.
 
-<dt>
-<img src="http://www.openlcb.org/trunk/web/logo-ajs-dph.png" align="right" alt="OpenLCB logo" height="43" width="104">
-<a href="http://www.openlcb.org">OpenLCB</a>
-<dd>
-OpenLCB is a group of hobbyists and manufacturers who have 
-come together to produce a future-oriented layout control bus, also called
-<a href="http://openlcb.org">OpenLCB</a>.
-<p>
-JMRI includes 
-<a href="../openlcb/index.shtml">basic support for OpenLCB</a>, 
-and more is being developed along with OpenLCB itself.
-
-<dt>
-<img src="http://www.nmra.org/common/nmra_logo.jpg" align="right" alt="NMRA logo" height="45" width="55">
-<a href="http://www.nmra.org">NMRA</a>
-NMRAnet
-<dd>The
-<a href="http://www.nmra.org">NMRA</a> has a 
-<a href="http://www.nmra.org/standards/DCC/WGpublic/discussion_topics.html#Topic0603245">working group</a>
-developing a layout control network, notionally called
-"NMRAnet". No other information seems to publicly available.
-<p>
-NMRAnet developers may find the JMRI tools for tracing and exercising CAN to be useful.
 
 </dl>
 
@@ -85,8 +81,9 @@ There's also a
 <a href="../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">tool for sending</a> CAN frames manually and in 
 sequences.
 <p>
-For CBUS, JMRI can provide the usual Sensor and Turnout features once
-<a href="cbus/index.shtml">configured for CBUS events</a>.
+JMRI can provide the usual Sensor and Turnout features once configured for
+<a href="../openlcb/index.shtml">OpenLCB</a> or
+<a href="cbus/index.shtml">CBUS</a> "events".
 
 <p>
 For development, there are 
@@ -95,19 +92,30 @@ for sending and receiving CAN frames.
 These can be very useful in testing hardware, etc.
 
 <h2>Configuring a CAN connection</h2>
-
-JMRI can connect via a number of hardware adapters:
+<a name="connect"/>
+JMRI can connect to CAN networks several ways.  
+<p>
+There are various CAN-USB adapters available:
 
 <dl>
-
+<dt>TCH Technologies
+<dd><a href="http://www.tchtechnology.com/products/can_usb/">TCH Technology CAN/USB</a>
+which provides a high-speed connection for model railroad use
 <dt>gridconnect
 <dd><a href="http://www.gridconnect.com/canboandto.html">GridConnect</a> CAN_RS,
 which is also the protocol used by the MERG CAN_RS board
 <dt>lawicell
 <dd><a href="http://canusb.com/">LAWICEL AB</a> 
 CANUSB and CAN232 adapters.
-
 </dl>
+To use any of these, select the appropriate device type in the 
+JMRI preferences.  If using a GridConnect or Lawicel device, be sure to
+set the appropriate baud rate under advanced preferences.  The TCH Technology 
+adapter does this automatically, so no setting is required.
+
+<p>
+It's also possible to attach via a TCP/IP connection (EtherNet or WiFi), 
+but you'll have to make your own connection for this.
 
 <!--#include virtual="/Footer" -->
 </body>
