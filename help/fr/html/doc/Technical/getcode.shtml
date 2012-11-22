@@ -38,43 +38,34 @@
 
 <h2> Mise en route </h2>
 
-Vous pouvez télécharger le code source le plus récent via CVS en utilisant:
+Vous pouvez télécharger le code source le plus récent via SVN en utilisant:
 <code> <PRE>
-cvs-d: pserver: anonymous@jmri.cvs.sourceforge.net: / cvsroot / login jmri
-cvs-d: pserver: anonymous@jmri.cvs.sourceforge.net: / cvsroot / co jmri all
+svn checkout svn://svn.code.sf.net/p/jmri/code/trunk/jmri
 </PRE> </code>
-(Si on vous demande un mot de passe, appuyez simplement sur le retour)
 
 
 <h2>Détails</h2>
-Notre code source est distribué via CVS.
+Notre code source est distribué via SVN.
 (Nous gardons aussi le
 <A href="WebSite.shtml"> site web </a>
-dans le CVS, si vous souhaitez travailler directement avec lui.)
+dans le SVN, si vous souhaitez travailler directement avec lui.)
 Si vous voulez travailler avec les
-code, cela vaut la peine de prendre quelques minutes pour installer CVS  . Nous sommes désolés, mais
+code, cela vaut la peine de prendre quelques minutes pour installer SVN  . Nous sommes désolés, mais
 nous ne pouvons pas appuyer d'autres méthodes (envoi des fichiers. zip, etc), car ils sont
 tout simplement sources de trop d'erreurs.
 
 <P>
-De nombreux ordinateurs sont livrés avec CVS installé, y compris Linux et MacOS X.
-Si vous utilisez Windows, vous aurez besoin d'installer un programme "client" CVS comme
-<A HREF="http://sourceforge.net/project/showfiles.php?group_id=10072&release_id=24467"> WinCVS </a>.
-Une version récente peut être téléchargée à partir de:
-<a  href="http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip"> http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip </a>
-
-<P>
 Pour obtenir une copie de la source pour votre propre usage, vous pouvez utiliser "checkout anonyme".
-Pour un client en ligne de commande cvs, créez un nouveau répertoire pour le projet, changer de répertoire actif, et dire que vous existez à CVS
+Pour un client en ligne de commande cvs, créez un nouveau répertoire pour le projet, changer de répertoire actif, et dire que vous existez à SVN
 <PRE>
-cvs-d: pserver: anonymous@jmri.cvs.sourceforge.net: / cvsroot / login jmri
+svn checkout svn://svn.code.sf.net/p/jmri/code/trunk/jmri
 </PRE>
 Ce "login " en ligne
 n'est nécessaire qu'une seule fois, après quoi, il est rappelé sur votre machine locale. Vous pouvez
 être sollicité pour un mot de passe. Si oui, appuyez simplement sur le retour, sinon le mot de passe vide ne sera acceptée.
 Vous pouvez alors obtenir une copie du code de
 <PRE>
-cvs-d: pserver: anonymous@jmri.cvs.sourceforge.net: / cvsroot / co jmri all
+svn checkout svn://svn.code.sf.net/p/jmri/code/trunk/jmri
 </PRE>
 <P>
 Si vous utilisez un client graphique de base comme WinCVS, déroulez le menu "admin"
@@ -82,13 +73,13 @@ Si vous utilisez un client graphique de base comme WinCVS, déroulez le menu "ad
 Sur d'autres ordinateurs, vous pouvez taper directement sur la ligne de commande.
 <p>
 Si vous avez une copie existante du code et que vous souhaitez mettre à jour
-pour le contenu le plus récent de CVS, la deuxième commande est la suivante:
+pour le contenu le plus récent de SVN, la deuxième commande est la suivante:
 <PRE>
 cvs-d: pserver: anonymous@jmri.cvs.sourceforge.net: / cvsroot / jmri-q update-dA
 </PRE>
 <P>
 Voir aussi la
-<A HREF="CVSFAQ.shtml"> page FAQ CVS  </a>.
+<A HREF="SVNFAQ.shtml"> page FAQ SVN  </a>.
 <P>
 Après que l'extraction soit terminée, vous trouverez des répertoires appelés
 "xml", "ressources", "jython", "help ", "lib", "java" et d'autres.
@@ -101,7 +92,7 @@ l'exécuter, vous avez besoin de l'un des outils de compilation qui est décrit 
 à gauche: Ant, JBuilder, etc (Ant peut être plus facile à installer et à utiliser)
 <P>
 Une fois que vous travaillez avec le code, vous aurez probablement créer des améliorations et 
-vous souhaitez contribuer à la vie du projet. C'est là que CVS a énormément
+vous souhaitez contribuer à la vie du projet. C'est là que SVN a énormément
 d'avantages, avec les autorisations appropriées et les commandes, vous pouvez fusionner vos
 modifications dans la source commune automagiquement. Contactez-nous si vous êtes prêt à le
 faire ou voir les infos <A HREF="index.shtml#contributing"> sur la contribution </a>.
