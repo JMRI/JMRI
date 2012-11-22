@@ -138,7 +138,7 @@
 
 	    <dt class="im">
 		<a href="http://www.loksound.de/us/index.php?showId=205">
-		<img src="http://www.esu.eu/fileadmin/template/gfx/banner1.jpg" width="70" height="50" alt="ESU"></a>
+		<img src="http://www.esu.eu/esu_logo.jpg" width="70" height="50" alt="ESU"></a>
 	    </dt>
 	    <dt>ESU</dt>
 	    <dd><p class="dl">Configure connection to 
@@ -199,8 +199,7 @@
 		<p>Maple Systems touch panel</p>
 	        <p class="dl">Configure: <a href="maple/index.shtml">connection via serial link</a></p>
 	    </dd>
-	    <dt>Marklin</dt>
-        <a href="http:/www.marklin.com/"><img src="images/marklin_logo.gif" width="101" height="22" alt="TAMS"></a>
+	    <dt><a href="http:/www.marklin.com/"><img src="images/marklin_logo.gif" width="101" height="22" alt="Marklin">Marklin</a></dt>
 	    <dd><p class="dl">Configure connection to 
 		<a href="marklin/index.shtml">CS2</a> Command Station 2.</p>
         <a href="ecos/index.shtml">CS</a> Command Station - Reloaded see ESU ECoS</p>
