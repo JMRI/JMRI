@@ -69,6 +69,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected boolean _printed = false;		// when true, manifest has been printed
 	protected boolean _sendToTerminal = false;	// when true, cars picked up by train only go to terminal
 	protected boolean _allowLocalMoves = true;	// when true, cars with custom loads can be moved locally
+	protected boolean _allowThroughCars = true;	// when true, cars from the origin can be sent to the terminal
 	protected boolean _buildNormal = false;	// when true build this train in normal mode
 	protected boolean _allowCarsReturnStaging = false;	// when true allow cars to return to staging if necessary
 	protected Route _route = null;
@@ -663,6 +664,12 @@ public class Train implements java.beans.PropertyChangeListener {
 		return getCurrentLocationName() != "" && getTrainDepartsRouteLocation() != getCurrentLocation();
 	}
 	
+	/**
+	 * Used to determine if train is a local switcher serving one location.
+	 * Note the the train can have more than location in its route, but all
+	 * location names must be same.
+	 * @return
+	 */
 	public boolean isLocal() {
 		String departureName = TrainCommon.splitString(getTrainDepartsName());
 		Route route = getRoute();
@@ -1881,6 +1888,18 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 	}
 	
+	public boolean isAllowThroughCarsEnabled(){
+		return _allowThroughCars;
+	}
+	
+	public void setAllowThroughCarsEnabled(boolean enable){
+		boolean old = _allowThroughCars;
+		_allowThroughCars = enable;
+		if (old != enable){
+			setDirtyAndFirePropertyChange("allow through cars", old?"true":"false", enable?"true":"false");
+		}
+	}
+	
 	public boolean isBuildTrainNormalEnabled(){
 		return _buildNormal;
 	}
@@ -2691,6 +2710,8 @@ public class Train implements java.beans.PropertyChangeListener {
     		_sendToTerminal = a.getValue().equals("true");
        	if ((a = e.getAttribute("allowLocalMoves")) != null)
     		_allowLocalMoves = a.getValue().equals("true");
+       	if ((a = e.getAttribute("allowThroughCars")) != null)
+    		_allowThroughCars = a.getValue().equals("true");
     	if ((a = e.getAttribute("allowReturn")) != null)
     		_allowCarsReturnStaging = a.getValue().equals("true");
     	if ((a = e.getAttribute("built")) != null)
@@ -2867,6 +2888,7 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("toTerminal", isSendCarsToTerminalEnabled()?"true":"false");
         e.setAttribute("allowLocalMoves", isAllowLocalMovesEnabled()?"true":"false");
         e.setAttribute("allowReturn", isAllowReturnToStagingEnabled()?"true":"false");
+        e.setAttribute("allowThroughCars", isAllowThroughCarsEnabled()?"true":"false");
         e.setAttribute("built", isBuilt()?"true":"false");
         e.setAttribute("build", isBuildEnabled()?"true":"false");
         e.setAttribute("buildFailed", getBuildFailed()?"true":"false");

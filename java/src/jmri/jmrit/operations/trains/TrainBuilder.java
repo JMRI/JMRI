@@ -73,7 +73,6 @@ public class TrainBuilder extends TrainCommon{
 	boolean success;			// true when enough cars have been picked up from a location
 	PrintWriter buildReport;	// build report for this train
 	boolean noMoreMoves;		// when true there aren't any more moves for a location
-	boolean localSwitcher;		// when true, train is a switcher serving one location
 	
 	// managers 
 	CarManager carManager = CarManager.instance();
@@ -146,7 +145,21 @@ public class TrainBuilder extends TrainCommon{
 		terminateLocation = locationManager.getLocationByName(train.getTrainTerminatesName());
 		if (terminateLocation == null){
 			throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorNeedTermLoc"),new Object[]{train.getName()}));
-		}		  
+		}
+		
+		// show train build options in very detailed mode
+		addLine(buildReport, SEVEN, rb.getString("MenuItemBuildOptions"));
+		if (train.isBuildTrainNormalEnabled())
+			addLine(buildReport, SEVEN, rb.getString("NormalModeWhenBuilding"));
+		if (train.isSendCarsToTerminalEnabled())
+			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("SendToTerminal"),new Object[]{terminateLocation.getName()}));
+		if (train.isAllowReturnToStagingEnabled() || Setup.isAllowReturnToStagingEnabled())
+			addLine(buildReport, SEVEN, rb.getString("AllowCarsToReturn"));
+		if (train.isAllowLocalMovesEnabled())
+			addLine(buildReport, SEVEN, rb.getString("AllowLocalMoves"));
+		if (train.isAllowThroughCarsEnabled())
+			addLine(buildReport, SEVEN, rb.getString("AllowThroughCars"));
+		
 		// TODO: DAB control minimal build by each train
 		if (train.getTrainDepartsRouteLocation().getMaxCarMoves() > departLocation.getNumberRS() && Control.fullTrainOnly){
 			throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorCars"),new Object[]{Integer.toString(departLocation.getNumberRS()),
@@ -196,10 +209,6 @@ public class TrainBuilder extends TrainCommon{
 		if(routeList.size()> 1)
 			requested = requested/2;  // only need half as many cars to meet requests
 		addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildRouteRequest"),new Object[]{train.getRoute().getName(), Integer.toString(requested), Integer.toString(numMoves)}));
-		
-		// is this train a switcher servicing only one location?
-		localSwitcher = train.isLocal();
-		//checkForLocalSwitcher();
 		
     	// show road names that this train will service
 		if (!train.getRoadOption().equals(Train.ALLROADS)){
@@ -2534,7 +2543,7 @@ public class TrainBuilder extends TrainCommon{
 			start++;		//yes!, no car drops at departure
 		// all pick ups to terminal?
 		if (train.isSendCarsToTerminalEnabled() && routeIndex>0 && routeEnd == routeList.size()){
-			addLine(buildReport, FIVE, rb.getString("buildSendToTerminal"));
+			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildSendToTerminal"),new Object[]{terminateLocation.getName()}));
 			start = routeEnd-1;
 		}
 		for (int k = start; k<routeEnd; k++){
@@ -2558,7 +2567,7 @@ public class TrainBuilder extends TrainCommon{
 			}
 			// don't move car to same location unless the route only has one location (local moves) or is passenger, caboose or car with FRED
 			if (splitString(rl.getName()).equals(splitString(rld.getName()))
-					&& !localSwitcher && !car.isPassenger() && !car.isCaboose()
+					&& !train.isLocal() && !car.isPassenger() && !car.isCaboose()
 					&& !car.hasFred()) {
 				// allow cars to return to the same staging location if no other options (tracks) are available
 				if ((train.isAllowReturnToStagingEnabled() || Setup.isAllowReturnToStagingEnabled())
@@ -2592,6 +2601,17 @@ public class TrainBuilder extends TrainCommon{
 			// is the train length okay?
 			if (!checkTrainLength(car, rl, rld)){
 				break;	// done with this route
+			}
+			// no through traffic from origin to terminal?
+			if (!train.isAllowThroughCarsEnabled()
+					&& !train.isLocal()
+					&& !car.isCaboose()
+					&& !car.hasFred()
+					&& !car.isPassenger()
+					&& car.getLocation() == departLocation 
+					&& rld == train.getTrainTerminatesRouteLocation()){
+				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildThroughTrafficNotAllow"),new Object[]{departLocation, rld.getName()}));
+				continue;
 			}
 			// is there a track assigned for staging cars?				
 			if (rld == train.getTrainTerminatesRouteLocation() && terminateStageTrack != null){						
