@@ -366,8 +366,7 @@ public class TrainBuilder extends TrainCommon{
 				if (departStageTrack == null)
 					throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorStagingEmpty"),new Object[]{departLocation.getName()}));
 				// load engines for this train
-				if (getEngines(reqNumEngines, train.getEngineModel(), train.getEngineRoad(), train.getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)){
-				} else {
+				if (!getEngines(reqNumEngines, train.getEngineModel(), train.getEngineRoad(), train.getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)){
 					throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorEngines"),new Object[]{reqNumEngines, train.getTrainDepartsName(), engineTerminatesFirstLeg.getName()}));
 				}
 			} else for (int i=0; i<stagingTracks.size(); i++ ){
@@ -393,12 +392,9 @@ public class TrainBuilder extends TrainCommon{
 			} else if (terminateStageTrack == null && departLocation == terminateLocation  && Setup.isBuildAggressive() && Setup.isStagingTrackImmediatelyAvail()){
 				terminateStageTrack = departStageTrack;	// use the same track
 			}
-		} else {
-			// load engines for this train
-			if (getEngines(reqNumEngines, train.getEngineModel(), train.getEngineRoad(), train.getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)){
-			} else {
-				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorEngines"),new Object[]{reqNumEngines, train.getTrainDepartsName(), engineTerminatesFirstLeg.getName()}));
-			}
+		// no staging tracks at this location, load engines for this train 
+		} else if (!getEngines(reqNumEngines, train.getEngineModel(), train.getEngineRoad(), train.getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)){
+			throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorEngines"),new Object[]{reqNumEngines, train.getTrainDepartsName(), engineTerminatesFirstLeg.getName()}));
 		}
 		
 		// Save termination and departure tracks

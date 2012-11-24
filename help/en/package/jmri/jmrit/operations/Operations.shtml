@@ -125,7 +125,7 @@ of tools and can be found under the main menu heading
     <LI><A HREF="#Trains">Trains</A>
      <UL>
       <LI><A HREF="#TrainReset">Reset Train</A></LI>
-      <LI><A HREF="#TrainOptions">Train Options</A></LI>
+      <LI><A HREF="#TrainOptions">Train Build Options</A></LI>
       <LI><A HREF="#TrainScripts">Scripts</A></LI>
       <LI><A HREF="#TrainShowCarTypesServiced">Show Car Types Serviced</A></LI>
       <LI><A HREF="#ModifyTrainsByCarType">Modify Trains by Car Type</A></LI>
@@ -2215,6 +2215,12 @@ car roads, load, owners, and built dates the train will service.
    with a custom load, and you also had a spur with a schedule at the same location requesting that
    load, the train's manifest could show the pull and spot as a local move. If you don't want your
    train to perform local moves when a car has a custom load, deselect this option.   
+   
+   <H4>Allow cars to travel from origin to terminal</H4>
+
+   Normally the program allows cars to travel from the train's departure location (origin) to its
+   last location (terminal). Deselect this option if you don't want the train to carry cars from the
+   train's origin to the terminal. 
    
    <A NAME="TrainRoadNames"></A>
 <H3>Train Road Names</H3>
