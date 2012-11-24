@@ -2390,7 +2390,20 @@ public class TrainBuilder extends TrainCommon{
 			if (car.getRouteLocation() != null){
 				// The following code should not be executed, this should not occur if train was reset before a build!
 				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarAlreadyAssigned"),new Object[]{car.toString()}));
-			} 
+			}
+			// is the car's destination the terminal and is that allowed?
+			if (!train.isAllowThroughCarsEnabled()
+					&& !train.isLocal()
+					&& !car.isCaboose()
+					&& !car.hasFred()
+					&& !car.isPassenger()
+					&& splitString(car.getLocationName()).equals(splitString(departLocation.getName()))
+					&& splitString(car.getDestinationName()).equals(splitString(terminateLocation.getName()))){
+				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarHasFinalDestination"),new Object[]{car.toString(), departLocation.getName(), terminateLocation.getName()}));
+				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildThroughTrafficNotAllow"),new Object[]{departLocation.getName(), terminateLocation.getName()}));
+				addLine(buildReport, SEVEN, BLANK_LINE);	// add line when in very detailed report mode
+				return true;	// done
+			}
 			// now go through the route and try and find a location with
 			// the correct destination name
 			boolean carAdded = false;
