@@ -192,7 +192,6 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                             return button;
                         }
                         public void handleGroupPaneStart(JPanel pane) {
-                            System.out.println("Start "+pane);
                             this.gpane = pane;
                             evt1 = null;
                             evt2 = null;
@@ -200,7 +199,6 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                             return;
                         }
                         public void handleGroupPaneEnd(JPanel pane) {
-                            System.out.println("End   "+pane);
                             if (gpane!=null && evt1 != null && evt2 != null && desc != null) {
                                 JPanel p = new JPanel();
                                 p.setLayout(new FlowLayout());
@@ -243,14 +241,12 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
                             return;
                         }
                         public JFormattedTextField handleEventIdTextField(JFormattedTextField field) {
-                            System.out.println("Evt  ");
                             if (evt1 == null) evt1 = field;
                             else if (evt2 == null) evt2 = field;
                             else gpane = null;  // flag too many
                             return field;
                         }
                         public JTextField handleStringValue(JTextField value) {
-                            System.out.println("Text  ");
                             desc = value;
                             return value;
                         }
