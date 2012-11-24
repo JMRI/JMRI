@@ -1496,8 +1496,26 @@ public class TrainBuilder extends TrainCommon{
 				}
 				// does car have a next destination, but no destination
 				if (car.getNextDestination() != null && car.getDestination() == null){
-					if (!train.isAllowLocalMovesEnabled() && splitString(car.getLocationName()).equals(splitString(car.getNextDestinationName()))){
+					// no local moves for this train?
+					if (!train.isAllowLocalMovesEnabled() 
+							&& splitString(car.getLocationName()).equals(splitString(car.getNextDestinationName()))){
 						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarHasFinalDestNoMove"),new Object[]{car.toString(), car.getNextDestinationName()}));
+						addLine(buildReport, SEVEN, BLANK_LINE);	// add line when in very detailed report mode
+						log.debug("Removing car ("+car.toString()+") from list");
+						carList.remove(car.getId());
+						carIndex--;
+						continue;
+					}
+					// no through traffic from origin to terminal?
+					if (!train.isAllowThroughCarsEnabled()
+							&& !train.isLocal()
+							&& !car.isCaboose()
+							&& !car.hasFred()
+							&& !car.isPassenger()
+							&& splitString(car.getLocationName()).equals(splitString(departLocation.getName()))
+							&& splitString(car.getNextDestinationName()).equals(splitString(terminateLocation.getName()))){
+						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarHasFinalDestination"),new Object[]{car.toString(), departLocation.getName(), terminateLocation.getName()}));
+						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildThroughTrafficNotAllow"),new Object[]{departLocation.getName(), terminateLocation.getName()}));
 						addLine(buildReport, SEVEN, BLANK_LINE);	// add line when in very detailed report mode
 						log.debug("Removing car ("+car.toString()+") from list");
 						carList.remove(car.getId());
@@ -1542,6 +1560,7 @@ public class TrainBuilder extends TrainCommon{
 						(car.getDestination() == null || car.getDestinationTrack() == null || car.getTrain() == null)){
 					addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildErrorCarStageDest"),
 							new Object[]{car.toString()}));
+					addLine(buildReport, SEVEN, BLANK_LINE);	// add line when in very detailed report mode
 				}
 				// are there still moves available?
 				if (noMoreMoves) {
@@ -1647,7 +1666,6 @@ public class TrainBuilder extends TrainCommon{
 		destination.setStatus();
 		// add car to train
 		addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarAssignedDest"),new Object[]{car.toString(), (destination.getName()+", "+track.getName())}));
-		addLine(buildReport, SEVEN, BLANK_LINE);	// add line when in very detailed report mode
 		car.setTrain(train);
 		car.setRouteLocation(rl);
 		car.setRouteDestination(rld);
@@ -1676,7 +1694,8 @@ public class TrainBuilder extends TrainCommon{
 				kCar.setPreviousNextDestination(car.getPreviousNextDestination());
 				kCar.setPreviousNextDestTrack(car.getPreviousNextDestTrack());
 			}
-		} 
+		}
+		addLine(buildReport, SEVEN, BLANK_LINE);	// add line when in very detailed report mode
 		numberCars++;		// bump number of cars moved by this train
 		moves++;			// bump number of car pick up moves for the location
 		reqNumOfMoves--; 	// decrement number of moves left for the location
@@ -1839,6 +1858,11 @@ public class TrainBuilder extends TrainCommon{
 	private boolean checkDepartureStagingTrack(Track departStageTrack){
 		if (departStageTrack.getNumberRS()==0){
 			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingEmpty"),new Object[]{departStageTrack.getName()}));
+			return false;
+		}
+		// does the staging track have the right number of locomotives?
+		if (reqNumEngines > 0 && reqNumEngines != departStageTrack.getNumberEngines()){
+			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingNotEngines"),new Object[]{departStageTrack.getName()}));
 			return false;
 		}
 		// is the staging track direction correct for this train?
@@ -2122,6 +2146,16 @@ public class TrainBuilder extends TrainCommon{
 					log.debug("Skipping track ("+track.getName()+"), it would require a local move");
 					continue;
 				}
+				if (!train.isAllowThroughCarsEnabled()
+						&& !train.isLocal()
+						&& !car.isCaboose()
+						&& !car.hasFred()
+						&& !car.isPassenger()
+						&& splitString(car.getLocationName()).equals(splitString(departLocation.getName()))
+						&& splitString(track.getLocation().getName()).equals(splitString(terminateLocation.getName()))){
+					log.debug("Skipping track ("+track.getName()+"), through cars not allowed to terminal ("+terminateLocation.getName()+")");
+					continue;
+				}				
 				if (car.testDestination(track.getLocation(), track).equals(Track.OKAY)){
 					// check the number of in bound cars to this track
 					if (!track.isSpaceAvailable(car)){
@@ -2608,9 +2642,9 @@ public class TrainBuilder extends TrainCommon{
 					&& !car.isCaboose()
 					&& !car.hasFred()
 					&& !car.isPassenger()
-					&& car.getLocation() == departLocation 
-					&& rld == train.getTrainTerminatesRouteLocation()){
-				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildThroughTrafficNotAllow"),new Object[]{departLocation, rld.getName()}));
+					&& splitString(car.getLocationName()).equals(splitString(departLocation.getName()))
+					&& splitString(rld.getName()).equals(splitString(terminateLocation.getName()))){
+				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildThroughTrafficNotAllow"),new Object[]{departLocation.getName(), terminateLocation.getName()}));
 				continue;
 			}
 			// is there a track assigned for staging cars?				
@@ -2620,6 +2654,7 @@ public class TrainBuilder extends TrainCommon{
 				if (status.equals(Track.OKAY)){
 					trackTemp = terminateStageTrack;
 					destinationTemp = testDestination;
+				// only generate a new load if there aren't any other tracks available for this car
 				} else if (status.contains(Track.LOAD) && car.getTrack() == departStageTrack && rldSave == null
 						&& (departStageTrack.isAddLoadsEnabled() || departStageTrack.isAddLoadsEnabledAnySiding())){
 					// try and generate a load for this car into staging
