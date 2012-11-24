@@ -353,7 +353,7 @@ public abstract class AppsBase {
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
 
         // first log entry
-        log.info(jmriLog);
+        //log.info(jmriLog);
 
         // now indicate logging locations
         @SuppressWarnings("unchecked")

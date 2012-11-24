@@ -95,8 +95,14 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
 
     // Main entry point
     public static void main(String args[]) {
+        preInit(args);
         DecoderPro3 app = new DecoderPro3(args);
         app.start();
+    }
+    
+    static public void preInit(String[] args) {
+        apps.gui3.Apps3.preInit(applicationName);
+        setConfigFilename("DecoderProConfig3.xml", args);
     }
 
     /**
