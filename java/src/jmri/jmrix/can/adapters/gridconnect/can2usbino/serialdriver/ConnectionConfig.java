@@ -10,7 +10,7 @@ package jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver;
  * @author      Andrew Crosland 2008
  * @version	$Revision: 19909 $
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.can.adapters.ConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;

@@ -149,10 +149,10 @@ public class DCCManufacturerList {
         else if (a=='G') return "Grapevine";
         else if (a=='K') return "Maple";
         else if (a=='L') return "LocoNet";
-        else if (a=='M') return "MERG";
         else if (a=='N') return "NCE";
         else if (a=='O') return "Oak Tree";
         else if (a=='M') return "OpenLCB";  // duplicates MERG?
+        else if (a=='M') return "MERG";
         else if (a=='P') return "PowerLine";
         else if (a=='Q') return "QSI";
         else if (a=='R') return "RPS";
