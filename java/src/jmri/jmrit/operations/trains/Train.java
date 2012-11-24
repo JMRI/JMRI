@@ -670,7 +670,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * location names must be same.
 	 * @return
 	 */
-	public boolean isLocal() {
+	public boolean isLocalSwitcher() {
 		String departureName = TrainCommon.splitString(getTrainDepartsName());
 		Route route = getRoute();
 		if (route != null) {

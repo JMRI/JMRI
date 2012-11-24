@@ -255,7 +255,7 @@ public class TrainCommon {
 		if (car.getRouteLocation().equals(car.getRouteDestination()) 
 				&& car.getTrack() != null)
 			return true;
-		if (car.getTrain() != null && car.getTrain().isLocal() 
+		if (car.getTrain() != null && car.getTrain().isLocalSwitcher() 
 				&& splitString(car.getRouteLocation().getName()).equals(splitString(car.getRouteDestination().getName()))
 				&& car.getTrack() != null)
 			return true;
