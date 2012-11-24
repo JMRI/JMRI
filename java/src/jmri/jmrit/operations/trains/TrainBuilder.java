@@ -171,9 +171,9 @@ public class TrainBuilder extends TrainCommon{
 			RouteLocation rl = train.getRoute().getLocationById(routeList.get(i));
 			// check to see if there's a location for each stop in the route
 			Location l = locationManager.getLocationByName(rl.getName());
-			if (l == null){
+			if (l == null || rl.getLocation() == null){
 				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorLocMissing"),new Object[]{train.getRoute().getName()}));
-			}				
+			}
 			// train doesn't drop or pick up cars from staging locations found in middle of a route
 			List<String> slStage = l.getTrackIdsByMovesList(Track.STAGING);
 			if (slStage.size() > 0 && i!=0 && i!=routeList.size()-1){
@@ -737,13 +737,13 @@ public class TrainBuilder extends TrainCommon{
 				}
 			// find a destination track for this engine
 			} else {
-				Location location = locationManager.getLocationByName(rld.getName());
-				List<String> destTracks = location.getTrackIdsByMovesList(null);
+				Location destination = rld.getLocation();
+				List<String> destTracks = destination.getTrackIdsByMovesList(null);
 				for (int s = 0; s < destTracks.size(); s++){
-					Track track = location.getTrackById(destTracks.get(s));
+					Track track = destination.getTrackById(destTracks.get(s));
 					if (!checkDropTrainDirection(engine, rld, track))
 						continue;
-					String status = engine.testDestination(location, track);
+					String status = engine.testDestination(destination, track);
 					if (status.equals(Track.OKAY)){
 						if (addEngineToTrain(engine, rl, rld, track)){	
 							engineList.remove(indexEng);
@@ -1308,7 +1308,7 @@ public class TrainBuilder extends TrainCommon{
     				continue;
     			routeList.remove(rld.getId());
     			Location loc = locationManager.getLocationById(blockId);
-    			Location setOutLoc = locationManager.getLocationByName(rld.getName());
+    			Location setOutLoc = rld.getLocation();
     			if (loc != null && setOutLoc != null && checkDropTrainDirection(rld)){
     				for (carIndex=0; carIndex<carList.size(); carIndex++){
     					Car car = carManager.getById(carList.get(carIndex));
@@ -1372,9 +1372,8 @@ public class TrainBuilder extends TrainCommon{
     			maxMoves = rl.getMaxCarMoves()-rl.getCarMoves();
     			rlMax = rl;
     		}
-    		// if two locations have the same number of moves, return the one that doesn't match the block id
-    		Location loc = locationManager.getLocationByName(rl.getName());    		
-    		if (rl.getMaxCarMoves()-rl.getCarMoves() == maxMoves && !loc.getId().equals(blockId)){
+    		// if two locations have the same number of moves, return the one that doesn't match the block id   		
+    		if (rl.getMaxCarMoves()-rl.getCarMoves() == maxMoves && !rl.getLocation().getId().equals(blockId)){
     			rlMax = rl;
     		}
     	}
@@ -1598,9 +1597,9 @@ public class TrainBuilder extends TrainCommon{
 	}
 	
 	private boolean addEngineToTrain(Engine engine, RouteLocation rl, RouteLocation rld, Track track){
-		Location location = locationManager.getLocationByName(rl.getName());
+		Location location = rl.getLocation();
 		location.setStatus();
-		Location destination = locationManager.getLocationByName(rld.getName());
+		Location destination = rld.getLocation();
 		destination.setStatus();
 		leadEngine = engine;
 		if (train.getLeadEngine() == null)
@@ -1656,9 +1655,9 @@ public class TrainBuilder extends TrainCommon{
 	 * the boolean "success" true if location doesn't need any more pick ups. 
 	 */
 	private boolean addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track){
-		Location location = locationManager.getLocationByName(rl.getName());
+		Location location = rl.getLocation();
 		location.setStatus();
-		Location destination = locationManager.getLocationByName(rld.getName());
+		Location destination = rld.getLocation();
 		destination.setStatus();
 		// add car to train
 		addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarAssignedDest"),new Object[]{car.toString(), (destination.getName()+", "+track.getName())}));
@@ -1730,7 +1729,7 @@ public class TrainBuilder extends TrainCommon{
 			addLine(buildReport, ONE,  MessageFormat.format(rb.getString("buildErrorRsNoLoc"),new Object[]{rs.toString(), rs.getLocationName()}));
 			return false;
 		}
-		if (routeList.size() == 1) // ignore local train direction
+		if (train.isLocal()) // ignore local switcher direction
 			return true;
 		if ((rl.getTrainDirection() & rs.getLocation().getTrainDirections() & rs.getTrack().getTrainDirections()) > 0)
 			return true;
@@ -1742,13 +1741,12 @@ public class TrainBuilder extends TrainCommon{
 	}
 	
 	private boolean checkPickUpTrainDirection(RouteLocation rl){
-		if (routeList.size() == 1) // ignore local train direction
+		if (train.isLocal()) // ignore local switcher direction
 			return true;
-		Location location = locationManager.getLocationByName(rl.getName());
-		if ((rl.getTrainDirection() & location.getTrainDirections()) > 0)
+		if ((rl.getTrainDirection() & rl.getLocation().getTrainDirections()) > 0)
 			return true;
 		
-		addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildLocDirection"),new Object[]{location.getName(), rl.getTrainDirectionString()}));
+		addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildLocDirection"),new Object[]{rl.getName(), rl.getTrainDirectionString()}));
 		return false;
 	}
 	
@@ -1787,28 +1785,28 @@ public class TrainBuilder extends TrainCommon{
 	private final boolean ignoreTrainDirectionIfLastLoc = false;
 	private boolean checkDropTrainDirection (RollingStock rs, RouteLocation rld, Track track){
 		// local?
-		if (routeList.size()==1)
+		if (train.isLocal())
 			return true;
 		// is the destination the last location on the route? 
 		if (ignoreTrainDirectionIfLastLoc && rld == train.getTrainTerminatesRouteLocation())
 			return true;	// yes, ignore train direction
-		Location destination = locationManager.getLocationByName(rld.getName());
+
 		// this location only services trains with these directions
-		int serviceTrainDir = destination.getTrainDirections();
+		int serviceTrainDir = rld.getLocation().getTrainDirections();
 		if (track != null)
 			serviceTrainDir = serviceTrainDir & track.getTrainDirections(); 
 		if ((rld.getTrainDirection() & serviceTrainDir) >0){
 			return true;
 		}
 		if (rs == null){
-			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildDestinationDoesNotService"),new Object[]{destination.getName(), rld.getTrainDirectionString()}));
+			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildDestinationDoesNotService"),new Object[]{rld.getLocation().getName(), rld.getTrainDirectionString()}));
 			return false;
 		}
 		addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCanNotDropRsUsingTrain"),new Object[]{rs.toString(), rld.getTrainDirectionString()}));
 		if (track != null)
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCanNotDropRsUsingTrain2"),new Object[]{track.getName()}));
 		else 
-			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCanNotDropRsUsingTrain3"),new Object[]{destination.getName()}));
+			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCanNotDropRsUsingTrain3"),new Object[]{rld.getLocation().getName()}));
 		return false;
 	}
 	
@@ -2589,7 +2587,7 @@ public class TrainBuilder extends TrainCommon{
 				continue;
 			}
 			// get the destination
-			Location testDestination = locationManager.getLocationByName(rld.getName());
+			Location testDestination = rld.getLocation();
 			if (testDestination == null){
 				// The following should never throw, all locations in the route have been already checked
 				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorRouteLoc"),
@@ -2734,17 +2732,17 @@ public class TrainBuilder extends TrainCommon{
 						continue;
 					}		
 					// No local moves from spur to spur
-					if (routeList.size() == 1 && !Setup.isLocalSidingMovesEnabled() && testTrack.getLocType().equals(Track.SIDING) && car.getTrack().getLocType().equals(Track.SIDING)){
+					if (train.isLocal() && !Setup.isLocalSidingMovesEnabled() && testTrack.getLocType().equals(Track.SIDING) && car.getTrack().getLocType().equals(Track.SIDING)){
 						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoSidingToSidingMove"),new Object[]{testTrack.getName()}));
 						continue;
 					}
 					// No local moves from yard to yard
-					if (routeList.size() == 1 && !Setup.isLocalYardMovesEnabled() && testTrack.getLocType().equals(Track.YARD) && car.getTrack().getLocType().equals(Track.YARD)){
+					if (train.isLocal() && !Setup.isLocalYardMovesEnabled() && testTrack.getLocType().equals(Track.YARD) && car.getTrack().getLocType().equals(Track.YARD)){
 						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoYardToYardMove"),new Object[]{testTrack.getName()}));
 						continue;
 					}
 					// No local moves from interchange to interchange
-					if (routeList.size() == 1 && !Setup.isLocalInterchangeMovesEnabled() && testTrack.getLocType().equals(Track.INTERCHANGE) && car.getTrack().getLocType().equals(Track.INTERCHANGE)){
+					if (train.isLocal() && !Setup.isLocalInterchangeMovesEnabled() && testTrack.getLocType().equals(Track.INTERCHANGE) && car.getTrack().getLocType().equals(Track.INTERCHANGE)){
 						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoInterchangeToInterchangeMove"),new Object[]{testTrack.getName()}));
 						continue;
 					}
