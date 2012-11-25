@@ -216,7 +216,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         
         if ((width+this.getX())>=dim.getWidth()){
             // not fit in width, try to move position left
-            int offsetX = (width+(int)this.getX()) - (int)dim.getWidth(); // pixels too large
+            int offsetX = (width+this.getX()) - (int)dim.getWidth(); // pixels too large
             if (log.isDebugEnabled()) log.debug("reSizeToFitScreen moves left "+offsetX+" pixels");
             int positionX = this.getX()-offsetX;
             if (positionX < 0) {
@@ -231,7 +231,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         }
         if ((height+this.getY())>=dim.getHeight()){
             // not fit in height, try to move position up
-            int offsetY = (height+(int)this.getY()) - (int)dim.getHeight(); // pixels too large
+            int offsetY = (height+this.getY()) - (int)dim.getHeight(); // pixels too large
             if (log.isDebugEnabled()) log.debug("reSizeToFitScreen moves up "+offsetY+" pixels");
             int positionY = this.getY()-offsetY;
             if (positionY < 0) {
