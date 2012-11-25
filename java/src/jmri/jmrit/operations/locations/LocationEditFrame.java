@@ -267,7 +267,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
-		toolMenu.add(new ModifyLocationsAction(rb.getString("TitleModifyLocation"), location));	
+		toolMenu.add(new ModifyLocationsAction(rb.getString("TitleModifyLocation"), _location));	
 		toolMenu.add(new ShowCarsByLocationAction(false, locationName, null));
 		toolMenu.add(new ChangeTracksTypeAction(this));
 		if (Setup.isVsdPhysicalLocationEnabled())
@@ -608,15 +608,21 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		}
 	}
 	
+	 LocationsByCarTypeFrame f = null;
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		JCheckBox b =  (JCheckBox)ae.getSource();
-		log.debug("checkbox change "+ b.getText());
+		JCheckBox b = (JCheckBox) ae.getSource();
+		log.debug("checkbox change " + b.getText());
 		if (_location == null)
 			return;
 		_location.removePropertyChangeListener(this);
-		if (b.isSelected()){
+		if (b.isSelected()) {
 			_location.addTypeName(b.getText());
-		}else{
+			// show which tracks will service this car type
+			if (f != null)
+				f.dispose();
+			f = new LocationsByCarTypeFrame();
+			f.initComponents(_location, b.getText());
+		} else {
 			_location.deleteTypeName(b.getText());
 		}
 		_location.addPropertyChangeListener(this);

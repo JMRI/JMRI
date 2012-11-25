@@ -71,6 +71,11 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 		this.location = location;
 		initComponents("");
 	}
+	
+	public void initComponents(Location location, String carType){
+		this.location = location;
+		initComponents(carType);
+	}
 
 	public void initComponents(String carType) {
 
