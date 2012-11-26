@@ -87,14 +87,14 @@ the following:
 	<LI>From the main menu bar select "File" then "Import..."</LI>
 	<LI>Click on "SVN" then "Project from SVN" then "Next"</LI>
 	<LI>Now create a new repository location and enter this URL:
-	"https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri"</LI>
+	"https://svn.code.sf.net/p/jmri/code/trunk/jmri"</LI>
 	<LI>If you have a SourceForge id and password enter that now,
 	otherwise leave them blank. The id and password are only necessary if
 	you're going to commit your work back to the repository.</LI>
 	<LI>Click "Next" then "Finish"</LI>
 	<LI>You should now see a window called "Check Out As", click ""Finish"</LI>
 	<LI>If all is well, the check out should begin. It might take a
-	few minutes to download all of the JMRI files.</LI>
+	while to download all of the JMRI files.</LI>
 </OL>
 
 <P>After the download is complete the Eclipse Package Explorer
