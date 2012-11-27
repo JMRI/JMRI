@@ -1,12 +1,17 @@
 // Server.java
 
-package jmri.jmrix.loconet.loconetovertcp ;
+package jmri.jmrix.loconet.loconetovertcp;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.io.*;
 import java.util.LinkedList;
 import java.util.Properties;
+import jmri.InstanceManager;
+import jmri.implementation.QuietShutDownTask;
 import jmri.util.zeroconf.ZeroConfService;
 
 /**
@@ -16,7 +21,7 @@ import jmri.util.zeroconf.ZeroConfService;
  * @version	$Revision$
  */
 
-public class Server{
+public class Server {
   static Server self ;
   LinkedList<ClientRxHandler>    clients ;
   Thread        socketListener ;
@@ -24,6 +29,8 @@ public class Server{
   boolean       settingsLoaded = false;
   ServerListner stateListner ;
   boolean       settingsChanged = false;
+  QuietShutDownTask shutDownTask;
+  ZeroConfService service = null;
   
   static final String AUTO_START_KEY = "AutoStart" ;
   static final String PORT_NUMBER_KEY = "PortNumber" ;
@@ -37,7 +44,7 @@ public class Server{
     stateListner = l ;
   }
 
-  public static synchronized Server getInstance(){
+  public static synchronized Server getInstance() {
     if( self == null ){
       self = new Server();
       if( self.getAutoStart() )
@@ -143,8 +150,22 @@ public class Server{
       socketListener.start();
       updateServerStateListener();
       // advertise over Zeroconf/Bonjour
-      ZeroConfService.create("_loconetovertcpserver._tcp.local.", portNumber).publish();
-
+      if (this.service == null) {
+          this.service = ZeroConfService.create("_loconetovertcpserver._tcp.local.", portNumber);
+      }
+      this.service.publish();
+      if (this.shutDownTask == null) {
+          this.shutDownTask = new QuietShutDownTask("LocoNetOverTcpServer") {
+              @Override
+              public boolean execute() {
+                  Server.getInstance().disable();
+                  return true;
+              }
+          };
+      }
+      if (this.shutDownTask != null && InstanceManager.shutDownManagerInstance() != null) {
+          InstanceManager.shutDownManagerInstance().register(this.shutDownTask);
+      }
     }
   }
 
@@ -169,6 +190,10 @@ public class Server{
       }
       for( int i = 0; i < clientsArray.length ; i++ )
         ((ClientRxHandler)clientsArray[i]).close();
+    }
+    this.service.stop();
+    if (this.shutDownTask != null && InstanceManager.shutDownManagerInstance() != null) {
+        InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
     }
   }
 
