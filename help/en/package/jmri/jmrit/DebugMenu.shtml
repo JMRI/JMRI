@@ -53,7 +53,7 @@ The JMRI "Debug" menu contains the following items:
   <li>USB Input Control</li>
   <li>USB Device Viewer</li>
   <li>RailDriver Throttle</li>
-  <li><a href="../../../html/web/index.shtml">Start Mini Web Server</a></li>
+  <li><a href="../../../html/web/index.shtml">Start JMRI Web Server</a></li>
   <li>Start WiThrottle</li>
 </ul>
 

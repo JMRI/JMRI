@@ -25,7 +25,7 @@ This application is a single web page that runs on the most recent browsers in c
 <br /><b>There is nothing to install !</b>
 </p>
 <p>
-To start using JMRI through a web browser, you just need to activate the included <b>Mini Web Server</b>.
+To start using JMRI through a web browser, you just need to activate the included <b>JMRI Web Server</b>.
 You may found additional information <a href="/help/en/html/web/index.shtml">here</a>.
 </p>
 <p>It controls not only locomotives and function decoders, as a web throttle, but also turnouts, lights and other devices through JMRI active frames.</p>

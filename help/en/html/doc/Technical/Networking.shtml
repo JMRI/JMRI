@@ -93,8 +93,8 @@ In the rest of this page, we provide links to the various examples of those two 
 <h2>Upstream (networked JMRI operations) connections</h2>
 
 <ul>
-<li>Built-in <a href="../../web/index.shtml">mini web server</a>
-    (<a href="http://jmri.org/JavaDoc/doc/jmri/web/miniserver/package-summary.html">code</a>)
+<li>Built-in <a href="../../web/index.shtml">web server</a>
+    (<a href="http://jmri.org/JavaDoc/doc/jmri/web/server/package-summary.html">code</a>)
     <p>
     This is advertised on Bonjour/Zeroconf as a "_http._tcp.local." service.
     In particular, this contains the 

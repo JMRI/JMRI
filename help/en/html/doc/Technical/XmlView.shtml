@@ -70,8 +70,8 @@ To do this:
         from JMRI 2.9.4 or later.  If it's older than that,
         just load it into JMIR 2.9.4 or later and store it again.
     </ul>
-<li>Start the JMRI mini web server.  Under the debug
-    menu, select "Start Mini Web Server".
+<li>Start the JMRI web server.  Under the Tools
+    menu, select "Start JMRI Web Server".
 <li>Open your web browser and enter the URL
     "<a href="http://localhost:12080/index.html">http://localhost:12080/index.html</a>"
 <li>You should now see the JMRI logo on a index page.

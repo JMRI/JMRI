@@ -179,7 +179,7 @@ upper right-hand corner. </p>
   <li>Speedometer</li>
   <li>--------------</li>
   <li>Start WiThrottle Server </li>
-  <li>Start Mini WebServer</li>
+  <li>Start Web Server</li>
   <li>--------------</li>
   <li>Recreate Roster Index </li>
   <li>Recreate Decoder Index</li>
