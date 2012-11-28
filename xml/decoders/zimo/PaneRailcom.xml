@@ -10,5 +10,6 @@
 		<display item="RailCom channel 1 (Broadcast)" tooltip="CV 28 bit 1 "/>
 		<display item="RailCom channel 2 (Data)" tooltip="CV 28 bit 2"/>
 		<label label=" " />
+		<display item="RailCom speed reporting method" tooltip="CV158 bit 2" />
 	</column>
 </pane>

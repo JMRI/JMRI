@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 
+<!-- version 1.2, Nigel Cliffe, added "Standing Sound on premature shutdown" and "Chuff rate at higher speed steps" -->
 <!-- version 1.1, Nigel Cliffe, added "Steam chuff frequency at speed step 1" -->
 <!-- version 1, Mark Waters - for Unified Software -->
 
@@ -39,6 +40,7 @@
       </label>
 	<display item="Drive Away if Startup sound still playing"/>
 	<display item="Delay Shutdown untill end of Starting Whistle"/>
+	<display item="Standing Sound on premature shutdown" />
     </column>
     <column>
       <display item="Virtual cam chuff frequency"/>
@@ -49,6 +51,7 @@
       <display item="Chuff volume at low speed and no load"/>
       <display item="Chuff volume at high speed and no load"/>
       <display item="Degree of volume change under load"/>
+	  <display item="Chuff rate at higher speed steps"/>
       <label label=" ">
         <label> </label>
       </label>

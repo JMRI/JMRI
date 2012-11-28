@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+
+<!-- version 1 - for Unified Software -->
+<!-- Nigel Cliffe, 16th Nov 2012 -->  
+<!-- From Version 32 firmware -->
+<!-- CV's 739-768 control volume and sound choices of individual sounds -->
+<!-- manual hints that control of sound in slot, looping etc. is possible, but gives no details -->
+<!-- see Zimo German manual for small decoders, -->
+
+<variables>
+
+<!-- include this CV to put it onto the Sound Levels pane -->
+
+	  <variable label="Switch triggered sound S1" CV="739" tooltip="CV 739" item="Zimo Sound Setting 32">
+        <decVal/>
+      </variable>
+	  <variable label="Switch triggered sound S2" CV="741" tooltip="CV 742" item="Zimo Sound Setting 33">
+        <decVal/>
+      </variable>
+	  <variable label="Switch triggered sound S3" CV="743" tooltip="CV 743" item="Zimo Sound Setting 34">
+        <decVal/>
+      </variable>
+	  
+	  
+	  <variable label="Random sound Z1" CV="745" tooltip="CV 586" item="Zimo Sound Setting 35">
+        <decVal/>
+      </variable>
+	  <variable label="Random sound Z2" CV="748" tooltip="CV 748" item="Zimo Sound Setting 36">
+        <decVal/>
+      </variable>
+	  <variable label="Random sound Z3" CV="751" tooltip="CV 751" item="Zimo Sound Setting 37">
+        <decVal/>
+      </variable>
+	  <variable label="Random sound Z4" CV="754" tooltip="CV 754" item="Zimo Sound Setting 38">
+        <decVal/>
+      </variable>
+	  <variable label="Random sound Z5" CV="757" tooltip="CV 757" item="Zimo Sound Setting 39">
+        <decVal/>
+      </variable>
+	  <variable label="Random sound Z6" CV="760" tooltip="CV 760" item="Zimo Sound Setting 40">
+        <decVal/>
+      </variable>
+	  <variable label="Random sound Z7" CV="763" tooltip="CV 763" item="Zimo Sound Setting 41">
+        <decVal/>
+      </variable>
+	  <variable label="Random sound Z8" CV="766" tooltip="CV 766" item="Zimo Sound Setting 42">
+        <decVal/>
+      </variable>
+
+
+
+
+</variables>

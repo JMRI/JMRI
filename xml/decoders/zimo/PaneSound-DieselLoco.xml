@@ -23,6 +23,11 @@
         <label>Maximum speed before upshifting</label>
       </display>
     </column>
+	<column>
+      <label label=" " />
+      <display item="Function Key for Coasting"/>
+      <display item="Sound Slot during Coasting"/>
+	  </column>
     <column>
       <label label="Turbocharger">
         <label>Turbocharger</label>
@@ -49,6 +54,11 @@
       <display item="Decrease in frequency of the Turbocharger">
       <label>Decrease in frequency of the Turbocharger</label>
       </display>
+	  
+      <display item="Drop one speed step to lower turbocharger">
+      <label>Drop one speed step to lower turbocharger</label>
+      </display>
+	  
     </column>
     <name>Sound - Diesel Loco</name>
   </pane>
