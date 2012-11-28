@@ -22,6 +22,7 @@ public class TabbedPreferencesFrame extends jmri.util.JmriJFrame {
     
     public TabbedPreferencesFrame() {
         add(jmri.InstanceManager.tabbedPreferencesInstance());
+        addHelpMenu("package.apps.TabbedPreferences", true);
     }
     
     public void gotoPreferenceItem(String item, String sub){
