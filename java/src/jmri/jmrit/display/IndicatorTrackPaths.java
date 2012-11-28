@@ -168,7 +168,7 @@ import jmri.jmrit.logix.OBlock;
         return status;
     }
     
-    class LocoLable extends PositionableRoundRect {
+    static class LocoLable extends PositionableRoundRect {
     	
     	String _text;
     	

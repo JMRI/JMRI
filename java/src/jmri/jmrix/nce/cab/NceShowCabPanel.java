@@ -255,7 +255,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     JLabel space4 = new JLabel(" ");
     JLabel space5 = new JLabel(" ");
         
-    class dataRow	{
+    static class dataRow	{
     	int			cab;
     	String		type;
     	JButton 	buttonPurgeCab;

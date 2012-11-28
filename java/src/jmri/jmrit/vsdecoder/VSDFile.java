@@ -181,7 +181,7 @@ public class VSDFile extends ZipFile {
 	out.close();
     }
     
-    class ValidateStatus {
+    static class ValidateStatus {
 	String msg = "";
 	Boolean valid = false;
 	
