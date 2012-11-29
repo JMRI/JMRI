@@ -59,7 +59,7 @@ class Bell(Jynstrument, PropertyChangeListener, AddressListener, MouseListener):
             self.setIcon()
 
 #AddressListener part: to listen for address changes in address panel (release, acquired)
-    def notifyAddressChosen(self, address, isLong):
+    def notifyAddressChosen(self, address):
         pass
 
     def notifyAddressThrottleFound(self, throttle):
@@ -67,9 +67,18 @@ class Bell(Jynstrument, PropertyChangeListener, AddressListener, MouseListener):
         self.updateThrottle()
         self.setIcon()
     
-    def notifyAddressReleased(self, address, isLong):
+    def notifyAddressReleased(self, address):
         self.cleanThrottle()
         self.setIcon()
+
+    def notifyConsistAddressChosen(self, address, isLong):
+        self.notifyAddressChosen(address)
+
+    def notifyConsistAddressThrottleFound(self, throttle):
+        self.notifyAddressThrottleFound(throttle)
+
+    def notifyConsistAddressReleased(self, address, isLong):
+        self.notifyAddressReleased(address)
 
 #MouseListener part: to listen for mouse events
     def mouseReleased(self, event):
