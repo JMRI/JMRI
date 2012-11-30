@@ -59,8 +59,8 @@ public class SerialDriverAdapter extends AcelaPortController  implements jmri.jm
             }
 
             // set RTS high, DTR high
-            activeSerialPort.setRTS(false);		// not connected in some serial ports and adapters
-            activeSerialPort.setDTR(false);		// pin 1 in DIN8; on main connector, this is DTR
+            activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
+            activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
             activeSerialPort.setFlowControlMode(0);
