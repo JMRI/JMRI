@@ -30,8 +30,6 @@ import org.eclipse.jetty.util.thread.ExecutorThreadPool;
  */
 public final class WebServer implements LifeCycle.Listener {
 
-    static ResourceBundle services = ResourceBundle.getBundle("jmri.web.server.Services");
-    static ResourceBundle filePaths = ResourceBundle.getBundle("jmri.web.server.FilePaths");
     protected Server server;
     protected ZeroConfService zeroConfService = null;
     private WebServerPreferences preferences = null;
@@ -68,15 +66,15 @@ public final class WebServer implements LifeCycle.Listener {
             server.setConnectors(new Connector[]{connector});
 
             ContextHandlerCollection contexts = new ContextHandlerCollection();
-            for (String path : services.keySet()) {
+            for (String path : ResourceBundle.getBundle("jmri.web.server.Services").keySet()) {
                 ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SECURITY);
                 context.setContextPath(path);
-                if (services.getString(path).equals("fileHandler")) {
+                if (ResourceBundle.getBundle("jmri.web.server.Services").getString(path).equals("fileHandler")) {
                     ServletHolder holder = context.addServlet(DefaultServlet.class, "/*");
-                    holder.setInitParameter("resourceBase", FileUtil.getAbsoluteFilename(filePaths.getString(path)));
-                    holder.setInitParameter("stylesheet", FileUtil.getAbsoluteFilename(filePaths.getString("/css")) + "/miniServer.css");
+                    holder.setInitParameter("resourceBase", FileUtil.getAbsoluteFilename(ResourceBundle.getBundle("jmri.web.server.FilePaths").getString(path)));
+                    holder.setInitParameter("stylesheet", FileUtil.getAbsoluteFilename(ResourceBundle.getBundle("jmri.web.server.FilePaths").getString("/css")) + "/miniServer.css");
                 } else {
-                    context.addServlet(services.getString(path), "/*");
+                    context.addServlet(ResourceBundle.getBundle("jmri.web.server.Services").getString(path), "/*");
                 }
                 contexts.addHandler(context);
             }
