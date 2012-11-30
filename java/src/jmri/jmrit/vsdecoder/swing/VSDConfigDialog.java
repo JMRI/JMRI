@@ -24,9 +24,7 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 21510 $
  */
 
-import java.awt.BorderLayout;
 import java.util.ResourceBundle;
-import javax.swing.SwingUtilities;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.event.ActionEvent;
@@ -112,7 +110,6 @@ public class VSDConfigDialog extends JDialog {
 
     /** Init the GUI components */
     protected void initComponents() {
-	//setLayout(new BorderLayout(10, 10));
 	this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
 	
 	// Tabbed pane for loco select (Roster or Manual)

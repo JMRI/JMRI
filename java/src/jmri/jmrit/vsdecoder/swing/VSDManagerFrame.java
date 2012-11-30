@@ -24,20 +24,15 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 21510 $
  */
 
-import jmri.util.JmriJFrame;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.Arrays;
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -60,7 +55,6 @@ import jmri.util.WindowMenu;
 import jmri.jmrit.vsdecoder.VSDConfig;
 import jmri.jmrit.vsdecoder.VSDecoder;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
-import jmri.jmrit.vsdecoder.swing.VSDSwingBundle;
 import jmri.jmrit.vsdecoder.SoundEvent;
 import jmri.jmrit.vsdecoder.LoadVSDFileAction;
 import jmri.jmrit.vsdecoder.StoreXmlVSDecoderAction;
