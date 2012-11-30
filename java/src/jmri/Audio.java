@@ -134,6 +134,16 @@ public interface Audio extends NamedBean {
     public static final int CMD_BIND_BUFFER = 0x30;
 
     /**
+     * Command to queue Buffer to Source
+     */
+    public static final int CMD_QUEUE_BUFFERS = 0x31;
+
+    /**
+     * Command to unqueue used Buffers from Source
+     */
+    public static final int CMD_UNQUEUE_BUFFERS = 0x32;
+
+    /**
      * Command to play this Source from the beginning
      */
     public static final int CMD_PLAY = 0x40;
