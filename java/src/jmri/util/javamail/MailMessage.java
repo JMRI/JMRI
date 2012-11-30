@@ -100,6 +100,14 @@ public class MailMessage {
     public void setFrom(String from) {
         this.from = from;
     }
+
+    public void setUser(String userName) {
+        this.user = userName;
+    }
+
+    public void setPassword(String passWord) {
+        this.password = passWord;
+    }
     
     Session session;
     Message msg;
