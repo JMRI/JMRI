@@ -127,7 +127,6 @@ public class VSDControl extends JPanel {
 
     static public JPanel generateBlank() {
 	VSDControl temp = new VSDControl("");
-	Dimension size = temp.getPreferredSize();
 	JLabel jl = new JLabel(rb.getString("BlankVSDControlLabel"));
 	jl.setMinimumSize(temp.getPreferredSize());
 	jl.setPreferredSize(temp.getPreferredSize());

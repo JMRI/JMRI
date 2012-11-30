@@ -16,37 +16,45 @@ package jmri.jmrit.vsdecoder;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
+ * @version			$Revision: 21592 $
  */
 
+import java.util.List;
+import java.util.ArrayList;
 import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.jmrit.audio.AudioBuffer;
 import jmri.jmrit.audio.AudioSource;
 import jmri.util.PhysicalLocation;
+import jmri.jmrit.audio.JoalAudioSource;
 
-class SoundBite extends VSDSound {
+class QueueSoundBite extends VSDSound {
 
     String filename, system_name, user_name;
     AudioBuffer sound_buf;
-    AudioSource sound_src;
+    protected AudioSource sound_src;
     boolean initialized = false;
     boolean looped = false;
     boolean buf_loaded = false;
     int minloops;
     int maxloops;
     long length;
+    ArrayList<AudioBuffer> loopBufferList = new ArrayList<AudioBuffer>();
 
-    public SoundBite(String name) {
+    public QueueSoundBite(String name) {
 	super(name);
+	this.filename = null;
+	system_name = VSDSound.SrcSysNamePrefix + name;
+	user_name = VSDSound.SrcUserNamePrefix + name;
+	initialized = init();
     }
 
-    public SoundBite(VSDFile vf, String filename, String sname, String uname) {
+    public QueueSoundBite(VSDFile vf, String filename, String sname, String uname) {
 	super(uname);
 	this.filename = filename;
 	system_name = sname;
 	user_name = uname;
-	initialized = init(vf);
+	initialized = init();
     }
 
     public String getFileName() { return(filename); }
@@ -54,34 +62,43 @@ class SoundBite extends VSDSound {
     public String getUserName() { return(user_name); }
     public boolean isInitialized() { return(initialized); }
 
-    public final boolean init(VSDFile vf) {
+    public final boolean init() {
         AudioManager am = jmri.InstanceManager.audioManagerInstance();
 	if (!initialized) {
             try {
                 sound_src = (AudioSource) am.provideAudio(SrcSysNamePrefix+system_name);
+		log.debug("Sound Source Added: " + sound_src.getSystemName());
+		if (sound_src instanceof JoalAudioSource)
+		    log.debug("" + sound_src.getSystemName() + " is a JoalAudioSource");
                 sound_src.setUserName(BufUserNamePrefix+user_name);
-                sound_buf = (AudioBuffer) am.provideAudio(BufSysNamePrefix+system_name);
-                sound_buf.setUserName(BufUserNamePrefix+user_name);
-                if (vf == null) {
-                    sound_buf.setURL(vsd_file_base + filename);
-                } else {
-		    java.io.InputStream ins = vf.getInputStream(filename);
-		    if (ins != null) {
-			sound_buf.setInputStream(ins);
-		    }
-		    else {
-			return(false);
-		    }
-                }
-                sound_src.setAssignedBuffer(sound_buf);
-		setLength();
                 setLooped(false);
             } catch (AudioException ex) {
-                log.warn("Problem creating SoundBite: " + ex);
+                log.warn("Problem creating QueueSoundBite: " + ex);
             }
 	}
 	return(true);
     }
+
+    public void queueBuffer(AudioBuffer b) {
+	if (b == null) {
+	    log.debug("queueAudioBuffer with null buffer input");
+	    return;
+	}
+	if (sound_src == null) {
+	    log.debug("queueAudioBuffer with null sound_src");
+	    return;
+	}
+
+	log.debug("Queueing Buffer: " + b.getSystemName());
+	    
+	sound_src.queueBuffer(b);
+    }
+
+    public void unqueueBuffers() {
+	sound_src.unqueueBuffers();
+    }
+
+    public int numQueuedBuffers() { return(sound_src.numQueuedBuffers()); }
 
     // Direct access to the underlying source.  use with caution.
     public AudioSource getSource() { return(sound_src); }
@@ -148,7 +165,7 @@ class SoundBite extends VSDSound {
 
     public void play() {
 	sound_src.play();
-	is_playing = false;
+	is_playing = true;
     }
 
     public void loop() {
@@ -209,18 +226,15 @@ class SoundBite extends VSDSound {
     }
     public void setLength(long p) { length = p; } 
     public void setLength() {
-	length = calcLength(this);
+	length = 0;
     }
 
     public static long calcLength(SoundBite s) {
-	return(calcLength(s.getBuffer()));
-    }
-
-    public static long calcLength(AudioBuffer buf) {
 	// Assumes later getBuffer() will find the buffer from AudioManager instead
 	// of the current local reference... that's why I'm not directly using sound_buf here.
 
 	// Required buffer functions not yet implemented
+	AudioBuffer buf = s.getBuffer();
 	long num_frames;
 	int frequency;
 
@@ -247,6 +261,6 @@ class SoundBite extends VSDSound {
     }
 
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SoundBite.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QueueSoundBite.class.getName());
 }    
-	
+       
