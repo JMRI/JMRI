@@ -184,6 +184,10 @@ public class VSDConfigDialog extends JDialog {
 	profileLoadButton.setToolTipText(rb.getString("ProfileLoadButtonToolTip"));
 	profileLoadButton.setMnemonic(Mnemonics.get("ProfileLoad"));
 	profileLoadButton.setEnabled(true);
+	TitledBorder title2 = BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), 
+							      rb.getString("ProfileSelectorPaneTitle"));
+	title.setTitlePosition(TitledBorder.DEFAULT_POSITION);
+	profilePanel.setBorder(title2);
 	
         profileComboBox.setModel(new javax.swing.DefaultComboBoxModel());
 	// Add any already-loaded profile names
@@ -242,12 +246,13 @@ public class VSDConfigDialog extends JDialog {
 		}
 	    });
 	cbPanel.add(cancelButton);
+	cbPanel.add(rosterSaveButton);
 	cbPanel.add(closeButton);
 
 
 	this.add(locoSelectPanel);
 	this.add(profilePanel);
-	this.add(rosterSaveButton);
+	//this.add(rosterSaveButton);
 	this.add(cbPanel);
 	this.pack();
 	this.setVisible(true);
