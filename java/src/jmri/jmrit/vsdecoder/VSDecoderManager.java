@@ -452,17 +452,23 @@ public class VSDecoderManager implements PropertyChangeListener {
 	    v.shutdown();
 	}
 	// Empty the DecoderTable
+	decodertable.clear();
+	/*
 	vk = decodertable.keySet();
 	it = vk.iterator();
 	while(it.hasNext()) {
 	    decodertable.remove(it.next());
 	}
+	*/
 	// Empty the AddressMap
+	decoderAddressMap.clear();
+	/*
 	vk = decoderAddressMap.keySet();
 	it = vk.iterator();
 	while(it.hasNext()) {
 	    decoderAddressMap.remove(it.next());
 	}
+	*/
     }
 
     public void propertyChange(PropertyChangeEvent evt) {

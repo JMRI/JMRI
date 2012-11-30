@@ -43,7 +43,7 @@ class Diesel3Sound extends EngineSound {
 
     // Engine Sounds
     HashMap<Integer, D3Notch> notch_sounds;
-    QueueSoundBite _sound;
+    SoundBite _sound;
     AudioBuffer start_buffer;
     AudioBuffer stop_buffer;
     AudioBuffer transition_buf;
@@ -304,7 +304,7 @@ class Diesel3Sound extends EngineSound {
 	super.setXml(e, vf);
 	
 	log.debug("Diesel EngineSound: " + e.getAttribute("name").getValue());
-	_sound = new QueueSoundBite(e.getAttributeValue("name"));
+	_sound = new SoundBite(e.getAttributeValue("name"), SoundBite.BufferMode.QUEUE_MODE);
 	notch_sounds = new HashMap<Integer, D3Notch>();
 
 	// Get the notch sounds
