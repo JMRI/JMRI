@@ -26,7 +26,6 @@ package jmri.jmrit.vsdecoder.listener;
  * @version			$Revision: 21510 $
  */
 
-import net.java.games.sound3d.Vec3f;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 import jmri.util.PhysicalLocation;
