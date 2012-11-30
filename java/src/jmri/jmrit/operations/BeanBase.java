@@ -16,9 +16,6 @@ import java.beans.*;
  */
 public class BeanBase {
 
-	/**
-	 * 
-	 */
 	public BeanBase() {
 		// TODO Auto-generated constructor stub
 	}
