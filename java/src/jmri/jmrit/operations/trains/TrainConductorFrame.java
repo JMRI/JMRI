@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridBagLayout;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -451,7 +452,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 				textStatus.setText(getStatus(rl));
 				check();
 			} else {
-				textStatus.setText(rb.getString("TrainTerminatesIn")+ " " + _train.getTrainTerminatesName());
+				textStatus.setText(MessageFormat.format(rb.getString("TrainTerminatesIn"), new Object[] { _train.getTrainTerminatesName()}));
 				moveButton.setEnabled(false);
 				setButton.setEnabled(false);
 			}
@@ -498,17 +499,10 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	}
 	
 	private String getStatus(RouteLocation rl){
-		StringBuffer buf = new StringBuffer(rb.getString("TrainDeparts")+ " " + rl.getName() +" "+ rl.getTrainDirectionString()
-				+ rb.getString("boundWith") +" ");
-		/*
-		if (Setup.isPrintLoadsAndEmptiesEnabled())
-			buf.append((_train.getNumberCarsInTrain()-emptyCars)+" "+rb.getString("Loads")+", "+emptyCars+" "+rb.getString("Empties")+", ");
-		else
-		*/
-			buf.append(_train.getNumberCarsInTrain() +" "+rb.getString("cars")+", ");
-		String s = _train.getTrainLength()+" "+rb.getString("feet")+", "+_train.getTrainWeight()+" "+rb.getString("tons");
-		buf.append(s);
-		return buf.toString();
+		return MessageFormat.format(rb.getString("TrainDepartsCars"),
+				new Object[] { rl.getName(), rl.getTrainDirectionString(), _train.getNumberCarsInTrain(),
+			_train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl) });
+
 	}
     
     private void packFrame(){

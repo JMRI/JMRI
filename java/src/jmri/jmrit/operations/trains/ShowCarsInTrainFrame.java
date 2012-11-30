@@ -4,6 +4,7 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -20,6 +21,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 
 
 /**
@@ -193,24 +195,16 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 
 				textStatus.setText(getStatus(rl));
 			} else {
-				textStatus.setText(rb.getString("TrainTerminatesIn")+ " " + _train.getTrainTerminatesName());
+				textStatus.setText(MessageFormat.format(rb.getString("TrainTerminatesIn"), new Object[] { _train.getTrainTerminatesName()}));
 			}
 			pCars.repaint();
 		}
 	}
 	
 	private String getStatus(RouteLocation rl){
-		StringBuffer buf = new StringBuffer(rb.getString("TrainDeparts")+ " " + rl.getName() +" "+ rl.getTrainDirectionString()
-				+ rb.getString("boundWith") +" ");
-		/*
-		if (Setup.isPrintLoadsAndEmptiesEnabled())
-			buf.append((_train.getNumberCarsInTrain()-emptyCars)+" "+rb.getString("Loads")+", "+emptyCars+" "+rb.getString("Empties")+", ");
-		else
-		*/
-			buf.append(_train.getNumberCarsInTrain() +" "+rb.getString("cars")+", ");
-		String s = _train.getTrainLength()+" "+rb.getString("feet")+", "+_train.getTrainWeight()+" "+rb.getString("tons");
-		buf.append(s);
-		return buf.toString();
+		return MessageFormat.format(rb.getString("TrainDepartsCars"),
+				new Object[] { rl.getName(), rl.getTrainDirectionString(), _train.getNumberCarsInTrain(),
+						_train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl) });
 	}
     
     private void packFrame(){
