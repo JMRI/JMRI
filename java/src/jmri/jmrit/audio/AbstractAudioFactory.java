@@ -111,6 +111,12 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                             case Audio.CMD_BIND_BUFFER:
                                 audioSource.setBound(audioSource.bindAudioBuffer(audioSource.getAssignedBuffer()));
                                 break;
+                            case Audio.CMD_QUEUE_BUFFERS:
+				    audioSource.setQueued(audioSource.queueAudioBuffers(audioSource.getQueuedBuffers()));
+                                break;
+                            case Audio.CMD_UNQUEUE_BUFFERS:
+				    audioSource.setQueued(audioSource.unqueueAudioBuffers());
+                                break;
                             case Audio.CMD_PLAY:
                                 audioSource.doPlay();
                                 break;

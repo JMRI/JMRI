@@ -4,6 +4,7 @@ package jmri.jmrit.audio;
 
 import javax.vecmath.Vector3f;
 import net.java.games.joal.AL;
+import java.util.List;
 
 /**
  * JOAL implementation of the Audio Source sub-class.
@@ -112,6 +113,136 @@ public class JoalAudioSource extends AbstractAudioSource {
         }
 
         return true;
+    }
+
+    /**
+     * Queue a single AudioBuffer on this source.
+     *
+     * (called from DefaultAudioFactory command queue)
+     * @return True if successfully queued.
+     */
+    @Override
+    public boolean queueAudioBuffer(AudioBuffer audioBuffer) {
+        // First check we've been initialised
+        if (!_initialised) {
+	    log.error("Source Not Initialized: " + this.getSystemName());
+            return false;
+        }
+        
+	int[] bids = new int[1];
+	// Make an int[] of the buffer ids
+	bids[0] = ((JoalAudioBuffer)audioBuffer).getDataStorageBuffer()[0];
+	if (log.isDebugEnabled()) 
+	    log.debug("Queueing Buffer: " + audioBuffer.getSystemName() + " bid: " + 
+		      ((JoalAudioBuffer)audioBuffer).getDataStorageBuffer()[0] + " Source: " + this.getSystemName());
+
+        // Bind this AudioSource to the specified AudioBuffer
+	al.alSourceQueueBuffers(_source[0], 1, bids, 0);
+        if (JoalAudioFactory.checkALError()) {
+            log.warn("Error queueing JoalSource (" + this.getSystemName() + ") to AudioBuffers (" + audioBuffer.getDisplayName() +")");
+            return false;
+        }
+        
+        if (log.isDebugEnabled()) log.debug("Queue JoalAudioBuffer (" + audioBuffer.getSystemName() +
+                                            ") to JoalAudioSource (" + this.getSystemName() + ")");
+        return true;
+	
+    }
+
+    /**
+     * Queue a list of AudioBuffers on this source.
+     *
+     * (called from DefaultAudioFactory command queue)
+     * @return True if successfully queued.
+     */
+    @Override
+    public boolean queueAudioBuffers(List<AudioBuffer> audioBuffers) {
+        // First check we've been initialised
+        if (!_initialised) {
+            return false;
+        }
+        
+	// Make an int[] of the buffer ids
+	int[] bids = new int[audioBuffers.size()];
+	int i = 0;
+	for (AudioBuffer b : audioBuffers) {
+	    bids[i] = ((JoalAudioBuffer)b).getDataStorageBuffer()[0];
+	    if (log.isDebugEnabled()) log.debug("Queueing Buffer [" + i + "] " + b.getSystemName());
+	    i++;
+	}
+
+        // Bind this AudioSource to the specified AudioBuffer
+	al.alSourceQueueBuffers(_source[0], bids.length, bids, 0);
+        //al.alSourcei(_source[0], AL.AL_BUFFER, ((JoalAudioBuffer)audioBuffer).getDataStorageBuffer()[0]);
+        if (JoalAudioFactory.checkALError()) {
+            log.warn("Error queueing JoalSource (" + this.getSystemName() + ") to AudioBuffers (" + audioBuffers.get(0).getDisplayName() +") etc.");
+            return false;
+        }
+        
+        if (log.isDebugEnabled()) log.debug("Queue JoalAudioBuffer (" + audioBuffers.get(0).getSystemName() +
+                                            ") (etc) to JoalAudioSource (" + this.getSystemName() + ")");
+        return true;
+    }
+
+    /**
+     * Remove all processed AudioBuffers from this Source.
+     *
+     * @return True if successful.
+     */
+    @Override
+    public boolean unqueueAudioBuffers() {
+        // First check we've been initialised
+        if (!_initialised) {
+            return false;
+        }
+        
+	int[] num_processed = new int[1];
+	
+	// How many processed buffers are there?
+	al.alGetSourcei(_source[0], AL.AL_BUFFERS_PROCESSED, num_processed, 0);
+        if (JoalAudioFactory.checkALError()) {
+            log.warn("Error getting # processed buffers from  JoalSource (" + this.getSystemName() + ")");
+            return false;
+        }
+
+	// Try to unqueue them all.
+	if (num_processed[0] > 0) {
+	    int[] bids = new int[num_processed[0]];
+	    al.alSourceUnqueueBuffers(_source[0], num_processed[0], bids, 0);
+	    if (JoalAudioFactory.checkALError()) {
+		log.warn("Error removing " + num_processed[0] + " buffers from  JoalSource (" + this.getSystemName() + ")");
+		return false;
+	    }
+        }
+        if (log.isDebugEnabled()) log.debug("Removed " + num_processed[0] + " buffers from JoalAudioSource (" + this.getSystemName() + ")");
+	if (numQueuedBuffers() == 0)
+	    return false;
+	else
+	    return true;
+    }
+
+    /**
+     * Report the number of AudioBuffers queued to this source.
+     *
+     * @return number of queued buffers.
+     */
+    @Override
+    public int numQueuedBuffers() {
+        // First check we've been initialised
+        if (!_initialised) {
+            return(0);
+        }
+        
+	int[] num_processed = new int[1];
+	// How many processed buffers are there?
+	al.alGetSourcei(_source[0], AL.AL_BUFFERS_QUEUED, num_processed, 0);
+        if (JoalAudioFactory.checkALError()) {
+            log.warn("Error getting # queued buffers from  JoalSource (" + this.getSystemName() + ")");
+            return(0);
+        }
+
+        if (log.isDebugEnabled()) log.debug("Queued " + num_processed[0] + " buffers on JoalAudioSource (" + this.getSystemName() + ")");
+        return(num_processed[0]);
     }
 
     boolean bindAudioBuffer(AudioBuffer audioBuffer) {
@@ -248,7 +379,7 @@ public class JoalAudioSource extends AbstractAudioSource {
 
     protected void doPlay() {
         if (log.isDebugEnabled()) log.debug("Play JoalAudioSource (" + this.getSystemName() + ")");
-        if (_initialised && isBound()) {
+        if (_initialised && (isBound() || isQueued())) {
             doRewind();
             doResume();
         }
@@ -257,7 +388,7 @@ public class JoalAudioSource extends AbstractAudioSource {
     @SuppressWarnings("SleepWhileInLoop")
     protected void doStop() {
         if (log.isDebugEnabled()) log.debug("Stop JoalAudioSource (" + this.getSystemName() + ")");
-        if (_initialised && isBound()) {
+        if (_initialised && (isBound() || isQueued())) {
             al.alSourceStop(_source[0]);
             doRewind();
         }
@@ -276,7 +407,7 @@ public class JoalAudioSource extends AbstractAudioSource {
 
     protected void doPause() {
         if (log.isDebugEnabled()) log.debug("Pause JoalAudioSource (" + this.getSystemName() + ")");
-        if (_initialised && isBound()) {
+        if (_initialised && (isBound() || isQueued())) {
             al.alSourcePause(_source[0]);
         }
         this.setState(STATE_STOPPED);
@@ -284,7 +415,7 @@ public class JoalAudioSource extends AbstractAudioSource {
 
     protected void doResume() {
         if (log.isDebugEnabled()) log.debug("Resume JoalAudioSource (" + this.getSystemName() + ")");
-        if (_initialised && isBound()) {
+        if (_initialised && (isBound() || isQueued())) {
             calculateGain();
             al.alSourcei(_source[0], AL.AL_LOOPING, this.isLooped() ? AL.AL_TRUE : AL.AL_FALSE);
             al.alSourcePlay(_source[0]);
@@ -301,14 +432,14 @@ public class JoalAudioSource extends AbstractAudioSource {
 
     protected void doRewind() {
         if (log.isDebugEnabled()) log.debug("Rewind JoalAudioSource (" + this.getSystemName() + ")");
-        if (_initialised && isBound()) {
+        if (_initialised && (isBound() || isQueued())) {
             al.alSourceRewind(_source[0]);
         }
     }
 
     protected void doFadeIn() {
         if (log.isDebugEnabled()) log.debug("Fade-in JoalAudioSource (" + this.getSystemName() + ")");
-        if (_initialised && isBound()) {
+        if (_initialised && (isBound() || isQueued())) {
             doPlay();
             AudioSourceFadeThread asft = new AudioSourceFadeThread(this);
             asft.start();
@@ -317,7 +448,7 @@ public class JoalAudioSource extends AbstractAudioSource {
 
     protected void doFadeOut() {
         if (log.isDebugEnabled()) log.debug("Fade-out JoalAudioSource (" + this.getSystemName() + ")");
-        if (_initialised && isBound()) {
+        if (_initialised && (isBound() || isQueued())) {
             AudioSourceFadeThread asft = new AudioSourceFadeThread(this);
             asft.start();
         }
@@ -325,7 +456,7 @@ public class JoalAudioSource extends AbstractAudioSource {
 
     protected void cleanUp() {
         if (log.isDebugEnabled()) log.debug("Cleanup JoalAudioSource (" + this.getSystemName() + ")");
-        if (_initialised && isBound()) {
+        if (_initialised && (isBound() || isQueued())) {
             al.alSourceStop(_source[0]);
             al.alDeleteSources(1, _source, 0);
             this._source = null;
