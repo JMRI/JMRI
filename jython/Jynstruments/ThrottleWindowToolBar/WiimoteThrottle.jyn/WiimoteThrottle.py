@@ -224,7 +224,7 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
         self.addressPanel = None
 
 #AddressListener part: to listen for address changes in address panel (release, acquired)
-    def notifyAddressChosen(self, address, isLong):
+    def notifyAddressChosen(self, address):
         pass
         
     def notifyAddressThrottleFound(self, throttle):
@@ -232,10 +232,19 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
         self.throttle = throttle
         self.speedAction.setThrottle( self.throttle )
             
-    def notifyAddressReleased(self, address, isLong):
+    def notifyAddressReleased(self, address):
         self.speedTimer.stop()
         self.throttle = None
         self.speedAction.setThrottle( self.throttle )
+
+    def notifyConsistAddressChosen(self, address, isLong):
+        self.notifyAddressChosen(address)
+
+    def notifyConsistAddressThrottleFound(self, throttle):
+        self.notifyAddressThrottleFound(throttle)
+
+    def notifyConsistAddressReleased(self, address, isLong):
+        self.notifyAddressReleased(address)
                 
 # Speed timer class, to increase speed regularly once button pushed, thread stopped on button release
 class SpeedAction(ActionListener):

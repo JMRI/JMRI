@@ -506,7 +506,7 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
        return elt
 
 #AddressListener part: to listen for address changes in address panel (release, acquired)
-    def notifyAddressChosen(self, address, isLong):
+    def notifyAddressChosen(self, address):
         pass
         
     def notifyAddressThrottleFound(self, throttle):
@@ -514,10 +514,19 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
         self.throttle = throttle
         self.speedAction.setThrottle( self.throttle )
             
-    def notifyAddressReleased(self, address, isLong):
+    def notifyAddressReleased(self, address):
         self.speedTimer.stop()
         self.throttle = None
         self.speedAction.setThrottle( self.throttle )
+
+    def notifyConsistAddressChosen(self, address, isLong):
+        self.notifyAddressChosen(address)
+
+    def notifyConsistAddressThrottleFound(self, throttle):
+        self.notifyAddressThrottleFound(throttle)
+
+    def notifyConsistAddressReleased(self, address, isLong):
+        self.notifyAddressReleased(address)
 
 # Item listeners for the PopUp menu
 class ControllerItemListener( java.awt.event.ItemListener):
