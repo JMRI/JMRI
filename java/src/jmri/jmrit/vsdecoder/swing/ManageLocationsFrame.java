@@ -255,7 +255,7 @@ public class ManageLocationsFrame extends JmriJFrame {
 	this.setJMenuBar(new JMenuBar());
 	this.getJMenuBar().add(fileMenu);
 	this.getJMenuBar().add(editMenu);
-	this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.VSDManagerFrame", true); // Fix this... needs to be help for the new frame
+	this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.ManageLocationsFrame", true); // Fix this... needs to be help for the new frame
 	
     }
 
