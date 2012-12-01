@@ -42,6 +42,10 @@ class SoundBite extends VSDSound {
     BufferMode bufferMode;
     ArrayList<AudioBuffer> loopBufferList = new ArrayList<AudioBuffer>();
 
+    public SoundBite(String name) {
+	this(name, BufferMode.BOUND_MODE);
+    }
+
     // Constructor to replace QueueSoundBite, really.
     public SoundBite(String name, BufferMode mode) {
 	super(name);
