@@ -469,7 +469,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		} else {
 			enableButtons(false);
 		}
-		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainOptions", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainBuildOptions", true);
 		updateRoadNames();
 		updateTypeComboBoxes();
 		updateLoadComboBoxes();

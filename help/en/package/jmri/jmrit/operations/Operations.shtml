@@ -125,7 +125,8 @@ of tools and can be found under the main menu heading
     <LI><A HREF="#Trains">Trains</A>
      <UL>
       <LI><A HREF="#TrainReset">Reset Train</A></LI>
-      <LI><A HREF="#TrainOptions">Train Build Options</A></LI>
+      <LI><A HREF="#TrainBuildOptions">Train Build Options</A></LI>
+      <LI><A HREF="#TrainManifestOptions">Train Manifest Options</A></LI>
       <LI><A HREF="#TrainScripts">Scripts</A></LI>
       <LI><A HREF="#TrainShowCarTypesServiced">Show Car Types Serviced</A></LI>
       <LI><A HREF="#ModifyTrainsByCarType">Modify Trains by Car Type</A></LI>
@@ -282,7 +283,7 @@ ability to create backups and restore files for operations.
 Enter your railroad name in the field across from "Railroad Name". This
 name will show up on your manifests. You can also have a different
 railroad name for every train in your roster, see 
-<A HREF="#TrainOptions">Train Options</A> for details.
+<A HREF="#TrainManifestOptions">Train Manifest Options</A> for details.
 
 <H3>Train Directions</H3>
 
@@ -491,73 +492,71 @@ all trains are terminated or reset.
 </P>
 
 <A NAME="AllowLocalCarMovements"></A>
-<H3>Allow Local Car Movements when using a Switcher</H3>
+<H3>Switcher Service</H3>
 
 The next set of options control local car movements when using
-<A HREF="#SwitcherService">switcher</A> to service a location.
-Normally it is better not to allow a car to move from one spur
-directly to another spur at the same location. This type of move can
-be very unrealistic, picture moving a boxcar from a shoe manufacture
-directly to an auto manufacture. Also moving a car from one yard
-track to another can have your operators wondering what kind of busy
-work is being generated! But if you need these types of moves, select
-the appropriate checkbox. 
-			
-<A NAME="TypeRoadLoadRestrictionsStaging"></A>
-<H3>Enable Type, Road and Load Restrictions into Staging</H3>
+<A HREF="#SwitcherService">switcher</A> to service a location. Normally it is better not to allow a
+   car to move from one spur directly to another spur at the same location. This type of move can be
+   very unrealistic, picture moving a boxcar from a shoe manufacture directly to an auto
+   manufacture. Also moving a car from one yard track to another can have your operators wondering
+   what kind of busy work is being generated! But if you need these types of moves, select the
+   appropriate checkbox.
 
-The next option is restricting trains to staging tracks that only
-accept the train's rolling stock type, road and load names. When "Enable Type,
-Road and Load Restrictions into Staging" is selected, the program will only
-deliver a train to a staging track has the same rolling stock, road and load
-name restrictions. This is useful when you want trains delivered to
-staging tracks based on the train's rolling stock restrictions. However,
-if you want certain car types, car loads, or road names to be transported by a train,
-but not delivered to staging, deselect this feature.
+   <H3>Staging</H3>
+   <A NAME="TypeRoadLoadRestrictionsStaging"></A>
+   <H4>Enable Type, Road and Load Restrictions into Staging</H4>
 
-<A NAME="MakeDepartureTrackAvailable"></A>
-<H3>Make departure track available after train is built</H3>
+   The next option is restricting trains to staging tracks that only accept the train's rolling
+   stock type, road and load names. When "Enable Type, Road and Load Restrictions into Staging" is
+   selected, the program will only deliver a train to a staging track has the same rolling stock,
+   road and load name restrictions. This is useful when you want trains delivered to staging tracks
+   based on the train's rolling stock restrictions. However, if you want certain car types, car
+   loads, or road names to be transported by a train, but not delivered to staging, deselect this
+   feature.
+   
+   <A NAME="MakeDepartureTrackAvailable"></A>
+   <H4>Make departure track available after train is built</H4>
 
-When selected the departure track in staging becomes available for other trains immediately after
-the departure train is built. For trains that return to same staging location, this option allows
-the train to return to the same track it departed on. This option is only available when using
-the <A HREF="#BuildOptions">aggressive</A> mode for building trains.
-
-<A NAME="AllowCarsToReturnToStaging"></A>
-   <H3>Allow cars to return to staging if needed</H3>
+   When selected the departure track in staging becomes available for other trains immediately after
+   the departure train is built. For trains that return to same staging location, this option allows
+   the train to return to the same track it departed on. This option is only available when using
+   the
+   <A HREF="#BuildOptions">aggressive</A> mode for building trains. <A
+    NAME="AllowCarsToReturnToStaging"></A>
+   <H4>Allow cars to return to staging if needed</H4>
 
    When a train departs and returns to the same staging location, it is regarded as a turn by the
    program. A turn normally takes cars from staging, sets them out on the layout, picks up new cars
-   and returns to staging with those cars. Normally the program doesn't allow the same cars to depart and
-   return to staging. However, it may be desirable to allow the train carry the cars
+   and returns to staging with those cars. Normally the program doesn't allow the same cars to
+   depart and return to staging. However, it may be desirable to allow the train carry the cars
    rather than having the program report that cars in staging couldn't be delivered to destinations
-   on the layout. Selecting this option allows a turn to transport cars to and from the same
-   staging location. Note that when this options is selected, that the program will only return cars
-   to staging when destinations are not available on the layout.
+   on the layout. Selecting this option allows a turn to transport cars to and from the same staging
+   location. Note that when this options is selected, that the program will only return cars to
+   staging when destinations are not available on the layout.
+
+   <P>
+    This options is also available on a per train basis. See <A HREF="#TrainBuildOptions">Train
+     Build Options</A>.
+   </P>
+
+   <A NAME="PromptDepartureTrack"></A>
+   <H4>Prompt for Departure Track from Staging</H4>
+
+   If you would like the program to ask you which track a train should depart from staging during
+   the train build, select this option. Normally during the train build the program would selected
+   the least recently used track when determining the track to depart from. Note that the program
+   will only prompt you if there are two or more trains available in staging that meet the train's
+   requirements.
+   <A NAME="PromptArrivalTrack"></A>
+   <H4>Prompt for Arrival Track into Staging</H4>
+
+   If you would like the program to ask you which track a train should use when arriving into
+   staging during the train build, select this option. Normally during the train build the program
+   would selected the least recently used track when determining the track to arrive on. Note that
+   the program will only prompt you if there are two or more tracks available in staging that meet
+   the train's requirements. 
    
-   <P>This options is also available on a per train basis.  See <A HREF="#TrainBuildOptions">Train Build Options</A>.</P>
-   
-    <A NAME="PromptDepartureTrack"></A>
-<H3>Prompt for Departure Track from Staging</H3>
-
-If you would like the program to ask you which track a train should
-depart from staging during the train build, select this option. Normally
-during the train build the program would selected the least
-recently used track when determining the track to depart from. Note that the
-program will only prompt you if there are two or more trains available
-in staging that meet the train's requirements. 
-
-<A NAME="PromptArrivalTrack"></A>
-<H3>Prompt for Arrival Track into Staging</H3>
-
-If you would like the program to ask you which track a train should
-use when arriving into staging during the train build, select this option. Normally
-during the train build the program would selected the least
-recently used track when determining the track to arrive on. Note that the
-program will only prompt you if there are two or more tracks available
-in staging that meet the train's requirements. 
-
-<A NAME="CarRouting"></A>
+   <A NAME="CarRouting"></A>
 <H3>Car Routing</H3>
 
 When car routing is enabled, the program will use multiple trains
@@ -753,8 +752,10 @@ different format for your switch lists.
    If you want a logo in the top right hand corner of your manifests and switch lists, press the
    "Add Logo" button and select a file with the image you want to display. You can also have a
    different logo for every train in your roster, see
-   <A HREF="#TrainOptions">Train Options</A> for details. <A
-    NAME="MisplacedCarsComment"></A>
+   <A HREF="#TrainManifestOptions">Train Manifest Options</A> for details. 
+   
+   
+   <A NAME="MisplacedCarsComment"></A>
    <H3>Misplaced Cars Comment</H3>
 
    The program provides a comment for your operators to search for
@@ -2162,14 +2163,6 @@ Press "Save Train" to save your train. The program will create a file
 "operations". A backup file with the last settings for all of your
 trains is also created each time the "Save Train" button is pressed. 
 
-<A NAME="TrainOptions"></A>
-<H3>Train Options</H3>
-
-You can optionally have a unique railroad name and logo for each train
-in your roster.  You can also decide if your manifests show the train's
-arrival and departure times. Use the "Edit Train-&gt;Tools-&gt;Options" to 
-set these options.
-
 <A NAME="TrainBuildOptions"></A>
 <H3> Train Build Options</H3>
 
@@ -2205,7 +2198,8 @@ car roads, load, owners, and built dates the train will service.
    rather than having the program report that cars in staging couldn't be delivered to destinations
    on the layout. Selecting this option allows a turn to transport cars to and from the same staging
    location. Note that when this options is selected, that the program will only return cars to
-   staging when destinations are not available on the layout.
+   staging when destinations are not available on the layout. You can also set this option for all turns, 
+   see <A HREF="#SettingsOptions"> Options</A>.
 
    <H4>Allow local moves when a car has a custom load</H4>
 
@@ -2220,7 +2214,7 @@ car roads, load, owners, and built dates the train will service.
 
    Normally the program allows cars to travel from the train's departure location (origin) to its
    last location (terminal). Deselect this option if you don't want the train to carry cars from the
-   train's origin to the terminal. 
+   train's origin to the terminal.
    
    <A NAME="TrainRoadNames"></A>
 <H3>Train Road Names</H3>
@@ -2294,334 +2288,317 @@ caboose.
     starting at the location you select, and removes the helper service at the second location
     specified by you.</P>
 
+   <A NAME="TrainManifestOptions"></A>
+   <H3>Train Manifest Options</H3>
+
+   You can optionally have a unique railroad name and logo for each train in your roster. You can
+   also decide if your manifests show the train's arrival and departure times. Use the "Edit
+   Train-&gt;Tools-&gt;Manifest Options" to set these options.
    <A NAME="TrainScripts"></A>
-<H3>Scripts</H3>
+   <H3>Scripts</H3>
 
-If you want to run a <a HREF="../../../../html/tools/scripting/index.shtml">script</a> when a train is built, moves or terminates, select
-under the "Edit Train-&gt;Tools-&gt;Scripts". This will bring up a new
-window with several script options.
-<p>Included in the <a HREF="http://jmri.org/jython/operations">jython directory</a> are several examples of
-operation oriented scripts.</P>
+   If you want to run a <a
+    HREF="../../../../html/tools/scripting/index.shtml">script</a> when a train is built, moves or
+   terminates, select under the "Edit Train-&gt;Tools-&gt;Scripts". This will bring up a new window
+   with several script options.
+   <p>
+    Included in the <a HREF="http://jmri.org/jython/operations">jython directory</a> are several
+    examples of operation oriented scripts.
+   </P>
 
-<A NAME="TrainShowCarTypesServiced"></A>
-<H3>Show Car Types Serviced</H3>
-<P>This diagnostic tool can help you determine why a train will not
-service a particular car type. You can select a car type and see how the
-train will service that car type. You can also select a specific car to
-see how that car would be serviced.</P>
+   <A NAME="TrainShowCarTypesServiced"></A>
+   <H3>Show Car Types Serviced</H3>
+   <P>This diagnostic tool can help you determine why a train will not service a particular car
+    type. You can select a car type and see how the train will service that car type. You can also
+    select a specific car to see how that car would be serviced.</P>
 
-<P><img src="images/ShowCarTypesServicedTrain.png"></P>
-<P>The window shows the train's route along with every location and
-track that can be serviced by the train. To the right of each track is
-the current status for the car type currently selected in the drop down
-menu. If the track status is "OK" then this train can pick up and set out
-this type of car to that specific track. If the track status is "Pick up"
-or "Set out" then the train can only pick up or set out cars to this
-particular track. A status that begins with an "X" means that the
-train will not service the track. The following table provides a summary
-of the various track statuses.</P>
+   <P>
+    <img src="images/ShowCarTypesServicedTrain.png">
+   </P>
+   <P>The window shows the train's route along with every location and track that can be
+    serviced by the train. To the right of each track is the current status for the car type
+    currently selected in the drop down menu. If the track status is "OK" then this train can pick
+    up and set out this type of car to that specific track. If the track status is "Pick up" or "Set
+    out" then the train can only pick up or set out cars to this particular track. A status that
+    begins with an "X" means that the train will not service the track. The following table provides
+    a summary of the various track statuses.</P>
 
-<table>
-	<tr>
-		<th>Status</th>
-		<th>Description</th>
-	</tr>
-	<tr>
-		<td width="20%">OK</td>
-		<td>Selected car type can be picked up and set out</td>
-	</tr>
-	<tr>
-		<td>Pick up</td>
-		<td>Selected car type can only be picked up from this track</td>
-	</tr>
-	<tr>
-		<td>Set out</td>
-		<td>Selected car type can only be set out to this track</td>
-	</tr>
-	<tr>
-		<td>X (Train Built)</td>
-		<td>Selected car built date is not serviced by this train</td>
-	</tr>
-	<tr>
-		<td>X (Train Load)</td>
-		<td>Selected car load is not serviced by this train</td>
-	</tr>
-	<tr>
-		<td>X (Train Owner)</td>
-		<td>Selected car owner is not serviced by this train</td>
-	</tr>
-	<tr>
-		<td>X (Train Road)</td>
-		<td>Selected car road is not serviced by this train</td>
-	</tr>
-	<tr>
-		<td>X (Train Type)</td>
-		<td>Selected car type is not serviced by this train</td>
-	</tr>
-	<tr>
-		<td>X (Train Skips)</td>
-		<td>The train doesn't service this location</td>
-	</tr>
-	<tr>
-		<td>X (Train Pick up)</td>
-		<td>The train can't pick up cars from this track</td>
-	</tr>
-	<tr>
-		<td>X (Train Set out)</td>
-		<td>The train can't set out cars to this track</td>
-	</tr>
-	<tr>
-		<td>X (Route)</td>
-		<td>The route doesn't allow pick ups or set outs for this location</td>
-	</tr>
-	<tr>
-		<td>X (Route Moves)</td>
-		<td>The number of requested car moves for this location is zero</td>
-	</tr>
-	<tr>
-		<td>X (Location Type)</td>
-		<td>The location doesn't service the selected car type</td>
-	</tr>
-	<tr>
-		<td>X (Track Road)</td>
-		<td>The track doesn't service the selected car road</td>
-	</tr>
-	<tr>
-		<td>X (Track Type)</td>
-		<td>The track doesn't service the selected car type</td>
-	</tr>
-	<tr>
-		<td>X (Dir Loc)</td>
-		<td>Based on the train's departure direction, the location
-		doesn't allow set outs or pick ups</td>
-	</tr>
-	<tr>
-		<td>X (Dir Trk)</td>
-		<td>Based on the train's departure direction, the track doesn't
-		allow set outs or pick ups</td>
-	</tr>
-	<tr>
-		<td>X (Schedule Timetable)</td>
-		<td>The spur's schedule <A HREF="#Schedules">timetable</A> selection prevents the car from being serviced.</td>
-	</tr>
-	<tr>
-		<td>X (Schedule Type)</td>
-		<td>The spur's schedule does not allow the car's type to be serviced.</td>
-	</tr>
-	<tr>
-		<td>X (Schedule Load)</td>
-		<td>The spur's schedule does not allow the car's load to be serviced.</td>
-	</tr>
-	<tr>
-		<td>X (Schedule Road)</td>
-		<td>The spur's schedule does not allow the car's road to be serviced.</td>
-	</tr>
-	<tr>
-		<td>X (Schedule)</td>
-		<td>The spur's schedule does not allow the combination of the car's type, load, and road.</td>
-	</tr>
-</table>
+   <table>
+    <tr>
+     <th>Status</th>
+     <th>Description</th>
+    </tr>
+    <tr>
+     <td width="20%">OK</td>
+     <td>Selected car type can be picked up and set out</td>
+    </tr>
+    <tr>
+     <td>Pick up</td>
+     <td>Selected car type can only be picked up from this track</td>
+    </tr>
+    <tr>
+     <td>Set out</td>
+     <td>Selected car type can only be set out to this track</td>
+    </tr>
+    <tr>
+     <td>X (Train Built)</td>
+     <td>Selected car built date is not serviced by this train</td>
+    </tr>
+    <tr>
+     <td>X (Train Load)</td>
+     <td>Selected car load is not serviced by this train</td>
+    </tr>
+    <tr>
+     <td>X (Train Owner)</td>
+     <td>Selected car owner is not serviced by this train</td>
+    </tr>
+    <tr>
+     <td>X (Train Road)</td>
+     <td>Selected car road is not serviced by this train</td>
+    </tr>
+    <tr>
+     <td>X (Train Type)</td>
+     <td>Selected car type is not serviced by this train</td>
+    </tr>
+    <tr>
+     <td>X (Train Skips)</td>
+     <td>The train doesn't service this location</td>
+    </tr>
+    <tr>
+     <td>X (Train Pick up)</td>
+     <td>The train can't pick up cars from this track</td>
+    </tr>
+    <tr>
+     <td>X (Train Set out)</td>
+     <td>The train can't set out cars to this track</td>
+    </tr>
+    <tr>
+     <td>X (Route)</td>
+     <td>The route doesn't allow pick ups or set outs for this location</td>
+    </tr>
+    <tr>
+     <td>X (Route Moves)</td>
+     <td>The number of requested car moves for this location is zero</td>
+    </tr>
+    <tr>
+     <td>X (Location Type)</td>
+     <td>The location doesn't service the selected car type</td>
+    </tr>
+    <tr>
+     <td>X (Track Road)</td>
+     <td>The track doesn't service the selected car road</td>
+    </tr>
+    <tr>
+     <td>X (Track Type)</td>
+     <td>The track doesn't service the selected car type</td>
+    </tr>
+    <tr>
+     <td>X (Dir Loc)</td>
+     <td>Based on the train's departure direction, the location doesn't allow set outs or pick
+      ups</td>
+    </tr>
+    <tr>
+     <td>X (Dir Trk)</td>
+     <td>Based on the train's departure direction, the track doesn't allow set outs or pick ups</td>
+    </tr>
+    <tr>
+     <td>X (Schedule Timetable)</td>
+     <td>The spur's schedule <A HREF="#Schedules">timetable</A> selection prevents the car from
+      being serviced.
+     </td>
+    </tr>
+    <tr>
+     <td>X (Schedule Type)</td>
+     <td>The spur's schedule does not allow the car's type to be serviced.</td>
+    </tr>
+    <tr>
+     <td>X (Schedule Load)</td>
+     <td>The spur's schedule does not allow the car's load to be serviced.</td>
+    </tr>
+    <tr>
+     <td>X (Schedule Road)</td>
+     <td>The spur's schedule does not allow the car's road to be serviced.</td>
+    </tr>
+    <tr>
+     <td>X (Schedule)</td>
+     <td>The spur's schedule does not allow the combination of the car's type, load, and road.</td>
+    </tr>
+   </table>
 
-<A NAME="ModifyTrainsByCarType"></A>
-<H3>Modify Trains by Car Type</H3>
+   <A NAME="ModifyTrainsByCarType"></A>
+   <H3>Modify Trains by Car Type</H3>
 
-This tool can be found under Trains-&gt;Tools. Use this tool to quickly
-modify the type of cars your trains will service. Very useful when
-adding a new car type to your roster. 
+   This tool can be found under Trains-&gt;Tools. Use this tool to quickly modify the type of cars
+   your trains will service. Very useful when adding a new car type to your roster.
 
-<P><img src="images/ModifyTrainsByCarType.png"></P>
+   <P>
+    <img src="images/ModifyTrainsByCarType.png">
+   </P>
 
-<P>First select the car type you wish to modify. The window will
-then show which trains can service that car type. Select or deselect the
-trains you want to service, and press the "Save" button to modify your
-trains. You can also copy how an existing car is serviced by your trains
-and apply those rules to another car. To make a car type behave like
-another, first select the car your would like to copy, then select the
-"copy" checkbox, the car type will now appear to the right of the
-checkbox, then select the type of car you want to modify, and press
-"Save" to have both car types serviced by the same trains.</P>
+   <P>First select the car type you wish to modify. The window will then show which trains can
+    service that car type. Select or deselect the trains you want to service, and press the "Save"
+    button to modify your trains. You can also copy how an existing car is serviced by your trains
+    and apply those rules to another car. To make a car type behave like another, first select the
+    car your would like to copy, then select the "copy" checkbox, the car type will now appear to
+    the right of the checkbox, then select the type of car you want to modify, and press "Save" to
+    have both car types serviced by the same trains.</P>
 
-<A NAME="SwitcherService"></A>
-<H3>Switcher Service</H3>
+   <A NAME="SwitcherService"></A>
+   <H3>Switcher Service</H3>
 
-Many operators assign a locomotive to a location to do the local switching.
-Using the location's switch list allows the person assigned to the
-location to service all trains that stop at that location. However,
-there can be locations that don't get enough work servicing through or
-local trains and it would be nice to create some additional work for the
-operator assigned to that location. To create a "switcher" job, create a
-route with one location, the location that the switcher will service,
-and assign that route to a train. The "train" now becomes a switcher
-that will only service that location. Adjust the "Move" count in the
-route to control how many cars the switcher will service.
+   Many operators assign a locomotive to a location to do the local switching. Using the location's
+   switch list allows the person assigned to the location to service all trains that stop at that
+   location. However, there can be locations that don't get enough work servicing through or local
+   trains and it would be nice to create some additional work for the operator assigned to that
+   location. To create a "switcher" job, create a route with one location, the location that the
+   switcher will service, and assign that route to a train. The "train" now becomes a switcher that
+   will only service that location. Adjust the "Move" count in the route to control how many cars
+   the switcher will service.
 
-<P>Some operators like to produce a train manifest that only shows
-set outs or pick ups from a yard or interchange, and then have a switch list
-that shows moves between the yard and spurs. To eliminate tracks from
-showing up on a train's manifest, deselect all of the direction boxes
-for that track. Only a "switcher" will service a track that doesn't have
-any direction boxes selected.</P>
+   <P>Some operators like to produce a train manifest that only shows set outs or pick ups from
+    a yard or interchange, and then have a switch list that shows moves between the yard and spurs.
+    To eliminate tracks from showing up on a train's manifest, deselect all of the direction boxes
+    for that track. Only a "switcher" will service a track that doesn't have any direction boxes
+    selected.</P>
 
-<H3>Switcher Restrictions</H3>
+   <H3>Switcher Restrictions</H3>
 
-The program when generating a manifest for a switcher (a train with a single
-location in its route) will by default never move a car from a spur
-to a spur or yard to a yard, only yard to spur or spur to yard.
-This rule also applies to interchanges. This restriction helps prevent
-unrealistic car movements between spurs (industries). However, if you want a
-spur to spur move, use a <A HREF="#Schedules">Schedule</A> to
-force the car move. You can also disable this restriction see 
-<A	HREF="#AllowLocalCarMovements">Options.</A>
+   The program when generating a manifest for a switcher (a train with a single location in its
+   route) will by default never move a car from a spur to a spur or yard to a yard, only yard to
+   spur or spur to yard. This rule also applies to interchanges. This restriction helps prevent
+   unrealistic car movements between spurs (industries). However, if you want a spur to spur move,
+   use a
+   <A HREF="#Schedules">Schedule</A> to force the car move. You can also disable this restriction
+   see <A
+    HREF="#AllowLocalCarMovements">Options.</A> <A NAME="BuildingTrains"></A>
+   <H2>Building Trains</H2>
 
-<A NAME="BuildingTrains"></A>
-<H2>Building Trains</H2>
+   To build one train, press the "Build" button in the row for the desired train in the
+   <A HREF="#Trains">Trains</A> window. The button will become "Print" or "Preview" after the train
+   is built. If you want to review how the train was built, select the "Build Reports" checkbox
+   before pressing the "Print" or "Preview" button for the desired train. If the "Preview Manifest"
+   checkbox is selected, the program will generate the build report and manifest and present them in
+   preview windows. If you want to build several trains without having to press individual buttons
+   for each train, select the trains that you want built and press the "Build" button found at the
+   bottom of the trains window. The program will then build manifests for all of the selected
+   trains.
 
-To build one train, press the "Build" button in the row for the desired
-train in the <A HREF="#Trains">Trains</A> window. The button will become
-"Print" or "Preview" after the train is built. If you want to review how
-the train was built, select the "Build Reports" checkbox before pressing the
-"Print" or "Preview" button for the desired train. If the "Preview
-Manifest" checkbox is selected, the program will generate the build
-report and manifest and present them in preview windows. If you want to
-build several trains without having to press individual buttons for each
-train, select the trains that you want built and press the "Build"
-button found at the bottom of the trains window. The program will then
-build manifests for all of the selected trains.
+   <P>If a train fails to build, the "Move" button will change its text to "Report". Pressing
+    "Report" will print or preview the build report for this train. Whenever a train fails to build,
+    a build failure message will appear. If you want to disable this feature deselect the checkbox
+    "Build Messages".</P>
+   <P>You can also control which trains are shown in the Trains window. When the "Show All"
+    checkbox is unselected, only trains that have the "Build" checkbox selected are shown.</P>
 
-<P>If a train fails to build, the "Move" button will change its text
-to "Report". Pressing "Report" will print or preview the build report
-for this train. Whenever a train fails to build, a build failure message
-will appear. If you want to disable this feature deselect the checkbox
-"Build Messages".</P>
-<P>You can also control which trains are shown in the Trains window.
-When the "Show All" checkbox is unselected, only trains that have the
-"Build" checkbox selected are shown.</P>
+   <A NAME="Timetable"></A>
+   <H3>Timetable</H3>
 
-<A NAME="Timetable"></A>
-<H3>Timetable</H3>
+   The Timetable tool allows you to define which trains will run on any given day, and can be found
+   under the Trains-&gt;Tools. For each day of the week, select which trains you want to build. Then
+   select which day you want by selecting the appropriate radio button. Then press the "Apply"
+   button to update the Trains build checkboxes. Use the "Save" button to store any changes you made
+   to the timetable.
+   <A NAME="TroubleShootingBuildingTrains"></A>
+   <H2>Problems Building Trains How to Fix</H2>
 
-The Timetable tool allows you to define which trains will run on any
-given day, and can be found under the Trains-&gt;Tools. For each day of
-the week, select which trains you want to build. Then select which day
-you want by selecting the appropriate radio button. Then press the
-"Apply" button to update the Trains build checkboxes. Use the "Save"
-button to store any changes you made to the timetable. 
+   If you have a problem building a train you can select the "Build Reports" checkbox at the bottom
+   of the train window. When a build fails for any reason and the "Build Reports" checkbox is
+   selected, the program will send a report to your printer if the "Preview Manifests" isn't
+   selected; or to a preview window if the "Preview Manifest" is selected. The build report can
+   print out different levels of detail, from minimal to very detailed. See the Settings section
+   <A HREF="#BuildReportDetails"> Build Report Options</A> for more information on how to change the
+   build report detail level.
 
-<A NAME="TroubleShootingBuildingTrains"></A>
-<H2>Problems Building Trains How to Fix</H2>
+   <P>
+    <img src="images/BuildReport.png">
+   </P>
+   <H3>Reading the Build Report</H3>
 
-If you have a problem building a train you can select the "Build
-Reports" checkbox at the bottom of the train window. When a build fails
-for any reason and the "Build Reports" checkbox is selected, the program
-will send a report to your printer if the "Preview Manifests" isn't
-selected; or to a preview window if the "Preview Manifest" is selected.
-The build report can print out different levels of detail, from minimal
-to very detailed. See the Settings section <A HREF="#BuildReportDetails">
-Build Report Options</A> for more information on how to change the build report
-detail level.
+   The program when building a train creates a build report and saves it to disk. The text files can
+   be found in the JMRI-&gt;operations-&gt;buildstatus directory. The build report shows the steps
+   the operations program goes through while building a train. The first page provides the route the
+   train will travel and the number of car moves requested for each location. The report then shows
+   the car type and locomotive types that the train will service. By reading the various comments in
+   the report you can get an idea of steps the operations program goes through to build a train.
+   When there's an issue that the operation's build can't resolve, the build will fail. To
+   understand why a build failed, go to the last page of the build report and by working backwards
+   from the last line, you should be able to understand why a train failed to build.
 
-<P><img src="images/BuildReport.png"></P>
-<H3>Reading the Build Report</H3>
+   <H3>More Build Report Details</H3>
 
-The program when building a train creates a build report and saves it to
-disk. The text files can be found in the
-JMRI-&gt;operations-&gt;buildstatus directory. The build report shows
-the steps the operations program goes through while building a train.
-The first page provides the route the train will travel and the number
-of car moves requested for each location. The report then shows the car
-type and locomotive types that the train will service. By reading the
-various comments in the report you can get an idea of steps the
-operations program goes through to build a train. When there's an issue
-that the operation's build can't resolve, the build will fail. To
-understand why a build failed, go to the last page of the build report
-and by working backwards from the last line, you should be able to
-understand why a train failed to build.
+   For those who want to understand how the program builds trains here's the details. If the train
+   requires a locomotive or several locomotives, the program will look for locomotives at the start
+   of the route and then determines if the termination location will accept them. Note that if two
+   or more locomotives are required for the train that the locomotives must be in a
+   <A HREF="#LocomotivesAdd">consist</A>. The program assigns to the rolling stock (locomotives and
+   cars) the number of moves that they experience during each session. The move count is bumped up
+   each time the rolling stock is set out to a new location's track, or if the rolling stock was
+   assigned to a train and the train was reset. The program sorts the rolling stock by the move
+   count, and then tries to assign locomotives and cars with the least number of moves to the train.
+   When building a train only rolling stock at locations that are part of the train's route are
+   used. With regards to cars, in addition to the number of moves a car has experienced, the car's
+   load priority is also considered. The program will try and find destinations for cars with high
+   priority loads before low priority loads.
 
-<H3>More Build Report Details</H3>
+   <P>The next step is to optionally assign a caboose or car with FRED to the train. If the
+    program finds the required caboose or car with FRED at the start of the route, the program tries
+    to find a track at the termination location that will accept it. If successful, all other
+    cabooses and cars with FRED are removed from the available car list.</P>
 
-For those who want to understand how the program builds trains here's
-the details. If the train requires a locomotive or several locomotives,
-the program will look for locomotives at the start of the route and then
-determines if the termination location will accept them. Note that if
-two or more locomotives are required for the train that the locomotives
-must be in a <A HREF="#LocomotivesAdd">consist</A>. The program assigns
-to the rolling stock (locomotives and cars) the number of moves that
-they experience during each session. The move count is bumped up each
-time the rolling stock is set out to a new location's track, or if
-the rolling stock was assigned to a train and the train was reset. The
-program sorts the rolling stock by the move count, and then tries to
-assign locomotives and cars with the least number of moves to the train.
-When building a train only rolling stock at locations that are part of
-the train's route are used. With regards to cars, in addition to the
-number of moves a car has experienced, the car's load priority is also
-considered. The program will try and find destinations for cars with
-high priority loads before low priority loads.
+   <P>Next the program will assign cars to the train starting from the departure location. Each
+    car goes through the process of finding a track along the route that will accept the car.
+    Another count assigned to a track is used to determine if the track has been serviced recently.
+    Tracks with the least amount of service get priority. A car can have several track choices and
+    the one with the highest priority will be assigned as the car's destination. The process
+    continues until the number of car moves requested by a location is met, or the available cars
+    being processed by the program is used up. Once the car moves requested for a location is met,
+    the next location in the route is processed. This continues until all locations in a train's
+    route have been processed.</P>
 
-<P>The next step is to optionally assign a caboose or car with FRED to the
-train. If the program finds the required caboose or car with FRED at the
-start of the route, the program tries to find a track at the termination
-location that will accept it. If successful, all other cabooses and cars
-with FRED are removed from the available car list.</P>
+   <P>
+    In <A HREF="#SettingsOptions">aggressive mode</A> , the program when figuring out destinations
+    for cars, will do two passes when determining where to place cars. The first pass does 50% of
+    the available moves for each location, and the second pass does the remainder. By doing two
+    passes, the program can "free" up some spurs that already have cars there, thus increasing the
+    number of cars that the train can service. Once a car has been given a destination in aggressive
+    mode, the car's current track space is available for other trains to use.
+   </P>
 
-<P>Next the program will assign cars to the train starting from the
-departure location. Each car goes through the process of finding a track
-along the route that will accept the car. Another count assigned to a
-track is used to determine if the track has been serviced recently.
-Tracks with the least amount of service get priority. A car can have
-several track choices and the one with the highest priority will be
-assigned as the car's destination. The process continues until the
-number of car moves requested by a location is met, or the available
-cars being processed by the program is used up. Once the car moves
-requested for a location is met, the next location in the route is
-processed. This continues until all locations in a train's route have
-been processed.</P>
+   <P>If a car has a final destination that was set by a schedule, the program will try and move
+    the car to that destination, or if not possible, it will try and move the car closer to that
+    final destination.</P>
 
-<P>In <A HREF="#SettingsOptions">aggressive mode</A> , the program
-when figuring out destinations for cars, will do two passes when
-determining where to place cars. The first pass does 50% of the
-available moves for each location, and the second pass does the
-remainder. By doing two passes, the program can "free" up some spurs
-that already have cars there, thus increasing the number of cars that
-the train can service. Once a car has been given a destination in
-aggressive mode, the car's current track space is available for other
-trains to use.</P>
+   <P>If a car has a custom load without a destination, the program will search for a spur with
+    a schedule demanding that car type and load, the program will then "route" the car to that
+    destination. The program will use up to five trains to get the car to a destination.</P>
 
-<P>If a car has a final destination that was set by a schedule, the
-program will try and move the car to that destination, or if not
-possible, it will try and move the car closer to that final destination.</P>
+   <P>
+    Sometimes reading the build report can get tedious. If you want to use a <A
+     HREF="#BuildReportDetails">text editor</A> to search the report, the build reports can be found
+    in the directory JMRI-&gt;operations-&gt;buildstatus.
+   </P>
 
-<P>If a car has a custom load without a destination, the program will 
-search for a spur with a schedule demanding that car type and load,
-the program will then "route" the car to that destination.  The program
-will use up to five trains to get the car to a destination.
-</P>
+   <A NAME="PrintingManifests"></A>
+   <H3>Printing Manifests</H3>
 
-<P>Sometimes reading the build report can get tedious. If you want
-to use a <A HREF="#BuildReportDetails">text editor</A> to search the report, the build reports can be
-found in the directory JMRI-&gt;operations-&gt;buildstatus.</P>
+   After building a train, the "Build" button will become "Print" or "Preview" depending on the
+   state of the checkbox called "Preview Manifests" located in the lower right corner of the Trains
+   window. Pressing the "Print" button will print the manifest for that train. Pressing the
+   "Preview" button will produce a window in which you can review the manifest. If you want to print
+   manifests for several trains, select the trains you want in the build column and then press the
+   "Print" or "Preview" button found at the bottom of the trains window. The program will then print
+   or preview manifests for all of the selected trains.
 
-<A NAME="PrintingManifests"></A>
-<H3>Printing Manifests</H3>
+   <P>
+    <img src="images/Manifest.png">
+   </P>
 
-After building a train, the "Build" button will become "Print" or
-"Preview" depending on the state of the checkbox called "Preview
-Manifests" located in the lower right corner of the Trains window.
-Pressing the "Print" button will print the manifest for that train.
-Pressing the "Preview" button will produce a window in which you can
-review the manifest. If you want to print manifests for several trains,
-select the trains you want in the build column and then press the
-"Print" or "Preview" button found at the bottom of the trains window.
-The program will then print or preview manifests for all of the selected
-trains.
+   <A NAME="SwitchList"></A>
+   <H3>Switch Lists</H3>
 
-<P><img src="images/Manifest.png"></P>
-
-<A NAME="SwitchList"></A>
-<H3>Switch Lists</H3>
-
-A switch list shows the work required to service all of the trains
-visiting that location. Normally a switch list is given to the person in
-charge of a yard or a location with many spurs or industries.
+   A switch list shows the work required to service all of the trains visiting that location.
+   Normally a switch list is given to the person in charge of a yard or a location with many spurs
+   or industries.
 
    <P>Press the "Switch List" button found at the bottom of the "Trains" window if you want a
     switch list for a given location. A menu will appear that allows you to select which locations
@@ -2629,9 +2606,9 @@ charge of a yard or a location with many spurs or industries.
     the "Save" button to keep your selections.</P>
 
    <P>The switch list menu also lets you add a comment to the switch list for a location and
-    select which printer to use when printing out the switch list.  Note that the program when
+    select which printer to use when printing out the switch list. Note that the program when
     printing out manifests will also use the printer associated the train's departure location.</P>
-    
+
    <H3>Switch List Options</H3>
 
    There are three options for adjusting the switch lists to your liking. The first checkbox option
@@ -2682,101 +2659,82 @@ charge of a yard or a location with many spurs or industries.
     list if needed.</P>
 
    <P>
-      <img src="images/SwitchList.png">
-     </P> <A NAME="TrainMove"></A>
-<H3>Moving Trains</H3>
+    <img src="images/SwitchList.png">
+   </P>
+   <A NAME="TrainMove"></A>
+   <H3>Moving Trains</H3>
 
-After providing your operators with a printed manifest or location
-switch list, you must keep the program database synchronized with the
-actual movement of trains on your layout. This is done by the train
-"Move" buttons located on the right side of the <A HREF="#Trains">Trains</A>
-window. Pressing the "Move" button will cause the train to depart its
-current location move to the next location in the route. The locomotives and
-cars assigned to the train will travel to the next location on the
-railroad. At each location, cars can be picked up or set out. You
-can also move a train by selecting the train's icon and selecting "Move"
-from the icon's popup menu. Each press of the "Move" button moves the
-train closer to its terminal location. When the train arrives at the
-last location in the route, the last press of the "Move" button will
-terminate the train. Once a train is terminated, you can build it again.
+   After providing your operators with a printed manifest or location switch list, you must keep the
+   program database synchronized with the actual movement of trains on your layout. This is done by
+   the train "Move" buttons located on the right side of the
+   <A HREF="#Trains">Trains</A> window. Pressing the "Move" button will cause the train to depart
+   its current location move to the next location in the route. The locomotives and cars assigned to
+   the train will travel to the next location on the railroad. At each location, cars can be picked
+   up or set out. You can also move a train by selecting the train's icon and selecting "Move" from
+   the icon's popup menu. Each press of the "Move" button moves the train closer to its terminal
+   location. When the train arrives at the last location in the route, the last press of the "Move"
+   button will terminate the train. Once a train is terminated, you can build it again.
 
-<P>Each time a locomotive or car is moved a count associated with them
-is incremented. The program uses this to determine which cars haven't
-moved recently and tries to select cars with the least number of moves
-when building new trains. Each time a location has a car
-set out, the program increments a count associated with that location.
-The program tries to move cars to locations that have experienced the
-least number of car operations.</P>
+   <P>Each time a locomotive or car is moved a count associated with them is incremented. The
+    program uses this to determine which cars haven't moved recently and tries to select cars with
+    the least number of moves when building new trains. Each time a location has a car set out, the
+    program increments a count associated with that location. The program tries to move cars to
+    locations that have experienced the least number of car operations.</P>
 
-<A NAME="TerminateTrain"></A>
-<H3>Terminate Train</H3>
+   <A NAME="TerminateTrain"></A>
+   <H3>Terminate Train</H3>
 
-When you terminate a train, you are asking the program to move the train
-from its current location to its final destination. The cars and locomotives
-associated with the train will be picked up and delivered to the
-locations shown in the train manifest. After terminating a train the
-locomotives and cars associated with that train become available for other
-trains. Therefore you should terminate a train only after it actually
-arrives at the final destination in the train's route. To terminate
-several trains, select the trains you wish to terminate in the build
-column and press the "Terminate" button at the bottom of the Trains
-window.
+   When you terminate a train, you are asking the program to move the train from its current
+   location to its final destination. The cars and locomotives associated with the train will be
+   picked up and delivered to the locations shown in the train manifest. After terminating a train
+   the locomotives and cars associated with that train become available for other trains. Therefore
+   you should terminate a train only after it actually arrives at the final destination in the
+   train's route. To terminate several trains, select the trains you wish to terminate in the build
+   column and press the "Terminate" button at the bottom of the Trains window.
+   <A NAME="SaveBuilds"></A>
+   <H3>Save Builds</H3>
 
-<A NAME="SaveBuilds"></A>
-<H3>Save Builds</H3>
+   Pressing the "Save Builds" button causes the program to update the train, car, locomotive, and
+   location xml files. Any time you "Move" a train the operations program will make changes to the
+   train, car, locomotive, and location databases. These databases must be saved before you shut
+   down JMRI, otherwise you will lose all of the changes that the operations program made to move a
+   train to the next location. Pressing the "Save Builds" button before quitting JMRI allows the
+   operations program to resume exactly at the point where you pressed the "Save Builds" button.
+   <A NAME="BuildingMultipleTrainsSession"></A>
+   <H2>Building Multiple Trains for a Session</H2>
 
-Pressing the "Save Builds" button causes the program to update the
-train, car, locomotive, and location xml files. Any time you "Move" a train
-the operations program will make changes to the train, car, locomotive, and
-location databases. These databases must be saved before you shut down
-JMRI, otherwise you will lose all of the changes that the operations
-program made to move a train to the next location. Pressing the "Save
-Builds" button before quitting JMRI allows the operations program to
-resume exactly at the point where you pressed the "Save Builds" button.
+   Most operating sessions require more than one train to keep your operators busy. The correct way
+   to do this is to build and print all of the trains needed before terminating them. So if you need
+   a dozen trains for a session, you must build twelve trains before you terminate any one train.
+   Terminating a train tells the program that the locomotives and cars in that particular train have
+   been delivered to their final locations and can be used again when building new trains. So always
+   build all, print all, THEN terminate each train after completing its run! It is okay to build all
+   trains, print all trains, and then use the "Save Builds" button and shut down the program. Later
+   you can restart the program and terminate the trains that completed their runs.
 
-<A NAME="BuildingMultipleTrainsSession"></A>
-<H2>Building Multiple Trains for a Session</H2>
+   <p>The correct time to terminate a train is when the train actually arrives at its
+    destination. Terminating a train before it completes it run means that the operation database
+    believes that the locomotives and cars have been delivered. It is better to build and print
+    twelve trains and then later find out that only nine trains completed their runs. You would then
+    terminate nine trains, and leave the other three for next time. Or if you wish you could reset
+    any trains that didn't depart from their terminal. Reseting trains really isn't necessary, the
+    trains that didn't run during this session could run the during the next session.</P>
+   <p>An alternate method is to build, print, and use the "Move" button for each train to track
+    the actual movement of the trains during your session. As long as the trains on your layout
+    match the locations in the program you can build a new train.</P>
 
-Most operating sessions require more than one train to keep your
-operators busy. The correct way to do this is to build and print all of
-the trains needed before terminating them. So if you need a dozen trains
-for a session, you must build twelve trains before you terminate any one
-train. Terminating a train tells the program that the locomotives and cars
-in that particular train have been delivered to their final locations
-and can be used again when building new trains. So always build all,
-print all, THEN terminate each train after completing its run! It is
-okay to build all trains, print all trains, and then use the "Save
-Builds" button and shut down the program. Later you can restart the
-program and terminate the trains that completed their runs.
+   <A NAME="OperationWindows"></A>
+   <H2>Operation Windows</H2>
 
-<p>The correct time to terminate a train is when the train actually
-arrives at its destination. Terminating a train before it completes it
-run means that the operation database believes that the locomotives and cars
-have been delivered. It is better to build and print twelve trains and
-then later find out that only nine trains completed their runs. You
-would then terminate nine trains, and leave the other three for next
-time. Or if you wish you could reset any trains that didn't depart from
-their terminal. Reseting trains really isn't necessary, the trains that
-didn't run during this session could run the during the next session.</P>
-<p>An alternate method is to build, print, and use the "Move" button
-for each train to track the actual movement of the trains during your
-session. As long as the trains on your layout match the locations in the
-program you can build a new train.</P>
+   All of the operation windows can be resized and placed to your liking. When you close the window,
+   the size and window location on your screen is saved.
 
-<A NAME="OperationWindows"></A>
-<H2>Operation Windows</H2>
+   <P>The program also allows you to resize the Cars, Locomotives, Trains and Timetable table
+    column widths. Adjust the column widths to your liking and then press the window's "Save" or
+    "Save Builds" to save your preferences.</P>
 
-All of the operation windows can be resized and placed to your liking.
-When you close the window, the size and window location on your screen
-is saved.
-
-<P>The program also allows you to resize the Cars, Locomotives, Trains
-and Timetable table column widths. Adjust the column widths to your
-liking and then press the window's "Save" or "Save Builds" to save your
-preferences.</P>
-
-<P>The end of operations help.</P>
-    </DIV>
+   <P>The end of operations help.</P>
+  </DIV>
 <!-- closes #mainContent--></DIV>
 <!-- closes #mBody-->
 </BODY>

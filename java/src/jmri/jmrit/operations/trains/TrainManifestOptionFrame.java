@@ -118,7 +118,7 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 		}
 
 		//	build menu		
-		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainOptions", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainManifestOptions", true);
 
 		pack();
 		if (getWidth()<400 )
