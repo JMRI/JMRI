@@ -51,6 +51,7 @@ public class DebugMenu extends JMenu {
 	JMenu oldVsdMenu = new JMenu(rb.getString("OldVSDInterfaceMenuItem"));
 	oldVsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(rb.getString("OldVSDecoderWindow"), false));
 	oldVsdMenu.add(new jmri.jmrit.beantable.SetPhysicalLocationAction(rb.getString("OldSetReporterLocationsAction"), null));
+	oldVsdMenu.setEnabled(false);
 	vsdMenu.add(oldVsdMenu);
 	add(vsdMenu);
 
