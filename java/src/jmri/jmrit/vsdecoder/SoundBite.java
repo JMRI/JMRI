@@ -19,6 +19,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import java.util.ArrayList;
 import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.jmrit.audio.AudioBuffer;
@@ -26,6 +27,8 @@ import jmri.jmrit.audio.AudioSource;
 import jmri.util.PhysicalLocation;
 
 class SoundBite extends VSDSound {
+
+    public static enum BufferMode { BOUND_MODE, QUEUE_MODE }
 
     String filename, system_name, user_name;
     AudioBuffer sound_buf;
@@ -36,17 +39,36 @@ class SoundBite extends VSDSound {
     int minloops;
     int maxloops;
     long length;
+    BufferMode bufferMode;
+    ArrayList<AudioBuffer> loopBufferList = new ArrayList<AudioBuffer>();
 
     public SoundBite(String name) {
-	super(name);
+	this(name, BufferMode.BOUND_MODE);
     }
 
+    // Constructor to replace QueueSoundBite, really.
+    public SoundBite(String name, BufferMode mode) {
+	super(name);
+	this.filename = null;
+	system_name = VSDSound.SrcSysNamePrefix + name;
+	user_name = VSDSound.SrcUserNamePrefix + name;
+	bufferMode = mode;
+	initialized = init(null, mode);
+    }
+
+    // Constructor for backward compatibility
     public SoundBite(VSDFile vf, String filename, String sname, String uname) {
+	this(BufferMode.BOUND_MODE, vf, filename, sname, uname);
+    }
+
+
+    public SoundBite(BufferMode mode, VSDFile vf, String filename, String sname, String uname) {
 	super(uname);
 	this.filename = filename;
 	system_name = sname;
 	user_name = uname;
-	initialized = init(vf);
+	bufferMode = mode;
+	initialized = init(vf, mode);
     }
 
     public String getFileName() { return(filename); }
@@ -54,27 +76,67 @@ class SoundBite extends VSDSound {
     public String getUserName() { return(user_name); }
     public boolean isInitialized() { return(initialized); }
 
-    public final boolean init(VSDFile vf) {
+    public final boolean init(VSDFile vf, BufferMode mode) {
         AudioManager am = jmri.InstanceManager.audioManagerInstance();
 	if (!initialized) {
             try {
                 sound_src = (AudioSource) am.provideAudio(SrcSysNamePrefix+system_name);
                 sound_src.setUserName(BufUserNamePrefix+user_name);
-                sound_buf = (AudioBuffer) am.provideAudio(BufSysNamePrefix+system_name);
-                sound_buf.setUserName(BufUserNamePrefix+user_name);
-                if (vf == null) {
-                    sound_buf.setURL(vsd_file_base + filename);
-                } else {
-                    sound_buf.setInputStream(vf.getInputStream(filename));
-                }
-                sound_src.setAssignedBuffer(sound_buf);
-		setLength();
                 setLooped(false);
+		if (mode == BufferMode.BOUND_MODE) {
+		    sound_buf = (AudioBuffer) am.provideAudio(BufSysNamePrefix+system_name);
+		    sound_buf.setUserName(BufUserNamePrefix+user_name);
+		    if (vf == null) {
+			sound_buf.setURL(vsd_file_base + filename);
+		    } else {
+			java.io.InputStream ins = vf.getInputStream(filename);
+			if (ins != null) {
+			    sound_buf.setInputStream(ins);
+			}
+			else {
+			    return(false);
+			}
+		    }
+		    sound_src.setAssignedBuffer(sound_buf);
+		    setLength();
+		}
             } catch (AudioException ex) {
                 log.warn("Problem creating SoundBite: " + ex);
             }
 	}
 	return(true);
+    }
+    public void queueBuffer(AudioBuffer b) {
+	if (bufferMode == BufferMode.QUEUE_MODE) {
+	    if (b == null) {
+		log.debug("queueAudioBuffer with null buffer input");
+		return;
+	    }
+	    if (sound_src == null) {
+		log.debug("queueAudioBuffer with null sound_src");
+		return;
+	    }
+	    
+	    log.debug("Queueing Buffer: " + b.getSystemName());
+	    
+	    sound_src.queueBuffer(b);
+	} else {
+	    log.warn("Attempted to Queue buffer to a Bound SoundBite.");
+	}
+    }
+
+    public void unqueueBuffers() {
+	if (bufferMode == BufferMode.QUEUE_MODE) {
+	    sound_src.unqueueBuffers();
+	}
+    }
+
+    public int numQueuedBuffers() {
+	if (bufferMode == BufferMode.QUEUE_MODE) {
+	    return(sound_src.numQueuedBuffers());
+	} else {
+	    return(0);
+	}
     }
 
     // Direct access to the underlying source.  use with caution.
@@ -89,13 +151,6 @@ class SoundBite extends VSDSound {
     public String getSourceUserName() { return(SrcUserNamePrefix+user_name); }
     public String getBufferSystemName() { return(BufSysNamePrefix+system_name); }
     public String getBufferUserName() { return(BufUserNamePrefix+user_name); }
-
-    /*
-    public void reset() {
-	initialized = false;
-	initialized = init();
-    }
-    */
 
     public void setLooped(boolean loop, int minloops, int maxloops) {
 	this.looped = loop;
@@ -162,12 +217,21 @@ class SoundBite extends VSDSound {
     }
 
     public void fadeOut() {
-	sound_src.fadeOut();
+	// Skip the fade action if the fade out time is zero.
+	if (sound_src.getFadeOut() == 0) {
+	    sound_src.stop();
+	} else {
+	    sound_src.fadeOut();
+	}
     }
 
     public void fadeIn() {
-	sound_src.fadeIn();
-	//sound_src.play();
+	// Skip the fade action if the fade in time is zero.
+	if (sound_src.getFadeIn() == 0) {
+	    sound_src.play();
+	} else {
+	    sound_src.fadeIn();
+	}
     }
 
     @Override
@@ -198,15 +262,25 @@ class SoundBite extends VSDSound {
     }
 
     public static long calcLength(SoundBite s) {
+	return(calcLength(s.getBuffer()));
+    }
+
+    public static long calcLength(AudioBuffer buf) {
 	// Assumes later getBuffer() will find the buffer from AudioManager instead
 	// of the current local reference... that's why I'm not directly using sound_buf here.
 
 	// Required buffer functions not yet implemented
-	AudioBuffer buf = s.getBuffer();
+	long num_frames;
+	int frequency;
 
-	long num_frames = buf.getLength();
-	int frequency = buf.getFrequency();
-
+	if (buf != null) {
+	    num_frames = buf.getLength();
+	    frequency = buf.getFrequency();
+	} else {
+	    // No buffer attached!
+	    num_frames = 0;
+	    frequency = 0;
+	}
 	
 	/*
 	long num_frames = 1;

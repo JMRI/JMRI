@@ -30,30 +30,19 @@ import java.awt.*;
 import javax.swing.border.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import jmri.LocoAddress;
-import jmri.DccLocoAddress;
 import jmri.util.swing.*;
 
-import java.io.File;
-import jmri.jmrit.XmlFile;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
-import jmri.jmrit.vsdecoder.VSDecoder;
 import jmri.jmrit.vsdecoder.VSDConfig;
 import java.util.ResourceBundle;
-import jmri.jmrit.vsdecoder.swing.VSDSwingBundle;
 import jmri.jmrit.vsdecoder.SoundEvent;
 import jmri.jmrit.vsdecoder.EngineSoundEvent;
 
@@ -90,7 +79,6 @@ public class VSDControl extends JPanel {
     String address;
 
     Border tb;
-    //TitledBorder tb;
     JLabel addressLabel;
     JButton configButton;
     JButton optionButton;
@@ -127,7 +115,6 @@ public class VSDControl extends JPanel {
 
     static public JPanel generateBlank() {
 	VSDControl temp = new VSDControl("");
-	Dimension size = temp.getPreferredSize();
 	JLabel jl = new JLabel(rb.getString("BlankVSDControlLabel"));
 	jl.setMinimumSize(temp.getPreferredSize());
 	jl.setPreferredSize(temp.getPreferredSize());

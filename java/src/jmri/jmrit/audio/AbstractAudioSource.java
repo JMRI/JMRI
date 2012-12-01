@@ -8,6 +8,8 @@ import jmri.AudioManager;
 import jmri.InstanceManager;
 import javax.vecmath.Vector3f;
 import jmri.implementation.AbstractAudio;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Base implementation of the AudioSource class.
@@ -57,8 +59,10 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     private int _fading               = Audio.FADE_NONE;
     private boolean _bound            = false;
     private boolean _positionRelative = false;
+    private boolean _queued           = false;
     private AudioBuffer _buffer;
 //    private AudioSourceDelayThread asdt = null;
+    private List<AudioBuffer> pendingBufferQueue = new ArrayList<AudioBuffer>();
 
     private static AudioFactory activeAudioFactory = InstanceManager.audioManagerInstance().getActiveAudioFactory();
 
@@ -87,29 +91,84 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         return SOURCE;
     }
 
+    public boolean queueBuffers(List<AudioBuffer> audioBuffers) {
+	// Note: Cannot queue buffers to a Source that has a bound buffer.
+	if (!_bound) {
+	    this.pendingBufferQueue = audioBuffers;
+	    activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_QUEUE_BUFFERS));
+	    activeAudioFactory.getCommandThread().interrupt();
+	    if (log.isDebugEnabled())
+		log.debug("Queued Buffer " + audioBuffers.get(0).getSystemName() + " to Source " + this.getSystemName());
+	    return(true);
+	} else {
+	    log.error("Attempted to queue buffers " + audioBuffers.get(0).getSystemName() + " (etc) to Bound Source " + this.getSystemName());
+	    return(false);
+	}
+    }
+
+    public boolean queueBuffer(AudioBuffer audioBuffer) {
+	if (!_bound) {
+	    this.pendingBufferQueue.clear();
+	    this.pendingBufferQueue.add(audioBuffer);
+	    activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_QUEUE_BUFFERS));
+	    activeAudioFactory.getCommandThread().interrupt();
+	    if (log.isDebugEnabled())
+		log.debug("Queued Buffer " + audioBuffer.getSystemName() + " to Source " + this.getSystemName());
+	    return(true);
+	} else {
+	    log.error("Attempted to queue buffer " + audioBuffer.getSystemName() + " to Bound Source " + this.getSystemName());
+	    return(false);
+	}
+    }
+
+    public boolean unqueueBuffers() {
+	if (_queued) {
+	    activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_UNQUEUE_BUFFERS));
+	    activeAudioFactory.getCommandThread().interrupt();
+	    if (log.isDebugEnabled())
+		log.debug("Unqueued Processed Buffers on Source " + this.getSystemName());
+	    return(true);
+	} else {
+	    log.error("Attempted to unqueue buffers on Bound Source " + this.getSystemName());
+	    return(false);
+	}
+    }
+
+    public List<AudioBuffer> getQueuedBuffers() {
+	return(this.pendingBufferQueue);
+    }
+
     public void setAssignedBuffer(AudioBuffer audioBuffer) {
-        this._buffer = audioBuffer;
-        // Ensure that the source is stopped
-        this.stop(false);
-        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_BIND_BUFFER));
-        activeAudioFactory.getCommandThread().interrupt();
-        if (log.isDebugEnabled())
-            log.debug("Assigned Buffer " + audioBuffer.getSystemName() + " to Source " + this.getSystemName());
+	if (!_queued) {
+	    this._buffer = audioBuffer;
+	    // Ensure that the source is stopped
+	    this.stop(false);
+	    activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_BIND_BUFFER));
+	    activeAudioFactory.getCommandThread().interrupt();
+	    if (log.isDebugEnabled())
+		log.debug("Assigned Buffer " + audioBuffer.getSystemName() + " to Source " + this.getSystemName());
+	} else {
+	    log.error("Attempted to assign buffer " + audioBuffer.getSystemName() + " to Queued Source " + this.getSystemName());
+	}
     }
 
     public void setAssignedBuffer(String bufferSystemName) {
-        AudioManager am = InstanceManager.audioManagerInstance();
-        Audio a = am.getBySystemName(bufferSystemName);
-        if (a.getSubType()==Audio.BUFFER) {
-            setAssignedBuffer((AudioBuffer) a);
-        }
-        else {
-            log.warn("Attempt to assign incorrect object type to buffer - AudioBuffer expected.");
-            this._buffer = null;
-            this._bound = false;
-        }
+	if (!_queued) {
+	    AudioManager am = InstanceManager.audioManagerInstance();
+	    Audio a = am.getBySystemName(bufferSystemName);
+	    if (a.getSubType()==Audio.BUFFER) {
+		setAssignedBuffer((AudioBuffer) a);
+	    }
+	    else {
+		log.warn("Attempt to assign incorrect object type to buffer - AudioBuffer expected.");
+		this._buffer = null;
+		this._bound = false;
+	    }
+	} else {
+	    log.error("Attempted to assign buffer " + bufferSystemName + " to Queued Source " + this.getSystemName());
+	}
     }
-
+    
     public AudioBuffer getAssignedBuffer() {
         return this._buffer;
     }
@@ -453,6 +512,27 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         }
     }
 
+    // Probably aught to be abstract, but I don't want to force the non-JOAL Source
+    // types to implement this (yet).  So default to failing.
+    public boolean queueAudioBuffers(List<AudioBuffer> audioBuffers) {
+	log.debug("Abstract queueAudioBuffers() called.");
+	return(false);
+    }
+
+    // Probably aught to be abstract, but I don't want to force the non-JOAL Source
+    // types to implement this (yet).  So default to failing.
+    public boolean queueAudioBuffer(AudioBuffer audioBuffer) {
+	return(false);
+    }
+
+    public boolean unqueueAudioBuffers() {
+	return(false);
+    }
+
+    // Probably aught to be abstract, but I don't want to force the non-JOAL Source
+    // types to implement this (yet).  So default to failing.
+    public int numQueuedBuffers() { return(0); }
+
     /**
      * Binds this AudioSource with the specified AudioBuffer
      * <p>
@@ -474,8 +554,16 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         this._bound = bound;
     }
 
+    protected void setQueued(boolean queued) {
+	this._queued = queued;
+    }
+
     public boolean isBound() {
         return this._bound;
+    }
+
+    public boolean isQueued() {
+	return this._queued;
     }
 
     public void stateChanged(int oldState) {

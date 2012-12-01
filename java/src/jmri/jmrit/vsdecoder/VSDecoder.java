@@ -447,11 +447,14 @@ public class VSDecoder implements PropertyChangeListener {
 
 	// Give all of the VSDSound objects the position translated relative to the listener position.
 	// This is a workaround for OpenAL requiring the listener position to always be at (0,0,0).
+	/*
 	PhysicalLocation ref = VSDecoderManager.instance().getVSDecoderPreferences().getListenerPhysicalLocation();
 	if (ref == null)
 	    ref = PhysicalLocation.Origin;
+	*/
 	for (VSDSound s : sound_list.values()) {
-	    s.setPosition(PhysicalLocation.translate(p, ref));
+	    //s.setPosition(PhysicalLocation.translate(p, ref));
+	    s.setPosition(p);
 	}
 	fireMyEvent(new VSDecoderEvent(this, VSDecoderEvent.EventType.LOCATION_CHANGE, p));
     }
@@ -870,6 +873,11 @@ public class VSDecoder implements PropertyChangeListener {
 	    } else if (el.getAttributeValue("type").equals("diesel2")) {
 		// Handle a Diesel Engine sound
 		Diesel2Sound es = new Diesel2Sound(el.getAttributeValue("name"));
+		es.setXml(el, vf);
+		sound_list.put(el.getAttributeValue("name"), es);
+	    } else if (el.getAttributeValue("type").equals("diesel3")) {
+		// Handle a Diesel Engine sound
+		Diesel3Sound es = new Diesel3Sound(el.getAttributeValue("name"));
 		es.setXml(el, vf);
 		sound_list.put(el.getAttributeValue("name"), es);
 	    } else if (el.getAttributeValue("type").equals("steam")) {

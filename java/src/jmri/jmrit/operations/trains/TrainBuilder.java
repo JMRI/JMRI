@@ -1148,7 +1148,6 @@ public class TrainBuilder extends TrainCommon{
 				Car c = carManager.getById(carList.get(carIndex));
 				if (c.getLocationName().equals(departLocation.getName())){
 					if (c.getTrackName().equals(departStageTrack.getName())){
-//						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingCarAtLoc"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
 						numCarsFromStaging++;
 						// populate car blocking hashtable
 						// don't block cabooses, cars with FRED, or passenger.  Only block lead cars in kernel
@@ -1169,12 +1168,12 @@ public class TrainBuilder extends TrainCommon{
 				}
 			}
 			// show how many cars are departing from staging
-			addLine(buildReport, FIVE, "Departing staging track ("+departStageTrack.getName()+") with "+numCarsFromStaging+" cars");
+			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildDepartingStagingCars"),new Object[]{departStageTrack.getLocation().getName(), departStageTrack.getName(), numCarsFromStaging}));
 			for (carIndex=0; carIndex<carList.size(); carIndex++){
 				Car c = carManager.getById(carList.get(carIndex));
 				if (c.getLocationName().equals(departLocation.getName())){
 					if (c.getTrackName().equals(departStageTrack.getName())){
-						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildStagingCarAtLoc"),new Object[]{c.toString(), (c.getLocationName()+", "+c.getTrackName())}));
+						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildStagingCarAtLoc"),new Object[]{c.toString(), c.getType(), c.getLoad()}));
 					}
 				}
 			}
@@ -1689,6 +1688,11 @@ public class TrainBuilder extends TrainCommon{
 				kCar.setPreviousNextDestination(car.getPreviousNextDestination());
 				kCar.setPreviousNextDestTrack(car.getPreviousNextDestTrack());
 			}
+		}
+		// warn if car's load wasn't generated out of staging
+		if (!train.acceptsLoadName(car.getLoad())) {
+			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildWarnCarDepartStaging"),
+					new Object[]{car.toString(), car.getLoad()}));
 		}
 		addLine(buildReport, SEVEN, BLANK_LINE);	// add line when in very detailed report mode
 		numberCars++;		// bump number of cars moved by this train

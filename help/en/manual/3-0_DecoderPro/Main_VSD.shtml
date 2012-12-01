@@ -57,29 +57,38 @@ OpenAL site.</p>
 <p>Please NOTE:  OpenAL is a separate project from JMRI and is neither
 maintained nor controlled by the JMRI team.</p>
 
-<h4>Quick Start - How to use Virtual Sound Decoder</h4>
+<a name="quickstart"></a><h4>Quick Start - How to use Virtual Sound Decoder</h4>
 <p>To get started with Virtual Sound Decoder, follow these steps.</p>
 <ol>
   <li>Make sure your sound system is working, and (if needed) you have
   installed OpenAL</li>
-  <li>Select Debug->Virtual Sound Decoder</li>
-  <li>With the VSDecoder window selected, load a VSD file (File->Load
-  VSD File)</li>
-  <li>Select a Profile in the Profile combo-box.</li>
-  <li>Assign a locomotive address or choose a locomotive from the
-  Roster</li>
-  <li>Click to the "Sounds" Tab and press the "Engine Start"
-  button.</li>
+  <li>Select Debug->Virtual Sound Decoder->VSDecoder Manager</li>
+  <li>With the VSDecoder Manager window selected, click the <em>Add
+  Decoder</em> button.</li>
+  <li>Configure the new VSDecoder
+  <ul>
+    <li>Select a loco from the Roster or enter an address
+    Manually</li>
+    <li>Click <em>Load VSD File</em> and load the "example.vsd"
+    file</li>
+    <li>Choose a Profile from the Profile combo-box.</li>
+    <li>Click <em>OK</em></li>
+  </ul></li>
+  <li>Press the "Engine Start" button.</li>
   <li>Run your train!!</li>
 </ol>
-
-<p><em>Note: You must select a Profile (or choose a Roster Entry) before you can Set the Address!</em></p>
-<p>You can save a VSDecoder profile selection to a
+<p>Each time you <em>Add Decoder</em> a new control panel will be
+added to the Manager window.  The buttons on the control panel are
+specific to that VSDecoder.</p>
+<p>In the Configure Dialog, you can save a VSDecoder profile selection to a
 Roster Entry, so that the profile is automatically loaded when the
 locomotive is selected from the Roster.  Select the Roster entry,
 choose a Profile, and click "Save".</p>
 
-<h4>Throttle Compatibility</h4>
+<p>For more detailed information on the VSDecoder Manager, see the
+<a href="VSD_Manager.shtml">VSDecoder Manager</a> manual page.</p>
+
+<a name="compatibility"></a><h4>Throttle Compatibility</h4>
 
 Virtual Sound Decoder requires a throttle that will report speed
 changes and function button presses to JMRI. Currently compatible
@@ -111,7 +120,7 @@ because they do not send throttle information to JMRI.</p>
 <p>The buttons on the Sounds tab can be used to trigger sounds if you
 are using an incompatible throttle system.</p>
 
-<a name="VSDLocations"></a><h4>Location Following</h4>
+<a name="locations"></a><a name="VSDLocations"></a><h4>Location Following</h4>
 <p>(Note: This function will be active starting with test release 3.1.5.)</p>
 <p>With input from locomotive tracking hardware, Virtual Sound Decoder is
 able to move the apparent source of the locomotive sound to follow the
@@ -128,42 +137,12 @@ supports the following tracking systems:
   <li>RailCom / DCC4PC (not tested)</li>
 </ul>
 
-If you have one of the systems noted as "not tested", and would like
+<p>If you have one of the systems noted as "not tested", and would like
 to help with testing and debug of this feature, please contact me on
 the <a href="http://groups.yahoo.com/group/jmriusers/">JMRIUsers
-Yahoo! Group</a>.  More systems will be added in the future.
-
-To enable VSD Location Following, follow these steps:
-</p>
-<ol>
-  <li>Follow the directions appropriate to your hardware system for
-  <!-- link below should point to the HELP page for Reporters -->
-  <a href="../../html/tools/Reporters.shtml">setting
-  up Reporters</a>.</li>
-  <li>From the main PanelPro or DecoderPro window, select Debug->Set Reporter Locations</li>
-  <li>In the dialog, set X / Y / Z coordinates for each reporter you
-  wish to use for VSD location following.  <em>Click "Save" for
-  each reporter</em>.</li>
-  <li>Save your configuration either in a config file or as part of a
-  Panel</li>
-  <li>Tell VSD where the listener is:
-  <ul>
-    <li>From the main window, select Debug->Virtual Sound Decoder</li>
-    <li>Choose File->VSDecoder Preferences</li>
-    <li>set the X / Y / Z location of the Listener according to the
-    same coordinates you used for the Reporter positions. Note the
-    Listener is assumed to be facing in the +Y direction</li>
-    <li>Click "Save"</li>
-    </ul>
-</ol>
-
-<p>The X / Y / Z location values can be in any unit you choose,
-including an arbitrary relative scheme, as long as you are
-consistent. Positive X is to the listener's right, positve Y is in front of the
-listener, and positive Z is up.  Negative values are left, behind, and
-down, respectively.  If you want a reporter to not affect the train's
-apparent location, set the reporter's location to (0, 0, 0) and it
-will be ignored.</p>
+Yahoo! Group</a>.  More systems will be added in the future.</p>
+<p>For details on setting up Location Following, see the <a
+href="VSD_LocationsMgr.shtml">Manage VSD Locations</a> instructions.</p>
 
 <p>When you have followed the above setup steps, launch a VSDecoder
 window, assign a locomotive and run it.  As your locomotive moves
@@ -183,8 +162,8 @@ following.</p>
   <li>Select Tools->Options</li>
   <li>Check the "Enable physical locations for Virtual Sound Decoder"
   option, and save the changes.</li>
-  <li>Select Operations->Locations</li>
-  <li>Select Tools->Set Physical Locations</li>
+  <li>Follow the directions in <a href="VSD_LocationsMgr.shtml">Manage
+  VSD Locations</a> to assign locations.</li>
 </ol>
 <p>To use Operations for location following, assign the specific locomotive to
 the train, then select the train in the locomotive's VSDecoder Options
@@ -193,95 +172,18 @@ move to the next location on the Route.</p>
 <p>For more information on Operations, see the <a href="./Ops_Start.shtml">Operations section</a> of
 the Manual.</p>
 
-
-<h4>Virtual Sound Decoder dialog</h4>
-<p>The Virtual Sound Decoder dialog is launched from the Debug menu.
-It provides several tabs that allow you to configure and control your
-locomotive sounds.  Each VSDecoder dialog represents and controls
-sounds for a single locomotive.  Multiple dialogs can be launched to
-provide sound for multiple locomotives.</p>
+<p><em>Note:</em> Operations Locations following is temporarily
+disabled in version 3.1.6.  It will be re-enabled in 3.1.7.</p>
 
 <h5>Menu Items</h5>
-<h6>Load VSD File</h6>
+<h6>File->Load VSD File</h6>
 <p>Load the Sound Profiles from a VSD File.  Profiles loaded will be
 available to any currently running or newly launched VSDecoder.</p>
-<h6>VSDecoder Preferences</h6>
+<h6>Edit->VSDecoder Preferences</h6>
 <p>Set preferences for VSDecoder operation.  See below for details.</p>
-<h5>Volume / Mute control</h5>
-<p>At the bottom of the window is a master volume slider and mute
-button.  These control the overall sound level for this locomotive,
-and affect all sounds generated by this VSDecoder window.</p>
-
-<h5>Config Tab</h5>
-<p><img src="images/vsdecoder/config_pane.png" alt="configuration tab"
-width="350" height="260" border="4"></p>
-<p>The Config tab allows you to select a Sound Profile and assign it
-to a locomotive.</p>
-<h6>Profile ComboBox</h6>
-<p>The Profile ComboBox allows you to select one of the currently loaded
-Sound Profiles.  If the box is empty, use the Load VSD File menu item
-(or select a Roster Entry - see below) to load a profile.</p>
-<h6>Address Select</h6>
-<p>Use the text box and protocol chooser to set the decoder address
-for this VSDecoder.  This number should match the decoder address
-of the locomotive you want the sounds to follow.  Press "Set" to
-assign the address.</p>
-<h6>Roster Select and Save</h6>
-<p> The Roster chooser allows you to select a locomotive from your
-Roster.  The Decoder Address will be automatically set to match
-the Roster entry. If you have previously saved a VSDecoder profile to that
-Roster entry (see below), this profile will also be automatically
-set.</p>
-<p>Click the "Save" button to store the currently selected Profile to
-the currently selected Roster entry.  The next time this Roster entry
-is selected, the Profile will be automatically loaded and set.</p>
-<p>WARNING: Versions prior to 3.1.5 have a bug here.  The "Save" button does NOT save the
-Roster entry change to disk.  You will have to Edit the Roster entry
-(from the top-level "Roster->Edit..." menu item) and Save the Roster
-entry for the changes to persist after you close DecoderPro.  Starting
-with version 3.1.5, the changes will be saved to disk automatically.</p>
-
-<h5>Options Tab</h5>
-<p><img src="images/vsdecoder/options_pane.png" alt="options tab"
-width="350" height="260" border="4"></p>
-<p>The Options tab allows the user to select various options for the
-selected Profile.  For example, a particular Profile may allow a
-choice of several different horn sounds, or turbo/non-turbo versions
-of an engine.  Selections here will vary depending on the chosen
-Profile.</p>
-
-<p>At this time, these features are not available, so the selectors shown
-are for demonstration only - they are non-functional.</p>
-
-<h6>Operations Train Selector</h6>
-<p>The one <i>functional</i> selector on this page allows the user to
-choose a Train to follow from the JMRI Operations feature.</p>
 
 
-<h5>Sounds Tab</h5>
-<p><img src="images/vsdecoder/sounds_pane.png" alt="sounds tab"
-width="350" height="260" border="4"></p>
-<p>The Sounds tab provides a series of buttons that allow the user to
-directly play the available sounds from the computer screen, without
-using a Throttle.  The buttons shown vary depending on the available
-sounds in the selected Profile.</p>
-<h6>Engine Start Button and Slider</h6>
-<p>To start the Engine, press the "Engine Start" button.  This will
-cause a start-up sound to be played, and then will enable the Engine
-sound to follow the Throttle setting for the selected locomotive.
-Pressing the Engine Start button again will play a shut-down sound to
-be played and silence the engine.</p>
-<p>By default, the Engine sounds will not play until the Engine Start
-button has been pressed.  If you prefer Engine sounds to play as soon
-as the Throttle is changed, this feature can be changed via the
-VSDecoder Preferences.</p>
-<p>The slider just above the Engine Start button is an indicator of
-which "notch" the Engine is in.  The slider does not control
-anything.  Just as on the prototype, the slider (and the engine
-sound!) follows the Throttle setting, not the actual locomotive
-speed.</p>
-
-<h4>VSDecoder Preferences</h4>
+<a name="preferences"></a><h4>VSDecoder Preferences</h4>
 <p>The VSDecoder Preferences pane allows the user to change various
 preferences in how the VSDecoder works.</p>
 <h5>Auto Start Engine</h5>

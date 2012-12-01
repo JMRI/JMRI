@@ -271,7 +271,7 @@ public class VSDFile extends ZipFile {
 		    if (!validateFiles(el, "notch-sound",file_elements)) {
 			return(new ValidateStatus(false, rb.getString("VSDFileStatusMissingSoundFile") + " : <notch-sound>"));
 		    }
-		    if (!validateFiles(el, "notch-transition", file_elements)) {
+		    if (!validateFiles(el, "notch-transition", file_elements, false)) {
 			return(new ValidateStatus(false, rb.getString("VSDFileStatusMissingSoundFile") + " : <notch-transition>"));
 		    }
 		} else if (type.equals("diesel2")) {
@@ -322,8 +322,12 @@ public class VSDFile extends ZipFile {
 	}
 	return(true);
     }
-    
+
     protected boolean validateOptionalFile(Element el, String name) {
+	return(validateOptionalFile(el, name, true));
+    }
+
+    protected boolean validateOptionalFile(Element el, String name, Boolean required) {
 	String s = el.getChildText(name);
 	if ((s != null) && (getFile(s) == null)) {
 	    log.debug("File " + s + " for element " + name + " in Element " + el.getAttributeValue("name") + " not found.");
@@ -333,12 +337,21 @@ public class VSDFile extends ZipFile {
     }
 
     protected boolean validateFiles(Element el, String name, String[] fnames) {
+	return(validateFiles(el, name, fnames, true));
+    }
+
+    protected boolean validateFiles(Element el, String name, String[] fnames, Boolean required) {
 	List elist = el.getChildren(name);
 	String s;
-	if (elist.size() == 0) {
+
+	// First, check to see if any elements of this <name> exist.
+	if ((elist.size() == 0) && (required)) {
+	    // Only fail if this type of element is required.
 	    log.debug("No elements of name " + name);
 	    return(false);
 	}
+
+	// Now, if the elements exist, make sure the files they point to exist.
 
 	// Would like to get rid of this suppression, but I think it's fairly safe to assume a list of children
 	// returned from an Element is going to be a list of Elements.

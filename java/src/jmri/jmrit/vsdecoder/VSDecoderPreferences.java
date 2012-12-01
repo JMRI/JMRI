@@ -234,6 +234,8 @@ public class VSDecoderPreferences {
     }
 
     public void setListenerPosition(ListeningSpot p) {
+	VSDecoderManager vm = VSDecoderManager.instance();
+	vm.setListenerLocation(vm.getDefaultListenerName(), p);
 	_listenerPosition = p;
     }
     // Note:  No setListenerPosition(String) for ListeningSpot implementation
@@ -243,8 +245,10 @@ public class VSDecoderPreferences {
     }
 
     public void setListenerPosition(PhysicalLocation p) {
-	_listenerPosition = new ListeningSpot();
-	_listenerPosition.setLocation(p);
+	VSDecoderManager vm = VSDecoderManager.instance();
+	vm.setListenerLocation(vm.getDefaultListenerName(), new ListeningSpot(p));
+	//_listenerPosition = new ListeningSpot();
+	//_listenerPosition.setLocation(p);
     }
 
     public AudioMode getAudioMode() {

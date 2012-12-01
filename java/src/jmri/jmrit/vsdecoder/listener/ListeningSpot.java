@@ -26,8 +26,8 @@ package jmri.jmrit.vsdecoder.listener;
  * @version			$Revision: 21510 $
  */
 
-import net.java.games.sound3d.Vec3f;
 import javax.vecmath.Vector3d;
+import javax.vecmath.Vector3f;
 import jmri.util.PhysicalLocation;
 import org.jdom.Element;
 import java.util.regex.*;
@@ -45,8 +45,19 @@ public class ListeningSpot {
     public ListeningSpot() {
 	_name = null;
 	_location = new Vector3d();
-	_up = new Vector3d(0.0d, 0.0d, 1.0d);
-	_lookAt = new Vector3d(0.0d, 1.0d, 0.0d);
+	_up = _upVector;
+	_lookAt = _rightVector;
+    }
+
+    public ListeningSpot(Vector3f position) {
+	_name = null;
+	_location = new Vector3d(position);
+	_up = _upVector;
+	_lookAt = _rightVector;
+    }
+
+    public ListeningSpot(Vector3d position) {
+	this(null, position);
     }
 
     public ListeningSpot(String name, Vector3d position) {
@@ -87,13 +98,29 @@ public class ListeningSpot {
 	return(_lookAt);
     }
 
+    /* TRig notes
+     * Trig x = map y
+     * Trig y = map x
+     * bearing = theta
+     * azimuth = 90 - rho
+     * map y = r sin (90-azimuth) cos bearing
+     * map x = r sin (90-azimuth) sin bearing
+     * map z = r cos (90-azimuth)
+     * r = sqrt( x^2 + y^2 + z^2 )
+     * bearing = theta = atan(map x / map y)
+     * azimuth = 90 - rho = 90 - acos(z / p)
+     */
+
     public Double getBearing() {
-	return(Math.toDegrees(Math.asin(_location.y / _location.x)));
+	//bearing = theta = atan(map x / map y)
+	return(Math.toDegrees(Math.atan(_location.x / _location.y)));
     }
 
     public Double getAzimuth() {
-	Double hypo = Math.sqrt(Math.pow(_location.x, 2.0d) + Math.pow(_location.y, 2.0d));
-	return(Math.toDegrees(Math.asin(_location.z / hypo)));
+	// r = sqrt( x^2 + y^2 + z^2 )
+	// azimuth = 90 - rho = 90 - acos(z / p)
+	Double r = Math.sqrt(Math.pow(_location.x, 2.0d) + Math.pow(_location.y, 2.0d) + Math.pow(_location.z, 2.0d));
+	return(Math.toDegrees(Math.acos(_location.z / r)));
     }
 
     public void setName(String n) {
@@ -141,11 +168,16 @@ public class ListeningSpot {
 
     public void setOrientation(double bearing, double azimuth) {
 	// Convert bearing + azimuth to look-at and up vectors.
-	// X = sin(baearing), Y = cos(bearing), Z = sin(azimuth)
-	double theta_b = Math.toRadians(bearing);  // Bearing in radians
-	double theta_a = Math.toRadians(azimuth);  // Azimuth in radians
-	Double hypo = Math.sqrt(Math.pow(_location.x, 2.0d) + Math.pow(_location.y, 2.0d));
-	_lookAt = new Vector3d(Math.sin(theta_b), Math.cos(theta_b), Math.sin(theta_a)*hypo);
+	// Bearing measured clockwise from Y axis.
+	// Azimuth measured up (or down) from X/Y plane.
+	// map y = r sin (90-azimuth) cos bearing
+	// map x = r sin (90-azimuth) sin bearing
+	// map z = r cos (90-azimuth)
+	// Assumes r = 1;
+	double y = Math.sin(Math.toRadians(90-azimuth)) * Math.cos(bearing);
+	double x = Math.sin(Math.toRadians(90-azimuth)) * Math.sin(bearing); 
+	double z = Math.cos(Math.toRadians(90-azimuth));
+	_lookAt = new Vector3d(x, y, z);
 	_up = calcUpFromLookAt(_lookAt);
     }
 

@@ -35,7 +35,7 @@ import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
 public class VSDecoderCreationAction extends AbstractAction {
 
     Boolean _useNewGUI = false;
-    private static JFrame openFrame = null;
+    //private static JFrame openFrame = null;
 
     /**
      * Constructor

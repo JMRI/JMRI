@@ -4,6 +4,7 @@ package jmri.jmrit.audio;
 
 import jmri.Audio;
 import javax.vecmath.Vector3f;
+import java.util.List;
 
 
 /**
@@ -240,6 +241,23 @@ public interface AudioSource extends Audio {
 //    public boolean bindAudioBuffer(AudioBuffer audioBuffer);
 
     /**
+     * Queues the linked AudioBuffer object to this Source's buffer queue
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Source
+     * </ul>
+     * @param audioBuffer the AudioBuffer object to enqueue to this AudioSource
+     */
+    public boolean queueBuffers(List<AudioBuffer> audioBuffers);
+
+    public boolean queueBuffer(AudioBuffer audioBuffer);
+
+    public boolean unqueueBuffers();
+
+    public int numQueuedBuffers();
+
+    /**
      * Method to return if this AudioSource has been bound to an AudioBuffer
      * <p>
      * Applies only to sub-types:
@@ -249,6 +267,17 @@ public interface AudioSource extends Audio {
      * @return True if bound to an AudioBuffer
      */
     public boolean isBound();
+
+    /**
+     * Method to return if this AudioSource has AudioBuffers queued to it
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Source
+     * </ul>
+     * @return True if AudioBuffers are queued.
+     */
+    public boolean isQueued();
 
     /**
      * Return the currently stored gain setting

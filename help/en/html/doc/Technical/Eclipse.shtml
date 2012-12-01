@@ -82,22 +82,22 @@ enabled. To install subversion do the following:
 To get the source code from SourceForge using Subversion you need to do
 the following:
 
-<OL>
-	<LI>Open Eclipse.</LI>
-	<LI>From the main menu bar select "File" then "Import..."</LI>
-	<LI>Click on "SVN" then "Project from SVN" then "Next"</LI>
-	<LI>Now create a new repository location and enter this URL:
-	"https://svn.code.sf.net/p/jmri/code/trunk/jmri"</LI>
-	<LI>If you have a SourceForge id and password enter that now,
-	otherwise leave them blank. The id and password are only necessary if
-	you're going to commit your work back to the repository.</LI>
-	<LI>Click "Next" then "Finish"</LI>
-	<LI>You should now see a window called "Check Out As", click ""Finish"</LI>
-	<LI>If all is well, the check out should begin. It might take a
-	while to download all of the JMRI files.</LI>
-</OL>
+ <OL>
+  <LI>Open Eclipse.</LI>
+  <LI>From the main menu bar select "File" then "Import..."</LI>
+  <LI>Click on "SVN" then "Project from SVN" then "Next"</LI>
+  <LI>Now create a new repository location and enter this URL for read only access:
+   "svn://svn.code.sf.net/p/jmri/code/trunk/jmri".</LI>
+  <P>If you have a SourceForge id and password enter the following URL with your user id in the
+   path name: "svn+ssh://user_id@svn.code.sf.net/p/jmri/code/trunk/jmri". Then when requested submit
+   your id and password.</P>
+  <LI>Click "Next" then "Finish"</LI>
+  <LI>You should now see a window called "Check Out As", click ""Finish"</LI>
+  <LI>If all is well, the check out should begin. It might take a while to download all of the
+   JMRI files.</LI>
+ </OL>
 
-<P>After the download is complete the Eclipse Package Explorer
+ <P>After the download is complete the Eclipse Package Explorer
 should look like this:</P>
 <img src="images/EclipsePackageExplorer.png">
 <P>After the download is complete, Eclipse will be reporting an
@@ -150,44 +150,43 @@ use the appropriate checkbox to generate what you want.</P>
  
 <ol>
 
-<LI>You need to configure the Java complier to not scrub the output
-folders, otherwise some of the resources files that are loaded by the
-ant build will disappear. To stop the scrub, select under the main
-control bar "Window-&gt;Preferences". Then in the preferences window,
-select "Java-&gt;Complier-&gt;Building". In the building window deselect
-"Scrub output folders when cleaning projects", then "OK".</LI>
+  <LI>You need to configure the complier compliance level to java 1.6. select under the main
+   control bar "Window-&gt;Preferences", then select "Java-&gt;Complier" Adjust the complier
+   compliance level to 1.6.
+ 
+  <LI>Next you need to configure the Java complier to not scrub the output folders, otherwise
+   some of the resources files that are loaded by the ant build will disappear. To stop the scrub,
+   select "Java-&gt;Complier-&gt;Building". In the building window deselect "Scrub output folders
+   when cleaning projects", then "OK".</LI>
 
-<LI>Then run the ant build again to load the output folders.</LI>
+  <LI>Then run the ant build again to load the output folders.</LI>
 
-<LI>From the "Run" menu, select "Run Configurations..." We'll use the window that
-opens to configure which program(s) to run. (If the Run menu does not
-have a "Run Configurations..." entry, be sure you selected the java directory in the
-navigation pane above - Eclipse menus are context sensitive)</LI>
+  <LI>From the "Run" menu, select "Run Configurations..." We'll use the window that opens to
+   configure which program(s) to run. (If the Run menu does not have a "Run Configurations..."
+   entry, be sure you selected the java directory in the navigation pane above - Eclipse menus are
+   context sensitive)</LI>
 
-<LI>On the left side, highlight "Java Application", then press the
-"New" icon above it. The icon looks like a document with a plus sign on
-the upper-right.</LI>
+  <LI>On the left side, highlight "Java Application", then press the "New" icon above it. The
+   icon looks like a document with a plus sign on the upper-right.</LI>
 
-<LI>You should now have a new "Main" tab highlighted. Above that,
-replace "New_configuration" with "DecoderPro". Below it, enter "jmri"
-(lower case important) for "Project:" and "apps.DecoderPro.DecoderPro"
-for "Main class:".</LI>
+  <LI>You should now have a new "Main" tab highlighted. Above that, replace "New_configuration"
+   with "DecoderPro". Below it, enter "jmri" (lower case important) for "Project:" and
+   "apps.DecoderPro.DecoderPro" for "Main class:".</LI>
 
-<LI>Select the "Arguments" tab, and under VM argments enter (You
-should probably cut and paste): 
-<BR> <PRE>
+  <LI>Select the "Arguments" tab, and under VM argments enter (You should probably cut and
+   paste): <BR> <PRE>
 -Xms10m
 -Xmx300m
 -Djava.security.policy=lib/security.policy 
 -Dapple.laf.useScreenMenuBar=true
 </PRE> If you're using a 32 bit windows system add the library path: <PRE>
 -Djava.library.path=.;lib;lib/windows/x86 
-</PRE> Note if you're using a 64 bit windows system change the library path
-to: <PRE>
+</PRE> Note if you're using a 64 bit windows system change the library path to: <PRE>
 -Djava.library.path=.;lib;lib/windows/x64
-</PRE></LI>
+</PRE>
+  </LI>
 
-<LI>Optional, select the "Common" tab, the section on "Display in favorites menu",
+  <LI>Optional, select the "Common" tab, the section on "Display in favorites menu",
         check the boxes next to "Run" and "Debug"</LI>
     
     <LI>If you'd like to create targets to make it easy to 

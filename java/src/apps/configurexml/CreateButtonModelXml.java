@@ -74,13 +74,13 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
             log.error("Could not find specified class: "+className);
             result = false;
         } catch (IllegalAccessException ex2) {
-            log.error("Unexpected access exception",ex2);
+            log.error("Unexpected access exception for class: "+className, ex2);
             result = false;
         } catch (InstantiationException ex3) {
             log.error("Could not instantiate specified class: "+className, ex3);
             result = false;
         } catch (Exception ex4) {
-            log.error("Exception while performing startup action", ex4);
+            log.error("Exception while performing startup action for class: "+className, ex4);
             result = false;
         }
         CreateButtonModel m = new CreateButtonModel();

@@ -48,7 +48,7 @@ public class TrainManifest extends TrainCommon {
 		else
 			newLine(fileOut, Setup.getRailroadName());
 		newLine(fileOut);
-		newLine(fileOut, rb.getString("ManifestForTrain")+" (" + train.getName() + ") "+ train.getDescription());
+		newLine(fileOut, MessageFormat.format(rb.getString("ManifestForTrain"), new Object[]{train.getName(), train.getDescription()}));
 		
 		String valid = MessageFormat.format(rb.getString("Valid"), new Object[]{getDate()});
 		
@@ -96,22 +96,19 @@ public class TrainManifest extends TrainCommon {
 						newLine(fileOut);
 					newWork = true;
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
+					String workAt = MessageFormat.format(rb.getString("ScheduledWorkAt"), new Object[]{routeLocationName});
 					if (!train.isShowArrivalAndDepartureTimesEnabled()){
-						newLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName);
+						newLine(fileOut, workAt);
 					} else if (r == 0){
-						newLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
-								+", "+rb.getString("departureTime")+" "+train.getFormatedDepartureTime());
+						newLine(fileOut, workAt	+ MessageFormat.format(rb.getString("departureTime"), new Object[] {train.getFormatedDepartureTime()}));
 					} else if (!rl.getDepartureTime().equals("")){
-						newLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
-								+", "+rb.getString("departureTime")+" "+rl.getFormatedDepartureTime());
+						newLine(fileOut, workAt	+ MessageFormat.format(rb.getString("departureTime"), new Object[] {rl.getFormatedDepartureTime()}));
 					} else if (Setup.isUseDepartureTimeEnabled() && r != routeList.size()-1){
-						newLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
-								+", "+rb.getString("departureTime")+" "+train.getExpectedDepartureTime(rl));
+						newLine(fileOut, workAt + MessageFormat.format(rb.getString("departureTime"), new Object[] {train.getExpectedDepartureTime(rl)}));
 					} else if (!expectedArrivalTime.equals("-1")){
-						newLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
-								+", "+rb.getString("estimatedArrival")+" "+ expectedArrivalTime);
+						newLine(fileOut, workAt	+ MessageFormat.format(rb.getString("estimatedArrival"), new Object[] {expectedArrivalTime}));
 					} else {
-						newLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName);
+						newLine(fileOut, workAt);
 					}
 					// add route comment
 					if (!rl.getComment().trim().equals(""))
@@ -186,15 +183,20 @@ public class TrainManifest extends TrainCommon {
 				String nextRouteLocationName = splitString(rlNext.getName());
 				if (!routeLocationName.equals(nextRouteLocationName)){
 					if (newWork){
-						StringBuffer buf = new StringBuffer(rb.getString("TrainDeparts")+ " " + routeLocationName +" "+ rl.getTrainDirectionString()
-								+ rb.getString("boundWith") +" ");
+						// Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
+						String trainDeparts = MessageFormat.format(
+								rb.getString("TrainDepartsCars"),
+								new Object[] { routeLocationName, rl.getTrainDirectionString(), 
+									cars, train.getTrainLength(rl),	Setup.getLengthUnit().toLowerCase(), 
+									train.getTrainWeight(rl) });
+						// Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450 feet, 3000 tons
 						if (Setup.isPrintLoadsAndEmptiesEnabled())
-							buf.append((cars-emptyCars)+" "+rb.getString("Loads")+", "+emptyCars+" "+rb.getString("Empties")+", ");
-						else
-							buf.append(cars +" "+rb.getString("cars")+", ");
-						String s = train.getTrainLength(rl)+" "+Setup.getLengthUnit().toLowerCase()+", "+train.getTrainWeight(rl)+" "+rb.getString("tons");
-						buf.append(s);
-						newLine(fileOut, buf.toString());
+							trainDeparts = MessageFormat.format(
+									rb.getString("TrainDepartsLoads"),
+									new Object[] { routeLocationName, rl.getTrainDirectionString(), 
+										cars-emptyCars, emptyCars, train.getTrainLength(rl),	Setup.getLengthUnit().toLowerCase(), 
+										train.getTrainWeight(rl) });
+						newLine(fileOut, trainDeparts);
 						newWork = false;
 						newLine(fileOut);
 					} else {
@@ -208,17 +210,17 @@ public class TrainManifest extends TrainCommon {
 						}
 						if (train.isShowArrivalAndDepartureTimesEnabled()){
 							if (r == 0)
-								s = s +", "+rb.getString("departureTime")+" "+train.getDepartureTime();
+								s = s + MessageFormat.format(rb.getString("departureTime"), new Object[] {train.getDepartureTime()});
 							else if (!rl.getDepartureTime().equals(""))
-								s = s +", "+rb.getString("departureTime")+" "+rl.getFormatedDepartureTime();
+								s = s + MessageFormat.format(rb.getString("departureTime"), new Object[] {rl.getFormatedDepartureTime()});
 							else if (Setup.isUseDepartureTimeEnabled() && !rl.getComment().equals("") && r != routeList.size()-1)
-								s = s +", "+rb.getString("departureTime")+" "+train.getExpectedDepartureTime(rl);
+								s = s + MessageFormat.format(rb.getString("departureTime"), new Object[] {train.getExpectedDepartureTime(rl)});
 						}
 						newLine(fileOut, s);
 					}
 				}
 			} else {
-				newLine(fileOut, rb.getString("TrainTerminatesIn")+ " " + routeLocationName);
+				newLine(fileOut, MessageFormat.format(rb.getString("TrainTerminatesIn"), new Object[] {routeLocationName}));
 			}
 			previousRouteLocationName = routeLocationName;
 		}

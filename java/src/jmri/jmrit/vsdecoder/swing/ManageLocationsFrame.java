@@ -25,13 +25,9 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
-import java.util.Set;
 import java.util.Map;
-import java.util.Iterator;
 import javax.swing.event.EventListenerList;
 import jmri.util.JmriJFrame;
-import javax.vecmath.Vector3d;
-import javax.vecmath.Vector2d;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.table.AbstractTableModel;
@@ -40,7 +36,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import jmri.util.PhysicalLocation;
 import jmri.util.WindowMenu;
-import jmri.jmrit.vsdecoder.swing.VSDSwingBundle;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.LoadVSDFileAction;
 import jmri.jmrit.vsdecoder.StoreXmlVSDecoderAction;
@@ -260,7 +255,7 @@ public class ManageLocationsFrame extends JmriJFrame {
 	this.setJMenuBar(new JMenuBar());
 	this.getJMenuBar().add(fileMenu);
 	this.getJMenuBar().add(editMenu);
-	this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.VSDManagerFrame", true); // Fix this... needs to be help for the new frame
+	this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.ManageLocationsFrame", true); // Fix this... needs to be help for the new frame
 	
     }
 

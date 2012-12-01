@@ -44,6 +44,8 @@ import jmri.LocoAddress;
 import jmri.PhysicalLocationReporter;
 import jmri.util.PhysicalLocation;
 import jmri.IdTag;
+import jmri.jmrit.vsdecoder.listener.VSDListener;
+import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
 
 // VSDecoderFactory
@@ -52,11 +54,13 @@ import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
 
 public class VSDecoderManager implements PropertyChangeListener {
 
+
     private static final ResourceBundle rb = VSDecoderBundle.bundle();
 
     private static final String vsd_property_change_name = "VSDecoder Manager";
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
+    HashMap<String, VSDListener> listenerTable; // list of listeners
     HashMap<String, VSDecoder> decodertable; // list of active decoders by System ID
     HashMap<String, VSDecoder> decoderAddressMap; // List of active decoders by address
     HashMap<String, String> profiletable;    // list of loaded profiles key = profile name, value = path
@@ -76,6 +80,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     private VSDecoder default_decoder = null;  // shortcut pointer to the default decoder (do we need this?)
 
     private static int vsdecoderID = 0;
+    private static int listenerID = 0;
 
     // Unused?
     //private PhysicalLocation listener_position;
@@ -84,6 +89,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     // WARNING: Should only be called from static instance()
     public VSDecoderManager() {
 	// Setup the decoder table
+	listenerTable = new HashMap<String, VSDListener>();
 	decodertable = new HashMap<String, VSDecoder>();
 	decoderAddressMap = new HashMap<String, VSDecoder>();
 	profiletable = new HashMap<String, String>();  // key = profile name, value = path
@@ -92,9 +98,12 @@ public class VSDecoderManager implements PropertyChangeListener {
 	String dirname = XmlFile.prefsDir()+ "vsdecoder" +File.separator;
 	XmlFile.ensurePrefsPresent(dirname);
 	vsdecoderPrefs = new VSDecoderPreferences(dirname+ rb.getString("VSDPreferencesFileName"));
-
 	// Listen to ReporterManager for Report List changes
 	setupReporterManagerListener();
+	// Get a Listener (the only one for now)
+	//VSDListener t = new VSDListener(getNextListenerID());
+	VSDListener t = new VSDListener();
+	listenerTable.put(t.getSystemName(), t);
     }
 
     public static VSDecoderManager instance() {
@@ -137,6 +146,14 @@ public class VSDecoderManager implements PropertyChangeListener {
 	// vsdecoderID initialized to zero, pre-incremented before return...
 	// first returned ID value is 1.
 	return("IAD:VSD:VSDecoderID" + (++vsdecoderID));
+    }
+
+    // To be used in the future
+    private String getNextListenerID() {
+	// ListenerID initialized to zero, pre-incremented before return...
+	// first returned ID value is 1.
+	// Prefix is added by the VSDListener constructor
+	return("VSDecoderID" + (++listenerID));
     }
 
     // New version (now)
@@ -266,6 +283,25 @@ public class VSDecoderManager implements PropertyChangeListener {
 
     public Collection<VSDecoder> getVSDecoderList() {
 	return(decodertable.values());
+    }
+
+    public String getDefaultListenerName() {
+	return(VSDListener.ListenerSysNamePrefix + "ListenerID1");
+    }
+
+    public ListeningSpot getDefaultListenerLocation() {
+	VSDListener l = listenerTable.get(getDefaultListenerName());
+	if (l != null)
+	    return(l.getLocation());
+	else
+	    return(null);
+    }
+
+    public void setListenerLocation(String id, ListeningSpot sp) {
+	VSDListener l = listenerTable.get(id);
+	log.debug("Set listener location " + sp + " listener: " + l);
+	if (l != null)
+	    l.setLocation(sp);
     }
 
     public void setDecoderPositionByID(String id, PhysicalLocation p) {
@@ -416,17 +452,23 @@ public class VSDecoderManager implements PropertyChangeListener {
 	    v.shutdown();
 	}
 	// Empty the DecoderTable
+	decodertable.clear();
+	/*
 	vk = decodertable.keySet();
 	it = vk.iterator();
 	while(it.hasNext()) {
 	    decodertable.remove(it.next());
 	}
+	*/
 	// Empty the AddressMap
+	decoderAddressMap.clear();
+	/*
 	vk = decoderAddressMap.keySet();
 	it = vk.iterator();
 	while(it.hasNext()) {
 	    decoderAddressMap.remove(it.next());
 	}
+	*/
     }
 
     public void propertyChange(PropertyChangeEvent evt) {

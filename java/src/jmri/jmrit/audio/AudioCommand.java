@@ -83,6 +83,10 @@ public class AudioCommand {
                 return "Load Sound (0x" + Integer.toHexString(this.command) + ")";
             case Audio.CMD_BIND_BUFFER:
                 return "Bind buffer (0x" + Integer.toHexString(this.command) + ")";
+            case Audio.CMD_QUEUE_BUFFERS:
+                return "Queue buffers (0x" + Integer.toHexString(this.command) + ")";
+            case Audio.CMD_UNQUEUE_BUFFERS:
+                return "Unqueue buffers (0x" + Integer.toHexString(this.command) + ")";
             case Audio.CMD_PLAY:
                 return "Play (0x" + Integer.toHexString(this.command) + ")";
             case Audio.CMD_PAUSE:

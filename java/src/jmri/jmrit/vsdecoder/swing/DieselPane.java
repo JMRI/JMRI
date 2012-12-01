@@ -25,7 +25,6 @@ package jmri.jmrit.vsdecoder.swing;
  */
 
 import java.util.ResourceBundle;
-import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JToggleButton;
@@ -35,10 +34,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import jmri.jmrit.vsdecoder.EnginePane;
-import jmri.jmrit.vsdecoder.EngineSoundEvent;
 
 @SuppressWarnings("serial")
 public class DieselPane extends EnginePane {
@@ -51,8 +48,6 @@ public class DieselPane extends EnginePane {
 
     JSpinner throttle_spinner;
     JToggleButton start_button;
-
-    EngineSoundEvent engine;
 
     Integer throttle_setting;
     Boolean engine_started;

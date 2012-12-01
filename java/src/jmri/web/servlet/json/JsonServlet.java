@@ -38,8 +38,6 @@ public class JsonServlet extends WebSocketServlet {
 	private ObjectMapper mapper;
 	
 	private final Set<JsonWebSocket> sockets = new CopyOnWriteArraySet<JsonWebSocket>();
-	private static ResourceBundle html = ResourceBundle.getBundle("jmri.web.server.Html");
-    private static ResourceBundle wsHtml = ResourceBundle.getBundle("jmri.web.servlet.json.JsonHtml");
 	private static Logger log = Logger.getLogger(JsonServlet.class);
 
 	public JsonServlet() {
@@ -168,13 +166,13 @@ public class JsonServlet extends WebSocketServlet {
         	}
         	response.getWriter().write(this.mapper.writeValueAsString(reply));
         } else {
-            response.getWriter().println(String.format(html.getString("HeadFormat"),
-                    html.getString("HTML5DocType"),
+            response.getWriter().println(String.format(ResourceBundle.getBundle("jmri.web.server.Html").getString("HeadFormat"),
+                    ResourceBundle.getBundle("jmri.web.server.Html").getString("HTML5DocType"),
                     "JSON Console",
                     JsonServlet.class.getSimpleName(),
-                    wsHtml.getString("HeadAdditions")));
-            response.getWriter().println(wsHtml.getString("BodyContent"));
-            response.getWriter().println(String.format(html.getString("TailFormat"), "", ""));
+                    ResourceBundle.getBundle("jmri.web.servlet.json.JsonHtml").getString("HeadAdditions")));
+            response.getWriter().println(ResourceBundle.getBundle("jmri.web.servlet.json.JsonHtml").getString("BodyContent"));
+            response.getWriter().println(String.format(ResourceBundle.getBundle("jmri.web.server.Html").getString("TailFormat"), "", ""));
         }
 	}
 
