@@ -56,7 +56,7 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 	// combo boxes
 
 	public TrainManifestOptionFrame() {
-		super(ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle").getString("TitleOptions"));
+		super(rb.getString("TitleOptions"));
 	}
 
 	public void initComponents(TrainEditFrame parent) {

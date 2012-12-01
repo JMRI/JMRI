@@ -3,9 +3,6 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.event.ActionEvent;
-import java.awt.Frame;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 
 /**
@@ -16,7 +13,6 @@ import javax.swing.AbstractAction;
  * @version $Revision$
  */
 public class TrainEditBuildOptionsAction extends AbstractAction {
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
     public TrainEditBuildOptionsAction(String s, TrainEditFrame frame) {
     	super(s);
@@ -32,10 +28,7 @@ public class TrainEditBuildOptionsAction extends AbstractAction {
     		f.dispose();
     	}
     	f = new TrainEditBuildOptionsFrame();
-    	//f.setLocation(frame.getLocation());
     	f.initComponents(frame);
-    	f.setExtendedState(Frame.NORMAL);  	
-    	f.setTitle(rb.getString("MenuItemBuildOptions"));
     }
 }
 

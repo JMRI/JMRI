@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20121201-0605-jake on Fri Nov 30 22:06:09 PST 2012 $Id$-->
+  <!--Written by JMRI version 20121201-2008-jake on Sat Dec 01 12:08:41 PST 2012 $Id$-->
   <decoderIndex version="250">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -3401,6 +3401,16 @@
       </family>
       <family name="MRC Sounder Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_sounder1666.xml">
         <model model="Diesel Sound Decoder 1666 Alco244SD60-70" numOuts="2" numFns="12">
+          <size length="17.4" width="17.4" height="4.0" units="mm" />
+        </model>
+      </family>
+      <family name="MRC Sounder Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_sounder1908.xml">
+        <model model="Steam Sound Decoder 1908" numOuts="2" numFns="28">
+          <size length="17.4" width="17.4" height="4.0" units="mm" />
+        </model>
+      </family>
+      <family name="MRC Sounder Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_sounder1909.xml">
+        <model model="Diesel Sound Decoder 1909 EMD 567/645/645E/710 Alco 244/539T" numOuts="2" numFns="28">
           <size length="17.4" width="17.4" height="4.0" units="mm" />
         </model>
       </family>

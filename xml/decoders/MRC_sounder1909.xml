@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2007 All rights reserved -->
+<!-- $Id: MRC_sounder1909.xml 17977 2011-07-18 17:23:46Z zoo $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bryan Vianco" version="3" lastUpdated="20120310"/>  
+  <version author="Christopher Zurek" version="2" lastUpdated="20081218"/>
+  <version author="Pete Cesaro" version="1" lastUpdated="20080307"/>
+<!-- made from the MRC_1645 file by Bill Chown -->
+<!-- added many decoder-specific tool tips -->
+<!-- added CV identities to all tool tips -->
+<!-- Added local panel for Lights since I needed to add some text description for its use -->
+<!-- Version 2 - Changed Horn and Bell choices to drop downs (Christopher Zurek) -->
+<!-- Version 3 - Updated for 1909 specs -->
+  <decoder>
+    <family name="MRC Sounder Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
+      <model model="Diesel Sound Decoder 1909 EMD 567/645/645E/710 Alco 244/539T" numOuts="2" numFns="28">
+        <size length="17.4" width="17.4" height="4.0" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <variable label="Short Address" CV="1" comment="Range 1-127" tooltip="Sets the Short, Primary or 2-digit address, CV 1, range 1-127" item="Short Address" default="3">
+        <shortAddressVal/>
+        <label>Short Address</label>
+        <comment>Range 1-127</comment>
+      </variable>
+      <variable label="Acceleration" CV="120" item="Accel" default="0" tooltip="Note: Sets the acceleration rate (delay) in CV120, range 0(default)-32" comment="Range 0-32">
+        <decVal max="32"/>
+        <label>Acceleration</label>
+        <comment>Range 0-32</comment>
+      </variable>
+      <variable label="Deceleration" CV="121" item="Decel" default="0" tooltip="Note: Sets the deceleration rate (delay) in CV121, range 0(default)-32" comment="Range 0-32">
+        <decVal max="32"/>
+        <label>Deceleration</label>
+        <comment>Range 0-32</comment>
+      </variable>
+      <variable label="Manufacturer version number" CV="7" readOnly="yes" tooltip="CV7=32 for all MRC Brilliance models, Read Only" item="Decoder Version" default="32">
+        <decVal/>
+        <label>Manufacturer version number</label>
+      </variable>
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" tooltip="CV8=143 for MRC, Read Only" item="Manufacturer" default="143">
+        <decVal/>
+        <label>Manufacturer ID</label>
+      </variable>
+      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended (4 digit) address, range 128-9999, mapped to CV17 and 18" comment="4 digit address (Range 0001-9999)">
+        <longAddressVal/>
+        <label>Long Address</label>
+        <comment>4 digit address (Range 0001-9999)</comment>
+      </variable>
+      <variable label="Advanced consist address" CV="19" mask="XVVVVVVV" item="Consist Address" tooltip="CV19, range 1-127">
+        <decVal/>
+        <label>Advanced consist address</label>
+      </variable>
+      <variable label="Consist Direction" CV="19" mask="VXXXXXXX" tooltip="CV19, Normal(default) or Reversed(address+128)">
+        <enumVal>
+          <enumChoice choice="Normal">
+            <choice>Normal</choice>
+          </enumChoice>
+          <enumChoice choice="Reversed">
+            <choice>Reversed</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Direction</label>
+      </variable>
+      <variable label="Functions Respond to Address" CV="21" mask="XXXXXXXV" tooltip="CV21, least bit Def=0">
+        <enumVal>
+          <enumChoice choice="Locomotive address only">
+            <choice>Locomotive address only</choice>
+          </enumChoice>
+          <enumChoice choice="Respond to consist address">
+            <choice>Respond to consist address</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Functions Respond to Address</label>
+      </variable>
+      <variable label="Normal direction of motion" CV="29" tooltip="CV29, '1' (least significant) bit, Forward(0)(default) or Reverse(1)" mask="XXXXXXXV" item="Locomotive Direction">
+        <enumVal>
+          <enumChoice choice="Forward">
+            <choice>Forward</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse">
+            <choice>Reverse</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Normal direction of motion</label>
+      </variable>
+      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" tooltip="CV29, '2' bit. Sets the Speed Step for motor, also affects some light settings" item="Speed Step Mode" default="1">
+        <enumVal>
+          <enumChoice choice="14">
+            <choice>14</choice>
+          </enumChoice>
+          <enumChoice choice="28/128 (recommended)">
+            <choice>28/128 (recommended)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Speed Steps</label>
+      </variable>
+      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="0" item="Analog (DC) Operation">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Analog conversion mode</label>
+      </variable>
+      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" tooltip="CV29, '32' bit" item="Address Format">
+        <enumVal>
+          <enumChoice choice="2 digit addressing">
+            <choice>2 digit addressing</choice>
+          </enumChoice>
+          <enumChoice choice="4 digit addressing">
+            <choice>4 digit addressing</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Addressing Mode</label>
+      </variable>
+      <variable label="Master volume control" CV="49" item="Sound Setting 16" default="63" tooltip="CV49, range 0-63" comment="Range 0-63">
+        <decVal max="63"/>
+        <label>Master volume control</label>
+        <comment>Range 0-63</comment>
+      </variable>
+	<variable label="Horn type" CV="50" item="Sound Option 1" default="13" tooltip="CV50" comment="Range 0-22">
+        <enumVal>
+          <enumChoice choice="Horn 1">
+            <choice>Horn 1</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 2">
+            <choice>Horn 2</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 3">
+            <choice>Horn 3</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 4">
+            <choice>Horn 4</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 5">
+            <choice>Horn 5</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 6">
+            <choice>Horn 6</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 7">
+            <choice>Horn 7</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 8">
+            <choice>Horn 8</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 9">
+            <choice>Horn 9</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 10">
+            <choice>Horn 10</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 11">
+            <choice>Horn 11</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 12">
+            <choice>Horn 12</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 13">
+            <choice>Horn 13</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 14">
+            <choice>Horn 14</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 15">
+            <choice>Horn 15</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 16">
+            <choice>Horn 16</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 17">
+            <choice>Horn 17</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 18">
+            <choice>Horn 18</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 19">
+            <choice>Horn 19</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 20">
+            <choice>Horn 20</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 21">
+            <choice>Horn 21</choice>
+          </enumChoice>
+          <enumChoice choice="Horn 22">
+            <choice>Horn 22</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Horn type</label>
+        <comment>Range 0-22</comment>
+      </variable>
+      <variable label="Horn volume" CV="51" item="Sound Setting 1" default="12" tooltip="CV51, range 0-15" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Horn volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Bell type" CV="52" item="Sound Option 2" default="3" tooltip="CV52 Note: Bell, Dynamic Brake and Rail Wheel Clack cannot play at the same time" comment="Range 0-6">
+        <enumVal>
+          <enumChoice choice="Bell 1">
+            <choice>Bell 1</choice>
+          </enumChoice>
+          <enumChoice choice="Bell 2">
+            <choice>Bell 2</choice>
+          </enumChoice>
+          <enumChoice choice="Bell 3">
+            <choice>Bell 3</choice>
+          </enumChoice>
+          <enumChoice choice="Bell 4">
+            <choice>Bell 4</choice>
+          </enumChoice>
+          <enumChoice choice="Bell 5">
+            <choice>Bell 5</choice>
+          </enumChoice>
+          <enumChoice choice="Bell 6">
+            <choice>Bell 6</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Bell type</label>
+        <comment>Range 0-6</comment>
+      </variable>
+      <variable label="Bell volume" CV="53" item="Sound Setting 2" default="12" tooltip="CV53, range 0-15 Note: Bell, Dynamic Brake and Rail Wheel Clack cannot play at the same time" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Bell volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Bell ring rate" CV="54" item="Sound Option 7" default="3" tooltip="CV54, range 0-50" comment="Range 0-50">
+        <decVal max="50"/>
+        <label>Bell ring rate</label>
+        <comment>Range 0-50</comment>
+      </variable>
+      <variable label="Diesel rumble volume" CV="55" item="Sound Setting 3" default="12" tooltip="CV55, range 0-15" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Diesel rumble volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Brake squeal volume" CV="56" item="Sound Setting 4" default="7" tooltip="CV56, range 0-15" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Brake squeal volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Dynamic brake volume" item="Sound Setting 5" CV="57" default="12" tooltip="CV57, range 0-15 Note: Bell, Dynamic Brake and Rail Wheel Clack cannot play at the same time" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Dynamic brake volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Air release volume" item="Sound Setting 6" CV="58" default="12" tooltip="CV58, range 0-15" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Air release volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Air pump volume" CV="59" item="Sound Setting 7" default="12" tooltip="CV59, range 0-15" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Air pump volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Safety pop value volume" CV="60" item="Sound Setting 8" default="12" tooltip="CV60, range 0-15" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Safety pop value volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Engine cooling fan volume" CV="61" item="Sound Setting 9" default="12" tooltip="CV61, range 0-15" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Engine cooling fan volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Coupling volume" CV="62" item="Sound Setting 11" default="12" tooltip="CV62, range 0-12" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Coupling volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Random noise volume" CV="63" item="Sound Setting 12" default="12" tooltip="CV63, range 0-15" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Random noise volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Rail wheel clack" CV="64" item="Sound Setting 15" default="12" tooltip="CV64, range 0-15 Note: Bell, Dynamic  Brake and Rail Wheel Clack cannot play at the same time. Rail Wheel Clack cannot play while loco is idle." comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Rail wheel clack</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="User ID #1" CV="105" item="User Id #1" default="0" tooltip="CV105, range 0-255" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>User ID #1</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable label="User ID #2" CV="106" item="User Id #2" default="0" tooltip="CV106, range 0-255" comment="Range 0-255">
+        <decVal max="255"/>
+        <label>User ID #2</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <variable label="Sand dropping volume" CV="112" item="Sound Setting 13" default="12" tooltip="CV112, range 0-15" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Sand dropping volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+      <variable label="Flange squeal volume" CV="116" item="Sound Setting 14" default="12" tooltip="CV116, range 0-15" comment="Range 0-15">
+        <decVal max="15"/>
+        <label>Flange squeal volume</label>
+        <comment>Range 0-15</comment>
+      </variable>
+	<variable label="Back EMF Load Control Proportional Gain Kp" CV="113" item="Sound Setting 19" default="20" tooltip="CV113, range 0-31" comment="Range 0-31">
+        <decVal max="31"/>
+        <label>Back EMF Load Control Proportional Gain Kp</label>
+        <comment>Range 0-31</comment>
+      </variable>
+	<variable label="Back EMF Load Control Integral Gain Ki" CV="114" item="Sound Setting 20" default="10" tooltip="CV114, range 0-31" comment="Range 0-31">
+        <decVal max="31"/>
+        <label>Back EMF Load Control Integral Gain Kp</label>
+        <comment>Range 0-31</comment>
+      </variable>
+      <variable label="Auto Brake squeal" item="Sound Option 3" CV="115" default="1" tooltip="CV115, Off(0) or On(1)(default)">
+        <enumVal>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+          <enumChoice choice="On">
+            <choice>On</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Auto Brake squeal</label>
+      </variable>
+      <variable label="Diesel notch mode" item="Sound Option 5" CV="122" default="0" tooltip="CV122, Auto(0)(default) or Manual(3)">
+        <enumVal>
+          <enumChoice choice="Auto notch - RPM and notch synchro to speed" value="0">
+            <choice>Auto notch - RPM and notch synchro to speed</choice>
+          </enumChoice>
+          <enumChoice choice="Manual notch - notch up/down with F8/F9" value="3">
+            <choice>Manual notch - notch up/down with F8/F9</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Diesel notch mode</label>
+      </variable>
+      <variable label="Prime mover sound" item="Sound Option 6" CV="123" default="0" tooltip="CV123, EMD 645E (0 - Default), EMD 645 (1), EMD 710 (2), ALCO 244 (3), ALCO539T (4), or EMD 567(5)">
+        <enumVal>
+          <enumChoice choice="EMD 645E" value="0">
+            <choice>EMD 645E</choice>
+          </enumChoice>
+          <enumChoice choice="EMD 645" value="1">
+            <choice>EMD 645</choice>
+          </enumChoice>
+	    <enumChoice choice="EMD 710" value="2">
+            <choice>EMD 710</choice>
+          </enumChoice>
+          <enumChoice choice="Alco 244" value="3">
+            <choice>Alco 244</choice>
+          </enumChoice>
+          <enumChoice choice="Alco 539T" value="4">
+            <choice>Alco 539T</choice>
+          </enumChoice>
+	    <enumChoice choice="EMD 567" value="5">
+            <choice>EMD 567</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime mover sound</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="125" default="1"/>
+    </resets>
+  </decoder>
+  <pane name="MRC">
+    <column>
+      <label label="MRC 1909 Diesel Sounder Decoder with 6 Prime Mover Sounds">
+        <label>MRC 1909 Diesel Sounder Decoder with 6 Prime Mover Sounds</label>
+      </label>
+      <label label="Six types of synchronized diesel prime movers, EMD567B/645/645E/710 - ALCO 244/539T">
+        <label>Six types of synchronized diesel prime movers, EMD567B/645/645E/710 - ALCO 244/539T</label>
+      </label>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <separator/>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <display item="Functions Respond to Address"/>
+    </column>
+    <name>MRC</name>
+  </pane>
+</decoder-config>

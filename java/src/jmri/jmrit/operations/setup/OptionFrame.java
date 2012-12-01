@@ -70,7 +70,7 @@ public class OptionFrame extends OperationsFrame{
 	// combo boxes
 
 	public OptionFrame() {
-		super(ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle").getString("TitleOptions"));
+		super(rb.getString("TitleOptions"));
 	}
 
 	public void initComponents() {

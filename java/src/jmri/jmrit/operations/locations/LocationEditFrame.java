@@ -618,10 +618,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		if (b.isSelected()) {
 			_location.addTypeName(b.getText());
 			// show which tracks will service this car type
-			if (f != null)
-				f.dispose();
-			f = new LocationsByCarTypeFrame();
-			f.initComponents(_location, b.getText());
+			if (CarTypes.instance().containsName(b.getText())) {
+				if (f != null)
+					f.dispose();
+				f = new LocationsByCarTypeFrame();
+				f.initComponents(_location, b.getText());
+			}
 		} else {
 			_location.deleteTypeName(b.getText());
 		}
