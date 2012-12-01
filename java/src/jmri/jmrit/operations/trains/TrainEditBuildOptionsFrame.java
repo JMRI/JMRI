@@ -180,7 +180,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	public static final String DISPOSE = "dispose" ;
 
 	public TrainEditBuildOptionsFrame() {
-		super();
+		super(rb.getString("MenuItemBuildOptions"));
  	}
 
 	public void initComponents(TrainEditFrame parent) {
