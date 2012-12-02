@@ -96,9 +96,11 @@ class Diesel3Sound extends EngineSound {
 		log.debug("Loop: Adding buffer " + b.getSystemName());
 		_sound.queueBuffer(b);
 	    }
-	    _sound.play();
+	    if (!is_playing) {
+		_sound.play();
+		is_playing = true;
+	    }
 	    t.start();
-	    is_playing = true;
 	    is_looping = true;
 	}
     }
@@ -209,7 +211,8 @@ class Diesel3Sound extends EngineSound {
     protected void handleNotchTimerPop(ActionEvent e) {
 	// semi-Recursively call the speed change handler until it quits setting up timers.
 	//notch_transition.fadeOut();
-	changeSpeed(throttle_setting, engine_pane);
+	//changeSpeed(throttle_setting, engine_pane);
+	changeThrottle(throttle_setting);
     }
 
     @Override
