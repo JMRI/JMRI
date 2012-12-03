@@ -113,7 +113,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
             		hoverText = famComment + "  CV7=" + verString;
         		}
         	}
-            if ((familyElement==null || !family.equals(familyElement.toString())) && !familyNameNode.containsKey(family) ) {
+            if (familyElement==null || (!family.equals(familyElement.toString()) && !familyNameNode.containsKey(family) )) {
                 // need new family node - is there only one model? Expect the
                 // family element, plus the model element, so check i+2
                 // to see if its the same, or if a single-decoder family
