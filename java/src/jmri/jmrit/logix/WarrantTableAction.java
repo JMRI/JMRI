@@ -901,19 +901,23 @@ public class WarrantTableAction extends AbstractAction {
                 case ADDRESS_COLUMN:
                     String addr = (String)value;
                     if (addr!= null && addr.length() != 0) {
+                    	addr = addr.toUpperCase().trim();
                         try {
-                            char ch = Character.toUpperCase(addr.charAt(addr.length()-1));
                             boolean isLong = false;
-                            int n = 0;
-                            if (Character.isDigit(ch)){
-                                n = Integer.parseInt(addr);
-                                ch = addr.charAt(0);
-                                isLong = (ch=='0' && addr.length()>3);  // leading zero means long
-                            } else {
-                                isLong = (ch == 'L');
-                                n = Integer.parseInt(addr.substring(0, addr.length()-1));
-                            }
-                            w.setDccAddress( new DccLocoAddress(n, isLong));
+                            int dccNum = 0;
+                        	if (addr.endsWith("(L)")) {
+                        		isLong = true;
+                        	} else if (!addr.endsWith("(S)")) {
+                        		// no suffix specified
+                        		dccNum = Integer.parseInt(addr);
+                        		Character ch = addr.charAt(0);
+                                isLong = (ch=='0' || addr.length()>3);  // leading zero means long
+                                w.setDccAddress( new DccLocoAddress(dccNum, isLong));
+                                break;
+                        	}
+                        	// user has specified short or long
+                        	dccNum = Integer.parseInt(addr.substring(0, addr.length()-3));
+                            w.setDccAddress( new DccLocoAddress(dccNum, isLong));
                         } catch (NumberFormatException nfe) {
                             msg = java.text.MessageFormat.format(rb.getString("BadDccAddress"), addr);
                         }
