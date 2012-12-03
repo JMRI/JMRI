@@ -44,7 +44,6 @@ public abstract class AppsBase {
     protected boolean preferenceFileExists;
     static boolean log4JSetUp = false;
     static boolean preInit = false;
-    private static final String jmriLog = "****** JMRI log *******";
     static Logger log = Logger.getLogger(AppsBase.class.getName());
 
     /**
