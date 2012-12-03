@@ -49,13 +49,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
-	public static final String NAME = rb.getString("Name");	// Sort by choices
-	public static final String TIME = rb.getString("Time");
-	public static final String DEPARTS = rb.getString("Departs");
-	public static final String TERMINATES = rb.getString("Terminates");
-	public static final String ROUTE = rb.getString("Route");
-	public static final String STATUS = rb.getString("Status");
-	public static final String ID = rb.getString("Id");
+	//public static final String NAME = rb.getString("Name");	// Sort by choices
+	//public static final String TIME = rb.getString("Time");
+	//public static final String DEPARTS = rb.getString("Departs");
+	//public static final String TERMINATES = rb.getString("Terminates");
+	//public static final String ROUTE = rb.getString("Route");
+	//public static final String STATUS = rb.getString("Status");
+	//public static final String ID = rb.getString("Id");
 	
 	public static final String MOVE = rb.getString("Move");
 	public static final String TERMINATE = rb.getString("Terminate");
@@ -75,8 +75,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	JScrollPane trainsPane;
 	
 	// radio buttons
-	JRadioButton showTime = new JRadioButton(TIME);
-	JRadioButton showId = new JRadioButton(ID);
+	JRadioButton showTime = new JRadioButton(rb.getString("Time"));
+	JRadioButton showId = new JRadioButton(rb.getString("Id"));
     
     JRadioButton moveRB = new JRadioButton(MOVE);
     JRadioButton terminateRB = new JRadioButton(TERMINATE);
@@ -387,7 +387,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	int _status = TableSorter.ASCENDING;
 	protected String getSortBy(){
 		// set the defaults
-		String sortBy = NAME;
+		String sortBy = TrainsTableModel.TIMECOLUMNNAME;
 		_status = TableSorter.ASCENDING;
 		// now look to see if a sort is active
 		for (int i=0; i<sorter.getColumnCount(); i++){
