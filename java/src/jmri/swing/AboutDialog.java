@@ -41,6 +41,7 @@ public class AboutDialog extends JDialog {
         this.pack();
         this.setResizable(false);
         this.setLocationRelativeTo(null); // center on screen
+        this.setTitle(MessageFormat.format(rb.getString("TitleAbout"), Application.getApplicationName()));
         log.debug("End constructor");
     }
 
@@ -85,6 +86,7 @@ public class AboutDialog extends JDialog {
 
         pane1.add(new JLabel(MessageFormat.format(rb.getString("DefaultVersionCredit"),
                 new Object[]{Version.name()})));
+        pane1.add(new JLabel(Version.getCopyright()));
         pane1.add(new JLabel(MessageFormat.format(rb.getString("JavaVersionCredit"),
                 new Object[]{System.getProperty("java.version", "<unknown>"),
                     Locale.getDefault().toString()})));
@@ -96,5 +98,5 @@ public class AboutDialog extends JDialog {
         c.setAlignmentX(Component.CENTER_ALIGNMENT); // doesn't work
         p.add(c);
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AboutDialog.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AboutDialog.class.getName());
 }
