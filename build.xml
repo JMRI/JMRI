@@ -183,20 +183,20 @@
         classpathref="path.svnant"/>
     
     <!-- to use default command link authentification -->
-<!-- 
     <svnSetting
         id="svn.settings"
         javahl="false"
         svnkit="false"/>
- -->
 
     <!-- to use authentification credentials from local.properties file -->
+<!-- 
     <svnSetting
         id="svn.settings"
         username="${sourceforge.userid}"
         password="${sourceforge.password}"
         javahl="true"
         svnkit="true"/>
+ -->
 
     <target name="check-ant-requirements"
             description="check build system requirements">
@@ -1019,7 +1019,7 @@
             <arg value="-avz"/>
             <arg value="--delete"/>
             <arg value="${doctarget}"/>
-            <arg value="jacobsen,jmri@web.sourceforge.net:htdocs/JavaDoc/"/>
+            <arg value="${sourceforge.userid},jmri@web.sourceforge.net:htdocs/JavaDoc/"/>
         </exec>
     </target>
 
@@ -1369,7 +1369,7 @@
 <!-- targets to support revision control repository management -->
 
     <!-- where is the SVN repository -->
-    <property name="repository.base-url" value="https://jmri.svn.sourceforge.net/svnroot/jmri"/>
+    <property name="repository.base-url" value="svn+ssh://${sourceforge.userid}@svn.code.sf.net/p/jmri/code/"/>
 
     <!-- you can set these to alternate values in local.properties
          when you need to test.  Please do not change them here! -->
