@@ -29,8 +29,10 @@ import jmri.AudioManager;
 public abstract class AbstractAudioManager extends AbstractManager
     implements AudioManager {
 
+    @Override
     public char typeLetter() { return 'A'; }
 
+    @Override
     public Audio provideAudio(String name) throws AudioException {
         Audio t = getAudio(name);
         if (t!=null) return t;
@@ -40,6 +42,7 @@ public abstract class AbstractAudioManager extends AbstractManager
             return newAudio(makeSystemName(name), null);
     }
 
+    @Override
     public Audio getAudio(String name) {
         Audio t = getByUserName(name);
         if (t!=null) return t;
@@ -47,22 +50,25 @@ public abstract class AbstractAudioManager extends AbstractManager
         return getBySystemName(name);
     }
 
+    @Override
     public Audio getBySystemName(String key) {
         return (Audio)_tsys.get(key);
     }
 
+    @Override
     public Audio getByUserName(String key) {
         return key==null?null:(Audio)_tuser.get(key);
     }
 
+    @Override
     public Audio newAudio(String systemName, String userName) throws AudioException {
         if (log.isDebugEnabled()) log.debug("new Audio:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));
-        if (systemName == null){ 
-        	log.error("SystemName cannot be null. UserName was "
-        			+( (userName==null) ? "null" : userName));
-        	return null;
+        if (systemName == null) { 
+            log.error("SystemName cannot be null. UserName was "
+                    +( (userName==null) ? "null" : userName));
+            return null;
         }
         // is system name in correct format?
         if ((!systemName.startsWith(""+getSystemPrefix()+typeLetter()+Audio.BUFFER))
@@ -87,8 +93,8 @@ public abstract class AbstractAudioManager extends AbstractManager
             return s;
         }
         if ( (s = getBySystemName(systemName)) != null) {
-			if ((s.getUserName() == null) && (userName != null))
-				s.setUserName(userName);
+            if ((s.getUserName() == null) && (userName != null))
+                s.setUserName(userName);
             else if (userName != null) log.warn("Found audio via system name ("+systemName
                                     +") with non-null user name ("+userName+")");
             return s;

@@ -53,10 +53,12 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
         super(systemName.toUpperCase(), userName);
     }
     
+    @Override
     public int getState() {
         return this._state;
     }
 
+    @Override
     public void setState(int newState) {
         Object _old = this._state;
         this._state = newState;

@@ -58,6 +58,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
      * @param o Object to store, of type AudioManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element audio = new Element("audio");
         setStoreElementClass(audio);
@@ -271,6 +272,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
      */
     abstract public void setStoreElementClass(Element audio);
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -281,6 +283,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
      * @param audio Top level Element to unpack.
      * @return true if successful
      */
+    @Override
     abstract public boolean load(Element audio);
 
     /**

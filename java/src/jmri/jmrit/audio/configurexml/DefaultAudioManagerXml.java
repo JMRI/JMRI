@@ -42,6 +42,7 @@ public class DefaultAudioManagerXml extends AbstractAudioManagerConfigXML {
      * Default implementation is to use the local class here.
      * @param audio The top-level element being created
      */
+    @Override
     public void setStoreElementClass(Element audio) {
         audio.setAttribute("class","jmri.jmrit.audio.configurexml.DefaultAudioManagerXml");
     }
@@ -52,6 +53,7 @@ public class DefaultAudioManagerXml extends AbstractAudioManagerConfigXML {
      * @param audio Top level Element to unpack.
      * @return true if successful
      */
+    @Override
     public boolean load(Element audio) {
         // create the master object
         InstanceManager.audioManagerInstance();
