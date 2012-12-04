@@ -2675,10 +2675,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			selectedObject = null;
 			for (int i = 0; i<turnoutList.size();i++) {
 				LayoutTurnout t = turnoutList.get(i);
-				// check the center point
+				// check a rectangle as large as turnout circle, but at least size 4
 				Point2D pt = t.getCoordsCenter();
+                double size = SIZE * turnoutCircleSize;
+                if (size < SIZE2*2.0) size = SIZE2*2.0;
 				Rectangle2D r = new Rectangle2D.Double(
-						pt.getX()-(SIZE2*2.0),pt.getY()-(SIZE2*2.0),4.0*SIZE2,4.0*SIZE2);
+						pt.getX()-size, pt.getY()-size, size+size, size+size);
 				if (r.contains(dLoc)) {
 					// mouse was pressed on this turnout
 					selectedObject = t;
