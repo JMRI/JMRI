@@ -245,6 +245,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         return(num_processed[0]);
     }
 
+    @Override
     boolean bindAudioBuffer(AudioBuffer audioBuffer) {
         // First check we've been initialised
         if (!_initialised) {
@@ -263,6 +264,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         return true;
     }
 
+    @Override
     protected void changePosition(Vector3f pos) {
         if (_initialised) {
             al.alSource3f(_source[0], AL.AL_POSITION, pos.x, pos.y, pos.z);
@@ -377,6 +379,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void doPlay() {
         if (log.isDebugEnabled()) log.debug("Play JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && (isBound() || isQueued())) {
@@ -386,6 +389,7 @@ public class JoalAudioSource extends AbstractAudioSource {
     }
 
     @SuppressWarnings("SleepWhileInLoop")
+    @Override
     protected void doStop() {
         if (log.isDebugEnabled()) log.debug("Stop JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && (isBound() || isQueued())) {
@@ -405,6 +409,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         this.setState(STATE_STOPPED);
     }
 
+    @Override
     protected void doPause() {
         if (log.isDebugEnabled()) log.debug("Pause JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && (isBound() || isQueued())) {
@@ -413,6 +418,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         this.setState(STATE_STOPPED);
     }
 
+    @Override
     protected void doResume() {
         if (log.isDebugEnabled()) log.debug("Resume JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && (isBound() || isQueued())) {
@@ -430,6 +436,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         this.setState(STATE_PLAYING);
     }
 
+    @Override
     protected void doRewind() {
         if (log.isDebugEnabled()) log.debug("Rewind JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && (isBound() || isQueued())) {
@@ -437,6 +444,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void doFadeIn() {
         if (log.isDebugEnabled()) log.debug("Fade-in JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && (isBound() || isQueued())) {
@@ -446,6 +454,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void doFadeOut() {
         if (log.isDebugEnabled()) log.debug("Fade-out JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && (isBound() || isQueued())) {
@@ -454,6 +463,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void cleanUp() {
         if (log.isDebugEnabled()) log.debug("Cleanup JoalAudioSource (" + this.getSystemName() + ")");
         if (_initialised && (isBound() || isQueued())) {
@@ -465,6 +475,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         this.dispose();
     }
 
+    @Override
     protected void calculateGain() {
 
         // Adjust gain based on master gain for this source and any

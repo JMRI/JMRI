@@ -99,6 +99,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
     }
 
     @SuppressWarnings("SleepWhileInLoop")
+    @Override
     boolean bindAudioBuffer(AudioBuffer audioBuffer) {
         // First check we've been initialised
         if (!_initialised) {
@@ -154,6 +155,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
 
     }
 
+    @Override
     protected void changePosition(Vector3f pos) {
         if (_initialised && isBound() && _audioChannel != null) {
             calculateGain();
@@ -212,6 +214,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         
     }
 
+    @Override
     protected void doPlay() {
         if (log.isDebugEnabled()) log.debug("Play JavaSoundAudioSource (" + this.getSystemName() + ")");
         if (_initialised && isBound()) {
@@ -220,6 +223,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void doStop() {
         if (log.isDebugEnabled()) log.debug("Stop JavaSoundAudioSource (" + this.getSystemName() + ")");
         if (_initialised && isBound()) {
@@ -228,6 +232,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void doPause() {
         if (log.isDebugEnabled()) log.debug("Pause JavaSoundAudioSource (" + this.getSystemName() + ")");
         if (_initialised && isBound()) {
@@ -241,6 +246,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         this.setState(STATE_STOPPED);
     }
 
+    @Override
     protected void doResume() {
         if (log.isDebugEnabled()) log.debug("Resume JavaSoundAudioSource (" + this.getSystemName() + ")");
         if (_initialised && isBound()) {
@@ -254,6 +260,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void doRewind() {
         if (log.isDebugEnabled()) log.debug("Rewind JavaSoundAudioSource (" + this.getSystemName() + ")");
         if (_initialised && isBound()) {
@@ -261,6 +268,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void doFadeIn() {
         if (log.isDebugEnabled()) log.debug("Fade-in JavaSoundAudioSource (" + this.getSystemName() + ")");
         if (_initialised && isBound()) {
@@ -270,6 +278,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void doFadeOut() {
         if (log.isDebugEnabled()) log.debug("Fade-out JavaSoundAudioSource (" + this.getSystemName() + ")");
         if (_initialised && isBound()) {
@@ -278,6 +287,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         }
     }
 
+    @Override
     protected void cleanUp() {
         if (_initialised && isBound()) {
             this._clip.stop();
@@ -314,6 +324,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
             log.debug("Set pan of JavaSoundAudioSource " + this.getSystemName() + " to " + pan);
     }
 
+    @Override
     protected void calculateGain() {
 
         // Calculate distance from listener

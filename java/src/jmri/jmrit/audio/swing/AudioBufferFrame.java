@@ -57,6 +57,8 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 
     private boolean _newBuffer;
 
+    private final Object lock = new Object();
+
     // UI components for Add/Edit Buffer
     JLabel urlLabel = new JLabel(rba.getString("LabelURL"));
     JTextField url = new JTextField(40);
@@ -72,6 +74,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 //    AudioWaveFormPanel waveForm = new AudioWaveFormPanel();
 
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioBufferFrame(String title, AudioTableDataModel model) {
         super(title, model);
         layoutFrame();
@@ -98,6 +101,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         p2.add(urlLabel);
         p2.add(url);
         buttonBrowse.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 browsePressed(e);
             }
@@ -144,6 +148,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         loopStart.setModel(
                 new SpinnerNumberModel(Long.valueOf(0), Long.valueOf(0), Long.valueOf(Long.MAX_VALUE), Long.valueOf(1)));
         loopStart.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 loopEnd.setValue(
                         ((Long)loopStart.getValue()
@@ -158,6 +163,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         loopEnd.setModel(
                 new SpinnerNumberModel(Long.valueOf(0), Long.valueOf(0), Long.valueOf(Long.MAX_VALUE), Long.valueOf(1)));
         loopEnd.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 loopStart.setValue(
                         ((Long)loopEnd.getValue()
@@ -172,6 +178,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         JButton ok;
         frame.getContentPane().add(ok = new JButton(rb.getString("ButtonOK")));
         ok.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 okPressed(e);
             }
@@ -181,8 +188,11 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     /**
      * Method to populate the Edit Buffer frame with default values
      */
+    @Override
     public void resetFrame() {
-        sysName.setText("IAB"+counter++);
+        synchronized(lock) {
+            sysName.setText("IAB"+counter++);
+        }
         userName.setText(null);
         url.setText(null);
 //        format.setText(null);

@@ -50,10 +50,12 @@ public class NullAudioListener extends AbstractAudioListener {
         if (log.isDebugEnabled()) log.debug("New NullAudioListener: "+userName+" ("+systemName+")");
     }
 
+    @Override
     protected void changePosition(Vector3f pos) {
         // Do nothing
     }
 
+    @Override
     protected void cleanUp() {
         if (log.isDebugEnabled()) log.debug("Cleanup NullAudioBuffer (" + this.getSystemName() + ")");
         this.dispose();

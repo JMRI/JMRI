@@ -47,12 +47,15 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
     ShutDownTask audioShutDownTask;
 
+    @Override
     public int getXMLOrder(){
         return jmri.Manager.AUDIO;
     }
     
+    @Override
     public String getSystemPrefix() { return "I"; }
 
+    @Override
     protected Audio createNewAudio(String systemName, String userName) throws AudioException {
 
         if (activeAudioFactory==null) {
@@ -96,16 +99,20 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 a = activeAudioFactory.createNewSource(systemName, userName);
                 break;
             }
+            default:
+                throw new IllegalArgumentException();
         }
 
         return a;
     }
 
     @Deprecated
+    @Override
     public List<String> getSystemNameList(int subType) {
         return this.getSystemNameList((char)subType);
     }
 
+    @Override
     public List<String> getSystemNameList(char subType) {
         List<String> tempList = getSystemNameList();
         List<String> out = new ArrayList<String>();
@@ -123,6 +130,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // OK to write to static variables as we only do so if not initialised
+    @Override
     public synchronized void init() {
         if(!_initialised) {
 //            // First try to initialise LWJGL
@@ -191,15 +199,19 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 countListeners--;
                 break;
             }
+            default:
+                throw new IllegalArgumentException();
         }
     }
 
+    @Override
     public void cleanUp() {
         // Shutdown AudioFactory and close the output device
         log.info("Shutting down active AudioFactory");
         activeAudioFactory.cleanup();
     }
 
+    @Override
     public AudioFactory getActiveAudioFactory() {
         return activeAudioFactory;
     }

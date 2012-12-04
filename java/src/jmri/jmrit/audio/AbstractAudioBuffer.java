@@ -97,14 +97,17 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
         this.setState(STATE_EMPTY);
     }
 
+    @Override
     public char getSubType() {
         return BUFFER;
     }
 
+    @Override
     public String getURL() {
         return this._url;
     }
 
+    @Override
     public void setURL(String url) {
         this._url = FileUtil.getPortableFilename(url);
 
@@ -116,6 +119,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
             log.debug("Set url of Buffer " + this.getSystemName() + " to " + url);
     }
 
+    @Override
     public void setInputStream(InputStream stream) {
 	this._url = "stream";
 
@@ -124,6 +128,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
             log.debug("Set inputstream of Buffer " + this.getSystemName() + " to stream");
     }
     
+    @Override
     public int getFrameSize() {
         switch (this.getFormat()) {
             case AudioBuffer.FORMAT_8BIT_MONO:
@@ -169,6 +174,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
      */
     abstract protected boolean loadBuffer(InputStream s);
 
+    @Override
     public void setStartLoopPoint(long startLoopPoint) {
         this.setStartLoopPoint(startLoopPoint, true);
     }
@@ -187,10 +193,12 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
             log.debug("Set start loop point of Buffer " + this.getSystemName() + " to " + startLoopPoint);
     }
 
+    @Override
     public long getStartLoopPoint() {
         return this._startLoopPoint;
     }
 
+    @Override
     public void setEndLoopPoint(long endLoopPoint) {
         this.setEndLoopPoint(endLoopPoint, true);
     }
@@ -209,10 +217,12 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
             log.debug("Set end loop point of Buffer " + this.getSystemName() + " to " + endLoopPoint);
     }
 
+    @Override
     public long getEndLoopPoint() {
         return this._endLoopPoint;
     }
 
+    @Override
     public void setStreamed(boolean streamed) {
         if (streamed) {
             log.warn("Streaming not yet supported!!");
@@ -229,6 +239,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
         }
     }
 
+    @Override
     public boolean isStreamed() {
         return this._streamed;
     }
@@ -248,6 +259,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
         }
     }
 
+    @Override
     public boolean isStreamedForced() {
         return this._streamedForced;
     }
@@ -272,6 +284,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
      */
     abstract protected void removeStreamingBuffers();
 
+    @Override
     public void stateChanged(int oldState) {
         // Move along... nothing to see here...
     }

@@ -387,19 +387,23 @@ public class JoalAudioFactory extends AbstractAudioFactory {
         ALut.alutExit();
     }
 
+    @Override
     public AudioBuffer createNewBuffer(String systemName, String userName) {
         return new JoalAudioBuffer(systemName, userName);
     }
 
+    @Override
     public AudioListener createNewListener(String systemName, String userName) {
         activeAudioListener = new JoalAudioListener(systemName, userName);
         return activeAudioListener;
     }
 
+    @Override
     public AudioListener getActiveAudioListener() {
         return activeAudioListener;
     }
 
+    @Override
     public AudioSource createNewSource(String systemName, String userName) {
         return new JoalAudioSource(systemName, userName);
     }

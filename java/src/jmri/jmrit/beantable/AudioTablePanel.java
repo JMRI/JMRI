@@ -51,7 +51,7 @@ public class AudioTablePanel extends JPanel {
     private JScrollPane             bufferDataScroll;
     private JScrollPane             sourceDataScroll;
     private JTabbedPane             audioTabs;
-    Box bottomBox;  		    // panel at bottom for extra buttons etc
+    Box bottomBox;                  // panel at bottom for extra buttons etc
     int bottomBoxIndex;             // index to insert extra stuff
 
     static final int bottomStrutWidth = 20;
@@ -59,6 +59,7 @@ public class AudioTablePanel extends JPanel {
     //private static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     private static final ResourceBundle rba = ResourceBundle.getBundle("jmri.jmrit.audio.swing.AudioTableBundle");
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioTablePanel(AudioTableDataModel listenerModel,
                            AudioTableDataModel bufferModel,
                            AudioTableDataModel sourceModel,
@@ -152,16 +153,17 @@ public class AudioTablePanel extends JPanel {
         JMenuItem printItem = new JMenuItem(rbapps.getString("PrintTable"));
         
         printItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    try {
-                        MessageFormat footerFormat = new MessageFormat("Page {0,number}");
-                        listenerDataTable.print(JTable.PrintMode.FIT_WIDTH , new MessageFormat("Listener Table"), footerFormat);
-                        bufferDataTable.print(JTable.PrintMode.FIT_WIDTH , new MessageFormat("Buffer Table"), footerFormat);
-                        sourceDataTable.print(JTable.PrintMode.FIT_WIDTH , new MessageFormat("Source Table"), footerFormat);
-                    } catch (java.awt.print.PrinterException e1) {
-                        log.warn("error printing: "+e1,e1);
-                    }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    MessageFormat footerFormat = new MessageFormat("Page {0,number}");
+                    listenerDataTable.print(JTable.PrintMode.FIT_WIDTH , new MessageFormat("Listener Table"), footerFormat);
+                    bufferDataTable.print(JTable.PrintMode.FIT_WIDTH , new MessageFormat("Buffer Table"), footerFormat);
+                    sourceDataTable.print(JTable.PrintMode.FIT_WIDTH , new MessageFormat("Source Table"), footerFormat);
+                } catch (java.awt.print.PrinterException e1) {
+                    log.warn("error printing: "+e1,e1);
                 }
+            }
         });
         return printItem;
     }

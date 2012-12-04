@@ -140,10 +140,11 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         }
     }
 
+    @Override
     protected boolean loadBuffer(InputStream stream) {
-	if (!_initialised) {
-	    return false;
-	}
+        if (!_initialised) {
+            return false;
+        }
 
         // Reinitialise
         init();
@@ -159,9 +160,10 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
             return false;
         }
 
-	return(this.processBuffer());
+        return(this.processBuffer());
     }
 
+    @Override
     protected boolean loadBuffer() {
         if (!_initialised) {
             return false;
@@ -183,8 +185,8 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
             log.error("Error loading buffer:" + ex);
             return false;
         }
-	
-	return(this.processBuffer());
+
+        return(this.processBuffer());
     }
 
     private boolean processBuffer() {
@@ -256,6 +258,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
 
     }
 
+    @Override
     protected void generateLoopBuffers(int which) {
         // TODO: Actually write this bit
         //if ((which==LOOP_POINT_START)||(which==LOOP_POINT_BOTH)) {
@@ -266,6 +269,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
             log.debug("Method generateLoopBuffers() called for JavaSoundAudioBuffer " + this.getSystemName());
     }
 
+    @Override
     protected boolean generateStreamingBuffers() {
         // TODO: Actually write this bit
         if (log.isDebugEnabled())
@@ -273,12 +277,14 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         return true;
     }
 
+    @Override
     protected void removeStreamingBuffers() {
         // TODO: Actually write this bit
         if (log.isDebugEnabled())
             log.debug("Method removeStreamingBuffers() called for JavaSoundAudioBuffer " + this.getSystemName());
     }
 
+    @Override
     public int getFormat() {
         if (_audioFormat!=null) {
             if (_audioFormat.getChannels()==1 && _audioFormat.getSampleSizeInBits()==8) {
@@ -296,10 +302,12 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         return FORMAT_UNKNOWN;
     }
     
+    @Override
     public long getLength() {
         return this._size;
     }
     
+    @Override
     public int getFrequency() {
         return this._freq;
     }
@@ -379,6 +387,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         return out.array();
     }
 
+    @Override
     protected void cleanUp() {
         if (log.isDebugEnabled()) log.debug("Cleanup JavaSoundAudioBuffer (" + this.getSystemName() + ")");
         this.dispose();

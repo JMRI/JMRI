@@ -103,19 +103,23 @@ public class NullAudioFactory extends AbstractAudioFactory {
         // Do nothing
     }
 
+    @Override
     public AudioBuffer createNewBuffer(String systemName, String userName) {
         return new NullAudioBuffer(systemName, userName);
     }
 
+    @Override
     public AudioListener createNewListener(String systemName, String userName) {
         activeAudioListener =  new NullAudioListener(systemName, userName);
         return activeAudioListener;
     }
 
+    @Override
     public AudioListener getActiveAudioListener() {
         return activeAudioListener;
     }
 
+    @Override
     public AudioSource createNewSource(String systemName, String userName) {
         return new NullAudioSource(systemName, userName);
     }

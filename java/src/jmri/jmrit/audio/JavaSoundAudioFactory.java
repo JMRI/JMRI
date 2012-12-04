@@ -136,19 +136,23 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
         _mixer = null;
     }
 
+    @Override
     public AudioBuffer createNewBuffer(String systemName, String userName) {
         return new JavaSoundAudioBuffer(systemName, userName);
     }
 
+    @Override
     public AudioListener createNewListener(String systemName, String userName) {
         _activeAudioListener = new JavaSoundAudioListener(systemName, userName);
         return _activeAudioListener;
     }
 
+    @Override
     public AudioListener getActiveAudioListener() {
         return _activeAudioListener;
     }
 
+    @Override
     public AudioSource createNewSource(String systemName, String userName) {
         return new JavaSoundAudioSource(systemName, userName);
     }

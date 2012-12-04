@@ -231,6 +231,8 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
             slider.setMaximum(Math.round(max*INT_PRECISION));
             slider.setMajorTickSpacing(iInterval);
             slider.setMinorTickSpacing(iInterval/minorTicks);
+            @SuppressWarnings("UseOfObsoleteCollectionType")
+                    // Need to use Hashtable for JSlider labels
             Hashtable<Integer,JLabel> labelTable = new Hashtable<Integer,JLabel>();
             for (int i=iMin; i<=iMax; i+=iInterval) {
                 float f = i;
@@ -241,6 +243,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
             slider.setPaintTicks(true);
             slider.setPaintLabels(true);
             slider.addChangeListener(new ChangeListener() {
+                @Override
                 public void stateChanged(ChangeEvent e) {
                     float f = slider.getValue();
                     f/=INT_PRECISION;
@@ -252,6 +255,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
                     new SpinnerNumberModel(min, min, max, new Float(FLT_PRECISION)));
             spinner.setEditor(new JSpinner.NumberEditor(spinner, "0.00"));
             spinner.addChangeListener(new ChangeListener() {
+                @Override
                 public void stateChanged(ChangeEvent e) {
                     slider.setValue(
                             Math.round((Float)spinner.getValue()*INT_PRECISION));

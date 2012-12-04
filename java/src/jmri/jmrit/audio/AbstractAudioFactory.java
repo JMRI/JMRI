@@ -46,11 +46,12 @@ public abstract class AbstractAudioFactory implements AudioFactory {
     private static boolean _distanceAttenuated = true;
 
     /**
-     * Reference to the seperate thread used to process all AudioCommands
+     * Reference to the separate thread used to process all AudioCommands
      */
     private static AbstractAudioThread audioCommandThread = null;
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @Override
     public boolean init() {
         if (_initialised) {
             log.debug("Already initialised");
@@ -68,6 +69,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
         return true;
     }
 
+    @Override
     public void cleanup() {
 
         boolean dieException = false;
@@ -91,6 +93,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
         }
     }
 
+    @Override
     public synchronized boolean audioCommandQueue(AudioCommand queueAudioCommand) {
         if (queueAudioCommand == null) {
             log.debug("Processing command queue");
@@ -192,15 +195,18 @@ public abstract class AbstractAudioFactory implements AudioFactory {
         }
     }
 
+    @Override
     public Thread getCommandThread() {
         return audioCommandThread;
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    @Override
     public void setDistanceAttenuated(boolean attenuated) {
         _distanceAttenuated = attenuated;
     }
 
+    @Override
     public boolean isDistanceAttenuated() {
         return _distanceAttenuated;
     }

@@ -56,6 +56,7 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
         if (log.isDebugEnabled()) log.debug("New JavaSoundAudioListener: "+userName+" ("+systemName+")");
     }
 
+    @Override
     protected void changePosition(Vector3f pos) {
         recalculateSources();
     }
@@ -84,6 +85,7 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
         }
     }
 
+    @Override
     protected void cleanUp() {
         // no clean-up needed for Listener
         if (log.isDebugEnabled()) log.debug("Cleanup JavaSoundAudioListener (" + this.getSystemName() + ")");
