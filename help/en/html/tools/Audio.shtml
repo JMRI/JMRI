@@ -101,6 +101,11 @@ in which case they will be played back independently.
 <p>
 As with the Audio Listener, an Audio Source should be positioned in 3d-space.
 If required to 'move' whilst playing, set the velocity in x, y and z directions.
+This will move the position of the Audio Source in the direction and speed
+specified by the velocity vector at the defined rate while the Audio Source is playing.
+<p>
+<em>Example:</em> An 'x' value of 2 will move the Audio Source 2 units (meters)
+per second towards the right whilst playing.
 <p>
 <em>Note:</em> The Audio Source position is only relevant when bound to a mono
 buffer - those holding multi-channel sounds (i.e. stereo) will not be affected
