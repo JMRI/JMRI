@@ -230,6 +230,7 @@
             <filter token="release.official"       value="${release.official}"/>
             <filter token="release.build_date"     value="${release.build_date}"/>
             <filter token="release.is_branched"    value="${release.is_branched}"/>
+            <filter token="jmri.copyright.year"    value="${jmri.copyright.year}"/>
         </filterset>
     </target>
 

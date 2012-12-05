@@ -19,7 +19,7 @@ package jmri;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  * <P>
- * @author  Bob Jacobsen   Copyright 2000 - 2011
+ * @author  Bob Jacobsen   Copyright @@jmri.copyright.year@@
  * @version $Revision: 17977 $
  */
 
@@ -61,7 +61,7 @@ public class Version {
 	StringBuilder modifier = new StringBuilder("");
 
 	if (test != 0) {
-	    modifier.append("." + test);
+	    modifier.append(".").append(test);
 	}
 	
 	if (branched && !official) {
@@ -175,6 +175,15 @@ public class Version {
      */
     static public String getCanonicalVersion() {
         return major + "." + minor + "." + test;
+    }
+    
+    /**
+     * Return the application copyright as a String.
+     * 
+     * @return The copyright
+     */
+    static public String getCopyright() {
+        return "Copyright © @@jmri.copyright.year@@ JMRI Community";
     }
     
     /**
