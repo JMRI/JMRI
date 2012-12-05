@@ -20,6 +20,8 @@
 #
 # Version 1.0,  based on Zimo Function Programmer 
 # Nigel Cliffe, copyright April 2011
+# Version 1.1. Nigel Cliffe, Extends function keys for F13 to F19.   December 2012. 
+#
 #
 # Components based on Bob Jacobsen's scripts in JMRI distribution. 
 #
@@ -459,8 +461,8 @@ class LocoZimoPseudoProg(jmri.jmrit.automat.AbstractAutomaton) :
         
         temppanel1f = javax.swing.JPanel()
         temppanel1f.add(self.radioBtn3)
-        self.opsCVLabel3 = ('Select', 'Function F0','Function F1','Function F2','Function F3','Function F4','Function F5','Function F6', 'Function F7','Function F8','Function F9','Function F10','Function F11','Function F12')
-        self.opsCVVal3 = ('0', '20', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12' )
+        self.opsCVLabel3 = ('Select', 'Function F0','Function F1','Function F2','Function F3','Function F4','Function F5','Function F6', 'Function F7','Function F8','Function F9','Function F10','Function F11','Function F12', 'Function F13', 'Function F14', 'Function F15', 'Function F16', 'Function F17', 'Function F18', 'Function F19')
+        self.opsCVVal3 = ('0', '20', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19' )
         self.opsComboBox3 = javax.swing.JComboBox(self.opsCVLabel3)
         temppanel1f.add(self.opsComboBox3)
         f.contentPane.add(temppanel1f)
