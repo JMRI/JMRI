@@ -105,7 +105,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
     	
     	JPanel pButtons = new JPanel();
     	pButtons.setLayout(new GridBagLayout());
-    	pButtons.setBorder(BorderFactory.createEtchedBorder());
+    	pButtons.setBorder(BorderFactory.createTitledBorder(""));
     	
     	addItem(pButtons, clearButton, 0, 0);
     	addItem(pButtons, setButton, 1, 0);

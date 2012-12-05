@@ -608,7 +608,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		}
 	}
 	
-	 LocationsByCarTypeFrame f = null;
+	 LocationsByCarTypeFrame lctf = null;
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		JCheckBox b = (JCheckBox) ae.getSource();
 		log.debug("checkbox change " + b.getText());
@@ -619,10 +619,10 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			_location.addTypeName(b.getText());
 			// show which tracks will service this car type
 			if (CarTypes.instance().containsName(b.getText())) {
-				if (f != null)
-					f.dispose();
-				f = new LocationsByCarTypeFrame();
-				f.initComponents(_location, b.getText());
+				if (lctf != null)
+					lctf.dispose();
+				lctf = new LocationsByCarTypeFrame();
+				lctf.initComponents(_location, b.getText());
 			}
 		} else {
 			_location.deleteTypeName(b.getText());
@@ -681,6 +681,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		sidingModel.dispose();
 		interchangeModel.dispose();
 		stagingModel.dispose();
+		if (lctf != null)
+			lctf.dispose();
 		super.dispose();
 	}
 	
