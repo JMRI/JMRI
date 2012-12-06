@@ -15,8 +15,10 @@
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20110216"/>
+  <version author="Michael Mosher" version="2" lastUpdated="20121205"/>
 
 <!-- version 1	Based on the "Soundtraxx_MC by Michael Mosher 									-->
+<!-- version 2	Add SD40-2W																		-->
 
 <!-- Decoder Model information follows -->
 
@@ -66,6 +68,13 @@
       </model>
 	  
       <model model="FP7" numOuts="4" numFns="14" connector="other" productID="F">
+        <versionCV lowVersionID="96"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Brakes"/>
+      </model>
+	  
+      <model model="SD40-2W" numOuts="4" numFns="14" connector="other" productID="SD40">
         <versionCV lowVersionID="96"/>
         <output name="3" label="  FX5  "/>
         <output name="4" label="  FX6  "/>
@@ -840,7 +849,7 @@
       </variable>
 
       <variable label="FL(r) controls Backup Light" CV="34" mask="XXXXXXVX"
-			item="FL(r) controls output 2" minOut="2" default="1" include="ES">
+			item="FL(r) controls output 2" minOut="2" default="1" include="ES,SD40">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1048,7 +1057,7 @@
       </variable>
 
       <variable label="F5 controls output FX5" CV="39" mask="XXXXXXVX"
-			item="F5 controls output 3" minOut="1" default="1" include="ES">
+			item="F5 controls output 3" minOut="1" default="1" include="ES,SD40">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1061,7 +1070,7 @@
       </variable>
 
       <variable label="F5 controls output FX6" CV="39" mask="XXXXXVXX"
-			item="F5 controls output 4" minOut="2" default="0" include="ES">
+			item="F5 controls output 4" minOut="2" default="0" include="ES,SD40">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1087,7 +1096,7 @@
       </variable>
 
       <variable label="F6 controls output FX5" CV="40" mask="XXXXXXVX"
-			item="F6 controls output 3" minOut="1" default="0" include="ES">
+			item="F6 controls output 3" minOut="1" default="0" include="ES,SD40">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1126,7 +1135,7 @@
       </variable>
 
       <variable label="F6 controls output FX6" CV="40" mask="XXXXXVXX"
-			item="F6 controls output 4" minOut="2" default="1" include="ES">
+			item="F6 controls output 4" minOut="2" default="1" include="ES,SD40">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
