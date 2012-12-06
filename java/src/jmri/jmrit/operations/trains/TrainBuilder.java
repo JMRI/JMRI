@@ -900,9 +900,6 @@ public class TrainBuilder extends TrainCommon{
 		Track departTrack = null;
 		if (rl == train.getTrainDepartsRouteLocation())
 			departTrack = departStageTrack;
-		boolean cabooseTip = true;	// add a user tip to the build report about cabooses if none found
-		boolean cabooseAtDeparture = false; // set to true if caboose at departure location is found
-		boolean foundCaboose = false;
 		if (!requiresCaboose){
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildTrainNoCaboose"),new Object[]{rl.getName()}));
 			if (departTrack == null)
@@ -910,10 +907,14 @@ public class TrainBuilder extends TrainCommon{
 		} else {		
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildTrainReqCaboose"),new Object[]{train.getName(), roadCaboose, rl.getName(), rld.getName()}));
 		}
+		// Now go through the car list looking for cabooses
+		boolean cabooseTip = true;	// add a user tip to the build report about cabooses if none found
+		boolean cabooseAtDeparture = false; // set to true if caboose at departure location is found
+		boolean foundCaboose = false;
 		for (carIndex=0; carIndex<carList.size(); carIndex++){
 			Car car = carManager.getById(carList.get(carIndex));
 			if (car.isCaboose()){
-				cabooseTip = false;
+				cabooseTip = false;	// found at least one caboose, so they exist!
 				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCarIsCaboose"),new Object[]{car.toString(), car.getRoad(), car.getLocationName()}));
 				// car departing staging must leave with train
 				if (car.getTrack() == departTrack){
@@ -940,15 +941,22 @@ public class TrainBuilder extends TrainCommon{
 						carIndex--;
 						continue;
 					}
-					// first pass only take a caboose that matches the engine
+					// first pass, take a caboose that matches the engine
 					if (leadEngine != null && car.getRoad().equals(leadEngine.getRoad())){
+						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCabooseRoadMatches"),new Object[]{car.toString(), car.getRoad(), leadEngine.toString()}));
 						if (checkCarForDestinationAndTrack(car, rl, rld)){
 							if (car.getTrain() == train)
 								foundCaboose = true;
 						} else if (findDestinationAndTrack(car, rl, rld)){
 							foundCaboose = true;
 						}
+						if (!foundCaboose){
+							carList.remove(car.getId());		// remove this car from the list
+							carIndex--;
+							continue;
+						}
 					}
+					// done if we found a caboose and not departing staging
 					if (foundCaboose && departTrack == null)
 						break;
 				}
@@ -1386,7 +1394,7 @@ public class TrainBuilder extends TrainCommon{
 	 */
 	private void placeCars(int percent) throws BuildFailedException{
 		if (percent < 100){
-			addLine(buildReport, THREE, rb.getString("buildMultiplePass"));
+			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildMultiplePass"),new Object[]{percent}));
 			multipass = true;
 		}
 		if (percent == 100 && multipass)
@@ -1414,7 +1422,6 @@ public class TrainBuilder extends TrainCommon{
 			success = true;	// true when done with this location
 			reqNumOfMoves = rl.getMaxCarMoves()-rl.getCarMoves();	// the number of moves requested
 			int saveReqMoves = reqNumOfMoves;	// save a copy for status message
-			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildLocReqMoves"),new Object[]{rl.getName(), reqNumOfMoves, rl.getMaxCarMoves()}));
 			// multiple pass build?
 			if (percent < 100){
 				reqNumOfMoves = reqNumOfMoves*percent/100;
@@ -1424,6 +1431,7 @@ public class TrainBuilder extends TrainCommon{
 					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildDepartStagingAggressive"),new Object[]{}));
 				}
 			}
+			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildLocReqMoves"),new Object[]{rl.getName(), reqNumOfMoves, saveReqMoves, rl.getMaxCarMoves()}));
 			findDestinationsForCarsFromLocation(rl, routeIndex, false);
 			// perform a another pass if aggressive and there are requested moves
 			// this will perform local moves at this location, services off spot tracks

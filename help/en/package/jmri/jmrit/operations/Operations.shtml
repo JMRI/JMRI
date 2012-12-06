@@ -2341,24 +2341,24 @@ caboose.
      <td>Selected car type can only be set out to this track</td>
     </tr>
     <tr>
+     <td>X (Train Type)</td>
+     <td>Selected car type is not serviced by this train</td>
+    </tr>
+    <tr>
      <td>X (Train Built)</td>
-     <td>Selected car built date is not serviced by this train</td>
+     <td>Selected car's built date is not serviced by this train</td>
     </tr>
     <tr>
      <td>X (Train Load)</td>
-     <td>Selected car load is not serviced by this train</td>
+     <td>Selected car's load is not serviced by this train</td>
     </tr>
     <tr>
      <td>X (Train Owner)</td>
-     <td>Selected car owner is not serviced by this train</td>
+     <td>Selected car's owner is not serviced by this train</td>
     </tr>
     <tr>
      <td>X (Train Road)</td>
-     <td>Selected car road is not serviced by this train</td>
-    </tr>
-    <tr>
-     <td>X (Train Type)</td>
-     <td>Selected car type is not serviced by this train</td>
+     <td>Selected car's road is not serviced by this train</td>
     </tr>
     <tr>
      <td>X (Train Skips)</td>
@@ -2385,12 +2385,16 @@ caboose.
      <td>The location doesn't service the selected car type</td>
     </tr>
     <tr>
-     <td>X (Track Road)</td>
-     <td>The track doesn't service the selected car road</td>
-    </tr>
-    <tr>
      <td>X (Track Type)</td>
      <td>The track doesn't service the selected car type</td>
+    </tr>
+    <tr>
+     <td>X (Track Load)</td>
+     <td>The track doesn't service the selected car's load</td>
+    </tr>
+    <tr>
+     <td>X (Track Road)</td>
+     <td>The track doesn't service the selected car's road</td>
     </tr>
     <tr>
      <td>X (Dir Loc)</td>

@@ -73,7 +73,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		// frame location can move just a bit on MacOS
 		//Point p = f.getLocation();
 				
-		Assert.assertEquals("sort by name", TrainsTableFrame.NAME, f.getSortBy());
+		Assert.assertEquals("sort by name", TrainsTableModel.TIMECOLUMNNAME, f.getSortBy());
 		/* all JMRI window position and size are now saved
 		Assert.assertEquals("location 1", p, tmanager.getTrainsFramePosition());
 		Assert.assertEquals("default size", new Dimension(Control.panelWidth,Control.panelHeight), tmanager.getTrainsFrameSize());
