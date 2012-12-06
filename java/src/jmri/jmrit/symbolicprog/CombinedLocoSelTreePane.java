@@ -7,6 +7,7 @@ import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import java.util.Enumeration;
+import java.util.HashMap;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -78,6 +79,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
         int len = decoders.size();
         DefaultMutableTreeNode mfgElement = null;
         DefaultMutableTreeNode familyElement = null;
+        HashMap<String, DefaultMutableTreeNode> familyNameNode = new HashMap<String, DefaultMutableTreeNode>();
         for (int i = 0; i<len; i++) {
             DecoderFile decoder = decoders.get(i);
             String mfg = decoder.getMfg();
@@ -94,6 +96,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
                 mfgElement = new DecoderTreeNode(mfg,
                     "CV8 = "+DecoderIndexFile.instance().mfgIdFromName(mfg), "");
                 dModel.insertNodeInto(mfgElement, dRoot, dRoot.getChildCount());
+                familyNameNode = new HashMap<String, DefaultMutableTreeNode>();
                 familyElement = null;
             }
         	String famComment = decoders.get(i).getFamilyComment();
@@ -110,7 +113,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
             		hoverText = famComment + "  CV7=" + verString;
         		}
         	}
-            if (familyElement==null || !family.equals(familyElement.toString()) ) {
+            if ((familyElement==null || !family.equals(familyElement.toString())) && !familyNameNode.containsKey(family) ) {
                 // need new family node - is there only one model? Expect the
                 // family element, plus the model element, so check i+2
                 // to see if its the same, or if a single-decoder family
@@ -125,6 +128,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
                     									hoverText,
                                                         decoders.get(i).titleString());
                     dModel.insertNodeInto(familyElement, mfgElement, mfgElement.getChildCount());
+                    familyNameNode.put(family, familyElement);
                     continue;
                 } else {
                     // this is short case; insert decoder entry (next) here
@@ -136,12 +140,15 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
                     									hoverText,
                                                         decoders.get(i).titleString());
                     dModel.insertNodeInto(familyElement, mfgElement, mfgElement.getChildCount());
+                    familyNameNode.put(family, familyElement);
                     i = i+1;
                     continue;
                 }
             }
             // insert at the decoder level, except if family name is the same
             if (!family.equals(model)){
+                if(familyNameNode.containsKey(family))
+                    familyElement = familyNameNode.get(family);
                 dModel.insertNodeInto(new DecoderTreeNode(model,
                                                         hoverText,
                                                         decoders.get(i).titleString()),
