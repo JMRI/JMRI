@@ -19,8 +19,106 @@
   <version author="Michael Mosher" version="2" lastUpdated="20101201"/>
 <!-- ver3 fix bug in sanding volume CV -->
   <version author="Michael Mosher" version="3" lastUpdated="20101216"/>
+<!-- ver4 add new models -->
+  <version author="Michael Mosher" version="4" lastUpdated="20121205"/>
   <decoder>
     <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168">
+      <model model="LokSound Select Big Boy 4-8-8-4" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73416">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="Dyno"/>
+        <output name="20" label="Pump"/>
+        <output name="21" label="Blow"/>
+        <output name="22" label="Inj"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Oil"/>
+        <output name="28" label="Coal"/>
+        <output name="29" label="S Whsl"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select SP Cab Forward" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73409">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="Dyno"/>
+        <output name="20" label="Pump"/>
+        <output name="21" label="Blow"/>
+        <output name="22" label="Inj"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Oil"/>
+        <output name="28" label="Coal"/>
+        <output name="29" label="S Whsl"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
+      <model model="LokSound Select Y6B 2-8-8-2" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73457">
+        <output name="1" label="Headlight" maxcurrent="250mA"/>
+        <output name="2" label="Rear light" maxcurrent="250mA"/>
+        <output name="3" label="AUX 1" maxcurrent="250mA"/>
+        <output name="4" label="AUX 2" maxcurrent="250mA"/>
+        <output name="5" label="AUX 3" maxcurrent="250mA"/>
+        <output name="6" label="AUX 4" maxcurrent="250mA"/>
+        <output name="7" label="Acc"/>
+        <output name="8" label="Sw"/>
+        <output name="9" label="DB"/>
+        <output name="10" label="Dim"/>
+        <output name="11" label="Cross"/>
+        <output name="12" label="Notch"/>
+        <output name="13" label="Dop"/>
+        <output name="14" label="Shift"/>
+        <output name="15" label="Prime"/>
+        <output name="16" label="Horn"/>
+        <output name="17" label="Bell"/>
+        <output name="18" label="Coup"/>
+        <output name="19" label="Dyno"/>
+        <output name="20" label="Pump"/>
+        <output name="21" label="Blow"/>
+        <output name="22" label="Inj"/>
+        <output name="23" label="Comm"/>
+        <output name="24" label="Clak"/>
+        <output name="25" label="Brake"/>
+        <output name="26" label="Sand"/>
+        <output name="27" label="Oil"/>
+        <output name="28" label="Coal"/>
+        <output name="29" label="S Whsl"/>
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+      </model>
       <model model="LokSound Select Steam 3 Driven Axles" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73413">
         <output name="1" label="Headlight" maxcurrent="250mA"/>
         <output name="2" label="Rear light" maxcurrent="250mA"/>
@@ -609,6 +707,14 @@
         </enumVal>
         <label>Whistle</label>
       </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73409" item="Sound Option 2">
+        <enumVal>
+          <enumChoice choice="SP Cab Forward">
+            <choice>SP Cab Forward</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
       <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73413" item="Sound Option 2">
         <enumVal>
           <enumChoice choice="Mogul">
@@ -659,17 +765,8 @@
       </variable>
       <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73416" item="Sound Option 2">
         <enumVal>
-          <enumChoice choice="Big Boy">
-            <choice>Big Boy</choice>
-          </enumChoice>
-          <enumChoice choice="4-6-6-4 Challenger">
-            <choice>4-6-6-4 Challenger</choice>
-          </enumChoice>
-          <enumChoice choice="2-8-8-2">
-            <choice>2-8-8-2</choice>
-          </enumChoice>
-          <enumChoice choice="2-6-6-2">
-            <choice>2-6-6-2</choice>
+          <enumChoice choice="Big Boy 4-8-8-4">
+            <choice>Big Boy 4-8-8-4</choice>
           </enumChoice>
         </enumVal>
         <label>Prime Mover</label>
@@ -679,14 +776,22 @@
           <enumChoice choice="4-8-4 Class J">
             <choice>4-8-4 Class J</choice>
           </enumChoice>
-          <enumChoice choice="'2-10-2 Santa Fe">
-            <choice>'2-10-2 Santa Fe</choice>
+          <enumChoice choice="2-10-2 Santa Fe">
+            <choice>2-10-2 Santa Fe</choice>
           </enumChoice>
           <enumChoice choice="4-4-0 American">
             <choice>4-4-0 American</choice>
           </enumChoice>
           <enumChoice choice="2-6-2 Tank">
             <choice>2-6-2 Tank</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Prime Mover</label>
+      </variable>
+      <variable label="Prime Mover" CV="48" mask="XXVVXXXX" default="0" include="73457" item="Sound Option 2">
+        <enumVal>
+          <enumChoice choice="Y6B 2-8-8-2">
+            <choice>Y6B 2-8-8-2</choice>
           </enumChoice>
         </enumVal>
         <label>Prime Mover</label>
