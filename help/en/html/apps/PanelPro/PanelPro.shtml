@@ -261,7 +261,7 @@ icons from the panel with the popup menu.
 
 Because this is icon-based, you can create panels that look any way you 
 want.  For example, instead of using track-schematic icons for turnouts, you
-could use small images of the levels and plates on CTC machine.  This would 
+could use small images of the levers and plates on CTC machine.  This would 
 give you "mechanical" levers you can flip back and forth with a click.
 This can be made absolutely prototypical, or can be simplified for easier
 and faster operation, as you prefer.
