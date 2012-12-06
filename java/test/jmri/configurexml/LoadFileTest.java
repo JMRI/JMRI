@@ -100,6 +100,7 @@ public class LoadFileTest extends LoadFileTestBase {
                 && !inLine.startsWith("  <timebase")   // time changes from timezone to timezone
                 && !inLine.startsWith("    <test>")   // version changes over time
                 && !inLine.startsWith("    <modifier")   // version changes over time
+                && !inLine.startsWith("    <minor")   // version changes over time
                 && !inLine.startsWith("<?xml-stylesheet")   // Linux seems to put attributes in different order
                 && !inLine.startsWith("    <modifier>This line ignored</modifier>"))
                     Assert.assertEquals(inLine, outLine);
