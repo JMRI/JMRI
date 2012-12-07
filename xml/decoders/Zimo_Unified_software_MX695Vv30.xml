@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007 All rights reserved -->
-<!-- $Id: Zimo_MX640_v26.xml,v 1.0 2010/05/10 03:38:52 jacobsen Exp $ -->
+<!-- $Id: Zimo_MX695V_v30.xml,v 1.0 2010/05/10 03:38:52 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,22 +14,60 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.1" lastUpdated="20110815"/>
+  <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.2" lastUpdated="20121202"/>
 
 <!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
 <!-- V 1 file, dated 20090222. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file.    -->
 <!--                                                                                       -->
-<!-- Based on the "2010 03 01" English version of the ZIMO MX640            			 -->
+<!-- Based on the "2010 03 01" English version of the ZIMO MX640						   -->
 <!-- decoder manual (with thanks to Art Luescher of ZIMO Agency of North America           -->
-<!-- for the translations!)with updates from "2010 10 15" German version			 --> 
-<!-- and the decoder software update page of the Zimo website.					 -->
+<!-- for the translations!)with updates from "2010 10 15" German version				   --> 
+<!-- and the decoder software update page of the Zimo website.							   -->
 <!--                                                                                       -->
 <!-- This decoder XML is meant to be used with the "Comprehensive" programmer format.      -->
 <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
 <!-- variables on the proper pane of the Comprehensive programmer.                         -->
 <!-- V 1 new file -->
+<!-- V 1.2 updated file  Added KV and LV models -->
   <decoder>
     <family name="Zimo Unified software (version 25+)" mfg="Zimo">
-      <model model="MX695V version 30+" lowVersionID="30" highVersionID="35"  maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)"
+      <model model="MX695V version 30+" lowVersionID="30" highVersionID="31"  maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)"
+ maxTotalCurrent="6 A (peak 10 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="224">
+        <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug"/>
+        <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="3" label="   FO  1   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="4" label="   FO  2   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="5" label="   FO  3   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="6" label="   FO  4   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="7" label="   FO  5   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="8" label="   FO  6   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="9" label="   FO  7   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="10" label="   FO  8   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="11" label="   FO  9   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="12" label="   FO 10   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="13" label="   FO 11   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="14" label="   FO 12   " maxcurrent="2 A total per group" connection="plug"/>
+        <size length="50" width="40" height="14" units="mm"/>
+      </model>
+      <model model="MX695KV version 30+" lowVersionID="30" highVersionID="31"  maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)"
+ maxTotalCurrent="6 A (peak 10 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="224">
+        <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug"/>
+        <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="3" label="   FO  1   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="4" label="   FO  2   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="5" label="   FO  3   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="6" label="   FO  4   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="7" label="   FO  5   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="8" label="   FO  6   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="9" label="   FO  7   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="10" label="   FO  8   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="11" label="   FO  9   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="12" label="   FO 10   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="13" label="   FO 11   " maxcurrent="2 A total per group" connection="plug"/>
+        <output name="14" label="   FO 12   " maxcurrent="2 A total per group" connection="plug"/>
+        <size length="50" width="40" height="14" units="mm"/>
+      </model>
+      <model model="MX695LV version 30+" lowVersionID="30" highVersionID="31"  maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)"
  maxTotalCurrent="6 A (peak 10 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="224">
         <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug"/>
         <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug"/>
