@@ -126,14 +126,17 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 
     @Override
     public boolean unqueueBuffers() {
-	if (_queued) {
+	if (_bound) {
+	    log.error("Attempted to unqueue buffers on Bound Source " + this.getSystemName());
+	    return(false);
+	} else if (_queued) {
 	    activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_UNQUEUE_BUFFERS));
 	    activeAudioFactory.getCommandThread().interrupt();
 	    if (log.isDebugEnabled())
 		log.debug("Unqueued Processed Buffers on Source " + this.getSystemName());
 	    return(true);
 	} else {
-	    log.error("Attempted to unqueue buffers on Bound Source " + this.getSystemName());
+	    log.debug("Source neither queued nor bound. Not an error. " + this.getSystemName());
 	    return(false);
 	}
     }
@@ -576,6 +579,10 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     // types to implement this (yet).  So default to failing.
     @Override
     public int numQueuedBuffers() { return(0); }
+
+    // Probably aught to be abstract, but I don't want to force the non-JOAL Source
+    // types to implement this (yet).  So default to failing.
+    public int numProcessedBuffers() { return(0); }
 
     /**
      * Binds this AudioSource with the specified AudioBuffer

@@ -221,6 +221,20 @@ public class JoalAudioSource extends AbstractAudioSource {
 	    return true;
     }
 
+    @Override
+    public int numProcessedBuffers() {
+	int[] num_processed = new int[1];
+	
+	// How many processed buffers are there?
+	al.alGetSourcei(_source[0], AL.AL_BUFFERS_PROCESSED, num_processed, 0);
+        if (JoalAudioFactory.checkALError()) {
+            log.warn("Error getting # processed buffers from  JoalSource (" + this.getSystemName() + ")");
+            return 0;
+        }
+	return(num_processed[0]);
+
+    }
+
     /**
      * Report the number of AudioBuffers queued to this source.
      *
