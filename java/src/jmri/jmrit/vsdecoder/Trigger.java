@@ -28,10 +28,10 @@ abstract public class Trigger implements PropertyChangeListener {
 
     
 
-    public enum TriggerType { BUTTON, BOOLEAN, STRING, NONE, NOTCH, INT, FLOAT, THROTTLE }
-    public enum TargetAction { PLAY, LOOP, STOP, FADEIN, FADEOUT, NOTCH, CHANGE, NOTHING }
-    public enum CompareType { EQ, GT, LT, GTE, LTE }
-    public enum CompareValueType { INT, FLOAT }
+    static public enum TriggerType { BUTTON, BOOLEAN, STRING, NONE, NOTCH, INT, FLOAT, THROTTLE }
+    static public enum TargetAction { PLAY, LOOP, STOP, FADEIN, FADEOUT, NOTCH, CHANGE, NOTHING }
+    static public enum CompareType { EQ, GT, LT, GTE, LTE }
+    static public enum CompareValueType { INT, FLOAT }
 
     String trigger_name; // Name for the trigger object
     String event_name;  // event to respond to
@@ -51,7 +51,6 @@ abstract public class Trigger implements PropertyChangeListener {
     }
 
     abstract public void propertyChange(PropertyChangeEvent event);
-	// Do nothing.  Subclasses will implement.
     
     // JavaBean set/get functions
 

@@ -101,6 +101,7 @@ class IntTrigger extends Trigger implements PropertyChangeListener {
 	}
     }
 
+    @Override
     public void setXml(Element e) {
 	// Grab common stuff.
 	super.setXml(e);
@@ -110,7 +111,7 @@ class IntTrigger extends Trigger implements PropertyChangeListener {
 	    compare_type = Trigger.CompareType.valueOf(e.getChild("compare-type").getValue().toUpperCase());
 	}
     }
-    
+   
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IntTrigger.class.getName());
 
 
