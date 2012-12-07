@@ -47,6 +47,7 @@ class BoolTrigger extends Trigger implements PropertyChangeListener {
 	return(match_value);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent event) {
 	// Validate
 	// If no target, or not a name match, or no trigger, or no action
@@ -75,6 +76,7 @@ class BoolTrigger extends Trigger implements PropertyChangeListener {
 	}
     }
 
+    @Override
     public Element getXml() {
 	Element me = new Element("trigger");
 
@@ -94,7 +96,8 @@ class BoolTrigger extends Trigger implements PropertyChangeListener {
 	
 	return(me);
     }
-	    
+
+    @Override
     public void setXml(Element e) {
 	// Get common stuff
 	super.setXml(e);

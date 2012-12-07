@@ -257,6 +257,8 @@ public interface AudioSource extends Audio {
 
     public int numQueuedBuffers();
 
+    public int numProcessedBuffers();
+
     /**
      * Method to return if this AudioSource has been bound to an AudioBuffer
      * <p>

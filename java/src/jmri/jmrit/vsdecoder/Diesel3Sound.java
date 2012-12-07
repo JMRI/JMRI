@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
+import jmri.Audio;
 import jmri.AudioManager;
 import jmri.AudioException;
 import jmri.util.PhysicalLocation;
@@ -44,93 +45,58 @@ class Diesel3Sound extends EngineSound {
     // Engine Sounds
     HashMap<Integer, D3Notch> notch_sounds;
     SoundBite _sound;
+    String _soundName;
     AudioBuffer start_buffer;
     AudioBuffer stop_buffer;
     AudioBuffer transition_buf;
     
-    // Old sounds
-    SoundBite notch_transition; // used for changing notches
-
     // Common variables
-    Float throttle_setting;
+    Float throttle_setting; // used for handling speed changes
     EnginePane engine_pane;
 
     int current_notch = 1;
     boolean changing_speed = false;
     boolean is_looping = false;
+    D3LoopThread _loopThread = null;
 
     Timer t;
 
     public Diesel3Sound(String name) {
 	super(name);
+	//_loopThread = new D3LoopThread(this);
+	//_loopThread.start();
+	log.debug("New Diesel3Sound name(param) = " + name + " name(val) " + this.getName());
     }
 
     // Note:  Play and Loop do the same thing, since all of the notch sounds are set to loop.
     @Override
     public void play() {
 	this.loop();
-	/*
-	if (engine_started || auto_start_engine) {
-	    _sound.play();
-	    is_playing = true;
-	}
-	*/
     }
 
     // Note:  Play and Loop do the same thing, since all of the notch sounds are set to loop.
     @Override
+
     public void loop() {
 	if (notch_sounds.containsKey(current_notch) && (engine_started || auto_start_engine)) {
-	    log.debug("Looping.  Notch = " + current_notch);
-	    D3Notch cn = notch_sounds.get(current_notch);
-	    log.debug("Buffer " + cn.getLoopBuffer(cn.loopIndex()).getSystemName() + " length " + cn.getLoopBufferLength(cn.loopIndex()));
-	    t = newTimer(cn.getLoopBufferLength(cn.loopIndex()) - 100, false, 
-			 new ActionListener() { 
-			     public void actionPerformed(ActionEvent e) {
-				 handleLoopTimerPop(e);
-			     }
-			 });
-	    if (_sound.getSource().numQueuedBuffers() < 2) {
-		log.debug("Buffer count low.  Adding buffer.");
-		AudioBuffer b = notch_sounds.get(current_notch).nextLoopBuffer();
-		log.debug("Loop: Adding buffer " + b.getSystemName());
-		_sound.queueBuffer(b);
-	    }
-	    if (!is_playing) {
-		_sound.play();
-		is_playing = true;
-	    }
-	    t.start();
-	    is_looping = true;
+	    // Really, nothing to do here.  The engine should be started/stopped through
+	    // the startEngine() and stopEngine() calls.  Maybe should clean that up or have
+	    // play() == loop() == startEngine() and stop == stopEngine() some time.
+	    if(_loopThread.isRunning())
+		_loopThread.setRunning(true);
 	}
-    }
-
-    // WARNING: Potentially recursive.
-    private void handleLoopTimerPop(ActionEvent e) {
-	_sound.unqueueBuffers();
-	log.debug("Removed used buffers.  Num Queued = " + _sound.numQueuedBuffers());
-	//if (_sound.getSource().numQueuedBuffers() < 2) {
-	//    AudioBuffer b = notch_sounds.get(current_notch).nextLoopBuffer();
-	//    log.debug("Loop: Adding buffer " + b.getSystemName());
-	//    _sound.queueBuffer(b);
-	//}
-	this.loop();
     }
 
     @Override
     public void stop() {
+	// Stop the loop thread, in case it's running
+	if (_loopThread != null)
+	    _loopThread.setRunning(false);
 	// Stop the loop timer, in case it's running
-	if (t != null)
-	    t.stop();
-	if (_sound != null)
-	    _sound.stop();
-	is_playing = false;
-	is_looping = false;
-    }
-
-    public void stopLoop() {
-	// Just stop the timer.  Let the sound continue to play.
-	t.stop();
+	//if (t != null)
+	//    t.stop();
+	//if (_sound != null)
+	//    _sound.stop();
 	is_looping = false;
     }
 
@@ -143,64 +109,8 @@ class Diesel3Sound extends EngineSound {
 
     // Responds to "CHANGE" trigger
     public void changeThrottle(float s) {
-	D3Notch cn = notch_sounds.get(current_notch);
-	log.debug("Change Throttle: " + s + " Accel Limit = " + cn.getAccelLimit() + " Decel Limit = " + cn.getDecelLimit());
-	throttle_setting = s;
-	// Really first, is this a "Panic Stop"?
-	if (s < 0) {
-	    // DO something to shut down
-	    this.shutdown();
-	    return;
-	}
-	// First, am I too fast or too slow for the current notch?
-	if ((s <= cn.getAccelLimit()) && (s >= cn.getDecelLimit())) {
-	    // Still (or now) in this notch.  Nothing to do.
-	    if (changing_speed)
-		_sound.queueBuffer(cn.nextLoopBuffer());
-	    changing_speed = false;
-	    log.debug("No Change");
-	    if (!this.is_looping)
-		this.loop();
-	    return;
-	}
-	else if (s > cn.getAccelLimit()) {
-	    // Too fast. Need to go to next notch up.
-	    changing_speed = true;
-	    transition_buf = cn.getAccelBuffer();
-	    current_notch = cn.getNextNotch();
-	    log.debug("Change up. notch=" + current_notch);
-	} 
-	else if (s < cn.getDecelLimit()) {
-	    // Too slow.  Need to go to next notch down.
-	    changing_speed = true;
-	    transition_buf = cn.getDecelBuffer();
-	    current_notch = cn.getPrevNotch();
-	    log.debug("Change down. notch=" + current_notch);
-	}
-	// Now, regardless of whether we're going up or down, set the timer,
-	// fade the current sound, and move on.
-	if (transition_buf == null) {
-	    // No transition sound to play.  Skip the timer bit.
-	    // Recurse directly to try the next notch.
-	    this.loop();
-	    changeThrottle(s);
-	    log.debug("No transition sound defined.");
-	    return;
-	} else {
-	    // Stop the loop if it's running
-	    this.stopLoop();
-	    // queue up the transition sound buffer.
-	    _sound.queueBuffer(transition_buf);
-	    // Set up a timer to come in and loop.
-	    t = newTimer(SoundBite.calcLength(transition_buf) - this.getFadeInTime(), false,
-			 new ActionListener() {
-			     public void actionPerformed(ActionEvent e) {
-				 handleNotchTimerPop(e);
-			     }
-			 });
-	    t.start();
-	}
-	return;
+	// This is all we have to do.  The loop thread will handle everything else.
+	_loopThread.setThrottle(s);
     }
 
     protected void changeSpeed(Float s, EnginePane e) {
@@ -208,55 +118,32 @@ class Diesel3Sound extends EngineSound {
 	changeThrottle(s);
     }
 
-    protected void handleNotchTimerPop(ActionEvent e) {
-	// semi-Recursively call the speed change handler until it quits setting up timers.
-	//notch_transition.fadeOut();
-	//changeSpeed(throttle_setting, engine_pane);
-	changeThrottle(throttle_setting);
+    // Private function used in place of EngineSound.calcEngineNotch()
+    private D3Notch findNotch(float val) {
+	for (D3Notch n : notch_sounds.values()) {
+	    if (n.isInLimits(val))
+		return(n);
+	}
+	// If we fall out of the loop, somehow we didn't find a notch.
+	return(null);
+    }
+
+    public D3Notch getNotch(int n) {
+	return(notch_sounds.get(n));
     }
 
     @Override
     public void startEngine() {
-	_sound.unqueueBuffers();
-	_sound.queueBuffer(start_buffer);
-	_sound.play();
-	log.debug("Starting Engine. Sound buffers: " + _sound.numQueuedBuffers());
-	current_notch = calcEngineNotch(0.0f);
-	if (notch_sounds.containsKey(current_notch)) {
-	    AudioBuffer b = notch_sounds.get(current_notch).nextLoopBuffer();
-	    log.debug("Loop: Adding buffer " + b.getSystemName());
-	    _sound.queueBuffer(b);
-	}
-	t = newTimer(Math.max(SoundBite.calcLength(start_buffer) - _sound.getFadeOutTime() + 100, 0), false, new ActionListener() { 
-                @Override
-		public void actionPerformed(ActionEvent e) {
-		    startToIdleAction(e);
-		}
-	    } );
-	t.setInitialDelay((int)(SoundBite.calcLength(start_buffer) - _sound.getFadeOutTime()));
-	t.setRepeats(false);
-	engine_started = true;
-	log.debug("Starting Engine");
-	t.start();
+	log.debug("startEngine.  ID = " + this.getName());
+	_loopThread = new D3LoopThread(this, notch_sounds.get(current_notch), _soundName, true);
+	_loopThread.startEngine(start_buffer);
     }
 
     @Override
     public void stopEngine() {
-	this.stopLoop();
-	_sound.unqueueBuffers();
-	log.debug("Removed used buffers.  Num Queued = " + _sound.numQueuedBuffers());
-	log.debug("Stopping Engine. Sound buffers: " + _sound.numQueuedBuffers());
-	_sound.queueBuffer(stop_buffer);
-	engine_started = false;
-    }
-
-    private void startToIdleAction(ActionEvent e) {
-	log.debug("Starting idle sound notch = " + current_notch + " sound = " + notch_sounds.get(current_notch));
-	//_sound.queueBuffer(notch_sounds.get(current_notch).nextLoopBuffer());
-	log.debug("Sound buffers: " + _sound.numQueuedBuffers());
-	this.loop();
-	engine_started = true;
-    }
+	log.debug("stopEngine.  ID = " + this.getName());
+	_loopThread.stopEngine(stop_buffer);
+    }			      
 
     @Override
     public void shutdown() {
@@ -265,17 +152,20 @@ class Diesel3Sound extends EngineSound {
 
     @Override
     public void mute(boolean m) {
-	_sound.mute(m);
+	_loopThread.mute(m);
+	//	_sound.mute(m);
     }
 
     @Override
     public void setVolume(float v) {
-	_sound.setVolume(v);
+	_loopThread.setVolume(v);
+	//_sound.setVolume(v);
     }
 
     @Override
     public void setPosition(PhysicalLocation p) {
-	_sound.setPosition(p);
+	_loopThread.setPosition(p);
+	//_sound.setPosition(p);
     }
 
     protected Timer newTimer(long time, boolean repeat, ActionListener al) {
@@ -306,8 +196,9 @@ class Diesel3Sound extends EngineSound {
 	// Handle the common stuff.
 	super.setXml(e, vf);
 	
-	log.debug("Diesel EngineSound: " + e.getAttribute("name").getValue());
-	_sound = new SoundBite(e.getAttributeValue("name"), SoundBite.BufferMode.QUEUE_MODE);
+	//log.debug("Diesel EngineSound: " + e.getAttribute("name").getValue());
+	_soundName = this.getName() + ":" + e.getAttributeValue("name");
+	log.debug("Diesel3: name: " + this.getName() + " soundName " + _soundName);
 	notch_sounds = new HashMap<Integer, D3Notch>();
 
 	// Get the notch sounds
@@ -331,7 +222,7 @@ class Diesel3Sound extends EngineSound {
 
 	    // Gain is broken, for the moment.  Buffers don't have gain. Sources do.
 	    //_sound.setGain(setXMLGain(el));
-	    _sound.setGain(default_gain);
+	    //_sound.setGain(default_gain);
 
 	    sb.setNextNotch(el.getChildText("next-notch"));
 	    sb.setPrevNotch(el.getChildText("prev-notch"));
@@ -356,20 +247,12 @@ class Diesel3Sound extends EngineSound {
 	    fn = el.getChild("file").getValue();
 	    //log.debug("Start sound: " + fn);
 	    start_buffer = D3Notch.getBuffer(vf, fn, "Engine_start", "Engine_Start");
-	    // Handle gain
-	    //start_sound.setGain(setXMLGain(el));
-	    //start_sound.setFadeTimes(this.getFadeInTime(), this.getFadeOutTime());
-	    //start_sound.setLooped(false);
 	}
 	el = e.getChild("shutdown-sound");
 	if (el != null) {
 	    fn = el.getChild("file").getValue();
 	    //log.debug("Shutdown sound: " + fn);
 	    stop_buffer = D3Notch.getBuffer(vf, fn, "Engine_shutdown", "Engine_Shutdown");
-	    //shutdown_sound.setLooped(false);
-	    // Handle gain
-	    //shutdown_sound.setGain(setXMLGain(el));
-	    //shutdown_sound.setFadeTimes(this.getFadeInTime(), this.getFadeOutTime());
 	}
 
     }
@@ -413,6 +296,7 @@ class D3Notch {
     public AudioBuffer getDecelBuffer() { return(decel_buf); }
     public float getAccelLimit() { return(accel_limit); }
     public float getDecelLimit() { return(decel_limit); }
+    public Boolean isInLimits(float val) { return((val >= decel_limit) && (val <= accel_limit)); }
     public List<AudioBuffer> getLoopBuffers() { return(loop_bufs); }
     public AudioBuffer getLoopBuffer(int idx) { return(loop_bufs.get(idx)); }
     public long getLoopBufferLength(int idx) { return(SoundBite.calcLength(loop_bufs.get(idx))); }
@@ -474,7 +358,7 @@ class D3Notch {
 	AudioBuffer buf = null;
 	AudioManager am = jmri.InstanceManager.audioManagerInstance();
 	try {
-	    buf = (AudioBuffer) am.provideAudio(VSDSound.BufSysNamePrefix+sname);
+	    buf = (AudioBuffer) am.provideAudio(VSDSound.BufSysNamePrefix+filename);
 	    buf.setUserName(VSDSound.BufUserNamePrefix+uname);
 	    if (vf == null) {
 		// Need to fix this.
@@ -502,4 +386,182 @@ class D3Notch {
  
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(D3Notch.class.getName());
    
+}
+
+class D3LoopThread extends Thread {
+    private boolean is_running = false;
+    private boolean is_looping = false;
+    private boolean is_dying = false;
+    Diesel3Sound _parent;
+    D3Notch _notch;
+    SoundBite _sound;
+    float _throttle;
+
+    public D3LoopThread(Diesel3Sound p) {
+	super();
+	is_running = false;
+	is_looping = false;
+	is_dying = false;
+	_notch = null;
+	_sound = null;
+	_parent = p;
+	_throttle = 0.0f;
+    }
+
+    public D3LoopThread(Diesel3Sound d, D3Notch n, String s, boolean r) {
+	super();
+	is_running = r;
+	is_looping = false;
+	is_dying = false;
+	_notch = n;
+	_sound = new SoundBite(s, SoundBite.BufferMode.QUEUE_MODE);
+	_sound.setGain(0.8f);
+	_parent = d;
+	_throttle = 0.0f;
+	if (r)
+	    this.start();
+    }
+
+    public void setNotch(D3Notch n) {
+	_notch = n;
+    }
+
+    public D3Notch getNotch() { return(_notch); }
+
+    public void setSound(SoundBite s) {
+	_sound = s;
+    }
+
+    public void setRunning(boolean r) {
+	is_running = r;
+    }
+
+    public boolean isRunning() { return(is_running); }
+
+    public void setThrottle(float t) { _throttle = t; }
+
+    public void startEngine(AudioBuffer start_buf) {
+	_sound.unqueueBuffers();
+	_sound.queueBuffer(start_buf);
+	_sound.queueBuffer(_notch.nextLoopBuffer());
+	is_looping = true;
+	if (!_sound.isPlaying())
+	    _sound.play();
+	try {
+	    sleep(SoundBite.calcLength(start_buf));
+	} catch (InterruptedException e) { }
+    }
+
+    public void stopEngine(AudioBuffer stop_buf) {
+	is_looping = false; // stop the loop player
+	is_dying = true;
+	_sound.queueBuffer(stop_buf);
+	if (!_sound.isPlaying())
+	    _sound.play();
+    }
+
+    public void run() {
+	try {
+	    while (is_running) {
+		if (is_looping) {
+		    if (_sound.getSource().numProcessedBuffers() > 0)
+			_sound.unqueueBuffers();
+		    log.debug("D3Loop"+ _sound.getName() + "Run loop. Buffers: " + _sound.getSource().numQueuedBuffers());
+		    if (!_notch.isInLimits(_throttle)) {
+			changeNotch();
+		    }
+		    if (_sound.getSource().numQueuedBuffers() < 2) {
+			log.debug("D3Loop"+ _sound.getName() + "Buffer count low (" + _sound.getSource().numQueuedBuffers() + ").  Adding buffer.");
+			AudioBuffer b = _notch.nextLoopBuffer();
+			log.debug("D3Loop"+ _sound.getName() + "Loop: Adding buffer " + b.getSystemName());
+			_sound.queueBuffer(b);
+		    }
+		    if (!_sound.isPlaying()) {
+			_sound.play();
+		    }
+		} else {
+		    // Quietly wait for the sound to get turned on again
+		    // Once we've stopped playing, kill the thread.
+		    if (_sound.getSource().numProcessedBuffers() > 0)
+			_sound.unqueueBuffers();
+		    if (is_dying && (_sound.getSource().getState() != Audio.STATE_PLAYING)) {
+			_sound.stop(); // good reason to get rid of SoundBite.is_playing variable!
+			return;
+		    }
+		}
+		sleep(100);
+	    }
+	    // Note: if (is_running == false) we'll exit the endless while and the Thread will die.
+	    return;
+	} catch (InterruptedException ie) {
+	    //_notch = _parent.getCurrentNotch();
+	    is_running = false;
+	    return;
+	    // probably should do something. Not sure what.
+	}
+    }
+
+    private void changeNotch() {
+	AudioBuffer transition_buf = null;
+	int new_notch = _notch.getNotch();
+	
+	log.debug("D3Thread Change Throttle: " + _throttle + " Accel Limit = " + _notch.getAccelLimit() + " Decel Limit = " + _notch.getDecelLimit());
+	if (_throttle < 0) {
+	    // DO something to shut down
+	    _sound.stop();
+	    is_running = false;
+	    return;
+	}
+	if (_throttle > _notch.getAccelLimit()) {
+	    // Too fast. Need to go to next notch up.
+	    transition_buf = _notch.getAccelBuffer();
+	    new_notch = _notch.getNextNotch();
+	    //log.debug("Change up. notch=" + new_notch);
+	} 
+	else if (_throttle < _notch.getDecelLimit()) {
+	    // Too slow.  Need to go to next notch down.
+	    transition_buf = _notch.getDecelBuffer();
+	    new_notch = _notch.getPrevNotch();
+	    log.debug("Change down. notch=" + new_notch);
+	}
+	// Now, regardless of whether we're going up or down, set the timer,
+	// fade the current sound, and move on.
+	if (transition_buf == null) {
+	    // No transition sound to play.  Skip the timer bit.
+	    // Recurse directly to try the next notch.
+	    _notch = _parent.getNotch(new_notch);
+	    log.debug("No transition sound defined.");
+	    return;
+	} else {
+	    // Stop the loop if it's running
+	    //this.stopLoop();
+	    // queue up the transition sound buffer.
+	    _notch = _parent.getNotch(new_notch);
+	    _sound.queueBuffer(transition_buf);
+	    try {
+		sleep(SoundBite.calcLength(transition_buf) - 50);
+	    } catch (InterruptedException e) { }
+	}
+	return;
+    }
+
+    public void mute(boolean m) {
+	_sound.mute(m);
+    }
+
+    public void setVolume(float v) {
+	_sound.setVolume(v);
+    }
+
+    public void setPosition(PhysicalLocation p) {
+	_sound.setPosition(p);
+    }
+
+    public void kill() {
+	is_running = false;
+	_notch = null;
+	_sound = null;
+    }
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(D3LoopThread.class.getName());
+
 }

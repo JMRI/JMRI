@@ -156,7 +156,7 @@ public class VSDecoderManager implements PropertyChangeListener {
 	return("VSDecoderID" + (++listenerID));
     }
 
-    // New version (now)
+    @Deprecated
     public VSDecoder getVSDecoder(String profile_name) {
 	VSDecoder vsd;
 	String path;
@@ -186,6 +186,11 @@ public class VSDecoderManager implements PropertyChangeListener {
     public VSDecoder getVSDecoder(VSDConfig config) {
 	String path;
 	String profile_name = config.getProfileName();
+	// First, check to see if we already have a VSDecoder on this Address
+	//debugPrintDecoderList();
+	if (decoderAddressMap.containsKey(config.getLocoAddress().toString())) {
+	    return(decoderAddressMap.get(config.getLocoAddress().toString()));
+	}
 	if (profiletable.containsKey(profile_name)) {
 	    path = profiletable.get(profile_name);
 	    log.debug("Profile " + profile_name + " is in table.  Path = " + path);
@@ -203,6 +208,7 @@ public class VSDecoderManager implements PropertyChangeListener {
 	}
     }
 
+    /*
     public void debugPrintDecoderList() {
 	log.debug("Current Decoder List by System ID:");
 	Set<Map.Entry<String, VSDecoder>> ids = decodertable.entrySet();
@@ -216,9 +222,10 @@ public class VSDecoderManager implements PropertyChangeListener {
 	idi = ids.iterator();
 	while (idi.hasNext()) {
 	    Map.Entry<String, VSDecoder> e = idi.next();
-	    log.debug("    ID = " +  e.getKey() + " Val = " + e.getValue().getAddress().toString());
+	    log.debug("    ID = " +  e.getKey() + " Val = " + e.getValue().getID());
 	}
     }
+    */
 
     public VSDecoder getVSDecoderByID(String id) {
 	VSDecoder v = decodertable.get(id);
@@ -487,7 +494,7 @@ public class VSDecoderManager implements PropertyChangeListener {
 		d.shutdown();
 		decodertable.remove(d.getID());
 		decoderAddressMap.remove(sa);
-		debugPrintDecoderList();
+		//debugPrintDecoderList();
 	    } else if(evt.getPropertyName().equals(VSDManagerFrame.PCIDMap.get(VSDManagerFrame.PropertyChangeID.CLOSE_WINDOW))) {
 		// Note this assumes there is only one VSDManagerFrame open at a time.
 		shutdownDecoders();

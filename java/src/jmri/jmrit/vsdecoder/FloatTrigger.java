@@ -103,6 +103,7 @@ class FloatTrigger extends Trigger implements PropertyChangeListener {
 	}
     }
     
+    @Override
     public Element getXml() {
 	Element me = new Element("trigger");
 	me.setAttribute("name", this.getName());
@@ -111,6 +112,7 @@ class FloatTrigger extends Trigger implements PropertyChangeListener {
 	return(me);
     }
 
+    @Override
     public void setXml(Element e) {
 	log.warn("FloatTrigger.setXml()");
 

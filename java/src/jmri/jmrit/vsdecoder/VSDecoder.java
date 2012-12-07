@@ -853,6 +853,8 @@ public class VSDecoder implements PropertyChangeListener {
 
 
 	// First, the sounds.
+	String prefix = ""+this.getID()+":";
+	log.debug("VSDecoder " + this.getID() + " prefix = " + prefix);
 	itr = (e.getChildren("sound")).iterator();
 	while(itr.hasNext()) {
 	    el = (Element)itr.next();
@@ -862,27 +864,22 @@ public class VSDecoder implements PropertyChangeListener {
 		continue;
 	    } else if (el.getAttributeValue("type").equals("configurable")) {
 		// Handle configurable sounds.
-		ConfigurableSound cs = new ConfigurableSound(el.getAttributeValue("name"));
+		ConfigurableSound cs = new ConfigurableSound(prefix+el.getAttributeValue("name"));
 		cs.setXml(el, vf);
 		sound_list.put(el.getAttributeValue("name"),cs);
 	    } else if (el.getAttributeValue("type").equals("diesel")) {
 		// Handle a Diesel Engine sound
-		DieselSound es = new DieselSound(el.getAttributeValue("name"));
-		es.setXml(el, vf);
-		sound_list.put(el.getAttributeValue("name"), es);
-	    } else if (el.getAttributeValue("type").equals("diesel2")) {
-		// Handle a Diesel Engine sound
-		Diesel2Sound es = new Diesel2Sound(el.getAttributeValue("name"));
+		DieselSound es = new DieselSound(prefix+el.getAttributeValue("name"));
 		es.setXml(el, vf);
 		sound_list.put(el.getAttributeValue("name"), es);
 	    } else if (el.getAttributeValue("type").equals("diesel3")) {
 		// Handle a Diesel Engine sound
-		Diesel3Sound es = new Diesel3Sound(el.getAttributeValue("name"));
+		Diesel3Sound es = new Diesel3Sound(prefix+el.getAttributeValue("name"));
 		es.setXml(el, vf);
 		sound_list.put(el.getAttributeValue("name"), es);
 	    } else if (el.getAttributeValue("type").equals("steam")) {
 		// Handle a Diesel Engine sound
-		SteamSound es = new SteamSound(el.getAttributeValue("name"));
+		SteamSound es = new SteamSound(prefix+el.getAttributeValue("name"));
 		es.setXml(el, vf);
 		sound_list.put(el.getAttributeValue("name"), es);
 	    } else {
