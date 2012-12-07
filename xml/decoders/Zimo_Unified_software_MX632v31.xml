@@ -13,8 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20110530"/>
-  <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.1" lastUpdated="20121202"/>
+  <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20121202"/>
 
 <!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
 <!-- V 1 file, dated 20090222. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file.    -->
@@ -28,10 +27,9 @@
 <!-- Continued the practice of using unrelated "item" names to place Zimo unique           -->
 <!-- variables on the proper pane of the Comprehensive programmer.                         -->
 <!-- V 1 new file -->
-<!-- V 1.0 updated file highVersionID increased to 30 -->
   <decoder>
     <family name="Zimo Unified software (version 25+)" mfg="Zimo">
-      <model model="MX632 version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A"
+      <model model="MX632 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A"
  maxTotalCurrent="1.6A" formFactor="HO" numOuts="10" numFns="14" productID="212">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
@@ -45,7 +43,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632R version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A"
+      <model model="MX632R version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A"
  maxTotalCurrent="1.6A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="212">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
@@ -59,7 +57,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632D version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A"
+      <model model="MX632D version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A"
  maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
@@ -73,7 +71,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632V version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A"
+      <model model="MX632V version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A"
  maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
@@ -87,7 +85,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632VD version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A"
+      <model model="MX632VD version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A"
  maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
@@ -101,7 +99,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632W version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A"
+      <model model="MX632W version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A"
  maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
@@ -115,7 +113,7 @@
         <output name="10" label="FO 8"/>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632WD version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A"
+      <model model="MX632WD version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A"
  maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
@@ -134,7 +132,7 @@
     <variables>
 
   <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152version30.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
 
@@ -142,6 +140,9 @@
 			<decVal/>
 			<label>Decoder ID 1</label>
 			</variable>
+			
+  <xi:include href="http://jmri.org/xml/decoders/zimo/CV400-CV428.xml"/>
+  
     </variables>
     <resets>
       <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
@@ -161,6 +162,7 @@
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSpeedRegulation.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneServos2.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneDecoderlock.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneInputMapping.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneLoadCode.xml"/>
   
 </decoder-config>
