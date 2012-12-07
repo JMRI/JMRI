@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20121201-2008-jake on Sat Dec 01 12:08:41 PST 2012 $Id$-->
-  <decoderIndex version="250">
+  <!--Written by JMRI version 3.1.7ish-20121207-0637-jake on Thu Dec 06 22:37:31 PST 2012 $Id$-->
+  <decoderIndex version="252">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1808,7 +1808,7 @@
           <output name="29" label="S Horn" />
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE FDL" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73403">
+        <model model="LokSound Select Alco 251-16" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73427">
           <output name="1" label="Headlight" maxcurrent="250mA" />
           <output name="2" label="Rear light" maxcurrent="250mA" />
           <output name="3" label="AUX 1" maxcurrent="250mA" />
@@ -1840,7 +1840,7 @@
           <output name="29" label="S Horn" />
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select GE 7FDL" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73404">
+        <model model="LokSound Select Alco 539T" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73411">
           <output name="1" label="Headlight" maxcurrent="250mA" />
           <output name="2" label="Rear light" maxcurrent="250mA" />
           <output name="3" label="AUX 1" maxcurrent="250mA" />
@@ -1872,7 +1872,71 @@
           <output name="29" label="S Horn" />
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Baldwin" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73405">
+        <model model="LokSound Select Baldwin 606_606NA" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73446">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="DB" />
+          <output name="20" label="Comp" />
+          <output name="21" label="Fan" />
+          <output name="22" label="Det" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Air" />
+          <output name="28" label="Pop" />
+          <output name="29" label="S Horn" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select Baldwin 606SC_606A" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73447">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="DB" />
+          <output name="20" label="Comp" />
+          <output name="21" label="Fan" />
+          <output name="22" label="Det" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Air" />
+          <output name="28" label="Pop" />
+          <output name="29" label="S Horn" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select Baldwin VO-6" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73405">
           <output name="1" label="Headlight" maxcurrent="250mA" />
           <output name="2" label="Rear light" maxcurrent="250mA" />
           <output name="3" label="AUX 1" maxcurrent="250mA" />
@@ -1968,7 +2032,7 @@
           <output name="29" label="S Horn" />
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 645E/F" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73408">
+        <model model="LokSound Select EMD 12-645 non turbo" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73443">
           <output name="1" label="Headlight" maxcurrent="250mA" />
           <output name="2" label="Rear light" maxcurrent="250mA" />
           <output name="3" label="AUX 1" maxcurrent="250mA" />
@@ -2000,7 +2064,135 @@
           <output name="29" label="S Horn" />
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select EMD 645 turbo" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73409">
+        <model model="LokSound Select EMD 12-645E3" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73439">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="DB" />
+          <output name="20" label="Comp" />
+          <output name="21" label="Fan" />
+          <output name="22" label="Det" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Air" />
+          <output name="28" label="Pop" />
+          <output name="29" label="S Horn" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select EMD 16-645 non turbo" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73426">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="DB" />
+          <output name="20" label="Comp" />
+          <output name="21" label="Fan" />
+          <output name="22" label="Det" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Air" />
+          <output name="28" label="Pop" />
+          <output name="29" label="S Horn" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select EMD F40PH" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73430">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="DB" />
+          <output name="20" label="Comp" />
+          <output name="21" label="Fan" />
+          <output name="22" label="Det" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Air" />
+          <output name="28" label="Pop" />
+          <output name="29" label="S Horn" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select EMD 16-645F" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73450">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="DB" />
+          <output name="20" label="Comp" />
+          <output name="21" label="Fan" />
+          <output name="22" label="Det" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Air" />
+          <output name="28" label="Pop" />
+          <output name="29" label="S Horn" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select EMD 645E/F" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73408">
           <output name="1" label="Headlight" maxcurrent="250mA" />
           <output name="2" label="Rear light" maxcurrent="250mA" />
           <output name="3" label="AUX 1" maxcurrent="250mA" />
@@ -2064,7 +2256,7 @@
           <output name="29" label="S Horn" />
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Switcher" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73411">
+        <model model="LokSound Select EMD SD70M-2" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73425">
           <output name="1" label="Headlight" maxcurrent="250mA" />
           <output name="2" label="Rear light" maxcurrent="250mA" />
           <output name="3" label="AUX 1" maxcurrent="250mA" />
@@ -2096,7 +2288,263 @@
           <output name="29" label="S Horn" />
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
-        <model model="LokSound Select Special" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73412">
+        <model model="LokSound Select EMD SD80MAC" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73461">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="DB" />
+          <output name="20" label="Comp" />
+          <output name="21" label="Fan" />
+          <output name="22" label="Det" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Air" />
+          <output name="28" label="Pop" />
+          <output name="29" label="S Horn" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select EMD SD90MAC" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73431">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="DB" />
+          <output name="20" label="Comp" />
+          <output name="21" label="Fan" />
+          <output name="22" label="Det" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Air" />
+          <output name="28" label="Pop" />
+          <output name="29" label="S Horn" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select EMD MP40PH-2C" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73428">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="DB" />
+          <output name="20" label="Comp" />
+          <output name="21" label="Fan" />
+          <output name="22" label="Det" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Air" />
+          <output name="28" label="Pop" />
+          <output name="29" label="S Horn" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select GE Cat-44" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73444">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="DB" />
+          <output name="20" label="Comp" />
+          <output name="21" label="Fan" />
+          <output name="22" label="Det" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Air" />
+          <output name="28" label="Pop" />
+          <output name="29" label="S Horn" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select GE FDL" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73403">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="DB" />
+          <output name="20" label="Comp" />
+          <output name="21" label="Fan" />
+          <output name="22" label="Det" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Air" />
+          <output name="28" label="Pop" />
+          <output name="29" label="S Horn" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select GE FDL-16" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73445">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="DB" />
+          <output name="20" label="Comp" />
+          <output name="21" label="Fan" />
+          <output name="22" label="Det" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Air" />
+          <output name="28" label="Pop" />
+          <output name="29" label="S Horn" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select GE 7FDL" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73404">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="DB" />
+          <output name="20" label="Comp" />
+          <output name="21" label="Fan" />
+          <output name="22" label="Det" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Air" />
+          <output name="28" label="Pop" />
+          <output name="29" label="S Horn" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select Baldwin" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73405">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="DB" />
+          <output name="20" label="Comp" />
+          <output name="21" label="Fan" />
+          <output name="22" label="Det" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Air" />
+          <output name="28" label="Pop" />
+          <output name="29" label="S Horn" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select PCC trolley steetcar" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73418">
           <output name="1" label="Headlight" maxcurrent="250mA" />
           <output name="2" label="Rear light" maxcurrent="250mA" />
           <output name="3" label="AUX 1" maxcurrent="250mA" />
@@ -2154,6 +2602,102 @@
         </functionlabels>
       </family>
       <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168" file="ESU_LokSound_Select_Steam.xml">
+        <model model="LokSound Select Big Boy 4-8-8-4" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73416">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="Dyno" />
+          <output name="20" label="Pump" />
+          <output name="21" label="Blow" />
+          <output name="22" label="Inj" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Oil" />
+          <output name="28" label="Coal" />
+          <output name="29" label="S Whsl" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select SP Cab Forward" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73409">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="Dyno" />
+          <output name="20" label="Pump" />
+          <output name="21" label="Blow" />
+          <output name="22" label="Inj" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Oil" />
+          <output name="28" label="Coal" />
+          <output name="29" label="S Whsl" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select Y6B 2-8-8-2" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73457">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="Dyno" />
+          <output name="20" label="Pump" />
+          <output name="21" label="Blow" />
+          <output name="22" label="Inj" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Oil" />
+          <output name="28" label="Coal" />
+          <output name="29" label="S Whsl" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
         <model model="LokSound Select Steam 3 Driven Axles" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73413">
           <output name="1" label="Headlight" maxcurrent="250mA" />
           <output name="2" label="Rear light" maxcurrent="250mA" />
@@ -5540,6 +6084,12 @@
           <output name="4" label="  FX6  " />
           <output name="Brakes" />
         </model>
+        <model model="SD40-2W" numOuts="4" numFns="14" connector="other" productID="SD40">
+          <versionCV lowVersionID="96" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Brakes" />
+        </model>
       </family>
       <family name="OEM Bachmann E-Z Command decoders" mfg="Throttle-Up (SoundTraxx)" lowVersionID="1" file="SoundTraxx_OEM_Bachmann_v3.xml">
         <model model="2 function decoder (36-558)" numOuts="2" numFns="14" maxMotorCurrent=".5A" formFactor="HO, N" connector="NMRAmedium">
@@ -6740,6 +7290,21 @@
         </model>
       </family>
       <family name="Tsunami Diesel Genesis OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Athearn Genesis Tsunami diesel decoders" file="SoundTraxx_Tsu_Diesel_Genesis.xml">
+        <model model="DDA40X" numOuts="4" numFns="14" connector="other" productID="DD">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
         <model model="F2" numOuts="4" numFns="14" connector="other" productID="F2">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
@@ -7011,6 +7576,21 @@
           <output name="Coupler" />
         </model>
         <model model="N FP45" numOuts="4" numFns="14" connector="other" productID="N_F45">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="N F59PHI" numOuts="4" numFns="14" connector="other" productID="N_F45">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -10009,7 +10589,7 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX620v28.xml">
-        <model model="MX620 version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="201">
+        <model model="MX620 version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="201">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10037,6 +10617,44 @@
           <size length="14" width="9" height="2.5" units="mm" />
         </model>
         <model model="MX620F version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="201">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="14" width="9" height="2.5" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX620v31.xml">
+        <model model="MX620 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="201">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="14" width="9" height="2.5" units="mm" />
+        </model>
+        <model model="MX620N version 31" lowVersionID="31" highVersionID="31" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="201">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="14" width="9" height="2.5" units="mm" />
+        </model>
+        <model model="MX620R version 31" lowVersionID="31" highVersionID="31" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="201">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="14" width="9" height="2.5" units="mm" />
+        </model>
+        <model model="MX620F version 31" lowVersionID="31" highVersionID="31" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="201">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10123,7 +10741,7 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX621v28.xml">
-        <model model="MX621 version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="40V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="4" numFns="14" productID="223">
+        <model model="MX621 version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="40V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="4" numFns="14" productID="223">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10151,6 +10769,44 @@
           <size length="12" width="8.5" height="2" units="mm" />
         </model>
         <model model="MX621F version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="40V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="4" numFns="14" productID="223">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="12" width="8.5" height="2" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX621v31.xml">
+        <model model="MX621 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="40V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="4" numFns="14" productID="223">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="12" width="8.5" height="2" units="mm" />
+        </model>
+        <model model="MX621N version 31" lowVersionID="31" highVersionID="31" maxInputVolts="40V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="4" numFns="14" productID="223">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="12" width="8.5" height="2" units="mm" />
+        </model>
+        <model model="MX621R version 31" lowVersionID="31" highVersionID="31" maxInputVolts="40V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAmedium" numOuts="4" numFns="14" productID="223">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <size length="12" width="8.5" height="2" units="mm" />
+        </model>
+        <model model="MX621F version 31" lowVersionID="31" highVersionID="31" maxInputVolts="40V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="4" numFns="14" productID="223">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10253,7 +10909,7 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX630v28.xml">
-        <model model="MX630 version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" numOuts="8" numFns="14" productID="211">
+        <model model="MX630 version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" numOuts="8" numFns="14" productID="211">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10264,7 +10920,7 @@
           <output name="8" label="FO 6 (+5v)" />
           <size length="20" width="11" height="3.5" units="mm" />
         </model>
-        <model model="MX630R version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="211">
+        <model model="MX630R version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="211">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10275,7 +10931,7 @@
           <output name="8" label="FO 6 (+5v)" />
           <size length="20" width="11" height="3.5" units="mm" />
         </model>
-        <model model="MX630F version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="211">
+        <model model="MX630F version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="211">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10286,7 +10942,53 @@
           <output name="8" label="FO 6 (+5v)" />
           <size length="20" width="11" height="3.5" units="mm" />
         </model>
-        <model model="MX630P version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="other" numOuts="8" numFns="14" productID="211">
+        <model model="MX630P version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="PluX16" numOuts="8" numFns="14" productID="211">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+          <size length="20" width="11" height="3.5" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX630v31.xml">
+        <model model="MX630 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" numOuts="8" numFns="14" productID="211">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+          <size length="20" width="11" height="3.5" units="mm" />
+        </model>
+        <model model="MX630R version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="211">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+          <size length="20" width="11" height="3.5" units="mm" />
+        </model>
+        <model model="MX630F version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="211">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+          <size length="20" width="11" height="3.5" units="mm" />
+        </model>
+        <model model="MX630P version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="PluX16" numOuts="8" numFns="14" productID="211">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10325,7 +11027,20 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX631Cv28.xml">
-        <model model="MX631C version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="other" numOuts="8" numFns="14" productID="213">
+        <model model="MX631C version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="213">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+          <size length="20.5" width="15.5" height="4" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX631Cv31.xml">
+        <model model="MX631C version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="213">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10408,7 +11123,7 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX631v28.xml">
-        <model model="MX631 version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="8" numFns="14" productID="213">
+        <model model="MX631 version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="8" numFns="14" productID="213">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10419,7 +11134,7 @@
           <output name="8" label="FO 6 (+5v)" />
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
-        <model model="MX631R version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="213">
+        <model model="MX631R version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="213">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10430,7 +11145,42 @@
           <output name="8" label="FO 6 (+5v)" />
           <size length="20.5" width="15.5" height="4" units="mm" />
         </model>
-        <model model="MX631F version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="213">
+        <model model="MX631F version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="213">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+          <size length="20" width="15.5" height="4" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX631v31.xml">
+        <model model="MX631 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="8" numFns="14" productID="213">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+          <size length="20.5" width="15.5" height="4" units="mm" />
+        </model>
+        <model model="MX631R version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="213">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+          <size length="20.5" width="15.5" height="4" units="mm" />
+        </model>
+        <model model="MX631F version 31" lowVersionID="31" highVersionID="31" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="213">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10473,7 +11223,22 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX632Cv28.xml">
-        <model model="MX632C version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212">
+        <model model="MX632C version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+          <size length="28" width="15.5" height="4" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX632Cv31.xml">
+        <model model="MX632C version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10674,7 +11439,7 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX632v28.xml">
-        <model model="MX632 version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" numOuts="10" numFns="14" productID="212">
+        <model model="MX632 version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" numOuts="10" numFns="14" productID="212">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10687,7 +11452,7 @@
           <output name="10" label="FO 8" />
           <size length="28" width="15.5" height="4" units="mm" />
         </model>
-        <model model="MX632R version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="212">
+        <model model="MX632R version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="212">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10700,7 +11465,7 @@
           <output name="10" label="FO 8" />
           <size length="28" width="15.5" height="4" units="mm" />
         </model>
-        <model model="MX632D version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212">
+        <model model="MX632D version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10713,7 +11478,7 @@
           <output name="10" label="FO 8" />
           <size length="28" width="15.5" height="4" units="mm" />
         </model>
-        <model model="MX632V version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212">
+        <model model="MX632V version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10726,7 +11491,7 @@
           <output name="10" label="FO 8" />
           <size length="28" width="15.5" height="4" units="mm" />
         </model>
-        <model model="MX632VD version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212">
+        <model model="MX632VD version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10739,7 +11504,7 @@
           <output name="10" label="FO 8" />
           <size length="28" width="15.5" height="4" units="mm" />
         </model>
-        <model model="MX632W version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212">
+        <model model="MX632W version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -10752,7 +11517,100 @@
           <output name="10" label="FO 8" />
           <size length="28" width="15.5" height="4" units="mm" />
         </model>
-        <model model="MX632WD version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212">
+        <model model="MX632WD version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+          <size length="28" width="15.5" height="4" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX632v31.xml">
+        <model model="MX632 version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" numOuts="10" numFns="14" productID="212">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+          <size length="28" width="15.5" height="4" units="mm" />
+        </model>
+        <model model="MX632R version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="212">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+          <size length="28" width="15.5" height="4" units="mm" />
+        </model>
+        <model model="MX632D version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+          <size length="28" width="15.5" height="4" units="mm" />
+        </model>
+        <model model="MX632V version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+          <size length="28" width="15.5" height="4" units="mm" />
+        </model>
+        <model model="MX632VD version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+          <size length="28" width="15.5" height="4" units="mm" />
+        </model>
+        <model model="MX632W version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+          <size length="28" width="15.5" height="4" units="mm" />
+        </model>
+        <model model="MX632WD version 31" lowVersionID="31" highVersionID="31" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -11569,7 +12427,23 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX64Dv28.xml">
-        <model model="MX64D version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="12-24V" maxMotorCurrent="1.2A,  peak=2A" maxTotalCurrent="1.2A" formFactor="HO" connector="other" numOuts="8" numFns="14" productID="206">
+        <model model="MX64D version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="12-24V" maxMotorCurrent="1.2A,  peak=2A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="206">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+          <output name="9" label="FO 7 (+5v)" />
+          <output name="10" label="FO 8 (+5v)" />
+          <output name="11" label="FO 9 (+5v)" />
+          <size length="32" width="16" height="6" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX64Dv31.xml">
+        <model model="MX64D version 31" lowVersionID="31" highVersionID="31" maxInputVolts="12-24V" maxMotorCurrent="1.2A,  peak=2A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="206">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -11712,8 +12586,43 @@
           <size length="55" width="26" height="18" units="mm" />
         </model>
       </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX695KNv30.xml">
+        <model model="MX695KN version 30+" lowVersionID="30" highVersionID="31" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="8" numFns="14" formFactor="G" connector="other" productID="224">
+          <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug" />
+          <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug" />
+          <output name="3" label="   FO  1   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="4" label="   FO  2   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="5" label="   FO  3   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="6" label="   FO  4   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="7" label="   FO  5   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="8" label="   FO  6   " maxcurrent="2 A total per group" connection="plug" />
+          <size length="50" width="40" height="14" units="mm" />
+        </model>
+      </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX695Sv30.xml">
-        <model model="MX695S version 30+" lowVersionID="30" highVersionID="35" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="8" numFns="14" formFactor="G" connector="other" productID="224">
+        <model model="MX695S version 30+" lowVersionID="30" highVersionID="31" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="8" numFns="14" formFactor="G" connector="other" productID="224">
+          <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug" />
+          <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug" />
+          <output name="3" label="   FO  1   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="4" label="   FO  2   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="5" label="   FO  3   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="6" label="   FO  4   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="7" label="   FO  5   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="8" label="   FO  6   " maxcurrent="2 A total per group" connection="plug" />
+          <size length="50" width="40" height="14" units="mm" />
+        </model>
+        <model model="MX695KS version 30+" lowVersionID="30" highVersionID="31" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="8" numFns="14" formFactor="G" connector="other" productID="224">
+          <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug" />
+          <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug" />
+          <output name="3" label="   FO  1   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="4" label="   FO  2   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="5" label="   FO  3   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="6" label="   FO  4   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="7" label="   FO  5   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="8" label="   FO  6   " maxcurrent="2 A total per group" connection="plug" />
+          <size length="50" width="40" height="14" units="mm" />
+        </model>
+        <model model="MX695LS version 30+" lowVersionID="30" highVersionID="31" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="8" numFns="14" formFactor="G" connector="other" productID="224">
           <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug" />
           <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug" />
           <output name="3" label="   FO  1   " maxcurrent="2 A total per group" connection="plug" />
@@ -11726,7 +12635,41 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX695Vv30.xml">
-        <model model="MX695V version 30+" lowVersionID="30" highVersionID="35" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="224">
+        <model model="MX695V version 30+" lowVersionID="30" highVersionID="31" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="224">
+          <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug" />
+          <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug" />
+          <output name="3" label="   FO  1   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="4" label="   FO  2   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="5" label="   FO  3   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="6" label="   FO  4   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="7" label="   FO  5   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="8" label="   FO  6   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="9" label="   FO  7   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="10" label="   FO  8   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="11" label="   FO  9   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="12" label="   FO 10   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="13" label="   FO 11   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="14" label="   FO 12   " maxcurrent="2 A total per group" connection="plug" />
+          <size length="50" width="40" height="14" units="mm" />
+        </model>
+        <model model="MX695KV version 30+" lowVersionID="30" highVersionID="31" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="224">
+          <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug" />
+          <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug" />
+          <output name="3" label="   FO  1   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="4" label="   FO  2   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="5" label="   FO  3   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="6" label="   FO  4   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="7" label="   FO  5   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="8" label="   FO  6   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="9" label="   FO  7   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="10" label="   FO  8   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="11" label="   FO  9   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="12" label="   FO 10   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="13" label="   FO 11   " maxcurrent="2 A total per group" connection="plug" />
+          <output name="14" label="   FO 12   " maxcurrent="2 A total per group" connection="plug" />
+          <size length="50" width="40" height="14" units="mm" />
+        </model>
+        <model model="MX695LV version 30+" lowVersionID="30" highVersionID="31" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="224">
           <output name="1" label="Front light" maxcurrent="2 A total per group" connection="plug" />
           <output name="2" label="Rear light " maxcurrent="2 A total per group" connection="plug" />
           <output name="3" label="   FO  1   " maxcurrent="2 A total per group" connection="plug" />
@@ -11763,7 +12706,16 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX69Lv28.xml">
-        <model model="MX69L version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="2 A (peak 8 A)" maxTotalCurrent="2 A (peak 8 A)" numOuts="4" numFns="14" formFactor="G" connector="other" productID="209">
+        <model model="MX69L version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="24 V" maxMotorCurrent="2 A (peak 8 A)" maxTotalCurrent="2 A (peak 8 A)" numOuts="4" numFns="14" formFactor="G" connector="other" productID="209">
+          <output name="1" label="Front light" comment="pin-6,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="2" label="Rear light " comment="pin-11, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="3" label="   FO  1   " comment="pin-14, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="4" label="   FO  2   " comment="pin-7,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <size length="55" width="26" height="14" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX69Lv31.xml">
+        <model model="MX69L version 31" lowVersionID="31" highVersionID="31" maxInputVolts="24 V" maxMotorCurrent="2 A (peak 8 A)" maxTotalCurrent="2 A (peak 8 A)" numOuts="4" numFns="14" formFactor="G" connector="other" productID="209">
           <output name="1" label="Front light" comment="pin-6,  left" maxcurrent="1.5 A total per group" connection="plug" />
           <output name="2" label="Rear light " comment="pin-11, left" maxcurrent="1.5 A total per group" connection="plug" />
           <output name="3" label="   FO  1   " comment="pin-14, left" maxcurrent="1.5 A total per group" connection="plug" />
@@ -11798,7 +12750,20 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX69Sv28.xml">
-        <model model="MX69S version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="3 A (peak 8 A)" maxTotalCurrent="3 A (peak 8 A)" numOuts="8" numFns="14" formFactor="G" connector="other" productID="209">
+        <model model="MX69S version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="24 V" maxMotorCurrent="3 A (peak 8 A)" maxTotalCurrent="3 A (peak 8 A)" numOuts="8" numFns="14" formFactor="G" connector="other" productID="209">
+          <output name="1" label="Front light" comment="pin-6,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="2" label="Rear light " comment="pin-11, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="3" label="   FO  1   " comment="pin-14, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="4" label="   FO  2   " comment="pin-7,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="5" label="   FO  3   " comment="pin-13, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="6" label="   FO  4   " comment="pin-9,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="7" label="   FO  5   " comment="pin-12, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="8" label="   FO  6   " comment="pin-8,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <size length="55" width="26" height="16" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX69Sv31.xml">
+        <model model="MX69S version 31" lowVersionID="31" highVersionID="31" maxInputVolts="24 V" maxMotorCurrent="3 A (peak 8 A)" maxTotalCurrent="3 A (peak 8 A)" numOuts="8" numFns="14" formFactor="G" connector="other" productID="209">
           <output name="1" label="Front light" comment="pin-6,  left" maxcurrent="1.5 A total per group" connection="plug" />
           <output name="2" label="Rear light " comment="pin-11, left" maxcurrent="1.5 A total per group" connection="plug" />
           <output name="3" label="   FO  1   " comment="pin-14, left" maxcurrent="1.5 A total per group" connection="plug" />
@@ -11849,7 +12814,26 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX69Vv28.xml">
-        <model model="MX69V version 28+" lowVersionID="28" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="4-5 A (peak 8 A)" maxTotalCurrent="4-5 A (peak 8 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="209">
+        <model model="MX69V version 28+" lowVersionID="28" highVersionID="30" maxInputVolts="24 V" maxMotorCurrent="4-5 A (peak 8 A)" maxTotalCurrent="4-5 A (peak 8 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="209">
+          <output name="1" label="Front light" comment="pin-6,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="2" label="Rear light " comment="pin-11, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="3" label="   FO  1   " comment="pin-14, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="4" label="   FO  2   " comment="pin-7,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="5" label="   FO  3   " comment="pin-13, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="6" label="   FO  4   " comment="pin-9,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="7" label="   FO  5   " comment="pin-12, left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="8" label="   FO  6   " comment="pin-8,  left" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="9" label="   FO  7   " comment="pin-12, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="10" label="   FO  8   " comment="pin-13, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="11" label="   FO  9   " comment="pin-14, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="12" label="   FO 10   " comment="pin-8,  right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="13" label="   FO 11   " comment="pin-15, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <output name="14" label="   FO 12   " comment="pin-16, right" maxcurrent="1.5 A total per group" connection="plug" />
+          <size length="55" width="26" height="18" units="mm" />
+        </model>
+      </family>
+      <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX69Vv31.xml">
+        <model model="MX69V version 31" lowVersionID="31" highVersionID="31" maxInputVolts="24 V" maxMotorCurrent="4-5 A (peak 8 A)" maxTotalCurrent="4-5 A (peak 8 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="209">
           <output name="1" label="Front light" comment="pin-6,  left" maxcurrent="1.5 A total per group" connection="plug" />
           <output name="2" label="Rear light " comment="pin-11, left" maxcurrent="1.5 A total per group" connection="plug" />
           <output name="3" label="   FO  1   " comment="pin-14, left" maxcurrent="1.5 A total per group" connection="plug" />
