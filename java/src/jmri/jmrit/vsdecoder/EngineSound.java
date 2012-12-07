@@ -202,11 +202,13 @@ class EngineSound extends VSDSound {
 
     public void setXml(Element e, VSDFile vf) {
 	// Do only the stuff common...
-	this.setName(e.getAttribute("name").getValue());
-	log.debug("EngineSound: " + e.getAttribute("name").getValue());
+	if (this.getName() == null)
+	    this.setName(e.getAttributeValue("name"));
+	//log.debug("EngineSound: " + this.getName());
 	this.setFadeInTime(e.getChildText("fade-in-time"));
 	this.setFadeOutTime(e.getChildText("fade-out-time"));
-	log.debug("Fade-In-Time: " + this.getFadeInTime() + " Fade-Out-Time: " + this.getFadeOutTime());
+	log.debug("Name: " + this.getName() + "Fade-In-Time: " + this.getFadeInTime() +
+		  " Fade-Out-Time: " + this.getFadeOutTime());
     }
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EngineSound.class.getName());

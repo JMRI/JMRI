@@ -199,6 +199,7 @@ public class VSDManagerFrame extends JmriJFrame {
     /** Handle "Add" button press */
     protected void addButtonPressed(ActionEvent e) {
 	log.debug("Add button pressed");
+	config = new VSDConfig(); // Create a new Config for the new VSDecoder.
 	// Do something here.  Create a new VSDecoder and add it to the window.
 	VSDConfigDialog d = new VSDConfigDialog(decoderPane, rb.getString("NewDecoderConfigPaneTitle"), config);
 	d.addPropertyChangeListener(new PropertyChangeListener() {
@@ -214,12 +215,14 @@ public class VSDManagerFrame extends JmriJFrame {
     /** Callback for the Config Dialog */
     protected void addButtonPropertyChange(PropertyChangeEvent event) {
 	log.debug("internal config dialog handler");
+	log.debug("New Config: " + config.toString());
 	VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
 	if (newDecoder == null) {
 	    log.debug("no New Decoder constructed!" + config.toString());
 	    return;
 	}
-	//VSDControl newControl = new VSDControl(config.getLocoAddress().toString());
+	// Need to add something here... if this Control already exists, don't
+	// create a new one.
 	VSDControl newControl = new VSDControl(config);
 	// Set the Decoder to listen to PropertyChanges from the control
 	newControl.addPropertyChangeListener(newDecoder);
