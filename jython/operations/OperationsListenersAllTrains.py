@@ -2,7 +2,7 @@
 # Not to be used as a train move or termination script!
 #
 # Author: Bob Jacobsen, copyright 2004
-# Author: Daniel Boudreau, copyright 2010
+# Author: Daniel Boudreau, copyright 2010, 2012
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
@@ -15,6 +15,7 @@ import jmri
 # of course possible.
 class MyListener(java.beans.PropertyChangeListener):    
   def propertyChange(self, event):
+    print " "   # add a line between updates to make it easier to read
     print "Train name:",event.source.getName()
     print "Train id:",event.source.getId()
     print "Train status:",event.source.getStatus()
@@ -28,10 +29,20 @@ class MyListener(java.beans.PropertyChangeListener):
     train = tm.getTrainById(trainId)
     if (train.isBuilt() == True):
     	print "Train", train.getName(), "is built"
+        if (event.propertyName == jmri.jmrit.operations.trains.Train.TRAIN_LOCATION_CHANGED_PROPERTY):
+            print "Cars in train:", train.getNumberCarsInTrain()
+            print "Train length:", train.getTrainLength()
+            print "Train weight:", train.getTrainWeight()
     else: 
    		print "Train", train.getName(), "not built"
-   		if (train.getStatus() == "Terminated"):
-   			print "Train", train.getName(), "has been terminated"
+    
+    # determine using property change if train has just been built
+    if (event.propertyName == jmri.jmrit.operations.trains.Train.BUILT_CHANGED_PROPERTY and event.newValue == "true"):
+        print "Train", train.getName(), "built status changed to true"
+        # fix an issue with this scripts property change listener being ahead of the cars in operations
+        train.removePropertyChangeListener(self)
+        train.addPropertyChangeListener(MyListener())
+    
 
 class listenAllTrains(jmri.jmrit.automat.AbstractAutomaton) :      
   def init(self):
@@ -50,8 +61,7 @@ class listenAllTrains(jmri.jmrit.automat.AbstractAutomaton) :
     for trainId in tList :
       train = self.tm.getTrainById(trainId)
       print "Train", count, train.getName(), train.getDescription()
-      m = MyListener()
-      train.addPropertyChangeListener(m)
+      train.addPropertyChangeListener(MyListener())
       count = count + 1
 
     return False              # all done, don't repeat again
