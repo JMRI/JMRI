@@ -118,16 +118,6 @@ class Diesel3Sound extends EngineSound {
 	changeThrottle(s);
     }
 
-    // Private function used in place of EngineSound.calcEngineNotch()
-    private D3Notch findNotch(float val) {
-	for (D3Notch n : notch_sounds.values()) {
-	    if (n.isInLimits(val))
-		return(n);
-	}
-	// If we fall out of the loop, somehow we didn't find a notch.
-	return(null);
-    }
-
     public D3Notch getNotch(int n) {
 	return(notch_sounds.get(n));
     }
@@ -466,7 +456,7 @@ class D3LoopThread extends Thread {
 		if (is_looping) {
 		    if (_sound.getSource().numProcessedBuffers() > 0)
 			_sound.unqueueBuffers();
-		    log.debug("D3Loop"+ _sound.getName() + "Run loop. Buffers: " + _sound.getSource().numQueuedBuffers());
+		    //log.debug("D3Loop"+ _sound.getName() + "Run loop. Buffers: " + _sound.getSource().numQueuedBuffers());
 		    if (!_notch.isInLimits(_throttle)) {
 			changeNotch();
 		    }
