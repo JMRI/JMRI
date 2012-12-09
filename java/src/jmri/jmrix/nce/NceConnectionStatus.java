@@ -18,7 +18,7 @@ import jmri.jmrix.ConnectionStatus;
  * 
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
- * @author Daniel Boudreau (C) 2007, 2010
+ * @author Daniel Boudreau (C) 2007, 2010, 2012
  * @version     $Revision$
  * 
  */
@@ -68,6 +68,8 @@ public class NceConnectionStatus implements NceListener {
 
 	private static final int mm_2007a = 1; // Revision of May 2007 EPROM VV.MM.mm = 6.2.1
 	private static final int mm_2008 = 2;  // Revision of 2008 EPROM VV.MM.mm = 6.2.2
+	
+	private static final int VV_2012 = 7;	// Revision 2012
 
 	// USB -> Cab bus adapter:
 	// When used with PowerCab V1.28 - 6.3.0
@@ -242,9 +244,14 @@ public class NceConnectionStatus implements NceListener {
 			byte MM = (byte) r.getElement(1);
 			byte mm = (byte) r.getElement(2);
 			
-			// Is the reply valid? Check major revision VV_2004 = VV_2007 = VV_USB
-			if(VV != VV_2004 && VV != VV_1999){
+			// Is the reply valid? Check major revision, there are only three valid responses
+			// note that VV_2004 = VV_2007 = VV_USB
+			if(VV != VV_2012 && VV != VV_2004 && VV != VV_1999){
 				log.error("Wrong major revision: "+ Integer.toHexString(VV & 0xFF));
+				// show the entire revision number
+				log.info("NCE EPROM revision = " + Integer.toHexString(VV & 0xFF)
+						+ "." + Integer.toHexString(MM & 0xFF) + "."
+						+ Integer.toHexString(mm & 0xFF));
 				return;
 			}
 			
@@ -254,7 +261,7 @@ public class NceConnectionStatus implements NceListener {
 			// Have we already done the error checking?
 			if (epromChecked)
 				return;
-			epromChecked =true;
+			epromChecked = true;
 
 			// Send to log file the NCE EPROM revision
 			log.info("NCE EPROM revision = " + Integer.toHexString(VV & 0xFF)
@@ -300,6 +307,7 @@ public class NceConnectionStatus implements NceListener {
 				}
 
 			// Check for USB
+			// TODO the following code doesn't check for 2012 USB version 7
 			if (VV == VV_USB && MM == MM_USB) {
 				// USB detected, check to see if user preferences are correct
 				if (mm == mm_USB_PwrCab	&& tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB) {
