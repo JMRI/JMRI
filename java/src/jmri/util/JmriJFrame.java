@@ -691,7 +691,8 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if ((p != null) && (reuseFrameSavedSized) && isVisible()) {
             //Windows sets the size parameter when resizing a frame, while Unix uses the preferredsize
-            if(System.getProperty("os.name").toLowerCase().contains("windows"))
+            if(System.getProperty("os.name").toLowerCase().contains("windows")
+            		|| System.getProperty("os.name").toLowerCase().equals("mac os x"))
                 p.setWindowSize(windowFrameRef, super.getSize());
             else 
                 p.setWindowSize(windowFrameRef, super.getPreferredSize());
@@ -730,7 +731,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
             if (reuseFrameSavedPosition)
                 p.setWindowLocation(windowFrameRef, this.getLocation());
             if (reuseFrameSavedSized){
-                if(System.getProperty("os.name").toLowerCase().contains("windows"))
+            	//Windows sets the size parameter when resizing a frame, while Unix uses the preferredsize
+                if(System.getProperty("os.name").toLowerCase().contains("windows")
+                		|| System.getProperty("os.name").toLowerCase().equals("mac os x"))
                     p.setWindowSize(windowFrameRef, super.getSize());
                 else 
                     p.setWindowSize(windowFrameRef, super.getPreferredSize());
