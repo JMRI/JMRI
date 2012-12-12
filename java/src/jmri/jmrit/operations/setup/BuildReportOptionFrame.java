@@ -41,6 +41,8 @@ public class BuildReportOptionFrame extends OperationsFrame{
     
     // check boxes
 	JCheckBox buildReportCheckBox = new JCheckBox(rb.getString("BuildReportEdit"));
+	JCheckBox buildReportIndentCheckBox = new JCheckBox(rb.getString("BuildReportIndent"));
+	
 	
 
 	public BuildReportOptionFrame() {
@@ -68,6 +70,7 @@ public class BuildReportOptionFrame extends OperationsFrame{
 		addItemLeft (pReport, buildReportMax, 3, 0);
 		addItemLeft (pReport, buildReportVD, 4, 0);
 		addItemWidth (pReport, buildReportCheckBox, 3, 1, 1);	
+		addItemWidth (pReport, buildReportIndentCheckBox, 3, 1, 2);
 
 		// controls
 		JPanel pControl = new JPanel();
@@ -79,6 +82,7 @@ public class BuildReportOptionFrame extends OperationsFrame{
 		getContentPane().add(pControl);
 		
 		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
+		buildReportIndentCheckBox.setSelected(Setup.isBuildReportIndentEnabled());
 		
 		ButtonGroup buildReportGroup = new ButtonGroup();
 		buildReportGroup.add(buildReportMin);
@@ -110,6 +114,7 @@ public class BuildReportOptionFrame extends OperationsFrame{
 			else if (buildReportVD.isSelected())
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
 			Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
+			Setup.setBuildReportIndentEnabled(buildReportIndentCheckBox.isSelected());
 			
 			OperationsSetupXml.instance().writeOperationsFile();
 			if (Setup.isCloseWindowOnSaveEnabled())

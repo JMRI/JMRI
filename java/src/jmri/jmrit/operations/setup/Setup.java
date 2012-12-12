@@ -216,6 +216,7 @@ public class Setup {
 	private static boolean switchListAllTrains = true;		// when true show all trains that visit the location
 	private static boolean switchListPage = false;			// when true each train has its own page
 	private static boolean buildReportEditorEnabled = false;	// when true use text editor to view build report
+	private static boolean buildReportIndentEnabled = true;	// when true use text editor to view build report
 	
 	private static boolean enableTrainIconXY = true;
 	private static boolean appendTrainIcon = false;		//when true, append engine number to train name
@@ -583,6 +584,14 @@ public class Setup {
 	
 	public static boolean isBuildReportEditorEnabled(){
 		return buildReportEditorEnabled;
+	}
+	
+	public static void setBuildReportIndentEnabled(boolean enable){
+		buildReportIndentEnabled = enable;
+	}
+	
+	public static boolean isBuildReportIndentEnabled(){
+		return buildReportIndentEnabled;
 	}
 	
 	public static void setSwitchListFormatSameAsManifest(boolean b){
@@ -1535,6 +1544,7 @@ public class Setup {
     	e.addContent(values = new Element("buildReport"));
     	values.setAttribute("level", getBuildReportLevel());
     	values.setAttribute("useEditor", isBuildReportEditorEnabled()?"true":"false");
+    	values.setAttribute("indent", isBuildReportIndentEnabled()?"true":"false");
     	
        	e.addContent(values = new Element("owner"));
     	values.setAttribute("name", getOwnerName());
@@ -1986,6 +1996,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("build report useEditor: "+enable);
         		setBuildReportEditorEnabled(enable.equals("true"));
+        	}
+           	if ((a = operations.getChild("buildReport").getAttribute("indent")) != null) {
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("build report indent: "+enable);
+        		setBuildReportIndentEnabled(enable.equals("true"));
         	}
         }
         if ((operations.getChild("owner") != null) 

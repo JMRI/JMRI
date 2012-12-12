@@ -183,7 +183,7 @@ public class TrainPrintUtilities {
 				line = in.readLine();
 				if (line == null)
 					break;
-				line = filterBuildReport(line, true);
+				line = filterBuildReport(line, Setup.isBuildReportIndentEnabled());
 				if (line.equals(""))
 					continue;
 				out.println(line); // indent lines for each level
@@ -255,6 +255,9 @@ public class TrainPrintUtilities {
 			for (int i = start; i < inputLine.length; i++) {
 				buf.append(inputLine[i] + " ");
 			}
+			// blank line?
+			if (buf.length() == 0)
+				return " ";
 			return buf.toString();
 		} else {
 			log.debug("ERROR first characters of build report not valid ("

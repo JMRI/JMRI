@@ -129,7 +129,8 @@
 <!ATTLIST buildOptions generateCsvSwitchList		(true | false ) "false">  
    
 <!ATTLIST buildReport level				CDATA #IMPLIED>    
-<!ATTLIST buildReport useEditor			(true | false ) "false">                                  
+<!ATTLIST buildReport useEditor			(true | false ) "false">   
+<!ATTLIST buildReport indent			(true | false ) "true">                                
 <!ATTLIST owner name					CDATA #IMPLIED>
 
 <!ATTLIST iconColor north				CDATA #IMPLIED>    
