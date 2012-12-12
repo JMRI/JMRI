@@ -33,7 +33,7 @@ public class JmriInsets {
     
     //private static final String XFCE_CONFIG = System.getProperty("user.home") + "/.config/xfce4/mcs_settings/panel.xml";
     
-    private static final String OS_NAME = System.getProperty("os.name");
+    private static final String OS_NAME = SystemType.getOSName();
     
     // Set this to -2 initially (out of the normal range)
     // which can then be used to determine if we need to
@@ -63,7 +63,7 @@ public class JmriInsets {
      * Determine the current Linux Window Manager
      */
     private static int getLinuxWindowManager(){
-        if(!OS_NAME.toLowerCase().startsWith("windows")&&
+        if(!SystemType.isWindows() &&
            !OS_NAME.toLowerCase().startsWith("mac")) {
             try {
                 Process p = Runtime.getRuntime().exec("ps ax");

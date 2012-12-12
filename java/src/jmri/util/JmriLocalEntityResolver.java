@@ -88,7 +88,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                             // regardless of what File.separator says
                             String realSeparator = File.separator;
                             // guess! first form is right one
-                            if (System.getProperty("os.name").startsWith("Windows")) {
+                            if (SystemType.isWindows()) {
                                 int forIndex = path.indexOf("/");
                                 int backIndex = path.indexOf("\\");
                                 if (forIndex >= 0 && backIndex < 0) realSeparator = "/";

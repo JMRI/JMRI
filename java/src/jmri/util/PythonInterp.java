@@ -42,8 +42,7 @@ public class PythonInterp {
 
      static public void execFile(String filename) {
         // if windows, need to process backslashes in filename
-        String os = System.getProperty("os.name");
-        if ( os != null && os.startsWith("Window"))
+        if (SystemType.isWindows())
             filename = filename.replaceAll("\\\\", "\\\\\\\\");
         
         execCommand("execfile(\""+filename+"\")");

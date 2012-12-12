@@ -8,7 +8,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
-import java.io.Reader;
 
 import java.net.URL;
 
@@ -539,7 +538,7 @@ public abstract class XmlFile {
         if (jmriScriptsDir.length()>0) return jmriScriptsDir+File.separator;
         
         // not present, work through other choices
-        String osName       = System.getProperty("os.name","<unknown>");
+        String osName       = SystemType.getOSName();
         String mrjVersion   = System.getProperty("mrj.version","<unknown>");
         String userHome     = System.getProperty("user.home","");
 
@@ -550,7 +549,7 @@ public abstract class XmlFile {
 
         if ( !mrjVersion.equals("<unknown>")) {
             // Macintosh, test for OS X
-            if (osName.toLowerCase().equals("mac os x")) {
+            if (SystemType.isMacOSX()) {
                 // Mac OS X
                 result = userHome+"Library"+File.separator+"Preferences"
                     +File.separator+"JMRI"+File.separator;
@@ -564,7 +563,7 @@ public abstract class XmlFile {
                 // userHome is the overall preferences directory
                 result = userHome+"JMRI"+File.separator;
             }
-        } else if (osName.equals("Linux")) {
+        } else if (SystemType.isLinux()) {
             // Linux, so use an invisible file
             result = userHome+".jmri"+File.separator;
         } else {

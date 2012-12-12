@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.ms100;
 
+import jmri.util.SystemType;
+
 
 /**
  * Definition of objects to handle configuring an LocoBuffer layout connection
@@ -31,9 +33,8 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 	 * @return null if this is a MacOS X system that can't run MS100
 	 */
     public String name() {
-        String osName;
-    	if ((osName = System.getProperty("os.name","<unknown>").toLowerCase()).equals("mac os x")
-            || (osName.contains("windows") && Double.valueOf(System.getProperty("os.version")) >= 6 ) )
+    	if (SystemType.isMacOSX()
+            || (SystemType.isWindows() && Double.valueOf(System.getProperty("os.version")) >= 6 ))
 
             return "(LocoNet MS100 not available)";
     	else

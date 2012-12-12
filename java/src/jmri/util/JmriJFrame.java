@@ -431,19 +431,15 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
                 
                 // If insets are zero, guess based on system type
                 if (widthInset == 0 && heightInset == 0) {
-                    String type = System.getProperty("os.name","");
-                    if (type.equals("Linux")) {
+                    String osName = SystemType.getOSName();
+                    if (SystemType.isLinux()) {
                         // Linux generally has a bar across the top and/or bottom
                         // of the screen, but lets you have the full width.
                         heightInset = 70;
                     }
                     // Windows generally has values, but not always,
                     // so we provide observed values just in case
-                    else if (type.equals("Windows XP")) {
-                        heightInset = 28;  // bottom 28
-                    } else if (type.equals("Windows 98")) {
-                        heightInset = 28;  // bottom 28
-                    } else if (type.equals("Windows 2000")) {
+                    else if (osName.equals("Windows XP") || osName.equals("Windows 98") || osName.equals("Windows 2000")) {
                         heightInset = 28;  // bottom 28
                     }
                 }
@@ -691,8 +687,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if ((p != null) && (reuseFrameSavedSized) && isVisible()) {
             //Windows sets the size parameter when resizing a frame, while Unix uses the preferredsize
-            if(System.getProperty("os.name").toLowerCase().contains("windows")
-            		|| System.getProperty("os.name").toLowerCase().equals("mac os x"))
+        	if (!SystemType.isLinux())
                 p.setWindowSize(windowFrameRef, super.getSize());
             else 
                 p.setWindowSize(windowFrameRef, super.getPreferredSize());
@@ -732,8 +727,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
                 p.setWindowLocation(windowFrameRef, this.getLocation());
             if (reuseFrameSavedSized){
             	//Windows sets the size parameter when resizing a frame, while Unix uses the preferredsize
-                if(System.getProperty("os.name").toLowerCase().contains("windows")
-                		|| System.getProperty("os.name").toLowerCase().equals("mac os x"))
+            	if (!SystemType.isLinux())
                     p.setWindowSize(windowFrameRef, super.getSize());
                 else 
                     p.setWindowSize(windowFrameRef, super.getPreferredSize());
