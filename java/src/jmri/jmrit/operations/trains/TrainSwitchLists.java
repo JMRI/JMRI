@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -32,6 +33,9 @@ public class TrainSwitchLists extends TrainCommon {
 	
 	TrainManager manager = TrainManager.instance();
 	char formFeed = '\f';
+	
+	boolean pickupCars;
+	boolean dropCars;
 		
 	/**
 	 * builds a switch list for a location
@@ -104,6 +108,7 @@ public class TrainSwitchLists extends TrainCommon {
 			// determine if train works this location
 			boolean works = false;
 			List<String> routeList = route.getLocationsBySequenceList();
+			// first determine if there's any work at this location
 			for (int r=0; r<routeList.size(); r++){
 				RouteLocation rl = route.getLocationById(routeList.get(r));
 				if (splitString(rl.getName()).equals(splitString(location.getName()))){
@@ -126,15 +131,15 @@ public class TrainSwitchLists extends TrainCommon {
 				}
 			}		
 			if (!works && !Setup.isSwitchListAllTrainsEnabled()) {
-				log.debug("No work for train ("+train.getName()+") at location "+location.getName());
+				log.debug("No work for train ("+train.getName()+") at location ("+location.getName()+")");
 				continue;
 			}
 			if (nextTrain && Setup.isSwitchListPagePerTrainEnabled())
 				fileOut.write(formFeed);
 			nextTrain = true;
-			// some cars counts and the number of times this location get's serviced
-			int pickupCars = 0;
-			int dropCars = 0;
+			// some cars booleans and the number of times this location get's serviced
+			pickupCars = false;
+			dropCars = false;
 			int stops = 1;
 			boolean trainDone = false;
 			// does the train stop once or more at this location?
@@ -185,47 +190,23 @@ public class TrainSwitchLists extends TrainCommon {
 					}
 					// go through the list of engines and determine if the engine departs here					
 					pickupEngines(fileOut, enginesList, rl, Setup.getSwitchListOrientation());
+					
+					if (Setup.isSortByTrackEnabled())
+						blockCarsByTrack(fileOut, train, carList, routeList, rl);
+					else
+						blockCarsByPickUpAndSetOut(fileOut, train, carList, routeList, rl);		
 
-					// block cars by destination
-					for (int j = 0; j < routeList.size(); j++) {						
-						RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
-						utilityCarTypes.clear();	// list utility cars by quantity
-						for (int k = 0; k < carList.size(); k++) {
-							Car car = carManager.getById(carList.get(k));
-							if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
-									&& car.getRouteDestination() == rld) {
-								if (car.isUtility())
-									pickupCars(fileOut, carList, car, rl, rld);
-								else
-									switchListPickUpCar(fileOut, car);
-								pickupCars++;
-							}
-						}
-					}
-					
-					utilityCarTypes.clear();	// list utility cars by quantity
-					for (int j=0; j<carList.size(); j++){
-						Car car = carManager.getById(carList.get(j));
-						if (car.getRouteDestination() == rl){
-							if (car.isUtility())
-								setoutCars(fileOut, carList, car, rl, car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null);
-							else
-								switchListDropCar(fileOut, car);
-							dropCars++;
-						}
-					}
-					
 					dropEngines(fileOut, enginesList, rl, Setup.getSwitchListOrientation());
 					stops++;
 				}
 			}
-			if (trainDone && pickupCars == 0 && dropCars == 0){
+			if (trainDone && !pickupCars && !dropCars){
 				newLine(fileOut, rb.getString("TrainDone"));
 			} else {
-				if (stops > 1 && pickupCars == 0){
+				if (stops > 1 && !pickupCars){
 					newLine(fileOut, rb.getString("NoCarPickUps"));
 				}
-				if (stops > 1 && dropCars == 0){
+				if (stops > 1 && !dropCars){
 					newLine(fileOut, rb.getString("NoCarDrops"));
 				}
 			}
@@ -235,9 +216,85 @@ public class TrainSwitchLists extends TrainCommon {
 		fileOut.flush();
 		fileOut.close();
 	}
+	
+	/**
+	 * Block cars by pick up and set out for each location in a train's route.
+	 */
+	private void blockCarsByPickUpAndSetOut(PrintWriter fileOut, Train train, List<String> carList, List<String> routeList, RouteLocation rl) {
+		// block cars by destination
+		for (int j = 0; j < routeList.size(); j++) {						
+			RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
+			utilityCarTypes.clear();	// list utility cars by quantity
+			for (int k = 0; k < carList.size(); k++) {
+				Car car = carManager.getById(carList.get(k));
+				if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
+						&& car.getRouteDestination() == rld) {
+					if (car.isUtility())
+						pickupCars(fileOut, carList, car, rl, rld);
+					else
+						switchListPickUpCar(fileOut, car);
+					pickupCars = true;
+				}
+			}
+		}
+		
+		utilityCarTypes.clear();	// list utility cars by quantity
+		for (int j=0; j<carList.size(); j++){
+			Car car = carManager.getById(carList.get(j));
+			if (car.getRouteDestination() == rl){
+				if (car.isUtility())
+					setoutCars(fileOut, carList, car, rl, car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null);
+				else
+					switchListDropCar(fileOut, car);
+				dropCars = true;
+			}
+		}
+	}
+	
+	/**
+	 * Block cars by track, then pick up and set out for each location in a train's route.
+	 */
+	private void blockCarsByTrack(PrintWriter fileOut, Train train, List<String> carList, List<String> routeList, RouteLocation rl) {
+		List<String> trackIds = rl.getLocation().getTrackIdsByNameList(null);
+		for (int i=0; i<trackIds.size(); i++) {
+			Track track = rl.getLocation().getTrackById(trackIds.get(i));		
+			// block cars by destination
+			for (int j = 0; j < routeList.size(); j++) {						
+				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
+				utilityCarTypes.clear();	// list utility cars by quantity
+				for (int k = 0; k < carList.size(); k++) {
+					Car car = carManager.getById(carList.get(k));
+					if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
+							&& track == car.getTrack() && car.getRouteDestination() == rld) {
+						if (car.isUtility())
+							pickupCars(fileOut, carList, car, rl, rld);
+						else
+							switchListPickUpCar(fileOut, car);
+						pickupCars = true;
+					}
+				}
+			}
+
+			utilityCarTypes.clear();	// list utility cars by quantity
+			for (int j=0; j<carList.size(); j++){
+				Car car = carManager.getById(carList.get(j));
+				if (car.getRouteDestination() == rl && track == car.getDestinationTrack()){
+					if (car.isUtility())
+						setoutCars(fileOut, carList, car, rl, car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null);
+					else
+						switchListDropCar(fileOut, car);
+					dropCars = true;
+				}
+			}
+		}
+	}
 
 	public void printSwitchList(Location location, boolean isPreview) {
 		File buildFile = TrainManagerXml.instance().getSwitchListFile(location.getName());
+		if (!buildFile.exists()) {
+			log.warn("Switch list file missing for location ("+location.getName()+")");
+			return;
+		}
 		if (isPreview && Setup.isManifestEditorEnabled())
 			TrainPrintUtilities.openDesktopEditor(buildFile);
 		else

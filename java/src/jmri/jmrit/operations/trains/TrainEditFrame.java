@@ -80,7 +80,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JLabel textRoad2 = new JLabel(rb.getString("Road"));
 	JLabel textRoad3 = new JLabel(rb.getString("Road"));
 	JLabel textEngine = new JLabel(rb.getString("Engines"));
-	JLabel textCars = new JLabel();
 	JLabel textComment = new JLabel(rb.getString("Comment"));
 
 	// major buttons
@@ -356,8 +355,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		updateLocationCheckboxes();
 		updateCarTypeCheckboxes();
 		updateEngineTypeCheckboxes();
-		//not currently showing how many cars assigned to this train
-		//updateNumberCars();
 		updateCabooseRoadComboBox();
 		updateEngineRoadComboBox();
 		
@@ -673,13 +670,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		routeBox.setEnabled(true);
 	}
 	
-	private void updateNumberCars(){
-		if (_train != null){
-			textCars.setText(MessageFormat.format(rb.getString("CarMoves"),
-					new Object[] {Integer.toString(_train.getNumberCarsWorked())}));
-		}
-	}
-	
 	private void updateCarTypeCheckboxes(){
 		typeCarCheckBoxes.clear();
 		typeCarPanelCheckBoxes.removeAll();
@@ -945,10 +935,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY)){
 			updateLocationCheckboxes();
 			packFrame();
-		}
-		if (e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY) || 
-				e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)){
-			updateNumberCars();
 		}
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)){
 			updateRoadComboBoxes();

@@ -367,6 +367,11 @@ public class TrainCommon {
 						+" ("+splitString(car.getReturnWhenEmptyDestTrackName())+")";
 			return "";
 		}
+		else if (attribute.equals(Setup.FINAL_DEST)){
+			if (!car.getNextDestinationName().equals(""))
+				return " "+rb.getString("FD")+" "+splitString(car.getNextDestinationName());
+			return "";
+		}
 		return getRollingStockAttribute(car, attribute, pickup, local);
 	}
 

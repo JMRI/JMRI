@@ -122,6 +122,7 @@ public class Setup {
 	public static final String COLOR = rb.getString("Color");
 	public static final String DESTINATION = rb.getString("Destination");
 	public static final String DEST_TRACK = rb.getString("DestAndTrack");
+	public static final String FINAL_DEST = rb.getString("FinalDestination");
 	public static final String LOCATION = rb.getString("Location");
 	public static final String CONSIST = rb.getString("Consist");
 	public static final String KERNEL = rb.getString("Kernel");
@@ -252,9 +253,10 @@ public class Setup {
 	private static boolean printLocationComments = false;	// when true print location comments on the manifest
 	private static boolean printRouteComments = false;		// when true print route comments on the manifest
 	private static boolean printLoadsAndEmpties	= false;	// when true print Loads and Empties on the manifest
-	private static boolean printTimetableName	= false;	// when true print timetable name on manifests and switch lists
-	private static boolean use12hrFormat		= false;	// when true use 12hr rather than 24hr format
-	private static boolean printValid			= true;		// when true print out the valid time and date
+	private static boolean printTimetableName = false;		// when true print timetable name on manifests and switch lists
+	private static boolean use12hrFormat = false;			// when true use 12hr rather than 24hr format
+	private static boolean printValid = true;				// when true print out the valid time and date
+	private static boolean sortByTrack = false;				// when true manifest work is sorted by track names
 
 	public static boolean isMainMenuEnabled(){
 		OperationsSetupXml.instance(); // load file
@@ -677,6 +679,14 @@ public class Setup {
 	
 	public static boolean isPrintValidEnabled(){
 		return printValid;
+	}
+	
+	public static void setSortByTrackEnabled(boolean enable){
+		sortByTrack = enable;
+	}
+	
+	public static boolean isSortByTrackEnabled(){
+		return sortByTrack;
 	}
 	
 	public static void setSwitchTime(int minutes){
@@ -1276,6 +1286,7 @@ public class Setup {
 		box.addItem(LOCATION);
 		box.addItem(DESTINATION);
 		box.addItem(DEST_TRACK);
+		box.addItem(FINAL_DEST);
 		box.addItem(COMMENT);
 		box.addItem(DROP_COMMENT);
 		box.addItem(PICKUP_COMMENT);
@@ -1389,6 +1400,7 @@ public class Setup {
        	values.setAttribute("printTimetable", isPrintTimetableNameEnabled()?"true":"false");
        	values.setAttribute("use12hrFormat", is12hrFormatEnabled()?"true":"false");
        	values.setAttribute("printValid", isPrintValidEnabled()?"true":"false");
+       	values.setAttribute("sortByTrack", isSortByTrackEnabled()?"true":"false");
        	values.setAttribute("lengthUnit", getLengthUnit());
        	values.setAttribute("yearModeled", getYearModeled());
        	
@@ -1675,6 +1687,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("printValid: "+enable);
         		setPrintValidEnabled(enable.equals("true"));
+        	}
+          	if ((a = operations.getChild("settings").getAttribute("sortByTrack"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("sortByTrack: "+enable);
+        		setSortByTrackEnabled(enable.equals("true"));
         	}
          	if ((a = operations.getChild("settings").getAttribute("lengthUnit"))!= null){
         		String unit = a.getValue();

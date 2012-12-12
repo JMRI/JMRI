@@ -82,6 +82,7 @@
 <!ATTLIST settings printLoadsEmpties 	(true | false ) "false"> 
 <!ATTLIST settings printTimetable		(true | false ) "false"> 
 <!ATTLIST settings use12hrFormat		(true | false ) "false"> 
+<!ATTLIST settings sortByTrack			(true | false ) "false"> 
 <!ATTLIST settings scale			CDATA #IMPLIED> 
 <!ATTLIST settings carTypes			CDATA #IMPLIED> 
 <!ATTLIST settings yearModeled		CDATA #IMPLIED> 

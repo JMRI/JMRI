@@ -138,6 +138,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String TRAIN_LOCATION_CHANGED_PROPERTY = "TrainLocation";
 	public static final String TRAIN_ROUTE_CHANGED_PROPERTY = "TrainRoute";
 	public static final String TRAIN_REQUIREMENTS_CHANGED_PROPERTY = "TrainRequires";
+	public static final String TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY = "TrainMoveComplete";
+	
 	
 	// Train status
 	public static final String BUILDFAILED = rb.getString("BuildFailed");
@@ -2250,6 +2252,8 @@ public class Train implements java.beans.PropertyChangeListener {
 				// cars and engines will move via property change
 				setDirtyAndFirePropertyChange(TRAIN_LOCATION_CHANGED_PROPERTY, rl, rlNew);
 				updateStatus(rl, rlNew);
+				// tell GUI that train has complete its move
+				setDirtyAndFirePropertyChange(TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY, rl, rlNew);
 				break;
 			}
 		}

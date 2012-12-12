@@ -235,7 +235,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 			_train.addPropertyChangeListener(this);
 			update();
 		}
-		if (e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY))
 			update();
 	}
 

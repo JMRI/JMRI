@@ -10,8 +10,8 @@ import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.List;
 
-import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
@@ -29,6 +29,10 @@ public class TrainManifest extends TrainCommon {
 	
 	LocationManager locationManager = LocationManager.instance();
 
+	int cars = 0;
+	int emptyCars = 0;
+	boolean newWork = false;
+	
 	public TrainManifest(Train train){
 		// create manifest file
 		File file = TrainManagerXml.instance().createTrainManifestFile(
@@ -71,10 +75,8 @@ public class TrainManifest extends TrainCommon {
 		
 		List<String> carList = carManager.getByTrainDestinationList(train);
 		log.debug("Train has " + carList.size() + " cars assigned to it");
-		int cars = 0;
-		int emptyCars = 0;
+		
 		boolean work = false;
-		boolean newWork = false;
 		String previousRouteLocationName = null;
 		List<String> routeList = train.getRoute().getLocationsBySequenceList();
 		
@@ -84,7 +86,6 @@ public class TrainManifest extends TrainCommon {
 			work = isThereWorkAtLocation(carList, engineList, rl);	
 
 			// print info only if new location
-			Location location = locationManager.getLocationByName(rl.getName());
 			String routeLocationName = splitString(rl.getName());
 			if (!routeLocationName.equals(previousRouteLocationName) ||
 					(routeLocationName.equals(previousRouteLocationName) && oldWork == false && work == true && newWork == false)){
@@ -115,8 +116,8 @@ public class TrainManifest extends TrainCommon {
 						newLine(fileOut, rl.getComment());
 				}
 				// add location comment
-				if (Setup.isPrintLocationCommentsEnabled() && !location.getComment().equals(""))
-					newLine(fileOut, location.getComment());				
+				if (Setup.isPrintLocationCommentsEnabled() && !rl.getLocation().getComment().equals(""))
+					newLine(fileOut, rl.getLocation().getComment());				
 			}
 			
 			// engine change or helper service?
@@ -135,53 +136,17 @@ public class TrainManifest extends TrainCommon {
 			
 			pickupEngines(fileOut, engineList, rl, Setup.getManifestOrientation());
 
-			// block cars by destination
-			for (int j = r; j < routeList.size(); j++) {
-				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));				
-				utilityCarTypes.clear();	// list utility cars by quantity
-				for (int k = 0; k < carList.size(); k++) {
-					Car car = carManager.getById(carList.get(k));
-					if (car.getRouteLocation() == rl
-							&& car.getRouteDestination() == rld) {
-						if (car.isUtility())
-							pickupCars(fileOut, carList, car, rl, rld);
-						// use truncated format if there's a switch list
-						else if (Setup.isTruncateManifestEnabled() && location.isSwitchListEnabled())
-							pickUpCarTruncated(fileOut, car);
-						else 
-							pickUpCar(fileOut, car);
-						cars++;
-						newWork = true;
-						if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))
-							emptyCars++;
-					}
-				}
-			}		
-			utilityCarTypes.clear();	// list utility cars by quantity
-			for (int j = 0; j < carList.size(); j++) {
-				Car car = carManager.getById(carList.get(j));
-				if (car.getRouteDestination() == rl) {
-					if (car.isUtility())
-						setoutCars(fileOut, carList, car, rl, car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null);
-					// use truncated format if there's a switch list
-					else if (Setup.isTruncateManifestEnabled() && location.isSwitchListEnabled())
-						truncatedDropCar(fileOut, car);
-					else
-						dropCar(fileOut, car);
-					cars--;
-					newWork = true;
-					if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))
-						emptyCars--;
-				}
-			}
+			if (Setup.isSortByTrackEnabled())
+				blockCarsByTrack(fileOut, train, carList, routeList, rl, r);
+			else
+				blockCarsByPickUpAndSetOut(fileOut, train, carList, routeList, rl, r);
 			
 			dropEngines(fileOut, engineList, rl, Setup.getManifestOrientation());
 
 			if (r != routeList.size() - 1) {
 				// Is the next location the same as the previous?
 				RouteLocation rlNext = train.getRoute().getLocationById(routeList.get(r+1));
-				String nextRouteLocationName = splitString(rlNext.getName());
-				if (!routeLocationName.equals(nextRouteLocationName)){
+				if (!routeLocationName.equals(splitString(rlNext.getName()))){
 					if (newWork){
 						// Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
 						String trainDeparts = MessageFormat.format(
@@ -231,6 +196,100 @@ public class TrainManifest extends TrainCommon {
 		fileOut.close();
 		
 		train.setModified(false);
+	}
+	
+	/**
+	 * Block cars by pick up and set out for each location in a train's route.
+	 */
+	private void blockCarsByPickUpAndSetOut(PrintWriter fileOut, Train train, List<String> carList, List<String> routeList, RouteLocation rl, int r) {
+		// block car pick ups by destination
+		for (int j = r; j < routeList.size(); j++) {
+			RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));				
+			utilityCarTypes.clear();	// list utility cars by quantity
+			for (int k = 0; k < carList.size(); k++) {
+				Car car = carManager.getById(carList.get(k));
+				if (car.getRouteLocation() == rl
+						&& car.getRouteDestination() == rld) {
+					if (car.isUtility())
+						pickupCars(fileOut, carList, car, rl, rld);
+					// use truncated format if there's a switch list
+					else if (Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
+						pickUpCarTruncated(fileOut, car);
+					else 
+						pickUpCar(fileOut, car);
+					cars++;
+					newWork = true;
+					if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))
+						emptyCars++;
+				}
+			}
+		}		
+		utilityCarTypes.clear();	// list utility cars by quantity
+		for (int j = 0; j < carList.size(); j++) {
+			Car car = carManager.getById(carList.get(j));
+			if (car.getRouteDestination() == rl) {
+				if (car.isUtility())
+					setoutCars(fileOut, carList, car, rl, car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null);
+				// use truncated format if there's a switch list
+				else if (Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
+					truncatedDropCar(fileOut, car);
+				else
+					dropCar(fileOut, car);
+				cars--;
+				newWork = true;
+				if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))
+					emptyCars--;
+			}
+		}
+	}
+	
+	/**
+	 * Block cars by track, then pick up and set out for each location in a train's route.
+	 */
+	private void blockCarsByTrack(PrintWriter fileOut, Train train, List<String> carList, List<String> routeList, RouteLocation rl, int r) {
+		List<String> trackIds = rl.getLocation().getTrackIdsByNameList(null);
+		for (int i=0; i<trackIds.size(); i++) {
+			Track track = rl.getLocation().getTrackById(trackIds.get(i));		
+			// block car pick ups by destination
+			for (int j = r; j < routeList.size(); j++) {
+				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));				
+				utilityCarTypes.clear();	// list utility cars by quantity
+				for (int k = 0; k < carList.size(); k++) {
+					Car car = carManager.getById(carList.get(k));
+					if (car.getRouteLocation() == rl && track == car.getTrack()
+							&& car.getRouteDestination() == rld) {
+						if (car.isUtility())
+							pickupCars(fileOut, carList, car, rl, rld);
+						// use truncated format if there's a switch list
+						else if (Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
+							pickUpCarTruncated(fileOut, car);
+						else 
+							pickUpCar(fileOut, car);
+						cars++;
+						newWork = true;
+						if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))
+							emptyCars++;
+					}
+				}
+			}		
+			utilityCarTypes.clear();	// list utility cars by quantity
+			for (int j = 0; j < carList.size(); j++) {
+				Car car = carManager.getById(carList.get(j));
+				if (car.getRouteDestination() == rl && track == car.getDestinationTrack()) {
+					if (car.isUtility())
+						setoutCars(fileOut, carList, car, rl, car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null);
+					// use truncated format if there's a switch list
+					else if (Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
+						truncatedDropCar(fileOut, car);
+					else
+						dropCar(fileOut, car);
+					cars--;
+					newWork = true;
+					if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))
+						emptyCars--;
+				}
+			}
+		}
 	}
 	
 	// returns true if there's work at location

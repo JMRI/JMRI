@@ -35,8 +35,6 @@ public class CarsSetFrameAction extends AbstractAction {
         // create a car table frame
         CarsSetFrame csf = new CarsSetFrame();
         csf.initComponents(_carsTableModel, _carsTable);
-    	csf.setTitle(rb.getString("TitleSetCars"));
-    	csf.setVisible(true);
     }
 }
 

@@ -535,7 +535,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 		//if (Control.showProperty && log.isDebugEnabled()) 
 		log.debug("Property change " +e.getPropertyName() + " for: "+e.getSource().toString()
 				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY))
 			clearAndUpdate();
 		if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)){
 			// Move property change to end of list so car updates happen before the conduction determines train length, etc.

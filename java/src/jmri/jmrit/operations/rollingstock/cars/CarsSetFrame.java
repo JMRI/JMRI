@@ -2,8 +2,12 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.text.MessageFormat;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+
+import jmri.util.com.sun.TableSorter;
 
 
 /**
@@ -37,6 +41,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		
 		super.initComponents();
 		
+		setTitle(rb.getString("TitleSetCars"));
 		// modify Save button text to "Change"
 		saveButton.setText(rb.getString("Change"));
 		// disable edit load button if no cars selected
@@ -58,14 +63,12 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		ignoreDestinationCheckBox.setSelected(ignoreDestinationCheckBoxSelected);
 		ignoreFinalDestinationCheckBox.setSelected(ignoreFinalDestinationCheckBoxSelected);
 		ignoreTrainCheckBox.setSelected(ignoreTrainCheckBoxSelected);
-		
-		Car car;
+
 		int rows[] = _carsTable.getSelectedRows();
-		if (rows.length > 0)
-			car = _carsTableModel.getCarAtIndex(rows[0]);
-		else
-			return;		
-		super.loadCar(car);
+		if (rows.length > 0) {
+			Car car = _carsTableModel.getCarAtIndex(rows[0]);
+			super.loadCar(car);
+		}
 	}
 	
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
@@ -78,19 +81,30 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		ignoreDestinationCheckBoxSelected = ignoreDestinationCheckBox.isSelected();
 		ignoreFinalDestinationCheckBoxSelected = ignoreFinalDestinationCheckBox.isSelected();
 		ignoreTrainCheckBoxSelected = ignoreTrainCheckBox.isSelected();
-
+		
 		int rows[] = _carsTable.getSelectedRows();
 		if (rows.length == 0)					
 			JOptionPane.showMessageDialog(this,
 				rb.getString("selectCars"),
 				rb.getString("carNoneSelected"),
 				JOptionPane.WARNING_MESSAGE);
-			
+		
+		TableSorter sorter = (TableSorter) _carsTable.getModel();
 		for (int i=0; i<rows.length; i++){
-			Car car = _carsTableModel.getCarAtIndex(rows[i]);
+			Car car = _carsTableModel.getCarAtIndex(sorter.modelIndex(rows[i]));
 			if (_car == null){
 				super.loadCar(car);
 				continue;
+			}
+			if (i == 0 && car != _car) {
+				log.debug("Default car isn't the first one selected");
+				if (JOptionPane.showConfirmDialog(this,
+						MessageFormat.format(rb.getString("doYouWantToChange"),new Object[]{car.toString()}),
+						rb.getString("changeDefaultCar"),					
+						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					super.loadCar(car);	// new default car
+					break;				// done, don't modify any of the cars selected
+				}
 			}
 			if (!super.change(car))
 				return false;

@@ -73,6 +73,15 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
     	
     	addItem(pCarType, typeComboBox, 0,0);
     	addItem(pCarType, carsComboBox, 1,0);
+    	
+    	// increase width of combobox so large text names display properly
+		Dimension boxsize = typeComboBox.getMinimumSize();
+		if (boxsize != null){
+			boxsize.setSize(boxsize.width+10, boxsize.height);
+			typeComboBox.setMinimumSize(boxsize);
+		}
+		
+		adjustCarsComboBoxSize();
 
     	pLocations.setLayout(new GridBagLayout());
     	JScrollPane locationPane = new JScrollPane(pLocations);
@@ -170,6 +179,11 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 					op.setText(rb.getString("X(RouteMoves)"));
 				else if (!location.acceptsTypeName(carType))
 					op.setText(rb.getString("X(LocationType)"));
+				// check route before checking train, check train calls check route
+				else if (!track.acceptsPickupRoute(route) && !track.acceptsDropRoute(route))
+					op.setText(rb.getString("X(TrackRoute)"));
+				else if (!track.acceptsPickupTrain(train) && !track.acceptsDropTrain(train))
+					op.setText(rb.getString("X(TrackTrain)"));
 				else if (!track.acceptsTypeName(carType))
 					op.setText(rb.getString("X(TrackType)"));
 				else if (car != null && !track.acceptsRoadName(car.getRoad()))
@@ -180,6 +194,16 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 					op.setText(rb.getString("X(DirLoc)"));
 				else if ((rl.getTrainDirection() & track.getTrainDirections()) == 0)
 					op.setText(rb.getString("X(DirTrk)"));
+				else if (!checkScheduleAttribute(TYPE, carType, null, track))
+					op.setText(rb.getString("X(ScheduleType)"));
+				else if (!checkScheduleAttribute(LOAD, carType, car, track))
+					op.setText(rb.getString("X(ScheduleLoad)"));
+				else if (!checkScheduleAttribute(ROAD, carType, car, track))
+					op.setText(rb.getString("X(ScheduleRoad)"));
+				else if (!checkScheduleAttribute(TIMETABLE, carType, car, track))
+					op.setText(rb.getString("X(ScheduleTimeTable)"));
+				else if (!checkScheduleAttribute(ALL, carType, car, track))
+					op.setText(rb.getString("X(Schedule)"));			
 				else if (!track.acceptsPickupTrain(train)){
 					// can the train drop off car?
 					if (rl.canDrop() && track.acceptsDropTrain(train))
@@ -193,16 +217,6 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 						op.setText(rb.getString("PickupOnly"));
 					else
 						op.setText(rb.getString("X(TrainDrop)"));
-				else if (!checkScheduleAttribute(TYPE, carType, null, track))
-					op.setText(rb.getString("X(ScheduleType)"));
-				else if (!checkScheduleAttribute(LOAD, carType, car, track))
-					op.setText(rb.getString("X(ScheduleLoad)"));
-				else if (!checkScheduleAttribute(ROAD, carType, car, track))
-					op.setText(rb.getString("X(ScheduleRoad)"));
-				else if (!checkScheduleAttribute(TIMETABLE, carType, car, track))
-					op.setText(rb.getString("X(ScheduleTimeTable)"));
-				else if (!checkScheduleAttribute(ALL, carType, car, track))
-					op.setText(rb.getString("X(Schedule)"));
 				else if (rl.canDrop() && rl.canPickup())
 					op.setText(rb.getString("OK"));
 				else if (rl.canDrop())
@@ -275,6 +289,20 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 		}
 	}
 	
+	private void adjustCarsComboBoxSize(){
+		List<String> cars = CarManager.instance().getList();
+		for (int i=0; i<cars.size(); i++){
+			Car car = CarManager.instance().getById(cars.get(i));	
+			carsComboBox.addItem(car);
+		}
+		Dimension boxsize = carsComboBox.getMinimumSize();
+		if (boxsize != null){
+			boxsize.setSize(boxsize.width+10, boxsize.height);
+			carsComboBox.setMinimumSize(boxsize);
+		}
+		carsComboBox.removeAllItems();
+	}
+	
 	/**
 	 * Add property listeners for locations and tracks
 	 */
@@ -344,6 +372,11 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY))
 			updateComboBox();
+		if (e.getPropertyName().equals(Location.LENGTH_CHANGED_PROPERTY)) {
+			// a track has been add or deleted update property listeners
+			removeLocationAndTrackPropertyChange();
+			addLocationAndTrackPropertyChange();
+		}
  	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger

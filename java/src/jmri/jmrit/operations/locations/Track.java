@@ -786,10 +786,11 @@ public class Track {
     }
     
     public boolean acceptsDropRoute(Route route){
-      	if (_dropOption.equals(ANY))
+      	if (_dropOption.equals(ANY) || _dropOption.equals(TRAINS) || _dropOption.equals(EXCLUDE_TRAINS))
+      		return true;
+       	// yard tracks accept all routes
+    	if (getLocType().equals(YARD))
     		return true;
-      	if (_dropOption.equals(TRAINS) || _dropOption.equals(EXCLUDE_TRAINS))
-      		return false;
       	if (_dropOption.equals(EXCLUDE_ROUTES))
       		return !containsDropId(route.getId());
       	return containsDropId(route.getId());
@@ -854,10 +855,11 @@ public class Track {
     }
     
     public boolean acceptsPickupRoute(Route route){
-      	if (_pickupOption.equals(ANY))
+      	if (_pickupOption.equals(ANY) || _pickupOption.equals(TRAINS) || _pickupOption.equals(EXCLUDE_TRAINS))
+      		return true;
+       	// yard tracks accept all routes
+    	if (getLocType().equals(YARD))
     		return true;
-      	if (_pickupOption.equals(TRAINS) || _pickupOption.equals(EXCLUDE_TRAINS))
-      		return false;
       	if (_pickupOption.equals(EXCLUDE_ROUTES))
       			return !containsPickupId(route.getId());
       	return containsPickupId(route.getId());
