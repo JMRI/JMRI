@@ -2397,6 +2397,14 @@ caboose.
      <td>The track doesn't service the selected car's road</td>
     </tr>
     <tr>
+     <td>X (Track Train)</td>
+     <td>The track doesn't service this train</td>
+    </tr>
+    <tr>
+     <td>X (Track Route)</td>
+     <td>The track doesn't service the train's route</td>
+    </tr>
+    <tr>
      <td>X (Dir Loc)</td>
      <td>Based on the train's departure direction, the location doesn't allow set outs or pick
       ups</td>
