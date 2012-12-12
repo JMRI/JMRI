@@ -4,7 +4,7 @@
 
 <decoderIndex-config>
   <!--Written by JMRI version 20121201-2008-jake on Sat Dec 01 12:08:41 PST 2012 $Id$-->
-  <decoderIndex version="251">
+  <decoderIndex version="255">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
