@@ -10,7 +10,6 @@ import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.List;
 
-import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -26,8 +25,6 @@ import jmri.jmrit.operations.setup.Setup;
  * @version $Revision: 1 $
  */
 public class TrainManifest extends TrainCommon {
-	
-	LocationManager locationManager = LocationManager.instance();
 
 	int cars = 0;
 	int emptyCars = 0;
