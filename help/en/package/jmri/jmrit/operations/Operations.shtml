@@ -559,19 +559,18 @@ The next set of options control local car movements when using
    <A NAME="CarRouting"></A>
 <H3>Car Routing</H3>
 
-When car routing is enabled, the program will use multiple trains
-to deliver a car to it final destination. It is recommended that you
-leave this option enabled. With car routing enabled, you can use a <A
-	HREF="#Schedules">Schedule</A> to deliver a car to a specific location.
-The car routing algorithm will search for the most efficient route for
-the car to travel. The algorithm will attempt to use interchanges and
-then yards to move cars. Routing through staging is disabled by default.
-The algorithm will try and find a route using a maximum of five trains
-to complete the car move.  Note that the program never gives up trying to
-route a car.  If a car has been assigned a "Final Destination" the program
-will try and route the car after every move.
+   When car routing is enabled, the program will use multiple trains to deliver a car to it final
+   destination. It is recommended that you leave this option enabled. With car routing enabled, you
+   can use a
+   <A HREF="#Schedules">Schedule</A> to deliver a car to a specific location. The car routing
+   algorithm will search for the most efficient route for the car to travel. The algorithm will
+   attempt to use interchanges and then yards to move cars. Routing through staging is disabled by
+   default. The algorithm will try and find a route using a maximum of five trains to complete the
+   car move. Note that the program never gives up trying to route a car. If a car has been assigned
+   a
+   <A HREF="#CarsSet">Final Destination</A> the program will try and route the car after every move.
 
-<A NAME="LoggingOptions"></A>
+   <A NAME="LoggingOptions"></A>
 <H3>Logging Options</H3>
 
 If you want the operations program to log your locomotive, car, or train movements to
@@ -948,18 +947,20 @@ will change to the other, i.e. "E" becomes "L" and "L" becomes "E".</P>
 <A NAME="Schedules"></A>
 <H3>Schedules</H3>
 
-If you would like to see cars delivered in a particular sequence, or
-with a specific load for delivery or shipping, the program allows you to
-apply a schedule to a spur. This is an optional feature and shouldn't
-be used until you become very familiar with how the program generates
-manifests and switch lists. A schedule provides very fine control on the
-order types of cars will be delivered to a spur. You can also specify
-the road name for the type of car delivered. For example, if you wanted
-two SP boxcars to be delivered followed by a tank car loaded with "Oil",
-you can create a schedule that will do exactly that. To create a
+   If you would like to see cars delivered in a particular sequence, or with a specific load for
+   delivery or shipping, the program allows you to apply a schedule to a spur. This is an optional
+   feature and shouldn't be used until you become very familiar with how the program generates
+   manifests and switch lists. A schedule provides very fine control on the order types of cars will
+   be delivered to a spur. You can specify the car type, when it can be delivered, the car's road
+   name and load. You can decide the car's new load and destination. For example, if you wanted two
+   SP boxcars to be delivered followed by a tank car loaded with "Oil", you can create a schedule
+   that will do exactly that.
+
+   <P>
+To create a
 schedule press the "Edit" button next to "Optional Schedule" pull down 
 menu on the "Edit Spur Track" window. Pressing the
-"Edit" button should create the "Add Schedule" window.
+"Edit" button should create the "Add Schedule" window.</P>
 <P>
 <img src="images/EditSchedule.png">
 </P>
@@ -1016,11 +1017,14 @@ spur that has a schedule that also requests that particular load.
 However, cars with a custom load can still be placed at yards,
 staging, and interchanges.</P>
 
-<P>You can if you wish, specify the final destination for a car once
-it has been serviced by the spur. Only destination tracks that can
-accept the car type are shown in the track pull down menu.</P>
+   <P>
+    You can if you wish, specify the ship to destination for a car once it has been serviced by the
+    spur. Only destination tracks that can accept the car type are shown in the track pull down
+    menu. The destination loaded by a schedule is shown as the car's <A HREF="#CarsSet">Final
+     Destination</A> in the various car windows.
+   </P>
 
-<P>You can optionally use your <A HREF="#StagingAndCarLoads">staging
+   <P>You can optionally use your <A HREF="#StagingAndCarLoads">staging
 tracks</A> to empty cars with a custom load, and you can also optionally
 have the program place custom loads into cars using staging tracks. If
 you want to specify staging as the car's destination, do not select a
@@ -1087,69 +1091,72 @@ cars with those loads. </P>
 <A	NAME="SchedulesAndLoads"></A>
 <H3>Schedules and Loads</H3>
 
-You've entered all of your cars, tracks, and trains and have been
-playing with the program for awhile. You're happy with where the cars
-end up, but watching the car movements generated by the program over
-several sessions has you thinking that it would be nice if the car
-movements had a "purpose". What you would like to see is a series of car
-moves that mimic the prototype railroad that your modeling, or maybe you
-just want the cars to move in a certain sequence. Schedules and custom
-car loads is the trick to getting the program to do what you want.
+   You've entered all of your cars, tracks, and trains and have been playing with the program for
+   awhile. You're happy with where the cars end up, but watching the car movements generated by the
+   program over several sessions has you thinking that it would be nice if the car movements had a
+   "purpose". What you would like to see is a series of car moves that mimic the prototype railroad
+   that your modeling, or maybe you just want the cars to move in a certain sequence. Schedules and
+   custom car loads is the trick to getting the program to do what you want.
 
-<P>The program provides every car with two loads, an "L" and "E".
-These are called the default load and empty respectively. You can't
-delete them, but you can rename them if you wish. For every car type,
-you can create additional loads. For example, let's say you have an
-industry that needs paper loaded in boxcars. You could create this <A
-	HREF="#EditCarLoads">load</A> for your boxcars and name it "L(paper)"
- or just "paper".
-Now at the spur that serves your paper industry, you need to create a
-schedule. In this schedule, the first item you enter is a boxcar, and
-then select as the receive load, L(paper). If the train that services
-this industry departs from staging, you're basically done. The program
-when building a train from staging, will search for an empty boxcar, and
-if found, will create the load L(paper) for you. Once the car's load is
-created for that industry, the program will set the car's destination to
-that industry. When the car gets delivered, the program will remove the
-paper load, and the car's load status will become empty or "E".</P>
+   <P>
+    The program provides every car with two loads, an "L" and "E". These are called the default load
+    and empty respectively. You can't delete them, but you can rename them if you wish. For every
+    car type, you can create additional loads. For example, let's say you have an industry that
+    needs paper loaded in boxcars. You could create this
+    <A HREF="#EditCarLoads">load</A> for your boxcars and name it "L(paper)" or just "paper". Now at
+    the spur that serves your paper industry, you need to create a schedule. In this schedule, the
+    first item you enter is a boxcar, and then select as the receive load, L(paper). If the train
+    that services this industry departs from staging, you're basically done. The program when
+    building a train from
+    <A HREF="#StagingAndCarLoads">staging</A>, will search for an empty boxcar, and if found, will
+    create the load L(paper) for you. Once the car's load is created for that industry, the program
+    will set the car's destination to that industry. When the car gets delivered, the program will
+    remove the paper load, and the car's load status will become empty or "E".
+   </P>
 
-<P>That was easy, so let's make things more interesting and have the
-industry ship some printed materials. We'll create and call this load
-"L(print)". Now in the first schedule item, instead of leaving the menu
-under "Ship" blank, select L(print). Next to the ship menu are
-destination and track menus. We could select a destination that is
-staging. No need to select the track, just the staging location. Now
-when a train returns to pick up the boxcar, its load will be L(print)
-and when the car gets to staging, the load will be removed and the car's
-load status will return to empty or "E".</P>
+   <P>That was easy, so let's make things more interesting and have the industry ship some
+    printed materials. We'll create and call this load "L(print)". Now in the first schedule item,
+    instead of leaving the menu under "Ship" blank, select L(print). Next to the ship menu are
+    destination and track menus. We could select a destination that is staging. No need to select
+    the track, just the staging location. Now when a train returns to pick up the boxcar, its load
+    will be L(print) and when the car gets to staging, the load will be removed and the car's load
+    status will return to empty or "E".</P>
 
-<P>We could have instead of sending the car with print to staging,
-to a spur. Just select the destination and spur that you want the
-car go to. Even if it takes several trains to get the car there, the
-program will figure out the best route. Now if you create another
-schedule at this spur, you could forward the car again. By stringing a
-series of schedules and loads together you can create any car sequence
-you want.</P>
+   <P>We could have instead of sending the car with print to staging, decided to send the car to
+    a spur servicing a paper industry. Just select the destination and the spur/industry that you
+    want the car go to. Even if it takes several trains to get the car there, the program will
+    figure out the best route. Note that when the schedule specifies the ship to destination and
+    spur, that the spur doesn't need a schedule to accept the car with the custom load "L(print)".</P>
+   <P>
+    Now, if you created another schedule at the destination spur, you could forward the car again. By
+    stringing a series of schedules and loads together you can create any car sequence you want.</P>
 
-<P>Another interesting way to move cars is to ship a custom load,
-but not specify a destination. The program when it finds a car with a
-custom load, but no destination, will check every spur to see if
-there's a schedule demanding that car type with that specific load. And
-if there is a spur that meets the requirements, the program will route
-the car to that industry. But once a car has a custom load, that car can
-only move to yards, interchanges, and staging. No spurs unless the
-spur also has a schedule demanding that car and load.</P>
+   <P>Another interesting way to move cars is to ship a custom load, but not specify a
+    destination. The program when it finds a car with a custom load, but no destination, will check
+    every spur to see if there's a schedule demanding that car type with that specific load. And if
+    there is a spur that meets the requirements, the program will route the car to that industry.
+    But once a schedule sets up a car with a custom load without a ship to destination, that car can
+    only move to yards, classification/interchanges, staging, and spurs with schedules. Spurs are
+    considered only if the spur has a schedule demanding the car's type and custom load.</P>
 
-<P>One more consideration is empty cars. The program doesn't route
-cars with the default loads "E" or "L". So if your schedule is
-requesting an car with the empty default "E", it can take awhile before
-that car shows up. An alternative is to handle empty cars like cars
-with custom loads. You could create the custom load "E(mpty)" and use
-this load to signify an empty car. Now cars with this load will be
-routed and will have the same characteristics as cars with the "other"
-custom loads.</P>
+   <P>Another variation is to create a schedule that provides a custom load for the car, and a
+    destination, but without the track assignment. The car will be accepted by yards,
+    classification/interchange tracks, staging, and spurs at the destination that have a schedule
+    that is demanding that car type and custom load. Spurs without a schedule can not service a car
+    with a custom load, unless the car is shipped directly to that spur.</P>
 
-<A NAME="ShowSchedulesByCarTypeAndLoad"></A>
+   <P>One more consideration is empty cars. The program doesn't route cars with the default
+    loads "E" or "L". So if your schedule is requesting an car with the empty default "E", it can
+    take awhile before that car shows up. An alternative is to handle empty cars like cars with
+    custom loads. You could create the custom load "E(mpty)" and use this load to signify an empty
+    car. Now cars with this load will be routed and will have the same characteristics as cars with
+    the "other" custom loads.</P>
+
+   <P>The examples above used custom loads to help understand car movement, you could if you
+    wish just forward cars using schedules without the use of custom loads. Custom loads are
+    optional and not necessary if you want to create a simple car sequence.</P>
+
+   <A NAME="ShowSchedulesByCarTypeAndLoad"></A>
 <H3>Show Schedules by Car Type and Load</H3>
 
 <img src="images/ShowSchedulesByCarTypeAndLoad.png">
