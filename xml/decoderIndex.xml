@@ -4,7 +4,7 @@
 
 <decoderIndex-config>
   <!--Written by JMRI version 3.1.7ish-20121207-0637-jake on Thu Dec 06 22:37:31 PST 2012 $Id$-->
-  <decoderIndex version="252">
+  <decoderIndex version="253">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -91,6 +91,7 @@
       <manufacturer mfg="QSIndustries" mfgID="113" />
       <manufacturer mfg="RR-CirKits" mfgID="87" />
       <manufacturer mfg="Railnet Solutions, LLC" mfgID="66" />
+      <manufacturer mfg="Railstars Limited" mfgID="91" />
       <manufacturer mfg="RamFixx Technologies (Wangrow)" mfgID="15" />
       <manufacturer mfg="Rampino Elektronik" mfgID="57" />
       <manufacturer mfg="Rautenhaus Digital Vertrieb" mfgID="53" />
