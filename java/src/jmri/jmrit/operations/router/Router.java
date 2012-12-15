@@ -286,8 +286,11 @@ public class Router extends TrainCommon {
 						Train firstTrain = TrainManager.instance().getTrainForCar(testCar);
 						String status = testCar.testDestination(location, track);
 						// Is there a "first" train for this car out of staging?
-						if (_train != null && !_train.servicesCar(testCar) && car.getTrack().getLocType().equals(Track.STAGING))
+						if (_train != null && !_train.servicesCar(testCar) && car.getTrack().getLocType().equals(Track.STAGING)){
+							if (debugFlag)
+								log.debug("Train ("+_train.getName()+") can not deliver car to ("+location.getName()+", "+track.getName()+")");
 							firstTrain = null;	// can't use this train
+						}
 						if (status.equals(Track.OKAY) && firstTrain != null){
 							addLine(_buildReport, SEVEN, MessageFormat.format(rb.getString("RouterRoute2ForCar"),new Object[]{car.toString(),car.getLocationName(),testCar.getDestinationName(),car.getNextDestinationName()}));
 							// only set car's destination if specific train can service car

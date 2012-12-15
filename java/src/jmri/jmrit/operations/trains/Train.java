@@ -1244,6 +1244,12 @@ public class Train implements java.beans.PropertyChangeListener {
     											|| !rs.getDestinationTrack().acceptsDropTrain(this))
     										continue;
     								}
+    								// is this a local move?
+    								if (rs.getLocationName().equals(rs.getDestinationName()) && !isAllowLocalMovesEnabled()){
+    									if (debugFlag)
+    										log.debug("Local moves is disabled");
+    									continue;
+    								}
     		    					// check to see if moves are available
     		    					if (getStatus().equals(BUILDING)){
     		    						if (rLoc.getMaxCarMoves()-rLoc.getCarMoves() == 0){
