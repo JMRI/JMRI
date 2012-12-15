@@ -327,7 +327,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     private JComboBox getLoadComboBox(ScheduleItem si){
     	//log.debug("getLoadComboBox for ScheduleItem "+si.getType());
     	JComboBox cb = CarLoads.instance().getSelectComboBox(si.getType());
-    	filterLoads(cb);	// remove loads not accepted by this track
+    	filterLoads(si, cb);	// remove loads not accepted by this track
     	cb.setSelectedItem(si.getLoad());
     	if (!cb.getSelectedItem().equals(si.getLoad())){
     		String notValid = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getLoad()});
@@ -531,16 +531,16 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     		Track track = loc.getTrackById(tracks.get(i));
     		if (!track.acceptsTypeName(carType) || track.getLocType().equals(Track.STAGING) 
     				|| (!carRoad.equals("") && !track.acceptsRoadName(carRoad)) 
-    				|| (!carLoad.equals("") && !track.acceptsLoadName(carLoad)))
+    				|| (!carLoad.equals("") && !track.acceptsLoad(carLoad, carType)))
     			cb.removeItem(track);
     	}
     }
     
     // remove receive loads not serviced by track
-    private void filterLoads (JComboBox cb){
+    private void filterLoads (ScheduleItem si, JComboBox cb){
     	for (int i=cb.getItemCount()-1; i>0; i--){
     		String loadName = (String)cb.getItemAt(i);
-    		if (!loadName.equals("") && !_track.acceptsLoadName(loadName))
+    		if (!loadName.equals("") && !_track.acceptsLoad(loadName, si.getType()))
     			cb.removeItem(loadName);
     	}
     }

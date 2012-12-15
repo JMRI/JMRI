@@ -16,6 +16,8 @@ public class CarLoad {
 	
 	public static final String LOAD_TYPE_EMPTY = rb.getString("EmptyTypeName");
 	public static final String LOAD_TYPE_LOAD = rb.getString("LoadTypeName");
+	
+	public static final String SPLIT_CHAR = " & ";	// used to combine car type and load in tracks and trains
 
 	String _name;
 	String _priority = PRIORITY_LOW;

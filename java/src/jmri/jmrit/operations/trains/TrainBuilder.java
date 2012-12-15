@@ -22,6 +22,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -1111,7 +1112,7 @@ public class TrainBuilder extends TrainCommon{
     				carIndex--;
     				continue;
     			}
-    			if (!c.isCaboose() && !c.isPassenger() && !train.acceptsLoadName(c.getLoad())){
+    			if (!c.isCaboose() && !c.isPassenger() && !train.acceptsLoad(c.getLoad(), c.getType())){
     				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarLoadAtLoc"),new Object[]{c.toString(), c.getLoad(), (c.getLocationName()+", "+c.getTrackName())}));
     				carList.remove(c.getId());
     				carIndex--;
@@ -1698,7 +1699,7 @@ public class TrainBuilder extends TrainCommon{
 			}
 		}
 		// warn if car's load wasn't generated out of staging
-		if (!train.acceptsLoadName(car.getLoad())) {
+		if (!train.acceptsLoad(car.getLoad(), car.getType())) {
 			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildWarnCarDepartStaging"),
 					new Object[]{car.toString(), car.getLoad()}));
 		}
@@ -1965,7 +1966,7 @@ public class TrainBuilder extends TrainCommon{
 					if (!car.isCaboose() && !car.isPassenger() 
 							&& (!car.getLoad().equals(CarLoads.instance().getDefaultEmptyName()) 
 							||  !departStageTrack.isAddLoadsEnabled() && !departStageTrack.isAddLoadsEnabledAnySiding())
-							&& !train.acceptsLoadName(car.getLoad())){
+							&& !train.acceptsLoad(car.getLoad(), car.getType())){
 						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingDepartCarLoad"),
 								new Object[]{departStageTrack.getName(), car.toString(), car.getLoad(), train.getName()}));
 						return false;
@@ -2097,9 +2098,17 @@ public class TrainBuilder extends TrainCommon{
 		else if (train.getLoadOption().equals(Train.INCLUDELOADS)){
 			String[] loads = train.getLoadNames();
 			for (int i=0; i<loads.length; i++){
-				if (!terminateStageTrack.acceptsLoadName(loads[i])){
-					addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingTrackLoad"),new Object[]{terminateStageTrack.getName(), loads[i]}));
-					return false;
+				String loadParts[] = loads[i].split(CarLoad.SPLIT_CHAR);	// split load name
+				if (loadParts.length > 1){
+					if (!terminateStageTrack.acceptsLoad(loadParts[1], loadParts[0])){
+						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingTrackLoad"),new Object[]{terminateStageTrack.getName(), loads[i]}));
+						return false;
+					}
+				} else {
+					if (!terminateStageTrack.acceptsLoadName(loads[i])){
+						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingTrackLoad"),new Object[]{terminateStageTrack.getName(), loads[i]}));
+						return false;
+					}
 				}
 			}
 		}
@@ -2119,9 +2128,17 @@ public class TrainBuilder extends TrainCommon{
 				loads.remove(excludeLoads[i]);
 			}
 			for (int i=0; i<loads.size(); i++){
-				if (!terminateStageTrack.acceptsLoadName(loads.get(i))){
-					addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingTrackLoad"),new Object[]{terminateStageTrack.getName(), loads.get(i)}));
-					return false;
+				String loadParts[] = loads.get(i).split(CarLoad.SPLIT_CHAR);	// split load name
+				if (loadParts.length > 1){
+					if (!terminateStageTrack.acceptsLoad(loadParts[1], loadParts[0])){
+						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingTrackLoad"),new Object[]{terminateStageTrack.getName(), loads.get(i)}));
+						return false;
+					}
+				} else {
+					if (!terminateStageTrack.acceptsLoadName(loads.get(i))){
+						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingTrackLoad"),new Object[]{terminateStageTrack.getName(), loads.get(i)}));
+						return false;
+					}
 				}
 			}
 		}
@@ -2311,13 +2328,13 @@ public class TrainBuilder extends TrainCommon{
 			log.debug("Not using track ("+track.getName()+") schedule request type ("+si.getType()+") road ("+si.getRoad()+") load ("+si.getLoad()+")");
 			return null;
 		}
-		if (!train.acceptsLoadName(si.getLoad())){
+		if (!train.acceptsLoad(si.getLoad(), si.getType())){
 			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildTrainNotNewLoad"),
 					new Object[]{train.getName(), si.getLoad(), track.getLocation().getName(), track.getName()}));
 			return null;
 		}
 		// does the departure track allow this load?
-		if (!car.getTrack().acceptsLoadName(si.getLoad())){
+		if (!car.getTrack().acceptsLoad(si.getLoad(), car.getType())){
 			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildTrackNotNewLoad"),
 					new Object[]{car.getTrackName(), si.getLoad(), track.getLocation().getName(), track.getName()}));
 			return null;
@@ -2894,7 +2911,7 @@ public class TrainBuilder extends TrainCommon{
 		List<String> loads = CarLoads.instance().getNames(car.getType());
 		for (int i=loads.size()-1; i>=0; i--){
 			String load = loads.get(i);
-			if (!terminateStageTrack.acceptsLoadName(load) || !train.acceptsLoadName(load))
+			if (!terminateStageTrack.acceptsLoad(load, car.getType()) || !train.acceptsLoad(load, car.getType()))
 			loads.remove(i);
 		}
 		// Use random loads rather that the first one that works to create interesting loads

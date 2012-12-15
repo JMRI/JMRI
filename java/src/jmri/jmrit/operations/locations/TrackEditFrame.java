@@ -4,6 +4,7 @@ package jmri.jmrit.operations.locations;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -36,6 +37,8 @@ import java.util.ResourceBundle;
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
+	
+	private static boolean loadAndType = false;
 	
 	// Managers
 	LocationManagerXml managerXml = LocationManagerXml.instance();
@@ -77,11 +80,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JButton addPickupButton = new JButton(rb.getString("Add"));
 	
 	// check boxes
-	JCheckBox checkBox;
 	JCheckBox northCheckBox = new JCheckBox(rb.getString("North"));
 	JCheckBox southCheckBox = new JCheckBox(rb.getString("South"));
 	JCheckBox eastCheckBox = new JCheckBox(rb.getString("East"));
 	JCheckBox westCheckBox = new JCheckBox(rb.getString("West"));
+	JCheckBox loadAndTypeCheckBox = new JCheckBox(rb.getString("TypeAndLoad"));
 	
 	// radio buttons
     JRadioButton roadNameAll = new JRadioButton(rb.getString("AcceptAll"));
@@ -345,6 +348,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		updateCarOrder();
 		updateDropOptions();
 		updatePickupOptions();
+		
+		loadAndTypeCheckBox.setSelected(loadAndType);
 	}
 	
 	// Save, Delete, Add 
@@ -396,12 +401,18 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			selectNextItemComboBox(comboBoxRoads);
 		}
 		if (ae.getSource() == addLoadButton){
-			if(_track.addLoadName((String) comboBoxLoads.getSelectedItem()))
+			String loadName = (String) comboBoxLoads.getSelectedItem();
+			if (loadAndTypeCheckBox.isSelected())
+				loadName = comboBoxTypes.getSelectedItem() + CarLoad.SPLIT_CHAR + loadName;
+			if(_track.addLoadName(loadName))
 				updateLoadNames();
 			selectNextItemComboBox(comboBoxLoads);
 		}
 		if (ae.getSource() == deleteLoadButton){
-			if(_track.deleteLoadName((String) comboBoxLoads.getSelectedItem()))
+			String loadName = (String) comboBoxLoads.getSelectedItem();
+			if (loadAndTypeCheckBox.isSelected())
+				loadName = comboBoxTypes.getSelectedItem() + CarLoad.SPLIT_CHAR + loadName;
+			if(_track.deleteLoadName(loadName))
 				updateLoadNames();
 			selectNextItemComboBox(comboBoxLoads);
 		}
@@ -556,6 +567,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		return true;
 	}
 
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	protected void saveTrack (Track track){
 		// save train directions serviced by this location
 		int direction = 0;
@@ -575,6 +587,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		track.setName(trackNameTextField.getText());
 		
 		track.setComment(commentTextArea.getText());
+		
+		// save the last state of the "Use car type and load" checkbox
+		loadAndType = loadAndTypeCheckBox.isSelected();
+		
 		// enable 
 		enableButtons(true);
 		// save location file
@@ -730,6 +746,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		loadNameAll.setEnabled(enabled);
 		loadNameInclude.setEnabled(enabled);
 		loadNameExclude.setEnabled(enabled);
+		loadAndTypeCheckBox.setEnabled(enabled);
 		anyDrops.setEnabled(enabled);
 		trainDrop.setEnabled(enabled);
 		routeDrop.setEnabled(enabled);
@@ -985,14 +1002,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 	private void enableCheckboxes(boolean enable){
 		for (int i=0; i < checkBoxes.size(); i++){
-			checkBox = checkBoxes.get(i);
+			JCheckBox checkBox = checkBoxes.get(i);
 			checkBox.setEnabled(enable);
 		}
 	}
 	
 	private void selectCheckboxes(boolean enable){
 		for (int i=0; i < checkBoxes.size(); i++){
-			checkBox = checkBoxes.get(i);
+			JCheckBox checkBox = checkBoxes.get(i);
 			checkBox.setSelected(enable);
 			if(_track != null){
 				//_track.removePropertyChangeListener(this);
@@ -1126,6 +1143,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		    	p.add(addLoadButton);
 		    	p.add(deleteLoadButton);
 		    	p.add(deleteAllLoadsButton);
+		    	p.add(loadAndTypeCheckBox);
 				gc.gridy = y++;
 		    	panelLoadNames.add(p, gc);
 

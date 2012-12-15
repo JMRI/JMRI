@@ -33,6 +33,7 @@ import org.jdom.JDOMException;
 
 import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarLengths;
+import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -306,6 +307,12 @@ public class OperationsTrainsTest extends TestCase {
 		train1.addLoadName("WOOD");
 		Assert.assertTrue("Train still accepts (INCLUDELOADS) Load name BOXES", train1.acceptsLoadName("BOXES"));
 		Assert.assertTrue("Train accepts (INCLUDELOADS) Load name WOOD", train1.acceptsLoadName("WOOD"));
+		
+		train1.addLoadName("Boxcar"+CarLoad.SPLIT_CHAR+"SCREWS");
+		Assert.assertFalse("Train does not accept (INCLUDELOADS) Load name SCREWS", train1.acceptsLoadName("SCREWS"));
+		Assert.assertTrue("Train still accepts (INCLUDELOADS) Load name BOXES", train1.acceptsLoad("BOXES", "Boxcar"));
+		Assert.assertTrue("Train accepts (INCLUDELOADS) Load WOOD carried by Boxcar", train1.acceptsLoad("WOOD", "Boxcar"));
+		Assert.assertTrue("Train accepts (INCLUDELOADS) Load Boxcar with SCREWS", train1.acceptsLoad("SCREWS", "Boxcar"));
 
 		train1.deleteLoadName("BOXES");
 		Assert.assertFalse("Train no longer accepts (INCLUDELOADS) Load name BOXES", train1.acceptsLoadName("BOXES"));

@@ -9,6 +9,7 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
@@ -703,6 +704,24 @@ public class Track {
        	return !_loadList.contains(load);
     }
     
+    /**
+     * Determine if track will service a specific load 
+     * and car type.
+     * @param load the load name to check.
+     * @param type the type of car used to carry the load.
+     * @return true if track will service this load.
+     */
+    public boolean acceptsLoad(String load, String type){
+    	if (_loadOption.equals(ALLLOADS)){
+    		return true;
+    	}
+       	if (_loadOption.equals(INCLUDELOADS)){
+       		return _loadList.contains(load) || _loadList.contains(type+CarLoad.SPLIT_CHAR+load);
+       	}
+       	// exclude!
+       	return !_loadList.contains(load) && !_loadList.contains(type+CarLoad.SPLIT_CHAR+load);
+    }
+    
     public String getDropOption(){
     	return _dropOption;
     }
@@ -902,7 +921,7 @@ public class Track {
     				length = length + Integer.parseInt(c.getLength()) + RollingStock.COUPLER;	
     			}
     		}
-			if (!acceptsLoadName(car.getLoad())){
+			if (!acceptsLoad(car.getLoad(), car.getType())){
 				log.debug("Car  ("+rs.toString()+") load ("+car.getLoad()+") not accepted at location ("+getLocation().getName()+", "+getName()+") wrong load");
 				return LOAD+ " ("+car.getLoad()+")";
 			}
@@ -1162,7 +1181,7 @@ public class Track {
 				break;
 			}
 			// check loads
-			if (!si.getLoad().equals("") && !acceptsLoadName(si.getLoad())){
+			if (!si.getLoad().equals("") && !acceptsLoad(si.getLoad(), si.getType())){
 				status = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getLoad()});
 				break;
 			}
@@ -1192,7 +1211,7 @@ public class Track {
 							new Object[]{si.getDestinationTrack()+" ("+rb.getString("Road")+")"});
 					break;
 				}
-				if (!si.getShip().equals("") && !si.getDestinationTrack().acceptsLoadName(si.getShip())){
+				if (!si.getShip().equals("") && !si.getDestinationTrack().acceptsLoad(si.getShip(), si.getType())){
 					status = MessageFormat.format(rb.getString("NotValid"),
 							new Object[]{si.getDestinationTrack()+" ("+rb.getString("Load")+")"});
 					break;

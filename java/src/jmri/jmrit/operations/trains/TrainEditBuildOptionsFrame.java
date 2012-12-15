@@ -29,6 +29,7 @@ import javax.swing.JTextField;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -150,6 +151,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     JCheckBox returnStagingCheckBox = new JCheckBox(rb.getString("AllowCarsToReturn"));
     JCheckBox allowLocalMovesCheckBox = new JCheckBox(rb.getString("AllowLocalMoves"));
     JCheckBox allowThroughCarsCheckBox = new JCheckBox(rb.getString("AllowThroughCars"));
+    JCheckBox loadAndTypeCheckBox = new JCheckBox(rb.getString("TypeAndLoad"));
 	
 	// text field
     JTextField builtAfterTextField = new JTextField(10);
@@ -506,12 +508,18 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 				selectNextItemComboBox(roadBox);
 			}
 			if (ae.getSource() == addLoadButton){
-				if(_train.addLoadName((String) loadBox.getSelectedItem()))
+				String loadName = (String) loadBox.getSelectedItem();
+				if (loadAndTypeCheckBox.isSelected())
+					loadName = typeBox.getSelectedItem() + CarLoad.SPLIT_CHAR + loadName;
+				if(_train.addLoadName(loadName))
 					updateLoadNames();
 				selectNextItemComboBox(loadBox);
 			}
 			if (ae.getSource() == deleteLoadButton){
-				if(_train.deleteLoadName((String) loadBox.getSelectedItem()))
+				String loadName = (String) loadBox.getSelectedItem();
+				if (loadAndTypeCheckBox.isSelected())
+					loadName = typeBox.getSelectedItem() + CarLoad.SPLIT_CHAR + loadName;
+				if(_train.deleteLoadName(loadName))
 					updateLoadNames();
 				selectNextItemComboBox(loadBox);
 			}
@@ -727,16 +735,15 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		    	p.add(addLoadButton);
 		    	p.add(deleteLoadButton);
 		    	p.add(deleteAllLoadsButton);
+		    	p.add(loadAndTypeCheckBox);
 				gc.gridy = y++;
 		    	panelLoadNames.add(p, gc);
 
 		    	String[]carLoads = _train.getLoadNames();
 		    	int x = 0;
 		    	for (int i =0; i<carLoads.length; i++){
-		    		JLabel load = new JLabel();
-		    		load.setText(carLoads[i]);
-		    		addItem(panelLoadNames, load, x++, y);
-		    		if (x > 6){
+		    		addItem(panelLoadNames, new JLabel(carLoads[i]), x++, y);
+		    		if (x > 5){
 		    			y++;
 		    			x = 0;
 		    		}
@@ -1031,6 +1038,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		loadNameAll.setEnabled(enabled);
 		loadNameInclude.setEnabled(enabled);
 		loadNameExclude.setEnabled(enabled);
+		loadAndTypeCheckBox.setEnabled(enabled);
 		addRoadButton.setEnabled(enabled);
 		deleteRoadButton.setEnabled(enabled);
 		ownerNameAll.setEnabled(enabled);

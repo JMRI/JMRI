@@ -424,7 +424,7 @@ public class TrainCommon {
 			return "";
 		// tab?
 		else if (attribute.equals(Setup.TAB))
-			return " "+tabString("", Control.max_len_string_attibute);
+			return " "+tabString("", Setup.getTabLength());
 		return " ("+rb.getString("ErrorPrintOptions")+") ";	// maybe user changed locale
 	}
 	

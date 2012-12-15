@@ -163,14 +163,12 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 					op.setText(rb.getString("X(TrainType)"));
 				else if (car != null && !train.acceptsRoadName(car.getRoad()))
 					op.setText(rb.getString("X(TrainRoad)"));
-				else if (car != null && !car.isCaboose() && !train.acceptsLoadName(car.getLoad()))
+				else if (car != null && !car.isCaboose() && !train.acceptsLoad(car.getLoad(), car.getType()))
 					op.setText(rb.getString("X(TrainLoad)"));
 				else if (car != null && !train.acceptsBuiltDate(car.getBuilt()))
 					op.setText(rb.getString("X(TrainBuilt)"));
 				else if (car != null && !train.acceptsOwnerName(car.getOwner()))
 					op.setText(rb.getString("X(TrainOwner)"));
-				else if (car != null && !train.acceptsLoadName(car.getLoad()))
-					op.setText(rb.getString("X(TrainLoad)"));
 				else if (train.skipsLocation(rl.getId()))
 					op.setText(rb.getString("X(TrainSkips)"));
 				else if (!rl.canDrop() && !rl.canPickup())
@@ -188,7 +186,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 					op.setText(rb.getString("X(TrackType)"));
 				else if (car != null && !track.acceptsRoadName(car.getRoad()))
 					op.setText(rb.getString("X(TrackRoad)"));
-				else if (car != null && !track.acceptsLoadName(car.getLoad()))
+				else if (car != null && !track.acceptsLoad(car.getLoad(), car.getType()))
 					op.setText(rb.getString("X(TrackLoad)"));
 				else if ((rl.getTrainDirection() & location.getTrainDirections()) == 0)
 					op.setText(rb.getString("X(DirLoc)"));

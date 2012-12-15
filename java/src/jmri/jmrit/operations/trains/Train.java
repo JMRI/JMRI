@@ -14,6 +14,7 @@ import org.jdom.Element;
 
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -991,6 +992,24 @@ public class Train implements java.beans.PropertyChangeListener {
        	return !_loadList.contains(load);
     }
     
+    /**
+     * Determine if train will service a specific load 
+     * and car type.
+     * @param load the load name to check.
+     * @param type the type of car used to carry the load.
+     * @return true if train will service this load.
+     */
+    public boolean acceptsLoad(String load, String type){
+    	if (_loadOption.equals(ALLLOADS)){
+    		return true;
+    	}
+       	if (_loadOption.equals(INCLUDELOADS)){
+       		return _loadList.contains(load) || _loadList.contains(type+CarLoad.SPLIT_CHAR+load);
+       	}
+       	// exclude!
+       	return !_loadList.contains(load) && !_loadList.contains(type+CarLoad.SPLIT_CHAR+load);
+    }
+    
 	public String getOwnerOption (){
     	return _ownerOption;
     }
@@ -1170,7 +1189,7 @@ public class Train implements java.beans.PropertyChangeListener {
     		// if car, check to see if train accepts car load
     		if (Car.class.isInstance(rs)){
     			Car car = (Car)rs;
-    			if (!acceptsLoadName(car.getLoad()))
+    			if (!acceptsLoad(car.getLoad(), car.getType()))
     				return false;
     		}
     		Route route = getRoute();

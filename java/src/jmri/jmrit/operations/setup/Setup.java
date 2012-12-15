@@ -207,7 +207,8 @@ public class Setup {
 	private static String iconLocalColor ="";
 	private static String iconTerminateColor ="";
 	
-	private static boolean tab = false;
+	private static boolean tab = false;						// when true, tab out manifest and switch lists
+	private static int tabCharLength = Control.max_len_string_attibute;
 	private static boolean manifestEditorEnabled = false;	// when true use text editor to view build report
 	private static boolean switchListSameManifest = true;	// when true switch list format is the same as the manifest
 	private static boolean manifestTruncated = false;		// when true, manifest is truncated if switch list is available
@@ -803,6 +804,14 @@ public class Setup {
 	
 	public static void setTabEnabled(boolean enable){
 		tab = enable;
+	}
+	
+	public static int getTabLength(){
+		return tabCharLength;
+	}
+	
+	public static void setTablength(int length){
+		tabCharLength = length;
 	}
 	
 	public static boolean isCarLoggerEnabled(){
@@ -1512,6 +1521,7 @@ public class Setup {
     	
     	e.addContent(values = new Element("tab"));
     	values.setAttribute("enabled", isTabEnabled()?"true":"false");
+    	values.setAttribute("length", Integer.toString(getTabLength()));
     	
     	e.addContent(values = new Element("manifest"));
     	values.setAttribute("truncate", isTruncateManifestEnabled()?"true":"false");
@@ -1899,6 +1909,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("tab: "+enable);
         		setTabEnabled(enable.equals("true"));
+        	}
+          	if((a = operations.getChild("tab").getAttribute("length"))!= null){
+        		String length = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("tab length: "+length);
+        		setTablength(Integer.parseInt(length));
         	}
         }
         if ((operations.getChild("manifest") != null)){ 

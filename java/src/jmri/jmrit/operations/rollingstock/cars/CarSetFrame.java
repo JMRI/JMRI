@@ -260,7 +260,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		// determine if train services this car's load
 		if (car.getTrain() != null){
 			Train train = car.getTrain();		
-			if (!train.acceptsLoadName(car.getLoad())){
+			if (!train.acceptsLoad(car.getLoad(), car.getType())){
 				JOptionPane.showMessageDialog(this,
 						MessageFormat.format(rb.getString("carTrainNotServLoad"), new Object[]{car.getLoad(), train.getName()}),
 						rb.getString("rsNotMove"),
