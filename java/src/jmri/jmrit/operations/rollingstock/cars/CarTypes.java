@@ -159,6 +159,13 @@ public class CarTypes {
     
     private int maxNameLength = 0;
     
+	/**
+	 * Get the maximum character length of a car type when printing on a
+	 * manifest or switch list. Car subtypes or characters after the "-" are
+	 * ignored.
+	 * 
+	 * @return the maximum character length of a car type
+	 */
     public int getCurMaxNameLength(){
     	if (maxNameLength == 0){
     		String[] types = getNames();
@@ -172,6 +179,28 @@ public class CarTypes {
     		return length;
     	} else {
     		return maxNameLength;
+    	}
+    }
+    
+    private int maxNameLengthSubType = 0;
+    
+	/**
+	 * Get the maximum character length of a car type including the sub type characters.
+	 * 
+	 * @return the maximum character length of a car type
+	 */
+    public int getMaxNameSubTypeLength(){
+    	if (maxNameLengthSubType == 0){
+    		String[] types = getNames();
+    		int length = MIN_NAME_LENGTH;
+    		for (int i = 0; i < types.length; i++){
+    			if (types[i].length()>length)
+    				length = types[i].length();
+    		}
+    		maxNameLengthSubType = length;
+    		return length;
+    	} else {
+    		return maxNameLengthSubType;
     	}
     }
         

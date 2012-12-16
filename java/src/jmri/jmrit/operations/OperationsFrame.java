@@ -18,7 +18,7 @@ import javax.swing.JTable;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.implementation.swing.SwingShutDownTask;
-import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.XTableColumnModel;
 
@@ -108,6 +108,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	
 	/**
 	 * Gets the number of checkboxes(+1) that can fix in one row
+	 * see OperationsFrame.minCheckboxes and OperationsFrame.maxCheckboxes
 	 * @return the number of checkboxes, minimum is 5 (6 checkboxes)
 	 */
 	protected int getNumberOfCheckboxes(){
@@ -118,7 +119,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		if (size== null)
 			return minCheckboxes;	// default is 6 checkboxes per row
 		StringBuffer pad = new StringBuffer("X");
-		for (int i=0; i<Control.max_len_string_attibute; i++)
+		for (int i=0; i<CarTypes.instance().getMaxNameSubTypeLength(); i++)
 			pad.append("X");
 		
 		JCheckBox box = new JCheckBox(pad.toString());

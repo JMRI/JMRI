@@ -387,6 +387,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 					reportTrainExists(rb.getString("save"));
 					return;
 				}
+				checkRoute(); // check to see if use supplied a route, just warn if no route
 				saveTrain();
 			}
 			if (Setup.isCloseWindowOnSaveEnabled())
@@ -559,6 +560,17 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 					JOptionPane.WARNING_MESSAGE);
 		}
 		return true;
+	}
+	
+	private boolean checkRoute(){
+		if (_train.getRoute() == null){
+			JOptionPane.showMessageDialog(this, rb.getString("TrainNeedsRoute"),
+					rb.getString("TrainNoRoute"),
+					JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		return true;
+		
 	}
 	
 	private void reportTrainExists(String s){
