@@ -89,13 +89,17 @@ public class HelpUtil {
 
             // Put about dialog in Apple's prefered area on Mac OS X
             if (SystemType.isMacOSX()) {
-                Application.getApplication().setAboutHandler(new AboutHandler() {
+                try {
+                    Application.getApplication().setAboutHandler(new AboutHandler() {
 
-                    @Override
-                    public void handleAbout(EventObject eo) {
-                        new AboutDialog(null, true).setVisible(true);
-                    }
-                });
+                        @Override
+                        public void handleAbout(EventObject eo) {
+                            new AboutDialog(null, true).setVisible(true);
+                        }
+                    });
+                } catch (java.lang.RuntimeException re) {
+                    log.error("Unable to put About handler in default location", re);
+                }
             }
             // Include About in Help menu if not on Mac OS X or not using Aqua Look and Feel
             if (!SystemType.isMacOSX() || !UIManager.getLookAndFeel().isNativeLookAndFeel()) {
