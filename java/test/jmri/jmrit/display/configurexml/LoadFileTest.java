@@ -21,8 +21,8 @@ import jmri.InstanceManager;
 public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
 
     public void testLoadStoreCurrent() throws Exception {
-        // skip if headless, as requires display to show
-        if (System.getProperty("jmri.headlesstest","false").equals("true")) return;
+        // this runs during the "headless" tests, so files
+        // used can't pop windows
     
         // load manager
         java.io.File inFile = new java.io.File("java/test/jmri/jmrit/display/configurexml/ScaledIconTest.xml");
@@ -65,6 +65,7 @@ public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
                 && !inLine.startsWith("    <memory")   // time changes
                 && !inLine.startsWith("    <test>")  // version changes
                 && !inLine.startsWith("    <modifier")  // version changes
+                && !inLine.startsWith("    <minor")  // version changes
                 && !inLine.startsWith("  <paneleditor class="))   // outfile writes class for backward compatibility
                     Assert.assertEquals(inLine, outLine);
         }
