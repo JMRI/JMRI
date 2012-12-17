@@ -2083,7 +2083,7 @@ public class OperationsTrainsTest extends TestCase {
 		// increase the size of staging
 		l3s2.setLength(500);
 		// allow default load swaps
-		l3s2.enableLoadSwaps(true);  // South End 2
+		l3s2.setLoadSwapsEnabled(true);  // South End 2
 		
 		train2.build();
 		// Check expected arrival times
@@ -3261,7 +3261,7 @@ public class OperationsTrainsTest extends TestCase {
 		loc3trk1 = loc3.addTrack("Bedford Yard 1", Track.STAGING);
 		loc3trk1.setTrainDirections(Track.WEST + Track.EAST);
 		loc3trk1.setLength(900);
-		loc3trk1.enableRemoveLoads(true);
+		loc3trk1.setRemoveLoadsEnabled(true);
 		
 		// Create route with 2 location
 		Route rte1;
@@ -3520,8 +3520,8 @@ public class OperationsTrainsTest extends TestCase {
 		r3rl3.setTrainIconX(75);	// set the train icon coordinates
 		r3rl3.setTrainIconY(100);
 		
-		loc3trk1.enableRemoveLoads(false);
-		loc3trk1.enableAddLoads(true);		// generate schedule loads
+		loc3trk1.setRemoveLoadsEnabled(false);
+		loc3trk1.setAddLoadsEnabled(true);		// generate schedule loads
 		
 		sch1Item1.setLoad("Metal 1");		// request these loads from staging
 		sch1Item2.setLoad("Metal 2");

@@ -504,24 +504,6 @@ public class TrainBuilder extends TrainCommon{
 		log.debug("Done building train "+train.getName());
 	}
 	
-//	/**
-//	 * Determines if this train is a switcher servicing one location.
-//	 * Note that a switcher route can be greater than one if all locations
-//	 * have the "same" name.
-//	 */
-//	private void checkForLocalSwitcher(){
-//		localSwitcher = false;
-//		// now check to see if all locations in this train's route have the same name
-//		String locationName = splitString(train.getRoute().getLocationById(routeList.get(0)).getName());
-//		for (int i = 0; i<routeList.size(); i++){
-//			String name  = splitString(train.getRoute().getLocationById(routeList.get(i)).getName());
-//			if (!locationName.equals(name))
-//				return;	// not a local switcher
-//		}
-//		// all locations have the same name
-//		localSwitcher = true;
-//		addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildSwitcherRoute"),new Object[]{train.getName(), routeList.size()}));
-//	}
 	
 	/**
 	 * Ask which staging track the train is to depart on.
@@ -1333,7 +1315,8 @@ public class TrainBuilder extends TrainCommon{
     							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockNotAbleCustomLoad"),new Object[]{car.toString(), car.getLoad()}));
     							continue;
     						}
-       						if (car.getLoad().equals(CarLoads.instance().getDefaultEmptyName()) && (departStageTrack.isAddLoadsEnabled() || departStageTrack.isAddLoadsEnabledAnySiding())){
+       						if (car.getLoad().equals(CarLoads.instance().getDefaultEmptyName()) && (departStageTrack.isAddLoadsEnabled() 
+       								|| departStageTrack.isAddLoadsAnySidingEnabled() || departStageTrack.isAddCustomLoadsAnyStagingTrackEnabled())){
     							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("blockNotAbleCarTypeGenerate"),new Object[]{car.toString(), car.getLoad()}));
     							continue;
     						}
@@ -1482,7 +1465,8 @@ public class TrainBuilder extends TrainCommon{
 				// check for car order?
 				car = getCarOrder(car);
 				// is car departing staging and generate custom load?
-				searchForCarLoad(car);
+				if (!generateCarLoadFromStaging(car))
+					generateCarLoadStagingToStaging(car);
 				// does car have a custom load without a destination?
 				if (!car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 						&& !car.getLoad().equals(CarLoads.instance().getDefaultLoadName())
@@ -1965,7 +1949,8 @@ public class TrainBuilder extends TrainCommon{
 					// does the train accept the car load from the staging track?
 					if (!car.isCaboose() && !car.isPassenger() 
 							&& (!car.getLoad().equals(CarLoads.instance().getDefaultEmptyName()) 
-							||  !departStageTrack.isAddLoadsEnabled() && !departStageTrack.isAddLoadsEnabledAnySiding())
+							||  !departStageTrack.isAddLoadsEnabled() && !departStageTrack.isAddLoadsAnySidingEnabled()
+							&& !departStageTrack.isAddCustomLoadsAnyStagingTrackEnabled())
 							&& !train.acceptsLoad(car.getLoad(), car.getType())){
 						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingDepartCarLoad"),
 								new Object[]{departStageTrack.getName(), car.toString(), car.getLoad(), train.getName()}));
@@ -2218,12 +2203,12 @@ public class TrainBuilder extends TrainCommon{
 	 * @param car the car 
 	 * @throws BuildFailedException 
 	 */
-	private void searchForCarLoad(Car car) throws BuildFailedException{
-		if (car.getTrack() == null || !car.getTrack().isAddLoadsEnabledAnySiding()
+	private boolean generateCarLoadFromStaging(Car car) throws BuildFailedException{
+		if (car.getTrack() == null || !car.getTrack().isAddLoadsAnySidingEnabled()
 				|| !car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 				|| car.getDestination() != null || car.getNextDestination() != null){
-			log.debug("No load search for car ("+car.toString()+") loads enabled: "+(car.getTrack().isAddLoadsEnabledAnySiding()?"true":"false")+", car load: ("+car.getLoad()+")");
-			return;
+			log.debug("No load search for car ("+car.toString()+") isAddLoadsAnySidingEnabled: "+(car.getTrack().isAddLoadsAnySidingEnabled()?"true":"false")+", car load: ("+car.getLoad()+")");
+			return false;	// no load generated for this car
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchTrackNewLoad"),
 				new Object[]{car.toString(), car.getType(), car.getLoad(), car.getTrackName()}));
@@ -2266,7 +2251,7 @@ public class TrainBuilder extends TrainCommon{
 					// is car part of kernel?
 					car.updateKernel();
 					track.bumpSchedule();
-					return;	//done
+					return true;	//done, car now has a custom load
 				} else {
 					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotRouteCar"),
 							new Object[]{car.toString(), si.getLoad(), track.getLocation().getName(), track.getName()}));
@@ -2280,10 +2265,49 @@ public class TrainBuilder extends TrainCommon{
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildUnableNewLoad"),
 				new Object[]{car.toString()}));
+		return false;	// done, no load generated for this car
 	}
 	
 	/**
-	 * Used to generate car load from staging.
+	 * Tries to place a custom load in the car that is departing staging, and may terminate to staging.
+	 * Tries to create a custom load that will be accepted by the train's terminal if the terminal is staging.
+	 * Otherwise, any staging track is searched for that will accept this car and a custom load.
+	 * 
+	 * @param car the car 
+	 * @throws BuildFailedException 
+	 */
+	private boolean generateCarLoadStagingToStaging(Car car) throws BuildFailedException{
+		if (car.getTrack() == null 
+				|| !car.getTrack().getLocType().equals(Track.STAGING)
+				|| !car.getTrack().isAddCustomLoadsAnyStagingTrackEnabled()
+				|| !car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
+				|| car.getDestination() != null || car.getNextDestination() != null){
+			log.debug("No load search for car ("+car.toString()+") isAddCustomLoadsAnyStagingTrackEnabled: "+(car.getTrack().isAddLoadsAnySidingEnabled()?"true":"false")+", car load: ("+car.getLoad()+")");
+			return false;
+		}
+		// first try this train's termination track if one exists
+		if (generateLoadCarDepartingAndTerminatingIntoStaging(car, terminateStageTrack))
+			return true;	
+		List<Track> tracks = locationManager.getTracks(Track.STAGING);
+		log.debug("Found "+tracks.size()+" staging tracks");
+		for (int i=0; i<tracks.size(); i++){
+			Track track = tracks.get(i);
+			log.debug("Staging track ("+track.getLocation().getName()+", "+track.getName()+")");
+			// find a staging track that isn't at the departure or terminal
+			if (track.getLocation() == departLocation || track.getLocation() == terminateLocation)
+				continue;
+			if (generateLoadCarDepartingAndTerminatingIntoStaging(car, track)){
+				// TODO this new load could cause the car to not find a valid track for this train.
+				// maybe we should check to see if this load is valid for this train's route
+				car.setTrain(train);	// reset will now return the car's load to default empty
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Used when generating a car load from staging.
 	 * @param car the car.
 	 * @param track the car's destination track that has the schedule.
 	 * @return ScheduleItem si if match found, null otherwise. 
@@ -2691,9 +2715,10 @@ public class TrainBuilder extends TrainCommon{
 					destinationTemp = testDestination;
 				// only generate a new load if there aren't any other tracks available for this car
 				} else if (status.contains(Track.LOAD) && car.getTrack() == departStageTrack && rldSave == null
-						&& (departStageTrack.isAddLoadsEnabled() || departStageTrack.isAddLoadsEnabledAnySiding())){
+						&& !departStageTrack.isAddCustomLoadsAnyStagingTrackEnabled() 
+						&& (departStageTrack.isAddLoadsEnabled() || departStageTrack.isAddLoadsAnySidingEnabled())){
 					// try and generate a load for this car into staging
-					if (generateLoadForCarDepartingAndTerminatingIntoStaging(car)){
+					if (generateLoadCarDepartingAndTerminatingIntoStaging(car, terminateStageTrack)){
 						trackTemp = terminateStageTrack;
 						destinationTemp = testDestination;
 					} else		
@@ -2739,7 +2764,7 @@ public class TrainBuilder extends TrainCommon{
 							&& (!status.startsWith(Track.LENGTH))	// can't generate load for spur that is full
 							&& testTrack.getLocType().equals(Track.SIDING) 
 							&& !testTrack.getScheduleId().equals("")
-							&& (car.getTrack().isAddLoadsEnabled() || car.getTrack().isAddLoadsEnabledAnySiding()) // both options checked for cabooses and cars with FRED
+							&& (car.getTrack().isAddLoadsEnabled() || car.getTrack().isAddLoadsAnySidingEnabled()) // both options checked for cabooses and cars with FRED
 							&& car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())){
 						// can we use this track?
 						if (!testTrack.isSpaceAvailable(car)){
@@ -2904,14 +2929,19 @@ public class TrainBuilder extends TrainCommon{
 	 * @param car the car!
 	 * @return true if a load was generated this this car.
 	 */
-	private boolean generateLoadForCarDepartingAndTerminatingIntoStaging(Car car){
-		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchTrackNewLoad"),
-				new Object[]{car.toString(), car.getType(), car.getLoad(), car.getTrackName()}));
+	private boolean generateLoadCarDepartingAndTerminatingIntoStaging(Car car, Track stageTrack){
+		if (stageTrack == null)
+			return false;
+		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchTrackLoadStaging"),
+				new Object[]{car.toString(), car.getType(), car.getLoad(), car.getTrackName(), stageTrack.getLocation().getName(), stageTrack.getName()}));
 		// figure out which loads the car can use
 		List<String> loads = CarLoads.instance().getNames(car.getType());
+		// remove the default names
+		loads.remove(CarLoads.instance().getDefaultEmptyName());
+		loads.remove(CarLoads.instance().getDefaultLoadName());
 		for (int i=loads.size()-1; i>=0; i--){
 			String load = loads.get(i);
-			if (!terminateStageTrack.acceptsLoad(load, car.getType()) || !train.acceptsLoad(load, car.getType()))
+			if (!stageTrack.acceptsLoad(load, car.getType()) || !train.acceptsLoad(load, car.getType()))
 			loads.remove(i);
 		}
 		// Use random loads rather that the first one that works to create interesting loads
@@ -2920,17 +2950,17 @@ public class TrainBuilder extends TrainCommon{
 			int rnd = (int)(Math.random()*loads.size());
 			car.setLoad(loads.get(rnd));
 			// check to see if car is now accepted by staging
-			String status = car.testDestination(terminateStageTrack.getLocation(), terminateStageTrack); 	// will staging now accept this car?
+			String status = car.testDestination(stageTrack.getLocation(), stageTrack); 	// will staging now accept this car?
 			if (status.equals(Track.OKAY)){
 				car.setLoadGeneratedFromStaging(true);
 				// is car part of kernel?
 				car.updateKernel();
-				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCreateNewLoadForCar"),
-						new Object[]{car.toString(), car.getLoad(), terminateStageTrack.getLocation().getName(), terminateStageTrack.getName()}));
+				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildAddingScheduleLoad"),
+						new Object[]{car.getLoad(), car.toString()}));
 				return true;
 			}
 			car.setLoad(oldLoad);	// restore load and report failure
-			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), terminateStageTrack.getName(), status}));
+			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), stageTrack.getName(), status}));
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildUnableNewLoad"), new Object[]{car.toString()}));
 		return false;

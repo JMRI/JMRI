@@ -77,6 +77,7 @@ public class Track {
 	private static final int GENERATE_SCHEDULE_LOADS = 4;
 	private static final int GENERATE_SCHEDULE_LOADS_ANY_SIDING = 8;
 	private static final int EMPTY_GENERIC_LOADS = 16;
+	private static final int GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK = 32;
 	
 	protected int _blockOptions = 0;
 	private static final int BLOCK_CARS = 1;
@@ -1228,7 +1229,7 @@ public class Track {
 	 * @param enable
 	 *            when true, swap generic car load state
 	 */
-	public void enableLoadSwaps(boolean enable){
+	public void setLoadSwapsEnabled(boolean enable){
 		if (enable)
 			_loadOptions = _loadOptions | SWAP_GENERIC_LOADS;
 		else
@@ -1246,7 +1247,7 @@ public class Track {
 	 * @param enable
 	 *            when true, set generic car load to empty
 	 */
-	public void enableSetLoadEmpty(boolean enable){
+	public void setLoadEmptyEnabled(boolean enable){
 		if (enable)
 			_loadOptions = _loadOptions | EMPTY_GENERIC_LOADS;
 		else
@@ -1261,7 +1262,7 @@ public class Track {
 	 * When enabled, remove Scheduled car loads.
 	 * @param enable when true, remove Scheduled loads from cars
 	 */
-	public void enableRemoveLoads(boolean enable){
+	public void setRemoveLoadsEnabled(boolean enable){
 		if (enable)
 			_loadOptions = _loadOptions | EMPTY_SCHEDULE_LOADS;
 		else
@@ -1276,7 +1277,7 @@ public class Track {
 	 * When enabled, add Scheduled car loads if there's a demand.
 	 * @param enable when true, add Scheduled loads from cars
 	 */
-	public void enableAddLoads(boolean enable){
+	public void setAddLoadsEnabled(boolean enable){
 		if (enable)
 			_loadOptions = _loadOptions | GENERATE_SCHEDULE_LOADS;
 		else
@@ -1291,18 +1292,36 @@ public class Track {
 	 * When enabled, add Scheduled car loads if there's a demand.
 	 * @param enable when true, add Scheduled loads from cars
 	 */
-	public void enableAddLoadsAnySiding(boolean enable){
+	public void setAddLoadsAnySidingEnabled(boolean enable){
 		if (enable)
 			_loadOptions = _loadOptions | GENERATE_SCHEDULE_LOADS_ANY_SIDING;
 		else
 			_loadOptions = _loadOptions & 0xFFFF-GENERATE_SCHEDULE_LOADS_ANY_SIDING;
 	}
 	
-	public boolean isAddLoadsEnabledAnySiding(){
+	public boolean isAddLoadsAnySidingEnabled(){
 		return (0 < (_loadOptions & GENERATE_SCHEDULE_LOADS_ANY_SIDING));
 	}
 	
-	public void enableBlockCars(boolean enable){
+	/**
+	 * When enabled, add custom car loads to cars in staging for new
+	 * destinations that are staging.
+	 * 
+	 * @param enable
+	 *            when true, add custom load to car
+	 */
+	public void setAddCustomLoadsAnyStagingTrackEnabled(boolean enable){
+		if (enable)
+			_loadOptions = _loadOptions | GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK;
+		else
+			_loadOptions = _loadOptions & 0xFFFF-GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK;
+	}
+	
+	public boolean isAddCustomLoadsAnyStagingTrackEnabled(){
+		return (0 < (_loadOptions & GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK));
+	}
+	
+	public void setBlockCarsEnabled(boolean enable){
 		if (enable)
 			_blockOptions = _blockOptions | BLOCK_CARS;
 		else

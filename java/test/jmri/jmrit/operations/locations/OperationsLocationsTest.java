@@ -667,23 +667,23 @@ public class OperationsLocationsTest extends TestCase {
 
 		/* Test Load Swapable */
 		Assert.assertEquals("Location Track Load Swapable default", false, t.isLoadSwapEnabled());
-		t.enableLoadSwaps(true);
+		t.setLoadSwapsEnabled(true);
 		Assert.assertEquals("Location Track Load Swapable true", true, t.isLoadSwapEnabled());
-		t.enableLoadSwaps(false);
+		t.setLoadSwapsEnabled(false);
 		Assert.assertEquals("Location Track Load Swapable false", false, t.isLoadSwapEnabled());
 
 		/* Test Remove Loads */
 		Assert.assertEquals("Location Track Remove Loads default", false, t.isRemoveLoadsEnabled());
-		t.enableRemoveLoads(true);
+		t.setRemoveLoadsEnabled(true);
 		Assert.assertEquals("Location Track Remove Loads true", true, t.isRemoveLoadsEnabled());
-		t.enableRemoveLoads(false);
+		t.setRemoveLoadsEnabled(false);
 		Assert.assertEquals("Location Track Remove Loads false", false, t.isRemoveLoadsEnabled());
 
 		/* Test Add Loads */
 		Assert.assertEquals("Location Track Add Loads default", false, t.isAddLoadsEnabled());
-		t.enableAddLoads(true);
+		t.setAddLoadsEnabled(true);
 		Assert.assertEquals("Location Track Add Loads true", true, t.isAddLoadsEnabled());
-		t.enableAddLoads(false);
+		t.setAddLoadsEnabled(false);
 		Assert.assertEquals("Location Track Add Loads false", false, t.isAddLoadsEnabled());
 	}
 

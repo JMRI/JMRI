@@ -24,6 +24,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 	JCheckBox emptyCustomCheckBox = new JCheckBox(rb.getString("EmptyCarLoads"));
 	JCheckBox loadCheckBox = new JCheckBox(rb.getString("LoadCarLoads"));
 	JCheckBox loadAnyCheckBox = new JCheckBox(rb.getString("LoadAnyCarLoads"));
+	JCheckBox loadAnyStagingCheckBox = new JCheckBox(rb.getString("LoadsStaging"));
 	JCheckBox blockCarsCheckBox = new JCheckBox(rb.getString("BlockCars"));
 
 	JPanel panelLoad = panelOpt4;
@@ -49,6 +50,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		addItemLeft(p2, emptyCustomCheckBox, 0, 0);
 		addItemLeft(p2, loadCheckBox, 0, 1);
 		addItemLeft(p2, loadAnyCheckBox, 0, 2);
+		addItemLeft(p2, loadAnyStagingCheckBox, 0, 3);
 		
 		JPanel p3 = new JPanel();
 		p3.setLayout(new GridBagLayout());
@@ -83,9 +85,10 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 			emptyCheckBox.setSelected(_track.isSetLoadEmptyEnabled());
 			emptyCustomCheckBox.setSelected(_track.isRemoveLoadsEnabled());
 			loadCheckBox.setSelected(_track.isAddLoadsEnabled());
-			loadAnyCheckBox.setSelected(_track.isAddLoadsEnabledAnySiding());
+			loadAnyCheckBox.setSelected(_track.isAddLoadsAnySidingEnabled());
+			loadAnyStagingCheckBox.setSelected(_track.isAddCustomLoadsAnyStagingTrackEnabled());
 			blockCarsCheckBox.setSelected(_track.isBlockCarsEnabled());
-			if (loadCheckBox.isSelected() || loadAnyCheckBox.isSelected()){
+			if (loadCheckBox.isSelected() || loadAnyCheckBox.isSelected() || loadAnyStagingCheckBox.isSelected()){
 				blockCarsCheckBox.setSelected(false);
 				blockCarsCheckBox.setEnabled(false);
 			}				
@@ -95,6 +98,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		addCheckBoxAction(emptyCheckBox);
 		addCheckBoxAction(loadCheckBox);
 		addCheckBoxAction(loadAnyCheckBox);
+		addCheckBoxAction(loadAnyStagingCheckBox);
 		
 		// finish
 		panelOrder.setVisible(false);	// Car order out of staging isn't necessary
@@ -103,12 +107,13 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 	}
 	
 	protected void saveTrack (Track track){
-		track.enableLoadSwaps(swapLoadsCheckBox.isSelected());
-		track.enableSetLoadEmpty(emptyCheckBox.isSelected());
-		track.enableRemoveLoads(emptyCustomCheckBox.isSelected());
-		track.enableAddLoads(loadCheckBox.isSelected());
-		track.enableAddLoadsAnySiding(loadAnyCheckBox.isSelected());
-		track.enableBlockCars(blockCarsCheckBox.isSelected());
+		track.setLoadSwapsEnabled(swapLoadsCheckBox.isSelected());
+		track.setLoadEmptyEnabled(emptyCheckBox.isSelected());
+		track.setRemoveLoadsEnabled(emptyCustomCheckBox.isSelected());
+		track.setAddLoadsEnabled(loadCheckBox.isSelected());
+		track.setAddLoadsAnySidingEnabled(loadAnyCheckBox.isSelected());
+		track.setAddCustomLoadsAnyStagingTrackEnabled(loadAnyStagingCheckBox.isSelected());
+		track.setBlockCarsEnabled(blockCarsCheckBox.isSelected());
 		super.saveTrack(track);
 	}
 	
@@ -118,7 +123,8 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		emptyCustomCheckBox.setEnabled(enabled);
 		loadCheckBox.setEnabled(enabled);
 		loadAnyCheckBox.setEnabled(enabled);
-		if (!loadCheckBox.isSelected() && !loadAnyCheckBox.isSelected() && enabled)
+		loadAnyStagingCheckBox.setEnabled(enabled);
+		if (!loadCheckBox.isSelected() && !loadAnyCheckBox.isSelected() && !loadAnyStagingCheckBox.isSelected() && enabled)
 			blockCarsCheckBox.setEnabled(true);
 		else
 			blockCarsCheckBox.setEnabled(false);
@@ -140,7 +146,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 				blockCarsCheckBox.setSelected(false);
 				blockCarsCheckBox.setEnabled(false);
 			}
-			else if (!loadAnyCheckBox.isSelected())
+			else if (!loadAnyCheckBox.isSelected() && !loadAnyStagingCheckBox.isSelected())
 				blockCarsCheckBox.setEnabled(true);
 		}
 		if (ae.getSource() == loadAnyCheckBox){
@@ -149,7 +155,14 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 				blockCarsCheckBox.setSelected(false);
 				blockCarsCheckBox.setEnabled(false);
 			}
-			else if (!loadCheckBox.isSelected())
+			else if (!loadCheckBox.isSelected() && !loadAnyStagingCheckBox.isSelected())
+				blockCarsCheckBox.setEnabled(true);
+		}
+		if (ae.getSource() == loadAnyStagingCheckBox){
+			if (loadAnyStagingCheckBox.isSelected()){
+				blockCarsCheckBox.setEnabled(false);
+			}
+			else if (!loadCheckBox.isSelected() && !loadAnyCheckBox.isSelected())
 				blockCarsCheckBox.setEnabled(true);
 		}
 		else super.checkBoxActionPerformed(ae);
