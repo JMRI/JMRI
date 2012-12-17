@@ -77,7 +77,10 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         } catch (Exception e) {
             log.error("Exception during roster reading: " + e);
             try {
-                JOptionPane.showMessageDialog(null,  "An error occured while trying to read the roster index file:\n"+e.getMessage(), "Error Reading Roster Index", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,  
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorReadingText")+"\n"+e.getMessage(), 
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorReadingTitle"), 
+                        JOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
             // ignore inability to display dialog
             }
@@ -685,7 +688,10 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         } catch (Exception e) {
             log.error("Exception while writing the new roster file, may not be complete: "+e);
             try {
-                JOptionPane.showMessageDialog(null,  "An error occured writing the roster file, may not be complete:\n"+e.getMessage(), "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,  
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingText")+"\n"+e.getMessage(), 
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingTitle"), 
+                        JOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore failure to display dialog
             }

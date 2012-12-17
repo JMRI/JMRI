@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.ImageIcon;
@@ -759,7 +760,10 @@ public class RosterEntry implements jmri.BasicRosterEntry{
         } catch (Exception e) {
             log.error("error during locomotive file output", e);
             try {
-                JOptionPane.showMessageDialog(null, "An error occured saving the roster file " + getId() + " and the file may not be complete:\n"+e.getMessage(), "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, 
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingText")+"\n"+e.getMessage(), 
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingTitle"), 
+                        JOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore inability to display dialog
             }
@@ -797,7 +801,10 @@ public class RosterEntry implements jmri.BasicRosterEntry{
         } catch (Exception e) {
             log.error("error during locomotive file output", e);
             try {
-                JOptionPane.showMessageDialog(null, "An error occured saving the roster file " + getId() + " and the file may not be complete:\n"+e.getMessage(), "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, 
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingText")+"\n"+e.getMessage(), 
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingTitle"), 
+                        JOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore inability to display dialog
             }
@@ -832,7 +839,10 @@ public class RosterEntry implements jmri.BasicRosterEntry{
         } catch (Exception ex){
             log.error("Error reading roster entry", ex);
             try {
-                JOptionPane.showMessageDialog(null,  "An error occured while trying to read the roster entry " + getId() + "\nPlease check the console for more information", "Error Saving Roster Entry", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,  
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorReadingText"), 
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorReadingTitle"), 
+                        JOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore inability to display dialog
             }

@@ -6,6 +6,7 @@ import jmri.jmrit.XmlFile;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.ResourceBundle;
 
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
@@ -156,8 +157,11 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
     boolean userOK(String entry, String filename, String fullFileName) {
         return ( JOptionPane.YES_OPTION ==
                  JOptionPane.showConfirmDialog(_who,
-                                               "Delete entry "+entry+" and file "+fullFileName+"?",
-                                               "Delete entry "+entry+"?", JOptionPane.YES_NO_OPTION));
+                        java.text.MessageFormat.format(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("DeletePrompt"),
+                                        entry,fullFileName),
+                        java.text.MessageFormat.format(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("DeleteTitle"),
+                                        entry),
+                        JOptionPane.YES_NO_OPTION));
     }
 
     // initialize logging
