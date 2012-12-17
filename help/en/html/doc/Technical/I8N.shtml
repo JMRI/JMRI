@@ -307,25 +307,31 @@ Some web references on how to do this:
 </UL>
 
 <P>
-Briefly, you create a static object in your class that handles the lookup of 
+Briefly, you reference a Bundle object in your class that handles the lookup of 
 strings:
 
 <pre><code>
-  static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+  java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 </code></pre>
 
 <P>
 The getBundle argument is the complete package name (not file name)
 for the properties file this class will be using.  You can have 
-more than one of these objects if you'd like to look up 
+reference more than one of these objects if you'd like to look up 
 strings in more than one properties file.
 
 <P>
 You can then retrieve particular strings like this:
 <pre><code>
-  String msg = rbx.getString("ButtonNew");
+java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle").getString("ButtonNew");
 </code></pre>
 <P>
+We no longer recommend defining a class-static variable to hold the 
+reference to the Bundle object, as this ends up consuming a lot 
+of permanent memory in a program the size of JMRI.  Go ahead and 
+call the getBundle() each time, it's fast because it works through
+a weakly-referenced and garbage-collected cache.
+<p>
 Some messages need to have specific information inserted into them:
 <pre><code>
   System name LT1 is already in use
@@ -350,7 +356,8 @@ Next, format the final message by inserting the content into it:
 <P>
 The first argument to the "format" call is the message itself; 
 the second is an array of Strings to be inserted into the message.
-
+(This is better than using String.format() because it allows
+the inserted terms to appear in different orders in different languages.)
 <P>
 Different languages may need a different number of lines to express
 a message, or may need to break it before or after a particular 
