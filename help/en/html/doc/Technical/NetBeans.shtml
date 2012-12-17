@@ -83,7 +83,7 @@
     </p>
         [Team]-&gt;[Subversion]-&gt;[Checkout]
         <ul>
-            <li> Repository URL: <strong>https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri</strong>
+            <li> Repository URL: <strong>https://svn.code.sf.net/p/jmri/code/trunk/jmri</strong>
             <li> User: <em>leave empty</em>
             <li> Password: <em>leave empty</em>
             <li> [Next &gt;]
