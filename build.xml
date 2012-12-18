@@ -754,9 +754,9 @@
 
     <!-- Force false language/country to check I8N -->
     <target name="locale"
-            description="check JmriDemo I8N"
+            description="check DecoderPro I8N"
             depends="debug, runtime-library-selection">
-        <java classname="apps.JmriDemo.JMRIdemo" dir="." fork="yes">
+        <java classname="apps.DecoderPro.DecoderPro" dir="." fork="yes">
             <classpath refid="project.class.path"/>
             <sysproperty key="java.security.policy"
                          value="${libdir}/security.policy"/>
@@ -769,7 +769,7 @@
             <sysproperty key="user.language" value="tlh"/>
             <!-- klingon -->
             <sysproperty key="user.country" value="001"/>
-            <arg line="LocaleTestConfig2.xml"/>
+            <arg line="DecoderProConfig2.xml"/>
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
             <!-- <jvmarg value="-Xloggc:memory.vgc"/> -->
