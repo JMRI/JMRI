@@ -99,14 +99,14 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         this.buildWindow();
     }
     int clickDelay = 0;
-    JRadioButtonMenuItem contextEdit = new JRadioButtonMenuItem("Edit");
-    JRadioButtonMenuItem contextOps = new JRadioButtonMenuItem("Programming On Main");
-    JRadioButtonMenuItem contextService = new JRadioButtonMenuItem("Programming Track");
+    JRadioButtonMenuItem contextEdit = new JRadioButtonMenuItem(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("Edit"));
+    JRadioButtonMenuItem contextOps = new JRadioButtonMenuItem(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ProgrammingOnMain"));
+    JRadioButtonMenuItem contextService = new JRadioButtonMenuItem(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ProgrammingTrack"));
     JTextPane dateUpdated = new JTextPane();
     JTextPane dccAddress = new JTextPane();
     JTextPane decoderFamily = new JTextPane();
     JTextPane decoderModel = new JTextPane();
-    JRadioButton edit = new JRadioButton("Edit Only");
+    JRadioButton edit = new JRadioButton(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("EditOnly"));
     JTextPane filename = new JTextPane();
     JLabel firstHelpLabel;
     //int firstTimeAddedEntry = 0x00;
@@ -122,16 +122,16 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     ProgModeSelector modePanel = new ProgServiceModeComboBox();
     JTextPane model = new JTextPane();
     JLabel operationsModeProgrammerLabel = new JLabel();
-    JRadioButton ops = new JRadioButton("Programming On Main");
+    JRadioButton ops = new JRadioButton(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ProgrammingOnMain"));
     ConnectionConfig opsModeProCon = null;
     JTextPane owner = new JTextPane();
     UserPreferencesManager p;
-    JButton prog1Button = new JButton("Program");
-    JButton prog2Button = new JButton("Basic Programmer");
+    JButton prog1Button = new JButton(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("Program"));
+    JButton prog2Button = new JButton(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("BasicProgrammer"));
     ActionListener programModeListener;
     ProgDebugger programmer = new ProgDebugger();
-    String programmer1 = "Comprehensive";
-    String programmer2 = "Basic";
+    String programmer1 = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("Comprehensive");
+    String programmer2 = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("Basic");
     ResourceBundle rb = ResourceBundle.getBundle("apps.gui3.dp3.DecoderPro3Bundle");
     final ResourceBundle rbroster = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
     //current selected loco
@@ -141,17 +141,17 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     JPanel rosterDetailPanel = new JPanel();
     PropertyChangeListener rosterEntryUpdateListener;
     JSplitPane rosterGroupSplitPane;
-    JButton rosterMedia = new JButton("Labels & Media");
+    JButton rosterMedia = new JButton(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("LabelsAndMedia"));
     RosterTable rtable;
     RosterEntry[] selectedRosterEntries = null;
     ConnectionConfig serModeProCon = null;
-    JRadioButton service = new JRadioButton("Programming Track");
+    JRadioButton service = new JRadioButton(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ProgrammingTrack"));
     JLabel serviceModeProgrammerLabel = new JLabel();
     JLabel statusField = new JLabel();
     Dimension summaryPaneDim = new Dimension(0, 170);
     protected ListSelectionListener tableSelectionListener;
-    JButton throttleLabels = new JButton("Throttle Labels");
-    JButton throttleLaunch = new JButton("Throttle");
+    JButton throttleLabels = new JButton(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ThrottleLabels"));
+    JButton throttleLaunch = new JButton(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("Throttle"));
 
     void additionsToToolBar() {
         //This value may return null if the DP3 window has been called from a the traditional JMRI menu frame
@@ -641,7 +641,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     protected void exportLoco() {
-        ExportRosterItem act = new ExportRosterItem("Export", this, re);
+        ExportRosterItem act = new ExportRosterItem(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("Export"), this, re);
         act.actionPerformed(null);
     }
 
