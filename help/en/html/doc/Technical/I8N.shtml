@@ -373,7 +373,7 @@ your code.  We provide a tool for doing this which creates
 and automatically translated version of your properties files,
 following the ideas of Harry Robinson and Arne Thormodsen.
 (Their
-<a href="http://www.geocities.com/harry_robinson_testing/klingon.htm">paper on this</a> is recommended reading!)
+<a href="http://www.oocities.org/harry_robinson_testing/klingon.htm">paper on this</a> is recommended reading!)
 To use it:
 <ul>
 <li>Make sure your code compiles and builds OK.  We'll be modifying the compiled version.
