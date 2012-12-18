@@ -25,6 +25,8 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         super();
         option1Name = "Gateway";
         options.put(option1Name, new Option("Gateway", new String[]{"Pass All", "Filtering"}));
+        option2Name = "Protocol";
+        options.put(option2Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions(), false));
         adaptermemo = new jmri.jmrix.can.CanSystemConnectionMemo();
         adaptermemo.setUserName("OpenLCB");
         setManufacturer(jmri.jmrix.DCCManufacturerList.OPENLCB);
@@ -45,7 +47,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         log.debug("Connecting port");
         tc.connectPort(this);
 
-        adaptermemo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
+        adaptermemo.setProtocol(getOptionState(option2Name));
 
         // do central protocol-specific configuration    
         adaptermemo.configureManagers();
