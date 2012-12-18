@@ -3,10 +3,11 @@ package jmri.managers.configurexml;
 import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.managers.DefaultSignalMastManager;
+import jmri.implementation.SignalMastRepeater;
 import jmri.configurexml.XmlAdapter;
 import java.util.List;
 
-import org.jdom.Element;
+import org.jdom.*;
 
 /**
  * Handle XML configuration for a DefaultSignalMastManager objects.
@@ -40,7 +41,7 @@ public class DefaultSignalMastManagerXml
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(p);
                     if (e!=null) element.addContent(e);
                 } catch (Exception e) {
-                    log.error("Error storing signalhead: "+e);
+                    log.error("Error storing signalmast: "+e);
                     e.printStackTrace();
                 }
                 
@@ -49,6 +50,25 @@ public class DefaultSignalMastManagerXml
                 e.addContent(new Element("systemName").addContent(p.getSystemName()));
                 storeCommon(p, e);
                 element.addContent(e);*/
+            }
+            List<SignalMastRepeater> repeaterList = m.getRepeaterList();
+            if(repeaterList.size()>0){
+                //Element repeatElem= new Element("signalmastrepeaters");
+                for(SignalMastRepeater smr:repeaterList){
+                    if(smr.getMasterMast()!=null && smr.getSlaveMast()!=null){
+                        Element e = new Element("signalmastrepeater");
+                        e.addContent(new Element("masterMast").addContent(smr.getMasterMastName()));
+                        e.addContent(new Element("slaveMast").addContent(smr.getSlaveMastName()));
+                        e.addContent(new Element("enabled").addContent(smr.getEnabled()?"true":"false"));
+                        switch (smr.getDirection()){
+                            case 1 : e.addContent(new Element("update").addContent("MasterToSlave")); break;
+                            case 2 : e.addContent(new Element("update").addContent("SlaveToMaster")); break;
+                            default : e.addContent(new Element("update").addContent("BothWay")); break;
+                        }
+                        element.addContent(e);
+                    }
+                }
+                //element.add(repeatElem);
             }
         }
         return element;
@@ -140,6 +160,31 @@ public class DefaultSignalMastManagerXml
                     ex.printStackTrace();
                 }
             }
+        }
+        
+        list = element.getChildren("signalmastrepeater");
+        if(list!=null){
+            DefaultSignalMastManager m = (DefaultSignalMastManager)InstanceManager.signalMastManagerInstance();
+            for (int i = 0; i < list.size(); i++) {
+                Element e = list.get(i);
+                String masterName = e.getChild("masterMast").getText();
+                String slaveName = e.getChild("slaveMast").getText();
+                SignalMastRepeater smr = new SignalMastRepeater(masterName, slaveName);
+                if(e.getChild("enabled")!=null && e.getChild("enabled").getText().equals("false"))
+                    smr.setEnabled(false);
+                if(e.getChild("update")!=null){
+                    if(e.getChild("update").getText().equals("MasterToSlave"))
+                        smr.setDirection(SignalMastRepeater.MASTERTOSLAVE);
+                    else if (e.getChild("update").getText().equals("SlaveToMaster"))
+                        smr.setDirection(SignalMastRepeater.SLAVETOMASTER);
+                }
+                try {
+                    m.addRepeater(smr);
+                } catch (jmri.JmriException ex){
+                    log.error("Unable to add mast repeater " + masterName + " : " + slaveName);
+                }
+            }
+            m.initialiseRepeaters();
         }
         return true;
     }

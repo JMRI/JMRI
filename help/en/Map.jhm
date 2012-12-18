@@ -2148,6 +2148,8 @@
 
 <mapID target="package.jmri.jmrit.ToolsMenu" url="package/jmri/jmrit/ToolsMenu.shtml"/>
 
+<mapID target="package.jmri.jmrit.beantable.SignalMastRepeater" url="package/jmri/jmrit/beantable/SignalMastRepeater.shtml"/>
+
 <mapID target="manual.DP3_2-14_manual.Programmer_Multi_Decoder" url="manual/DP3_2-14_manual/Programmer_Multi_Decoder.shtml"/>
 
 <mapID target="html.apps.DecoderPro.MultiDecoder" url="html/apps/DecoderPro/MultiDecoder.shtml"/>

@@ -4,6 +4,10 @@ package jmri.managers;
 
 import jmri.*;
 import jmri.managers.AbstractManager;
+import jmri.implementation.SignalMastRepeater;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Default implementation of a SignalMastManager.
@@ -70,8 +74,40 @@ public class DefaultSignalMastManager extends AbstractManager
         return (SignalMast)_tuser.get(key);
     }
     
-    //int lastAutoMastRef = 0;
-
+    ArrayList<SignalMastRepeater> repeaterList = new ArrayList<SignalMastRepeater>();
+    
+    public void addRepeater(SignalMastRepeater rp) throws jmri.JmriException{
+        for(SignalMastRepeater rpeat:repeaterList){
+            if(rpeat.getMasterMast()==rp.getMasterMast() &&
+                rpeat.getSlaveMast() == rp.getSlaveMast()){
+                    log.error("Signal repeater already Exists");
+                    throw new jmri.JmriException("Signal mast Repeater already exists");
+            }
+            else if(rpeat.getMasterMast()==rp.getSlaveMast() &&
+                rpeat.getSlaveMast() == rp.getMasterMast()){
+                    log.error("Signal repeater already Exists");
+                    throw new jmri.JmriException("Signal mast Repeater already exists");
+                }
+        }
+        repeaterList.add(rp);
+        firePropertyChange("repeaterlength", null, null);
+    }
+    
+    public void removeRepeater(SignalMastRepeater rp){
+        rp.dispose();
+        repeaterList.remove(rp);
+        firePropertyChange("repeaterlength", null, null);
+    }
+    
+    public List<SignalMastRepeater> getRepeaterList(){
+        return repeaterList;
+    }
+    
+    public void initialiseRepeaters(){
+        for(SignalMastRepeater smr:repeaterList){
+            smr.initialise();
+        }
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalMastManager.class.getName());
 }

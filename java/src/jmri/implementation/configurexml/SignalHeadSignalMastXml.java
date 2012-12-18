@@ -52,9 +52,13 @@ public class SignalHeadSignalMastXml
     public boolean load(Element element) {
         SignalMast m;
         String sys = getSystemName(element);
-        m = InstanceManager.signalMastManagerInstance()
+        try {
+            m = InstanceManager.signalMastManagerInstance()
                     .provideSignalMast(sys);
-        
+        } catch (Exception e){
+            log.error("An error occured while trying to create the signal '"+sys+"' " + e.toString());
+            return false;
+        }
         if (getUserName(element) != null)
             m.setUserName(getUserName(element));
         

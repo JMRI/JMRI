@@ -91,6 +91,20 @@ public class SignalMastTableAction extends AbstractTableAction {
         }
         addFrame.setVisible(true);
     }
+    
+    public void setMenuBar(BeanTableFrame f){
+        JMenuBar menuBar = f.getJMenuBar();
+        JMenu pathMenu = new JMenu(rb.getString("Tools"));
+        menuBar.add(pathMenu);
+        JMenuItem item = new JMenuItem(rb.getString("MenuItemRepeaters"));
+        pathMenu.add(item);
+        item.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                jmri.jmrit.beantable.signalmast.SignalMastRepeaterJFrame frame = new jmri.jmrit.beantable.signalmast.SignalMastRepeaterJFrame(); 
+                frame.setVisible(true);
+        	}
+        });
+    }
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalMastTableAction.class.getName());
 
