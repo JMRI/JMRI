@@ -473,7 +473,8 @@ public class TrainBuilder extends TrainCommon{
 				
 		blockCarsFromStaging(); // block cars from staging
 		
-		// now find destinations for cars 
+		// now find destinations for cars
+		addLine(buildReport, SEVEN, BLANK_LINE);	// add line when in very detailed report mode
 		addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildTrain"),new Object[]{requested, train.getName(), carList.size()}));
 		
 		if (Setup.isBuildAggressive() && !train.isBuildTrainNormalEnabled()){
@@ -1412,7 +1413,7 @@ public class TrainBuilder extends TrainCommon{
 				// Departing staging?
 				if (routeIndex == 0 && departStageTrack != null){
 					reqNumOfMoves = 0;	// Move cars out of staging after working other locations
-					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildDepartStagingAggressive"),new Object[]{}));
+					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildDepartStagingAggressive"),new Object[]{departStageTrack.getLocation().getName()}));
 				}
 			}
 			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildLocReqMoves"),new Object[]{rl.getName(), reqNumOfMoves, saveReqMoves, rl.getMaxCarMoves()}));
@@ -2930,22 +2931,24 @@ public class TrainBuilder extends TrainCommon{
 	 * @return true if a load was generated this this car.
 	 */
 	private boolean generateLoadCarDepartingAndTerminatingIntoStaging(Car car, Track stageTrack){
-		if (stageTrack == null)
+		if (stageTrack == null || !stageTrack.getLocType().equals(Track.STAGING))
 			return false;
-		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchTrackLoadStaging"),
-				new Object[]{car.toString(), car.getType(), car.getLoad(), car.getTrackName(), stageTrack.getLocation().getName(), stageTrack.getName()}));
 		// figure out which loads the car can use
 		List<String> loads = CarLoads.instance().getNames(car.getType());
 		// remove the default names
 		loads.remove(CarLoads.instance().getDefaultEmptyName());
 		loads.remove(CarLoads.instance().getDefaultLoadName());
+		if (loads.size() == 0)
+			return false;	
+		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchTrackLoadStaging"),
+				new Object[]{car.toString(), car.getType(), car.getLoad(), car.getTrackName(), stageTrack.getLocation().getName(), stageTrack.getName()}));
 		for (int i=loads.size()-1; i>=0; i--){
 			String load = loads.get(i);
 			if (!stageTrack.acceptsLoad(load, car.getType()) || !train.acceptsLoad(load, car.getType()))
 			loads.remove(i);
 		}
 		// Use random loads rather that the first one that works to create interesting loads
-		if (loads.size()>0){
+		if (loads.size() > 0){
 			String oldLoad = car.getLoad();	// in case creating a new load still doesn't allow the car to be placed into staging
 			int rnd = (int)(Math.random()*loads.size());
 			car.setLoad(loads.get(rnd));
@@ -2962,7 +2965,7 @@ public class TrainBuilder extends TrainCommon{
 			car.setLoad(oldLoad);	// restore load and report failure
 			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), stageTrack.getName(), status}));
 		}
-		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildUnableNewLoad"), new Object[]{car.toString()}));
+		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildUnableNewLoadStaging"), new Object[]{car.toString(), car.getTrackName(), stageTrack.getLocation().getName(), stageTrack.getName()}));
 		return false;
 	}
 	
