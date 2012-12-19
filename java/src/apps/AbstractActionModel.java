@@ -79,11 +79,13 @@ public abstract class AbstractActionModel{
         while (e.hasMoreElements()) {
             Class<?> classes;
             String key = e.nextElement();
-            try {
-                classes = Class.forName(key);
-                classList.put(classes, rb.getString(key));
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class "+key);
+            if (!key.equals("")) { // ignoring empty lines in file
+                try {
+                    classes = Class.forName(key);
+                    classList.put(classes, rb.getString(key));
+                } catch (ClassNotFoundException ex) {
+                    log.error("Did not find class ["+key+"]");
+                }
             }
         }
     }
