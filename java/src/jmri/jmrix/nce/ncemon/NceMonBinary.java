@@ -297,6 +297,12 @@ public class NceMonBinary {
 						new Object[] {getAddress(m)});
 			break;
 		}
+		case (NceBinaryCommand.READ_AUI2_CMD):{
+			if (m.getNumDataElements() == 2)
+				return MessageFormat.format(rb.getString("READ_AUI2_CMD"),
+						new Object[] {m.getElement(1)});
+			break;
+		}
 		case (NceBinaryCommand.READ1_CMD):{
 			if (m.getNumDataElements() == 3)
 				return MessageFormat.format(rb.getString("READ1_CMD"),

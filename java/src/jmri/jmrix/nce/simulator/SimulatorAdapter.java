@@ -332,6 +332,10 @@ public class SimulatorAdapter extends NcePortController implements
 		case NceBinaryCommand.READ16_CMD:		// Read 16 bytes
 			readMemory(m, reply, 16);
 			break;
+		case NceBinaryCommand.READ_AUI2_CMD:	// Read AUI 2 byte response
+			reply.setElement(0, 0x00);			// fixed data for now
+			reply.setElement(1, 0x00);			// fixed data for now
+			break;
 		case NceBinaryCommand.READ1_CMD:		// Read 1 bytes
 			readMemory(m, reply, 1);
 			break;

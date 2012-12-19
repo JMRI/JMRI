@@ -86,9 +86,9 @@ public class NceBinaryCommand {
     public static final int CLOCK_1224_CMD = 0x86;	//NCE change clock 12/24 command
     public static final int CLOCK_RATIO_CMD = 0x87;	//NCE set clock ratio command
 
-    // NOTE: NCE USB does not support AUI commands
+    // NOTE: NCE USB does not support the following AUI command
+    public static final int READ_AUI4_CMD = 0x8A;	//NCE read status of AUI yy, returns four bytes
     
-    public static final int READ_AUI4_CMD = 0x8A;	//NCE read status of AUI yy
     public static final int DUMMY_CMD = 0x8C;		//NCE Dummy instruction
     
     // NOTE: NCE USB does not support any read or write memory commands
@@ -101,6 +101,7 @@ public class NceBinaryCommand {
     public static final int WRITE8_CMD = 0x9A;		//NCE write 8 bytes of memory command
     public static final int READ1_CMD = 0x9D;		//NCE read 1 byte of memory command
     
+    public static final int READ_AUI2_CMD = 0x9B;	//NCE read status of AUI yy, returns two bytes
     public static final int MACRO_CMD = 0x9C;		//NCE execute macro n
 
     public static final int ACC_CMD = 0xAD;			//NCE accessory command
