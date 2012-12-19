@@ -47,7 +47,7 @@ ordinateur particulier et la version du système d'exploitation. La question imp
 voici le "pilote" de l'ordinateur doit communiquer avec le matériel
 adaptateur, certains fabricants de cartes ne fournissent que des pilotes Windows, qui
 rend leurs produits inutiles à un Macintosh ou Linux. A noter également
-que les pilotes pour MacOS 8/9 et MacOS X pilotes sont différents, et ne peuvent être
+que les pilotes pour MacOS 8/9 et Mac OS X pilotes sont différents, et ne peuvent être
 interchangés.
 </P>
 <P>De nombreux systèmes DCC ne nécessitent pas beaucoup  leurs ports série,
@@ -65,7 +65,7 @@ câbles de commande.
 <P>Les adaptateurs 19HS Keyspan sont connus pour fonctionner avec le MS100. Nous avons un
 rapports de succès obtenu par des utilisateurs à partir de Windows 98, Windows XP et Mac OS 9.
 
-(Notez que le MS100 ne fonctionne pas avec MacOS X ou plusieurs ordinateurs Windows Vista;
+(Notez que le MS100 ne fonctionne pas avec Mac OS X ou plusieurs ordinateurs Windows Vista;
 ce n'est pas une question adaptateur USB) Vous devrez obtenir un câble spécial pour brancher le connecteur 9-pin
  de l'adaptateur Keyspan au connecteur à 25 broches sur le MS100. </P>
 <P> Notez que l'aide d'un LocoBuffer est fortement recommandé au lieu d'
@@ -91,7 +91,7 @@ Pour un fonctionnement fiable, les interfaces série LocoBuffer exigent que
 le contrôle RS232 permette de fournir le contrôle de flux.
 <p>Les adaptateurs Keyspan sont également connus pour travailler avec les LocoBuffer.
 Nous avons reçu des rapports de succès à partir de Windows 98, Windows ME, Windows XP
-et utilisateurs de MacOS X. Vous devrez obtenir un câble spécial pour relier
+et utilisateurs de Mac OS X. Vous devrez obtenir un câble spécial pour relier
 le connecteur à 9 broches sur l'adaptateur Keyspan au connecteur à 25 broches sur
 le LocoBuffer original; les modèles plus récents ont un connecteur série à 9 broches </P>.
 <P> Nous avons également eu un rapport que l'adaptateur "iConcepts"  acheté

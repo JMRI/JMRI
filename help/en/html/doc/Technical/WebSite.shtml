@@ -122,18 +122,18 @@ As part of the migration, a number of directories remain that contain
 only redirects and/or obsolete files:
 <ul>
 </ul>
-<H2>Local Web Site: MacOS X</H2>
+<H2>Local Web Site: Mac OS X</H2>
 
 If you want to host a copy of the JMRI web site on your local
-MacOS X machine, follow these instructions to first configure
+Mac OS X machine, follow these instructions to first configure
 the Apache server to do server-side includes, and then make
 a copy of the web site files available to the server.
 
 <OL>
 <LI>You need to edit the Apache web server's configuration file. 
 <ul>
-<li>On MacOS X 10.4 (Tiger), this is the /etc/httpd/httpd.conf file
-<li>On MacOS X 10.5 (Leopard) and later, this is the /etc/apache2/httpd.conf file
+<li>On Mac OS X 10.4 (Tiger), this is the /etc/httpd/httpd.conf file
+<li>On Mac OS X 10.5 (Leopard) and later, this is the /etc/apache2/httpd.conf file
 </UL>
 Once you've located the file, open it with your favorite
 editor (You'll need to authenticate with the administrator password to 

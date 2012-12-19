@@ -233,7 +233,7 @@ page technique pour le fond sur la façon d'utiliser CVS si vous n'êtes pas
 familiariser avec lui. Les étapes sont:
 <ol>
 <LI> Créer un répertoire nommé "classes" dans le même répertoire
-que votre fichier «jmri.jar" . Par exemple, sur MacOS X ou Linux:
+que votre fichier «jmri.jar" . Par exemple, sur Mac OS X ou Linux:
 <PRE>
 mkdir classes 
 </ PRE>

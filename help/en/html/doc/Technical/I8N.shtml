@@ -238,7 +238,7 @@ technical page for background on how to use CVS if you're not
 familiar with it.  The steps are:
 <ol>
 <LI>Create a directory named "classes" in the same directory
-as your "jmri.jar" file.  E.g. on MacOS X or linux:
+as your "jmri.jar" file.  E.g. on Mac OS X or linux:
 <PRE>
 	mkdir classes
 </PRE>

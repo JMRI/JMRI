@@ -47,7 +47,7 @@ sur les sujets DCC de Joe Fugate
 
 <H2>De Quoi Avez vous Besoin pour Utiliser DecoderPro</H2>
 
-<p>Le logiciel DecoderPro fonctionne sur Windows, Linux, Macintosh (OS 8.6 à 9.2 et MacOS X), et OS/2. Il pourra sans doute aussi travailler avec la plupart des autres systèmes d'exploitation modernes qui disposent de Java; nous contacter pour vous aider si vous souhaitez l'essayer sur un autre système. Vous avez besoin d'un port série disponible, soit sur l'ordinateur lui-même, ou via un <A HREF="../../hardware/USBtoSerial.shtml">adaptateur USB</a>. Pour plus d'informations sur la façon de l'utiliser, ou consultez les
+<p>Le logiciel DecoderPro fonctionne sur Windows, Linux, Macintosh (OS 8.6 à 9.2 et Mac OS X), et OS/2. Il pourra sans doute aussi travailler avec la plupart des autres systèmes d'exploitation modernes qui disposent de Java; nous contacter pour vous aider si vous souhaitez l'essayer sur un autre système. Vous avez besoin d'un port série disponible, soit sur l'ordinateur lui-même, ou via un <A HREF="../../hardware/USBtoSerial.shtml">adaptateur USB</a>. Pour plus d'informations sur la façon de l'utiliser, ou consultez les
 <A HREF="http://jmri.sourceforge.net/download/index.html">pages de téléchargement</a>.</p>
 
 <p>Vous devez également disposer d'une connexion série à votre système DCC.

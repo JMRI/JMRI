@@ -220,7 +220,7 @@ the test Java file in the "test/" file tree.
 </pre></code>
 
 <p>
-For a quick file check, Linux and MacOS X users can validate from the
+For a quick file check, Linux and Mac OS X users can validate from the
 command line with e.g. 
 <code><pre>
  cd xml

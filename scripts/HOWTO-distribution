@@ -152,7 +152,7 @@ For local builds, these are the build instructions; CI builds will already be ru
 ( ) ant -Dnsis.home="" packages
 
     Ant will do the various builds, construct the distribution
-    directories, and finally construct the Linux, MacOS X and Windows
+    directories, and finally construct the Linux, Mac OS X and Windows
     distribution files in dist/releases/
 
 ( ) Put the Linux, Mac OS X and Windows files where developers can

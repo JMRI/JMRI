@@ -48,7 +48,7 @@ DecoderPro et al are run via a java command which sets the CLASSPATH and
 various options.  How that's actually done varies with the platform:  csh
 scripts on Unix, a 
 <a href="StartUpScripts.shtml#windows">launcher application</a>
-on Windows, application bundles on MacOS X, etc.
+on Windows, application bundles on Mac OS X, etc.
 <P>
 To make it easy to add plug-ins, these include all .jar files in the 
 application directory, and in its "lib/" subdirectory, in the CLASSPATH.

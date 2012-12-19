@@ -447,14 +447,14 @@ quel que soit le système que vous avez.
        
       <li><b>Cette option a été supprimée à partir de la version 2.9.5 </b>
      Vérifier l'état du tampon lors de l'envoi? Par défaut  «oui» sur 
-     Windows et Linux, et "non" sur MacOS 8 / 9 et MacOS X.
+     Windows et Linux, et "non" sur MacOS 8 / 9 et Mac OS X.
      Sauf lorsque de débogage des problèmes, vous devriez laisser cela à la valeur par défaut.
 
      <li> La série des boutons radio étiquetés «style graphique" vous permet de
     lectionnez l'aspect sous lequel le programme va s'afficher. "Metal" est l'apparence native de Java
      disponible sur tous les types. D'autres choix peuvent varier avec votre type d'ordinateur
      . "Motif", "Windows", "MacOS" et "MacOS Adaptive" apparence native
-     sur Linux, Windows, MacOS "Classic" et MacOS X, respectivement.
+     sur Linux, Windows, MacOS "Classic" et Mac OS X, respectivement.
 
      <li> Dans le bas de la boîte de sélections, vous pouvez choisir l'option par défaut du
      format de programmateur. Vous pouvez le remplacer à chaque fois que vous ouvrez le
@@ -520,14 +520,14 @@ quel que soit le système que vous avez.
      <li> 
 <b> Cette option a été supprimée à partir de la version 2.9.5 </b>
      Vérifier l'état du tampon lors de l'envoi? Par défaut à «oui» sur le
-     Windows et Linux, et "non" sur MacOS 8 / 9 et MacOS X.
+     Windows et Linux, et "non" sur MacOS 8 / 9 et Mac OS X.
      Sauf lors de débogage des problèmes, vous devriez laisser cela à la valeur par défaut.
 
      <li> La série de boutons radio étiquetés «style graphique" vous permet de
      Sélectionnez l'apparence d'affichage du programme . "Metal" est l'apparence native de Java
      disponible sur tous les types. D'autres choix peuvent varier avec votre type ordinateur
      . "Motif", "Windows", "MacOS" et "MacOS Adaptive" apparence native
-     sur Linux, Windows, MacOS "Classic" et MacOS X, respectivement.
+     sur Linux, Windows, MacOS "Classic" et Mac OS X, respectivement.
 
      
      <li> Dans la boîte de sélection en bas, vous pouvez choisir l'option par défaut
@@ -576,7 +576,7 @@ et le LI-Server doit être exécuté. </b>
      Sélectionnez l'apparence d'affichage du programme . "Metal" est l'apparence native de Java
      disponible sur tous les types d'ordinateurs. D'autres choix peuvent varier avec votre type ordinateur
      . "Motif", "Windows", "MacOS" et "MacOS Adaptive" apparence native
-     sur Linux, Windows, MacOS "Classic" et MacOS X, respectivement.
+     sur Linux, Windows, MacOS "Classic" et Mac OS X, respectivement.
 
      <li> Dans la boîte de sélection en bas, vous pouvez choisir l'option par défaut
      du format de programmateur. Vous pouvez le remplacer à chaque fois que vous ouvrez le
@@ -606,7 +606,7 @@ REMARQUE <b>: La première version supportant la connexion JMRI Lenz Server 2.5.
      . "Metal" est l'apparence native de Java
      disponible sur tous les types. D'autres choix peuvent varier avec votre type ordinateur
      . "Motif", "Windows", "MacOS" et "MacOS Adaptive" apparence native
-     sur Linux, Windows, MacOS "Classic" et MacOS X, respectivement .
+     sur Linux, Windows, MacOS "Classic" et Mac OS X, respectivement .
 
      <li>  Dans la boîte de sélection en bas, vous pouvez choisir l'option par défaut
      du format de programmateur. Vous pouvez le remplacer à chaque fois que vous ouvrez le
@@ -665,14 +665,14 @@ REMARQUE <b>: La première version supportant la connexion JMRI Lenz Server 2.5.
 
       <li><b>Cette option a été supprimée à partir de la version 2.9.5 </b>
      Vérifier l'état du tampon lors de l'envoi? Par défaut à «oui» sur 
-     Windows et Linux, et "non" sur MacOS 8/9 et MacOS X.
+     Windows et Linux, et "non" sur MacOS 8/9 et Mac OS X.
      Sauf lors de débogage des problèmes, vous devriez laisser cela à la valeur par défaut.
 
      <li>La série de boutons radio étiquetés «style graphique" vous permet de
      Sélectionnez l'apparence d'affichage du programmes. "Metal" est l'apparence native de Java
      disponible sur tous les types. D'autres choix peuvent varier avec votre type ordinateur
      . "Motif", "Windows", "MacOS" et "MacOS Adaptive" apparence native
-     sur Linux, Windows, MacOS "Classic" et MacOS X, respectivement .
+     sur Linux, Windows, MacOS "Classic" et Mac OS X, respectivement .
 
 <li>Dans la boîte de sélection en bas, vous pouvez choisir l'option par défaut
      du format de programmateur. Vous pouvez le remplacer à chaque fois que vous ouvrez le
@@ -721,14 +721,14 @@ REMARQUE <b>: La première version supportant la connexion JMRI Lenz Server 2.5.
   
     <li><b>Cette option a été supprimée à partir de la version 2.9.5</b>
      Vérifier l'état du tampon lors de l'envoi? Par défaut à «oui» sur le
-     Windows et Linux, et "non" sur MacOS 8/9 et MacOS X.
+     Windows et Linux, et "non" sur MacOS 8/9 et Mac OS X.
      Sauf lors de débogage des problèmes, vous devriez laisser cela à la valeur par défaut.
 
      <li>La série de boutons radio étiquetés «style graphique" vous permet de
      Sélectionnez l'apparence d'affichage du programmes. "Metal" est l'apparence native de Java
      disponible sur tous les types. D'autres choix peuvent varier avec votre type ordinateur
      . "Motif", "Windows", "MacOS" et "MacOS Adaptive" apparence native
-     sur Linux, Windows, MacOS "Classic" et MacOS X, respectivement.
+     sur Linux, Windows, MacOS "Classic" et Mac OS X, respectivement.
 
     <li>Dans la boîte de sélection en bas, vous pouvez choisir l'option par défaut
      du format de programmateur. Vous pouvez le remplacer à chaque fois que vous ouvrez le
@@ -796,7 +796,7 @@ téléphone à l'XPA.
      Sélectionnez l'apparence d'affichage du programmes. "Metal" est l'apparence native de Java
      disponible sur tous les types. D'autres choix peuvent varier avec votre type ordinateur
      . "Motif", "Windows", "MacOS" et "MacOS Adaptive" apparence native
-     sustationr Linux, Windows, MacOS "Classic" et MacOS X, respectivement.
+     sustationr Linux, Windows, MacOS "Classic" et Mac OS X, respectivement.
 
     <li>Dans la boîte de sélection en bas, vous pouvez choisir l'option par défaut
      du format de programmateur. Vous pouvez le remplacer à chaque fois que vous ouvrez le

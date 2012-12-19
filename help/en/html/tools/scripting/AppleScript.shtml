@@ -26,7 +26,7 @@ JMRI: AppleScript
 
 On Mac OS X, you can use AppleScript to with JMRI.  There are two ways to do this:
 <ul>
-<li>A JMRI script can use AppleScript to ask MacOS X to do things.
+<li>A JMRI script can use AppleScript to ask Mac OS X to do things.
 <li>AppleScripts running outside of JMRI can ask a JMRI application to do things.
 </ul>
 

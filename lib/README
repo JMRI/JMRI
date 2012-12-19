@@ -13,7 +13,7 @@ in separate subdirectories under windows/, and let the installer sort them out.
 
 A similar mechanism is used for Linux under the linux/ directory.
 
-MacOS X fat binaries are treated slightly differently, see the README file there.
+Mac OS X fat binaries are treated slightly differently, see the README file there.
 
 Specific components:
 
@@ -53,9 +53,9 @@ RXTXcomm.jar, librxtxSerial.jnilib
   From Rxtx-2.2pre2  http://rxtx.qbang.org (http://rxtx.qbang.org/pub/rxtx/rxtx-2.2pre2-bins.zip)
   The win32 and win64 directories contain the necessary rxtxSerial.dll for the two windows varients
   The i686-pc-linux-gnu directory contains two .so libraries for 32-bit Linux
-  For MacOS X:
+  For Mac OS X:
     macosx/librxtxSerial.jnilib     169488  from rxtx-2.2pre2-bins distribution
-    macosx/ppc/librxtxSerial.jnilib 301908  built for MacOS X 10.4 by John Plocher 2010-02-04
+    macosx/ppc/librxtxSerial.jnilib 301908  built for Mac OS X 10.4 by John Plocher 2010-02-04
   
 security.policy
  (JMRI file)
@@ -106,7 +106,7 @@ libusb-jar (ch.ntb.usb.jar)
         libusb installers from "TWAIN SANE" http://www.ellert.se/twain-sane/
         
   version 0.5.7
-  libusbJava.jnilib for MacOS X
+  libusbJava.jnilib for Mac OS X
   LibusbJava.dll for Windows is 0.2.3.0 (Feb 18, 2008)
   libusbJava.so for Linux was built on Ubuntu 7.10 w libusb 2:0.1.12-7
   
@@ -125,7 +125,7 @@ Joal 1.1.2
       gluegen-rt.jar
 
   plus helper native libraries:
-  for MacOS X 10.4+
+  for Mac OS X 10.4+
     from joal-1.1.2-macosx-universal.zip download
       libjoal_native.jnilib
       libgluegen-rt.jnilib

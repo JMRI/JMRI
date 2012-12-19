@@ -657,7 +657,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
         
     
-    // For marking the window as modified on MacOS X
+    // For marking the window as modified on Mac OS X
     // See: http://developer.apple.com/qa/qa2001/qa1146.html
     final static String WINDOW_MODIFIED = "windowModified";
     public void markWindowModified(boolean yes){

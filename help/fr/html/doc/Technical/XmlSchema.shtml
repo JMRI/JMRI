@@ -216,7 +216,7 @@ le fichier de test Java dans l'arborescence de fichier «test/"
 </pre></code>
 
 <p>
-Pour une vérification rapide de fichiers, Linux et MacOS X peuvent valider à partir de la ligne de commande avec par exemple 
+Pour une vérification rapide de fichiers, Linux et Mac OS X peuvent valider à partir de la ligne de commande avec par exemple 
 <code><pre>
  cd xml
  xmllint -schema schema/aspecttable.xsd -noout signals/sample-aspects.xml

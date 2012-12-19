@@ -30,7 +30,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
 	/** 
 	 * Provide this adapter name, if it's available on this system.
-	 * @return null if this is a MacOS X system that can't run MS100
+	 * @return null if this is a Mac OS X system that can't run MS100
 	 */
     public String name() {
     	if (SystemType.isMacOSX()

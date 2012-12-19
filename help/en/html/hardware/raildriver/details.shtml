@@ -52,7 +52,7 @@ to their desires while we sort out what's generally needed.
 <h2>Structure</h2>
 
 Because jinput and the RailDriver provide different component names
-on Windows, MacOS X and Linux, the script is organized around 
+on Windows, Mac OS X and Linux, the script is organized around 
 the number (index) of the component, not it's name.  All three platforms
 provide the components in the same order.
 

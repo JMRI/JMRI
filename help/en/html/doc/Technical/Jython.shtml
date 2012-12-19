@@ -132,8 +132,8 @@ connection is working for the menu-based tools before trying to use Jython.
 <LI>Download and install Jython from
 <A HREF="http://www.jython.org">http://www.jython.org</a>.  
 Development is using the 2.1 version, so you
-might want to start with that.  On MacOS X, the installer does not run, so you
-have to manually invoke the jython_21.class file; see the MacOS X note
+might want to start with that.  On Mac OS X, the installer does not run, so you
+have to manually invoke the jython_21.class file; see the Mac OS X note
 on the jython web site.  Make sure the installation is complete
 by invoking jython from the command line:
 <PRE>
@@ -167,7 +167,7 @@ used when jython starts up.  The required list in Unix syntax is:
 </PRE>
 <BR/>
 To save typing, the "jmrithon" script is available for use on Linux
-and MacOS X systems:
+and Mac OS X systems:
 <PRE>
   % ./jmrithon
   Jython 2.1 on java1.4.1_01 (JIT: null)

@@ -464,7 +464,7 @@ public abstract class XmlFile {
      * <DT>Linux<DD>{user.home}/.jmri/
      * <DT>Windows<DD>{user.home}\JMRI
      * <DT>MacOS "Classic"<DD>{user.home}:JMRI
-     * <DT>MacOS X<DD>{user.home}/Library/Preferences/JMRI
+     * <DT>Mac OS X<DD>{user.home}/Library/Preferences/JMRI
      * <DT>Other<DD> In the JMRI folder/directory in the folder/directory
      *                  referenced by {user.home}
      * </DL>

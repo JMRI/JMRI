@@ -88,7 +88,7 @@ LocoBuffer are no longer commercially available; their primary advantage now is
 that they use a traditional serial port, which may be the only suitable connection 
 type available on some older computers.</p>
 <p>The MS100 is not recommended; it sometimes fails to provide reliable 
-    communications, and it cannot be used with JMRI if you are using MacOS X or 
+    communications, and it cannot be used with JMRI if you are using Mac OS X or 
     on most Windows Vista machines. If you have problems with the MS100, 
     you might not be able to fix them, and nobody may be able to help you.</p>
 
@@ -156,7 +156,7 @@ or Zephyr command station. </p>
     the program will look. "Metal" is the native Java look available on all
     types. Other choices will vary with your computer type. "Motif", "Windows",
     "MacOS" and "MacOS Adaptive" look native on Linux, Windows, MacOS "Classic"
-    and MacOS X respectively. </li>
+    and Mac OS X respectively. </li>
   <li>In the bottom selection box, you can pick the default programmer format.
     You can override this each time you open the programmer, so this is here
     just for convenience. If you are the primary user of this system we suggest
@@ -218,8 +218,8 @@ A LocoBuffer should be connected to the LocoNet&reg;-T connection. </p>
 program decoders via a PR1 programmer. JMRI supports decoder programming either
 via the PR3 as a stand-alone programmer or via a command station.</p>
 
-<p><b>MacOS X and the MS100</b> - Because MacOS X can't communicate at the
-special baud rate used by the MS100, the MS100 won't work with MacOS X. You
+<p><b>Mac OS X and the MS100</b> - Because Mac OS X can't communicate at the
+special baud rate used by the MS100, the MS100 won't work with Mac OS X. You
 should get a LocoBuffer-USB instead. </p>
 
 <p><b>Microsoft Vista and the MS100</b> - It has been reported that Vista does

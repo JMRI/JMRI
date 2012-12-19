@@ -87,7 +87,7 @@ on their front panel.
 	select how the program will look. "Metal" is the native Java look
 	available on all types. Other choices will vary with your computer
 	type. "CDE/Motif", "Windows", and "Mac OS X" look native on
-	Linux, Windows, and MacOS X respectively.</LI>
+	Linux, Windows, and Mac OS X respectively.</LI>
 	<LI>In the bottom selection box, you can pick the default
 	programmer format. You can override this each time you open the
 	programmer, so this is here just for convenience.</LI>
@@ -218,7 +218,7 @@ on the use of serial-network adapters, also known as terminal servers)</p>
 	select how the program will look. "Metal" is the native Java look
 	available on all types. Other choices will vary with your computer
 	type. "CDE/Motif", "Windows", and "Mac OS X" look native on
-	Linux, Windows, and MacOS X respectively.</LI>
+	Linux, Windows, and Mac OS X respectively.</LI>
 	<LI>In the bottom selection box, you can pick the default
 	programmer format. You can override this each time you open the
 	programmer, so this is here just for convenience.</LI>
@@ -275,7 +275,7 @@ system from the preference menu for reliable operation.</P>
 	in the NCE USB Interface. 
 	    <UL>
 	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/CP210x_VCP_Win2K_XP_S2K3.zip">Windows driver</a></LI>
-	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/Mac_OSX_VCP_Driver.zip">MacOS X driver</a></LI>
+	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/Mac_OSX_VCP_Driver.zip">Mac OS X driver</a></LI>
 	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/cp210x-3.0.0.tar.gz">Linux driver</a></LI>
         <LI>
         If one of the above links doesn't work, you can
@@ -305,7 +305,7 @@ system from the preference menu for reliable operation.</P>
 	select how the program will look. "Metal" is the native Java look
 	available on all types. Other choices will vary with your computer
 	type. "CDE/Motif", "Windows", and "Mac OS X" look native on
-	Linux, Windows, and MacOS X respectively.</LI>
+	Linux, Windows, and Mac OS X respectively.</LI>
 	<LI>In the bottom selection box, you can pick the default
 	programmer format. You can override this each time you open the
 	programmer, so this is here just for convenience.</LI>

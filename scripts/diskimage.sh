@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Create the JMRI MacOS X disk image
+# Create the JMRI Mac OS X disk image
 #   This is structured to use the Mac OS X tools when run on a Mac, and native Linux tools when run on a Linux box.
 #
 #   The contents of the image are the same either way, and the tools are similar in capability, so we do it this way

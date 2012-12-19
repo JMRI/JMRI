@@ -77,7 +77,7 @@ pour régler le débit en bauds à 9600, et appuyez sur PROG/ESC pour sortir. </
 sélectionnez la façon dont le programme va s'afficher. "Metal" est l'apparence native de Java
 disponible sur tous les types. D'autres choix peuvent varier avec votre ordinateur
 type. «CDE/Motif", "Windows" et "Mac OS X" apparence native sur
-Linux, Windows et MacOS X, respectivement. </LI>
+Linux, Windows et Mac OS X, respectivement. </LI>
 <LI> Dans la boîte de sélection en bas, vous pouvez choisir l'option par défaut
 du format du programmateur. Vous pouvez remplacer ceci à chaque fois que vous ouvrez le
 programmateur, ce n'est donc juste ici que pour la commodité. </LI>
@@ -204,7 +204,7 @@ ou de numéros d'adresse Internet pour votre adaptateur série-réseau.
 Sélectionnez la façon dont le programme va apparaitre. "Metal" est l'apparence native de Java
 disponible sur tous les types. D'autres choix peuvent varier avec votre ordinateur
 type. «CDE/Motif", "Windows" et "Mac OS X" apparence native sur
-Linux, Windows et MacOS X, respectivement. </LI>
+Linux, Windows et Mac OS X, respectivement. </LI>
 <LI> Dans la boîte de sélection en bas, vous pouvez choisir l'option par défaut
 du format de programmateur. Vous pouvez remplacer celui-ci à chaque fois que vous ouvrez le
 programmateur, ce n'est donc ici que par commodité. </LI>
@@ -249,7 +249,7 @@ branchez le câble USB dans l'ordinateur.
 dans l'adaptateur USB NCE.
 <UL>
 <li> <a Href="https://www.silabs.com/Support%20Documents/Software/CP210x_VCP_Win2K_XP_S2K3.zip"> pilote Windows </a>
-<LI> <a Href="https://www.silabs.com/Support%20Documents/Software/Mac_OSX_VCP_Driver.zip"> pilote MacOS X </a>
+<LI> <a Href="https://www.silabs.com/Support%20Documents/Software/Mac_OSX_VCP_Driver.zip"> pilote Mac OS X </a>
 <li> <a Href="https://www.silabs.com/Support%20Documents/Software/cp210x-3.0.0.tar.gz"> pilote Linux </a><LI>        
 <LI>
        Si l'un des liens ci-dessus ne fonctionne pas, vous pouvez
@@ -278,7 +278,7 @@ en supprimant le cavalier n°1. Installation du cavalier n°1 fixe le taux de tr
 sélectionnez la façon dont le programme sera affiché. "Metal" est l'apparence native de Java
 disponible sur tous les types. D'autres choix peuvent varier avec votre ordinateur
 type. «CDE/Motif", "Windows" et "Mac OS X" apparence native sur
-Linux, Windows et MacOS X, respectivement. </LI>
+Linux, Windows et Mac OS X, respectivement. </LI>
 <LI> Dans la boîte de sélection en bas, vous pouvez choisir l'option par défaut
 du format du programmateur. Vous pouvez remplacer celui-ci à chaque fois que vous ouvrez le
 programmateur, ce n'est donc ici que par commodité. </LI>

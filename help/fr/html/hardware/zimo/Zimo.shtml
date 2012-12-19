@@ -63,7 +63,7 @@ MX-1. </li>
 <li> La série de boutons radio étiquetés «style gui» vous permet
 de sélectionner la façon dont le programme va s'afficher. «métal» est le mode natif Java. Voir pour d'autres choix possibles
  en fonction de votre type d'ordinateur. «motif», «fenêtres», «MacOS» et «MacOS adaptative»
-apparence native sous Linux, Windows, MacOS "classique" et MacOS X
+apparence native sous Linux, Windows, MacOS "classique" et Mac OS X
 respectivement. </li>
 
 <li> dans la case de sélection en bas, vous pouvez choisir l'option par défaut du 

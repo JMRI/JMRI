@@ -35,7 +35,7 @@ This page provides information on the tools provided with
 JMRI distributions on:
 <ul>
 <li><a href="#linux">Linux</a>
-<li><a href="#macosx">MacOS X</a>
+<li><a href="#macosx">Mac OS X</a>
 <li><a href="#windows">Windows</a>
 </ul>
 
@@ -142,13 +142,13 @@ to be comma-separated list of the names.
 </dl>
 
 <a name="macosx">
-<h2>MacOS X</h2></a>
-JMRI distributions for MacOS X contain application bundles
+<h2>Mac OS X</h2></a>
+JMRI distributions for Mac OS X contain application bundles
 for each of the main applications:  DecoderPro, PanelPro, etc.
 These provide familiar application icons for the user.
 
 <p>
-To register the bundles with MacOS X, they need to be copied
+To register the bundles with Mac OS X, they need to be copied
 from the distributed disk image onto the user's disk drive.
 
 <h3>Bundle Details</h3>
@@ -221,7 +221,7 @@ copying and renaming an application.
 <dd>
 The program sets a number of options for the JVM.  This includes
 the necessary program settings, setting memory limits, various
-symbols to control operation, and some options specific to MacOS X.
+symbols to control operation, and some options specific to Mac OS X.
 
 <dt>Java command
 <dd>Finally, the script puts all this together into a java command, which it executes.

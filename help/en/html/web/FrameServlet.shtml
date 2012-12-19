@@ -32,7 +32,7 @@ It uses the facilities of the jmri.util.JmriJFrame class
 to locate windows and create an image of their current appearance.
 The window does not have to be maximized, but it does have to be open;
 it's OK for the window to have been minimized to the Start Bar (Windows)
-or converted to an icon (MacOS X and Linux).
+or converted to an icon (Mac OS X and Linux).
 
 <p>
 The <a href="index.shtml#Configure">Web Server Preferences</a> can be used to adjust the default delay after

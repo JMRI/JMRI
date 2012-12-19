@@ -1,8 +1,8 @@
 
-This directory holds the MacOS X "application bundles" for JMRI.
+This directory holds the Mac OS X "application bundles" for JMRI.
 
 An application bundle is a directory in the Unix sense, though
-MacOS X displays it as a single icon.
+Mac OS X displays it as a single icon.
 
 Because CVS doesn't version directories very well, and because
 the directory structure (e.g. empty ones) may be significant in

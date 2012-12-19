@@ -27,7 +27,7 @@
 <dt class=left>Pendant que le programme s'exécute</dt>
 <dd class=first>
 <p>Pendant que le programme s'exécute,
-l'information de débogage est imprimée sur une "sortie standard", qui est à différent endroits suivant le système d'exploitation que vous utilisez et comment vous démarrez le programme. Sur un Macintosh classique, Elle apparait dans une fenêtre qui est créée avec le premier message d'erreur. Avec MacOS X, elle peut apparaitre dans une nouvelle fenêtre, ou vous pouvez devoir lancer l'application  "Console" pour la voir. Sur Windows, Vous devez exécuter des fichiers batch  "Debug" pour voir les messages d'erreur; regardez les dans le répertoire applications.</p>
+l'information de débogage est imprimée sur une "sortie standard", qui est à différent endroits suivant le système d'exploitation que vous utilisez et comment vous démarrez le programme. Sur un Macintosh classique, Elle apparait dans une fenêtre qui est créée avec le premier message d'erreur. Avec Mac OS X, elle peut apparaitre dans une nouvelle fenêtre, ou vous pouvez devoir lancer l'application  "Console" pour la voir. Sur Windows, Vous devez exécuter des fichiers batch  "Debug" pour voir les messages d'erreur; regardez les dans le répertoire applications.</p>
 
 <p>L'erreur de connexion est contrôler par le fichier"default.lcf". Il y a un lots de commentaires sur ce que signifient les termes variés. Si vous n'aimez pas les messages reliés à un fichier, changer la ligne.</p>
 

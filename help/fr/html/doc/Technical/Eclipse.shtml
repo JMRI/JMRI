@@ -42,7 +42,7 @@ iso-8859-1">
     <p>Eclipse (disponible à <a href="http://www.eclipse.org">  www.eclipse.org </a>) fait une excellente plate-forme pour travailler avec JMRI, mais parce que le référentiel n'est
      pas défini comme un projet Eclipse, il ya quelques soucis pour obtenir un bon
      travail. (La description ci-dessous est exacte pour les versions
-     <strong> Eclipse 3.2.2 à 3.4.1 pour MacOS X </strong>.
+     <strong> Eclipse 3.2.2 à 3.4.1 pour Mac OS X </strong>.
      Eclipse est <i>censé </i> être identique sur toutes les plateformes, mais cela n'a pas
      été vérifiée sur les autres ). </ p>
      <p> Eclipse est un environnement complexe. Si vous êtes déjà familier

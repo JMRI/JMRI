@@ -5,7 +5,7 @@ Contents of this folder:
 	CONTENTS			This file
 	
 	JmriDemo			Macintosh Classic Application
-	JmriDemo X  		MacOS X Application (some systems will show as Decoder Pro X.app)
+	JmriDemo X  		Mac OS X Application (some systems will show as Decoder Pro X.app)
 	JmriDemo.bat		Application start script for Windows
 	JmriDebug.bat   	Application start script for Windows with debug window
 	JmriDemo.csh		Application start script for Linux

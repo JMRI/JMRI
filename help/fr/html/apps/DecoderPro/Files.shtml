@@ -46,7 +46,7 @@ Normalement, il est localisé.
 <ul>
 <li>Sur une machine Linux, regarder pour avoir un répertoire .jmri dans votre répertoire home.
 
-<li>Sur MacOS X, les preferences sont stockées dans un répertoire "JMRI" dans le dossier Library/Preferences dans votre répertoire utilisateur.
+<li>Sur Mac OS X, les preferences sont stockées dans un répertoire "JMRI" dans le dossier Library/Preferences dans votre répertoire utilisateur.
 
 <li>Sur Windows, ce peut être un nombre de places dépendant de la version de Windows que vous utilisez et si vous avez plusieurs utilisateurs de configurés. Démarrer en regardant sous "Documents"
 ou "User Documents" ou "Users and Documents".  Vous devez chercher un dossier appelé "JMRI".
