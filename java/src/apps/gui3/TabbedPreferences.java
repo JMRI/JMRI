@@ -314,7 +314,7 @@ public class TabbedPreferences extends AppConfigBase {
 			// need to replace this mechanism with some mechanism that relies on a
 			// cached discovery mechanism for plugins like @ http://code.google.com/p/jspf/
 			List<String> classNames = (new ObjectMapper()).readValue(
-					rb.getString("PreferencesPanels"),
+					java.util.ResourceBundle.getBundle("apps.AppsStructureBundle").getString("PreferencesPanels"),
 					new TypeReference<List<String>>() {
 					});
 			for (String className : classNames) {

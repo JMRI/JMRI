@@ -22,6 +22,7 @@
 
 # Make list of properties classes, removing a couple that are intended not for translation
 VALS=`find classes -name \*.properties ! -name \*_\?\?.properties -print \
+| grep -v apps/AppsStructureBundle.properties \
 | grep -v jmri/web/server/Services.properties \
 | grep -v jmri/web/server/FilePaths.properties`
 
