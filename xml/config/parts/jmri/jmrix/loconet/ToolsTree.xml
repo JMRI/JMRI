@@ -13,52 +13,80 @@
   <name>LocoNet Tools</name>
 
   <node><name>Monitor &amp; Control</name>
-    <node><name>Monitor LocoNet</name>
+    <node><name>Monitor LocoNet
+     <name xml:lang="it">LocoNet Monitor</name>
+    </name>
         <panel>jmri.jmrix.loconet.locomon.LocoMonPane</panel>
     </node>
-    <node><name>Monitor Slots</name>
+    <node><name>Monitor Slots
+     <name xml:lang="it">Slots Monitor</name>
+    </name>
         <panel>jmri.jmrix.loconet.slotmon.SlotMonPane</panel>
     </node>
-    <node><name>Monitor Clock</name>
+    <node><name>Monitor Clock
+     <name xml:lang="it">Monitor Orologio</name>
+    </name>
         <panel>jmri.jmrix.loconet.clockmon.ClockMonPane</panel>
     </node>
-    <node><name>Interface Status</name>
+    <node><name>Interface Status
+     <name xml:lang="it">Stato Interfaccia</name>
+    </name>
         <panel>jmri.jmrix.loconet.locostats.LocoStatsPanel</panel>
     </node>
   </node>
 
-  <node><name>Tools</name>
-    <node><name>Throttle Messaging</name>
+  <node><name>Tools
+   <name xml:lang="it">Strumenti</name>
+  </name>
+    <node><name>Throttle Messaging
+     <name xml:lang="it">Messaggi Palmare</name>
+    </name>
         <panel>jmri.jmrix.loconet.throttlemsg.MessagePanel</panel>
     </node>
   </node>
 
   <node><name>Configuration</name>
-    <node><name>Set LocoNet ID</name>
+    <node><name>Set LocoNet ID
+     <name xml:lang="it">Imposta ID Loconet</name>
+    </name>
         <panel>jmri.jmrix.loconet.locoid.LocoIdPanel</panel>
     </node>
-    <node><name>Configure Command Station</name>
+    <node><name>Configure Command Station
+     <name xml:lang="it">Configura Centrale</name>
+    </name>
         <panel>jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigPane</panel>
     </node>
-    <node><name>Configure BDL16/BDL168</name>
+    <node><name>Configure BDL16/BDL168
+     <name xml:lang="it">Configura BDL16/BDL168</name>
+    </name>
         <panel>jmri.jmrix.loconet.bdl16.BDL16Panel</panel>
     </node>
-    <node><name>Configure DS64</name>
+    <node><name>Configure DS64
+     <name xml:lang="it">Configura DS64</name>
+    </name>
         <panel>jmri.jmrix.loconet.ds64.DS64Panel</panel>
     </node>
-    <node><name>Configure PM4/PM42</name>
+    <node><name>Configure PM4/PM42
+     <name xml:lang="it">Configura PM4/PM42</name>
+    </name>
         <panel>jmri.jmrix.loconet.pm4.PM4Panel</panel>
     </node>
-    <node><name>Configure SE8c</name>
+    <node><name>Configure SE8c
+     <name xml:lang="it">Configura SE8c</name>
+    </name>
         <panel>jmri.jmrix.loconet.se8.SE8Panel</panel>
     </node>
   </node>
 
   <node><name>Tools</name>
-    <node><name>Send Throttle Message</name>
+    <node><name>Send Throttle Message
+     <name xml:lang="it">Invia Messaggio Palmare</name>
+    </name>
         <panel>jmri.jmrix.loconet.swing.throttlemsg.MessagePanel</panel>
     </node>
-    <node><name>Send LocoNet Message</name>
+    <node><name>Send LocoNet Message
+     <name xml:lang="it">Invia Messaggio Loconet</name>
+    </name>
         <panel>jmri.jmrix.loconet.locogen.LocoGenPanel</panel>
     </node>
   </node>
