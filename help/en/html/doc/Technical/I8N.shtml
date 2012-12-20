@@ -365,6 +365,20 @@ value is inserted.  It's therefore better to use "\n" within a
 single message from the properties file to create line breaks, rather
 than providing multiple lines in the code itself.
 
+<a id="xml">
+<h3>XML files</h3>
+XML files can also be internationalized.  There are examples in the 
+decoder definition directories.  Look for elements with a xml:lang="fr"
+attribute. Basically, you create additional elements with that attribute to 
+specify the language used:
+<code><pre>
+      &lt;variable item="Vmid" CV="6" default="22"&gt;
+        &lt;decVal max="64"/&gt;
+        &lt;label&gt;Vmid&lt;/label&gt;
+        &lt;label xml:lang="fr"&gt;Vmoy&lt;/label&gt;
+      &lt;/variable&gt;
+</pre></code>
+
 <a id="testing">
 <h3>Testing</h3>
 
