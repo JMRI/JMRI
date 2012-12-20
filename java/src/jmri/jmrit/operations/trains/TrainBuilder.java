@@ -1382,8 +1382,10 @@ public class TrainBuilder extends TrainCommon{
 			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildMultiplePass"),new Object[]{percent}));
 			multipass = true;
 		}
-		if (percent == 100 && multipass)
+		if (percent == 100 && multipass){
+			addLine(buildReport, SEVEN, BLANK_LINE);	// add line when in very detailed report mode
 			addLine(buildReport, THREE, rb.getString("buildFinalPass"));
+		}
 		noMoreMoves = false;	// need to reset this in case noMoreMoves is true on first pass
 		// determine how many locations are serviced by this train
 		int numLocs = routeList.size();
@@ -2205,7 +2207,9 @@ public class TrainBuilder extends TrainCommon{
 	 * @throws BuildFailedException 
 	 */
 	private boolean generateCarLoadFromStaging(Car car) throws BuildFailedException{
-		if (car.getTrack() == null || !car.getTrack().isAddLoadsAnySidingEnabled()
+		if (car.getTrack() == null
+				|| !car.getTrack().getLocType().equals(Track.STAGING)
+				|| !car.getTrack().isAddLoadsAnySidingEnabled()
 				|| !car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 				|| car.getDestination() != null || car.getNextDestination() != null){
 			log.debug("No load search for car ("+car.toString()+") isAddLoadsAnySidingEnabled: "+(car.getTrack().isAddLoadsAnySidingEnabled()?"true":"false")+", car load: ("+car.getLoad()+")");
@@ -2287,7 +2291,7 @@ public class TrainBuilder extends TrainCommon{
 			return false;
 		}
 		// first try this train's termination track if one exists
-		if (generateLoadCarDepartingAndTerminatingIntoStaging(car, terminateStageTrack))
+		if (train.isAllowThroughCarsEnabled() && generateLoadCarDepartingAndTerminatingIntoStaging(car, terminateStageTrack))
 			return true;	
 		List<Track> tracks = locationManager.getTracks(Track.STAGING);
 		log.debug("Found "+tracks.size()+" staging tracks");
@@ -2298,15 +2302,26 @@ public class TrainBuilder extends TrainCommon{
 			if (track.getLocation() == departLocation || track.getLocation() == terminateLocation)
 				continue;
 			if (generateLoadCarDepartingAndTerminatingIntoStaging(car, track)){
-				// TODO this new load could cause the car to not find a valid track for this train.
-				// maybe we should check to see if this load is valid for this train's route
-				car.setTrain(train);	// reset will now return the car's load to default empty
-				return true;
+				// try sending car to this destination, but not staging track
+				car.setNextDestination(track.getLocation());
+				car.setNextDestTrack(null);
+				// test to see if destination is reachable by this train
+				if (Router.instance().setDestination(car, train, buildReport) && car.getDestination() != null){
+					//car.setTrain(train);	// reset will now return the car's load to default empty
+					return true;
+				} else {
+					addLine(buildReport, SEVEN, "Staging track ("+track.getLocation().getName()+", "+track.getName()+") not reachable with custom load ("+car.getLoad()+")");
+					// return car to original state
+					car.setLoad(CarLoads.instance().getDefaultEmptyName());
+					car.setLoadGeneratedFromStaging(false);
+					car.setNextDestination(null);
+					car.updateKernel();
+				}
 			}
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Used when generating a car load from staging.
 	 * @param car the car.
@@ -2931,7 +2946,9 @@ public class TrainBuilder extends TrainCommon{
 	 * @return true if a load was generated this this car.
 	 */
 	private boolean generateLoadCarDepartingAndTerminatingIntoStaging(Car car, Track stageTrack){
-		if (stageTrack == null || !stageTrack.getLocType().equals(Track.STAGING))
+		if (stageTrack == null || !stageTrack.getLocType().equals(Track.STAGING) 
+				|| !stageTrack.acceptsTypeName(car.getType())
+				|| !stageTrack.acceptsRoadName(car.getRoad()))
 			return false;
 		// figure out which loads the car can use
 		List<String> loads = CarLoads.instance().getNames(car.getType());
@@ -2945,7 +2962,7 @@ public class TrainBuilder extends TrainCommon{
 		for (int i=loads.size()-1; i>=0; i--){
 			String load = loads.get(i);
 			if (!stageTrack.acceptsLoad(load, car.getType()) || !train.acceptsLoad(load, car.getType()))
-			loads.remove(i);
+				loads.remove(i);
 		}
 		// Use random loads rather that the first one that works to create interesting loads
 		if (loads.size() > 0){
@@ -2958,7 +2975,7 @@ public class TrainBuilder extends TrainCommon{
 				car.setLoadGeneratedFromStaging(true);
 				// is car part of kernel?
 				car.updateKernel();
-				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildAddingScheduleLoad"),
+				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildAddingScheduleLoad"),
 						new Object[]{car.getLoad(), car.toString()}));
 				return true;
 			}
@@ -2968,7 +2985,7 @@ public class TrainBuilder extends TrainCommon{
 		addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildUnableNewLoadStaging"), new Object[]{car.toString(), car.getTrackName(), stageTrack.getLocation().getName(), stageTrack.getName()}));
 		return false;
 	}
-	
+
 	/**
 	 * Checks to see if cars that are already in the train can be redirected from the alternate track to
 	 * the spur that really wants the car.  Fixes the issue of having cars placed at the alternate when
