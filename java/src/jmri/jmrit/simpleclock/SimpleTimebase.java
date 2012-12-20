@@ -515,7 +515,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 timeStorageFormat = new java.text.SimpleDateFormat(java.util.ResourceBundle.getBundle("jmri.jmrit.simpleclock.SimpleClockBundle")
                                 .getString("TimeStorageFormat"));
             } catch (java.lang.IllegalArgumentException e) {
-                log.info("Dropping back to default time format due to exception", e);
+                log.info("Dropping back to default time format due to exception "+e);
                 timeStorageFormat = new java.text.SimpleDateFormat("h:mm a");
             }
         }
