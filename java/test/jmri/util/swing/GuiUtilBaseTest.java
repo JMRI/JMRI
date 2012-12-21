@@ -7,26 +7,26 @@ import junit.framework.*;
 /**
  * Checks of JMRI XML Schema for GUI definition files.
  * 
- * @author Bob Jacobsen Copyright 2011
+ * @author Bob Jacobsen Copyright 2011, 2012
  * @since 2.9.3
  * @version $Revision$
  */
 public class GuiUtilBaseTest extends jmri.configurexml.LoadFileTestBase {
 
-    public void testRealFiles() {
-        // should probably be a tree search
-        doDirectory("xml/config/apps/decoderpro");
-        doDirectory("xml/config/apps/demo");
-        doDirectory("xml/config/apps/panelpro");
-        doDirectory("xml/config/parts/jmri/jmrix/loconet");
-    }
-    
-    void doDirectory(String pathName) {
+    /**
+     * Recursive
+     */
+    protected void doDirectory(String pathName) {
         java.io.File dir = new java.io.File(pathName);
         java.io.File[] files = dir.listFiles();
         for (int i=0; i<files.length; i++) {
-            if (files[i].getName().endsWith("xml")) {
-                validate(files[i]);
+            if (files[i].getName().equals(".svn")) continue;
+            if (files[i].isDirectory()) {
+                doDirectory(files[i].getPath());
+            } else {
+                if (files[i].getName().endsWith(".xml")) {
+                    validate(files[i]);
+                }
             }
         }
     }
