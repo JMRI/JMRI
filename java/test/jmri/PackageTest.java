@@ -27,7 +27,7 @@ public class PackageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.JmriTest");  // no tests in this class itself
+        TestSuite suite = new TestSuite("jmri.PackageTest");  // no tests in this class itself
 
 		suite.addTest(jmri.BeanSettingTest.suite());
         suite.addTest(jmri.NamedBeanHandleManagerTest.suite());
