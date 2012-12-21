@@ -88,107 +88,132 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 	
 	JTextField findCarTextBox = new JTextField(6);
 
-    public CarsTableFrame(boolean showAllCars, String locationName, String trackName) {
-        super(ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle").getString("TitleCarsTable"));
-        this.showAllCars = showAllCars;
-        this.locationName = locationName;
-        this.trackName = trackName;
-        // general GUI configuration
-        getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
+	public CarsTableFrame(boolean showAllCars, String locationName, String trackName) {
+		super(ResourceBundle.getBundle(
+				"jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle").getString(
+				"TitleCarsTable"));
+		this.showAllCars = showAllCars;
+		this.locationName = locationName;
+		this.trackName = trackName;
+		// general GUI configuration
+		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-    	// Set up the table in a Scroll Pane..
-        carsModel = new CarsTableModel(showAllCars, locationName, trackName);
-        sorter = new TableSorter(carsModel);
-        carsTable = new JTable(sorter);
-        sorter.setTableHeader(carsTable.getTableHeader());        
-        JScrollPane carsPane = new JScrollPane(carsTable);
-    	carsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-       	carsModel.initTable(carsTable, this);
-     	
-    	// load the number of cars and listen for changes
-       	updateNumCars();
-    	carsModel.addTableModelListener(this);
-    	
-    	// Set up the control panel
-    	
-    	//row 1
-    	JPanel cp1 = new JPanel();
-    	cp1.setBorder(BorderFactory.createTitledBorder(rb.getString("SortBy")));
+		// Set up the table in a Scroll Pane..
+		carsModel = new CarsTableModel(showAllCars, locationName, trackName);
+		sorter = new TableSorter(carsModel);
+		carsTable = new JTable(sorter);
+		sorter.setTableHeader(carsTable.getTableHeader());
+		JScrollPane carsPane = new JScrollPane(carsTable);
+		carsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		carsModel.initTable(carsTable, this);
 
-    	cp1.add(sortByNumber);
-    	cp1.add(sortByRoad);
-    	cp1.add(sortByType);
-    	cp1.add(sortByColor);
-    	cp1.add(sortByLoad);
-    	cp1.add(sortByKernel);
-    	cp1.add(sortByLocation);
-    	cp1.add(sortByDestination);
-    	cp1.add(sortByFinalDestination);
-    	cp1.add(sortByRwe);
-    	cp1.add(sortByTrain);
-    	cp1.add(sortByMoves);
-    	cp1.add(sortByBuilt);
-    	cp1.add(sortByOwner);
-    	if(Setup.isValueEnabled())
-    		cp1.add(sortByValue);
-    	if(Setup.isRfidEnabled())
-    		cp1.add(sortByRfid);
-    	if(ScheduleManager.instance().numEntries()>0)
-    		cp1.add(sortByWait);
-    	
-    	// row 2
-    	JPanel cp2 = new JPanel();
-    	cp2.setBorder(BorderFactory.createTitledBorder(""));
+		// load the number of cars and listen for changes
+		updateNumCars();
+		carsModel.addTableModelListener(this);
+
+		// Set up the control panel
+
+		// row 1
+		JPanel cp1 = new JPanel();
+		cp1.setBorder(BorderFactory.createTitledBorder(rb.getString("SortBy")));
+		cp1.add(sortByNumber);
+		cp1.add(sortByRoad);
+		cp1.add(sortByType);
+		JPanel clp = new JPanel();
+		clp.setBorder(BorderFactory.createTitledBorder(""));
+		clp.add(sortByColor);
+		clp.add(sortByLoad);
+		cp1.add(clp);
+		// cp1.add(sortByColor);
+		// cp1.add(sortByLoad);
+		cp1.add(sortByKernel);
+		cp1.add(sortByLocation);
+		JPanel destp = new JPanel();
+		destp.setBorder(BorderFactory.createTitledBorder(""));
+		destp.add(sortByDestination);
+		destp.add(sortByFinalDestination);
+		destp.add(sortByRwe);
+		cp1.add(destp);
+		// cp1.add(sortByDestination);
+		// cp1.add(sortByFinalDestination);
+		// cp1.add(sortByRwe);
+		cp1.add(sortByTrain);
+		JPanel movep = new JPanel();
+		movep.setBorder(BorderFactory.createTitledBorder(""));
+		movep.add(sortByMoves);
+		movep.add(sortByBuilt);
+		movep.add(sortByOwner);
+		if (Setup.isValueEnabled())
+			movep.add(sortByValue);
+		if (Setup.isRfidEnabled())
+			movep.add(sortByRfid);
+		if (ScheduleManager.instance().numEntries() > 0)
+			movep.add(sortByWait);
+		cp1.add(movep);
+
+		// cp1.add(sortByMoves);
+		// cp1.add(sortByBuilt);
+		// cp1.add(sortByOwner);
+		// if(Setup.isValueEnabled())
+		// cp1.add(sortByValue);
+		// if(Setup.isRfidEnabled())
+		// cp1.add(sortByRfid);
+		// if(ScheduleManager.instance().numEntries()>0)
+		// cp1.add(sortByWait);
+
+		// row 2
+		JPanel cp2 = new JPanel();
+		cp2.setBorder(BorderFactory.createTitledBorder(""));
 		findButton.setToolTipText(rb.getString("findCar"));
 		findCarTextBox.setToolTipText(rb.getString("findCar"));
-		
-    	cp2.add(numCars);
-    	cp2.add(textCars); 
-    	cp2.add(textSep1);
-		cp2.add(addButton);	
+
+		cp2.add(numCars);
+		cp2.add(textCars);
+		cp2.add(textSep1);
+		cp2.add(addButton);
 		cp2.add(saveButton);
 		cp2.add(findButton);
-		cp2.add(findCarTextBox);	
-		
+		cp2.add(findCarTextBox);
+
 		// place controls in scroll pane
 		JPanel controlPanel = new JPanel();
-		controlPanel.setLayout(new BoxLayout(controlPanel,BoxLayout.Y_AXIS));
+		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 		controlPanel.add(cp1);
 		controlPanel.add(cp2);
-		
-	    JScrollPane controlPane = new JScrollPane(controlPanel);
-	    // make sure control panel is the right size
-	    controlPane.setMinimumSize(new Dimension(500,130));
-	    controlPane.setMaximumSize(new Dimension(2000,200));
-	    controlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		
-    	getContentPane().add(carsPane);
-	   	getContentPane().add(controlPane);
-	   	
+
+		JScrollPane controlPane = new JScrollPane(controlPanel);
+		// make sure control panel is the right size
+		controlPane.setMinimumSize(new Dimension(500, 130));
+		controlPane.setMaximumSize(new Dimension(2000, 200));
+		controlPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+		getContentPane().add(carsPane);
+		getContentPane().add(controlPane);
+
 		// setup buttons
 		addButtonAction(addButton);
 		addButtonAction(findButton);
 		addButtonAction(saveButton);
-		
-    	sortByNumber.setSelected(true);
-		addRadioButtonAction (sortByNumber);
-		addRadioButtonAction (sortByRoad);
-		addRadioButtonAction (sortByType);
-		addRadioButtonAction (sortByColor);
-		addRadioButtonAction (sortByLoad);
-		addRadioButtonAction (sortByKernel);
-		addRadioButtonAction (sortByLocation);
-		addRadioButtonAction (sortByDestination);
-		addRadioButtonAction (sortByFinalDestination);
-		addRadioButtonAction (sortByRwe);
-		addRadioButtonAction (sortByTrain);
-		addRadioButtonAction (sortByMoves);
-		addRadioButtonAction (sortByBuilt);
-		addRadioButtonAction (sortByOwner);
-		addRadioButtonAction (sortByValue);
-		addRadioButtonAction (sortByRfid);
-		addRadioButtonAction (sortByWait);
-		
+
+		sortByNumber.setSelected(true);
+		addRadioButtonAction(sortByNumber);
+		addRadioButtonAction(sortByRoad);
+		addRadioButtonAction(sortByType);
+		addRadioButtonAction(sortByColor);
+		addRadioButtonAction(sortByLoad);
+		addRadioButtonAction(sortByKernel);
+		addRadioButtonAction(sortByLocation);
+		addRadioButtonAction(sortByDestination);
+		addRadioButtonAction(sortByFinalDestination);
+		addRadioButtonAction(sortByRwe);
+		addRadioButtonAction(sortByTrain);
+		addRadioButtonAction(sortByMoves);
+		addRadioButtonAction(sortByBuilt);
+		addRadioButtonAction(sortByOwner);
+		addRadioButtonAction(sortByValue);
+		addRadioButtonAction(sortByRfid);
+		addRadioButtonAction(sortByWait);
+
 		group.add(sortByNumber);
 		group.add(sortByRoad);
 		group.add(sortByType);
@@ -327,6 +352,10 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 			f.setTitle(rb.getString("TitleCarAdd"));
 		}
 		if (ae.getSource() == saveButton){
+			if(carsTable.isEditing()){
+				log.debug("cars table edit true");
+				carsTable.getCellEditor().stopCellEditing();
+			}
 			carManager.setCarsFrameTableColumnWidths(getCurrentTableColumnWidths());
 			OperationsXml.save();
 			saveTableDetails(carsTable);

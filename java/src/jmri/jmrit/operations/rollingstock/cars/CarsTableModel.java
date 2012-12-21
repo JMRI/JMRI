@@ -401,6 +401,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         switch (col) {
         case SETCOLUMN: 
         case EDITCOLUMN: 
+        case MOVESCOLUMN:
         	return true;
         default: 
         	return false;
@@ -534,6 +535,29 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	    	cef.setExtendedState(Frame.NORMAL);
 	    	focusCef = true;
         	break;
+		case MOVESCOLUMN:
+			if (showMoveCol == SHOWBUILT)
+				car.setBuilt(value.toString());
+			else if (showMoveCol == SHOWOWNER)
+				car.setOwner(value.toString());
+			else if (showMoveCol == SHOWVALUE)
+				car.setValue(value.toString());
+			else if (showMoveCol == SHOWRFID)
+				car.setRfid(value.toString());
+			else if (showMoveCol == SHOWWAIT) {
+				try {
+					car.setWait(Integer.parseInt(value.toString()));
+				} catch (NumberFormatException e) {
+					log.error("wait count must be a number");
+				}
+			} else {
+				try {
+					car.setMoves(Integer.parseInt(value.toString()));
+				} catch (NumberFormatException e) {
+					log.error("move count must be a number");
+				}
+			}
+			break;
         default:
             break;
         }
