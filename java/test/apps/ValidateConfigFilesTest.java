@@ -18,11 +18,21 @@ import jmri.InstanceManager;
  * @since 2.5.5
  * @version $Revision$
  */
-public class ValidateConfigFilesTest extends jmri.configurexml.LoadFileTestBase {
+public class ValidateConfigFilesTest extends jmri.util.swing.GuiUtilBaseTest {
 
 
     public void testValidateOne() {
         validate(new java.io.File("xml/config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml"));
+    }
+
+    public void testRealFiles() {
+        // should probably be a tree search
+        doDirectory("xml/config/");
+        //doDirectory("xml/config/apps/decoderpro");
+        //doDirectory("xml/config/apps/demo");
+        //doDirectory("xml/config/apps/panelpro");
+        //doDirectory("xml/config/parts/jmri/jmrix/loconet");
+        //doDirectory("xml/config/parts");
     }
 
     // from here down is testing infrastructure
