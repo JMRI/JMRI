@@ -952,7 +952,7 @@ will change to the other, i.e. "E" becomes "L" and "L" becomes "E".</P>
    feature and shouldn't be used until you become very familiar with how the program generates
    manifests and switch lists. A schedule provides very fine control on the order types of cars will
    be delivered to a spur. You can specify the car type, when it can be delivered, the car's road
-   name and load. You can decide the car's new load and destination. For example, if you wanted two
+   name and load. You can also decide the car's new load and destination. For example, if you wanted two
    SP boxcars to be delivered followed by a tank car loaded with "Oil", you can create a schedule
    that will do exactly that.
 
@@ -1297,7 +1297,7 @@ the custom load when the cars arrive at the staging track. Select the
 "Empty cars with custom loads" box if you want to replace your custom
 loads with the default empty.
 
-<P>The program provides two options for placing custom loads into
+<P>The program provides three options for placing custom loads into
 cars when they depart staging. The first option is called "Generate
 custom loads for spurs serviced by this train". If the first option is
 selected, the program will only check spurs with schedules along the
@@ -1339,7 +1339,21 @@ then Tools-&gt;<A HREF="#TrainBuildOptions">Train Build Options</A>.</P>
     Use the terminating staging track's "Select loads serviced by this track" to control which
     type of loads the program will generate from the departure staging track.</P>
 
-<A NAME="BlockingCarsFromStaging"></A>
+   <P>The third option "Generate custom loads for any staging track" will try and place custom
+    loads into your cars by searching for destinations that are staging tracks. First, if the train
+    departing staging is also terminating into staging, the program will try a place a custom load
+    into an empty car that meets the train's and terminal staging track's load requirements. If
+    there isn't a terminal staging track for the train, or the program was unsuccessful in adding a
+    custom load to the car that meets the terminal staging track requirements, the program will then
+    search for other staging tracks that aren't at the departure or terminal location. If the
+    program does find a staging track that isn't located at the departure or terminal location, it
+    will randomly assign a custom load that is serviced by both the train and destination staging
+    track. Next the program will determine if the car can be routed to destination staging track
+    using the assigned custom load. If the staging track is reachable, the program will in addition
+    to placing the custom load in the car, set the car's final destination to the location where the
+    staging track resides.</P>
+
+   <A NAME="BlockingCarsFromStaging"></A>
    <H3>Blocking Cars from Staging</H3>
 
 The program provides a very simplistic algorithm to block cars from
@@ -1486,9 +1500,7 @@ want to find all cars with numbers that ended with 345, enter *345, and press
 find.  Each time you press find, the next car with a road number ending with
 "345" will be highlighted.
 
-<P>
 <A NAME="ImportingCars"></A>
-</P>
 <H3>Importing Cars from a File</H3>
 
 If you already have a list of cars in a database, you can import the
@@ -2301,6 +2313,7 @@ caboose.
    You can optionally have a unique railroad name and logo for each train in your roster. You can
    also decide if your manifests show the train's arrival and departure times. Use the "Edit
    Train-&gt;Tools-&gt;Manifest Options" to set these options.
+   
    <A NAME="TrainScripts"></A>
    <H3>Scripts</H3>
 
@@ -2488,8 +2501,10 @@ caboose.
    unrealistic car movements between spurs (industries). However, if you want a spur to spur move,
    use a
    <A HREF="#Schedules">Schedule</A> to force the car move. You can also disable this restriction
-   see <A
-    HREF="#AllowLocalCarMovements">Options.</A> <A NAME="BuildingTrains"></A>
+   see <A HREF="#AllowLocalCarMovements">Options.</A> 
+    
+    
+    <A NAME="BuildingTrains"></A>
    <H2>Building Trains</H2>
 
    To build one train, press the "Build" button in the row for the desired train in the
@@ -2517,6 +2532,7 @@ caboose.
    select which day you want by selecting the appropriate radio button. Then press the "Apply"
    button to update the Trains build checkboxes. Use the "Save" button to store any changes you made
    to the timetable.
+   
    <A NAME="TroubleShootingBuildingTrains"></A>
    <H2>Problems Building Trains How to Fix</H2>
 
@@ -2710,6 +2726,7 @@ caboose.
    you should terminate a train only after it actually arrives at the final destination in the
    train's route. To terminate several trains, select the trains you wish to terminate in the build
    column and press the "Terminate" button at the bottom of the Trains window.
+   
    <A NAME="SaveBuilds"></A>
    <H3>Save Builds</H3>
 
@@ -2719,6 +2736,7 @@ caboose.
    down JMRI, otherwise you will lose all of the changes that the operations program made to move a
    train to the next location. Pressing the "Save Builds" button before quitting JMRI allows the
    operations program to resume exactly at the point where you pressed the "Save Builds" button.
+   
    <A NAME="BuildingMultipleTrainsSession"></A>
    <H2>Building Multiple Trains for a Session</H2>
 
