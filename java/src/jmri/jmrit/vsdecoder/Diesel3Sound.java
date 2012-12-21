@@ -437,9 +437,6 @@ class D3LoopThread extends Thread {
 	is_looping = true;
 	if (!_sound.isPlaying())
 	    _sound.play();
-	try {
-	    sleep(SoundBite.calcLength(start_buf));
-	} catch (InterruptedException e) { }
     }
 
     public void stopEngine(AudioBuffer stop_buf) {
