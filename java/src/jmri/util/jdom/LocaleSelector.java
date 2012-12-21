@@ -29,7 +29,7 @@ public class LocaleSelector {
     
     /**
      * Return the value of an attribute
-     * for the current local.
+     * for the current locale.
      *
      * <foo temp="a">
      *   <temp xml:lang="hh">b</temp>
@@ -63,6 +63,10 @@ public class LocaleSelector {
         return a.getValue();
     }
     
+    /**
+      * checks one element to see if it's the one for the current language
+      * else returns null
+      */
     static String checkElement(Element el, String name, String suffix) {
         for (Object obj : el.getChildren(name)) {
             Element e = (Element)obj;
