@@ -1121,7 +1121,7 @@ public class TrainBuilder extends TrainCommon{
     				continue;
         		}
            		// does car have a wait count?
-        		if (c.getWait() > 0){
+        		if (c.getWait() > 0 && train.servicesCar(c)){
     				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildExcludeCarWait"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+", "+c.getTrackName()), c.getWait()}));
     				c.setWait(c.getWait()-1);	// decrement wait count
     				carList.remove(c.getId());
