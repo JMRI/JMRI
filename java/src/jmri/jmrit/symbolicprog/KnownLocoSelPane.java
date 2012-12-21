@@ -43,10 +43,10 @@ public class KnownLocoSelPane extends LocoSelPane  {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel pane2a = new JPanel();
         pane2a.setLayout(new BoxLayout(pane2a, BoxLayout.X_AXIS));
-        pane2a.add(new JLabel("Use existing roster entry:"));
+        pane2a.add(new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("UseExisting")));
 
         if (mCanIdent) {
-            JButton idloco = new JButton("Read address & select");
+            JButton idloco = new JButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("ReadAndSelect"));
             idloco.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (log.isDebugEnabled()) log.debug("Identify locomotive pressed");
@@ -64,7 +64,7 @@ public class KnownLocoSelPane extends LocoSelPane  {
 
         addProgrammerBox();
 
-        JButton go2 = new JButton("Open programmer");
+        JButton go2 = new JButton(SymbolicProgBundle.bundle().getString("OpenProgrammer"));
         go2.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (log.isDebugEnabled()) log.debug("Open programmer pressed");
@@ -81,7 +81,7 @@ public class KnownLocoSelPane extends LocoSelPane  {
     private void addProgrammerBox() {
         JPanel pane3a = new JPanel();
         pane3a.setLayout(new BoxLayout(pane3a, BoxLayout.X_AXIS));
-        pane3a.add(new JLabel("Programmer format: "));
+        pane3a.add(new JLabel(SymbolicProgBundle.bundle().getString("ProgrammerFormat")));
 
         // create the programmer box
         programmerBox = new JComboBox(ProgDefault.findListOfProgFiles());
@@ -145,7 +145,10 @@ public class KnownLocoSelPane extends LocoSelPane  {
             RosterEntry re = locoBox.getSelectedRosterEntries()[0];
             startProgrammer(null, re, (String)programmerBox.getSelectedItem());
         } else {
-            JOptionPane.showMessageDialog(this, "A locomotive must be selected.", "No selection", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                    SymbolicProgBundle.bundle().getString("LocoMustSelected"), 
+                    SymbolicProgBundle.bundle().getString("NoSelection"), 
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 

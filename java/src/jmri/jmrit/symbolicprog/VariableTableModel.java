@@ -317,6 +317,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     
             // find the variable
             int index = findVarIndex(variableRef);
+            
             if (index >= 0) {
                 // found, attach the qualifier object by creating it
                 if (log.isDebugEnabled()) log.debug("Attached "+variableRef+" variable qualifying "+v.label());

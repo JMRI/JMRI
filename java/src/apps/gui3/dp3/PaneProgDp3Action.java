@@ -175,7 +175,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction {
                         
                         JPanel progFormat = new JPanel();
                         progFormat.setLayout(new BoxLayout(progFormat, BoxLayout.X_AXIS));
-                        progFormat.add(new JLabel(rbt.getString("PROGRAMMER FORMAT: ")));
+                        progFormat.add(new JLabel(rbt.getString("ProgrammerFormat")));
                         progFormat.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
                         
                         programmerBox = new JComboBox();
@@ -186,7 +186,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction {
                             programmerBox.setSelectedItem(p.getComboBoxLastSelection(lastSelectedProgrammer));
                         if (ProgDefault.getDefaultProgFile()!=null) programmerBox.setSelectedItem(ProgDefault.getDefaultProgFile());
                         progFormat.add(programmerBox);
-                        go2 = new JButton(rbt.getString("OPEN PROGRAMMER"));
+                        go2 = new JButton(rbt.getString("OpenProgrammer"));
                         go2.addActionListener( new ActionListener() {
                                 public void actionPerformed(java.awt.event.ActionEvent e) {
                                     if (log.isDebugEnabled()) log.debug("Open programmer pressed");

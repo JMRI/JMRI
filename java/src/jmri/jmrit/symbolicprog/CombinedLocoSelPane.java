@@ -219,7 +219,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         // create the programmer box
         JPanel progFormat = new JPanel();
         progFormat.setLayout(new BoxLayout(progFormat, BoxLayout.X_AXIS));
-        progFormat.add(new JLabel(rbt.getString("PROGRAMMER FORMAT: ")));
+        progFormat.add(new JLabel(rbt.getString("ProgrammerFormat")));
         progFormat.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
 
         programmerBox = new JComboBox(ProgDefault.findListOfProgFiles());
@@ -227,7 +227,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         if (ProgDefault.getDefaultProgFile()!=null) programmerBox.setSelectedItem(ProgDefault.getDefaultProgFile());
         progFormat.add(programmerBox);
         
-        go2 = new JButton(rbt.getString("OPEN PROGRAMMER"));
+        go2 = new JButton(rbt.getString("OpenProgrammer"));
         go2.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (log.isDebugEnabled()) log.debug("Open programmer pressed");
