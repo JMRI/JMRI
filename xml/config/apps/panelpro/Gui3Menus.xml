@@ -50,8 +50,6 @@
     </node>
   </node>
 
-  <xi:include href="http://jmri.org/xml/config/parts/WindowsMenu.xml"/>
-  <xi:include href="http://jmri.org/xml/config/parts/HelpMenu.xml"/>
 
 </nodes>
   
