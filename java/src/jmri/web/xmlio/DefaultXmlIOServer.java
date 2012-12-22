@@ -1,5 +1,4 @@
 // DefaultXmlIOServer.java
-
 package jmri.web.xmlio;
 
 import java.io.File;
@@ -23,27 +22,21 @@ import org.jdom.Element;
 /**
  * Default implementation for XML I/O.
  *
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
- * <P>
+ * <hr> This file is part of JMRI. <P> JMRI is free software; you can
+ * redistribute it and/or modify it under the terms of version 2 of the GNU
+ * General Public License as published by the Free Software Foundation. See the
+ * "COPYING" file for a copy of this license. <P> JMRI is distributed in the
+ * hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See
+ * the GNU General Public License for more details. <P>
  *
- * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
+ * @author	Bob Jacobsen Copyright (C) 2008, 2009, 2010
  * @version	$Revision$
- * @see  jmri.web.xmlio.XmlIOFactory
+ * @see jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
-	
-	static List<String> disallowedFrames = WebServerManager.getWebServerPreferences().getDisallowedFrames();
+
+    static List<String> disallowedFrames = WebServerManager.getWebServerPreferences().getDisallowedFrames();
 
     @Override
     public Element immediateRequest(Element e) throws JmriException {
@@ -53,10 +46,10 @@ public class DefaultXmlIOServer implements XmlIOServer {
         // iPads or Android tablet apps could directly render the panels.
 
         // first, process any "list" elements
-    	//  roster, frame, panel, metadata and railroad are immediate only
-    	//  power, turnout, sensor, signalhead, signalmast, memory and route 
-    	//  can be monitored for changes, pass current values to begin
-    	//  throttle accepts changes
+        //  roster, frame, panel, metadata and railroad are immediate only
+        //  power, turnout, sensor, signalhead, signalmast, memory and route 
+        //  can be monitored for changes, pass current values to begin
+        //  throttle accepts changes
         @SuppressWarnings("unchecked")
         List<Element> lists = new ArrayList<Element>(e.getChildren("list"));
         for (Element list : lists) {
@@ -69,9 +62,9 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 // if type is null, set type from a child element named "type"
                 type = list.getChild("type").getText();
             }
-            if (type == null){
-            	log.error("type not found!");
-            	continue;		         			
+            if (type == null) {
+                log.error("type not found!");
+                continue;
             }
             if (type.equals("turnout")) {
                 // add an element for each turnout
@@ -82,34 +75,42 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     Element n = new Element((useAttributes) ? "turnout" : "item");
                     if (useAttributes) {
                         n.setAttribute("name", name);
-                        if (t.getUserName() != null) n.setAttribute("userName", t.getUserName());
-                        if (t.getComment() != null) n.setAttribute("comment", t.getComment());
+                        if (t.getUserName() != null) {
+                            n.setAttribute("userName", t.getUserName());
+                        }
+                        if (t.getComment() != null) {
+                            n.setAttribute("comment", t.getComment());
+                        }
                         n.setAttribute("inverted", Boolean.valueOf(t.getInverted()).toString());
                     } else {
-                    n.addContent(new Element("type").addContent("turnout"));
-                    n.addContent(new Element("name").addContent(name));
-                    n.addContent(new Element("userName").addContent(t.getUserName()));
-                    n.addContent(new Element("comment").addContent(t.getComment()));
-                    n.addContent(new Element("inverted").addContent(Boolean.valueOf(t.getInverted()).toString()));
+                        n.addContent(new Element("type").addContent("turnout"));
+                        n.addContent(new Element("name").addContent(name));
+                        n.addContent(new Element("userName").addContent(t.getUserName()));
+                        n.addContent(new Element("comment").addContent(t.getComment()));
+                        n.addContent(new Element("inverted").addContent(Boolean.valueOf(t.getInverted()).toString()));
                     }
                     e.addContent(n);
                 }
             } else if (type.equals("memory")) {
                 // add an element for each memory
-            	MemoryManager m = InstanceManager.memoryManagerInstance();
+                MemoryManager m = InstanceManager.memoryManagerInstance();
                 List<String> names = m.getSystemNameList();
                 for (String name : names) {
                     Memory t = m.getMemory(name);
                     Element n = new Element((useAttributes) ? "memory" : "item");
                     if (useAttributes) {
                         n.setAttribute("name", name);
-                        if (t.getUserName() != null) n.setAttribute("userName", t.getUserName());
-                        if (t.getComment() != null) n.setAttribute("comment", t.getComment());
+                        if (t.getUserName() != null) {
+                            n.setAttribute("userName", t.getUserName());
+                        }
+                        if (t.getComment() != null) {
+                            n.setAttribute("comment", t.getComment());
+                        }
                     } else {
-                    n.addContent(new Element("type").addContent("memory"));
-                    n.addContent(new Element("name").addContent(name));
-                    n.addContent(new Element("userName").addContent(t.getUserName()));
-                    n.addContent(new Element("comment").addContent(t.getComment()));
+                        n.addContent(new Element("type").addContent("memory"));
+                        n.addContent(new Element("name").addContent(name));
+                        n.addContent(new Element("userName").addContent(t.getUserName()));
+                        n.addContent(new Element("comment").addContent(t.getComment()));
                     }
                     e.addContent(n);
                 }
@@ -122,13 +123,17 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     Element n = new Element((useAttributes) ? "route" : "item");
                     if (useAttributes) {
                         n.setAttribute("name", name);
-                        if (t.getUserName() != null) n.setAttribute("userName", t.getUserName());
-                        if (t.getComment() != null) n.setAttribute("comment", t.getComment());
+                        if (t.getUserName() != null) {
+                            n.setAttribute("userName", t.getUserName());
+                        }
+                        if (t.getComment() != null) {
+                            n.setAttribute("comment", t.getComment());
+                        }
                     } else {
-                    n.addContent(new Element("type").addContent("route"));
-                    n.addContent(new Element("name").addContent(name));
-                    n.addContent(new Element("userName").addContent(t.getUserName()));
-                    n.addContent(new Element("comment").addContent(t.getComment()));
+                        n.addContent(new Element("type").addContent("route"));
+                        n.addContent(new Element("name").addContent(name));
+                        n.addContent(new Element("userName").addContent(t.getUserName()));
+                        n.addContent(new Element("comment").addContent(t.getComment()));
                     }
                     e.addContent(n);
                 }
@@ -141,18 +146,22 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     Element n = new Element((useAttributes) ? "sensor" : "item");
                     if (useAttributes) {
                         n.setAttribute("name", name);
-                        if (t.getUserName() != null) n.setAttribute("userName", t.getUserName());
-                        if (t.getComment() != null) n.setAttribute("comment", t.getComment());
+                        if (t.getUserName() != null) {
+                            n.setAttribute("userName", t.getUserName());
+                        }
+                        if (t.getComment() != null) {
+                            n.setAttribute("comment", t.getComment());
+                        }
                         n.setAttribute("inverted", Boolean.valueOf(t.getInverted()).toString());
                     } else {
-                    n.addContent(new Element("type").addContent("sensor"));
-                    n.addContent(new Element("name").addContent(name));
-                    n.addContent(new Element("userName").addContent(t.getUserName()));
-                    n.addContent(new Element("comment").addContent(t.getComment()));
-                    n.addContent(new Element("inverted").addContent(Boolean.valueOf(t.getInverted()).toString()));
+                        n.addContent(new Element("type").addContent("sensor"));
+                        n.addContent(new Element("name").addContent(name));
+                        n.addContent(new Element("userName").addContent(t.getUserName()));
+                        n.addContent(new Element("comment").addContent(t.getComment()));
+                        n.addContent(new Element("inverted").addContent(Boolean.valueOf(t.getInverted()).toString()));
                     }
                     e.addContent(n);
-                }            
+                }
             } else if (type.equals("signalhead")) {
                 // add an element for each signalhead
                 SignalHeadManager m = InstanceManager.signalHeadManagerInstance();
@@ -162,16 +171,20 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     Element n = new Element((useAttributes) ? "signalHead" : "item");
                     if (useAttributes) {
                         n.setAttribute("name", name);
-                        if (t.getUserName() != null) n.setAttribute("userName", t.getUserName());
-                        if (t.getComment() != null) n.setAttribute("comment", t.getComment());
+                        if (t.getUserName() != null) {
+                            n.setAttribute("userName", t.getUserName());
+                        }
+                        if (t.getComment() != null) {
+                            n.setAttribute("comment", t.getComment());
+                        }
                     } else {
-                    n.addContent(new Element("type").addContent("signalhead"));
-                    n.addContent(new Element("name").addContent(name));
-                    n.addContent(new Element("userName").addContent(t.getUserName()));
-                    n.addContent(new Element("comment").addContent(t.getComment()));
+                        n.addContent(new Element("type").addContent("signalhead"));
+                        n.addContent(new Element("name").addContent(name));
+                        n.addContent(new Element("userName").addContent(t.getUserName()));
+                        n.addContent(new Element("comment").addContent(t.getComment()));
                     }
                     e.addContent(n);
-                }            
+                }
             } else if (type.equals("signalmast")) {
                 // add an element for each signalmast
                 SignalMastManager m = InstanceManager.signalMastManagerInstance();
@@ -181,78 +194,82 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     Element n = new Element((useAttributes) ? "signalMast" : "item");
                     if (useAttributes) {
                         n.setAttribute("name", name);
-                        if (t.getUserName() != null) n.setAttribute("userName", t.getUserName());
-                        if (t.getComment() != null) n.setAttribute("comment", t.getComment());
+                        if (t.getUserName() != null) {
+                            n.setAttribute("userName", t.getUserName());
+                        }
+                        if (t.getComment() != null) {
+                            n.setAttribute("comment", t.getComment());
+                        }
                     } else {
-                    n.addContent(new Element("type").addContent("signalmast"));
-                    n.addContent(new Element("name").addContent(name));
-                    n.addContent(new Element("userName").addContent(t.getUserName()));
-                    n.addContent(new Element("comment").addContent(t.getComment()));
+                        n.addContent(new Element("type").addContent("signalmast"));
+                        n.addContent(new Element("name").addContent(name));
+                        n.addContent(new Element("userName").addContent(t.getUserName()));
+                        n.addContent(new Element("comment").addContent(t.getComment()));
                     }
                     e.addContent(n);
-                }            
+                }
             } else if (type.equals("roster")) {
-            	// add an element for each roster entry
-            	List <RosterEntry> rlist = Roster.instance().matchingList(null, null, null, null, null, null, null);
-            	for (int i = 0; i < rlist.size(); i++) {
-            		RosterEntry entry = rlist.get(i);
-            		Element n = new Element((useAttributes) ? "roster" : "item");
-                        if (useAttributes) {
-                            n.setAttribute("name", entry.getId());
-                            n.setAttribute("dccAddress", entry.getDccAddress());
-                            n.setAttribute("addressLength", entry.isLongAddress() ? "L" : "S");
-                            n.setAttribute("roadName", entry.getRoadName());
-                            n.setAttribute("roadNumber", entry.getRoadNumber());
-                            n.setAttribute("mfg", entry.getMfg());
-                            n.setAttribute("model", entry.getModel());
-                            n.setAttribute("comment", entry.getComment());
-                            n.setAttribute("maxSpeedPct", Integer.valueOf(entry.getMaxSpeedPCT()).toString());
-                            File file = new File(entry.getImagePath());
-                            n.setAttribute("imageFileName", file.getName());
-                            file = new File(entry.getIconPath());
-                            n.setAttribute("imageIconName", file.getName());
-                            Element f;
-                            for (int j = 0; j < entry.getMAXFNNUM(); j++) {
-                                if (entry.getFunctionLabel(j) != null) {
-                                    f = new Element("function");
-                                    f.setAttribute("name", "F" + j);
-                                    f.setAttribute("label", entry.getFunctionLabel(j));
-                                    f.setAttribute("lockable", Boolean.valueOf(entry.getFunctionLockable(j)).toString());
-                                    n.addContent(f);
-                                }
+                // add an element for each roster entry
+                List<RosterEntry> rlist = Roster.instance().matchingList(null, null, null, null, null, null, null);
+                for (int i = 0; i < rlist.size(); i++) {
+                    RosterEntry entry = rlist.get(i);
+                    Element n = new Element((useAttributes) ? "roster" : "item");
+                    if (useAttributes) {
+                        n.setAttribute("name", entry.getId());
+                        n.setAttribute("dccAddress", entry.getDccAddress());
+                        n.setAttribute("addressLength", entry.isLongAddress() ? "L" : "S");
+                        n.setAttribute("roadName", entry.getRoadName());
+                        n.setAttribute("roadNumber", entry.getRoadNumber());
+                        n.setAttribute("mfg", entry.getMfg());
+                        n.setAttribute("model", entry.getModel());
+                        n.setAttribute("comment", entry.getComment());
+                        n.setAttribute("maxSpeedPct", Integer.valueOf(entry.getMaxSpeedPCT()).toString());
+                        File file = new File(entry.getImagePath());
+                        n.setAttribute("imageFileName", file.getName());
+                        file = new File(entry.getIconPath());
+                        n.setAttribute("imageIconName", file.getName());
+                        Element f;
+                        for (int j = 0; j < entry.getMAXFNNUM(); j++) {
+                            if (entry.getFunctionLabel(j) != null) {
+                                f = new Element("function");
+                                f.setAttribute("name", "F" + j);
+                                f.setAttribute("label", entry.getFunctionLabel(j));
+                                f.setAttribute("lockable", Boolean.valueOf(entry.getFunctionLockable(j)).toString());
+                                n.addContent(f);
                             }
-                        } else {
-            		n.addContent(new Element("type").addContent("roster"));
-            		n.addContent(new Element("name").addContent(entry.getId()));
-            		n.addContent(new Element("dccAddress").addContent(entry.getDccAddress()));
-            		n.addContent(new Element("addressLength").addContent(entry.isLongAddress() ? "L" : "S"));
-            		n.addContent(new Element("roadName").addContent(entry.getRoadName()));
-            		n.addContent(new Element("roadNumber").addContent(entry.getRoadNumber()));
-            		n.addContent(new Element("mfg").addContent(entry.getMfg()));
-            		n.addContent(new Element("model").addContent(entry.getModel()));
-            		n.addContent(new Element("comment").addContent(entry.getComment()));
-            		n.addContent(new Element("maxSpeedPct").addContent(Integer.valueOf(entry.getMaxSpeedPCT()).toString()));
-            		File file = new File(entry.getImagePath());
-            		n.addContent(new Element("imageFileName").addContent(file.getName()));
-            		file = new File(entry.getIconPath());
-            		n.addContent(new Element("imageIconName").addContent(file.getName()));
-        			Element f = new Element("functionLabels");
-        			Element g = new Element("functionLockables");
-                	for (int j = 0; j < entry.getMAXFNNUM(); j++) {
-                		if (entry.getFunctionLabel(j) != null) {
-                    		f.addContent(new Element("F" + j).addContent(entry.getFunctionLabel(j)));
-                    		g.addContent(new Element("F" + j).addContent(Boolean.valueOf(entry.getFunctionLockable(j)).toString()));
-                		}
-            		}
-        			n.addContent(f);
-        			n.addContent(g);
                         }
-        			e.addContent(n);
-            	}
+                    } else {
+                        n.addContent(new Element("type").addContent("roster"));
+                        n.addContent(new Element("name").addContent(entry.getId()));
+                        n.addContent(new Element("dccAddress").addContent(entry.getDccAddress()));
+                        n.addContent(new Element("addressLength").addContent(entry.isLongAddress() ? "L" : "S"));
+                        n.addContent(new Element("roadName").addContent(entry.getRoadName()));
+                        n.addContent(new Element("roadNumber").addContent(entry.getRoadNumber()));
+                        n.addContent(new Element("mfg").addContent(entry.getMfg()));
+                        n.addContent(new Element("model").addContent(entry.getModel()));
+                        n.addContent(new Element("comment").addContent(entry.getComment()));
+                        n.addContent(new Element("maxSpeedPct").addContent(Integer.valueOf(entry.getMaxSpeedPCT()).toString()));
+                        File file = new File(entry.getImagePath());
+                        n.addContent(new Element("imageFileName").addContent(file.getName()));
+                        file = new File(entry.getIconPath());
+                        n.addContent(new Element("imageIconName").addContent(file.getName()));
+                        Element f = new Element("functionLabels");
+                        Element g = new Element("functionLockables");
+                        for (int j = 0; j < entry.getMAXFNNUM(); j++) {
+                            if (entry.getFunctionLabel(j) != null) {
+                                f.addContent(new Element("F" + j).addContent(entry.getFunctionLabel(j)));
+                                g.addContent(new Element("F" + j).addContent(Boolean.valueOf(entry.getFunctionLockable(j)).toString()));
+                            }
+                        }
+                        n.addContent(f);
+                        n.addContent(g);
+                    }
+                    e.addContent(n);
+                }
 
             } else if (type.equals("frame")) {
-            	
-            	// list frames, (open JMRI windows)
+
+                // list frames, (open JMRI windows)
                 List<JmriJFrame> frames = JmriJFrame.getFrameList();
                 for (JmriJFrame frame : frames) { //add all non-blank titles to list
                     if (frame.getAllowInFrameServlet()) {
@@ -275,18 +292,18 @@ public class DefaultXmlIOServer implements XmlIOServer {
 
             } else if (type.equals("panel")) {
 
-            	// list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor)
+                // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor)
                 List<JmriJFrame> frames = JmriJFrame.getFrameList(ControlPanelEditor.class);
                 for (JmriJFrame frame : frames) {
                     if (frame.getAllowInFrameServlet()) {
-                        String title = ((JmriJFrame) ((Editor)frame).getTargetPanel().getTopLevelAncestor()).getTitle();
+                        String title = ((JmriJFrame) ((Editor) frame).getTargetPanel().getTopLevelAncestor()).getTitle();
                         if (!title.equals("") && !disallowedFrames.contains(title)) {
                             String escapedTitle = StringUtil.escapeString(title);
                             Element n = new Element((useAttributes) ? "panel" : "item");
                             if (useAttributes) {
-                            	n.setAttribute("name", "ControlPanel/" + escapedTitle);
-                            	n.setAttribute("userName", title);
-                            	n.setAttribute("type", "Control Panel");
+                                n.setAttribute("name", "ControlPanel/" + escapedTitle);
+                                n.setAttribute("userName", title);
+                                n.setAttribute("type", "Control Panel");
                             } else {
                                 n.addContent(new Element("type").addContent("panel"));
                                 n.addContent(new Element("name").addContent("ControlPanel/" + escapedTitle));
@@ -299,14 +316,14 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 frames = JmriJFrame.getFrameList(PanelEditor.class);
                 for (JmriJFrame frame : frames) {
                     if (frame.getAllowInFrameServlet() && !(LayoutEditor.class.isInstance(frame))) {  //skip LayoutEditor panels, as they will be added next
-                        String title = ((JmriJFrame) ((Editor)frame).getTargetPanel().getTopLevelAncestor()).getTitle();
+                        String title = ((JmriJFrame) ((Editor) frame).getTargetPanel().getTopLevelAncestor()).getTitle();
                         if (!title.equals("") && !disallowedFrames.contains(title)) {
                             String escapedTitle = StringUtil.escapeString(title);
                             Element n = new Element((useAttributes) ? "panel" : "item");
                             if (useAttributes) {
-                            	n.setAttribute("name", "Panel/" + escapedTitle);
-                            	n.setAttribute("userName", title);
-                            	n.setAttribute("type", "Panel");
+                                n.setAttribute("name", "Panel/" + escapedTitle);
+                                n.setAttribute("userName", title);
+                                n.setAttribute("type", "Panel");
                             } else {
                                 n.addContent(new Element("type").addContent("panel"));
                                 n.addContent(new Element("name").addContent("Panel/" + escapedTitle));
@@ -319,14 +336,14 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 frames = JmriJFrame.getFrameList(LayoutEditor.class);
                 for (JmriJFrame frame : frames) {
                     if (frame.getAllowInFrameServlet()) {
-                        String title = ((JmriJFrame) ((Editor)frame).getTargetPanel().getTopLevelAncestor()).getTitle();
+                        String title = ((JmriJFrame) ((Editor) frame).getTargetPanel().getTopLevelAncestor()).getTitle();
                         if (!title.equals("") && !disallowedFrames.contains(title)) {
                             String escapedTitle = StringUtil.escapeString(title);
                             Element n = new Element((useAttributes) ? "panel" : "item");
                             if (useAttributes) {
-                            	n.setAttribute("name", "Layout/" + escapedTitle);
-                            	n.setAttribute("userName", title);
-                            	n.setAttribute("type", "Layout");
+                                n.setAttribute("name", "Layout/" + escapedTitle);
+                                n.setAttribute("userName", title);
+                                n.setAttribute("type", "Layout");
                             } else {
                                 n.addContent(new Element("type").addContent("panel"));
                                 n.addContent(new Element("name").addContent("Layout/" + escapedTitle));
@@ -338,13 +355,13 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 }
 
             } else if (type.equals("power")) {
-            	// add a power element
+                // add a power element
                 Element n = new Element((useAttributes) ? "power" : "item");
                 if (useAttributes) {
                     n.setAttribute("name", "power");
                 } else {
-                n.addContent(new Element("type").addContent("power"));
-                n.addContent(new Element("name").addContent("power"));
+                    n.addContent(new Element("type").addContent("power"));
+                    n.addContent(new Element("name").addContent("power"));
                 }
                 e.addContent(n);
             } else if (type.equals("metadata")) {
@@ -355,8 +372,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     if (useAttributes) {
                         n.setAttribute("name", mn);
                     } else {
-                    n.addContent(new Element("type").addContent("metadata"));
-                    n.addContent(new Element("name").addContent("" + mn));
+                        n.addContent(new Element("type").addContent("metadata"));
+                        n.addContent(new Element("name").addContent("" + mn));
                     }
                     e.addContent(n);
                 }
@@ -365,9 +382,11 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 Element n = new Element("railroad");
                 n.setAttribute("name", WebServerManager.getWebServerPreferences().getRailRoadName());
                 e.addContent(n);
-            } else log.warn("Unexpected type in list element: " + type);
+            } else {
+                log.warn("Unexpected type in list element: " + type);
+            }
         }
-        
+
         // handle everything else
         @SuppressWarnings("unchecked")
         List<Element> items = e.getChildren();
@@ -381,7 +400,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             } else if (name == null) {
                 name = "";
             }
-        
+
             //check for "set" values and process them
             if (type.equals("throttle")) {
                 immediateSetThrottle(item);
@@ -422,13 +441,13 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 log.warn("Unexpected element: " + type);
             }
         }
-        
+
         return e;
     }
 
     @Override
     public void monitorRequest(Element e, XmlIORequestor r, String client, Thread thread) throws JmriException {
-        
+
         // check for differences now
         if (checkValues(e)) {
 
@@ -442,7 +461,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
         dr.requestor = r;
         dr.client = client;
         dr.thread = thread;
-        
+
         @SuppressWarnings("unchecked")
         List<Element> items = e.getChildren();
 
@@ -456,15 +475,24 @@ public class DefaultXmlIOServer implements XmlIOServer {
             } else if (name == null) {
                 name = "";
             }
-            
-            if (type.equals("turnout")) addListenerToTurnout(name, item, dr);
-            else if (type.equals("memory")) addListenerToMemory(name, item, dr);
-            else if (type.equals("route")) addListenerToRoute(name, item, dr);
-            else if (type.equals("sensor")) addListenerToSensor(name, item, dr);
-            else if (type.equals("signalhead")) addListenerToSignalHead(name, item, dr);
-            else if (type.equals("signalmast")) addListenerToSignalMast(name, item, dr);
-            else if (type.equals("power")) addListenerToPower(name, item, dr);
-            else log.warn("Unexpected type: " + type);
+
+            if (type.equals("turnout")) {
+                addListenerToTurnout(name, item, dr);
+            } else if (type.equals("memory")) {
+                addListenerToMemory(name, item, dr);
+            } else if (type.equals("route")) {
+                addListenerToRoute(name, item, dr);
+            } else if (type.equals("sensor")) {
+                addListenerToSensor(name, item, dr);
+            } else if (type.equals("signalhead")) {
+                addListenerToSignalHead(name, item, dr);
+            } else if (type.equals("signalmast")) {
+                addListenerToSignalMast(name, item, dr);
+            } else if (type.equals("power")) {
+                addListenerToPower(name, item, dr);
+            } else {
+                log.warn("Unexpected type: " + type);
+            }
         }
 
         // Check one more time to ensure clear of race conditions
@@ -475,7 +503,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
     void sendMonitorReply(Element e, XmlIORequestor r, String client, Thread thread) {
         @SuppressWarnings("unchecked")
         List<Element> items = e.getChildren();
-        
+
         for (Element item : items) {
             String type = item.getName();
             String name = item.getAttributeValue("name");
@@ -486,28 +514,37 @@ public class DefaultXmlIOServer implements XmlIOServer {
             } else if (name == null) {
                 name = "";
             }
-            
+
             try {
-                if (type.equals("turnout")) immediateReadTurnout(name, item);
-                else if (type.equals("memory")) immediateReadMemory(name, item);
-                else if (type.equals("sensor")) immediateReadSensor(name, item);
-                else if (type.equals("signalhead")) immediateReadSignalHead(name, item);
-                else if (type.equals("signalmast")) immediateReadSignalMast(name, item);
-                else if (type.equals("route")) immediateReadRoute(name, item);
-                else if (type.equals("power")) immediateReadPower(name, item);
-                else if (type.equals("metadata")) immediateReadMetadata(name, item);
+                if (type.equals("turnout")) {
+                    immediateReadTurnout(name, item);
+                } else if (type.equals("memory")) {
+                    immediateReadMemory(name, item);
+                } else if (type.equals("sensor")) {
+                    immediateReadSensor(name, item);
+                } else if (type.equals("signalhead")) {
+                    immediateReadSignalHead(name, item);
+                } else if (type.equals("signalmast")) {
+                    immediateReadSignalMast(name, item);
+                } else if (type.equals("route")) {
+                    immediateReadRoute(name, item);
+                } else if (type.equals("power")) {
+                    immediateReadPower(name, item);
+                } else if (type.equals("metadata")) {
+                    immediateReadMetadata(name, item);
+                }
             } catch (JmriException j) {
                 log.warn("exception handling " + type + " " + name, j);
             }
         }
-        
+
         r.monitorReply(e, thread);
     }
-    
+
     boolean checkValues(Element e) {
         @SuppressWarnings("unchecked")
         List<Element> items = e.getChildren();
-        
+
         boolean changed = false;
         for (Element item : items) {
             String type = item.getName();
@@ -519,111 +556,152 @@ public class DefaultXmlIOServer implements XmlIOServer {
             } else if (name == null) {
                 name = "";
             }
-            if (item.getAttribute("value") == null &&
-                    item.getChild("value") == null) return true;  // if no value, consider changed
-
+            if (item.getAttribute("value") == null
+                    && item.getChild("value") == null) {
+                return true;  // if no value, consider changed
+            }
             try {
-                if (type.equals("turnout")) changed |= monitorProcessTurnout(name, item);
-                else if (type.equals("memory")) changed |= monitorProcessMemory(name, item);
-                else if (type.equals("sensor")) changed |= monitorProcessSensor(name, item);
-                else if (type.equals("signalhead")) changed |= monitorProcessSignalHead(name, item);
-                else if (type.equals("signalmast")) changed |= monitorProcessSignalMast(name, item);
-                else if (type.equals("route")) changed |= monitorProcessRoute(name, item);
-                else if (type.equals("power")) changed |= monitorProcessPower(name, item);
-                else if (type.equals("metadata")) changed = true;
-                else log.warn("Unexpected type: "+type);
+                if (type.equals("turnout")) {
+                    changed |= monitorProcessTurnout(name, item);
+                } else if (type.equals("memory")) {
+                    changed |= monitorProcessMemory(name, item);
+                } else if (type.equals("sensor")) {
+                    changed |= monitorProcessSensor(name, item);
+                } else if (type.equals("signalhead")) {
+                    changed |= monitorProcessSignalHead(name, item);
+                } else if (type.equals("signalmast")) {
+                    changed |= monitorProcessSignalMast(name, item);
+                } else if (type.equals("route")) {
+                    changed |= monitorProcessRoute(name, item);
+                } else if (type.equals("power")) {
+                    changed |= monitorProcessPower(name, item);
+                } else if (type.equals("metadata")) {
+                    changed = true;
+                } else {
+                    log.warn("Unexpected type: " + type);
+                }
             } catch (JmriException j) {
-                log.warn("exception handling "+type+" "+name, j);
+                log.warn("exception handling " + type + " " + name, j);
             }
         }
         return changed;
     }
-    
+
     void addListenerToTurnout(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("adding Listener To Turnout " + name + " for " + dr.client);
-    	Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
+        if (log.isDebugEnabled()) {
+            log.debug("adding Listener To Turnout " + name + " for " + dr.client);
+        }
+        Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
         b.addPropertyChangeListener(dr);
     }
-    
+
     void addListenerToMemory(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("adding Listener To Memory " + name + " for " + dr.client);
+        if (log.isDebugEnabled()) {
+            log.debug("adding Listener To Memory " + name + " for " + dr.client);
+        }
         Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
         b.addPropertyChangeListener(dr);
     }
-    
+
     void addListenerToRoute(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("adding Listener To Route " + name + " for " + dr.client);
+        if (log.isDebugEnabled()) {
+            log.debug("adding Listener To Route " + name + " for " + dr.client);
+        }
         Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
         b.addPropertyChangeListener(dr);
     }
-    
+
     void addListenerToSensor(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("adding Listener To Sensor " + name + " for " + dr.client);
+        if (log.isDebugEnabled()) {
+            log.debug("adding Listener To Sensor " + name + " for " + dr.client);
+        }
         Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
         b.addPropertyChangeListener(dr);
     }
-    
+
     void addListenerToSignalHead(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("adding Listener To SignalHead " + name + " for " + dr.client);
+        if (log.isDebugEnabled()) {
+            log.debug("adding Listener To SignalHead " + name + " for " + dr.client);
+        }
         SignalHead b = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
         b.addPropertyChangeListener(dr);
     }
-    
+
     void addListenerToSignalMast(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("adding Listener To SignalMast " + name + " for " + dr.client);
+        if (log.isDebugEnabled()) {
+            log.debug("adding Listener To SignalMast " + name + " for " + dr.client);
+        }
         SignalMast b = InstanceManager.signalMastManagerInstance().getSignalMast(name);
         b.addPropertyChangeListener(dr);
     }
-    
+
     void addListenerToPower(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("adding Listener To Power " + name + " for " + dr.client);
+        if (log.isDebugEnabled()) {
+            log.debug("adding Listener To Power " + name + " for " + dr.client);
+        }
         PowerManager b = InstanceManager.powerManagerInstance();
         b.addPropertyChangeListener(dr);
     }
-    
+
     void removeListenerFromTurnout(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("removing Listener From Turnout " + name + " for " + dr.client);
+        if (log.isDebugEnabled()) {
+            log.debug("removing Listener From Turnout " + name + " for " + dr.client);
+        }
         Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
         b.removePropertyChangeListener(dr);
     }
-    
+
     void removeListenerFromMemory(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("removing Listener From Memory " + name + " for " + dr.client);
+        if (log.isDebugEnabled()) {
+            log.debug("removing Listener From Memory " + name + " for " + dr.client);
+        }
         Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
         b.removePropertyChangeListener(dr);
     }
-    
+
     void removeListenerFromRoute(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("removing Listener From Route " + name + " for " + dr.client);
+        if (log.isDebugEnabled()) {
+            log.debug("removing Listener From Route " + name + " for " + dr.client);
+        }
         Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
         b.removePropertyChangeListener(dr);
     }
-    
+
     void removeListenerFromSensor(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("removing Listener from Sensor " + name + " for " + dr.client);
+        if (log.isDebugEnabled()) {
+            log.debug("removing Listener from Sensor " + name + " for " + dr.client);
+        }
         Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
         b.removePropertyChangeListener(dr);
     }
-    
+
     void removeListenerFromSignalHead(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("removing Listener from SignalHead " + name + " for " + dr.client);
+        if (log.isDebugEnabled()) {
+            log.debug("removing Listener from SignalHead " + name + " for " + dr.client);
+        }
         SignalHead b = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
         b.removePropertyChangeListener(dr);
     }
-    
+
     void removeListenerFromSignalMast(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("removing Listener from SignalMast " + name + " for " + dr.client);
+        if (log.isDebugEnabled()) {
+            log.debug("removing Listener from SignalMast " + name + " for " + dr.client);
+        }
         SignalMast b = InstanceManager.signalMastManagerInstance().getSignalMast(name);
         b.removePropertyChangeListener(dr);
     }
-    
+
     void removeListenerFromPower(String name, Element item, DeferredRead dr) {
-    	if (log.isDebugEnabled()) log.debug("removing Listener From Power " + name + " for " + dr.client);
+        if (log.isDebugEnabled()) {
+            log.debug("removing Listener From Power " + name + " for " + dr.client);
+        }
         PowerManager b = InstanceManager.powerManagerInstance();
         b.removePropertyChangeListener(dr);
     }
-    
-    /** Return true if there is a difference   */
+
+    /**
+     * Return true if there is a difference
+     */
     boolean monitorProcessTurnout(String name, Element item) {
         Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
 
@@ -631,16 +709,18 @@ public class DefaultXmlIOServer implements XmlIOServer {
         if (item.getAttributeValue("value") != null) {
             return (b.getKnownState() != Integer.parseInt(item.getAttributeValue("value")));
         } else {
-        Element v = item.getChild("value");
-        if (v!=null) {
-            int state = Integer.parseInt(v.getText());
-            return  (b.getKnownState() != state);
-        }
+            Element v = item.getChild("value");
+            if (v != null) {
+                int state = Integer.parseInt(v.getText());
+                return (b.getKnownState() != state);
+            }
         }
         return false;  // no difference
     }
-    
-    /** Return true if there is a difference   */
+
+    /**
+     * Return true if there is a difference
+     */
     boolean monitorProcessMemory(String name, Element item) {
         Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
 
@@ -655,18 +735,20 @@ public class DefaultXmlIOServer implements XmlIOServer {
         return false;  // no difference
     }
 
-    /** Return true if there is a difference in passed in route  */
+    /**
+     * Return true if there is a difference in passed in route
+     */
     boolean monitorProcessRoute(String name, Element item) {
-    	int newState = 0;  //default to unknown
-    	RouteManager manager = InstanceManager.routeManagerInstance();
-    	Route r = manager.getBySystemName(name);
-    	String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
-		if (turnoutsAlignedSensor != "") {  //only set if found
-			Sensor routeAligned = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
-	        newState = (routeAligned != null) ? routeAligned.getKnownState() : 0;  //default to unknown
-		}
+        int newState = 0;  //default to unknown
+        RouteManager manager = InstanceManager.routeManagerInstance();
+        Route r = manager.getBySystemName(name);
+        String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
+        if (turnoutsAlignedSensor != "") {  //only set if found
+            Sensor routeAligned = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
+            newState = (routeAligned != null) ? routeAligned.getKnownState() : 0;  //default to unknown
+        }
 
-		int state;
+        int state;
         // check for value element, which means compare
         if (item.getAttributeValue("value") != null) {
             state = Integer.parseInt(item.getAttributeValue("value"));
@@ -675,7 +757,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
         }
         return (newState != state); // return true if states are different
     }
-    
+
     /**
      * Return true if there is a difference
      */
@@ -686,71 +768,71 @@ public class DefaultXmlIOServer implements XmlIOServer {
         if (item.getAttributeValue("value") != null) {
             return (b.getState() != Integer.parseInt(item.getAttributeValue("value")));
         } else {
-        Element v = item.getChild("value");
-        if (v!=null) {
-            int state = Integer.parseInt(v.getText());
-            return  (b.getState() != state);
-        }
+            Element v = item.getChild("value");
+            if (v != null) {
+                int state = Integer.parseInt(v.getText());
+                return (b.getState() != state);
+            }
         }
         return false;  // no difference
     }
-    
+
     /**
      * Return true if there is a difference
      */
     boolean monitorProcessSignalHead(String name, Element item) {
         SignalHead b = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
         if (b == null) {
-        	log.warn("SignalHead " + name + " not found, skipping.");
-        	return false;
+            log.warn("SignalHead " + name + " not found, skipping.");
+            return false;
         }
-    	int state = b.getState();
-    	if (b.getHeld()) {
-        	state = SignalHead.HELD;  //also handle held as a state   
+        int state = b.getState();
+        if (b.getHeld()) {
+            state = SignalHead.HELD;  //also handle held as a state   
         }
 
         // check for value element, which means compare
         if (item.getAttributeValue("value") != null) {
             return (state != Integer.parseInt(item.getAttributeValue("value")));
         } else {
-        	Element v = item.getChild("value");
-        	if (v!=null) {
-        		int newState = Integer.parseInt(v.getText());
-        		return  (state != newState);
-        	}
+            Element v = item.getChild("value");
+            if (v != null) {
+                int newState = Integer.parseInt(v.getText());
+                return (state != newState);
+            }
         }
         return false;  // no difference
     }
-    
+
     /**
      * Return true if there is a difference
      */
     boolean monitorProcessSignalMast(String name, Element item) {
-    	SignalMast b = InstanceManager.signalMastManagerInstance().getSignalMast(name);
-    	if (b == null) {
-    		log.warn("SignalMast " + name + " not found, skipping.");
-    		return false;
-    	}
-    	String state = b.getAspect();
-    	if ((b.getHeld()) && (b.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD)!=null)) {
-    		state = "Held";
-    	} else if ((b.getLit()) && (b.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK)!=null)) {
-    		state = "Dark";
-    	} else if (state == null) {
-    		state = "Unknown";
-    	}
+        SignalMast b = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+        if (b == null) {
+            log.warn("SignalMast " + name + " not found, skipping.");
+            return false;
+        }
+        String state = b.getAspect();
+        if ((b.getHeld()) && (b.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD) != null)) {
+            state = "Held";
+        } else if ((b.getLit()) && (b.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK) != null)) {
+            state = "Dark";
+        } else if (state == null) {
+            state = "Unknown";
+        }
 
-    	// check for value element, which means compare
-    	if (item.getAttributeValue("value") != null) {
-    		return (!state.equals(item.getAttributeValue("value")));
-    	} else {
-    		Element v = item.getChild("value");
-    		if (v!=null) {
-    			String newState = v.getText();
-    			return  (!state.equals(newState));
-    		}
-    	}
-    	return false;  // no difference
+        // check for value element, which means compare
+        if (item.getAttributeValue("value") != null) {
+            return (!state.equals(item.getAttributeValue("value")));
+        } else {
+            Element v = item.getChild("value");
+            if (v != null) {
+                String newState = v.getText();
+                return (!state.equals(newState));
+            }
+        }
+        return false;  // no difference
     }
 
     /**
@@ -768,14 +850,14 @@ public class DefaultXmlIOServer implements XmlIOServer {
             return (b.getPower() != Integer.parseInt(item.getAttributeValue("value")));
         } else {
             Element v = item.getChild("value");
-            if (v!=null) {
+            if (v != null) {
                 int state = Integer.parseInt(v.getText());
-                return  (b.getPower() != state);
+                return (b.getPower() != state);
             }
         }
         return false;  // no difference
     }
-    
+
     void immediateWriteTurnout(String name, Element item) {
         // get turnout
         Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
@@ -785,23 +867,23 @@ public class DefaultXmlIOServer implements XmlIOServer {
             b.setCommandedState(Integer.parseInt(item.getAttributeValue("set")));
             item.removeAttribute("set");
         } else {
-        Element v = item.getChild("set");
-        if (v!=null) {
-            int state = Integer.parseInt(v.getText());
-            b.setCommandedState(state);
-            item.removeContent(v);
+            Element v = item.getChild("set");
+            if (v != null) {
+                int state = Integer.parseInt(v.getText());
+                b.setCommandedState(state);
+                item.removeContent(v);
+            }
         }
     }
-    }    
-    
+
     void immediateWriteMemory(String name, Element item) throws JmriException {
         // get memory
         Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
 
         // check for set element, which means write
         if (item.getAttributeValue("set") != null) {
-            if (item.getAttribute("isNull") != null &&
-                    item.getAttributeValue("isNull").equals(Boolean.toString(true))) {
+            if (item.getAttribute("isNull") != null
+                    && item.getAttributeValue("isNull").equals(Boolean.toString(true))) {
                 b.setValue(null);
             } else {
                 b.setValue(item.getAttributeValue("set"));
@@ -811,8 +893,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
         } else {
             Element v = item.getChild("set");
             if (v != null) {
-                if (item.getAttribute("isNull") != null &&
-                        item.getAttributeValue("isNull").equals(Boolean.toString(true))) {
+                if (item.getAttribute("isNull") != null
+                        && item.getAttributeValue("isNull").equals(Boolean.toString(true))) {
                     b.setValue(null);
                 } else {
                     String state = v.getText();
@@ -824,65 +906,65 @@ public class DefaultXmlIOServer implements XmlIOServer {
     }
 
     void immediateWriteSensor(String name, Element item) throws JmriException {
-    	// get sensor
-    	Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
+        // get sensor
+        Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
 
-    	// check for set element, which means write
-    	if (item.getAttributeValue("set") != null) {
-    		b.setState(Integer.parseInt(item.getAttributeValue("set")));
-    		item.removeAttribute("set");
-    	} else {
-    		Element v = item.getChild("set");
-    		if (v!=null) {
-    			int state = Integer.parseInt(v.getText());
-    			b.setState(state);
-    			item.removeContent(v);
-    		}
-    	}
+        // check for set element, which means write
+        if (item.getAttributeValue("set") != null) {
+            b.setState(Integer.parseInt(item.getAttributeValue("set")));
+            item.removeAttribute("set");
+        } else {
+            Element v = item.getChild("set");
+            if (v != null) {
+                int state = Integer.parseInt(v.getText());
+                b.setState(state);
+                item.removeContent(v);
+            }
+        }
     }
-    
+
     void immediateWriteSignalHead(String name, Element item) throws JmriException {
-    	// get signalhead
-    	SignalHead b = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+        // get signalhead
+        SignalHead b = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
 
-    	// check for set element, which means write
-    	if (item.getAttributeValue("set") != null) {
-    		b.setState(Integer.parseInt(item.getAttributeValue("set")));
-    		item.removeAttribute("set");
-    	} else {
-    		Element v = item.getChild("set");
-    		if (v!=null) {
-    			int state = Integer.parseInt(v.getText());
-    			b.setState(state);
-    			item.removeContent(v);
-    		}
-    	}
+        // check for set element, which means write
+        if (item.getAttributeValue("set") != null) {
+            b.setState(Integer.parseInt(item.getAttributeValue("set")));
+            item.removeAttribute("set");
+        } else {
+            Element v = item.getChild("set");
+            if (v != null) {
+                int state = Integer.parseInt(v.getText());
+                b.setState(state);
+                item.removeContent(v);
+            }
+        }
     }
-    
+
     void immediateWriteSignalMast(String name, Element item) throws JmriException {
-    	// get signalMast
-    	SignalMast b = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+        // get signalMast
+        SignalMast b = InstanceManager.signalMastManagerInstance().getSignalMast(name);
 
-    	// check for set element, which means write
-    	if (item.getAttributeValue("set") != null) {
-    		try {
-    			b.setAspect(item.getAttributeValue("set"));
-    		} catch (IllegalArgumentException e) { //ignore invalid change requests
-    		}
-    		item.removeAttribute("set");
-    	} else {
-    		Element v = item.getChild("set");
-    		if (v!=null) {
-    			String state = v.getText();
-    			try {
-    				b.setAspect(state);
-    			} catch (IllegalArgumentException e) { //ignore invalid change requests
-    			}
-    			item.removeContent(v);
-    		}
-    	}
+        // check for set element, which means write
+        if (item.getAttributeValue("set") != null) {
+            try {
+                b.setAspect(item.getAttributeValue("set"));
+            } catch (IllegalArgumentException e) { //ignore invalid change requests
+            }
+            item.removeAttribute("set");
+        } else {
+            Element v = item.getChild("set");
+            if (v != null) {
+                String state = v.getText();
+                try {
+                    b.setAspect(state);
+                } catch (IllegalArgumentException e) { //ignore invalid change requests
+                }
+                item.removeContent(v);
+            }
+        }
     }
-    
+
     void immediateWriteRoute(String name, Element item) throws JmriException {
         // get route
         Route b = InstanceManager.routeManagerInstance().provideRoute(name, null);
@@ -891,16 +973,16 @@ public class DefaultXmlIOServer implements XmlIOServer {
             b.setRoute();
             item.removeAttribute("set");
         } else {
-        // check for set element, which means write
-        Element v = item.getChild("set");
-        if (v!=null) {
+            // check for set element, which means write
+            Element v = item.getChild("set");
+            if (v != null) {
 //            int state = Integer.parseInt(v.getText());
-            b.setRoute(); 
-            item.removeContent(v);
+                b.setRoute();
+                item.removeContent(v);
+            }
         }
     }
-    }
-    
+
     void immediateWritePower(String name, Element item) throws JmriException {
         // get power manager
         PowerManager b = InstanceManager.powerManagerInstance();
@@ -916,7 +998,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 //item.setAttribute("value", Integer.toString(b.getPower()));
             } else {
                 Element v = item.getChild("set");
-                if (v!=null) {
+                if (v != null) {
                     int state = Integer.parseInt(v.getText());
                     b.setPower(state);
                     // remove set element
@@ -925,15 +1007,15 @@ public class DefaultXmlIOServer implements XmlIOServer {
             }
         }
     }
-    
+
     void immediateWriteRoster(String name, Element item) throws JmriException {
         log.error("no immediate write for roster element");
     }
-    
+
     void immediateWriteFrame(String name, Element item) throws JmriException {
         log.error("no immediate write for frame element");
     }
-    
+
     void immediateWriteMetadata(String name, Element item) throws JmriException {
         log.error("no immediate write for metadata element");
     }
@@ -945,16 +1027,18 @@ public class DefaultXmlIOServer implements XmlIOServer {
         if (useAttributes) {
             item.setAttribute("value", Integer.toString(b.getKnownState()));
         } else {
-        Element v = item.getChild("value");
+            Element v = item.getChild("value");
 
-        // Start read: ensure value element
-        if (v == null) item.addContent(v = new Element("value"));
-        
-        // set result
-        v.setText(""+b.getKnownState());
+            // Start read: ensure value element
+            if (v == null) {
+                item.addContent(v = new Element("value"));
+            }
+
+            // set result
+            v.setText("" + b.getKnownState());
+        }
     }
-    }
-    
+
     void immediateReadMemory(String name, Element item) {
         // get memory
         Memory b = InstanceManager.memoryManagerInstance().provideMemory(name);
@@ -969,7 +1053,9 @@ public class DefaultXmlIOServer implements XmlIOServer {
             Element v = item.getChild("value");
 
             // Start read: ensure value element
-            if (v == null) item.addContent(v = new Element("value"));
+            if (v == null) {
+                item.addContent(v = new Element("value"));
+            }
 
             // set result
             v.setText(s);
@@ -978,90 +1064,98 @@ public class DefaultXmlIOServer implements XmlIOServer {
             }
         }
     }
-    
+
     void immediateReadRoute(String name, Element item) {
 
-    	String state = "0";  //default to unknown
-    	RouteManager manager = InstanceManager.routeManagerInstance();
-    	Route r = manager.getBySystemName(name);
-    	String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
-		if (turnoutsAlignedSensor != "") {  //only set if found
-			Sensor routeAligned = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
-			state = Integer.toString((routeAligned != null) ? routeAligned.getKnownState() : 0);
-		}
-        
+        String state = "0";  //default to unknown
+        RouteManager manager = InstanceManager.routeManagerInstance();
+        Route r = manager.getBySystemName(name);
+        String turnoutsAlignedSensor = r.getTurnoutsAlignedSensor();
+        if (turnoutsAlignedSensor != "") {  //only set if found
+            Sensor routeAligned = InstanceManager.sensorManagerInstance().provideSensor(turnoutsAlignedSensor);
+            state = Integer.toString((routeAligned != null) ? routeAligned.getKnownState() : 0);
+        }
+
         if (useAttributes) {
             item.setAttribute("value", state);
         } else {
             Element v = item.getChild("value");
 
             // Start read: ensure value element
-            if (v == null) item.addContent(v = new Element("value"));
+            if (v == null) {
+                item.addContent(v = new Element("value"));
+            }
 
             // set result
             v.setText(state);
         }
     }
-    
+
     void immediateReadSensor(String name, Element item) {
-    	// get sensor
-    	Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
+        // get sensor
+        Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
 
-    	if (useAttributes) {
-    		item.setAttribute("value", Integer.toString(b.getState()));
-    	} else {
-    		Element v = item.getChild("value");
+        if (useAttributes) {
+            item.setAttribute("value", Integer.toString(b.getState()));
+        } else {
+            Element v = item.getChild("value");
 
-    		// Start read: ensure value element
-    		if (v == null) item.addContent(v = new Element("value"));
+            // Start read: ensure value element
+            if (v == null) {
+                item.addContent(v = new Element("value"));
+            }
 
-    		// set result
-    		v.setText(""+b.getState());
-    	}
-    }
-    
-    void immediateReadSignalHead(String name, Element item) {
-    	// get signalhead
-    	SignalHead b = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-        int state = b.getState();
-    	if (b.getHeld()) {
-        	state = SignalHead.HELD;  //also handle held as a state   
+            // set result
+            v.setText("" + b.getState());
         }
-    	if (useAttributes) {
-    		item.setAttribute("value", Integer.toString(state));
-    	} else {
-    		Element v = item.getChild("value");
+    }
 
-    		// Start read: ensure value element
-    		if (v == null) item.addContent(v = new Element("value"));
+    void immediateReadSignalHead(String name, Element item) {
+        // get signalhead
+        SignalHead b = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+        int state = b.getState();
+        if (b.getHeld()) {
+            state = SignalHead.HELD;  //also handle held as a state   
+        }
+        if (useAttributes) {
+            item.setAttribute("value", Integer.toString(state));
+        } else {
+            Element v = item.getChild("value");
 
-    		// set result
-    		v.setText(""+state);
-    	}
+            // Start read: ensure value element
+            if (v == null) {
+                item.addContent(v = new Element("value"));
+            }
+
+            // set result
+            v.setText("" + state);
+        }
     }
 
     void immediateReadSignalMast(String name, Element item) {
-    	// get signalMast
-    	SignalMast b = InstanceManager.signalMastManagerInstance().getSignalMast(name);
-    	String state = b.getAspect();
-    	if ((b.getHeld()) && (b.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD)!=null)) {
-    		state = "Held";
-    	} else if ((b.getLit()) && (b.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK)!=null)) {
-    		state = "Dark";
-    	} else if (state == null) {
-    		state = "Unknown";
-    	}
-    	if (useAttributes) {
-    		item.setAttribute("value", state);
-    	} else {
-    		Element v = item.getChild("value");
+        // get signalMast
+        SignalMast b = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+        String state = b.getAspect();
+        if ((b.getHeld()) && (b.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD) != null)) {
+            state = "Held";
+        } else if ((b.getLit()) && (b.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK) != null)) {
+            state = "Dark";
+        } else if (state == null) {
+            state = "Unknown";
+        }
+        if (useAttributes) {
+            item.setAttribute("value", state);
+        } else {
+            Element v = item.getChild("value");
 
-    		// Start read: ensure value element
-    		if (v == null) item.addContent(v = new Element("value"));
+            // Start read: ensure value element
+            if (v == null) {
+                item.addContent(v = new Element("value"));
+            }
 
-    		// set result
-    		v.setText(state);
-    	}
+            // set result
+            v.setText(state);
+        }
     }
 
     void immediateReadPower(String name, Element item) throws JmriException {
@@ -1078,14 +1172,18 @@ public class DefaultXmlIOServer implements XmlIOServer {
             Element v = item.getChild("value");
 
             // Start read: ensure value element
-            if (v == null) item.addContent(v = new Element("value"));
+            if (v == null) {
+                item.addContent(v = new Element("value"));
+            }
 
             // set result
             v.setText(p);
-            if (b == null) item.setAttribute("isNull", Boolean.toString(true));
+            if (b == null) {
+                item.setAttribute("isNull", Boolean.toString(true));
+            }
         }
     }
-    
+
     void immediateReadMetadata(String name, Element item) throws JmriException {
 
         if (useAttributes) {
@@ -1115,9 +1213,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
             }
         }
     }
-    
     static HashMap<Integer, ThrottleContext> map = new HashMap<Integer, ThrottleContext>();
-    
+
     void immediateSetThrottle(Element item) {
         Integer address;
         useAttributes = (item.getAttribute("address") != null);
@@ -1130,7 +1227,6 @@ public class DefaultXmlIOServer implements XmlIOServer {
         if (tc == null) {
             // first request does the allocation
             InstanceManager.throttleManagerInstance().requestThrottle(address, new ThrottleListener() {
-
                 @Override
                 public void notifyThrottleFound(DccThrottle t) {
                     log.debug("callback for throttle");
@@ -1151,368 +1247,502 @@ public class DefaultXmlIOServer implements XmlIOServer {
             DccThrottle t = tc.throttle;
 
             if (useAttributes) {
-            	Attribute a;
-            	try {
-            		if ((a = item.getAttribute("speed")) != null) {
-            			t.setSpeedSetting(a.getFloatValue());
-            		} else {
-            			item.setAttribute("speed", Float.toString(t.getSpeedSetting()));
-            		}
+                Attribute a;
+                try {
+                    if ((a = item.getAttribute("speed")) != null) {
+                        t.setSpeedSetting(a.getFloatValue());
+                    } else {
+                        item.setAttribute("speed", Float.toString(t.getSpeedSetting()));
+                    }
 
-            		if ((a = item.getAttribute("forward")) != null) {
-            			t.setIsForward(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("forward", Boolean.valueOf(t.getIsForward()).toString());
-            		}
+                    if ((a = item.getAttribute("forward")) != null) {
+                        t.setIsForward(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("forward", Boolean.valueOf(t.getIsForward()).toString());
+                    }
 
-            		if ((a = item.getAttribute("F0")) != null) {
-            			t.setF0(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F0", Boolean.valueOf(t.getF0()).toString());
-            		}
+                    if ((a = item.getAttribute("F0")) != null) {
+                        t.setF0(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F0", Boolean.valueOf(t.getF0()).toString());
+                    }
 
-            		if ((a = item.getAttribute("F1")) != null) {
-            			t.setF1(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F1", Boolean.valueOf(t.getF1()).toString());
-            		}
+                    if ((a = item.getAttribute("F1")) != null) {
+                        t.setF1(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F1", Boolean.valueOf(t.getF1()).toString());
+                    }
 
-            		if ((a = item.getAttribute("F2")) != null) {
-            			t.setF2(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F2", Boolean.valueOf(t.getF2()).toString());
-            		}
+                    if ((a = item.getAttribute("F2")) != null) {
+                        t.setF2(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F2", Boolean.valueOf(t.getF2()).toString());
+                    }
 
-            		if ((a = item.getAttribute("F3")) != null) {
-            			t.setF3(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F3", Boolean.valueOf(t.getF3()).toString());
-            		}
+                    if ((a = item.getAttribute("F3")) != null) {
+                        t.setF3(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F3", Boolean.valueOf(t.getF3()).toString());
+                    }
 
-            		if ((a = item.getAttribute("F4")) != null) {
-            			t.setF4(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F4", Boolean.valueOf(t.getF4()).toString());
-            		}
+                    if ((a = item.getAttribute("F4")) != null) {
+                        t.setF4(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F4", Boolean.valueOf(t.getF4()).toString());
+                    }
 
-            		if ((a = item.getAttribute("F5")) != null) {
-            			t.setF5(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F5", Boolean.valueOf(t.getF5()).toString());
-            		}
+                    if ((a = item.getAttribute("F5")) != null) {
+                        t.setF5(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F5", Boolean.valueOf(t.getF5()).toString());
+                    }
 
-            		if ((a = item.getAttribute("F6")) != null) {
-            			t.setF6(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F6", Boolean.valueOf(t.getF6()).toString());
-            		}
+                    if ((a = item.getAttribute("F6")) != null) {
+                        t.setF6(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F6", Boolean.valueOf(t.getF6()).toString());
+                    }
 
-            		if ((a = item.getAttribute("F7")) != null) {
-            			t.setF7(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F7", Boolean.valueOf(t.getF7()).toString());
-            		}
+                    if ((a = item.getAttribute("F7")) != null) {
+                        t.setF7(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F7", Boolean.valueOf(t.getF7()).toString());
+                    }
 
-            		if ((a = item.getAttribute("F8")) != null) {
-            			t.setF8(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F8", Boolean.valueOf(t.getF8()).toString());
-            		}
+                    if ((a = item.getAttribute("F8")) != null) {
+                        t.setF8(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F8", Boolean.valueOf(t.getF8()).toString());
+                    }
 
-            		if ((a = item.getAttribute("F9")) != null) {
-            			t.setF9(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F9", Boolean.valueOf(t.getF9()).toString());
-            		}
+                    if ((a = item.getAttribute("F9")) != null) {
+                        t.setF9(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F9", Boolean.valueOf(t.getF9()).toString());
+                    }
 
-            		if ((a = item.getAttribute("F10")) != null) {
-            			t.setF10(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F10", Boolean.valueOf(t.getF10()).toString());
-            		}
+                    if ((a = item.getAttribute("F10")) != null) {
+                        t.setF10(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F10", Boolean.valueOf(t.getF10()).toString());
+                    }
 
-            		if ((a = item.getAttribute("F11")) != null) {
-            			t.setF11(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F11", Boolean.valueOf(t.getF11()).toString());
-            		}
+                    if ((a = item.getAttribute("F11")) != null) {
+                        t.setF11(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F11", Boolean.valueOf(t.getF11()).toString());
+                    }
 
-            		if ((a = item.getAttribute("F12")) != null) {
-            			t.setF12(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F12", Boolean.valueOf(t.getF12()).toString());
-            		}
-            		if ((a = item.getAttribute("F13")) != null) {
-            			t.setF13(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F13", Boolean.valueOf(t.getF13()).toString());
-            		}
-            		if ((a = item.getAttribute("F14")) != null) {
-            			t.setF14(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F14", Boolean.valueOf(t.getF14()).toString());
-            		}
-            		if ((a = item.getAttribute("F15")) != null) {
-            			t.setF15(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F15", Boolean.valueOf(t.getF15()).toString());
-            		}
-            		if ((a = item.getAttribute("F16")) != null) {
-            			t.setF16(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F16", Boolean.valueOf(t.getF16()).toString());
-            		}
-            		if ((a = item.getAttribute("F17")) != null) {
-            			t.setF17(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F17", Boolean.valueOf(t.getF17()).toString());
-            		}
-            		if ((a = item.getAttribute("F18")) != null) {
-            			t.setF18(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F18", Boolean.valueOf(t.getF18()).toString());
-            		}
-            		if ((a = item.getAttribute("F19")) != null) {
-            			t.setF19(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F19", Boolean.valueOf(t.getF19()).toString());
-            		}
-            		if ((a = item.getAttribute("F20")) != null) {
-            			t.setF20(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F20", Boolean.valueOf(t.getF20()).toString());
-            		}
-            		if ((a = item.getAttribute("F21")) != null) {
-            			t.setF21(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F21", Boolean.valueOf(t.getF21()).toString());
-            		}
-            		if ((a = item.getAttribute("F22")) != null) {
-            			t.setF22(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F22", Boolean.valueOf(t.getF22()).toString());
-            		}
-            		if ((a = item.getAttribute("F23")) != null) {
-            			t.setF23(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F23", Boolean.valueOf(t.getF23()).toString());
-            		}
-            		if ((a = item.getAttribute("F24")) != null) {
-            			t.setF24(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F24", Boolean.valueOf(t.getF24()).toString());
-            		}
-            		if ((a = item.getAttribute("F25")) != null) {
-            			t.setF25(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F25", Boolean.valueOf(t.getF25()).toString());
-            		}
-            		if ((a = item.getAttribute("F26")) != null) {
-            			t.setF26(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F26", Boolean.valueOf(t.getF26()).toString());
-            		}
-            		if ((a = item.getAttribute("F27")) != null) {
-            			t.setF27(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F27", Boolean.valueOf(t.getF27()).toString());
-            		}
-            		if ((a = item.getAttribute("F28")) != null) {
-            			t.setF28(a.getBooleanValue());
-            		} else {
-            			item.setAttribute("F28", Boolean.valueOf(t.getF28()).toString());
-            		}
+                    if ((a = item.getAttribute("F12")) != null) {
+                        t.setF12(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F12", Boolean.valueOf(t.getF12()).toString());
+                    }
+                    if ((a = item.getAttribute("F13")) != null) {
+                        t.setF13(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F13", Boolean.valueOf(t.getF13()).toString());
+                    }
+                    if ((a = item.getAttribute("F14")) != null) {
+                        t.setF14(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F14", Boolean.valueOf(t.getF14()).toString());
+                    }
+                    if ((a = item.getAttribute("F15")) != null) {
+                        t.setF15(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F15", Boolean.valueOf(t.getF15()).toString());
+                    }
+                    if ((a = item.getAttribute("F16")) != null) {
+                        t.setF16(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F16", Boolean.valueOf(t.getF16()).toString());
+                    }
+                    if ((a = item.getAttribute("F17")) != null) {
+                        t.setF17(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F17", Boolean.valueOf(t.getF17()).toString());
+                    }
+                    if ((a = item.getAttribute("F18")) != null) {
+                        t.setF18(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F18", Boolean.valueOf(t.getF18()).toString());
+                    }
+                    if ((a = item.getAttribute("F19")) != null) {
+                        t.setF19(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F19", Boolean.valueOf(t.getF19()).toString());
+                    }
+                    if ((a = item.getAttribute("F20")) != null) {
+                        t.setF20(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F20", Boolean.valueOf(t.getF20()).toString());
+                    }
+                    if ((a = item.getAttribute("F21")) != null) {
+                        t.setF21(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F21", Boolean.valueOf(t.getF21()).toString());
+                    }
+                    if ((a = item.getAttribute("F22")) != null) {
+                        t.setF22(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F22", Boolean.valueOf(t.getF22()).toString());
+                    }
+                    if ((a = item.getAttribute("F23")) != null) {
+                        t.setF23(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F23", Boolean.valueOf(t.getF23()).toString());
+                    }
+                    if ((a = item.getAttribute("F24")) != null) {
+                        t.setF24(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F24", Boolean.valueOf(t.getF24()).toString());
+                    }
+                    if ((a = item.getAttribute("F25")) != null) {
+                        t.setF25(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F25", Boolean.valueOf(t.getF25()).toString());
+                    }
+                    if ((a = item.getAttribute("F26")) != null) {
+                        t.setF26(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F26", Boolean.valueOf(t.getF26()).toString());
+                    }
+                    if ((a = item.getAttribute("F27")) != null) {
+                        t.setF27(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F27", Boolean.valueOf(t.getF27()).toString());
+                    }
+                    if ((a = item.getAttribute("F28")) != null) {
+                        t.setF28(a.getBooleanValue());
+                    } else {
+                        item.setAttribute("F28", Boolean.valueOf(t.getF28()).toString());
+                    }
 
-            	} catch (DataConversionException e) {
-
-            	}
+                } catch (DataConversionException e) {
+                }
             } else {
-            	Element e;
+                Element e;
 
-            	if ( (e = item.getChild("speed")) != null) {
-            		t.setSpeedSetting(Float.parseFloat(e.getText()));
-            	}
-            	else item.addContent(new Element("speed")
-            	.addContent(
-            			""+t.getSpeedSetting()
-            	));
+                if ((e = item.getChild("speed")) != null) {
+                    t.setSpeedSetting(Float.parseFloat(e.getText()));
+                } else {
+                    item.addContent(new Element("speed")
+                            .addContent(
+                            "" + t.getSpeedSetting()));
+                }
 
-            	if ( (e = item.getChild("forward")) != null) {
-            		if (e.getText().equals("false")) t.setIsForward(false);
-            		else t.setIsForward(true);
-            	}
-            	else item.addContent(new Element("forward")
-            	.addContent(
-            			t.getIsForward() ? "true" : "false"
-            	));
+                if ((e = item.getChild("forward")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setIsForward(false);
+                    } else {
+                        t.setIsForward(true);
+                    }
+                } else {
+                    item.addContent(new Element("forward")
+                            .addContent(
+                            t.getIsForward() ? "true" : "false"));
+                }
 
-            	if ( (e = item.getChild("F0")) != null)  
-            		if (e.getText().equals("false")) t.setF0(false);
-            		else t.setF0(true);
-            	else item.addContent(new Element("F0")
-            	.addContent(
-            			t.getF0() ? "true" : "false"
-            	));
+                if ((e = item.getChild("F0")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF0(false);
+                    } else {
+                        t.setF0(true);
+                    }
+                } else {
+                    item.addContent(new Element("F0")
+                            .addContent(
+                            t.getF0() ? "true" : "false"));
+                }
 
-            	if ( (e = item.getChild("F1")) != null)  
-            		if (e.getText().equals("false")) t.setF1(false);
-            		else t.setF1(true);
-            	else item.addContent(new Element("F1")
-            	.addContent(
-            			t.getF1() ? "true" : "false"
-            	));
+                if ((e = item.getChild("F1")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF1(false);
+                    } else {
+                        t.setF1(true);
+                    }
+                } else {
+                    item.addContent(new Element("F1")
+                            .addContent(
+                            t.getF1() ? "true" : "false"));
+                }
 
-            	if ( (e = item.getChild("F2")) != null)  
-            		if (e.getText().equals("false")) t.setF2(false);
-            		else t.setF2(true);
-            	else item.addContent(new Element("F2")
-            	.addContent(
-            			t.getF2() ? "true" : "false"
-            	));
+                if ((e = item.getChild("F2")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF2(false);
+                    } else {
+                        t.setF2(true);
+                    }
+                } else {
+                    item.addContent(new Element("F2")
+                            .addContent(
+                            t.getF2() ? "true" : "false"));
+                }
 
-            	if ( (e = item.getChild("F3")) != null)  
-            		if (e.getText().equals("false")) t.setF3(false);
-            		else t.setF3(true);
-            	else item.addContent(new Element("F3")
-            	.addContent(
-            			t.getF3() ? "true" : "false"
-            	));
+                if ((e = item.getChild("F3")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF3(false);
+                    } else {
+                        t.setF3(true);
+                    }
+                } else {
+                    item.addContent(new Element("F3")
+                            .addContent(
+                            t.getF3() ? "true" : "false"));
+                }
 
-            	if ( (e = item.getChild("F4")) != null)  
-            		if (e.getText().equals("false")) t.setF4(false);
-            		else t.setF4(true);
-            	else item.addContent(new Element("F4")
-            	.addContent(
-            			t.getF4() ? "true" : "false"
-            	));
+                if ((e = item.getChild("F4")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF4(false);
+                    } else {
+                        t.setF4(true);
+                    }
+                } else {
+                    item.addContent(new Element("F4")
+                            .addContent(
+                            t.getF4() ? "true" : "false"));
+                }
 
-            	if ( (e = item.getChild("F5")) != null)  
-            		if (e.getText().equals("false")) t.setF5(false);
-            		else t.setF5(true);
-            	else item.addContent(new Element("F5")
-            	.addContent(
-            			t.getF5() ? "true" : "false"
-            	));
+                if ((e = item.getChild("F5")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF5(false);
+                    } else {
+                        t.setF5(true);
+                    }
+                } else {
+                    item.addContent(new Element("F5")
+                            .addContent(
+                            t.getF5() ? "true" : "false"));
+                }
 
-            	if ( (e = item.getChild("F6")) != null)  
-            		if (e.getText().equals("false")) t.setF6(false);
-            		else t.setF6(true);
-            	else item.addContent(new Element("F6")
-            	.addContent(
-            			t.getF6() ? "true" : "false"
-            	));
+                if ((e = item.getChild("F6")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF6(false);
+                    } else {
+                        t.setF6(true);
+                    }
+                } else {
+                    item.addContent(new Element("F6")
+                            .addContent(
+                            t.getF6() ? "true" : "false"));
+                }
 
-            	if ( (e = item.getChild("F7")) != null)  
-            		if (e.getText().equals("false")) t.setF7(false);
-            		else t.setF7(true);
-            	else item.addContent(new Element("F7")
-            	.addContent(
-            			t.getF7() ? "true" : "false"
-            	));
+                if ((e = item.getChild("F7")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF7(false);
+                    } else {
+                        t.setF7(true);
+                    }
+                } else {
+                    item.addContent(new Element("F7")
+                            .addContent(
+                            t.getF7() ? "true" : "false"));
+                }
 
-            	if ( (e = item.getChild("F8")) != null)  
-            		if (e.getText().equals("false")) t.setF8(false);
-            		else t.setF8(true);
-            	else item.addContent(new Element("F8")
-            	.addContent(
-            			t.getF8() ? "true" : "false"
-            	));
+                if ((e = item.getChild("F8")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF8(false);
+                    } else {
+                        t.setF8(true);
+                    }
+                } else {
+                    item.addContent(new Element("F8")
+                            .addContent(
+                            t.getF8() ? "true" : "false"));
+                }
 
-            	if ( (e = item.getChild("F9")) != null)  
-            		if (e.getText().equals("false")) t.setF9(false);
-            		else t.setF9(true);
-            	else item.addContent(new Element("F9")
-            	.addContent(
-            			t.getF9() ? "true" : "false"
-            	));
+                if ((e = item.getChild("F9")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF9(false);
+                    } else {
+                        t.setF9(true);
+                    }
+                } else {
+                    item.addContent(new Element("F9")
+                            .addContent(
+                            t.getF9() ? "true" : "false"));
+                }
 
-            	if ( (e = item.getChild("F10")) != null)  
-            		if (e.getText().equals("false")) t.setF10(false);
-            		else t.setF10(true);
-            	else item.addContent(new Element("F10")
-            	.addContent(
-            			t.getF10() ? "true" : "false"
-            	));
+                if ((e = item.getChild("F10")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF10(false);
+                    } else {
+                        t.setF10(true);
+                    }
+                } else {
+                    item.addContent(new Element("F10")
+                            .addContent(
+                            t.getF10() ? "true" : "false"));
+                }
 
-            	if ( (e = item.getChild("F11")) != null)  
-            		if (e.getText().equals("false")) t.setF11(false);
-            		else t.setF11(true);
-            	else item.addContent(new Element("F11")
-            	.addContent(
-            			t.getF11() ? "true" : "false"
-            	));
+                if ((e = item.getChild("F11")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF11(false);
+                    } else {
+                        t.setF11(true);
+                    }
+                } else {
+                    item.addContent(new Element("F11")
+                            .addContent(
+                            t.getF11() ? "true" : "false"));
+                }
 
-            	if ( (e = item.getChild("F12")) != null)  
-            		if (e.getText().equals("false")) t.setF12(false);
-            		else t.setF12(true);
-            	else item.addContent(new Element("F12")
-            	.addContent(
-            			t.getF12() ? "true" : "false"
-            	));
-            	if ( (e = item.getChild("F13")) != null)  
-            		if (e.getText().equals("false")) t.setF13(false);
-            		else t.setF13(true);
-            	else item.addContent(new Element("F13").addContent(t.getF13() ? "true" : "false"));
-            	if ( (e = item.getChild("F14")) != null)  
-            		if (e.getText().equals("false")) t.setF14(false);
-            		else t.setF14(true);
-            	else item.addContent(new Element("F14").addContent(t.getF14() ? "true" : "false"));
-            	if ( (e = item.getChild("F15")) != null)  
-            		if (e.getText().equals("false")) t.setF15(false);
-            		else t.setF15(true);
-            	else item.addContent(new Element("F15").addContent(t.getF15() ? "true" : "false"));
-            	if ( (e = item.getChild("F16")) != null)  
-            		if (e.getText().equals("false")) t.setF16(false);
-            		else t.setF16(true);
-            	else item.addContent(new Element("F16").addContent(t.getF16() ? "true" : "false"));
-            	if ( (e = item.getChild("F17")) != null)  
-            		if (e.getText().equals("false")) t.setF17(false);
-            		else t.setF17(true);
-            	else item.addContent(new Element("F17").addContent(t.getF17() ? "true" : "false"));
-            	if ( (e = item.getChild("F18")) != null)  
-            		if (e.getText().equals("false")) t.setF18(false);
-            		else t.setF18(true);
-            	else item.addContent(new Element("F18").addContent(t.getF18() ? "true" : "false"));
-            	if ( (e = item.getChild("F19")) != null)  
-            		if (e.getText().equals("false")) t.setF19(false);
-            		else t.setF19(true);
-            	else item.addContent(new Element("F19").addContent(t.getF19() ? "true" : "false"));
-            	if ( (e = item.getChild("F20")) != null)  
-            		if (e.getText().equals("false")) t.setF20(false);
-            		else t.setF20(true);
-            	else item.addContent(new Element("F20").addContent(t.getF20() ? "true" : "false"));
-            	if ( (e = item.getChild("F21")) != null)  
-            		if (e.getText().equals("false")) t.setF21(false);
-            		else t.setF21(true);
-            	else item.addContent(new Element("F21").addContent(t.getF21() ? "true" : "false"));
-            	if ( (e = item.getChild("F22")) != null)  
-            		if (e.getText().equals("false")) t.setF22(false);
-            		else t.setF22(true);
-            	else item.addContent(new Element("F22").addContent(t.getF22() ? "true" : "false"));
-            	if ( (e = item.getChild("F23")) != null)  
-            		if (e.getText().equals("false")) t.setF23(false);
-            		else t.setF23(true);
-            	else item.addContent(new Element("F23").addContent(t.getF23() ? "true" : "false"));
-            	if ( (e = item.getChild("F24")) != null)  
-            		if (e.getText().equals("false")) t.setF24(false);
-            		else t.setF24(true);
-            	else item.addContent(new Element("F24").addContent(t.getF24() ? "true" : "false"));
-            	if ( (e = item.getChild("F25")) != null)  
-            		if (e.getText().equals("false")) t.setF25(false);
-            		else t.setF25(true);
-            	else item.addContent(new Element("F25").addContent(t.getF25() ? "true" : "false"));
-            	if ( (e = item.getChild("F26")) != null)  
-            		if (e.getText().equals("false")) t.setF26(false);
-            		else t.setF26(true);
-            	else item.addContent(new Element("F26").addContent(t.getF26() ? "true" : "false"));
-            	if ( (e = item.getChild("F27")) != null)  
-            		if (e.getText().equals("false")) t.setF27(false);
-            		else t.setF27(true);
-            	else item.addContent(new Element("F27").addContent(t.getF27() ? "true" : "false"));
-            	if ( (e = item.getChild("F28")) != null)  
-            		if (e.getText().equals("false")) t.setF28(false);
-            		else t.setF28(true);
-            	else item.addContent(new Element("F28").addContent(t.getF28() ? "true" : "false"));
+                if ((e = item.getChild("F12")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF12(false);
+                    } else {
+                        t.setF12(true);
+                    }
+                } else {
+                    item.addContent(new Element("F12")
+                            .addContent(
+                            t.getF12() ? "true" : "false"));
+                }
+                if ((e = item.getChild("F13")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF13(false);
+                    } else {
+                        t.setF13(true);
+                    }
+                } else {
+                    item.addContent(new Element("F13").addContent(t.getF13() ? "true" : "false"));
+                }
+                if ((e = item.getChild("F14")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF14(false);
+                    } else {
+                        t.setF14(true);
+                    }
+                } else {
+                    item.addContent(new Element("F14").addContent(t.getF14() ? "true" : "false"));
+                }
+                if ((e = item.getChild("F15")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF15(false);
+                    } else {
+                        t.setF15(true);
+                    }
+                } else {
+                    item.addContent(new Element("F15").addContent(t.getF15() ? "true" : "false"));
+                }
+                if ((e = item.getChild("F16")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF16(false);
+                    } else {
+                        t.setF16(true);
+                    }
+                } else {
+                    item.addContent(new Element("F16").addContent(t.getF16() ? "true" : "false"));
+                }
+                if ((e = item.getChild("F17")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF17(false);
+                    } else {
+                        t.setF17(true);
+                    }
+                } else {
+                    item.addContent(new Element("F17").addContent(t.getF17() ? "true" : "false"));
+                }
+                if ((e = item.getChild("F18")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF18(false);
+                    } else {
+                        t.setF18(true);
+                    }
+                } else {
+                    item.addContent(new Element("F18").addContent(t.getF18() ? "true" : "false"));
+                }
+                if ((e = item.getChild("F19")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF19(false);
+                    } else {
+                        t.setF19(true);
+                    }
+                } else {
+                    item.addContent(new Element("F19").addContent(t.getF19() ? "true" : "false"));
+                }
+                if ((e = item.getChild("F20")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF20(false);
+                    } else {
+                        t.setF20(true);
+                    }
+                } else {
+                    item.addContent(new Element("F20").addContent(t.getF20() ? "true" : "false"));
+                }
+                if ((e = item.getChild("F21")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF21(false);
+                    } else {
+                        t.setF21(true);
+                    }
+                } else {
+                    item.addContent(new Element("F21").addContent(t.getF21() ? "true" : "false"));
+                }
+                if ((e = item.getChild("F22")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF22(false);
+                    } else {
+                        t.setF22(true);
+                    }
+                } else {
+                    item.addContent(new Element("F22").addContent(t.getF22() ? "true" : "false"));
+                }
+                if ((e = item.getChild("F23")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF23(false);
+                    } else {
+                        t.setF23(true);
+                    }
+                } else {
+                    item.addContent(new Element("F23").addContent(t.getF23() ? "true" : "false"));
+                }
+                if ((e = item.getChild("F24")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF24(false);
+                    } else {
+                        t.setF24(true);
+                    }
+                } else {
+                    item.addContent(new Element("F24").addContent(t.getF24() ? "true" : "false"));
+                }
+                if ((e = item.getChild("F25")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF25(false);
+                    } else {
+                        t.setF25(true);
+                    }
+                } else {
+                    item.addContent(new Element("F25").addContent(t.getF25() ? "true" : "false"));
+                }
+                if ((e = item.getChild("F26")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF26(false);
+                    } else {
+                        t.setF26(true);
+                    }
+                } else {
+                    item.addContent(new Element("F26").addContent(t.getF26() ? "true" : "false"));
+                }
+                if ((e = item.getChild("F27")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF27(false);
+                    } else {
+                        t.setF27(true);
+                    }
+                } else {
+                    item.addContent(new Element("F27").addContent(t.getF27() ? "true" : "false"));
+                }
+                if ((e = item.getChild("F28")) != null) {
+                    if (e.getText().equals("false")) {
+                        t.setF28(false);
+                    } else {
+                        t.setF28(true);
+                    }
+                } else {
+                    item.addContent(new Element("F28").addContent(t.getF28() ? "true" : "false"));
+                }
 
             }
             // The speedStepMode is sent every time since a XMLIO client may
@@ -1522,9 +1752,9 @@ public class DefaultXmlIOServer implements XmlIOServer {
             // to prevent clients that don't know what to do with unknown
             // elements from crashing.
             if (useAttributes) {
-            	item.setAttribute("SSM", Integer.toString(t.getSpeedStepMode()));
+                item.setAttribute("SSM", Integer.toString(t.getSpeedStepMode()));
             } else {
-            	item.addContent(new Element("SSM").addContent(Integer.toString(t.getSpeedStepMode())));
+                item.addContent(new Element("SSM").addContent(Integer.toString(t.getSpeedStepMode())));
             }
         }
     }
@@ -1532,22 +1762,26 @@ public class DefaultXmlIOServer implements XmlIOServer {
     // class to persist (from one usage to another)
     // throttle information
     static class ThrottleContext {
+
         DccThrottle throttle;
     }
-    
+
     // class for firing off requests to handle a deferred read
     class DeferredRead implements java.beans.PropertyChangeListener {
+
         public Thread thread;
-		Element request;
+        Element request;
         XmlIORequestor requestor;
         String client;
-        
+
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             boolean changed = checkValues(request);
-            
-            if (!changed) return;
-            
+
+            if (!changed) {
+                return;
+            }
+
             // found change, pull listeners and return
             @SuppressWarnings("unchecked")
             List<Element> items = request.getChildren();
@@ -1561,23 +1795,30 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 } else if (name == null) {
                     name = "";
                 }
-                if (type.equals("turnout")) removeListenerFromTurnout(name, item, this);
-                else if (type.equals("memory")) removeListenerFromMemory(name, item, this);
-                else if (type.equals("sensor")) removeListenerFromSensor(name, item, this);
-                else if (type.equals("signalhead")) removeListenerFromSignalHead(name, item, this);
-                else if (type.equals("signalmast")) removeListenerFromSignalMast(name, item, this);
-                else if (type.equals("route")) removeListenerFromRoute(name, item, this);
-                else if (type.equals("power")) removeListenerFromPower(name, item, this);
-                else log.warn("Unexpected type: "+type);
+                if (type.equals("turnout")) {
+                    removeListenerFromTurnout(name, item, this);
+                } else if (type.equals("memory")) {
+                    removeListenerFromMemory(name, item, this);
+                } else if (type.equals("sensor")) {
+                    removeListenerFromSensor(name, item, this);
+                } else if (type.equals("signalhead")) {
+                    removeListenerFromSignalHead(name, item, this);
+                } else if (type.equals("signalmast")) {
+                    removeListenerFromSignalMast(name, item, this);
+                } else if (type.equals("route")) {
+                    removeListenerFromRoute(name, item, this);
+                } else if (type.equals("power")) {
+                    removeListenerFromPower(name, item, this);
+                } else {
+                    log.warn("Unexpected type: " + type);
+                }
             }
-            
+
             sendMonitorReply(request, requestor, client, thread);
-            
+
         }
     }
-    
     boolean useAttributes = false;
-
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultXmlIOServer.class.getName());
 }
 
