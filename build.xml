@@ -601,8 +601,7 @@
                          path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
-            <!-- <jvmarg value="-Xloggc:memory.vgc"/> -->
-            <!-- for JTune -->
+            <!-- <jvmarg value="-Xloggc:memory.vgc"/> --><!-- for JTune -->
             <arg value="${antargline}"/>
         </java>
     </target>
