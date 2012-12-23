@@ -66,6 +66,7 @@
     <xs:attribute name="decoderFilePanes"  type="yesNoType" default="yes"/>
     <xs:attribute name="showEmptyPanes"  type="yesNoDefaultType" default="default"/>
     <xs:attribute name="showFnLanelPane"  type="yesNoType" default="no"/>
+    <xs:attribute name="showRosterPane"  type="yesNoType" default="no"/>
     <xs:attribute name="showRosterMediaPane"  type="yesNoType" default="no"/>
   </xs:complexType>
 
@@ -137,5 +138,11 @@
     <xs:attribute name="layout" type="xs:string"/>
     <xs:attribute name="tooltip" type="xs:string"/>
   </xs:complexType>
+
+  <xs:element name="pane" type="PaneType">
+    <xs:annotation><xs:documentation>
+      Can appear as top-level element in xml/programmer/parts files.
+    </xs:documentation></xs:annotation>
+  </xs:element>
 
 </xs:schema>
