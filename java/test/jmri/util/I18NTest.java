@@ -50,6 +50,8 @@ public class I18NTest extends TestCase {
         Map<String, Integer> result = new HashMap<String, Integer>();
         for (String key : props.stringPropertyNames()) {
             int val = Integer.parseInt(props.getProperty(key, "0"));
+            log.info("I18NTest expected results from file: " + key + "=" + props.getProperty(key));
+            log.info("I18NTest expected results as used: " + key + "=" + val);
             result.put(key, val);
         }
         return result;
