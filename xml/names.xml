@@ -2,6 +2,25 @@
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
 <!-- $Id$ -->
 <names-config>
+   <!-- This file defines the proper values for "item" attributes in JMRI   -->
+   <!-- DecoderPro programmer and decoder definition files.  As such, it    -->
+   <!-- should _NOT_ be translated to other languages. The "item"           -->
+   <!-- attributes are internal to JMRI and should not (if the label and    -->
+   <!-- name attributes have been properly defined) appear in the JMRI      -->
+   <!-- user interface.                                                     -->
+
+    <!-- This file is part of JMRI.                                             -->
+    <!--                                                                        -->
+    <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+    <!-- the terms of version 2 of the GNU General Public License as published  -->
+    <!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+    <!-- of this license.                                                       -->
+    <!--                                                                        -->
+    <!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+    <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+    <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+    <!-- for more details.                                                      -->
+
 		<version author="Jack Shall lcrr@bellsouth.net" 
 			version="11" lastUpdated="20100819"/>
 		<version author="Jack Shall jack745@bellsouth.net" 
@@ -12,7 +31,6 @@
 			version="8" lastUpdated="20081226"/>
 		<version author="jake@physics.berkeley.edu" 
 			version="7.1" lastUpdated="20031008"/>
-
    <!-- Version 7 - changed spelling of "behavior" (Jack Shall)				-->
    <!-- Version 8 - up to date with Comprehensive.xml for JUnit tests		-->
    <!-- Version 9 - add explicit EMF Enable to fix TCS confusion			-->
@@ -45,17 +63,6 @@
 	<!-- 		Volumes and other analog settings -->		
 	<!-- 		Global sound options 			-->
 	
-    <!-- This file is part of JMRI.                                             -->
-    <!--                                                                        -->
-    <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-    <!-- the terms of version 2 of the GNU General Public License as published  -->
-    <!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-    <!-- of this license.                                                       -->
-    <!--                                                                        -->
-    <!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-    <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-    <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-    <!-- for more details.                                                      -->
 
 	
 	<!-- Basic configuration variables -->
