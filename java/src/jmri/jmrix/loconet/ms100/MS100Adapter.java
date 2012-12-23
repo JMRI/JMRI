@@ -33,6 +33,10 @@ import Serialio.SerialPortLocal;
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
     public MS100Adapter() {
+        option2Name = "CommandStation";
+        option3Name = "TurnoutHandle";
+        options.put(option2Name, new Option("Command station type:", commandStationNames, false));
+        options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
         adaptermemo = new LocoNetSystemConnectionMemo();
     }
 
