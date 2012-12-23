@@ -18,7 +18,7 @@ import jmri.jmrit.XmlFile;
  * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
-public class CheckProgrammerNames extends TestCase {
+public class CheckProgrammerNames extends jmri.util.swing.GuiUtilBaseTest {
     
     public void testAdvanced() {
         checkAgainstNames(new File("xml/programmers/Advanced.xml"));
@@ -111,6 +111,9 @@ public class CheckProgrammerNames extends TestCase {
         validate(new File("xml/programmers/Zimo.xml"));
     }
     
+    public void testValidateAllParts() {
+        doDirectory("xml/programmers");
+    }
 
     // utilities
     
@@ -125,22 +128,7 @@ public class CheckProgrammerNames extends TestCase {
         if (!result.equals(""))
             Assert.fail(result);
     }
-    
-    public void validate(File file) {
-        boolean original = XmlFile.getVerify();
-        try {
-            XmlFile.setVerify(true);
-            XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
-            xf.rootFromFile(file);
-        } catch (Exception ex) {
-            XmlFile.setVerify(original);
-            Assert.fail(ex.toString());
-            return;
-        } finally {
-            XmlFile.setVerify(original);
-        }
-    }
-    
+        
     // from here down is testing infrastructure
 
     public CheckProgrammerNames(String s) {
