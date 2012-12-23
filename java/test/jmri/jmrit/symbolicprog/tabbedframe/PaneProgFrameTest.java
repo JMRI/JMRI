@@ -26,6 +26,7 @@ public class PaneProgFrameTest extends TestCase {
 
     // test creating a pane in config file
     public void testPane() {
+        if (System.getProperty("jmri.headlesstest","false").equals("true")) return;
         setupDoc();
 
         // create test object
@@ -53,6 +54,7 @@ public class PaneProgFrameTest extends TestCase {
 
     // show me the specially-created frame
     public void testFrame() {
+        if (System.getProperty("jmri.headlesstest","false").equals("true")) return;
         setupDoc();
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                                             "test frame", "programmers/Basic.xml",

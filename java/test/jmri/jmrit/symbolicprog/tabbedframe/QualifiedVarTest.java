@@ -22,6 +22,8 @@ public class QualifiedVarTest extends TestCase {
 
     // show me a specially-created frame
     public void testFrame() throws Exception {
+        if (System.getProperty("jmri.headlesstest","false").equals("true")) return;
+
         setupDoc();
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                                             "test qualified var", "programmers/Basic.xml",
