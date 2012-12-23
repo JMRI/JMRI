@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<pane name="Basic Speed Control">
+<pane name="Basic Speed Control" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name xml:lang="ca">Control bàsic de velocitat</name>
     <column>
         <row>

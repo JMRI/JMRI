@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pane name="Analog Controls">
+<pane name="Analog Controls" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name xml:lang="ca">Control Analògic</name>
     <column>
         <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">

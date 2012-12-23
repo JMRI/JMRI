@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<pane name="Motor">
+<pane name="Motor" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
     <column>
         <display item="Kick Start" tooltip="Provides an initial higher voltage spike to loco to overcome starting friction"/>
         <display item="Accel" tooltip="Sets the acceleration rate (delay)"/>

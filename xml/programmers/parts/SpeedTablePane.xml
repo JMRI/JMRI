@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<pane name="Speed Table">
+<pane name="Speed Table" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
   <name xml:lang="ca">Taula de velocitat</name>
     <column>
         <row>
