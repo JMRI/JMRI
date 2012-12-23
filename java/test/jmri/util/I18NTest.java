@@ -27,7 +27,7 @@ public class I18NTest extends TestCase {
     public void testI18N() throws IOException {
         File suiteDir = new File(System.getProperty("user.dir")); // root of SVN checkout
         suiteDir = suiteDir.getCanonicalFile();
-        String topDirs = null; // use "." if not null, since suiteDir is our topDir.
+        String topDirs = "."; // use "." since null or "" cause tests to fail
         Boolean allProperties = true; // test all .properties files, not just <package>/Bundle.properties
         String result = I18nChecker.runAsTest(suiteDir, topDirs, this.getUnfinishedI18NModules(), allProperties);
         if (!result.isEmpty()) {
