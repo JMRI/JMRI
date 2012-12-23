@@ -247,7 +247,7 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
-     * @param audioBuffer the AudioBuffer object to enqueue to this AudioSource
+     * @param audioBuffers the AudioBuffer object to enqueue to this AudioSource
      */
     public boolean queueBuffers(List<AudioBuffer> audioBuffers);
 
