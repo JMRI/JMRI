@@ -45,7 +45,7 @@ public class GuiUtilBaseTest extends jmri.configurexml.LoadFileTestBase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(GuiUtilBaseTest.class);
+        TestSuite suite = new TestSuite("GuiUtilBaseTest");
         return suite;
     }
 
