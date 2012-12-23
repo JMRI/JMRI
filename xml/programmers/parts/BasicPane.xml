@@ -5,7 +5,9 @@
     <column>
         <dccaddress/>
         <label label=" "/>
-        <display item="Short Address" tooltip="Sets the Primary (2 digit) address"/>
+        <display item="Short Address" tooltip="Sets the Primary (2 digit) address">
+            <tooltip xml:lang="it">Indirizzo Corto"</tooltip>
+        </display>
         <display item="Long Address" tooltip="Sets the extended (4 digit) address"/>
         <display item="Address Format" tooltip="Determines whether loco will use short or long address"/>
         <label label=" "/>
