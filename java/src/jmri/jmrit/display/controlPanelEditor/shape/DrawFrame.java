@@ -34,7 +34,7 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 	
     protected ShapeDrawer _parent;
     
-    public static java.util.ResourceBundle rbcp = ControlPanelEditor.rbcp;
+    public static final java.util.ResourceBundle rbcp = ControlPanelEditor.rbcp;
     static int STRUT_SIZE = 10;
     static Point _loc = new Point(100,100);
     static Dimension _dim = new Dimension(500,500);
