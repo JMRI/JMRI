@@ -93,7 +93,6 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
 
         panel.add(new JLabel(ItemPalette.rbp.getString("ReadWriteMemory")), c);
 
-        JPanel JPanel = new JPanel();
         _writeMem = new MemoryInputIcon(5, _editor);
         JPanel p0 = makeDragIcon(_writeMem, Type.READWRITE);
         _spinner = new JSpinner(new SpinnerNumberModel(0,0,100,1));
