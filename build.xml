@@ -819,7 +819,7 @@
         </java>
     </target>
 
-    <target name="headlesstest" depends="runtime-library-selection" description="run headless test suite">
+    <target name="headlesstest" depends="tests, runtime-library-selection" description="run headless test suite">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." >
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
