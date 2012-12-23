@@ -774,7 +774,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
 
     /**
      * Check start block for occupied for start of run
-     * @return
      */
     protected String checkStartBlock() {
      	BlockOrder bo = _orders.get(0);
@@ -799,7 +798,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
     /**
      * Report any occupied blocks in the route
-     * @return
      */
     public String checkRoute() {
     	String msg =null;
