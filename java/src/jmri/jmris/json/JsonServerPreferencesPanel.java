@@ -3,8 +3,6 @@ package jmri.jmris.json;
 /**
  * @author Randall Wood Copyright (C) 2012
  */
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -23,8 +21,8 @@ import org.apache.log4j.Logger;
 
 public class JsonServerPreferencesPanel extends JPanel implements PreferencesPanel {
 
-	private static final long serialVersionUID = 5452568391598728906L;
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.json.JsonServer");
+    private static final long serialVersionUID = 5452568391598728906L;
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.json.JsonServer");
     static Logger log = Logger.getLogger(JsonServerPreferencesPanel.class.getName());
     private JSpinner heartbeatIntervalSpinner;
     private JTextField port;
@@ -32,7 +30,7 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     private JButton btnCancel;
     private JsonServerPreferences preferences;
     private JFrame parentFrame = null;
-    
+
     public JsonServerPreferencesPanel() {
         preferences = JsonServerManager.getJsonServerPreferences();
         initGUI();
@@ -129,84 +127,48 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
         return panel;
     }
 
-    private JPanel cancelApplySave() {
-        JPanel panel = new JPanel();
-        btnCancel = new JButton(rb.getString("ButtonCancel"));
-        btnCancel.setVisible(false);
-        btnCancel.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                cancelValues();
-            }
-        });
-        JButton applyB = new JButton(rb.getString("ButtonApply"));
-        applyB.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                applyValues();
-            }
-        });
-        btnSave = new JButton(rb.getString("ButtonSave"));
-        btnSave.setVisible(false);
-        btnSave.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                savePreferences();
-            }
-        });
-        panel.add(btnCancel);
-        panel.add(btnSave);
-        panel.add(new JLabel(rb.getString("LabelApplyWarning")));
-        panel.add(applyB);
-        return panel;
+    @Override
+    public String getPreferencesItem() {
+        return rb.getString("PreferencesItem");
     }
 
-	@Override
-	public String getPreferencesItem() {
-		return rb.getString("PreferencesItem");
-	}
+    @Override
+    public String getPreferencesItemText() {
+        return rb.getString("PreferencesItemTitle");
+    }
 
-	@Override
-	public String getPreferencesItemText() {
-		return rb.getString("PreferencesItemTitle");
-	}
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return rb.getString("PreferencesTabTitle");
+    }
 
-	@Override
-	public String getTabbedPreferencesTitle() {
-		return rb.getString("PreferencesTabTitle");
-	}
+    @Override
+    public String getLabelKey() {
+        return null;
+    }
 
-	@Override
-	public String getLabelKey() {
-		return null;
-	}
+    @Override
+    public JComponent getPreferencesComponent() {
+        return this;
+    }
 
-	@Override
-	public JComponent getPreferencesComponent() {
-		return this;
-	}
+    @Override
+    public boolean isPersistant() {
+        return false;
+    }
 
-	@Override
-	public boolean isPersistant() {
-		return false;
-	}
+    @Override
+    public String getPreferencesTooltip() {
+        return rb.getString("PreferencesTooltip");
+    }
 
-	@Override
-	public String getPreferencesTooltip() {
-		return rb.getString("PreferencesTooltip");
-	}
-
-	@Override
-	public void savePreferences() {
-		if (this.setValues()) {
-			this.preferences.save();
-			if (this.parentFrame != null) {
-				this.parentFrame.dispose();
-			}
-		}
-	}
-
+    @Override
+    public void savePreferences() {
+        if (this.setValues()) {
+            this.preferences.save();
+            if (this.parentFrame != null) {
+                this.parentFrame.dispose();
+            }
+        }
+    }
 }
