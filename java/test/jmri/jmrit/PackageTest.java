@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Invokes complete set of tests in the jmri.jmrit tree
  *
- * @author	    Bob Jacobsen  Copyright 2001, 2003
+ * @author	    Bob Jacobsen  Copyright 2001, 2003, 2012
  * @version         $Revision$
  */
 public class PackageTest extends TestCase {
@@ -57,15 +57,19 @@ public class PackageTest extends TestCase {
             //suite.addTest(jmri.jmrit.mastbuilder.MastBuilderTest.suite());
             suite.addTest(jmri.jmrit.powerpanel.PowerPanelTest.suite());
             suite.addTest(jmri.jmrit.progsupport.ProgServiceModePaneTest.suite());
-            suite.addTest(jmri.jmrit.revhistory.FileHistoryTest.suite());
             suite.addTest(jmri.jmrit.sendpacket.SendPacketTest.suite());
             suite.addTest(jmri.jmrit.sensorgroup.SensorGroupTest.suite());
-            suite.addTest(jmri.jmrit.symbolicprog.SymbolicProgTest.suite());
+        }
+        
+        suite.addTest(jmri.jmrit.revhistory.FileHistoryTest.suite());
+        suite.addTest(jmri.jmrit.symbolicprog.PackageTest.suite());
+
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
             suite.addTest(jmri.jmrit.ussctc.UssCtcTest.suite());
             suite.addTest(jmri.jmrit.AbstractIdentifyTest.suite());
         }
 
-            suite.addTest(jmri.jmrit.DccLocoAddressSelectorTest.suite());
+        suite.addTest(jmri.jmrit.DccLocoAddressSelectorTest.suite());
         
         return suite;
     }
