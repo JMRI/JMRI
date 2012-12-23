@@ -155,6 +155,15 @@
     </path>
 
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
+   
+    <!-- jars needed for i18n testing only -->
+    <path id="i18n.class.path">
+        <pathelement location="${ant.home}/lib/ant.jar"/>
+        <pathelement location="${libdir}/antlr-3.4-complete.jar"/>
+        <pathelement location="${libdir}/i18nchecker.jar"/>
+    </path>
+
+    <pathconvert property="i18n.class.jars" refid="i18n.class.path"/>
 
     <!-- jars that are needed at build time -->
     <path id="compile.class.path">
@@ -162,6 +171,7 @@
         <pathelement location="${libdir}/AppleJavaExtensions.jar"/> <!-- build with Mac OS X-specific support -->
         <pathelement location="${libdir}/annotations.jar"/> <!-- findbugs build-time only-->
         <pathelement location="${libdir}/jsr305.jar"/>      <!-- findbugs build-time only-->
+        <pathelement path="${i18n.class.jars}"/>            <!-- i18n test -->
     </path>
 
     <path id="project.class.path">
@@ -170,7 +180,11 @@
         <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
     </path>
 
-
+    <path id="test.class.path">
+        <path   refid="i18n.class.path"/>
+        <path   refid="project.class.path"/>
+    </path>
+    
     <path id="path.svnant">
       <pathelement location="${svnantdir}/svnant.jar"/>
       <pathelement location="${svnantdir}/svnClientAdapter.jar"/>
@@ -205,6 +219,14 @@
       <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
     </target>
 
+    <target name="i18n-consistency-check"  description="Verification of localized strings in source code" depends="jar">
+        <property name="i18n.modulefilter" value=""/>
+        <echo>I18N Consistency Check - use modulefilter property if you want to see errors only from one module</echo>
+        <taskdef classname="org.i18nchecker.I18nChecker" name="i18nConsistencyCheck" classpath="${ant.home}/lib/ant.jar:lib/antlr-3.4-complete.jar:lib/i18nchecker.jar"/>
+        <!-- check includes all .properties files including ones we use for non-translatable files -->
+        <i18nConsistencyCheck srcdir="${basedir}" topdirs="" allProperties="true" modulefilter="${i18n.modulefilter}"/>
+    </target>
+    
     <target name="init"
             description="create needed directories">
         <!-- Create the time stamp properties -->
@@ -808,7 +830,7 @@
             <sysproperty key="java.awt.headless" value="true"/>
             <sysproperty key="jmri.headlesstest" value="true"/>
 
-            <classpath refid="project.class.path"/>
+            <classpath refid="test.class.path"/>
 
             <test name="jmri.HeadLessTest" outfile="junit-results">
                 <formatter type="xml"/>
@@ -823,7 +845,7 @@
         <java classname="apps.tests.AllTest"
           dir="."
           fork="yes" >
-            <classpath refid="project.class.path"/>
+            <classpath refid="test.class.path"/>
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
