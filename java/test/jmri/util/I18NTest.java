@@ -56,4 +56,11 @@ public class I18NTest extends TestCase {
         }
         return result;
     }
+
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {"-noloading", I18NTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
+
 }
