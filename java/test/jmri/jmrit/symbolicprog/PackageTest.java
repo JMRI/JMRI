@@ -15,7 +15,7 @@ import junit.framework.TestSuite;
  * @author			Bob Jacobsen Copyright 2006
  * @version         $Revision$
  */
-public class SymbolicProgTest extends TestCase {
+public class PackageTest extends TestCase {
 
     // check configuring the programmer
     public void testConfigProgrammer() {
@@ -27,19 +27,19 @@ public class SymbolicProgTest extends TestCase {
 
     // from here down is testing infrastructure
 
-    public SymbolicProgTest(String s) {
+    public PackageTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SymbolicProgTest.class.getName()};
+        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests, including others in the package
     public static Test suite() {
-        TestSuite suite = new TestSuite(SymbolicProgTest.class);
+        TestSuite suite = new TestSuite(PackageTest.class);
         suite.addTest(jmri.jmrit.symbolicprog.FnMapPanelTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.CompositeVariableValueTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.Pr1ImporterTest.suite());
@@ -55,10 +55,7 @@ public class SymbolicProgTest extends TestCase {
         suite.addTest(jmri.jmrit.symbolicprog.VariableTableModelTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.CombinedLocoSelListPaneTest.suite());
 
-        suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest.suite());
-        suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest.suite());
-        suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.CheckProgrammerNames.suite());
-        suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.QualifiedVarTest.suite());
+        suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PackageTest.suite());
         return suite;
     }
 
