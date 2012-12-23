@@ -240,6 +240,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
                     dModel.reload();
                     for(TreePath path:selectedPath){
                         dTree.expandPath(path);
+                        dTree.scrollPathToVisible(path);
                     }
                   }
                 }
@@ -390,17 +391,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
         if(showMatched.isSelected()){
             dModel.activateFilter(true);
             dModel.reload();
-            for(InvisibleNode node:familyNode){
-                TreePath path = new TreePath(node.getPath());
+            for(TreePath path:selectedPath){
                 dTree.expandPath(path);
-            }
-            for(InvisibleNode node:modelNode){
-                TreePath path = new TreePath(node.getPath());
-               dTree.expandPath(path);
-            }
-            for(InvisibleNode node:selectedNode){
-                TreePath path = new TreePath(node.getPath());
-                dTree.expandPath(path);
+                dTree.scrollPathToVisible(path);
             }
         }
     }
