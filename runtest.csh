@@ -118,6 +118,9 @@ fi
 CP="${CP}:jmri.jar"
 # and contents of lib
 CP="${CP}:`ls -m lib/*.jar | tr -d ' \n' | tr ',' ':'`"
+# add a stand-in for ${ant.home}/lib/ant.jar
+CP="${CP}:/usr/share/ant/lib/ant.jar"
+
 [ "${DEBUG}" ] && echo "CLASSPATH: '${CP}'"
 
 # create the option string
