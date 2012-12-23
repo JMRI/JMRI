@@ -96,8 +96,6 @@ public class Dcc4PcMessage  extends jmri.jmrix.AbstractMRMessage {
     /**
      * Get formatted message for direct output to stream - this is the final 
      * format of the message as a byte array
-     * @param dcc4pcState a Dcc4PcState variable representing the current state
-     * of the Dcc4Pc
      * @return the formatted message as a byte array
      */
     public byte[] getFormattedMessage() {

@@ -116,7 +116,7 @@ public class MarklinTurnout extends AbstractTurnout
     
     /**
      * Tell the layout to go to new state.
-     * @param closed State of the turnout to be sent to the command station
+     * @param newstate State of the turnout to be sent to the command station
      */
     protected void sendMessage(final boolean newstate) {
         MarklinMessage m = MarklinMessage.getSetTurnout(getCANAddress(), (newstate? 1:0), 0x01);

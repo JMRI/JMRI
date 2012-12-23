@@ -31,7 +31,7 @@ public class SprogType  {
     /**
      * Construct a new SPROG type of a given type
      * 
-     * @param t int, one of SprogType.xxx constants
+     * @param type int, one of SprogType.xxx constants
      */
     public SprogType(int type) {
         if (log.isDebugEnabled()) { log.debug("SprogType(int) ctor, type: " + type); }
@@ -87,7 +87,7 @@ public class SprogType  {
      * Get the Flash memory block Length for bootloader
      *
      * @param bootVer the bootloader version
-     * @return
+     * @return length in bytes
      */
     static public int getBlockLen(int bootVer) {
         switch (bootVer) {
