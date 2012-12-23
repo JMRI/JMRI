@@ -456,7 +456,7 @@ public class JsonLister {
 			}
 			data.put("aspect", aspect);
 			data.put("lit", signalMast.getLit());
-			data.put("held", signalMast.getHeld());;
+			data.put("held", signalMast.getHeld());
 			//state is appearance, plus flags for held and dark statii
 			if ((signalMast.getHeld()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD)!=null)) {
 				data.put("state", "Held");
