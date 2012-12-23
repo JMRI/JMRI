@@ -71,19 +71,21 @@ import java.util.List;
 public class PaneProgPane extends javax.swing.JPanel
     implements java.beans.PropertyChangeListener  {
 
-    CvTableModel _cvModel;
+    protected CvTableModel _cvModel;
     IndexedCvTableModel _indexedCvModel;
-    VariableTableModel _varModel;
-    PaneContainer container;
+    protected VariableTableModel _varModel;
+    protected PaneContainer container;
         
-    boolean _cvTable; 
+    boolean _cvTable;
+    
+    protected JPanel bottom;
 
     static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
 
     transient ItemListener l1;
-    transient ItemListener l2;
+    protected transient ItemListener l2;
     transient ItemListener l3;
-    transient ItemListener l4;
+    protected transient ItemListener l4;
     transient ItemListener l5;
     transient ItemListener l6;
 
@@ -153,7 +155,7 @@ public class PaneProgPane extends javax.swing.JPanel
         add(new JScrollPane(p));
 
         // add buttons in a new panel
-        JPanel bottom = new JPanel();
+        bottom = new JPanel();
         panelList.add(p);
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
 
@@ -362,8 +364,8 @@ public class PaneProgPane extends javax.swing.JPanel
      * separately, and the CVs that are represented by variables are not
      * entered here.  So far (sic), the only use of this is for the cvtable rep.
      */
-    List<Integer> cvList = new ArrayList<Integer>();
-    int cvListIndex;
+    protected List<Integer> cvList = new ArrayList<Integer>();
+    protected int cvListIndex;
     /**
      * This remembers the indexed CVs on this pane for the Read/Write sheet
      * operation.  They are stored as a list of Integer objects, each of which
@@ -374,10 +376,10 @@ public class PaneProgPane extends javax.swing.JPanel
     List<Integer> indexedCvList = new ArrayList<Integer>();
     int indexedCvListIndex;
 
-    JToggleButton readChangesButton  = new JToggleButton(rbt.getString("ButtonReadChangesSheet"));
-    JToggleButton readAllButton      = new JToggleButton(rbt.getString("ButtonReadFullSheet"));
-    JToggleButton writeChangesButton = new JToggleButton(rbt.getString("ButtonWriteChangesSheet"));
-    JToggleButton writeAllButton     = new JToggleButton(rbt.getString("ButtonWriteFullSheet"));
+    protected JToggleButton readChangesButton  = new JToggleButton(rbt.getString("ButtonReadChangesSheet"));
+    protected JToggleButton readAllButton      = new JToggleButton(rbt.getString("ButtonReadFullSheet"));
+    protected JToggleButton writeChangesButton = new JToggleButton(rbt.getString("ButtonWriteChangesSheet"));
+    protected JToggleButton writeAllButton     = new JToggleButton(rbt.getString("ButtonWriteFullSheet"));
     JToggleButton confirmChangesButton = new JToggleButton(rbt.getString("ButtonConfirmChangesSheet"));
     JToggleButton confirmAllButton     = new JToggleButton(rbt.getString("ButtonConfirmFullSheet"));
 
@@ -1142,7 +1144,7 @@ public class PaneProgPane extends javax.swing.JPanel
         log.debug("end restartProgramming");
     }
 
-    void stopProgramming() {
+    protected void stopProgramming() {
         log.debug("start stopProgramming");
         setToRead(false, false);
         setToWrite(false, false);

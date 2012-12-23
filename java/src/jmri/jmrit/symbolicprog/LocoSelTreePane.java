@@ -34,6 +34,12 @@ public class LocoSelTreePane extends CombinedLocoSelTreePane  {
     // don't show the select-roster-entry box
     protected JPanel layoutRosterSelection() { return null; }
     
+    protected JPanel layoutDecoderSelection() { 
+        JPanel pan = super.layoutDecoderSelection();
+        viewButtons.setVisible(false);
+        return pan;
+    }
+    
     // don't show the Ident button
     JToggleButton addDecoderIdentButton() {
         return null;

@@ -143,7 +143,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * Convert the decoder selection UI result into a name.
      * @return The selected decoder type name, or null if none selected.
      */
-    String selectedDecoderType() {
+    protected String selectedDecoderType() {
         if (!isDecoderSelected()) return null;
         else return (String)decoderBox.getSelectedItem();
     }
