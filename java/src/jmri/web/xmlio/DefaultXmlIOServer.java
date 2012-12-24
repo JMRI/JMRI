@@ -43,6 +43,12 @@ public class DefaultXmlIOServer implements XmlIOServer {
     boolean useAttributes = false;
     static Logger log = Logger.getLogger(DefaultXmlIOServer.class);
 
+    /* TODO: place those elements that are shared across servers into, ideally,
+     * the a Class in the package that they are supporting (i.e. name constants
+     * for elements common to namedBean subClasses that are common between
+     * JSON, Simple, and XmlIO servers would be in a single Class so all servers
+     * use the same String for those elements.
+     */
     // Frequently used XML strings
     static final String COMMENT = "comment"; // NOI18N
     static final String FALSE = "false"; // NOI18N
@@ -70,10 +76,6 @@ public class DefaultXmlIOServer implements XmlIOServer {
     static final String SIGNAL_MAST = "signalMast"; // NOI18N
     static final String THROTTLE = "throttle"; // NOI18N
     static final String TURNOUT = "turnout"; // NOI18N
-    // XmlIO metadata elements
-    static final String MAJOR = "major"; // NOI18N
-    static final String MINOR = "minor"; // NOI18N
-    static final String TEST = "test"; // NOI18N
     // XmlIO panel elements
     static final String CONTROLPANEL = "ControlPanel"; // NOI18N
     static final String LAYOUT = "Layout"; // NOI8N
@@ -1287,9 +1289,9 @@ public class DefaultXmlIOServer implements XmlIOServer {
         if (useAttributes) {
             item.setAttribute(VALUE, Metadata.getBySystemName(name));
             if (name.equals(Metadata.JMRIVERSION)) {
-                item.setAttribute(MAJOR, Metadata.getBySystemName(Metadata.JMRIVERMAJOR));
-                item.setAttribute(MINOR, Metadata.getBySystemName(Metadata.JMRIVERMINOR));
-                item.setAttribute(TEST, Metadata.getBySystemName(Metadata.JMRIVERTEST));
+                item.setAttribute(Metadata.JMRIVERMAJOR, Metadata.getBySystemName(Metadata.JMRIVERMAJOR));
+                item.setAttribute(Metadata.JMRIVERMINOR, Metadata.getBySystemName(Metadata.JMRIVERMINOR));
+                item.setAttribute(Metadata.JMRIVERTEST, Metadata.getBySystemName(Metadata.JMRIVERTEST));
             }
         } else {
             Element v = item.getChild(VALUE);
@@ -1302,11 +1304,11 @@ public class DefaultXmlIOServer implements XmlIOServer {
             // set result
             v.setText("" + Metadata.getBySystemName(name));
             if (name.equals(Metadata.JMRIVERSION)) {
-                item.addContent(v = new Element(MAJOR));
+                item.addContent(v = new Element(Metadata.JMRIVERMAJOR));
                 v.setText("" + Metadata.getBySystemName(Metadata.JMRIVERMAJOR));
-                item.addContent(v = new Element(MINOR));
+                item.addContent(v = new Element(Metadata.JMRIVERMINOR));
                 v.setText("" + Metadata.getBySystemName(Metadata.JMRIVERMINOR));
-                item.addContent(v = new Element(TEST));
+                item.addContent(v = new Element(Metadata.JMRIVERTEST));
                 v.setText("" + Metadata.getBySystemName(Metadata.JMRIVERTEST));
             }
         }
