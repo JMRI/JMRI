@@ -41,7 +41,7 @@ public class I18NTest extends TestCase {
 
     private Map<String, Integer> getUnfinishedI18NModules() throws IOException {
         Properties props = new Properties();
-        InputStream is = getClass().getResourceAsStream("i18n_known_errors.properties");
+        InputStream is = new java.io.FileInputStream(new java.io.File("java/test/jmri/util/i18n_known_errors.properties"));
         try {
             props.load(is);
         } finally {
@@ -49,6 +49,7 @@ public class I18NTest extends TestCase {
         }
         Map<String, Integer> result = new HashMap<String, Integer>();
         for (String key : props.stringPropertyNames()) {
+            System.out.println("prop: "+key+" "+props.getProperty(key, "0"));
             int val = Integer.parseInt(props.getProperty(key, "0"));
             log.info("I18NTest expected results from file: " + key + "=" + props.getProperty(key));
             log.info("I18NTest expected results as used: " + key + "=" + val);
