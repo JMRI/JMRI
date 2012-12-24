@@ -73,3 +73,5 @@ log4j.appender.R.layout.ConversionPattern=%-5p - %m [%t] %c{2}.%M()%n
 # log4j.category.jmri.jmrit.symbolicprog.LongAddrVariableValueTest=DEBUG
 # log4j.category.jmri.jmrix.nce=DEBUG
 # log4j.category.jmri.jmrix.nce.NceTrafficController=WARN
+log4j.category.jmri.util.I18NTest=DEBUG
+
