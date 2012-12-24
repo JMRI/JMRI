@@ -412,7 +412,10 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             f.pack();
 
         }
-        this.mProgrammer = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+        if (jmri.InstanceManager.programmerManagerInstance() != null &&
+            jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
+            this.mProgrammer = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+        }
 
         cvModel       = new CvTableModel(statusLabel, mProgrammer);
         iCvModel      = new IndexedCvTableModel(statusLabel, mProgrammer);

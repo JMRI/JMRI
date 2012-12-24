@@ -63,7 +63,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
     
     JRadioButton showAll;
     JRadioButton showMatched;
-    protected JPanel viewButtons;
+    protected JPanel viewButtons = new JPanel();
     /**
      * Create the panel used to select the decoder
      */
@@ -203,49 +203,53 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
             } );
 
 
-        viewButtons = new JPanel();
-        showAll = new JRadioButton(rbt.getString("LabelAll"));
-        showAll.setSelected(true);
-        showMatched = new JRadioButton(rbt.getString("LabelMatched"));
-        ButtonGroup group = new ButtonGroup();
-        group.add(showAll);
-        group.add(showMatched);
-        viewButtons.add(showAll);
-        viewButtons.add(showMatched);
-        // add button
+        //viewButtons = new JPanel();
         iddecoder = addDecoderIdentButton();
         if (iddecoder!=null) {
-            viewButtons.add(iddecoder);
+                viewButtons.add(iddecoder);
+        /*}
+        if (jmri.InstanceManager.programmerManagerInstance() != null &&
+            jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){*/
+            showAll = new JRadioButton(rbt.getString("LabelAll"));
+            showAll.setSelected(true);
+            showMatched = new JRadioButton(rbt.getString("LabelMatched"));
+            ButtonGroup group = new ButtonGroup();
+            group.add(showAll);
+            group.add(showMatched);
+            viewButtons.add(showAll);
+            viewButtons.add(showMatched);
+            
+
+            
+            pane1a.add(viewButtons, BorderLayout.SOUTH);
+            showAll.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if (dModel.isActivatedFilter()) {
+                        dModel.activateFilter(false);
+                        dModel.reload();
+                        for(TreePath path:selectedPath){
+                            dTree.expandPath(path);
+                            dTree.addSelectionPath(path);
+                            dTree.scrollPathToVisible(path);
+                        }
+                      }
+                    }
+                }
+            );
+            showMatched.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if (!dModel.isActivatedFilter()) {
+                        dModel.activateFilter(true);
+                        dModel.reload();
+                        for(TreePath path:selectedPath){
+                            dTree.expandPath(path);
+                            dTree.scrollPathToVisible(path);
+                        }
+                      }
+                    }
+                }
+            );
         }
-        
-        pane1a.add(viewButtons, BorderLayout.SOUTH);
-        showAll.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (dModel.isActivatedFilter()) {
-                    dModel.activateFilter(false);
-                    dModel.reload();
-                    for(TreePath path:selectedPath){
-                        dTree.expandPath(path);
-                        dTree.addSelectionPath(path);
-                        dTree.scrollPathToVisible(path);
-                    }
-                  }
-                }
-            }
-        );
-        showMatched.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (!dModel.isActivatedFilter()) {
-                    dModel.activateFilter(true);
-                    dModel.reload();
-                    for(TreePath path:selectedPath){
-                        dTree.expandPath(path);
-                        dTree.scrollPathToVisible(path);
-                    }
-                  }
-                }
-            }
-        );
         
         return pane1a;
     }
