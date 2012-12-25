@@ -83,7 +83,7 @@
     </p>
         [Team]-&gt;[Subversion]-&gt;[Checkout]
         <ul>
-            <li> Repository URL: <strong>https://svn.code.sf.net/p/jmri/code/trunk/jmri</strong>
+            <li> Repository URL: <strong>http://svn.code.sf.net/p/jmri/code/</strong>
             <li> User: <em>leave empty</em>
             <li> Password: <em>leave empty</em>
             <li> [Next &gt;]
@@ -92,7 +92,7 @@
             <li> Repository Revision:  <em> leave empty</em>
             <li> Skip "jmri" and checkout only its content:  <em> leave unchecked</em>
             <li> Export a clean directory tree from the repository:  <em> leave unchecked</em>
-            <li> Local Folder: <em>pick somplace on your hard drive...</em>
+            <li> Local Folder: <em>pick some place on your hard drive...</em>
             <li> Scan for NetBeans Projects after Checkout:  <em> ensure checked</em>
             <li> [Finish]
         </ul>
