@@ -32,14 +32,14 @@
       </H2>
 
       <p>This page describes tests of two USB serial adapters with the Digitrax
-      MS100 LocoNet interface.
+      MS100 LocoNet&reg; interface.
 
       <p> The MS100 is a passive level shifter that gets its power from the
       control leads in the RS232 interface.  Digitrax has not published a
       schematic, but Bill Robinson of Team Digital has graciously provided a
       schematic of their level shifter which is thought to be very similar.</p>
 
-      <p><img src="./images/LN_to_PC.gif"></p>
+      <p><img src="./images/LN_to_PC.gif" alt="Sample LocoNet to RS232 Interface Schematic"></p>
 
     <H2>Summary</H2>
 
@@ -121,7 +121,8 @@ RI       9            22
 	the other level.</p>
 
 	<p>
-	<a HREF="./images/KeyspanJumper.jpg"><img SRC="./images/KeyspanJumper-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">(click to enlarge)</a></p>
+	<a HREF="./images/KeyspanJumper.jpg"><img SRC="./images/KeyspanJumper-thumb.jpg"
+                alt="Keyspan USA-28X did not function">(click to enlarge)</a></p>
 
 
 	<p> The second problem was that the serial port outputs were only +/-
@@ -132,7 +133,8 @@ RI       9            22
 	enough swing to drive the LocoNet itself, but not to power the receive
 	level shifter in the MS100.
 
-	<p><a HREF="./images/KeyspanTxD.jpg"><img SRC="./images/KeyspanTxD-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">
+	<p><a HREF="./images/KeyspanTxD.jpg"><img SRC="./images/KeyspanTxD-thumb.jpg" 
+                alt="Oscilloscope image showing Keyspan USA-28X TxD voltages">
 	(click to enlarge)</a></p>
 
 	<p>Providing auxiliary +/- 9V power to the MS100, without using the
@@ -142,7 +144,8 @@ RI       9            22
 	6V, marginally OK, but it was not going below ground.  The USB serial
 	adapter was not reporting any received charaters to the Macintosh.
 
-	<p><a HREF="./images/KeyspanRxD.jpg"><img SRC="./images/KeyspanRxD-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">
+	<p><a HREF="./images/KeyspanRxD.jpg"><img SRC="./images/KeyspanRxD-thumb.jpg" 
+                alt="Oscilloscope image showing inadequate Keyspan USA-28X RxD voltages">
 (click to enlarge)</a></p>
 
 	<h3>Hardware & software used</h3>
@@ -159,6 +162,9 @@ RI       9            22
 
 	</dd>
 	</dl>
+<p>LocoNet&reg; is a registered trademark of <a href="www.digitrax.com">Digitrax, Inc.</a></p>
+    </div>
+  </div>
 
 <!--#include virtual="/Footer" -->
 </body>

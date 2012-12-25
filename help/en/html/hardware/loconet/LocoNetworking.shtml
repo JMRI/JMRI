@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
  <TITLE>
-      JMRI Hardware Guide: Methods to Connect Multiple Computers to a LocoNet Layout
+      JMRI Hardware Guide: Methods to Connect Multiple Computers to a LocoNet&reg; Layout
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
@@ -26,11 +26,11 @@
     <div id="mainContent">
 
       <h1> 
-      JMRI Hardware Guide: Methods to Connect Multiple Computers to a LocoNet Layout
+      JMRI Hardware Guide: Methods to Connect Multiple Computers to a LocoNet&reg; Layout
       </h1>
 
 JMRI currently supports two different ways that allow you to connect multiple
-computers to your LocoNet-equipped layout
+computers to your LocoNet&reg;-equipped layout
 using a single LocoBuffer. In both methods, the computers communicate using standard
 TCP/IP protocols, but there are differences in the details.
 <P>
@@ -79,8 +79,10 @@ It does cost a little more for the extra adapters, and doesn't permit you to
 put a computer remote from the layout.
 </UL>
 
+<p>LocoNet&reg; is a registered trademark of <a href="www.digitrax.com">Digitrax, Inc.</a></p>
       <hr class="hide">
-
+    </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

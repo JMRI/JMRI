@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
  <TITLE>
-      JMRI Hardware Guide: Connecting Multiple Computers to LocoNet via LbServer
+      JMRI Hardware Guide: Connecting Multiple Computers to LocoNet&reg; via LbServer
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
@@ -24,11 +24,8 @@
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
       <h1> 
-      JMRI Hardware Guide: Connecting Multiple Computers to LocoNet via LbServer
+      JMRI Hardware Guide: Connecting Multiple Computers to LocoNet&reg; via LbServer
       </h1>
 
 This page describes how to configure multiple JMRI nodes to connect as 
@@ -62,7 +59,7 @@ like jmri.sf.net
 <h2>Notes:</h2>
 <UL>
 <LI>It's strongly recommended that you connect the master computer
-to the LocoNet with a LocoBuffer or LocoBuffer-II.  Although a MS-100
+to the LocoNet&reg; with a LocoBuffer or LocoBuffer-II.  Although a MS-100
 will basically work for this application, correction of the resulting occasional LocoNet
 errors may cause noticable delays in updating the remote computers.
 <LI>
@@ -79,7 +76,9 @@ case the Client and Server just happen to be on the same node.
 To get around this you will either have to enable access in your firewall software or change the port to
 another number like 9999 say. The new port number will also need to be passed into LbServer as a command line option.
 </UL>
-
+<p>LocoNet&reg; is a registered trademark of <a href="www.digitrax.com">Digitrax, Inc.</a></p>
+    </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

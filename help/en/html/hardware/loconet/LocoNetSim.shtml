@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
  <TITLE>
-      JMRI Hardware Guide: LocoNet Simulator
+      JMRI Hardware Guide: LocoNet&reg; Simulator
  </TITLE>
 <!-- Style -->
   <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -26,10 +26,10 @@
     <div id="mainContent">
 
       <h1> 
-      JMRI Hardware Guide: LocoNet Simulator
+      JMRI Hardware Guide: LocoNet&reg; Simulator
       </h1>
 
-If JMRI is configured to use a Digitrax LocoNet connection, but
+If JMRI is configured to use a Digitrax LocoNet&reg; connection, but
 the connection isn't available, several aspects of the program will
 not function.  This is because the program needs to interact with
 the LocoNet during normal operation, and without the expected responses
@@ -80,6 +80,7 @@ space immediately before the carriage return!</p>
     tool captures and interprets messages on LocoNet.</p>
 <p>The LocoNet&reg; Personal Use Edition 1.0 Specification is available from the 
     <a href="http://www.digitrax.com">Digitrax web site</a>.</p>
+<p>LocoNet&reg; is a registered trademark of <a href="www.digitrax.com">Digitrax, Inc.</a></p>
 
     </div>
   </div>

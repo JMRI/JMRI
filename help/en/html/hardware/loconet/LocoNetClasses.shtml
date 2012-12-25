@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <TITLE>
- 	JMRI: LocoNet Implementation
+ 	JMRI: LocoNet&reg; Implementation
     </TITLE>
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI LocoNet technical implementation">
@@ -33,10 +33,10 @@
     <div id="mainContent">
 
 
-<H1>Information on the JMRI LocoNet implementation</H1>
+<H1>Information on the JMRI LocoNet&reg; implementation</H1>
 
 
-This page describes various high-level structures of the JMRI LocoNet implementation.
+This page describes various high-level structures of the JMRI LocoNet&reg; implementation.
 Please see also the 
 <A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/package-summary.html">JavaDocs for the jmrix.loconet package</A>.
 
@@ -57,7 +57,7 @@ user classes. Messages are sent by passing them to a LocoNetInterface
 implementation, and you can register with a LocoNetInterface
 to be notified of all LocoNet traffic.
 <P>
-<IMG SRC="images/LocoNetInterfaceUML.png">
+<IMG SRC="images/LocoNetInterfaceUML.png" alt="UML of JMRI's LocoNet Interface">
 <P>
 The 
 <A HREF="http://jmri.sourceforge.net/JavaDoc/doc/jmri/jmrix/loconet/LocoNetMessage.html">LocoNetMessage</A> class
@@ -124,7 +124,7 @@ LocoNet will thence use the last-created LnTrafficController implementation.
 See the section on "<a href="#startup">Startup</a>" for more information on this.
 
 <P>
-<img src="images/LnTrafficControllerUML.png">
+<img src="images/LnTrafficControllerUML.png" alt="UML of JMRI's LocoNet Traffic Controller">
 
 <h3>LnTrafficPacketizer</h3>
 The
@@ -287,6 +287,8 @@ notified when a slot changes.
 Because Digitrax command stations handle programming via a special reserved
 slot, the jmri.Programmer interface is also implemented by the loconet.SlotManager class.
 This greatly complicates the class, but is acceptable for now.
+
+<p>LocoNet&reg; is a registered trademark of <a href="www.digitrax.com">Digitrax, Inc.</a></p>
 
 <!--#include virtual="/Footer" -->
     </div>

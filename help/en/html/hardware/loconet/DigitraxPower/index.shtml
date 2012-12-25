@@ -42,7 +42,7 @@ by a single DCS100 (Chief) booster, with PM4 units for power subdistricts and
 DS54 units for various controls. Track power
 was on, and the DCS100 was in "run" mode, i.e. sending packets on the rails.
 About 1.2A was being drawn from the DCS100 booster output.  During the measurements,
-no LocoNet commands were sent, nor were reversing sections being traversed.
+no LocoNet&reg; commands were sent, nor were reversing sections being traversed.
 
 <P>Unfortunately, the camera scope photos wasn't sufficiently
 sensitive, so they show a lot of blur. In all pictures, the ground reference was 
@@ -59,7 +59,7 @@ a 10MHz bandwidth limit; the visible spikes are about 6V with no bandwidth limit
 The ungrounded layout was probably generating a lot of RF noise...
 
 <P>
-<A HREF="./images/DiscGround.jpg"><IMG SRC="./images/DiscGround-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
+<A HREF="./images/DiscGround.jpg"><IMG SRC="./images/DiscGround-thumb.jpg" alt="Booster ground signal without connection to household ground"></A>
 
 <P>
 For the rest of the measurements, I reconnected the DCS100 ground to the power
@@ -68,8 +68,8 @@ ground. Both noise and offset were then less than 20mV.
 <P>
 With respect to system ground, the Rail A and Rail B lines alternate between 12V and about 0.8V:
 <BR>
-<A HREF="./images/RailA.jpg"><IMG SRC="./images/RailA-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
-<A HREF="./images/RailB.jpg"><IMG SRC="./images/RailB-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
+<A HREF="./images/RailA.jpg"><IMG SRC="./images/RailA-thumb.jpg" alt="RailA signal relative to system gound"></A>
+<A HREF="./images/RailB.jpg"><IMG SRC="./images/RailB-thumb.jpg" alt="RailB signal relative to system gound"></A>
 <BR>
 It appears that the DCS100 internal high-power supply is only positive.  To get a better understanding
 of that, I looked at the two power in lines from the transformer:
@@ -114,11 +114,11 @@ from the PM4 and DCS100.
 <IMG SRC="./images/Halfwave.jpg">
 <BR>
 Note the ripple in the ground (black) lead.
-Digitrax recommends that you <bold>not</bold>
+Digitrax recommends that you <b>not</b>
 connect the DS54 ground lead to system ground; this offset shows why
 its a good idea to listen to that recommendation.  The ground in the 
 cartoon schematic is the DS54 black-wire "ground",
-but it is <bold>not</bold> the same as the system (LocoNet) 
+but it is <b>not</b> the same as the system (LocoNet) 
 ground.  
 <P>
 Don Crano has pointed out that the DS54 is deriving
@@ -159,7 +159,9 @@ connected oppositely to either the common power or the rails, they would be unab
 <BR>
 
 Bob Jacobsen
-
+<p>LocoNet&reg; is a registered trademark of <a href="www.digitrax.com">Digitrax, Inc.</a></p>
+    </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

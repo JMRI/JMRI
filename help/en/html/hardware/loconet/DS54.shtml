@@ -33,7 +33,7 @@ ways.
 Walter Thompson walked through the details of this:
 
 <P>
-With the ds54 at defaults these are the Loconet msgs when either Switch A
+With the DS54 at defaults these are the LocoNet&reg; msgs when either Switch A
 or Aux A goes positive causing the Turnout to "toggle" state:
 <BR>
 When Switch A (blue lead) goes high loconet msg [b2 8 70 35].
@@ -62,23 +62,23 @@ inputs are used to change the turnout.
 
 <h2>Exact Feedback</h2>
 
-To use exact feedback, you need to connect two microswitches to the 
+<p>To use exact feedback, you need to connect two microswitches to the 
 turnout and to the Switch and Aux inputs on the DS54.
-(You can use the built in Tortoise contacts for this)
+(You can use the built in Tortoise contacts for this)</p>
 <P>
 Configure the DS54 channel with:
 <PRE>
- Aux A input"='Active ON, trigger on change, Postive Level"
+ Aux A input"='Active ON, trigger on change, Positive Level"
  Aux A task"="No Output change"
  When Aux A input changes, send"= "Exact turnout feedback message"
- Switch A input"='Active ON, trigger on change, Postive Level"
+ Switch A input"='Active ON, trigger on change, Positive Level"
  Switch A task"="No Output change"
  Switch A input changes, send"= "Exact turnout feedback message"
 </PRE>
-Configure Turnout LT9 (via the Turnout Table) to use "EXACT" feedback.
+<p>Configure Turnout LT9 (via the Turnout Table) to use "EXACT" feedback.</p>
 <P>
 <table border="1">
-    <tr><th> Commentary</th><th>Loconet messages</th></tr>
+    <tr><th> Commentary</th><th>LocoNet messages</th></tr>
     <tr><td>
             Start with Turnout 9 closed<br>
             Switch A will be Closed and Aux A open.
@@ -135,6 +135,20 @@ Configure Turnout LT9 (via the Turnout Table) to use "EXACT" feedback.
     track connections and programming resistor, and be sure to remove the 
     programming jumper.</p>
 <!--#include virtual="/Footer" -->
+<H1>DS54 Wiring</H1>
+<p>It is strongly recommended that when multiple DS54s are used, that they be
+    connected to the track wires with consistent phasing.  In other words, all
+    DS54 devices should connect the RailA connection to the same terminal position
+    on the DS54, and that all DS54s connect the RailB connection to the <i>other</i>
+    terminal position.  This is important to ensure that there is not an unexpected
+    current flow on the LocoNet cable due to out-of-phase connections on the
+    DS54 track connections.  Note that this means that the DS54 track connections
+    should <i>not</i> be made using track power that is from an <i>autoreversing</i>
+    power district.</p>
+<p>Technical details on this issue can be found in <a href="DigitraxPower/index.shtml"> a discussion of
+        power leads on Digitrax components</a>.</p>
+
+<p>LocoNet&reg; is a registered trademark of <a href="www.digitrax.com">Digitrax, Inc.</a></p>
 </body>
 </html>
 

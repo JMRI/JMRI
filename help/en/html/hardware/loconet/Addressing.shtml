@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <TITLE>
- 	JMRI: LocoNet Addressing
+ 	JMRI: LocoNet&reg; Addressing
     </TITLE>
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI LocoNet Address Addressing Sensors Turnout">
@@ -30,9 +30,9 @@
     <div id="mainContent">
 
 
-<h1>LocoNet addressing</h1>
+<h1>LocoNet&reg; addressing</h1>
 
-LocoNet systems address input sensors and output turnouts using numbers.
+LocoNet&reg; systems address input sensors and output turnouts using numbers.
 This page talks about how those numbers are defined in JMRI, and how they relate
 to the numbers in other systems.
 
@@ -176,6 +176,7 @@ available when it changes.  JMRI refers to reporters using the name
     each transponding zone</p>
 <p>Additional information on Reporters and the Reporter Table may be found at the
     <a href="../../tools/Reporters.shtml">main Reporter page</a>.</p>
+<p>LocoNet&reg; is a registered trademark of <a href="www.digitrax.com">Digitrax, Inc.</a></p>
     </div>
   </div>
 

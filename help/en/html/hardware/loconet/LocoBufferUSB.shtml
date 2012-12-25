@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
  <TITLE>
-      JMRI Hardware Guide: Connecting a LocoBuffer-USB to LocoNet
+      JMRI Hardware Guide: Connecting a LocoBuffer-USB to LocoNet&reg;
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
@@ -27,13 +27,13 @@
     <div id="mainContent">
 
       <h1> 
-      JMRI Hardware Guide: Connecting a LocoBuffer-USB to LocoNet
+      JMRI Hardware Guide: Connecting a LocoBuffer-USB to LocoNet&reg;
       </h1>
 
-<img src="http://www.rr-cirkits.com/description/LocoBuffer-USB-t.gif" height="83" width="140" align="right"/>
+        <img src="http://www.rr-cirkits.com/description/LocoBuffer-USB-t.gif" height="83" width="140" alt="LocoBuffer-USB image">
 <p>
 The LocoBuffer-USB provides a very reliable way to 
-connect a computer to a LocoNet.  It is produced by Dick Bronson's
+connect a computer to a LocoNet&reg;.  It is produced by Dick Bronson's
 <A HREF="http://www.rr-cirkits.com">RR-CirKits</a> 
 company, based in part on the original LocoBuffer design.
 </p>
@@ -58,7 +58,10 @@ The LocoBuffer-USB completely isolates your computer from the LocoNet,
 removing the possibility of ground currents flowing through the LocoNet cable. 
 It receives its power partially from the LocoNet RailSync lines and the rest from your 
 computer via the USB cable.
+<p>LocoNet&reg; is a registered trademark of <a href="www.digitrax.com">Digitrax, Inc.</a></p>
 
+    </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

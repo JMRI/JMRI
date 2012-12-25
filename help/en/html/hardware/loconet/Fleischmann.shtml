@@ -33,7 +33,7 @@
       </H1>
 
 <P>DecoderPro can communicate with a Fleischmann Twin Centre via
-the built-in serial port and the LocoNet protocol. 
+the built-in serial port and the LocoNet&reg; protocol. 
 <p>
 Note that this capability was added to JMRI in test version 1.5.2, 
 and is not present in the previous 1.4 production release.  
@@ -63,8 +63,10 @@ Then start the JMRI program and configure it to:
 <LI>Select hardware handshaking
 <LI>Select DCS100 command station
 </UL>
+<p>LocoNet&reg; is a registered trademark of <a href="www.digitrax.com">Digitrax, Inc.</a></p>
 
-
+    </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

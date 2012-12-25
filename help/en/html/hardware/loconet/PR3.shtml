@@ -31,12 +31,13 @@ JMRI Hardware Guide: Connecting to a Digitrax PR3
 
 
 <a href="http://digitrax.com/prd_compint_pr3.php">
-<img src="http://www.digitrax.com/static/apps/products/computer-control/pr3/images/PR3_jpg_350x900_q85.jpg" width="175" height="175" align="right" alt="PR3 picture"/>
+<img src="http://www.digitrax.com/static/apps/products/computer-control/pr3/images/PR3_jpg_350x900_q85.jpg" 
+     alt="PR3 picture"/>
 </a><br/>
 
 The Digitrax PR3 can be used as either a standalone
 decoder programmer much like the PR2, or as an 
-interface between your computer and a LocoNet, much
+interface between your computer and a LocoNet&reg;, much
 like an MS100. It can only do one or the other 
 of these at a given time. You select the mode
 of operation in the JMRI preferences during setup.
@@ -48,7 +49,7 @@ It can also be used to download sound information into
 Digitrax sound decoders and, within its limited current
 capability, run one locomotive to test it. When used with 
 Digitrax SFX decoders, "neutral mode" allows you to vary the speed
-without the motor moving the deocder, so you can hear how the locomotive
+without the motor moving the decoder, so you can hear how the locomotive
 sound reacts to varying speeds.
 (Note that Digitrax only guarantees programming for Digitrax
 SFX decoders with properly installed loads, etc, but our testing
@@ -87,7 +88,7 @@ driver when using current versions of Mac OS X or Linux.
 
 <h2>Using the PR3 as a LocoNet Interface</h2>
 
-<img src="images/PR3toCommandStation.png" align="right" height="120" width="426">
+<img src="images/PR3toCommandStation.png" alt="PR3 Connection to Digitrax Command Station">
 
 To use the PR3 as an interface, connect a LocoNet cable to the
 LocoNet connector on the PR3.  
@@ -127,12 +128,17 @@ station connected.
 
 <h2>Using the PR3 Programming Track</h2>
 
-<img src="images/PR3standAlone.png" align="right" height="194" width="399">
+<img src="images/PR3standAlone.png" alt="PR3 Connection to Programming Track">
 
-To use the PR3 programming track, 
+<p>To use the PR3 programming track, 
 connect the PR3 to its power supply and to a 
 dedicated piece of track which you'll use as the programming track.
-Finally, connect a USB cable between the PR3 and your computer.
+Finally, connect a USB cable between the PR3 and your computer.</p>
+<p>The PR3 does not necessarily provide reliable readback of 
+    CVs for some decoders, including many sound decoders, when 
+    the power supply is a 12VDC or 14VDC power supply.  Some users 
+    repot that using a 18 VDC regulated power supply enables them 
+    to reliably read sound decoder CVs via the PR3 programming track.</p>
 
 <h3>Recommended setup</h3>
 <p>
@@ -189,14 +195,16 @@ writes CV128 to 0 or 1.  This happens when a JMRI throttle is used to
 run the locomotive on the PR3 programming track, and there's nothing
 JMRI can do to prevent it.  Unfortunately, this can interfere with the 
 CV programming on some non-Digitrax decoders.  For example, it will set
-the "Master Volume" CV128 on some Soundtraxx decoders to a very low volume.
+the "Master Volume" CV128 on some SoundTraxx decoders to a very low volume.
 <p>
 If you are using the PR3 with a decoder that uses CV128 for something, 
 you should either not use a JMRI throttle to run the locomotive on the
 PR3 programming track, or remember to rewrite CV128 with the right value 
 just before removing the locomotive from the track.
 
-
+<p>LocoNet&reg; is a registered trademark of <a href="www.digitrax.com">Digitrax, Inc.</a></p>
+    </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>
