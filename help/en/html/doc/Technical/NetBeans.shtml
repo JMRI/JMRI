@@ -66,7 +66,7 @@
     <ul>
         <li> Download NetBeans 7.2 (The Java SE version is fine) from 
             <a href="http://www.netbeans.org">www.netbeans.org</a><br>
-            (If you don't yet have Java Development Kit 6.0 (JDK) installed on your
+		(If you don't yet have Java Development Kit 6.0 (JDK) installed on your
             system, download a JDK-NetBeans bundle - on the NetBeans download page, 
             look for a link similar to "JDK with NetBeans IDE Java SE bundle".)</li>
         <li> Run the NetBeans package installer</li>
@@ -83,37 +83,24 @@
     </p>
     <p>Start NetBeans and do the following steps. Text in brackets [] are menu items to be selected
     or buttons to be pressed.
-    Text in <strong>this style</strong> should be typed into NetBeans exactly as written.  
-    Text in <strong><em>this style</em></strong> denotes information related to your
-    sourceforge.net login.  <em>This font</em> denotes explanations and stage directions to follow.<br />
+    Text in <strong>this font</strong> should be typed into NetBeans exactly as written.
+    <em>This font</em> denotes explanations and stage directions to follow.<br />
     </p>
         [Team]-&gt;[Subversion]-&gt;[Checkout]
         <ul>
-            <li> Repository URL: <strong>svn+ssh://svn.code.sf.net/p/jmri/code</strong>
-            <li> User: <strong><i>your SourceForge.net login name</i></strong>
-            <li> Password: <strong><i>your SourceForge.net password</i></strong>
-
+            <li> Repository URL: <strong>http://svn.code.sf.net/p/jmri/code/</strong>
+            <li> User: <em>leave empty</em>
+            <li> Password: <em>leave empty</em>
             <li> [Next &gt;]
-			<br>&nbsp;
+                <p><img src="images/netBeansSvnCheckoutPg1.png" alt="First NetBeans SVN Checkout Page for JMRI"></p></li>
             <li> Repository Folder(s): <strong>trunk/jmri</strong>
-            <li> Repository Revision:
-                <ul><li><em>The "Repository Revision" entry defaults to <strong>HEAD</strong> .  
-                        This effectively selects the most recently checked-in source
-                        code.</em></li>
-                    <li><em>You may instead use the </em>[Browse] <em>button to browse the SVN
-                        repository to select a specific code-base using a "tag" 
-                        or "branch" or some other portion from the "trunk".  This can
-                        be useful if you need to work with an older version of the 
-                        JMRI project.</em></li>
-                    <li><em>You may instead use the </em>[Search] <em>button to select code based on
-                    commit date.</em></li>
-                </ul>
-                    
-            <li> Skip "&lt;selected-folder&gt;" and checkout only its content:  <em> leave unchecked</em>
+            <li> Repository Revision:  <em>leave set for HEAD</em>
+            <li> Skip "jmri" and checkout only its content:  <em> leave unchecked</em>
             <li> Export a clean directory tree from the repository:  <em> leave unchecked</em>
-            <li> Local Folder: <em>pick someplace on your hard drive...</em>
+            <li> Local Folder: <em>pick some place on your hard drive...</em>
             <li> Scan for NetBeans Projects after Checkout:  <em> ensure checked</em>
             <li> [Finish]
+                <p><img src="images/netBeansSvnCheckoutPg2.png" alt="Second NetBeans SVN Checkout Page for JMRI"></p></li>
         </ul>
     <br />
     [Window]-&gt;[Output]-&gt;[Output]     <em>shows SVN activity log window...</em>
@@ -134,9 +121,7 @@
 
     <ul>
         <li>Run -> Run Project (JMRI)  <em>will compile and invoke DecoderPro</em>
-        <li><em>You can choose other targets (i.e. PanelPro...) by changing 
-                [File]-&gt;[Project Properties (JMRI)]-&gt;[Build and Run]-&gt;
-                [Run Project]</em>
+        <li><em>You can choose other targets (i.e. PanelPro...) by changing [File]-&gt;[Project Properties (JMRI)]-&gt;[Build and Run]-&gt;[Run Project]</em>
     </ul>
     <p>
         If you want to run the program under the NetBeans debugger,
@@ -148,9 +133,7 @@
 
     <p>From time to time, you can update the code to match the current 
     repository contents. To do this, use the
-    [Team]-&gt;[Update] menu choice.  You will probably need to provide your 
-    sourceforge login information as was required to initially check out JMRI
-    from sourceforge, as described above.</p>
+    [Team]-&gt;[Update] menu choice.</p>
 
     
     <h2><a id="jar">Making a Jar File</a></h2>
@@ -230,18 +213,18 @@
     <p>or</p>
     <p style="font-family: monospace">findbugs.home=/opt/findbugs-1.3.8</p>
     <p>To run the FindBugs tool on JMRI code, execute the ant target "findbugs" 
-        which is defined in build.xml.  Within Netbeans this can be accomplished 
+        which is defined in build.xml.  Within NetBeans this can be accomplished 
         by right-clicking build.xml in the "Files" pane and "Run"ing the "findbugs" 
-        target.  When FindBugs completes, the Netbeans Output window will show 
+        target.  When FindBugs completes, the NetBeans Output window will show 
         the path to a report file in HTML format.  Open that file with a browser 
         to review the FindBugs results.</p>        
 
-
-<!--#include virtual="/Footer" -->
+    
+    <!--#include virtual="/Footer" -->
 
 
       </div>
       <!-- closes #mainContent-->
 </body>
 
-</html>
+ </html>
