@@ -158,13 +158,13 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 					case "positionablelabel" :
 						$widget['icon1'] = 		$(this).find('icon').attr('url');
 						var $rotation = 		$(this).find('icon').find('rotation').text();
-						$widget['degrees'] = 	($(this).find('icon').attr('degrees') * 1) + ($rotation * 90);
+						$widget['degrees'] = 	($(this).find('icon').attr('degrees') * 1) - ($rotation * 90);
 						$widget['scale'] = 		$(this).find('icon').attr('scale');
 						break;
 					case "indicatortrackicon" :
 						$widget['icon1'] = 		$(this).find('iconmap').find('ClearTrack').attr('url');
 						var $rotation = 		$(this).find('iconmap').find('ClearTrack').find('rotation').text();
-						$widget['degrees'] = 	($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) + ($rotation * 90);
+						$widget['degrees'] = 	($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) - ($rotation * 90);
 						$widget['scale'] = 		$(this).find('iconmap').find('ClearTrack').attr('scale');
 						break;
 					case "indicatorturnouticon" :
@@ -175,7 +175,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$widget['icon4'] = 		$(this).find('iconmaps').find('ClearTrack').find('TurnoutStateThrown').attr('url');
 						$widget['icon8'] = 		$(this).find('iconmaps').find('ClearTrack').find('BeanStateInconsistent').attr('url');
 						var $rotation = 		$(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').find('rotation').text();
-						$widget['degrees'] = 	($(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('degrees') * 1) + ($rotation * 90);
+						$widget['degrees'] = 	($(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('degrees') * 1) - ($rotation * 90);
 						$widget['scale'] = 		$(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('scale');
 						if ($widget.forcecontroloff != "true") {
 							$widget.classes += 		$widget.element + " clickable ";
@@ -189,7 +189,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$widget['icon4'] =  	$(this).find('icons').find('thrown').attr('url');
 						$widget['icon8'] =		$(this).find('icons').find('inconsistent').attr('url');
 						var $rotation = 		$(this).find('icons').find('unknown').find('rotation').text();
-						$widget['degrees'] = 	($(this).find('icons').find('unknown').attr('degrees') * 1) + ($rotation * 90);
+						$widget['degrees'] = 	($(this).find('icons').find('unknown').attr('degrees') * 1) - ($rotation * 90);
 						$widget['scale'] = 		$(this).find('icons').find('unknown').attr('scale');
 						if ($widget.forcecontroloff != "true") {
 							$widget.classes += 		$widget.element + " clickable ";
@@ -203,7 +203,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$widget['icon4'] =  	$(this).find('inactive').attr('url');
 						$widget['icon8'] =		$(this).find('inconsistent').attr('url');
 						var $rotation = 		$(this).find('unknown').find('rotation').text();
-						$widget['degrees'] = 	($(this).find('unknown').attr('degrees') * 1) + ($rotation * 90);
+						$widget['degrees'] = 	($(this).find('unknown').attr('degrees') * 1) - ($rotation * 90);
 						$widget['scale'] = 		$(this).find('unknown').attr('scale');
 						if ($widget.forcecontroloff != "true") {
 							$widget.classes += 		$widget.element + " clickable ";
@@ -211,7 +211,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						break;
 					case "signalheadicon" :
 						$widget['name']  =		$widget.signalhead; //normalize name
-						$widget['element']  =	"signalhead"; //what xmlio server calls this
+						$widget['element']  =	"signalHead"; //what xmlio server calls this
 						$widget['icon' + HELD] =  	$(this).find('icons').find('held').attr('url');
 						$widget['icon' + DARK] 	=	$(this).find('icons').find('dark').attr('url');
 						$widget['icon' + RED] =  	$(this).find('icons').find('red').attr('url');
@@ -226,7 +226,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$widget['icon' + LUNAR] 	=	$(this).find('icons').find('lunar').attr('url');
 						$widget['icon' + FLASHLUNAR] =	$(this).find('icons').find('lunar').attr('url');
 						var $rotation = 		$(this).find('icons').find('dark').find('rotation').text();
-						$widget['degrees'] = 	($(this).find('icons').find('dark').attr('degrees') * 1) + ($rotation * 90);
+						$widget['degrees'] = 	($(this).find('icons').find('dark').attr('degrees') * 1) - ($rotation * 90);
 						$widget['scale'] = 		$(this).find('icons').find('dark').attr('scale');
 						if ($widget.forcecontroloff != "true") {
 							$widget.classes += 		$widget.element + " clickable ";
@@ -234,7 +234,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						break;
 					case "signalmasticon" :
 						$widget['name']  =		$widget.signalmast; //normalize name
-						$widget['element']  =	"signalmast"; //what xmlio server calls this
+						$widget['element']  =	"signalMast"; //what xmlio server calls this
 						var icons = $(this).find('icons').children(); //get array of icons
 						icons.each(function(i, item) {  //loop thru icons array and set all iconXX urls for widget
 							$widget['icon'+item.nodeName] = $(item).attr('url'); 
@@ -254,7 +254,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$widget['icon4'] =  	$(this).find('inactive').attr('url');
 						$widget['icon8'] =		$(this).find('inconsistent').attr('url');
 						var $rotation = 		$(this).find('unknown').find('rotation').text();
-						$widget['degrees'] = 	($(this).find('unknown').attr('degrees') * 1) + ($rotation * 90);
+						$widget['degrees'] = 	($(this).find('unknown').attr('degrees') * 1) - ($rotation * 90);
 						$widget['scale'] = 		$(this).find('unknown').attr('scale');
 						if ($widget.forcecontroloff != "true") {
 							$widget.classes += 		$widget.element + " clickable ";
