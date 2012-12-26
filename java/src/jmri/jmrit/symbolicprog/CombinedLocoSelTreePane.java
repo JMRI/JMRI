@@ -641,7 +641,7 @@ class InvisibleNode extends DefaultMutableTreeNode {
 
     int realIndex = -1;
     int visibleIndex = -1;
-    Enumeration e = children.elements();
+    Enumeration<?> e = children.elements();
     while (e.hasMoreElements()) {
       InvisibleNode node = (InvisibleNode) e.nextElement();
       if (node.isVisible()) {
@@ -666,7 +666,7 @@ class InvisibleNode extends DefaultMutableTreeNode {
     }
 
     int count = 0;
-    Enumeration e = children.elements();
+    Enumeration<?> e = children.elements();
     while (e.hasMoreElements()) {
       InvisibleNode node = (InvisibleNode) e.nextElement();
       if (node.isVisible()) {

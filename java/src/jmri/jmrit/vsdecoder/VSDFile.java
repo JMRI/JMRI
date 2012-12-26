@@ -67,8 +67,7 @@ public class VSDFile extends ZipFile {
 
 	try {
 	    // Debug: List all the top-level contents in the file.
-	    @SuppressWarnings("rawtypes")
-	    Enumeration entries = this.entries();
+	    Enumeration<?> entries = this.entries();
 	    while(entries.hasMoreElements()) {
 		ZipEntry z = (ZipEntry)entries.nextElement();
 		log.debug("Entry: " + z.getName());
@@ -341,7 +340,8 @@ public class VSDFile extends ZipFile {
     }
 
     protected boolean validateFiles(Element el, String name, String[] fnames, Boolean required) {
-	List elist = el.getChildren(name);
+	@SuppressWarnings("unchecked")
+	List<Element> elist = el.getChildren(name);
 	String s;
 
 	// First, check to see if any elements of this <name> exist.

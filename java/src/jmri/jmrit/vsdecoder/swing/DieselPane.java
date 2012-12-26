@@ -99,13 +99,12 @@ public class DieselPane extends EnginePane {
 	this.setVisible(true);
     }
 
-    /** Respond to a throttle change.  Basically, doesn't do anything */
-    public void throttleChange(ChangeEvent e) {
-	firePropertyChangeEvent(new PropertyChangeEvent(this, "throttle",
-						        throttle_setting,
-							(Integer)throttle_spinner.getModel().getValue()));
-	throttle_setting = (Integer)throttle_spinner.getModel().getValue();
-    }
+	/** Respond to a throttle change. Basically, doesn't do anything */
+	public void throttleChange(ChangeEvent e) {
+		firePropertyChangeEvent(new PropertyChangeEvent(this, "throttle", throttle_setting,
+				throttle_spinner.getModel().getValue()));
+		throttle_setting = (Integer) throttle_spinner.getModel().getValue();
+	}
 
     /** Respond to a start button press */
     public void startButtonChange(ActionEvent e) {

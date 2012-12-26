@@ -198,7 +198,7 @@ class Diesel3Sound extends EngineSound {
 	    sb = new D3Notch();
 	    int nn = Integer.parseInt(el.getChildText("notch"));
 	    sb.setNotch(nn);
-	    List<Element> elist = (List<Element>)el.getChildren("file");
+	    List<Element> elist = el.getChildren("file");
 	    int j = 0;
 	    for (Element fe : elist) {
 		fn = fe.getText();

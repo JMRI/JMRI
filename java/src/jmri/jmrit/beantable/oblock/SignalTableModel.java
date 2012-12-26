@@ -446,7 +446,7 @@ public class SignalTableModel extends AbstractTableModel {
                         break;      // no change
                     }
                     deleteSignal(signalRow);    // delete old
-                    OBlock oldBlock = signalRow.getFromBlock();
+//                    OBlock oldBlock = signalRow.getFromBlock();
                     signalRow.setFromBlock(block);                    	
                     portal = signalRow.getPortal();
                     if (checkPortalBlock(portal, block)) {
@@ -571,14 +571,14 @@ public class SignalTableModel extends AbstractTableModel {
         }
     }
 
-    private int getSignalIndex(String name) {
-        for (int i=0; i<_signalList.size(); i++)  {
-            if (_signalList.get(i).getSignal().getDisplayName().equals(name)) { 
-                return i;
-            }
-        }
-        return -1;
-    }
+//    private int getSignalIndex(String name) {
+//        for (int i=0; i<_signalList.size(); i++)  {
+//            if (_signalList.get(i).getSignal().getDisplayName().equals(name)) { 
+//                return i;
+//            }
+//        }
+//        return -1;
+//    }
 
     private void deleteSignal(SignalRow signalRow) {
         Portal portal = signalRow.getPortal();
