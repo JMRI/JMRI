@@ -1294,7 +1294,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     protected void startIdentifyLoco() {
         if (InstanceManager.programmerManagerInstance() == null || !InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
             log.error("Identify loco called when no service mode programmer is available");
-            JOptionPane.showMessageDialog(null, "Identify loco called when no service mode programmer is available");
+            JOptionPane.showMessageDialog(null, ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("IdentifyError"));
             return;
         }
         // start identifying a loco
@@ -1367,8 +1367,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     protected void statusBar() {
         addToStatusBox(serviceModeProgrammerLabel, null);
         addToStatusBox(operationsModeProgrammerLabel, null);
-        JLabel programmerStatusLabel = new JLabel("Programmer Status : ");
-        statusField.setText("idle");
+        JLabel programmerStatusLabel = new JLabel(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ProgrammerStatus"));
+        statusField.setText(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("Idle"));
         addToStatusBox(programmerStatusLabel, statusField);
     }
 
@@ -1468,10 +1468,18 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
         if (serModeProCon != null) {
             if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo()) && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
-                serviceModeProgrammerLabel.setText("Service Mode Programmer " + serModeProCon.getConnectionName() + " Is Online");
+                serviceModeProgrammerLabel.setText(
+                    java.text.MessageFormat.format(
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ServiceModeProgOnline"),
+                        new Object[] {serModeProCon.getConnectionName()})
+                );
                 serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
             } else {
-                serviceModeProgrammerLabel.setText("Service Mode Programmer " + serModeProCon.getConnectionName() + " Is Offline");
+                serviceModeProgrammerLabel.setText(
+                    java.text.MessageFormat.format(
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ServiceModeProgOffline"),
+                        new Object[] {serModeProCon.getConnectionName()})
+                );
                 serviceModeProgrammerLabel.setForeground(Color.red);
             }
             if (oldServMode == null) {
@@ -1482,7 +1490,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 firePropertyChange("setprogservice", "setEnabled", true);
             }
         } else {
-            serviceModeProgrammerLabel.setText("No Service Mode Programmer Available");
+            serviceModeProgrammerLabel.setText(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("NoServiceProgrammerAvailable"));
             serviceModeProgrammerLabel.setForeground(Color.red);
             if (oldServMode != null) {
                 contextService.setEnabled(false);
@@ -1494,10 +1502,18 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
         if (opsModeProCon != null) {
             if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo()) && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
-                operationsModeProgrammerLabel.setText("Operations Mode Programmer " + opsModeProCon.getConnectionName() + " Is Online");
+                operationsModeProgrammerLabel.setText(
+                    java.text.MessageFormat.format(
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("OpsModeProgOnline"),
+                        new Object[] {opsModeProCon.getConnectionName()})
+                );
                 operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
             } else {
-                operationsModeProgrammerLabel.setText("Operations Mode Programmer " + opsModeProCon.getConnectionName() + " Is Offline");
+                operationsModeProgrammerLabel.setText(
+                    java.text.MessageFormat.format(
+                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("OpsModeProgOffline"),
+                        new Object[] {opsModeProCon.getConnectionName()})
+                );
                 operationsModeProgrammerLabel.setForeground(Color.red);
             }
             if (oldOpsMode == null) {
@@ -1508,7 +1524,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 firePropertyChange("setprogops", "setEnabled", true);
             }
         } else {
-            operationsModeProgrammerLabel.setText("No Operations Mode Programmer Available");
+            operationsModeProgrammerLabel.setText(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("NoOpsProgrammerAvailable"));
             operationsModeProgrammerLabel.setForeground(Color.red);
             if (oldOpsMode != null) {
                 contextOps.setEnabled(false);
