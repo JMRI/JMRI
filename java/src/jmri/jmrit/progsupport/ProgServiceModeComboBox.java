@@ -4,6 +4,7 @@ package jmri.jmrit.progsupport;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import jmri.*;
@@ -69,34 +70,34 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements java.be
         box = new JComboBox();
 
         // install items in GUI
-        add(new JLabel("Programming Mode"));
+        add(new JLabel(ResourceBundle.getBundle("jmri.jmrit.progsupport.ProgSupportBundle").getString("ProgrammingMode")));
         add(box);
 
         if (InstanceManager.programmerManagerInstance() != null
                 && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
             Programmer p = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
             if (p.hasMode(Programmer.PAGEMODE)) {
-                box.addItem("Paged Mode");
+                box.addItem(ResourceBundle.getBundle("jmri.jmrit.progsupport.ProgSupportBundle").getString("PagedMode"));
                 modes.add(modes.size(), Programmer.PAGEMODE);
             }
             if (p.hasMode(Programmer.REGISTERMODE)) {
-                box.addItem("Register Mode");
+                box.addItem(ResourceBundle.getBundle("jmri.jmrit.progsupport.ProgSupportBundle").getString("RegisterMode"));
                 modes.add(modes.size(), Programmer.REGISTERMODE);
             }
             if (p.hasMode(Programmer.DIRECTBYTEMODE)) {
-                box.addItem("Direct Byte");
+                box.addItem(ResourceBundle.getBundle("jmri.jmrit.progsupport.ProgSupportBundle").getString("DirectByte"));
                 modes.add(modes.size(), Programmer.DIRECTBYTEMODE);
             }
             if (p.hasMode(Programmer.DIRECTBITMODE)) {
-                box.addItem("Direct Bit");
+                box.addItem(ResourceBundle.getBundle("jmri.jmrit.progsupport.ProgSupportBundle").getString("DirectBit"));
                 modes.add(modes.size(), Programmer.DIRECTBITMODE);
             }
             if (p.hasMode(Programmer.ADDRESSMODE)) {
-                box.addItem("Address Mode");
+                box.addItem(ResourceBundle.getBundle("jmri.jmrit.progsupport.ProgSupportBundle").getString("AddressMode"));
                 modes.add(modes.size(), Programmer.ADDRESSMODE);
             }
         } else {
-            box.addItem("Not Available");
+            box.addItem(ResourceBundle.getBundle("jmri.jmrit.progsupport.ProgSupportBundle").getString("NotAvailable"));
             log.info("No programmer available, so modes not set");
         }
         box.setEnabled((!modes.isEmpty()));
