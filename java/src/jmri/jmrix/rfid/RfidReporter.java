@@ -9,7 +9,6 @@ import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.PhysicalLocationReporter;
 import jmri.util.PhysicalLocation;
-import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.ReporterManager;
 import java.util.regex.Pattern;

@@ -7,8 +7,6 @@ import apps.Apps;
 import java.text.MessageFormat;
 
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import jmri.util.swing.WindowInterface;
 
 /**
  * Nick Kulp's Cornwall Railroad.

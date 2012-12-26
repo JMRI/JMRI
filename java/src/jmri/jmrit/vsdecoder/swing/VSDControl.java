@@ -27,11 +27,8 @@ package jmri.jmrit.vsdecoder.swing;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.border.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import jmri.util.swing.*;
-
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;

@@ -1,6 +1,5 @@
 package jmri.jmrit.display;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -8,12 +7,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Dimension;
-import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import jmri.Sensor;
-import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.controlPanelEditor.shape.PositionableRoundRect;
 import jmri.jmrit.logix.OBlock;
 /**

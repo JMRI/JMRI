@@ -15,7 +15,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.apache.log4j.Logger;
-import org.i18nchecker.I18nChecker;
+//import org.i18nchecker.I18nChecker;
 
 /**
  *

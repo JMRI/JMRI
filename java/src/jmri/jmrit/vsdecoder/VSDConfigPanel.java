@@ -19,7 +19,6 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -35,7 +34,6 @@ import jmri.util.swing.JmriPanel;
 import javax.swing.SwingWorker;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
-import jmri.LocoAddress;
 import java.text.MessageFormat;
 import javax.swing.JOptionPane;
 

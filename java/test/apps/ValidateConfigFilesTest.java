@@ -2,14 +2,8 @@
 
 package apps;
 
-import jmri.jmrit.XmlFile;
-import java.io.*;
-
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import jmri.InstanceManager;
 
 /**
  * Test upper level loading of config files

@@ -21,7 +21,6 @@ package jmri.jmrit.vsdecoder;
 
 import org.jdom.Element;
 import java.util.HashMap;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

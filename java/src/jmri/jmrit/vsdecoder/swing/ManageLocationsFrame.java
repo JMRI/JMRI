@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
-import java.util.Map;
 import javax.swing.event.EventListenerList;
 import jmri.util.JmriJFrame;
 import javax.swing.*;

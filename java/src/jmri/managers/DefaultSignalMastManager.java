@@ -6,7 +6,6 @@ import jmri.*;
 import jmri.managers.AbstractManager;
 import jmri.implementation.SignalMastRepeater;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

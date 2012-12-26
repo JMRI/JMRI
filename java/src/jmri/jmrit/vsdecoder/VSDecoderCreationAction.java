@@ -23,7 +23,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import java.io.File;
-import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
 
 /**
  * Create a new VSDecoder Pane.

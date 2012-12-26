@@ -9,7 +9,6 @@ import jmri.jmrit.roster.RosterEntry;
 import java.util.Enumeration;
 import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;

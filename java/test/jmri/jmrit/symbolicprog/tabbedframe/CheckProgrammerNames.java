@@ -6,10 +6,7 @@ import java.io.*;
 
 import junit.framework.Test;
 import junit.framework.Assert;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.jmrit.XmlFile;
 
 /**
  * Check the names in an XML programmer file against the names.xml definitions

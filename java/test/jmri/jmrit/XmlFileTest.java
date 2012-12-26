@@ -13,8 +13,6 @@ import org.jdom.Element;
 import org.jdom.Document;
 import org.jdom.DocType;
 
-import java.io.InputStream;
-
 /**
  * Tests for the XmlFile class.
  * <P>

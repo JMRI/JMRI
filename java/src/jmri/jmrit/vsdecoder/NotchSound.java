@@ -19,11 +19,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision: 18481 $
  */
 
-import jmri.AudioException;
-import jmri.AudioManager;
-import jmri.jmrit.audio.AudioBuffer;
-import jmri.jmrit.audio.AudioSource;
-import jmri.util.PhysicalLocation;
+
 
 class NotchSound extends SoundBite {
     // Engine-notch specific values

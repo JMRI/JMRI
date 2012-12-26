@@ -19,8 +19,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import java.awt.Dimension;
-
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
 
