@@ -55,6 +55,17 @@
  -->
   </xs:attribute>
 
+  <xs:attribute name="base" xmlns:xml="http://www.w3.org/XML/1998/namespace" type="xs:string">
+    <xs:annotation>
+      <xs:documentation>
+      Part of XInclude processing, this denotes the 
+      base address from which elements were included.
+      For more information on use, see the 
+      <a href="http://www.w3.org/TR/xmlbase/#syntax">W3C XML Base page</a>.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+
   <xs:complexType name="NamedBeanType">
     <xs:sequence>
       <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
