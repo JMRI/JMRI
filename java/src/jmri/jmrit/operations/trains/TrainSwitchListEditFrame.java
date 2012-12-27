@@ -316,14 +316,24 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		
 		int y = 1;		// vertical position in panel
 
-		String previousName = "";
+		Location previousLocation = null;
 		
 		for (int i =0; i<locations.size(); i++){
 			Location l = manager.getLocationById(locations.get(i));
+			if (l.getStatus().equals(Location.MODIFIED) && l.isSwitchListEnabled()){
+				changeButton.setEnabled(true);
+				csvChangeButton.setEnabled(true);
+			}
 			String name = TrainCommon.splitString(l.getName());
-			if (name.equals(previousName))
+			if (previousLocation != null && TrainCommon.splitString(previousLocation.getName()).equals(name)) {
+				l.setSwitchListEnabled(previousLocation.isSwitchListEnabled());
+				if (previousLocation.isSwitchListEnabled() && l.getStatus().equals(Location.MODIFIED)) {
+					previousLocation.setStatus();	// we need to update the primary location
+					l.setStatus(Location.UPDATED);	// and clear the secondaries
+				}
 				continue;
-			previousName = name;
+			}
+			previousLocation = l;
 			
 			JCheckBox checkBox = new JCheckBox();
 			locationCheckBoxes.add(checkBox);
@@ -334,10 +344,6 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			addItemLeft(locationPanelCheckBoxes, checkBox, 0, y);
 			
 			JLabel status = new JLabel(l.getStatus());
-			if (l.getStatus().equals(Location.MODIFIED) && l.isSwitchListEnabled()){
-				changeButton.setEnabled(true);
-				csvChangeButton.setEnabled(true);
-			}
 			addItem(locationPanelCheckBoxes, status, 2, y);
 			
 			JButton button = new JButton(rb.getString("Add"));
@@ -351,8 +357,15 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			locationComboBoxes.add(comboBox);
 			comboBox.setSelectedItem(l.getDefaultPrinterName());
 			addItem(locationPanelCheckBoxes, comboBox, 6, y++);
-			
-			l.addPropertyChangeListener(this);					
+								
+		}
+		
+		// restore listeners
+		synchronized (this) {
+			for (int i =0; i<locations.size(); i++){
+				Location l = manager.getLocationById(locations.get(i));
+				l.addPropertyChangeListener(this);
+			}
 		}
 
 		locationPanelCheckBoxes.revalidate();

@@ -476,11 +476,10 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		List<String> locations = locationManager.getLocationsByIdList();
 		for (int i=0; i<locations.size(); i++){
 			Location location = locationManager.getLocationById(locations.get(i));
-			if (location != null)
-				if (location.isSwitchListEnabled() && location.getStatus().equals(Location.MODIFIED)){
-					printSwitchButton.setBackground(Color.RED);
-					return;
-				}
+			if (location != null && location.isSwitchListEnabled() && location.getStatus().equals(Location.MODIFIED)){
+				printSwitchButton.setBackground(Color.RED);
+				return;
+			}
 		}
 		printSwitchButton.setBackground(Color.GREEN);
 	}
