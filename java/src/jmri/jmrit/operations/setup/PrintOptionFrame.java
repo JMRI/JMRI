@@ -228,75 +228,8 @@ public class PrintOptionFrame extends OperationsFrame {
 		p1.add(pLocalColor);
 		p1.add(pSwitchFormat);
 
-		// engine message format
-		pEngPickup.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("BorderLayoutPickupEngine")));
-		pEngPickup.add(pickupEngPrefix);
-		pickupEngPrefix.setText(Setup.getPickupEnginePrefix());
-		String[] format = Setup.getPickupEngineMessageFormat();
-		for (int i = 0; i < format.length; i++) {
-			JComboBox b = Setup.getEngineMessageComboBox();
-			b.setSelectedItem(format[i]);
-			pEngPickup.add(b);
-			enginePickupMessageList.add(b);
-		}
-		pEngPickup.add(addEngPickupComboboxButton);
-		pEngPickup.add(deleteEngPickupComboboxButton);
-
-		pEngDrop.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropEngine")));
-		pEngDrop.add(dropEngPrefix);
-		dropEngPrefix.setText(Setup.getDropEnginePrefix());
-		format = Setup.getDropEngineMessageFormat();
-		for (int i = 0; i < format.length; i++) {
-			JComboBox b = Setup.getEngineMessageComboBox();
-			b.setSelectedItem(format[i]);
-			pEngDrop.add(b);
-			engineDropMessageList.add(b);
-		}
-		pEngDrop.add(addEngDropComboboxButton);
-		pEngDrop.add(deleteEngDropComboboxButton);
-
-		// car pickup message format
-		pPickup.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPickupCar")));
-		pPickup.add(pickupCarPrefix);
-		pickupCarPrefix.setText(Setup.getPickupCarPrefix());
-		String[] pickFormat = Setup.getPickupCarMessageFormat();
-		for (int i = 0; i < pickFormat.length; i++) {
-			JComboBox b = Setup.getCarMessageComboBox();
-			b.setSelectedItem(pickFormat[i]);
-			pPickup.add(b);
-			carPickupMessageList.add(b);
-		}
-		pPickup.add(addCarPickupComboboxButton);
-		pPickup.add(deleteCarPickupComboboxButton);
-
-		// car drop message format
-		pDrop.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropCar")));
-		pDrop.add(dropCarPrefix);
-		dropCarPrefix.setText(Setup.getDropCarPrefix());
-		String[] dropFormat = Setup.getDropCarMessageFormat();
-		for (int i = 0; i < dropFormat.length; i++) {
-			JComboBox b = Setup.getCarMessageComboBox();
-			b.setSelectedItem(dropFormat[i]);
-			pDrop.add(b);
-			carDropMessageList.add(b);
-		}
-		pDrop.add(addCarDropComboboxButton);
-		pDrop.add(deleteCarDropComboboxButton);
-
-		// local car move message format
-		pLocal.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutLocal")));
-		pLocal.add(localPrefix);
-		localPrefix.setText(Setup.getLocalPrefix());
-		String[] localFormat = Setup.getLocalMessageFormat();
-		for (int i = 0; i < localFormat.length; i++) {
-			JComboBox b = Setup.getCarMessageComboBox();
-			b.setSelectedItem(localFormat[i]);
-			pLocal.add(b);
-			localMessageList.add(b);
-		}
-		pLocal.add(addLocalComboboxButton);
-		pLocal.add(deleteLocalComboboxButton);
+		// load all of the message combo boxes
+		loadFormatComboBox();
 
 		// Optional Switch List Panel
 		JPanel pSl = new JPanel();
@@ -311,52 +244,6 @@ public class PrintOptionFrame extends OperationsFrame {
 		addItem(pSwitchListOrientation, new JLabel(" "), 3, 0); // pad
 
 		pSl.add(pSwitchListOrientation);
-		// pSl.add(pSwitchListOptions);
-
-		// switch list car pickup message format
-		pSwPickup.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("BorderLayoutSwitchListPickupCar")));
-		pSwPickup.add(switchListPickupCarPrefix);
-		switchListPickupCarPrefix.setText(Setup.getSwitchListPickupCarPrefix());
-		pickFormat = Setup.getSwitchListPickupCarMessageFormat();
-		for (int i = 0; i < pickFormat.length; i++) {
-			JComboBox b = Setup.getCarMessageComboBox();
-			b.setSelectedItem(pickFormat[i]);
-			pSwPickup.add(b);
-			switchListCarPickupMessageList.add(b);
-		}
-		pSwPickup.add(addSwitchListPickupComboboxButton);
-		pSwPickup.add(deleteSwitchListPickupComboboxButton);
-
-		// switch list car drop message format
-		pSwDrop.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("BorderLayoutSwitchListDropCar")));
-		pSwDrop.add(switchListDropCarPrefix);
-		switchListDropCarPrefix.setText(Setup.getSwitchListDropCarPrefix());
-		dropFormat = Setup.getSwitchListDropCarMessageFormat();
-		for (int i = 0; i < dropFormat.length; i++) {
-			JComboBox b = Setup.getCarMessageComboBox();
-			b.setSelectedItem(dropFormat[i]);
-			pSwDrop.add(b);
-			switchListCarDropMessageList.add(b);
-		}
-		pSwDrop.add(addSwitchListDropComboboxButton);
-		pSwDrop.add(deleteSwitchListDropComboboxButton);
-
-		// switch list local car move message format
-		pSwLocal.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("BorderLayoutSwitchListLocal")));
-		pSwLocal.add(switchListLocalPrefix);
-		switchListLocalPrefix.setText(Setup.getSwitchListLocalPrefix());
-		localFormat = Setup.getSwitchListLocalMessageFormat();
-		for (int i = 0; i < localFormat.length; i++) {
-			JComboBox b = Setup.getCarMessageComboBox();
-			b.setSelectedItem(localFormat[i]);
-			pSwLocal.add(b);
-			switchListLocalMessageList.add(b);
-		}
-		pSwLocal.add(addSwitchListLocalComboboxButton);
-		pSwLocal.add(deleteSwitchListLocalComboboxButton);
 
 		// Manifest comments
 		JPanel pManifestOptions = new JPanel();
@@ -637,8 +524,7 @@ public class PrintOptionFrame extends OperationsFrame {
 			// hazardous comment
 			Setup.setHazardousMsg(hazardousTextField.getText());
 			// misplaced car comment
-			Setup.setMiaComment(commentTextArea.getText());
-			Setup.setTabEnabled(tabFormatCheckBox.isSelected());
+			Setup.setMiaComment(commentTextArea.getText());	
 			Setup.setSwitchListFormatSameAsManifest(formatSwitchListCheckBox.isSelected());
 			Setup.setPrintLocationCommentsEnabled(printLocCommentsCheckBox.isSelected());
 			Setup.setPrintRouteCommentsEnabled(printRouteCommentsCheckBox.isSelected());
@@ -650,8 +536,14 @@ public class PrintOptionFrame extends OperationsFrame {
 			Setup.setTruncateManifestEnabled(truncateCheckBox.isSelected());
 			Setup.setUseDepartureTimeEnabled(departureTimeCheckBox.isSelected());
 			Setup.setManifestEditorEnabled(editManifestCheckBox.isSelected());
+			
+			// reload combo boxes if tab changed
+			boolean oldTabEnabled = Setup.isTabEnabled();
+			Setup.setTabEnabled(tabFormatCheckBox.isSelected());	
+			if (oldTabEnabled ^ Setup.isTabEnabled())
+				loadFormatComboBox();
+			
 			OperationsSetupXml.instance().writeOperationsFile();
-			// Check font if user selected tab output
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
 		}
@@ -723,6 +615,145 @@ public class PrintOptionFrame extends OperationsFrame {
 				return;
 			}
 		}
+	}
+	
+	private void loadFormatComboBox() {
+		// loco pick up message format
+		pEngPickup.removeAll();
+		enginePickupMessageList.clear();
+		pEngPickup.setBorder(BorderFactory.createTitledBorder(rb
+				.getString("BorderLayoutPickupEngine")));
+		pEngPickup.add(pickupEngPrefix);
+		pickupEngPrefix.setText(Setup.getPickupEnginePrefix());
+		String[] format = Setup.getPickupEngineMessageFormat();
+		for (int i = 0; i < format.length; i++) {
+			JComboBox b = Setup.getEngineMessageComboBox();
+			b.setSelectedItem(format[i]);
+			pEngPickup.add(b);
+			enginePickupMessageList.add(b);
+		}
+		pEngPickup.add(addEngPickupComboboxButton);
+		pEngPickup.add(deleteEngPickupComboboxButton);
+		pEngPickup.revalidate();
+
+		// loco set out message format
+		pEngDrop.removeAll();
+		engineDropMessageList.clear();
+		pEngDrop.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropEngine")));
+		pEngDrop.add(dropEngPrefix);
+		dropEngPrefix.setText(Setup.getDropEnginePrefix());
+		format = Setup.getDropEngineMessageFormat();
+		for (int i = 0; i < format.length; i++) {
+			JComboBox b = Setup.getEngineMessageComboBox();
+			b.setSelectedItem(format[i]);
+			pEngDrop.add(b);
+			engineDropMessageList.add(b);
+		}
+		pEngDrop.add(addEngDropComboboxButton);
+		pEngDrop.add(deleteEngDropComboboxButton);
+		pEngDrop.revalidate();
+
+		// car pickup message format
+		pPickup.removeAll();
+		carPickupMessageList.clear();
+		pPickup.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPickupCar")));
+		pPickup.add(pickupCarPrefix);
+		pickupCarPrefix.setText(Setup.getPickupCarPrefix());
+		String[] pickFormat = Setup.getPickupCarMessageFormat();
+		for (int i = 0; i < pickFormat.length; i++) {
+			JComboBox b = Setup.getCarMessageComboBox();
+			b.setSelectedItem(pickFormat[i]);
+			pPickup.add(b);
+			carPickupMessageList.add(b);
+		}
+		pPickup.add(addCarPickupComboboxButton);
+		pPickup.add(deleteCarPickupComboboxButton);
+		pPickup.revalidate();
+
+		// car drop message format
+		pDrop.removeAll();
+		carDropMessageList.clear();
+		pDrop.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropCar")));
+		pDrop.add(dropCarPrefix);
+		dropCarPrefix.setText(Setup.getDropCarPrefix());
+		String[] dropFormat = Setup.getDropCarMessageFormat();
+		for (int i = 0; i < dropFormat.length; i++) {
+			JComboBox b = Setup.getCarMessageComboBox();
+			b.setSelectedItem(dropFormat[i]);
+			pDrop.add(b);
+			carDropMessageList.add(b);
+		}
+		pDrop.add(addCarDropComboboxButton);
+		pDrop.add(deleteCarDropComboboxButton);
+		pDrop.revalidate();
+
+		// local car move message format
+		pLocal.removeAll();
+		localMessageList.clear();
+		pLocal.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutLocal")));
+		pLocal.add(localPrefix);
+		localPrefix.setText(Setup.getLocalPrefix());
+		String[] localFormat = Setup.getLocalMessageFormat();
+		for (int i = 0; i < localFormat.length; i++) {
+			JComboBox b = Setup.getCarMessageComboBox();
+			b.setSelectedItem(localFormat[i]);
+			pLocal.add(b);
+			localMessageList.add(b);
+		}
+		pLocal.add(addLocalComboboxButton);
+		pLocal.add(deleteLocalComboboxButton);
+		pLocal.revalidate();
+		
+		// switch list car pickup message format
+		pSwPickup.removeAll();
+		switchListCarPickupMessageList.clear();
+		pSwPickup.setBorder(BorderFactory.createTitledBorder(rb
+				.getString("BorderLayoutSwitchListPickupCar")));
+		pSwPickup.add(switchListPickupCarPrefix);
+		switchListPickupCarPrefix.setText(Setup.getSwitchListPickupCarPrefix());
+		pickFormat = Setup.getSwitchListPickupCarMessageFormat();
+		for (int i = 0; i < pickFormat.length; i++) {
+			JComboBox b = Setup.getCarMessageComboBox();
+			b.setSelectedItem(pickFormat[i]);
+			pSwPickup.add(b);
+			switchListCarPickupMessageList.add(b);
+		}
+		pSwPickup.add(addSwitchListPickupComboboxButton);
+		pSwPickup.add(deleteSwitchListPickupComboboxButton);
+
+		// switch list car drop message format
+		pSwDrop.removeAll();
+		switchListCarDropMessageList.clear();
+		pSwDrop.setBorder(BorderFactory.createTitledBorder(rb
+				.getString("BorderLayoutSwitchListDropCar")));
+		pSwDrop.add(switchListDropCarPrefix);
+		switchListDropCarPrefix.setText(Setup.getSwitchListDropCarPrefix());
+		dropFormat = Setup.getSwitchListDropCarMessageFormat();
+		for (int i = 0; i < dropFormat.length; i++) {
+			JComboBox b = Setup.getCarMessageComboBox();
+			b.setSelectedItem(dropFormat[i]);
+			pSwDrop.add(b);
+			switchListCarDropMessageList.add(b);
+		}
+		pSwDrop.add(addSwitchListDropComboboxButton);
+		pSwDrop.add(deleteSwitchListDropComboboxButton);
+
+		// switch list local car move message format
+		pSwLocal.removeAll();
+		switchListLocalMessageList.clear();
+		pSwLocal.setBorder(BorderFactory.createTitledBorder(rb
+				.getString("BorderLayoutSwitchListLocal")));
+		pSwLocal.add(switchListLocalPrefix);
+		switchListLocalPrefix.setText(Setup.getSwitchListLocalPrefix());
+		localFormat = Setup.getSwitchListLocalMessageFormat();
+		for (int i = 0; i < localFormat.length; i++) {
+			JComboBox b = Setup.getCarMessageComboBox();
+			b.setSelectedItem(localFormat[i]);
+			pSwLocal.add(b);
+			switchListLocalMessageList.add(b);
+		}
+		pSwLocal.add(addSwitchListLocalComboboxButton);
+		pSwLocal.add(deleteSwitchListLocalComboboxButton);
 	}
 
 	private void loadFontComboBox() {

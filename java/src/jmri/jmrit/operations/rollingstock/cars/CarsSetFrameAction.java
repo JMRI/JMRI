@@ -25,16 +25,15 @@ public class CarsSetFrameAction extends AbstractAction {
     	super(s);
     }
 
-    public CarsSetFrameAction(CarsTableModel carsTableModel, JTable carsTable){
+    public CarsSetFrameAction(JTable carsTable){
     	this(rb.getString("TitleSetCars"));
-    	_carsTableModel = carsTableModel;
     	_carsTable = carsTable;
     }
 
     public void actionPerformed(ActionEvent e) {
         // create a car table frame
         CarsSetFrame csf = new CarsSetFrame();
-        csf.initComponents(_carsTableModel, _carsTable);
+        csf.initComponents(_carsTable);
     }
 }
 

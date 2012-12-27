@@ -21,6 +21,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 	
 	CarsTableModel _carsTableModel;
 	JTable _carsTable;
+	TableSorter _sorter;
 		
 	public CarsSetFrame() {
 		super();
@@ -35,9 +36,10 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 	private static boolean ignoreFinalDestinationCheckBoxSelected = false;
 	private static boolean ignoreTrainCheckBoxSelected = false;
 
-	public void initComponents(CarsTableModel carsTableModel, JTable carsTable){
-		_carsTableModel = carsTableModel;
+	public void initComponents(JTable carsTable){	
 		_carsTable = carsTable;
+		_sorter = (TableSorter) carsTable.getModel();
+		_carsTableModel = (CarsTableModel) _sorter.getTableModel();
 		
 		super.initComponents();
 		
@@ -66,7 +68,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 
 		int rows[] = _carsTable.getSelectedRows();
 		if (rows.length > 0) {
-			Car car = _carsTableModel.getCarAtIndex(rows[0]);
+			Car car = _carsTableModel.getCarAtIndex(_sorter.modelIndex(rows[0]));
 			super.loadCar(car);
 		}
 	}
@@ -89,9 +91,8 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 				rb.getString("carNoneSelected"),
 				JOptionPane.WARNING_MESSAGE);
 		
-		TableSorter sorter = (TableSorter) _carsTable.getModel();
 		for (int i=0; i<rows.length; i++){
-			Car car = _carsTableModel.getCarAtIndex(sorter.modelIndex(rows[i]));
+			Car car = _carsTableModel.getCarAtIndex(_sorter.modelIndex(rows[i]));
 			if (_car == null){
 				super.loadCar(car);
 				continue;

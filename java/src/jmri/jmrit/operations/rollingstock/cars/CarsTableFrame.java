@@ -48,7 +48,6 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 
 	CarsTableModel carsModel;
-	TableSorter sorter;
 	JTable carsTable;
 	boolean showAllCars;
 	String locationName;
@@ -100,7 +99,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 
 		// Set up the table in a Scroll Pane..
 		carsModel = new CarsTableModel(showAllCars, locationName, trackName);
-		sorter = new TableSorter(carsModel);
+		TableSorter sorter = new TableSorter(carsModel);
 		carsTable = new JTable(sorter);
 		sorter.setTableHeader(carsTable.getTableHeader());
 		JScrollPane carsPane = new JScrollPane(carsTable);
@@ -250,7 +249,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		toolMenu.add(new CarRosterMenu("Roster", CarRosterMenu.MAINMENU, this));
 		toolMenu.add(new ModifyLocationsAction());
 		toolMenu.add(new TrainsByCarTypeAction());
-		toolMenu.add(new CarsSetFrameAction(carsModel, carsTable));
+		toolMenu.add(new CarsSetFrameAction(carsTable));
 		menuBar.add(toolMenu);
 		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
