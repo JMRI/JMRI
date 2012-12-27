@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<variables>
+
+    <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2010</year><holder>JMRI</holder>
+    </copyright>
+  
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+      <author>
+        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+      </author>    
+    </authorgroup>
+
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+      <revision>
+        <revnumber>6</revnumber>
+        <date>2010-03-12</date>
+        <authorinitials>BJ</authorinitials>
+        <revremark>Initial release as separate file</revremark>
+      </revision>
+      <revision>
+        <revnumber>5</revnumber>
+        <date>2003-12-05</date>
+        <authorinitials>BJ</authorinitials>
+        <revremark>Revision in original 0NMRA.xml file</revremark>
+      </revision> 
+    </revhistory>
+    
+      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
+        <shortAddressVal />
+        <label>Primary Address</label>
+        <comment>Short address</comment>
+      </variable>
+
+      <variable label="Long Address" CV="17" item="Extended Address">
+        <longAddressVal />
+        <label>Long Address</label>
+      </variable>
+
+      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
+        <enumVal>
+          <enumChoice choice="2 digit addressing">
+            <choice>2 digit addressing</choice>
+          </enumChoice>
+          <enumChoice choice="4 digit addressing">
+            <choice>4 digit addressing</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Addressing Mode</label>
+      </variable>
+
+</variables>
