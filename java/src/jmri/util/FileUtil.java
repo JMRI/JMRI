@@ -20,11 +20,11 @@ import org.apache.log4j.Logger;
  */
 public class FileUtil {
 
-    @Deprecated
-    static public final String RESOURCE = "resource:";
     static public final String PROGRAM = "program:";
     static public final String PREFERENCES = "preference:";
     static public final String HOME = "home:";
+    @Deprecated
+    static public final String RESOURCE = "resource:";
     @Deprecated
     static public final String FILE = "file:";
     /**
