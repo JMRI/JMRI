@@ -37,15 +37,18 @@
         <li><a href="#intro">Introduction</a>
         <li><a href="#installing">Getting and Installing NetBeans</a>
         <li><a href="#checkout">Checking out code</a>
-        <li><a href="#buildandrun">Building and running JMRI</a>
+            <ul><li><a href="#checkoutNoCommmit">Configuring NetBeans SVN to allow only Check-out</a></li>
+                <li><a href="#checkoutWithCommitAllowed">Configuring NetBeans SVN to allow both Check-out and Commit</a></li>
+            </ul></li>
         <li><a href="#updating">Updating the code from SVN</a>
+        <li><a href="#buildandrun">Building and running JMRI</a>
         <li><a href="#jar">Making a Jar File</a>
         <li><a href="#patch">Making a Patch File</a>
         <li><a href="#nsis">Making a release package for Windows using NSIS</a></li>
         <li><a href="#findbugs">Running FindBugs</a></li>
-            
+        <li><a href="#compileIndividualFile">NetBeans and compiling individual files</a></li>            
     </ul>
-    
+<a href="#SeeAlso">See Also</a>    
     <h2><a id="intro">Introduction</a></h2>
     <p>NetBeans 7.2 (available at <a href="http://www.netbeans.org">www.netbeans.org</a>)
     makes a great platform for working with JMRI.
@@ -76,15 +79,49 @@
 	- search your package manager for NetBeans.</p>
     
     <h2><a id="checkout">Checking out code</a></h2>
-    <p>
-    The easiest way to get the initial copy of the code is to 
-    directly check it out using NetBeans' integrated SVN.  Once you've done that,
-    NetBeans will automatically use it.
-    </p>
+    <p>Subversion (also known as SVN) provides version control for projects hosted 
+        at sourceforge.net, such as the JMRI project.  NetBeans provides built-in support 
+        for SVN functionality.  NetBeans SVN support may be configured in either 
+        of two ways, depending on how the user wishes to interact with the SVN 
+        repository.</p>
+    <p>Users who wish to get a copy of the code, but do not wish to
+        make commits (i.e. changes) to the JMRI SVN repository at sourceforge.net 
+        may configure NetBeans 
+        SVN to access the repository in a read-only mode.  These users do
+        not need an account at sourceforge.net.  Once a NetBeans project is 
+        configured for this "read-only" SVN access of the JMRI code 
+        repository, it will be difficult to later "commit" changed code
+        to the JMRI repository.  Instructions to check out
+        a copy of JMRI source code without an easy ability to update the 
+        JMRI repository are found below at <a href="#checkoutNoCommmit">
+            Configuring NetBeans SVN to allow only Check-out</a>.
+        </p>
+    <p>Users who wish to get a copy of the code, and who <i>do</i> wish to
+        be able to make commits (i.e. changes) to the JMRI SVN repository at sourceforge.net may 
+        configure NetBeans SVN to access the repository in a read-write mode.  
+        These users require an account at sourceforge.net, and this account
+        information is used every time NetBeans/Subversion is used to access the JMRI
+        SVN repository.  Instructions to check out
+        a copy of JMRI source code without an easy ability to update the 
+        JMRI repository are found below at <a href="#checkoutWithCommitAllowed">
+            Configuring NetBeans SVN to allow both Check-out and Commit</a>
+        </p>
+      <h3><a id="checkoutNoCommmit">Configuring NetBeans SVN to allow only Check-out</a></h3> 
+    <p>The easiest way to get the initial copy of the code (<i>without the ability 
+        to commit changes to the JMRI SVN repository</i>), as well as the files for 
+        all available translations of the help pages, is to 
+        check it out using NetBeans' integrated SVN, without using a personal 
+        sourceforge.net account .  Once you've done that,
+        NetBeans will automatically use it.  When using this process, it will <i>not</i>
+        be possible to submit changes to the SVN repository.  If you have a sourceforge.net
+        login, and are a member of the sourceforge.net JMRI project, then you will want to use a 
+        different configuration in NetBeans.  See <a href="#checkoutWithCommitAllowed">
+            Configuring NetBeans SVN to allow both Check-out and Commit</a></p>
+    <p>Here's how:</p>
     <p>Start NetBeans and do the following steps. Text in brackets [] are menu items to be selected
     or buttons to be pressed.
     Text in <strong>this font</strong> should be typed into NetBeans exactly as written.
-    <em>This font</em> denotes explanations and stage directions to follow.<br />
+    <em>This font</em> denotes explanations and stage directions to follow.<br>
     </p>
         [Team]-&gt;[Subversion]-&gt;[Checkout]
         <ul>
@@ -92,7 +129,8 @@
             <li> User: <em>leave empty</em>
             <li> Password: <em>leave empty</em>
             <li> [Next &gt;]
-                <p><img src="images/netBeansSvnCheckoutPg1.png" alt="First NetBeans SVN Checkout Page for JMRI"></p></li>
+                <p><img src="images/netBeansSvnCheckoutPg1.png" 
+                        alt="First NetBeans SVN Checkout Page for JMRI"></p></li>
             <li> Repository Folder(s): <strong>trunk/jmri</strong>
             <li> Repository Revision:  <em>leave set for HEAD</em>
             <li> Skip "jmri" and checkout only its content:  <em> leave unchecked</em>
@@ -100,20 +138,88 @@
             <li> Local Folder: <em>pick some place on your hard drive...</em>
             <li> Scan for NetBeans Projects after Checkout:  <em> ensure checked</em>
             <li> [Finish]
-                <p><img src="images/netBeansSvnCheckoutPg2.png" alt="Second NetBeans SVN Checkout Page for JMRI"></p></li>
+                <p><img src="images/netBeansSvnCheckoutPg2.png" 
+                        alt="Second NetBeans SVN Checkout Page for JMRI"></p></li>
         </ul>
-    <br />
+    <br>
     [Window]-&gt;[Output]-&gt;[Output]     <em>shows SVN activity log window...</em>
     <ul>
-        <li><em>wait a few minutes for the SVN checkout to complete<br />
-            A popup will display stating that 2 projects were checked out
+        <li><em>Wait a for the SVN checkout to complete. This SVN checkout moves
+                over 100 MBytes of code, help files, .pdf files, tool 
+                configuration files and other information.</em></li>
+        <li><em>A popup will display stating that 2 projects were checked out
             and asking if you want to open the projects.</em>
-        <li>[Open Project...]<br />&nbsp;
+        <li>[Open Project...]<br>&nbsp;
+        <li><em>In the Open Projects popup, choose JMRI
+        </em>
+        <li>[Open]
+    </ul>
+    <h3><a id="checkoutWithCommitAllowed">Configuring NetBeans SVN to allow both Check-out and Commit</a></h3> 
+    <p>If you have a sourceforge.net account and are a member of the sourceforge.net 
+        JMRI project, <i>and you wish to be able to check out and submit changes to 
+        the JMRI SVN repository at sourceforge.net</i>, then it is necessary to follow 
+        a different process than listed above.</p>
+    <p>Start NetBeans and perform the steps shown below.  In the description, text 
+        in brackets [] are menu items to be selected or buttons to be pressed.
+        Text in <strong>this font</strong> should be typed into NetBeans exactly as written.
+        Text in <b><i>this font</i></b> represents your sourceforge.net login information.
+        <em>This font</em> denotes explanations and stage directions to follow.<br>
+    </p>
+        [Team]-&gt;[Subversion]-&gt;[Checkout]
+        <ul>
+            <li> Repository URL: <strong>svn+ssh://svn.code.sf.net/p/jmri/code/trunk/jmri</strong>
+            <li> User: <i><b>&lt;your sourceforge user name&gt;</b></i></li>
+            <li> Password: <i><b>&lt;your sourceforge password&gt;</b></i></li>
+            <li> Port Number: <em>leave set at 22</em>
+            <li> Identity File: <em>leave blank</em></li>
+            <li> Passphrase: <em>leave blank</em></li>
+            <li> Save Username and Password: <em>check or un-check to suit your needs</em></li>
+            <li> Proxy Configuration button: <em>Set proxy information if required for your network setup</em></li>
+            <li> [Next &gt;]
+                <p><img src="images/netBeansSvnSetupWIthCommitAllowedPg1.png" 
+                        alt="First Page of Setup for NetBeans SVN Checkout with Commit allowed"></p></li>
+            <li> Repository Folder(s): <strong>trunk/jmri</strong>
+                <p>Note that you may [Browse] to another part of the SVN repository 
+                    directory structure if you desire to check out only a part 
+                    of the JMRI repository.</p></li>
+            <li> Repository Revision:  <em>leave set for HEAD</em>
+                <p>Note that you may [Browse] the tags, branches, or trunk of 
+                    the SVN repository to check out a specific version of JMRI.
+                    You may also [Search] by date to find and check out a 
+                    version of JMRI by date.</p></li>
+            <li> Skip "jmri" and checkout only its content:  <em> leave unchecked</em>
+            <li> Export a clean directory tree from the repository:  <em> leave unchecked</em>
+            <li> Local Folder: <em>pick some place on your hard drive...</em>
+            <li> Prefer old Subversion 1.6 Format: <em>leave unchecked</em></li>
+            <li> Scan for NetBeans Projects after Checkout:  <em> ensure checked</em>
+            <li> [Finish]
+                <p><img src="images/netBeansSvnSetupWIthCommitAllowedPg2.png" 
+                        alt="Second Page of Setup for NetBeans SVN Checkout with Commit allowed"></p></li>
+        </ul>
+    <br>
+    [Window]-&gt;[Output]-&gt;[Output]     <em>shows SVN activity log window...</em>
+    <ul>
+        <li><em>Wait a for the SVN checkout to complete. This SVN checkout moves
+                over 100 MBytes of code, help files, .pdf files, tool 
+                configuration files and other information.</em></li>
+        <li><em>A popup will display stating that 2 projects were checked out
+            and asking if you want to open the projects.</em>
+        <li>[Open Project...]<br>&nbsp;
         <li><em>In the Open Projects popup, choose JMRI
         </em>
         <li>[Open]
     </ul>
 
+
+    <h2><a id="updating">Updating the code from SVN</a></h2>
+
+    <p>From time to time, you can update your local copy of the code to match 
+        the current "head" of the sourceforge.net JMRI SVN repository contents. 
+        To do this, use the NetBeans [Team]-&gt;[Update] menu choice.</p>
+    <p>You may also update a single file or the contents of a folder, by
+        right-clicking on an item in the "Files" window, then selecting 
+        [Subversion]-&gt;[Update].</p>
+    
     <h2><a id="buildandrun">Building and running JMRI</a></h2>
     <p>    To build and run DecoderPro, all you have to do is select
            "Run Project (JMRI)" from the Run menu, or click the Run icon in the tool bar.
@@ -121,7 +227,8 @@
 
     <ul>
         <li>Run -> Run Project (JMRI)  <em>will compile and invoke DecoderPro</em>
-        <li><em>You can choose other targets (i.e. PanelPro...) by changing [File]-&gt;[Project Properties (JMRI)]-&gt;[Build and Run]-&gt;[Run Project]</em>
+        <li><em>You can choose other targets (i.e. PanelPro...) by changing 
+                [File]-&gt;[Project Properties (JMRI)]-&gt;[Build and Run]-&gt;[Run Project]</em>
     </ul>
     <p>
         If you want to run the program under the NetBeans debugger,
@@ -129,13 +236,6 @@
         select "Debug Main Project" from the "Debug" menu.
     </p>
 
-    <h2><a id="updating">Updating the code from SVN</a></h2>
-
-    <p>From time to time, you can update the code to match the current 
-    repository contents. To do this, use the
-    [Team]-&gt;[Update] menu choice.</p>
-
-    
     <h2><a id="jar">Making a Jar File</a></h2>
 
     Most of the code in a normal JMRI installation lives in a file called
@@ -147,17 +247,22 @@
     "Projects" window.  This will open a pop-up menu, on which you'll
     find "Make Jar File". Select that, and a new jmri.jar file will be
     produced in the project's main directory.
-    
+    <p>Alternately, from the "Files" window, right-click on the build.xml file,
+        and select "Run Target", then "jar".</p>
     
     <h2><a id="patch">Making a Patch File</a></h2>
     
-    A "diff patch file" is an easy way to gather up all your changes, even
+    <p>A "diff patch file" is an easy way to gather up all your changes, even
     if they span multiple files, into one file that you can then send to us.
     It's also easy to merge in with the rest of the code, so we greatly 
-    prefer that you use this.
+    prefer that you use this.  If you have checked-out the SVN repository 
+    using the first method shown above (i.e. without using a sourceforge.net
+    user name and password), this is the best way to collect any code changes you 
+    have for submission to the JMRI developer's team for inclusion in a future
+    JMRI release.</p>
     
     <p>
-    To create the file:
+    To create the "diff patch file":
     <ul>
  
     <li>From the [Team] menu, select "Export Diff Patch ..."
@@ -173,7 +278,7 @@
     <p>It is possible for NetBeans users to create a release package for use on 
         the Windows platform.  This requires installation of the Nullsoft Scriptable 
         Install System (NSIS), which can be downloaded from 
-        <a href="http://sourceforge.net/projects/nsis"> the NSIS project web page</a> 
+        <a href="http://sourceforge.net/projects/nsis"> the NSIS project web site</a> 
         on SourceForge.</p>
     <p>Once NSIS is installed on the computer, it is necessary to create a file called
         local.properties in the same directory as JMRI's build.xml file.  This file is
@@ -202,7 +307,7 @@
         FindBugs "plugin" to run analysis on the JMRI code except on a one-file-at-
         a-time basis.  As such, it seems advisable to download and install the
         appropriate stand-alone FindBugs tool for your operating system.  FindBugs
-        downloads may be found at <a href="findbugs.sourceforge.net">the 
+        downloads may be found at <a href="http://findbugs.sourceforge.net">the 
         FindBugs web site</a>.
     <p>Once you have the FindBugs tool installed, you must provide a path to the 
         directory containing the executable for use by the build.xml ant file.  
@@ -219,10 +324,29 @@
         the path to a report file in HTML format.  Open that file with a browser 
         to review the FindBugs results.</p>        
 
-    
+
+        <h2><a id="compileIndividualFile">NetBeans and compiling individual files</a></h2>
+        <p>The NetBeans IDE shows icons to the side of each object in the Projects window,
+            and to the side of each file in the Files window.  These icons can reflect the
+            status of each item, including local change and proper compilation status.</p>
+        <p>At this time, the files (in the project's nbproject/ directory) which 
+            control how NetBeans performs individual file compilation, do not properly
+            reflect all of the requirements of the JMRI project.  <i>Until these files
+            are properly updated, the error icons will persist within the JMRI project.</i>
+            These error icons do <i>not</i> affect the ability of NetBeans to compile the 
+            source files using the Ant tasks defined in the project's build.xml file.</p>
+        <p>Building the JMRI .jar file, and executing a JMRI tool from within
+            NetBeans is generally done via Ant tasks, which are defined in the project's
+            build.xml file.  JMRI's developers have generally kept this file up-to-date,
+            so building the JMRI .jar file, and executing a JMRI tool from within NetBeans
+            generally does not suffer from the shortcomings of the configuration information
+            found in the files in the project's nbproject/ directory.</p>        
+        <h1><a id="SeeAlso">See Also</a></h1>
+        <p><a href="http://netbeans.org/">The NetBeans Integrated Development Environment web site</a></p>
+        <p><a href="http://subversion.apache.org/">The Apache Subversion project web site</a></p>
+        <p><a href="http://sourceforge.net/projects/nsis">The NSIS project web site</a></p>
+        <p><a href="http://findbugs.sourceforge.net">The FindBugs web site</a></p>
     <!--#include virtual="/Footer" -->
-
-
       </div>
       <!-- closes #mainContent-->
 </body>
