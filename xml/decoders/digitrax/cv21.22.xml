@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<variables>
+
+    <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2012</year><holder>JMRI</holder>
+    </copyright>
+  
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+      <author>
+        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+      </author>    
+    </authorgroup>
+
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+      <revision>
+        <revnumber>32</revnumber>
+        <date>2012-12-27</date>
+        <authorinitials>BJ</authorinitials>
+        <revremark>Initial release as separate file</revremark>
+      </revision>
+      <revision>
+        <revnumber>31</revnumber>
+        <date>2011-12-30</date>
+        <authorinitials>BJ</authorinitials>
+        <revremark>Revision in original Digitrax_01x3.xml file</revremark>
+      </revision> 
+    </revhistory>
+
+      <variable label="Advanced Consist Function 1 Override" CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 1 Override</label>
+      </variable>
+      <variable label="Advanced Consist Function 2 Override" CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 2 Override</label>
+      </variable>
+      <variable label="Advanced Consist Function 3 Override" CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 3 Override</label>
+      </variable>
+      <variable label="Advanced Consist Function 4 Override" CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 4 Override</label>
+      </variable>
+      <variable label="Advanced Consist Function 5 Override" CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 5 Override</label>
+      </variable>
+      <variable label="Advanced Consist Function 6 Override" CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 6 Override</label>
+      </variable>
+      <variable label="Advanced Consist Function 7 Override" CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 7 Override</label>
+      </variable>
+      <variable label="Advanced Consist Function 8 Override" CV="21" mask="VXXXXXXX" item="Consist Address Active For F8" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 8 Override</label>
+      </variable>
+      <variable label="Advanced Consist Function 0 Override" CV="22" mask="XXXXXXXV" item="Consist Address Active For F0" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 0 Override</label>
+      </variable>
+<!--
+	  <variable label="Advanced Consist Function 9 Override" CV="22" mask="XXXVXXXX" item="Consist Address Active For F9" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 9 Override</label>
+	  </variable>
+	  <variable label="Advanced Consist Function 10 Override" CV="22" mask="XXVXXXXX" item="Consist Address Active For F10" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 10 Override</label>
+	  </variable>
+	  <variable label="Advanced Consist Function 11 Override" CV="22" mask="XVXXXXXX" item="Consist Address Active For F11" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 11 Override</label>
+	  </variable>
+	  <variable label="Advanced Consist Function 12 Override" CV="22" mask="VXXXXXXX" item="Consist Address Active For F12" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Consist Function 12 Override</label>
+	  </variable>
+-->
+	
+</variables>
