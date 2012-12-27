@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Richard Sauerbrun" version="32" lastUpdated="20121226" />
+  <version author="Bob Jacobsen" version="32" lastUpdated="20121226" />
   <version author="Richard Sauerbrun" version="31" lastUpdated="20111230" />
   <version author="Peter Ulvestad" version="30" lastUpdated="20091101" />
   <version author="Peter Ulvestad" version="29" lastUpdated="20090704" />
@@ -436,132 +436,8 @@
       </variable>
       
       <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv21.22.xml"/>
       
-      <variable label="Advanced Consist Function 1 Override" CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Advanced Consist Function 1 Override</label>
-      </variable>
-      <variable label="Advanced Consist Function 2 Override" CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Advanced Consist Function 2 Override</label>
-      </variable>
-      <variable label="Advanced Consist Function 3 Override" CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Advanced Consist Function 3 Override</label>
-      </variable>
-      <variable label="Advanced Consist Function 4 Override" CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Advanced Consist Function 4 Override</label>
-      </variable>
-      <variable label="Advanced Consist Function 5 Override" CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Advanced Consist Function 5 Override</label>
-      </variable>
-      <variable label="Advanced Consist Function 6 Override" CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Advanced Consist Function 6 Override</label>
-      </variable>
-      <variable label="Advanced Consist Function 7 Override" CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Advanced Consist Function 7 Override</label>
-      </variable>
-      <variable label="Advanced Consist Function 8 Override" CV="21" mask="VXXXXXXX" item="Consist Address Active For F8" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Advanced Consist Function 8 Override</label>
-      </variable>
-      <variable label="Advanced Consist Function 0 Override" CV="22" mask="XXXXXXXV" item="Consist Address Active For F0" default="0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Advanced Consist Function 0 Override</label>
-      </variable>
-      <!--
-		<variable label="Advanced Consist Function 9 Override" CV="22" mask="XXXVXXXX" item="Consist Address Active For F9" default="0">
-			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-		<variable label="Advanced Consist Function 10 Override" CV="22" mask="XXVXXXXX" item="Consist Address Active For F10" default="0">
-			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-		<variable label="Advanced Consist Function 11 Override" CV="22" mask="XVXXXXXX" item="Consist Address Active For F11" default="0">
-			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-		<variable label="Advanced Consist Function 12 Override" CV="22" mask="VXXXXXXX" item="Consist Address Active For F12" default="0">
-			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
--->
       <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="forward">
