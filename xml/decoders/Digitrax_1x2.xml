@@ -47,32 +47,13 @@
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
-      <variable label="Start Volts" CV="2" item="Vstart" comment="A value of 255 corresponds to 100%">
-        <decVal/>
-        <label>Start Volts</label>
-        <comment>A value of 255 corresponds to 100%</comment>
-      </variable>
-      <variable label="Acceleration Rate" CV="3" item="Accel">
-        <decVal max="31"/>
-        <label>Acceleration Rate</label>
-      </variable>
-      <variable label="Deceleration Rate" CV="4" item="Decel">
-        <decVal max="31"/>
-        <label>Deceleration Rate</label>
-      </variable>
-      <variable label="Max Volts" CV="5" item="Vhigh">
-        <decVal/>
-        <label>Max Volts</label>
-      </variable>
-      <variable label="Mid Volts" CV="6" item="Vmid">
-        <decVal/>
-        <label>Mid Volts</label>
-      </variable>
+      
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/shortAndLongAddress.xml"/>
+
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+      
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
@@ -169,10 +150,6 @@
         </enumVal>
         <label>F0 Reverse during DC operation</label>
       </variable>
-      <variable label="Long Address" CV="17" item="Extended Address">
-        <longAddressVal/>
-        <label>Long Address</label>
-      </variable>
       <variable label="Advanced Consist address" CV="19" item="Consist Address" mask="XVVVVVVV" default="0">
         <decVal max="127"/>
         <label>Advanced Consist address</label>
@@ -188,26 +165,6 @@
         </enumVal>
         <label>Advanced Consist direction</label>
       </variable>
-<!--
-		<variable label="Advanced Consist Function 1 Override" CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0">
-			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-		<variable label="Advanced Consist Function 2 Override" CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0">
-			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
-		<variable label="Advanced Consist Function 0 Override" CV="22" mask="XXXXXXXV" item="Consist Address Active For F0" default="0">
-			<enumVal>
-				<enumChoice choice="No"/>
-				<enumChoice choice="Yes"/>
-				</enumVal>
-			</variable>
--->
       <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="forward">
@@ -251,17 +208,6 @@
           </enumChoice>
         </enumVal>
         <label>Use Speed Table</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
       </variable>
       <variable label="Forward light F0F effect generated" CV="49" mask="XXXXVVVV" item="Function F0F effect generated">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>

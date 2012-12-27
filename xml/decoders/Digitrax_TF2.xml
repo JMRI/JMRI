@@ -34,11 +34,9 @@
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="no"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
+      
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/shortAndLongAddress.xml"/>
+
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
@@ -75,21 +73,6 @@
           </enumChoice>
         </enumVal>
         <label>Decoder Lock Type</label>
-      </variable>
-      <variable label="Long Address" CV="17" item="Extended Address">
-        <longAddressVal/>
-        <label>Long Address</label>
-      </variable>
-      <variable label="Addressing Mode" CV="29" item="Address Format">
-        <enumVal>
-          <enumChoice choice="2 digit addressing" value="6">
-            <choice>2 digit addressing</choice>
-          </enumChoice>
-          <enumChoice choice="4 digit addressing" value="38">
-            <choice>4 digit addressing</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Addressing Mode</label>
       </variable>
       <variable label="Effect Generated for White Lead" CV="49" mask="XXXXXVVV" item="Effect Generated W">
         <enumVal>
