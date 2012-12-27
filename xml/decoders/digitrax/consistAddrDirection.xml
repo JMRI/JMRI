@@ -14,7 +14,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <copyright xmlns="http://docbook.org/ns/docbook">
       <year>2010</year><holder>JMRI</holder>
@@ -48,16 +48,6 @@
 
       <variable label="Advanced Consist direction" CV="19" item="Consist Direction" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
-<!-- 
-        <enumVal>
-          <enumChoice choice="forward">
-            <choice>forward</choice>
-          </enumChoice>
-          <enumChoice choice="reverse">
-            <choice>reverse</choice>
-          </enumChoice>
-        </enumVal>
- -->
         <label>Advanced Consist direction</label>
       </variable>
     
