@@ -40,16 +40,17 @@
 
     <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
     <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/DocBook.xsd'/>
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/03/xml.xsd" />
 
-<xs:annotation>
-    <xs:documentation>
+    <xs:annotation>
+      <xs:documentation>
       Defines the JMRI decoder definition files.
-    </xs:documentation>
-    <xs:appinfo>
+      </xs:documentation>
+      <xs:appinfo>
         <jmri:usingclass configurexml="false">jmri.jmrit.decoderdefn.DecoderFile</jmri:usingclass>
         <jmri:usingclass configurexml="false">jmri.jmrit.symbolicprog.VariableTableModel</jmri:usingclass>
-    </xs:appinfo>
-</xs:annotation>
+      </xs:appinfo>
+    </xs:annotation>
 
   <xs:complexType name="VersionType">
       <xs:attribute name="author" type="xs:string" />
@@ -312,6 +313,7 @@
                       </xs:complexType>
                     </xs:element>
                   </xs:sequence>
+                  <xs:attribute ref="xml:base" />
                   <xs:attribute name="comment" type="xs:string"/>
                 </xs:complexType>
               </xs:element>
@@ -532,6 +534,7 @@
         </xs:complexType>
       </xs:element>
     </xs:sequence>
+    <xs:attribute ref="xml:base" />
   </xs:complexType>
 
   <xs:complexType name="ResetsType">
