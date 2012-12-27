@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
+import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
 import jmri.jmrit.roster.Roster;
@@ -59,8 +60,8 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     public void actionPerformed(ActionEvent event) {
 
         String entry = (String)JOptionPane.showInputDialog(_who,
-                                     "<html><b>Create new roster group</b></html>",
-                                     "New Roster Group",
+                                     "<html><b>"+ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuGroupCreate")+"</b></html>",
+                                     ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("MenuGroupCreate"),
                                      JOptionPane.INFORMATION_MESSAGE,
                                      null, // icon
                                      null, // initial values
