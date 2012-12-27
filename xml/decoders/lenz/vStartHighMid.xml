@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<variables>
+
+    <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2012</year><holder>JMRI</holder>
+    </copyright>
+  
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+      <author>
+        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+      </author>    
+    </authorgroup>
+
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+      <revision>
+        <revnumber>6</revnumber>
+        <date>2012-12-27</date>
+        <authorinitials>BJ</authorinitials>
+        <revremark>Initial release as separate file</revremark>
+      </revision>
+      <revision>
+        <revnumber>5</revnumber>
+        <date>2005-08-14</date>
+        <authorinitials>BJ</authorinitials>
+        <revremark>Revision in original Lenz_Gold.xml file</revremark>
+      </revision> 
+    </revhistory>
+    
+      <variable label="Start Volts (0-255)" CV="2" item="Vstart" default="0" comment="Range 0-255">
+        <decVal min="0" max="255"/>
+        <label>Start Volts (0-255)</label>
+        <comment>Range 0-255</comment>
+      </variable>
+
+      <variable label="Max Volts (0-255)" CV="5" item="Vhigh" default="255" comment="Sets the maximum voltage at full throttle">
+        <decVal min="0" max="255"/>
+        <label>Max Volts (0-255)</label>
+        <comment>Sets the maximum voltage at full throttle</comment>
+      </variable>
+
+      <variable label="Vmid (0-255)" CV="6" item="Vmid" default="48" comment="Range 0-255">
+        <decVal min="0" max="255"/>
+        <label>Vmid (0-255)</label>
+        <comment>Range 0-255</comment>
+      </variable>
+
+</variables>
