@@ -340,7 +340,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
         }
     }
     
-    void finishRead(){
+    synchronized void finishRead(){
         if((cv29&0x20) == 0){
             shortAddr = true;
             address = cv1;
@@ -499,7 +499,11 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
 
     public void prepGlassPane(javax.swing.AbstractButton activeButton) {}
 
-    public jmri.util.BusyGlassPane getBusyGlassPane() { return new jmri.util.BusyGlassPane(new ArrayList<JComponent>(), new ArrayList<Rectangle>(), rosterPanel, f);}
+    synchronized public jmri.util.BusyGlassPane getBusyGlassPane() { 
+        return new jmri.util.BusyGlassPane(new ArrayList<JComponent>(), 
+                                           new ArrayList<Rectangle>(), 
+                                           rosterPanel, f);
+    }
     
     class ThisProgPane extends PaneProgPane{
         
