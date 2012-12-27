@@ -35,7 +35,7 @@ public class SimpleTurnoutCtrlAction 			extends JmriAbstractAction {
 
 
     }
-    public SimpleTurnoutCtrlAction() { this("Turnouts");}
+    public SimpleTurnoutCtrlAction() { this(java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle").getString("Turnouts"));}
 
     public void actionPerformed(ActionEvent e) {
 

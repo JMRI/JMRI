@@ -246,10 +246,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
 //        JPanel signalMastPanel = new JPanel();
         
         JTabbedPane detailsTab = new JTabbedPane();
-        detailsTab.add(rb.getString("Blocks"), buildBlocksPanel());
-        detailsTab.add(rb.getString("Turnouts"), buildTurnoutPanel());
-        detailsTab.add(rb.getString("Sensors"), buildSensorPanel());
-        detailsTab.add(rb.getString("SignalMasts"), buildSignalMastPanel());
+        detailsTab.add(rb.getString(java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle").getString("Blocks")), buildBlocksPanel());
+        detailsTab.add(rb.getString(java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle").getString("Turnouts")), buildTurnoutPanel());
+        detailsTab.add(rb.getString(java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle").getString("Sensors")), buildSensorPanel());
+        detailsTab.add(rb.getString(java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle").getString("SignalMasts")), buildSignalMastPanel());
         
         containerPanel.add(detailsTab, BorderLayout.CENTER);
         
