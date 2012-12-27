@@ -510,7 +510,47 @@ public abstract class XmlFile {
         return result;
     }
     
-    static public String resourcesDir() {
+ //
+    static public String configDir() {
+        // check for jmri.prefsdir
+        String jmriPrefsDir = System.getProperty("jmri.prefsdir","");
+        if (jmriPrefsDir.length()>0) return jmriPrefsDir+File.separator;
+        
+        // not present, work through other choices
+        String userHome     = System.getProperty("user.home","");
+		
+        // add a File.separator to userHome here, so can ignore whether its empty later on
+        if (!userHome.equals("")) userHome = userHome+File.separator;
+		
+        String result;          // no value; that allows compiler to check completeness of algorithm
+		
+        switch (SystemType.getType()) {
+            case SystemType.MACOSX:
+                // Mac OS X
+                result = userHome + "Library" + File.separator + "Preferences"
+				+ File.separator + "JMRI" + File.separator;
+                break;
+            case SystemType.LINUX:
+                // Linux, so use an invisible file
+                result = userHome + ".jmri" + File.separator;
+                break;
+            default:
+                // Could be Windows, other
+                result = userHome + "JMRI" + File.separator;
+                break;
+        }
+		
+        if (log.isDebugEnabled()) log.debug("configDir defined as \""+result+
+                                            "\" based on os.name=\""
+                                            +SystemType.getOSName()
+                                            +"\" user.home=\""
+                                            +userHome
+                                            +"\"");
+        return result;
+    }
+    
+	
+	static public String resourcesDir() {
     	return XmlFile.prefsDir()+ "resources" +File.separator ;
     }
     

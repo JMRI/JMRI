@@ -30,10 +30,13 @@ public class XmlFileLocationAction extends AbstractAction {
     
     public void actionPerformed(ActionEvent ev) {
         
-        final String prefs = jmri.jmrit.XmlFile.prefsDir();
+        final String user = jmri.jmrit.XmlFile.userFileLocationDefault();
+        final String roster = jmri.jmrit.roster.Roster.getFileLocation();
+ 		final String config = jmri.jmrit.XmlFile.configDir();
+        final String configName = System.getProperty("org.jmri.Apps.configFilename");
         final String prog = System.getProperty("user.dir");
 
-        JFrame frame = new jmri.util.JmriJFrame();  // to ensure fits
+		JFrame frame = new jmri.util.JmriJFrame();  // to ensure fits
                 
         JPanel pane = new JPanel();
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
@@ -42,15 +45,35 @@ public class XmlFileLocationAction extends AbstractAction {
         buttons.setLayout(new FlowLayout());
         pane.add(buttons);
         
-        JButton b = new JButton("Open Preferences Directory");
+        JButton b = new JButton("Open User Files Directory");
         buttons.add(b);
         b.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                            try {
-                                java.awt.Desktop.getDesktop().open(new java.io.File(prefs));
-                            } catch (java.io.IOException e) {
-                            }
-                        }
+				try {
+					java.awt.Desktop.getDesktop().open(new java.io.File(user));
+				} catch (java.io.IOException e) {
+				}
+			}
+        });
+		b = new JButton("Open Roster Directory");
+        buttons.add(b);
+        b.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+				try {
+					java.awt.Desktop.getDesktop().open(new java.io.File(roster));
+				} catch (java.io.IOException e) {
+				}
+			}
+        });
+        b = new JButton("Open Preferences Directory");
+        buttons.add(b);
+        b.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+				try {
+					java.awt.Desktop.getDesktop().open(new java.io.File(config));
+				} catch (java.io.IOException e) {
+				}
+			}
         });
         b = new JButton("Open Program Directory");
         buttons.add(b);
@@ -70,7 +93,11 @@ public class XmlFileLocationAction extends AbstractAction {
         textPane.setEditable(false);
         pane.add(textPane);
         
-        textPane.append("Preferences directory: "+prefs+"\n");
+        textPane.append("User Files directory: "+user+"\n");
+        
+        textPane.append("Roster directory: "+roster+"\n");
+        
+        textPane.append("Preferences directory: "+config+"\n");
         
         textPane.append("Program directory: "+prog+"\n");
 
