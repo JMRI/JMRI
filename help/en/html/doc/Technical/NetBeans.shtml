@@ -176,7 +176,7 @@
             <li> Save Username and Password: <em>check or un-check to suit your needs</em></li>
             <li> Proxy Configuration button: <em>Set proxy information if required for your network setup</em></li>
             <li> [Next &gt;]
-                <p><img src="images/netBeansSvnSetupWIthCommitAllowedPg1.png" 
+                <p><img src="images/NetbeansSvnSetupWithCommitAllowedPg1.png" 
                         alt="First Page of Setup for NetBeans SVN Checkout with Commit allowed"></p></li>
             <li> Repository Folder(s): <strong>trunk/jmri</strong>
                 <p>Note that you may [Browse] to another part of the SVN repository 
@@ -193,7 +193,7 @@
             <li> Prefer old Subversion 1.6 Format: <em>leave unchecked</em></li>
             <li> Scan for NetBeans Projects after Checkout:  <em> ensure checked</em>
             <li> [Finish]
-                <p><img src="images/netBeansSvnSetupWIthCommitAllowedPg2.png" 
+                <p><img src="images/NetbeansSvnSetupWithCommitAllowedPg2.png" 
                         alt="Second Page of Setup for NetBeans SVN Checkout with Commit allowed"></p></li>
         </ul>
     <br>
