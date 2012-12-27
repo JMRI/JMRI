@@ -62,7 +62,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
     
     JRadioButton showAll;
     JRadioButton showMatched;
-    protected JPanel viewButtons = new JPanel();
+    protected JPanel viewButtons;
     /**
      * Create the panel used to select the decoder
      */
@@ -202,7 +202,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
             } );
 
 
-        //viewButtons = new JPanel();
+        viewButtons = new JPanel();  // can't use object initialization, as invoked from superclass ctor
         iddecoder = addDecoderIdentButton();
         if (iddecoder!=null) {
                 viewButtons.add(iddecoder);
