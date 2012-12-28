@@ -89,7 +89,6 @@ public abstract class BackupBase {
 	 * 
 	 * @param setName
 	 *            The name of the new backup set
-	 * @return true if successful, false if not.
 	 * @throws Exception
 	 */
 	public void backupFilesToSetName(String setName) throws IOException {
@@ -114,7 +113,6 @@ public abstract class BackupBase {
 	 * 
 	 * @param backupDirectory
 	 *            The directory to use for the backup.
-	 * @return true if successful.
 	 * @throws Exception
 	 */
 	public void backupFilesToDirectory(File backupDirectory) throws IOException {
@@ -178,8 +176,7 @@ public abstract class BackupBase {
 	/**
 	 * Restores a Backup Set with the given name from the backup store.
 	 * 
-	 * @param directoryName
-	 * @return
+	 * @param setName
 	 * @throws Exception
 	 */
 	public void restoreFilesFromSetName(String setName) throws IOException {
@@ -190,7 +187,6 @@ public abstract class BackupBase {
 	 * Restores a Backup Set from the given directory.
 	 * 
 	 * @param directory
-	 * @return true if successful, false if not.
 	 * @throws Exception
 	 */
 	public void restoreFilesFromDirectory(File directory) throws IOException {
@@ -207,8 +203,8 @@ public abstract class BackupBase {
 	 * 
 	 * Only copies files that are included in the list of Operations files.
 	 * 
-	 * @param directory
-	 * @return true if successful, false if not.
+	 * @param sourceDir
+	 * @param destDir
 	 * @throws IOException
 	 * @throws SetupException
 	 */
@@ -288,7 +284,7 @@ public abstract class BackupBase {
 	 * Checks to see how many of the Operations files are present in the source
 	 * directory.
 	 * 
-	 * @return
+	 * @return number of files
 	 */
 	public int getSourceFileCount(File sourceDir) {
 		int count = 0;
@@ -328,7 +324,6 @@ public abstract class BackupBase {
 	 * under the given directory. A name suffix as appended to the base name and
 	 * can range from 00 to 99.
 	 * 
-	 * @param _backupRoot
 	 * @return A backup set name that is not already in use.
 	 */
 	public String suggestBackupSetName() {

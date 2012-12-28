@@ -657,18 +657,20 @@ public class OperationsBackupTest extends TestCase {
 		Assert.assertEquals("Confirm auto back up directory is empty", autoBackupRoot.list().length, 0);
 
 		// Make three backups and then get the list of set names
-		BackupBase backup = new DefaultBackup();
+		BackupBase backup = new DefaultBackup();		
+		Assert.assertEquals("Confirm directory is empty", backup.getBackupSetList().length, 0);
 
 		String[] expectedList = new String[3];
 
 		String setName;
 		for (int i = 0; i < 3; i++) {
 			setName = backup.suggestBackupSetName();
-			backup.backupFilesToSetName(setName);
 			expectedList[i] = setName;
+			backup.backupFilesToSetName(setName);		
 		}
 		
 		Assert.assertEquals("Confirm default directory has the right number of files", defaultBackupRoot.list().length, 3);
+		Assert.assertEquals("Confirm default directory has the right number of files", backup.getBackupSetList().length, 3);
 		Assert.assertEquals("Confirm auto back up directory is empty", autoBackupRoot.list().length, 0);
 
 		String[] actualList = backup.getBackupSetList();
@@ -802,17 +804,19 @@ public class OperationsBackupTest extends TestCase {
 		
 		// Make three backups and then get the list of set names
 		BackupBase backup = new AutoBackup();
+		Assert.assertEquals("Confirm directory is empty", backup.getBackupSetList().length, 0);
 
 		String[] expectedList = new String[3];
 
 		String setName;
 		for (int i = 0; i < 3; i++) {
 			setName = backup.suggestBackupSetName();
-			backup.backupFilesToSetName(setName);
 			expectedList[i] = setName;
+			backup.backupFilesToSetName(setName);
 		}
 		
 		Assert.assertEquals("Auto backup directory has the right number of files", autoBackupRoot.list().length, 3);
+		Assert.assertEquals("Auto backup directory has the right number of files", backup.getBackupSetList().length, 3);
 		Assert.assertEquals("Confirm default backup directory is empty", defaultBackupRoot.list().length, 0);
 
 		String[] actualList = backup.getBackupSetList();

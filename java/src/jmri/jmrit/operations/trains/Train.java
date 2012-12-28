@@ -671,7 +671,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * Used to determine if train is a local switcher serving one location.
 	 * Note the the train can have more than location in its route, but all
 	 * location names must be same.
-	 * @return
+	 * @return true if local switcher
 	 */
 	public boolean isLocalSwitcher() {
 		String departureName = TrainCommon.splitString(getTrainDepartsName());

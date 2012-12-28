@@ -27,7 +27,6 @@ public class AutoBackup extends BackupBase {
 	 * Backs up Operations files to a generated directory under the automatic
 	 * backup root directory.
 	 * 
-	 * @return
 	 * @throws Exception
 	 */
 	public synchronized void autoBackup() throws IOException {

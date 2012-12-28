@@ -267,7 +267,7 @@ public class TrainCommon {
 	 * Used to determine if car is a local move
 	 * 
 	 * @param car
-	 * @return
+	 * @return true if the move is at the same location
 	 */
 	protected boolean islocalMove(Car car) {
 		if (car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack() != null)
