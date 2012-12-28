@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import jmri.jmrit.XmlFile;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -16,6 +17,7 @@ import org.apache.log4j.Logger;
  * at least try to fake it.
  *
  * @author Bob Jacobsen Copyright 2003, 2005, 2006
+ * @author Randall Wood Copyright 2012
  * @version $Revision$
  */
 public class FileUtil {
@@ -35,6 +37,8 @@ public class FileUtil {
     static private String programPath = null;
     static private String homePath = System.getProperty("user.home") + File.separator;
     
+    static private Boolean logged = false;
+
     /**
      * Find the resource file corresponding to a name. There are five cases:
      * <UL> <LI> Starts with "resource:", treat the rest as a pathname relative
@@ -135,12 +139,6 @@ public class FileUtil {
     static public String getAbsoluteFilename(String path) {
         if (path == null || path.length() == 0) {
             return null;
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("Getting path for: " + path);
-            log.debug("PROGRAM: " + FileUtil.getProgramPath());
-            log.debug("PREFERENCES: " + FileUtil.getPreferencesPath());
-            log.debug("HOME: " + FileUtil.getHomePath());
         }
         if (path.startsWith(PROGRAM)) {
             if (new File(path.substring(PROGRAM.length())).isAbsolute()) {
@@ -249,6 +247,12 @@ public class FileUtil {
             }
         }
         return programPath;
+    }
+
+    static public void logFilePaths() {
+        log.info("File path " + FileUtil.PROGRAM + " is " + FileUtil.getProgramPath());
+        log.info("File path " + FileUtil.PREFERENCES + " is " + FileUtil.getPreferencesPath());
+        log.info("File path " + FileUtil.HOME + " is " + FileUtil.getHomePath());
     }
 
     // initialize logging
