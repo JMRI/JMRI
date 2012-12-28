@@ -347,7 +347,9 @@ public abstract class BackupBase {
 
 			File testPath = new File(_backupRoot, fullName);
 
-			if (!testPath.exists()) {
+			// bug workaround for Linux, File.exists() can be cached returning the wrong results (true)
+			// when the directory was recently deleted.
+			if (!testPath.exists() || testPath.length() == 0) {
 				return fullName; // Found an unused name
 			}
 
