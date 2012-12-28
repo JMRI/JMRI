@@ -262,10 +262,10 @@
 
       <xs:element name="constant" minOccurs="0" maxOccurs="unbounded" >
         <xs:complexType>
-          <xs:attribute name="label" type="xs:string" use="required"/>
+          <xs:attribute name="label" type="xs:string"/>
           <xs:attribute name="default" type="xs:int"/>
           <xs:attribute name="comment" type="xs:string"/>
-          <xs:attribute name="item" type="xs:string"/>
+          <xs:attribute name="item" type="xs:string" use="required"/>
           <xs:attribute name="minFn" type="xs:int"/>
           <xs:attribute name="minOut" type="xs:int"/>
           <xs:attribute name="inOptions" type="xs:string"/>
