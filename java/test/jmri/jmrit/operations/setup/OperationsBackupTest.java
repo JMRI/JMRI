@@ -650,6 +650,11 @@ public class OperationsBackupTest extends TestCase {
 	}
 
 	public void testDefaultBackupSetList() throws IOException {
+		
+		// Added these two checks to confirm that all directories have been deleted
+		Assert.assertTrue("Auto back directory exists", defaultBackupRoot.exists());
+		Assert.assertEquals("Confirm directory is empty", defaultBackupRoot.list().length, 0);
+
 		// Make three backups and then get the list of set names
 		BackupBase backup = new DefaultBackup();
 
@@ -785,6 +790,11 @@ public class OperationsBackupTest extends TestCase {
 	}
 
 	public void testAutoBackupSetList() throws IOException {
+		
+		// Added these two checks to confirm that all directories have been deleted
+		Assert.assertTrue("Auto back directory exists", autoBackupRoot.exists());
+		Assert.assertEquals("Confirm directory is empty", autoBackupRoot.list().length, 0);
+		
 		// Make three backups and then get the list of set names
 		BackupBase backup = new AutoBackup();
 
