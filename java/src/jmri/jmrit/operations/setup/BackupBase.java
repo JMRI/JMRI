@@ -12,7 +12,6 @@ import java.util.Calendar;
 
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.util.SystemType;
 
 /**
  * Base class for backing up and restoring Operations working files. Derived
@@ -340,24 +339,32 @@ public abstract class BackupBase {
 		// again.
 		String baseName = getDate();
 		String fullName = null;
+		String [] dirNames = _backupRoot.list();
 
 		// Check for up to 100 backup file names to see if they already exist
 		for (int i = 0; i < 99; i++) {
 			// Create the trial name, then see if it already exists.
 			fullName = String.format("%s_%02d", baseName, i);
-
-			File testPath = new File(_backupRoot, fullName);
-
+					
 			// bug workaround for Linux/NFS, File.exists() can be cached returning the wrong results (true)
-			if (!testPath.exists()) {
-				return fullName; // Found an unused name
-			// is the directory empty?  If so we can use.
-			} else if (SystemType.isLinux() && testPath.list().length == 0) {
-				return fullName; 
-			}
+			boolean foundFileNameMatch = false;		
+			for (int j = 0; j < dirNames.length; j++) {
+				if (dirNames[j].equals(fullName)) {
+					foundFileNameMatch = true;
+					break;
+				}
+			}			
+			if (!foundFileNameMatch)
+				return fullName;
+
+//			File testPath = new File(_backupRoot, fullName);
+//
+//			if (!testPath.exists()) {
+//				return fullName; // Found an unused name
+
 
 			// Otherwise complain and keep trying...
-			log.debug("Operations backup directory: " + testPath
+			log.debug("Operations backup directory: " + fullName
 					+ " already exists");
 		}
 
