@@ -47,12 +47,8 @@ Controlling&nbsp;  lighting and sound in the room, and so forth. (SoundPro&reg;)
 <p>Note: This entire manual has been updated to   correspond to DecoderPro 2.12, and the HTML verified using HTML4 and   Cascading Style Sheets. If the formatting looks odd, you probably need   to update your browser. </p>
 <p>
   <a name="index"></a>
-<div align="right">
-<h2>Download Print version of Manual (pdf format)
-</h2>
-<p><a href="../pdf/jmri_Man_2_14.pdf"><strong>Manual version 2.14.1</strong></a></div>
 
-<h1>Table of Contents</h1>
+<h2>Table of Contents</h2>
 <h4><a name="Installing"></a>Installing JMRI</h4>
 <ul>
 <li><a href="Installing_JMRI.shtml">Preparing to Install JMRI</a></li>
