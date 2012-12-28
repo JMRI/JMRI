@@ -24,1035 +24,1035 @@
 <!-- Register 1 -->
       <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
         <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
+        <label xml:lang="it">Indirizzo Primario</label>
+        <comment xml:lang="it">Indirizzo Corto</comment>
       </variable>
       <variable label="Address Format" CV="29" mask="XXVXXXXX">
         <enumVal>
           <enumChoice choice="One byte (short) address">
-            <choice>One byte (short) address</choice>
+            <choice xml:lang="it">Indirizzo a 1 byte (corto)</choice>
           </enumChoice>
           <enumChoice choice="Two byte (extended) address">
-            <choice>Two byte (extended) address</choice>
+            <choice xml:lang="it">Indirizzo a 2 byte (esteso)</choice>
           </enumChoice>
         </enumVal>
         <label>Address Format</label>
       </variable>
       <variable label="Dummy" CV="2">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="3">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="4">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="5">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="6">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="7">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="8">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="9">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="10">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="11">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="12">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="13">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="14">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="15">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="16">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="17">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="18">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="19">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="20">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="21">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="22">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="23">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="24">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="25">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="26">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="27">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="28">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="29">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="30">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="31">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="32">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="33">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="34">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="35">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="36">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="37">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="38">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="39">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="40">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="41">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="42">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="43">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="44">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="45">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="46">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="47">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="48">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="49">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="50">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="51">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="52">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="53">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="54">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="55">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="56">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="57">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="58">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="59">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="60">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="61">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="62">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="63">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="64">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="65">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="66">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="67">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="68">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="69">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="70">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="71">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="72">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="73">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="74">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="75">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="76">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="77">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="78">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="79">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="80">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="81">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="82">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="83">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="84">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="85">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="86">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="87">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="88">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="89">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="90">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="91">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="92">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="93">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="94">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="95">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="96">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="97">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="98">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="99">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="100">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="101">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="102">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="103">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="104">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="105">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="106">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="107">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="108">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="109">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="110">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="111">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="112">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="113">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="114">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="115">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="116">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="117">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="118">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="119">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="120">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="121">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="122">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="123">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="124">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="125">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="126">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="127">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="128">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="129">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="130">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="131">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="132">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="133">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="134">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="135">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="136">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="137">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="138">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="139">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="140">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="141">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="142">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="143">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="144">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="145">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="146">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="147">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="148">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="149">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="150">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="151">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="152">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="153">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="154">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="155">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="156">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="157">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="158">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="159">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="160">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="161">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="162">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="163">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="164">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="165">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="166">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="167">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="168">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="169">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="170">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="171">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="172">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="173">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="174">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="175">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="176">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="177">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="178">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="179">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="180">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="181">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="182">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="183">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="184">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="185">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="186">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="187">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="188">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="189">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="190">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="191">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="192">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="193">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="194">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="195">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="196">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="197">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="198">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="199">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="200">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="201">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="202">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="203">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="204">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="205">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="206">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="207">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="208">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="209">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="210">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="211">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="212">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="213">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="214">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="215">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="216">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="217">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="218">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="219">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="220">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="221">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="222">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="223">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="224">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="225">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="226">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="227">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="228">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="229">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="230">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="231">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="232">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="233">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="234">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="235">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="236">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="237">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="238">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="239">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="240">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="241">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="242">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="243">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="244">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="245">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="246">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="247">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="248">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="249">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="250">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="251">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="252">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="253">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="254">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
       <variable label="Dummy" CV="255">
         <decVal/>
-        <label>Dummy</label>
+        <label xml:lang="it">Falso</label>
       </variable>
     </variables>
   </decoder>
