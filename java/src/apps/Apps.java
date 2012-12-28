@@ -37,6 +37,7 @@ import javax.swing.*;
 import jmri.plaf.macosx.Application;
 import jmri.plaf.macosx.PreferencesHandler;
 import jmri.plaf.macosx.QuitHandler;
+import jmri.util.FileUtil;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.WindowInterface;
 
@@ -184,6 +185,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
                 e.printStackTrace();
             }
         }
+
+        FileUtil.logFilePaths();
         
         splash(false);
         splash(true, false);

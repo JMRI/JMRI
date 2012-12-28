@@ -18,6 +18,7 @@ import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.managers.DefaultShutDownManager;
 import jmri.managers.DefaultUserMessagePreferences;
+import jmri.util.FileUtil;
 import jmri.util.Log4JUtil;
 import jmri.util.exceptionhandler.AwtHandler;
 import jmri.util.exceptionhandler.UncaughtExceptionHandler;
@@ -95,6 +96,8 @@ public abstract class AppsBase {
 
         setAndLoadPreferenceFile();
 
+        FileUtil.logFilePaths();
+        
         Runnable r;
         /*
          * Once all the preferences have been loaded we can initial the
