@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Main_Window.shtml 18157 2011-08-11 10:37:44Z dat7719 $ -->
+<TITLE>
+DecoderPro&reg; Main Window
+</TITLE>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>DecoderPro&reg; Main Window</h1>
+<h1>Window Menu</h1>
+
+<div align=right>
+<p><a href="Main_Debug.shtml">Previous</a> | <a href="Main_Help.shtml">Next </a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<p><strong>Minimize</strong></p>
+<p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
+<p>
+  <input name="checkbox" type="checkbox" id="checkbox" checked> 
+  <strong>DecoderPro</strong></p>
+<p>
+  <input type="checkbox" name="checkbox2" id="checkbox2"> 
+  <strong>Power Control</strong></p>
+<p>
+  <input type="checkbox" name="checkbox3" id="checkbox3"> 
+  <strong>Throttle</strong></p>
+<p>Shows all DecoderPro windows that are open, active windows will be checked.</p>
+<p>
+<hr>
+
+<div align=right>
+<p><a href="Main_Help.shtml"></a><a href="Main_Debug.shtml">Previous</a> | <a href="Main_Help.shtml">Next </a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

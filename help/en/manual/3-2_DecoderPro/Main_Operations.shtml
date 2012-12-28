@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Main_Operations.shtml 18150 2011-08-10 13:07:19Z dat7719 $ -->
+<title>Comprehensive Programmer - Advanced Features Pane</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+<h1>DecoderPro&reg; Main Window</h1>
+<h1>Operations Menu</h1>
+
+<div align=right>
+<p><a href="Main_Panels.shtml">Previous </a> | <a href="Main_Menu.shtml#System">Next</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<ul>
+  <li><strong>Settings</strong>  
+    <p>Opens the <a href="Ops_Start.shtml">Operations Setting </a>window.</p>
+  </li>
+  <li><strong>Locations</strong>  
+    <p>Opens the <a href="Ops_Locations.shtml">Locations</a> window.</p>
+  </li>
+  <li><strong>Cars</strong></li>
+</ul>
+<blockquote>
+  <p>Opens the <a href="Ops_Cars.shtml">Cars</a> window.</p>
+</blockquote>
+<ul>
+  <li><strong>Locomotives</strong></li>
+</ul>
+<blockquote>
+  <p>Opens the <a href="Ops_Engines.shtml">Locomotives</a> window.</p>
+</blockquote>
+<ul>
+  <li><strong>Routes</strong></li>
+</ul>
+<blockquote>
+  <p>Opens the <a href="Ops_Routes.shtml">Routes</a> window.</p>
+</blockquote>
+<ul>
+  <li><strong>Trains</strong></li>
+</ul>
+<blockquote>
+  <p>Opens the <a href="Ops_Trains.shtml">Trains</a> window.</p>
+</blockquote>
+<p>&nbsp;</p>
+
+<hr>
+
+<div align=right>
+<p><a href="Main_Panels.shtml">Previous </a> | <a href="Main_Menu.shtml#System">Next</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
