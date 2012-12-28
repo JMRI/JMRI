@@ -175,16 +175,16 @@
         <label>Speed Table</label>
       </variable>
 <!-- Define the fixed Function-Output mapping -->
-      <constant label="FL(f) controls output 1" minOut="1" default="1"/>
-      <constant label="FL(r) controls output 2" minOut="2" default="1"/>
-      <constant label="F1 controls output 3" minOut="3" minFn="1" default="1"/>
-      <constant label="F2 controls output 4" minOut="4" minFn="2" default="1"/>
-      <constant label="F3 controls output 5" minOut="5" minFn="3" default="1"/>
-      <constant label="F4 controls output 6" minOut="6" minFn="4" default="1"/>
-      <constant label="F5 controls output 7" minOut="7" minFn="5" default="1"/>
-      <constant label="F6 controls output 8" minOut="8" minFn="6" default="1"/>
-      <constant label="F7 controls output 9" minOut="9" minFn="7" default="1"/>
-      <constant label="F8 controls output 10" minOut="10" minFn="8" default="1"/>
+      <constant item="FL(f) controls output 1" minOut="1" default="1"/>
+      <constant item="FL(r) controls output 2" minOut="2" default="1"/>
+      <constant item="F1 controls output 3" minOut="3" minFn="1" default="1"/>
+      <constant item="F2 controls output 4" minOut="4" minFn="2" default="1"/>
+      <constant item="F3 controls output 5" minOut="5" minFn="3" default="1"/>
+      <constant item="F4 controls output 6" minOut="6" minFn="4" default="1"/>
+      <constant item="F5 controls output 7" minOut="7" minFn="5" default="1"/>
+      <constant item="F6 controls output 8" minOut="8" minFn="6" default="1"/>
+      <constant item="F7 controls output 9" minOut="9" minFn="7" default="1"/>
+      <constant item="F8 controls output 10" minOut="10" minFn="8" default="1"/>
     </variables>
   </decoder>
 </decoder-config>

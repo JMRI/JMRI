@@ -156,8 +156,8 @@
         <comment>Range 0-63</comment>
       </variable>
 <!-- Define the fixed Function-Output mapping -->
-      <constant label="F2 controls output 3" minOut="3" default="1"/>
-      <constant label="F3 controls output 4" minOut="4" default="1"/>
+      <constant item="F2 controls output 3" minOut="3" default="1"/>
+      <constant item="F3 controls output 4" minOut="4" default="1"/>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8"/>

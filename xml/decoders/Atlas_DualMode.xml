@@ -243,8 +243,8 @@
         <label>Decoder Software Version</label>
       </variable>
 <!-- Define the fixed Function-Output mapping -->
-      <constant label="FL(f) controls output 1" minOut="1" default="1"/>
-      <constant label="FL(r) controls output 2" minOut="2" default="1"/>
+      <constant item="FL(f) controls output 1" minOut="1" default="1"/>
+      <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="33"/>

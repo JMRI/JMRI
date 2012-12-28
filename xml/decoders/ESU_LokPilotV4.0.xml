@@ -590,7 +590,7 @@
       </variable>
 
 <!-- Indexed variables on page number 16.0 for CVs 257 - 512 Output Effects -->
-      <constant label="PICV" default="32" comment="CV used for Primary Index"/>
+      <constant item="PICV" default="32" comment="CV used for Primary Index"/>
 
 <!-- Output Effects -->
       <ivariable label="Headlight Mode" CVname="259.0" CV="259" PI="0" default="1" item="Function F0F option 1" mask="XXXVVVVV">

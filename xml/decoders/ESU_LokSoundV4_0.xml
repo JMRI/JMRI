@@ -852,7 +852,7 @@
         <label>Constant Brake Mode - Brake Distance Backward</label>
       </variable>
 <!-- Indexed variables -->
-      <constant label="PICV" default="32" comment="CV used for Primary Index"/>
+      <constant item="PICV" default="32" comment="CV used for Primary Index"/>
 <!-- Light output config -->
       <ivariable label="Headlight Mode" CVname="259.0" CV="259" PI="0" default="2" item="Function F0F effect generated" mask="XXXXVVVV">
         <ienumVal>

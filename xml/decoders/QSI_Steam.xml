@@ -1662,8 +1662,8 @@
         <decVal/>
         <label>Reverse Trim</label>
       </variable>
-      <constant label="PICV" default="49" comment="CV used for Primary Index"/>
-      <constant label="SICV" default="50" comment="CV used for Secondary Index"/>
+      <constant item="PICV" default="49" comment="CV used for Primary Index"/>
+      <constant item="SICV" default="50" comment="CV used for Secondary Index"/>
 <!-- QSI CV.PI.SI formatted items -->
 <!-- Sound control -->
       <ivariable label="System Volume" CVname="51.0" CV="51" PI="0" default="127" item="CV51.0">
