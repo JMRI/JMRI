@@ -12,6 +12,7 @@ import java.util.Calendar;
 
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.util.SystemType;
 
 /**
  * Base class for backing up and restoring Operations working files. Derived
@@ -347,10 +348,12 @@ public abstract class BackupBase {
 
 			File testPath = new File(_backupRoot, fullName);
 
-			// bug workaround for Linux, File.exists() can be cached returning the wrong results (true)
-			// when the directory was recently deleted.
-			if (!testPath.exists() || testPath.length() == 0) {
+			// bug workaround for Linux/NFS, File.exists() can be cached returning the wrong results (true)
+			if (!testPath.exists()) {
 				return fullName; // Found an unused name
+			// is the directory empty?  If so we can use.
+			} else if (SystemType.isLinux() && testPath.list().length == 0) {
+				return fullName; 
 			}
 
 			// Otherwise complain and keep trying...
