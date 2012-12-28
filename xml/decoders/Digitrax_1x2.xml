@@ -150,21 +150,9 @@
         </enumVal>
         <label>F0 Reverse during DC operation</label>
       </variable>
-      <variable label="Advanced Consist address" CV="19" item="Consist Address" mask="XVVVVVVV" default="0">
-        <decVal max="127"/>
-        <label>Advanced Consist address</label>
-      </variable>
-      <variable label="Advanced Consist direction" CV="19" item="Consist Direction" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="forward">
-            <choice>forward</choice>
-          </enumChoice>
-          <enumChoice choice="reverse">
-            <choice>reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Advanced Consist direction</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
+      
       <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="forward">
@@ -551,37 +539,9 @@
         </enumVal>
         <label>Function 4 behavior</label>
       </variable>
-      <variable label="Static compensation for speed stabilization" CV="55" default="128" item="EMF Static Config" comment="Factory default is 128, no effect until droop (CV57) set">
-        <decVal/>
-        <label>Static compensation for speed stabilization</label>
-        <comment>Factory default is 128, no effect until droop (CV57) set</comment>
-      </variable>
-      <variable label="Dynamic compensation for speed stabilization" CV="56" default="48" item="EMF Dynamic Config" comment="Factory default is 48, no effect until droop (CV57) set">
-        <decVal/>
-        <label>Dynamic compensation for speed stabilization</label>
-        <comment>Factory default is 48, no effect until droop (CV57) set</comment>
-      </variable>
-      <variable label="Solo operation droop compensation for speed stabilization" CV="57" mask="XXXXVVVV" default="6" item="EMF Droop Config" comment="0 is compenstation off, 15 is full on, typical value is 5">
-        <decVal max="15"/>
-        <label>Solo operation droop compensation for speed stabilization</label>
-        <comment>0 is compenstation off, 15 is full on, typical value is 5</comment>
-      </variable>
-      <variable label="Advanced consist droop compensation for speed stabilization" CV="57" mask="VVVVXXXX" default="0" comment="0 is compenstation off, 15 is full on, typical value is 5">
-        <decVal max="15"/>
-        <label>Advanced consist droop compensation for speed stabilization</label>
-        <comment>0 is compenstation off, 15 is full on, typical value is 5</comment>
-      </variable>
-      <variable label="Speed Compensation Control" CV="61" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="F5 has no effect on speed compensation">
-            <choice>F5 has no effect on speed compensation</choice>
-          </enumChoice>
-          <enumChoice choice="F5 On disables speed compensation">
-            <choice>F5 On disables speed compensation</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Compensation Control</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
+
       <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" item="Advanced Ack">
         <enumVal>
           <enumChoice choice="Off">
@@ -653,42 +613,31 @@
         <label>Ditch light hold-over time</label>
         <comment>0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds</comment>
       </variable>
-      <variable label="Kick Start" CV="65">
-        <decVal/>
-        <label>Kick Start</label>
-      </variable>
-      <variable label="Forward Trim" CV="66">
-        <decVal/>
-        <label>Forward Trim</label>
-      </variable>
-      <variable label="Reverse Trim" CV="95">
-        <decVal/>
-        <label>Reverse Trim</label>
-      </variable>
-      <variable label="User Private ID #1" CV="105" item="User Id #1">
-        <decVal/>
-        <label>User Private ID #1</label>
-      </variable>
-      <variable label="User Private ID #2" CV="106" item="User Id #2">
-        <decVal/>
-        <label>User Private ID #2</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
+
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml" />
+
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
 <!-- Define the fixed Function-Output mapping -->
-      <constant label="FL(f) controls output 1" minOut="1" default="1"/>
-      <constant label="FL(r) controls output 2" minOut="2" default="1"/>
-      <constant label="F1 controls output 3" minOut="3" minFn="1" default="1"/>
-      <constant label="F2 controls output 4" minOut="4" minFn="2" default="1"/>
-      <constant label="F3 controls output 5" minOut="5" minFn="3" default="1"/>
-      <constant label="F4 controls output 6" minOut="6" minFn="4" default="1"/>
-      <constant label="F5 controls output 7" minOut="7" minFn="5" default="1"/>
-      <constant label="F6 controls output 8" minOut="8" minFn="6" default="1"/>
-      <constant label="F7 controls output 9" minOut="9" minFn="7" default="1"/>
-      <constant label="F8 controls output 10" minOut="10" minFn="8" default="1"/>
+      <constant item="FL(f) controls output 1" minOut="1" default="1"/>
+      <constant item="FL(r) controls output 2" minOut="2" default="1"/>
+      <constant item="F1 controls output 3" minOut="3" minFn="1" default="1"/>
+      <constant item="F2 controls output 4" minOut="4" minFn="2" default="1"/>
+      <constant item="F3 controls output 5" minOut="5" minFn="3" default="1"/>
+      <constant item="F4 controls output 6" minOut="6" minFn="4" default="1"/>
+      <constant item="F5 controls output 7" minOut="7" minFn="5" default="1"/>
+      <constant item="F6 controls output 8" minOut="8" minFn="6" default="1"/>
+      <constant item="F7 controls output 9" minOut="9" minFn="7" default="1"/>
+      <constant item="F8 controls output 10" minOut="10" minFn="8" default="1"/>
     </variables>
+
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8"/>
       <factReset label="Reset All CVs except speed table" CV="8" default="9"/>

@@ -54,26 +54,11 @@
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="Motor Drive Frequency" CV="9" item="Total PWM Period" default="0" comment="00 is fastest, 255 is slowest">
-        <decVal/>
-        <label>Motor Drive Frequency</label>
-        <comment>00 is fastest, 255 is slowest</comment>
-      </variable>
-      <variable label="Advanced Consist address" CV="19" item="Consist Address" mask="XVVVVVVV" default="0">
-        <decVal max="127"/>
-        <label>Advanced Consist address</label>
-      </variable>
-      <variable label="Advanced Consist direction" CV="19" item="Consist Direction" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="forward">
-            <choice>forward</choice>
-          </enumChoice>
-          <enumChoice choice="reverse">
-            <choice>reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Advanced Consist direction</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/motorDriveFreq.xml"/>
+
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
+      
       <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="forward">
@@ -247,26 +232,14 @@
         <decVal/>
         <label>Decoder Lock ID number</label>
       </variable>
-      <variable label="Kick Start" CV="65">
-        <decVal/>
-        <label>Kick Start</label>
-      </variable>
-      <variable label="Forward Trim" CV="66">
-        <decVal/>
-        <label>Forward Trim</label>
-      </variable>
-      <variable label="Reverse Trim" CV="95">
-        <decVal/>
-        <label>Reverse Trim</label>
-      </variable>
-      <variable label="User Private ID #1" CV="105" item="User Id #1">
-        <decVal/>
-        <label>User Private ID #1</label>
-      </variable>
-      <variable label="User Private ID #2" CV="106" item="User Id #2">
-        <decVal/>
-        <label>User Private ID #2</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
+
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml" />
+
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
