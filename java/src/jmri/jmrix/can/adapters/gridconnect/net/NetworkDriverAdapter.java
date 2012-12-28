@@ -5,6 +5,8 @@ package jmri.jmrix.can.adapters.gridconnect.net;
 import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.can.ConfigurationManager;
+import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
 
 import java.util.Vector;
 
@@ -37,16 +39,25 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
      * station connected to this port
      */
     public void configure() {
-
+        TrafficController tc;
+        if(getOptionState(option2Name).equals(ConfigurationManager.MERGCBUS)){
         // Register the CAN traffic controller being used for this connection
-        TrafficController tc = new GcTrafficController();
+            tc = new MergTrafficController();
+            try {
+                tc.setCanId(Integer.parseInt(getOptionState("CANID")));
+            } catch (Exception e) {
+                log.error("Cannot parse CAN ID - check your preference settings "+e);
+                log.error("Now using default CAN ID");
+            }
+        } else {
+            tc = new GcTrafficController();
+        }
         adaptermemo.setTrafficController(tc);
         
         
         // Now connect to the traffic controller
         log.debug("Connecting port");
         tc.connectPort(this);
-
         adaptermemo.setProtocol(getOptionState(option2Name));
 
         // do central protocol-specific configuration    
